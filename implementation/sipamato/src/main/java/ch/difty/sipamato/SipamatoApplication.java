@@ -34,11 +34,12 @@ public class SipamatoApplication extends WicketBootWebApplication implements App
 
     @Override
     public Class<? extends Page> getHomePage() {
-        return SipamatoHomePage.class;
+        return PaperEntryPage.class;
     }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.ctx = applicationContext;
     }
+
 }
