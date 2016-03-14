@@ -1,7 +1,6 @@
 package ch.difty.sipamato;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.SpringApplication;
@@ -27,14 +26,8 @@ public class SipamatoApplication extends WicketBootWebApplication implements App
     }
 
     @Override
-    protected Class<? extends WebPage> getSignInPageClass() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public Class<? extends Page> getHomePage() {
-        return PaperEntryPage.class;
+        return SipamatoHomePage.class;
     }
 
     @Override

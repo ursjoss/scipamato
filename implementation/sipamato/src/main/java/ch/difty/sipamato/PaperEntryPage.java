@@ -8,8 +8,13 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 public class PaperEntryPage extends BasePage {
+
+    public PaperEntryPage(PageParameters parameters) {
+        super(parameters);
+    }
 
     private static final long serialVersionUID = 1L;
 
