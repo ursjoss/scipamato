@@ -2,9 +2,11 @@ package ch.difty.sipamato;
 
 import java.util.Date;
 
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+@AuthorizeInstantiation("USER")
 public class SipamatoHomePage extends BasePage {
 
     public SipamatoHomePage(PageParameters parameters) {
