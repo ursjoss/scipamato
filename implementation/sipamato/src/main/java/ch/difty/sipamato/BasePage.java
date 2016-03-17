@@ -45,6 +45,7 @@ public abstract class BasePage extends GenericWebPage<Void> {
 
         addPageLink(navbar, SipamatoHomePage.class, "Home", GlyphIconType.home);
         addPageLink(navbar, PaperEntryPage.class, "Edit", GlyphIconType.edit);
+        addPageLink(navbar, LogoutPage.class, "Logout", GlyphIconType.edit);
 
         return navbar;
     }
