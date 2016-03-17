@@ -5,3 +5,4 @@
 target/
 bin/
 implementation/sipamato/.factorypath
+rebel.xml
