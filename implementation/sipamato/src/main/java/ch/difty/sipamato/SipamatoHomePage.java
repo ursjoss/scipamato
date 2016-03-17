@@ -9,11 +9,11 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 @AuthorizeInstantiation("USER")
 public class SipamatoHomePage extends BasePage {
 
+    private static final long serialVersionUID = 1L;
+
     public SipamatoHomePage(PageParameters parameters) {
         super(parameters);
     }
-
-    private static final long serialVersionUID = 1L;
 
     protected void onInitialize() {
         super.onInitialize();
