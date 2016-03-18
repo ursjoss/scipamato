@@ -29,6 +29,7 @@ public class LoginPage extends BasePage {
         add(new LoginForm("form"));
     }
 
+    // TODO consider using SignInPanel
     private static class LoginForm extends Form<LoginForm> {
         private static final long serialVersionUID = 1L;
 
@@ -37,7 +38,7 @@ public class LoginPage extends BasePage {
 
         public LoginForm(String id) {
             super(id);
-            setModel(new CompoundPropertyModel<>(this));
+            setDefaultModel(new CompoundPropertyModel<>(this));
 
             add(new Label("usernameLabel", new ResourceModel("username.label", "un")));
             add(new RequiredTextField<String>("username"));
