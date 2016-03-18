@@ -5,6 +5,8 @@ import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
@@ -20,30 +22,28 @@ public class PaperEntryPage extends BasePage {
         super(parameters);
     }
 
+    private Form<Paper> form;
+
     protected void onInitialize() {
         super.onInitialize();
 
-        Form<Paper> form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(Model.of(new Paper()))) {
+        form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(Model.of(new Paper()))) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onSubmit() {
-                System.out.println("form submitted. Paper:");
-                System.out.println(getModelObject());
                 info("form submitted. Paper:" + getModelObject());
             }
         };
         add(form);
 
-        form.add(new Label("authorLabel", new StringResourceModel("author.label", this, null)));
-        TextField<String> authorField = new TextField<String>(Paper.AUTHOR);
-        form.add(authorField);
+        TextField<String> authorField = new RequiredTextField<String>(Paper.AUTHOR);
+        addFieldAndLabel(authorField);
 
-        form.add(new Label("firstAuthorLabel", new StringResourceModel("firstAuthor.label", this, null)));
         TextField<String> firstAuthorField = new TextField<String>(Paper.FIRST_AUTHOR);
         firstAuthorField.setEnabled(false);
         firstAuthorField.setOutputMarkupId(true);
-        form.add(firstAuthorField);
+        addFieldAndLabel(firstAuthorField);
 
         authorField.add(new OnChangeAjaxBehavior() {
             private static final long serialVersionUID = 1L;
@@ -54,12 +54,17 @@ public class PaperEntryPage extends BasePage {
             }
         });
 
-        form.add(new Label("titleLabel", new StringResourceModel("title.label", this, null)));
-        TextField<String> titleField = new TextField<String>(Paper.TITLE);
-        form.add(titleField);
+        addFieldAndLabel(new RequiredTextField<String>(Paper.TITLE));
+        addFieldAndLabel(new TextField<String>(Paper.LOCATION));
+    }
 
-        form.add(new Label("locationLabel", new StringResourceModel("location.label", this, null)));
-        TextField<String> locationField = new TextField<String>(Paper.LOCATION);
-        form.add(locationField);
-    };
+    private void addFieldAndLabel(FormComponent<String> field) {
+        String id = field.getId();
+        StringResourceModel labelModel = new StringResourceModel(id + ".label", this, null);
+        Label label = new Label(id + "Label", labelModel);
+        field.setLabel(labelModel);
+        form.add(label);
+        form.add(field);
+    }
+
 }
