@@ -24,6 +24,7 @@ public class SipamatoApplication extends WicketBootSecuredWebApplication impleme
     protected void init() {
         super.init();
         getComponentInstantiationListeners().add(new SpringComponentInjector(this, ctx, true));
+        mountPackage("/", SipamatoHomePage.class);
     }
 
     @Override
