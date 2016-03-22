@@ -1,7 +1,5 @@
 package ch.difty.sipamato;
 
-import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
-import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
@@ -22,7 +20,7 @@ public class LoginPage extends BasePage {
     protected void onInitialize() {
         super.onInitialize();
 
-        if (((AbstractAuthenticatedWebSession) getSession()).isSignedIn()) {
+        if (isSignedIn()) {
             continueToOriginalDestination();
         }
 
@@ -30,7 +28,7 @@ public class LoginPage extends BasePage {
     }
 
     // TODO consider using SignInPanel
-    private static class LoginForm extends Form<LoginForm> {
+    private class LoginForm extends Form<LoginForm> {
         private static final long serialVersionUID = 1L;
 
         private String username;
@@ -48,12 +46,12 @@ public class LoginPage extends BasePage {
 
         @Override
         protected void onSubmit() {
-            AuthenticatedWebSession session = AuthenticatedWebSession.get();
-            if (session.signIn(username, password)) {
+            if (signIn(username, password)) {
                 setResponsePage(SipamatoHomePage.class);
             } else {
                 error(getString("msg.login.failure"));
             }
         }
+
     }
 }

@@ -1,5 +1,6 @@
 package ch.difty.sipamato;
 
+import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
@@ -27,7 +28,6 @@ public abstract class BasePage extends GenericWebPage<Void> {
         super.onInitialize();
         add(newNavbar("navbar"));
         createAndAddFeedbackPanel("feedback");
-        add(feedbackPanel);
     }
 
     private void createAndAddFeedbackPanel(String label) {
@@ -53,6 +53,14 @@ public abstract class BasePage extends GenericWebPage<Void> {
     private <P extends BasePage> void addPageLink(Navbar navbar, Class<P> pageClass, String label, IconType iconType) {
         NavbarButton<Void> button = new NavbarButton<Void>(pageClass, Model.of(label)).setIconType(iconType);
         navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.LEFT, button));
+    }
+
+    protected boolean isSignedIn() {
+        return AuthenticatedWebSession.get().isSignedIn();
+    }
+
+    protected boolean signIn(String username, String password) {
+        return AuthenticatedWebSession.get().signIn(username, password);
     }
 
 }
