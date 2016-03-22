@@ -17,6 +17,7 @@ public class WicketWebSecurityApapterConfig extends WebSecurityConfigurerAdapter
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        // TODO replace stub with real implementation
         auth.inMemoryAuthentication().withUser("admin").password("admin").authorities("USER", "ADMIN");
     }
 }
