@@ -8,6 +8,9 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import com.giffing.wicket.spring.boot.context.scan.WicketSignInPage;
+
+@WicketSignInPage
 public class LoginPage extends BasePage {
 
     private static final long serialVersionUID = 1L;
