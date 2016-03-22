@@ -33,6 +33,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <wicket-bootstrap.version>0.10.6</wicket-bootstrap.version>
+        <wicket.version>7.2.0</wicket.version>
     </properties>
 
     <dependencies>
@@ -83,6 +84,11 @@
             <groupId>de.agilecoders.wicket</groupId>
             <artifactId>wicket-bootstrap-themes</artifactId>
             <version>${wicket-bootstrap.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-devutils</artifactId>
+            <version>${wicket.version}</version>
         </dependency>
 
         <!-- Testing -->
