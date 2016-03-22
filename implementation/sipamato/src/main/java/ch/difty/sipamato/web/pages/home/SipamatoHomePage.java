@@ -1,10 +1,12 @@
-package ch.difty.sipamato.web;
+package ch.difty.sipamato.web.pages.home;
 
 import java.util.Date;
 
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+
+import ch.difty.sipamato.web.pages.BasePage;
 
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 

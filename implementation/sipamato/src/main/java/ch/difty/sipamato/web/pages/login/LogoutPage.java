@@ -1,9 +1,11 @@
-package ch.difty.sipamato.web;
+package ch.difty.sipamato.web.pages.login;
 
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+
+import ch.difty.sipamato.web.pages.BasePage;
 
 @AuthorizeInstantiation("USER")
 public class LogoutPage extends BasePage {

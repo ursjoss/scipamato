@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web;
+package ch.difty.sipamato.web.pages;
 
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.markup.html.GenericWebPage;
@@ -6,6 +6,9 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import ch.difty.sipamato.web.pages.entry.PaperEntryPage;
+import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
+import ch.difty.sipamato.web.pages.login.LogoutPage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;

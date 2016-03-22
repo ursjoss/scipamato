@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web;
+package ch.difty.sipamato.web.validator;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 

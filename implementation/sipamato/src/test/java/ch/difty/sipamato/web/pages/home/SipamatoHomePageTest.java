@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web;
+package ch.difty.sipamato.web.pages.home;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -16,6 +16,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import ch.difty.sipamato.web.SipamatoApplication;
+import ch.difty.sipamato.web.pages.login.LoginPage;
 
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 

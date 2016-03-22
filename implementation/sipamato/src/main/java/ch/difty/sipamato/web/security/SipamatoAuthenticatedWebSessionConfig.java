@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web;
+package ch.difty.sipamato.web.security;
 
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.springframework.stereotype.Service;

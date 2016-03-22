@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web;
+package ch.difty.sipamato.web.validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

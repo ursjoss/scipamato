@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web;
+package ch.difty.sipamato.web.pages.entry;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
@@ -14,6 +14,8 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.web.pages.BasePage;
+import ch.difty.sipamato.web.validator.AuthorFieldValidator;
 
 @AuthorizeInstantiation("USER")
 public class PaperEntryPage extends BasePage {

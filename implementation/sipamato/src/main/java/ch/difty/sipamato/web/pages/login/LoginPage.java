@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web;
+package ch.difty.sipamato.web.pages.login;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -7,6 +7,9 @@ import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+
+import ch.difty.sipamato.web.pages.BasePage;
+import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 
 import com.giffing.wicket.spring.boot.context.scan.WicketSignInPage;
 

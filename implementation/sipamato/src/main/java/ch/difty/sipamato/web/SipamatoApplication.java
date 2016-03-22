@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
+
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication;
 
 @SpringBootApplication
