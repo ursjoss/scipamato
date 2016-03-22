@@ -14,17 +14,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SipamatoApplication.class)
 @WebAppConfiguration
-@DirtiesContext
 public class SipamatoHomePageTest {
 
     private static final String USERNAME = "admin";
@@ -47,17 +44,16 @@ public class SipamatoHomePageTest {
                 return new TestingAuthenticationToken(USERNAME, PASSWORD, "USER", "ADMIN");
             }
         });
-        ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock);
+        application.setApplicationContext(applicationContextMock);
         tester = new WicketTester(application);
         login(USERNAME, PASSWORD);
-        tester = new WicketTester(application);
     }
 
     private void login(String username, String password) {
         SecureWebSession session = (SecureWebSession) tester.getSession();
         session.signOut();
         tester.startPage(LoginPage.class);
-        FormTester formTester = tester.newFormTester("loginForm");
+        FormTester formTester = tester.newFormTester("form");
         formTester.setValue("username", username);
         formTester.setValue("password", password);
         formTester.submit();
