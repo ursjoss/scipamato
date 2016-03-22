@@ -1,4 +1,4 @@
-package ch.difty.sipamato;
+package ch.difty.sipamato.entity;
 
 import java.io.Serializable;
 

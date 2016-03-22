@@ -1,4 +1,4 @@
-package ch.difty.sipamato;
+package ch.difty.sipamato.web;
 
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.beans.BeansException;

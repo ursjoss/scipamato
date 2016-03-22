@@ -1,4 +1,4 @@
-package ch.difty.sipamato;
+package ch.difty.sipamato.web;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

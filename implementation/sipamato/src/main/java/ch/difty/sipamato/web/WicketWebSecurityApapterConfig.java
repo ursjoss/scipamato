@@ -1,4 +1,4 @@
-package ch.difty.sipamato;
+package ch.difty.sipamato.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

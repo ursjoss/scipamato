@@ -1,4 +1,4 @@
-package ch.difty.sipamato;
+package ch.difty.sipamato.web;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 

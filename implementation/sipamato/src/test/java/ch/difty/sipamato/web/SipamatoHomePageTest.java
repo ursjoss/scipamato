@@ -1,4 +1,4 @@
-package ch.difty.sipamato;
+package ch.difty.sipamato.web;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.protocol.http.WebApplication;

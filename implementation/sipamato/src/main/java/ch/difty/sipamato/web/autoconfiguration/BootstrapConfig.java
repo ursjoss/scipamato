@@ -1,4 +1,4 @@
-package ch.difty.sipamato.autoconfiguration;
+package ch.difty.sipamato.web.autoconfiguration;
 
 import org.apache.wicket.protocol.http.WebApplication;
 import org.springframework.beans.factory.annotation.Autowired;

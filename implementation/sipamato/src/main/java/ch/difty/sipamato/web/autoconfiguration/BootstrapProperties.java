@@ -1,4 +1,4 @@
-package ch.difty.sipamato.autoconfiguration;
+package ch.difty.sipamato.web.autoconfiguration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
