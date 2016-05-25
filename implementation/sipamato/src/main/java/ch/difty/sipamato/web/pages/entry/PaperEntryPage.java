@@ -1,8 +1,11 @@
 package ch.difty.sipamato.web.pages.entry;
 
+import java.util.Optional;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -15,7 +18,6 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.web.pages.BasePage;
-import ch.difty.sipamato.web.validator.AuthorFieldValidator;
 
 @AuthorizeInstantiation("USER")
 public class PaperEntryPage extends BasePage {
@@ -42,8 +44,7 @@ public class PaperEntryPage extends BasePage {
         add(form);
 
         TextField<String> authorField = new RequiredTextField<String>(Paper.AUTHOR);
-        authorField.add(AuthorFieldValidator.getInstance());
-        addFieldAndLabel(authorField);
+        addFieldAndLabel(authorField, new PropertyValidator<String>());
 
         TextField<String> firstAuthorField = new TextField<String>(Paper.FIRST_AUTHOR);
         firstAuthorField.setEnabled(false);
@@ -59,16 +60,28 @@ public class PaperEntryPage extends BasePage {
             }
         });
 
-        addFieldAndLabel(new RequiredTextField<String>(Paper.TITLE));
+        addFieldAndLabel(new RequiredTextField<String>(Paper.TITLE), new PropertyValidator<String>());
+        authorField.add(new PropertyValidator<String>());
         addFieldAndLabel(new TextField<String>(Paper.LOCATION));
     }
 
     private void addFieldAndLabel(FormComponent<String> field) {
+        addFieldAndLabel(field, Optional.empty());
+    }
+
+    private void addFieldAndLabel(FormComponent<String> field, PropertyValidator<?> pv) {
+        addFieldAndLabel(field, Optional.ofNullable(pv));
+    }
+
+    private void addFieldAndLabel(FormComponent<String> field, Optional<PropertyValidator<?>> pv) {
         String id = field.getId();
         StringResourceModel labelModel = new StringResourceModel(id + ".label", this, null);
         Label label = new Label(id + "Label", labelModel);
         field.setLabel(labelModel);
         form.add(label);
         form.add(field);
+        if (pv.isPresent()) {
+            field.add(pv.get());
+        }
     }
 }
