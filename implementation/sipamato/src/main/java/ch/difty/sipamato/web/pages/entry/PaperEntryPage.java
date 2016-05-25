@@ -9,7 +9,7 @@ import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
@@ -43,7 +43,7 @@ public class PaperEntryPage extends BasePage {
         };
         add(form);
 
-        TextField<String> authorField = new RequiredTextField<String>(Paper.AUTHOR);
+        TextArea<String> authorField = new TextArea<String>(Paper.AUTHOR);
         addFieldAndLabel(authorField, new PropertyValidator<String>());
 
         TextField<String> firstAuthorField = new TextField<String>(Paper.FIRST_AUTHOR);
@@ -60,8 +60,7 @@ public class PaperEntryPage extends BasePage {
             }
         });
 
-        addFieldAndLabel(new RequiredTextField<String>(Paper.TITLE), new PropertyValidator<String>());
-        authorField.add(new PropertyValidator<String>());
+        addFieldAndLabel(new TextArea<String>(Paper.TITLE), new PropertyValidator<String>());
         addFieldAndLabel(new TextField<String>(Paper.LOCATION));
     }
 

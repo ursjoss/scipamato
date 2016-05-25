@@ -3,11 +3,39 @@
 <body>
     <wicket:extend>
         <form wicket:id="form">
-            <span wicket:id="authorLabel"></span> <input wicket:id="author"></input>
-            <span wicket:id="firstAuthorLabel"></span><input wicket:id="firstAuthor"></input>
-            <span wicket:id="titleLabel"></span> <input wicket:id="title"></input>
-            <span wicket:id="locationLabel"></span> <input wicket:id="location"></input>
-            <input type="submit" value="submit"></input>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-10">
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <div wicket:id="authorLabel"></div>
+                                <textarea wicket:id="author" rows="2" cols="80" class="form-control"></textarea>
+                            </div>
+                            <div class="col-lg-2">
+                                <div wicket:id="firstAuthorLabel"></div>
+                                <input wicket:id="firstAuthor" class="form-control"></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-10">
+                        <div wicket:id="titleLabel"></div>
+                        <textarea wicket:id="title" rows="2" cols="100" class="form-control"></textarea>
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-10">
+                        <div wicket:id="locationLabel"></div>
+                        <input wicket:id="location" class="form-control"></input>
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="submit" value="submit"></input>
+                    </div>
+                </div>
+            </div>
         </form>
     </wicket:extend>
 </body>
