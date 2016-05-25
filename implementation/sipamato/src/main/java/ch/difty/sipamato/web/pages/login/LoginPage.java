@@ -8,10 +8,12 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import com.giffing.wicket.spring.boot.context.scan.WicketSignInPage;
+
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
-
-import com.giffing.wicket.spring.boot.context.scan.WicketSignInPage;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 
 @WicketSignInPage
 public class LoginPage extends BasePage {
@@ -44,10 +46,12 @@ public class LoginPage extends BasePage {
             super(id);
             setDefaultModel(new CompoundPropertyModel<>(this));
 
+            add(new Label("header", new ResourceModel("header.label", "h")));
             add(new Label("usernameLabel", new ResourceModel("username.label", "un")));
             add(new RequiredTextField<String>("username"));
             add(new Label("passwordLabel", new ResourceModel("password.label", "pw")));
             add(new PasswordTextField("password"));
+            add(new BootstrapButton("signin", new ResourceModel("signin.value", "si"), Buttons.Type.Default));
         }
 
         @Override
