@@ -1,11 +1,9 @@
 package ch.difty.sipamato.entity;
 
-import java.io.Serializable;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-public class Paper implements Serializable {
+public class Paper extends SipamatoEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -14,6 +12,7 @@ public class Paper implements Serializable {
     public static final String TITLE = "title";
     public static final String LOCATION = "location";
 
+    @NotNull
     @Pattern(regexp = "^\\w+(\\s\\w+){0,}(,\\s\\w+(\\s\\w+){0,}){0,}\\.$", message = "{paper.invalidAuthor}")
     private String author;
 
@@ -52,7 +51,7 @@ public class Paper implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("Paper [author=");
         builder.append(author);
         builder.append(", title=");

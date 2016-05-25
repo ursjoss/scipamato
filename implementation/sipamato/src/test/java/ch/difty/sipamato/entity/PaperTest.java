@@ -2,31 +2,16 @@ package ch.difty.sipamato.entity;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-import java.util.Set;
-
 import javax.validation.ConstraintViolation;
 
-import org.hibernate.validator.HibernateValidator;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-public class PaperTest {
+public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     private static final String VALID_AUTHOR = "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.";
     private static final String VALID_TITLE = "Some non-null title";
 
     private final Paper p = new Paper();
-
-    private LocalValidatorFactoryBean validatorFactoryBean;
-    private Set<ConstraintViolation<Paper>> violations;
-
-    @Before
-    public void setUp() {
-        validatorFactoryBean = new LocalValidatorFactoryBean();
-        validatorFactoryBean.setProviderClass(HibernateValidator.class);
-        validatorFactoryBean.afterPropertiesSet();
-    }
 
     @Test
     public void gettingFirstAuthor() {
@@ -44,10 +29,10 @@ public class PaperTest {
         p.setAuthor(VALID_AUTHOR);
         assertThat(p.getTitle()).isNull();
 
-        violations = validatorFactoryBean.validate(p);
+        validate(p);
 
-        assertThat(violations).isNotEmpty().hasSize(1);
-        ConstraintViolation<Paper> violation = violations.iterator().next();
+        assertThat(getViolations()).isNotEmpty().hasSize(1);
+        ConstraintViolation<Paper> violation = getViolations().iterator().next();
         assertThat(violation.getMessageTemplate()).isEqualTo("{javax.validation.constraints.NotNull.message}");
         assertThat(violation.getInvalidValue()).isNull();
         assertThat(violation.getPropertyPath().toString()).isEqualTo(Paper.TITLE);
@@ -55,17 +40,17 @@ public class PaperTest {
 
     private void verifySuccessfulAuthorValidation(final String invalidValue) {
         p.setTitle(VALID_TITLE);
-        violations = validatorFactoryBean.validate(p);
-        assertThat(violations).isEmpty();
+        validate(p);
+        assertThat(getViolations()).isEmpty();
     }
 
     private void verifyFailedAuthorValidation(final String invalidValue) {
         p.setTitle(VALID_TITLE);
 
-        violations = validatorFactoryBean.validate(p);
+        validate(p);
 
-        assertThat(violations).isNotEmpty().hasSize(1);
-        ConstraintViolation<Paper> violation = violations.iterator().next();
+        assertThat(getViolations()).isNotEmpty().hasSize(1);
+        ConstraintViolation<Paper> violation = getViolations().iterator().next();
         assertThat(violation.getMessageTemplate()).isEqualTo("{paper.invalidAuthor}");
         assertThat(violation.getInvalidValue()).isEqualTo(invalidValue);
         assertThat(violation.getPropertyPath().toString()).isEqualTo(Paper.AUTHOR);
