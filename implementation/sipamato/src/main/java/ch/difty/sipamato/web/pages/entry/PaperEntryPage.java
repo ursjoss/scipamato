@@ -42,7 +42,7 @@ public class PaperEntryPage extends BasePage {
         add(form);
 
         TextField<String> authorField = new RequiredTextField<String>(Paper.AUTHOR);
-        authorField.add(new AuthorFieldValidator());
+        authorField.add(AuthorFieldValidator.getInstance());
         addFieldAndLabel(authorField);
 
         TextField<String> firstAuthorField = new TextField<String>(Paper.FIRST_AUTHOR);

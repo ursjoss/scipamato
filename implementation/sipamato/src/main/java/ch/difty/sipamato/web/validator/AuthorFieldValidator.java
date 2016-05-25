@@ -1,13 +1,8 @@
 package ch.difty.sipamato.web.validator;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.wicket.validation.IValidatable;
-import org.apache.wicket.validation.IValidator;
-import org.apache.wicket.validation.ValidationError;
-
-import com.google.common.base.Strings;
+import org.apache.wicket.validation.validator.PatternValidator;
 
 /**
  * Validates author strings, which are expected to be similar to this:<p/>
@@ -16,19 +11,17 @@ import com.google.common.base.Strings;
  *
  * @author u.joss
  */
-public class AuthorFieldValidator implements IValidator<String> {
+public class AuthorFieldValidator extends PatternValidator {
     private static final long serialVersionUID = 1L;
 
-    private final Pattern PATTERN = Pattern.compile("^\\w+(\\s\\w+){0,}(,\\s\\w+(\\s\\w+){0,}){0,}\\.$");
+    private static final AuthorFieldValidator INSTANCE = new AuthorFieldValidator();
 
-    @Override
-    public void validate(final IValidatable<String> validatable) {
-        final String candidate = Strings.isNullOrEmpty(validatable.getValue()) ? "" : validatable.getValue();
-        final Matcher m = PATTERN.matcher(candidate);
-        if (!m.matches()) {
-            final ValidationError error = new ValidationError(this);
-            validatable.error(error);
-        }
+    public static AuthorFieldValidator getInstance() {
+        return INSTANCE;
+    }
+
+    protected AuthorFieldValidator() {
+        super("^\\w+(\\s\\w+){0,}(,\\s\\w+(\\s\\w+){0,}){0,}\\.$", Pattern.CASE_INSENSITIVE);
     }
 
 }

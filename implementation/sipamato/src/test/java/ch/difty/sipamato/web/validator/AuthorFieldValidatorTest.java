@@ -1,15 +1,23 @@
 package ch.difty.sipamato.web.validator;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 import org.apache.wicket.validation.Validatable;
 import org.junit.Test;
 
 public class AuthorFieldValidatorTest {
 
+    private final AuthorFieldValidator validator = AuthorFieldValidator.getInstance();
+
     @Test
     public void degenerate() {
-        assertValidationFailure(null);
+        try {
+            validator.validate(null);
+            fail("expected to throw NPE");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullPointerException.class);
+        }
         assertValidationFailure("");
     }
 
@@ -46,7 +54,6 @@ public class AuthorFieldValidatorTest {
     }
 
     private void assertValidation(final String candidate, final boolean success) {
-        AuthorFieldValidator validator = new AuthorFieldValidator();
         Validatable<String> validatable = new Validatable<>(candidate);
         validator.validate(validatable);
         assertThat(validatable.isValid()).isEqualTo(success);
