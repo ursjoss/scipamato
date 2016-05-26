@@ -37,6 +37,12 @@ public class PaperEntryPageTest extends AbstractPageTest<PaperEntryPage> {
         assertTabPanel(0, b);
         assertTabPanel(1, b);
         assertTabPanel(2, b);
+
+        b = "form:tabs:panel:tab1Form";
+        getTester().assertComponent(b, Form.class);
+        assertLabeledTextArea(b, Paper.GOALS);
+        assertLabeledTextArea(b, Paper.POPULATION);
+        assertLabeledTextArea(b, Paper.METHODS);
     }
 
     private void assertTabPanel(int i, String b) {
