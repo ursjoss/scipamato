@@ -20,12 +20,14 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         super.setUp();
 
         p.setId(1);
-        p.setPmid(1000);
         p.setDoi(VALID_DOI);
+        p.setPmid(1000);
         p.setAuthors(VALID_AUTHORS);
         p.setFirstAuthor(NON_NULL_STRING);
         p.setTitle(NON_NULL_STRING);
+        p.setLocation(NON_NULL_STRING);
         p.setPublicationYear(2016);
+        p.setGoals(NON_NULL_STRING);
     }
 
     private void verifySuccessfulValidation() {
@@ -59,7 +61,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withBlankAuthor() {
+    public void validatingPaper_withBlankAuthor_fails() {
         final String invalidValue = "";
         p.setAuthors(invalidValue);
         verifyFailedAuthorValidation(invalidValue);
@@ -112,7 +114,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withNullFirstAuthor() {
+    public void validatingPaper_withNullFirstAuthor_fails() {
         p.setFirstAuthor(null);
         validateAndAssertFailure(Paper.FIRST_AUTHOR, null, "{javax.validation.constraints.NotNull.message}");
     }
@@ -127,6 +129,12 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void validatingPaper_withAuthorWithTickInName_succeeds() {
         p.setAuthors("d'Alpha G.");
         verifySuccessfulValidation();
+    }
+
+    @Test
+    public void validatingPaper_withNullLocation_fails() {
+        p.setLocation(null);
+        validateAndAssertFailure(Paper.LOCATION, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
@@ -164,4 +172,11 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         validate(p);
         validateAndAssertFailure(Paper.DOI, invalidDoi, "{paper.invalidDOI}");
     }
+
+    @Test
+    public void validatingPaper_withNullGoals_fails() {
+        p.setGoals(null);
+        validateAndAssertFailure(Paper.GOALS, null, "{javax.validation.constraints.NotNull.message}");
+    }
+
 }

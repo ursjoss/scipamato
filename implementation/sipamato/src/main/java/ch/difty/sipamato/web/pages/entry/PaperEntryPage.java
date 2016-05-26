@@ -19,6 +19,7 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -64,7 +65,7 @@ public class PaperEntryPage extends BasePage {
         addFieldAndLabel(new TextField<Integer>(Paper.ID), new PropertyValidator<Integer>());
         addFieldAndLabel(new TextField<Integer>(Paper.PUBL_YEAR), new PropertyValidator<Integer>());
         addFieldAndLabel(new TextField<Integer>(Paper.PMID));
-        addFieldAndLabel(new TextField<String>(Paper.DOI), new PropertyValidator<Integer>());
+        addFieldAndLabel(new TextField<String>(Paper.DOI), new PropertyValidator<String>());
     }
 
     private void makeAndAddTabPanel(String tabId) {
@@ -74,7 +75,7 @@ public class PaperEntryPage extends BasePage {
 
             @Override
             public Panel getPanel(String panelId) {
-                return new TabPanel1(panelId);
+                return new TabPanel1(panelId, form.getModel());
             }
         });
         tabs.add(new AbstractTab(new StringResourceModel("tab2" + LABEL_RECOURCE_TAG, this, null)) {
@@ -179,10 +180,33 @@ public class PaperEntryPage extends BasePage {
     private static class TabPanel1 extends Panel {
         private static final long serialVersionUID = 1L;
 
-        public TabPanel1(String id) {
-            super(id);
+        public TabPanel1(String id, IModel<Paper> model) {
+            super(id, model);
         }
+
+        @Override
+        protected void onInitialize() {
+            super.onInitialize();
+
+            Form<Paper> form = new Form<Paper>("tab1Form");
+            add(form);
+
+            makeAndAddTo(form, Paper.GOALS);
+            makeAndAddTo(form, Paper.POPULATION);
+            makeAndAddTo(form, Paper.METHODS);
+        }
+
+        private void makeAndAddTo(Form<Paper> form, String id) {
+            TextArea<String> field = new TextArea<String>(id);
+            field.add(new PropertyValidator<String>());
+            StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
+            form.add(new Label(id + LABEL_TAG, labelModel));
+            field.setLabel(labelModel);
+            form.add(field);
+        }
+
     };
+
 
     private static class TabPanel2 extends Panel {
         private static final long serialVersionUID = 1L;

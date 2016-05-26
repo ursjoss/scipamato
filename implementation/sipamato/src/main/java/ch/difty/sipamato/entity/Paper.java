@@ -20,10 +20,11 @@ public class Paper extends SipamatoEntity {
     public static final String LOCATION = "location";
     public static final String PUBL_YEAR = "publicationYear";
 
-    private Integer id;
+    public static final String GOALS = "goals";
+    public static final String POPULATION = "population";
+    public static final String METHODS = "methods";
 
-    // TODO can it be null? Range validation?
-    private Integer pmid;
+    private Integer id;
 
     /*
      * Digital Object Identifier (see http://www.doi.org
@@ -36,8 +37,10 @@ public class Paper extends SipamatoEntity {
      *
      * /^10.\d{4,9}/[-._;()/:A-Z0-9]+$/i
      */
-    @Pattern(regexp = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$", flags = {Flag.CASE_INSENSITIVE}, message = "{paper.invalidDOI}")
+    @Pattern(regexp = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$", flags = { Flag.CASE_INSENSITIVE }, message = "{paper.invalidDOI}")
     private String doi;
+
+    private Integer pmid;
 
     @NotNull
     @Pattern(regexp = "^[\\w-']+(\\s[\\w-']+){0,}(,\\s[\\w-']+(\\s[\\w-']+){0,}){0,}\\.$", message = "{paper.invalidAuthor}")
@@ -46,15 +49,18 @@ public class Paper extends SipamatoEntity {
     @NotNull
     private String firstAuthor;
     private boolean firstAuthorOverridden;
-
     @NotNull
     private String title;
-
-    // TODO validation non null?
+    @NotNull
     private String location;
 
     @Range(min = 1500, max = 2100, message = "{paper.invalidPublicationYear}")
     private int publicationYear;
+
+    @NotNull
+    private String goals;
+    private String population;
+    private String methods;
 
     public Integer getId() {
         return id;
@@ -64,20 +70,20 @@ public class Paper extends SipamatoEntity {
         this.id = id;
     }
 
-    public Integer getPmid() {
-        return pmid;
-    }
-
-    public void setPmid(Integer pmid) {
-        this.pmid = pmid;
-    }
-
     public String getDoi() {
         return doi;
     }
 
     public void setDoi(String doi) {
         this.doi = doi;
+    }
+
+    public Integer getPmid() {
+        return pmid;
+    }
+
+    public void setPmid(Integer pmid) {
+        this.pmid = pmid;
     }
 
     public String getAuthors() {
@@ -128,15 +134,39 @@ public class Paper extends SipamatoEntity {
         this.publicationYear = publicationYear;
     }
 
+    public String getGoals() {
+        return goals;
+    }
+
+    public void setGoals(String goals) {
+        this.goals = goals;
+    }
+
+    public String getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(String population) {
+        this.population = population;
+    }
+
+    public String getMethods() {
+        return methods;
+    }
+
+    public void setMethods(String methods) {
+        this.methods = methods;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append("Paper [id=");
         sb.append(id);
-        sb.append(", pmid=");
-        sb.append(pmid);
         sb.append(", doi=");
         sb.append(doi);
+        sb.append(", pmid=");
+        sb.append(pmid);
         sb.append(", authors=");
         sb.append(authors);
         sb.append(", title=");
