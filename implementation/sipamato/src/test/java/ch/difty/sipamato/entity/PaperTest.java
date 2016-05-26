@@ -20,11 +20,12 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         super.setUp();
 
         p.setId(1);
-        p.setPmid(1000);
         p.setDoi(VALID_DOI);
+        p.setPmid(1000);
         p.setAuthors(VALID_AUTHORS);
         p.setFirstAuthor(NON_NULL_STRING);
         p.setTitle(NON_NULL_STRING);
+        p.setLocation(NON_NULL_STRING);
         p.setPublicationYear(2016);
         p.setGoals(NON_NULL_STRING);
     }
@@ -128,6 +129,12 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void validatingPaper_withAuthorWithTickInName_succeeds() {
         p.setAuthors("d'Alpha G.");
         verifySuccessfulValidation();
+    }
+
+    @Test
+    public void validatingPaper_withNullLocation_fails() {
+        p.setLocation(null);
+        validateAndAssertFailure(Paper.LOCATION, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
