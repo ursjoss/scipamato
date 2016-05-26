@@ -129,12 +129,9 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withAuthorWithDashInName_shouldSucceed() {
-        final String invalidValue = "Alpha-Beta G.";
-        p.setAuthors(invalidValue);
-        verifyFailedAuthorValidation(invalidValue);
-        // TODO this should actually succeed
-//        verifySuccessfulAuthorValidation();
+    public void validatingPaper_withAuthorWithDashInName_succeeds() {
+        p.setAuthors("Alpha-Beta G.");
+        verifySuccessfulAuthorValidation();
     }
 
 }
