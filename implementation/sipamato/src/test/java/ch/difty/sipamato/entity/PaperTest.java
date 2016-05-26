@@ -17,40 +17,40 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Before
     public void setUp() {
         super.setUp();
+
         p.setAuthors(VALID_AUTHORS);
         p.setFirstAuthor(NON_NULL_STRING);
         p.setTitle(NON_NULL_STRING);
     }
 
-    @Test
-    public void validatingPaper_withNullTitle() {
-        p.setTitle(null);
-
-        validate(p);
-
-        assertThat(getViolations()).isNotEmpty().hasSize(1);
-        ConstraintViolation<Paper> violation = getViolations().iterator().next();
-        assertThat(violation.getMessageTemplate()).isEqualTo("{javax.validation.constraints.NotNull.message}");
-        assertThat(violation.getInvalidValue()).isNull();
-        assertThat(violation.getPropertyPath().toString()).isEqualTo(Paper.TITLE);
-    }
-
-    private void verifySuccessfulAuthorValidation() {
+    private void verifySuccessfulValidation() {
         validate(p);
         assertThat(getViolations()).isEmpty();
     }
 
-    private void verifyFailedAuthorValidation(final String invalidValue) {
-        p.setTitle(NON_NULL_STRING);
-        p.setFirstAuthor(NON_NULL_STRING);
+    @Test
+    public void validatingPaper_withMultipleAuthorsWithFirstname_withPeriod_succeeds() {
+        verifySuccessfulValidation();
+    }
 
+    @Test
+    public void validatingPaper_withNullTitle_fails() {
+        p.setTitle(null);
+        validateAndAssertFailure(Paper.TITLE, null, "{javax.validation.constraints.NotNull.message}");
+    }
+
+    private void validateAndAssertFailure(final String field, final Object invalidValue, final String msg) {
         validate(p);
 
         assertThat(getViolations()).isNotEmpty().hasSize(1);
         ConstraintViolation<Paper> violation = getViolations().iterator().next();
-        assertThat(violation.getMessageTemplate()).isEqualTo("{paper.invalidAuthor}");
+        assertThat(violation.getMessageTemplate()).isEqualTo(msg);
         assertThat(violation.getInvalidValue()).isEqualTo(invalidValue);
-        assertThat(violation.getPropertyPath().toString()).isEqualTo(Paper.AUTHORS);
+        assertThat(violation.getPropertyPath().toString()).isEqualTo(field);
+    }
+
+    private void verifyFailedAuthorValidation(final String invalidValue) {
+        validateAndAssertFailure(Paper.AUTHORS, invalidValue, "{paper.invalidAuthor}");
     }
 
     @Test
@@ -64,7 +64,6 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void validatingPaper_withSingleAuthorWithoutFirstname_withoutPeriod_fails() {
         final String invalidValue = "Turner";
         p.setAuthors(invalidValue);
-        p.setFirstAuthor(NON_NULL_STRING);
         verifyFailedAuthorValidation(invalidValue);
     }
 
@@ -72,21 +71,19 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void validatingPaper_withSingleAuthorWithoutFirstname_withPeriod_succeeds() {
         final String validValue = "Turner.";
         p.setAuthors(validValue);
-        p.setFirstAuthor(NON_NULL_STRING);
-        verifySuccessfulAuthorValidation();
+        verifySuccessfulValidation();
     }
 
     @Test
     public void validatingPaper_withSingleAuthorWithFirstname_withoutPeriod_fails() {
         p.setAuthors("Turner MC");
-        p.setFirstAuthor(NON_NULL_STRING);
         verifyFailedAuthorValidation("Turner MC");
     }
 
     @Test
     public void validatingPaper_withSingleAuthorWithFirstname_withPeriod_succeeds() {
         p.setAuthors("Turner MC.");
-        verifySuccessfulAuthorValidation();
+        verifySuccessfulValidation();
     }
 
     @Test
@@ -99,7 +96,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Test
     public void validatingPaper_withTwoAuthorsWithFirstname_withPeriod_succeeds() {
         p.setAuthors("Turner MC, Cohen A.");
-        verifySuccessfulAuthorValidation();
+        verifySuccessfulValidation();
     }
 
     @Test
@@ -110,34 +107,21 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withMultipleAuthorsWithFirstname_withPeriod_succeeds() {
-        p.setAuthors(VALID_AUTHORS);
-        verifySuccessfulAuthorValidation();
-    }
-
-    @Test
     public void validatingPaper_withNullFirstAuthor() {
         p.setFirstAuthor(null);
-
-        validate(p);
-
-        assertThat(getViolations()).isNotEmpty().hasSize(1);
-        ConstraintViolation<Paper> violation = getViolations().iterator().next();
-        assertThat(violation.getMessageTemplate()).isEqualTo("{javax.validation.constraints.NotNull.message}");
-        assertThat(violation.getInvalidValue()).isNull();
-        assertThat(violation.getPropertyPath().toString()).isEqualTo(Paper.FIRST_AUTHOR);
+        validateAndAssertFailure(Paper.FIRST_AUTHOR, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingPaper_withAuthorWithDashInName_succeeds() {
         p.setAuthors("Alpha-Beta G.");
-        verifySuccessfulAuthorValidation();
+        verifySuccessfulValidation();
     }
 
     @Test
     public void validatingPaper_withAuthorWithTickInName_succeeds() {
         p.setAuthors("d'Alpha G.");
-        verifySuccessfulAuthorValidation();
+        verifySuccessfulValidation();
     }
 
 }
