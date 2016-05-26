@@ -14,7 +14,7 @@ public class Paper extends SipamatoEntity {
     public static final String LOCATION = "location";
 
     @NotNull
-    @Pattern(regexp = "^[\\w-]+(\\s[\\w-]+){0,}(,\\s[\\w-]+(\\s[\\w-]+){0,}){0,}\\.$", message = "{paper.invalidAuthor}")
+    @Pattern(regexp = "^[\\w-']+(\\s[\\w-']+){0,}(,\\s[\\w-']+(\\s[\\w-']+){0,}){0,}\\.$", message = "{paper.invalidAuthor}")
     private String authors;
     @NotNull
     private String firstAuthor;

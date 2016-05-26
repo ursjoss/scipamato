@@ -134,4 +134,10 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         verifySuccessfulAuthorValidation();
     }
 
+    @Test
+    public void validatingPaper_withAuthorWithTickInName_succeeds() {
+        p.setAuthors("d'Alpha G.");
+        verifySuccessfulAuthorValidation();
+    }
+
 }
