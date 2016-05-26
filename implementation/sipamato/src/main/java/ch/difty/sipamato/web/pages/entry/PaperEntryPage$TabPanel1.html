@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
-<br/>
-This is tab-panel 1
+    <form wicket:id="tab1Form">
+         <div class="container-fluid">
+             <div class="row">
+                 <div class="col-lg-12">
+                     <div wicket:id="goalsLabel"></div>
+                     <textarea wicket:id="goals" rows="4" cols="80" class="form-control"></textarea>
+                     <div wicket:id="populationLabel"></div>
+                     <textarea wicket:id="population" rows="5" cols="80" class="form-control"></textarea>
+                     <div wicket:id="methodsLabel"></div>
+                     <textarea wicket:id="methods" rows="10" cols="80" class="form-control"></textarea>
+                 </div>
+             </div>
+         </div>
+    </form>
 </wicket:panel>
 </html>
