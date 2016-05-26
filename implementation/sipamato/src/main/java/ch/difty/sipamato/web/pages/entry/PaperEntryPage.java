@@ -1,5 +1,6 @@
 package ch.difty.sipamato.web.pages.entry;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -35,7 +36,7 @@ public class PaperEntryPage extends BasePage {
     protected void onInitialize() {
         super.onInitialize();
 
-        form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(Model.of(new Paper()))) {
+        form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(getNewDefaultModel())) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -48,6 +49,18 @@ public class PaperEntryPage extends BasePage {
         makeAndAddAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
         addFieldAndLabel(new TextArea<String>(Paper.TITLE), new PropertyValidator<String>());
         addFieldAndLabel(new TextField<String>(Paper.LOCATION));
+
+        addFieldAndLabel(new TextField<Integer>(Paper.ID), new PropertyValidator<Integer>());
+        addFieldAndLabel(new TextField<Integer>(Paper.PUBL_YEAR), new PropertyValidator<Integer>());
+        addFieldAndLabel(new TextField<Integer>(Paper.PMID));
+        addFieldAndLabel(new TextField<String>(Paper.DOI));
+
+    }
+
+    private Model<Paper> getNewDefaultModel() {
+        final Paper p = new Paper();
+        p.setPublicationYear(LocalDate.now().getYear());
+        return Model.of(p);
     }
 
     /*
@@ -97,15 +110,15 @@ public class PaperEntryPage extends BasePage {
         };
     }
 
-    private void addFieldAndLabel(FormComponent<String> field) {
+    private void addFieldAndLabel(FormComponent<?> field) {
         addFieldAndLabel(field, Optional.empty());
     }
 
-    private void addFieldAndLabel(FormComponent<String> field, PropertyValidator<?> pv) {
+    private void addFieldAndLabel(FormComponent<?> field, PropertyValidator<?> pv) {
         addFieldAndLabel(field, Optional.ofNullable(pv));
     }
 
-    private void addFieldAndLabel(FormComponent<String> field, Optional<PropertyValidator<?>> pv) {
+    private void addFieldAndLabel(FormComponent<?> field, Optional<PropertyValidator<?>> pv) {
         String id = field.getId();
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
         form.add(new Label(id + LABEL_TAG, labelModel));

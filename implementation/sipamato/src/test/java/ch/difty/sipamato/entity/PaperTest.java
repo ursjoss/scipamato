@@ -18,9 +18,13 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void setUp() {
         super.setUp();
 
+        p.setId(1);
+        p.setPmid(1000);
+        p.setDigitalObjectIdentifier("10.1093/aje/kwu275");
         p.setAuthors(VALID_AUTHORS);
         p.setFirstAuthor(NON_NULL_STRING);
         p.setTitle(NON_NULL_STRING);
+        p.setPublicationYear(2016);
     }
 
     private void verifySuccessfulValidation() {
@@ -122,6 +126,34 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void validatingPaper_withAuthorWithTickInName_succeeds() {
         p.setAuthors("d'Alpha G.");
         verifySuccessfulValidation();
+    }
+
+    @Test
+    public void validatingPaper_withTooSmallPublicationYear_fails() {
+        final int tooEarly = 1499;
+        p.setPublicationYear(tooEarly);
+        validate(p);
+        validateAndAssertFailure(Paper.PUBL_YEAR, tooEarly, "{paper.invalidPublicationYear}");
+    }
+
+    @Test
+    public void validatingPaper_withOkPublicationYear_succeeds() {
+        p.setPublicationYear(1500);
+        verifySuccessfulValidation();
+
+        p.setPublicationYear(2016);
+        verifySuccessfulValidation();
+
+        p.setPublicationYear(2100);
+        verifySuccessfulValidation();
+    }
+
+    @Test
+    public void validatingPaper_withTooLargePublicationYear_fails() {
+        final int tooLate = 2101;
+        p.setPublicationYear(tooLate);
+        validate(p);
+        validateAndAssertFailure(Paper.PUBL_YEAR, tooLate, "{paper.invalidPublicationYear}");
     }
 
 }

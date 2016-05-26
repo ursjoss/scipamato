@@ -22,5 +22,10 @@ public class PaperEntryPageTest extends AbstractPageTest<PaperEntryPage> {
         assertLabeledCheckBox(b, Paper.FIRST_AUTHOR_OVERRIDDEN);
         assertLabeledTextArea(b, Paper.TITLE);
         assertLabeledTextField(b, Paper.LOCATION);
+
+        assertLabeledTextField(b, Paper.ID);
+        assertLabeledTextField(b, Paper.PUBL_YEAR);
+        assertLabeledTextField(b, Paper.PMID);
+        assertLabeledTextField(b, Paper.DOI);
     }
 }
