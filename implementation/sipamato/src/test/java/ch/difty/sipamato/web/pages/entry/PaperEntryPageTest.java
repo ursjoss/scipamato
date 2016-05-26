@@ -17,7 +17,7 @@ public class PaperEntryPageTest extends AbstractPageTest<PaperEntryPage> {
         String b = "form";
         getTester().assertComponent(b, Form.class);
 
-        assertLabeledTextArea(b, Paper.AUTHOR);
+        assertLabeledTextArea(b, Paper.AUTHORS);
         assertLabeledTextField(b, Paper.FIRST_AUTHOR);
         assertLabeledTextArea(b, Paper.TITLE);
         assertLabeledTextField(b, Paper.LOCATION);

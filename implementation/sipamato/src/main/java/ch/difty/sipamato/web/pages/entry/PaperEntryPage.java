@@ -17,6 +17,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.web.pages.BasePage;
 
 @AuthorizeInstantiation("USER")
@@ -43,19 +44,21 @@ public class PaperEntryPage extends BasePage {
         };
         add(form);
 
-        TextArea<String> authorField = new TextArea<String>(Paper.AUTHOR);
-        addFieldAndLabel(authorField, new PropertyValidator<String>());
+        TextArea<String> authorsField = new TextArea<String>(Paper.AUTHORS);
+        addFieldAndLabel(authorsField, new PropertyValidator<String>());
 
         TextField<String> firstAuthorField = new TextField<String>(Paper.FIRST_AUTHOR);
         firstAuthorField.setEnabled(false);
         firstAuthorField.setOutputMarkupId(true);
         addFieldAndLabel(firstAuthorField);
 
-        authorField.add(new OnChangeAjaxBehavior() {
+        authorsField.add(new OnChangeAjaxBehavior() {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
+                AuthorParser p = new AuthorParser(authorsField.getValue());
+                firstAuthorField.setModelObject(p.getFirstAuthor().orElse(null));
                 target.add(firstAuthorField);
             }
         });

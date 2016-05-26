@@ -7,30 +7,36 @@ public class Paper extends SipamatoEntity {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String AUTHOR = "author";
+    public static final String AUTHORS = "authors";
     public static final String FIRST_AUTHOR = "firstAuthor";
     public static final String TITLE = "title";
     public static final String LOCATION = "location";
 
     @NotNull
     @Pattern(regexp = "^\\w+(\\s\\w+){0,}(,\\s\\w+(\\s\\w+){0,}){0,}\\.$", message = "{paper.invalidAuthor}")
-    private String author;
+    private String authors;
+    @NotNull
+    private String firstAuthor;
 
     @NotNull
     private String title;
 
     private String location;
 
-    public String getAuthor() {
-        return author;
+    public String getAuthors() {
+        return authors;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthors(String authors) {
+        this.authors = authors;
     }
 
     public String getFirstAuthor() {
-        return author == null ? "" : author.split(" ", 2)[0];
+        return firstAuthor;
+    }
+
+    public void setFirstAuthor(String firstAuthor) {
+        this.firstAuthor = firstAuthor;
     }
 
     public String getTitle() {
@@ -52,12 +58,14 @@ public class Paper extends SipamatoEntity {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Paper [author=");
-        builder.append(author);
+        builder.append("Paper [authors=");
+        builder.append(authors);
         builder.append(", title=");
         builder.append(title);
         builder.append(", location=");
         builder.append(location);
+        builder.append(", firstAuthor=");
+        builder.append(firstAuthor);
         builder.append("]");
         return builder.toString();
     }
