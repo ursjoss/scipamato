@@ -20,6 +20,9 @@ public abstract class BasePage extends GenericWebPage<Void> {
 
     private static final long serialVersionUID = 1L;
 
+    protected static final String LABEL_TAG = "Label";
+    protected static final String LABEL_RECOURCE_TAG = ".label";
+
     private NotificationPanel feedbackPanel;
 
     public BasePage(final PageParameters parameters) {

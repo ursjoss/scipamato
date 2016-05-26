@@ -26,11 +26,11 @@ public class PaperEntryPage extends BasePage {
 
     private static final long serialVersionUID = 1L;
 
+    private Form<Paper> form;
+
     public PaperEntryPage(PageParameters parameters) {
         super(parameters);
     }
-
-    private Form<Paper> form;
 
     protected void onInitialize() {
         super.onInitialize();
@@ -50,14 +50,18 @@ public class PaperEntryPage extends BasePage {
         addFieldAndLabel(new TextField<String>(Paper.LOCATION));
     }
 
+    /*
+     * The authors field determines the firstAuthor field, but only unless overridden. Changes in the author field (if not overridden)
+     * or in the override checkbox can have an effect on the firstAuthor field (enabled, content) 
+     */
     private void makeAndAddAuthorComplex(String authorsId, String firstAuthorId, String firstAuthorOverriddenId) {
-        TextArea<String> authorsField = new TextArea<String>(authorsId);
-        addFieldAndLabel(authorsField, new PropertyValidator<String>());
+        TextArea<String> authors = new TextArea<String>(authorsId);
+        addFieldAndLabel(authors, new PropertyValidator<String>());
 
         CheckBox firstAuthorOverridden = new CheckBox(firstAuthorOverriddenId);
         addCheckBoxAndLabel(firstAuthorOverridden);
 
-        TextField<String> firstAuthorField = new TextField<String>(firstAuthorId) {
+        TextField<String> firstAuthor = new TextField<String>(firstAuthorId) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -66,25 +70,28 @@ public class PaperEntryPage extends BasePage {
                 setEnabled(firstAuthorOverridden.getModelObject());
             }
         };
-        firstAuthorField.add(new PropertyValidator<String>());
-        firstAuthorField.setOutputMarkupId(true);
-        addFieldAndLabel(firstAuthorField);
+        firstAuthor.add(new PropertyValidator<String>());
+        firstAuthor.setOutputMarkupId(true);
+        addFieldAndLabel(firstAuthor);
 
-        firstAuthorOverridden.add(makeFirstAuthorChangeBehavior(authorsField, firstAuthorOverridden, firstAuthorField));
-        authorsField.add(makeFirstAuthorChangeBehavior(authorsField, firstAuthorOverridden, firstAuthorField));
+        firstAuthorOverridden.add(makeFirstAuthorChangeBehavior(authors, firstAuthorOverridden, firstAuthor));
+        authors.add(makeFirstAuthorChangeBehavior(authors, firstAuthorOverridden, firstAuthor));
     }
 
-    private OnChangeAjaxBehavior makeFirstAuthorChangeBehavior(TextArea<String> authorsField, CheckBox firstAuthorOverridden, TextField<String> firstAuthorField) {
+    /*
+     * Behavior to parse the authors string and populate the firstAuthor field - but only if not overridden. 
+     */
+    private OnChangeAjaxBehavior makeFirstAuthorChangeBehavior(TextArea<String> authors, CheckBox overridden, TextField<String> firstAuthor) {
         return new OnChangeAjaxBehavior() {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                if (!firstAuthorOverridden.getModelObject()) {
-                    AuthorParser p = new AuthorParser(authorsField.getValue());
-                    firstAuthorField.setModelObject(p.getFirstAuthor().orElse(null));
+                if (!overridden.getModelObject()) {
+                    AuthorParser p = new AuthorParser(authors.getValue());
+                    firstAuthor.setModelObject(p.getFirstAuthor().orElse(null));
                 }
-                target.add(firstAuthorField);
+                target.add(firstAuthor);
             }
         };
     }
@@ -99,9 +106,8 @@ public class PaperEntryPage extends BasePage {
 
     private void addFieldAndLabel(FormComponent<String> field, Optional<PropertyValidator<?>> pv) {
         String id = field.getId();
-        StringResourceModel labelModel = new StringResourceModel(id + ".label", this, null);
-        Label label = new Label(id + "Label", labelModel);
-        form.add(label);
+        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
+        form.add(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
         form.add(field);
         if (pv.isPresent()) {
@@ -111,9 +117,8 @@ public class PaperEntryPage extends BasePage {
 
     private void addCheckBoxAndLabel(CheckBox field) {
         String id = field.getId();
-        StringResourceModel labelModel = new StringResourceModel(id + ".label", this, null);
-        Label label = new Label(id + "Label", labelModel);
-        form.add(label);
+        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
+        form.add(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
         form.add(field);
     }

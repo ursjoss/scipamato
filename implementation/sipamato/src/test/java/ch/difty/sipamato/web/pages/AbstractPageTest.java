@@ -1,6 +1,7 @@
 package ch.difty.sipamato.web.pages;
 
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -109,6 +110,12 @@ public abstract class AbstractPageTest<T extends BasePage> {
         final String bb = b + ":" + id;
         getTester().assertComponent(bb + "Label", Label.class);
         getTester().assertComponent(bb, TextField.class);
+    }
+
+    protected void assertLabeledCheckBox(String b, String id) {
+        final String bb = b + ":" + id;
+        getTester().assertComponent(bb + "Label", Label.class);
+        getTester().assertComponent(bb, CheckBox.class);
     }
 
 }
