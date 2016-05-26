@@ -1,18 +1,24 @@
 package ch.difty.sipamato.web.pages.entry;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.bean.validation.PropertyValidator;
+import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
+import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
+import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
@@ -55,6 +61,32 @@ public class PaperEntryPage extends BasePage {
         addFieldAndLabel(new TextField<Integer>(Paper.PMID));
         addFieldAndLabel(new TextField<String>(Paper.DOI), new PropertyValidator<Integer>());
 
+        List<ITab> tabs = new ArrayList<>();
+        tabs.add(new AbstractTab(new Model<String>("first tab")) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Panel getPanel(String panelId) {
+                return new TabPanel1(panelId);
+            }
+        });
+        tabs.add(new AbstractTab(new Model<String>("second tab")) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Panel getPanel(String panelId) {
+                return new TabPanel2(panelId);
+            }
+        });
+        tabs.add(new AbstractTab(new Model<String>("third tab")) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Panel getPanel(String panelId) {
+                return new TabPanel3(panelId);
+            }
+        });
+        form.add(new AjaxTabbedPanel<ITab>("tabs", tabs));
     }
 
     private Model<Paper> getNewDefaultModel() {
@@ -136,5 +168,29 @@ public class PaperEntryPage extends BasePage {
         field.setLabel(labelModel);
         form.add(field);
     }
+
+    private static class TabPanel1 extends Panel {
+        private static final long serialVersionUID = 1L;
+
+        public TabPanel1(String id) {
+            super(id);
+        }
+    };
+
+    private static class TabPanel2 extends Panel {
+        private static final long serialVersionUID = 1L;
+
+        public TabPanel2(String id) {
+            super(id);
+        }
+    };
+
+    private static class TabPanel3 extends Panel {
+        private static final long serialVersionUID = 1L;
+
+        public TabPanel3(String id) {
+            super(id);
+        }
+    };
 
 }
