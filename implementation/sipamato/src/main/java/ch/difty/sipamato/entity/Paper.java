@@ -9,6 +9,7 @@ public class Paper extends SipamatoEntity {
 
     public static final String AUTHORS = "authors";
     public static final String FIRST_AUTHOR = "firstAuthor";
+    public static final String FIRST_AUTHOR_OVERRIDDEN = "firstAuthorOverridden";
     public static final String TITLE = "title";
     public static final String LOCATION = "location";
 
@@ -17,6 +18,7 @@ public class Paper extends SipamatoEntity {
     private String authors;
     @NotNull
     private String firstAuthor;
+    private boolean firstAuthorOverridden;
 
     @NotNull
     private String title;
@@ -68,6 +70,14 @@ public class Paper extends SipamatoEntity {
         builder.append(firstAuthor);
         builder.append("]");
         return builder.toString();
+    }
+
+    public boolean isFirstAuthorOverridden() {
+        return firstAuthorOverridden;
+    }
+
+    public void setFirstAuthorOverridden(boolean firstAuthorOverridden) {
+        this.firstAuthorOverridden = firstAuthorOverridden;
     }
 
 }

@@ -7,6 +7,7 @@ import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -44,27 +45,48 @@ public class PaperEntryPage extends BasePage {
         };
         add(form);
 
-        TextArea<String> authorsField = new TextArea<String>(Paper.AUTHORS);
+        makeAndAddAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
+        addFieldAndLabel(new TextArea<String>(Paper.TITLE), new PropertyValidator<String>());
+        addFieldAndLabel(new TextField<String>(Paper.LOCATION));
+    }
+
+    private void makeAndAddAuthorComplex(String authorsId, String firstAuthorId, String firstAuthorOverriddenId) {
+        TextArea<String> authorsField = new TextArea<String>(authorsId);
         addFieldAndLabel(authorsField, new PropertyValidator<String>());
 
-        TextField<String> firstAuthorField = new TextField<String>(Paper.FIRST_AUTHOR);
-        firstAuthorField.setEnabled(false);
+        CheckBox firstAuthorOverridden = new CheckBox(firstAuthorOverriddenId);
+        addCheckBoxAndLabel(firstAuthorOverridden);
+
+        TextField<String> firstAuthorField = new TextField<String>(firstAuthorId) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setEnabled(firstAuthorOverridden.getModelObject());
+            }
+        };
+        firstAuthorField.add(new PropertyValidator<String>());
         firstAuthorField.setOutputMarkupId(true);
         addFieldAndLabel(firstAuthorField);
 
-        authorsField.add(new OnChangeAjaxBehavior() {
+        firstAuthorOverridden.add(makeFirstAuthorChangeBehavior(authorsField, firstAuthorOverridden, firstAuthorField));
+        authorsField.add(makeFirstAuthorChangeBehavior(authorsField, firstAuthorOverridden, firstAuthorField));
+    }
+
+    private OnChangeAjaxBehavior makeFirstAuthorChangeBehavior(TextArea<String> authorsField, CheckBox firstAuthorOverridden, TextField<String> firstAuthorField) {
+        return new OnChangeAjaxBehavior() {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                AuthorParser p = new AuthorParser(authorsField.getValue());
-                firstAuthorField.setModelObject(p.getFirstAuthor().orElse(null));
+                if (!firstAuthorOverridden.getModelObject()) {
+                    AuthorParser p = new AuthorParser(authorsField.getValue());
+                    firstAuthorField.setModelObject(p.getFirstAuthor().orElse(null));
+                }
                 target.add(firstAuthorField);
             }
-        });
-
-        addFieldAndLabel(new TextArea<String>(Paper.TITLE), new PropertyValidator<String>());
-        addFieldAndLabel(new TextField<String>(Paper.LOCATION));
+        };
     }
 
     private void addFieldAndLabel(FormComponent<String> field) {
@@ -79,11 +101,21 @@ public class PaperEntryPage extends BasePage {
         String id = field.getId();
         StringResourceModel labelModel = new StringResourceModel(id + ".label", this, null);
         Label label = new Label(id + "Label", labelModel);
-        field.setLabel(labelModel);
         form.add(label);
+        field.setLabel(labelModel);
         form.add(field);
         if (pv.isPresent()) {
             field.add(pv.get());
         }
     }
+
+    private void addCheckBoxAndLabel(CheckBox field) {
+        String id = field.getId();
+        StringResourceModel labelModel = new StringResourceModel(id + ".label", this, null);
+        Label label = new Label(id + "Label", labelModel);
+        form.add(label);
+        field.setLabel(labelModel);
+        form.add(field);
+    }
+
 }
