@@ -9,7 +9,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.bean.validation.PropertyValidator;
-import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
@@ -27,6 +26,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.web.pages.BasePage;
+import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.AjaxBootstrapTabbedPanel;
 
 @AuthorizeInstantiation("USER")
 public class PaperEntryPage extends BasePage {
@@ -52,6 +52,11 @@ public class PaperEntryPage extends BasePage {
         };
         add(form);
 
+        makeAndAddHeaderFields();
+        makeAndAddTabPanel("tabs");
+    }
+
+    private void makeAndAddHeaderFields() {
         makeAndAddAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
         addFieldAndLabel(new TextArea<String>(Paper.TITLE), new PropertyValidator<String>());
         addFieldAndLabel(new TextField<String>(Paper.LOCATION));
@@ -60,9 +65,11 @@ public class PaperEntryPage extends BasePage {
         addFieldAndLabel(new TextField<Integer>(Paper.PUBL_YEAR), new PropertyValidator<Integer>());
         addFieldAndLabel(new TextField<Integer>(Paper.PMID));
         addFieldAndLabel(new TextField<String>(Paper.DOI), new PropertyValidator<Integer>());
+    }
 
+    private void makeAndAddTabPanel(String tabId) {
         List<ITab> tabs = new ArrayList<>();
-        tabs.add(new AbstractTab(new Model<String>("first tab")) {
+        tabs.add(new AbstractTab(new StringResourceModel("tab1" + LABEL_RECOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -70,7 +77,7 @@ public class PaperEntryPage extends BasePage {
                 return new TabPanel1(panelId);
             }
         });
-        tabs.add(new AbstractTab(new Model<String>("second tab")) {
+        tabs.add(new AbstractTab(new StringResourceModel("tab2" + LABEL_RECOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -78,7 +85,7 @@ public class PaperEntryPage extends BasePage {
                 return new TabPanel2(panelId);
             }
         });
-        tabs.add(new AbstractTab(new Model<String>("third tab")) {
+        tabs.add(new AbstractTab(new StringResourceModel("tab3" + LABEL_RECOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -86,7 +93,7 @@ public class PaperEntryPage extends BasePage {
                 return new TabPanel3(panelId);
             }
         });
-        form.add(new AjaxTabbedPanel<ITab>("tabs", tabs));
+        form.add(new AjaxBootstrapTabbedPanel<ITab>(tabId, tabs));
     }
 
     private Model<Paper> getNewDefaultModel() {
