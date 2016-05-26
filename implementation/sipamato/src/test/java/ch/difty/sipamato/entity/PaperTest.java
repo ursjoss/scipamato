@@ -133,7 +133,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         final int tooEarly = 1499;
         p.setPublicationYear(tooEarly);
         validate(p);
-        validateAndAssertFailure(Paper.PUBL_YEAR, tooEarly, "{org.hibernate.validator.constraints.Range.message}");
+        validateAndAssertFailure(Paper.PUBL_YEAR, tooEarly, "{paper.invalidPublicationYear}");
     }
 
     @Test
@@ -153,6 +153,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         final int tooLate = 2101;
         p.setPublicationYear(tooLate);
         validate(p);
-        validateAndAssertFailure(Paper.PUBL_YEAR, tooLate, "{org.hibernate.validator.constraints.Range.message}");
+        validateAndAssertFailure(Paper.PUBL_YEAR, tooLate, "{paper.invalidPublicationYear}");
     }
+
 }

@@ -41,7 +41,7 @@ public class Paper extends SipamatoEntity {
     // TODO validation non null?
     private String location;
 
-    @Range(min = 1500, max = 2100)
+    @Range(min = 1500, max = 2100, message = "{paper.invalidPublicationYear}")
     private int publicationYear;
 
     public Integer getId() {
