@@ -26,6 +26,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         p.setFirstAuthor(NON_NULL_STRING);
         p.setTitle(NON_NULL_STRING);
         p.setPublicationYear(2016);
+        p.setGoals(NON_NULL_STRING);
     }
 
     private void verifySuccessfulValidation() {
@@ -59,7 +60,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withBlankAuthor() {
+    public void validatingPaper_withBlankAuthor_fails() {
         final String invalidValue = "";
         p.setAuthors(invalidValue);
         verifyFailedAuthorValidation(invalidValue);
@@ -112,7 +113,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void validatingPaper_withNullFirstAuthor() {
+    public void validatingPaper_withNullFirstAuthor_fails() {
         p.setFirstAuthor(null);
         validateAndAssertFailure(Paper.FIRST_AUTHOR, null, "{javax.validation.constraints.NotNull.message}");
     }
@@ -164,4 +165,11 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         validate(p);
         validateAndAssertFailure(Paper.DOI, invalidDoi, "{paper.invalidDOI}");
     }
+
+    @Test
+    public void validatingPaper_withNullGoals_fails() {
+        p.setGoals(null);
+        validateAndAssertFailure(Paper.GOALS, null, "{javax.validation.constraints.NotNull.message}");
+    }
+
 }

@@ -20,6 +20,10 @@ public class Paper extends SipamatoEntity {
     public static final String LOCATION = "location";
     public static final String PUBL_YEAR = "publicationYear";
 
+    public static final String GOALS = "goals";
+    public static final String POPULATION = "population";
+    public static final String METHODS = "methods";
+
     private Integer id;
 
     // TODO can it be null? Range validation?
@@ -55,6 +59,11 @@ public class Paper extends SipamatoEntity {
 
     @Range(min = 1500, max = 2100, message = "{paper.invalidPublicationYear}")
     private int publicationYear;
+
+    @NotNull
+    private String goals;
+    private String population;
+    private String methods;
 
     public Integer getId() {
         return id;
@@ -126,6 +135,30 @@ public class Paper extends SipamatoEntity {
 
     public void setPublicationYear(int publicationYear) {
         this.publicationYear = publicationYear;
+    }
+
+    public String getGoals() {
+        return goals;
+    }
+
+    public void setGoals(String goals) {
+        this.goals = goals;
+    }
+
+    public String getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(String population) {
+        this.population = population;
+    }
+
+    public String getMethods() {
+        return methods;
+    }
+
+    public void setMethods(String methods) {
+        this.methods = methods;
     }
 
     @Override
