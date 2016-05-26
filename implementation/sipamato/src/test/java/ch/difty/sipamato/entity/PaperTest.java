@@ -128,4 +128,16 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(violation.getPropertyPath().toString()).isEqualTo(Paper.FIRST_AUTHOR);
     }
 
+    @Test
+    public void validatingPaper_withAuthorWithDashInName_succeeds() {
+        p.setAuthors("Alpha-Beta G.");
+        verifySuccessfulAuthorValidation();
+    }
+
+    @Test
+    public void validatingPaper_withAuthorWithTickInName_succeeds() {
+        p.setAuthors("d'Alpha G.");
+        verifySuccessfulAuthorValidation();
+    }
+
 }

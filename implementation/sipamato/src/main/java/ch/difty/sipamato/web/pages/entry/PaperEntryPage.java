@@ -56,6 +56,7 @@ public class PaperEntryPage extends BasePage {
      */
     private void makeAndAddAuthorComplex(String authorsId, String firstAuthorId, String firstAuthorOverriddenId) {
         TextArea<String> authors = new TextArea<String>(authorsId);
+        authors.setEscapeModelStrings(false);
         addFieldAndLabel(authors, new PropertyValidator<String>());
 
         CheckBox firstAuthorOverridden = new CheckBox(firstAuthorOverriddenId);
