@@ -53,7 +53,7 @@ public class PaperEntryPage extends BasePage {
         addFieldAndLabel(new TextField<Integer>(Paper.ID), new PropertyValidator<Integer>());
         addFieldAndLabel(new TextField<Integer>(Paper.PUBL_YEAR), new PropertyValidator<Integer>());
         addFieldAndLabel(new TextField<Integer>(Paper.PMID));
-        addFieldAndLabel(new TextField<String>(Paper.DOI));
+        addFieldAndLabel(new TextField<String>(Paper.DOI), new PropertyValidator<Integer>());
 
     }
 

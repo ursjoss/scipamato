@@ -10,6 +10,7 @@ import org.junit.Test;
 public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     private static final String VALID_AUTHORS = "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.";
+    private static final String VALID_DOI = "10.1093/aje/kwu275";
     private static final String NON_NULL_STRING = "foo";
 
     private final Paper p = new Paper();
@@ -20,7 +21,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
         p.setId(1);
         p.setPmid(1000);
-        p.setDigitalObjectIdentifier("10.1093/aje/kwu275");
+        p.setDoi(VALID_DOI);
         p.setAuthors(VALID_AUTHORS);
         p.setFirstAuthor(NON_NULL_STRING);
         p.setTitle(NON_NULL_STRING);
@@ -156,4 +157,11 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         validateAndAssertFailure(Paper.PUBL_YEAR, tooLate, "{paper.invalidPublicationYear}");
     }
 
+    @Test
+    public void validatingPaper_withInvalidDoi_fails() {
+        final String invalidDoi = "abc";
+        p.setDoi(invalidDoi);
+        validate(p);
+        validateAndAssertFailure(Paper.DOI, invalidDoi, "{paper.invalidDOI}");
+    }
 }

@@ -2,6 +2,7 @@ package ch.difty.sipamato.entity;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Pattern.Flag;
 
 import org.hibernate.validator.constraints.Range;
 
@@ -11,7 +12,7 @@ public class Paper extends SipamatoEntity {
 
     public static final String ID = "id";
     public static final String PMID = "pmid";
-    public static final String DOI = "digitalObjectIdentifier";
+    public static final String DOI = "doi";
     public static final String AUTHORS = "authors";
     public static final String FIRST_AUTHOR = "firstAuthor";
     public static final String FIRST_AUTHOR_OVERRIDDEN = "firstAuthorOverridden";
@@ -24,8 +25,19 @@ public class Paper extends SipamatoEntity {
     // TODO can it be null? Range validation?
     private Integer pmid;
 
-    // TODO can it be null? Pattern validation?
-    private String digitalObjectIdentifier;
+    /*
+     * Digital Object Identifier (see http://www.doi.org
+     *
+     * The validation pattern is simplified and seems to catch roughly 74.4M out of 74.9M DOIs.
+     * The uncaught ones seem to be old and hopefully don't turn up within Sipamato. Otherwise additional
+     * regex patterns catching more of the remaining ones can be found here:
+     *
+     * http://blog.crossref.org/2015/08/doi-regular-expressions.html (thx to Andrew Gilmartin)
+     *
+     * /^10.\d{4,9}/[-._;()/:A-Z0-9]+$/i
+     */
+    @Pattern(regexp = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$", flags = {Flag.CASE_INSENSITIVE}, message = "{paper.invalidDOI}")
+    private String doi;
 
     @NotNull
     @Pattern(regexp = "^[\\w-']+(\\s[\\w-']+){0,}(,\\s[\\w-']+(\\s[\\w-']+){0,}){0,}\\.$", message = "{paper.invalidAuthor}")
@@ -60,12 +72,12 @@ public class Paper extends SipamatoEntity {
         this.pmid = pmid;
     }
 
-    public String getDigitalObjectIdentifier() {
-        return digitalObjectIdentifier;
+    public String getDoi() {
+        return doi;
     }
 
-    public void setDigitalObjectIdentifier(String digitalObjectIdentifier) {
-        this.digitalObjectIdentifier = digitalObjectIdentifier;
+    public void setDoi(String doi) {
+        this.doi = doi;
     }
 
     public String getAuthors() {
@@ -124,7 +136,7 @@ public class Paper extends SipamatoEntity {
         sb.append(", pmid=");
         sb.append(pmid);
         sb.append(", doi=");
-        sb.append(digitalObjectIdentifier);
+        sb.append(doi);
         sb.append(", authors=");
         sb.append(authors);
         sb.append(", title=");
