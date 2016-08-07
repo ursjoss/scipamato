@@ -248,6 +248,9 @@ public class PaperEntryPage extends BasePage {
             makeAndAddTo(form, Paper.RESULT);
             makeAndAddTo(form, Paper.COMMENT);
             makeAndAddTo(form, Paper.INTERN);
+
+            makeAndAddTo(form, Paper.RESULT_EXPOSURE_RANGE);
+            makeAndAddTo(form, Paper.RESULT_EFFECT_ESTIMATE);
         }
     };
 
