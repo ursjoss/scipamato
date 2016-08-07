@@ -27,7 +27,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.web.pages.BasePage;
-import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.AjaxBootstrapTabbedPanel;
+import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
 @AuthorizeInstantiation("USER")
 public class PaperEntryPage extends BasePage {
@@ -94,7 +94,7 @@ public class PaperEntryPage extends BasePage {
                 return new TabPanel3(panelId);
             }
         });
-        form.add(new AjaxBootstrapTabbedPanel<ITab>(tabId, tabs));
+        form.add(new ClientSideBootstrapTabbedPanel<ITab>(tabId, tabs));
     }
 
     private Model<Paper> getNewDefaultModel() {
@@ -206,7 +206,6 @@ public class PaperEntryPage extends BasePage {
         }
 
     };
-
 
     private static class TabPanel2 extends Panel {
         private static final long serialVersionUID = 1L;
