@@ -197,7 +197,6 @@ public class PaperEntryPage extends BasePage {
             field.setLabel(labelModel);
             form.add(field);
         }
-
     }
 
     private static class TabPanel1 extends AbstractTabPanel {
@@ -216,8 +215,19 @@ public class PaperEntryPage extends BasePage {
 
             makeAndAddTo(form, Paper.GOALS);
             makeAndAddTo(form, Paper.POPULATION);
-            makeAndAddTo(form, Paper.EXPOSITION);
+            makeAndAddTo(form, Paper.EXPOSURE);
             makeAndAddTo(form, Paper.METHODS);
+
+            makeAndAddTo(form, Paper.POPULATION_PLACE);
+            makeAndAddTo(form, Paper.POPULATION_PARTICIPANTS);
+            makeAndAddTo(form, Paper.POPULATION_DURATION);
+
+            makeAndAddTo(form, Paper.EXPOSURE_POLLUTANT);
+            makeAndAddTo(form, Paper.EXPOSURE_ASSESSMENT);
+
+            makeAndAddTo(form, Paper.METHOD_OUTCOME);
+            makeAndAddTo(form, Paper.METHOD_STATISTICS);
+            makeAndAddTo(form, Paper.METHOD_CONFOUNDERS);
         }
     };
 
@@ -238,6 +248,9 @@ public class PaperEntryPage extends BasePage {
             makeAndAddTo(form, Paper.RESULT);
             makeAndAddTo(form, Paper.COMMENT);
             makeAndAddTo(form, Paper.INTERN);
+
+            makeAndAddTo(form, Paper.RESULT_EXPOSURE_RANGE);
+            makeAndAddTo(form, Paper.RESULT_EFFECT_ESTIMATE);
         }
     };
 

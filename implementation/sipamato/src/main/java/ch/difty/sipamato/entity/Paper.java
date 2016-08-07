@@ -22,12 +22,24 @@ public class Paper extends SipamatoEntity {
 
     public static final String GOALS = "goals";
     public static final String POPULATION = "population";
-    public static final String EXPOSITION = "exposition";
+    public static final String EXPOSURE = "exposure";
     public static final String METHODS = "methods";
+
+    public static final String POPULATION_PLACE = "populationPlace";
+    public static final String POPULATION_PARTICIPANTS = "populationParticipants";
+    public static final String POPULATION_DURATION = "populationDuration";
+    public static final String EXPOSURE_POLLUTANT = "exposurePollutant";
+    public static final String EXPOSURE_ASSESSMENT = "exposureAssessment";
+    public static final String METHOD_OUTCOME = "methodOutcome";
+    public static final String METHOD_STATISTICS = "methodStatistics";
+    public static final String METHOD_CONFOUNDERS = "methodConfounders";
 
     public static final String RESULT = "result";
     public static final String COMMENT = "comment";
     public static final String INTERN = "intern";
+
+    public static final String RESULT_EXPOSURE_RANGE = "resultExposureRange";
+    public static final String RESULT_EFFECT_ESTIMATE = "resultEffectEstimate";
 
     private Integer id;
 
@@ -65,10 +77,20 @@ public class Paper extends SipamatoEntity {
     @NotNull
     private String goals;
     private String population;
-    private String exposition;
+    private String populationPlace;
+    private String populationParticipants;
+    private String populationDuration;
+    private String exposure;
+    private String exposurePollutant;
+    private String exposureAssessment;
     private String methods;
+    private String methodOutcome;
+    private String methodStatistics;
+    private String methodConfounders;
 
     private String result;
+    private String resultExposureRange;
+    private String resultEffectEstimate;
     private String comment;
     private String intern;
 
@@ -160,12 +182,12 @@ public class Paper extends SipamatoEntity {
         this.population = population;
     }
 
-    public String getExposition() {
-        return exposition;
+    public String getExposure() {
+        return exposure;
     }
 
-    public void setExposition(String exposition) {
-        this.exposition = exposition;
+    public void setExposure(String exposure) {
+        this.exposure = exposure;
     }
 
     public String getMethods() {
@@ -223,8 +245,8 @@ public class Paper extends SipamatoEntity {
         sb.append(goals);
         sb.append(", population=");
         sb.append(population);
-        sb.append(", exposition=");
-        sb.append(getExposition());
+        sb.append(", exposure=");
+        sb.append(exposure);
         sb.append(", methods=");
         sb.append(methods);
         sb.append(", result=");
@@ -235,6 +257,86 @@ public class Paper extends SipamatoEntity {
         sb.append(intern);
         sb.append("]");
         return sb.toString();
+    }
+
+    public String getPopulationPlace() {
+        return populationPlace;
+    }
+
+    public void setPopulationPlace(String populationPlace) {
+        this.populationPlace = populationPlace;
+    }
+
+    public String getPopulationParticipants() {
+        return populationParticipants;
+    }
+
+    public void setPopulationParticipants(String populationParticipants) {
+        this.populationParticipants = populationParticipants;
+    }
+
+    public String getPopulationDuration() {
+        return populationDuration;
+    }
+
+    public void setPopulationDuration(String populationDuration) {
+        this.populationDuration = populationDuration;
+    }
+
+    public String getExposurePollutant() {
+        return exposurePollutant;
+    }
+
+    public void setExposurePollutant(String exposurePollutant) {
+        this.exposurePollutant = exposurePollutant;
+    }
+
+    public String getExposureAssessment() {
+        return exposureAssessment;
+    }
+
+    public void setExposureAssessment(String exposureAssessment) {
+        this.exposureAssessment = exposureAssessment;
+    }
+
+    public String getMethodOutcome() {
+        return methodOutcome;
+    }
+
+    public void setMethodOutcome(String methodOutcome) {
+        this.methodOutcome = methodOutcome;
+    }
+
+    public String getMethodStatistics() {
+        return methodStatistics;
+    }
+
+    public void setMethodStatistics(String methodStatistics) {
+        this.methodStatistics = methodStatistics;
+    }
+
+    public String getMethodConfounders() {
+        return methodConfounders;
+    }
+
+    public void setMethodConfounders(String methodConfounders) {
+        this.methodConfounders = methodConfounders;
+    }
+
+    public String getResultExposureRange() {
+        return resultExposureRange;
+    }
+
+    public void setResultExposureRange(String resultExposureRange) {
+        this.resultExposureRange = resultExposureRange;
+    }
+
+    public String getResultEffectEstimate() {
+        return resultEffectEstimate;
+    }
+
+    public void setResultEffectEstimate(String resultEffectEstimate) {
+        this.resultEffectEstimate = resultEffectEstimate;
     }
 
 }

@@ -33,8 +33,9 @@ public class PaperEntryPageTest extends AbstractPageTest<PaperEntryPage> {
         b += ":tabs";
         getTester().assertComponent(b, ClientSideBootstrapTabbedPanel.class);
         b += ":panelsContainer:panels";
-        assertTabPanelFields(1, 1, b, Paper.GOALS, Paper.POPULATION, Paper.EXPOSITION, Paper.METHODS);
-        assertTabPanelFields(2, 3, b, Paper.RESULT, Paper.COMMENT, Paper.INTERN);
+        assertTabPanelFields(1, 1, b, Paper.GOALS, Paper.POPULATION, Paper.EXPOSURE, Paper.METHODS, Paper.POPULATION_PLACE, Paper.POPULATION_PARTICIPANTS, Paper.POPULATION_DURATION,
+                Paper.EXPOSURE_POLLUTANT, Paper.EXPOSURE_ASSESSMENT, Paper.METHOD_OUTCOME, Paper.METHOD_STATISTICS, Paper.METHOD_CONFOUNDERS);
+        assertTabPanelFields(2, 3, b, Paper.RESULT, Paper.COMMENT, Paper.INTERN, Paper.RESULT_EXPOSURE_RANGE, Paper.RESULT_EFFECT_ESTIMATE);
     }
 
     private void assertTabPanelFields(int tabId, int panelId, String b, String... fields) {
