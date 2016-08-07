@@ -24,6 +24,10 @@ public class Paper extends SipamatoEntity {
     public static final String POPULATION = "population";
     public static final String METHODS = "methods";
 
+    public static final String RESULT = "result";
+    public static final String COMMENT = "comment";
+    public static final String INTERN = "intern";
+
     private Integer id;
 
     /*
@@ -61,6 +65,10 @@ public class Paper extends SipamatoEntity {
     private String goals;
     private String population;
     private String methods;
+
+    private String result;
+    private String comment;
+    private String intern;
 
     public Integer getId() {
         return id;
@@ -158,6 +166,30 @@ public class Paper extends SipamatoEntity {
         this.methods = methods;
     }
 
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getIntern() {
+        return intern;
+    }
+
+    public void setIntern(String intern) {
+        this.intern = intern;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
@@ -177,6 +209,12 @@ public class Paper extends SipamatoEntity {
         sb.append(publicationYear);
         sb.append(", firstAuthor=");
         sb.append(firstAuthor);
+        sb.append(", result=");
+        sb.append(result);
+        sb.append(", comment=");
+        sb.append(comment);
+        sb.append(", intern=");
+        sb.append(intern);
         sb.append("]");
         return sb.toString();
     }

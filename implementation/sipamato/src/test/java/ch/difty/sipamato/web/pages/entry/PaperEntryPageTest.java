@@ -1,9 +1,6 @@
 package ch.difty.sipamato.web.pages.entry;
 
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextArea;
-import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.markup.html.panel.Panel;
 
 import ch.difty.sipamato.entity.Paper;
@@ -36,8 +33,18 @@ public class PaperEntryPageTest extends AbstractPageTest<PaperEntryPage> {
         b += ":tabs";
         getTester().assertComponent(b, ClientSideBootstrapTabbedPanel.class);
         b += ":panelsContainer:panels";
-        assertTabPanelFields(1, b, Paper.GOALS, Paper.POPULATION, Paper.METHODS);
+        assertTabPanelFields(1, 1, b, Paper.GOALS, Paper.POPULATION, Paper.METHODS);
+        assertTabPanelFields(2, 3, b, Paper.RESULT, Paper.COMMENT, Paper.INTERN);
 
+    }
+
+    private void assertTabPanelFields(int tabId, int panelId, String b, String... fields) {
+        assertTabPanel(panelId, b);
+        final String bb = b + ":" + panelId + ":tab" + tabId + "Form";
+        getTester().assertComponent(bb, Form.class);
+        for (String f : fields) {
+            assertLabeledTextArea(bb, f);
+        }
     }
 
     private void assertTabPanel(int i, String b) {
@@ -45,13 +52,4 @@ public class PaperEntryPageTest extends AbstractPageTest<PaperEntryPage> {
         getTester().assertComponent(b + bb, Panel.class);
     }
 
-    private void assertTabPanelFields(int i, String b, String... fields) {
-        assertTabPanel(i, b);
-        String id = String.valueOf(i);
-        final String bb = b + ":" + id + ":tab" + id + "Form";
-        getTester().assertComponent(bb, Form.class);
-        for (String f : fields) {
-            assertLabeledTextArea(bb, f);
-        }
-    }
 }

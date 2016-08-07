@@ -83,7 +83,7 @@ public class PaperEntryPage extends BasePage {
 
             @Override
             public Panel getPanel(String panelId) {
-                return new TabPanel2(panelId);
+                return new TabPanel2(panelId, form.getModel());
             }
         });
         tabs.add(new AbstractTab(new StringResourceModel("tab3" + LABEL_RECOURCE_TAG, this, null)) {
@@ -91,7 +91,7 @@ public class PaperEntryPage extends BasePage {
 
             @Override
             public Panel getPanel(String panelId) {
-                return new TabPanel3(panelId);
+                return new TabPanel3(panelId, form.getModel());
             }
         });
         form.add(new ClientSideBootstrapTabbedPanel<ITab>(tabId, tabs));
@@ -177,7 +177,30 @@ public class PaperEntryPage extends BasePage {
         form.add(field);
     }
 
-    private static class TabPanel1 extends Panel {
+    private static abstract class AbstractTabPanel extends Panel {
+
+        private static final long serialVersionUID = 1L;
+
+        public AbstractTabPanel(String id) {
+            super(id);
+        }
+
+        public AbstractTabPanel(String id, IModel<?> model) {
+            super(id, model);
+        }
+
+        void makeAndAddTo(Form<Paper> form, String id) {
+            TextArea<String> field = new TextArea<String>(id);
+            field.add(new PropertyValidator<String>());
+            StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
+            form.add(new Label(id + LABEL_TAG, labelModel));
+            field.setLabel(labelModel);
+            form.add(field);
+        }
+
+    }
+
+    private static class TabPanel1 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
         public TabPanel1(String id, IModel<Paper> model) {
@@ -195,31 +218,33 @@ public class PaperEntryPage extends BasePage {
             makeAndAddTo(form, Paper.POPULATION);
             makeAndAddTo(form, Paper.METHODS);
         }
-
-        private void makeAndAddTo(Form<Paper> form, String id) {
-            TextArea<String> field = new TextArea<String>(id);
-            field.add(new PropertyValidator<String>());
-            StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
-            form.add(new Label(id + LABEL_TAG, labelModel));
-            field.setLabel(labelModel);
-            form.add(field);
-        }
-
     };
 
-    private static class TabPanel2 extends Panel {
+    private static class TabPanel2 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        public TabPanel2(String id) {
-            super(id);
+        public TabPanel2(String id, IModel<Paper> model) {
+            super(id, model);
+        }
+
+        @Override
+        protected void onInitialize() {
+            super.onInitialize();
+
+            Form<Paper> form = new Form<Paper>("tab2Form");
+            add(form);
+
+            makeAndAddTo(form, Paper.RESULT);
+            makeAndAddTo(form, Paper.COMMENT);
+            makeAndAddTo(form, Paper.INTERN);
         }
     };
 
-    private static class TabPanel3 extends Panel {
+    private static class TabPanel3 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        public TabPanel3(String id) {
-            super(id);
+        public TabPanel3(String id, IModel<Paper> model) {
+            super(id, model);
         }
     };
 
