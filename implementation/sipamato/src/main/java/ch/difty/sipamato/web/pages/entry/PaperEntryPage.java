@@ -216,6 +216,7 @@ public class PaperEntryPage extends BasePage {
 
             makeAndAddTo(form, Paper.GOALS);
             makeAndAddTo(form, Paper.POPULATION);
+            makeAndAddTo(form, Paper.EXPOSITION);
             makeAndAddTo(form, Paper.METHODS);
         }
     };

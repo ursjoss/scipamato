@@ -22,6 +22,7 @@ public class Paper extends SipamatoEntity {
 
     public static final String GOALS = "goals";
     public static final String POPULATION = "population";
+    public static final String EXPOSITION = "exposition";
     public static final String METHODS = "methods";
 
     public static final String RESULT = "result";
@@ -64,6 +65,7 @@ public class Paper extends SipamatoEntity {
     @NotNull
     private String goals;
     private String population;
+    private String exposition;
     private String methods;
 
     private String result;
@@ -158,6 +160,14 @@ public class Paper extends SipamatoEntity {
         this.population = population;
     }
 
+    public String getExposition() {
+        return exposition;
+    }
+
+    public void setExposition(String exposition) {
+        this.exposition = exposition;
+    }
+
     public String getMethods() {
         return methods;
     }
@@ -209,6 +219,14 @@ public class Paper extends SipamatoEntity {
         sb.append(publicationYear);
         sb.append(", firstAuthor=");
         sb.append(firstAuthor);
+        sb.append(", goals=");
+        sb.append(goals);
+        sb.append(", population=");
+        sb.append(population);
+        sb.append(", exposition=");
+        sb.append(getExposition());
+        sb.append(", methods=");
+        sb.append(methods);
         sb.append(", result=");
         sb.append(result);
         sb.append(", comment=");
