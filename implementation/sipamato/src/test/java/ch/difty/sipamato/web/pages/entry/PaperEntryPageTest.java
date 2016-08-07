@@ -33,7 +33,7 @@ public class PaperEntryPageTest extends AbstractPageTest<PaperEntryPage> {
         b += ":tabs";
         getTester().assertComponent(b, ClientSideBootstrapTabbedPanel.class);
         b += ":panelsContainer:panels";
-        assertTabPanelFields(1, 1, b, Paper.GOALS, Paper.POPULATION, Paper.EXPOSITION, Paper.METHODS);
+        assertTabPanelFields(1, 1, b, Paper.GOALS, Paper.POPULATION, Paper.EXPOSURE, Paper.METHODS);
         assertTabPanelFields(2, 3, b, Paper.RESULT, Paper.COMMENT, Paper.INTERN);
     }
 

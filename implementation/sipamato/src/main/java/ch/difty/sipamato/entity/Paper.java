@@ -22,7 +22,7 @@ public class Paper extends SipamatoEntity {
 
     public static final String GOALS = "goals";
     public static final String POPULATION = "population";
-    public static final String EXPOSITION = "exposition";
+    public static final String EXPOSURE = "exposure";
     public static final String METHODS = "methods";
 
     public static final String RESULT = "result";
@@ -65,7 +65,7 @@ public class Paper extends SipamatoEntity {
     @NotNull
     private String goals;
     private String population;
-    private String exposition;
+    private String exposure;
     private String methods;
 
     private String result;
@@ -160,12 +160,12 @@ public class Paper extends SipamatoEntity {
         this.population = population;
     }
 
-    public String getExposition() {
-        return exposition;
+    public String getExposure() {
+        return exposure;
     }
 
-    public void setExposition(String exposition) {
-        this.exposition = exposition;
+    public void setExposure(String exposure) {
+        this.exposure = exposure;
     }
 
     public String getMethods() {
@@ -223,8 +223,8 @@ public class Paper extends SipamatoEntity {
         sb.append(goals);
         sb.append(", population=");
         sb.append(population);
-        sb.append(", exposition=");
-        sb.append(getExposition());
+        sb.append(", exposure=");
+        sb.append(exposure);
         sb.append(", methods=");
         sb.append(methods);
         sb.append(", result=");
