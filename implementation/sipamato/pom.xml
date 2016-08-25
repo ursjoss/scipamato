@@ -48,10 +48,6 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <!-- Apache Wicket + bootstrap -->
@@ -85,11 +81,14 @@
             <artifactId>wicket-bean-validation</artifactId>
             <version>${wicket.version}</version>
         </dependency>
+
+        <!-- The debug bar is only rendered visible in development mode -->
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-devutils</artifactId>
             <version>${wicket.version}</version>
         </dependency>
+
         <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -103,6 +102,23 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <id>development</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.include>development</spring.profiles.include>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-devtools</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
     <build>
         <resources>
             <resource>

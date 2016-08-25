@@ -1,7 +1,9 @@
 package ch.difty.sipamato.web.pages;
 
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
+import org.apache.wicket.devutils.debugbar.DebugBar;
 import org.apache.wicket.markup.html.GenericWebPage;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -34,12 +36,21 @@ public abstract class BasePage extends GenericWebPage<Void> {
         super.onInitialize();
         add(newNavbar("navbar"));
         createAndAddFeedbackPanel("feedback");
+        createAndAddDebugBar("debug");
     }
 
     private void createAndAddFeedbackPanel(String label) {
         feedbackPanel = new NotificationPanel(label);
         feedbackPanel.setOutputMarkupId(true);
         add(feedbackPanel);
+    }
+
+    private void createAndAddDebugBar(String label) {
+        if (getApplication().getDebugSettings().isDevelopmentUtilitiesEnabled()) {
+            add(new DebugBar(label).positionBottom());
+        } else {
+            add(new EmptyPanel(label).setVisible(false));
+        }
     }
 
     private Navbar newNavbar(String markupId) {
