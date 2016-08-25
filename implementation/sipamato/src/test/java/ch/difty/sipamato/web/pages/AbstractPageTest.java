@@ -5,7 +5,6 @@ import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.spring.test.ApplicationContextMock;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
@@ -13,37 +12,39 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 
 import ch.difty.sipamato.web.SipamatoApplication;
+import ch.difty.sipamato.web.WicketWebApplicationConfig;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 import ch.difty.sipamato.web.pages.login.LoginPage;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = SipamatoApplication.class)
-@WebAppConfiguration
+@SpringBootTest(classes = WicketWebApplicationConfig.class)
 public abstract class AbstractPageTest<T extends BasePage> {
 
-    private static final String USERNAME = "admin";
-    private static final String PASSWORD = "admin";
-
-    private ApplicationContextMock applicationContextMock;
+    private static final String USERNAME = "testuser";
+    private static final String PASSWORD = "secretpw";
 
     @Autowired
     private SipamatoApplication application;
 
-    private WicketTester tester;
+    @Autowired
+    private ApplicationContext applicationContextMock;
 
-    public ApplicationContextMock getApplicationContextMock() {
-        return applicationContextMock;
-    }
+    @SpyBean
+    private CustomAuthenticationManager customAuthenticationManager;
+
+    private WicketTester tester;
 
     public WebApplication getApplication() {
         return application;
@@ -55,17 +56,16 @@ public abstract class AbstractPageTest<T extends BasePage> {
 
     @Before
     public void setUp() {
-        applicationContextMock = new ApplicationContextMock();
-        applicationContextMock.putBean("authenticationManager", new AuthenticationManager() {
-
-            @Override
-            public Authentication authenticate(Authentication arg0) throws AuthenticationException {
-                return new TestingAuthenticationToken(USERNAME, PASSWORD, "USER", "ADMIN");
-            }
-        });
-        application.setApplicationContext(applicationContextMock);
+        ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock);
         tester = new WicketTester(application);
         login(USERNAME, PASSWORD);
+    }
+
+    public static class CustomAuthenticationManager implements AuthenticationManager {
+        @Override
+        public Authentication authenticate(Authentication arg0) throws AuthenticationException {
+            return new TestingAuthenticationToken(USERNAME, PASSWORD, "USER", "ADMIN");
+        }
     }
 
     private void login(String username, String password) {

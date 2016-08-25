@@ -1,20 +1,15 @@
 package ch.difty.sipamato.web;
 
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
-import org.springframework.beans.BeansException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-
-import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication;
 
-@SpringBootApplication
-public class SipamatoApplication extends WicketBootSecuredWebApplication implements ApplicationContextAware {
+import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 
-    private ApplicationContext applicationContext;
+@SpringBootApplication
+public class SipamatoApplication extends WicketBootSecuredWebApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SipamatoApplication.class, args);
@@ -23,13 +18,8 @@ public class SipamatoApplication extends WicketBootSecuredWebApplication impleme
     @Override
     protected void init() {
         super.init();
-        getComponentInstantiationListeners().add(new SpringComponentInjector(this, applicationContext, true));
+        getComponentInstantiationListeners().add(new SpringComponentInjector(this));
         mountPackage("/", SipamatoHomePage.class);
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
     }
 
 }
