@@ -16,7 +16,7 @@ import ch.difty.sipamato.web.pages.login.LoginPage;
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan(basePackageClasses = SpringBootWebPackageIdentifier.class)
-public class WicketWebApplicationConfig extends WicketBootSecuredWebApplication {
+public class WicketWebApplicationTestConfig extends WicketBootSecuredWebApplication {
 
     @Override
     protected Class<? extends WebPage> getSignInPageClass() {

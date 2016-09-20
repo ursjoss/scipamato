@@ -7,19 +7,27 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 
 /**
- * Overrides the {@link WicketWebSecurityAdapterConfig} used in the application for the test context.
+ * Overrides the {@link WicketWebSecurityConfig} used in the application for the test context.
  */
 @Configuration
 @Primary
-@Order(99)
-public class WicketWebSecurityAdapterTestConfig extends WicketWebSecurityAdapterConfig {
+@Order(101)
+public class WicketWebSecurityTestConfig extends WicketWebSecurityConfig {
 
     private static final String USER = "testuser";
+    private static final String ADMIN = "testadmin";
     private static final String PASSWORD = "secretpw";
 
+    @Override
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser(USER).password(PASSWORD).authorities("USER", "ADMIN");
+     // @formatter:off
+        auth
+            .inMemoryAuthentication()
+                .withUser(USER).password(PASSWORD).authorities("USER")
+                .and()
+                .withUser(ADMIN).password(PASSWORD).authorities("USER", "ADMIN");
+     // @formatter:on
     }
 
 }

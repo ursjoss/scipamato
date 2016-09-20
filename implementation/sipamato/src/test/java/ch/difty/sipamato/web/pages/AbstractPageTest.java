@@ -24,12 +24,12 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 
 import ch.difty.sipamato.web.SipamatoApplication;
-import ch.difty.sipamato.web.WicketWebApplicationConfig;
+import ch.difty.sipamato.web.WicketWebApplicationTestConfig;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 import ch.difty.sipamato.web.pages.login.LoginPage;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = WicketWebApplicationConfig.class)
+@SpringBootTest(classes = WicketWebApplicationTestConfig.class)
 public abstract class AbstractPageTest<T extends BasePage> {
 
     private static final String USERNAME = "testuser";
