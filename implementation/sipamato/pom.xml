@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ch.difty</groupId>
     <artifactId>sipamato</artifactId>
@@ -8,6 +7,7 @@
     <packaging>jar</packaging>
     <name>sipamato</name>
     <description>Scientific Paper Management Tool</description>
+
     <developers>
         <developer>
             <name>Urs Joss</name>
@@ -19,12 +19,14 @@
             <timezone>+1</timezone>
         </developer>
     </developers>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.4.0.RELEASE</version>
         <relativePath />
     </parent>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
@@ -32,6 +34,7 @@
         <wicket-spring-boot-starter.version>0.0.16</wicket-spring-boot-starter.version>
         <wicket.version>7.4.0</wicket.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,6 +53,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+
         <!-- Apache Wicket + bootstrap -->
         <dependency>
             <groupId>com.giffing.wicket.spring.boot.starter</groupId>
@@ -119,6 +123,7 @@
             </dependencies>
         </profile>
     </profiles>
+
     <build>
         <resources>
             <resource>
