@@ -1,6 +1,7 @@
 package ch.difty.sipamato.logic.parsing;
 
 import static java.util.stream.Collectors.toList;
+import static org.assertj.core.api.Assertions.fail;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 import org.junit.Test;
@@ -16,6 +17,7 @@ public class AuthorParserTest {
     public void degenerateConstruction() {
         try {
             new AuthorParser(null);
+            fail("Should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("authorsString must not be null.");
         }
