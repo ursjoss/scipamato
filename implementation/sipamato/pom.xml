@@ -61,6 +61,11 @@
             <version>${wicket-spring-boot-starter.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.wicketstuff</groupId>
+            <artifactId>wicketstuff-annotation</artifactId>
+            <version>${wicket.version}</version>
+        </dependency>
+        <dependency>
             <groupId>de.agilecoders.wicket</groupId>
             <artifactId>wicket-bootstrap-core</artifactId>
             <version>${wicket-bootstrap.version}</version>

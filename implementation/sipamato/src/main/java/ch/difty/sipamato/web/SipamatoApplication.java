@@ -5,8 +5,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication;
 
-import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
-
 @SpringBootApplication
 public class SipamatoApplication extends WicketBootSecuredWebApplication {
 
@@ -17,7 +15,6 @@ public class SipamatoApplication extends WicketBootSecuredWebApplication {
     @Override
     protected void init() {
         super.init();
-        mountPackage("/", SipamatoHomePage.class);
     }
 
 }
