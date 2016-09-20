@@ -9,7 +9,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 import ch.difty.sipamato.web.pages.BasePage;
 
 @MountPath("logout")
-@AuthorizeInstantiation("USER")
+@AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
 public class LogoutPage extends BasePage {
 
     public LogoutPage(PageParameters parameters) {

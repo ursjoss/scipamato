@@ -18,7 +18,7 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
      // @formatter:off
         http.csrf().disable()
             .authorizeRequests()
-                .antMatchers(actuatorEndpoints()).hasAuthority("ADMIN")
+                .antMatchers(actuatorEndpoints()).hasRole("ADMIN")
                 .antMatchers("/**").permitAll()
             .and()
                 .logout().permitAll();
@@ -35,7 +35,7 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
         // TODO replace stub with real implementation
      // @formatter:off
         auth.inMemoryAuthentication()
-                .withUser("admin").password("admin").authorities("USER", "ADMIN");
+                .withUser("admin").password("admin").roles("USER", "ADMIN");
      // @formatter:on
     }
 }

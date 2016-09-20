@@ -24,9 +24,9 @@ public class WicketWebSecurityTestConfig extends WicketWebSecurityConfig {
      // @formatter:off
         auth
             .inMemoryAuthentication()
-                .withUser(USER).password(PASSWORD).authorities("USER")
+                .withUser(USER).password(PASSWORD).roles("USER")
                 .and()
-                .withUser(ADMIN).password(PASSWORD).authorities("USER", "ADMIN");
+                .withUser(ADMIN).password(PASSWORD).roles("USER", "ADMIN");
      // @formatter:on
     }
 

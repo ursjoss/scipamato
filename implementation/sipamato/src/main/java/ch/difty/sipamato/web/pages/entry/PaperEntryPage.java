@@ -31,7 +31,7 @@ import ch.difty.sipamato.web.pages.BasePage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
 @MountPath("entry")
-@AuthorizeInstantiation("USER")
+@AuthorizeInstantiation({ "ROLE_USER" })
 public class PaperEntryPage extends BasePage {
 
     private static final long serialVersionUID = 1L;
