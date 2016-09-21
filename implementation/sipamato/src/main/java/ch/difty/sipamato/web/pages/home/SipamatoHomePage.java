@@ -7,9 +7,9 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.annotation.mount.MountPath;
 
-import ch.difty.sipamato.web.pages.BasePage;
-
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
+
+import ch.difty.sipamato.web.pages.BasePage;
 
 @MountPath("/")
 @AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
