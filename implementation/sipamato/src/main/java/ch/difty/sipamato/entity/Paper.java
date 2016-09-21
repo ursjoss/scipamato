@@ -44,7 +44,7 @@ public class Paper extends SipamatoEntity {
     private Integer id;
 
     /*
-     * Digital Object Identifier (see http://www.doi.org
+     * Digital Object Identifier (see http://www.doi.org)
      *
      * The validation pattern is simplified and seems to catch roughly 74.4M out of 74.9M DOIs.
      * The uncaught ones seem to be old and hopefully don't turn up within Sipamato. Otherwise additional
