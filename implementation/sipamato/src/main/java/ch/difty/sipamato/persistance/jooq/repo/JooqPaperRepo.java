@@ -4,6 +4,7 @@ import static ch.difty.sipamato.db.h2.Tables.PAPER;
 
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import ch.difty.sipamato.persistance.repository.PaperRepository;
  * @author Lukas Eder
  */
 @Service
+@Profile("DB_JOOQ")
 public class JooqPaperRepo implements PaperRepository {
 
     @Autowired

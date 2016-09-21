@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
@@ -23,6 +24,7 @@ import ch.difty.sipamato.SipamatoApplication;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SipamatoApplication.class)
+@ActiveProfiles({ "DB_JOOQ" })
 public class JooqPaperRepoTransactionIntegrationTest {
 
     @Autowired

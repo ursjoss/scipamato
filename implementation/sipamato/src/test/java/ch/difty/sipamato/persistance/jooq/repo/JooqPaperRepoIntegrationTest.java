@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
@@ -20,6 +21,7 @@ import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles({ "DB_JOOQ" })
 public class JooqPaperRepoIntegrationTest {
 
     @Autowired

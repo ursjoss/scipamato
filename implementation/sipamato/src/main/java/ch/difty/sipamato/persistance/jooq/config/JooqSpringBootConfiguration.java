@@ -13,6 +13,7 @@ import org.jooq.impl.DefaultDSLContext;
 import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 
@@ -22,6 +23,7 @@ import ch.difty.sipamato.persistance.jooq.exception.ExceptionTranslator;
  * @author Jacques Gonzalez
  */
 @Configuration
+@Profile("DB_JOOQ")
 public class JooqSpringBootConfiguration {
 
     @Bean
