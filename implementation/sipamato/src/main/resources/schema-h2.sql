@@ -1,10 +1,7 @@
 DROP TABLE IF EXISTS paper;
 
-DROP SEQUENCE IF EXISTS s_paper_id;
-CREATE SEQUENCE s_paper_id START WITH 1;
-
 CREATE TABLE paper (
-  id INT NOT NULL,
+  id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   doi VARCHAR,
   pm_id INT,
   authors VARCHAR NOT NULL,
@@ -35,6 +32,4 @@ CREATE TABLE paper (
   
   version INT,
   timestamp TIMESTAMP,
-
-  CONSTRAINT pk_paper PRIMARY KEY (ID)
 );

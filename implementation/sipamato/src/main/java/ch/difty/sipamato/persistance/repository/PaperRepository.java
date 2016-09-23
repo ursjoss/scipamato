@@ -1,7 +1,7 @@
 package ch.difty.sipamato.persistance.repository;
 
-public interface PaperRepository {
+import ch.difty.sipamato.entity.Paper;
 
-    void create(int id, String authors, String firstAuthor, boolean firstAuthorOverridden, String title, String location, String gaols);
+public interface PaperRepository extends GenericRepository<Paper, Integer> {
 
 }

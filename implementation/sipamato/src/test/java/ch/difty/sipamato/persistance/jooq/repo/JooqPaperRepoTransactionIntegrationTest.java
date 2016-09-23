@@ -38,7 +38,7 @@ public class JooqPaperRepoTransactionIntegrationTest {
     public void teardown() {
 
         // Delete all books that were created in any test
-        dsl.delete(PAPER).where(PAPER.ID.gt(4)).execute();
+        dsl.delete(PAPER).where(PAPER.ID.gt(1l)).execute();
     }
 
     @Test
@@ -50,7 +50,7 @@ public class JooqPaperRepoTransactionIntegrationTest {
 
             // This is a "bug". The same book is created twice, resulting in a
             // constraint violation exception
-            for (int i = 0; i < 2; i++)
+            for (long i = 0; i < 2; i++)
                 // @formatter:off
                 dsl.insertInto(PAPER)
                     .set(PAPER.ID, i)
@@ -75,20 +75,6 @@ public class JooqPaperRepoTransactionIntegrationTest {
         assertTrue(rollback);
     }
 
-    @Test
-    public void testDeclarativeTransactions() {
-        boolean rollback = false;
-
-        try {
-            books.create(5, "authors", "firstAuthor", false, "title", "location", "goals");
-            Assert.fail();
-        } catch (DataAccessException ignore) {
-            rollback = true;
-        }
-
-        assertEquals(1, dsl.fetchCount(PAPER));
-        assertTrue(rollback);
-    }
 
     @Test
     public void testjOOQTransactionsSimple() {
@@ -99,7 +85,7 @@ public class JooqPaperRepoTransactionIntegrationTest {
 
                 // This is a "bug". The same book is created twice, resulting in a
                 // constraint violation exception
-                for (int i = 0; i < 2; i++)
+                for (long i = 0; i < 2; i++)
                     // @formatter:off
                     dsl.insertInto(PAPER)
                         .set(PAPER.ID, i)
@@ -138,7 +124,7 @@ public class JooqPaperRepoTransactionIntegrationTest {
                 // The first insertion will work
                 // @formatter:off
                 dsl.insertInto(PAPER)
-                    .set(PAPER.ID, 2)
+                    .set(PAPER.ID, 2l)
                     .set(PAPER.AUTHORS, "authors")
                     .set(PAPER.FIRST_AUTHOR, "firstAuthor")
                     .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
@@ -157,10 +143,10 @@ public class JooqPaperRepoTransactionIntegrationTest {
                     dsl.transaction(c2 -> {
 
                         // The second insertion shouldn't work
-                        for (int i = 0; i < 2; i++)
+                        for (long i = 0; i < 2; i++)
                             // @formatter:off
                             dsl.insertInto(PAPER)
-                                .set(PAPER.ID, 3)
+                                .set(PAPER.ID, 3l)
                                 .set(PAPER.AUTHORS, "authors")
                                 .set(PAPER.FIRST_AUTHOR, "firstAuthor")
                                 .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)

@@ -1,5 +1,5 @@
 INSERT INTO paper VALUES(
-	next value for s_paper_id
+	DEFAULT
 	, '101234/12345', 1
 	, 'Kutlar Joss M, Joss U.', 'Kutlar Joss M.', 0
 	, 'Sample Title', 'loc', 2016

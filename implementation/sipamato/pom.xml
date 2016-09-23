@@ -197,6 +197,7 @@
                 <version>1.5</version>
 
                 <configuration>
+                    <skip>${skip.db.creation}</skip>
                     <skip>${maven.test.skip}</skip>
                     <forkMode>always</forkMode>
                 </configuration>
@@ -263,7 +264,7 @@
                                 <generate>
                                     <deprecated>false</deprecated>
                                     <instanceFields>true</instanceFields>
-                                    <pojos>true</pojos>
+                                    <pojos>false</pojos>
                                 </generate>
                                 <target>
                                     <packageName>ch.difty.sipamato.db.h2</packageName>

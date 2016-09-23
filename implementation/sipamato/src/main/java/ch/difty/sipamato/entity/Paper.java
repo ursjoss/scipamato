@@ -41,6 +41,7 @@ public class Paper extends SipamatoEntity {
     public static final String RESULT_EXPOSURE_RANGE = "resultExposureRange";
     public static final String RESULT_EFFECT_ESTIMATE = "resultEffectEstimate";
 
+    // TODO use Long
     private Integer id;
 
     /*
