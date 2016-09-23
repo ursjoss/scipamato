@@ -1,11 +1,11 @@
 package ch.difty.sipamato.persistance.repository;
 
-import java.io.Serializable;
 import java.util.List;
 
+import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.lib.NullArgumentException;
 
-public interface GenericRepository<T extends Serializable, ID> {
+public interface GenericRepository<E extends SipamatoEntity, ID> {
 
     /**
      * Add an entity <code>T</code> to the database.
@@ -14,7 +14,7 @@ public interface GenericRepository<T extends Serializable, ID> {
      * @return the added entity, including the generated default values - or <literal>null</literal> if it can't be added.
      * @throws NullArgumentException if the entity is null.
      */
-    T add(T entity);
+    E add(E entity);
 
     /**
      * Remove the persisted entity with the provided id.
@@ -23,14 +23,14 @@ public interface GenericRepository<T extends Serializable, ID> {
      * @return the deleted entity
      * @throws NullArgumentException if the id is null.
      */
-    T delete(ID id);
+    E delete(ID id);
 
     /**
      * Finds all persisted entitities.
      *
      * @return list of all entities <code>T</code>
      */
-    List<T> findAll();
+    List<E> findAll();
 
     /**
      * Finds the persistent entity <code>T</code> with the provided id.
@@ -39,7 +39,7 @@ public interface GenericRepository<T extends Serializable, ID> {
      * @return the persisted entity <code>T</code> or null if it can't be found.
      * @throws NullArgumentException if the id is null.
      */
-    T findById(ID id);
+    E findById(ID id);
 
     /**
      * Searches the persistent entity <code>T</code> and modifies it according to the values of the provided entity.
@@ -48,6 +48,6 @@ public interface GenericRepository<T extends Serializable, ID> {
      * @return the modified persisted entity
      * @throws NullArgumentException if the entity is null.
      */
-    T update(T entity);
+    E update(E entity);
 
 }
