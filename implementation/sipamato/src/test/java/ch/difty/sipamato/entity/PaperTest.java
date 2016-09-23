@@ -19,7 +19,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void setUp() {
         super.setUp();
 
-        p.setId(1);
+        p.setId(1l);
         p.setDoi(VALID_DOI);
         p.setPmid(1000);
         p.setAuthors(VALID_AUTHORS);
