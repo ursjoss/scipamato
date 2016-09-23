@@ -50,18 +50,31 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import ch.difty.sipamato.lib.Asserts;
+
 /**
  * An example <code>TransactionProvider</code> implementing the {@link TransactionProvider} contract for use with
  * Spring.
  *
  * @author Lukas Eder
+ * @author Urs Joss
  */
 public class SpringTransactionProvider implements TransactionProvider {
 
     private static final JooqLogger log = JooqLogger.getLogger(SpringTransactionProvider.class);
 
+    private final DataSourceTransactionManager txMgr;
+
     @Autowired
-    DataSourceTransactionManager txMgr;
+    public SpringTransactionProvider(DataSourceTransactionManager txMgr) {
+        Asserts.notNull(txMgr, "txMgr");
+        this.txMgr = txMgr;
+    }
+
+    /** protected for test purposes */
+    protected DataSourceTransactionManager getTxMgr() {
+        return txMgr;
+    }
 
     @Override
     public void begin(TransactionContext ctx) {
