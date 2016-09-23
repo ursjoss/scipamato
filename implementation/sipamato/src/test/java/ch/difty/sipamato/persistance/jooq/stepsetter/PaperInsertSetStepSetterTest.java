@@ -102,7 +102,7 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
 
     @Override
     protected void verifyCallToAllNonKeyFields() {
-        verify(entityMock).getPmid();
+        verify(entityMock).getPmId();
         verify(entityMock).getDoi();
         verify(entityMock).getAuthors();
         verify(entityMock).getFirstAuthor();

@@ -104,7 +104,7 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
     @Override
     protected void verifyCallToAllAllFields() {
         verify(entityMock).getId();
-        verify(entityMock).getPmid();
+        verify(entityMock).getPmId();
         verify(entityMock).getDoi();
         verify(entityMock).getAuthors();
         verify(entityMock).getFirstAuthor();

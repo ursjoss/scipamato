@@ -38,7 +38,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
     public static final String RESULT_EFFECT_ESTIMATE = "result effect estimate";
 
     public static void entityFixtureWithoutIdFields(Paper entityMock) {
-        when(entityMock.getPmid()).thenReturn(PM_ID);
+        when(entityMock.getPmId()).thenReturn(PM_ID);
         when(entityMock.getDoi()).thenReturn(DOI);
         when(entityMock.getAuthors()).thenReturn(AUTHORS);
         when(entityMock.getFirstAuthor()).thenReturn(FIRST_AUTHOR);
@@ -113,7 +113,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
     @Override
     protected void assertEntity(Paper e) {
         assertThat(e.getId()).isEqualTo(ID.intValue());
-        assertThat(e.getPmid()).isEqualTo(PM_ID);
+        assertThat(e.getPmId()).isEqualTo(PM_ID);
         assertThat(e.getDoi()).isEqualTo(DOI);
         assertThat(e.getAuthors()).isEqualTo(AUTHORS);
         assertThat(e.getFirstAuthor()).isEqualTo(FIRST_AUTHOR);
