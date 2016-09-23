@@ -2,10 +2,16 @@ package ch.difty.sipamato.persistance.repository;
 
 import java.util.List;
 
+import org.jooq.DSLContext;
+import org.jooq.Record;
+import org.jooq.RecordMapper;
+
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.lib.NullArgumentException;
+import ch.difty.sipamato.persistance.jooq.repo.InsertSetStepSetter;
+import ch.difty.sipamato.persistance.jooq.repo.UpdateSetStepSetter;
 
-public interface GenericRepository<E extends SipamatoEntity, ID> {
+public interface GenericRepository<R extends Record, E extends SipamatoEntity, ID, M extends RecordMapper<R, E>> {
 
     /**
      * Add an entity <code>T</code> to the database.
@@ -49,5 +55,13 @@ public interface GenericRepository<E extends SipamatoEntity, ID> {
      * @throws NullArgumentException if the entity is null.
      */
     E update(E entity);
+
+    DSLContext getDslContext();
+
+    M getMapper();
+
+    InsertSetStepSetter<R, E> getInsertSetStepSetter();
+
+    UpdateSetStepSetter<R, E> getUpdateSetStepSetter();
 
 }

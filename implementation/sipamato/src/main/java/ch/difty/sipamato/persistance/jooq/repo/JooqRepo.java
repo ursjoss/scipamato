@@ -18,7 +18,7 @@ import ch.difty.sipamato.persistance.repository.GenericRepository;
 
 @Profile("DB_JOOQ")
 @Transactional(readOnly = true)
-public abstract class JooqRepo<R extends Record, E extends SipamatoEntity, ID, T extends TableImpl<R>, M extends RecordMapper<R, E>> implements GenericRepository<E, ID> {
+public abstract class JooqRepo<R extends Record, E extends SipamatoEntity, ID, T extends TableImpl<R>, M extends RecordMapper<R, E>> implements GenericRepository<R, E, ID, M> {
 
     private final DSLContext dsl;
     private final M mapper;
@@ -36,23 +36,23 @@ public abstract class JooqRepo<R extends Record, E extends SipamatoEntity, ID, T
         this.updateSetStepSetter = updateSetStepSetter;
     }
 
-    /** protected for test purposes */
-    protected DSLContext getDslContext() {
+    @Override
+    public DSLContext getDslContext() {
         return dsl;
     }
 
-    /** protected for test purposes */
-    protected M getMapper() {
+    @Override
+    public M getMapper() {
         return mapper;
     }
 
-    /** protected for test purposes */
-    protected InsertSetStepSetter<R, E> getInsertSetStepSetter() {
+    @Override
+    public InsertSetStepSetter<R, E> getInsertSetStepSetter() {
         return insertSetStepSetter;
     }
 
-    /** protected for test purposes */
-    protected UpdateSetStepSetter<R, E> getUpdateSetStepSetter() {
+    @Override
+    public UpdateSetStepSetter<R, E> getUpdateSetStepSetter() {
         return updateSetStepSetter;
     }
 

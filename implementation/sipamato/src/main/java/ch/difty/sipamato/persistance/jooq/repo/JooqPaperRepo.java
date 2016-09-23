@@ -20,7 +20,7 @@ public class JooqPaperRepo extends JooqRepo<PaperRecord, Paper, Long, ch.difty.s
     private static final Logger LOGGER = LoggerFactory.getLogger(JooqPaperRepo.class);
 
     @Autowired
-    public JooqPaperRepo(final DSLContext dsl, PaperRecordMapper mapper, InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter, UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter) {
+    public JooqPaperRepo(DSLContext dsl, PaperRecordMapper mapper, InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter, UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter) {
         super(dsl, mapper, insertSetStepSetter, updateSetStepSetter);
     }
 
