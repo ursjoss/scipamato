@@ -1,6 +1,8 @@
 package ch.difty.sipamato.persistance.jooq.repo;
 
 import static ch.difty.sipamato.db.h2.Tables.PAPER;
+import static ch.difty.sipamato.persistance.jooq.repo.JooqPaperRepoIntegrationTest.*;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -38,7 +40,7 @@ public class JooqPaperRepoTransactionIntegrationTest {
     public void teardown() {
 
         // Delete all books that were created in any test
-        dsl.delete(PAPER).where(PAPER.ID.gt(1l)).execute();
+        dsl.delete(PAPER).where(PAPER.ID.gt(MAX_ID_PREPOPULATED)).execute();
     }
 
     @Test
@@ -53,7 +55,7 @@ public class JooqPaperRepoTransactionIntegrationTest {
             for (long i = 0; i < 2; i++)
                 // @formatter:off
                 dsl.insertInto(PAPER)
-                    .set(PAPER.ID, i)
+                    .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
                     .set(PAPER.AUTHORS, "authors")
                     .set(PAPER.FIRST_AUTHOR, "firstAuthor")
                     .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
@@ -71,7 +73,7 @@ public class JooqPaperRepoTransactionIntegrationTest {
             rollback = true;
         }
 
-        assertEquals(1, dsl.fetchCount(PAPER));
+        assertEquals(RECORD_COUNT_PREPOPULATED, dsl.fetchCount(PAPER));
         assertTrue(rollback);
     }
 
@@ -88,7 +90,7 @@ public class JooqPaperRepoTransactionIntegrationTest {
                 for (long i = 0; i < 2; i++)
                     // @formatter:off
                     dsl.insertInto(PAPER)
-                        .set(PAPER.ID, i)
+                        .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
                         .set(PAPER.AUTHORS, "authors")
                         .set(PAPER.FIRST_AUTHOR, "firstAuthor")
                         .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
@@ -107,7 +109,7 @@ public class JooqPaperRepoTransactionIntegrationTest {
             rollback = true;
         }
 
-        assertEquals(1, dsl.fetchCount(PAPER));
+        assertEquals(RECORD_COUNT_PREPOPULATED, dsl.fetchCount(PAPER));
         assertTrue(rollback);
     }
 
@@ -124,7 +126,7 @@ public class JooqPaperRepoTransactionIntegrationTest {
                 // The first insertion will work
                 // @formatter:off
                 dsl.insertInto(PAPER)
-                    .set(PAPER.ID, 2l)
+                    .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
                     .set(PAPER.AUTHORS, "authors")
                     .set(PAPER.FIRST_AUTHOR, "firstAuthor")
                     .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
@@ -134,7 +136,7 @@ public class JooqPaperRepoTransactionIntegrationTest {
                 .execute();
                 // @formatter:off
 
-                assertEquals(2, dsl.fetchCount(PAPER));
+                assertEquals(RECORD_COUNT_PREPOPULATED + 1, dsl.fetchCount(PAPER));
 
                 try {
 
@@ -165,7 +167,7 @@ public class JooqPaperRepoTransactionIntegrationTest {
                 }
 
                 // We should've rolled back to the savepoint
-                assertEquals(2, dsl.fetchCount(PAPER));
+                assertEquals(RECORD_COUNT_PREPOPULATED + 1, dsl.fetchCount(PAPER));
 
                 throw new org.jooq.exception.DataAccessException("Rollback");
             });
@@ -177,7 +179,7 @@ public class JooqPaperRepoTransactionIntegrationTest {
             rollback2.set(true);
         }
 
-        assertEquals(1, dsl.fetchCount(PAPER));
+        assertEquals(RECORD_COUNT_PREPOPULATED, dsl.fetchCount(PAPER));
         assertTrue(rollback2.get());
         assertTrue(rollback2.get());
     }

@@ -17,13 +17,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.entity.Paper;
 
+/**
+ * Note: The test will insert some records into the DB. It will try to wipe those records after the test suite terminates.
+ *
+ * If however, the number of records in the db does not match with the defined constants a few lines further down, the 
+ * additional records in the db would be wiped out by the tearDown method. So please make sure the number of records (plus
+ * the highest id) match the declarations further down.
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SipamatoApplication.class)
 @ActiveProfiles({ "DB_JOOQ" })
 public class JooqPaperRepoIntegrationTest {
 
-    private static final int RECORD_COUNT_PREPOPULATED = 1;
-    private static final Long MAX_ID_PREPOPULATED = 1l;
+    static final int RECORD_COUNT_PREPOPULATED = 2;
+    static final Long MAX_ID_PREPOPULATED = 2l;
 
     @Autowired
     private DSLContext dsl;
@@ -41,13 +48,15 @@ public class JooqPaperRepoIntegrationTest {
     public void findingAll() {
         List<Paper> papers = repo.findAll();
         assertThat(papers).hasSize(RECORD_COUNT_PREPOPULATED);
-        assertThat(papers.get(0).getId()).isEqualTo(MAX_ID_PREPOPULATED.intValue());
+        assertThat(papers.get(0).getId()).isEqualTo(1);
+        assertThat(papers.get(1).getId()).isEqualTo(MAX_ID_PREPOPULATED);
     }
 
     @Test
     public void findingById_withExistingId_returnsEntity() {
         Paper paper = repo.findById(1l);
-        assertThat(paper.getId()).isEqualTo(MAX_ID_PREPOPULATED.intValue());
+        paper = repo.findById(2l);
+        assertThat(paper.getId()).isEqualTo(MAX_ID_PREPOPULATED);
     }
 
     @Test
@@ -62,7 +71,7 @@ public class JooqPaperRepoIntegrationTest {
 
         Paper saved = repo.add(p);
         assertThat(saved).isNotNull();
-        assertThat(saved.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED.intValue());
+        assertThat(saved.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED);
         assertThat(saved.getAuthors()).isEqualTo("a");
     }
 
@@ -81,7 +90,7 @@ public class JooqPaperRepoIntegrationTest {
     public void updatingRecord() {
         Paper paper = repo.add(makeMinimalPaper());
         assertThat(paper).isNotNull();
-        assertThat(paper.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED.intValue());
+        assertThat(paper.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED);
         final long id = paper.getId();
         assertThat(paper.getAuthors()).isEqualTo("a");
 
@@ -99,7 +108,7 @@ public class JooqPaperRepoIntegrationTest {
     public void deletingRecord() {
         Paper paper = repo.add(makeMinimalPaper());
         assertThat(paper).isNotNull();
-        assertThat(paper.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED.intValue());
+        assertThat(paper.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED);
         final long id = paper.getId();
         assertThat(paper.getAuthors()).isEqualTo("a");
 
