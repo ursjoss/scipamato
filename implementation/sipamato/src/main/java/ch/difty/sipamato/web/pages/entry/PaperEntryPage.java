@@ -56,9 +56,8 @@ public class PaperEntryPage extends BasePage {
 
             @Override
             protected void onSubmit() {
-                info("form submitted. Paper" + getModelObject());
                 repo.update(getModelObject());
-                info("Successfully saved " + getModelObject());
+                info("Successfully saved Paper with id " + getModelObject().getId() + ": " + getModelObject().getAuthors() + " (" + getModelObject().getPublicationYear() + ")");
             }
         };
         add(form);
