@@ -176,7 +176,7 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
 
     @Test
     public void consideringSettingKeyOf_withNonNullId_doesSetId() {
-        when(getEntity().getId()).thenReturn(ID.intValue());
+        when(getEntity().getId()).thenReturn(ID);
 
         getSetter().considerSettingKeyOf(getMoreStep(), getEntity());
 

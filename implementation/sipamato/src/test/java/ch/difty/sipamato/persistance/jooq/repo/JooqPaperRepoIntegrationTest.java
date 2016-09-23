@@ -46,13 +46,13 @@ public class JooqPaperRepoIntegrationTest {
 
     @Test
     public void findingById_withExistingId_returnsEntity() {
-        Paper paper = repo.findById(1);
+        Paper paper = repo.findById(1l);
         assertThat(paper.getId()).isEqualTo(MAX_ID_PREPOPULATED.intValue());
     }
 
     @Test
     public void findingById_withNonExistingId_returnsNull() {
-        assertThat(repo.findById(-1)).isNull();
+        assertThat(repo.findById(-1l)).isNull();
     }
 
     @Test
@@ -82,7 +82,7 @@ public class JooqPaperRepoIntegrationTest {
         Paper paper = repo.add(makeMinimalPaper());
         assertThat(paper).isNotNull();
         assertThat(paper.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED.intValue());
-        final int id = paper.getId();
+        final long id = paper.getId();
         assertThat(paper.getAuthors()).isEqualTo("a");
 
         paper.setAuthors("b");
@@ -100,7 +100,7 @@ public class JooqPaperRepoIntegrationTest {
         Paper paper = repo.add(makeMinimalPaper());
         assertThat(paper).isNotNull();
         assertThat(paper.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED.intValue());
-        final int id = paper.getId();
+        final long id = paper.getId();
         assertThat(paper.getAuthors()).isEqualTo("a");
 
         Paper deleted = repo.delete(id);

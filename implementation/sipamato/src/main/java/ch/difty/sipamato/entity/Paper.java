@@ -41,8 +41,7 @@ public class Paper extends SipamatoEntity {
     public static final String RESULT_EXPOSURE_RANGE = "resultExposureRange";
     public static final String RESULT_EFFECT_ESTIMATE = "resultEffectEstimate";
 
-    // TODO use Long
-    private Integer id;
+    private Long id;
 
     /*
      * Digital Object Identifier (see http://www.doi.org)
@@ -95,11 +94,11 @@ public class Paper extends SipamatoEntity {
     private String comment;
     private String intern;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -59,7 +59,7 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
     public void considerSettingKeyOf(InsertSetMoreStep<PaperRecord> step, Paper entity) {
         Asserts.notNull(step, "step");
         Asserts.notNull(entity, "entity");
-        Integer id = entity.getId();
+        Long id = entity.getId();
         if (id != null)
             step.set(PAPER.ID, id.longValue());
     }

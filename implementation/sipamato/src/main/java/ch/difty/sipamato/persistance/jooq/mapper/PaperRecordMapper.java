@@ -15,7 +15,7 @@ public class PaperRecordMapper implements RecordMapper<PaperRecord, Paper> {
     public Paper map(PaperRecord from) {
         Asserts.notNull(from);
         Paper to = new Paper();
-        to.setId(from.getId().intValue());
+        to.setId(from.getId());
         to.setPmid(from.getPmId());
         to.setDoi(from.getDoi());
         to.setAuthors(from.getAuthors());

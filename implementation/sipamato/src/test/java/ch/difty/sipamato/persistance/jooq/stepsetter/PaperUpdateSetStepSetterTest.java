@@ -62,7 +62,7 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
     @Override
     protected void entityFixture() {
-        when(entityMock.getId()).thenReturn(ID.intValue());
+        when(entityMock.getId()).thenReturn(ID);
         PaperRecordMapperTest.entityFixtureWithoutIdFields(entityMock);
     }
 
