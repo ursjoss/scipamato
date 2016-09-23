@@ -23,10 +23,12 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
+import ch.difty.sipamato.persistance.repository.PaperRepository;
 import ch.difty.sipamato.web.pages.BasePage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
@@ -38,6 +40,9 @@ public class PaperEntryPage extends BasePage {
 
     private Form<Paper> form;
 
+    @SpringBean
+    private PaperRepository repo;
+
     public PaperEntryPage(PageParameters parameters) {
         super(parameters);
     }
@@ -45,12 +50,14 @@ public class PaperEntryPage extends BasePage {
     protected void onInitialize() {
         super.onInitialize();
 
-        form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(getNewDefaultModel())) {
+        Paper p = repo.findById(1l);
+        form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(Model.of(p))) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onSubmit() {
-                info("form submitted. Paper:" + getModelObject());
+                repo.update(getModelObject());
+                info("Successfully saved Paper with id " + getModelObject().getId() + ": " + getModelObject().getAuthors() + " (" + getModelObject().getPublicationYear() + ")");
             }
         };
         add(form);

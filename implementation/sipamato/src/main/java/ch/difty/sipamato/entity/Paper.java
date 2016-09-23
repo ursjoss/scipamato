@@ -11,7 +11,7 @@ public class Paper extends SipamatoEntity {
     private static final long serialVersionUID = 1L;
 
     public static final String ID = "id";
-    public static final String PMID = "pmid";
+    public static final String PMID = "pmId";
     public static final String DOI = "doi";
     public static final String AUTHORS = "authors";
     public static final String FIRST_AUTHOR = "firstAuthor";
@@ -57,7 +57,7 @@ public class Paper extends SipamatoEntity {
     @Pattern(regexp = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$", flags = { Flag.CASE_INSENSITIVE }, message = "{paper.invalidDOI}")
     private String doi;
 
-    private Integer pmid;
+    private Integer pmId;
 
     @NotNull
     @Pattern(regexp = "^[\\w-']+(\\s[\\w-']+){0,}(,\\s[\\w-']+(\\s[\\w-']+){0,}){0,}\\.$", message = "{paper.invalidAuthor}")
@@ -110,12 +110,12 @@ public class Paper extends SipamatoEntity {
         this.doi = doi;
     }
 
-    public Integer getPmid() {
-        return pmid;
+    public Integer getPmId() {
+        return pmId;
     }
 
-    public void setPmid(Integer pmid) {
-        this.pmid = pmid;
+    public void setPmId(Integer pmId) {
+        this.pmId = pmId;
     }
 
     public String getAuthors() {
@@ -229,8 +229,8 @@ public class Paper extends SipamatoEntity {
         sb.append(id);
         sb.append(", doi=");
         sb.append(doi);
-        sb.append(", pmid=");
-        sb.append(pmid);
+        sb.append(", pmId=");
+        sb.append(pmId);
         sb.append(", authors=");
         sb.append(authors);
         sb.append(", title=");

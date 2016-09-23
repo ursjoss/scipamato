@@ -22,7 +22,7 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
 
         // @formatter:off
         return step
-            .set(PAPER.PM_ID, e.getPmid())
+            .set(PAPER.PM_ID, e.getPmId())
             .set(PAPER.DOI, e.getDoi())
             .set(PAPER.AUTHORS, e.getAuthors())
             .set(PAPER.FIRST_AUTHOR, e.getFirstAuthor())
