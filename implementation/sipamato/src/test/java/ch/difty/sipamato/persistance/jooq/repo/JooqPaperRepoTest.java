@@ -73,8 +73,6 @@ public class JooqPaperRepoTest {
     private DeleteConditionStep<PaperRecord> deleteConditionStepMock;
     @Mock
     private UpdateSetFirstStep<PaperRecord> updateSetFirstStepMock;
-    //    @Mock
-    //    private UpdateSetStep<PaperRecord> updateSetStepMock;
     @Mock
     private UpdateConditionStep<PaperRecord> updateConditionStepMock;
     @Mock
@@ -83,11 +81,6 @@ public class JooqPaperRepoTest {
     private UpdateResultStep<PaperRecord> updateResultStepMock;
     @Mock
     private UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetterMock;
-    //    @Mock
-    //    private UpdateConditionStep<PaperRecord> updateConditionStepMock;
-    //    @Mock
-    //    private UpdateSetMoreStep<PaperRecord> updateSetMoreStepMock;
-    //
 
     @SuppressWarnings("unchecked")
     @Before
@@ -176,7 +169,7 @@ public class JooqPaperRepoTest {
         when(selectWhereStepMock.where(PAPER.ID.equal(id))).thenReturn(selectConditionStepMock);
         when(selectConditionStepMock.fetchOneInto(Paper.class)).thenReturn(persistedEntity);
 
-        repo.findById(id.intValue());
+        repo.findById(id);
 
         verify(dslMock).selectFrom(PAPER);
         verify(selectWhereStepMock).where(PAPER.ID.equal(id));
@@ -224,10 +217,10 @@ public class JooqPaperRepoTest {
 
     @Test
     public void deleting_withIdNotFoundInDb_returnsNull() {
-        final Integer id = 1;
+        final Long id = 1l;
         repo = new JooqPaperRepo(dslMock, mapperMock, insertSetStepSetterMock, updateSetStepSetterMock) {
             @Override
-            public Paper findById(Integer id) {
+            public Paper findById(Long id) {
                 return null;
             }
         };
@@ -236,10 +229,10 @@ public class JooqPaperRepoTest {
 
     @Test
     public void deleting_validPersistentEntity_returnsDeletedEntity() {
-        final Integer id = 10;
+        final Long id = 10l;
         repo = new JooqPaperRepo(dslMock, mapperMock, insertSetStepSetterMock, updateSetStepSetterMock) {
             @Override
-            public Paper findById(Integer id) {
+            public Paper findById(Long id) {
                 return persistedEntity;
             }
         };
@@ -255,10 +248,10 @@ public class JooqPaperRepoTest {
 
     @Test
     public void deleting_validPersistentEntity_withFailingDelete_returnsDeletedEntity() {
-        final Integer id = 10;
+        final Long id = 10l;
         repo = new JooqPaperRepo(dslMock, mapperMock, insertSetStepSetterMock, updateSetStepSetterMock) {
             @Override
-            public Paper findById(Integer id) {
+            public Paper findById(Long id) {
                 return persistedEntity;
             }
         };
@@ -291,7 +284,7 @@ public class JooqPaperRepoTest {
 
     @Test
     public void updating_withValidEntity_changesAndPersistsEntityToDb_andReturnsFetchedEntity() {
-        Integer id = 20;
+        final Long id = 20l;
         when(unpersistedEntity.getId()).thenReturn(id);
         when(unpersistedEntity.getId()).thenReturn(id);
         when(updateSetMoreStepMock.where(PAPER.ID.equal(id.longValue()))).thenReturn(updateConditionStepMock);
@@ -311,7 +304,7 @@ public class JooqPaperRepoTest {
 
     @Test
     public void updating_withUnsuccessfulRetrievalAfterPersistingAttempt_returnsNull() {
-        Integer id = 20;
+        final Long id = 20l;
         when(unpersistedEntity.getId()).thenReturn(id);
         when(unpersistedEntity.getId()).thenReturn(id);
         when(updateSetMoreStepMock.where(PAPER.ID.equal(id.longValue()))).thenReturn(updateConditionStepMock);
