@@ -11,6 +11,7 @@ import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;
 import org.jooq.impl.DefaultExecuteListenerProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -42,8 +43,9 @@ public class JooqSpringBootConfiguration {
     }
 
     @Bean
-    public TransactionProvider transactionProvider() {
-        return new SpringTransactionProvider();
+    @Autowired
+    public TransactionProvider transactionProvider(DataSourceTransactionManager transactionManager) {
+        return new SpringTransactionProvider(transactionManager);
     }
 
     @Bean

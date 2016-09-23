@@ -98,7 +98,7 @@ public abstract class JooqRepo<R extends Record, E extends SipamatoEntity, ID, T
         insertSetStepSetter.considerSettingKeyOf(step, entity);
 
         R saved = step.returning().fetchOne();
-        if (saved != null) { // TODO getTableImpl().getName() direkt???
+        if (saved != null) {
             getLogger().info("Inserted 1 record: {} with id {}.", getTable().getName(), getIdFrom(saved));
             return mapper.map(saved);
         } else {
