@@ -28,6 +28,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
+import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.persistance.repository.PaperRepository;
 import ch.difty.sipamato.web.pages.BasePage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
@@ -42,6 +43,9 @@ public class PaperEntryPage extends BasePage {
 
     @SpringBean
     private PaperRepository repo;
+
+    @SpringBean
+    private AuthorParserFactory authorParserFactory;
 
     public PaperEntryPage(PageParameters parameters) {
         super(parameters);
@@ -151,7 +155,7 @@ public class PaperEntryPage extends BasePage {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 if (!overridden.getModelObject()) {
-                    AuthorParser p = new AuthorParser(authors.getValue());
+                    AuthorParser p = authorParserFactory.createParser(authors.getValue());
                     firstAuthor.setModelObject(p.getFirstAuthor().orElse(null));
                 }
                 target.add(firstAuthor);

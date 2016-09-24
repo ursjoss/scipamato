@@ -1,74 +1,32 @@
 package ch.difty.sipamato.logic.parsing;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import org.apache.wicket.util.string.Strings;
+/**
+ * Implementations of the {@link AuthorParser} interface accept an <literal>author</literal> String
+ * (typically as a constructor argument). The string is lexed and parsed and individual authors are
+ * maintained. There are various ways to access the parsed authors, especially the <literal>First Author</literal
+ * is of importance.
+ *
+ * @author u.joss
+ */
+public interface AuthorParser {
 
-import ch.difty.sipamato.lib.NullArgumentException;
+    /**
+     * @return the <literal>first author</literal>, as Optional.
+     */
+    Optional<String> getFirstAuthor();
 
-public class AuthorParser {
+    /**
+     * @return the original unparsed <literal>authors string</literal>
+     */
+    String getAuthorsString();
 
-    private final String authorsString;
-    private final List<Author> authors;
-
-    public AuthorParser(final String authorsString) {
-        if (authorsString == null) {
-            throw new NullArgumentException("authorsString");
-        }
-        this.authorsString = authorsString.trim();
-
-        final String as = preprocess();
-        final List<String> authorStrings = lexAuthors(as);
-        this.authors = parseAuthors(authorStrings);
-    }
-
-    private String preprocess() {
-        if (authorsString.endsWith(".")) {
-            return authorsString.substring(0, authorsString.length() - 1);
-        } else {
-            return authorsString;
-        }
-    }
-
-    private List<String> lexAuthors(String authors) {
-        return Arrays.asList(authors.split(" *, *"));
-    }
-
-    private List<Author> parseAuthors(List<String> authorStrings) {
-        final List<Author> authors = new ArrayList<>();
-        for (final String as : authorStrings) {
-            authors.add(parseAuthor(as));
-        }
-        return authors;
-    }
-
-    private Author parseAuthor(final String authorString) {
-        String lastName = authorString;
-        String firstName = "";
-
-        final List<String> tokens = Arrays.asList(authorString.split(" +"));
-        if (tokens.size() > 1) {
-            int i = tokens.size() - 1;
-            firstName = tokens.get(i).trim();
-            lastName = Strings.join(" ", tokens.subList(0, i));
-        }
-        return new Author(authorString, lastName, firstName);
-    }
-
-    public Optional<String> getFirstAuthor() {
-        return authors.stream().findFirst().map(Author::getLastName);
-    }
-
-    public String getAuthorsString() {
-        return authorsString;
-    }
-
-    public Stream<Author> getAuthors() {
-        return authors.stream();
-    }
+    /**
+     * A stream of {@link Author}s.
+     * @return
+     */
+    Stream<Author> getAuthors();
 
 }

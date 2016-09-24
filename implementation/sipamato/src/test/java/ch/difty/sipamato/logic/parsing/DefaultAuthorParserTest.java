@@ -8,15 +8,15 @@ import org.junit.Test;
 
 import ch.difty.sipamato.lib.NullArgumentException;
 
-public class AuthorParserTest {
+public class DefaultAuthorParserTest {
 
-    private AuthorParser p;
+    private DefaultAuthorParser p;
     private String authorsString;
 
     @Test
     public void degenerateConstruction() {
         try {
-            new AuthorParser(null);
+            new DefaultAuthorParser(null);
             fail("Should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("authorsString must not be null.");
@@ -26,12 +26,12 @@ public class AuthorParserTest {
     @Test
     public void canReturnOriginalAuthorsString() {
         authorsString = "Bond J.";
-        p = new AuthorParser(authorsString);
+        p = new DefaultAuthorParser(authorsString);
         assertThat(p.getAuthorsString()).isEqualTo(authorsString);
     }
 
     private void assertFirstAuthorOf(String input, String expected) {
-        p = new AuthorParser(input);
+        p = new DefaultAuthorParser(input);
         assertThat(p.getFirstAuthor().orElse("n.a.")).isEqualTo(expected);
     }
 
@@ -68,9 +68,16 @@ public class AuthorParserTest {
 
     @Test
     public void canReturnAuthors() {
-        p = new AuthorParser("Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Krewsky D, Beckermann BS, Samet JM.");
+        p = new DefaultAuthorParser("Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Krewsky D, Beckermann BS, Samet JM.");
         assertThat(p.getAuthors().map(Author::getLastName).collect(toList())).containsExactly("Turner", "Cohen", "Jerret", "Gapstur", "Driver", "Krewsky", "Beckermann", "Samet");
         assertThat(p.getAuthors().map(Author::getFirstName).collect(toList())).containsExactly("MC", "A", "M", "SM", "WR", "D", "BS", "JM");
+    }
+
+    @Test
+    public void canDoUmlaute() {
+        p = new DefaultAuthorParser("Flückiger P, Bäni HU.");
+        assertThat(p.getAuthors().map(Author::getLastName).collect(toList())).containsExactly("Flückiger", "Bäni");
+        assertThat(p.getAuthors().map(Author::getFirstName).collect(toList())).containsExactly("P", "HU");
     }
 
 }
