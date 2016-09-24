@@ -1,4 +1,4 @@
-package ch.difty.sipamato.persistance.jooq.repo;
+package ch.difty.sipamato.persistance.jooq;
 
 import static org.assertj.core.api.Assertions.fail;
 import static org.fest.assertions.api.Assertions.assertThat;

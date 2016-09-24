@@ -1,4 +1,4 @@
-package ch.difty.sipamato.persistance.jooq.mapper;
+package ch.difty.sipamato.persistance.jooq.paper;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -7,6 +7,7 @@ import org.jooq.RecordMapper;
 
 import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.persistance.jooq.RecordMapperTest;
 
 public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> {
 

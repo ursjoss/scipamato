@@ -1,4 +1,4 @@
-package ch.difty.sipamato.persistance.jooq.repo;
+package ch.difty.sipamato.persistance.jooq;
 
 import static ch.difty.sipamato.db.h2.Tables.PAPER;
 import static java.util.Arrays.asList;

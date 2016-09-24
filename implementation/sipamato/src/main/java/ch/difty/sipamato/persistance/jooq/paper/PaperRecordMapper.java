@@ -1,4 +1,4 @@
-package ch.difty.sipamato.persistance.jooq.mapper;
+package ch.difty.sipamato.persistance.jooq.paper;
 
 import org.jooq.RecordMapper;
 import org.springframework.stereotype.Component;
