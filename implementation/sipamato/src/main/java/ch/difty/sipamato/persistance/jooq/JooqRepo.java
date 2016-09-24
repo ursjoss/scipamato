@@ -116,7 +116,7 @@ public abstract class JooqRepo<R extends Record, E extends SipamatoEntity, ID, T
         if (toBeDeleted != null) {
             final int deleteCount = dsl.delete(getTable()).where(getTableId().equal(id)).execute();
             if (deleteCount > 0) {
-                getLogger().info("Deleted {} record: {} with id {}.", deleteCount, getTable().getName(), String.valueOf(id));
+                getLogger().info("Deleted {} record: {} with id {}.", deleteCount, getTable().getName(), id);
             } else {
                 getLogger().error("Unable to delete {} with id {}", getTable().getName(), id);
             }
