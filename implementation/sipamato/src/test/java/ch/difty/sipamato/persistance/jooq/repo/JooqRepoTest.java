@@ -170,10 +170,10 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
     @Test
     public void nullCheck() {
         assertThat(getRepo()).isNotNull();
-        assertThat(getRepo().getDslContext()).isNotNull().isEqualTo(getDsl());
-        assertThat(getRepo().getMapper()).isNotNull().isEqualTo(getMapper());
-        assertThat(getRepo().getInsertSetStepSetter()).isNotNull().isEqualTo(getInsertSetStepSetter());
-        assertThat(getRepo().getUpdateSetStepSetter()).isNotNull().isEqualTo(getUpdateSetStepSetter());
+        assertThat(getDsl()).isNotNull();
+        assertThat(getMapper()).isNotNull();
+        assertThat(getInsertSetStepSetter()).isNotNull();
+        assertThat(getUpdateSetStepSetter()).isNotNull();
     }
 
     @SuppressWarnings("unchecked")
