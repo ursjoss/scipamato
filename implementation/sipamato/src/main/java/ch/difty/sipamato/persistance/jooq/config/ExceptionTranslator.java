@@ -22,7 +22,7 @@
  *
  * For more information, please visit: http://www.jooq.org/licenses
  */
-package ch.difty.sipamato.persistance.jooq.exception;
+package ch.difty.sipamato.persistance.jooq.config;
 
 import org.jooq.ExecuteContext;
 import org.jooq.SQLDialect;
