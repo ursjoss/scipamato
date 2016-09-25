@@ -10,6 +10,15 @@ public class Paper extends SipamatoEntity {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * One or more of the extended word characters including - and '
+     */
+    private static final String RE_WW = "[" + RE_W + "-']+";
+    private static final String RE_S_WW = "\\s" + RE_WW;
+
+    private static final String AUTHOR_REGEX = "^" + RE_WW + "(" + RE_S_WW + "){0,}(," + RE_S_WW + "(" + RE_S_WW + "){0,}){0,}\\.$";
+    private static final String DOI_REGEX = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$";
+
     public static final String ID = "id";
     public static final String PMID = "pmId";
     public static final String DOI = "doi";
@@ -54,13 +63,13 @@ public class Paper extends SipamatoEntity {
      *
      * /^10.\d{4,9}/[-._;()/:A-Z0-9]+$/i
      */
-    @Pattern(regexp = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$", flags = { Flag.CASE_INSENSITIVE }, message = "{paper.invalidDOI}")
+    @Pattern(regexp = DOI_REGEX, flags = { Flag.CASE_INSENSITIVE }, message = "{paper.invalidDOI}")
     private String doi;
 
     private Integer pmId;
 
     @NotNull
-    @Pattern(regexp = "^[\\w-']+(\\s[\\w-']+){0,}(,\\s[\\w-']+(\\s[\\w-']+){0,}){0,}\\.$", message = "{paper.invalidAuthor}")
+    @Pattern(regexp = AUTHOR_REGEX, message = "{paper.invalidAuthor}")
     private String authors;
 
     @NotNull

@@ -179,4 +179,10 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         validateAndAssertFailure(Paper.GOALS, null, "{javax.validation.constraints.NotNull.message}");
     }
 
+    @Test
+    public void validatingPaper_withNonAsciiChars_passes() {
+        final String valueWithUmlaut = "ÄäÖöÜüéèàêç A.";
+        p.setAuthors(valueWithUmlaut);
+        verifySuccessfulValidation();
+    }
 }
