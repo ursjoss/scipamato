@@ -19,6 +19,7 @@ import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
 /**
  * @author Lukas Eder
  * @author Thomas Darimont
+ * @author Urs Joss
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -32,8 +33,8 @@ public class JooqEntityDslIntegrationTest {
     public void testPaperRecords() throws Exception {
         Result<PaperRecord> result = create.selectFrom(PAPER).orderBy(PAPER.ID).fetch();
 
-        assertThat(result).hasSize(2);
-        assertEquals(asList(1l, 2l), result.getValues(0));
+        assertThat(result).hasSize(TestDbConstants.RECORD_COUNT_PREPOPULATED);
+        assertEquals(asList(1l, 2l, 3l), result.getValues(0));
     }
 
 }

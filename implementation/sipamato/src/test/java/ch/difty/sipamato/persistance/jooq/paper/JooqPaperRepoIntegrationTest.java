@@ -1,6 +1,8 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
 import static ch.difty.sipamato.db.h2.Tables.PAPER;
+import static ch.difty.sipamato.persistance.jooq.TestDbConstants.MAX_ID_PREPOPULATED;
+import static ch.difty.sipamato.persistance.jooq.TestDbConstants.RECORD_COUNT_PREPOPULATED;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 import java.util.List;
@@ -29,9 +31,6 @@ import ch.difty.sipamato.entity.Paper;
 @ActiveProfiles({ "DB_JOOQ" })
 public class JooqPaperRepoIntegrationTest {
 
-    static final int RECORD_COUNT_PREPOPULATED = 2;
-    static final Long MAX_ID_PREPOPULATED = 2l;
-
     @Autowired
     private DSLContext dsl;
 
@@ -49,13 +48,14 @@ public class JooqPaperRepoIntegrationTest {
         List<Paper> papers = repo.findAll();
         assertThat(papers).hasSize(RECORD_COUNT_PREPOPULATED);
         assertThat(papers.get(0).getId()).isEqualTo(1);
-        assertThat(papers.get(1).getId()).isEqualTo(MAX_ID_PREPOPULATED);
+        assertThat(papers.get(1).getId()).isEqualTo(2);
+        assertThat(papers.get(2).getId()).isEqualTo(3);
     }
 
     @Test
     public void findingById_withExistingId_returnsEntity() {
         Paper paper = repo.findById(1l);
-        paper = repo.findById(2l);
+        paper = repo.findById((long) RECORD_COUNT_PREPOPULATED);
         assertThat(paper.getId()).isEqualTo(MAX_ID_PREPOPULATED);
     }
 
