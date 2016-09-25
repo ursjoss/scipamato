@@ -54,7 +54,7 @@ public class PaperEntryPage extends BasePage {
     protected void onInitialize() {
         super.onInitialize();
 
-        Paper p = repo.findById(1l);
+        Paper p = repo.findById(2l);
         form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(Model.of(p))) {
             private static final long serialVersionUID = 1L;
 
@@ -164,22 +164,11 @@ public class PaperEntryPage extends BasePage {
     }
 
     private void addFieldAndLabel(FormComponent<?> field) {
-        addFieldAndLabel(field, Optional.empty());
+        addFieldAndLabel(form, field, Optional.empty());
     }
 
     private void addFieldAndLabel(FormComponent<?> field, PropertyValidator<?> pv) {
-        addFieldAndLabel(field, Optional.ofNullable(pv));
-    }
-
-    private void addFieldAndLabel(FormComponent<?> field, Optional<PropertyValidator<?>> pv) {
-        String id = field.getId();
-        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
-        form.add(new Label(id + LABEL_TAG, labelModel));
-        field.setLabel(labelModel);
-        form.add(field);
-        if (pv.isPresent()) {
-            field.add(pv.get());
-        }
+        addFieldAndLabel(form, field, Optional.ofNullable(pv));
     }
 
     private void addCheckBoxAndLabel(CheckBox field) {

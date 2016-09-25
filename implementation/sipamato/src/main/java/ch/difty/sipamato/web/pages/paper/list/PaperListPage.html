@@ -2,7 +2,19 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <body>
     <wicket:extend>
-        Hello ListPage
+        <form wicket:id="searchForm">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-10">
+                        <div wicket:id="searchFieldLabel"></div>
+                        <input wicket:id="searchField" class="form-control"></input>
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="submit" value="submit"></input>
+                    </div>
+                </div>
+            </div>
+        </form>
     </wicket:extend>
 </body>
 </html>

@@ -1,11 +1,18 @@
 package ch.difty.sipamato.web.pages;
 
+import java.util.Optional;
+
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
+import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.devutils.debugbar.DebugBar;
 import org.apache.wicket.markup.html.GenericWebPage;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
@@ -80,6 +87,17 @@ public abstract class BasePage extends GenericWebPage<Void> {
 
     protected boolean signIn(String username, String password) {
         return AuthenticatedWebSession.get().signIn(username, password);
+    }
+
+    protected void addFieldAndLabel(Form<?> form, FormComponent<?> field, Optional<PropertyValidator<?>> pv) {
+        String id = field.getId();
+        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
+        form.add(new Label(id + LABEL_TAG, labelModel));
+        field.setLabel(labelModel);
+        form.add(field);
+        if (pv.isPresent()) {
+            field.add(pv.get());
+        }
     }
 
 }
