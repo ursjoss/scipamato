@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.pages.entry;
+package ch.difty.sipamato.web.pages.paper.entry;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

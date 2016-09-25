@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.pages.entry;
+package ch.difty.sipamato.web.pages.paper.entry;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
