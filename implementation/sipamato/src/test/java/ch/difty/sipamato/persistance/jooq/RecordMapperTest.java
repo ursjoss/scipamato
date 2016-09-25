@@ -1,4 +1,4 @@
-package ch.difty.sipamato.persistance.jooq.mapper;
+package ch.difty.sipamato.persistance.jooq;
 
 import org.jooq.Record;
 import org.jooq.RecordMapper;

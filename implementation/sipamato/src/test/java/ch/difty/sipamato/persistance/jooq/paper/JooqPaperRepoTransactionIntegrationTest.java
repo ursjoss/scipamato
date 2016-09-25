@@ -1,8 +1,8 @@
-package ch.difty.sipamato.persistance.jooq.repo;
+package ch.difty.sipamato.persistance.jooq.paper;
 
 import static ch.difty.sipamato.db.h2.Tables.PAPER;
-import static ch.difty.sipamato.persistance.jooq.repo.JooqPaperRepoIntegrationTest.MAX_ID_PREPOPULATED;
-import static ch.difty.sipamato.persistance.jooq.repo.JooqPaperRepoIntegrationTest.RECORD_COUNT_PREPOPULATED;
+import static ch.difty.sipamato.persistance.jooq.paper.JooqPaperRepoIntegrationTest.MAX_ID_PREPOPULATED;
+import static ch.difty.sipamato.persistance.jooq.paper.JooqPaperRepoIntegrationTest.RECORD_COUNT_PREPOPULATED;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

@@ -1,12 +1,12 @@
-package ch.difty.sipamato.persistance.jooq.stepsetter;
+package ch.difty.sipamato.persistance.jooq;
 
 import static org.assertj.core.api.Assertions.fail;
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
+import org.jooq.InsertSetMoreStep;
+import org.jooq.InsertSetStep;
 import org.jooq.Record;
-import org.jooq.UpdateSetFirstStep;
-import org.jooq.UpdateSetMoreStep;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,25 +16,24 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.lib.NullArgumentException;
-import ch.difty.sipamato.persistance.jooq.repo.UpdateSetStepSetter;
 
 @RunWith(MockitoJUnitRunner.class)
-public abstract class UpdateSetStepSetterTest<R extends Record, E extends SipamatoEntity> {
+public abstract class InsertSetStepSetterTest<R extends Record, E extends SipamatoEntity> {
 
     @Mock
-    private UpdateSetFirstStep<R> stepMock;
+    private InsertSetStep<R> stepMock;
     @Mock
-    private UpdateSetMoreStep<R> moreStepMock;
+    private InsertSetMoreStep<R> moreStepMock;
 
-    protected UpdateSetFirstStep<R> getStep() {
+    protected InsertSetStep<R> getStep() {
         return stepMock;
     }
 
-    protected UpdateSetMoreStep<R> getMoreStep() {
+    protected InsertSetMoreStep<R> getMoreStep() {
         return moreStepMock;
     }
 
-    protected abstract UpdateSetStepSetter<R, E> getSetter();
+    protected abstract InsertSetStepSetter<R, E> getSetter();
 
     protected abstract E getEntity();
 
@@ -63,9 +62,9 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends Sipama
     }
 
     @Test
-    public void settingFields_withNullSetter_throws() {
+    public void settingNonKeyFields_withNullSetter_throws() {
         try {
-            getSetter().setFieldsFor(null, getEntity());
+            getSetter().setNonKeyFieldsFor(null, getEntity());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("step must not be null.");
@@ -73,9 +72,9 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends Sipama
     }
 
     @Test
-    public void settingFields_withNullEntity_throws() {
+    public void settingNonKeyFields_withNullEntity_throws() {
         try {
-            getSetter().setFieldsFor(stepMock, null);
+            getSetter().setNonKeyFieldsFor(getStep(), null);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("entity must not be null.");
@@ -84,14 +83,34 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends Sipama
 
     @Test
     public void settingNonKeyFields() {
-        getSetter().setFieldsFor(stepMock, getEntity());
+        getSetter().setNonKeyFieldsFor(getStep(), getEntity());
 
-        verifyCallToAllAllFields();
+        verifyCallToAllNonKeyFields();
         verifySetting();
     }
 
-    protected abstract void verifyCallToAllAllFields();
+    protected abstract void verifyCallToAllNonKeyFields();
 
     protected abstract void verifySetting();
+
+    @Test
+    public void consideringSettingKeyOf_withNullSetter_throws() {
+        try {
+            getSetter().considerSettingKeyOf(null, getEntity());
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("step must not be null.");
+        }
+    }
+
+    @Test
+    public void consideringSettingKeyOf_withNullEntity_throws() {
+        try {
+            getSetter().considerSettingKeyOf(getMoreStep(), null);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("entity must not be null.");
+        }
+    }
 
 }

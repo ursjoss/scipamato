@@ -1,4 +1,4 @@
-package ch.difty.sipamato.persistance.jooq.repo;
+package ch.difty.sipamato.persistance.jooq.paper;
 
 import static ch.difty.sipamato.db.h2.tables.Paper.PAPER;
 
@@ -11,7 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.persistance.jooq.mapper.PaperRecordMapper;
+import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
+import ch.difty.sipamato.persistance.jooq.JooqRepo;
+import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 import ch.difty.sipamato.persistance.repository.PaperRepository;
 
 @Repository

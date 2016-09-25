@@ -18,8 +18,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 
-import ch.difty.sipamato.persistance.jooq.exception.ExceptionTranslator;
-
 /**
  * @author Jacques Gonzalez
  */

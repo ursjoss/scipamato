@@ -1,27 +1,29 @@
-package ch.difty.sipamato.persistance.jooq.stepsetter;
+package ch.difty.sipamato.persistance.jooq.paper;
 
 import static ch.difty.sipamato.db.h2.tables.Paper.PAPER;
 
-import org.jooq.InsertSetMoreStep;
-import org.jooq.InsertSetStep;
+import org.jooq.UpdateSetFirstStep;
+import org.jooq.UpdateSetMoreStep;
 import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.Asserts;
-import ch.difty.sipamato.persistance.jooq.repo.InsertSetStepSetter;
+import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 
 @Component
-public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord, Paper> {
+public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord, Paper> {
 
     /** {@inheritDoc} */
     @Override
-    public InsertSetMoreStep<PaperRecord> setNonKeyFieldsFor(InsertSetStep<PaperRecord> step, Paper e) {
+    public UpdateSetMoreStep<PaperRecord> setFieldsFor(UpdateSetFirstStep<PaperRecord> step, Paper e) {
         Asserts.notNull(step, "step");
         Asserts.notNull(e, "entity");
-
+        Long id = e.getId();
+        Asserts.notNull(id, "entity.id");
         // @formatter:off
         return step
+            .set(PAPER.ID, id.longValue())
             .set(PAPER.PM_ID, e.getPmId())
             .set(PAPER.DOI, e.getDoi())
             .set(PAPER.AUTHORS, e.getAuthors())
@@ -51,17 +53,7 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
 
             .set(PAPER.RESULT_EXPOSURE_RANGE, e.getResultExposureRange())
             .set(PAPER.RESULT_EFFECT_ESTIMATE, e.getResultEffectEstimate());
-        // @formatter:on
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void considerSettingKeyOf(InsertSetMoreStep<PaperRecord> step, Paper entity) {
-        Asserts.notNull(step, "step");
-        Asserts.notNull(entity, "entity");
-        Long id = entity.getId();
-        if (id != null)
-            step.set(PAPER.ID, id.longValue());
+         // @formatter:on
     }
 
 }

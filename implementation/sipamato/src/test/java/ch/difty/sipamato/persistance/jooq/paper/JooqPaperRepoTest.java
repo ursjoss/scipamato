@@ -1,4 +1,4 @@
-package ch.difty.sipamato.persistance.jooq.repo;
+package ch.difty.sipamato.persistance.jooq.paper;
 
 import static ch.difty.sipamato.db.h2.tables.Paper.PAPER;
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -12,7 +12,7 @@ import org.mockito.Mock;
 import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.NullArgumentException;
-import ch.difty.sipamato.persistance.jooq.mapper.PaperRecordMapper;
+import ch.difty.sipamato.persistance.jooq.JooqRepoTest;
 import ch.difty.sipamato.persistance.repository.GenericRepository;
 
 public class JooqPaperRepoTest extends JooqRepoTest<PaperRecord, Paper, Long, ch.difty.sipamato.db.h2.tables.Paper, PaperRecordMapper> {

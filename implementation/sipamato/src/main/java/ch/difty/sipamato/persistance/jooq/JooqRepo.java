@@ -1,4 +1,4 @@
-package ch.difty.sipamato.persistance.jooq.repo;
+package ch.difty.sipamato.persistance.jooq;
 
 import java.util.List;
 
@@ -36,22 +36,21 @@ public abstract class JooqRepo<R extends Record, E extends SipamatoEntity, ID, T
         this.updateSetStepSetter = updateSetStepSetter;
     }
 
-    @Override
-    public DSLContext getDslContext() {
+    /** protected for test purposes */
+    protected DSLContext getDslContext() {
         return dsl;
     }
 
-    @Override
+    /** protected for test purposes */
     public M getMapper() {
         return mapper;
     }
 
-    @Override
     public InsertSetStepSetter<R, E> getInsertSetStepSetter() {
         return insertSetStepSetter;
     }
 
-    @Override
+    /** protected for test purposes */
     public UpdateSetStepSetter<R, E> getUpdateSetStepSetter() {
         return updateSetStepSetter;
     }
