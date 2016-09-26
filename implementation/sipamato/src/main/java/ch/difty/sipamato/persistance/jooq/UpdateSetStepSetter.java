@@ -12,9 +12,9 @@ import ch.difty.sipamato.entity.SipamatoEntity;
  * @author u.joss
  *
  * @param <R> Record extending {@link Record}
- * @param <E> Entity extending {@link SapamtoEntity}
+ * @param <T> Entity extending {@link SipamtoEntity}
  */
-public interface UpdateSetStepSetter<R extends Record, E extends SipamatoEntity> {
+public interface UpdateSetStepSetter<R extends Record, T extends SipamatoEntity> {
 
     /**
      * Sets all fields from the entity into the step.
@@ -23,6 +23,6 @@ public interface UpdateSetStepSetter<R extends Record, E extends SipamatoEntity>
      * @param entity the entity to set the values from
      * @return {@link UpdateSetMoreStep} for further usage with jOOQ
      */
-    UpdateSetMoreStep<R> setFieldsFor(UpdateSetFirstStep<R> step, E entity);
+    UpdateSetMoreStep<R> setFieldsFor(UpdateSetFirstStep<R> step, T entity);
 
 }

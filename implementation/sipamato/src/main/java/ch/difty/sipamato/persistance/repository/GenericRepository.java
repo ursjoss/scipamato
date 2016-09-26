@@ -1,5 +1,6 @@
 package ch.difty.sipamato.persistance.repository;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.jooq.Record;
@@ -8,7 +9,17 @@ import org.jooq.RecordMapper;
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.lib.NullArgumentException;
 
-public interface GenericRepository<R extends Record, E extends SipamatoEntity, ID, M extends RecordMapper<R, E>> {
+/**
+ * The generic repository interface.
+ *
+ * @author u.joss
+ *
+ * @param <R> the record, extending {@link Record}
+ * @param <T> the entity, extending {@link SipamatoEntity}
+ * @param <ID> the ID of the entity
+ * @param <M> the record mapper mapping records of type <literal>R</literal> into entities of type <literal>T</literal>
+ */
+public interface GenericRepository<R extends Record, T extends SipamatoEntity, ID, M extends RecordMapper<R, T>> extends Serializable {
 
     /**
      * Add an entity <code>T</code> to the database.
@@ -17,7 +28,7 @@ public interface GenericRepository<R extends Record, E extends SipamatoEntity, I
      * @return the added entity, including the generated default values - or <literal>null</literal> if it can't be added.
      * @throws NullArgumentException if the entity is null.
      */
-    E add(E entity);
+    T add(T entity);
 
     /**
      * Remove the persisted entity with the provided id.
@@ -26,14 +37,14 @@ public interface GenericRepository<R extends Record, E extends SipamatoEntity, I
      * @return the deleted entity
      * @throws NullArgumentException if the id is null.
      */
-    E delete(ID id);
+    T delete(ID id);
 
     /**
      * Finds all persisted entitities.
      *
      * @return list of all entities <code>T</code>
      */
-    List<E> findAll();
+    List<T> findAll();
 
     /**
      * Finds the persistent entity <code>T</code> with the provided id.
@@ -42,7 +53,7 @@ public interface GenericRepository<R extends Record, E extends SipamatoEntity, I
      * @return the persisted entity <code>T</code> or null if it can't be found.
      * @throws NullArgumentException if the id is null.
      */
-    E findById(ID id);
+    T findById(ID id);
 
     /**
      * Searches the persistent entity <code>T</code> and modifies it according to the values of the provided entity.
@@ -51,6 +62,6 @@ public interface GenericRepository<R extends Record, E extends SipamatoEntity, I
      * @return the modified persisted entity
      * @throws NullArgumentException if the entity is null.
      */
-    E update(E entity);
+    T update(T entity);
 
 }
