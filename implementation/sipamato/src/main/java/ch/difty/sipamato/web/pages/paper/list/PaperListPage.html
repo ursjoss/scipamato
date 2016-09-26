@@ -10,9 +10,15 @@
                         <input wicket:id="searchField" class="form-control"></input>
                     </div>
                     <div class="col-lg-2">
-                        <input type="submit" value="submit"></input>
+                        <div class="inline">
+                            <a wicket:id="submit">Query</a>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="container-fluid">
+                <table class="dataview" wicket:id="table">[table]
+                </table>
             </div>
         </form>
     </wicket:extend>

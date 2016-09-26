@@ -1,13 +1,11 @@
 package ch.difty.sipamato.entity;
 
-import java.io.Serializable;
-
-public class PaperFilter implements Serializable {
+public class PaperFilter extends SipamatoFilter {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SEARCH_MASK = "searchMask";
-    
+
     private String searchMask;
 
     public String getSearchMask() {
@@ -17,5 +15,5 @@ public class PaperFilter implements Serializable {
     public void setSearchMask(String searchMask) {
         this.searchMask = searchMask;
     }
-    
+
 }
