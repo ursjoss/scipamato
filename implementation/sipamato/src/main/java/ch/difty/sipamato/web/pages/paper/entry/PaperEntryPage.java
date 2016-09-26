@@ -29,7 +29,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
-import ch.difty.sipamato.persistance.repository.PaperRepository;
+import ch.difty.sipamato.persistance.jooq.paper.PaperRepository;
 import ch.difty.sipamato.web.pages.BasePage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 

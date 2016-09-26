@@ -36,7 +36,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.lib.NullArgumentException;
-import ch.difty.sipamato.persistance.repository.GenericRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, ID, T extends TableImpl<R>, M extends RecordMapper<R, E>> {

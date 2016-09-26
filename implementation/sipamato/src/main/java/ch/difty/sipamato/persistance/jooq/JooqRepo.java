@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.lib.Asserts;
-import ch.difty.sipamato.persistance.repository.GenericRepository;
 
 /**
  * The generic jOOQ repository.

@@ -12,7 +12,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.sipamato.entity.PaperFilter;
-import ch.difty.sipamato.persistance.service.JooqPaperService;
+import ch.difty.sipamato.persistance.jooq.paper.JooqPaperService;
 
 @Ignore // TODO wicket application needs to be attached
 @RunWith(MockitoJUnitRunner.class)

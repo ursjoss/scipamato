@@ -1,4 +1,4 @@
-package ch.difty.sipamato.persistance.service;
+package ch.difty.sipamato.persistance.jooq.paper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
-import ch.difty.sipamato.persistance.repository.PaperRepository;
 import ch.difty.sipamato.service.PaperService;
 
 /**

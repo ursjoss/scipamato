@@ -10,7 +10,6 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -21,7 +20,6 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperProvider;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 @MountPath("list")

@@ -1,4 +1,4 @@
-package ch.difty.sipamato.persistance.repository;
+package ch.difty.sipamato.persistance.jooq;
 
 import java.io.Serializable;
 import java.util.List;
