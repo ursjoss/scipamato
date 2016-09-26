@@ -20,6 +20,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperProvider;
+import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 @MountPath("list")
@@ -52,6 +53,7 @@ public class PaperListPage extends BasePage {
 
         DataTable<Paper, String> table = new BootstrapDefaultDataTable<>("table", columns, dataProvider, 20);
         table.setOutputMarkupId(true);
+        table.add(new TableBehavior().striped().hover());
         form.add(table);
 
         addFieldAndLabel(new TextField<String>("searchField", PropertyModel.of(dataProvider, "filterState." + PaperFilter.SEARCH_MASK)));
