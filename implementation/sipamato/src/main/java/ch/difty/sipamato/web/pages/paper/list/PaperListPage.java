@@ -57,10 +57,6 @@ public class PaperListPage extends BasePage {
         form.add(table);
 
         addFieldAndLabel(new TextField<String>("searchField", PropertyModel.of(dataProvider, "filterState." + PaperFilter.SEARCH_MASK)));
-
-        SubmitLink queryButton = new SubmitLink("submit", form);
-        form.add(queryButton.add(new ButtonBehavior()));
-        form.setDefaultButton(queryButton);
     }
 
     private void addFieldAndLabel(FormComponent<?> field) {
