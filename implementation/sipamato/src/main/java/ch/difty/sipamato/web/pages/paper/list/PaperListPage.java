@@ -11,8 +11,8 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColu
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.annotation.mount.MountPath;
 
@@ -39,11 +39,10 @@ public class PaperListPage extends BasePage {
         super.onInitialize();
 
         List<IColumn<Paper, String>> columns = new ArrayList<>();
-        // TODO property model for labels
-        columns.add(new PropertyColumn<Paper, String>(new Model<>("ID"), Paper.ID));
-        columns.add(new PropertyColumn<Paper, String>(new Model<>("Year"), Paper.PUBL_YEAR));
-        columns.add(new PropertyColumn<Paper, String>(new Model<>("Fist Author"), Paper.FIRST_AUTHOR));
-        columns.add(new PropertyColumn<Paper, String>(new Model<>("Titel"), Paper.TITLE));
+        columns.add(new PropertyColumn<Paper, String>(new StringResourceModel("column.header.id", this, null), Paper.ID, Paper.ID));
+        columns.add(new PropertyColumn<Paper, String>(new StringResourceModel("column.header.publicationYear", this, null), Paper.PUBL_YEAR, Paper.PUBL_YEAR));
+        columns.add(new PropertyColumn<Paper, String>(new StringResourceModel("column.header.firstAuthor", this, null), Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR));
+        columns.add(new PropertyColumn<Paper, String>(new StringResourceModel("column.header.title", this, null), Paper.TITLE, Paper.TITLE));
 
         SortablePaperProvider dataProvider = new SortablePaperProvider();
         columns = new ArrayList<>(columns);
