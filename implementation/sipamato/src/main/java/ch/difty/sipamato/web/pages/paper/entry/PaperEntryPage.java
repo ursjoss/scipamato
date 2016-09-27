@@ -35,7 +35,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrap
 
 @MountPath("entry")
 @AuthorizeInstantiation({ "ROLE_USER" })
-public class PaperEntryPage extends BasePage {
+public class PaperEntryPage extends BasePage<Paper> {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,13 +49,17 @@ public class PaperEntryPage extends BasePage {
 
     public PaperEntryPage(PageParameters parameters) {
         super(parameters);
+        initDefaultModel();
+    }
+
+    public PaperEntryPage(IModel<Paper> paperModel) {
+        super(paperModel);
     }
 
     protected void onInitialize() {
         super.onInitialize();
 
-        Paper p = repo.findById(2l);
-        form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(Model.of(p))) {
+        form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(getModel())) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -110,7 +114,7 @@ public class PaperEntryPage extends BasePage {
         queue(new ClientSideBootstrapTabbedPanel<ITab>(tabId, tabs));
     }
 
-    private Model<Paper> getNewDefaultModel() {
+    private Model<Paper> initDefaultModel() {
         final Paper p = new Paper();
         p.setPublicationYear(LocalDate.now().getYear());
         return Model.of(p);

@@ -7,6 +7,11 @@ import ch.difty.sipamato.web.pages.AbstractPageTest;
 public class SipamatoHomePageTest extends AbstractPageTest<SipamatoHomePage> {
 
     @Override
+    protected SipamatoHomePage makePage() {
+        return new SipamatoHomePage(null);
+    }
+
+    @Override
     protected Class<SipamatoHomePage> getPageClass() {
         return SipamatoHomePage.class;
     }
@@ -15,4 +20,5 @@ public class SipamatoHomePageTest extends AbstractPageTest<SipamatoHomePage> {
     protected void assertSpecificComponents() {
         getTester().assertComponent("message", Label.class);
     }
+
 }

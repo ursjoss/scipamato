@@ -2,12 +2,18 @@ package ch.difty.sipamato.web.pages.paper.entry;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.Model;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.web.pages.AbstractPageTest;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
 public class PaperEntryPageTest extends AbstractPageTest<PaperEntryPage> {
+
+    @Override
+    protected PaperEntryPage makePage() {
+        return new PaperEntryPage(Model.of(new Paper()));
+    }
 
     @Override
     protected Class<PaperEntryPage> getPageClass() {

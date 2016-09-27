@@ -10,7 +10,7 @@ import ch.difty.sipamato.web.pages.BasePage;
 
 @MountPath("logout")
 @AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
-public class LogoutPage extends BasePage {
+public class LogoutPage extends BasePage<Void> {
 
     public LogoutPage(PageParameters parameters) {
         super(parameters);

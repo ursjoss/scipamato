@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
@@ -25,7 +26,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarComponents;
 
-public abstract class BasePage extends GenericWebPage<Void> {
+public abstract class BasePage<T> extends GenericWebPage<T> {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,6 +37,10 @@ public abstract class BasePage extends GenericWebPage<Void> {
 
     public BasePage(final PageParameters parameters) {
         super(parameters);
+    }
+
+    public BasePage(final IModel<T> model) {
+        super(model);
     }
 
     @Override
@@ -75,7 +80,7 @@ public abstract class BasePage extends GenericWebPage<Void> {
         return navbar;
     }
 
-    private <P extends BasePage> void addPageLink(Navbar navbar, Class<P> pageClass, String label, IconType iconType) {
+    private <P extends BasePage<?>> void addPageLink(Navbar navbar, Class<P> pageClass, String label, IconType iconType) {
         NavbarButton<Void> button = new NavbarButton<Void>(pageClass, Model.of(label)).setIconType(iconType);
         navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.LEFT, button));
     }

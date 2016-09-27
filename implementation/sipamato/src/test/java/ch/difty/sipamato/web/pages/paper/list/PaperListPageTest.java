@@ -7,6 +7,11 @@ import ch.difty.sipamato.web.pages.AbstractPageTest;
 public class PaperListPageTest extends AbstractPageTest<PaperListPage> {
 
     @Override
+    protected PaperListPage makePage() {
+        return new PaperListPage(null);
+    }
+
+    @Override
     protected Class<PaperListPage> getPageClass() {
         return PaperListPage.class;
     }

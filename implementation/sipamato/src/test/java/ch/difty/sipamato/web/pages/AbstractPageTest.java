@@ -29,7 +29,7 @@ import ch.difty.sipamato.web.pages.login.LoginPage;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public abstract class AbstractPageTest<T extends BasePage> {
+public abstract class AbstractPageTest<T extends BasePage<?>> {
 
     private static final String USERNAME = "testuser";
     private static final String PASSWORD = "secretpw";
@@ -81,12 +81,17 @@ public abstract class AbstractPageTest<T extends BasePage> {
 
     @Test
     public void assertPage() {
-        getTester().startPage(getPageClass());
+        getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
         getTester().debugComponentTrees();
         assertSpecificComponents();
     }
+
+    /**
+     * @return instantiated page
+     */
+    protected abstract T makePage();
 
     /**
      * @return  page class to be tested
