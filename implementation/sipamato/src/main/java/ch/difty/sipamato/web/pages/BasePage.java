@@ -71,9 +71,9 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         navbar.setBrandName(new ResourceModel("brandname", "SiPaMaTo"));
         navbar.setInverted(true);
 
-        addPageLink(navbar, SipamatoHomePage.class, "Home", GlyphIconType.home);
-        addPageLink(navbar, PaperListPage.class, "Papers", GlyphIconType.list);
-        addPageLink(navbar, LogoutPage.class, "Logout", GlyphIconType.edit);
+        addPageLink(navbar, SipamatoHomePage.class, new StringResourceModel("menu.home", this, null).getString(), GlyphIconType.home);
+        addPageLink(navbar, PaperListPage.class, new StringResourceModel("menu.papers", this, null).getString(), GlyphIconType.list);
+        addPageLink(navbar, LogoutPage.class, new StringResourceModel("menu.logout", this, null).getString(), GlyphIconType.edit);
 
         return navbar;
     }
