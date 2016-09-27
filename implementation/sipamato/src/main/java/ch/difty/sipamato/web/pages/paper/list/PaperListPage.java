@@ -9,7 +9,6 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
@@ -31,6 +30,8 @@ public class PaperListPage extends BasePage {
 
     private FilterForm<PaperFilter> form;
 
+    private PaperFilter filter;
+
     public PaperListPage(PageParameters parameters) {
         super(parameters);
     }
@@ -38,28 +39,27 @@ public class PaperListPage extends BasePage {
     protected void onInitialize() {
         super.onInitialize();
 
-        List<IColumn<Paper, String>> columns = new ArrayList<>();
+        initDefaultModel();
+
+        final SortablePaperProvider dataProvider = new SortablePaperProvider(filter);
+        form = new FilterForm<PaperFilter>("searchForm", dataProvider);
+        add(form);
+
+        final List<IColumn<Paper, String>> columns = new ArrayList<>();
         columns.add(new PropertyColumn<Paper, String>(new StringResourceModel("column.header.id", this, null), Paper.ID, Paper.ID));
         columns.add(new PropertyColumn<Paper, String>(new StringResourceModel("column.header.publicationYear", this, null), Paper.PUBL_YEAR, Paper.PUBL_YEAR));
         columns.add(new PropertyColumn<Paper, String>(new StringResourceModel("column.header.firstAuthor", this, null), Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR));
         columns.add(new PropertyColumn<Paper, String>(new StringResourceModel("column.header.title", this, null), Paper.TITLE, Paper.TITLE));
-
-        SortablePaperProvider dataProvider = new SortablePaperProvider();
-        columns = new ArrayList<>(columns);
-
-        form = new FilterForm<PaperFilter>("searchForm", dataProvider);
-        add(form);
-
         DataTable<Paper, String> table = new BootstrapDefaultDataTable<>("table", columns, dataProvider, 20);
         table.setOutputMarkupId(true);
         table.add(new TableBehavior().striped().hover());
         form.add(table);
 
-        addFieldAndLabel(new TextField<String>("searchField", PropertyModel.of(dataProvider, "filterState." + PaperFilter.SEARCH_MASK)));
+        addFieldAndLabel(new TextField<String>("searchField", PropertyModel.of(dataProvider, "filterState." + PaperFilter.SEARCH_MASK)), Optional.empty());
     }
 
-    private void addFieldAndLabel(FormComponent<?> field) {
-        addFieldAndLabel(form, field, Optional.empty());
+    private void initDefaultModel() {
+        filter = new PaperFilter();
     }
 
 }
