@@ -38,17 +38,37 @@ public class PaperListPage extends BasePage<Paper> {
         initDefaultModel();
     }
 
+    private void initDefaultModel() {
+        filter = new PaperFilter();
+    }
+
     protected void onInitialize() {
         super.onInitialize();
 
         final SortablePaperProvider dataProvider = new SortablePaperProvider(filter);
-        FilterForm<PaperFilter> form = new FilterForm<PaperFilter>("searchForm", dataProvider);
-        queue(form);
 
+        queueFilterForm("searchForm", dataProvider);
+        queueDataTable("table", dataProvider);
+        queueFieldAndLabel(new TextField<String>("searchField", PropertyModel.of(dataProvider, "filterState." + PaperFilter.SEARCH_MASK)), Optional.empty());
+    }
+
+    private void queueFilterForm(final String id, final SortablePaperProvider dataProvider) {
+        FilterForm<PaperFilter> form = new FilterForm<PaperFilter>(id, dataProvider);
+        queue(form);
+    }
+
+    private void queueDataTable(final String id, final SortablePaperProvider dataProvider) {
+        final DataTable<Paper, String> table = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, 20);
+        table.setOutputMarkupId(true);
+        table.add(new TableBehavior().striped().hover());
+        queue(table);
+    }
+
+    private List<IColumn<Paper, String>> makeTableColumns() {
         final List<IColumn<Paper, String>> columns = new ArrayList<>();
-        columns.add(new PropertyColumn<Paper, String>(new StringResourceModel("column.header.id", this, null), Paper.ID, Paper.ID));
-        columns.add(new PropertyColumn<Paper, String>(new StringResourceModel("column.header.publicationYear", this, null), Paper.PUBL_YEAR, Paper.PUBL_YEAR));
-        columns.add(new PropertyColumn<Paper, String>(new StringResourceModel("column.header.firstAuthor", this, null), Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR));
+        columns.add(makePropertyColumn("id", Paper.ID, Paper.ID));
+        columns.add(makePropertyColumn("firstAuthor", Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR));
+        columns.add(makePropertyColumn("publicationYear", Paper.PUBL_YEAR, Paper.PUBL_YEAR));
         columns.add(new ClickablePropertyColumn<Paper, String>(new StringResourceModel("column.header.title", this, null), Paper.TITLE, Paper.TITLE) {
             private static final long serialVersionUID = 1L;
 
@@ -58,16 +78,11 @@ public class PaperListPage extends BasePage<Paper> {
             }
 
         });
-        DataTable<Paper, String> table = new BootstrapDefaultDataTable<>("table", columns, dataProvider, 20);
-        table.setOutputMarkupId(true);
-        table.add(new TableBehavior().striped().hover());
-        queue(table);
-
-        queueFieldAndLabel(new TextField<String>("searchField", PropertyModel.of(dataProvider, "filterState." + PaperFilter.SEARCH_MASK)), Optional.empty());
+        return columns;
     }
 
-    private void initDefaultModel() {
-        filter = new PaperFilter();
+    private PropertyColumn<Paper, String> makePropertyColumn(String colResourceId, String propExpression, String sortProperty) {
+        return new PropertyColumn<Paper, String>(new StringResourceModel("column.header." + colResourceId, this, null), sortProperty, propExpression);
     }
 
 }
