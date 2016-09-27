@@ -117,5 +117,7 @@ public class JooqPaperRepoIntegrationTest {
 
         assertThat(repo.findById(id)).isNull();
     }
+    
+    // TODO test findByExpression
 
 }

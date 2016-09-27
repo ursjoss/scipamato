@@ -27,10 +27,10 @@ public class ClickablePropertyColumn<T, S> extends AbstractColumn<T, S> {
     private final SerializableConsumer<IModel<T>> consumer;
 
     public ClickablePropertyColumn(IModel<String> displayModel, String property, SerializableConsumer<IModel<T>> consumer) {
-        this(displayModel, property, null, consumer);
+        this(displayModel, null, property, consumer);
     }
 
-    public ClickablePropertyColumn(IModel<String> displayModel, String property, S sort, SerializableConsumer<IModel<T>> consumer) {
+    public ClickablePropertyColumn(IModel<String> displayModel, S sort, String property, SerializableConsumer<IModel<T>> consumer) {
         super(displayModel, sort);
         this.property = property;
         this.consumer = consumer;

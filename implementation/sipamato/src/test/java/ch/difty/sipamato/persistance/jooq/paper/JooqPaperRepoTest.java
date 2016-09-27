@@ -11,11 +11,12 @@ import org.mockito.Mock;
 
 import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.PaperFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.persistance.jooq.GenericRepository;
 import ch.difty.sipamato.persistance.jooq.JooqRepoTest;
 
-public class JooqPaperRepoTest extends JooqRepoTest<PaperRecord, Paper, Long, ch.difty.sipamato.db.h2.tables.Paper, PaperRecordMapper> {
+public class JooqPaperRepoTest extends JooqRepoTest<PaperRecord, Paper, Long, ch.difty.sipamato.db.h2.tables.Paper, PaperRecordMapper, PaperFilter> {
 
     private static final Long SAMPLE_ID = 3l;
 
@@ -35,7 +36,7 @@ public class JooqPaperRepoTest extends JooqRepoTest<PaperRecord, Paper, Long, ch
     }
 
     @Override
-    protected GenericRepository<PaperRecord, Paper, Long, PaperRecordMapper> makeRepoFindingEntityById(Paper paper) {
+    protected GenericRepository<PaperRecord, Paper, Long, PaperRecordMapper, PaperFilter> makeRepoFindingEntityById(Paper paper) {
         return new JooqPaperRepo(getDsl(), getMapper(), getInsertSetStepSetter(), getUpdateSetStepSetter()) {
             private static final long serialVersionUID = 1L;
 

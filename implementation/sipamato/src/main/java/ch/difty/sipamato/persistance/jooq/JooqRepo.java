@@ -1,18 +1,31 @@
 package ch.difty.sipamato.persistance.jooq;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
+import org.jooq.SortField;
 import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Profile;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
+import ch.difty.sipamato.entity.SipamatoFilter;
 import ch.difty.sipamato.lib.Asserts;
 
 /**
@@ -25,10 +38,12 @@ import ch.difty.sipamato.lib.Asserts;
  * @param <ID> the id of entity <literal>T</literal>
  * @param <TI> the table implementation of record <literal>R</literal>
  * @param <M> the record mapper, mapping record <literal>R</literal> into entity <literal>T</literal>
+ * @param <F> the filter, extending {@link SipamatoFilter}
  */
 @Profile("DB_JOOQ")
 @Transactional(readOnly = true)
-public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>> implements GenericRepository<R, T, ID, M> {
+public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends SipamatoFilter>
+        implements GenericRepository<R, T, ID, M, F> {
 
     private static final long serialVersionUID = 1L;
 
@@ -73,9 +88,14 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
     protected abstract Logger getLogger();
 
     /**
-     * @return the Entity Class <code>E.class</code>
+     * @return the Entity Class <code>T.class</code>
      */
     protected abstract Class<? extends T> getEntityClass();
+
+    /**
+     * @return the Record Class <code>R.class</code>
+     */
+    protected abstract Class<? extends R> getRecordClass();
 
     /**
      * @return the jOOQ generated table of type <code>T</code>
@@ -98,6 +118,12 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
      * @return the id of type <code>ID</code>
      */
     protected abstract ID getIdFrom(T entity);
+
+    /**
+     * @param filter the filter to translate
+     * @return the translated {@link Condition}s
+     */
+    protected abstract Condition createWhereConditions(F filter);
 
     /** {@inheritDoc} */
     @Override
@@ -142,6 +168,7 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
         return dsl.selectFrom(getTable()).fetchInto(getEntityClass());
     }
 
+    /** {@inheritDoc} */
     @Override
     public T findById(final ID id) {
         Asserts.notNull(id, "id");
@@ -165,4 +192,60 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
             return null;
         }
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public int countByFilter(F filter) {
+        return dsl.fetchCount(dsl.selectOne().from(getTable()).where(createWhereConditions(filter)));
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Page<T> findByFilter(F filter, Pageable pageable) {
+        final List<R> queryResults = dsl.selectFrom(getTable()).where(createWhereConditions(filter)).orderBy(getSortFields(pageable.getSort())).fetchInto(getRecordClass());
+        final List<T> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
+        return new PageImpl<>(entities, pageable, (long) countByFilter(filter));
+    }
+
+    private Collection<SortField<T>> getSortFields(Sort sortSpecification) {
+        Collection<SortField<T>> querySortFields = new ArrayList<>();
+
+        if (sortSpecification == null) {
+            return querySortFields;
+        }
+
+        Iterator<Sort.Order> specifiedFields = sortSpecification.iterator();
+
+        while (specifiedFields.hasNext()) {
+            Sort.Order specifiedField = specifiedFields.next();
+
+            String sortFieldName = specifiedField.getProperty();
+            Sort.Direction sortDirection = specifiedField.getDirection();
+
+            TableField<R, T> tableField = getTableField(sortFieldName);
+            SortField<T> querySortField = convertTableFieldToSortField(tableField, sortDirection);
+            querySortFields.add(querySortField);
+        }
+
+        return querySortFields;
+    }
+
+    @SuppressWarnings("unchecked")
+    private TableField<R, T> getTableField(String sortFieldName) {
+        TableField<R, T> sortField = null;
+        try {
+            Field tableField = getTable().getClass().getField(sortFieldName.toUpperCase());
+            sortField = (TableField<R, T>) tableField.get(getTable());
+        } catch (NoSuchFieldException | IllegalAccessException ex) {
+            String errorMessage = String.format("Could not find table field: {}", sortFieldName);
+            throw new InvalidDataAccessApiUsageException(errorMessage, ex);
+        }
+
+        return sortField;
+    }
+
+    private SortField<T> convertTableFieldToSortField(TableField<R, T> tableField, Sort.Direction sortDirection) {
+        return sortDirection == Sort.Direction.ASC ? tableField.asc() : tableField.desc();
+    }
+
 }

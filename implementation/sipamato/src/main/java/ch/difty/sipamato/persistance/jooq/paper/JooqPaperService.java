@@ -1,10 +1,9 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ch.difty.sipamato.entity.Paper;
@@ -28,29 +27,15 @@ public class JooqPaperService implements PaperService {
         this.repo = repo;
     }
 
-    // TODO implement paging and finding by filter in Repo and replace this hand-rolled paging/filtering -> move them to JooqService
-    private List<Paper> filterPapers(List<Paper> papers, PaperFilter filter) {
-        String searchMask = filter != null ? filter.getSearchMask() : null;
-        if (StringUtils.isEmpty(searchMask)) {
-            return papers;
-        } else {
-            String sm = searchMask.toLowerCase();
-            return papers.stream()
-                    .filter(p -> p.getAuthors().toLowerCase().contains(sm) || p.getTitle().toLowerCase().contains(sm) || p.getResult().toLowerCase().contains(sm)
-                            || p.getMethods().toLowerCase().contains(sm))
-                    .collect(Collectors.toList());
-        }
-    }
-
+    /** {@inheritDoc} */
     @Override
-    public List<Paper> findByFilter(PaperFilter filter, long first, long count) {
-        List<Paper> papers = repo.findAll();
-        return filterPapers(papers, filter).subList((int) first, (int) (first + count));
+    public List<Paper> findByFilter(PaperFilter filter, Pageable pageable) {
+        return repo.findByFilter(filter, pageable).getContent();
     }
 
+    /** {@inheritDoc} */
     @Override
     public int countByFilter(PaperFilter filter) {
-        return filterPapers(repo.findAll(), filter).size();
+        return repo.countByFilter(filter);
     }
-
 }

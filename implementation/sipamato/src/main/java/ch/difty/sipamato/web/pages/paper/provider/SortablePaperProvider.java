@@ -9,6 +9,9 @@ import org.apache.wicket.injection.Injector;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
@@ -49,8 +52,15 @@ public class SortablePaperProvider extends SortableDataProvider<Paper, String> i
     }
 
     @Override
-    public Iterator<Paper> iterator(long first, long count) {
-        return service.findByFilter(filter, first, count).iterator();
+    public Iterator<Paper> iterator(long offset, long size) {
+        Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
+        String sortProp = getSort().getProperty();
+        Pageable pageable = new PageRequest(getPageIndex(offset, size), (int) size, dir, sortProp);
+        return service.findByFilter(filter, pageable).iterator();
+    }
+
+    private int getPageIndex(long from, long size) {
+        return (int) (from / size);
     }
 
     @Override
