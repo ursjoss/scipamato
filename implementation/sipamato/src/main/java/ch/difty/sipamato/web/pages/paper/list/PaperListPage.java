@@ -50,7 +50,11 @@ public class PaperListPage extends BasePage<Paper> {
 
         queueFilterForm("searchForm", dataProvider);
         queueDataTable("table", dataProvider);
-        queueFieldAndLabel(new TextField<String>("searchField", PropertyModel.of(dataProvider, "filterState." + PaperFilter.SEARCH_MASK)), Optional.empty());
+        queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(dataProvider, "filterState." + PaperFilter.AUTHOR_MASK)), Optional.empty());
+        queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(dataProvider, "filterState." + PaperFilter.METHODS_MASK)), Optional.empty());
+        queueFieldAndLabel(new TextField<String>("fieldSearch", PropertyModel.of(dataProvider, "filterState." + PaperFilter.SEARCH_MASK)), Optional.empty());
+        queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(dataProvider, "filterState." + PaperFilter.PUB_YEAR_FROM)), Optional.empty());
+        queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(dataProvider, "filterState." + PaperFilter.PUB_YEAR_UNTIL)), Optional.empty());
     }
 
     private void queueFilterForm(final String id, final SortablePaperProvider dataProvider) {
@@ -67,10 +71,11 @@ public class PaperListPage extends BasePage<Paper> {
 
     private List<IColumn<Paper, String>> makeTableColumns() {
         final List<IColumn<Paper, String>> columns = new ArrayList<>();
-        columns.add(makePropertyColumn(Paper.ID, Paper.ID));
-        columns.add(makePropertyColumn(Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR));
-        columns.add(makePropertyColumn(Paper.PUBL_YEAR, Paper.PUBL_YEAR));
-        columns.add(makeClickableColumn(Paper.TITLE, Paper.TITLE, (IModel<Paper> m) -> setResponsePage(new PaperEntryPage(m))));
+        // TODO get rid of db stuff define table fields somewhere else
+        columns.add(makePropertyColumn(Paper.ID, ch.difty.sipamato.db.h2.tables.Paper.PAPER.ID.getName()));
+        columns.add(makePropertyColumn(Paper.FIRST_AUTHOR, ch.difty.sipamato.db.h2.tables.Paper.PAPER.FIRST_AUTHOR.getName()));
+        columns.add(makePropertyColumn(Paper.PUBL_YEAR, ch.difty.sipamato.db.h2.tables.Paper.PAPER.PUBLICATION_YEAR.getName()));
+        columns.add(makeClickableColumn(Paper.TITLE, ch.difty.sipamato.db.h2.tables.Paper.PAPER.TITLE.getName(), (IModel<Paper> m) -> setResponsePage(new PaperEntryPage(m))));
         return columns;
     }
 

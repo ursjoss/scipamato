@@ -34,7 +34,7 @@ public class JooqEntityDslIntegrationTest {
         Result<PaperRecord> result = create.selectFrom(PAPER).orderBy(PAPER.ID).fetch();
 
         assertThat(result).hasSize(TestDbConstants.RECORD_COUNT_PREPOPULATED);
-        assertEquals(asList(1l, 2l, 3l), result.getValues(0));
+        assertEquals(asList(1l, 2l, 3l, 4l), result.getValues(0));
     }
 
 }

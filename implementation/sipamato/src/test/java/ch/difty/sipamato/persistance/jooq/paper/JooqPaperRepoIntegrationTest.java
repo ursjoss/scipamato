@@ -50,6 +50,7 @@ public class JooqPaperRepoIntegrationTest {
         assertThat(papers.get(0).getId()).isEqualTo(1);
         assertThat(papers.get(1).getId()).isEqualTo(2);
         assertThat(papers.get(2).getId()).isEqualTo(3);
+        assertThat(papers.get(3).getId()).isEqualTo(4);
     }
 
     @Test
@@ -117,5 +118,7 @@ public class JooqPaperRepoIntegrationTest {
 
         assertThat(repo.findById(id)).isNull();
     }
+    
+    // TODO test findByExpression
 
 }

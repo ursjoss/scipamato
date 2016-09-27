@@ -5,8 +5,11 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.RecordMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
+import ch.difty.sipamato.entity.SipamatoFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
 
 /**
@@ -18,8 +21,9 @@ import ch.difty.sipamato.lib.NullArgumentException;
  * @param <T> the entity, extending {@link SipamatoEntity}
  * @param <ID> the ID of the entity
  * @param <M> the record mapper mapping records of type <literal>R</literal> into entities of type <literal>T</literal>
+ * @param <F> the type of the filter extending {@link SipamatorFilter}
  */
-public interface GenericRepository<R extends Record, T extends SipamatoEntity, ID, M extends RecordMapper<R, T>> extends Serializable {
+public interface GenericRepository<R extends Record, T extends SipamatoEntity, ID, M extends RecordMapper<R, T>, F extends SipamatoFilter> extends Serializable {
 
     /**
      * Add an entity <code>T</code> to the database.
@@ -40,7 +44,7 @@ public interface GenericRepository<R extends Record, T extends SipamatoEntity, I
     T delete(ID id);
 
     /**
-     * Finds all persisted entitities.
+     * Finds all persisted entities.
      *
      * @return list of all entities <code>T</code>
      */
@@ -64,4 +68,17 @@ public interface GenericRepository<R extends Record, T extends SipamatoEntity, I
      */
     T update(T entity);
 
+    /**
+     * Finds all persisted entities matching the provided filter. 
+     *
+     * @return list of all matching entities <code>T</code>
+     */
+    Page<T> findByFilter(F filter, Pageable pageable);
+
+    /**
+     * Counts all persisted entities matching the provided filter. 
+     *
+     * @return list of all matching entities <code>T</code>
+     */
+    int countByFilter(F filter);
 }

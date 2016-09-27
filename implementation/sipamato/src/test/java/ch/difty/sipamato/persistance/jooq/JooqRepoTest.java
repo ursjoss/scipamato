@@ -35,12 +35,13 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
+import ch.difty.sipamato.entity.SipamatoFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
 
 @RunWith(MockitoJUnitRunner.class)
-public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, ID, T extends TableImpl<R>, M extends RecordMapper<R, E>> {
+public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, ID, T extends TableImpl<R>, M extends RecordMapper<R, E>, F extends SipamatoFilter> {
 
-    private GenericRepository<R, E, ID, M> repo;
+    private GenericRepository<R, E, ID, M, F> repo;
 
     private final List<E> entities = new ArrayList<>();
 
@@ -97,7 +98,7 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
     /**
      * @return the specific repository instantiated 
      */
-    protected abstract GenericRepository<R, E, ID, M> getRepo();
+    protected abstract GenericRepository<R, E, ID, M, F> getRepo();
 
     /**
      * Hand-rolled spy that returns the provided entity in the method <code>findById(ID id)</code>
@@ -105,7 +106,7 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
      * @param entity the entity to be found.
      * @return the entity
      */
-    protected abstract GenericRepository<R, E, ID, M> makeRepoFindingEntityById(E entity);
+    protected abstract GenericRepository<R, E, ID, M, F> makeRepoFindingEntityById(E entity);
 
     protected abstract E getPersistedEntity();
 
