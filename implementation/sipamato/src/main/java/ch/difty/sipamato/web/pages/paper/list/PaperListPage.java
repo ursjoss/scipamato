@@ -18,6 +18,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
+import ch.difty.sipamato.web.component.SerializableConsumer;
 import ch.difty.sipamato.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
@@ -66,23 +67,18 @@ public class PaperListPage extends BasePage<Paper> {
 
     private List<IColumn<Paper, String>> makeTableColumns() {
         final List<IColumn<Paper, String>> columns = new ArrayList<>();
-        columns.add(makePropertyColumn("id", Paper.ID, Paper.ID));
-        columns.add(makePropertyColumn("firstAuthor", Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR));
-        columns.add(makePropertyColumn("publicationYear", Paper.PUBL_YEAR, Paper.PUBL_YEAR));
-        columns.add(new ClickablePropertyColumn<Paper, String>(new StringResourceModel("column.header.title", this, null), Paper.TITLE, Paper.TITLE) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onClick(IModel<Paper> clicked) {
-                setResponsePage(new PaperEntryPage(clicked));
-            }
-
-        });
+        columns.add(makePropertyColumn(Paper.ID, Paper.ID));
+        columns.add(makePropertyColumn(Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR));
+        columns.add(makePropertyColumn(Paper.PUBL_YEAR, Paper.PUBL_YEAR));
+        columns.add(makeClickableColumn(Paper.TITLE, Paper.TITLE, (IModel<Paper> m) -> setResponsePage(new PaperEntryPage(m))));
         return columns;
     }
 
-    private PropertyColumn<Paper, String> makePropertyColumn(String colResourceId, String propExpression, String sortProperty) {
-        return new PropertyColumn<Paper, String>(new StringResourceModel("column.header." + colResourceId, this, null), sortProperty, propExpression);
+    private PropertyColumn<Paper, String> makePropertyColumn(String propExpression, String sortProperty) {
+        return new PropertyColumn<Paper, String>(new StringResourceModel("column.header." + propExpression, this, null), sortProperty, propExpression);
     }
 
+    private ClickablePropertyColumn<Paper, String> makeClickableColumn(String propExpression, String sortProperty, SerializableConsumer<IModel<Paper>> consumer) {
+        return new ClickablePropertyColumn<Paper, String>(new StringResourceModel("column.header." + propExpression, this, null), sortProperty, propExpression, consumer);
+    }
 }

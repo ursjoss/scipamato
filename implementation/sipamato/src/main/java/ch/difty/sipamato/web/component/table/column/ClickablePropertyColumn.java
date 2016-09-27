@@ -9,34 +9,40 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 
+import ch.difty.sipamato.web.component.SerializableConsumer;
+
 /**
- * ClickablePropertyColumn, a slightly modified version of the one provided in 
- * <literal>Apache Wicket Coockbook</literal>, thanks to Igor Vaynberg.
+ * ClickablePropertyColumn, a lambdified version of the one provided in
+ * <literal>Apache Wicket Cookbook</literal> - thanks to Igor Vaynberg.
  *
  * @author u.joss
  *
  * @param <T> the type of the object that will be rendered in this column's cells
  * @param <S> the type of the sort property
  */
-public abstract class ClickablePropertyColumn<T, S> extends AbstractColumn<T, S> {
+public class ClickablePropertyColumn<T, S> extends AbstractColumn<T, S> {
     private static final long serialVersionUID = 1L;
 
     private final String property;
+    private final SerializableConsumer<IModel<T>> consumer;
 
-    public ClickablePropertyColumn(IModel<String> displayModel, String property) {
-        this(displayModel, property, null);
+    public ClickablePropertyColumn(IModel<String> displayModel, String property, SerializableConsumer<IModel<T>> consumer) {
+        this(displayModel, property, null, consumer);
     }
 
-    public ClickablePropertyColumn(IModel<String> displayModel, String property, S sort) {
+    public ClickablePropertyColumn(IModel<String> displayModel, String property, S sort, SerializableConsumer<IModel<T>> consumer) {
         super(displayModel, sort);
         this.property = property;
+        this.consumer = consumer;
     }
 
     public void populateItem(Item<ICellPopulator<T>> cellItem, String componentId, IModel<T> rowModel) {
         cellItem.add(new LinkPanel(componentId, rowModel, new PropertyModel<Object>(rowModel, property)));
     }
 
-    protected abstract void onClick(IModel<T> clicked);
+    protected void onClick(IModel<T> clicked) {
+        consumer.accept(clicked);
+    };
 
     private class LinkPanel extends Panel {
         private static final long serialVersionUID = 1L;
