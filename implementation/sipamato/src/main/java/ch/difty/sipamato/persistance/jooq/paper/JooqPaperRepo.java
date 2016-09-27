@@ -14,10 +14,11 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
 import ch.difty.sipamato.persistance.jooq.JooqRepo;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
-import ch.difty.sipamato.persistance.repository.PaperRepository;
 
 @Repository
 public class JooqPaperRepo extends JooqRepo<PaperRecord, Paper, Long, ch.difty.sipamato.db.h2.tables.Paper, PaperRecordMapper> implements PaperRepository {
+
+    private static final long serialVersionUID = 1L;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JooqPaperRepo.class);
 

@@ -14,7 +14,7 @@ import ch.difty.sipamato.web.pages.BasePage;
 @MountPath("/")
 @AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
 @WicketHomePage
-public class SipamatoHomePage extends BasePage {
+public class SipamatoHomePage extends BasePage<Void> {
 
     private static final long serialVersionUID = 1L;
 

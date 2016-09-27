@@ -14,18 +14,30 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.lib.Asserts;
-import ch.difty.sipamato.persistance.repository.GenericRepository;
 
+/**
+ * The generic jOOQ repository.
+ *
+ * @author u.joss
+ *
+ * @param <R> the record, extending {@link Record}
+ * @param <T> the entity type, extending {@link SipamatoEntity}
+ * @param <ID> the id of entity <literal>T</literal>
+ * @param <TI> the table implementation of record <literal>R</literal>
+ * @param <M> the record mapper, mapping record <literal>R</literal> into entity <literal>T</literal>
+ */
 @Profile("DB_JOOQ")
 @Transactional(readOnly = true)
-public abstract class JooqRepo<R extends Record, E extends SipamatoEntity, ID, T extends TableImpl<R>, M extends RecordMapper<R, E>> implements GenericRepository<R, E, ID, M> {
+public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>> implements GenericRepository<R, T, ID, M> {
+
+    private static final long serialVersionUID = 1L;
 
     private final DSLContext dsl;
     private final M mapper;
-    private final InsertSetStepSetter<R, E> insertSetStepSetter;
-    private final UpdateSetStepSetter<R, E> updateSetStepSetter;
+    private final InsertSetStepSetter<R, T> insertSetStepSetter;
+    private final UpdateSetStepSetter<R, T> updateSetStepSetter;
 
-    protected JooqRepo(DSLContext dsl, M mapper, InsertSetStepSetter<R, E> insertSetStepSetter, UpdateSetStepSetter<R, E> updateSetStepSetter) {
+    protected JooqRepo(DSLContext dsl, M mapper, InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter) {
         Asserts.notNull(dsl, "dsl");
         Asserts.notNull(mapper, "mapper");
         Asserts.notNull(insertSetStepSetter, "insertSetStepSetter");
@@ -46,12 +58,12 @@ public abstract class JooqRepo<R extends Record, E extends SipamatoEntity, ID, T
         return mapper;
     }
 
-    public InsertSetStepSetter<R, E> getInsertSetStepSetter() {
+    public InsertSetStepSetter<R, T> getInsertSetStepSetter() {
         return insertSetStepSetter;
     }
 
     /** protected for test purposes */
-    public UpdateSetStepSetter<R, E> getUpdateSetStepSetter() {
+    public UpdateSetStepSetter<R, T> getUpdateSetStepSetter() {
         return updateSetStepSetter;
     }
 
@@ -63,12 +75,12 @@ public abstract class JooqRepo<R extends Record, E extends SipamatoEntity, ID, T
     /**
      * @return the Entity Class <code>E.class</code>
      */
-    protected abstract Class<? extends E> getEntityClass();
+    protected abstract Class<? extends T> getEntityClass();
 
     /**
      * @return the jOOQ generated table of type <code>T</code>
      */
-    protected abstract T getTable();
+    protected abstract TI getTable();
 
     /**
      * @return the jOOQ generated {@link TableField} representing the <code>ID</code>
@@ -85,12 +97,12 @@ public abstract class JooqRepo<R extends Record, E extends SipamatoEntity, ID, T
      * @param entity persisted entity that now holds the ID from the database.
      * @return the id of type <code>ID</code>
      */
-    protected abstract ID getIdFrom(E entity);
+    protected abstract ID getIdFrom(T entity);
 
     /** {@inheritDoc} */
     @Override
     @Transactional(readOnly = false)
-    public E add(final E entity) {
+    public T add(final T entity) {
         Asserts.notNull(entity);
 
         InsertSetMoreStep<R> step = insertSetStepSetter.setNonKeyFieldsFor(dsl.insertInto(getTable()), entity);
@@ -109,10 +121,10 @@ public abstract class JooqRepo<R extends Record, E extends SipamatoEntity, ID, T
     /** {@inheritDoc} */
     @Override
     @Transactional(readOnly = false)
-    public E delete(final ID id) {
+    public T delete(final ID id) {
         Asserts.notNull(id, "id");
 
-        final E toBeDeleted = findById(id);
+        final T toBeDeleted = findById(id);
         if (toBeDeleted != null) {
             final int deleteCount = dsl.delete(getTable()).where(getTableId().equal(id)).execute();
             if (deleteCount > 0) {
@@ -126,12 +138,12 @@ public abstract class JooqRepo<R extends Record, E extends SipamatoEntity, ID, T
 
     /** {@inheritDoc} */
     @Override
-    public List<E> findAll() {
+    public List<T> findAll() {
         return dsl.selectFrom(getTable()).fetchInto(getEntityClass());
     }
 
     @Override
-    public E findById(final ID id) {
+    public T findById(final ID id) {
         Asserts.notNull(id, "id");
         return dsl.selectFrom(getTable()).where(getTableId().equal(id)).fetchOneInto(getEntityClass());
     }
@@ -139,7 +151,7 @@ public abstract class JooqRepo<R extends Record, E extends SipamatoEntity, ID, T
     /** {@inheritDoc} */
     @Override
     @Transactional(readOnly = false)
-    public E update(final E entity) {
+    public T update(final T entity) {
         Asserts.notNull(entity, "entity");
         ID id = getIdFrom(entity);
         Asserts.notNull(id, "entity.id");

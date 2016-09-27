@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.pages.entry;
+package ch.difty.sipamato.web.pages.paper.entry;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,13 +29,13 @@ import org.wicketstuff.annotation.mount.MountPath;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
-import ch.difty.sipamato.persistance.repository.PaperRepository;
+import ch.difty.sipamato.persistance.jooq.paper.PaperRepository;
 import ch.difty.sipamato.web.pages.BasePage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
 @MountPath("entry")
 @AuthorizeInstantiation({ "ROLE_USER" })
-public class PaperEntryPage extends BasePage {
+public class PaperEntryPage extends BasePage<Paper> {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,13 +49,17 @@ public class PaperEntryPage extends BasePage {
 
     public PaperEntryPage(PageParameters parameters) {
         super(parameters);
+        initDefaultModel();
+    }
+
+    public PaperEntryPage(IModel<Paper> paperModel) {
+        super(paperModel);
     }
 
     protected void onInitialize() {
         super.onInitialize();
 
-        Paper p = repo.findById(1l);
-        form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(Model.of(p))) {
+        form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(getModel())) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -64,24 +68,24 @@ public class PaperEntryPage extends BasePage {
                 info("Successfully saved Paper with id " + getModelObject().getId() + ": " + getModelObject().getAuthors() + " (" + getModelObject().getPublicationYear() + ")");
             }
         };
-        add(form);
+        queue(form);
 
-        makeAndAddHeaderFields();
-        makeAndAddTabPanel("tabs");
+        queueHeaderFields();
+        queueTabPanel("tabs");
     }
 
-    private void makeAndAddHeaderFields() {
-        makeAndAddAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
-        addFieldAndLabel(new TextArea<String>(Paper.TITLE), new PropertyValidator<String>());
-        addFieldAndLabel(new TextField<String>(Paper.LOCATION));
+    private void queueHeaderFields() {
+        queueAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
+        queueFieldAndLabel(new TextArea<String>(Paper.TITLE), new PropertyValidator<String>());
+        queueFieldAndLabel(new TextField<String>(Paper.LOCATION));
 
-        addFieldAndLabel(new TextField<Integer>(Paper.ID), new PropertyValidator<Integer>());
-        addFieldAndLabel(new TextField<Integer>(Paper.PUBL_YEAR), new PropertyValidator<Integer>());
-        addFieldAndLabel(new TextField<Integer>(Paper.PMID));
-        addFieldAndLabel(new TextField<String>(Paper.DOI), new PropertyValidator<String>());
+        queueFieldAndLabel(new TextField<Integer>(Paper.ID), new PropertyValidator<Integer>());
+        queueFieldAndLabel(new TextField<Integer>(Paper.PUBL_YEAR), new PropertyValidator<Integer>());
+        queueFieldAndLabel(new TextField<Integer>(Paper.PMID));
+        queueFieldAndLabel(new TextField<String>(Paper.DOI), new PropertyValidator<String>());
     }
 
-    private void makeAndAddTabPanel(String tabId) {
+    private void queueTabPanel(String tabId) {
         List<ITab> tabs = new ArrayList<>();
         tabs.add(new AbstractTab(new StringResourceModel("tab1" + LABEL_RECOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
@@ -107,10 +111,10 @@ public class PaperEntryPage extends BasePage {
                 return new TabPanel3(panelId, form.getModel());
             }
         });
-        form.add(new ClientSideBootstrapTabbedPanel<ITab>(tabId, tabs));
+        queue(new ClientSideBootstrapTabbedPanel<ITab>(tabId, tabs));
     }
 
-    private Model<Paper> getNewDefaultModel() {
+    private Model<Paper> initDefaultModel() {
         final Paper p = new Paper();
         p.setPublicationYear(LocalDate.now().getYear());
         return Model.of(p);
@@ -120,13 +124,13 @@ public class PaperEntryPage extends BasePage {
      * The authors field determines the firstAuthor field, but only unless overridden. Changes in the author field (if not overridden)
      * or in the override checkbox can have an effect on the firstAuthor field (enabled, content) 
      */
-    private void makeAndAddAuthorComplex(String authorsId, String firstAuthorId, String firstAuthorOverriddenId) {
+    private void queueAuthorComplex(String authorsId, String firstAuthorId, String firstAuthorOverriddenId) {
         TextArea<String> authors = new TextArea<String>(authorsId);
         authors.setEscapeModelStrings(false);
-        addFieldAndLabel(authors, new PropertyValidator<String>());
+        queueFieldAndLabel(authors, new PropertyValidator<String>());
 
         CheckBox firstAuthorOverridden = new CheckBox(firstAuthorOverriddenId);
-        addCheckBoxAndLabel(firstAuthorOverridden);
+        queueCheckBoxAndLabel(firstAuthorOverridden);
 
         TextField<String> firstAuthor = new TextField<String>(firstAuthorId) {
             private static final long serialVersionUID = 1L;
@@ -139,7 +143,7 @@ public class PaperEntryPage extends BasePage {
         };
         firstAuthor.add(new PropertyValidator<String>());
         firstAuthor.setOutputMarkupId(true);
-        addFieldAndLabel(firstAuthor);
+        queueFieldAndLabel(firstAuthor);
 
         firstAuthorOverridden.add(makeFirstAuthorChangeBehavior(authors, firstAuthorOverridden, firstAuthor));
         authors.add(makeFirstAuthorChangeBehavior(authors, firstAuthorOverridden, firstAuthor));
@@ -163,31 +167,20 @@ public class PaperEntryPage extends BasePage {
         };
     }
 
-    private void addFieldAndLabel(FormComponent<?> field) {
-        addFieldAndLabel(field, Optional.empty());
+    private void queueFieldAndLabel(FormComponent<?> field) {
+        queueFieldAndLabel(field, Optional.empty());
     }
 
-    private void addFieldAndLabel(FormComponent<?> field, PropertyValidator<?> pv) {
-        addFieldAndLabel(field, Optional.ofNullable(pv));
+    private void queueFieldAndLabel(FormComponent<?> field, PropertyValidator<?> pv) {
+        queueFieldAndLabel(field, Optional.ofNullable(pv));
     }
 
-    private void addFieldAndLabel(FormComponent<?> field, Optional<PropertyValidator<?>> pv) {
+    private void queueCheckBoxAndLabel(CheckBox field) {
         String id = field.getId();
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
-        form.add(new Label(id + LABEL_TAG, labelModel));
+        queue(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
-        form.add(field);
-        if (pv.isPresent()) {
-            field.add(pv.get());
-        }
-    }
-
-    private void addCheckBoxAndLabel(CheckBox field) {
-        String id = field.getId();
-        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
-        form.add(new Label(id + LABEL_TAG, labelModel));
-        field.setLabel(labelModel);
-        form.add(field);
+        queue(field);
     }
 
     private static abstract class AbstractTabPanel extends Panel {
@@ -202,13 +195,13 @@ public class PaperEntryPage extends BasePage {
             super(id, model);
         }
 
-        void makeAndAddTo(Form<Paper> form, String id) {
+        void queueTo(Form<Paper> form, String id) {
             TextArea<String> field = new TextArea<String>(id);
             field.add(new PropertyValidator<String>());
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
-            form.add(new Label(id + LABEL_TAG, labelModel));
+            queue(new Label(id + LABEL_TAG, labelModel));
             field.setLabel(labelModel);
-            form.add(field);
+            queue(field);
         }
     }
 
@@ -224,23 +217,23 @@ public class PaperEntryPage extends BasePage {
             super.onInitialize();
 
             Form<Paper> form = new Form<Paper>("tab1Form");
-            add(form);
+            queue(form);
 
-            makeAndAddTo(form, Paper.GOALS);
-            makeAndAddTo(form, Paper.POPULATION);
-            makeAndAddTo(form, Paper.EXPOSURE);
-            makeAndAddTo(form, Paper.METHODS);
+            queueTo(form, Paper.GOALS);
+            queueTo(form, Paper.POPULATION);
+            queueTo(form, Paper.EXPOSURE);
+            queueTo(form, Paper.METHODS);
 
-            makeAndAddTo(form, Paper.POPULATION_PLACE);
-            makeAndAddTo(form, Paper.POPULATION_PARTICIPANTS);
-            makeAndAddTo(form, Paper.POPULATION_DURATION);
+            queueTo(form, Paper.POPULATION_PLACE);
+            queueTo(form, Paper.POPULATION_PARTICIPANTS);
+            queueTo(form, Paper.POPULATION_DURATION);
 
-            makeAndAddTo(form, Paper.EXPOSURE_POLLUTANT);
-            makeAndAddTo(form, Paper.EXPOSURE_ASSESSMENT);
+            queueTo(form, Paper.EXPOSURE_POLLUTANT);
+            queueTo(form, Paper.EXPOSURE_ASSESSMENT);
 
-            makeAndAddTo(form, Paper.METHOD_OUTCOME);
-            makeAndAddTo(form, Paper.METHOD_STATISTICS);
-            makeAndAddTo(form, Paper.METHOD_CONFOUNDERS);
+            queueTo(form, Paper.METHOD_OUTCOME);
+            queueTo(form, Paper.METHOD_STATISTICS);
+            queueTo(form, Paper.METHOD_CONFOUNDERS);
         }
     };
 
@@ -256,14 +249,14 @@ public class PaperEntryPage extends BasePage {
             super.onInitialize();
 
             Form<Paper> form = new Form<Paper>("tab2Form");
-            add(form);
+            queue(form);
 
-            makeAndAddTo(form, Paper.RESULT);
-            makeAndAddTo(form, Paper.COMMENT);
-            makeAndAddTo(form, Paper.INTERN);
+            queueTo(form, Paper.RESULT);
+            queueTo(form, Paper.COMMENT);
+            queueTo(form, Paper.INTERN);
 
-            makeAndAddTo(form, Paper.RESULT_EXPOSURE_RANGE);
-            makeAndAddTo(form, Paper.RESULT_EFFECT_ESTIMATE);
+            queueTo(form, Paper.RESULT_EXPOSURE_RANGE);
+            queueTo(form, Paper.RESULT_EFFECT_ESTIMATE);
         }
     };
 

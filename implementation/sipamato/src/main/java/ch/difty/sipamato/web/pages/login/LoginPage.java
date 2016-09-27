@@ -18,7 +18,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 
 @MountPath("login")
 @WicketSignInPage
-public class LoginPage extends BasePage {
+public class LoginPage extends BasePage<Void> {
 
     private static final long serialVersionUID = 1L;
 

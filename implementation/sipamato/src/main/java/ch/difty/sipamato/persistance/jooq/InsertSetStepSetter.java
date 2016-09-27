@@ -12,9 +12,9 @@ import ch.difty.sipamato.entity.SipamatoEntity;
  * @author u.joss
  *
  * @param <R> Record extending {@link Record}
- * @param <E> Entity extending {@link SapamtoEntity}
+ * @param <T> Entity extending {@link SipamtoEntity}
  */
-public interface InsertSetStepSetter<R extends Record, E extends SipamatoEntity> {
+public interface InsertSetStepSetter<R extends Record, T extends SipamatoEntity> {
 
     /**
      * Sets all the non-key fields of the provided entity into the setter.
@@ -23,7 +23,7 @@ public interface InsertSetStepSetter<R extends Record, E extends SipamatoEntity>
      * @param entity the entity with the values to set
      * @return {@link InsertSetMoreStep} for execution
      */
-    InsertSetMoreStep<R> setNonKeyFieldsFor(InsertSetStep<R> step, E entity);
+    InsertSetMoreStep<R> setNonKeyFieldsFor(InsertSetStep<R> step, T entity);
 
     /**
      * Sets the key field(s) of the provided entity into the setter - provided it is not null.
@@ -32,6 +32,6 @@ public interface InsertSetStepSetter<R extends Record, E extends SipamatoEntity>
      * @param step {@link InsertSetMoreStep} to set the values into
      * @param entity the entity with the values to set
      */
-    void considerSettingKeyOf(InsertSetMoreStep<R> step, E entity);
+    void considerSettingKeyOf(InsertSetMoreStep<R> step, T entity);
 
 }
