@@ -43,7 +43,7 @@ public class PaperListPage extends BasePage {
 
         final SortablePaperProvider dataProvider = new SortablePaperProvider(filter);
         form = new FilterForm<PaperFilter>("searchForm", dataProvider);
-        add(form);
+        queue(form);
 
         final List<IColumn<Paper, String>> columns = new ArrayList<>();
         columns.add(new PropertyColumn<Paper, String>(new StringResourceModel("column.header.id", this, null), Paper.ID, Paper.ID));
@@ -53,9 +53,9 @@ public class PaperListPage extends BasePage {
         DataTable<Paper, String> table = new BootstrapDefaultDataTable<>("table", columns, dataProvider, 20);
         table.setOutputMarkupId(true);
         table.add(new TableBehavior().striped().hover());
-        form.add(table);
+        queue(table);
 
-        addFieldAndLabel(new TextField<String>("searchField", PropertyModel.of(dataProvider, "filterState." + PaperFilter.SEARCH_MASK)), Optional.empty());
+        queueFieldAndLabel(new TextField<String>("searchField", PropertyModel.of(dataProvider, "filterState." + PaperFilter.SEARCH_MASK)), Optional.empty());
     }
 
     private void initDefaultModel() {

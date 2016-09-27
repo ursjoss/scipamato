@@ -7,7 +7,6 @@ import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.devutils.debugbar.DebugBar;
 import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.Model;
@@ -89,12 +88,12 @@ public abstract class BasePage extends GenericWebPage<Void> {
         return AuthenticatedWebSession.get().signIn(username, password);
     }
 
-    protected void addFieldAndLabel(Form<?> form, FormComponent<?> field, Optional<PropertyValidator<?>> pv) {
+    protected void queueFieldAndLabel(FormComponent<?> field, Optional<PropertyValidator<?>> pv) {
         String id = field.getId();
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
-        form.add(new Label(id + LABEL_TAG, labelModel));
+        queue(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
-        form.add(field);
+        queue(field);
         if (pv.isPresent()) {
             field.add(pv.get());
         }
