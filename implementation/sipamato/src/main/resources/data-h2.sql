@@ -3,8 +3,8 @@
     INSERT INTO paper VALUES(
     DEFAULT -- id
     , '', 0 -- doi, pm_id
-    , '', '', 0 -- authors
-    , first_author, first_author_overridden
+    , '' -- authors
+    , '', 0 -- first_author, first_author_overridden
     , '' -- title
     , '', 0 -- location, publication_year
     , '' -- goals
@@ -38,11 +38,12 @@ INSERT INTO paper VALUES(
     , 'Kommentar von Panagiotou AO, Wacholder S: How Big Is That Interaction (in My Community)-and I. Which Direction? Am. J. Epidemiol. 2014 180: 1150-1158.', ''
     , 1, current_timestamp()
 );
-/*
+
 INSERT INTO paper VALUES(
     DEFAULT -- id
     , '10.1161/ATVBAHA.116.307141', 27312220 -- doi, pm_id
-    , 'Dorans KS, Wilker EH, Li W, Rice MB, Ljungman PL, Schwartz J, Coull BA, Kloog I, Koutrakis P, D'Agostino RB Sr, Massaro JM, Hoffmann U, O'Donnell CJ, Mittleman MA.', '', 0 -- authors, first_author, first_author_overridden
+    , 'Dorans KS, Wilker EH, Li W, Rice MB, Ljungman PL, Schwartz J, Coull BA, Kloog I, Koutrakis P, D''Agostino RB Sr, Massaro JM, Hoffmann U, O''Donnell CJ, Mittleman MA.' -- authors
+    , 'Dorans', 0 -- first_author, first_author_overridden
     , 'Residential Proximity to Major Roads, Exposure to Fine Particulate Matter, and Coronary Artery Calcium: The Framingham Heart Study.' -- title
     , 'Arterioscler Thromb Vasc Biol. 2016 Aug;36(8):1679-85', 2016 -- location, publication_year
     , 'Kohortenstudie in den USA zur Untersuchung, ob die Verkalkung der Herzkranzgefässe mit der Belastung mit PM2.5 oder der Distanz zu einer Autobahn zusammenhängt.' -- goals
@@ -56,21 +57,21 @@ INSERT INTO paper VALUES(
     , '', '' -- comment, intern
     , 1, current_timestamp() -- version, timestamp
 );
-*/
+
 INSERT INTO paper VALUES(
     DEFAULT -- id
-    , '10.1161/ATVBAHA.116.307141', 27312220 -- doi, pm_id
-    , 'Dorans KS, Wilker EH, Li W, Rice MB, Ljungman PL, Schwartz J, Coull BA, Kloog I, Koutrakis P, D''Agostino RB Sr, Massaro JM, Hoffmann U, O''Donnell CJ, Mittleman MA.'
-    , 'Dorans KS', 0 -- authors, first_author, first_author_overridden
-    , 'Residential Proximity to Major Roads, Exposure to Fine Particulate Matter, and Coronary Artery Calcium: The Framingham Heart Study.' -- title
-    , 'Arterioscler Thromb Vasc Biol. 2016 Aug;36(8):1679-85', 2016 -- location, publication_year
-    , 'Kohortenstudie in den USA zur Untersuchung, ob die Verkalkung der Herzkranzgefässe mit der Belastung mit PM2.5 oder der Distanz zu einer Autobahn zusammenhängt.' -- goals
-    , '3399 Nachkommen (Kinder und Enkel, 51% Frauen) der Teilnehmer der Framingham-Kohorte, die bei der ersten von ein (2002-2005) bis zwei (2008-2011) Untersuchungen der Verkalkung der Herzkranzgefässe CAC durchschnittlich 52.2 Jahre alt waren und im Nordosten der USA wohnten.' -- population
+    , '10.1161/JAHA.115.002301', 26607712  -- doi, pm_id
+    , 'Hart JE, Puett RC, Rexrode KM, Albert CM, Laden F.' -- authors
+    , 'Hart', 0 -- first_author, first_author_overridden
+    , 'Effect Modification of Long-Term Air Pollution Exposures and the Risk of Incident Cardiovascular Disease in US Women.' -- title
+    , 'J Am Heart Assoc. 2015; 4 (12). pii: e002301.', 2015 -- location, publication_year
+    , 'Kohortenstudie an Krankenschwestern zur Untersuchung von Herz-/Kreislauferkrankungen in Abhängigkeit von der langjährigen Belastung mit Feinstaub.' -- goals
+    , '114''537 Krankenschwestern in den USA, welche erstmals 1976 im Alter von 30-55 Jahren und seither alle 2 Jahre nachbefragt wurden, von denen mindestens eine Adresse bekannt war, für welche Schadstoffwerte bekannt waren. Nurses Health Studie.' -- population
     , '', '', '' -- population_place, population_participants, population_duration
     , '', '', '' -- exposure, exposure_pollutant, exposure_assessment
-    , 'Die Verkalkung der Herzkranzgefässe CAC wurde mit Elektronenstrahl-Computertomographie untersucht und die Agatstonpunktzahl als Zielgrösse definiert. Ein Wert von mehr als Null wurde als Verkalkung interpretiert. Informationen zu weiteren Gesundheitsgrössen der Patienten stammten aus den aktuellsten Ergebnissen der 4 jährlichen Gesundheitsuntersuchungen.\\nAls Belastung mit Verkehr wurde die Distanz der Adresse zum Zeitpunkt der ersten Untersuchung zur nächsten Autobahn oder einer anderen grösseren Verkehrsachse (Klassen A1-A3, Entfernung von max. 50, 50-200, 200-400 und 400-1000m) definiert. Ausserdem wurde die Feinstaubbelastung mit einem Landnutzungsmodell für PM2.5 für das Jahr 2003 und 2003-2009 bestimmt, das auf Satellitendaten mit einer Auflösung von 1 x 1 km basierte.\\nDer Zusammenhang der Koronarverkalkung (binärer CAC-Score ja/nein, kontinuierlich) mit der Strassennähe oder der Feinstaubbelastung wurde einerseits mit verallgemeinerten Schätzgleichungen mit logit Link andererseits mit gemischten linearen Modellen untersucht. Der Zusammenhang der fortschreitenden Verkalkung (1. zur 2. Untersuchung) wurde mit logistischer Regression und mit gemischten linearen Modellen untersucht. In alle Modelle wurden Alter, Geschlecht, BMI, Rauchen, Bildung, %Hausbesitzer auf Quartierebenen als Variable für den sozioökonomischen Status, Kohorte (Enkeln oder Kinder der Ursprungskohorte), Datum der CAC Untersuchung und Abstand zur Gesundheitsuntersuchung (Tage) einbezogen. Sensitivitätsanalysen mit weiteren Störgrössen (Diabetes, Bewegungsverhalten, hoher Blutdruck) und Interaktionen wurden durchgeführt und es wurde versucht, eine nicht-lineare Dosis-Wirkungsbeziehung zu beschreiben.\\nHerz-/Kreislaufkrankheiten, Arteriosklerose, Framingham. Kohortenstudie. USA.' -- methods
+    , 'In der Nachfolgezeit von 1988-2006 wurde die Inzidenz von erstmaligen Herz-/Kreislaufkrankheiten, nicht tödlicher oder tödlicher koronarer Herzerkrankung und Hirnschlag untersucht. Die Informationen stammten aus den Fragebogen und wurde mit Krankengeschichten, Autopsie und Todesurkunde überprüft. Das Luftqualitätsmessnetz der US-EPA, das Projekt IMPROVE und verschiedene weitere Studien lieferten monatliche Messdaten für PM10, ab 1999 auch PM2.5. Für die Jahre vor 1999 wurde PM2.5 aus PM10 abgeleitet unter Verwendung des PM10/PM2.5 Verhältnisses aus einem Modell, das auf Daten der Zeit nach 1999 basierte. Die Belastung mit der gröberen Fraktion PM10-2.5 wurde aus der Differenz von PM10 und PM2.5 berechnet. Mit einem Landnutzungsmodell wurde den geocodierten Adressen (basierend auf der Postleitzahl) die Belastung kumuliert über 18 Jahre (1988-2006) zugeordnet.\\nMit proportionalen Hazard-Modellen nach Cox wurde die Inzidenz an Herz-/Kreislaufkrankheiten, koronaren Herzerkrankungen und Hirnschlag in Abhängigkeit der Feinstaubbelastung untersucht. In einem Grundmodell wurden Alter, Jahr, Jahreszeit und geografische Region und im erweiterten Modell zusätzlich Rasse, BMI, Wechseljahrstatus, Hormoneinnahme, Bluthochdruck, Hypercholesterinämie, Diabetes, familiäre Anamnese von Herzinfarkt, Rauchen, als Indikator für den Sozialstatus die Schulbildung, Zivilstand und Beruf des Partners und der Sozialstatus im Quartier einbezogen. Ausserdem wurde die Interaktion mit dem Alter, Diabetes, Familienanamnese von Herzinfarkt und Rauchen geprüft. Sensitivitätsanalyen zur Überprüfung der Robusheit wurden durchgeführt. Kohortenstudie. Nurses Health. USA.' -- methods
     , '', '', '' -- method_outcome, method_statistics, method_confounders
-    , 'Die Teilnehmer wohnten median 201m (Interquartilabstand IQR 359m) von einer grossen Strasse (USA: Kategorie A1-A3) entfernt und waren im Jahr 2003 mit median 10.7 (IQR 1.4) µg/m3 PM2.5 belastet. Bei 45% der Teilnehmer wurde Verkalkungen der Herzkranzgefässe festgestellt, bei der zweiten Untersuchung waren es 50%. Der mediane Agatston Score betrug bei Erstuntersuchung 70.5 IQR 278.5, bei der zweiten Untersuchung nach durchschnittlich 6.1 Jahren 137.1 (419.4).\\nPersonen in der Nähe von Autobahnen oder mit höheren Feinstaubbelastung hatten kein erhöhtes Risiko für einen messbaren CAC-Score, also einer Verkalkung der Herzkranzgefässe, das Risiko war tendenziell eher (paradox) reduziert, aber mit weiten Konfidenzintervallen: z.B. OR 0.95 (95%-CI: 0.74-1.22) für Personen die weniger als 50m von einer Autobahnentfernt wohnten gegenüber denen, die über 400m entfernt wohnten. Es konnte auch kein Zusammenhang mit der Höhe des Scores und der Belastung gefunden werden. Das Risiko für fortschreitende Koronararterienverkalkung hing ebenfalls nicht mit der Verkehrsnähe oder der Feinstaubbelastung zusammen. Sie hing paradox mit der logarithmierten Entfernung zur Strasse zusammen; steigender CAC-Agatstonscore von 2.2 (0.1-4.3) pro Jahr pro logarithmierter IQR-Entfernung zur Strasse. Die Ergebnisse blieben auch in den Sensitivitätsanalysen robust.\\nDie Autoren folgern, dass ihre Ergebnisse nicht für einen engen Zusammenhang der Koronarverkalkung mit der Verkehrs- oder Feinstaubbelastung sprechen, betonen aber, dass die Belastung generell tief war und wenig variierte.' -- result
+    , '6''767 Frauen erkrankten an Herz-Kreislauferkrankungen, 3''878 an  koronaren  Herzkrankheiten und 3''295 erlitten einen Hirnschlag. Die Frauen waren durchschnittlich 68.6 (7.3) Jahre alt, überwiegend weiss und verheiratet. Die durchschnittliche jährliche Belastung und die Standardabweichung (SD) betrug 22.2 (6.5) µg PM10/m3, 8.7 (4.5) µg PM2.5-10/m3 und 13.4 (3.3) µg PM2.5/m3.\\nIm Grundmodell nahm das Risiko bei einem Anstieg von 10 µg/m3 aller Feinstaubfraktionen gering, aber statistisch nicht signifikant zu. Lediglich für einen Anstieg von PM10 und Herz-/Kreislaufkrankheiten und für PM2.5-10 mit allen drei Zielgrössen gab es einen signifikanten Zusammenhang. Die Effektschätzer nahmen jedoch unter Einbezug aller Störfaktoren ab und waren nicht mehr signifikant.\\nDie Inzidenz von Herz-/Kreislaufkrankheiten und Hirnschlag nahm jedoch bei Frauen mit Diabetes gegenüber Frauen ohne Diabetes für PM10, PM2.5-10 und PM2.5 zu mit HR 1.19 (95%CI: 1.1-1.28), 1.17 (1.05-1.3) und 1.44 (1.23-1.68), resp. 1.23 (1.1-1.38), 1.18 (1.01-1.38) und 1.66 (1.31-2.1). Die Belastung mit PM10 und PM2.5-10, nicht aber mit PM2.5 war ausserdem mit einem erhöhten Risiko bei Diabetikerinnnen für koronare Herzkrankheiten mit 1.12 (1.02-1.23) und 1.14 (1-1.3) verbunden.\\nDie Autoren schliessen daraus, dass die Feinstaubbelastung bei Frauen mittleren Alters das Inzidenzrisiko für Herz-/Kreislaufkrankheiten gering, aber nicht signifikant erhöhe, die Effektschätzer aber bei Frauen mit Diabetes erhöht und signfikant waren.' -- result
     , '', ''  -- result_exposure_range, result_effect_estimate
     , '', '' -- comment, intern
     , 1, current_timestamp() -- version, timestamp

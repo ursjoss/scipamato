@@ -21,7 +21,11 @@ public class PaperListPageTest extends AbstractPageTest<PaperListPage> {
         String b = "searchForm";
         getTester().assertComponent(b, Form.class);
 
-        assertLabeledTextField(b, "searchField");
+        assertLabeledTextField(b, "authorsSearch");
+        assertLabeledTextField(b, "methodsSearch");
+        assertLabeledTextField(b, "fieldSearch");
+        assertLabeledTextField(b, "pubYearFrom");
+        assertLabeledTextField(b, "pubYearUntil");
     }
 
 }
