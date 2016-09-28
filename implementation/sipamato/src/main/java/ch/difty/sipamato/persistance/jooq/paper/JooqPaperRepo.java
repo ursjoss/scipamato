@@ -90,22 +90,14 @@ public class JooqPaperRepo extends JooqRepo<PaperRecord, Paper, Long, ch.difty.s
 
         if (filter.getSearchMask() != null) {
             String likeExpression = "%" + filter.getSearchMask() + "%";
-            // not including DOI, Title on request 
-            conditions.add(PAPER.FIRST_AUTHOR.likeIgnoreCase(likeExpression)
-                    .or(PAPER.AUTHORS.likeIgnoreCase(likeExpression))
+            conditions.add(PAPER.DOI.likeIgnoreCase(likeExpression)
                     .or(PAPER.LOCATION.likeIgnoreCase(likeExpression))
+                    .or(PAPER.TITLE.likeIgnoreCase(likeExpression))
                     .or(PAPER.GOALS.likeIgnoreCase(likeExpression))
                     .or(PAPER.POPULATION.likeIgnoreCase(likeExpression))
                     .or(PAPER.POPULATION_PLACE.likeIgnoreCase(likeExpression))
                     .or(PAPER.POPULATION_PARTICIPANTS.likeIgnoreCase(likeExpression))
                     .or(PAPER.POPULATION_DURATION.likeIgnoreCase(likeExpression))
-                    .or(PAPER.EXPOSURE.likeIgnoreCase(likeExpression))
-                    .or(PAPER.EXPOSURE_POLLUTANT.likeIgnoreCase(likeExpression))
-                    .or(PAPER.EXPOSURE_ASSESSMENT.likeIgnoreCase(likeExpression))
-                    .or(PAPER.METHODS.likeIgnoreCase(likeExpression))
-                    .or(PAPER.METHOD_OUTCOME.likeIgnoreCase(likeExpression))
-                    .or(PAPER.METHOD_STATISTICS.likeIgnoreCase(likeExpression))
-                    .or(PAPER.METHOD_CONFOUNDERS.likeIgnoreCase(likeExpression))
                     .or(PAPER.RESULT.likeIgnoreCase(likeExpression))
                     .or(PAPER.RESULT_EXPOSURE_RANGE.likeIgnoreCase(likeExpression))
                     .or(PAPER.RESULT_EFFECT_ESTIMATE.likeIgnoreCase(likeExpression))
