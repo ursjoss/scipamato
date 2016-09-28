@@ -9,6 +9,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.bean.validation.PropertyValidator;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
@@ -197,11 +198,22 @@ public class PaperEntryPage extends BasePage<Paper> {
         }
 
         void queueTo(Form<Paper> form, String id) {
+            queueTo(form, id, false);
+        }
+
+        void queueNewFieldTo(Form<Paper> form, String id) {
+            queueTo(form, id, true);
+        }
+
+        void queueTo(Form<Paper> form, String id, boolean newField) {
             TextArea<String> field = new TextArea<String>(id);
             field.add(new PropertyValidator<String>());
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
             queue(new Label(id + LABEL_TAG, labelModel));
             field.setLabel(labelModel);
+            if (newField) {
+                field.add(new AttributeAppender("class", " newField"));
+            }
             queue(field);
         }
     }
@@ -224,17 +236,17 @@ public class PaperEntryPage extends BasePage<Paper> {
             queueTo(form, Paper.POPULATION);
             queueTo(form, Paper.METHODS);
 
-            queueTo(form, Paper.POPULATION_PLACE);
-            queueTo(form, Paper.POPULATION_PARTICIPANTS);
-            queueTo(form, Paper.POPULATION_DURATION);
+            queueNewFieldTo(form, Paper.POPULATION_PLACE);
+            queueNewFieldTo(form, Paper.POPULATION_PARTICIPANTS);
+            queueNewFieldTo(form, Paper.POPULATION_DURATION);
 
-            queueTo(form, Paper.EXPOSURE_POLLUTANT);
-            queueTo(form, Paper.EXPOSURE_ASSESSMENT);
+            queueNewFieldTo(form, Paper.EXPOSURE_POLLUTANT);
+            queueNewFieldTo(form, Paper.EXPOSURE_ASSESSMENT);
 
-            queueTo(form, Paper.METHOD_STUDY_DESIGN);
-            queueTo(form, Paper.METHOD_OUTCOME);
-            queueTo(form, Paper.METHOD_STATISTICS);
-            queueTo(form, Paper.METHOD_CONFOUNDERS);
+            queueNewFieldTo(form, Paper.METHOD_STUDY_DESIGN);
+            queueNewFieldTo(form, Paper.METHOD_OUTCOME);
+            queueNewFieldTo(form, Paper.METHOD_STATISTICS);
+            queueNewFieldTo(form, Paper.METHOD_CONFOUNDERS);
         }
     };
 
@@ -256,8 +268,8 @@ public class PaperEntryPage extends BasePage<Paper> {
             queueTo(form, Paper.COMMENT);
             queueTo(form, Paper.INTERN);
 
-            queueTo(form, Paper.RESULT_EXPOSURE_RANGE);
-            queueTo(form, Paper.RESULT_EFFECT_ESTIMATE);
+            queueNewFieldTo(form, Paper.RESULT_EXPOSURE_RANGE);
+            queueNewFieldTo(form, Paper.RESULT_EFFECT_ESTIMATE);
         }
     };
 

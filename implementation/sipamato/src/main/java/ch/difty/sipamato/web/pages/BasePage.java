@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.devutils.debugbar.DebugBar;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -18,6 +20,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 import ch.difty.sipamato.web.pages.login.LogoutPage;
 import ch.difty.sipamato.web.pages.paper.list.PaperListPage;
+import ch.difty.sipamato.web.resources.MainCssResourceReference;
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
@@ -40,6 +43,12 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
     public BasePage(final IModel<T> model) {
         super(model);
+    }
+
+    @Override
+    public void renderHead(IHeaderResponse response) {
+        super.renderHead(response);
+        response.render(CssHeaderItem.forReference(MainCssResourceReference.get()));
     }
 
     @Override
