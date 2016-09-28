@@ -38,4 +38,10 @@ public class JooqPaperService implements PaperService {
     public int countByFilter(PaperFilter filter) {
         return repo.countByFilter(filter);
     }
+
+    /** {@inhericDoc} */
+    @Override
+    public Paper update(Paper paper) {
+        return repo.update(paper);
+    }
 }

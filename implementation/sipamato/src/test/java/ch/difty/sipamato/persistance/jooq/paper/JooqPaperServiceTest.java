@@ -34,7 +34,7 @@ public class JooqPaperServiceTest {
     @Mock
     private Page<Paper> paperPageMock;
     @Mock
-    private Paper mockPaper;
+    private Paper paperMock;
 
     private final List<Paper> papers = new ArrayList<>();
 
@@ -42,13 +42,13 @@ public class JooqPaperServiceTest {
     public void setUp() {
         service.setRepository(repoMock);
 
-        papers.add(mockPaper);
-        papers.add(mockPaper);
+        papers.add(paperMock);
+        papers.add(paperMock);
     }
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(repoMock, filterMock, pageableMock, paperPageMock, mockPaper);
+        verifyNoMoreInteractions(repoMock, filterMock, pageableMock, paperPageMock, paperMock);
     }
 
     @Test
@@ -68,4 +68,12 @@ public class JooqPaperServiceTest {
         assertThat(service.countByFilter(filterMock)).isEqualTo(3);
         verify(repoMock).countByFilter(filterMock);
     }
+
+    @Test
+    public void updating_delgatesToRepo() {
+        when(repoMock.update(paperMock)).thenReturn(paperMock);
+        assertThat(repoMock.update(paperMock)).isEqualTo(paperMock);
+        verify(repoMock).update(paperMock);
+    }
+
 }

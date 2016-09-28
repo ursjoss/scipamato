@@ -34,4 +34,13 @@ public interface SipamatoService<T extends SipamatoEntity, F extends SipamatoFil
      * @return entity count
      */
     int countByFilter(F filter);
+
+    /**
+     * Update the provided entity.
+     *
+     * @param the entity to persist
+     * @return the persisted entity
+     */
+    T update(T entity);
+
 }

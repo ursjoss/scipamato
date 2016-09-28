@@ -29,7 +29,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
-import ch.difty.sipamato.persistance.jooq.paper.PaperRepository;
+import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.pages.BasePage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
@@ -42,7 +42,7 @@ public class PaperEntryPage extends BasePage<Paper> {
     private Form<Paper> form;
 
     @SpringBean
-    private PaperRepository repo;
+    private PaperService service;
 
     @SpringBean
     private AuthorParserFactory authorParserFactory;
@@ -64,8 +64,9 @@ public class PaperEntryPage extends BasePage<Paper> {
 
             @Override
             protected void onSubmit() {
-                repo.update(getModelObject());
-                info("Successfully saved Paper with id " + getModelObject().getId() + ": " + getModelObject().getAuthors() + " (" + getModelObject().getPublicationYear() + ")");
+                // TODO return serviceresult instead of factoring the result here
+                service.update(getModelObject());
+                info("Successfully saved Paper [id " + getModelObject().getId() + "]: " + getModelObject().getAuthors() + " (" + getModelObject().getPublicationYear() + ")");
             }
         };
         queue(form);

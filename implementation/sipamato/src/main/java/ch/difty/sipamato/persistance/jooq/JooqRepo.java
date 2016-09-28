@@ -188,7 +188,8 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
             getLogger().info("Updated 1 record: {} with id {}.", getTable().getName(), id);
             return mapper.map(updated);
         } else {
-            getLogger().warn("Unable to update {} record with id {}.", getTable().getName(), id);
+            // TODO H2 does not return the record with returnin().fetchOne() -> DWA : don't wrongly report a failed save after successful persisting the record.
+//            getLogger().warn("Unable to update {} record with id {}.", getTable().getName(), id);
             return null;
         }
     }
