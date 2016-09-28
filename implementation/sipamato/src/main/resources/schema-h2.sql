@@ -20,6 +20,7 @@ CREATE TABLE paper (
   exposure_pollutant VARCHAR,
   exposure_assessment VARCHAR,
   methods VARCHAR,
+  method_study_design VARCHAR,
   method_outcome VARCHAR,
   method_statistics VARCHAR,
   method_confounders VARCHAR,

@@ -83,6 +83,7 @@ public class JooqPaperRepo extends JooqRepo<PaperRecord, Paper, Long, ch.difty.s
                     .or(PAPER.EXPOSURE_POLLUTANT.likeIgnoreCase(likeExpression))
                     .or(PAPER.EXPOSURE_ASSESSMENT.likeIgnoreCase(likeExpression))
                     .or(PAPER.METHODS.likeIgnoreCase(likeExpression))
+                    .or(PAPER.METHOD_STUDY_DESIGN.likeIgnoreCase(likeExpression))
                     .or(PAPER.METHOD_OUTCOME.likeIgnoreCase(likeExpression))
                     .or(PAPER.METHOD_STATISTICS.likeIgnoreCase(likeExpression))
                     .or(PAPER.METHOD_CONFOUNDERS.likeIgnoreCase(likeExpression)));

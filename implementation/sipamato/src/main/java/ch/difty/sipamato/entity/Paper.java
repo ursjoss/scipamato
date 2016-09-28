@@ -39,6 +39,7 @@ public class Paper extends SipamatoEntity {
     public static final String POPULATION_DURATION = "populationDuration";
     public static final String EXPOSURE_POLLUTANT = "exposurePollutant";
     public static final String EXPOSURE_ASSESSMENT = "exposureAssessment";
+    public static final String METHOD_STUDY_DESIGN = "methodStudyDesign";
     public static final String METHOD_OUTCOME = "methodOutcome";
     public static final String METHOD_STATISTICS = "methodStatistics";
     public static final String METHOD_CONFOUNDERS = "methodConfounders";
@@ -93,6 +94,7 @@ public class Paper extends SipamatoEntity {
     private String exposurePollutant;
     private String exposureAssessment;
     private String methods;
+    private String methodStudyDesign;
     private String methodOutcome;
     private String methodStatistics;
     private String methodConfounders;
@@ -306,6 +308,14 @@ public class Paper extends SipamatoEntity {
 
     public void setExposureAssessment(String exposureAssessment) {
         this.exposureAssessment = exposureAssessment;
+    }
+
+    public String getMethodStudyDesign() {
+        return methodStudyDesign;
+    }
+
+    public void setMethodStudyDesign(String methodStudyDesign) {
+        this.methodStudyDesign = methodStudyDesign;
     }
 
     public String getMethodOutcome() {

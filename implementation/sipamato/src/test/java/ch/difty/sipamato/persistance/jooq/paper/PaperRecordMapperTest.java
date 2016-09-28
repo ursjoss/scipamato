@@ -29,6 +29,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
     public static final String POPULATION_DURATION = "population duration";
     public static final String EXPOSURE_POLLUTANT = "exposure pollutant";
     public static final String EXPOSURE_ASSESSMENT = "exporsure assessment";
+    public static final String METHOD_STUDY_DESIGN = "method study design";
     public static final String METHOD_OUTCOME = "method outcome";
     public static final String METHOD_STATISTICS = "method statistics";
     public static final String METHOD_CONFOUNDERS = "method confounders";
@@ -58,6 +59,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
         when(entityMock.getPopulationDuration()).thenReturn(POPULATION_DURATION);
         when(entityMock.getExposurePollutant()).thenReturn(EXPOSURE_POLLUTANT);
         when(entityMock.getExposureAssessment()).thenReturn(EXPOSURE_ASSESSMENT);
+        when(entityMock.getMethodStudyDesign()).thenReturn(METHOD_STUDY_DESIGN);
         when(entityMock.getMethodOutcome()).thenReturn(METHOD_OUTCOME);
         when(entityMock.getMethodStatistics()).thenReturn(METHOD_STATISTICS);
         when(entityMock.getMethodConfounders()).thenReturn(METHOD_CONFOUNDERS);
@@ -98,6 +100,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
         record.setPopulationDuration(POPULATION_DURATION);
         record.setExposurePollutant(EXPOSURE_POLLUTANT);
         record.setExposureAssessment(EXPOSURE_ASSESSMENT);
+        record.setMethodStudyDesign(METHOD_STUDY_DESIGN);
         record.setMethodOutcome(METHOD_OUTCOME);
         record.setMethodStatistics(METHOD_STATISTICS);
         record.setMethodConfounders(METHOD_CONFOUNDERS);
@@ -133,6 +136,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
         assertThat(e.getPopulationDuration()).isEqualTo(POPULATION_DURATION);
         assertThat(e.getExposurePollutant()).isEqualTo(EXPOSURE_POLLUTANT);
         assertThat(e.getExposureAssessment()).isEqualTo(EXPOSURE_ASSESSMENT);
+        assertThat(e.getMethodStudyDesign()).isEqualTo(METHOD_STUDY_DESIGN);
         assertThat(e.getMethodOutcome()).isEqualTo(METHOD_OUTCOME);
         assertThat(e.getMethodStatistics()).isEqualTo(METHOD_STATISTICS);
         assertThat(e.getMethodConfounders()).isEqualTo(METHOD_CONFOUNDERS);

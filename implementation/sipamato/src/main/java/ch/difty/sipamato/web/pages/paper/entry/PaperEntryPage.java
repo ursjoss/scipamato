@@ -232,6 +232,7 @@ public class PaperEntryPage extends BasePage<Paper> {
             queueTo(form, Paper.EXPOSURE_POLLUTANT);
             queueTo(form, Paper.EXPOSURE_ASSESSMENT);
 
+            queueTo(form, Paper.METHOD_STUDY_DESIGN);
             queueTo(form, Paper.METHOD_OUTCOME);
             queueTo(form, Paper.METHOD_STATISTICS);
             queueTo(form, Paper.METHOD_CONFOUNDERS);

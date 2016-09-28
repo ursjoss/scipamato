@@ -35,6 +35,7 @@ public class PaperRecordMapper implements RecordMapper<PaperRecord, Paper> {
         to.setPopulationDuration(from.getPopulationDuration());
         to.setExposurePollutant(from.getExposurePollutant());
         to.setExposureAssessment(from.getExposureAssessment());
+        to.setMethodStudyDesign(from.getMethodStudyDesign());
         to.setMethodOutcome(from.getMethodOutcome());
         to.setMethodStatistics(from.getMethodStatistics());
         to.setMethodConfounders(from.getMethodConfounders());
