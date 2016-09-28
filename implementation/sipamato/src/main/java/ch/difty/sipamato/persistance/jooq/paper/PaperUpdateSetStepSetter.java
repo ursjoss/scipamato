@@ -23,7 +23,6 @@ public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord
         Asserts.notNull(id, "entity.id");
         // @formatter:off
         return step
-            .set(PAPER.ID, id.longValue())
             .set(PAPER.PM_ID, e.getPmId())
             .set(PAPER.DOI, e.getDoi())
             .set(PAPER.AUTHORS, e.getAuthors())

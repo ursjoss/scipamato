@@ -17,7 +17,7 @@ import ch.difty.sipamato.entity.SipamatoEntity;
 public interface UpdateSetStepSetter<R extends Record, T extends SipamatoEntity> {
 
     /**
-     * Sets all fields from the entity into the step.
+     * Sets all fields except the primary key(s) from the entity into the step.
      *
      * @param step the {@link UpdateSetFirstStep} to set the values into
      * @param entity the entity to set the values from

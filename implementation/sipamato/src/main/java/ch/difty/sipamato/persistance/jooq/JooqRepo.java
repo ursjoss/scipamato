@@ -12,10 +12,12 @@ import org.jooq.DSLContext;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
+import org.jooq.SQLDialect;
 import org.jooq.SortField;
 import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
@@ -33,12 +35,12 @@ import ch.difty.sipamato.lib.Asserts;
  *
  * @author u.joss
  *
- * @param <R> the record, extending {@link Record}
- * @param <T> the entity type, extending {@link SipamatoEntity}
- * @param <ID> the id of entity <literal>T</literal>
- * @param <TI> the table implementation of record <literal>R</literal>
- * @param <M> the record mapper, mapping record <literal>R</literal> into entity <literal>T</literal>
- * @param <F> the filter, extending {@link SipamatoFilter}
+ * @param <R> the type of the record, extending {@link Record}
+ * @param <T> the type of the entity, extending {@link SipamatoEntity}
+ * @param <ID> the type of the ID of the entity <literal>T</literal>
+ * @param <TI> the type of the table implementation of record <literal>R</literal>
+ * @param <M> the type of the record mapper, mapping record <literal>R</literal> into entity <literal>T</literal>
+ * @param <F> the type of the filter, extending {@link SipamatoFilter}
  */
 @Profile("DB_JOOQ")
 @Transactional(readOnly = true)
@@ -51,6 +53,9 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
     private final M mapper;
     private final InsertSetStepSetter<R, T> insertSetStepSetter;
     private final UpdateSetStepSetter<R, T> updateSetStepSetter;
+
+    @Value("${jooq.sql.dialect}")
+    private String sqlDialect;
 
     protected JooqRepo(DSLContext dsl, M mapper, InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter) {
         Asserts.notNull(dsl, "dsl");
@@ -188,9 +193,13 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
             getLogger().info("Updated 1 record: {} with id {}.", getTable().getName(), id);
             return mapper.map(updated);
         } else {
-            // TODO H2 does not return the record with returnin().fetchOne() -> DWA : don't wrongly report a failed save after successful persisting the record.
-//            getLogger().warn("Unable to update {} record with id {}.", getTable().getName(), id);
-            return null;
+            // Ugly, need to work around the problem that update...returning().fetchOne() is not supported for H2
+            if (SQLDialect.H2.getName().equals(sqlDialect)) {
+                return findById(id);
+            } else {
+                getLogger().warn("Unable to persist {} with id {}.", getTable().getName(), id);
+                return null;
+            }
         }
     }
 
