@@ -4,7 +4,6 @@ import static ch.difty.sipamato.db.h2.tables.Paper.PAPER;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.AUTHORS;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.COMMENT;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.DOI;
-import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.EXPOSURE;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.EXPOSURE_ASSESSMENT;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.EXPOSURE_POLLUTANT;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.FIRST_AUTHOR;
@@ -82,7 +81,6 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
         when(getMoreStep().set(PAPER.GOALS, GOALS)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.POPULATION, POPULATION)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.EXPOSURE, EXPOSURE)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.METHODS, METHODS)).thenReturn(getMoreStep());
 
         when(getMoreStep().set(PAPER.POPULATION_PLACE, POPULATION_PLACE)).thenReturn(getMoreStep());
@@ -117,7 +115,6 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
         verify(entityMock).getGoals();
         verify(entityMock).getPopulation();
-        verify(entityMock).getExposure();
         verify(entityMock).getMethods();
 
         verify(entityMock).getPopulationPlace();
@@ -153,7 +150,6 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
         verify(getMoreStep()).set(PAPER.GOALS, GOALS);
         verify(getMoreStep()).set(PAPER.POPULATION, POPULATION);
-        verify(getMoreStep()).set(PAPER.EXPOSURE, EXPOSURE);
         verify(getMoreStep()).set(PAPER.METHODS, METHODS);
 
         verify(getMoreStep()).set(PAPER.POPULATION_PLACE, POPULATION_PLACE);

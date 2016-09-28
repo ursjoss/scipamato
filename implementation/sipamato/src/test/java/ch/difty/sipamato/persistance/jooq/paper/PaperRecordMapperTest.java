@@ -22,7 +22,6 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
     public static final int PUBLICATION_YEAR = 3;
     public static final String GOALS = "goals";
     public static final String POPULATION = "population";
-    public static final String EXPOSURE = "exposure";
     public static final String METHODS = "methods";
     public static final String POPULATION_PLACE = "population place";
     public static final String POPULATION_PARTICIPANTS = "population  participants";
@@ -51,7 +50,6 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
 
         when(entityMock.getGoals()).thenReturn(GOALS);
         when(entityMock.getPopulation()).thenReturn(POPULATION);
-        when(entityMock.getExposure()).thenReturn(EXPOSURE);
         when(entityMock.getMethods()).thenReturn(METHODS);
 
         when(entityMock.getPopulationPlace()).thenReturn(POPULATION_PLACE);
@@ -92,7 +90,6 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
 
         record.setGoals(GOALS);
         record.setPopulation(POPULATION);
-        record.setExposure(EXPOSURE);
         record.setMethods(METHODS);
 
         record.setPopulationPlace(POPULATION_PLACE);
@@ -128,7 +125,6 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
 
         assertThat(e.getGoals()).isEqualTo(GOALS);
         assertThat(e.getPopulation()).isEqualTo(POPULATION);
-        assertThat(e.getExposure()).isEqualTo(EXPOSURE);
         assertThat(e.getMethods()).isEqualTo(METHODS);
 
         assertThat(e.getPopulationPlace()).isEqualTo(POPULATION_PLACE);

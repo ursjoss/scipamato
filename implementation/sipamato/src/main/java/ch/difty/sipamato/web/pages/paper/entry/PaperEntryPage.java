@@ -222,7 +222,6 @@ public class PaperEntryPage extends BasePage<Paper> {
 
             queueTo(form, Paper.GOALS);
             queueTo(form, Paper.POPULATION);
-            queueTo(form, Paper.EXPOSURE);
             queueTo(form, Paper.METHODS);
 
             queueTo(form, Paper.POPULATION_PLACE);

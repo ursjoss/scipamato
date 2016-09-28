@@ -33,7 +33,6 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
 
             .set(PAPER.GOALS, e.getGoals())
             .set(PAPER.POPULATION, e.getPopulation())
-            .set(PAPER.EXPOSURE, e.getExposure())
             .set(PAPER.METHODS, e.getMethods())
 
             .set(PAPER.POPULATION_PLACE, e.getPopulationPlace())

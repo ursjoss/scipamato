@@ -27,7 +27,6 @@ public class PaperRecordMapper implements RecordMapper<PaperRecord, Paper> {
 
         to.setGoals(from.getGoals());
         to.setPopulation(from.getPopulation());
-        to.setExposure(from.getExposure());
         to.setMethods(from.getMethods());
 
         to.setPopulationPlace(from.getPopulationPlace());

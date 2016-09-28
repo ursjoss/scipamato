@@ -16,7 +16,6 @@ CREATE TABLE paper (
   population_place VARCHAR,
   population_participants VARCHAR,
   population_duration VARCHAR,
-  exposure VARCHAR,
   exposure_pollutant VARCHAR,
   exposure_assessment VARCHAR,
   methods VARCHAR,
