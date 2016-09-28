@@ -31,7 +31,6 @@ public class Paper extends SipamatoEntity {
 
     public static final String GOALS = "goals";
     public static final String POPULATION = "population";
-    public static final String EXPOSURE = "exposure";
     public static final String METHODS = "methods";
 
     public static final String POPULATION_PLACE = "populationPlace";
@@ -39,6 +38,7 @@ public class Paper extends SipamatoEntity {
     public static final String POPULATION_DURATION = "populationDuration";
     public static final String EXPOSURE_POLLUTANT = "exposurePollutant";
     public static final String EXPOSURE_ASSESSMENT = "exposureAssessment";
+    public static final String METHOD_STUDY_DESIGN = "methodStudyDesign";
     public static final String METHOD_OUTCOME = "methodOutcome";
     public static final String METHOD_STATISTICS = "methodStatistics";
     public static final String METHOD_CONFOUNDERS = "methodConfounders";
@@ -89,10 +89,10 @@ public class Paper extends SipamatoEntity {
     private String populationPlace;
     private String populationParticipants;
     private String populationDuration;
-    private String exposure;
     private String exposurePollutant;
     private String exposureAssessment;
     private String methods;
+    private String methodStudyDesign;
     private String methodOutcome;
     private String methodStatistics;
     private String methodConfounders;
@@ -191,14 +191,6 @@ public class Paper extends SipamatoEntity {
         this.population = population;
     }
 
-    public String getExposure() {
-        return exposure;
-    }
-
-    public void setExposure(String exposure) {
-        this.exposure = exposure;
-    }
-
     public String getMethods() {
         return methods;
     }
@@ -254,8 +246,6 @@ public class Paper extends SipamatoEntity {
         sb.append(goals);
         sb.append(", population=");
         sb.append(population);
-        sb.append(", exposure=");
-        sb.append(exposure);
         sb.append(", methods=");
         sb.append(methods);
         sb.append(", result=");
@@ -306,6 +296,14 @@ public class Paper extends SipamatoEntity {
 
     public void setExposureAssessment(String exposureAssessment) {
         this.exposureAssessment = exposureAssessment;
+    }
+
+    public String getMethodStudyDesign() {
+        return methodStudyDesign;
+    }
+
+    public void setMethodStudyDesign(String methodStudyDesign) {
+        this.methodStudyDesign = methodStudyDesign;
     }
 
     public String getMethodOutcome() {

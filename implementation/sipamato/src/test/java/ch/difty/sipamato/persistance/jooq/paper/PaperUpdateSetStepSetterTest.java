@@ -4,7 +4,6 @@ import static ch.difty.sipamato.db.h2.tables.Paper.PAPER;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.AUTHORS;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.COMMENT;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.DOI;
-import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.EXPOSURE;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.EXPOSURE_ASSESSMENT;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.EXPOSURE_POLLUTANT;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.FIRST_AUTHOR;
@@ -17,6 +16,7 @@ import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.MET
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.METHOD_CONFOUNDERS;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.METHOD_OUTCOME;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.METHOD_STATISTICS;
+import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.METHOD_STUDY_DESIGN;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.PM_ID;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.POPULATION;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.POPULATION_DURATION;
@@ -81,7 +81,6 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
         when(getMoreStep().set(PAPER.GOALS, GOALS)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.POPULATION, POPULATION)).thenReturn(getMoreStep());
-        when(getMoreStep().set(PAPER.EXPOSURE, EXPOSURE)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.METHODS, METHODS)).thenReturn(getMoreStep());
 
         when(getMoreStep().set(PAPER.POPULATION_PLACE, POPULATION_PLACE)).thenReturn(getMoreStep());
@@ -89,6 +88,7 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
         when(getMoreStep().set(PAPER.POPULATION_DURATION, POPULATION_DURATION)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.EXPOSURE_POLLUTANT, EXPOSURE_POLLUTANT)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.EXPOSURE_ASSESSMENT, EXPOSURE_ASSESSMENT)).thenReturn(getMoreStep());
+        when(getMoreStep().set(PAPER.METHOD_STUDY_DESIGN, METHOD_STUDY_DESIGN)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.METHOD_OUTCOME, METHOD_OUTCOME)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.METHOD_STATISTICS, METHOD_STATISTICS)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.METHOD_CONFOUNDERS, METHOD_CONFOUNDERS)).thenReturn(getMoreStep());
@@ -115,7 +115,6 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
         verify(entityMock).getGoals();
         verify(entityMock).getPopulation();
-        verify(entityMock).getExposure();
         verify(entityMock).getMethods();
 
         verify(entityMock).getPopulationPlace();
@@ -123,6 +122,7 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
         verify(entityMock).getPopulationDuration();
         verify(entityMock).getExposurePollutant();
         verify(entityMock).getExposureAssessment();
+        verify(entityMock).getMethodStudyDesign();
         verify(entityMock).getMethodOutcome();
         verify(entityMock).getMethodStatistics();
         verify(entityMock).getMethodConfounders();
@@ -150,7 +150,6 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
         verify(getMoreStep()).set(PAPER.GOALS, GOALS);
         verify(getMoreStep()).set(PAPER.POPULATION, POPULATION);
-        verify(getMoreStep()).set(PAPER.EXPOSURE, EXPOSURE);
         verify(getMoreStep()).set(PAPER.METHODS, METHODS);
 
         verify(getMoreStep()).set(PAPER.POPULATION_PLACE, POPULATION_PLACE);
@@ -158,6 +157,7 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
         verify(getMoreStep()).set(PAPER.POPULATION_DURATION, POPULATION_DURATION);
         verify(getMoreStep()).set(PAPER.EXPOSURE_POLLUTANT, EXPOSURE_POLLUTANT);
         verify(getMoreStep()).set(PAPER.EXPOSURE_ASSESSMENT, EXPOSURE_ASSESSMENT);
+        verify(getMoreStep()).set(PAPER.METHOD_STUDY_DESIGN, METHOD_STUDY_DESIGN);
         verify(getMoreStep()).set(PAPER.METHOD_OUTCOME, METHOD_OUTCOME);
         verify(getMoreStep()).set(PAPER.METHOD_STATISTICS, METHOD_STATISTICS);
         verify(getMoreStep()).set(PAPER.METHOD_CONFOUNDERS, METHOD_CONFOUNDERS);

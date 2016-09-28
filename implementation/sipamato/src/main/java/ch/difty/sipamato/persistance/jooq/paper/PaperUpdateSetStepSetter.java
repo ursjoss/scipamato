@@ -35,7 +35,6 @@ public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord
 
             .set(PAPER.GOALS, e.getGoals())
             .set(PAPER.POPULATION, e.getPopulation())
-            .set(PAPER.EXPOSURE, e.getExposure())
             .set(PAPER.METHODS, e.getMethods())
 
             .set(PAPER.POPULATION_PLACE, e.getPopulationPlace())
@@ -43,6 +42,7 @@ public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord
             .set(PAPER.POPULATION_DURATION, e.getPopulationDuration())
             .set(PAPER.EXPOSURE_POLLUTANT, e.getExposurePollutant())
             .set(PAPER.EXPOSURE_ASSESSMENT, e.getExposureAssessment())
+            .set(PAPER.METHOD_STUDY_DESIGN, e.getMethodStudyDesign())
             .set(PAPER.METHOD_OUTCOME, e.getMethodOutcome())
             .set(PAPER.METHOD_STATISTICS, e.getMethodStatistics())
             .set(PAPER.METHOD_CONFOUNDERS, e.getMethodConfounders())

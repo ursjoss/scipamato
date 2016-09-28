@@ -22,13 +22,13 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
     public static final int PUBLICATION_YEAR = 3;
     public static final String GOALS = "goals";
     public static final String POPULATION = "population";
-    public static final String EXPOSURE = "exposure";
     public static final String METHODS = "methods";
     public static final String POPULATION_PLACE = "population place";
     public static final String POPULATION_PARTICIPANTS = "population  participants";
     public static final String POPULATION_DURATION = "population duration";
     public static final String EXPOSURE_POLLUTANT = "exposure pollutant";
     public static final String EXPOSURE_ASSESSMENT = "exporsure assessment";
+    public static final String METHOD_STUDY_DESIGN = "method study design";
     public static final String METHOD_OUTCOME = "method outcome";
     public static final String METHOD_STATISTICS = "method statistics";
     public static final String METHOD_CONFOUNDERS = "method confounders";
@@ -50,7 +50,6 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
 
         when(entityMock.getGoals()).thenReturn(GOALS);
         when(entityMock.getPopulation()).thenReturn(POPULATION);
-        when(entityMock.getExposure()).thenReturn(EXPOSURE);
         when(entityMock.getMethods()).thenReturn(METHODS);
 
         when(entityMock.getPopulationPlace()).thenReturn(POPULATION_PLACE);
@@ -58,6 +57,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
         when(entityMock.getPopulationDuration()).thenReturn(POPULATION_DURATION);
         when(entityMock.getExposurePollutant()).thenReturn(EXPOSURE_POLLUTANT);
         when(entityMock.getExposureAssessment()).thenReturn(EXPOSURE_ASSESSMENT);
+        when(entityMock.getMethodStudyDesign()).thenReturn(METHOD_STUDY_DESIGN);
         when(entityMock.getMethodOutcome()).thenReturn(METHOD_OUTCOME);
         when(entityMock.getMethodStatistics()).thenReturn(METHOD_STATISTICS);
         when(entityMock.getMethodConfounders()).thenReturn(METHOD_CONFOUNDERS);
@@ -90,7 +90,6 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
 
         record.setGoals(GOALS);
         record.setPopulation(POPULATION);
-        record.setExposure(EXPOSURE);
         record.setMethods(METHODS);
 
         record.setPopulationPlace(POPULATION_PLACE);
@@ -98,6 +97,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
         record.setPopulationDuration(POPULATION_DURATION);
         record.setExposurePollutant(EXPOSURE_POLLUTANT);
         record.setExposureAssessment(EXPOSURE_ASSESSMENT);
+        record.setMethodStudyDesign(METHOD_STUDY_DESIGN);
         record.setMethodOutcome(METHOD_OUTCOME);
         record.setMethodStatistics(METHOD_STATISTICS);
         record.setMethodConfounders(METHOD_CONFOUNDERS);
@@ -125,7 +125,6 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
 
         assertThat(e.getGoals()).isEqualTo(GOALS);
         assertThat(e.getPopulation()).isEqualTo(POPULATION);
-        assertThat(e.getExposure()).isEqualTo(EXPOSURE);
         assertThat(e.getMethods()).isEqualTo(METHODS);
 
         assertThat(e.getPopulationPlace()).isEqualTo(POPULATION_PLACE);
@@ -133,6 +132,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
         assertThat(e.getPopulationDuration()).isEqualTo(POPULATION_DURATION);
         assertThat(e.getExposurePollutant()).isEqualTo(EXPOSURE_POLLUTANT);
         assertThat(e.getExposureAssessment()).isEqualTo(EXPOSURE_ASSESSMENT);
+        assertThat(e.getMethodStudyDesign()).isEqualTo(METHOD_STUDY_DESIGN);
         assertThat(e.getMethodOutcome()).isEqualTo(METHOD_OUTCOME);
         assertThat(e.getMethodStatistics()).isEqualTo(METHOD_STATISTICS);
         assertThat(e.getMethodConfounders()).isEqualTo(METHOD_CONFOUNDERS);
