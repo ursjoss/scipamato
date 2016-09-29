@@ -20,9 +20,12 @@ import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.RecordMapper;
 import org.jooq.SQLDialect;
 import org.jooq.SelectConditionStep;
+import org.jooq.SelectJoinStep;
+import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.TableField;
 import org.jooq.UpdateConditionStep;
@@ -103,6 +106,13 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
     @Mock
     private UpdateResultStep<R> updateResultStepMock;
 
+    @Mock
+    private SelectSelectStep<Record1<Integer>> selectSelectStepMock;
+    @Mock
+    private SelectJoinStep<Record1<Integer>> selectJoinStepMock;
+    @Mock
+    private SelectConditionStep<Record1<Integer>> selectConditionStepMock2;
+
     protected abstract ID getSampleId();
 
     /**
@@ -139,6 +149,10 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
     protected abstract void verifyUnpersistedEntityId();
 
     protected abstract void verifyPersistedRecordId();
+
+    private F filterMock = getFilter();
+
+    protected abstract F getFilter();
 
     @SuppressWarnings("unchecked")
     @Before
@@ -177,6 +191,7 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
         verifyNoMoreInteractions(insertSetStepMock, insertSetMoreStepMock, insertResultStepMock, insertSetStepSetterMock);
         verifyNoMoreInteractions(deleteWhereStepMock, deleteConditionStepMock);
         verifyNoMoreInteractions(updateSetFirstStepMock, updateConditionStepMock, updateSetMoreStepMock, updateResultStepMock, updateSetStepSetterMock);
+        verifyNoMoreInteractions(selectSelectStepMock, selectJoinStepMock);
     }
 
     @Test
@@ -358,6 +373,38 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
         verify(dslMock).selectFrom(getTable());
         verify(selectWhereStepMock).where(getTableId().equal(id));
         verify(selectConditionStepMock).fetchOneInto(getEntityClass());
+    }
+
+    protected String makeWhereClause(String pattern, String... fieldNames) {
+        int fields = fieldNames.length;
+        final StringBuilder sb = new StringBuilder();
+        sb.append("(").append("\n  ");
+        for (final String fieldName : fieldNames) {
+            sb.append("lower(\"PUBLIC\".\"").append(getTable().getName()).append("\".\"").append(fieldName).append("\") like lower('%").append(pattern).append("%')").append("\n");
+            if (fields-- > 1)
+                sb.append("  or ");
+        }
+        return sb.append(")").toString();
+    }
+
+    @Test
+    public void countingByFilter() {
+        when(dslMock.selectOne()).thenReturn(selectSelectStepMock);
+        when(selectSelectStepMock.from(getTable())).thenReturn(selectJoinStepMock);
+        when(selectJoinStepMock.where(isA(Condition.class))).thenReturn(selectConditionStepMock2);
+        when(dslMock.fetchCount(selectConditionStepMock2)).thenReturn(2);
+
+        assertThat(repo.countByFilter(filterMock)).isEqualTo(2);
+
+        verify(dslMock).selectOne();
+        verify(selectSelectStepMock).from(getTable());
+        verify(selectJoinStepMock).where(isA(Condition.class));
+        verify(dslMock).fetchCount(selectConditionStepMock2);
+    }
+
+    @Test
+    public void findingByFilter() {
+        // TODO
     }
 
 }
