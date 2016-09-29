@@ -66,32 +66,8 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
         this.jooqConfig = jooqConfig;
     }
 
-    protected DSLContext getDslContext() {
-        return dsl;
-    }
-
-    /** protected for test purposes */
-    public M getMapper() {
+    protected M getMapper() {
         return mapper;
-    }
-
-    public InsertSetStepSetter<R, T> getInsertSetStepSetter() {
-        return insertSetStepSetter;
-    }
-
-    /** protected for test purposes */
-    public UpdateSetStepSetter<R, T> getUpdateSetStepSetter() {
-        return updateSetStepSetter;
-    }
-
-    /** protected for test purposes */
-    public JooqSortMapper<R, T, TI> getSortMapper() {
-        return sortMapper;
-    }
-
-    /** protected for test purposes */
-    public Configuration getJooqConfig() {
-        return jooqConfig;
     }
 
     /**
