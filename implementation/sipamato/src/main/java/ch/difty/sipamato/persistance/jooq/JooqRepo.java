@@ -1,5 +1,6 @@
 package ch.difty.sipamato.persistance.jooq;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +11,7 @@ import org.jooq.InsertSetMoreStep;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.SQLDialect;
+import org.jooq.SortField;
 import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
 import org.slf4j.Logger;
@@ -189,14 +191,19 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
     /** {@inheritDoc} */
     @Override
     public int countByFilter(F filter) {
-        return dsl.fetchCount(dsl.selectOne().from(getTable()).where(createWhereConditions(filter)));
+        final Condition conditions = createWhereConditions(filter);
+        return dsl.fetchCount(dsl.selectOne().from(getTable()).where(conditions));
     }
 
     /** {@inheritDoc} */
     @Override
     public Page<T> findByFilter(F filter, Pageable pageable) {
-        final List<R> queryResults = dsl.selectFrom(getTable()).where(createWhereConditions(filter)).orderBy(sortMapper.map(pageable.getSort(), getTable())).fetchInto(getRecordClass());
+        final Condition conditions = createWhereConditions(filter);
+        final Collection<SortField<T>> sortCriteria = sortMapper.map(pageable.getSort(), getTable());
+        final List<R> queryResults = dsl.selectFrom(getTable()).where(conditions).orderBy(sortCriteria).fetchInto(getRecordClass());
+
         final List<T> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
+
         return new PageImpl<>(entities, pageable, (long) countByFilter(filter));
     }
 
