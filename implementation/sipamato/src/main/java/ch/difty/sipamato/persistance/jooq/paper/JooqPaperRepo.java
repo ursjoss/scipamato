@@ -20,6 +20,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
 import ch.difty.sipamato.persistance.jooq.JooqRepo;
+import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 
 @Repository
@@ -31,8 +32,8 @@ public class JooqPaperRepo extends JooqRepo<PaperRecord, Paper, Long, ch.difty.s
 
     @Autowired
     public JooqPaperRepo(DSLContext dsl, PaperRecordMapper mapper, InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter, UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter,
-            Configuration jooqConfig) {
-        super(dsl, mapper, insertSetStepSetter, updateSetStepSetter, jooqConfig);
+            JooqSortMapper<PaperRecord, Paper, ch.difty.sipamato.db.h2.tables.Paper> sortFieldExtractor, Configuration jooqConfig) {
+        super(dsl, mapper, insertSetStepSetter, updateSetStepSetter, sortFieldExtractor, jooqConfig);
     }
 
     @Override
