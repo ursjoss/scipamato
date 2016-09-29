@@ -85,11 +85,11 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends Sipama
     public void settingNonKeyFields() {
         getSetter().setFieldsFor(stepMock, getEntity());
 
-        verifyCallToAllAllFields();
+        verifyCallToAllFields();
         verifySetting();
     }
 
-    protected abstract void verifyCallToAllAllFields();
+    protected abstract void verifyCallToAllFields();
 
     protected abstract void verifySetting();
 

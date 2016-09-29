@@ -68,9 +68,8 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
     @Override
     protected void stepSetFixture() {
-        when(getStep().set(PAPER.ID, ID)).thenReturn(getMoreStep());
+        when(getStep().set(PAPER.PM_ID, PM_ID)).thenReturn(getMoreStep());
 
-        when(getMoreStep().set(PAPER.PM_ID, PM_ID)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.DOI, DOI)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.AUTHORS, AUTHORS)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.FIRST_AUTHOR, FIRST_AUTHOR)).thenReturn(getMoreStep());
@@ -102,8 +101,7 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
     }
 
     @Override
-    protected void verifyCallToAllAllFields() {
-        verify(entityMock).getId();
+    protected void verifyCallToAllFields() {
         verify(entityMock).getPmId();
         verify(entityMock).getDoi();
         verify(entityMock).getAuthors();
@@ -137,9 +135,7 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
     @Override
     protected void verifySetting() {
-        verify(getStep()).set(PAPER.ID, ID);
-
-        verify(getMoreStep()).set(PAPER.PM_ID, PM_ID);
+        verify(getStep()).set(PAPER.PM_ID, PM_ID);
         verify(getMoreStep()).set(PAPER.DOI, DOI);
         verify(getMoreStep()).set(PAPER.AUTHORS, AUTHORS);
         verify(getMoreStep()).set(PAPER.FIRST_AUTHOR, FIRST_AUTHOR);
