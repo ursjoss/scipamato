@@ -4,13 +4,17 @@ import static org.assertj.core.api.Assertions.fail;
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
 import org.jooq.DeleteWhereStep;
@@ -18,9 +22,15 @@ import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.RecordMapper;
+import org.jooq.SQLDialect;
 import org.jooq.SelectConditionStep;
+import org.jooq.SelectJoinStep;
+import org.jooq.SelectSeekStepN;
+import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
+import org.jooq.SortField;
 import org.jooq.TableField;
 import org.jooq.UpdateConditionStep;
 import org.jooq.UpdateResultStep;
@@ -33,26 +43,30 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.SipamatoFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
 
 @RunWith(MockitoJUnitRunner.class)
-public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, ID, T extends TableImpl<R>, M extends RecordMapper<R, E>, F extends SipamatoFilter> {
+public abstract class JooqRepoTest<R extends Record, T extends SipamatoEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends SipamatoFilter> {
 
-    private GenericRepository<R, E, ID, M, F> repo;
+    private GenericRepository<R, T, ID, M, F> repo;
 
-    private final List<E> entities = new ArrayList<>();
+    private final List<T> entities = new ArrayList<>();
+    private final List<R> records = new ArrayList<>();
 
     private final ID id = getSampleId();
 
     @Mock
     private DSLContext dslMock;
     @Mock
-    private InsertSetStepSetter<R, E> insertSetStepSetterMock;
+    private InsertSetStepSetter<R, T> insertSetStepSetterMock;
     @Mock
-    private UpdateSetStepSetter<R, E> updateSetStepSetterMock;
+    private UpdateSetStepSetter<R, T> updateSetStepSetterMock;
 
     @Mock
     private R unpersistedRecord;
@@ -61,12 +75,26 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
         return dslMock;
     }
 
-    protected InsertSetStepSetter<R, E> getInsertSetStepSetter() {
+    protected InsertSetStepSetter<R, T> getInsertSetStepSetter() {
         return insertSetStepSetterMock;
     }
 
-    protected UpdateSetStepSetter<R, E> getUpdateSetStepSetter() {
+    protected UpdateSetStepSetter<R, T> getUpdateSetStepSetter() {
         return updateSetStepSetterMock;
+    }
+
+    @Mock
+    private JooqSortMapper<R, T, TI> sortFieldExtractorMock;
+
+    protected JooqSortMapper<R, T, TI> getSortFieldExtractor() {
+        return sortFieldExtractorMock;
+    }
+
+    @Mock
+    private Configuration jooqConfig;
+
+    protected Configuration getJooqConfig() {
+        return jooqConfig;
     }
 
     @Mock
@@ -93,12 +121,28 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
     @Mock
     private UpdateResultStep<R> updateResultStepMock;
 
+    @Mock
+    private SelectSelectStep<Record1<Integer>> selectSelectStepMock;
+    @Mock
+    private SelectJoinStep<Record1<Integer>> selectJoinStepMock;
+    @Mock
+    private SelectConditionStep<Record1<Integer>> selectConditionStepMock2;
+
+    @Mock
+    private Pageable pageableMock;
+    @Mock
+    private Sort sortMock;
+    @Mock
+    private Collection<SortField<T>> sortFieldsMock;
+    @Mock
+    private SelectSeekStepN<R> selectSeekStepNMock;
+
     protected abstract ID getSampleId();
 
     /**
      * @return the specific repository instantiated 
      */
-    protected abstract GenericRepository<R, E, ID, M, F> getRepo();
+    protected abstract GenericRepository<R, T, ID, M, F> getRepo();
 
     /**
      * Hand-rolled spy that returns the provided entity in the method <code>findById(ID id)</code>
@@ -106,19 +150,21 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
      * @param entity the entity to be found.
      * @return the entity
      */
-    protected abstract GenericRepository<R, E, ID, M, F> makeRepoFindingEntityById(E entity);
+    protected abstract GenericRepository<R, T, ID, M, F> makeRepoFindingEntityById(T entity);
 
-    protected abstract E getPersistedEntity();
+    protected abstract T getPersistedEntity();
 
-    protected abstract E getUnpersistedEntity();
+    protected abstract T getUnpersistedEntity();
 
     protected abstract R getPersistedRecord();
 
     protected abstract M getMapper();
 
-    protected abstract Class<E> getEntityClass();
+    protected abstract Class<T> getEntityClass();
 
-    protected abstract T getTable();
+    protected abstract TI getTable();
+
+    protected abstract Class<R> getRecordClass();
 
     protected abstract TableField<R, ID> getTableId();
 
@@ -130,6 +176,10 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
 
     protected abstract void verifyPersistedRecordId();
 
+    private F filterMock = getFilter();
+
+    protected abstract F getFilter();
+
     @SuppressWarnings("unchecked")
     @Before
     public void setUp() {
@@ -137,6 +187,9 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
 
         entities.add(getPersistedEntity());
         entities.add(getPersistedEntity());
+
+        records.add(getPersistedRecord());
+        records.add(getPersistedRecord());
 
         when(dslMock.selectFrom(getTable())).thenReturn(selectWhereStepMock);
         when(selectWhereStepMock.fetchInto(getEntityClass())).thenReturn(entities);
@@ -159,12 +212,14 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(dslMock, getMapper());
+        verifyNoMoreInteractions(dslMock, getMapper(), sortFieldExtractorMock);
         verifyNoMoreInteractions(getUnpersistedEntity(), getPersistedEntity(), unpersistedRecord, getPersistedRecord());
         verifyNoMoreInteractions(selectWhereStepMock, selectConditionStepMock);
         verifyNoMoreInteractions(insertSetStepMock, insertSetMoreStepMock, insertResultStepMock, insertSetStepSetterMock);
         verifyNoMoreInteractions(deleteWhereStepMock, deleteConditionStepMock);
         verifyNoMoreInteractions(updateSetFirstStepMock, updateConditionStepMock, updateSetMoreStepMock, updateResultStepMock, updateSetStepSetterMock);
+        verifyNoMoreInteractions(selectSelectStepMock, selectJoinStepMock);
+        verifyNoMoreInteractions(pageableMock, sortMock, sortFieldsMock, selectSeekStepNMock);
     }
 
     @Test
@@ -174,6 +229,8 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
         assertThat(getMapper()).isNotNull();
         assertThat(getInsertSetStepSetter()).isNotNull();
         assertThat(getUpdateSetStepSetter()).isNotNull();
+        assertThat(getSortFieldExtractor()).isNotNull();
+        assertThat(getJooqConfig()).isNotNull();
     }
 
     @SuppressWarnings("unchecked")
@@ -307,7 +364,8 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
     }
 
     @Test
-    public void updating_withUnsuccessfulRetrievalAfterPersistingAttempt_returnsNull() {
+    public void updating_withNonH2Db_withUnsuccessfulRetrievalAfterPersistingAttempt_returnsNull() {
+        when(jooqConfig.dialect()).thenReturn(SQLDialect.POSTGRES_9_5);
         expectEntityIdsWithValues();
         when(updateSetMoreStepMock.where(getTableId().equal(id))).thenReturn(updateConditionStepMock);
         when(updateResultStepMock.fetchOne()).thenReturn(null);
@@ -320,6 +378,115 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
         verify(updateSetMoreStepMock).where(getTableId().equal(id));
         verify(updateConditionStepMock).returning();
         verify(updateResultStepMock).fetchOne();
+    }
+
+    @Test
+    public void updating_withH2Db_withUnsuccessfulRetrievalAfterPersistingAttempt_andWithUnsuccessfulH2Retrieval_returnsNull() {
+        when(jooqConfig.dialect()).thenReturn(SQLDialect.H2);
+        expectEntityIdsWithValues();
+        when(updateSetMoreStepMock.where(getTableId().equal(id))).thenReturn(updateConditionStepMock);
+        when(updateResultStepMock.fetchOne()).thenReturn(null);
+        when(selectConditionStepMock.fetchOneInto(getEntityClass())).thenReturn(null);
+
+        assertThat(repo.update(getUnpersistedEntity())).isNull();
+
+        verifyUnpersistedEntityId();
+        verify(dslMock).update(getTable());
+        verify(updateSetStepSetterMock).setFieldsFor(updateSetFirstStepMock, getUnpersistedEntity());
+        verify(updateSetMoreStepMock).where(getTableId().equal(id));
+        verify(updateConditionStepMock).returning();
+        verify(updateResultStepMock).fetchOne();
+
+        verify(dslMock).selectFrom(getTable());
+        verify(selectWhereStepMock).where(getTableId().equal(id));
+        verify(selectConditionStepMock).fetchOneInto(getEntityClass());
+    }
+
+    @Test
+    public void updating_withH2Db_withUnsuccessfulRetrievalAfterPersistingAttempt_butSuccessfulFind_returnsEntity() {
+        when(jooqConfig.dialect()).thenReturn(SQLDialect.H2);
+        expectEntityIdsWithValues();
+        when(updateSetMoreStepMock.where(getTableId().equal(id))).thenReturn(updateConditionStepMock);
+        when(updateResultStepMock.fetchOne()).thenReturn(null);
+        when(selectConditionStepMock.fetchOneInto(getEntityClass())).thenReturn(getPersistedEntity());
+
+        assertThat(repo.update(getUnpersistedEntity())).isEqualTo(getPersistedEntity());
+
+        verifyUnpersistedEntityId();
+        verify(dslMock).update(getTable());
+        verify(updateSetStepSetterMock).setFieldsFor(updateSetFirstStepMock, getUnpersistedEntity());
+        verify(updateSetMoreStepMock).where(getTableId().equal(id));
+        verify(updateConditionStepMock).returning();
+        verify(updateResultStepMock).fetchOne();
+
+        verify(dslMock).selectFrom(getTable());
+        verify(selectWhereStepMock).where(getTableId().equal(id));
+        verify(selectConditionStepMock).fetchOneInto(getEntityClass());
+    }
+
+    protected String makeWhereClause(String pattern, String... fieldNames) {
+        int fields = fieldNames.length;
+        final StringBuilder sb = new StringBuilder();
+        sb.append("(").append("\n  ");
+        for (final String fieldName : fieldNames) {
+            sb.append("lower(\"PUBLIC\".\"").append(getTable().getName()).append("\".\"").append(fieldName).append("\") like lower('%").append(pattern).append("%')").append("\n");
+            if (fields-- > 1)
+                sb.append("  or ");
+        }
+        return sb.append(")").toString();
+    }
+
+    @Test
+    public void countingByFilter() {
+        when(dslMock.selectOne()).thenReturn(selectSelectStepMock);
+        when(selectSelectStepMock.from(getTable())).thenReturn(selectJoinStepMock);
+        when(selectJoinStepMock.where(isA(Condition.class))).thenReturn(selectConditionStepMock2);
+        when(dslMock.fetchCount(selectConditionStepMock2)).thenReturn(2);
+
+        assertThat(repo.countByFilter(filterMock)).isEqualTo(2);
+
+        verify(dslMock).selectOne();
+        verify(selectSelectStepMock).from(getTable());
+        verify(selectJoinStepMock).where(isA(Condition.class));
+        verify(dslMock).fetchCount(selectConditionStepMock2);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void findingByFilter() {
+        when(selectWhereStepMock.where(isA(Condition.class))).thenReturn(selectConditionStepMock);
+        when(pageableMock.getSort()).thenReturn(sortMock);
+        when(sortFieldExtractorMock.map(sortMock, getTable())).thenReturn(sortFieldsMock);
+        when(selectConditionStepMock.orderBy(sortFieldsMock)).thenReturn(selectSeekStepNMock);
+        when(selectSeekStepNMock.fetchInto(getRecordClass())).thenReturn(records);
+        when(getMapper().map(getPersistedRecord())).thenReturn(getPersistedEntity());
+        when(pageableMock.getOffset()).thenReturn(0);
+        when(pageableMock.getPageSize()).thenReturn(20);
+
+        when(dslMock.selectOne()).thenReturn(selectSelectStepMock);
+        when(selectSelectStepMock.from(getTable())).thenReturn(selectJoinStepMock);
+        when(selectJoinStepMock.where(isA(Condition.class))).thenReturn(selectConditionStepMock2);
+        when(dslMock.fetchCount(selectConditionStepMock2)).thenReturn(2);
+
+        Page<T> page = repo.findByFilter(filterMock, pageableMock);
+        assertThat(page).isNotNull();
+        assertThat(page.getTotalElements()).isEqualTo(2);
+        assertThat(page.getContent()).hasSize(2).containsOnly(getPersistedEntity());
+
+        verify(getDsl()).selectFrom(getTable());
+        verify(selectWhereStepMock).where(isA(Condition.class));
+        verify(pageableMock).getSort();
+        verify(sortFieldExtractorMock).map(sortMock, getTable());
+        verify(selectConditionStepMock).orderBy(sortFieldsMock);
+        verify(selectSeekStepNMock).fetchInto(getRecordClass());
+        verify(getMapper(), times(2)).map(getPersistedRecord());
+        verify(pageableMock, times(2)).getOffset();
+        verify(pageableMock).getPageSize();
+
+        verify(dslMock).selectOne();
+        verify(selectSelectStepMock).from(getTable());
+        verify(selectJoinStepMock).where(isA(Condition.class));
+        verify(dslMock).fetchCount(selectConditionStepMock2);
     }
 
 }

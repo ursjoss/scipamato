@@ -65,9 +65,13 @@ public class PaperEntryPage extends BasePage<Paper> {
 
             @Override
             protected void onSubmit() {
-                // TODO return serviceresult instead of factoring the result here
-                service.update(getModelObject());
-                info("Successfully saved Paper [id " + getModelObject().getId() + "]: " + getModelObject().getAuthors() + " (" + getModelObject().getPublicationYear() + ")");
+                Paper persisted = service.update(getModelObject());
+                if (persisted != null) {
+                    setModelObject(persisted);
+                    info("Successfully saved Paper [id " + getModelObject().getId() + "]: " + getModelObject().getAuthors() + " (" + getModelObject().getPublicationYear() + ")");
+                } else {
+                    warn("Could not save Paper [id " + getModelObject().getId() + "].");
+                }
             }
         };
         queue(form);

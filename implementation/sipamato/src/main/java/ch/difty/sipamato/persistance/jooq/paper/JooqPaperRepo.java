@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
@@ -19,6 +20,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
 import ch.difty.sipamato.persistance.jooq.JooqRepo;
+import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 
 @Repository
@@ -29,8 +31,9 @@ public class JooqPaperRepo extends JooqRepo<PaperRecord, Paper, Long, ch.difty.s
     private static final Logger LOGGER = LoggerFactory.getLogger(JooqPaperRepo.class);
 
     @Autowired
-    public JooqPaperRepo(DSLContext dsl, PaperRecordMapper mapper, InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter, UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter) {
-        super(dsl, mapper, insertSetStepSetter, updateSetStepSetter);
+    public JooqPaperRepo(DSLContext dsl, PaperRecordMapper mapper, InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter, UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter,
+            JooqSortMapper<PaperRecord, Paper, ch.difty.sipamato.db.h2.tables.Paper> sortFieldExtractor, Configuration jooqConfig) {
+        super(dsl, mapper, insertSetStepSetter, updateSetStepSetter, sortFieldExtractor, jooqConfig);
     }
 
     @Override
@@ -72,46 +75,49 @@ public class JooqPaperRepo extends JooqRepo<PaperRecord, Paper, Long, ch.difty.s
     protected Condition createWhereConditions(PaperFilter filter) {
         final List<Condition> conditions = new ArrayList<>();
 
-        if (filter.getAuthorMask() != null) {
-            String likeExpression = "%" + filter.getAuthorMask() + "%";
-            conditions.add(PAPER.FIRST_AUTHOR.likeIgnoreCase(likeExpression).or(PAPER.AUTHORS.likeIgnoreCase(likeExpression)));
+        if (filter != null) {
+            if (filter.getAuthorMask() != null) {
+                String likeExpression = "%" + filter.getAuthorMask() + "%";
+                conditions.add(PAPER.FIRST_AUTHOR.likeIgnoreCase(likeExpression).or(PAPER.AUTHORS.likeIgnoreCase(likeExpression)));
+            }
+
+            if (filter.getMethodsMask() != null) {
+                String likeExpression = "%" + filter.getMethodsMask() + "%";
+                conditions.add(PAPER.EXPOSURE_POLLUTANT.likeIgnoreCase(likeExpression)
+                        .or(PAPER.EXPOSURE_ASSESSMENT.likeIgnoreCase(likeExpression))
+                        .or(PAPER.METHODS.likeIgnoreCase(likeExpression))
+                        .or(PAPER.METHOD_STUDY_DESIGN.likeIgnoreCase(likeExpression))
+                        .or(PAPER.METHOD_OUTCOME.likeIgnoreCase(likeExpression))
+                        .or(PAPER.METHOD_STATISTICS.likeIgnoreCase(likeExpression))
+                        .or(PAPER.METHOD_CONFOUNDERS.likeIgnoreCase(likeExpression)));
+            }
+
+            if (filter.getSearchMask() != null) {
+                String likeExpression = "%" + filter.getSearchMask() + "%";
+                conditions.add(PAPER.DOI.likeIgnoreCase(likeExpression)
+                        .or(PAPER.LOCATION.likeIgnoreCase(likeExpression))
+                        .or(PAPER.TITLE.likeIgnoreCase(likeExpression))
+                        .or(PAPER.GOALS.likeIgnoreCase(likeExpression))
+                        .or(PAPER.POPULATION.likeIgnoreCase(likeExpression))
+                        .or(PAPER.POPULATION_PLACE.likeIgnoreCase(likeExpression))
+                        .or(PAPER.POPULATION_PARTICIPANTS.likeIgnoreCase(likeExpression))
+                        .or(PAPER.POPULATION_DURATION.likeIgnoreCase(likeExpression))
+                        .or(PAPER.RESULT.likeIgnoreCase(likeExpression))
+                        .or(PAPER.RESULT_EXPOSURE_RANGE.likeIgnoreCase(likeExpression))
+                        .or(PAPER.RESULT_EFFECT_ESTIMATE.likeIgnoreCase(likeExpression))
+                        .or(PAPER.COMMENT.likeIgnoreCase(likeExpression))
+                        .or(PAPER.INTERN.likeIgnoreCase(likeExpression)));
+            }
+
+            if (filter.getPublicationYearFrom() != null) {
+                conditions.add(PAPER.PUBLICATION_YEAR.ge(filter.getPublicationYearFrom()));
+            }
+
+            if (filter.getPublicationYearUntil() != null) {
+                conditions.add(PAPER.PUBLICATION_YEAR.le(filter.getPublicationYearUntil()));
+            }
         }
 
-        if (filter.getMethodsMask() != null) {
-            String likeExpression = "%" + filter.getMethodsMask() + "%";
-            conditions.add(PAPER.EXPOSURE_POLLUTANT.likeIgnoreCase(likeExpression)
-                    .or(PAPER.EXPOSURE_ASSESSMENT.likeIgnoreCase(likeExpression))
-                    .or(PAPER.METHODS.likeIgnoreCase(likeExpression))
-                    .or(PAPER.METHOD_STUDY_DESIGN.likeIgnoreCase(likeExpression))
-                    .or(PAPER.METHOD_OUTCOME.likeIgnoreCase(likeExpression))
-                    .or(PAPER.METHOD_STATISTICS.likeIgnoreCase(likeExpression))
-                    .or(PAPER.METHOD_CONFOUNDERS.likeIgnoreCase(likeExpression)));
-        }
-
-        if (filter.getSearchMask() != null) {
-            String likeExpression = "%" + filter.getSearchMask() + "%";
-            conditions.add(PAPER.DOI.likeIgnoreCase(likeExpression)
-                    .or(PAPER.LOCATION.likeIgnoreCase(likeExpression))
-                    .or(PAPER.TITLE.likeIgnoreCase(likeExpression))
-                    .or(PAPER.GOALS.likeIgnoreCase(likeExpression))
-                    .or(PAPER.POPULATION.likeIgnoreCase(likeExpression))
-                    .or(PAPER.POPULATION_PLACE.likeIgnoreCase(likeExpression))
-                    .or(PAPER.POPULATION_PARTICIPANTS.likeIgnoreCase(likeExpression))
-                    .or(PAPER.POPULATION_DURATION.likeIgnoreCase(likeExpression))
-                    .or(PAPER.RESULT.likeIgnoreCase(likeExpression))
-                    .or(PAPER.RESULT_EXPOSURE_RANGE.likeIgnoreCase(likeExpression))
-                    .or(PAPER.RESULT_EFFECT_ESTIMATE.likeIgnoreCase(likeExpression))
-                    .or(PAPER.COMMENT.likeIgnoreCase(likeExpression))
-                    .or(PAPER.INTERN.likeIgnoreCase(likeExpression)));
-        }
-
-        if (filter.getPublicationYearFrom() != null) {
-            conditions.add(PAPER.PUBLICATION_YEAR.ge(filter.getPublicationYearFrom()));
-        }
-
-        if (filter.getPublicationYearUntil() != null) {
-            conditions.add(PAPER.PUBLICATION_YEAR.le(filter.getPublicationYearUntil()));
-        }
         return DSL.and(conditions);
     }
 

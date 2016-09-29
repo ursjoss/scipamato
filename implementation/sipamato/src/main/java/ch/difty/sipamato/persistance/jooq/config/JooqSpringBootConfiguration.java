@@ -12,6 +12,7 @@ import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;
 import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -24,6 +25,9 @@ import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 @Configuration
 @Profile("DB_JOOQ")
 public class JooqSpringBootConfiguration {
+
+    @Value("${jooq.sql.dialect}")
+    private String sqlDialect;
 
     @Bean
     public DataSourceTransactionManager transactionManager(DataSource dataSource) {
@@ -63,7 +67,7 @@ public class JooqSpringBootConfiguration {
                 .derive(connectionProvider)
                 .derive(transactionProvider)
                 .derive(executeListenerProvider)
-                .derive(SQLDialect.H2);
+                .derive(SQLDialect.valueOf(sqlDialect));
         // @formatter:on
     }
 }

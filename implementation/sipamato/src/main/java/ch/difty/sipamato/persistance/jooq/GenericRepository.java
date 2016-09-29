@@ -17,10 +17,10 @@ import ch.difty.sipamato.lib.NullArgumentException;
  *
  * @author u.joss
  *
- * @param <R> the record, extending {@link Record}
- * @param <T> the entity, extending {@link SipamatoEntity}
- * @param <ID> the ID of the entity
- * @param <M> the record mapper mapping records of type <literal>R</literal> into entities of type <literal>T</literal>
+ * @param <R> the type of the record, extending {@link Record}
+ * @param <T> the type of the entity, extending {@link SipamatoEntity}
+ * @param <ID> the type of the ID of the entity
+ * @param <M> the type of the record mapper mapping records of type <literal>R</literal> into entities of type <literal>T</literal>
  * @param <F> the type of the filter extending {@link SipamatorFilter}
  */
 public interface GenericRepository<R extends Record, T extends SipamatoEntity, ID, M extends RecordMapper<R, T>, F extends SipamatoFilter> extends Serializable {

@@ -19,11 +19,8 @@ public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord
     public UpdateSetMoreStep<PaperRecord> setFieldsFor(UpdateSetFirstStep<PaperRecord> step, Paper e) {
         Asserts.notNull(step, "step");
         Asserts.notNull(e, "entity");
-        Long id = e.getId();
-        Asserts.notNull(id, "entity.id");
         // @formatter:off
         return step
-            .set(PAPER.ID, id.longValue())
             .set(PAPER.PM_ID, e.getPmId())
             .set(PAPER.DOI, e.getDoi())
             .set(PAPER.AUTHORS, e.getAuthors())
