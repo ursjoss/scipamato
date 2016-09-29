@@ -72,7 +72,7 @@ public class JooqPaperServiceTest {
     @Test
     public void updating_delgatesToRepo() {
         when(repoMock.update(paperMock)).thenReturn(paperMock);
-        assertThat(repoMock.update(paperMock)).isEqualTo(paperMock);
+        assertThat(service.update(paperMock)).isEqualTo(paperMock);
         verify(repoMock).update(paperMock);
     }
 
