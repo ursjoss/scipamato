@@ -30,14 +30,14 @@ public class JooqPaperRepoTest extends JooqRepoTest<PaperRecord, Paper, Long, ch
     @Override
     protected JooqPaperRepo getRepo() {
         if (repo == null) {
-            repo = new JooqPaperRepo(getDsl(), getMapper(), getInsertSetStepSetter(), getUpdateSetStepSetter());
+            repo = new JooqPaperRepo(getDsl(), getMapper(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig());
         }
         return repo;
     }
 
     @Override
     protected GenericRepository<PaperRecord, Paper, Long, PaperRecordMapper, PaperFilter> makeRepoFindingEntityById(Paper paper) {
-        return new JooqPaperRepo(getDsl(), getMapper(), getInsertSetStepSetter(), getUpdateSetStepSetter()) {
+        return new JooqPaperRepo(getDsl(), getMapper(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -115,24 +115,29 @@ public class JooqPaperRepoTest extends JooqRepoTest<PaperRecord, Paper, Long, ch
     @Test
     public void degenerateConstruction() {
         try {
-            new JooqPaperRepo(null, getMapper(), getInsertSetStepSetter(), getUpdateSetStepSetter());
+            new JooqPaperRepo(null, getMapper(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig());
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dsl must not be null.");
         }
         try {
-            new JooqPaperRepo(getDsl(), null, getInsertSetStepSetter(), getUpdateSetStepSetter());
+            new JooqPaperRepo(getDsl(), null, getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig());
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("mapper must not be null.");
         }
         try {
-            new JooqPaperRepo(getDsl(), getMapper(), null, getUpdateSetStepSetter());
+            new JooqPaperRepo(getDsl(), getMapper(), null, getUpdateSetStepSetter(), getJooqConfig());
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("insertSetStepSetter must not be null.");
         }
         try {
-            new JooqPaperRepo(getDsl(), getMapper(), getInsertSetStepSetter(), null);
+            new JooqPaperRepo(getDsl(), getMapper(), getInsertSetStepSetter(), null, getJooqConfig());
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("updateSetStepSetter must not be null.");
+        }
+        try {
+            new JooqPaperRepo(getDsl(), getMapper(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null);
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("jooqConfig must not be null.");
         }
     }
 

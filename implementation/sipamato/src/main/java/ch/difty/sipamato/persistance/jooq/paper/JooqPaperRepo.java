@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
@@ -29,8 +30,9 @@ public class JooqPaperRepo extends JooqRepo<PaperRecord, Paper, Long, ch.difty.s
     private static final Logger LOGGER = LoggerFactory.getLogger(JooqPaperRepo.class);
 
     @Autowired
-    public JooqPaperRepo(DSLContext dsl, PaperRecordMapper mapper, InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter, UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter) {
-        super(dsl, mapper, insertSetStepSetter, updateSetStepSetter);
+    public JooqPaperRepo(DSLContext dsl, PaperRecordMapper mapper, InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter, UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter,
+            Configuration jooqConfig) {
+        super(dsl, mapper, insertSetStepSetter, updateSetStepSetter, jooqConfig);
     }
 
     @Override

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.Record;
@@ -17,7 +18,6 @@ import org.jooq.SortField;
 import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
@@ -53,19 +53,20 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
     private final M mapper;
     private final InsertSetStepSetter<R, T> insertSetStepSetter;
     private final UpdateSetStepSetter<R, T> updateSetStepSetter;
+    private final Configuration jooqConfig;
 
-    @Value("${jooq.sql.dialect}")
-    private String sqlDialect;
-
-    protected JooqRepo(DSLContext dsl, M mapper, InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter) {
+    protected JooqRepo(DSLContext dsl, M mapper, InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter, Configuration jooqConfig) {
         Asserts.notNull(dsl, "dsl");
         Asserts.notNull(mapper, "mapper");
         Asserts.notNull(insertSetStepSetter, "insertSetStepSetter");
         Asserts.notNull(updateSetStepSetter, "updateSetStepSetter");
+        Asserts.notNull(jooqConfig, "jooqConfig");
+
         this.dsl = dsl;
         this.mapper = mapper;
         this.insertSetStepSetter = insertSetStepSetter;
         this.updateSetStepSetter = updateSetStepSetter;
+        this.jooqConfig = jooqConfig;
     }
 
     /** protected for test purposes */
@@ -85,6 +86,11 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
     /** protected for test purposes */
     public UpdateSetStepSetter<R, T> getUpdateSetStepSetter() {
         return updateSetStepSetter;
+    }
+
+    /** protected for test purposes */
+    public Configuration getJooqConfig() {
+        return jooqConfig;
     }
 
     /**
@@ -194,7 +200,7 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
             return mapper.map(updated);
         } else {
             // Ugly, need to work around the problem that update...returning().fetchOne() is not supported for H2
-            if (SQLDialect.H2.getName().equals(sqlDialect)) {
+            if (SQLDialect.H2.equals(jooqConfig.dialect())) {
                 return findById(id);
             } else {
                 getLogger().warn("Unable to persist {} with id {}.", getTable().getName(), id);

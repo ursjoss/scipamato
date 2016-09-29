@@ -11,6 +11,8 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
 import org.jooq.DeleteWhereStep;
@@ -19,6 +21,7 @@ import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
+import org.jooq.SQLDialect;
 import org.jooq.SelectConditionStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.TableField;
@@ -67,6 +70,13 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
 
     protected UpdateSetStepSetter<R, E> getUpdateSetStepSetter() {
         return updateSetStepSetterMock;
+    }
+
+    @Mock
+    private Configuration jooqConfig;
+
+    protected Configuration getJooqConfig() {
+        return jooqConfig;
     }
 
     @Mock
@@ -137,6 +147,8 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
 
         entities.add(getPersistedEntity());
         entities.add(getPersistedEntity());
+
+        when(jooqConfig.dialect()).thenReturn(SQLDialect.H2);
 
         when(dslMock.selectFrom(getTable())).thenReturn(selectWhereStepMock);
         when(selectWhereStepMock.fetchInto(getEntityClass())).thenReturn(entities);
@@ -307,10 +319,11 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
     }
 
     @Test
-    public void updating_withUnsuccessfulRetrievalAfterPersistingAttempt_returnsNull() {
+    public void updating_withH2Db_withUnsuccessfulRetrievalAfterPersistingAttempt_andWithUnsuccessfulH2Retrieval_returnsNull() {
         expectEntityIdsWithValues();
         when(updateSetMoreStepMock.where(getTableId().equal(id))).thenReturn(updateConditionStepMock);
         when(updateResultStepMock.fetchOne()).thenReturn(null);
+        when(selectConditionStepMock.fetchOneInto(getEntityClass())).thenReturn(null);
 
         assertThat(repo.update(getUnpersistedEntity())).isNull();
 
@@ -320,6 +333,31 @@ public abstract class JooqRepoTest<R extends Record, E extends SipamatoEntity, I
         verify(updateSetMoreStepMock).where(getTableId().equal(id));
         verify(updateConditionStepMock).returning();
         verify(updateResultStepMock).fetchOne();
+
+        verify(dslMock).selectFrom(getTable());
+        verify(selectWhereStepMock).where(getTableId().equal(id));
+        verify(selectConditionStepMock).fetchOneInto(getEntityClass());
+    }
+
+    @Test
+    public void updating_withH2Db_withUnsuccessfulRetrievalAfterPersistingAttempt_butSuccessfulFind_returnsEntity() {
+        expectEntityIdsWithValues();
+        when(updateSetMoreStepMock.where(getTableId().equal(id))).thenReturn(updateConditionStepMock);
+        when(updateResultStepMock.fetchOne()).thenReturn(null);
+        when(selectConditionStepMock.fetchOneInto(getEntityClass())).thenReturn(getPersistedEntity());
+
+        assertThat(repo.update(getUnpersistedEntity())).isEqualTo(getPersistedEntity());
+
+        verifyUnpersistedEntityId();
+        verify(dslMock).update(getTable());
+        verify(updateSetStepSetterMock).setFieldsFor(updateSetFirstStepMock, getUnpersistedEntity());
+        verify(updateSetMoreStepMock).where(getTableId().equal(id));
+        verify(updateConditionStepMock).returning();
+        verify(updateResultStepMock).fetchOne();
+
+        verify(dslMock).selectFrom(getTable());
+        verify(selectWhereStepMock).where(getTableId().equal(id));
+        verify(selectConditionStepMock).fetchOneInto(getEntityClass());
     }
 
 }
