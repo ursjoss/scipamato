@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.lib.Asserts;
+import ch.difty.sipamato.lib.AssertAs;
 
 @Component
 public class PaperRecordMapper implements RecordMapper<PaperRecord, Paper> {
@@ -13,7 +13,7 @@ public class PaperRecordMapper implements RecordMapper<PaperRecord, Paper> {
     /** {@inheritDoc} */
     @Override
     public Paper map(PaperRecord from) {
-        Asserts.notNull(from);
+        AssertAs.notNull(from, "from");
         Paper to = new Paper();
         to.setId(from.getId());
         to.setPmId(from.getPmId());

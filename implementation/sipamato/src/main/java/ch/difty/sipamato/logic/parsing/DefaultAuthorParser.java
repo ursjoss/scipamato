@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 import org.apache.wicket.util.string.Strings;
 
-import ch.difty.sipamato.lib.Asserts;
+import ch.difty.sipamato.lib.AssertAs;
 
 /**
  * Utility class to lex and parse Author strings. From the list of parsed authors it can return the first author.<p/>
@@ -31,8 +31,7 @@ public class DefaultAuthorParser implements AuthorParser {
     private final List<Author> authors;
 
     public DefaultAuthorParser(final String authorsString) {
-        Asserts.notNull(authorsString, "authorsString");
-        this.authorsString = authorsString.trim();
+        this.authorsString = AssertAs.notNull(authorsString, "authorsString").trim();
 
         final String as = preprocess();
         final List<String> authorStrings = lexAuthors(as);

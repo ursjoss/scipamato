@@ -14,7 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
-import ch.difty.sipamato.lib.Asserts;
+import ch.difty.sipamato.lib.AssertAs;
 
 /**
  * Default implementation of the {@link JooqSortMapper} interface.
@@ -56,8 +56,8 @@ public class SortMapper<R extends Record, T extends SipamatoEntity, TI extends T
     /** protected for test purposes */
     @SuppressWarnings("unchecked")
     protected TableField<R, T> getTableField(String sortFieldName, TI table) {
-        Asserts.notNull(sortFieldName, "sortFieldName");
-        Asserts.notNull(table, "table");
+        AssertAs.notNull(sortFieldName, "sortFieldName");
+        AssertAs.notNull(table, "table");
 
         TableField<R, T> sortField = null;
         try {

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.config.ApplicationProperties;
 import ch.difty.sipamato.config.AuthorParserStrategies;
-import ch.difty.sipamato.lib.Asserts;
+import ch.difty.sipamato.lib.AssertAs;
 
 /**
  * Default implementation of the {@link AuthorParserFactory} which relies
@@ -21,14 +21,14 @@ public class EnumBasedAuthorParserFactory implements AuthorParserFactory {
 
     @Autowired
     public EnumBasedAuthorParserFactory(ApplicationProperties appProperties) {
-        Asserts.notNull(appProperties, "appProperties");
+        AssertAs.notNull(appProperties, "appProperties");
         this.authorParserStrategy = appProperties.getAuthorParserStrategy();
     }
 
     /** {@inheritDoc} */
     @Override
     public AuthorParser createParser(String authorString) {
-        Asserts.notNull(authorString, "authorString");
+        AssertAs.notNull(authorString, "authorString");
 
         switch (authorParserStrategy) {
         case DEFAULT:

@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.SipamatoFilter;
-import ch.difty.sipamato.lib.Asserts;
+import ch.difty.sipamato.lib.AssertAs;
 
 /**
  * The generic jOOQ repository.
@@ -53,19 +53,12 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
 
     protected JooqRepo(DSLContext dsl, M mapper, InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter, JooqSortMapper<R, T, TI> sortMapper,
             Configuration jooqConfig) {
-        Asserts.notNull(dsl, "dsl");
-        Asserts.notNull(mapper, "mapper");
-        Asserts.notNull(insertSetStepSetter, "insertSetStepSetter");
-        Asserts.notNull(updateSetStepSetter, "updateSetStepSetter");
-        Asserts.notNull(sortMapper, "sortMapper");
-        Asserts.notNull(jooqConfig, "jooqConfig");
-
-        this.dsl = dsl;
-        this.mapper = mapper;
-        this.insertSetStepSetter = insertSetStepSetter;
-        this.updateSetStepSetter = updateSetStepSetter;
-        this.sortMapper = sortMapper;
-        this.jooqConfig = jooqConfig;
+        this.dsl = AssertAs.notNull(dsl, "dsl");
+        this.mapper = AssertAs.notNull(mapper, "mapper");
+        this.insertSetStepSetter = AssertAs.notNull(insertSetStepSetter, "insertSetStepSetter");
+        this.updateSetStepSetter = AssertAs.notNull(updateSetStepSetter, "updateSetStepSetter");
+        this.sortMapper = AssertAs.notNull(sortMapper, "sortMapper");
+        this.jooqConfig = AssertAs.notNull(jooqConfig, "jooqConfig");
     }
 
     protected M getMapper() {
@@ -119,7 +112,7 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
     @Override
     @Transactional(readOnly = false)
     public T add(final T entity) {
-        Asserts.notNull(entity);
+        AssertAs.notNull(entity, "entity");
 
         InsertSetMoreStep<R> step = insertSetStepSetter.setNonKeyFieldsFor(dsl.insertInto(getTable()), entity);
         insertSetStepSetter.considerSettingKeyOf(step, entity);
@@ -138,7 +131,7 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
     @Override
     @Transactional(readOnly = false)
     public T delete(final ID id) {
-        Asserts.notNull(id, "id");
+        AssertAs.notNull(id, "id");
 
         final T toBeDeleted = findById(id);
         if (toBeDeleted != null) {
@@ -161,7 +154,7 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
     /** {@inheritDoc} */
     @Override
     public T findById(final ID id) {
-        Asserts.notNull(id, "id");
+        AssertAs.notNull(id, "id");
         return dsl.selectFrom(getTable()).where(getTableId().equal(id)).fetchOneInto(getEntityClass());
     }
 
@@ -169,9 +162,8 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
     @Override
     @Transactional(readOnly = false)
     public T update(final T entity) {
-        Asserts.notNull(entity, "entity");
-        ID id = getIdFrom(entity);
-        Asserts.notNull(id, "entity.id");
+        AssertAs.notNull(entity, "entity");
+        ID id = AssertAs.notNull(getIdFrom(entity), "entity.id");
 
         R updated = updateSetStepSetter.setFieldsFor(dsl.update(getTable()), entity).where(getTableId().equal(id)).returning().fetchOne();
         if (updated != null) {

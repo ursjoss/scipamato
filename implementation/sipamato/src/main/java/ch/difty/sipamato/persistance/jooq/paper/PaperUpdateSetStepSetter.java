@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.lib.Asserts;
+import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 
 @Component
@@ -17,8 +17,8 @@ public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord
     /** {@inheritDoc} */
     @Override
     public UpdateSetMoreStep<PaperRecord> setFieldsFor(UpdateSetFirstStep<PaperRecord> step, Paper e) {
-        Asserts.notNull(step, "step");
-        Asserts.notNull(e, "entity");
+        AssertAs.notNull(step, "step");
+        AssertAs.notNull(e, "entity");
         // @formatter:off
         return step
             .set(PAPER.PM_ID, e.getPmId())

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.lib.Asserts;
+import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
 
 @Component
@@ -17,8 +17,8 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
     /** {@inheritDoc} */
     @Override
     public InsertSetMoreStep<PaperRecord> setNonKeyFieldsFor(InsertSetStep<PaperRecord> step, Paper e) {
-        Asserts.notNull(step, "step");
-        Asserts.notNull(e, "entity");
+        AssertAs.notNull(step, "step");
+        AssertAs.notNull(e, "entity");
 
         // @formatter:off
         return step
@@ -57,8 +57,8 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
     /** {@inheritDoc} */
     @Override
     public void considerSettingKeyOf(InsertSetMoreStep<PaperRecord> step, Paper entity) {
-        Asserts.notNull(step, "step");
-        Asserts.notNull(entity, "entity");
+        AssertAs.notNull(step, "step");
+        AssertAs.notNull(entity, "entity");
         Long id = entity.getId();
         if (id != null)
             step.set(PAPER.ID, id.longValue());

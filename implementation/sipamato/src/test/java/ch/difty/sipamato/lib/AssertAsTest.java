@@ -5,17 +5,17 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-public class AssertsTest {
+public class AssertAsTest {
 
     @Test
     public void assertingNonNullField_doesNothing() {
-        Asserts.notNull(new String(), "myparam");
+        assertThat(AssertAs.notNull(new String(), "myparam")).isEmpty();
     }
 
     @Test
     public void assertingNullField_throwsException() {
         try {
-            Asserts.notNull(null, "myparam");
+            AssertAs.notNull(null, "myparam");
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("myparam must not be null.");
@@ -24,13 +24,13 @@ public class AssertsTest {
 
     @Test
     public void assertingNonNullField_withoutName_doesNothing() {
-        Asserts.notNull(new String());
+        assertThat(AssertAs.notNull(new String())).isEmpty();
     }
 
     @Test
     public void assertingNullField_withNullName_throwsException() {
         try {
-            Asserts.notNull(null, null);
+            AssertAs.notNull(null, null);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("Argument must not be null.");
@@ -40,7 +40,7 @@ public class AssertsTest {
     @Test
     public void assertingNullField_withoutName_throwsException() {
         try {
-            Asserts.notNull(null);
+            AssertAs.notNull(null);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("Argument must not be null.");

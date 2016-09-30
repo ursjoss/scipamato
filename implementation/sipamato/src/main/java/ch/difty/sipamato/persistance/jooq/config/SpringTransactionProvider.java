@@ -50,7 +50,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import ch.difty.sipamato.lib.Asserts;
+import ch.difty.sipamato.lib.AssertAs;
 
 /**
  * An example <code>TransactionProvider</code> implementing the {@link TransactionProvider} contract for use with
@@ -67,8 +67,7 @@ public class SpringTransactionProvider implements TransactionProvider {
 
     @Autowired
     public SpringTransactionProvider(DataSourceTransactionManager txMgr) {
-        Asserts.notNull(txMgr, "txMgr");
-        this.txMgr = txMgr;
+        this.txMgr = AssertAs.notNull(txMgr, "txMgr");
     }
 
     /** protected for test purposes */
