@@ -2,6 +2,8 @@ package ch.difty.sipamato.web.pages;
 
 import java.util.Optional;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.devutils.debugbar.DebugBar;
@@ -105,10 +107,21 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
+        field.add(newOcab());
         queue(field);
         if (pv.isPresent()) {
             field.add(pv.get());
         }
     }
+
+    protected static OnChangeAjaxBehavior newOcab() {
+        return new OnChangeAjaxBehavior() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+            }
+        };
+    };
 
 }

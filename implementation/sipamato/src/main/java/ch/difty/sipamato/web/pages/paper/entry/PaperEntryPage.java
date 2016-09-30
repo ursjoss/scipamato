@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -25,6 +26,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.sipamato.entity.Paper;
@@ -32,6 +34,7 @@ import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.pages.BasePage;
+import de.agilecoders.wicket.core.markup.html.bootstrap.form.BootstrapForm;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
 @MountPath("entry")
@@ -53,6 +56,12 @@ public class PaperEntryPage extends BasePage<Paper> {
         initDefaultModel();
     }
 
+    private void initDefaultModel() {
+        final Paper p = new Paper();
+        p.setPublicationYear(LocalDate.now().getYear());
+        setDefaultModel(Model.of(p));
+    }
+
     public PaperEntryPage(IModel<Paper> paperModel) {
         super(paperModel);
     }
@@ -60,24 +69,51 @@ public class PaperEntryPage extends BasePage<Paper> {
     protected void onInitialize() {
         super.onInitialize();
 
-        form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(getModel())) {
+        form = new BootstrapForm<Paper>("form", new CompoundPropertyModel<Paper>(getModel())) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onSubmit() {
-                Paper persisted = service.update(getModelObject());
-                if (persisted != null) {
-                    setModelObject(persisted);
-                    info("Successfully saved Paper [id " + getModelObject().getId() + "]: " + getModelObject().getAuthors() + " (" + getModelObject().getPublicationYear() + ")");
-                } else {
-                    warn("Could not save Paper [id " + getModelObject().getId() + "].");
-                }
+                doUpdate(getModelObject());
+                info("Successfully saved Paper [id " + getModelObject().getId() + "]: " + getModelObject().getAuthors() + " (" + getModelObject().getPublicationYear() + ")");
             }
         };
+        form.add(makeAutoSaveAjaxTimerBehavior());
         queue(form);
 
         queueHeaderFields();
         queueTabPanel("tabs");
+    }
+
+    private void doUpdate(Paper paper) {
+        try {
+            modelChanged();
+            Paper persisted = service.update(paper);
+            if (persisted != null) {
+                setModelObject(persisted); // necessary?
+            } else {
+                warn("Could not save Paper [id " + getModelObject().getId() + "].");
+            }
+        } catch (Exception ex) {
+            info("Saving product failed: " + ex.toString());
+        }
+    }
+
+    /**
+     * scheduled behavior to save the modified text of the paper via ajax without submit. 
+     */
+    private AbstractAjaxTimerBehavior makeAutoSaveAjaxTimerBehavior() {
+        return new AbstractAjaxTimerBehavior(Duration.seconds(15)) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onTimer(AjaxRequestTarget target) {
+                doUpdate(form.getModelObject());
+                form.modelChanged();
+            }
+
+        };
     }
 
     private void queueHeaderFields() {
@@ -118,12 +154,6 @@ public class PaperEntryPage extends BasePage<Paper> {
             }
         });
         queue(new ClientSideBootstrapTabbedPanel<ITab>(tabId, tabs));
-    }
-
-    private Model<Paper> initDefaultModel() {
-        final Paper p = new Paper();
-        p.setPublicationYear(LocalDate.now().getYear());
-        return Model.of(p);
     }
 
     /*
@@ -186,6 +216,8 @@ public class PaperEntryPage extends BasePage<Paper> {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
+        field.setOutputMarkupId(true);
+        field.add(newOcab());
         queue(field);
     }
 
@@ -212,9 +244,11 @@ public class PaperEntryPage extends BasePage<Paper> {
         void queueTo(Form<Paper> form, String id, boolean newField) {
             TextArea<String> field = new TextArea<String>(id);
             field.add(new PropertyValidator<String>());
+            field.setOutputMarkupId(true);
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
             queue(new Label(id + LABEL_TAG, labelModel));
             field.setLabel(labelModel);
+            field.add(newOcab());
             if (newField) {
                 field.add(new AttributeAppender("class", " newField"));
             }
