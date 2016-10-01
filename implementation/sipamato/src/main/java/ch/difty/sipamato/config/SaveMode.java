@@ -18,7 +18,7 @@ public enum SaveMode {
     SUBMIT;
 
     public static SaveMode fromProperty(final String propertyValue) {
-        return PropertyUtils.fromProperty(propertyValue, values(), SUBMIT, ApplicationProperties.PAPER_SAVE_MODE);
+        return PropertyUtils.fromProperty(propertyValue, values(), SUBMIT, SipamatoProperties.PAPER_SAVE_MODE);
     }
 
 }

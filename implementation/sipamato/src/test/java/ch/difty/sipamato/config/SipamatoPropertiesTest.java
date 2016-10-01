@@ -12,10 +12,10 @@ import ch.difty.sipamato.SipamatoApplication;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SipamatoApplication.class)
-public class ApplicationPropertiesTest {
+public class SipamatoPropertiesTest {
 
     @Autowired
-    public ApplicationProperties appProperties;
+    public SipamatoProperties appProperties;
 
     @Test
     public void gettingDefaultStrategy() {
