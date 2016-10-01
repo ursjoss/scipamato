@@ -54,6 +54,8 @@ public class PaperEntryPage extends BasePage<Paper> {
     @SpringBean
     private ApplicationProperties applicationProperties;
 
+    public boolean dirty = false;
+
     public PaperEntryPage(PageParameters parameters) {
         super(parameters);
         initDefaultModel();
@@ -96,6 +98,25 @@ public class PaperEntryPage extends BasePage<Paper> {
         }
     }
 
+    /**
+     * Make a behavior that is part of the auto-save functionality. A change of a component with this behavior
+     * <ol>
+     * <li> will push the value to the model on the server
+     * <li> will set the page dirty flag, which is picked up by the AbstractAjaxTimerBehavior to actually save the changes
+     * </ol>
+     * @return
+     */
+    protected OnChangeAjaxBehavior makeOnChangeAjaxBehavior() {
+        return new OnChangeAjaxBehavior() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                dirty = true;
+            }
+        };
+    };
+
     private void doUpdate(Paper paper) {
         try {
             modelChanged();
@@ -120,8 +141,11 @@ public class PaperEntryPage extends BasePage<Paper> {
 
             @Override
             protected void onTimer(AjaxRequestTarget target) {
-                doUpdate(form.getModelObject());
-                form.modelChanged();
+                if (dirty) {
+                    doUpdate(form.getModelObject());
+                    form.modelChanged();
+                    dirty = false;
+                }
             }
 
         };

@@ -2,8 +2,6 @@ package ch.difty.sipamato.web.pages;
 
 import java.util.Optional;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.devutils.debugbar.DebugBar;
@@ -112,15 +110,5 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
             field.add(pv.get());
         }
     }
-
-    protected static OnChangeAjaxBehavior makeOnChangeAjaxBehavior() {
-        return new OnChangeAjaxBehavior() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onUpdate(AjaxRequestTarget target) {
-            }
-        };
-    };
 
 }
