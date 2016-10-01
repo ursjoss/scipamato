@@ -19,6 +19,11 @@ public class ApplicationPropertiesTest {
 
     @Test
     public void gettingDefaultStrategy() {
-        assertThat(appProperties.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategies.DEFAULT);
+        assertThat(appProperties.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.DEFAULT);
+    }
+
+    @Test
+    public void gettingPaperSaveMode() {
+        assertThat(appProperties.getPaperSaveMode()).isEqualTo(SaveMode.AUTO);
     }
 }

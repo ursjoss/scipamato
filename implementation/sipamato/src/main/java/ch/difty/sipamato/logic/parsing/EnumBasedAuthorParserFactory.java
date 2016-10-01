@@ -4,20 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.config.ApplicationProperties;
-import ch.difty.sipamato.config.AuthorParserStrategies;
+import ch.difty.sipamato.config.AuthorParserStrategy;
 import ch.difty.sipamato.lib.AssertAs;
 
 /**
  * Default implementation of the {@link AuthorParserFactory} which relies
  * on the enum based{@link ApplicationProperties} bean and the associated 
- * {@link AuthorParserStrategies} enum to parse and provide the property. 
+ * {@link AuthorParserStrategy} enum to parse and provide the property.
  *
  * @author u.joss
  */
 @Component
 public class EnumBasedAuthorParserFactory implements AuthorParserFactory {
 
-    private final AuthorParserStrategies authorParserStrategy;
+    private final AuthorParserStrategy authorParserStrategy;
 
     @Autowired
     public EnumBasedAuthorParserFactory(ApplicationProperties appProperties) {

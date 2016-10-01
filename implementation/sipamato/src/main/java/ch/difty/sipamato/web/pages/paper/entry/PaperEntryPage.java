@@ -29,6 +29,8 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import ch.difty.sipamato.config.ApplicationProperties;
+import ch.difty.sipamato.config.SaveMode;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
@@ -50,6 +52,9 @@ public class PaperEntryPage extends BasePage<Paper> {
 
     @SpringBean
     private AuthorParserFactory authorParserFactory;
+
+    @SpringBean
+    private ApplicationProperties applicationProperties;
 
     public PaperEntryPage(PageParameters parameters) {
         super(parameters);
@@ -78,7 +83,9 @@ public class PaperEntryPage extends BasePage<Paper> {
                 info("Successfully saved Paper [id " + getModelObject().getId() + "]: " + getModelObject().getAuthors() + " (" + getModelObject().getPublicationYear() + ")");
             }
         };
-        form.add(makeAutoSaveAjaxTimerBehavior());
+        if (applicationProperties.getPaperSaveMode() == SaveMode.AUTO) {
+            form.add(makeAutoSaveAjaxTimerBehavior());
+        }
         queue(form);
 
         queueHeaderFields();

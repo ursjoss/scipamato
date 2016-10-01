@@ -14,14 +14,23 @@ import org.springframework.stereotype.Component;
 public class ApplicationProperties {
 
     public static final String AUTHOR_PARSER_FACTORY = "sipamato.author.parser";
+    public static final String PAPER_SAVE_MODE = "sipamato.paper.savemode";
 
-    private final AuthorParserStrategies authorParserStrategy;
+    public static final String S = "${", E = ":n.a.}";
 
-    public ApplicationProperties(@Value("${sipamato.author.parser}") String authorParserStrategy) {
-        this.authorParserStrategy = AuthorParserStrategies.fromProperty(authorParserStrategy);
+    private final AuthorParserStrategy authorParserStrategy;
+    private final SaveMode paperSaveMode;
+
+    public ApplicationProperties(@Value(S + AUTHOR_PARSER_FACTORY + E) String authorParserStrategy, @Value(S + PAPER_SAVE_MODE + E) String paperSaveMode) {
+        this.authorParserStrategy = AuthorParserStrategy.fromProperty(authorParserStrategy);
+        this.paperSaveMode = SaveMode.fromProperty(paperSaveMode);
     }
 
-    public AuthorParserStrategies getAuthorParserStrategy() {
+    public AuthorParserStrategy getAuthorParserStrategy() {
         return authorParserStrategy;
+    }
+
+    public SaveMode getPaperSaveMode() {
+        return paperSaveMode;
     }
 }
