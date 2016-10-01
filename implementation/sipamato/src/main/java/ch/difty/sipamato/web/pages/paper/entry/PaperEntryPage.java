@@ -35,7 +35,6 @@ import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.pages.BasePage;
-import de.agilecoders.wicket.core.markup.html.bootstrap.form.BootstrapForm;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
 @MountPath("entry")
@@ -73,7 +72,7 @@ public class PaperEntryPage extends BasePage<Paper> {
     protected void onInitialize() {
         super.onInitialize();
 
-        form = new BootstrapForm<Paper>("form", new CompoundPropertyModel<Paper>(getModel())) {
+        form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(getModel())) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -82,15 +81,19 @@ public class PaperEntryPage extends BasePage<Paper> {
                 info("Successfully saved Paper [id " + getModelObject().getId() + "]: " + getModelObject().getAuthors() + " (" + getModelObject().getPublicationYear() + ")");
             }
         };
-        if (applicationProperties.isPaperAutoSaveMode()) {
-            form.add(makeAutoSaveAjaxTimerBehavior());
-            String msg = new StringResourceModel("paper.autosave.info", this, null).setParameters(applicationProperties.getPaperAutoSaveInterval()).getString();
-            info(msg);
-        }
         queue(form);
 
         queueHeaderFields();
         queueTabPanel("tabs");
+
+        if (applicationProperties.isPaperAutoSaveMode()) {
+            form.visitFormComponents((fc, visit) -> {
+                fc.setOutputMarkupId(true);
+                fc.add(makeOnChangeAjaxBehavior());
+            });
+            form.add(makeAutoSaveAjaxTimerBehavior());
+            info(new StringResourceModel("paper.autosave.info", this, null).setParameters(applicationProperties.getPaperAutoSaveInterval()).getString());
+        }
     }
 
     private void doUpdate(Paper paper) {
@@ -224,8 +227,6 @@ public class PaperEntryPage extends BasePage<Paper> {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
-        field.setOutputMarkupId(true);
-        field.add(newOcab());
         queue(field);
     }
 
@@ -256,7 +257,6 @@ public class PaperEntryPage extends BasePage<Paper> {
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
             queue(new Label(id + LABEL_TAG, labelModel));
             field.setLabel(labelModel);
-            field.add(newOcab());
             if (newField) {
                 field.add(new AttributeAppender("class", " newField"));
             }

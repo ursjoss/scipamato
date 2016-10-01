@@ -107,14 +107,13 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
-        field.add(newOcab());
         queue(field);
         if (pv.isPresent()) {
             field.add(pv.get());
         }
     }
 
-    protected static OnChangeAjaxBehavior newOcab() {
+    protected static OnChangeAjaxBehavior makeOnChangeAjaxBehavior() {
         return new OnChangeAjaxBehavior() {
             private static final long serialVersionUID = 1L;
 
