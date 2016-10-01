@@ -10,6 +10,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.sipamato.SipamatoApplication;
 
+/**
+ * Note,  this test class currently derives the configured values from application.properties.
+ *
+ * @author u.joss
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SipamatoApplication.class)
 public class SipamatoPropertiesTest {
@@ -23,7 +28,12 @@ public class SipamatoPropertiesTest {
     }
 
     @Test
-    public void gettingPaperSaveMode() {
-        assertThat(appProperties.getPaperSaveMode()).isEqualTo(SaveMode.AUTO);
+    public void gettingPaperAutoSaveInterval() {
+        assertThat(appProperties.getPaperAutoSaveInterval()).isEqualTo(5);
+    }
+
+    @Test
+    public void isPaperAutoSave() {
+        assertThat(appProperties.isPaperAutoSaveMode()).isTrue();
     }
 }

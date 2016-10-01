@@ -25,7 +25,7 @@ public final class PropertyUtils {
      * @param defaultValue
      *          the default enum value that shall be returned if the property value does not explicitly match an enum value.
      * @param propertyKey
-     *          the property key, used only for loggin purposes
+     *          the property key, used only for logging purposes
      * @param T type of the enum
      * @return enum of type <literal>T</literal>
      */
@@ -42,4 +42,29 @@ public final class PropertyUtils {
         LOGGER.warn(msg, propertyKey, propertyValue, defaultValue, values);
         return defaultValue;
     }
+
+    /**
+     * Derive an int value from a configuration property value.
+     * @param propertyValue
+     *          the configured property value as string
+     * @param values
+     *          possible values for log in case of a warn message
+     * @param defaultValue
+     *          the default value that shall be returned if the property value cannot be parsed as integer
+     * @param propertyKey
+     *          the property key, used only for logging purposes
+     * @return the int value
+     */
+    public static int parseInt(String propertyValue, String values, int defaultValue, String propertyKey) {
+        int value = defaultValue;
+        try {
+            value = Integer.parseInt(propertyValue);
+            LOGGER.info("{}={}", propertyKey, propertyValue);
+        } catch (NumberFormatException ex) {
+            final String msg = "{} is not properly defined. Current value: '{}' - now using {} - specify one in your property configuration (e.g. application.properties).{}";
+            LOGGER.warn(msg, propertyKey, propertyValue, defaultValue, values);
+        }
+        return value;
+    }
+
 }

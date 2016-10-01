@@ -13,26 +13,32 @@ import org.springframework.stereotype.Component;
 @Component
 public class SipamatoProperties implements ApplicationProperties {
 
-    public static final String AUTHOR_PARSER_FACTORY = "sipamato.author.parser";
-    public static final String PAPER_SAVE_MODE = "sipamato.paper.savemode";
-
-    public static final String S = "${", E = ":n.a.}";
+    private static final String S = "${", E = ":n.a.}";
 
     private final AuthorParserStrategy authorParserStrategy;
-    private final SaveMode paperSaveMode;
+    private final int paperAutoSaveInterval;
 
-    public SipamatoProperties(@Value(S + AUTHOR_PARSER_FACTORY + E) String authorParserStrategy, @Value(S + PAPER_SAVE_MODE + E) String paperSaveMode) {
+    public SipamatoProperties(@Value(S + AUTHOR_PARSER_FACTORY + E) String authorParserStrategy, @Value(S + PAPER_AUTO_SAVE_INTERVAL + E) String paperAutoSaveInterval) {
         this.authorParserStrategy = AuthorParserStrategy.fromProperty(authorParserStrategy);
-        this.paperSaveMode = SaveMode.fromProperty(paperSaveMode);
+        this.paperAutoSaveInterval = PropertyUtils.parseInt(paperAutoSaveInterval, "0: Submit based saving, >= 1 refresh interval", DEFAULT_PAPER_AUTO_SAVE_INTERVAL_IN_SECONDS,
+                PAPER_AUTO_SAVE_INTERVAL);
     }
 
+    /** {@inheritDoc} */
     @Override
     public AuthorParserStrategy getAuthorParserStrategy() {
         return authorParserStrategy;
     }
 
+    /** {@inheritDoc} */
     @Override
-    public SaveMode getPaperSaveMode() {
-        return paperSaveMode;
+    public int getPaperAutoSaveInterval() {
+        return paperAutoSaveInterval;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isPaperAutoSaveMode() {
+        return getPaperAutoSaveInterval() > 0;
     }
 }

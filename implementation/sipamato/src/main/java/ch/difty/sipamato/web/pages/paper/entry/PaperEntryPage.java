@@ -30,7 +30,6 @@ import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.sipamato.config.ApplicationProperties;
-import ch.difty.sipamato.config.SaveMode;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
@@ -83,8 +82,10 @@ public class PaperEntryPage extends BasePage<Paper> {
                 info("Successfully saved Paper [id " + getModelObject().getId() + "]: " + getModelObject().getAuthors() + " (" + getModelObject().getPublicationYear() + ")");
             }
         };
-        if (applicationProperties.getPaperSaveMode() == SaveMode.AUTO) {
+        if (applicationProperties.isPaperAutoSaveMode()) {
             form.add(makeAutoSaveAjaxTimerBehavior());
+            String msg = new StringResourceModel("paper.autosave.info", this, null).setParameters(applicationProperties.getPaperAutoSaveInterval()).getString();
+            info(msg);
         }
         queue(form);
 
