@@ -3,6 +3,7 @@ package ch.difty.sipamato.web.pages;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
@@ -11,9 +12,9 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
 
 import ch.difty.sipamato.config.ApplicationProperties;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarText;
 
-// TODO keep-alive if nothing happens for a long time.
-// TODO indication that page is dirty (*) or alike
 /**
  * Abstract page that enables the implementing concrete pages to auto-save the model (if dirty)
  * in an interval that can be defined as a property.
@@ -48,6 +49,7 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
 
         implSpecificOnInitialize();
 
+        getNavBar().setOutputMarkupId(true);
         // this must come after having initialized the form components
         triggerAutoSave();
     }
@@ -56,6 +58,21 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
      * pages extending {@link AutoSaveAwarePage} can override this method to do what they usually did in onInitialize. 
      */
     protected void implSpecificOnInitialize() {
+    }
+
+    @Override
+    protected void extendNavBar() {
+        NavbarText dirtyHint = new NavbarText(getNavBar().newExtraItemId(), new StringResourceModel("menu.dirty.hint", this, null).getString()) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean isVisible() {
+                return isDirty();
+            }
+        };
+        dirtyHint.position(Navbar.ComponentPosition.RIGHT);
+        dirtyHint.add(AttributeAppender.prepend("style", "color: red"));
+        getNavBar().addComponents(dirtyHint);
     }
 
     /**
@@ -69,8 +86,12 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
      * Sets the dirty flag
      * @param dirty
      */
-    public void setDirty(boolean dirty) {
-        this.dirty = dirty;
+    public void setDirty() {
+        dirty = true;
+    }
+
+    public void setClean() {
+        dirty = false;
     }
 
     /**
@@ -114,7 +135,8 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                dirty = true;
+                setDirty();
+                target.add(getNavBar());
             }
         };
     };
@@ -129,10 +151,11 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
 
             @Override
             protected void onTimer(AjaxRequestTarget target) {
-                if (dirty) {
+                if (isDirty()) {
                     doUpdate(getForm().getModelObject());
                     getForm().modelChanged();
-                    dirty = false;
+                    setClean();
+                    target.add(getNavBar());
                 }
             }
         };

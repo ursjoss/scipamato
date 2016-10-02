@@ -97,6 +97,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             Paper persisted = service.update(paper);
             if (persisted != null) {
                 setModelObject(persisted); // necessary?
+                setClean();
             } else {
                 warn("Could not save Paper [id " + getModelObject().getId() + "].");
             }

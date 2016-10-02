@@ -36,6 +36,7 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
     protected static final String LABEL_RECOURCE_TAG = ".label";
 
     private NotificationPanel feedbackPanel;
+    private Navbar navBar;
 
     public BasePage(final PageParameters parameters) {
         super(parameters);
@@ -43,6 +44,10 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
     public BasePage(final IModel<T> model) {
         super(model);
+    }
+
+    protected Navbar getNavBar() {
+        return navBar;
     }
 
     @Override
@@ -54,9 +59,21 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
     @Override
     protected void onInitialize() {
         super.onInitialize();
-        add(newNavbar("navbar"));
+        createAndAddNavBar("navbar");
         createAndAddFeedbackPanel("feedback");
         createAndAddDebugBar("debug");
+    }
+
+    private void createAndAddNavBar(String id) {
+        navBar = newNavbar(id);
+        add(navBar);
+        extendNavBar();
+    }
+
+    /**
+     * Override if you need to extend the {@link Navbar}
+     */
+    protected void extendNavBar() {
     }
 
     private void createAndAddFeedbackPanel(String label) {
