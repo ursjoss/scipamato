@@ -28,12 +28,12 @@ public class SipamatoPropertiesTest {
     }
 
     @Test
-    public void gettingPaperAutoSaveInterval() {
-        assertThat(appProperties.getPaperAutoSaveInterval()).isEqualTo(5);
+    public void gettingAutoSaveInterval() {
+        assertThat(appProperties.getAutoSaveIntervalInSeconds()).isEqualTo(15);
     }
 
     @Test
-    public void isPaperAutoSave() {
-        assertThat(appProperties.isPaperAutoSaveMode()).isTrue();
+    public void isAutoSavingEnabled() {
+        assertThat(appProperties.isAutoSavingEnabled()).isTrue();
     }
 }

@@ -1,5 +1,7 @@
 package ch.difty.sipamato.config;
 
+import ch.difty.sipamato.web.pages.AutoSaveAwarePage;
+
 /**
  * Manages property based configuration parameters.
  * <ol>
@@ -12,9 +14,10 @@ package ch.difty.sipamato.config;
 public interface ApplicationProperties {
 
     String AUTHOR_PARSER_FACTORY = "sipamato.author.parser";
-    String PAPER_AUTO_SAVE_INTERVAL = "sipamato.paper.autosave.interval";
+    String AUTO_SAVE_INTERVAL = "sipamato.autosave.interval.seconds";
 
-    int DEFAULT_PAPER_AUTO_SAVE_INTERVAL_IN_SECONDS = 0;
+    int DEFAULT_AUTO_SAVE_INTERVAL_IN_SECONDS = 0;
+    String AUTO_SAVE_HINT = "0: auto-saving disabled, >=1: save interval in seconds";
 
     /**
      * Defines the strategy how to interpret the author string.
@@ -24,18 +27,18 @@ public interface ApplicationProperties {
     AuthorParserStrategy getAuthorParserStrategy();
 
     /**
-     * The auto save interval on the paper edit page.
+     * The auto-save interval for pages extending {@link AutoSaveAwarePage}s.
      * <ul>
-     * <li>   0: no auto saving enabled -> resort to submit based saving
-     * <li> >=1: auto saving every x seconds (if there are changes)
+     * <li>   0: auto saving disabled -> resort to pure submit based saving
+     * <li> >=1: auto saving enabled every x seconds - provided the form is dirty, i.e. there are changes
      * </ul>
      * @return auto save interval in seconds
      */
-    int getPaperAutoSaveInterval();
+    int getAutoSaveIntervalInSeconds();
 
     /**
-     * @return shall papers be auto saved - or not?
+     * @return shall pages extending {@link AutoSaveAwarePage} activate auto-saving - or not?
      */
-    boolean isPaperAutoSaveMode();
+    boolean isAutoSavingEnabled();
 
 }

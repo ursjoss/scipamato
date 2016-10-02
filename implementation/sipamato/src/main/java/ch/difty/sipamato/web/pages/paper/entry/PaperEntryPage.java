@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -26,20 +25,18 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.annotation.mount.MountPath;
 
-import ch.difty.sipamato.config.ApplicationProperties;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.service.PaperService;
-import ch.difty.sipamato.web.pages.BasePage;
+import ch.difty.sipamato.web.pages.AutoSaveAwarePage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
 @MountPath("entry")
 @AuthorizeInstantiation({ "ROLE_USER" })
-public class PaperEntryPage extends BasePage<Paper> {
+public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
     private static final long serialVersionUID = 1L;
 
@@ -50,11 +47,6 @@ public class PaperEntryPage extends BasePage<Paper> {
 
     @SpringBean
     private AuthorParserFactory authorParserFactory;
-
-    @SpringBean
-    private ApplicationProperties applicationProperties;
-
-    public boolean dirty = false;
 
     public PaperEntryPage(PageParameters parameters) {
         super(parameters);
@@ -71,9 +63,8 @@ public class PaperEntryPage extends BasePage<Paper> {
         super(paperModel);
     }
 
-    protected void onInitialize() {
-        super.onInitialize();
-
+    @Override
+    protected void implSpecificOnInitialize() {
         form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(getModel())) {
             private static final long serialVersionUID = 1L;
 
@@ -87,37 +78,20 @@ public class PaperEntryPage extends BasePage<Paper> {
 
         queueHeaderFields();
         queueTabPanel("tabs");
-
-        if (applicationProperties.isPaperAutoSaveMode()) {
-            form.visitFormComponents((fc, visit) -> {
-                fc.setOutputMarkupId(true);
-                fc.add(makeOnChangeAjaxBehavior());
-            });
-            form.add(makeAutoSaveAjaxTimerBehavior());
-            info(new StringResourceModel("paper.autosave.info", this, null).setParameters(applicationProperties.getPaperAutoSaveInterval()).getString());
-        }
     }
 
-    /**
-     * Make a behavior that is part of the auto-save functionality. A change of a component with this behavior
-     * <ol>
-     * <li> will push the value to the model on the server
-     * <li> will set the page dirty flag, which is picked up by the AbstractAjaxTimerBehavior to actually save the changes
-     * </ol>
-     * @return
-     */
-    protected OnChangeAjaxBehavior makeOnChangeAjaxBehavior() {
-        return new OnChangeAjaxBehavior() {
-            private static final long serialVersionUID = 1L;
+    @Override
+    protected Form<Paper> getForm() {
+        return form;
+    }
 
-            @Override
-            protected void onUpdate(AjaxRequestTarget target) {
-                dirty = true;
-            }
-        };
+    @Override
+    protected String getEntityName() {
+        return "Paper";
     };
 
-    private void doUpdate(Paper paper) {
+    @Override
+    protected void doUpdate(Paper paper) {
         try {
             modelChanged();
             Paper persisted = service.update(paper);
@@ -129,26 +103,6 @@ public class PaperEntryPage extends BasePage<Paper> {
         } catch (Exception ex) {
             info("Saving product failed: " + ex.toString());
         }
-    }
-
-    /**
-     * scheduled behavior to save the modified text of the paper via ajax without submit. 
-     */
-    private AbstractAjaxTimerBehavior makeAutoSaveAjaxTimerBehavior() {
-        return new AbstractAjaxTimerBehavior(Duration.seconds(15)) {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onTimer(AjaxRequestTarget target) {
-                if (dirty) {
-                    doUpdate(form.getModelObject());
-                    form.modelChanged();
-                    dirty = false;
-                }
-            }
-
-        };
     }
 
     private void queueHeaderFields() {
@@ -349,6 +303,6 @@ public class PaperEntryPage extends BasePage<Paper> {
         public TabPanel3(String id, IModel<Paper> model) {
             super(id, model);
         }
-    };
+    }
 
 }
