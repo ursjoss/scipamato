@@ -71,7 +71,8 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             @Override
             protected void onSubmit() {
                 doUpdate(getModelObject());
-                info("Successfully saved Paper [id " + getModelObject().getId() + "]: " + getModelObject().getAuthors() + " (" + getModelObject().getPublicationYear() + ")");
+                info(new StringResourceModel("save.successful.hint", this, null).setParameters(getModelObject().getId(), getModelObject().getAuthors(), getModelObject().getPublicationYear())
+                        .getString());
             }
         };
         queue(form);
@@ -99,10 +100,10 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
                 setModelObject(persisted); // necessary?
                 setClean();
             } else {
-                warn("Could not save Paper [id " + getModelObject().getId() + "].");
+                warn(new StringResourceModel("save.unsuccessful.hint", this, null).setParameters(getModelObject().getId()));
             }
         } catch (Exception ex) {
-            info("Saving product failed: " + ex.toString());
+            warn(new StringResourceModel("save.error.hint", this, null).setParameters(getModelObject().getId(), ex.getMessage()));
         }
     }
 
