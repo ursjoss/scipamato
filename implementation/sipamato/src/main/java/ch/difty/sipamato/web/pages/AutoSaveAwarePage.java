@@ -1,5 +1,7 @@
 package ch.difty.sipamato.web.pages;
 
+import java.time.LocalDateTime;
+
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
@@ -12,6 +14,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
 
 import ch.difty.sipamato.config.ApplicationProperties;
+import ch.difty.sipamato.lib.DateTimeService;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarText;
 
@@ -26,10 +29,16 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarText;
 public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
     private static final long serialVersionUID = 1L;
 
+    private static final Duration KEEPALIVE_SECONDS = Duration.seconds(60);
+
     @SpringBean
     private ApplicationProperties applicationProperties;
 
+    @SpringBean
+    private DateTimeService dateTimeService;
+
     private boolean dirty = false;
+    private LocalDateTime lastSaveTimestamp;
 
     public AutoSaveAwarePage(PageParameters parameters) {
         super(parameters);
@@ -47,6 +56,7 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
     protected final void onInitialize() {
         super.onInitialize();
 
+        lastSaveTimestamp = dateTimeService.getCurrentDateTime();
         implSpecificOnInitialize();
 
         getNavBar().setOutputMarkupId(true);
@@ -151,12 +161,17 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
 
             @Override
             protected void onTimer(AjaxRequestTarget target) {
-                if (isDirty()) {
+                if (isDirty() || keepAliveReached()) {
                     doUpdate(getForm().getModelObject());
                     getForm().modelChanged();
                     setClean();
                     target.add(getNavBar());
+                    lastSaveTimestamp = dateTimeService.getCurrentDateTime();
                 }
+            }
+
+            private boolean keepAliveReached() {
+                return dateTimeService.getCurrentDateTime().minusSeconds(Double.valueOf(KEEPALIVE_SECONDS.seconds()).intValue()).isAfter(lastSaveTimestamp);
             }
         };
     }
