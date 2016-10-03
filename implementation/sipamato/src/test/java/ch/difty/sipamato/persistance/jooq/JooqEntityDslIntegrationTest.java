@@ -1,6 +1,6 @@
 package ch.difty.sipamato.persistance.jooq;
 
-import static ch.difty.sipamato.db.h2.Tables.PAPER;
+import static ch.difty.sipamato.db.Tables.PAPER;
 import static java.util.Arrays.asList;
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
+import ch.difty.sipamato.db.tables.records.PaperRecord;
 
 /**
  * @author Lukas Eder

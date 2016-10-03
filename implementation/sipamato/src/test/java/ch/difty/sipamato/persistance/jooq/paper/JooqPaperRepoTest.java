@@ -1,6 +1,6 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
-import static ch.difty.sipamato.db.h2.tables.Paper.PAPER;
+import static ch.difty.sipamato.db.tables.Paper.PAPER;
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -9,14 +9,14 @@ import org.jooq.TableField;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
+import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.persistance.jooq.GenericRepository;
 import ch.difty.sipamato.persistance.jooq.JooqRepoTest;
 
-public class JooqPaperRepoTest extends JooqRepoTest<PaperRecord, Paper, Long, ch.difty.sipamato.db.h2.tables.Paper, PaperRecordMapper, PaperFilter> {
+public class JooqPaperRepoTest extends JooqRepoTest<PaperRecord, Paper, Long, ch.difty.sipamato.db.tables.Paper, PaperRecordMapper, PaperFilter> {
 
     private static final Long SAMPLE_ID = 3l;
 
@@ -87,7 +87,7 @@ public class JooqPaperRepoTest extends JooqRepoTest<PaperRecord, Paper, Long, ch
     }
 
     @Override
-    protected ch.difty.sipamato.db.h2.tables.Paper getTable() {
+    protected ch.difty.sipamato.db.tables.Paper getTable() {
         return PAPER;
     }
 

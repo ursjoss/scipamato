@@ -34,7 +34,7 @@
         <wicket-spring-boot-starter.version>0.0.16</wicket-spring-boot-starter.version>
         <wicket.version>7.4.0</wicket.version>
         <org.jooq.version>3.9.0-SNAPSHOT</org.jooq.version>
-        <org.jooq.target.dir>target/generated-sources/jooq-h2</org.jooq.target.dir>
+        <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
     </properties>
 
     <dependencies>
@@ -314,7 +314,7 @@
                                     <pojos>false</pojos>
                                 </generate>
                                 <target>
-                                    <packageName>ch.difty.sipamato.db.h2</packageName>
+                                    <packageName>ch.difty.sipamato.db</packageName>
                                     <directory>${org.jooq.target.dir}</directory>
                                 </target>
                             </generator>

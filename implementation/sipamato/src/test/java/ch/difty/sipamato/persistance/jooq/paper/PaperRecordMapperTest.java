@@ -5,7 +5,7 @@ import static org.mockito.Mockito.when;
 
 import org.jooq.RecordMapper;
 
-import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
+import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.persistance.jooq.RecordMapperTest;
 

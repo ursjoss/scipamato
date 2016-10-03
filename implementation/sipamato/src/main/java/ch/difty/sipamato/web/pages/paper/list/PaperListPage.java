@@ -72,10 +72,10 @@ public class PaperListPage extends BasePage<Paper> {
     private List<IColumn<Paper, String>> makeTableColumns() {
         final List<IColumn<Paper, String>> columns = new ArrayList<>();
         // TODO get rid of db stuff define table fields somewhere else
-        columns.add(makePropertyColumn(Paper.ID, ch.difty.sipamato.db.h2.tables.Paper.PAPER.ID.getName()));
-        columns.add(makePropertyColumn(Paper.FIRST_AUTHOR, ch.difty.sipamato.db.h2.tables.Paper.PAPER.FIRST_AUTHOR.getName()));
-        columns.add(makePropertyColumn(Paper.PUBL_YEAR, ch.difty.sipamato.db.h2.tables.Paper.PAPER.PUBLICATION_YEAR.getName()));
-        columns.add(makeClickableColumn(Paper.TITLE, ch.difty.sipamato.db.h2.tables.Paper.PAPER.TITLE.getName(), (IModel<Paper> m) -> setResponsePage(new PaperEntryPage(m))));
+        columns.add(makePropertyColumn(Paper.ID, ch.difty.sipamato.db.tables.Paper.PAPER.ID.getName()));
+        columns.add(makePropertyColumn(Paper.FIRST_AUTHOR, ch.difty.sipamato.db.tables.Paper.PAPER.FIRST_AUTHOR.getName()));
+        columns.add(makePropertyColumn(Paper.PUBL_YEAR, ch.difty.sipamato.db.tables.Paper.PAPER.PUBLICATION_YEAR.getName()));
+        columns.add(makeClickableColumn(Paper.TITLE, ch.difty.sipamato.db.tables.Paper.PAPER.TITLE.getName(), (IModel<Paper> m) -> setResponsePage(new PaperEntryPage(m))));
         return columns;
     }
 

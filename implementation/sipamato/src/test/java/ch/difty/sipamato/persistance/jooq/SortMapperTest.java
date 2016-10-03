@@ -22,14 +22,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 
-import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
+import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.NullArgumentException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SortMapperTest {
 
-    private final SortMapper<PaperRecord, Paper, ch.difty.sipamato.db.h2.tables.Paper> mapper = new SortMapper<>();
+    private final SortMapper<PaperRecord, Paper, ch.difty.sipamato.db.tables.Paper> mapper = new SortMapper<>();
 
     @Mock
     private Order orderMock;
@@ -45,7 +45,7 @@ public class SortMapperTest {
 
     @Test
     public void mapping_nullSortSpecification_returnsEmptyCollection() {
-        assertThat(mapper.map(null, ch.difty.sipamato.db.h2.tables.Paper.PAPER)).isEmpty();
+        assertThat(mapper.map(null, ch.difty.sipamato.db.tables.Paper.PAPER)).isEmpty();
     }
 
     @Test
@@ -53,7 +53,7 @@ public class SortMapperTest {
         orders.add(new Order(Direction.DESC, "authors"));
         orders.add(new Order(Direction.ASC, "title"));
 
-        sortFields = mapper.map(new Sort(orders), ch.difty.sipamato.db.h2.tables.Paper.PAPER);
+        sortFields = mapper.map(new Sort(orders), ch.difty.sipamato.db.tables.Paper.PAPER);
         assertThat(sortFields).hasSize(2);
 
         Iterator<SortField<Paper>> it = sortFields.iterator();
@@ -68,8 +68,8 @@ public class SortMapperTest {
 
     @Test
     public void gettingTableField_withExistingField_returnsTableField() {
-        String existingFieldName = ch.difty.sipamato.db.h2.tables.Paper.PAPER.AUTHORS.getName();
-        TableField<PaperRecord, Paper> field = mapper.getTableField(existingFieldName, ch.difty.sipamato.db.h2.tables.Paper.PAPER);
+        String existingFieldName = ch.difty.sipamato.db.tables.Paper.PAPER.AUTHORS.getName();
+        TableField<PaperRecord, Paper> field = mapper.getTableField(existingFieldName, ch.difty.sipamato.db.tables.Paper.PAPER);
         assertThat(field).isNotNull();
         assertThat(field.getName()).isEqualTo(existingFieldName);
     }
@@ -78,7 +78,7 @@ public class SortMapperTest {
     public void gettingTableField_withNotExistingField_throws() {
         String notExistingFieldName = "foo";
         try {
-            mapper.getTableField(notExistingFieldName, ch.difty.sipamato.db.h2.tables.Paper.PAPER);
+            mapper.getTableField(notExistingFieldName, ch.difty.sipamato.db.tables.Paper.PAPER);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(InvalidDataAccessApiUsageException.class).hasMessage("Could not find table field: {}; nested exception is java.lang.NoSuchFieldException: FOO");
@@ -89,7 +89,7 @@ public class SortMapperTest {
     public void gettingTableField_withNullField_throws() {
         String nullFieldName = null;
         try {
-            mapper.getTableField(nullFieldName, ch.difty.sipamato.db.h2.tables.Paper.PAPER);
+            mapper.getTableField(nullFieldName, ch.difty.sipamato.db.tables.Paper.PAPER);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("sortFieldName must not be null.");
@@ -98,7 +98,7 @@ public class SortMapperTest {
 
     @Test
     public void gettingTableField_withNulTable_returnsTableField() {
-        String existingFieldName = ch.difty.sipamato.db.h2.tables.Paper.PAPER.AUTHORS.getName();
+        String existingFieldName = ch.difty.sipamato.db.tables.Paper.PAPER.AUTHORS.getName();
         try {
             mapper.getTableField(existingFieldName, null);
             fail("should have thrown exception");

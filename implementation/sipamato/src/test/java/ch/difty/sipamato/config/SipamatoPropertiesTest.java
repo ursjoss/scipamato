@@ -10,7 +10,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
-@RunWith(MockitoJUnitRunner.class)@Ignore // TODO get running with values injected
+@RunWith(MockitoJUnitRunner.class)
+@Ignore // TODO get running with values injected
 public class SipamatoPropertiesTest {
 
     @Spy

@@ -1,6 +1,6 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
-import static ch.difty.sipamato.db.h2.tables.Paper.PAPER;
+import static ch.difty.sipamato.db.tables.Paper.PAPER;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.AUTHORS;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.COMMENT;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.DOI;
@@ -33,7 +33,7 @@ import static org.mockito.Mockito.when;
 
 import org.mockito.Mock;
 
-import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
+import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetterTest;

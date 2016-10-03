@@ -1,12 +1,12 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
-import static ch.difty.sipamato.db.h2.tables.Paper.PAPER;
+import static ch.difty.sipamato.db.tables.Paper.PAPER;
 
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
 import org.springframework.stereotype.Component;
 
-import ch.difty.sipamato.db.h2.tables.records.PaperRecord;
+import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
