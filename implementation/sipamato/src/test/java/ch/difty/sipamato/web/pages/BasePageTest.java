@@ -1,5 +1,7 @@
 package ch.difty.sipamato.web.pages;
 
+import java.util.Locale;
+
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -29,7 +31,7 @@ import ch.difty.sipamato.web.pages.login.LoginPage;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public abstract class AbstractPageTest<T extends BasePage<?>> {
+public abstract class BasePageTest<T extends BasePage<?>> {
 
     private static final String USERNAME = "testuser";
     private static final String PASSWORD = "secretpw";
@@ -54,10 +56,19 @@ public abstract class AbstractPageTest<T extends BasePage<?>> {
     }
 
     @Before
-    public void setUp() {
+    public final void setUp() {
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock);
         tester = new WicketTester(application);
+        Locale locale = new Locale("en_US");
+        tester.getSession().setLocale(locale);
+        setUpHook();
         login(USERNAME, PASSWORD);
+    }
+
+    /**
+     * override if needed
+     */
+    protected void setUpHook() {
     }
 
     public static class CustomAuthenticationManager implements AuthenticationManager {
@@ -86,6 +97,9 @@ public abstract class AbstractPageTest<T extends BasePage<?>> {
 
         getTester().debugComponentTrees();
         assertSpecificComponents();
+
+        getTester().assertNoErrorMessage();
+        getTester().assertNoInfoMessage();
     }
 
     /**

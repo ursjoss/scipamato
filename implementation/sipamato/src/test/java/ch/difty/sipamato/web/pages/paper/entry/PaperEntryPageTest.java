@@ -1,14 +1,33 @@
 package ch.difty.sipamato.web.pages.paper.entry;
 
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.web.pages.AbstractPageTest;
+import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
+import ch.difty.sipamato.service.PaperService;
+import ch.difty.sipamato.web.pages.AutoSaveAwarePageTest;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
-public class PaperEntryPageTest extends AbstractPageTest<PaperEntryPage> {
+public class PaperEntryPageTest extends AutoSaveAwarePageTest<PaperEntryPage> {
+
+    @MockBean
+    private PaperService serviceMock;
+
+    @MockBean
+    private AuthorParserFactory authorParserFactoryMock;
+
+    @Mock
+    private Paper persistedPaperMock;
 
     @Override
     protected PaperEntryPage makePage() {
@@ -58,4 +77,15 @@ public class PaperEntryPageTest extends AbstractPageTest<PaperEntryPage> {
         getTester().assertComponent(b + bb, Panel.class);
     }
 
+    @Test
+    @Ignore // TODO get the submit test kick off the onSubmit event and test it
+    public void submitting_shouldActuallyKickoffOnSubmitInTest() {
+        when(serviceMock.update(isA(Paper.class))).thenReturn(persistedPaperMock);
+
+        getTester().startPage(makePage());
+        getTester().submitForm("form");
+
+        getTester().assertInfoMessages("foo");
+        verify(serviceMock).update(isA(Paper.class));
+    }
 }

@@ -2,9 +2,9 @@ package ch.difty.sipamato.web.pages.paper.list;
 
 import org.apache.wicket.markup.html.form.Form;
 
-import ch.difty.sipamato.web.pages.AbstractPageTest;
+import ch.difty.sipamato.web.pages.BasePageTest;
 
-public class PaperListPageTest extends AbstractPageTest<PaperListPage> {
+public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
     @Override
     protected PaperListPage makePage() {
