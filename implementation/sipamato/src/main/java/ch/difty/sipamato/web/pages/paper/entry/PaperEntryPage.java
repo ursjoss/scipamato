@@ -16,6 +16,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -32,6 +33,7 @@ import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.pages.AutoSaveAwarePage;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
 @MountPath("entry")
@@ -118,6 +120,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
         queueFieldAndLabel(new TextField<Integer>(Paper.PUBL_YEAR), new PropertyValidator<Integer>());
         queueFieldAndLabel(new TextField<Integer>(Paper.PMID));
         queueFieldAndLabel(new TextField<String>(Paper.DOI), new PropertyValidator<String>());
+        makeAndQueueSubmitButton("submit");
     }
 
     private void queueTabPanel(String tabId) {
@@ -202,6 +205,14 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
     private void queueFieldAndLabel(FormComponent<?> field, PropertyValidator<?> pv) {
         queueFieldAndLabel(field, Optional.ofNullable(pv));
+    }
+
+    private void makeAndQueueSubmitButton(String id) {
+        SubmitLink submitLink = new SubmitLink(id, form);
+        submitLink.add(new ButtonBehavior());
+        submitLink.setBody(new StringResourceModel("button.save.label"));
+        submitLink.setDefaultFormProcessing(true);
+        queue(submitLink);
     }
 
     private void queueCheckBoxAndLabel(CheckBox field) {
