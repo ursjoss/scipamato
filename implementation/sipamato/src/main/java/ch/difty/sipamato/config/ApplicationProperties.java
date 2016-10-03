@@ -1,27 +1,44 @@
 package ch.difty.sipamato.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import ch.difty.sipamato.web.pages.AutoSaveAwarePage;
 
 /**
- * This bean is used to evaluate all environment properties used in the application in one place and serve those as bean to wherever they are used.
- *
- * @see https://www.petrikainulainen.net/programming/spring-framework/spring-from-the-trenches-injecting-property-values-into-configuration-beans/
- *
+ * Manages property based configuration parameters.
+ * <ol>
+ * <li> the property keys (as constants)
+ * <li> default values for non-enum based properties
+ * <li> the methods with which the rest of the application can access the type safe property values
+ * </ol>
  * @author u.joss
  */
-@Component
-public class ApplicationProperties {
+public interface ApplicationProperties {
 
-    public static final String AUTHOR_PARSER_FACTORY = "sipamato.author.parser";
+    String AUTHOR_PARSER_FACTORY = "sipamato.author.parser";
+    String AUTO_SAVE_INTERVAL = "sipamato.autosave.interval.seconds";
 
-    private final AuthorParserStrategies authorParserStrategy;
+    int DEFAULT_AUTO_SAVE_INTERVAL_IN_SECONDS = 0;
+    String AUTO_SAVE_HINT = "0: auto-saving disabled, >=1: save interval in seconds";
 
-    public ApplicationProperties(@Value("${sipamato.author.parser}") String authorParserStrategy) {
-        this.authorParserStrategy = AuthorParserStrategies.fromProperty(authorParserStrategy);
-    }
+    /**
+     * Defines the strategy how to interpret the author string.
+     *
+     * @return
+     */
+    AuthorParserStrategy getAuthorParserStrategy();
 
-    public AuthorParserStrategies getAuthorParserStrategy() {
-        return authorParserStrategy;
-    }
+    /**
+     * The auto-save interval for pages extending {@link AutoSaveAwarePage}s.
+     * <ul>
+     * <li>   0: auto saving disabled -> resort to pure submit based saving
+     * <li> >=1: auto saving enabled every x seconds - provided the form is dirty, i.e. there are changes
+     * </ul>
+     * @return auto save interval in seconds
+     */
+    int getAutoSaveIntervalInSeconds();
+
+    /**
+     * @return shall pages extending {@link AutoSaveAwarePage} activate auto-saving - or not?
+     */
+    boolean isAutoSavingEnabled();
+
 }

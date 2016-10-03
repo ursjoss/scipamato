@@ -16,6 +16,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -31,12 +32,13 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.service.PaperService;
-import ch.difty.sipamato.web.pages.BasePage;
+import ch.difty.sipamato.web.pages.AutoSaveAwarePage;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
 @MountPath("entry")
 @AuthorizeInstantiation({ "ROLE_USER" })
-public class PaperEntryPage extends BasePage<Paper> {
+public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
     private static final long serialVersionUID = 1L;
 
@@ -53,25 +55,26 @@ public class PaperEntryPage extends BasePage<Paper> {
         initDefaultModel();
     }
 
+    private void initDefaultModel() {
+        final Paper p = new Paper();
+        p.setPublicationYear(LocalDate.now().getYear());
+        setDefaultModel(Model.of(p));
+    }
+
     public PaperEntryPage(IModel<Paper> paperModel) {
         super(paperModel);
     }
 
-    protected void onInitialize() {
-        super.onInitialize();
-
+    @Override
+    protected void implSpecificOnInitialize() {
         form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(getModel())) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onSubmit() {
-                Paper persisted = service.update(getModelObject());
-                if (persisted != null) {
-                    setModelObject(persisted);
-                    info("Successfully saved Paper [id " + getModelObject().getId() + "]: " + getModelObject().getAuthors() + " (" + getModelObject().getPublicationYear() + ")");
-                } else {
-                    warn("Could not save Paper [id " + getModelObject().getId() + "].");
-                }
+                doUpdate(getModelObject());
+                info(new StringResourceModel("save.successful.hint", this, null).setParameters(getModelObject().getId(), getModelObject().getAuthors(), getModelObject().getPublicationYear())
+                        .getString());
             }
         };
         queue(form);
@@ -80,15 +83,44 @@ public class PaperEntryPage extends BasePage<Paper> {
         queueTabPanel("tabs");
     }
 
+    @Override
+    protected Form<Paper> getForm() {
+        return form;
+    }
+
+    @Override
+    protected String getEntityName() {
+        return "Paper";
+    };
+
+    @Override
+    protected void doUpdate(Paper paper) {
+        try {
+            modelChanged();
+            Paper persisted = service.update(paper);
+            if (persisted != null) {
+                setModelObject(persisted); // necessary?
+                setClean();
+            } else {
+                warn(new StringResourceModel("save.unsuccessful.hint", this, null).setParameters(getModelObject().getId()));
+            }
+        } catch (Exception ex) {
+            warn(new StringResourceModel("save.error.hint", this, null).setParameters(getModelObject().getId(), ex.getMessage()));
+        }
+    }
+
     private void queueHeaderFields() {
         queueAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
         queueFieldAndLabel(new TextArea<String>(Paper.TITLE), new PropertyValidator<String>());
         queueFieldAndLabel(new TextField<String>(Paper.LOCATION));
 
-        queueFieldAndLabel(new TextField<Integer>(Paper.ID), new PropertyValidator<Integer>());
+        TextField<Integer> id = new TextField<Integer>(Paper.ID);
+        id.setEnabled(false);
+        queueFieldAndLabel(id);
         queueFieldAndLabel(new TextField<Integer>(Paper.PUBL_YEAR), new PropertyValidator<Integer>());
         queueFieldAndLabel(new TextField<Integer>(Paper.PMID));
         queueFieldAndLabel(new TextField<String>(Paper.DOI), new PropertyValidator<String>());
+        makeAndQueueSubmitButton("submit");
     }
 
     private void queueTabPanel(String tabId) {
@@ -118,12 +150,6 @@ public class PaperEntryPage extends BasePage<Paper> {
             }
         });
         queue(new ClientSideBootstrapTabbedPanel<ITab>(tabId, tabs));
-    }
-
-    private Model<Paper> initDefaultModel() {
-        final Paper p = new Paper();
-        p.setPublicationYear(LocalDate.now().getYear());
-        return Model.of(p);
     }
 
     /*
@@ -181,6 +207,14 @@ public class PaperEntryPage extends BasePage<Paper> {
         queueFieldAndLabel(field, Optional.ofNullable(pv));
     }
 
+    private void makeAndQueueSubmitButton(String id) {
+        SubmitLink submitLink = new SubmitLink(id, form);
+        submitLink.add(new ButtonBehavior());
+        submitLink.setBody(new StringResourceModel("button.save.label"));
+        submitLink.setDefaultFormProcessing(true);
+        queue(submitLink);
+    }
+
     private void queueCheckBoxAndLabel(CheckBox field) {
         String id = field.getId();
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
@@ -212,6 +246,7 @@ public class PaperEntryPage extends BasePage<Paper> {
         void queueTo(Form<Paper> form, String id, boolean newField) {
             TextArea<String> field = new TextArea<String>(id);
             field.add(new PropertyValidator<String>());
+            field.setOutputMarkupId(true);
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
             queue(new Label(id + LABEL_TAG, labelModel));
             field.setLabel(labelModel);
@@ -283,6 +318,6 @@ public class PaperEntryPage extends BasePage<Paper> {
         public TabPanel3(String id, IModel<Paper> model) {
             super(id, model);
         }
-    };
+    }
 
 }

@@ -2,10 +2,10 @@ package ch.difty.sipamato.web.pages.login;
 
 import org.apache.wicket.markup.html.form.Form;
 
-import ch.difty.sipamato.web.pages.AbstractPageTest;
+import ch.difty.sipamato.web.pages.BasePageTest;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 
-public class LoginPageTest extends AbstractPageTest<LoginPage> {
+public class LoginPageTest extends BasePageTest<LoginPage> {
 
     @Override
     protected LoginPage makePage() {

@@ -10,15 +10,30 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.sipamato.SipamatoApplication;
 
+/**
+ * Note,  this test class currently derives the configured values from application.properties.
+ *
+ * @author u.joss
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SipamatoApplication.class)
-public class ApplicationPropertiesTest {
+public class SipamatoPropertiesIntegrationTest {
 
     @Autowired
     public ApplicationProperties appProperties;
 
     @Test
     public void gettingDefaultStrategy() {
-        assertThat(appProperties.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategies.DEFAULT);
+        assertThat(appProperties.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.DEFAULT);
+    }
+
+    @Test
+    public void gettingAutoSaveInterval() {
+        assertThat(appProperties.getAutoSaveIntervalInSeconds()).isEqualTo(15);
+    }
+
+    @Test
+    public void isAutoSavingEnabled() {
+        assertThat(appProperties.isAutoSavingEnabled()).isTrue();
     }
 }
