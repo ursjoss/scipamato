@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ch.difty.sipamato.config.SipamatoProperties;
+import ch.difty.sipamato.config.ApplicationProperties;
 import ch.difty.sipamato.config.AuthorParserStrategy;
 import ch.difty.sipamato.lib.NullArgumentException;
 
@@ -22,7 +22,7 @@ public class EnumBasedAuthorParserFactoryTest {
     private AuthorParserFactory factory;
 
     @Mock
-    private SipamatoProperties appProperties;
+    private ApplicationProperties appProperties;
 
     @Before
     public void setUp() {
