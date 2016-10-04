@@ -29,8 +29,8 @@ import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 import ch.difty.sipamato.web.pages.login.LoginPage;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
+@RunWith(SpringRunner.class)
 public abstract class BasePageTest<T extends BasePage<?>> {
 
     private static final String USERNAME = "testuser";

@@ -1,40 +1,28 @@
 package ch.difty.sipamato.config;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.verify;
 
-import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Spy;
-import org.mockito.runners.MockitoJUnitRunner;
 
-@RunWith(MockitoJUnitRunner.class)
-@Ignore // TODO get running with values injected
 public class SipamatoPropertiesTest {
 
-    @Spy
-    private SipamatoProperties propsSpy;
+    SipamatoProperties sp = new SipamatoProperties("DEFAULT", "15");
 
     @Test
-    public void assertProperties() {
-        propsSpy.getAuthorParserStrategy();
-        propsSpy.getAutoSaveIntervalInSeconds();
-        propsSpy.isAutoSavingEnabled();
+    public void canResolveAuthorParserStrategy() {
+        assertThat(sp.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.DEFAULT);
     }
 
     @Test
-    public void isAutoSavingEnabled_withInterval0_returnsFalse() {
-        doReturn(0).when(propsSpy).getAutoSaveIntervalInSeconds();
-        assertThat(propsSpy.isAutoSavingEnabled()).isFalse();
-        verify(propsSpy).getAutoSaveIntervalInSeconds();
+    public void withAutoSaveIntervalGreaterThan0() {
+        assertThat(sp.getAutoSaveIntervalInSeconds()).isEqualTo(15);
+        assertThat(sp.isAutoSavingEnabled()).isTrue();
     }
 
     @Test
-    public void isAutoSavingEnabled_withIntervalGreaterThan0_returnsTrue() {
-        doReturn(1).when(propsSpy).getAutoSaveIntervalInSeconds();
-        assertThat(propsSpy.isAutoSavingEnabled()).isTrue();
-        verify(propsSpy).getAutoSaveIntervalInSeconds();
+    public void withAutoSaveIntervalEqual0() {
+        SipamatoProperties sp = new SipamatoProperties("DEFAULT", "0");
+        assertThat(sp.getAutoSaveIntervalInSeconds()).isEqualTo(0);
+        assertThat(sp.isAutoSavingEnabled()).isFalse();
     }
 }
