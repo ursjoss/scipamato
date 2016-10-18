@@ -92,3 +92,211 @@ INSERT INTO paper VALUES(
 	, 'comment', 'int'
 	, 1, current_timestamp()
 );
+
+INSERT INTO code_class VALUES (1, DEFAULT, DEFAULT);
+INSERT INTO code_class VALUES (2, DEFAULT, DEFAULT);
+INSERT INTO code_class VALUES (3, DEFAULT, DEFAULT);
+INSERT INTO code_class VALUES (4, DEFAULT, DEFAULT);
+INSERT INTO code_class VALUES (5, DEFAULT, DEFAULT);
+INSERT INTO code_class VALUES (6, DEFAULT, DEFAULT);
+INSERT INTO code_class VALUES (7, DEFAULT, DEFAULT);
+INSERT INTO code_class VALUES (8, DEFAULT, DEFAULT);
+
+INSERT INTO code_class_tr VALUES (DEFAULT, 1, 'de', 'Schadstoffe', 'Schadstoffe, Einwirkung, Exposition', DEFAULT, DEFAULT);
+INSERT INTO code_class_tr VALUES (DEFAULT, 2, 'de', 'Region', 'Geographie (Europa, andere)', DEFAULT, DEFAULT);
+INSERT INTO code_class_tr VALUES (DEFAULT, 3, 'de', 'Kollektiv', 'Stichprobe, Kollektiv', DEFAULT, DEFAULT);
+INSERT INTO code_class_tr VALUES (DEFAULT, 4, 'de', 'Zielgrössen', 'Wirkungen, Zielgrössen', DEFAULT, DEFAULT);
+INSERT INTO code_class_tr VALUES (DEFAULT, 5, 'de', 'Studientyp', 'Art der Studie, der Publikation', DEFAULT, DEFAULT);
+INSERT INTO code_class_tr VALUES (DEFAULT, 6, 'de', 'Spezies', 'Spezies (Mensch, Tier, Pflanze etc.)', DEFAULT, DEFAULT);
+INSERT INTO code_class_tr VALUES (DEFAULT, 7, 'de', 'Zeitdauer', 'Zeit der Einwirkung (kurzfristig – langfristig)', DEFAULT, DEFAULT);
+INSERT INTO code_class_tr VALUES (DEFAULT, 8, 'de', 'Umgebung', 'Umgebung (berufliche Exposition, Aussenluft…)', DEFAULT, DEFAULT);
+
+INSERT INTO code_class_tr VALUES (DEFAULT, 1, 'en', 'Exposure Agent', '', DEFAULT, DEFAULT);
+INSERT INTO code_class_tr VALUES (DEFAULT, 2, 'en', 'Region', '', DEFAULT, DEFAULT);
+INSERT INTO code_class_tr VALUES (DEFAULT, 3, 'en', 'Study Population', '', DEFAULT, DEFAULT);
+INSERT INTO code_class_tr VALUES (DEFAULT, 4, 'en', 'Health Outcome', '', DEFAULT, DEFAULT);
+INSERT INTO code_class_tr VALUES (DEFAULT, 5, 'en', 'Study Design', '', DEFAULT, DEFAULT);
+INSERT INTO code_class_tr VALUES (DEFAULT, 6, 'en', 'Species', '', DEFAULT, DEFAULT);
+INSERT INTO code_class_tr VALUES (DEFAULT, 7, 'en', 'Duration of Exposure', '', DEFAULT, DEFAULT);
+INSERT INTO code_class_tr VALUES (DEFAULT, 8, 'en', 'Setting', '', DEFAULT, DEFAULT);
+
+INSERT INTO code VALUES('1F', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1A', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1B', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1C', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1D', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1E', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1G', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1H', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1I', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1K', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1L', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1M', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1N', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1P', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1R', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1S', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1T', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1U', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1V', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1Y', 1, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('1Z', 1, DEFAULT, DEFAULT);
+
+INSERT INTO code VALUES('2R', 2, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('2N', 2, DEFAULT, DEFAULT);
+
+INSERT INTO code VALUES('3A', 3, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('3B', 3, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('3C', 3, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('3H', 3, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('3D', 3, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('3E', 3, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('3F', 3, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('3G', 3, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('3I', 3, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('3O', 3, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('3K', 3, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('3L', 3, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('3U', 3, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('3Z', 3, DEFAULT, DEFAULT);
+
+INSERT INTO code VALUES('4A', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4B', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4C', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4D', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4E', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4F', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4G', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4H', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4I', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4K', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4M', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4N', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4O', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4L', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4U', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4X', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4Y', 4, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('4Z', 4, DEFAULT, DEFAULT);
+
+INSERT INTO code VALUES('5A', 5, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('5B', 5, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('5C', 5, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('5E', 5, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('5F', 5, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('5G', 5, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('5H', 5, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('5I', 5, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('5M', 5, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('5S', 5, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('5D', 5, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('5K', 5, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('5U', 5, DEFAULT, DEFAULT);
+
+INSERT INTO code VALUES('6M', 6, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('6T', 6, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('6O', 6, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('6P', 6, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('6Z', 6, DEFAULT, DEFAULT);
+
+INSERT INTO code VALUES('7K', 7, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('7L', 7, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('7M', 7, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('7Z', 7, DEFAULT, DEFAULT);
+
+INSERT INTO code VALUES('8I', 8, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('8O', 8, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('8P', 8, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('8W', 8, DEFAULT, DEFAULT);
+INSERT INTO code VALUES('8Z', 8, DEFAULT, DEFAULT);
+
+
+INSERT INTO code_tr VALUES(DEFAULT, '1F', 'de', 'Feinstaub, Partikel', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1A', 'de', 'Ozon, Oxidantien', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1B', 'de', 'Stickoxide, Ammoniak', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1C', 'de', 'Kohlenwasserstoffe, nicht chloriert, VOC', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1D', 'de', 'Kohlenmonoxid', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1E', 'de', 'SO2, Schwefelverbindungen,', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1G', 'de', 'Metalle', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1H', 'de', 'Halogene, halogenierte Stoffe', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1I', 'de', 'Saure Aerosole', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1K', 'de', 'Radioaktive Stoffe', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1L', 'de', 'Asbest, Fasern', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1M', 'de', 'Tabakrauch, Passivrauchen', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1N', 'de', 'Keine Messung, andere Art der Exposure (Stadt : Land) z.B. Lärm', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1P', 'de', 'Pollen', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1R', 'de', 'Feuchtigkeit in der Raumluft', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1S', 'de', 'Milben, Allergene in den Raumluft', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1T', 'de', 'Temperatur', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1U', 'de', 'Andere / Übrige', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1V', 'de', 'Verkehr (gemessen: Verkehrsdichte, Nähe Strasse, # Fahrzeuge, Verkehrsberufe)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1Y', 'de', 'Gerüche', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1Z', 'de', 'Mehr als 8, alle gemeinsam', DEFAULT, DEFAULT);
+
+INSERT INTO code_tr VALUES(DEFAULT, '2R', 'de', 'Europa', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '2N', 'de', 'Alle übrigen Länder', DEFAULT, DEFAULT);
+
+INSERT INTO code_tr VALUES(DEFAULT, '3A', 'de', 'Säuglinge, Vorschulkinder', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3B', 'de', 'Schulkinder und Jugendliche', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3C', 'de', 'Erwachsene (alle)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3H', 'de', 'Betagte Personen (65+ Jahre) ! muss immer zsm. Mit 3C angegeben werden', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3D', 'de', 'Personen mit Asthma oder Atemwegsallergie', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3E', 'de', 'Personen mit anderer chronischer Lungenkrankheit, COPD', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3F', 'de', 'Registerdaten, Patienten', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3G', 'de', 'Schwangere Frauen', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3I', 'de', 'SportlerInnen', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3O', 'de', 'Beruflich Exponierte', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3K', 'de', 'Gewebe', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3L', 'de', 'Zellen', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3U', 'de', 'Übrige /Andere', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3Z', 'de', 'Mehr als 8 /alle (=bei Gesundheitsfolgenabschätzungen: gesamte Bevölkerung)', DEFAULT, DEFAULT);
+
+INSERT INTO code_tr VALUES(DEFAULT, '4A', 'de', 'Sterblichkeit', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4B', 'de', 'Lungenfunktion', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4C', 'de', 'Symptome', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4D', 'de', 'Biochemische oder zelluläre Veränderungen', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4E', 'de', 'Atemwegskrankheiten akut', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4F', 'de', 'Atemwegskrankheiten chron. Wie COPD/Asthma', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4G', 'de', 'Krebs', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4H', 'de', 'Herz, Kreislauf, Blut', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4I', 'de', 'Gehirn, Nerven, Augen, Ohren', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4K', 'de', 'Belästigung, psychische Folgen, Lebensqualität', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4M', 'de', 'Medikamentenkonsum, Konsultation, Spitaleintritt', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4N', 'de', 'Fertilität, Schwangerschaftsproblem, Abort', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4O', 'de', 'Frühgeburt, Säuglingsgewicht, pränatale Entwicklung', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4L', 'de', 'Missbildungen', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4U', 'de', 'Übrige /Andere', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4X', 'de', 'Kosten', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4Y', 'de', 'Absenzen, eingeschränkte Aktivität', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4Z', 'de', 'Mehr als 8 / Alle', DEFAULT, DEFAULT);
+
+INSERT INTO code_tr VALUES(DEFAULT, '5A', 'de', 'Experimentelle Studie unter Belastung / Arbeit', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5B', 'de', 'Experimentelle Studie in Ruhe', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5C', 'de', 'Experimentelle Studie Zellstudie etc.', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5E', 'de', 'Einmalige Exposition, Unfall, Brand', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5F', 'de', 'Zeitreihen, Panel, kurzfristige Längsstudie', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5G', 'de', 'Querschnitt, Fall-Kontrollstudie, deskriptiv', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5H', 'de', 'Kohortenstudie', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5I', 'de', 'Interventionsstudie', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5M', 'de', 'Messstudie, Studienmethodik, Statistik', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5S', 'de', 'Statistik', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5D', 'de', 'Einzelfallbeschreibung, Fallstudie', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5K', 'de', 'Krankheitsbeschreibung', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5U', 'de', 'Übersichten, Metaanalysen, HIA', DEFAULT, DEFAULT);
+
+INSERT INTO code_tr VALUES(DEFAULT, '6M', 'de', 'Mensch', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '6T', 'de', 'Tiere', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '6O', 'de', 'Viren, Bakterien, Einzeller', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '6P', 'de', 'Pflanzen', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '6Z', 'de', 'Alle / allg. Übersichten', DEFAULT, DEFAULT);
+
+INSERT INTO code_tr VALUES(DEFAULT, '7K', 'de', 'Kurzfristig (Tage)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '7L', 'de', 'Langfristig (1/2 Jahr – Jahre)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '7M', 'de', 'Mittelfristig (Wochen-Monate)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '7Z', 'de', 'Alle', DEFAULT, DEFAULT);
+
+INSERT INTO code_tr VALUES(DEFAULT, '8I', 'de', 'Raumluft', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '8O', 'de', 'Aussenluft', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '8P', 'de', 'Individuelle Messung / Personal Sampling', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '8W', 'de', 'Berufliche Exposition', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '8Z', 'de', 'Alle', DEFAULT, DEFAULT);
