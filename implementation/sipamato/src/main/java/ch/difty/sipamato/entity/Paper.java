@@ -223,41 +223,6 @@ public class Paper extends SipamatoEntity {
         this.intern = intern;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Paper [id=");
-        sb.append(id);
-        sb.append(", doi=");
-        sb.append(doi);
-        sb.append(", pmId=");
-        sb.append(pmId);
-        sb.append(", authors=");
-        sb.append(authors);
-        sb.append(", title=");
-        sb.append(title);
-        sb.append(", location=");
-        sb.append(location);
-        sb.append(", publicationYear=");
-        sb.append(publicationYear);
-        sb.append(", firstAuthor=");
-        sb.append(firstAuthor);
-        sb.append(", goals=");
-        sb.append(goals);
-        sb.append(", population=");
-        sb.append(population);
-        sb.append(", methods=");
-        sb.append(methods);
-        sb.append(", result=");
-        sb.append(result);
-        sb.append(", comment=");
-        sb.append(comment);
-        sb.append(", intern=");
-        sb.append(intern);
-        sb.append("]");
-        return sb.toString();
-    }
-
     public String getPopulationPlace() {
         return populationPlace;
     }

@@ -2,6 +2,9 @@ package ch.difty.sipamato.entity;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public abstract class SipamatoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -15,4 +18,8 @@ public abstract class SipamatoEntity implements Serializable {
      */
     protected static final String RE_W = "\\w\\u00C0-\\u024f";
 
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+    }
 }
