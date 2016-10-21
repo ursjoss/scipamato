@@ -9,14 +9,14 @@ import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.SipamatoFilter;
 
 /**
- * The generic {@link SipamatoService} interface, defining the common methods.
+ * The generic {@link ReadOnlyService} interface, defining the common methods.
  *
  * @author u.joss
  *
  * @param <T> the entity type, extending {@link SipamatoEntity}
  * @param <F> the filter, extending {@link SipamatoFilter}
  */
-public interface SipamatoService<T extends SipamatoEntity, F extends SipamatoFilter> extends Serializable {
+public interface ReadOnlyService<T extends SipamatoEntity, F extends SipamatoFilter> extends Serializable {
 
     /**
      * Finds a page of records of type <literal>T</literal> matching the provided filter.
@@ -34,13 +34,5 @@ public interface SipamatoService<T extends SipamatoEntity, F extends SipamatoFil
      * @return entity count
      */
     int countByFilter(F filter);
-
-    /**
-     * Update the provided entity.
-     *
-     * @param the entity to persist
-     * @return the persisted entity
-     */
-    T update(T entity);
 
 }

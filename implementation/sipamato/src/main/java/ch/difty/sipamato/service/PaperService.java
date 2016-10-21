@@ -9,6 +9,6 @@ import ch.difty.sipamato.entity.PaperFilter;
  * @author u.joss
  *
  */
-public interface PaperService extends SipamatoService<Paper, PaperFilter> {
+public interface PaperService extends EntityService<Paper, PaperFilter> {
 
 }

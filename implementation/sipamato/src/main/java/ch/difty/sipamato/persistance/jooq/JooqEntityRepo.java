@@ -1,24 +1,16 @@
 package ch.difty.sipamato.persistance.jooq;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.InsertSetMoreStep;
+import org.jooq.InsertSetStep;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.SQLDialect;
-import org.jooq.SortField;
-import org.jooq.TableField;
+import org.jooq.UpdateSetStep;
 import org.jooq.impl.TableImpl;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
@@ -26,7 +18,7 @@ import ch.difty.sipamato.entity.SipamatoFilter;
 import ch.difty.sipamato.lib.AssertAs;
 
 /**
- * The generic jOOQ repository.
+ * The generic jOOQ entity repository for manipulation of entities.
  *
  * @author u.joss
  *
@@ -39,56 +31,36 @@ import ch.difty.sipamato.lib.AssertAs;
  */
 @Profile("DB_JOOQ")
 @Transactional(readOnly = true)
-public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends SipamatoFilter>
-        implements GenericRepository<R, T, ID, M, F> {
+public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends SipamatoFilter>
+        extends JooqReadOnlyRepo<R, T, ID, TI, M, F> implements EntityRepository<R, T, ID, M, F> {
 
     private static final long serialVersionUID = 1L;
 
-    private final DSLContext dsl;
-    private final M mapper;
     private final InsertSetStepSetter<R, T> insertSetStepSetter;
     private final UpdateSetStepSetter<R, T> updateSetStepSetter;
     private final Configuration jooqConfig;
-    private final JooqSortMapper<R, T, TI> sortMapper;
 
-    protected JooqRepo(DSLContext dsl, M mapper, InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter, JooqSortMapper<R, T, TI> sortMapper,
-            Configuration jooqConfig) {
-        this.dsl = AssertAs.notNull(dsl, "dsl");
-        this.mapper = AssertAs.notNull(mapper, "mapper");
+    /**
+     * @param dsl the {@link DSLContext}
+     * @param mapper record mapper mapping record <literal>R</literal> into entity <literal>T</literal>
+     * @param sortMapper {@link JooqSortMapper} mapping spring data sort specifications into jOOQ specific sort specs
+     * @param filterConditionMapper the {@link GenericFilterConditionMapper} mapping a derivative of {@link SipamatoFilter} into jOOC Condition
+     * @param insertSetStepSetter {@link InsertSetStepSetter} mapping the entity fields into the jOOQ {@link InsertSetStep}.
+     * @param jooqConfig the {@link Configuration} needed to detect and manage db implementation specific aspects.
+     * @param updateSetStepSetter{ @link UpdateSetStepSetter} mapping the entity fields into the jOOQ {@link UpdateSetStep}.
+     */
+    protected JooqEntityRepo(DSLContext dsl, M mapper, JooqSortMapper<R, T, TI> sortMapper, GenericFilterConditionMapper<F> filterConditionMapper, InsertSetStepSetter<R, T> insertSetStepSetter,
+            UpdateSetStepSetter<R, T> updateSetStepSetter, Configuration jooqConfig) {
+        super(dsl, mapper, sortMapper, filterConditionMapper);
         this.insertSetStepSetter = AssertAs.notNull(insertSetStepSetter, "insertSetStepSetter");
         this.updateSetStepSetter = AssertAs.notNull(updateSetStepSetter, "updateSetStepSetter");
-        this.sortMapper = AssertAs.notNull(sortMapper, "sortMapper");
         this.jooqConfig = AssertAs.notNull(jooqConfig, "jooqConfig");
-    }
-
-    protected M getMapper() {
-        return mapper;
     }
 
     /**
      * @return return the Repo specific {@link Logger}
      */
     protected abstract Logger getLogger();
-
-    /**
-     * @return the Entity Class <code>T.class</code>
-     */
-    protected abstract Class<? extends T> getEntityClass();
-
-    /**
-     * @return the Record Class <code>R.class</code>
-     */
-    protected abstract Class<? extends R> getRecordClass();
-
-    /**
-     * @return the jOOQ generated table of type <code>T</code>
-     */
-    protected abstract TI getTable();
-
-    /**
-     * @return the jOOQ generated {@link TableField} representing the <code>ID</code>
-     */
-    protected abstract TableField<R, ID> getTableId();
 
     /**
      * @param record persisted record that now holds the ID from the database.
@@ -102,25 +74,19 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
      */
     protected abstract ID getIdFrom(T entity);
 
-    /**
-     * @param filter the filter to translate
-     * @return the translated {@link Condition}s
-     */
-    protected abstract Condition createWhereConditions(F filter);
-
     /** {@inheritDoc} */
     @Override
     @Transactional(readOnly = false)
     public T add(final T entity) {
         AssertAs.notNull(entity, "entity");
 
-        InsertSetMoreStep<R> step = insertSetStepSetter.setNonKeyFieldsFor(dsl.insertInto(getTable()), entity);
+        InsertSetMoreStep<R> step = insertSetStepSetter.setNonKeyFieldsFor(getDsl().insertInto(getTable()), entity);
         insertSetStepSetter.considerSettingKeyOf(step, entity);
 
         R saved = step.returning().fetchOne();
         if (saved != null) {
             getLogger().info("Inserted 1 record: {} with id {}.", getTable().getName(), getIdFrom(saved));
-            return mapper.map(saved);
+            return getMapper().map(saved);
         } else {
             getLogger().warn("Unable to insert {} record", getTable().getName());
             return null;
@@ -135,7 +101,7 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
 
         final T toBeDeleted = findById(id);
         if (toBeDeleted != null) {
-            final int deleteCount = dsl.delete(getTable()).where(getTableId().equal(id)).execute();
+            final int deleteCount = getDsl().delete(getTable()).where(getTableId().equal(id)).execute();
             if (deleteCount > 0) {
                 getLogger().info("Deleted {} record: {} with id {}.", deleteCount, getTable().getName(), id);
             } else {
@@ -147,28 +113,15 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
 
     /** {@inheritDoc} */
     @Override
-    public List<T> findAll() {
-        return dsl.selectFrom(getTable()).fetchInto(getEntityClass());
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public T findById(final ID id) {
-        AssertAs.notNull(id, "id");
-        return dsl.selectFrom(getTable()).where(getTableId().equal(id)).fetchOneInto(getEntityClass());
-    }
-
-    /** {@inheritDoc} */
-    @Override
     @Transactional(readOnly = false)
     public T update(final T entity) {
         AssertAs.notNull(entity, "entity");
         ID id = AssertAs.notNull(getIdFrom(entity), "entity.id");
 
-        R updated = updateSetStepSetter.setFieldsFor(dsl.update(getTable()), entity).where(getTableId().equal(id)).returning().fetchOne();
+        R updated = updateSetStepSetter.setFieldsFor(getDsl().update(getTable()), entity).where(getTableId().equal(id)).returning().fetchOne();
         if (updated != null) {
             getLogger().info("Updated 1 record: {} with id {}.", getTable().getName(), id);
-            return mapper.map(updated);
+            return getMapper().map(updated);
         } else {
             // Ugly, need to work around the problem that update...returning().fetchOne() is not supported for H2
             if (SQLDialect.H2.equals(jooqConfig.dialect())) {
@@ -178,25 +131,6 @@ public abstract class JooqRepo<R extends Record, T extends SipamatoEntity, ID, T
                 return null;
             }
         }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public int countByFilter(F filter) {
-        final Condition conditions = createWhereConditions(filter);
-        return dsl.fetchCount(dsl.selectOne().from(getTable()).where(conditions));
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Page<T> findByFilter(F filter, Pageable pageable) {
-        final Condition conditions = createWhereConditions(filter);
-        final Collection<SortField<T>> sortCriteria = sortMapper.map(pageable.getSort(), getTable());
-        final List<R> queryResults = dsl.selectFrom(getTable()).where(conditions).orderBy(sortCriteria).fetchInto(getRecordClass());
-
-        final List<T> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
-
-        return new PageImpl<>(entities, pageable, (long) countByFilter(filter));
     }
 
 }
