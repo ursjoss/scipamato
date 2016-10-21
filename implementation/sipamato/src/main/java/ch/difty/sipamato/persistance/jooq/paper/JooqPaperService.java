@@ -1,6 +1,7 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,12 @@ public class JooqPaperService implements PaperService {
 
     /** {@inheritDoc} */
     @Override
+    public Optional<Paper> findById(Long id) {
+        return Optional.ofNullable(repo.findById(id));
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public List<Paper> findByFilter(PaperFilter filter, Pageable pageable) {
         return repo.findByFilter(filter, pageable).getContent();
     }
@@ -44,4 +51,5 @@ public class JooqPaperService implements PaperService {
     public Paper update(Paper paper) {
         return repo.update(paper);
     }
+
 }

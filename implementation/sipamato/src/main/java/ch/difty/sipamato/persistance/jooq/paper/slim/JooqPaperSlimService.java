@@ -1,6 +1,7 @@
 package ch.difty.sipamato.persistance.jooq.paper.slim;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,12 @@ public class JooqPaperSlimService implements PaperSlimService {
     @Autowired
     public void setRepository(PaperSlimRepository repo) {
         this.repo = repo;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Optional<PaperSlim> findById(Long id) {
+        return Optional.ofNullable(repo.findById(id));
     }
 
     /** {@inheritDoc} */

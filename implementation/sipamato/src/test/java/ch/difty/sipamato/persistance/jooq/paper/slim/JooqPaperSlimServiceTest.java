@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -49,6 +50,28 @@ public class JooqPaperSlimServiceTest {
     @After
     public void tearDown() {
         verifyNoMoreInteractions(repoMock, filterMock, pageableMock, paperSlimPageMock, paperSlimMock);
+    }
+
+    @Test
+    public void findingById_withFoundEntity_returnsOptionalOfIt() {
+        Long id = 7l;
+        when(repoMock.findById(id)).thenReturn(paperSlimMock);
+
+        Optional<PaperSlim> optPaper = service.findById(id);
+        assertThat(optPaper.isPresent()).isTrue();
+        assertThat(optPaper.get()).isEqualTo(paperSlimMock);
+
+        verify(repoMock).findById(id);
+    }
+
+    @Test
+    public void findingById_withNotFoundEntity_returnsOptionalEmpty() {
+        Long id = 7l;
+        when(repoMock.findById(id)).thenReturn(null);
+
+        assertThat(service.findById(id).isPresent()).isFalse();
+
+        verify(repoMock).findById(id);
     }
 
     @Test

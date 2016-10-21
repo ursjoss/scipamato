@@ -8,6 +8,6 @@ import ch.difty.sipamato.entity.projection.PaperSlim;
  *
  * @author u.joss
  */
-public interface PaperSlimService extends ReadOnlyService<PaperSlim, PaperFilter> {
+public interface PaperSlimService extends ReadOnlyService<PaperSlim, Long, PaperFilter> {
 
 }
