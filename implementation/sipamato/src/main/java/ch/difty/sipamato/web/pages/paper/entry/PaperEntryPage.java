@@ -318,6 +318,14 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
         public TabPanel3(String id, IModel<Paper> model) {
             super(id, model);
         }
+
+        @Override
+        protected void onInitialize() {
+            super.onInitialize();
+
+            Form<Paper> form = new Form<Paper>("tab3Form");
+            queue(form);
+        }
     }
 
 }
