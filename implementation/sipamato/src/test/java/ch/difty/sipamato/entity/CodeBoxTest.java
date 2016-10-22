@@ -1,11 +1,14 @@
 package ch.difty.sipamato.entity;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Test;
+
+import ch.difty.sipamato.lib.NullArgumentException;
 
 public class CodeBoxTest {
 
@@ -84,4 +87,43 @@ public class CodeBoxTest {
         assertThat(codeBox.isEmpty()).isTrue();
     }
 
+    @Test
+    public void gettingCodesByCodeClass_withNullCodeClassId_throws() {
+        try {
+            codeBox.getCodesBy(null);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("codeClassId must not be null.");
+        }
+    }
+
+    @Test
+    public void gettingCodesByCodeClass() {
+        codeBox.addCodes(Arrays.asList(CODE_1F, CODE_5H, CODE_5F));
+
+        assertThat(codeBox.getCodesBy(CodeClassId.CC1)).containsExactly(CODE_1F);
+        assertThat(codeBox.getCodesBy(CodeClassId.CC2)).isEmpty();
+        assertThat(codeBox.getCodesBy(CodeClassId.CC5)).containsExactly(CODE_5H, CODE_5F);
+    }
+
+    @Test
+    public void clearingByCodeClassId_withNullParameter_throws() {
+        try {
+            codeBox.clearBy(null);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("codeClassId must not be null.");
+        }
+    }
+
+    @Test
+    public void clearingByCodeClassId_leavesOtherCategoriesUntouched() {
+        codeBox.addCodes(Arrays.asList(CODE_1F, CODE_5H, CODE_5F));
+        codeBox.clearBy(CodeClassId.CC1);
+        assertThat(codeBox.getCodes()).containsExactly(CODE_5H, CODE_5F);
+        codeBox.clearBy(CodeClassId.CC2);
+        assertThat(codeBox.getCodes()).containsExactly(CODE_5H, CODE_5F);
+        codeBox.clearBy(CodeClassId.CC5);
+        assertThat(codeBox.isEmpty()).isTrue();
+    }
 }
