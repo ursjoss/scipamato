@@ -93,3 +93,22 @@ ALTER TABLE code_tr ADD FOREIGN KEY (code) REFERENCES code(code) on delete casca
 
 DROP INDEX IF EXISTS idx_code_tr_unique;
 CREATE UNIQUE INDEX idx_code_tr_unique ON code_tr (code, lang_code);
+
+
+
+DROP TABLE IF EXISTS paper_code;
+
+CREATE TABLE paper_code (
+  id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  paper_id BIGINT NOT NULL,
+  code CHAR(2) NOT NULL,
+
+  version INT DEFAULT 1,
+  timestamp TIMESTAMP DEFAULT current_timestamp(),
+);
+
+ALTER TABLE paper_code ADD FOREIGN KEY (paper_id) REFERENCES paper(id) on delete cascade on update cascade;
+ALTER TABLE paper_code ADD FOREIGN KEY (code) REFERENCES code(code) on update cascade;
+
+DROP INDEX IF EXISTS idx_paper_code;
+CREATE UNIQUE INDEX idx_paper_code ON paper_code (paper_id, code);

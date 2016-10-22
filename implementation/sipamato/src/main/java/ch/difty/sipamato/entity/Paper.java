@@ -1,9 +1,14 @@
 package ch.difty.sipamato.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Pattern.Flag;
 
+import org.apache.commons.collections4.list.UnmodifiableList;
 import org.hibernate.validator.constraints.Range;
 
 public class Paper extends SipamatoEntity {
@@ -49,6 +54,15 @@ public class Paper extends SipamatoEntity {
 
     public static final String RESULT_EXPOSURE_RANGE = "resultExposureRange";
     public static final String RESULT_EFFECT_ESTIMATE = "resultEffectEstimate";
+
+    public static final String CODES_OF_CLASS_1 = "codesOfClass1";
+    public static final String CODES_OF_CLASS_2 = "codesOfClass2";
+    public static final String CODES_OF_CLASS_3 = "codesOfClass3";
+    public static final String CODES_OF_CLASS_4 = "codesOfClass4";
+    public static final String CODES_OF_CLASS_5 = "codesOfClass5";
+    public static final String CODES_OF_CLASS_6 = "codesOfClass6";
+    public static final String CODES_OF_CLASS_7 = "codesOfClass7";
+    public static final String CODES_OF_CLASS_8 = "codesOfClass8";
 
     private Long id;
 
@@ -102,6 +116,19 @@ public class Paper extends SipamatoEntity {
     private String resultEffectEstimate;
     private String comment;
     private String intern;
+
+    /**
+     * The index of the following lists of {@link Code} must correspond with the ids defined in {@link CodeClassId}
+     */
+    // TODO turn into map of lists and make it dynamic
+    private final List<Code> codesOfClass1 = new ArrayList<>();
+    private final List<Code> codesOfClass2 = new ArrayList<>();
+    private final List<Code> codesOfClass3 = new ArrayList<>();
+    private final List<Code> codesOfClass4 = new ArrayList<>();
+    private final List<Code> codesOfClass5 = new ArrayList<>();
+    private final List<Code> codesOfClass6 = new ArrayList<>();
+    private final List<Code> codesOfClass7 = new ArrayList<>();
+    private final List<Code> codesOfClass8 = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -309,6 +336,38 @@ public class Paper extends SipamatoEntity {
 
     public void setResultEffectEstimate(String resultEffectEstimate) {
         this.resultEffectEstimate = resultEffectEstimate;
+    }
+
+    public List<Code> getCodesOfClass1() {
+        return new UnmodifiableList<Code>(codesOfClass1);
+    }
+
+    public void clearCodesOfClass1() {
+        codesOfClass1.clear();
+    }
+
+    public void addCodeOfClass1(Code code) {
+        codesOfClass1.add(new Code(code));
+    }
+
+    public void addCodesOfClass1(List<Code> codes) {
+        codesOfClass1.addAll(codes.stream().map(c -> new Code(c)).collect(Collectors.toList()));
+    }
+
+    public List<Code> getCodesOfClass5() {
+        return new UnmodifiableList<Code>(codesOfClass5);
+    }
+
+    public void clearCodesOfClass5() {
+        codesOfClass5.clear();
+    }
+
+    public void addCodeOfClass5(Code code) {
+        codesOfClass5.add(new Code(code));
+    }
+
+    public void addCodesOfClass5(List<Code> codes) {
+        codesOfClass5.addAll(codes.stream().map(c -> new Code(c)).collect(Collectors.toList()));
     }
 
 }

@@ -52,4 +52,9 @@ public class JooqPaperService implements PaperService {
         return repo.update(paper);
     }
 
+    @Override
+    public Optional<Paper> findWithChildrenById(Long id, String languageCode) {
+        return Optional.ofNullable(repo.findWithChildrenById(id, languageCode));
+    }
+
 }

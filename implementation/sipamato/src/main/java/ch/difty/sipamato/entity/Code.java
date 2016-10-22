@@ -18,15 +18,23 @@ public class Code extends SipamatoEntity {
     private String code;
 
     @NotNull
-    private CodeClass codeClass;
-
-    @NotNull
     private String name;
 
-    public Code() {
+    @NotNull
+    private CodeClass codeClass;
+
+    public Code(String code, String name, Integer codeClassId, String codeClassName, String codeClassDescription) {
+        this.code = code;
+        this.name = name;
+        if (codeClassId != null)
+            this.codeClass = new CodeClass(codeClassId, codeClassName, codeClassDescription);
     }
 
-    public Code(String code, CodeClass codeClass, String name) {
+    public Code(final Code from) {
+        this(from.code, from.name, new CodeClass(from.codeClass));
+    }
+
+    private Code(String code, String name, CodeClass codeClass) {
         this.code = code;
         this.codeClass = codeClass;
         this.name = name;
@@ -40,6 +48,14 @@ public class Code extends SipamatoEntity {
         this.code = code;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public CodeClass getCodeClass() {
         return codeClass;
     }
@@ -48,11 +64,4 @@ public class Code extends SipamatoEntity {
         this.codeClass = codeClass;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

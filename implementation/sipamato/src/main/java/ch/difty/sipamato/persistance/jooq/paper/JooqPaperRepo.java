@@ -1,16 +1,27 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
+import static ch.difty.sipamato.db.tables.Code.CODE;
+import static ch.difty.sipamato.db.tables.CodeClass.CODE_CLASS;
+import static ch.difty.sipamato.db.tables.CodeClassTr.CODE_CLASS_TR;
+import static ch.difty.sipamato.db.tables.CodeTr.CODE_TR;
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
+import static ch.difty.sipamato.db.tables.PaperCode.PAPER_CODE;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
+import org.jooq.impl.DSL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
+import ch.difty.sipamato.entity.Code;
+import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
@@ -21,6 +32,8 @@ import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 
 @Repository
 public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.difty.sipamato.db.tables.Paper, PaperRecordMapper, PaperFilter> implements PaperRepository {
+
+    private static final String NOT_TRANSL = "not translated";
 
     private static final long serialVersionUID = 1L;
 
@@ -66,6 +79,39 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     @Override
     protected Long getIdFrom(Paper entity) {
         return entity.getId();
+    }
+
+    @Override
+    public Paper findWithChildrenById(Long id, String lang) {
+        final Paper p = findById(id);
+        if (p != null) {
+
+            // TODO if language not found, still add code and 
+            // @formatter:off
+            final List<Code> all = getDsl()
+                .select(CODE.CODE_.as("C_ID")
+                        , DSL.coalesce(CODE_TR.NAME, NOT_TRANSL).as("C_NAME")
+                        , CODE_CLASS.ID.as("CC_ID")
+                        , DSL.coalesce(CODE_CLASS_TR.NAME, NOT_TRANSL).as("CC_NAME")
+                        , DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, NOT_TRANSL).as("CC_DESCRIPTION"))
+                .from(PAPER_CODE)
+                .join(PAPER).on(PAPER_CODE.PAPER_ID.equal(PAPER.ID))
+                .join(CODE).on(PAPER_CODE.CODE.equal(CODE.CODE_))
+                .join(CODE_CLASS).on(CODE.CODE_CLASS_ID.equal(CODE_CLASS.ID))
+                .leftOuterJoin(CODE_TR).on(CODE.CODE_.equal(CODE_TR.CODE).and(CODE_TR.LANG_CODE.equal(lang)))
+                .leftOuterJoin(CODE_CLASS_TR).on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID).and(CODE_CLASS_TR.LANG_CODE.equal(lang)))
+                .where(PAPER_CODE.PAPER_ID.equal(p.getId()))
+                .fetchInto(Code.class);
+            // @formatter:on
+
+            p.addCodesOfClass1(getCodeClassSpecificCodes(all, CodeClassId.CC1));
+            p.addCodesOfClass5(getCodeClassSpecificCodes(all, CodeClassId.CC5));
+        }
+        return p;
+    }
+
+    private List<Code> getCodeClassSpecificCodes(List<Code> allCodesOfPaper, CodeClassId codeClassId) {
+        return allCodesOfPaper.stream().filter(c -> c.getCodeClass().getId().equals(codeClassId.getId())).collect(Collectors.toList());
     }
 
 }

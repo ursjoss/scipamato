@@ -300,3 +300,9 @@ INSERT INTO code_tr VALUES(DEFAULT, '8O', 'de', 'Aussenluft', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8P', 'de', 'Individuelle Messung / Personal Sampling', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8W', 'de', 'Berufliche Exposition', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8Z', 'de', 'Alle', DEFAULT, DEFAULT);
+
+INSERT INTO code_tr VALUES(DEFAULT, '1F', 'en', 'Particles, Particulate Matter', DEFAULT, DEFAULT);
+
+INSERT INTO paper_code VALUES(DEFAULT, 1, '1F', DEFAULT, DEFAULT);
+INSERT INTO paper_code VALUES(DEFAULT, 1, '5H', DEFAULT, DEFAULT);
+INSERT INTO paper_code VALUES(DEFAULT, 1, '5F', DEFAULT, DEFAULT);

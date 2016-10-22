@@ -53,4 +53,14 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
         assertThat(cc.toString()).isEqualTo("CodeClass[id=1,name=foo,description=bar]");
     }
 
+    @Test
+    public void cloning_copiesValuesDecoupled() {
+        CodeClass orig = new CodeClass(1, "cc1", "this is cc1");
+        CodeClass copy = new CodeClass(orig);
+        assertThat(copy).isEqualsToByComparingFields(orig);
+
+        orig.setId(2);
+        assertThat(orig.getId()).isEqualTo(2);
+        assertThat(copy.getId()).isEqualTo(1);
+    }
 }

@@ -1,6 +1,9 @@
 package ch.difty.sipamato.entity;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.extractProperty;
+
+import java.util.Arrays;
 
 import javax.validation.ConstraintViolation;
 
@@ -188,7 +191,64 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @Test
     public void testingToString() {
+     // @formatter:off
         assertThat(p.toString()).isEqualTo(
-                "Paper[id=1,doi=10.1093/aje/kwu275,pmId=1000,authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=foo,firstAuthorOverridden=false,title=foo,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>,exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>,methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,comment=<null>,intern=<null>]");
+                "Paper[id=1,doi=10.1093/aje/kwu275,pmId=1000"
+                + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=foo,firstAuthorOverridden=false"
+                + ",title=foo,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
+                + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
+                + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,comment=<null>,intern=<null>"
+                + ",codesOfClass1=[],codesOfClass2=[],codesOfClass3=[],codesOfClass4=[],codesOfClass5=[],codesOfClass6=[],codesOfClass7=[],codesOfClass8=[]]");
+     // @formatter:off
+    }
+
+    @Test
+    public void manageExposureAgentCodes() {
+        assertThat(p.getCodesOfClass1()).isNotNull().isEmpty();
+        p.addCodeOfClass1(makeCode("c1"));
+
+        assertThat(extractProperty(Code.CODE).from(p.getCodesOfClass1())).containsExactly("c1");
+
+        Code c2 = makeCode("c2");
+        Code c3 = makeCode("c3");
+        p.addCodesOfClass1(Arrays.asList(c2, c3));
+
+        assertThat(extractProperty(Code.CODE).from(p.getCodesOfClass1())).containsExactly("c1", "c2", "c3");
+
+        p.clearCodesOfClass1();
+        assertThat(p.getCodesOfClass1()).isNotNull().isEmpty();
+    }
+
+    private Code makeCode(String code) {
+        return new Code(code, "code " + code, 1, "cc" + code, "code class " + code);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void cannotAddCodeToGetterOfCodesOfClass1() {
+        p.getCodesOfClass1().add(makeCode("c1"));
+    }
+
+    @Test
+    public void addingCodesOfClass1_ignoresChangesMadeToCode_afterAdding() {
+        assertThat(p.getCodesOfClass1()).isNotNull().isEmpty();
+        Code d2 = makeCode("d2");
+        p.addCodesOfClass1(Arrays.asList(d2));
+        assertThat(extractProperty(Code.CODE).from(p.getCodesOfClass1())).containsExactly("d2");
+
+        d2.setCode("c1");
+        assertThat(d2.getCode()).isEqualTo("c1");
+        assertThat(extractProperty(Code.CODE).from(p.getCodesOfClass1())).containsExactly("d2");
+    }
+
+    @Test
+    public void addingCodeOfClass1_ignoresChangesMadeToCode_afterAdding() {
+        assertThat(p.getCodesOfClass1()).isNotNull().isEmpty();
+        Code d2 = makeCode("d2");
+        p.addCodeOfClass1(d2);
+        assertThat(extractProperty(Code.CODE).from(p.getCodesOfClass1())).containsExactly("d2");
+
+        d2.setCode("c1");
+        assertThat(d2.getCode()).isEqualTo("c1");
+        assertThat(extractProperty(Code.CODE).from(p.getCodesOfClass1())).containsExactly("d2");
     }
 }

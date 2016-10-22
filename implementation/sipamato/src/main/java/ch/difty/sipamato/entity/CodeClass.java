@@ -26,6 +26,10 @@ public class CodeClass extends SipamatoEntity {
         this.description = description;
     }
 
+    public CodeClass(CodeClass from) {
+        this(from.id, from.name, from.description);
+    }
+
     public Integer getId() {
         return id;
     }
