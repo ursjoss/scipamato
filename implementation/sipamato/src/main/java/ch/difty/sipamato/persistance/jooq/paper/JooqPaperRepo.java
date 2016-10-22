@@ -22,6 +22,7 @@ import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
+import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
 import ch.difty.sipamato.persistance.jooq.JooqEntityRepo;
@@ -80,7 +81,9 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     }
 
     @Override
-    public Paper findCompleteById(Long id, String lang) {
+    public Paper findCompleteById(Long id, String languageCode) {
+        AssertAs.notNull(id, "id");
+        String lang = trimLanguageCode(AssertAs.notNull(languageCode, "languageCode"));
         final Paper p = findById(id);
         if (p != null) {
             // @formatter:off
@@ -103,6 +106,12 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
             p.addCodes(codes);
         }
         return p;
+    }
+
+    private String trimLanguageCode(String lc) {
+        if (lc.length() > 2)
+            return lc.substring(0, 2);
+        return lc;
     }
 
 }
