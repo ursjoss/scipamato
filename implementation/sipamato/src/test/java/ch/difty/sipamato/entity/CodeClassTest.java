@@ -49,7 +49,7 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     @Test
     public void testingToString() {
         CodeClass cc = new CodeClass(1, "foo", "bar");
-        assertThat(cc.toString()).isEqualTo("CodeClass[id=1,name=foo,description=bar]");
+        assertThat(cc.toString()).isEqualTo("CodeClass[id=1]");
     }
 
     @Test
@@ -98,4 +98,5 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
         assertThat(cc1.equals(null)).isFalse();
         assertThat(cc1.equals(new String())).isFalse();
     }
+
 }

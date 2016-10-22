@@ -126,4 +126,46 @@ public class CodeBoxTest {
         codeBox.clearBy(CodeClassId.CC5);
         assertThat(codeBox.isEmpty()).isTrue();
     }
+
+    @Test
+    public void sizePerCodeClass_withNullCodeClass_throws() {
+        try {
+            codeBox.sizeOf(null);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("codeClassId must not be null.");
+        }
+    }
+
+    @Test
+    public void sizePerCodeClass() {
+        codeBox.addCodes(Arrays.asList(CODE_1F, CODE_5H, CODE_5F));
+        assertThat(codeBox.sizeOf(CodeClassId.CC1)).isEqualTo(1);
+        assertThat(codeBox.sizeOf(CodeClassId.CC2)).isEqualTo(0);
+        assertThat(codeBox.sizeOf(CodeClassId.CC5)).isEqualTo(2);
+    }
+
+    @Test
+    public void assertingToString_withNoCodes() {
+        assertThat(codeBox.isEmpty()).isTrue();
+        assertThat(codeBox.toString()).isEqualTo("[]");
+    }
+
+    @Test
+    public void assertingToString_withMembers() {
+        codeBox.addCodes(Arrays.asList(CODE_1F, CODE_5H, CODE_5F));
+        assertThat(codeBox.toString()).isEqualTo(
+         // @formatter:off
+              "["
+            +   "codesOfClass1=["
+            +     "Code[code=1F,name=Code 1F,codeClass=CodeClass[id=1]]"
+            +   "]"
+            +  ",codesOfClass5=["
+            +     "Code[code=5H,name=Code 5H,codeClass=CodeClass[id=5]]"
+            +   ", Code[code=5F,name=Code 5F,codeClass=CodeClass[id=5]]"
+            +   "]"
+            + "]"
+         // @formatter:on
+        );
+    }
 }

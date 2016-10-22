@@ -76,4 +76,13 @@ public class CodeClass extends SipamatoEntity {
         return true;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("CodeClass[id=");
+        builder.append(id);
+        builder.append("]");
+        return builder.toString();
+    }
+
 }

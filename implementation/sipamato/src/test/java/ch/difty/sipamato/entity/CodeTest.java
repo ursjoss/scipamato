@@ -71,7 +71,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void testingToString() {
-        assertThat(c.toString()).isEqualTo("Code[code=1A,name=code1,codeClass=CodeClass[id=1,name=c1,description=]]");
+        assertThat(c.toString()).isEqualTo("Code[code=1A,name=code1,codeClass=CodeClass[id=1]]");
     }
 
     @Test

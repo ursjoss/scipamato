@@ -8,7 +8,6 @@ import static ch.difty.sipamato.db.tables.Paper.PAPER;
 import static ch.difty.sipamato.db.tables.PaperCode.PAPER_CODE;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Repository;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Code;
-import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
@@ -85,8 +83,6 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     public Paper findWithChildrenById(Long id, String lang) {
         final Paper p = findById(id);
         if (p != null) {
-
-            // TODO if language not found, still add code and 
             // @formatter:off
             final List<Code> all = getDsl()
                 .select(CODE.CODE_.as("C_ID")
@@ -104,14 +100,9 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
                 .fetchInto(Code.class);
             // @formatter:on
 
-            p.addCodesOfClass1(getCodeClassSpecificCodes(all, CodeClassId.CC1));
-            p.addCodesOfClass5(getCodeClassSpecificCodes(all, CodeClassId.CC5));
+            p.addCodes(all);
         }
         return p;
-    }
-
-    private List<Code> getCodeClassSpecificCodes(List<Code> allCodesOfPaper, CodeClassId codeClassId) {
-        return allCodesOfPaper.stream().filter(c -> c.getCodeClass().getId().equals(codeClassId.getId())).collect(Collectors.toList());
     }
 
 }

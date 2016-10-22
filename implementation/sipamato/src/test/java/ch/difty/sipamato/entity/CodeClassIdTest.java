@@ -1,13 +1,13 @@
 package ch.difty.sipamato.entity;
 
-import static ch.difty.sipamato.entity.CodeClassId.CC7;
 import static ch.difty.sipamato.entity.CodeClassId.CC1;
-import static ch.difty.sipamato.entity.CodeClassId.CC4;
 import static ch.difty.sipamato.entity.CodeClassId.CC2;
-import static ch.difty.sipamato.entity.CodeClassId.CC8;
-import static ch.difty.sipamato.entity.CodeClassId.CC6;
-import static ch.difty.sipamato.entity.CodeClassId.CC5;
 import static ch.difty.sipamato.entity.CodeClassId.CC3;
+import static ch.difty.sipamato.entity.CodeClassId.CC4;
+import static ch.difty.sipamato.entity.CodeClassId.CC5;
+import static ch.difty.sipamato.entity.CodeClassId.CC6;
+import static ch.difty.sipamato.entity.CodeClassId.CC7;
+import static ch.difty.sipamato.entity.CodeClassId.CC8;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 import org.junit.Test;

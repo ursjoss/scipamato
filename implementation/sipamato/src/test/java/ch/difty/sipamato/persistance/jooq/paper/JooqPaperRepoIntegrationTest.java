@@ -137,17 +137,15 @@ public class JooqPaperRepoIntegrationTest {
         assertThat(paper.toString()).isEqualTo(
         // @formatter:off
            PAPER1_WO_CODE_CLASSES
-           + ",codesOfClass1=[Code[code=1F,name=Feinstaub, Partikel,codeClass=CodeClass[id=1,name=Schadstoffe,description=Schadstoffe, Einwirkung, Exposition]]]"
-           + ",codesOfClass2=[]"
-           + ",codesOfClass3=[]"
-           + ",codesOfClass4=[]"
-           + ",codesOfClass5=["
-               +   "Code[code=5F,name=Zeitreihen, Panel, kurzfristige Längsstudie,codeClass=CodeClass[id=5,name=Studientyp,description=Art der Studie, der Publikation]]"
-               + ", Code[code=5H,name=Kohortenstudie,codeClass=CodeClass[id=5,name=Studientyp,description=Art der Studie, der Publikation]]"
-           + "]"
-           + ",codesOfClass6=[]"
-           + ",codesOfClass7=[]"
-           + ",codesOfClass8=[]"
+           +   ",codes=["
+           +      "codesOfClass1=["
+           +         "Code[code=1F,name=Feinstaub, Partikel,codeClass=CodeClass[id=1]]"
+           +      "],"
+           +      "codesOfClass5=["
+           +         "Code[code=5F,name=Zeitreihen, Panel, kurzfristige Längsstudie,codeClass=CodeClass[id=5]], "
+           +         "Code[code=5H,name=Kohortenstudie,codeClass=CodeClass[id=5]]"
+           +      "]"
+           +    "]"
            + "]");
         // @formatter:on
     }
@@ -158,17 +156,15 @@ public class JooqPaperRepoIntegrationTest {
         assertThat(paper.toString()).isEqualTo(
         // @formatter:off
            PAPER1_WO_CODE_CLASSES
-           + ",codesOfClass1=[Code[code=1F,name=Particles, Particulate Matter,codeClass=CodeClass[id=1,name=Exposure Agent,description=]]]"
-           + ",codesOfClass2=[]"
-           + ",codesOfClass3=[]"
-           + ",codesOfClass4=[]"
-           + ",codesOfClass5=["
-           +   "Code[code=5F,name=not translated,codeClass=CodeClass[id=5,name=Study Design,description=]]"
-           + ", Code[code=5H,name=not translated,codeClass=CodeClass[id=5,name=Study Design,description=]]"
-           + "]"
-           + ",codesOfClass6=[]"
-           + ",codesOfClass7=[]"
-           + ",codesOfClass8=[]"
+           +   ",codes=["
+           +      "codesOfClass1=["
+           +         "Code[code=1F,name=Particles, Particulate Matter,codeClass=CodeClass[id=1]]"
+           +      "],"
+           +      "codesOfClass5=["
+           +         "Code[code=5F,name=not translated,codeClass=CodeClass[id=5]], "
+           +         "Code[code=5H,name=not translated,codeClass=CodeClass[id=5]]"
+           +      "]"
+           +    "]"
            + "]");
         // @formatter:on
     }
@@ -179,17 +175,15 @@ public class JooqPaperRepoIntegrationTest {
         assertThat(paper.toString()).isEqualTo(
         // @formatter:off
             PAPER1_WO_CODE_CLASSES
-            + ",codesOfClass1=[Code[code=1F,name=not translated,codeClass=CodeClass[id=1,name=not translated,description=not translated]]]"
-            + ",codesOfClass2=[]"
-            + ",codesOfClass3=[]"
-            + ",codesOfClass4=[]"
-            + ",codesOfClass5=["
-            +   "Code[code=5F,name=not translated,codeClass=CodeClass[id=5,name=not translated,description=not translated]]"
-            + ", Code[code=5H,name=not translated,codeClass=CodeClass[id=5,name=not translated,description=not translated]]"
-            + "]"
-            + ",codesOfClass6=[]"
-            + ",codesOfClass7=[]"
-            + ",codesOfClass8=[]"
+            +   ",codes=["
+            +     "codesOfClass1=["
+            +       "Code[code=1F,name=not translated,codeClass=CodeClass[id=1]]"
+            +     "],"
+            +     "codesOfClass5=["
+            +       "Code[code=5F,name=not translated,codeClass=CodeClass[id=5]], "
+            +       "Code[code=5H,name=not translated,codeClass=CodeClass[id=5]]"
+            +     "]"
+            +   "]"
             + "]");
         // @formatter:on
     }

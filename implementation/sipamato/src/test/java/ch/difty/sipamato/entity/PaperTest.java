@@ -190,42 +190,72 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
-    public void testingToString() {
+    public void testingToString_withoutCodeClasses() {
      // @formatter:off
         assertThat(p.toString()).isEqualTo(
-                "Paper[id=1,doi=10.1093/aje/kwu275,pmId=1000"
-                + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=foo,firstAuthorOverridden=false"
-                + ",title=foo,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
-                + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
-                + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,comment=<null>,intern=<null>"
-                + ",codesOfClass1=[],codesOfClass2=[],codesOfClass3=[],codesOfClass4=[],codesOfClass5=[],codesOfClass6=[],codesOfClass7=[],codesOfClass8=[]]");
-     // @formatter:off
+            "Paper[id=1,doi=10.1093/aje/kwu275,pmId=1000"
+            + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=foo,firstAuthorOverridden=false"
+            + ",title=foo,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
+            + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
+            + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,comment=<null>,intern=<null>"
+            + ",codes=[]]");
+     // @formatter:on
     }
 
     @Test
-    public void manageExposureAgentCodes() {
-        assertThat(p.getCodesOfClass1()).isNotNull().isEmpty();
-        p.addCodeOfClass1(makeCode("c1"));
-
-        assertThat(extractProperty(Code.CODE).from(p.getCodesOfClass1())).containsExactly("c1");
-
-        Code c2 = makeCode("c2");
-        Code c3 = makeCode("c3");
-        p.addCodesOfClass1(Arrays.asList(c2, c3));
-
-        assertThat(extractProperty(Code.CODE).from(p.getCodesOfClass1())).containsExactly("c1", "c2", "c3");
-
-        p.clearCodesOfClass1();
-        assertThat(p.getCodesOfClass1()).isNotNull().isEmpty();
+    public void testingToString_withCodeClasses() {
+        p.addCode(makeCode(1, "D"));
+        p.addCode(makeCode(1, "E"));
+        p.addCode(makeCode(5, "A"));
+        // @formatter:off
+        assertThat(p.toString()).isEqualTo(
+            "Paper[id=1,doi=10.1093/aje/kwu275,pmId=1000"
+            + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=foo,firstAuthorOverridden=false"
+            + ",title=foo,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
+            + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
+            + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,comment=<null>,intern=<null>"
+            + ",codes=[codesOfClass1=[Code[code=1D,name=code 1D,codeClass=CodeClass[id=1]]],codesOfClass1=[Code[code=1E,name=code 1E,codeClass=CodeClass[id=1]]],codesOfClass5=[Code[code=5A,name=code 5A,codeClass=CodeClass[id=5]]]]]");
+        // @formatter:on
     }
 
-    private Code makeCode(String code) {
-        return new Code(code, "code " + code, 1, "cc" + code, "code class " + code);
+    private Code makeCode(int codeClassId, String codePart) {
+        String code = codeClassId + codePart;
+        return new Code(code, "code " + code, codeClassId, "cc" + code, "code class " + code);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void cannotAddCodeToGetterOfCodesOfClass1() {
-        p.getCodesOfClass1().add(makeCode("c1"));
+    @Test
+    public void addingCode_addsItAndAllowsToRetrieveIt() {
+        assertThat(p.getCodes()).isNotNull().isEmpty();
+        p.addCode(makeCode(1, "C"));
+
+        assertThat(extractProperty(Code.CODE).from(p.getCodes())).containsExactly("1C");
+        assertThat(extractProperty(Code.CODE).from(p.getCodesOf(CodeClassId.CC1))).containsExactly("1C");
+        assertThat(extractProperty(Code.CODE).from(p.getCodesOf(CodeClassId.CC2))).isEmpty();
     }
 
+    @Test
+    public void addingCodes() {
+        p.addCode(makeCode(1, "C"));
+        Code c1D = makeCode(1, "D");
+        Code c2A = makeCode(2, "A");
+        p.addCodes(Arrays.asList(c1D, c2A));
+
+        assertThat(extractProperty(Code.CODE).from(p.getCodes())).containsExactly("1C", "1D", "2A");
+
+        p.clearCodes();
+        assertThat(p.getCodes()).isNotNull().isEmpty();
+    }
+
+    @Test
+    public void addingCodesOfSeveralClasses_allowsToRetrieveThemByClass() {
+        Code c1D = makeCode(1, "D");
+        Code c2F = makeCode(2, "F");
+        Code c2A = makeCode(2, "A");
+
+        p.addCodes(Arrays.asList(c1D, c2F, c2A));
+
+        assertThat(p.getCodesOf(CodeClassId.CC1)).containsExactly(c1D);
+        assertThat(p.getCodesOf(CodeClassId.CC2)).containsExactly(c2F, c2A);
+        assertThat(p.getCodesOf(CodeClassId.CC3)).isEmpty();
+    }
 }
