@@ -133,7 +133,7 @@ public class JooqPaperRepoIntegrationTest {
 
     @Test
     public void findingWithChildrenById_forPaper1InGerman() {
-        Paper paper = repo.findWithChildrenById(1l, "de");
+        Paper paper = repo.findCompleteById(1l, "de");
         assertThat(paper.toString()).isEqualTo(
         // @formatter:off
            PAPER1_WO_CODE_CLASSES
@@ -170,7 +170,7 @@ public class JooqPaperRepoIntegrationTest {
 
     @Test
     public void findingWithChildrenById_forPaper1InEnglish() {
-        Paper paper = repo.findWithChildrenById(1l, "en");
+        Paper paper = repo.findCompleteById(1l, "en");
         assertThat(paper.toString()).isEqualTo(
         // @formatter:off
            PAPER1_WO_CODE_CLASSES
@@ -207,7 +207,7 @@ public class JooqPaperRepoIntegrationTest {
 
     @Test
     public void findingWithChildrenById_forPaper1InNonExistingLanguage() {
-        Paper paper = repo.findWithChildrenById(1l, "xy");
+        Paper paper = repo.findCompleteById(1l, "xy");
         assertThat(paper.toString()).isEqualTo(
         // @formatter:off
             PAPER1_WO_CODE_CLASSES

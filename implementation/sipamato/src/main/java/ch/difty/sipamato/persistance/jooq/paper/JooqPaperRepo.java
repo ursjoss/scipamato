@@ -80,11 +80,11 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     }
 
     @Override
-    public Paper findWithChildrenById(Long id, String lang) {
+    public Paper findCompleteById(Long id, String lang) {
         final Paper p = findById(id);
         if (p != null) {
             // @formatter:off
-            final List<Code> all = getDsl()
+            final List<Code> codes = getDsl()
                 .select(CODE.CODE_.as("C_ID")
                         , DSL.coalesce(CODE_TR.NAME, NOT_TRANSL).as("C_NAME")
                         , CODE_CLASS.ID.as("CC_ID")
@@ -100,7 +100,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
                 .fetchInto(Code.class);
             // @formatter:on
 
-            p.addCodes(all);
+            p.addCodes(codes);
         }
         return p;
     }

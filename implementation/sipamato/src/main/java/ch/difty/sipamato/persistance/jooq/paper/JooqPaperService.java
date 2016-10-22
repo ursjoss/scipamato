@@ -53,8 +53,8 @@ public class JooqPaperService implements PaperService {
     }
 
     @Override
-    public Optional<Paper> findWithChildrenById(Long id, String languageCode) {
-        return Optional.ofNullable(repo.findWithChildrenById(id, languageCode));
+    public Optional<Paper> findCompleteById(Long id, String languageCode) {
+        return Optional.ofNullable(repo.findCompleteById(id, languageCode));
     }
 
 }
