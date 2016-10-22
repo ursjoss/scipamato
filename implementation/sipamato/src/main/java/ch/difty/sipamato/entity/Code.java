@@ -15,26 +15,28 @@ public class Code extends SipamatoEntity {
 
     @NotNull
     @Pattern(regexp = CODE_REGEX, message = "{code.invalidCode}")
-    private String code;
+    private final String code;
 
     @NotNull
-    private String name;
+    private final String name;
 
     @NotNull
-    private CodeClass codeClass;
+    private final CodeClass codeClass;
 
-    public Code(String code, String name, Integer codeClassId, String codeClassName, String codeClassDescription) {
+    public Code(final String code, final String name, final Integer codeClassId, final String codeClassName, final String codeClassDescription) {
         this.code = code;
         this.name = name;
         if (codeClassId != null)
             this.codeClass = new CodeClass(codeClassId, codeClassName, codeClassDescription);
+        else
+            this.codeClass = null;
     }
 
     public Code(final Code from) {
         this(from.code, from.name, new CodeClass(from.codeClass));
     }
 
-    private Code(String code, String name, CodeClass codeClass) {
+    private Code(final String code, final String name, final CodeClass codeClass) {
         this.code = code;
         this.codeClass = codeClass;
         this.name = name;
@@ -44,24 +46,49 @@ public class Code extends SipamatoEntity {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public CodeClass getCodeClass() {
         return codeClass;
     }
 
-    public void setCodeClass(CodeClass codeClass) {
-        this.codeClass = codeClass;
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((code == null) ? 0 : code.hashCode());
+        result = prime * result + ((codeClass == null) ? 0 : codeClass.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Code other = (Code) obj;
+        if (code == null) {
+            if (other.code != null)
+                return false;
+        } else if (!code.equals(other.code))
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (codeClass == null) {
+            if (other.codeClass != null)
+                return false;
+        } else if (!codeClass.equals(other.codeClass))
+            return false;
+        return true;
     }
 
 }

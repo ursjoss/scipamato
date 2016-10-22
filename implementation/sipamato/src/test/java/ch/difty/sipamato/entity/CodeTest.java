@@ -10,13 +10,13 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     private final Code c = new Code("1A", "code1", 1, "c1", "");
 
-    private void verifySuccessfulValidation() {
-        validate(c);
+    private void verifySuccessfulValidation(Code code) {
+        validate(code);
         assertThat(getViolations()).isEmpty();
     }
 
-    private void validateAndAssertFailure(final String field, final Object invalidValue, final String msg) {
-        validate(c);
+    private void validateAndAssertFailure(Code code, final String field, final Object invalidValue, final String msg) {
+        validate(code);
 
         assertThat(getViolations()).isNotEmpty().hasSize(1);
         ConstraintViolation<Code> violation = getViolations().iterator().next();
@@ -42,31 +42,31 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void validatingCode_beginValid_succeeds() {
-        verifySuccessfulValidation();
+        verifySuccessfulValidation(c);
     }
 
     @Test
     public void validatingCode_withNullCode_fails() {
-        c.setCode(null);
-        validateAndAssertFailure(Code.CODE, null, "{javax.validation.constraints.NotNull.message}");
-    }
-
-    @Test
-    public void validatingCode_withNullCodeClass_fails() {
-        c.setCodeClass(null);
-        validateAndAssertFailure(Code.CODE_CLASS, null, "{javax.validation.constraints.NotNull.message}");
+        Code c = new Code(null, "code1", 1, "c1", "");
+        validateAndAssertFailure(c, Code.CODE, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingCode_withNullName_fails() {
-        c.setName(null);
-        validateAndAssertFailure(Code.NAME, null, "{javax.validation.constraints.NotNull.message}");
+        Code c = new Code("1A", null, 1, "c1", "");
+        validateAndAssertFailure(c, Code.NAME, null, "{javax.validation.constraints.NotNull.message}");
+    }
+
+    @Test
+    public void validatingCode_withNullCodeClass_fails() {
+        Code c = new Code("1A", "code1", null, null, null);
+        validateAndAssertFailure(c, Code.CODE_CLASS, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingCode_withWrongCodeFormat_fails() {
-        c.setCode("xyz");
-        validateAndAssertFailure(Code.CODE, "xyz", "{code.invalidCode}");
+        Code c = new Code("xyz", "code1", 1, "c1", "");
+        validateAndAssertFailure(c, Code.CODE, "xyz", "{code.invalidCode}");
     }
 
     @Test
@@ -75,20 +75,49 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     }
 
     @Test
-    public void cloning_copiesValuesDecoupled() {
-        Code orig = new Code("C1", "c1", 10, "cc10", "cc10");
-        Code copy = new Code(orig);
-        assertThat(copy.getCode()).isEqualTo("C1");
-        assertThat(copy.getCodeClass()).isEqualsToByComparingFields(orig.getCodeClass());
-        assertThat(copy.getName()).isEqualTo("c1");
+    public void cloning_copiesValues() {
+        Code c1 = new Code("1A", "code1", 1, "c1", "");
+        Code c2 = new Code(c1);
+        assertThat(c2.getCode()).isEqualTo("1A");
+        assertThat(c2.getName()).isEqualTo("code1");
+        assertThat(c2.getCodeClass()).isEqualsToByComparingFields(c1.getCodeClass());
+    }
 
-        orig.setCode("C2");
-        assertThat(orig.getCode()).isEqualTo("C2");
-        assertThat(copy.getCode()).isEqualTo("C1");
+    @Test
+    public void sameValues_makeEquality() {
+        Code c2 = new Code(c);
+        assertThat(c.equals(c2)).isTrue();
+        assertThat(c2.equals(c)).isTrue();
+        assertThat(c.hashCode()).isEqualTo(c2.hashCode());
+    }
 
-        orig.getCodeClass().setId(20);
-        assertThat(orig.getCodeClass().getId()).isEqualTo(20);
-        assertThat(copy.getCodeClass().getId()).isEqualTo(10);
+    @Test
+    public void differingValues_makeInequality() {
+        Code c1 = new Code("1A", "code1", 1, "c1", "");
+        Code c2 = new Code("1B", "code1", 1, "c1", "");
+        Code c3 = new Code("1A", "code2", 1, "c1", "");
+        Code c4 = new Code("1A", "code1", 2, "c2", "");
+
+        assertThat(c1.equals(c2)).isFalse();
+        assertThat(c1.equals(c3)).isFalse();
+        assertThat(c1.equals(c4)).isFalse();
+        assertThat(c2.equals(c3)).isFalse();
+        assertThat(c2.equals(c4)).isFalse();
+        assertThat(c3.equals(c4)).isFalse();
+
+        assertThat(c1.hashCode()).isNotEqualTo(c2.hashCode());
+        assertThat(c1.hashCode()).isNotEqualTo(c3.hashCode());
+        assertThat(c1.hashCode()).isNotEqualTo(c4.hashCode());
+        assertThat(c2.hashCode()).isNotEqualTo(c3.hashCode());
+        assertThat(c2.hashCode()).isNotEqualTo(c4.hashCode());
+        assertThat(c3.hashCode()).isNotEqualTo(c4.hashCode());
+    }
+
+    @Test
+    public void equalingToSpecialCases() {
+        assertThat(c.equals(c)).isTrue();
+        assertThat(c.equals(null)).isFalse();
+        assertThat(c.equals(new String())).isFalse();
     }
 
 }

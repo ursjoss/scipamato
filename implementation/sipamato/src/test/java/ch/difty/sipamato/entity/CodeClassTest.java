@@ -8,14 +8,12 @@ import org.junit.Test;
 
 public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
 
-    private CodeClass cc = new CodeClass(1, "foo", "bar");
-
-    private void verifySuccessfulValidation() {
+    private void verifySuccessfulValidation(final CodeClass cc) {
         validate(cc);
         assertThat(getViolations()).isEmpty();
     }
 
-    private void validateAndAssertFailure(final String field, final Object invalidValue, final String msg) {
+    private void validateAndAssertFailure(final CodeClass cc, final String field, final Object invalidValue, final String msg) {
         validate(cc);
 
         assertThat(getViolations()).isNotEmpty().hasSize(1);
@@ -27,40 +25,77 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
 
     @Test
     public void validatingCodeClass_beingValid_succeeds() {
-        verifySuccessfulValidation();
+        verifySuccessfulValidation(new CodeClass(1, "foo", "bar"));
     }
 
     @Test
     public void validatingCodeClass_withNullId_fails() {
-        cc.setId(null);
-        validateAndAssertFailure(CodeClass.ID, null, "{javax.validation.constraints.NotNull.message}");
+        CodeClass cc = new CodeClass(null, "foo", "bar");
+        validateAndAssertFailure(cc, CodeClass.ID, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingCodeClass_withNullName_fails() {
-        cc.setName(null);
-        validateAndAssertFailure(CodeClass.NAME, null, "{javax.validation.constraints.NotNull.message}");
+        CodeClass cc = new CodeClass(1, null, "bar");
+        validateAndAssertFailure(cc, CodeClass.NAME, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingCodeClass_withNullDescription_fails() {
-        cc.setDescription(null);
-        validateAndAssertFailure(CodeClass.DESCRIPTION, null, "{javax.validation.constraints.NotNull.message}");
+        CodeClass cc = new CodeClass(1, "foo", null);
+        validateAndAssertFailure(cc, CodeClass.DESCRIPTION, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void testingToString() {
+        CodeClass cc = new CodeClass(1, "foo", "bar");
         assertThat(cc.toString()).isEqualTo("CodeClass[id=1,name=foo,description=bar]");
     }
 
     @Test
-    public void cloning_copiesValuesDecoupled() {
+    public void cloning_copiesValues() {
         CodeClass orig = new CodeClass(1, "cc1", "this is cc1");
         CodeClass copy = new CodeClass(orig);
         assertThat(copy).isEqualsToByComparingFields(orig);
+    }
 
-        orig.setId(2);
-        assertThat(orig.getId()).isEqualTo(2);
-        assertThat(copy.getId()).isEqualTo(1);
+    @Test
+    public void sameValues_makeEquality() {
+        CodeClass cc1 = new CodeClass(1, "cc1", "this is cc1");
+        CodeClass cc2 = new CodeClass(cc1);
+        assertThat(cc1.equals(cc2)).isTrue();
+        assertThat(cc2.equals(cc1)).isTrue();
+        assertThat(cc1.hashCode()).isEqualTo(cc2.hashCode());
+    }
+
+    @Test
+    public void differingValues_makeInequality() {
+        CodeClass cc1 = new CodeClass(1, "cc1", "this is cc1");
+        CodeClass cc2 = new CodeClass(2, "cc1", "this is cc1");
+        CodeClass cc3 = new CodeClass(1, "cc2", "this is cc1");
+        CodeClass cc4 = new CodeClass(1, "cc1", "this is cc2");
+
+        assertThat(cc1.equals(cc2)).isFalse();
+        assertThat(cc1.equals(cc3)).isFalse();
+        assertThat(cc1.equals(cc4)).isFalse();
+        assertThat(cc2.equals(cc3)).isFalse();
+        assertThat(cc2.equals(cc4)).isFalse();
+        assertThat(cc3.equals(cc4)).isFalse();
+
+        assertThat(cc1.hashCode()).isNotEqualTo(cc2.hashCode());
+        assertThat(cc1.hashCode()).isNotEqualTo(cc3.hashCode());
+        assertThat(cc1.hashCode()).isNotEqualTo(cc4.hashCode());
+        assertThat(cc2.hashCode()).isNotEqualTo(cc3.hashCode());
+        assertThat(cc2.hashCode()).isNotEqualTo(cc4.hashCode());
+        assertThat(cc3.hashCode()).isNotEqualTo(cc4.hashCode());
+    }
+
+    @Test
+    public void equalingToSpecialCases() {
+        CodeClass cc1 = new CodeClass(1, "cc1", "this is cc1");
+
+        assertThat(cc1.equals(cc1)).isTrue();
+        assertThat(cc1.equals(null)).isFalse();
+        assertThat(cc1.equals(new String())).isFalse();
     }
 }

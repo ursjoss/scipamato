@@ -228,27 +228,4 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         p.getCodesOfClass1().add(makeCode("c1"));
     }
 
-    @Test
-    public void addingCodesOfClass1_ignoresChangesMadeToCode_afterAdding() {
-        assertThat(p.getCodesOfClass1()).isNotNull().isEmpty();
-        Code d2 = makeCode("d2");
-        p.addCodesOfClass1(Arrays.asList(d2));
-        assertThat(extractProperty(Code.CODE).from(p.getCodesOfClass1())).containsExactly("d2");
-
-        d2.setCode("c1");
-        assertThat(d2.getCode()).isEqualTo("c1");
-        assertThat(extractProperty(Code.CODE).from(p.getCodesOfClass1())).containsExactly("d2");
-    }
-
-    @Test
-    public void addingCodeOfClass1_ignoresChangesMadeToCode_afterAdding() {
-        assertThat(p.getCodesOfClass1()).isNotNull().isEmpty();
-        Code d2 = makeCode("d2");
-        p.addCodeOfClass1(d2);
-        assertThat(extractProperty(Code.CODE).from(p.getCodesOfClass1())).containsExactly("d2");
-
-        d2.setCode("c1");
-        assertThat(d2.getCode()).isEqualTo("c1");
-        assertThat(extractProperty(Code.CODE).from(p.getCodesOfClass1())).containsExactly("d2");
-    }
 }
