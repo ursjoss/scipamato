@@ -26,6 +26,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -38,12 +39,14 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.service.PaperService;
+import ch.difty.sipamato.web.autoconfiguration.BootstrapConfig;
 import ch.difty.sipamato.web.model.CodeClassModel;
 import ch.difty.sipamato.web.model.CodeModel;
 import ch.difty.sipamato.web.pages.AutoSaveAwarePage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 
 @MountPath("entry")
 @AuthorizeInstantiation({ "ROLE_USER" })
@@ -364,7 +367,9 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             final PropertyModel<List<Code>> model = new PropertyModel<List<Code>>(getModel(), Paper.CODES);
             final CodeModel choices = new CodeModel(ccId, LANG);
             final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<Code>(Code.DISPLAY_VALUE, Code.CODE);
-            queue(new BootstrapMultiSelect<Code>("codesClass" + id, model, choices, choiceRenderer));
+            final StringResourceModel noneSelectedModel = new StringResourceModel("codes.noneSelected", this, null);
+            final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true).withNoneSelectedText(noneSelectedModel.getObject());
+            queue(new BootstrapMultiSelect<Code>("codesClass" + id, model, choices, choiceRenderer).with(config));
         }
     }
 
