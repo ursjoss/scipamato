@@ -51,6 +51,9 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
     private static final long serialVersionUID = 1L;
 
+    // TODO replace with global setting in some bean
+    private static final String LANG = "de";
+
     private Form<Paper> form;
 
     @SpringBean
@@ -335,7 +338,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             Form<Paper> form = new Form<Paper>("tab3Form");
             queue(form);
 
-            CodeClassModel codeClassModel = new CodeClassModel("de");
+            CodeClassModel codeClassModel = new CodeClassModel(LANG);
             List<CodeClass> codeClasses = codeClassModel.getObject();
 
             // TODO restrict modelClasses to only one type (some adaptermodel or so?)
@@ -359,7 +362,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             queue(new Label("codesClass" + id + "Label", Model.of(className)));
 
             final PropertyModel<List<Code>> model = new PropertyModel<List<Code>>(getModel(), Paper.CODES);
-            final CodeModel choices = new CodeModel(ccId, "de");
+            final CodeModel choices = new CodeModel(ccId, LANG);
             final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<Code>(Code.NAME, Code.DISPLAY_VALUE);
             queue(new BootstrapMultiSelect<Code>("codesClass" + id, model, choices, choiceRenderer));
         }
