@@ -14,8 +14,10 @@ import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
@@ -337,7 +339,6 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             List<CodeClass> codeClasses = codeClassModel.getObject();
 
             // TODO restrict modelClasses to only one type (some adaptermodel or so?)
-            // TODO only show relevant parts of the Codes -> ChoiceRenderer
             // TODO visualization (pills ??)
             // TODO storing the stuff
             // TODO visual style of the boxes
@@ -359,7 +360,8 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
             final PropertyModel<List<Code>> model = new PropertyModel<List<Code>>(getModel(), Paper.CODES);
             final CodeModel choices = new CodeModel(ccId, "de");
-            queue(new BootstrapMultiSelect<Code>("codesClass" + id, model, choices));
+            final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<Code>(Code.NAME, Code.DISPLAY_VALUE);
+            queue(new BootstrapMultiSelect<Code>("codesClass" + id, model, choices, choiceRenderer));
         }
     }
 
