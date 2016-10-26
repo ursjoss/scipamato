@@ -44,6 +44,7 @@ public class JooqCodeRepo implements CodeRepository {
             .leftOuterJoin(CODE_TR).on(CODE.CODE_.equal(CODE_TR.CODE).and(CODE_TR.LANG_CODE.equal(lang)))
             .leftOuterJoin(CODE_CLASS_TR).on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID).and(CODE_CLASS_TR.LANG_CODE.equal(lang)))
             .where(CODE.CODE_CLASS_ID.equal(codeClassId.getId()))
+            .orderBy(CODE_TR.NAME.asc(), CODE.CODE_.asc())
             .fetchInto(Code.class);
         // @formatter:on
 

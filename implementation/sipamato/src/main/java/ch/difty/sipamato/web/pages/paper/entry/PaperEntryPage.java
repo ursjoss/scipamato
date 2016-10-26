@@ -367,7 +367,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             final CodeModel choices = new CodeModel(ccId, LANG);
             final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<Code>(Code.DISPLAY_VALUE, Code.CODE);
             final StringResourceModel noneSelectedModel = new StringResourceModel("codes.noneSelected", this, null);
-            final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true).withNoneSelectedText(noneSelectedModel.getObject());
+            final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true).withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);
             final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<Code>("codesClass" + id, model, choices, choiceRenderer).with(config);
             multiSelect.add(new AttributeModifier("data-width", "fit"));
             queue(multiSelect);
