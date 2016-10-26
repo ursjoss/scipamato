@@ -54,6 +54,13 @@ public class Code extends SipamatoEntity {
         return codeClass;
     }
 
+    public String getDisplayValue() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(name);
+        sb.append(" (").append(code).append(")");
+        return sb.toString();
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;

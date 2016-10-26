@@ -9,6 +9,8 @@ public abstract class SipamatoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public static final String DISPLAY_VALUE = "displayValue";
+
     /**
      * Regex extending the classical \w with non-ASCII characters. To be used within a character class,<p/>
      *
@@ -22,4 +24,6 @@ public abstract class SipamatoEntity implements Serializable {
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
+    public abstract String getDisplayValue();
 }

@@ -99,4 +99,9 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
         assertThat(cc1.equals(new String())).isFalse();
     }
 
+    @Test
+    public void displayValue() {
+        CodeClass cc1 = new CodeClass(1, "cc1", "this is cc1");
+        assertThat(cc1.getDisplayValue()).isEqualTo("cc1");
+    }
 }

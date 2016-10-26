@@ -43,4 +43,12 @@ public class PaperSlim extends SipamatoEntity {
         this.title = title;
     }
 
+    @Override
+    public String getDisplayValue() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(firstAuthor).append(" (").append(publicationYear).append("): ");
+        sb.append(title).append(".");
+        return sb.toString();
+    }
+
 }

@@ -120,4 +120,8 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
         assertThat(c.equals(new String())).isFalse();
     }
 
+    @Test
+    public void displayValue() {
+        assertThat(c.getDisplayValue()).isEqualTo("code1 (1A)");
+    }
 }

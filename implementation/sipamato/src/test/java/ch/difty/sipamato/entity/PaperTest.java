@@ -13,6 +13,8 @@ import org.junit.Test;
 public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     private static final String VALID_AUTHORS = "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.";
+    private static final String FIRST_AUTHOR = "Turner MC";
+    private static final String TITLE = "Title";
     private static final String VALID_DOI = "10.1093/aje/kwu275";
     private static final String NON_NULL_STRING = "foo";
 
@@ -26,8 +28,8 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         p.setDoi(VALID_DOI);
         p.setPmId(1000);
         p.setAuthors(VALID_AUTHORS);
-        p.setFirstAuthor(NON_NULL_STRING);
-        p.setTitle(NON_NULL_STRING);
+        p.setFirstAuthor(FIRST_AUTHOR);
+        p.setTitle(TITLE);
         p.setLocation(NON_NULL_STRING);
         p.setPublicationYear(2016);
         p.setGoals(NON_NULL_STRING);
@@ -194,8 +196,8 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
      // @formatter:off
         assertThat(p.toString()).isEqualTo(
             "Paper[id=1,doi=10.1093/aje/kwu275,pmId=1000"
-            + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=foo,firstAuthorOverridden=false"
-            + ",title=foo,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
+            + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=Turner MC,firstAuthorOverridden=false"
+            + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
             + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
             + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,comment=<null>,intern=<null>"
             + ",codes=[]]");
@@ -210,8 +212,8 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         // @formatter:off
         assertThat(p.toString()).isEqualTo(
             "Paper[id=1,doi=10.1093/aje/kwu275,pmId=1000"
-            + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=foo,firstAuthorOverridden=false"
-            + ",title=foo,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
+            + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=Turner MC,firstAuthorOverridden=false"
+            + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
             + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
             + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,comment=<null>,intern=<null>"
             + ",codes=[codesOfClass1=[Code[code=1D,name=code 1D,codeClass=CodeClass[id=1]]],codesOfClass1=[Code[code=1E,name=code 1E,codeClass=CodeClass[id=1]]],codesOfClass5=[Code[code=5A,name=code 5A,codeClass=CodeClass[id=5]]]]]");
@@ -257,5 +259,10 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(p.getCodesOf(CodeClassId.CC1)).containsExactly(c1D);
         assertThat(p.getCodesOf(CodeClassId.CC2)).containsExactly(c2F, c2A);
         assertThat(p.getCodesOf(CodeClassId.CC3)).isEmpty();
+    }
+
+    @Test
+    public void displayValue() {
+        assertThat(p.getDisplayValue()).isEqualTo("Turner MC (2016): Title.");
     }
 }

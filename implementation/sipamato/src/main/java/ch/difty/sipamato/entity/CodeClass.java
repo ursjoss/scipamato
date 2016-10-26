@@ -85,4 +85,9 @@ public class CodeClass extends SipamatoEntity {
         return builder.toString();
     }
 
+    @Override
+    public String getDisplayValue() {
+        return name;
+    }
+
 }
