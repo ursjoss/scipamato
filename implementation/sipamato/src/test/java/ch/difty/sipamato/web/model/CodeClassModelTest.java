@@ -9,47 +9,18 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 
-import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.entity.CodeClass;
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.service.CodeClassService;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-public class CodeClassModelTest {
-
-    @Autowired
-    private SipamatoApplication application;
-
-    @Autowired
-    private ApplicationContext applicationContextMock;
-
-    private WicketTester tester;
+public class CodeClassModelTest extends ModelTest {
 
     @MockBean
     private CodeClassService serviceMock;
-
-    // TODO extract into baseClass
-    @Before
-    public final void setUp() {
-        ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock);
-        tester = new WicketTester(application);
-        Locale locale = new Locale("en_US");
-        tester.getSession().setLocale(locale);
-    }
 
     @Test
     public void instantiating_withNullLanguageCode_throws() {
