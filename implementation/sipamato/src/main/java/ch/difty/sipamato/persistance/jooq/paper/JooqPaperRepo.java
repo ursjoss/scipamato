@@ -23,6 +23,7 @@ import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.lib.TranslationUtils;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
 import ch.difty.sipamato.persistance.jooq.JooqEntityRepo;
@@ -31,8 +32,6 @@ import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 
 @Repository
 public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.difty.sipamato.db.tables.Paper, PaperRecordMapper, PaperFilter> implements PaperRepository {
-
-    private static final String NOT_TRANSL = "not translated";
 
     private static final long serialVersionUID = 1L;
 
@@ -83,16 +82,16 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     @Override
     public Paper findCompleteById(Long id, String languageCode) {
         AssertAs.notNull(id, "id");
-        String lang = trimLanguageCode(AssertAs.notNull(languageCode, "languageCode"));
+        String lang = TranslationUtils.trimLanguageCode(languageCode);
         final Paper p = findById(id);
         if (p != null) {
             // @formatter:off
             final List<Code> codes = getDsl()
                 .select(CODE.CODE_.as("C_ID")
-                        , DSL.coalesce(CODE_TR.NAME, NOT_TRANSL).as("C_NAME")
+                        , DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL).as("C_NAME")
                         , CODE_CLASS.ID.as("CC_ID")
-                        , DSL.coalesce(CODE_CLASS_TR.NAME, NOT_TRANSL).as("CC_NAME")
-                        , DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, NOT_TRANSL).as("CC_DESCRIPTION"))
+                        , DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL).as("CC_NAME")
+                        , DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL).as("CC_DESCRIPTION"))
                 .from(PAPER_CODE)
                 .join(PAPER).on(PAPER_CODE.PAPER_ID.equal(PAPER.ID))
                 .join(CODE).on(PAPER_CODE.CODE.equal(CODE.CODE_))
@@ -106,12 +105,6 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
             p.addCodes(codes);
         }
         return p;
-    }
-
-    private String trimLanguageCode(String lc) {
-        if (lc.length() > 2)
-            return lc.substring(0, 2);
-        return lc;
     }
 
 }
