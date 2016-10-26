@@ -358,7 +358,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
         private void makeCodeClassComplex(CodeClassId ccId, final List<CodeClass> codeClasses) {
             final int id = ccId.getId();
-            final String className = codeClasses.stream().filter(cc -> cc.getId() == id).map(CodeClass::getName).findFirst().orElse("n.a.");
+            final String className = codeClasses.stream().filter(cc -> cc.getId() == id).map(CodeClass::getName).findFirst().orElse(ccId.name());
             queue(new Label("codesClass" + id + "Label", Model.of(className)));
 
             final PropertyModel<List<Code>> model = new PropertyModel<List<Code>>(getModel(), Paper.CODES);
