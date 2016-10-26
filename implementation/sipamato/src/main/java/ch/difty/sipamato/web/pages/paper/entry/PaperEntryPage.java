@@ -23,18 +23,25 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import ch.difty.sipamato.entity.Code;
+import ch.difty.sipamato.entity.CodeClass;
+import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.service.PaperService;
+import ch.difty.sipamato.web.model.CodeClassModel;
+import ch.difty.sipamato.web.model.CodeModel;
 import ch.difty.sipamato.web.pages.AutoSaveAwarePage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 
 @MountPath("entry")
 @AuthorizeInstantiation({ "ROLE_USER" })
@@ -312,7 +319,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
         }
     };
 
-    private static class TabPanel3 extends AbstractTabPanel {
+    private class TabPanel3 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
         public TabPanel3(String id, IModel<Paper> model) {
@@ -325,6 +332,34 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
             Form<Paper> form = new Form<Paper>("tab3Form");
             queue(form);
+
+            CodeClassModel codeClassModel = new CodeClassModel("de");
+            List<CodeClass> codeClasses = codeClassModel.getObject();
+
+            // TODO restrict modelClasses to only one type (some adaptermodel or so?)
+            // TODO only show relevant parts of the Codes -> ChoiceRenderer
+            // TODO visualization (pills ??)
+            // TODO storing the stuff
+            // TODO visual style of the boxes
+            makeCodeClassComplex(CodeClassId.CC1, codeClasses);
+            makeCodeClassComplex(CodeClassId.CC2, codeClasses);
+            makeCodeClassComplex(CodeClassId.CC3, codeClasses);
+            makeCodeClassComplex(CodeClassId.CC4, codeClasses);
+            makeCodeClassComplex(CodeClassId.CC5, codeClasses);
+            makeCodeClassComplex(CodeClassId.CC6, codeClasses);
+            makeCodeClassComplex(CodeClassId.CC7, codeClasses);
+            makeCodeClassComplex(CodeClassId.CC8, codeClasses);
+
+        }
+
+        private void makeCodeClassComplex(CodeClassId ccId, final List<CodeClass> codeClasses) {
+            final int id = ccId.getId();
+            final String className = codeClasses.stream().filter(cc -> cc.getId() == id).map(CodeClass::getName).findFirst().orElse("n.a.");
+            queue(new Label("codesClass" + id + "Label", Model.of(className)));
+
+            final PropertyModel<List<Code>> model = new PropertyModel<List<Code>>(getModel(), Paper.CODES);
+            final CodeModel choices = new CodeModel(ccId, "de");
+            queue(new BootstrapMultiSelect<Code>("codesClass" + id, model, choices));
         }
     }
 

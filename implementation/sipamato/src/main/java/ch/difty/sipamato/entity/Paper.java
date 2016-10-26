@@ -341,4 +341,9 @@ public class Paper extends SipamatoEntity {
         this.codes.addCodes(codes);
     }
 
+    // TODO temporary to get started with the view. remove afterwards. Need to find a way to access by the various code classes using parameter
+    public void setCodes(List<Code> codes) {
+        this.codes.clear();
+        this.codes.addCodes(codes);
+    }
 }
