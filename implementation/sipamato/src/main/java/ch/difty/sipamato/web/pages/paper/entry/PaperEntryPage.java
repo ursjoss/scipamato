@@ -86,9 +86,9 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
             @Override
             protected void onSubmit() {
-                doUpdate(getModelObject());
-                info(new StringResourceModel("save.successful.hint", this, null).setParameters(getModelObject().getId(), getModelObject().getAuthors(), getModelObject().getPublicationYear())
-                        .getString());
+                Paper p = getModelObject();
+                doUpdate(p);
+                info(new StringResourceModel("save.successful.hint", this, null).setParameters(p.getId(), p.getAuthors(), p.getPublicationYear()).getString());
             }
         };
         queue(form);
