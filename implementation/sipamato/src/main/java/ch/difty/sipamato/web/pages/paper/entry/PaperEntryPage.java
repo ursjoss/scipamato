@@ -363,7 +363,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
             final PropertyModel<List<Code>> model = new PropertyModel<List<Code>>(getModel(), Paper.CODES);
             final CodeModel choices = new CodeModel(ccId, LANG);
-            final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<Code>(Code.NAME, Code.DISPLAY_VALUE);
+            final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<Code>(Code.DISPLAY_VALUE, Code.CODE);
             queue(new BootstrapMultiSelect<Code>("codesClass" + id, model, choices, choiceRenderer));
         }
     }
