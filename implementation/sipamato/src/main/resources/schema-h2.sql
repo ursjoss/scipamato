@@ -99,7 +99,6 @@ CREATE UNIQUE INDEX idx_code_tr_unique ON code_tr (code, lang_code);
 DROP TABLE IF EXISTS paper_code;
 
 CREATE TABLE paper_code (
-  id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   paper_id BIGINT NOT NULL,
   code CHAR(2) NOT NULL,
 
@@ -107,6 +106,7 @@ CREATE TABLE paper_code (
   timestamp TIMESTAMP DEFAULT current_timestamp(),
 );
 
+ALTER TABLE paper_code ADD PRIMARY KEY (paper_id, code);
 ALTER TABLE paper_code ADD FOREIGN KEY (paper_id) REFERENCES paper(id) on delete cascade on update cascade;
 ALTER TABLE paper_code ADD FOREIGN KEY (code) REFERENCES code(code) on update cascade;
 
