@@ -1,7 +1,7 @@
 package ch.difty.sipamato.persistance.jooq.codeclass;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.fest.assertions.api.Assertions.assertThat;
 
 import org.jooq.DSLContext;
 import org.junit.Before;

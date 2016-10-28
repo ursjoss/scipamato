@@ -1,6 +1,6 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import org.jooq.RecordMapper;

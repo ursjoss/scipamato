@@ -1,6 +1,6 @@
 package ch.difty.sipamato.entity;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.validation.ConstraintViolation;
 
@@ -80,7 +80,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
         Code c2 = new Code(c1);
         assertThat(c2.getCode()).isEqualTo("1A");
         assertThat(c2.getName()).isEqualTo("code1");
-        assertThat(c2.getCodeClass()).isEqualsToByComparingFields(c1.getCodeClass());
+        assertThat(c2.getCodeClass()).isEqualToComparingFieldByField(c1.getCodeClass());
     }
 
     @Test

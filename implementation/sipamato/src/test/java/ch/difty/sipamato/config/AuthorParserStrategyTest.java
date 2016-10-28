@@ -1,7 +1,7 @@
 package ch.difty.sipamato.config;
 
 import static ch.difty.sipamato.config.AuthorParserStrategy.DEFAULT;
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 

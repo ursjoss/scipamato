@@ -3,7 +3,7 @@ package ch.difty.sipamato.persistance.jooq.paper;
 import static ch.difty.sipamato.db.Tables.PAPER;
 import static ch.difty.sipamato.persistance.jooq.TestDbConstants.MAX_ID_PREPOPULATED;
 import static ch.difty.sipamato.persistance.jooq.TestDbConstants.RECORD_COUNT_PREPOPULATED;
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 

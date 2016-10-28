@@ -1,8 +1,8 @@
 package ch.difty.sipamato.logic.parsing;
 
 import static java.util.stream.Collectors.toList;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.fest.assertions.api.Assertions.assertThat;
 
 import org.junit.Test;
 
