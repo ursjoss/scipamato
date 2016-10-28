@@ -13,14 +13,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class SipamatoProperties implements ApplicationProperties {
 
+    private final String defaultLocalization;
     private final AuthorParserStrategy authorParserStrategy;
     private final int autoSaveIntervalInSeconds;
 
     private static final String S = "${", E = ":n.a.}";
 
-    public SipamatoProperties(@Value(S + AUTHOR_PARSER_FACTORY + E) String authorParserStrategy, @Value(S + AUTO_SAVE_INTERVAL + E) String paperAutoSaveInterval) {
+    public SipamatoProperties(@Value(S + LOCALIZATION_DEFAULT + ":en}") String defaultLocalization, @Value(S + AUTHOR_PARSER_FACTORY + E) String authorParserStrategy,
+            @Value(S + AUTO_SAVE_INTERVAL + E) String paperAutoSaveInterval) {
+        this.defaultLocalization = defaultLocalization;
         this.authorParserStrategy = AuthorParserStrategy.fromProperty(authorParserStrategy);
         this.autoSaveIntervalInSeconds = PropertyUtils.parseInt(paperAutoSaveInterval, AUTO_SAVE_HINT, DEFAULT_AUTO_SAVE_INTERVAL_IN_SECONDS, AUTO_SAVE_INTERVAL);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getDefaultLocalization() {
+        return defaultLocalization;
     }
 
     /** {@inheritDoc} */
@@ -40,4 +49,5 @@ public class SipamatoProperties implements ApplicationProperties {
     public boolean isAutoSavingEnabled() {
         return getAutoSaveIntervalInSeconds() > 0;
     }
+
 }

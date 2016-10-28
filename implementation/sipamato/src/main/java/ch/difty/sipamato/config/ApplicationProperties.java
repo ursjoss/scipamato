@@ -13,11 +13,19 @@ import ch.difty.sipamato.web.pages.AutoSaveAwarePage;
  */
 public interface ApplicationProperties {
 
+    String LOCALIZATION_DEFAULT = "sipamato.localization.default";
     String AUTHOR_PARSER_FACTORY = "sipamato.author.parser";
     String AUTO_SAVE_INTERVAL = "sipamato.autosave.interval.seconds";
 
     int DEFAULT_AUTO_SAVE_INTERVAL_IN_SECONDS = 0;
     String AUTO_SAVE_HINT = "0: auto-saving disabled, >=1: save interval in seconds";
+
+    /**
+     * Defines the localization the application starts with.
+     *
+     * @return
+     */
+    String getDefaultLocalization();
 
     /**
      * Defines the strategy how to interpret the author string.
