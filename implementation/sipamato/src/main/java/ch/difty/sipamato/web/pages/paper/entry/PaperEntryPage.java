@@ -344,10 +344,6 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             CodeClassModel codeClassModel = new CodeClassModel(LANG);
             List<CodeClass> codeClasses = codeClassModel.getObject();
 
-            // TODO restrict modelClasses to only one type (some adaptermodel or so?)
-            // TODO visualization (pills ??)
-            // TODO storing the stuff
-            // TODO visual style of the boxes
             makeCodeClassComplex(CodeClassId.CC1, codeClasses);
             makeCodeClassComplex(CodeClassId.CC2, codeClasses);
             makeCodeClassComplex(CodeClassId.CC3, codeClasses);
