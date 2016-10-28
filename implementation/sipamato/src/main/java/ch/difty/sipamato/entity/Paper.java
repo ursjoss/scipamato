@@ -1,5 +1,7 @@
 package ch.difty.sipamato.entity;
 
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Pattern.Flag;
@@ -49,6 +51,8 @@ public class Paper extends SipamatoEntity {
 
     public static final String RESULT_EXPOSURE_RANGE = "resultExposureRange";
     public static final String RESULT_EFFECT_ESTIMATE = "resultEffectEstimate";
+
+    public static final String CODES = "codes";
 
     private Long id;
 
@@ -102,6 +106,8 @@ public class Paper extends SipamatoEntity {
     private String resultEffectEstimate;
     private String comment;
     private String intern;
+
+    private final CodeBox codes = new CodeBox();
 
     public Long getId() {
         return id;
@@ -223,41 +229,6 @@ public class Paper extends SipamatoEntity {
         this.intern = intern;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Paper [id=");
-        sb.append(id);
-        sb.append(", doi=");
-        sb.append(doi);
-        sb.append(", pmId=");
-        sb.append(pmId);
-        sb.append(", authors=");
-        sb.append(authors);
-        sb.append(", title=");
-        sb.append(title);
-        sb.append(", location=");
-        sb.append(location);
-        sb.append(", publicationYear=");
-        sb.append(publicationYear);
-        sb.append(", firstAuthor=");
-        sb.append(firstAuthor);
-        sb.append(", goals=");
-        sb.append(goals);
-        sb.append(", population=");
-        sb.append(population);
-        sb.append(", methods=");
-        sb.append(methods);
-        sb.append(", result=");
-        sb.append(result);
-        sb.append(", comment=");
-        sb.append(comment);
-        sb.append(", intern=");
-        sb.append(intern);
-        sb.append("]");
-        return sb.toString();
-    }
-
     public String getPopulationPlace() {
         return populationPlace;
     }
@@ -344,6 +315,50 @@ public class Paper extends SipamatoEntity {
 
     public void setResultEffectEstimate(String resultEffectEstimate) {
         this.resultEffectEstimate = resultEffectEstimate;
+    }
+
+    public void clearCodes() {
+        this.codes.clear();
+    }
+
+    public List<Code> getCodes() {
+        return this.codes.getCodes();
+    }
+
+    public List<Code> getCodesOf(CodeClassId ccId) {
+        return this.codes.getCodesBy(ccId);
+    }
+
+    public void clearCodesOf(CodeClassId ccId) {
+        this.codes.clearBy(ccId);
+    }
+
+    public void addCode(Code code) {
+        this.codes.addCode(code);
+    }
+
+    public void addCodes(List<Code> codes) {
+        this.codes.addCodes(codes);
+    }
+
+    @Override
+    public String getDisplayValue() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(firstAuthor).append(" (").append(publicationYear).append("): ");
+        sb.append(title).append(".");
+        return sb.toString();
+    }
+
+    // TODO temporary to get started with the view. remove afterwards. Need to find a way to access by the various code classes using parameter
+    public void setCodes(List<Code> codes) {
+        this.codes.clear();
+        this.codes.addCodes(codes);
+    }
+
+    // TODO temporary to get started with the view. remove afterwards. Need to find a way to access by the various code classes using parameter
+    public void setCodesOf(CodeClassId ccId, List<Code> codes) {
+        this.codes.clearBy(ccId);
+        this.codes.addCodes(codes);
     }
 
 }

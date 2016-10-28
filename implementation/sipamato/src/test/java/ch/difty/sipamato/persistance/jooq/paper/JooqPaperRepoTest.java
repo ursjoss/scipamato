@@ -13,31 +13,31 @@ import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
-import ch.difty.sipamato.persistance.jooq.GenericRepository;
-import ch.difty.sipamato.persistance.jooq.JooqRepoTest;
+import ch.difty.sipamato.persistance.jooq.EntityRepository;
+import ch.difty.sipamato.persistance.jooq.JooqEntityRepoTest;
 
-public class JooqPaperRepoTest extends JooqRepoTest<PaperRecord, Paper, Long, ch.difty.sipamato.db.tables.Paper, PaperRecordMapper, PaperFilter> {
+public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Long, ch.difty.sipamato.db.tables.Paper, PaperRecordMapper, PaperFilter> {
 
     private static final Long SAMPLE_ID = 3l;
+
+    private JooqPaperRepo repo;
 
     @Override
     protected Long getSampleId() {
         return SAMPLE_ID;
     }
 
-    private JooqPaperRepo repo;
-
     @Override
     protected JooqPaperRepo getRepo() {
         if (repo == null) {
-            repo = new JooqPaperRepo(getDsl(), getMapper(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getSortFieldExtractor(), getJooqConfig());
+            repo = new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig());
         }
         return repo;
     }
 
     @Override
-    protected GenericRepository<PaperRecord, Paper, Long, PaperRecordMapper, PaperFilter> makeRepoFindingEntityById(Paper paper) {
-        return new JooqPaperRepo(getDsl(), getMapper(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getSortFieldExtractor(), getJooqConfig()) {
+    protected EntityRepository<PaperRecord, Paper, Long, PaperRecordMapper, PaperFilter> makeRepoFindingEntityById(Paper paper) {
+        return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -128,101 +128,44 @@ public class JooqPaperRepoTest extends JooqRepoTest<PaperRecord, Paper, Long, ch
     @Test
     public void degenerateConstruction() {
         try {
-            new JooqPaperRepo(null, getMapper(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getSortFieldExtractor(), getJooqConfig());
+            new JooqPaperRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig());
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dsl must not be null.");
         }
         try {
-            new JooqPaperRepo(getDsl(), null, getInsertSetStepSetter(), getUpdateSetStepSetter(), getSortFieldExtractor(), getJooqConfig());
+            new JooqPaperRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig());
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("mapper must not be null.");
         }
         try {
-            new JooqPaperRepo(getDsl(), getMapper(), null, getUpdateSetStepSetter(), getSortFieldExtractor(), getJooqConfig());
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("insertSetStepSetter must not be null.");
-        }
-        try {
-            new JooqPaperRepo(getDsl(), getMapper(), getInsertSetStepSetter(), null, getSortFieldExtractor(), getJooqConfig());
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("updateSetStepSetter must not be null.");
-        }
-        try {
-            new JooqPaperRepo(getDsl(), getMapper(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null, getJooqConfig());
+            new JooqPaperRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig());
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("sortMapper must not be null.");
         }
         try {
-            new JooqPaperRepo(getDsl(), getMapper(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getSortFieldExtractor(), null);
+            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), null, getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig());
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("filterConditionMapper must not be null.");
+        }
+        try {
+            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null, getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig());
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("localization must not be null.");
+        }
+        try {
+            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), null, getUpdateSetStepSetter(), getJooqConfig());
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("insertSetStepSetter must not be null.");
+        }
+        try {
+            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), getInsertSetStepSetter(), null, getJooqConfig());
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("updateSetStepSetter must not be null.");
+        }
+        try {
+            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("jooqConfig must not be null.");
         }
     }
-
-    private final PaperFilter filter = new PaperFilter();
-
-    @Test
-    public void creatingWhereCondition_withNoFilterCriteria_returnsNoOpCondition() {
-        assertThat(repo.createWhereConditions(filter).toString()).isEqualTo("1 = 1");
-    }
-
-    @Test
-    public void creatingWhereCondition_withAuthorMask_searchesFirstAuthorAndAuthors() {
-        String pattern = "am";
-        filter.setAuthorMask(pattern);
-        assertThat(repo.createWhereConditions(filter).toString()).isEqualTo(makeWhereClause(pattern, "FIRST_AUTHOR", "AUTHORS"));
-    }
-
-    @Test
-    public void creatingWhereCondition_withMethodsMask_searchesExposureAndMethodFields() {
-        String pattern = "m";
-        filter.setMethodsMask(pattern);
-        // @formatter:off
-        assertThat(repo.createWhereConditions(filter).toString()).isEqualTo(makeWhereClause(pattern
-                , "EXPOSURE_POLLUTANT"
-                , "EXPOSURE_ASSESSMENT"
-                , "METHODS"
-                , "METHOD_STUDY_DESIGN"
-                , "METHOD_OUTCOME"
-                , "METHOD_STATISTICS"
-                , "METHOD_CONFOUNDERS"
-        ));
-        // @formatter:off
-    }
-
-    @Test
-    public void creatingWhereCondition_withSearchMask_searchesRemainingTextFields() {
-        String pattern = "foo";
-        filter.setSearchMask(pattern);
-        // @formatter:off
-        assertThat(repo.createWhereConditions(filter).toString()).isEqualTo(makeWhereClause(pattern
-                , "DOI"
-                , "LOCATION"
-                , "TITLE"
-                , "GOALS"
-                , "POPULATION"
-                , "POPULATION_PLACE"
-                , "POPULATION_PARTICIPANTS"
-                , "POPULATION_DURATION"
-                , "RESULT"
-                , "RESULT_EXPOSURE_RANGE"
-                , "RESULT_EFFECT_ESTIMATE"
-                , "COMMENT"
-                , "INTERN"
-        ));
-        // @formatter:off
-    }
-
-    @Test
-    public void creatingWhereCondition_withPublicationYearFrom_searchesPublicationYear() {
-        filter.setPublicationYearFrom(2016);
-        assertThat(repo.createWhereConditions(filter).toString()).isEqualTo("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" >= 2016");
-    }
-
-    @Test
-    public void creatingWhereCondition_withPublicationYearUntil_searchesPublicationYear() {
-        filter.setPublicationYearUntil(2016);
-        assertThat(repo.createWhereConditions(filter).toString()).isEqualTo("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" <= 2016");
-    }
-
 }

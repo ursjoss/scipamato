@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -14,12 +16,15 @@ import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.ChainingModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -28,19 +33,29 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import ch.difty.sipamato.entity.Code;
+import ch.difty.sipamato.entity.CodeClass;
+import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.service.PaperService;
+import ch.difty.sipamato.web.model.CodeClassModel;
+import ch.difty.sipamato.web.model.CodeModel;
 import ch.difty.sipamato.web.pages.AutoSaveAwarePage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 
 @MountPath("entry")
 @AuthorizeInstantiation({ "ROLE_USER" })
 public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
     private static final long serialVersionUID = 1L;
+
+    // TODO replace with global setting in some bean
+    private static final String LANG = "de";
 
     private Form<Paper> form;
 
@@ -72,9 +87,9 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
             @Override
             protected void onSubmit() {
-                doUpdate(getModelObject());
-                info(new StringResourceModel("save.successful.hint", this, null).setParameters(getModelObject().getId(), getModelObject().getAuthors(), getModelObject().getPublicationYear())
-                        .getString());
+                Paper p = getModelObject();
+                doUpdate(p);
+                info(new StringResourceModel("save.successful.hint", this, null).setParameters(p.getId(), p.getAuthors(), p.getPublicationYear()).getString());
             }
         };
         queue(form);
@@ -312,11 +327,62 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
         }
     };
 
-    private static class TabPanel3 extends AbstractTabPanel {
+    private class TabPanel3 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
         public TabPanel3(String id, IModel<Paper> model) {
             super(id, model);
+        }
+
+        @Override
+        protected void onInitialize() {
+            super.onInitialize();
+
+            Form<Paper> form = new Form<Paper>("tab3Form");
+            queue(form);
+
+            CodeClassModel codeClassModel = new CodeClassModel(LANG);
+            List<CodeClass> codeClasses = codeClassModel.getObject();
+
+            makeCodeClassComplex(CodeClassId.CC1, codeClasses);
+            makeCodeClassComplex(CodeClassId.CC2, codeClasses);
+            makeCodeClassComplex(CodeClassId.CC3, codeClasses);
+            makeCodeClassComplex(CodeClassId.CC4, codeClasses);
+            makeCodeClassComplex(CodeClassId.CC5, codeClasses);
+            makeCodeClassComplex(CodeClassId.CC6, codeClasses);
+            makeCodeClassComplex(CodeClassId.CC7, codeClasses);
+            makeCodeClassComplex(CodeClassId.CC8, codeClasses);
+
+        }
+
+        private void makeCodeClassComplex(CodeClassId ccId, final List<CodeClass> codeClasses) {
+            final int id = ccId.getId();
+            final String className = codeClasses.stream().filter(cc -> cc.getId() == id).map(CodeClass::getName).findFirst().orElse(ccId.name());
+            queue(new Label("codesClass" + id + "Label", Model.of(className)));
+
+            final ChainingModel<List<Code>> model = new ChainingModel<List<Code>>(getModel()) {
+                private static final long serialVersionUID = 1L;
+
+                @SuppressWarnings("unchecked")
+                public List<Code> getObject() {
+                    return ((IModel<Paper>) getTarget()).getObject().getCodesOf(ccId);
+                };
+
+                @SuppressWarnings("unchecked")
+                public void setObject(List<Code> codes) {
+                    if (CollectionUtils.isNotEmpty(codes)) {
+                        ((IModel<Paper>) getTarget()).getObject().clearCodesOf(ccId);
+                        ((IModel<Paper>) getTarget()).getObject().addCodes(codes);
+                    }
+                }
+            };
+            final CodeModel choices = new CodeModel(ccId, LANG);
+            final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<Code>(Code.DISPLAY_VALUE, Code.CODE);
+            final StringResourceModel noneSelectedModel = new StringResourceModel("codes.noneSelected", this, null);
+            final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true).withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);
+            final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<Code>("codesClass" + id, model, choices, choiceRenderer).with(config);
+            multiSelect.add(new AttributeModifier("data-width", "fit"));
+            queue(multiSelect);
         }
     }
 
