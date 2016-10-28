@@ -1,6 +1,6 @@
 package ch.difty.sipamato.persistance.jooq;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jooq.Record;
 import org.jooq.impl.TableImpl;

@@ -2,7 +2,7 @@ package ch.difty.sipamato.persistance.jooq;
 
 import static ch.difty.sipamato.db.Tables.PAPER;
 import static java.util.Arrays.asList;
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 import org.jooq.DSLContext;

@@ -1,6 +1,6 @@
 package ch.difty.sipamato.web.pages.paper.provider;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
@@ -69,7 +69,7 @@ public class SortablePaperSlimProviderTest {
     @Test
     public void defaultFilterIsNewPaperFilter() {
         provider = new SortablePaperSlimProvider();
-        assertThat(provider.getFilter()).isEqualsToByComparingFields(new PaperFilter());
+        assertThat(provider.getFilter()).isEqualToComparingFieldByField(new PaperFilter());
     }
 
     @Test

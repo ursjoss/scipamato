@@ -1,6 +1,6 @@
 package ch.difty.sipamato.entity;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.validation.ConstraintViolation;
 
@@ -56,7 +56,7 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     public void cloning_copiesValues() {
         CodeClass orig = new CodeClass(1, "cc1", "this is cc1");
         CodeClass copy = new CodeClass(orig);
-        assertThat(copy).isEqualsToByComparingFields(orig);
+        assertThat(copy).isEqualToComparingFieldByField(orig);
     }
 
     @Test

@@ -1,7 +1,7 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
