@@ -38,6 +38,7 @@ import org.springframework.data.domain.Sort;
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.SipamatoFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
+import ch.difty.sipamato.service.Localization;
 
 @RunWith(MockitoJUnitRunner.class)
 public abstract class JooqReadOnlyRepoTest<R extends Record, T extends SipamatoEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends SipamatoFilter> {
@@ -61,6 +62,13 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends SipamatoE
 
     protected GenericFilterConditionMapper<F> getFilterConditionMapper() {
         return filterConditionMapperMock;
+    }
+
+    @Mock
+    private Localization localizationMock;
+
+    protected Localization getLocalization() {
+        return localizationMock;
     }
 
     @Mock
@@ -160,6 +168,8 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends SipamatoE
         records.add(getPersistedRecord());
 
         when(dslMock.selectFrom(getTable())).thenReturn(selectWhereStepMock);
+
+        when(localizationMock.getLocalization()).thenReturn("de");
         when(selectWhereStepMock.fetchInto(getEntityClass())).thenReturn(entities);
         when(selectWhereStepMock.where(getTableId().equal(id))).thenReturn(selectConditionStepMock);
 
@@ -177,7 +187,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends SipamatoE
     public final void tearDown() {
         specificTearDown();
         verifyNoMoreInteractions(dslMock, getMapper(), sortMapperMock);
-        verifyNoMoreInteractions(getUnpersistedEntity(), getPersistedEntity(), unpersistedRecord, getPersistedRecord());
+        verifyNoMoreInteractions(getUnpersistedEntity(), getPersistedEntity(), unpersistedRecord, getPersistedRecord(), localizationMock);
         verifyNoMoreInteractions(selectWhereStepMock, selectConditionStepMock);
         verifyNoMoreInteractions(selectSelectStepMock, selectJoinStepMock);
         verifyNoMoreInteractions(pageableMock, sortMock, sortFieldsMock, selectSeekStepNMock);
@@ -193,6 +203,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends SipamatoE
         assertThat(getDsl()).isNotNull();
         assertThat(getMapper()).isNotNull();
         assertThat(getSortMapper()).isNotNull();
+        assertThat(getLocalization()).isNotNull();
 
         specificNullCheck();
     }

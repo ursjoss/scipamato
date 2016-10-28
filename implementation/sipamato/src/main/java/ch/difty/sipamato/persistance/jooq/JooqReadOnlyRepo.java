@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.SipamatoFilter;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.service.Localization;
 
 /**
  * The generic jOOQ entity repository for read-only data retrieval.
@@ -44,18 +45,21 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntit
     private final M mapper;
     private final JooqSortMapper<R, T, TI> sortMapper;
     private final GenericFilterConditionMapper<F> filterConditionMapper;
+    private final Localization localization;
 
     /**
      * @param dsl the {@link DSLContext}
      * @param mapper record mapper mapping record <literal>R</literal> into entity <literal>T</literal>
      * @param sortMapper {@link JooqSortMapper} mapping spring data sort specifications into jOOQ specific sort specs
      * @param filterConditionMapper the {@link GenericFilterConditionMapper} mapping a derivative of {@link SipamatoFilter} into jOOC {@link Condition}s
+     * @param localization {@link Localization} been providing the information about the requested localization code.
      */
-    protected JooqReadOnlyRepo(final DSLContext dsl, final M mapper, final JooqSortMapper<R, T, TI> sortMapper, GenericFilterConditionMapper<F> filterConditionMapper) {
+    protected JooqReadOnlyRepo(final DSLContext dsl, final M mapper, final JooqSortMapper<R, T, TI> sortMapper, GenericFilterConditionMapper<F> filterConditionMapper, Localization localization) {
         this.dsl = AssertAs.notNull(dsl, "dsl");
         this.mapper = AssertAs.notNull(mapper, "mapper");
         this.sortMapper = AssertAs.notNull(sortMapper, "sortMapper");
         this.filterConditionMapper = AssertAs.notNull(filterConditionMapper, "filterConditionMapper");
+        this.localization = AssertAs.notNull(localization, "localization");
     }
 
     protected DSLContext getDsl() {
@@ -68,6 +72,10 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntit
 
     protected JooqSortMapper<R, T, TI> getSortMapper() {
         return sortMapper;
+    }
+
+    protected Localization getLocalization() {
+        return localization;
     }
 
     /**
