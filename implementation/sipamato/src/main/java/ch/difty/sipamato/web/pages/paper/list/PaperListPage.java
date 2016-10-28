@@ -83,7 +83,7 @@ public class PaperListPage extends BasePage<PaperSlim> {
         columns.add(makePropertyColumn(Paper.FIRST_AUTHOR, ch.difty.sipamato.db.tables.Paper.PAPER.FIRST_AUTHOR.getName()));
         columns.add(makePropertyColumn(Paper.PUBL_YEAR, ch.difty.sipamato.db.tables.Paper.PAPER.PUBLICATION_YEAR.getName()));
         columns.add(makeClickableColumn(Paper.TITLE, ch.difty.sipamato.db.tables.Paper.PAPER.TITLE.getName(),
-                (IModel<PaperSlim> m) -> setResponsePage(new PaperEntryPage(Model.of(paperService.findCompleteById(m.getObject().getId(), "de").orElse(new Paper()))))));
+                (IModel<PaperSlim> m) -> setResponsePage(new PaperEntryPage(Model.of(paperService.findById(m.getObject().getId()).orElse(new Paper()))))));
         return columns;
     }
 

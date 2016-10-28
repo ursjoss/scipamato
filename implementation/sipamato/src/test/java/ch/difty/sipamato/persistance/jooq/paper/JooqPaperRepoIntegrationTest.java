@@ -132,8 +132,8 @@ public class JooqPaperRepoIntegrationTest {
     }
 
     @Test
-    public void findingWithChildrenById_forPaper1InGerman() {
-        Paper paper = repo.findCompleteById(1l, "de");
+    public void findingById_forPaper1InGerman() {
+        Paper paper = repo.findById(1l);
         assertThat(paper.toString()).isEqualTo(
         // @formatter:off
            PAPER1_WO_CODE_CLASSES
@@ -168,116 +168,117 @@ public class JooqPaperRepoIntegrationTest {
         // @formatter:on
     }
 
-    @Test
-    public void findingWithChildrenById_forPaper1InSwissGerman_findsGerman() {
-        Paper paper = repo.findCompleteById(1l, "de_CH");
-        assertThat(paper.toString()).isEqualTo(
-        // @formatter:off
-           PAPER1_WO_CODE_CLASSES
-           +   ",codes=["
-           +      "codesOfClass1=["
-           +         "Code[code=1F,name=Feinstaub, Partikel,codeClass=CodeClass[id=1]]"
-           +      "],"
-           +      "codesOfClass2=["
-           +         "Code[code=2N,name=Alle übrigen Länder,codeClass=CodeClass[id=2]]"
-           +      "],"
-           +      "codesOfClass3=["
-           +         "Code[code=3C,name=Erwachsene (alle),codeClass=CodeClass[id=3]]"
-           +      "],"
-           +      "codesOfClass4=["
-           +         "Code[code=4G,name=Krebs,codeClass=CodeClass[id=4]]"
-           +      "],"
-           +      "codesOfClass5=["
-           +         "Code[code=5H,name=Kohortenstudie,codeClass=CodeClass[id=5]], "
-           +         "Code[code=5S,name=Statistik,codeClass=CodeClass[id=5]]"
-           +      "],"
-           +      "codesOfClass6=["
-           +         "Code[code=6M,name=Mensch,codeClass=CodeClass[id=6]]"
-           +      "],"
-           +      "codesOfClass7="
-           +         "[Code[code=7L,name=Langfristig (1/2 Jahr – Jahre),codeClass=CodeClass[id=7]]"
-           +      "],"
-           +      "codesOfClass8=["
-           +         "Code[code=8O,name=Aussenluft,codeClass=CodeClass[id=8]]"
-           +      "]"
-           +    "]"
-           + "]");
-        // @formatter:on
-    }
-
-    @Test
-    public void findingWithChildrenById_forPaper1InEnglish() {
-        Paper paper = repo.findCompleteById(1l, "en");
-        assertThat(paper.toString()).isEqualTo(
-        // @formatter:off
-           PAPER1_WO_CODE_CLASSES
-           +   ",codes=["
-           +      "codesOfClass1=["
-           +         "Code[code=1F,name=Particles, Particulate Matter,codeClass=CodeClass[id=1]]"
-           +      "],"
-           +      "codesOfClass2=["
-           +         "Code[code=2N,name=not translated,codeClass=CodeClass[id=2]]"
-           +      "],"
-           +      "codesOfClass3=["
-           +         "Code[code=3C,name=not translated,codeClass=CodeClass[id=3]]"
-           +      "],"
-           +      "codesOfClass4=["
-           +         "Code[code=4G,name=not translated,codeClass=CodeClass[id=4]]"
-           +      "],"
-           +      "codesOfClass5=["
-           +         "Code[code=5H,name=not translated,codeClass=CodeClass[id=5]], "
-           +         "Code[code=5S,name=not translated,codeClass=CodeClass[id=5]]"
-           +      "],"
-           +      "codesOfClass6=["
-           +         "Code[code=6M,name=not translated,codeClass=CodeClass[id=6]]"
-           +      "],"
-           +      "codesOfClass7=["
-           +          "Code[code=7L,name=not translated,codeClass=CodeClass[id=7]]"
-           +      "],"
-           +      "codesOfClass8=["
-           +          "Code[code=8O,name=not translated,codeClass=CodeClass[id=8]]"
-           +      "]"
-           +    "]"
-           + "]");
-        // @formatter:on
-    }
-
-    @Test
-    public void findingWithChildrenById_forPaper1InNonExistingLanguage() {
-        Paper paper = repo.findCompleteById(1l, "xy");
-        assertThat(paper.toString()).isEqualTo(
-        // @formatter:off
-            PAPER1_WO_CODE_CLASSES
-            +   ",codes=["
-            +      "codesOfClass1=["
-            +        "Code[code=1F,name=not translated,codeClass=CodeClass[id=1]]"
-            +      "],"
-            +      "codesOfClass2=["
-            +         "Code[code=2N,name=not translated,codeClass=CodeClass[id=2]]"
-            +      "],"
-            +      "codesOfClass3=["
-            +         "Code[code=3C,name=not translated,codeClass=CodeClass[id=3]]"
-            +      "],"
-            +      "codesOfClass4=["
-            +         "Code[code=4G,name=not translated,codeClass=CodeClass[id=4]]"
-            +      "],"
-            +      "codesOfClass5=["
-            +        "Code[code=5H,name=not translated,codeClass=CodeClass[id=5]], "
-            +        "Code[code=5S,name=not translated,codeClass=CodeClass[id=5]]"
-            +      "],"
-            +      "codesOfClass6=["
-            +         "Code[code=6M,name=not translated,codeClass=CodeClass[id=6]]"
-            +      "],"
-            +      "codesOfClass7=["
-            +          "Code[code=7L,name=not translated,codeClass=CodeClass[id=7]]"
-            +      "],"
-            +      "codesOfClass8=["
-            +          "Code[code=8O,name=not translated,codeClass=CodeClass[id=8]]"
-            +      "]"
-            +    "]"
-            + "]");
-        // @formatter:on
-    }
+    // TODO reactivate those tests after implementing language specific querying
+//    @Test
+//    public void findingWithChildrenById_forPaper1InSwissGerman_findsGerman() {
+//        Paper paper = repo.findCompleteById(1l, "de_CH");
+//        assertThat(paper.toString()).isEqualTo(
+//        // @formatter:off
+//           PAPER1_WO_CODE_CLASSES
+//           +   ",codes=["
+//           +      "codesOfClass1=["
+//           +         "Code[code=1F,name=Feinstaub, Partikel,codeClass=CodeClass[id=1]]"
+//           +      "],"
+//           +      "codesOfClass2=["
+//           +         "Code[code=2N,name=Alle übrigen Länder,codeClass=CodeClass[id=2]]"
+//           +      "],"
+//           +      "codesOfClass3=["
+//           +         "Code[code=3C,name=Erwachsene (alle),codeClass=CodeClass[id=3]]"
+//           +      "],"
+//           +      "codesOfClass4=["
+//           +         "Code[code=4G,name=Krebs,codeClass=CodeClass[id=4]]"
+//           +      "],"
+//           +      "codesOfClass5=["
+//           +         "Code[code=5H,name=Kohortenstudie,codeClass=CodeClass[id=5]], "
+//           +         "Code[code=5S,name=Statistik,codeClass=CodeClass[id=5]]"
+//           +      "],"
+//           +      "codesOfClass6=["
+//           +         "Code[code=6M,name=Mensch,codeClass=CodeClass[id=6]]"
+//           +      "],"
+//           +      "codesOfClass7="
+//           +         "[Code[code=7L,name=Langfristig (1/2 Jahr – Jahre),codeClass=CodeClass[id=7]]"
+//           +      "],"
+//           +      "codesOfClass8=["
+//           +         "Code[code=8O,name=Aussenluft,codeClass=CodeClass[id=8]]"
+//           +      "]"
+//           +    "]"
+//           + "]");
+//        // @formatter:on
+//    }
+//
+//    @Test
+//    public void findingWithChildrenById_forPaper1InEnglish() {
+//        Paper paper = repo.findCompleteById(1l, "en");
+//        assertThat(paper.toString()).isEqualTo(
+//        // @formatter:off
+//           PAPER1_WO_CODE_CLASSES
+//           +   ",codes=["
+//           +      "codesOfClass1=["
+//           +         "Code[code=1F,name=Particles, Particulate Matter,codeClass=CodeClass[id=1]]"
+//           +      "],"
+//           +      "codesOfClass2=["
+//           +         "Code[code=2N,name=not translated,codeClass=CodeClass[id=2]]"
+//           +      "],"
+//           +      "codesOfClass3=["
+//           +         "Code[code=3C,name=not translated,codeClass=CodeClass[id=3]]"
+//           +      "],"
+//           +      "codesOfClass4=["
+//           +         "Code[code=4G,name=not translated,codeClass=CodeClass[id=4]]"
+//           +      "],"
+//           +      "codesOfClass5=["
+//           +         "Code[code=5H,name=not translated,codeClass=CodeClass[id=5]], "
+//           +         "Code[code=5S,name=not translated,codeClass=CodeClass[id=5]]"
+//           +      "],"
+//           +      "codesOfClass6=["
+//           +         "Code[code=6M,name=not translated,codeClass=CodeClass[id=6]]"
+//           +      "],"
+//           +      "codesOfClass7=["
+//           +          "Code[code=7L,name=not translated,codeClass=CodeClass[id=7]]"
+//           +      "],"
+//           +      "codesOfClass8=["
+//           +          "Code[code=8O,name=not translated,codeClass=CodeClass[id=8]]"
+//           +      "]"
+//           +    "]"
+//           + "]");
+//        // @formatter:on
+//    }
+//
+//    @Test
+//    public void findingWithChildrenById_forPaper1InNonExistingLanguage() {
+//        Paper paper = repo.findCompleteById(1l, "xy");
+//        assertThat(paper.toString()).isEqualTo(
+//        // @formatter:off
+//            PAPER1_WO_CODE_CLASSES
+//            +   ",codes=["
+//            +      "codesOfClass1=["
+//            +        "Code[code=1F,name=not translated,codeClass=CodeClass[id=1]]"
+//            +      "],"
+//            +      "codesOfClass2=["
+//            +         "Code[code=2N,name=not translated,codeClass=CodeClass[id=2]]"
+//            +      "],"
+//            +      "codesOfClass3=["
+//            +         "Code[code=3C,name=not translated,codeClass=CodeClass[id=3]]"
+//            +      "],"
+//            +      "codesOfClass4=["
+//            +         "Code[code=4G,name=not translated,codeClass=CodeClass[id=4]]"
+//            +      "],"
+//            +      "codesOfClass5=["
+//            +        "Code[code=5H,name=not translated,codeClass=CodeClass[id=5]], "
+//            +        "Code[code=5S,name=not translated,codeClass=CodeClass[id=5]]"
+//            +      "],"
+//            +      "codesOfClass6=["
+//            +         "Code[code=6M,name=not translated,codeClass=CodeClass[id=6]]"
+//            +      "],"
+//            +      "codesOfClass7=["
+//            +          "Code[code=7L,name=not translated,codeClass=CodeClass[id=7]]"
+//            +      "],"
+//            +      "codesOfClass8=["
+//            +          "Code[code=8O,name=not translated,codeClass=CodeClass[id=8]]"
+//            +      "]"
+//            +    "]"
+//            + "]");
+//        // @formatter:on
+//    }
 
     // TODO test findByExpression
 

@@ -84,13 +84,23 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
         insertSetStepSetter.considerSettingKeyOf(step, entity);
 
         R saved = step.returning().fetchOne();
+        saveAssociatedEntitiesOf(entity);
         if (saved != null) {
             getLogger().info("Inserted 1 record: {} with id {}.", getTable().getName(), getIdFrom(saved));
-            return getMapper().map(saved);
+            T savedEntity = getMapper().map(saved);
+            enrichAssociatedEntitiesOf(savedEntity);
+            return savedEntity;
         } else {
             getLogger().warn("Unable to insert {} record", getTable().getName());
             return null;
         }
+    }
+
+    /**
+     * Implement if associated entities need separate saving.
+     * @param entity
+     */
+    protected void saveAssociatedEntitiesOf(T entity) {
     }
 
     /** {@inheritDoc} */
@@ -101,6 +111,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
 
         final T toBeDeleted = findById(id);
         if (toBeDeleted != null) {
+            deleteAssociatedEntitiesOf(toBeDeleted);
             final int deleteCount = getDsl().delete(getTable()).where(getTableId().equal(id)).execute();
             if (deleteCount > 0) {
                 getLogger().info("Deleted {} record: {} with id {}.", deleteCount, getTable().getName(), id);
@@ -111,6 +122,13 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
         return toBeDeleted;
     }
 
+    /**
+     * Implement if associated entities need separate deletion. Not necessary if cascaded delete is set.
+     * @param entity
+     */
+    protected void deleteAssociatedEntitiesOf(T entity) {
+    }
+
     /** {@inheritDoc} */
     @Override
     @Transactional(readOnly = false)
@@ -119,18 +137,28 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
         ID id = AssertAs.notNull(getIdFrom(entity), "entity.id");
 
         R updated = updateSetStepSetter.setFieldsFor(getDsl().update(getTable()), entity).where(getTableId().equal(id)).returning().fetchOne();
+        updateAssociatedEntities(entity);
         if (updated != null) {
             getLogger().info("Updated 1 record: {} with id {}.", getTable().getName(), id);
             return getMapper().map(updated);
         } else {
             // Ugly, need to work around the problem that update...returning().fetchOne() is not supported for H2
             if (SQLDialect.H2.equals(jooqConfig.dialect())) {
-                return findById(id);
+                T savedEntity = findById(id);
+                enrichAssociatedEntitiesOf(savedEntity);
+                return savedEntity;
             } else {
                 getLogger().warn("Unable to persist {} with id {}.", getTable().getName(), id);
                 return null;
             }
         }
+    }
+
+    /**
+     * Implement updates associated entities need separate saving.
+     * @param entity
+     */
+    protected void updateAssociatedEntities(final T entity) {
     }
 
 }

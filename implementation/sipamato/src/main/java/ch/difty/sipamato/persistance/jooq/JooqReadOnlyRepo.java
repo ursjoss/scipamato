@@ -93,15 +93,32 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntit
     /** {@inheritDoc} */
     @Override
     public List<T> findAll() {
-        return getDsl().selectFrom(getTable()).fetchInto(getEntityClass());
+        final List<T> entities = getDsl().selectFrom(getTable()).fetchInto(getEntityClass());
+        enrichAssociatedEntitiesOfAll(entities);
+        return entities;
+    }
+
+    private void enrichAssociatedEntitiesOfAll(final List<T> entities) {
+        for (final T e : entities) {
+            enrichAssociatedEntitiesOf(e);
+        }
     }
 
     /** {@inheritDoc} */
     @Override
     public T findById(final ID id) {
         AssertAs.notNull(id, "id");
-        return getDsl().selectFrom(getTable()).where(getTableId().equal(id)).fetchOneInto(getEntityClass());
+        T entity = getDsl().selectFrom(getTable()).where(getTableId().equal(id)).fetchOneInto(getEntityClass());
+        enrichAssociatedEntitiesOf(entity);
+        return entity;
     }
+
+    /**
+     * Implement if associated entities need separate saving.
+     * @param entities
+     */
+    protected void enrichAssociatedEntitiesOf(T entity) {
+    };
 
     /** {@inheritDoc} */
     @Override
@@ -118,6 +135,8 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntit
         final List<R> queryResults = getDsl().selectFrom(getTable()).where(conditions).orderBy(sortCriteria).fetchInto(getRecordClass());
 
         final List<T> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
+
+        enrichAssociatedEntitiesOfAll(entities);
 
         return new PageImpl<>(entities, pageable, (long) countByFilter(filter));
     }

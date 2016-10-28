@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
@@ -23,10 +24,10 @@ import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.ChainingModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -363,7 +364,22 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             final String className = codeClasses.stream().filter(cc -> cc.getId() == id).map(CodeClass::getName).findFirst().orElse(ccId.name());
             queue(new Label("codesClass" + id + "Label", Model.of(className)));
 
-            final PropertyModel<List<Code>> model = new PropertyModel<List<Code>>(getModel(), Paper.CODES);
+            final ChainingModel<List<Code>> model = new ChainingModel<List<Code>>(getModel()) {
+                private static final long serialVersionUID = 1L;
+
+                @SuppressWarnings("unchecked")
+                public List<Code> getObject() {
+                    return ((IModel<Paper>) getTarget()).getObject().getCodesOf(ccId);
+                };
+
+                @SuppressWarnings("unchecked")
+                public void setObject(List<Code> codes) {
+                    if (CollectionUtils.isNotEmpty(codes)) {
+                        ((IModel<Paper>) getTarget()).getObject().clearCodesOf(ccId);
+                        ((IModel<Paper>) getTarget()).getObject().addCodes(codes);
+                    }
+                }
+            };
             final CodeModel choices = new CodeModel(ccId, LANG);
             final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<Code>(Code.DISPLAY_VALUE, Code.CODE);
             final StringResourceModel noneSelectedModel = new StringResourceModel("codes.noneSelected", this, null);

@@ -52,9 +52,4 @@ public class JooqPaperService implements PaperService {
         return repo.update(paper);
     }
 
-    @Override
-    public Optional<Paper> findCompleteById(Long id, String languageCode) {
-        return Optional.ofNullable(repo.findCompleteById(id, languageCode));
-    }
-
 }

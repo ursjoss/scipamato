@@ -8,9 +8,11 @@ import static ch.difty.sipamato.db.tables.Paper.PAPER;
 import static ch.difty.sipamato.db.tables.PaperCode.PAPER_CODE;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.jooq.InsertValuesStep2;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
@@ -18,11 +20,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ch.difty.sipamato.db.tables.records.PaperCodeRecord;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
-import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.lib.TranslationUtils;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
@@ -34,6 +36,9 @@ import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.difty.sipamato.db.tables.Paper, PaperRecordMapper, PaperFilter> implements PaperRepository {
 
     private static final long serialVersionUID = 1L;
+
+    // TODO Make the selected language code available dynamically
+    private static final String LANGUAGE_CODE = "de";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JooqPaperRepo.class);
 
@@ -80,11 +85,8 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     }
 
     @Override
-    public Paper findCompleteById(Long id, String languageCode) {
-        AssertAs.notNull(id, "id");
-        String lang = TranslationUtils.trimLanguageCode(languageCode);
-        final Paper p = findById(id);
-        if (p != null) {
+    protected void enrichAssociatedEntitiesOf(Paper entity) {
+        if (entity != null) {
             // @formatter:off
             final List<Code> codes = getDsl()
                 .select(CODE.CODE_.as("C_ID")
@@ -96,15 +98,43 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
                 .join(PAPER).on(PAPER_CODE.PAPER_ID.equal(PAPER.ID))
                 .join(CODE).on(PAPER_CODE.CODE.equal(CODE.CODE_))
                 .join(CODE_CLASS).on(CODE.CODE_CLASS_ID.equal(CODE_CLASS.ID))
-                .leftOuterJoin(CODE_TR).on(CODE.CODE_.equal(CODE_TR.CODE).and(CODE_TR.LANG_CODE.equal(lang)))
-                .leftOuterJoin(CODE_CLASS_TR).on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID).and(CODE_CLASS_TR.LANG_CODE.equal(lang)))
-                .where(PAPER_CODE.PAPER_ID.equal(p.getId()))
+                .leftOuterJoin(CODE_TR).on(CODE.CODE_.equal(CODE_TR.CODE).and(CODE_TR.LANG_CODE.equal(LANGUAGE_CODE)))
+                .leftOuterJoin(CODE_CLASS_TR).on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID).and(CODE_CLASS_TR.LANG_CODE.equal(LANGUAGE_CODE)))
+                .where(PAPER_CODE.PAPER_ID.equal(entity.getId()))
                 .fetchInto(Code.class);
             // @formatter:on
 
-            p.addCodes(codes);
+            entity.addCodes(codes);
         }
-        return p;
+    }
+
+    @Override
+    protected void saveAssociatedEntitiesOf(Paper paper) {
+        if (!paper.getCodes().isEmpty()) {
+            storeNewCodesOf(paper);
+        }
+    }
+
+    @Override
+    protected void updateAssociatedEntities(Paper paper) {
+        if (!paper.getCodes().isEmpty()) {
+            storeNewCodesOf(paper);
+            deleteObsoleteCodesFrom(paper);
+        }
+    }
+
+    private void storeNewCodesOf(Paper paper) {
+        InsertValuesStep2<PaperCodeRecord, Long, String> step = getDsl().insertInto(PAPER_CODE, PAPER_CODE.PAPER_ID, PAPER_CODE.CODE);
+        final Long paperId = paper.getId();
+        for (final Code c : paper.getCodes()) {
+            step = step.values(paperId, c.getCode());
+        }
+        step.onDuplicateKeyIgnore().execute();
+    }
+
+    private void deleteObsoleteCodesFrom(Paper paper) {
+        final List<String> codes = paper.getCodes().stream().map(Code::getCode).collect(Collectors.toList());
+        getDsl().deleteFrom(PAPER_CODE).where(PAPER_CODE.PAPER_ID.equal(paper.getId()).and(PAPER_CODE.CODE.notIn(codes))).execute();
     }
 
 }

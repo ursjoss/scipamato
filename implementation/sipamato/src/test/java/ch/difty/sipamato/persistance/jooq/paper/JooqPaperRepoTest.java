@@ -2,7 +2,6 @@ package ch.difty.sipamato.persistance.jooq.paper;
 
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.fest.assertions.api.Assertions.fail;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -162,26 +161,6 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
             new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("jooqConfig must not be null.");
-        }
-    }
-
-    @Test
-    public void findingByIdWithNullId_throws() {
-        try {
-            repo.findCompleteById(null, "de");
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("id must not be null.");
-        }
-    }
-
-    @Test
-    public void findingByIdWithLanguageCode_throws() {
-        try {
-            repo.findCompleteById(1l, null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("languageCode must not be null.");
         }
     }
 }
