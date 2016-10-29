@@ -36,4 +36,9 @@ public class SipamatoPropertiesIntegrationTest {
     public void isAutoSavingEnabled() {
         assertThat(appProperties.isAutoSavingEnabled()).isTrue();
     }
+
+    @Test
+    public void assertDefaultlocalization() {
+        assertThat(appProperties.getDefaultLocalization()).isEqualTo("de");
+    }
 }

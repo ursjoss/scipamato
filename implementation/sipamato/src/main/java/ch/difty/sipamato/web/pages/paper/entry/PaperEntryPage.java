@@ -54,9 +54,6 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
     private static final long serialVersionUID = 1L;
 
-    // TODO replace with global setting in some bean
-    private static final String LANG = "de";
-
     private Form<Paper> form;
 
     @SpringBean
@@ -341,7 +338,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             Form<Paper> form = new Form<Paper>("tab3Form");
             queue(form);
 
-            CodeClassModel codeClassModel = new CodeClassModel(LANG);
+            CodeClassModel codeClassModel = new CodeClassModel(getLocalization().getLocalization());
             List<CodeClass> codeClasses = codeClassModel.getObject();
 
             makeCodeClassComplex(CodeClassId.CC1, codeClasses);
@@ -376,7 +373,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
                     }
                 }
             };
-            final CodeModel choices = new CodeModel(ccId, LANG);
+            final CodeModel choices = new CodeModel(ccId, getLocalization().getLocalization());
             final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<Code>(Code.DISPLAY_VALUE, Code.CODE);
             final StringResourceModel noneSelectedModel = new StringResourceModel("codes.noneSelected", this, null);
             final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true).withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);

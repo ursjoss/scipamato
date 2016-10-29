@@ -1,12 +1,14 @@
 package ch.difty.sipamato.service;
 
+import java.io.Serializable;
+
 /**
  * Bean to provide access (getting/setting) of the localization of the application.
  * If nothing is set, the bean will be initiated with a default localization defined externally.
  *
  * @author u.joss
  */
-public interface Localization {
+public interface Localization extends Serializable {
 
     /**
      * @return the default localization as initialized during application startup

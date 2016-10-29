@@ -9,6 +9,8 @@ import ch.difty.sipamato.lib.AssertAs;
 @Component
 public class SipamatoLocalization implements Localization {
 
+    private static final long serialVersionUID = 1L;
+
     private final String defaultLocalization;
     private String localization;
 

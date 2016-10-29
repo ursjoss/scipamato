@@ -15,6 +15,7 @@ import org.apache.wicket.util.time.Duration;
 
 import ch.difty.sipamato.config.ApplicationProperties;
 import ch.difty.sipamato.lib.DateTimeService;
+import ch.difty.sipamato.service.Localization;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarText;
 
@@ -37,6 +38,9 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
     @SpringBean
     private DateTimeService dateTimeService;
 
+    @SpringBean
+    private Localization localization;
+
     private boolean dirty = false;
     private LocalDateTime lastSaveTimestamp;
 
@@ -46,6 +50,10 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
 
     public AutoSaveAwarePage(IModel<T> model) {
         super(model);
+    }
+
+    protected Localization getLocalization() {
+        return localization;
     }
 
     /**
