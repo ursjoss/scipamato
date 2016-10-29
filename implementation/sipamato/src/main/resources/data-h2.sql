@@ -248,12 +248,12 @@ INSERT INTO code_tr VALUES(DEFAULT, '2N', 'de', 'Alle übrigen Länder', DEFAULT
 INSERT INTO code_tr VALUES(DEFAULT, '3A', 'de', 'Säuglinge, Vorschulkinder', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3B', 'de', 'Schulkinder und Jugendliche', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3C', 'de', 'Erwachsene (alle)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '3H', 'de', 'Betagte Personen (65+ Jahre) ! muss immer zsm. Mit 3C angegeben werden', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3H', 'de', 'Betagte Personen (65+ Jahre)', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3D', 'de', 'Personen mit Asthma oder Atemwegsallergie', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3E', 'de', 'Personen mit anderer chronischer Lungenkrankheit, COPD', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3F', 'de', 'Registerdaten, Patienten', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3G', 'de', 'Schwangere Frauen', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '3I', 'de', 'SportlerInnen', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3I', 'de', 'Sportler/innen', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3O', 'de', 'Beruflich Exponierte', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3K', 'de', 'Gewebe', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3L', 'de', 'Zellen', DEFAULT, DEFAULT);
