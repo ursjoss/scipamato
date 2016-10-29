@@ -38,13 +38,14 @@ public class JooqCodeRepo implements CodeRepository {
                     , DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL).as("C_NAME")
                     , CODE_CLASS.ID.as("CC_ID")
                     , DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL).as("CC_NAME")
-                    , DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL).as("CC_DESCRIPTION"))
+                    , DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL).as("CC_DESCRIPTION")
+                    , CODE.SORT.as("C_SORT"))
             .from(CODE)
             .join(CODE_CLASS).on(CODE.CODE_CLASS_ID.equal(CODE_CLASS.ID))
             .leftOuterJoin(CODE_TR).on(CODE.CODE_.equal(CODE_TR.CODE).and(CODE_TR.LANG_CODE.equal(lang)))
             .leftOuterJoin(CODE_CLASS_TR).on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID).and(CODE_CLASS_TR.LANG_CODE.equal(lang)))
             .where(CODE.CODE_CLASS_ID.equal(codeClassId.getId()))
-            .orderBy(CODE_TR.NAME.asc(), CODE.CODE_.asc())
+            .orderBy(CODE_CLASS.ID, CODE.SORT)
             .fetchInto(Code.class);
         // @formatter:on
 

@@ -49,8 +49,8 @@ public class CodeModelTest extends ModelTest {
         String languageCode = "de";
 
         final List<Code> codes = new ArrayList<>();
-        codes.add(new Code("1F", "code 1F", 1, "cc1", ""));
-        codes.add(new Code("1N", "code 1N", 1, "cc1", ""));
+        codes.add(new Code("1F", "code 1F", 1, "cc1", "", 1));
+        codes.add(new Code("1N", "code 1N", 1, "cc1", "", 13));
 
         when(serviceMock.findCodesOfClass(ccId, languageCode)).thenReturn(codes);
 

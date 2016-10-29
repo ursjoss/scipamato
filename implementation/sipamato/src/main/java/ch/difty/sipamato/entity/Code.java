@@ -12,6 +12,7 @@ public class Code extends SipamatoEntity {
     public static final String CODE = "code";
     public static final String CODE_CLASS = "codeClass";
     public static final String NAME = "name";
+    public static final String SORT = "sort";
 
     @NotNull
     @Pattern(regexp = CODE_REGEX, message = "{code.invalidCode}")
@@ -23,23 +24,27 @@ public class Code extends SipamatoEntity {
     @NotNull
     private final CodeClass codeClass;
 
-    public Code(final String code, final String name, final Integer codeClassId, final String codeClassName, final String codeClassDescription) {
+    private final int sort;
+
+    public Code(final String code, final String name, final Integer codeClassId, final String codeClassName, final String codeClassDescription, final int sort) {
         this.code = code;
         this.name = name;
         if (codeClassId != null)
             this.codeClass = new CodeClass(codeClassId, codeClassName, codeClassDescription);
         else
             this.codeClass = null;
+        this.sort = sort;
     }
 
     public Code(final Code from) {
-        this(from.code, from.name, new CodeClass(from.codeClass));
+        this(from.code, from.name, new CodeClass(from.codeClass), from.sort);
     }
 
-    private Code(final String code, final String name, final CodeClass codeClass) {
+    private Code(final String code, final String name, final CodeClass codeClass, final int sort) {
         this.code = code;
         this.codeClass = codeClass;
         this.name = name;
+        this.sort = sort;
     }
 
     public String getCode() {
@@ -52,6 +57,10 @@ public class Code extends SipamatoEntity {
 
     public CodeClass getCodeClass() {
         return codeClass;
+    }
+
+    public int getSort() {
+        return sort;
     }
 
     public String getDisplayValue() {
@@ -68,6 +77,7 @@ public class Code extends SipamatoEntity {
         result = prime * result + ((code == null) ? 0 : code.hashCode());
         result = prime * result + ((codeClass == null) ? 0 : codeClass.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + sort;
         return result;
     }
 
@@ -95,7 +105,7 @@ public class Code extends SipamatoEntity {
                 return false;
         } else if (!codeClass.equals(other.codeClass))
             return false;
-        return true;
+        return sort == other.sort;
     }
 
 }

@@ -12,16 +12,16 @@ import ch.difty.sipamato.lib.NullArgumentException;
 
 public class CodeBoxTest {
 
-    private static final Code CODE_1F = makeCode(CodeClassId.CC1, "F");
-    private static final Code CODE_5H = makeCode(CodeClassId.CC5, "H");
-    private static final Code CODE_5F = makeCode(CodeClassId.CC5, "F");
+    private static final Code CODE_1F = makeCode(CodeClassId.CC1, "F", 1);
+    private static final Code CODE_5H = makeCode(CodeClassId.CC5, "H", 7);
+    private static final Code CODE_5F = makeCode(CodeClassId.CC5, "F", 5);
 
     private final CodeBox codeBox = new CodeBox();
 
-    private static Code makeCode(CodeClassId codeClassId, String codePart2) {
+    private static Code makeCode(CodeClassId codeClassId, String codePart2, int sort) {
         int ccId = codeClassId.getId();
         String code = ccId + codePart2;
-        return new Code(code, "Code " + code, ccId, codeClassId.name(), "");
+        return new Code(code, "Code " + code, ccId, codeClassId.name(), "", sort);
     }
 
     @Test
@@ -158,11 +158,11 @@ public class CodeBoxTest {
          // @formatter:off
               "["
             +   "codesOfClass1=["
-            +     "Code[code=1F,name=Code 1F,codeClass=CodeClass[id=1]]"
+            +     "Code[code=1F,name=Code 1F,codeClass=CodeClass[id=1],sort=1]"
             +   "]"
             +  ",codesOfClass5=["
-            +     "Code[code=5H,name=Code 5H,codeClass=CodeClass[id=5]]"
-            +   ", Code[code=5F,name=Code 5F,codeClass=CodeClass[id=5]]"
+            +     "Code[code=5H,name=Code 5H,codeClass=CodeClass[id=5],sort=7]"
+            +   ", Code[code=5F,name=Code 5F,codeClass=CodeClass[id=5],sort=5]"
             +   "]"
             + "]"
          // @formatter:on

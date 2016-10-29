@@ -60,7 +60,6 @@ CREATE TABLE code_class_tr (
 
 ALTER TABLE code_class_tr ADD FOREIGN KEY (code_class_id) REFERENCES code_class(id) on delete cascade on update cascade;
 
-DROP INDEX IF EXISTS idx_code_class_tr_key;
 DROP INDEX IF EXISTS idx_code_class_tr_unique;
 CREATE UNIQUE INDEX idx_code_class_tr_unique ON code_class_tr (code_class_id, lang_code);
 
@@ -71,10 +70,14 @@ DROP TABLE IF EXISTS code;
 CREATE TABLE code (
   code CHAR(2) NOT NULL PRIMARY KEY,
   code_class_id INT NOT NULL,
+  sort INT NOT NULL,
 
   version INT DEFAULT 1,
   timestamp TIMESTAMP DEFAULT current_timestamp(),
 );
+
+DROP INDEX IF EXISTS idx_code_unique;
+CREATE UNIQUE INDEX idx_code_unique ON code (code_class_id, sort);
 
 DROP TABLE IF EXISTS code_tr;
 
