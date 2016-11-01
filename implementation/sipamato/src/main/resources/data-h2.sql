@@ -243,14 +243,14 @@ INSERT INTO code_tr VALUES(DEFAULT, '1Y', 'de', 'Gerüche', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1Z', 'de', 'Mehr als 8, alle gemeinsam', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '2R', 'de', 'Europa', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '2N', 'de', 'Alle übrigen Länder', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '2N', 'de', 'Übrige Länder', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '3A', 'de', 'Säuglinge, Vorschulkinder', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3B', 'de', 'Schulkinder und Jugendliche', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3C', 'de', 'Erwachsene (alle)', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3H', 'de', 'Betagte Personen (65+ Jahre)', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3D', 'de', 'Personen mit Asthma oder Atemwegsallergie', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '3E', 'de', 'Personen mit anderer chronischer Lungenkrankheit, COPD', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3E', 'de', 'Pers. mit anderer chronischer Lungenkrankheit, COPD', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3F', 'de', 'Registerdaten, Patienten', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3G', 'de', 'Schwangere Frauen', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3I', 'de', 'Sportler/innen', DEFAULT, DEFAULT);
@@ -258,7 +258,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '3O', 'de', 'Beruflich Exponierte', DEFAULT,
 INSERT INTO code_tr VALUES(DEFAULT, '3K', 'de', 'Gewebe', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3L', 'de', 'Zellen', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3U', 'de', 'Übrige /Andere', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '3Z', 'de', 'Mehr als 8 /alle (=bei Gesundheitsfolgenabschätzungen: gesamte Bevölkerung)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3Z', 'de', 'Mehr als 8 / alle', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '4A', 'de', 'Sterblichkeit', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4B', 'de', 'Lungenfunktion', DEFAULT, DEFAULT);
@@ -287,26 +287,26 @@ INSERT INTO code_tr VALUES(DEFAULT, '5F', 'de', 'Zeitreihen, Panel, kurzfristige
 INSERT INTO code_tr VALUES(DEFAULT, '5G', 'de', 'Querschnitt, Fall-Kontrollstudie, deskriptiv', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5H', 'de', 'Kohortenstudie', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5I', 'de', 'Interventionsstudie', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '5M', 'de', 'Messstudie, Studienmethodik, Statistik', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5M', 'de', 'Messstudie, Studienmethodik', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5S', 'de', 'Statistik', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5D', 'de', 'Einzelfallbeschreibung, Fallstudie', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5K', 'de', 'Krankheitsbeschreibung', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5U', 'de', 'Übersichten, Metaanalysen, HIA', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '6M', 'de', 'Mensch', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '6T', 'de', 'Tiere', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '6T', 'de', 'Tier', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '6O', 'de', 'Viren, Bakterien, Einzeller', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '6P', 'de', 'Pflanzen', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '6Z', 'de', 'Alle / allg. Übersichten', DEFAULT, DEFAULT);
 
-INSERT INTO code_tr VALUES(DEFAULT, '7K', 'de', 'Kurzfristig (Tage)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '7L', 'de', 'Langfristig (1/2 Jahr – Jahre)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '7M', 'de', 'Mittelfristig (Wochen-Monate)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '7K', 'de', 'Kurzfristig', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '7L', 'de', 'Langfristig', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '7M', 'de', 'Mittelfristig', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '7Z', 'de', 'Alle', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '8I', 'de', 'Raumluft', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8O', 'de', 'Aussenluft', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '8P', 'de', 'Individuelle Messung / Personal Sampling', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '8P', 'de', 'Individuelle Messung', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8W', 'de', 'Berufliche Exposition', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8Z', 'de', 'Alle', DEFAULT, DEFAULT);
 
@@ -327,8 +327,8 @@ INSERT INTO code_tr VALUES(DEFAULT, '1P', 'en', 'Pollen', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1R', 'en', 'Indoor air humidity', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1S', 'en', 'Mites, indoor allergens', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1T', 'en', 'Temperature', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '1U', 'en', 'TODO (Andere / Übrige)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '1V', 'en', 'TODO (Verkehr (gemessen: Verkehrsdichte, Nähe Strasse, # Fahrzeuge, Verkehrsberufe))', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1U', 'en', 'Others', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1V', 'en', 'Traffic', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1Y', 'en', 'Odours', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1Z', 'en', 'More than 8, all together', DEFAULT, DEFAULT);
 
@@ -347,8 +347,8 @@ INSERT INTO code_tr VALUES(DEFAULT, '3I', 'en', 'Athletes', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3O', 'en', 'Ocupationally exposed', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3K', 'en', 'Tissue', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3L', 'en', 'Zells', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '3U', 'en', 'TODO (Übrige /Andere)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '3Z', 'en', 'TODO (Mehr als 8 /alle)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3U', 'en', 'Others', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3Z', 'en', 'More than 8 / all', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '4A', 'en', 'Mortality', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4B', 'en', 'Lung function, pulmonary function', DEFAULT, DEFAULT);
@@ -364,9 +364,9 @@ INSERT INTO code_tr VALUES(DEFAULT, '4M', 'en', 'Drug intake, consultation, hosp
 INSERT INTO code_tr VALUES(DEFAULT, '4N', 'en', 'Fertility, pregnancy complications, miscarriage', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4O', 'en', 'Preterm birth, birth weight, prenatal development', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4L', 'en', 'Congenital malformation', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4U', 'en', 'TODO (Übrige /Andere)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4U', 'en', 'Others', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4X', 'en', 'Cost', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4Y', 'en', 'TODO (Absenzen, eingeschränkte Aktivität)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4Y', 'en', 'Absences, limited activity (TODO)', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4Z', 'en', 'More than 8 / all', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '5A', 'en', 'Experimental study TODO (unter Belastung)', DEFAULT, DEFAULT);
@@ -377,10 +377,10 @@ INSERT INTO code_tr VALUES(DEFAULT, '5F', 'en', 'Panel study,  time series', DEF
 INSERT INTO code_tr VALUES(DEFAULT, '5G', 'en', 'Cross-sectional or case-control study, descriptive', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5H', 'en', 'Cohort Study', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5I', 'en', 'Intervention', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '5M', 'en', 'Exposure assessment , modelling, statistics', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5M', 'en', 'Exposure assessment , modelling', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5S', 'en', 'Statistics', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5D', 'en', 'TODO (Einzelfallbeschreibung, Fallstudie)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '5K', 'en', 'TODO (rankheitsbeschreibung)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5K', 'en', 'TODO (Krankheitsbeschreibung)', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5U', 'en', 'Review, meta-analysis', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '6M', 'en', 'Humans', DEFAULT, DEFAULT);
@@ -391,14 +391,14 @@ INSERT INTO code_tr VALUES(DEFAULT, '6Z', 'en', 'All / Gen. overviews', DEFAULT,
 
 INSERT INTO code_tr VALUES(DEFAULT, '7K', 'en', 'Short-term', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '7L', 'en', 'Long-term', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '7M', 'en', 'Mid-term (Weeks-Months)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '7M', 'en', 'Mid-term', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '7Z', 'en', 'All', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '8I', 'en', 'Indoor Air', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8O', 'en', 'Ambient air', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8P', 'en', 'Personal measurement', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8W', 'en', 'Occupational exposure', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '8Z', 'en', 'TODO (Alle)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '8Z', 'en', 'All', DEFAULT, DEFAULT);
 
 
 INSERT INTO code_tr VALUES(DEFAULT, '1F', 'fr', 'Poussière fines, particules', DEFAULT, DEFAULT);
@@ -418,10 +418,10 @@ INSERT INTO code_tr VALUES(DEFAULT, '1P', 'fr', 'Pollen', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1R', 'fr', 'Humidité (air intérieur)', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1S', 'fr', 'Allergènes dans l''air intérieur', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1T', 'fr', 'Température', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '1U', 'fr', 'TODO (Andere / Übrige)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '1V', 'fr', 'TODO (Verkehr (gemessen: Verkehrsdichte, Nähe Strasse, # Fahrzeuge, Verkehrsberufe))', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1U', 'fr', 'Autres', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1V', 'fr', 'Trafic', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1Y', 'fr', 'Odeur', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '1Z', 'fr', 'TODO (Mehr als 8, alle gemeinsam)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1Z', 'fr', 'Plus de 8 / tous', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '2R', 'fr', 'Europe', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '2N', 'fr', 'Autres pays', DEFAULT, DEFAULT);
@@ -438,8 +438,8 @@ INSERT INTO code_tr VALUES(DEFAULT, '3I', 'fr', 'Sportifs', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3O', 'fr', 'Personnes exposées au travail', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3K', 'fr', 'Tissus', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3L', 'fr', 'Cellules', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '3U', 'fr', 'TODO (Übrige /Andere)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '3Z', 'fr', 'TODO (Mehr als 8 /alle (=bei Gesundheitsfolgenabschätzungen: gesamte Bevölkerung))', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3U', 'fr', 'Autres (TODO)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3Z', 'fr', 'Plus de 8 / tous (TODO)', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '4A', 'fr', 'Mortalité', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4B', 'fr', 'Fonction pulmonaire', DEFAULT, DEFAULT);
@@ -453,12 +453,12 @@ INSERT INTO code_tr VALUES(DEFAULT, '4I', 'fr', 'Système nerveux, yeux, oreille
 INSERT INTO code_tr VALUES(DEFAULT, '4K', 'fr', 'Nuisance, bien-être, qualité de vie', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4M', 'fr', 'Médicaments, visite médicale, hospitalisation', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4N', 'fr', 'Fertilité, complication de grossesse, fausse couche', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4O', 'fr', 'TODO (Frühgeburt, Säuglingsgewicht, pränatale Entwicklung)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4O', 'fr', 'Naissance prématurée, poids de naissance ', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4L', 'fr', 'Malformation', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4U', 'fr', 'TODO (Übrige /Andere)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4X', 'fr', 'TODO (Kosten)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4Y', 'fr', 'TODO (Absenzen, eingeschränkte Aktivität)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4Z', 'fr', 'TODO (Mehr als 8 / Alle)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4U', 'fr', 'Autres', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4X', 'fr', 'Coûts (TODO)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4Y', 'fr', 'Absences, activités limités (TODO)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4Z', 'fr', 'Plus de 8 / tous', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '5A', 'fr', 'Etude expérimentale TODO (unter Belastung / Arbeit)', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5B', 'fr', 'Etude expérimentale TODO (in Ruhe)', DEFAULT, DEFAULT);
@@ -476,20 +476,20 @@ INSERT INTO code_tr VALUES(DEFAULT, '5U', 'fr', 'Review, révue, méta-analyse',
 
 INSERT INTO code_tr VALUES(DEFAULT, '6M', 'fr', 'Hommes', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '6T', 'fr', 'Animaux', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '6O', 'fr', 'Virus, Bactéries', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '6P', 'fr', 'TODO (Pflanzen)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '6Z', 'fr', 'TODO (Alle / allg. Übersichten)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '6O', 'fr', 'Virus, Bactéries, Protozoaires', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '6P', 'fr', 'Plantes', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '6Z', 'fr', 'Tous / Exposés gen.', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '7K', 'fr', 'à court terme', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '7L', 'fr', 'à long terme', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '7M', 'fr', 'TODO (Mittelfristig (Wochen-Monate))', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '7Z', 'fr', 'TODO (Alle)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '7M', 'fr', 'à moyen terme', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '7Z', 'fr', 'tous', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '8I', 'fr', 'Air intérieur', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '8O', 'fr', 'Air exterieur', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '8O', 'fr', 'Air extérieur', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8P', 'fr', 'Mesures personalisées', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8W', 'fr', 'Exposition lié au travail', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '8Z', 'fr', 'TODO (Alle)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '8Z', 'fr', 'Tous', DEFAULT, DEFAULT);
 
 INSERT INTO paper_code VALUES(1, '1F', DEFAULT, DEFAULT);
 INSERT INTO paper_code VALUES(1, '2N', DEFAULT, DEFAULT);
