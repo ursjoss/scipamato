@@ -46,6 +46,8 @@ public class PaperRecordMapper implements RecordMapper<PaperRecord, Paper> {
         to.setResultExposureRange(from.getResultExposureRange());
         to.setResultEffectEstimate(from.getResultEffectEstimate());
 
+        to.setMainCodeOfCodeclass1(from.getMainCodeOfCodeclass1());
+
         return to;
     }
 

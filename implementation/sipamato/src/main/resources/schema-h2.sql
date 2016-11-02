@@ -29,7 +29,9 @@ CREATE TABLE paper (
   result_effect_estimate VARCHAR,
   comment VARCHAR,
   intern VARCHAR,
-  
+
+  main_code_of_codeclass1 CHAR(2) NULL,
+
   version INT DEFAULT 1,
   timestamp TIMESTAMP DEFAULT current_timestamp(),
 );
