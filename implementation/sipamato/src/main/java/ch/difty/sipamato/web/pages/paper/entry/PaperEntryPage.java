@@ -341,6 +341,8 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             CodeClassModel codeClassModel = new CodeClassModel(getLocalization().getLocalization());
             List<CodeClass> codeClasses = codeClassModel.getObject();
 
+            makeAndAddMainCodeOfClass1(new TextField<String>(Paper.MAIN_CODE_OF_CODECLASS1));
+
             makeCodeClassComplex(CodeClassId.CC1, codeClasses);
             makeCodeClassComplex(CodeClassId.CC2, codeClasses);
             makeCodeClassComplex(CodeClassId.CC3, codeClasses);
@@ -349,7 +351,16 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             makeCodeClassComplex(CodeClassId.CC6, codeClasses);
             makeCodeClassComplex(CodeClassId.CC7, codeClasses);
             makeCodeClassComplex(CodeClassId.CC8, codeClasses);
+        }
 
+        private void makeAndAddMainCodeOfClass1(TextField<String> field) {
+            String id = field.getId();
+            StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
+            queue(new Label(id + LABEL_TAG, labelModel));
+            field.add(new PropertyValidator<String>());
+            field.setOutputMarkupId(true);
+            field.setLabel(labelModel);
+            queue(field);
         }
 
         private void makeCodeClassComplex(CodeClassId ccId, final List<CodeClass> codeClasses) {

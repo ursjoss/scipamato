@@ -28,6 +28,7 @@ import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.
 import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 import ch.difty.sipamato.web.pages.login.LoginPage;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -134,6 +135,12 @@ public abstract class BasePageTest<T extends BasePage<?>> {
         final String bb = b + ":" + id;
         getTester().assertComponent(bb + "Label", Label.class);
         getTester().assertComponent(bb, CheckBox.class);
+    }
+
+    protected void assertLabeledMultiSelect(String b, String id) {
+        final String bb = b + ":" + id;
+        getTester().assertComponent(bb + "Label", Label.class);
+        getTester().assertComponent(bb, BootstrapMultiSelect.class);
     }
 
 }
