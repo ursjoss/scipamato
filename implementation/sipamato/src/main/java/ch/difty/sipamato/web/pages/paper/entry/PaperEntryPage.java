@@ -2,6 +2,7 @@ package ch.difty.sipamato.web.pages.paper.entry;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -341,9 +342,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             CodeClassModel codeClassModel = new CodeClassModel(getLocalization().getLocalization());
             List<CodeClass> codeClasses = codeClassModel.getObject();
 
-            makeAndAddMainCodeOfClass1(new TextField<String>(Paper.MAIN_CODE_OF_CODECLASS1));
-
-            makeCodeClassComplex(CodeClassId.CC1, codeClasses);
+            makeCodeClass1Complex(codeClasses);
             makeCodeClassComplex(CodeClassId.CC2, codeClasses);
             makeCodeClassComplex(CodeClassId.CC3, codeClasses);
             makeCodeClassComplex(CodeClassId.CC4, codeClasses);
@@ -353,7 +352,14 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             makeCodeClassComplex(CodeClassId.CC8, codeClasses);
         }
 
-        private void makeAndAddMainCodeOfClass1(TextField<String> field) {
+        private void makeCodeClass1Complex(final List<CodeClass> codeClasses) {
+            final TextField<String> mainCodeOfCodeClass1 = new TextField<String>(Paper.MAIN_CODE_OF_CODECLASS1);
+            final BootstrapMultiSelect<Code> codeClass1 = makeCodeClassComplex(CodeClassId.CC1, codeClasses);
+            codeClass1.add(makeCodeClass1ChangeBehavior(codeClass1, mainCodeOfCodeClass1));
+            addMainCodeOfClass1(mainCodeOfCodeClass1);
+        }
+
+        private void addMainCodeOfClass1(TextField<String> field) {
             String id = field.getId();
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
             queue(new Label(id + LABEL_TAG, labelModel));
@@ -363,7 +369,46 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             queue(field);
         }
 
-        private void makeCodeClassComplex(CodeClassId ccId, final List<CodeClass> codeClasses) {
+        private OnChangeAjaxBehavior makeCodeClass1ChangeBehavior(final BootstrapMultiSelect<Code> codeClass1, final TextField<String> mainCodeOfCodeClass1) {
+            return new OnChangeAjaxBehavior() {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected void onUpdate(final AjaxRequestTarget target) {
+                    if (codeClass1 != null && codeClass1.getModelObject() != null) {
+                        final Collection<Code> codesOfClass1 = codeClass1.getModelObject();
+                        switch (codesOfClass1.size()) {
+                        case 0:
+                            setMainCodeOfClass1(null, mainCodeOfCodeClass1, target);
+                            break;
+                        case 1:
+                            setMainCodeOfClass1(codesOfClass1.iterator().next().getCode(), mainCodeOfCodeClass1, target);
+                            break;
+                        default:
+                            ensureMainCodeIsPartOfCodes(codesOfClass1, mainCodeOfCodeClass1, target);
+                            break;
+                        }
+                    }
+                }
+
+                private void setMainCodeOfClass1(final String code, final TextField<String> mainCodeOfCodeClass1, final AjaxRequestTarget target) {
+                    mainCodeOfCodeClass1.setModelObject(code);
+                    target.add(mainCodeOfCodeClass1);
+                }
+
+                private void ensureMainCodeIsPartOfCodes(Collection<Code> codesOfClass1, TextField<String> mainCodeOfCodeClass1, AjaxRequestTarget target) {
+                    final Optional<String> main = Optional.ofNullable(mainCodeOfCodeClass1.getModelObject());
+                    final Optional<String> match = codesOfClass1.stream().map(c -> c.getCode()).filter(c -> main.isPresent() && main.get().equals(c)).findFirst();
+                    if (main.isPresent() && !match.isPresent()) {
+                        mainCodeOfCodeClass1.setModelObject(null);
+                        target.add(mainCodeOfCodeClass1);
+                    }
+                }
+
+            };
+        }
+
+        private BootstrapMultiSelect<Code> makeCodeClassComplex(CodeClassId ccId, final List<CodeClass> codeClasses) {
             final int id = ccId.getId();
             final String className = codeClasses.stream().filter(cc -> cc.getId() == id).map(CodeClass::getName).findFirst().orElse(ccId.name());
             queue(new Label("codesClass" + id + "Label", Model.of(className)));
@@ -391,6 +436,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<Code>("codesClass" + id, model, choices, choiceRenderer).with(config);
             multiSelect.add(new AttributeModifier("data-width", "fit"));
             queue(multiSelect);
+            return multiSelect;
         }
     }
 
