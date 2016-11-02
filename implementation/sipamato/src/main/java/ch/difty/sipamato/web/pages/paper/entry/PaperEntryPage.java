@@ -24,6 +24,7 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.ChainingModel;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -38,6 +39,7 @@ import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.CodeClass;
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.service.PaperService;
@@ -328,6 +330,8 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
     private class TabPanel3 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
+        private static final String CODES_CLASS_BASE_NAME = "codesClass";
+
         public TabPanel3(String id, IModel<Paper> model) {
             super(id, model);
         }
@@ -342,7 +346,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             CodeClassModel codeClassModel = new CodeClassModel(getLocalization().getLocalization());
             List<CodeClass> codeClasses = codeClassModel.getObject();
 
-            makeCodeClass1Complex(codeClasses);
+            makeCodeClass1Complex(codeClasses, form);
             makeCodeClassComplex(CodeClassId.CC2, codeClasses);
             makeCodeClassComplex(CodeClassId.CC3, codeClasses);
             makeCodeClassComplex(CodeClassId.CC4, codeClasses);
@@ -350,13 +354,15 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             makeCodeClassComplex(CodeClassId.CC6, codeClasses);
             makeCodeClassComplex(CodeClassId.CC7, codeClasses);
             makeCodeClassComplex(CodeClassId.CC8, codeClasses);
+
         }
 
-        private void makeCodeClass1Complex(final List<CodeClass> codeClasses) {
+        private void makeCodeClass1Complex(final List<CodeClass> codeClasses, Form<Paper> form) {
             final TextField<String> mainCodeOfCodeClass1 = new TextField<String>(Paper.MAIN_CODE_OF_CODECLASS1);
             final BootstrapMultiSelect<Code> codeClass1 = makeCodeClassComplex(CodeClassId.CC1, codeClasses);
             codeClass1.add(makeCodeClass1ChangeBehavior(codeClass1, mainCodeOfCodeClass1));
             addMainCodeOfClass1(mainCodeOfCodeClass1);
+            form.add(new CodeClass1ConsistencyValidator(codeClass1, mainCodeOfCodeClass1));
         }
 
         private void addMainCodeOfClass1(TextField<String> field) {
@@ -366,6 +372,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             field.add(new PropertyValidator<String>());
             field.setOutputMarkupId(true);
             field.setLabel(labelModel);
+            field.setEnabled(false);
             queue(field);
         }
 
@@ -406,12 +413,13 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
                 }
 
             };
+
         }
 
         private BootstrapMultiSelect<Code> makeCodeClassComplex(CodeClassId ccId, final List<CodeClass> codeClasses) {
             final int id = ccId.getId();
             final String className = codeClasses.stream().filter(cc -> cc.getId() == id).map(CodeClass::getName).findFirst().orElse(ccId.name());
-            queue(new Label("codesClass" + id + "Label", Model.of(className)));
+            queue(new Label(CODES_CLASS_BASE_NAME + id + "Label", Model.of(className)));
 
             final ChainingModel<List<Code>> model = new ChainingModel<List<Code>>(getModel()) {
                 private static final long serialVersionUID = 1L;
@@ -422,7 +430,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
                 };
 
                 @SuppressWarnings("unchecked")
-                public void setObject(List<Code> codes) {
+                public void setObject(final List<Code> codes) {
                     if (CollectionUtils.isNotEmpty(codes)) {
                         ((IModel<Paper>) getTarget()).getObject().clearCodesOf(ccId);
                         ((IModel<Paper>) getTarget()).getObject().addCodes(codes);
@@ -433,10 +441,41 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<Code>(Code.DISPLAY_VALUE, Code.CODE);
             final StringResourceModel noneSelectedModel = new StringResourceModel("codes.noneSelected", this, null);
             final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true).withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);
-            final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<Code>("codesClass" + id, model, choices, choiceRenderer).with(config);
+            final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<Code>(CODES_CLASS_BASE_NAME + id, model, choices, choiceRenderer).with(config);
             multiSelect.add(new AttributeModifier("data-width", "fit"));
             queue(multiSelect);
             return multiSelect;
+        }
+    }
+
+    static class CodeClass1ConsistencyValidator extends AbstractFormValidator {
+
+        private static final long serialVersionUID = 1L;
+
+        private final FormComponent<?>[] components;
+
+        public CodeClass1ConsistencyValidator(BootstrapMultiSelect<Code> codeClass1, TextField<String> mainCodeOfCodeClass1) {
+            AssertAs.notNull(codeClass1);
+            AssertAs.notNull(mainCodeOfCodeClass1);
+            components = new FormComponent<?>[] { codeClass1, mainCodeOfCodeClass1 };
+        }
+
+        @Override
+        public FormComponent<?>[] getDependentFormComponents() {
+            return components;
+        }
+
+        @Override
+        public void validate(Form<?> form) {
+            @SuppressWarnings("unchecked")
+            final BootstrapMultiSelect<Code> codeClass1 = (BootstrapMultiSelect<Code>) components[0];
+            final FormComponent<?> mainCode = components[1];
+
+            if (!codeClass1.getModelObject().isEmpty() && mainCode.getConvertedInput() == null) {
+                String key = resourceKey();
+                error(mainCode, key + ".mainCodeOfCodeclass1Required");
+            }
+
         }
     }
 
