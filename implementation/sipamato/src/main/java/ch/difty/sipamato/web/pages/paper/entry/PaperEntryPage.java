@@ -433,7 +433,8 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
         }
 
-        private BootstrapMultiSelect<Code> makeCodeClassComplex(CodeClassId ccId, final List<CodeClass> codeClasses) {
+        private BootstrapMultiSelect<Code> makeCodeClassComplex(final CodeClassId codeClassId, final List<CodeClass> codeClasses) {
+            final CodeClassId ccId = CodeClassId.fromId(codeClassId.getId()).get();
             final int id = ccId.getId();
             final String className = codeClasses.stream().filter(cc -> cc.getId() == id).map(CodeClass::getName).findFirst().orElse(ccId.name());
             queue(new Label(CODES_CLASS_BASE_NAME + id + "Label", Model.of(className)));
@@ -448,8 +449,8 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
                 @SuppressWarnings("unchecked")
                 public void setObject(final List<Code> codes) {
+                    ((IModel<Paper>) getTarget()).getObject().clearCodesOf(ccId);
                     if (CollectionUtils.isNotEmpty(codes)) {
-                        ((IModel<Paper>) getTarget()).getObject().clearCodesOf(ccId);
                         ((IModel<Paper>) getTarget()).getObject().addCodes(codes);
                     }
                 }
@@ -488,7 +489,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             final BootstrapMultiSelect<Code> codeClass1 = (BootstrapMultiSelect<Code>) components[0];
             final FormComponent<?> mainCode = components[1];
 
-            if (!codeClass1.getModelObject().isEmpty() && mainCode.getConvertedInput() == null) {
+            if (!codeClass1.getModelObject().isEmpty() && mainCode.getModelObject() == null) {
                 String key = resourceKey();
                 error(mainCode, key + ".mainCodeOfCodeclass1Required");
             }
