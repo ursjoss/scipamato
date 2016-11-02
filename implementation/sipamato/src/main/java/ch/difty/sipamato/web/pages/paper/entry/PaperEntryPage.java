@@ -87,15 +87,32 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
             @Override
             protected void onSubmit() {
-                Paper p = getModelObject();
-                doUpdate(p);
-                info(new StringResourceModel("save.successful.hint", this, null).setParameters(p.getId(), p.getAuthors(), p.getPublicationYear()).getString());
+                super.onSubmit();
+                if (!hasError() && !manualValidationFails()) {
+                    Paper p = getModelObject();
+                    doUpdate(p);
+                    success(new StringResourceModel("save.successful.hint", this, null).setParameters(p.getId(), p.getAuthors(), p.getPublicationYear()).getString());
+                } else {
+                    errorValidationMessage();
+                }
             }
         };
         queue(form);
 
         queueHeaderFields();
         queueTabPanel("tabs");
+    }
+
+    // TODO fix validation to kick in properly
+    @Override
+    protected boolean manualValidationFails() {
+        Paper p = getModelObject();
+        return p.getCodesOf(CodeClassId.CC1).size() > 0 && p.getMainCodeOfCodeclass1() == null;
+    }
+
+    @Override
+    protected void errorValidationMessage() {
+        error(new StringResourceModel("save.unsuccessful.hint", this, null).setParameters(getModelObject().getId()).getString());
     }
 
     @Override

@@ -170,11 +170,18 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
             @Override
             protected void onTimer(AjaxRequestTarget target) {
                 if (isDirty() || keepAliveReached()) {
-                    doUpdate(getForm().getModelObject());
-                    getForm().modelChanged();
-                    setClean();
-                    target.add(getNavBar());
-                    lastSaveTimestamp = dateTimeService.getCurrentDateTime();
+                    if (!manualValidationFails()) {
+                        doUpdate(getForm().getModelObject());
+                        getForm().modelChanged();
+                        setClean();
+                        target.add(getNavBar());
+                        target.add(getFeedbackPanel());
+                        lastSaveTimestamp = dateTimeService.getCurrentDateTime();
+                    } else {
+                        errorValidationMessage();
+                        target.add(getNavBar());
+                        target.add(getFeedbackPanel());
+                    }
                 }
             }
 
@@ -182,6 +189,19 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
                 return dateTimeService.getCurrentDateTime().minusSeconds(Double.valueOf(KEEPALIVE_SECONDS.seconds()).intValue()).isAfter(lastSaveTimestamp);
             }
         };
+    }
+
+    /**
+     * TODO fix validation really use the default form processing mechanism.
+     */
+    protected boolean manualValidationFails() {
+        return false;
+    }
+
+    /**
+     * Override to pace the page specific validation error
+     */
+    protected void errorValidationMessage() {
     }
 
     /**
