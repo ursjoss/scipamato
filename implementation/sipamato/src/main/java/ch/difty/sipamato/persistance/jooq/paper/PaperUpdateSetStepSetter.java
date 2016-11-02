@@ -49,7 +49,9 @@ public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord
             .set(PAPER.INTERN, e.getIntern())
 
             .set(PAPER.RESULT_EXPOSURE_RANGE, e.getResultExposureRange())
-            .set(PAPER.RESULT_EFFECT_ESTIMATE, e.getResultEffectEstimate());
+            .set(PAPER.RESULT_EFFECT_ESTIMATE, e.getResultEffectEstimate())
+
+            .set(PAPER.MAIN_CODE_OF_CODECLASS1, e.getMainCodeOfCodeclass1());
          // @formatter:on
     }
 

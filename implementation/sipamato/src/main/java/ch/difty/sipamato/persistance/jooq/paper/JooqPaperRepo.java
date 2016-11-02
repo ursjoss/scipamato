@@ -112,17 +112,13 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
 
     @Override
     protected void saveAssociatedEntitiesOf(Paper paper) {
-        if (!paper.getCodes().isEmpty()) {
-            storeNewCodesOf(paper);
-        }
+        storeNewCodesOf(paper);
     }
 
     @Override
     protected void updateAssociatedEntities(Paper paper) {
-        if (!paper.getCodes().isEmpty()) {
-            storeNewCodesOf(paper);
-            deleteObsoleteCodesFrom(paper);
-        }
+        storeNewCodesOf(paper);
+        deleteObsoleteCodesFrom(paper);
     }
 
     private void storeNewCodesOf(Paper paper) {

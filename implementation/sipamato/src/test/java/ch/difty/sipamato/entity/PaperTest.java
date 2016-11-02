@@ -200,15 +200,16 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
             + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
             + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
             + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,comment=<null>,intern=<null>"
-            + ",codes=[]]");
+            + ",mainCodeOfCodeclass1=<null>,codes=[]]");
      // @formatter:on
     }
 
     @Test
-    public void testingToString_withCodeClasses() {
+    public void testingToString_withCodeClassesAndMainCodeOfClass1() {
         p.addCode(makeCode(1, "D"));
         p.addCode(makeCode(1, "E"));
         p.addCode(makeCode(5, "A"));
+        p.setMainCodeOfCodeclass1("1D");
         // @formatter:off
         assertThat(p.toString()).isEqualTo(
             "Paper[id=1,doi=10.1093/aje/kwu275,pmId=1000"
@@ -216,7 +217,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
             + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
             + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
             + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,comment=<null>,intern=<null>"
-            + ",codes=[codesOfClass1=[Code[code=1D,name=code 1D,codeClass=CodeClass[id=1],sort=1]],codesOfClass1=[Code[code=1E,name=code 1E,codeClass=CodeClass[id=1],sort=1]],codesOfClass5=[Code[code=5A,name=code 5A,codeClass=CodeClass[id=5],sort=1]]]]");
+            + ",mainCodeOfCodeclass1=1D,codes=[codesOfClass1=[Code[code=1D,name=code 1D,codeClass=CodeClass[id=1],sort=1]],codesOfClass1=[Code[code=1E,name=code 1E,codeClass=CodeClass[id=1],sort=1]],codesOfClass5=[Code[code=5A,name=code 5A,codeClass=CodeClass[id=5],sort=1]]]]");
         // @formatter:on
     }
 
@@ -259,6 +260,20 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(p.getCodesOf(CodeClassId.CC1)).containsExactly(c1D);
         assertThat(p.getCodesOf(CodeClassId.CC2)).containsExactly(c2F, c2A);
         assertThat(p.getCodesOf(CodeClassId.CC3)).isEmpty();
+    }
+
+    @Test
+    public void testingMainCodeOfCodeClass1() {
+        Code c1D = makeCode(1, "D");
+        Code c1E = makeCode(1, "E");
+        Code c5A = makeCode(5, "A");
+        p.addCodes(Arrays.asList(c1E, c1D, c5A));
+        p.setMainCodeOfCodeclass1(c1E.getCode());
+
+        assertThat(p.getCodesOf(CodeClassId.CC1)).containsExactly(c1E, c1D);
+        assertThat(p.getCodesOf(CodeClassId.CC2)).isEmpty();
+        assertThat(p.getCodesOf(CodeClassId.CC5)).containsExactly(c5A);
+        assertThat(p.getMainCodeOfCodeclass1()).isEqualTo("1E");
     }
 
     @Test

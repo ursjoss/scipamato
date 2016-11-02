@@ -50,6 +50,10 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         return navBar;
     }
 
+    protected NotificationPanel getFeedbackPanel() {
+        return feedbackPanel;
+    }
+
     @Override
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);

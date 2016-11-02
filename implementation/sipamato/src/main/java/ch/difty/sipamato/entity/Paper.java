@@ -52,6 +52,8 @@ public class Paper extends SipamatoEntity {
     public static final String RESULT_EXPOSURE_RANGE = "resultExposureRange";
     public static final String RESULT_EFFECT_ESTIMATE = "resultEffectEstimate";
 
+    public static final String MAIN_CODE_OF_CODECLASS1 = "mainCodeOfCodeclass1";
+
     public static final String CODES = "codes";
 
     private Long id;
@@ -106,6 +108,7 @@ public class Paper extends SipamatoEntity {
     private String resultEffectEstimate;
     private String comment;
     private String intern;
+    private String mainCodeOfCodeclass1;
 
     private final CodeBox codes = new CodeBox();
 
@@ -317,6 +320,14 @@ public class Paper extends SipamatoEntity {
         this.resultEffectEstimate = resultEffectEstimate;
     }
 
+    public String getMainCodeOfCodeclass1() {
+        return mainCodeOfCodeclass1;
+    }
+
+    public void setMainCodeOfCodeclass1(String mainCodeOfCodeclass1) {
+        this.mainCodeOfCodeclass1 = mainCodeOfCodeclass1;
+    }
+
     public void clearCodes() {
         this.codes.clear();
     }
@@ -347,18 +358,6 @@ public class Paper extends SipamatoEntity {
         sb.append(firstAuthor).append(" (").append(publicationYear).append("): ");
         sb.append(title).append(".");
         return sb.toString();
-    }
-
-    // TODO temporary to get started with the view. remove afterwards. Need to find a way to access by the various code classes using parameter
-    public void setCodes(List<Code> codes) {
-        this.codes.clear();
-        this.codes.addCodes(codes);
-    }
-
-    // TODO temporary to get started with the view. remove afterwards. Need to find a way to access by the various code classes using parameter
-    public void setCodesOf(CodeClassId ccId, List<Code> codes) {
-        this.codes.clearBy(ccId);
-        this.codes.addCodes(codes);
     }
 
 }

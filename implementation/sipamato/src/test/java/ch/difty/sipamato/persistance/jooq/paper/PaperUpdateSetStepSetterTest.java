@@ -12,6 +12,7 @@ import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.GOA
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.ID;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.INTERN;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.LOCATION;
+import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.MAIN_CODE_OF_CODECLASS1;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.METHODS;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.METHOD_CONFOUNDERS;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.METHOD_OUTCOME;
@@ -98,6 +99,8 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
         when(getMoreStep().set(PAPER.RESULT_EXPOSURE_RANGE, RESULT_EXPOSURE_RANGE)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.RESULT_EFFECT_ESTIMATE, RESULT_EFFECT_ESTIMATE)).thenReturn(getMoreStep());
+
+        when(getMoreStep().set(PAPER.MAIN_CODE_OF_CODECLASS1, MAIN_CODE_OF_CODECLASS1)).thenReturn(getMoreStep());
     }
 
     @Override
@@ -131,6 +134,8 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
         verify(entityMock).getResultExposureRange();
         verify(entityMock).getResultEffectEstimate();
+
+        verify(entityMock).getMainCodeOfCodeclass1();
     }
 
     @Override
@@ -164,6 +169,8 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
         verify(getMoreStep()).set(PAPER.RESULT_EXPOSURE_RANGE, RESULT_EXPOSURE_RANGE);
         verify(getMoreStep()).set(PAPER.RESULT_EFFECT_ESTIMATE, RESULT_EFFECT_ESTIMATE);
+
+        verify(getMoreStep()).set(PAPER.MAIN_CODE_OF_CODECLASS1, MAIN_CODE_OF_CODECLASS1);
     }
 
 }
