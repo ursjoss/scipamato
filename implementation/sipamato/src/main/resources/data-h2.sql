@@ -270,7 +270,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '4B', 'de', 'Lungenfunktion', DEFAULT, DEFAU
 INSERT INTO code_tr VALUES(DEFAULT, '4C', 'de', 'Symptome', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4D', 'de', 'Biochemische oder zelluläre Veränderungen', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4E', 'de', 'Atemwegskrankheiten akut', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4F', 'de', 'Atemwegskrankheiten chron. Wie COPD/Asthma', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4F', 'de', 'Atemwegskrankheiten chronisch', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4G', 'de', 'Krebs', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4H', 'de', 'Herz, Kreislauf, Blut', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4I', 'de', 'Gehirn, Nerven, Augen, Ohren', DEFAULT, DEFAULT);
@@ -360,7 +360,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '4B', 'en', 'Lung function, pulmonary functi
 INSERT INTO code_tr VALUES(DEFAULT, '4C', 'en', 'Symptoms', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4D', 'en', 'Biochemical or cellular responses', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4E', 'en', 'Respiratory diseases acute', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4F', 'en', 'Respiratory diseases chronical', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4F', 'en', 'Respiratory diseases chronic', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4G', 'en', 'Cancer', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4H', 'en', 'Heart, cardovascular system, blood', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4I', 'en', 'Brain, nervous system, eyes, ears', DEFAULT, DEFAULT);
