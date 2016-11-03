@@ -263,7 +263,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '3O', 'de', 'Beruflich Exponierte', null, DE
 INSERT INTO code_tr VALUES(DEFAULT, '3K', 'de', 'Gewebe', null, DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3L', 'de', 'Zellen', null, DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3U', 'de', 'Übrige / Andere', null, DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '3Z', 'de', 'Mehr als 8 / alle', null, DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3Z', 'de', 'Mehr als 8 Teilnehmergruppen / alle', null, DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '4A', 'de', 'Sterblichkeit', null, DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4B', 'de', 'Lungenfunktion', null, DEFAULT, DEFAULT);
@@ -354,7 +354,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '3O', 'en', 'Ocupationally exposed', null, D
 INSERT INTO code_tr VALUES(DEFAULT, '3K', 'en', 'Tissue', null, DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3L', 'en', 'Cells', null, DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3U', 'en', 'Others', null, DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '3Z', 'en', 'More than 8 / all', null, DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3Z', 'en', 'More than 8 participant groups / all', null, DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '4A', 'en', 'Mortality', null, DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4B', 'en', 'Lung function, pulmonary function', null, DEFAULT, DEFAULT);
