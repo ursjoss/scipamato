@@ -245,7 +245,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '1T', 'de', 'Temperatur', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1U', 'de', 'Andere / Übrige', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1V', 'de', 'Verkehr', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1Y', 'de', 'Gerüche', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '1Z', 'de', 'Mehr als 8, alle gemeinsam', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1Z', 'de', 'Mehr als 8 Schadstoffe, alle gemeinsam', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '2R', 'de', 'Europa', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '2N', 'de', 'Übrige Länder', DEFAULT, DEFAULT);
@@ -335,7 +335,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '1T', 'en', 'Temperature', DEFAULT, DEFAULT)
 INSERT INTO code_tr VALUES(DEFAULT, '1U', 'en', 'Others', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1V', 'en', 'Traffic', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1Y', 'en', 'Odours', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '1Z', 'en', 'More than 8, all together', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1Z', 'en', 'More than 8 pollutants, all together', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '2R', 'en', 'Europe', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '2N', 'en', 'Other countries', DEFAULT, DEFAULT);
@@ -425,7 +425,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '1T', 'fr', 'Température', DEFAULT, DEFAULT
 INSERT INTO code_tr VALUES(DEFAULT, '1U', 'fr', 'Autres', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1V', 'fr', 'Trafic / circulation', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1Y', 'fr', 'Odeur', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '1Z', 'fr', 'Plus de 8 / tous', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1Z', 'fr', 'Plus de 8 polluants / tous', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '2R', 'fr', 'Europe', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '2N', 'fr', 'Autres pays', DEFAULT, DEFAULT);
