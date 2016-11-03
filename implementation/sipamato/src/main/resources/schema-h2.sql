@@ -73,6 +73,7 @@ CREATE TABLE code (
   code CHAR(2) NOT NULL PRIMARY KEY,
   code_class_id INT NOT NULL,
   sort INT NOT NULL,
+  internal BOOLEAN NOT NULL DEFAULT 0,
 
   version INT DEFAULT 1,
   timestamp TIMESTAMP DEFAULT current_timestamp(),

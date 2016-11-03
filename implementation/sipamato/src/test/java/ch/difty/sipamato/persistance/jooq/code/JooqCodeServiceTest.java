@@ -33,8 +33,8 @@ public class JooqCodeServiceTest {
         String languageCode = "de";
 
         List<Code> codes = new ArrayList<>();
-        codes.add(new Code("c1", "Code1", null, 1, "cc1", "", 1));
-        codes.add(new Code("c2", "Code2", null, 1, "cc1", "", 2));
+        codes.add(new Code("c1", "Code1", null, false, 1, "cc1", "", 1));
+        codes.add(new Code("c2", "Code2", null, false, 1, "cc1", "", 2));
         when(repoMock.findCodesOfClass(ccId, languageCode)).thenReturn(codes);
 
         assertThat(extractProperty(Code.CODE).from(service.findCodesOfClass(ccId, languageCode))).containsOnly("c1", "c2");

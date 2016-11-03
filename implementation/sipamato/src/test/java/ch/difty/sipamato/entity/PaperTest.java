@@ -217,13 +217,13 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
             + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
             + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
             + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,comment=<null>,intern=<null>"
-            + ",mainCodeOfCodeclass1=1D,codes=[codesOfClass1=[Code[code=1D,name=code 1D,comment=<null>,codeClass=CodeClass[id=1],sort=1]],codesOfClass1=[Code[code=1E,name=code 1E,comment=<null>,codeClass=CodeClass[id=1],sort=1]],codesOfClass5=[Code[code=5A,name=code 5A,comment=<null>,codeClass=CodeClass[id=5],sort=1]]]]");
+            + ",mainCodeOfCodeclass1=1D,codes=[codesOfClass1=[Code[code=1D,name=code 1D,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1]],codesOfClass1=[Code[code=1E,name=code 1E,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1]],codesOfClass5=[Code[code=5A,name=code 5A,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=1]]]]");
         // @formatter:on
     }
 
     private Code makeCode(int codeClassId, String codePart) {
         String code = codeClassId + codePart;
-        return new Code(code, "code " + code, null, codeClassId, "cc" + code, "code class " + code, 1);
+        return new Code(code, "code " + code, null, false, codeClassId, "cc" + code, "code class " + code, 1);
     }
 
     @Test
