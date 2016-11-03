@@ -243,7 +243,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '1R', 'de', 'Feuchtigkeit in der Raumluft', 
 INSERT INTO code_tr VALUES(DEFAULT, '1S', 'de', 'Milben, Allergene in den Raumluft', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1T', 'de', 'Temperatur', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1U', 'de', 'Andere / Übrige', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '1V', 'de', 'Verkehr (gemessen: Verkehrsdichte, Nähe Strasse, # Fahrzeuge, Verkehrsberufe)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1V', 'de', 'Verkehr', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1Y', 'de', 'Gerüche', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1Z', 'de', 'Mehr als 8, alle gemeinsam', DEFAULT, DEFAULT);
 
@@ -423,7 +423,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '1R', 'fr', 'Humidité (air intérieur)', DE
 INSERT INTO code_tr VALUES(DEFAULT, '1S', 'fr', 'Allergènes dans l''air intérieur', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1T', 'fr', 'Température', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1U', 'fr', 'Autres', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '1V', 'fr', 'Trafic', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1V', 'fr', 'Trafic / circulation', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1Y', 'fr', 'Odeur', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1Z', 'fr', 'Plus de 8 / tous', DEFAULT, DEFAULT);
 
