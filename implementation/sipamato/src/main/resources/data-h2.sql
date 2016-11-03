@@ -262,7 +262,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '3I', 'de', 'Sportler/innen', DEFAULT, DEFAU
 INSERT INTO code_tr VALUES(DEFAULT, '3O', 'de', 'Beruflich Exponierte', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3K', 'de', 'Gewebe', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3L', 'de', 'Zellen', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '3U', 'de', 'Übrige /Andere', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3U', 'de', 'Übrige / Andere', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3Z', 'de', 'Mehr als 8 / alle', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '4A', 'de', 'Sterblichkeit', DEFAULT, DEFAULT);
@@ -314,6 +314,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '8O', 'de', 'Aussenluft', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8P', 'de', 'Individuelle Messung', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8W', 'de', 'Berufliche Exposition', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8Z', 'de', 'Alle', DEFAULT, DEFAULT);
+
 
 INSERT INTO code_tr VALUES(DEFAULT, '1F', 'en', 'Particles, Particulate Matter', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1A', 'en', 'Ozone, Oxidants', DEFAULT, DEFAULT);
@@ -441,8 +442,8 @@ INSERT INTO code_tr VALUES(DEFAULT, '3I', 'fr', 'Sportifs', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3O', 'fr', 'Personnes exposées au travail', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3K', 'fr', 'Tissus', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3L', 'fr', 'Cellules', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '3U', 'fr', 'Autres (TODO)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '3Z', 'fr', 'Plus de 8 / tous (TODO)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3U', 'fr', 'Autres', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3Z', 'fr', 'Plus de 8 / tous', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '4A', 'fr', 'Mortalité', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4B', 'fr', 'Fonction pulmonaire', DEFAULT, DEFAULT);
@@ -492,6 +493,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '8O', 'fr', 'Air extérieur', DEFAULT, DEFAU
 INSERT INTO code_tr VALUES(DEFAULT, '8P', 'fr', 'Mesures personalisées', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8W', 'fr', 'Exposition lié au travail', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '8Z', 'fr', 'Tous', DEFAULT, DEFAULT);
+
 
 INSERT INTO paper_code VALUES(1, '1F', DEFAULT, DEFAULT);
 INSERT INTO paper_code VALUES(1, '2N', DEFAULT, DEFAULT);
