@@ -382,10 +382,9 @@ INSERT INTO code_tr VALUES(DEFAULT, '5F', 'en', 'Panel study,  time series', DEF
 INSERT INTO code_tr VALUES(DEFAULT, '5G', 'en', 'Cross-sectional or case-control study, descriptive', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5H', 'en', 'Cohort Study', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5I', 'en', 'Intervention', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '5M', 'en', 'Exposure assessment , modelling', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5M', 'en', 'Methodological study, Exposure assessment, modelling', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5S', 'en', 'Statistics', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '5D', 'en', 'TODO (Einzelfallbeschreibung, Fallstudie)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '5K', 'en', 'TODO (Krankheitsbeschreibung)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5D', 'en', 'Case study', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5U', 'en', 'Review, meta-analysis', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '6M', 'en', 'Humans', DEFAULT, DEFAULT);
@@ -472,10 +471,9 @@ INSERT INTO code_tr VALUES(DEFAULT, '5F', 'fr', 'Etude panel, étude longitudina
 INSERT INTO code_tr VALUES(DEFAULT, '5G', 'fr', 'Etude transversal ou cas-témoin, descriptive', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5H', 'fr', 'Etude de cohorte', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5I', 'fr', 'Intervention', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '5M', 'fr', 'Méthodologie, statistique (TODO diff. 5S)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '5S', 'fr', 'Méthodologie, statistique (TODO diff. 5M)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '5D', 'fr', 'TODO (Einzelfallbeschreibung, Fallstudie)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '5K', 'fr', 'TODO (Krankheitsbeschreibung)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5M', 'fr', 'Méthodologie', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5S', 'fr', 'Statistique ', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5D', 'fr', 'Étude de cas', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5U', 'fr', 'Review, révue, méta-analyse', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '6M', 'fr', 'Hommes', DEFAULT, DEFAULT);
