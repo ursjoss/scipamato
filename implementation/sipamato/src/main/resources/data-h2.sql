@@ -374,9 +374,9 @@ INSERT INTO code_tr VALUES(DEFAULT, '4X', 'en', 'Costs', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4Y', 'en', 'Absenteeism, restricted activity', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4Z', 'en', 'More than 8 health outcomes / all', DEFAULT, DEFAULT);
 
-INSERT INTO code_tr VALUES(DEFAULT, '5A', 'en', 'Experimental study TODO (unter Belastung)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '5B', 'en', 'Experimental study TODO (in Ruhe)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '5C', 'en', 'Experimental study TODO (Zellstudie etc.)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5A', 'en', 'Experimental study under exercising conditions', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5B', 'en', 'Experimental study under resting conditions', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5C', 'en', 'Experimental study with cells, tissues', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5E', 'en', 'Accidental release, fire', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5F', 'en', 'Panel study,  time series', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5G', 'en', 'Cross-sectional or case-control study, descriptive', DEFAULT, DEFAULT);
@@ -464,9 +464,9 @@ INSERT INTO code_tr VALUES(DEFAULT, '4X', 'fr', 'Frais / coûts', DEFAULT, DEFAU
 INSERT INTO code_tr VALUES(DEFAULT, '4Y', 'fr', 'Absentéisme, activités réduites', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4Z', 'fr', 'Plus de 8 effets / tous', DEFAULT, DEFAULT);
 
-INSERT INTO code_tr VALUES(DEFAULT, '5A', 'fr', 'Etude expérimentale TODO (unter Belastung / Arbeit)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '5B', 'fr', 'Etude expérimentale TODO (in Ruhe)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '5C', 'fr', 'Etude expérimentale TODO (Zellstudie etc.)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5A', 'fr', 'Etude expérimentale dans des conditions exercicantes', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5B', 'fr', 'Etude expérimentale dans des conditions sédentaires', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '5C', 'fr', 'Etude expérimentale avec cellules etc.', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5E', 'fr', 'Accident, incident chimique, feu', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5F', 'fr', 'Etude panel, étude longitudinale à court terme, séries chronologiques', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5G', 'fr', 'Etude transversal ou cas-témoin, descriptive', DEFAULT, DEFAULT);
