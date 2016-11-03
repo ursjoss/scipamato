@@ -391,7 +391,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '6M', 'en', 'Humans', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '6T', 'en', 'Animals', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '6O', 'en', 'Viruses, Bacteria, Protozoa', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '6P', 'en', 'Plants', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '6Z', 'en', 'All / Gen. overviews', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '6Z', 'en', 'All / General Overviews', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '7K', 'en', 'Short-term', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '7L', 'en', 'Long-term', DEFAULT, DEFAULT);
