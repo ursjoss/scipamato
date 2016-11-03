@@ -1,12 +1,4 @@
 wicket:
-  core:
-    settings:
-      general:
-        configuration-type: development
-      debug:
-        enabled: true
-        component-use-check: true
-        development-utilities-enabled: true
   stuff:
     htmlcompressor:
       enabled: false
