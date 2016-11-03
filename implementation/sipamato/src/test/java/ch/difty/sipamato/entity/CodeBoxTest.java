@@ -21,7 +21,7 @@ public class CodeBoxTest {
     private static Code makeCode(CodeClassId codeClassId, String codePart2, int sort) {
         int ccId = codeClassId.getId();
         String code = ccId + codePart2;
-        return new Code(code, "Code " + code, ccId, codeClassId.name(), "", sort);
+        return new Code(code, "Code " + code, null, ccId, codeClassId.name(), "", sort);
     }
 
     @Test
@@ -158,11 +158,11 @@ public class CodeBoxTest {
          // @formatter:off
               "["
             +   "codesOfClass1=["
-            +     "Code[code=1F,name=Code 1F,codeClass=CodeClass[id=1],sort=1]"
+            +     "Code[code=1F,name=Code 1F,comment=<null>,codeClass=CodeClass[id=1],sort=1]"
             +   "]"
             +  ",codesOfClass5=["
-            +     "Code[code=5H,name=Code 5H,codeClass=CodeClass[id=5],sort=7]"
-            +   ", Code[code=5F,name=Code 5F,codeClass=CodeClass[id=5],sort=5]"
+            +     "Code[code=5H,name=Code 5H,comment=<null>,codeClass=CodeClass[id=5],sort=7]"
+            +   ", Code[code=5F,name=Code 5F,comment=<null>,codeClass=CodeClass[id=5],sort=5]"
             +   "]"
             + "]"
          // @formatter:on

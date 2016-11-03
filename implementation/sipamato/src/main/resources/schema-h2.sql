@@ -89,6 +89,7 @@ CREATE TABLE code_tr (
   lang_code VARCHAR NOT NULL,
 
   name VARCHAR NOT NULL,
+  comment VARCHAR NULL,
 
   version INT DEFAULT 1,
   timestamp TIMESTAMP DEFAULT current_timestamp(),

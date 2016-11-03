@@ -91,6 +91,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
             final List<Code> codes = getDsl()
                 .select(CODE.CODE_.as("C_ID")
                         , DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL).as("C_NAME")
+                        , CODE_TR.COMMENT.as("C_COMMENT")
                         , CODE_CLASS.ID.as("CC_ID")
                         , DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL).as("CC_NAME")
                         , DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL).as("CC_DESCRIPTION")
