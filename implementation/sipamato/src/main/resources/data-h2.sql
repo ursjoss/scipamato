@@ -327,7 +327,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '1I', 'en', 'Acidic Aerosols', DEFAULT, DEFA
 INSERT INTO code_tr VALUES(DEFAULT, '1K', 'en', 'Radioactive substances', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1L', 'en', 'Asbestos, fibres', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1M', 'en', 'Tobacco smoke, passive smoking', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '1N', 'en', 'TODO (Keine Messung, andere Art der Exposure (Stadt : Land) z.B. Lärm)', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '1N', 'en', 'Different exposure or assessment (geographic, noise)', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1P', 'en', 'Pollen', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1R', 'en', 'Indoor air humidity', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1S', 'en', 'Mites, indoor allergens', DEFAULT, DEFAULT);
@@ -418,7 +418,6 @@ INSERT INTO code_tr VALUES(DEFAULT, '1I', 'fr', 'Aérosols acides', DEFAULT, DEF
 INSERT INTO code_tr VALUES(DEFAULT, '1K', 'fr', 'Substances radioactives', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1L', 'fr', 'Amiante, fibres', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1M', 'fr', 'Tabagisme passif, fumée de cigarette', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '1N', 'fr', 'TODO (Keine Messung, andere Art der Exposure (Stadt : Land) z.B. Lärm)', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1P', 'fr', 'Pollen', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1R', 'fr', 'Humidité (air intérieur)', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '1S', 'fr', 'Allergènes dans l''air intérieur', DEFAULT, DEFAULT);
