@@ -279,10 +279,10 @@ INSERT INTO code_tr VALUES(DEFAULT, '4M', 'de', 'Medikamentenkonsum, Konsultatio
 INSERT INTO code_tr VALUES(DEFAULT, '4N', 'de', 'Fertilität, Schwangerschaftsproblem, Abort', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4O', 'de', 'Frühgeburt, Säuglingsgewicht, pränatale Entwicklung', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4L', 'de', 'Missbildungen', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4U', 'de', 'Übrige /Andere', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4U', 'de', 'Übrige / Andere', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4X', 'de', 'Kosten', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4Y', 'de', 'Absenzen, eingeschränkte Aktivität', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4Z', 'de', 'Mehr als 8 / Alle', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4Z', 'de', 'Mehr als 8 ges. Zielgrössen / Alle', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '5A', 'de', 'Experimentelle Studie unter Belastung / Arbeit', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5B', 'de', 'Experimentelle Studie in Ruhe', DEFAULT, DEFAULT);
@@ -370,9 +370,9 @@ INSERT INTO code_tr VALUES(DEFAULT, '4N', 'en', 'Fertility, pregnancy complicati
 INSERT INTO code_tr VALUES(DEFAULT, '4O', 'en', 'Preterm birth, birth weight, prenatal development', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4L', 'en', 'Congenital malformation', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4U', 'en', 'Others', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4X', 'en', 'Cost', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4Y', 'en', 'Absences, limited activity (TODO)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4Z', 'en', 'More than 8 / all', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4X', 'en', 'Costs', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4Y', 'en', 'Absenteeism, restricted activity', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4Z', 'en', 'More than 8 health outcomes / all', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '5A', 'en', 'Experimental study TODO (unter Belastung)', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5B', 'en', 'Experimental study TODO (in Ruhe)', DEFAULT, DEFAULT);
@@ -460,9 +460,9 @@ INSERT INTO code_tr VALUES(DEFAULT, '4N', 'fr', 'Fertilité, complication de gro
 INSERT INTO code_tr VALUES(DEFAULT, '4O', 'fr', 'Naissance prématurée, poids de naissance ', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4L', 'fr', 'Malformation', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '4U', 'fr', 'Autres', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4X', 'fr', 'Coûts (TODO)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4Y', 'fr', 'Absences, activités limités (TODO)', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '4Z', 'fr', 'Plus de 8 / tous', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4X', 'fr', 'Frais / coûts', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4Y', 'fr', 'Absentéisme, activités réduites', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '4Z', 'fr', 'Plus de 8 effets / tous', DEFAULT, DEFAULT);
 
 INSERT INTO code_tr VALUES(DEFAULT, '5A', 'fr', 'Etude expérimentale TODO (unter Belastung / Arbeit)', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '5B', 'fr', 'Etude expérimentale TODO (in Ruhe)', DEFAULT, DEFAULT);
