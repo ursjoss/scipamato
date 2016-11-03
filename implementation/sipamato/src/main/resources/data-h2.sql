@@ -351,7 +351,7 @@ INSERT INTO code_tr VALUES(DEFAULT, '3G', 'en', 'Pregnant women', DEFAULT, DEFAU
 INSERT INTO code_tr VALUES(DEFAULT, '3I', 'en', 'Athletes', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3O', 'en', 'Ocupationally exposed', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3K', 'en', 'Tissue', DEFAULT, DEFAULT);
-INSERT INTO code_tr VALUES(DEFAULT, '3L', 'en', 'Zells', DEFAULT, DEFAULT);
+INSERT INTO code_tr VALUES(DEFAULT, '3L', 'en', 'Cells', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3U', 'en', 'Others', DEFAULT, DEFAULT);
 INSERT INTO code_tr VALUES(DEFAULT, '3Z', 'en', 'More than 8 / all', DEFAULT, DEFAULT);
 
