@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
-    private final Code c = new Code("1A", "code1", 1, "c1", "", 1);
+    private final Code c = new Code("1A", "code1", null, false, 1, "c1", "", 1);
 
     private void verifySuccessfulValidation(Code code) {
         validate(code);
@@ -27,7 +27,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void constructing_withAllValues_populatesCodeClass() {
-        Code c = new Code("C1", "c1", 10, "cc10", "codeclass10", 2);
+        Code c = new Code("C1", "c1", null, false, 10, "cc10", "codeclass10", 2);
         assertThat(c.getCodeClass()).isNotNull();
         assertThat(c.getCodeClass().getId()).isEqualTo(10);
         assertThat(c.getCodeClass().getName()).isEqualTo("cc10");
@@ -36,7 +36,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void constructing_withNullCodeClassId_leaveCodeClassNull() {
-        Code c = new Code("C1", "c1", null, "cc10", "codeclass10", 1);
+        Code c = new Code("C1", "c1", null, false, null, "cc10", "codeclass10", 1);
         assertThat(c.getCodeClass()).isNull();
     }
 
@@ -47,39 +47,41 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void validatingCode_withNullCode_fails() {
-        Code c = new Code(null, "code1", 1, "c1", "", 1);
+        Code c = new Code(null, "code1", null, false, 1, "c1", "", 1);
         validateAndAssertFailure(c, Code.CODE, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingCode_withNullName_fails() {
-        Code c = new Code("1A", null, 1, "c1", "", 1);
+        Code c = new Code("1A", null, null, false, 1, "c1", "", 1);
         validateAndAssertFailure(c, Code.NAME, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingCode_withNullCodeClass_fails() {
-        Code c = new Code("1A", "code1", null, null, null, 1);
+        Code c = new Code("1A", "code1", null, false, null, null, null, 1);
         validateAndAssertFailure(c, Code.CODE_CLASS, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingCode_withWrongCodeFormat_fails() {
-        Code c = new Code("xyz", "code1", 1, "c1", "", 1);
+        Code c = new Code("xyz", "code1", null, false, 1, "c1", "", 1);
         validateAndAssertFailure(c, Code.CODE, "xyz", "{code.invalidCode}");
     }
 
     @Test
     public void testingToString() {
-        assertThat(c.toString()).isEqualTo("Code[code=1A,name=code1,codeClass=CodeClass[id=1],sort=1]");
+        assertThat(c.toString()).isEqualTo("Code[code=1A,name=code1,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1]");
     }
 
     @Test
     public void cloning_copiesValues() {
-        Code c1 = new Code("1A", "code1", 1, "c1", "", 2);
+        Code c1 = new Code("1A", "code1", "foo", true, 1, "c1", "", 2);
         Code c2 = new Code(c1);
         assertThat(c2.getCode()).isEqualTo("1A");
         assertThat(c2.getName()).isEqualTo("code1");
+        assertThat(c2.getComment()).isEqualTo("foo");
+        assertThat(c2.isInternal()).isTrue();
         assertThat(c2.getCodeClass()).isEqualToComparingFieldByField(c1.getCodeClass());
         assertThat(c2.getSort()).isEqualTo(2);
     }
@@ -94,33 +96,57 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void differingValues_makeInequality() {
-        Code c1 = new Code("1A", "code1", 1, "c1", "", 1);
-        Code c2 = new Code("1B", "code1", 1, "c1", "", 1);
-        Code c3 = new Code("1A", "code2", 1, "c1", "", 1);
-        Code c4 = new Code("1A", "code1", 2, "c2", "", 1);
-        Code c5 = new Code("1A", "code1", 1, "c2", "", 2);
+        Code c1 = new Code("1A", "code1", null, false, 1, "c1", "", 1);
+        Code c2 = new Code("1B", "code1", null, false, 1, "c1", "", 1);
+        Code c3 = new Code("1A", "code2", null, false, 1, "c1", "", 1);
+        Code c4 = new Code("1A", "code1", null, false, 2, "c2", "", 1);
+        Code c5 = new Code("1A", "code1", null, false, 1, "c2", "", 2);
+        Code c6 = new Code("1A", "code1", "foo", false, 1, "c1", "", 1);
+        Code c7 = new Code("1A", "code1", null, true, 1, "c1", "", 1);
 
         assertThat(c1.equals(c2)).isFalse();
         assertThat(c1.equals(c3)).isFalse();
         assertThat(c1.equals(c4)).isFalse();
         assertThat(c1.equals(c5)).isFalse();
+        assertThat(c1.equals(c6)).isFalse();
+        assertThat(c1.equals(c7)).isFalse();
         assertThat(c2.equals(c3)).isFalse();
         assertThat(c2.equals(c4)).isFalse();
         assertThat(c2.equals(c5)).isFalse();
+        assertThat(c2.equals(c6)).isFalse();
+        assertThat(c2.equals(c7)).isFalse();
         assertThat(c3.equals(c4)).isFalse();
         assertThat(c3.equals(c5)).isFalse();
+        assertThat(c3.equals(c6)).isFalse();
+        assertThat(c3.equals(c7)).isFalse();
         assertThat(c4.equals(c5)).isFalse();
+        assertThat(c4.equals(c6)).isFalse();
+        assertThat(c4.equals(c7)).isFalse();
+        assertThat(c5.equals(c6)).isFalse();
+        assertThat(c5.equals(c7)).isFalse();
+        assertThat(c6.equals(c7)).isFalse();
 
         assertThat(c1.hashCode()).isNotEqualTo(c2.hashCode());
         assertThat(c1.hashCode()).isNotEqualTo(c3.hashCode());
         assertThat(c1.hashCode()).isNotEqualTo(c4.hashCode());
         assertThat(c1.hashCode()).isNotEqualTo(c5.hashCode());
+        assertThat(c1.hashCode()).isNotEqualTo(c6.hashCode());
+        assertThat(c1.hashCode()).isNotEqualTo(c7.hashCode());
         assertThat(c2.hashCode()).isNotEqualTo(c3.hashCode());
         assertThat(c2.hashCode()).isNotEqualTo(c4.hashCode());
         assertThat(c2.hashCode()).isNotEqualTo(c5.hashCode());
+        assertThat(c2.hashCode()).isNotEqualTo(c6.hashCode());
+        assertThat(c2.hashCode()).isNotEqualTo(c7.hashCode());
         assertThat(c3.hashCode()).isNotEqualTo(c4.hashCode());
         assertThat(c3.hashCode()).isNotEqualTo(c5.hashCode());
+        assertThat(c3.hashCode()).isNotEqualTo(c6.hashCode());
+        assertThat(c3.hashCode()).isNotEqualTo(c7.hashCode());
         assertThat(c4.hashCode()).isNotEqualTo(c5.hashCode());
+        assertThat(c4.hashCode()).isNotEqualTo(c6.hashCode());
+        assertThat(c4.hashCode()).isNotEqualTo(c7.hashCode());
+        assertThat(c5.hashCode()).isNotEqualTo(c6.hashCode());
+        assertThat(c5.hashCode()).isNotEqualTo(c7.hashCode());
+        assertThat(c6.hashCode()).isNotEqualTo(c7.hashCode());
     }
 
     @Test
