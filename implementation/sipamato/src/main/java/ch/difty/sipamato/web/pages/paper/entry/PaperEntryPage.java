@@ -148,7 +148,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
     private void queueHeaderFields() {
         queueAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
         queueFieldAndLabel(new TextArea<String>(Paper.TITLE), new PropertyValidator<String>());
-        queueFieldAndLabel(new TextField<String>(Paper.LOCATION));
+        queueFieldAndLabel(new TextField<String>(Paper.LOCATION), new PropertyValidator<String>());
 
         TextField<Integer> id = new TextField<Integer>(Paper.ID);
         id.setEnabled(false);
@@ -272,14 +272,18 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
         }
 
         void queueTo(Form<Paper> form, String id) {
-            queueTo(form, id, false);
+            queueTo(form, id, false, Optional.empty());
+        }
+
+        void queueTo(Form<Paper> form, String id, PropertyValidator<?> pv) {
+            queueTo(form, id, false, Optional.ofNullable(pv));
         }
 
         void queueNewFieldTo(Form<Paper> form, String id) {
-            queueTo(form, id, true);
+            queueTo(form, id, true, Optional.empty());
         }
 
-        void queueTo(Form<Paper> form, String id, boolean newField) {
+        void queueTo(Form<Paper> form, String id, boolean newField, Optional<PropertyValidator<?>> pv) {
             TextArea<String> field = new TextArea<String>(id);
             field.add(new PropertyValidator<String>());
             field.setOutputMarkupId(true);
@@ -288,6 +292,9 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             field.setLabel(labelModel);
             if (newField) {
                 field.add(new AttributeAppender("class", " newField"));
+            }
+            if (pv.isPresent()) {
+                field.add(pv.get());
             }
             queue(field);
         }
@@ -307,7 +314,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             Form<Paper> form = new Form<Paper>("tab1Form");
             queue(form);
 
-            queueTo(form, Paper.GOALS);
+            queueTo(form, Paper.GOALS, new PropertyValidator<String>());
             queueTo(form, Paper.POPULATION);
             queueTo(form, Paper.METHODS);
 
