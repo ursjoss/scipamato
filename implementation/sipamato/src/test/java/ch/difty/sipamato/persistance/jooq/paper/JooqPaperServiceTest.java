@@ -93,10 +93,21 @@ public class JooqPaperServiceTest {
     }
 
     @Test
-    public void updating_delgatesToRepo() {
+    public void savingOrUpdating_withPaperWithNullId_hasRepoAddThePaper() {
+        when(paperMock.getId()).thenReturn(null);
+        when(repoMock.add(paperMock)).thenReturn(paperMock);
+        assertThat(service.saveOrUpdate(paperMock)).isEqualTo(paperMock);
+        verify(repoMock).add(paperMock);
+        verify(paperMock).getId();
+    }
+
+    @Test
+    public void savingOrUpdating_withPaperWithNonNullId_hasRepoUpdateThePaper() {
+        when(paperMock.getId()).thenReturn(17l);
         when(repoMock.update(paperMock)).thenReturn(paperMock);
-        assertThat(service.update(paperMock)).isEqualTo(paperMock);
+        assertThat(service.saveOrUpdate(paperMock)).isEqualTo(paperMock);
         verify(repoMock).update(paperMock);
+        verify(paperMock).getId();
     }
 
 }

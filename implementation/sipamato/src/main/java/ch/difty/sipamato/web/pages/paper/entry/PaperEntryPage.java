@@ -129,7 +129,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
     protected void doUpdate(Paper paper) {
         try {
             modelChanged();
-            Paper persisted = service.update(paper);
+            Paper persisted = service.saveOrUpdate(paper);
             if (persisted != null) {
                 setModelObject(persisted); // necessary?
                 setClean();

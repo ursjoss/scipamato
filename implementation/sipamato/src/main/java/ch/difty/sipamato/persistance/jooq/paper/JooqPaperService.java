@@ -48,8 +48,12 @@ public class JooqPaperService implements PaperService {
 
     /** {@inhericDoc} */
     @Override
-    public Paper update(Paper paper) {
-        return repo.update(paper);
+    public Paper saveOrUpdate(Paper paper) {
+        if (paper.getId() == null) {
+            return repo.add(paper);
+        } else {
+            return repo.update(paper);
+        }
     }
 
 }
