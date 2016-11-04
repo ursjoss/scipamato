@@ -19,6 +19,6 @@ public interface EntityService<T extends SipamatoEntity, F extends SipamatoFilte
      * @param the entity to persist
      * @return the persisted entity
      */
-    T update(T entity);
+    T saveOrUpdate(T entity);
 
 }

@@ -95,12 +95,12 @@ public class PaperEntryPageTest extends AutoSaveAwarePageTest<PaperEntryPage> {
     @Test
     @Ignore // TODO get the submit test kick off the onSubmit event and test it
     public void submitting_shouldActuallyKickoffOnSubmitInTest() {
-        when(serviceMock.update(isA(Paper.class))).thenReturn(persistedPaperMock);
+        when(serviceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
 
         getTester().startPage(makePage());
         getTester().submitForm("form");
 
         getTester().assertInfoMessages("foo");
-        verify(serviceMock).update(isA(Paper.class));
+        verify(serviceMock).saveOrUpdate(isA(Paper.class));
     }
 }
