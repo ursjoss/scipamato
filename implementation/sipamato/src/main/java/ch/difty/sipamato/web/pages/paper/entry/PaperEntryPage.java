@@ -112,7 +112,11 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
     @Override
     protected void errorValidationMessage() {
-        error(new StringResourceModel("save.unsuccessful.hint", this, null).setParameters(getModelObject().getId()).getString());
+        error(new StringResourceModel("save.unsuccessful.hint", this, null).setParameters(getNullSafeId()).getString());
+    }
+
+    private Long getNullSafeId() {
+        return getModelObject().getId() != null ? getModelObject().getId().longValue() : 0l;
     }
 
     @Override
@@ -134,10 +138,10 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
                 setModelObject(persisted); // necessary?
                 setClean();
             } else {
-                warn(new StringResourceModel("save.unsuccessful.hint", this, null).setParameters(getModelObject().getId()));
+                errorValidationMessage();
             }
         } catch (Exception ex) {
-            warn(new StringResourceModel("save.error.hint", this, null).setParameters(getModelObject().getId(), ex.getMessage()));
+            error(new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId()).getString());
         }
     }
 
