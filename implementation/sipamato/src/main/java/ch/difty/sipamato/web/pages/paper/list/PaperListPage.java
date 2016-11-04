@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -27,6 +29,8 @@ import ch.difty.sipamato.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
@@ -56,12 +60,24 @@ public class PaperListPage extends BasePage<PaperSlim> {
         final SortablePaperSlimProvider dataProvider = new SortablePaperSlimProvider(filter);
 
         queueFilterForm("searchForm", dataProvider);
-        queueDataTable("table", dataProvider);
         queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(dataProvider, "filterState." + PaperFilter.AUTHOR_MASK)), Optional.empty());
         queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(dataProvider, "filterState." + PaperFilter.METHODS_MASK)), Optional.empty());
         queueFieldAndLabel(new TextField<String>("fieldSearch", PropertyModel.of(dataProvider, "filterState." + PaperFilter.SEARCH_MASK)), Optional.empty());
         queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(dataProvider, "filterState." + PaperFilter.PUB_YEAR_FROM)), Optional.empty());
         queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(dataProvider, "filterState." + PaperFilter.PUB_YEAR_UNTIL)), Optional.empty());
+
+        queueDataTable("table", dataProvider);
+
+        BootstrapAjaxButton newButton = new BootstrapAjaxButton("newButton", new StringResourceModel("newButton.label", this, null), Type.Default) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                super.onSubmit(target, form);
+                setResponsePage(new PaperEntryPage(getPageParameters()));
+            }
+        };
+        queue(newButton);
     }
 
     private void queueFilterForm(final String id, final SortablePaperSlimProvider dataProvider) {
