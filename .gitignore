@@ -7,3 +7,4 @@ bin/
 implementation/sipamato/.factorypath
 rebel.xml
 implementation/sipamato/log/sipamato.log
+implementation/sipamato/sipamato.*.db
