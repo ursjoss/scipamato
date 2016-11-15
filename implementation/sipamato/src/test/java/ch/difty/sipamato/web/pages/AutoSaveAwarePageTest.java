@@ -75,27 +75,27 @@ public abstract class AutoSaveAwarePageTest<T extends BasePage<?>> extends BaseP
     @Test
     public void renderedPage_withoutAutoSavingEnabled_addsNoAjaxTimerBehavior() {
         getTester().startPage(makePage());
-        assertThat(getTester().getComponentFromLastRenderedPage("form").getBehaviors(AbstractAjaxTimerBehavior.class)).isEmpty();
+        assertThat(getTester().getComponentFromLastRenderedPage("contentPanel:form").getBehaviors(AbstractAjaxTimerBehavior.class)).isEmpty();
     }
 
     @Test
     public void renderedPage_withoutAutoSavingEnabled_doesNotSetOutputMarkupIdToComponents() {
         getTester().startPage(makePage());
-        assertThat(getTester().getComponentFromLastRenderedPage("form:title").getOutputMarkupId()).isFalse();
+        assertThat(getTester().getComponentFromLastRenderedPage("contentPanel:form:title").getOutputMarkupId()).isFalse();
     }
 
     @Test
     public void renderedPage_withAutoSavingEnabled_addsAjaxTimerBehavior() {
         setAutoSaveMode();
         getTester().startPage(makePage());
-        assertThat(getTester().getComponentFromLastRenderedPage("form").getBehaviors(AbstractAjaxTimerBehavior.class)).isNotEmpty();
+        assertThat(getTester().getComponentFromLastRenderedPage("contentPanel:form").getBehaviors(AbstractAjaxTimerBehavior.class)).isNotEmpty();
     }
 
     @Test
     public void renderedPage_withAutoSavingEnabled_doesSetOutputMarkupIdToComponents() {
         setAutoSaveMode();
         getTester().startPage(makePage());
-        assertThat(getTester().getComponentFromLastRenderedPage("form:title").getOutputMarkupId()).isTrue();
+        assertThat(getTester().getComponentFromLastRenderedPage("contentPanel:form:title").getOutputMarkupId()).isTrue();
     }
 
 }

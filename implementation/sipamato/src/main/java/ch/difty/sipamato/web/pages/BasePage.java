@@ -70,7 +70,7 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
     private void createAndAddNavBar(String id) {
         navBar = newNavbar(id);
-        add(navBar);
+        queue(navBar);
         extendNavBar();
     }
 
@@ -83,14 +83,14 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
     private void createAndAddFeedbackPanel(String label) {
         feedbackPanel = new NotificationPanel(label);
         feedbackPanel.setOutputMarkupId(true);
-        add(feedbackPanel);
+        queue(feedbackPanel);
     }
 
     private void createAndAddDebugBar(String label) {
         if (getApplication().getDebugSettings().isDevelopmentUtilitiesEnabled()) {
-            add(new DebugBar(label).positionBottom());
+            queue(new DebugBar(label).positionBottom());
         } else {
-            add(new EmptyPanel(label).setVisible(false));
+            queue(new EmptyPanel(label).setVisible(false));
         }
     }
 
