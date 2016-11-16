@@ -19,7 +19,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
     public static final boolean FIRST_AUTHOR_OVERRIDDEN = false;
     public static final String TITLE = "title";
     public static final String LOCATION = "location";
-    public static final int PUBLICATION_YEAR = 3;
+    public static final Integer PUBLICATION_YEAR = 3;
     public static final String GOALS = "goals";
     public static final String POPULATION = "population";
     public static final String METHODS = "methods";

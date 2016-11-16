@@ -86,8 +86,9 @@ public class Paper extends SipamatoEntity {
     @NotNull
     private String location;
 
+    @NotNull
     @Range(min = 1500, max = 2100, message = "{paper.invalidPublicationYear}")
-    private int publicationYear;
+    private Integer publicationYear;
 
     @NotNull
     private String goals;
@@ -176,11 +177,11 @@ public class Paper extends SipamatoEntity {
         this.location = location;
     }
 
-    public int getPublicationYear() {
+    public Integer getPublicationYear() {
         return publicationYear;
     }
 
-    public void setPublicationYear(int publicationYear) {
+    public void setPublicationYear(Integer publicationYear) {
         this.publicationYear = publicationYear;
     }
 
