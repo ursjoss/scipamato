@@ -68,16 +68,7 @@ public class PaperListPage extends BasePage<PaperSlim> {
 
         queueDataTable("table", dataProvider);
 
-        BootstrapAjaxButton newButton = new BootstrapAjaxButton("newButton", new StringResourceModel("newButton.label", this, null), Type.Default) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                super.onSubmit(target, form);
-                setResponsePage(new PaperEntryPage(getPageParameters()));
-            }
-        };
-        queue(newButton);
+        queueNewButton("newButton");
     }
 
     private void queueFilterForm(final String id, final SortablePaperSlimProvider dataProvider) {
@@ -110,4 +101,18 @@ public class PaperListPage extends BasePage<PaperSlim> {
     private ClickablePropertyColumn<PaperSlim, String> makeClickableColumn(String propExpression, String sortProperty, SerializableConsumer<IModel<PaperSlim>> consumer) {
         return new ClickablePropertyColumn<PaperSlim, String>(new StringResourceModel("column.header." + propExpression, this, null), sortProperty, propExpression, consumer);
     }
+
+    private void queueNewButton(final String id) {
+        BootstrapAjaxButton newButton = new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null), Type.Default) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                super.onSubmit(target, form);
+                setResponsePage(new PaperEntryPage(getPageParameters()));
+            }
+        };
+        queue(newButton);
+    }
+
 }
