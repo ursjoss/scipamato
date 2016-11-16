@@ -13,6 +13,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.service.Localization;
+import ch.difty.sipamato.web.panel.paper.Mode;
 
 public abstract class AbstractPanel<T extends SipamatoEntity> extends GenericPanel<T> {
 
@@ -22,19 +23,58 @@ public abstract class AbstractPanel<T extends SipamatoEntity> extends GenericPan
     protected static final String LABEL_RECOURCE_TAG = ".label";
     protected static final String LABEL_TAG = "Label";
 
+    private final Mode mode;
+    private final String submitLinkResourceLabel;
+
     @SpringBean
     private Localization localization;
+
+    protected String getSubmitLinkResourceLabel() {
+        return submitLinkResourceLabel;
+    }
+
+    protected Mode getMode() {
+        return mode;
+    }
+
+    protected boolean isSearchMode() {
+        return mode == Mode.SEARCH;
+    }
+
+    protected boolean isEditMode() {
+        return mode == Mode.EDIT;
+    }
+
+    protected boolean isViewMode() {
+        return mode == Mode.VIEW;
+    }
 
     protected Localization getLocalization() {
         return localization;
     }
 
     public AbstractPanel(final String id) {
-        super(id);
+        this(id, null, Mode.VIEW);
     }
 
     public AbstractPanel(final String id, IModel<T> model) {
+        this(id, model, Mode.VIEW);
+    }
+
+    public AbstractPanel(final String id, IModel<T> model, Mode mode) {
         super(id, model);
+        this.mode = mode;
+        switch (mode) {
+        case EDIT:
+            this.submitLinkResourceLabel = "button.save.label";
+            break;
+        case SEARCH:
+            this.submitLinkResourceLabel = "button.search.label";
+            break;
+        case VIEW:
+        default:
+            this.submitLinkResourceLabel = "button.disabled.label";
+        }
     }
 
     // TODO duplicated from BasePage
@@ -44,7 +84,7 @@ public abstract class AbstractPanel<T extends SipamatoEntity> extends GenericPan
         queue(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
         queue(field);
-        if (pv.isPresent()) {
+        if (pv.isPresent() && isEditMode()) {
             field.add(pv.get());
         }
     }

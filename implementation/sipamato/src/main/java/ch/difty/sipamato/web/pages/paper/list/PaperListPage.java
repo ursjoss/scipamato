@@ -29,6 +29,7 @@ import ch.difty.sipamato.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.search.PaperSearchPage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
@@ -68,7 +69,8 @@ public class PaperListPage extends BasePage<PaperSlim> {
 
         queueDataTable("table", dataProvider);
 
-        queueNewButton("newButton");
+        queueResponsePageButton("complexSearch", new PaperSearchPage(getPageParameters()));
+        queueResponsePageButton("newPaper", new PaperEntryPage(getPageParameters()));
     }
 
     private void queueFilterForm(final String id, final SortablePaperSlimProvider dataProvider) {
@@ -102,14 +104,14 @@ public class PaperListPage extends BasePage<PaperSlim> {
         return new ClickablePropertyColumn<PaperSlim, String>(new StringResourceModel("column.header." + propExpression, this, null), sortProperty, propExpression, consumer);
     }
 
-    private void queueNewButton(final String id) {
+    private void queueResponsePageButton(final String id, BasePage<?> responsePage) {
         BootstrapAjaxButton newButton = new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null), Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                 super.onSubmit(target, form);
-                setResponsePage(new PaperEntryPage(getPageParameters()));
+                setResponsePage(responsePage);
             }
         };
         queue(newButton);

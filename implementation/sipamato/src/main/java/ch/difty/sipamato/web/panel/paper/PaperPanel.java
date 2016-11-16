@@ -1,14 +1,11 @@
 package ch.difty.sipamato.web.panel.paper;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
@@ -29,15 +26,12 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.CodeClass;
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;
-import ch.difty.sipamato.logic.parsing.AuthorParser;
-import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.web.model.CodeClassModel;
 import ch.difty.sipamato.web.model.CodeModel;
 import ch.difty.sipamato.web.panel.AbstractPanel;
@@ -58,8 +52,9 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
         super(id, model);
     }
 
-    @SpringBean
-    private AuthorParserFactory authorParserFactory;
+    public PaperPanel(String id, IModel<Paper> model, Mode mode) {
+        super(id, model, mode);
+    }
 
     private Form<Paper> form;
 
@@ -93,7 +88,7 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
         queueFieldAndLabel(new TextField<String>(Paper.LOCATION), new PropertyValidator<String>());
 
         TextField<Integer> id = new TextField<Integer>(Paper.ID);
-        id.setEnabled(false);
+        id.setEnabled(isSearchMode());
         queueFieldAndLabel(id);
         queueFieldAndLabel(new TextField<Integer>(Paper.PUBL_YEAR), new PropertyValidator<Integer>());
         queueFieldAndLabel(new TextField<Integer>(Paper.PMID));
@@ -142,39 +137,20 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
         CheckBox firstAuthorOverridden = new CheckBox(firstAuthorOverriddenId);
         queueCheckBoxAndLabel(firstAuthorOverridden);
 
-        TextField<String> firstAuthor = new TextField<String>(firstAuthorId) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onConfigure() {
-                super.onConfigure();
-                setEnabled(firstAuthorOverridden.getModelObject());
-            }
-        };
-        firstAuthor.add(new PropertyValidator<String>());
+        TextField<String> firstAuthor = makeFirstAuthor(firstAuthorId, firstAuthorOverridden);
         firstAuthor.setOutputMarkupId(true);
         queueFieldAndLabel(firstAuthor);
 
-        firstAuthorOverridden.add(makeFirstAuthorChangeBehavior(authors, firstAuthorOverridden, firstAuthor));
-        authors.add(makeFirstAuthorChangeBehavior(authors, firstAuthorOverridden, firstAuthor));
+        addAuthorBehavior(authors, firstAuthorOverridden, firstAuthor);
     }
 
-    /*
-     * Behavior to parse the authors string and populate the firstAuthor field - but only if not overridden. 
-     */
-    private OnChangeAjaxBehavior makeFirstAuthorChangeBehavior(TextArea<String> authors, CheckBox overridden, TextField<String> firstAuthor) {
-        return new OnChangeAjaxBehavior() {
-            private static final long serialVersionUID = 1L;
+    /** override if special behavior is required */
+    protected TextField<String> makeFirstAuthor(String firstAuthorId, CheckBox firstAuthorOverridden) {
+        return new TextField<String>(firstAuthorId);
+    }
 
-            @Override
-            protected void onUpdate(AjaxRequestTarget target) {
-                if (!overridden.getModelObject()) {
-                    AuthorParser p = authorParserFactory.createParser(authors.getValue());
-                    firstAuthor.setModelObject(p.getFirstAuthor().orElse(null));
-                }
-                target.add(firstAuthor);
-            }
-        };
+    /** override if special behavior is required */
+    protected void addAuthorBehavior(TextArea<String> authors, CheckBox firstAuthorOverridden, TextField<String> firstAuthor) {
     }
 
     private void queueFieldAndLabel(FormComponent<?> field) {
@@ -184,12 +160,13 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
     private void makeAndQueueSubmitButton(String id) {
         SubmitLink submitLink = new SubmitLink(id, form);
         submitLink.add(new ButtonBehavior());
-        submitLink.setBody(new StringResourceModel("button.save.label"));
+        submitLink.setBody(new StringResourceModel(getSubmitLinkResourceLabel()));
         submitLink.setDefaultFormProcessing(true);
+        submitLink.setEnabled(!isViewMode());
         queue(submitLink);
     }
 
-    private static abstract class AbstractTabPanel extends Panel {
+    private abstract class AbstractTabPanel extends Panel {
 
         private static final long serialVersionUID = 1L;
 
@@ -215,7 +192,6 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
 
         void queueTo(Form<Paper> form, String id, boolean newField, Optional<PropertyValidator<?>> pv) {
             TextArea<String> field = new TextArea<String>(id);
-            field.add(new PropertyValidator<String>());
             field.setOutputMarkupId(true);
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
             queue(new Label(id + LABEL_TAG, labelModel));
@@ -223,14 +199,14 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
             if (newField) {
                 field.add(new AttributeAppender("class", " newField"));
             }
-            if (pv.isPresent()) {
+            if (pv.isPresent() && isEditMode()) {
                 field.add(pv.get());
             }
             queue(field);
         }
     }
 
-    private static class TabPanel1 extends AbstractTabPanel {
+    private class TabPanel1 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
         public TabPanel1(String id, IModel<Paper> model) {
@@ -262,7 +238,7 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
         }
     };
 
-    private static class TabPanel2 extends AbstractTabPanel {
+    private class TabPanel2 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
         public TabPanel2(String id, IModel<Paper> model) {
@@ -318,7 +294,7 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
         private void makeCodeClass1Complex(final List<CodeClass> codeClasses, Form<Paper> form) {
             final TextField<String> mainCodeOfCodeClass1 = new TextField<String>(Paper.MAIN_CODE_OF_CODECLASS1);
             final BootstrapMultiSelect<Code> codeClass1 = makeCodeClassComplex(CodeClassId.CC1, codeClasses);
-            codeClass1.add(makeCodeClass1ChangeBehavior(codeClass1, mainCodeOfCodeClass1));
+            addCodeClass1ChangeBehavior(mainCodeOfCodeClass1, codeClass1);
             addMainCodeOfClass1(mainCodeOfCodeClass1);
             form.add(new CodeClass1ConsistencyValidator(codeClass1, mainCodeOfCodeClass1));
         }
@@ -332,46 +308,6 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
             field.setLabel(labelModel);
             field.setEnabled(false);
             queue(field);
-        }
-
-        private OnChangeAjaxBehavior makeCodeClass1ChangeBehavior(final BootstrapMultiSelect<Code> codeClass1, final TextField<String> mainCodeOfCodeClass1) {
-            return new OnChangeAjaxBehavior() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                protected void onUpdate(final AjaxRequestTarget target) {
-                    if (codeClass1 != null && codeClass1.getModelObject() != null) {
-                        final Collection<Code> codesOfClass1 = codeClass1.getModelObject();
-                        switch (codesOfClass1.size()) {
-                        case 0:
-                            setMainCodeOfClass1(null, mainCodeOfCodeClass1, target);
-                            break;
-                        case 1:
-                            setMainCodeOfClass1(codesOfClass1.iterator().next().getCode(), mainCodeOfCodeClass1, target);
-                            break;
-                        default:
-                            ensureMainCodeIsPartOfCodes(codesOfClass1, mainCodeOfCodeClass1, target);
-                            break;
-                        }
-                    }
-                }
-
-                private void setMainCodeOfClass1(final String code, final TextField<String> mainCodeOfCodeClass1, final AjaxRequestTarget target) {
-                    mainCodeOfCodeClass1.setModelObject(code);
-                    target.add(mainCodeOfCodeClass1);
-                }
-
-                private void ensureMainCodeIsPartOfCodes(Collection<Code> codesOfClass1, TextField<String> mainCodeOfCodeClass1, AjaxRequestTarget target) {
-                    final Optional<String> main = Optional.ofNullable(mainCodeOfCodeClass1.getModelObject());
-                    final Optional<String> match = codesOfClass1.stream().map(c -> c.getCode()).filter(c -> main.isPresent() && main.get().equals(c)).findFirst();
-                    if (main.isPresent() && !match.isPresent()) {
-                        mainCodeOfCodeClass1.setModelObject(null);
-                        target.add(mainCodeOfCodeClass1);
-                    }
-                }
-
-            };
-
         }
 
         private BootstrapMultiSelect<Code> makeCodeClassComplex(final CodeClassId codeClassId, final List<CodeClass> codeClasses) {
@@ -405,6 +341,10 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
             queue(multiSelect);
             return multiSelect;
         }
+    }
+
+    /** override if needed */
+    protected void addCodeClass1ChangeBehavior(final TextField<String> mainCodeOfCodeClass1, final BootstrapMultiSelect<Code> codeClass1) {
     }
 
     static class CodeClass1ConsistencyValidator extends AbstractFormValidator {

@@ -15,7 +15,7 @@ import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.pages.AutoSaveAwarePage;
-import ch.difty.sipamato.web.panel.paper.PaperPanel;
+import ch.difty.sipamato.web.panel.paper.EditablePaperPanel;
 
 @MountPath("entry")
 @AuthorizeInstantiation({ "ROLE_USER" })
@@ -26,7 +26,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
     @SpringBean
     private PaperService service;
 
-    private PaperPanel contentPanel;
+    private EditablePaperPanel contentPanel;
 
     public PaperEntryPage(PageParameters parameters) {
         super(parameters);
@@ -45,7 +45,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
     @Override
     protected void implSpecificOnInitialize() {
-        contentPanel = new PaperPanel("contentPanel", getModel()) {
+        contentPanel = new EditablePaperPanel("contentPanel", getModel()) {
             private static final long serialVersionUID = 1L;
 
             @Override
