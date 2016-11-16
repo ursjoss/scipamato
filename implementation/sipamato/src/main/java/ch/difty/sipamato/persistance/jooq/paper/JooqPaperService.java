@@ -56,4 +56,10 @@ public class JooqPaperService implements PaperService {
         }
     }
 
+    /** {@inhericDoc} */
+    @Override
+    public List<Paper> findByExample(Paper example) {
+        return repo.findByExample(example);
+    }
+
 }

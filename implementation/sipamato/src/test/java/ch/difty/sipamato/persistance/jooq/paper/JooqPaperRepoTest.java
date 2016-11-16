@@ -2,6 +2,7 @@ package ch.difty.sipamato.persistance.jooq.paper;
 
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -129,43 +130,61 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     public void degenerateConstruction() {
         try {
             new JooqPaperRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig());
+            fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dsl must not be null.");
         }
         try {
             new JooqPaperRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig());
+            fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("mapper must not be null.");
         }
         try {
             new JooqPaperRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig());
+            fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("sortMapper must not be null.");
         }
         try {
             new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), null, getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig());
+            fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("filterConditionMapper must not be null.");
         }
         try {
             new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null, getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig());
+            fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("localization must not be null.");
         }
         try {
             new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), null, getUpdateSetStepSetter(), getJooqConfig());
+            fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("insertSetStepSetter must not be null.");
         }
         try {
             new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), getInsertSetStepSetter(), null, getJooqConfig());
+            fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("updateSetStepSetter must not be null.");
         }
         try {
             new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null);
+            fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("jooqConfig must not be null.");
+        }
+    }
+
+    @Test
+    public void findingByExample_withNullExample_throws() {
+        try {
+            repo.findByExample(null);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("example must not be null.");
         }
     }
 }

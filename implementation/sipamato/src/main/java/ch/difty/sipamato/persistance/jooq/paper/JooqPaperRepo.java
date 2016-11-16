@@ -11,8 +11,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.InsertValuesStep2;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
@@ -21,11 +23,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ch.difty.sipamato.db.Tables;
 import ch.difty.sipamato.db.tables.records.PaperCodeRecord;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
+import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.lib.TranslationUtils;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
@@ -135,6 +139,42 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     private void deleteObsoleteCodesFrom(Paper paper) {
         final List<String> codes = paper.getCodes().stream().map(Code::getCode).collect(Collectors.toList());
         getDsl().deleteFrom(PAPER_CODE).where(PAPER_CODE.PAPER_ID.equal(paper.getId()).and(PAPER_CODE.CODE.notIn(codes))).execute();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public List<Paper> findByExample(Paper example) {
+        AssertAs.notNull(example, "example");
+        // Query By example simply uses eq (without ignore case) and is thus not flexible enough.
+        //        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(DSL.condition(record)).fetchInto(getRecordClass());
+        Condition c = extractConditions(example);
+        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(c).fetchInto(getRecordClass());
+        final List<Paper> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
+        enrichAssociatedEntitiesOfAll(entities);
+
+        return entities;
+    }
+
+    private Condition extractConditions(Paper example) {
+        // TODO also consider codes. Make possible to have Year null
+        PaperRecord record = new PaperRecord();
+        record.from(example);
+
+        // TODO RecordCondition
+
+        Condition c = DSL.trueCondition();
+        int size = record.size();
+        for (int i = 0; i < size; i++) {
+            Object value = record.get(i);
+
+            if (value != null) {
+                Field f1 = record.field(i);
+                @SuppressWarnings("unchecked")
+                Field f2 = DSL.val(value, f1.getDataType());
+                c = c.and(f1.lower().contains(f2.lower()));
+            }
+        }
+        return c;
     }
 
 }

@@ -110,4 +110,10 @@ public class JooqPaperServiceTest {
         verify(paperMock).getId();
     }
 
+    @Test
+    public void findingByExample_delegatesToRepo() {
+        when(repoMock.findByExample(paperMock)).thenReturn(papers);
+        assertThat(service.findByExample(paperMock)).containsAll(papers);
+        verify(repoMock).findByExample(paperMock);
+    }
 }

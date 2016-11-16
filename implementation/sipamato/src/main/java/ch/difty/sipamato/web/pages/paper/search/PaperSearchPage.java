@@ -1,5 +1,7 @@
 package ch.difty.sipamato.web.pages.paper.search;
 
+import java.util.List;
+
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -55,7 +57,11 @@ public class PaperSearchPage extends BasePage<Paper> {
     }
 
     protected void doSearch() {
-        LOGGER.info("TODO searching... <--------------------------------------------------");
+        List<Paper> candidates = service.findByExample(getModelObject());
+        LOGGER.info("found {} papers matching the criteria", candidates.size());
+        for (Paper p : candidates) {
+            LOGGER.info("- {}", p.toString());
+        }
     }
 
 }
