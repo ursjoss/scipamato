@@ -14,6 +14,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.InsertValuesStep2;
 import org.jooq.TableField;
@@ -160,8 +161,26 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
         PaperRecord record = new PaperRecord();
         record.from(example);
 
-        // TODO RecordCondition
-
+        // TODO refactor into separate class hierarchy
+        // TODO implement search patterns as follows:
+        /*
+            Strings:
+            
+            foo     likeIgnoreCase '%foo%'  "*foo*"
+            "foo"   equalsIgnoreCase 'foo'
+            foo*  likeIgnoreCase 'foo%'
+            *foo  likeIgnoreCase '%foo'
+            
+            
+            Numbers:
+            
+            2016        = 2016
+            >2016       > 2016
+            >=2016      >= 2016
+            <2016       < 2016
+            <=2016      <= 2016
+            2016-2018   between 2016 and 2018
+         */
         Condition c = DSL.trueCondition();
         int size = record.size();
         for (int i = 0; i < size; i++) {
@@ -169,9 +188,17 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
 
             if (value != null) {
                 Field f1 = record.field(i);
-                @SuppressWarnings("unchecked")
                 Field f2 = DSL.val(value, f1.getDataType());
-                c = c.and(f1.lower().contains(f2.lower()));
+                Class<?> type = f1.getType();
+                if (String.class == type) {
+                    c = c.and(f1.lower().contains(f2.lower()));
+                } else if (Boolean.class == type) {
+                    if (((Boolean) value).booleanValue()) {
+                        c = c.and(f1.equal(f2));
+                    }
+                } else {
+                    c = c.and(f1.equal(f2));
+                }
             }
         }
         return c;
