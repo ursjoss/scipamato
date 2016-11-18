@@ -196,7 +196,7 @@
                                     <pluginExecutionFilter>
                                         <groupId>org.jooq</groupId>
                                         <artifactId>jooq-codegen-maven</artifactId>
-                                        <versionRange>[3.8.4,)</versionRange>
+                                        <versionRange>${org.jooq.version}</versionRange>
                                         <goals>
                                             <goal>generate</goal>
                                         </goals>
