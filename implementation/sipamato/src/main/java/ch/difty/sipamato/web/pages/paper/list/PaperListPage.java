@@ -61,11 +61,11 @@ public class PaperListPage extends BasePage<PaperSlim> {
         final SortablePaperSlimProvider dataProvider = new SortablePaperSlimProvider(filter);
 
         queueFilterForm("searchForm", dataProvider);
-        queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(dataProvider, "filterState." + PaperFilter.AUTHOR_MASK)), Optional.empty());
-        queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(dataProvider, "filterState." + PaperFilter.METHODS_MASK)), Optional.empty());
-        queueFieldAndLabel(new TextField<String>("fieldSearch", PropertyModel.of(dataProvider, "filterState." + PaperFilter.SEARCH_MASK)), Optional.empty());
-        queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(dataProvider, "filterState." + PaperFilter.PUB_YEAR_FROM)), Optional.empty());
-        queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(dataProvider, "filterState." + PaperFilter.PUB_YEAR_UNTIL)), Optional.empty());
+        queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(filter, PaperFilter.AUTHOR_MASK)), Optional.empty());
+        queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(filter, PaperFilter.METHODS_MASK)), Optional.empty());
+        queueFieldAndLabel(new TextField<String>("fieldSearch", PropertyModel.of(filter, PaperFilter.SEARCH_MASK)), Optional.empty());
+        queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(filter, PaperFilter.PUB_YEAR_FROM)), Optional.empty());
+        queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(filter, PaperFilter.PUB_YEAR_UNTIL)), Optional.empty());
 
         queueDataTable("table", dataProvider);
 
