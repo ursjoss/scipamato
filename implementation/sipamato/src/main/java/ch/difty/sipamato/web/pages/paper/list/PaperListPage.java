@@ -29,7 +29,7 @@ import ch.difty.sipamato.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
-import ch.difty.sipamato.web.pages.paper.search.PaperSearchPage;
+import ch.difty.sipamato.web.pages.paper.search.PaperSearchCriteriaPage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
@@ -69,7 +69,7 @@ public class PaperListPage extends BasePage<PaperSlim> {
 
         queueDataTable("table", dataProvider);
 
-        queueResponsePageButton("complexSearch", new PaperSearchPage(getPageParameters()));
+        queueResponsePageButton("complexSearch", new PaperSearchCriteriaPage(getPageParameters()));
         queueResponsePageButton("newPaper", new PaperEntryPage(getPageParameters()));
     }
 

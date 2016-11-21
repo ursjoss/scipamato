@@ -9,27 +9,25 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.panel.paper.SearchablePaperPanel;
 
-@MountPath("search")
 @AuthorizeInstantiation({ "ROLE_USER" })
-public class PaperSearchPage extends BasePage<Paper> {
+public class PaperSearchCriteriaPage extends BasePage<Paper> {
 
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PaperSearchPage.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PaperSearchCriteriaPage.class);
 
     @SpringBean
     private PaperService service;
 
     private SearchablePaperPanel contentPanel;
 
-    public PaperSearchPage(PageParameters parameters) {
+    public PaperSearchCriteriaPage(PageParameters parameters) {
         super(parameters);
         initDefaultModel();
     }
@@ -38,7 +36,7 @@ public class PaperSearchPage extends BasePage<Paper> {
         setDefaultModel(Model.of(new Paper()));
     }
 
-    public PaperSearchPage(IModel<Paper> paperModel) {
+    public PaperSearchCriteriaPage(IModel<Paper> paperModel) {
         super(paperModel);
     }
 
@@ -50,7 +48,7 @@ public class PaperSearchPage extends BasePage<Paper> {
 
             @Override
             protected void onFormSubmit() {
-                PaperSearchPage.this.doSearch();
+                PaperSearchCriteriaPage.this.doSearch();
             }
         };
         queue(contentPanel);
