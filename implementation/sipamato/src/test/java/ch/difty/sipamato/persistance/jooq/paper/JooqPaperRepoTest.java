@@ -178,13 +178,4 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
         }
     }
 
-    @Test
-    public void findingByExample_withNullExample_throws() {
-        try {
-            repo.findByExample(null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("example must not be null.");
-        }
-    }
 }

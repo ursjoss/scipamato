@@ -1,12 +1,13 @@
 package ch.difty.sipamato.web.pages.paper.search;
 
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.service.PaperService;
+import ch.difty.sipamato.service.PaperSlimService;
 import ch.difty.sipamato.web.pages.BasePage;
 
 @MountPath("search")
@@ -18,7 +19,7 @@ public class PaperSearchPage extends BasePage<PaperSlim> {
     private PaperComplexFilter filter;
 
     @SpringBean
-    private PaperService paperService;
+    private PaperSlimService paperSlimService;
 
     public PaperSearchPage(PageParameters parameters) {
         super(parameters);
@@ -32,6 +33,8 @@ public class PaperSearchPage extends BasePage<PaperSlim> {
     protected void onInitialize() {
         super.onInitialize();
 
+        queue(new Form<>("form"));
+        queueResponsePageButton("addSearch", new PaperSearchCriteriaPage(getPageParameters()));
     }
 
 }

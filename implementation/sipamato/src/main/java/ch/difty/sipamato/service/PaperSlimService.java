@@ -1,5 +1,8 @@
 package ch.difty.sipamato.service;
 
+import java.util.List;
+
+import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 
@@ -9,5 +12,15 @@ import ch.difty.sipamato.entity.projection.PaperSlim;
  * @author u.joss
  */
 public interface PaperSlimService extends ReadOnlyService<PaperSlim, Long, PaperFilter> {
+
+    /**
+     * Query by example: Find any paper matching the provided {@link Paper} example. 
+     *
+     * {@link ch.difty.sipamato.persistance.jooq.paper.PaperSlimRepository#findByExample}
+     *
+     * @param example
+     * @return list of {@link PaperSlim}s
+     */
+    List<PaperSlim> findByExample(Paper example);
 
 }

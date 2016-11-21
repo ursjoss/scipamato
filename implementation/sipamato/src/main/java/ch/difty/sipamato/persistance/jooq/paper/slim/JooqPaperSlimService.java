@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.PaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.service.PaperSlimService;
@@ -46,4 +47,9 @@ public class JooqPaperSlimService implements PaperSlimService {
         return repo.countByFilter(filter);
     }
 
+    /** {@inhericDoc} */
+    @Override
+    public List<PaperSlim> findByExample(Paper example) {
+        return repo.findByExample(example);
+    }
 }

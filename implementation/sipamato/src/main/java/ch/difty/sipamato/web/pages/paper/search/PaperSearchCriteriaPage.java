@@ -11,7 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.service.PaperService;
+import ch.difty.sipamato.service.PaperSlimService;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.panel.paper.SearchablePaperPanel;
 
@@ -23,7 +25,7 @@ public class PaperSearchCriteriaPage extends BasePage<Paper> {
     private static final Logger LOGGER = LoggerFactory.getLogger(PaperSearchCriteriaPage.class);
 
     @SpringBean
-    private PaperService service;
+    private PaperSlimService service;
 
     private SearchablePaperPanel contentPanel;
 
@@ -55,9 +57,9 @@ public class PaperSearchCriteriaPage extends BasePage<Paper> {
     }
 
     protected void doSearch() {
-        List<Paper> candidates = service.findByExample(getModelObject());
+        List<PaperSlim> candidates = service.findByExample(getModelObject());
         LOGGER.info("found {} papers matching the criteria", candidates.size());
-        for (Paper p : candidates) {
+        for (PaperSlim p : candidates) {
             LOGGER.info("- {}", p.toString());
         }
     }

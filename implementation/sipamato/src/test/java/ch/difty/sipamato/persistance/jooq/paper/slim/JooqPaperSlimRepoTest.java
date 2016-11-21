@@ -1,15 +1,19 @@
 package ch.difty.sipamato.persistance.jooq.paper.slim;
 
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.jooq.TableField;
+import org.junit.Test;
 import org.mockito.Mock;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.PaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.persistance.jooq.JooqReadOnlyRepoTest;
 import ch.difty.sipamato.persistance.jooq.ReadOnlyRepository;
 
@@ -122,4 +126,13 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
         return filterMock;
     }
 
+    @Test
+    public void findingByExample_withNullExample_throws() {
+        try {
+            repo.findByExample(null);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("example must not be null.");
+        }
+    }
 }

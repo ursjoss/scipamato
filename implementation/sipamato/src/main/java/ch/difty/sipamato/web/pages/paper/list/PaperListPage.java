@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -29,8 +27,6 @@ import ch.difty.sipamato.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
@@ -72,8 +68,7 @@ public class PaperListPage extends BasePage<PaperSlim> {
     }
 
     private void queueFilterForm(final String id, final SortablePaperSlimProvider dataProvider) {
-        FilterForm<PaperFilter> form = new FilterForm<PaperFilter>(id, dataProvider);
-        queue(form);
+        queue(new FilterForm<PaperFilter>(id, dataProvider));
     }
 
     private void queueDataTable(final String id, final SortablePaperSlimProvider dataProvider) {
@@ -100,19 +95,6 @@ public class PaperListPage extends BasePage<PaperSlim> {
 
     private ClickablePropertyColumn<PaperSlim, String> makeClickableColumn(String propExpression, String sortProperty, SerializableConsumer<IModel<PaperSlim>> consumer) {
         return new ClickablePropertyColumn<PaperSlim, String>(new StringResourceModel("column.header." + propExpression, this, null), sortProperty, propExpression, consumer);
-    }
-
-    private void queueResponsePageButton(final String id, BasePage<?> responsePage) {
-        BootstrapAjaxButton newButton = new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null), Type.Default) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                super.onSubmit(target, form);
-                setResponsePage(responsePage);
-            }
-        };
-        queue(newButton);
     }
 
 }
