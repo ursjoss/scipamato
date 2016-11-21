@@ -29,9 +29,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         assertLabeledTextField(b, "pubYearUntil");
 
         // TODO test behavior of buttons
-        String bb = b + ":complexSearch";
-        getTester().assertComponent(bb, BootstrapAjaxButton.class);
-        bb = b + ":newPaper";
+        String bb = b + ":newPaper";
         getTester().assertComponent(bb, BootstrapAjaxButton.class);
     }
 
