@@ -20,6 +20,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 import ch.difty.sipamato.web.pages.login.LogoutPage;
 import ch.difty.sipamato.web.pages.paper.list.PaperListPage;
+import ch.difty.sipamato.web.pages.paper.search.PaperSearchPage;
 import ch.difty.sipamato.web.resources.MainCssResourceReference;
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
@@ -103,6 +104,7 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
         addPageLink(navbar, SipamatoHomePage.class, new StringResourceModel("menu.home", this, null).getString(), GlyphIconType.home);
         addPageLink(navbar, PaperListPage.class, new StringResourceModel("menu.papers", this, null).getString(), GlyphIconType.list);
+        addPageLink(navbar, PaperSearchPage.class, new StringResourceModel("menu.search", this, null).getString(), GlyphIconType.search);
         addPageLink(navbar, LogoutPage.class, new StringResourceModel("menu.logout", this, null).getString(), GlyphIconType.edit);
 
         return navbar;
