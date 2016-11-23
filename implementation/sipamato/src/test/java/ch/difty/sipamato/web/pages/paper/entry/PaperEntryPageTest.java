@@ -44,7 +44,7 @@ public class PaperEntryPageTest extends AutoSaveAwarePageTest<PaperEntryPage> {
     protected void assertSpecificComponents() {
         String b = "contentPanel";
         getTester().assertComponent(b, PaperPanel.class);
-        
+
         b += ":form";
         getTester().assertComponent(b, Form.class);
 

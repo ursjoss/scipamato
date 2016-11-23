@@ -2,10 +2,8 @@ package ch.difty.sipamato.web.pages.paper.provider;
 
 import java.util.Iterator;
 
-import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.IFilterStateLocator;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
-import org.apache.wicket.injection.Injector;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -13,8 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 
-import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.PaperFilter;
+import ch.difty.sipamato.entity.SipamatoFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.service.PaperSlimService;
 
@@ -23,23 +20,17 @@ import ch.difty.sipamato.service.PaperSlimService;
  *
  * @author u.joss
  */
-public class SortablePaperSlimProvider extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<PaperFilter> {
+public abstract class SortablePaperSlimProvider<F extends SipamatoFilter> extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<F> {
 
     private static final long serialVersionUID = 1L;
+
+    private F filter;
 
     @SpringBean
     private PaperSlimService service;
 
-    private PaperFilter filter;
-
-    public SortablePaperSlimProvider() {
-        this(new PaperFilter());
-    }
-
-    public SortablePaperSlimProvider(PaperFilter filter) {
-        Injector.get().inject(this);
-        this.filter = filter;
-        setSort(Paper.AUTHORS, SortOrder.ASCENDING);
+    protected PaperSlimService getService() {
+        return service;
     }
 
     /** protected for test purposes */
@@ -47,9 +38,8 @@ public class SortablePaperSlimProvider extends SortableDataProvider<PaperSlim, S
         this.service = service;
     }
 
-    /** protected for test purposes */
-    protected PaperFilter getFilter() {
-        return filter;
+    SortablePaperSlimProvider(F filter) {
+        this.filter = filter;
     }
 
     @Override
@@ -57,8 +47,10 @@ public class SortablePaperSlimProvider extends SortableDataProvider<PaperSlim, S
         Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         String sortProp = getSort().getProperty();
         Pageable pageable = new PageRequest(getPageIndex(offset, size), (int) size, dir, sortProp);
-        return service.findByFilter(filter, pageable).iterator();
+        return findByFilter(pageable);
     }
+
+    protected abstract Iterator<PaperSlim> findByFilter(Pageable pageable);
 
     private int getPageIndex(long from, long size) {
         return (int) (from / size);
@@ -66,8 +58,10 @@ public class SortablePaperSlimProvider extends SortableDataProvider<PaperSlim, S
 
     @Override
     public long size() {
-        return service.countByFilter(filter);
+        return getSize();
     }
+
+    protected abstract long getSize();
 
     @Override
     public IModel<PaperSlim> model(PaperSlim entity) {
@@ -75,13 +69,13 @@ public class SortablePaperSlimProvider extends SortableDataProvider<PaperSlim, S
     }
 
     @Override
-    public PaperFilter getFilterState() {
+    public F getFilterState() {
         return filter;
     }
 
     @Override
-    public void setFilterState(PaperFilter state) {
-        this.filter = state;
+    public void setFilterState(F filterState) {
+        this.filter = filterState;
     }
 
 }

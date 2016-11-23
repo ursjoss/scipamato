@@ -13,7 +13,7 @@ import ch.difty.sipamato.entity.PaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
-import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.provider.SimpleSortablePaperSlimProvider;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
 
 @MountPath("list")
@@ -36,7 +36,7 @@ public class PaperListPage extends BasePage<PaperSlim> {
     protected void onInitialize() {
         super.onInitialize();
 
-        final SortablePaperSlimProvider dataProvider = new SortablePaperSlimProvider(filter);
+        final SimpleSortablePaperSlimProvider dataProvider = new SimpleSortablePaperSlimProvider(filter);
 
         queueFilterForm("searchForm", dataProvider);
         queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(filter, PaperFilter.AUTHOR_MASK)), Optional.empty());
@@ -50,7 +50,7 @@ public class PaperListPage extends BasePage<PaperSlim> {
 
     }
 
-    private void queueFilterForm(final String id, final SortablePaperSlimProvider dataProvider) {
+    private void queueFilterForm(final String id, final SimpleSortablePaperSlimProvider dataProvider) {
         queue(new FilterForm<PaperFilter>(id, dataProvider));
     }
 }
