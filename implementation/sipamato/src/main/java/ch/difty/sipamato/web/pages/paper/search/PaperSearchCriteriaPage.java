@@ -1,18 +1,14 @@
 package ch.difty.sipamato.web.pages.paper.search;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.service.PaperSlimService;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.panel.paper.SearchablePaperPanel;
 
@@ -21,51 +17,48 @@ public class PaperSearchCriteriaPage extends BasePage<Paper> {
 
     private static final long serialVersionUID = 1L;
 
-    private final Map<Long, PaperSlim> previousSearchResults = new HashMap<Long, PaperSlim>();
-
-    @SpringBean
-    private PaperSlimService service;
+    private final List<Paper> accumuluatedSearchCriteria = new ArrayList<>();
 
     /**
      * Instantiates the page directly with a handed over paper model.
      *
      * @param paperModel
      */
-    public PaperSearchCriteriaPage(IModel<Paper> paperModel) {
+    public PaperSearchCriteriaPage(final IModel<Paper> paperModel) {
         super(paperModel);
     }
 
     /**
      * Instantiates the page using the {@link PageParameters}.
      * Initiates the default model with a new empty {@link Paper} and
-     * sets the previousSearchResults as an empty map.
+     * sets the searchCriteria as an empty list.
      *
      * @param parameters
      */
-    public PaperSearchCriteriaPage(PageParameters parameters) {
+    public PaperSearchCriteriaPage(final PageParameters parameters) {
         super(parameters);
         initDefaultModel();
     }
 
     /**
      * Instantiates the page with a default model (empty {@link Paper}), handing over
-     * a list of previous search results.
+     * a list of previously accumulated search criteria.
      *
-     * @param previousSearchResults map of {@link PaperSlim}s from previous searches.
+     * @param accumulatedSearchCriteria list of {@link Paper}s defining other search criteria.
      */
-    public PaperSearchCriteriaPage(Map<Long, PaperSlim> previousSearchResults) {
+    public PaperSearchCriteriaPage(final List<Paper> accumulatedSearchCriteria) {
         super(new PageParameters());
         initDefaultModel();
-        addResultsOfPreviousSearchesTo(previousSearchResults);
+        addDefinitionsOfPreviousSearchesTo(accumulatedSearchCriteria);
     }
 
     private void initDefaultModel() {
         setDefaultModel(Model.of(new Paper()));
     }
 
-    private void addResultsOfPreviousSearchesTo(Map<Long, PaperSlim> previousSearchResults) {
-        if (previousSearchResults != null) {
-            this.previousSearchResults.putAll(previousSearchResults);
+    private void addDefinitionsOfPreviousSearchesTo(List<Paper> accumulatedSearchCriteria) {
+        if (accumulatedSearchCriteria != null) {
+            this.accumuluatedSearchCriteria.addAll(accumulatedSearchCriteria);
         }
     }
 
@@ -82,15 +75,8 @@ public class PaperSearchCriteriaPage extends BasePage<Paper> {
 
             @Override
             protected void onFormSubmit() {
-                final List<PaperSlim> currentSearchResult = service.findByExample(getModelObject());
-                if (currentSearchResult != null) {
-                    for (PaperSlim p : currentSearchResult) {
-                        if (!previousSearchResults.containsKey(p.getId())) {
-                            previousSearchResults.put(p.getId(), p);
-                        }
-                    }
-                }
-                setResponsePage(new PaperSearchPage(Model.ofMap(previousSearchResults)));
+                accumuluatedSearchCriteria.add(getModelObject());
+                setResponsePage(new PaperSearchPage(accumuluatedSearchCriteria));
             }
         };
     }

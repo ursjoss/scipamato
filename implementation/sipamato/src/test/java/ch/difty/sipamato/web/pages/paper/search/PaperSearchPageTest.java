@@ -1,14 +1,13 @@
 package ch.difty.sipamato.web.pages.paper.search;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
@@ -68,12 +67,15 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     @Test
-    public void startingPageWithModelConstructor_withTwoPaperSlims_initiatesPageWith2Papers() {
-        final Map<Long, PaperSlim> map = papers.stream().collect(Collectors.toMap(PaperSlim::getId, Function.identity()));
-        getTester().startPage(new PaperSearchPage(Model.ofMap(map)));
+    public void startingPageWithPaperConstructor_withPaperResultingInTwoPapersFound_initiatesPageWith2Papers() {
+        when(mockPaperSlimService.findByExample(mockPaper)).thenReturn(papers);
+        getTester().startPage(new PaperSearchPage(Arrays.asList(mockPaper)));
+
         getTester().assertRenderedPage(getPageClass());
         getTester().assertComponent("form:paperCount", Label.class);
         getTester().assertModelValue("form:paperCount", 2);
+
+        verify(mockPaperSlimService).findByExample(mockPaper);
     }
 
 }
