@@ -44,10 +44,10 @@ public class PaperListPage extends BasePage<PaperSlim> {
         queueFieldAndLabel(new TextField<String>("fieldSearch", PropertyModel.of(filter, PaperFilter.SEARCH_MASK)), Optional.empty());
         queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(filter, PaperFilter.PUB_YEAR_FROM)), Optional.empty());
         queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(filter, PaperFilter.PUB_YEAR_UNTIL)), Optional.empty());
+        queueResponsePageButton("newPaper", new PaperEntryPage(getPageParameters()));
 
         queue(new ResultPanel("resultPanel", dataProvider));
 
-        queueResponsePageButton("newPaper", new PaperEntryPage(getPageParameters()));
     }
 
     private void queueFilterForm(final String id, final SortablePaperSlimProvider dataProvider) {

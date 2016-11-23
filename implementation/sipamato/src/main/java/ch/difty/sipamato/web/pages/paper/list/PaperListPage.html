@@ -2,10 +2,10 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <body>
     <wicket:extend>
-        <form wicket:id="searchForm">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-4">
+        <div class="container-fluid">
+            <div class="row">
+                <form wicket:id="searchForm">
+                    <div class="col-lg-3">
                         <div wicket:id="methodsSearchLabel"></div>
                         <input wicket:id="methodsSearch" class="form-control"></input>
                     </div>
@@ -25,17 +25,15 @@
                         <div wicket:id="fieldSearchLabel"></div>
                         <input wicket:id="fieldSearch" class="form-control"></input>
                     </div>
-                </div>
-                <div class="row">
-                    <div wicket:id="resultPanel"></div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-1" style="bottom: -20px;">
                         <a wicket:id="newPaper">New Paper</a>
                     </div>
-                </div>
+                </form>
             </div>
-        </form>
+            <div class="row">
+                <div wicket:id="resultPanel"></div>
+            </div>
+        </div>
     </wicket:extend>
 </body>
 </html>
