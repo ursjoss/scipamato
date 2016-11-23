@@ -16,6 +16,16 @@ public class PaperSlim extends SipamatoEntity {
     @NotNull
     private String title;
 
+    public PaperSlim() {
+    }
+
+    public PaperSlim(Long id, String firstAuthor, Integer publicationYear, String title) {
+        setId(id);
+        setFirstAuthor(firstAuthor);
+        setPublicationYear(publicationYear);
+        setTitle(title);
+    }
+
     public Long getId() {
         return id;
     }
