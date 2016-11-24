@@ -75,7 +75,7 @@ public class PaperSearchCriteriaPage extends BasePage<Paper> {
 
             @Override
             protected void onFormSubmit() {
-                accumuluatedSearchCriteria.add(getModelObject());
+                accumuluatedSearchCriteria.add((Paper)getModelObject());
                 setResponsePage(new PaperSearchPage(accumuluatedSearchCriteria));
             }
         };

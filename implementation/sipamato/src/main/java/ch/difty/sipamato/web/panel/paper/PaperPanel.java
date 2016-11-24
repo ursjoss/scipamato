@@ -41,7 +41,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrap
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 
-public abstract class PaperPanel extends AbstractPanel<Paper> {
+public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T> {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,20 +49,20 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
         super(id);
     }
 
-    public PaperPanel(String id, IModel<Paper> model) {
+    public PaperPanel(String id, IModel<T> model) {
         super(id, model);
     }
 
-    public PaperPanel(String id, IModel<Paper> model, Mode mode) {
+    public PaperPanel(String id, IModel<T> model, Mode mode) {
         super(id, model, mode);
     }
 
-    private Form<Paper> form;
+    private Form<T> form;
 
     @Override
     public void onInitialize() {
         super.onInitialize();
-        form = new Form<Paper>("form", new CompoundPropertyModel<Paper>(getModel())) {
+        form = new Form<T>("form", new CompoundPropertyModel<T>(getModel())) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -79,7 +79,7 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
 
     protected abstract void onFormSubmit();
 
-    public Form<Paper> getForm() {
+    public Form<T> getForm() {
         return form;
     }
 
@@ -179,19 +179,19 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
             super(id, model);
         }
 
-        void queueTo(Form<Paper> form, String id) {
+        void queueTo(Form<T> form, String id) {
             queueTo(form, id, false, Optional.empty());
         }
 
-        void queueTo(Form<Paper> form, String id, PropertyValidator<?> pv) {
+        void queueTo(Form<T> form, String id, PropertyValidator<?> pv) {
             queueTo(form, id, false, Optional.ofNullable(pv));
         }
 
-        void queueNewFieldTo(Form<Paper> form, String id) {
+        void queueNewFieldTo(Form<T> form, String id) {
             queueTo(form, id, true, Optional.empty());
         }
 
-        void queueTo(Form<Paper> form, String id, boolean newField, Optional<PropertyValidator<?>> pv) {
+        void queueTo(Form<T> form, String id, boolean newField, Optional<PropertyValidator<?>> pv) {
             TextArea<String> field = new TextArea<String>(id);
             field.setOutputMarkupId(true);
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
@@ -210,7 +210,7 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
     private class TabPanel1 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        public TabPanel1(String id, IModel<Paper> model) {
+        public TabPanel1(String id, IModel<T> model) {
             super(id, model);
         }
 
@@ -218,7 +218,7 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<Paper> form = new Form<Paper>("tab1Form");
+            Form<T> form = new Form<>("tab1Form");
             queue(form);
 
             queueTo(form, Paper.GOALS, new PropertyValidator<String>());
@@ -242,7 +242,7 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
     private class TabPanel2 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        public TabPanel2(String id, IModel<Paper> model) {
+        public TabPanel2(String id, IModel<T> model) {
             super(id, model);
         }
 
@@ -250,7 +250,7 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<Paper> form = new Form<Paper>("tab2Form");
+            Form<T> form = new Form<>("tab2Form");
             queue(form);
 
             queueTo(form, Paper.RESULT);
@@ -267,7 +267,7 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
 
         private static final String CODES_CLASS_BASE_NAME = "codesClass";
 
-        public TabPanel3(String id, IModel<Paper> model) {
+        public TabPanel3(String id, IModel<T> model) {
             super(id, model);
         }
 
@@ -275,7 +275,7 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<Paper> form = new Form<Paper>("tab3Form");
+            Form<T> form = new Form<>("tab3Form");
             queue(form);
 
             CodeClassModel codeClassModel = new CodeClassModel(getLocalization().getLocalization());
@@ -292,7 +292,7 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
 
         }
 
-        private void makeCodeClass1Complex(final List<CodeClass> codeClasses, Form<Paper> form) {
+        private void makeCodeClass1Complex(final List<CodeClass> codeClasses, Form<T> form) {
             final TextField<String> mainCodeOfCodeClass1 = new TextField<String>(Paper.MAIN_CODE_OF_CODECLASS1);
             final BootstrapMultiSelect<Code> codeClass1 = makeCodeClassComplex(CodeClassId.CC1, codeClasses);
             addCodeClass1ChangeBehavior(mainCodeOfCodeClass1, codeClass1);

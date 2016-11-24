@@ -11,11 +11,10 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.service.Localization;
 import ch.difty.sipamato.web.panel.paper.Mode;
 
-public abstract class AbstractPanel<T extends SipamatoEntity> extends GenericPanel<T> {
+public abstract class AbstractPanel<T> extends GenericPanel<T> {
 
     private static final long serialVersionUID = 1L;
 

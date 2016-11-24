@@ -18,7 +18,7 @@ import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 
-public abstract class EditablePaperPanel extends PaperPanel {
+public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     private static final long serialVersionUID = 1L;
 
