@@ -13,7 +13,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
-import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.ComplexPaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.service.PaperSlimService;
 import ch.difty.sipamato.web.pages.BasePage;
@@ -24,7 +24,7 @@ public class PaperSearchPage extends BasePage<List<PaperSlim>> {
 
     private static final long serialVersionUID = 1L;
 
-    private final List<Paper> accumulatedSearchCriteria = new ArrayList<>();
+    private final List<ComplexPaperFilter> accumulatedSearchCriteria = new ArrayList<>();
 
     @SpringBean
     private PaperSlimService service;
@@ -33,7 +33,7 @@ public class PaperSearchPage extends BasePage<List<PaperSlim>> {
         super(parameters);
     }
 
-    public PaperSearchPage(List<Paper> searchCriteria) {
+    public PaperSearchPage(List<ComplexPaperFilter> searchCriteria) {
         super(new PageParameters());
         if (searchCriteria != null) {
             accumulatedSearchCriteria.addAll(searchCriteria);
@@ -43,8 +43,8 @@ public class PaperSearchPage extends BasePage<List<PaperSlim>> {
 
     private void applySearch() {
         final Map<Long, PaperSlim> results = new HashMap<>();
-        for (final Paper p : accumulatedSearchCriteria) {
-            for (final PaperSlim ps : service.findByExample(p)) {
+        for (final ComplexPaperFilter f : accumulatedSearchCriteria) {
+            for (final PaperSlim ps : service.findByFilter(f)) {
                 results.put(ps.getId(), ps);
             }
         }

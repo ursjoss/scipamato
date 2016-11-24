@@ -4,10 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.ComplexPaperFilter;
 import ch.difty.sipamato.entity.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.service.PaperSlimService;
@@ -49,7 +50,17 @@ public class JooqPaperSlimService implements PaperSlimService {
 
     /** {@inhericDoc} */
     @Override
-    public List<PaperSlim> findByExample(Paper example) {
-        return repo.findByExample(example);
+    public List<PaperSlim> findByFilter(ComplexPaperFilter filter) {
+        return repo.findByFilter(filter);
+    }
+
+    @Override
+    public Page<PaperSlim> findByFilter(ComplexPaperFilter filter, Pageable pageable) {
+        return repo.findByFilter(filter, pageable);
+    }
+
+    @Override
+    public int countByFilter(ComplexPaperFilter filter) {
+        return repo.countByFilter(filter);
     }
 }

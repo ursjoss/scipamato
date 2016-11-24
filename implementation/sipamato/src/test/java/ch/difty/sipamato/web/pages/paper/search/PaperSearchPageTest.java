@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import ch.difty.sipamato.entity.ComplexPaperFilter;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.service.PaperSlimService;
@@ -27,6 +28,8 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Mock
     private Paper mockPaper;
+    @Mock
+    private ComplexPaperFilter mockComplexPaperFilter;
 
     private final List<PaperSlim> papers = Arrays.asList(new PaperSlim(1l, null, null, null), new PaperSlim(2l, null, null, null));
 
@@ -68,14 +71,14 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Test
     public void startingPageWithPaperConstructor_withPaperResultingInTwoPapersFound_initiatesPageWith2Papers() {
-        when(mockPaperSlimService.findByExample(mockPaper)).thenReturn(papers);
-        getTester().startPage(new PaperSearchPage(Arrays.asList(mockPaper)));
+        when(mockPaperSlimService.findByFilter(mockComplexPaperFilter)).thenReturn(papers);
+        getTester().startPage(new PaperSearchPage(Arrays.asList(mockComplexPaperFilter)));
 
         getTester().assertRenderedPage(getPageClass());
         getTester().assertComponent("form:paperCount", Label.class);
         getTester().assertModelValue("form:paperCount", 2);
 
-        verify(mockPaperSlimService).findByExample(mockPaper);
+        verify(mockPaperSlimService).findByFilter(mockComplexPaperFilter);
     }
 
 }

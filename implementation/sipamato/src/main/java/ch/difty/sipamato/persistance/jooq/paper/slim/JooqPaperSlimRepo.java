@@ -7,15 +7,20 @@ import java.util.stream.Collectors;
 
 import org.jooq.Condition;
 import org.jooq.DSLContext;
-import org.jooq.Field;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.sipamato.db.Tables;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
-import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.ComplexPaperFilter;
+import ch.difty.sipamato.entity.ComplexPaperFilter.BooleanSearchTerm;
+import ch.difty.sipamato.entity.ComplexPaperFilter.IntegerSearchTerm;
+import ch.difty.sipamato.entity.ComplexPaperFilter.StringSearchTerm;
 import ch.difty.sipamato.entity.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.AssertAs;
@@ -56,11 +61,11 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     }
 
     @Override
-    public List<PaperSlim> findByExample(Paper example) {
-        AssertAs.notNull(example, "example");
+    public List<PaperSlim> findByFilter(final ComplexPaperFilter filter) {
+        AssertAs.notNull(filter, "filter");
         // Query By example simply uses eq (without ignore case) and is thus not flexible enough.
         //        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(DSL.condition(record)).fetchInto(getRecordClass());
-        Condition c = extractConditions(example);
+        Condition c = extractConditions(filter);
         final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(c).fetchInto(getRecordClass());
         final List<PaperSlim> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
         enrichAssociatedEntitiesOfAll(entities);
@@ -68,52 +73,50 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
         return entities;
     }
 
-    private Condition extractConditions(Paper example) {
-        // TODO also consider codes. Make possible to have Year null
-        PaperRecord record = new PaperRecord();
-        record.from(example);
-
-        // TODO refactor into separate class hierarchy
-        // TODO implement search patterns as follows:
-        /*
-            Strings:
-        
-            foo     likeIgnoreCase '%foo%'  "*foo*"
-            "foo"   equalsIgnoreCase 'foo'
-            foo*  likeIgnoreCase 'foo%'
-            *foo  likeIgnoreCase '%foo'
-        
-        
-            Numbers:
-        
-            2016        = 2016
-            >2016       > 2016
-            >=2016      >= 2016
-            <2016       < 2016
-            <=2016      <= 2016
-            2016-2018   between 2016 and 2018
-         */
+    // TODO implement search patterns as follows:
+    /*
+        Strings:
+    
+        foo     likeIgnoreCase '%foo%'  "*foo*"
+        "foo"   equalsIgnoreCase 'foo'
+        foo*  likeIgnoreCase 'foo%'
+        *foo  likeIgnoreCase '%foo'
+    
+    
+        Numbers:
+    
+        2016        = 2016
+        >2016       > 2016
+        >=2016      >= 2016
+        <2016       < 2016
+        <=2016      <= 2016
+        2016-2018   between 2016 and 2018
+     */
+    private Condition extractConditions(ComplexPaperFilter filter) {
         Condition c = DSL.trueCondition();
-        int size = record.size();
-        for (int i = 0; i < size; i++) {
-            Object value = record.get(i);
-
-            if (value != null) {
-                Field f1 = record.field(i);
-                Field f2 = DSL.val(value, f1.getDataType());
-                Class<?> type = f1.getType();
-                if (String.class == type) {
-                    c = c.and(f1.lower().contains(f2.lower()));
-                } else if (Boolean.class == type) {
-                    if (((Boolean) value).booleanValue()) {
-                        c = c.and(f1.equal(f2));
-                    }
-                } else {
-                    c = c.and(f1.equal(f2));
-                }
-            }
+        for (BooleanSearchTerm st : filter.getBooleanSearchTerms()) {
+            // TODO key to field name ???
+            c = c.and(DSL.field(st.key).equal(DSL.val(st.rawValue)));
+        }
+        for (IntegerSearchTerm st : filter.getIntegerSearchTerms()) {
+            c = c.and(DSL.field(st.key).equal(DSL.val(st.rawValue)));
+        }
+        for (StringSearchTerm st : filter.getStringSearchTerms()) {
+            c = c.and(DSL.field(st.key).lower().contains(DSL.val(st.rawValue).lower()));
         }
         return c;
+    }
+
+    @Override
+    public Page<PaperSlim> findByFilter(ComplexPaperFilter filter, Pageable pageable) {
+        final List<PaperSlim> entities = findByFilter(filter);
+        return new PageImpl<>(entities, pageable, (long) countByFilter(filter));
+    }
+
+    @Override
+    public int countByFilter(ComplexPaperFilter filter) {
+        final Condition conditions = extractConditions(filter);
+        return getDsl().fetchCount(getDsl().selectOne().from(getTable()).where(conditions));
     }
 
 }
