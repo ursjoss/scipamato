@@ -28,6 +28,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 
 import ch.difty.sipamato.entity.Code;
+import ch.difty.sipamato.entity.CodeBoxAware;
 import ch.difty.sipamato.entity.CodeClass;
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
@@ -321,14 +322,14 @@ public abstract class PaperPanel extends AbstractPanel<Paper> {
 
                 @SuppressWarnings("unchecked")
                 public List<Code> getObject() {
-                    return ((IModel<Paper>) getTarget()).getObject().getCodesOf(ccId);
+                    return ((IModel<CodeBoxAware>) getTarget()).getObject().getCodesOf(ccId);
                 };
 
                 @SuppressWarnings("unchecked")
                 public void setObject(final List<Code> codes) {
-                    ((IModel<Paper>) getTarget()).getObject().clearCodesOf(ccId);
+                    ((IModel<CodeBoxAware>) getTarget()).getObject().clearCodesOf(ccId);
                     if (CollectionUtils.isNotEmpty(codes)) {
-                        ((IModel<Paper>) getTarget()).getObject().addCodes(codes);
+                        ((IModel<CodeBoxAware>) getTarget()).getObject().addCodes(codes);
                     }
                 }
             };

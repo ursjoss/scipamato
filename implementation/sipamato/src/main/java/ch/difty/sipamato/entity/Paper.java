@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern.Flag;
 
 import org.hibernate.validator.constraints.Range;
 
-public class Paper extends SipamatoEntity {
+public class Paper extends SipamatoEntity implements CodeBoxAware {
 
     private static final long serialVersionUID = 1L;
 
@@ -365,26 +365,32 @@ public class Paper extends SipamatoEntity {
         this.mainCodeOfCodeclass1 = mainCodeOfCodeclass1;
     }
 
+    @Override
     public void clearCodes() {
         this.codes.clear();
     }
 
+    @Override
     public List<Code> getCodes() {
         return this.codes.getCodes();
     }
 
+    @Override
     public List<Code> getCodesOf(CodeClassId ccId) {
         return this.codes.getCodesBy(ccId);
     }
 
+    @Override
     public void clearCodesOf(CodeClassId ccId) {
         this.codes.clearBy(ccId);
     }
 
+    @Override
     public void addCode(Code code) {
         this.codes.addCode(code);
     }
 
+    @Override
     public void addCodes(List<Code> codes) {
         this.codes.addCodes(codes);
     }
