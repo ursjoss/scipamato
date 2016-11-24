@@ -19,7 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.PaperFilter;
+import ch.difty.sipamato.entity.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -30,7 +30,7 @@ public class JooqPaperSlimServiceTest {
     @Mock
     private PaperSlimRepository repoMock;
     @Mock
-    private PaperFilter filterMock;
+    private SimplePaperFilter simplefilterMock;
     @Mock
     private Pageable pageableMock;
     @Mock
@@ -52,7 +52,7 @@ public class JooqPaperSlimServiceTest {
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(repoMock, filterMock, pageableMock, paperSlimPageMock, paperSlimMock, paperMock);
+        verifyNoMoreInteractions(repoMock, simplefilterMock, pageableMock, paperSlimPageMock, paperSlimMock, paperMock);
     }
 
     @Test
@@ -79,27 +79,20 @@ public class JooqPaperSlimServiceTest {
 
     @Test
     public void findingByFilter_delegatesToRepo() {
-        when(repoMock.findByFilter(filterMock, pageableMock)).thenReturn(paperSlimPageMock);
+        when(repoMock.findByFilter(simplefilterMock, pageableMock)).thenReturn(paperSlimPageMock);
         when(paperSlimPageMock.getContent()).thenReturn(papers);
 
-        assertThat(service.findByFilter(filterMock, pageableMock)).isEqualTo(papers);
+        assertThat(service.findByFilter(simplefilterMock, pageableMock)).isEqualTo(papers);
 
-        verify(repoMock).findByFilter(filterMock, pageableMock);
+        verify(repoMock).findByFilter(simplefilterMock, pageableMock);
         verify(paperSlimPageMock).getContent();
     }
 
     @Test
     public void countingByFilter_delegatesToRepo() {
-        when(repoMock.countByFilter(filterMock)).thenReturn(3);
-        assertThat(service.countByFilter(filterMock)).isEqualTo(3);
-        verify(repoMock).countByFilter(filterMock);
-    }
-
-    @Test
-    public void findingByExample_delegatesToRepo() {
-        when(repoMock.findByExample(paperMock)).thenReturn(papers);
-        assertThat(service.findByExample(paperMock)).containsAll(papers);
-        verify(repoMock).findByExample(paperMock);
+        when(repoMock.countByFilter(simplefilterMock)).thenReturn(3);
+        assertThat(service.countByFilter(simplefilterMock)).isEqualTo(3);
+        verify(repoMock).countByFilter(simplefilterMock);
     }
 
 }

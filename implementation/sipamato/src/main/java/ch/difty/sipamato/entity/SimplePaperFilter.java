@@ -1,6 +1,6 @@
 package ch.difty.sipamato.entity;
 
-public class PaperFilter extends SipamatoFilter {
+public class SimplePaperFilter extends SipamatoFilter {
 
     private static final long serialVersionUID = 1L;
 

@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.PaperFilter;
+import ch.difty.sipamato.entity.SimplePaperFilter;
 import ch.difty.sipamato.service.PaperService;
 
 /**
@@ -36,13 +36,13 @@ public class JooqPaperService implements PaperService {
 
     /** {@inheritDoc} */
     @Override
-    public List<Paper> findByFilter(PaperFilter filter, Pageable pageable) {
+    public List<Paper> findByFilter(SimplePaperFilter filter, Pageable pageable) {
         return repo.findByFilter(filter, pageable).getContent();
     }
 
     /** {@inheritDoc} */
     @Override
-    public int countByFilter(PaperFilter filter) {
+    public int countByFilter(SimplePaperFilter filter) {
         return repo.countByFilter(filter);
     }
 

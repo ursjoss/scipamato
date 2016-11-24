@@ -28,7 +28,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.sipamato.SipamatoApplication;
-import ch.difty.sipamato.entity.PaperFilter;
+import ch.difty.sipamato.entity.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.persistance.jooq.paper.slim.JooqPaperSlimService;
 
@@ -42,7 +42,7 @@ public class SimpleSortablePaperSlimProviderTest {
     private JooqPaperSlimService serviceMock;
 
     @Mock
-    private PaperFilter filterMock;
+    private SimplePaperFilter filterMock;
 
     @Mock
     private PaperSlim entityMock;
@@ -69,7 +69,7 @@ public class SimpleSortablePaperSlimProviderTest {
     @Test
     public void defaultFilterIsNewPaperFilter() {
         provider = new SimpleSortablePaperSlimProvider();
-        assertThat(provider.getFilterState()).isEqualToComparingFieldByField(new PaperFilter());
+        assertThat(provider.getFilterState()).isEqualToComparingFieldByField(new SimplePaperFilter());
     }
 
     @Test

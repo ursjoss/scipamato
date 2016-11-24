@@ -19,7 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.PaperFilter;
+import ch.difty.sipamato.entity.SimplePaperFilter;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JooqPaperServiceTest {
@@ -29,7 +29,7 @@ public class JooqPaperServiceTest {
     @Mock
     private PaperRepository repoMock;
     @Mock
-    private PaperFilter filterMock;
+    private SimplePaperFilter filterMock;
     @Mock
     private Pageable pageableMock;
     @Mock

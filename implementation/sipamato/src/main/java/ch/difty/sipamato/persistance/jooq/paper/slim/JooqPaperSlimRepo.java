@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import ch.difty.sipamato.db.Tables;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.PaperFilter;
+import ch.difty.sipamato.entity.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
@@ -25,13 +25,13 @@ import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.sipamato.service.Localization;
 
 @Repository
-public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, Long, ch.difty.sipamato.db.tables.Paper, PaperSlimRecordMapper, PaperFilter> implements PaperSlimRepository {
+public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, Long, ch.difty.sipamato.db.tables.Paper, PaperSlimRecordMapper, SimplePaperFilter> implements PaperSlimRepository {
 
     private static final long serialVersionUID = 1L;
 
     @Autowired
     public JooqPaperSlimRepo(DSLContext dsl, PaperSlimRecordMapper mapper, JooqSortMapper<PaperRecord, PaperSlim, ch.difty.sipamato.db.tables.Paper> sortMapper,
-            GenericFilterConditionMapper<PaperFilter> filterConditionMapper, Localization localization) {
+            GenericFilterConditionMapper<SimplePaperFilter> filterConditionMapper, Localization localization) {
         super(dsl, mapper, sortMapper, filterConditionMapper, localization);
     }
 
@@ -77,15 +77,15 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
         // TODO implement search patterns as follows:
         /*
             Strings:
-
+        
             foo     likeIgnoreCase '%foo%'  "*foo*"
             "foo"   equalsIgnoreCase 'foo'
             foo*  likeIgnoreCase 'foo%'
             *foo  likeIgnoreCase '%foo'
-
-
+        
+        
             Numbers:
-
+        
             2016        = 2016
             >2016       > 2016
             >=2016      >= 2016

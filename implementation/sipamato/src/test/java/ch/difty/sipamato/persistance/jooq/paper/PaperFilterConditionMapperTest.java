@@ -7,15 +7,15 @@ import org.junit.Test;
 
 import ch.difty.sipamato.db.tables.Paper;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
-import ch.difty.sipamato.entity.PaperFilter;
+import ch.difty.sipamato.entity.SimplePaperFilter;
 import ch.difty.sipamato.persistance.jooq.FilterConditionMapperTest;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
 
-public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<PaperRecord, ch.difty.sipamato.db.tables.Paper, PaperFilter> {
+public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<PaperRecord, ch.difty.sipamato.db.tables.Paper, SimplePaperFilter> {
 
     private final PaperFilterConditionMapper mapper = new PaperFilterConditionMapper();
 
-    private final PaperFilter filter = new PaperFilter();
+    private final SimplePaperFilter filter = new SimplePaperFilter();
 
     @Override
     protected Paper getTable() {
@@ -23,12 +23,12 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
     }
 
     @Override
-    protected GenericFilterConditionMapper<PaperFilter> getMapper() {
+    protected GenericFilterConditionMapper<SimplePaperFilter> getMapper() {
         return mapper;
     }
 
     @Override
-    protected PaperFilter getFilter() {
+    protected SimplePaperFilter getFilter() {
         return filter;
     }
 
