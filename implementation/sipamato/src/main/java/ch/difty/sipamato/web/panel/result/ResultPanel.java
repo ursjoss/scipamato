@@ -49,11 +49,10 @@ public class ResultPanel extends GenericPanel<Void> {
 
     private List<IColumn<PaperSlim, String>> makeTableColumns() {
         final List<IColumn<PaperSlim, String>> columns = new ArrayList<>();
-        // TODO get rid of db stuff define table fields somewhere else
-        columns.add(makePropertyColumn(Paper.ID, ch.difty.sipamato.db.tables.Paper.PAPER.ID.getName()));
-        columns.add(makePropertyColumn(Paper.FIRST_AUTHOR, ch.difty.sipamato.db.tables.Paper.PAPER.FIRST_AUTHOR.getName()));
-        columns.add(makePropertyColumn(Paper.PUBL_YEAR, ch.difty.sipamato.db.tables.Paper.PAPER.PUBLICATION_YEAR.getName()));
-        columns.add(makeClickableColumn(Paper.TITLE, ch.difty.sipamato.db.tables.Paper.PAPER.TITLE.getName(),
+        columns.add(makePropertyColumn(Paper.ID, Paper.FLD_ID));
+        columns.add(makePropertyColumn(Paper.FIRST_AUTHOR, Paper.FLD_FIRST_AUTHOR));
+        columns.add(makePropertyColumn(Paper.PUBL_YEAR, Paper.FLD_PUBL_YEAR));
+        columns.add(makeClickableColumn(Paper.TITLE, Paper.FLD_TITLE,
                 (IModel<PaperSlim> m) -> setResponsePage(new PaperEntryPage(Model.of(paperService.findById(m.getObject().getId()).orElse(new Paper()))))));
         return columns;
     }

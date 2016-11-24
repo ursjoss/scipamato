@@ -22,8 +22,8 @@ public class Paper extends SipamatoEntity {
     private static final String DOI_REGEX = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$";
 
     public static final String ID = "id";
-    public static final String PMID = "pmId";
     public static final String DOI = "doi";
+    public static final String PMID = "pmId";
     public static final String AUTHORS = "authors";
     public static final String FIRST_AUTHOR = "firstAuthor";
     public static final String FIRST_AUTHOR_OVERRIDDEN = "firstAuthorOverridden";
@@ -55,6 +55,42 @@ public class Paper extends SipamatoEntity {
     public static final String MAIN_CODE_OF_CODECLASS1 = "mainCodeOfCodeclass1";
 
     public static final String CODES = "codes";
+
+    // TODO Leaky abstraction!!! Should not use the table fields in the entity layer, but how to avoid it???
+    public static final String FLD_ID = "id";
+    public static final String FLD_DOI = "doi";
+    public static final String FLD_PMID = "pm_id";
+    public static final String FLD_AUTHORS = "authors";
+    public static final String FLD_FIRST_AUTHOR = "first_author";
+    public static final String FLD_FIRST_AUTHOR_OVERRIDDEN = "first_author_overridden";
+    public static final String FLD_TITLE = "title";
+    public static final String FLD_LOCATION = "location";
+    public static final String FLD_PUBL_YEAR = "publication_year";
+
+    public static final String FLD_GOALS = "goals";
+    public static final String FLD_POPULATION = "population";
+    public static final String FLD_METHODS = "methods";
+
+    public static final String FLD_POPULATION_PLACE = "population_place";
+    public static final String FLD_POPULATION_PARTICIPANTS = "population_participants";
+    public static final String FLD_POPULATION_DURATION = "population_duration";
+    public static final String FLD_EXPOSURE_POLLUTANT = "exposure_pollutant";
+    public static final String FLD_EXPOSURE_ASSESSMENT = "exposure_assessment";
+    public static final String FLD_METHOD_STUDY_DESIGN = "method_studydesign";
+    public static final String FLD_METHOD_OUTCOME = "method_outcome";
+    public static final String FLD_METHOD_STATISTICS = "method_statistics";
+    public static final String FLD_METHOD_CONFOUNDERS = "method_confounders";
+
+    public static final String FLD_RESULT = "result";
+    public static final String FLD_COMMENT = "comment";
+    public static final String FLD_INTERN = "intern";
+
+    public static final String FLD_RESULT_EXPOSURE_RANGE = "result_exposure_range";
+    public static final String FLD_RESULT_EFFECT_ESTIMATE = "result_effect_estimate";
+
+    public static final String FLD_MAIN_CODE_OF_CODECLASS1 = "main_code_of_codeclass1";
+
+    public static final String FLD_CODES = "codes";
 
     private Long id;
 
