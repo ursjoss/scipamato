@@ -10,7 +10,6 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.sipamato.entity.SimplePaperFilter;
-import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.pages.paper.provider.SimpleSortablePaperSlimProvider;
@@ -18,39 +17,44 @@ import ch.difty.sipamato.web.panel.result.ResultPanel;
 
 @MountPath("list")
 @AuthorizeInstantiation({ "ROLE_USER" })
-public class PaperListPage extends BasePage<PaperSlim> {
+public class PaperListPage extends BasePage<Void> {
 
     private static final long serialVersionUID = 1L;
 
     private SimplePaperFilter filter;
+    private SimpleSortablePaperSlimProvider dataProvider;
 
     public PaperListPage(PageParameters parameters) {
         super(parameters);
-        initDefaultModel();
+        initFilterAndProvider();
     }
 
-    private void initDefaultModel() {
+    private void initFilterAndProvider() {
         filter = new SimplePaperFilter();
+        dataProvider = new SimpleSortablePaperSlimProvider(filter);
     }
 
     protected void onInitialize() {
         super.onInitialize();
 
-        final SimpleSortablePaperSlimProvider dataProvider = new SimpleSortablePaperSlimProvider(filter);
+        makeAndQueueFilterForm("searchForm");
+        makeAndQueueResultPanel("resultPanel");
+    }
 
-        queueFilterForm("searchForm", dataProvider);
+    private void makeAndQueueFilterForm(final String id) {
+        queue(new FilterForm<SimplePaperFilter>(id, dataProvider));
+
         queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(filter, SimplePaperFilter.AUTHOR_MASK)), Optional.empty());
         queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(filter, SimplePaperFilter.METHODS_MASK)), Optional.empty());
         queueFieldAndLabel(new TextField<String>("fieldSearch", PropertyModel.of(filter, SimplePaperFilter.SEARCH_MASK)), Optional.empty());
         queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(filter, SimplePaperFilter.PUB_YEAR_FROM)), Optional.empty());
         queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(filter, SimplePaperFilter.PUB_YEAR_UNTIL)), Optional.empty());
+
         queueResponsePageButton("newPaper", new PaperEntryPage(getPageParameters()));
-
-        queue(new ResultPanel("resultPanel", dataProvider));
-
     }
 
-    private void queueFilterForm(final String id, final SimpleSortablePaperSlimProvider dataProvider) {
-        queue(new FilterForm<SimplePaperFilter>(id, dataProvider));
+    private void makeAndQueueResultPanel(String id) {
+        queue(new ResultPanel(id, dataProvider));
     }
+
 }
