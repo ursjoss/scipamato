@@ -28,9 +28,17 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Override
     protected void assertSpecificComponents() {
-        String b = "form";
+        assertForm("form");
+        assertResultPanel("resultPanel");
+    }
+
+    private void assertForm(String b) {
         getTester().assertComponent(b, Form.class);
         getTester().assertComponent(b + ":addSearch", BootstrapAjaxButton.class);
+    }
+
+    private void assertResultPanel(String b) {
+        getTester().assertComponent(b, ResultPanel.class);
     }
 
     @Test
@@ -42,13 +50,6 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         formTester.submit("addSearch");
 
         getTester().assertRenderedPage(PaperSearchCriteriaPage.class);
-    }
-
-    @Test
-    public void startingPageWithDefaultConstructor_initiatesPageWith0Papers() {
-        getTester().startPage(getPageClass());
-        getTester().assertRenderedPage(getPageClass());
-        getTester().assertComponent("resultPanel", ResultPanel.class);
     }
 
 }

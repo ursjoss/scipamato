@@ -25,6 +25,8 @@ public class PaperSearchPage extends BasePage<CompositeComplexPaperFilter> {
 
     private static final long serialVersionUID = 1L;
 
+    private ComplexSortablePaperSlimProvider dataProvider;
+
     public PaperSearchPage(PageParameters parameters) {
         super(parameters);
         setDefaultModel(Model.of(new CompositeComplexPaperFilter(null)));
@@ -37,10 +39,19 @@ public class PaperSearchPage extends BasePage<CompositeComplexPaperFilter> {
     protected void onInitialize() {
         super.onInitialize();
 
-        final ComplexSortablePaperSlimProvider dataProvider = new ComplexSortablePaperSlimProvider(getModelObject());
-        queue(new FilterForm<>("form", dataProvider));
-        queue(new ResultPanel("resultPanel", dataProvider));
+        dataProvider = new ComplexSortablePaperSlimProvider(getModelObject());
+
+        queueForm("form");
+        queueResultPanel("resultPanel");
+    }
+
+    private void queueForm(final String id) {
+        queue(new FilterForm<>(id, dataProvider));
         queueResponsePageButton("addSearch", new PaperSearchCriteriaPage(getModelObject()));
+    }
+
+    private void queueResultPanel(final String id) {
+        queue(new ResultPanel(id, dataProvider));
     }
 
 }

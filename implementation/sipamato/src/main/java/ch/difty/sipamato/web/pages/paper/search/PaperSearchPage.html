@@ -4,57 +4,16 @@
     <wicket:extend>
         <div class="container-fluid">
             <div class="row">
-                <form wicket:id="form">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <a wicket:id="addSearch">Complex Search</a>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="row">
-                <div wicket:id="resultPanel"></div>
-            </div>
-        </div>
-        <!--
-        <div class="container-fluid">
-            <table class="dataview" wicket:id="table"></table>
-        </div>
-         -->
-        <!-- 
-        <form wicket:id="searchForm">
-                    <div class="col-lg-4">
-                        <div wicket:id="methodsSearchLabel"></div>
-                        <input wicket:id="methodsSearch" class="form-control"></input>
-                    </div>
-                    <div class="col-lg-3">
-                        <div wicket:id="authorsSearchLabel"></div>
-                        <input wicket:id="authorsSearch" class="form-control"></input>
-                    </div>
-                    <div class="col-lg-1">
-                        <div wicket:id="pubYearFromLabel"></div>
-                        <input wicket:id="pubYearFrom" class="form-control"></input>
-                    </div>
-                    <div class="col-lg-1">
-                        <div wicket:id="pubYearUntilLabel"></div>
-                        <input wicket:id="pubYearUntil" class="form-control"></input>
-                    </div>
-                    <div class="col-lg-3">
-                        <div wicket:id="fieldSearchLabel"></div>
-                        <input wicket:id="fieldSearch" class="form-control"></input>
-                    </div>
+                <div class="col-md-2">
+                    <form wicket:id="form">
+                        <a wicket:id="addSearch">Complex Search</a>
+                    </form>
                 </div>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <a wicket:id="complexSearch">Complex Search</a>
-                        <a wicket:id="newPaper">New Paper</a>
-                    </div>
+                <div class="col-md-10">
+                    <div wicket:id="resultPanel"></div>
                 </div>
             </div>
-        </form> -->
+        </div>
     </wicket:extend>
 </body>
 </html>
