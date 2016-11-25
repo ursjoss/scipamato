@@ -42,8 +42,10 @@ public interface ReadOnlyRepository<R extends Record, T extends SipamatoEntity, 
     T findById(ID id);
 
     /**
-     * Finds all persisted entities matching the provided filter.
+     * Finds all persisted entities matching the provided filter, returned in pages.
      *
+     * @param filter of type <code>F</code>
+     * @param pageable {@link Pageable}
      * @return list of all matching entities <code>T</code>
      */
     Page<T> findByFilter(F filter, Pageable pageable);
@@ -51,6 +53,7 @@ public interface ReadOnlyRepository<R extends Record, T extends SipamatoEntity, 
     /**
      * Counts all persisted entities matching the provided filter. 
      *
+     * @param filter of type <code>F</code>
      * @return list of all matching entities <code>T</code>
      */
     int countByFilter(F filter);

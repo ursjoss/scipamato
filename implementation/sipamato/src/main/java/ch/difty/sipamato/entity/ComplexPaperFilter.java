@@ -34,7 +34,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO evaluate meta pattern, validate final input if datatype matches
+/**
+ * The {@link ComplexPaperFilter} is an instance of {@link SipamatoFilter} that provides
+ * accessors for all fields present in the entity {@link Paper}, but all in String form.
+ *
+ * The provided String values may contain query specific meta information that can be interpreted
+ * by the query infrastructure to specify e.g. ranges or wildcards.
+ *
+ * Internally it stores any of the fields that were explicitly set in Maps that can be accessed
+ * to be evaluated by the query engine.
+ *
+ * @author u.joss
+ *
+ * TODO parse the type specific information and validate both meta information and the actual query term 
+ *      (e.g. that integer search specifications are actually integer values when stripped from the meta information)
+ */
 public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
 
     private static final long serialVersionUID = 1L;
@@ -43,19 +57,30 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
     private final Map<String, IntegerSearchTerm> integerSearchTerms = new HashMap<>();
     private final Map<String, BooleanSearchTerm> booleanSearchTerms = new HashMap<>();
 
+    /**
+     * @return all search terms specified for string fields in entity {@link Paper}
+     */
     public Collection<StringSearchTerm> getStringSearchTerms() {
         return stringSearchTerms.values();
     }
 
+    /**
+     * @return all search terms specified for integer fields in entity {@link Paper}
+     */
     public Collection<IntegerSearchTerm> getIntegerSearchTerms() {
         return integerSearchTerms.values();
     }
 
+    /**
+     * @return all search terms specified for boolean fields in entity {@link Paper}
+     */
     public Collection<BooleanSearchTerm> getBooleanSearchTerms() {
         return booleanSearchTerms.values();
     }
 
     private final CodeBox codes = new CodeBox();
+
+    /** {@link Paper} specific accessors */
 
     public String getId() {
         return getIntegerValue(FLD_ID);
@@ -273,6 +298,8 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
         setStringValue(FLD_MAIN_CODE_OF_CODECLASS1, value);
     }
 
+    /** {@link CodeBoxAware} methods */
+
     @Override
     public void clearCodes() {
         this.codes.clear();
@@ -303,6 +330,9 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
         this.codes.addCodes(codes);
     }
 
+    /**
+     * Helper class to capture string specific search terms
+     */
     public static class StringSearchTerm implements Serializable {
         private static final long serialVersionUID = 1L;
 
@@ -328,6 +358,9 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
         }
     }
 
+    /**
+     * Helper class to capture integer specific search terms
+     */
     public static class IntegerSearchTerm implements Serializable {
         private static final long serialVersionUID = 1L;
 
@@ -353,6 +386,9 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
         }
     }
 
+    /**
+     * Helper class to capture boolean specific search terms
+     */
     public static class BooleanSearchTerm implements Serializable {
         private static final long serialVersionUID = 1L;
 
