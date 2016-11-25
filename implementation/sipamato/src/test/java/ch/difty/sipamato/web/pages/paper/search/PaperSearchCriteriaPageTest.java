@@ -5,6 +5,7 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
 
 import ch.difty.sipamato.web.pages.BasePageTest;
+import ch.difty.sipamato.web.panel.paper.SearchablePaperPanel;
 
 public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteriaPage> {
 
@@ -16,6 +17,11 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
     @Override
     protected Class<PaperSearchCriteriaPage> getPageClass() {
         return PaperSearchCriteriaPage.class;
+    }
+
+    @Override
+    protected void assertSpecificComponents() {
+        getTester().assertComponent("contentPanel", SearchablePaperPanel.class);
     }
 
     @Test

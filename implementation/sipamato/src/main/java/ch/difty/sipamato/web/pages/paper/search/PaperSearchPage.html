@@ -2,16 +2,22 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <body>
     <wicket:extend>
-        <form wicket:id="form">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <a wicket:id="addSearch">Complex Search</a>
-                        <div wicket:id="paperCount"></div>
+        <div class="container-fluid">
+            <div class="row">
+                <form wicket:id="form">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a wicket:id="addSearch">Complex Search</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
-        </form>
+            <div class="row">
+                <div wicket:id="resultPanel"></div>
+            </div>
+        </div>
         <!--
         <div class="container-fluid">
             <table class="dataview" wicket:id="table"></table>

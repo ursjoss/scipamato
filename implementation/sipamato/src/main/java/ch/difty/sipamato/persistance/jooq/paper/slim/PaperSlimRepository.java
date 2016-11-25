@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
-import ch.difty.sipamato.entity.ComplexPaperFilter;
+import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
 import ch.difty.sipamato.entity.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.persistance.jooq.ReadOnlyRepository;
@@ -14,30 +14,33 @@ import ch.difty.sipamato.persistance.jooq.ReadOnlyRepository;
 public interface PaperSlimRepository extends ReadOnlyRepository<PaperRecord, PaperSlim, Long, PaperSlimRecordMapper, SimplePaperFilter> {
 
     /**
-     * Finds all {@link PaperSlim}s matching the provided {@link ComplexPaperFilter}.
+     * Finds all {@link PaperSlim}s matching the provided {@link CompositeComplexPaperFilter}.
      *
      * <ul>
      * <li>strings are matched <code>contain</code> like ignoring case</li>
      * <li>numbers are matched exactly</li>
      * </ul>
      *
-     * @param {@link ComplexPaperFilter}
+     * @param compositeFilter {@link CompositeComplexPaperFilter} the combined search specification
      * @return list of {@link PaperSlim}s
      */
-    List<PaperSlim> findByFilter(ComplexPaperFilter filter);
+    List<PaperSlim> findByFilter(CompositeComplexPaperFilter compositeFilter);
 
     /**
-     * Finds all persisted entities matching the provided filter.
+     * Finds all {@link PaperSlim}s matching the provided {@link CompositeComplexPaperFilter}, returned in pages.
      *
-     * @return list of all matching entities <code>T</code>
+     * @see #findByFilter(CompositeComplexPaperFilter)
+     *
+     * @return list of {@link PaperSlim}s
      */
-    Page<PaperSlim> findByFilter(ComplexPaperFilter filter, Pageable pageable);
+    Page<PaperSlim> findByFilter(CompositeComplexPaperFilter filter, Pageable pageable);
 
     /**
-     * Counts all persisted entities matching the provided filter.
+     * Counts all persisted entities matching the provided {@link CompositeComplexPaperFilter}.
      *
-     * @return list of all matching entities <code>T</code>
+     * @param compositeFilter {@link CompositeComplexPaperFilter} the combined search specification
+     * @return paper count
      */
-    int countByFilter(ComplexPaperFilter filter);
+    int countByFilter(CompositeComplexPaperFilter filter);
 
 }

@@ -18,7 +18,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import ch.difty.sipamato.entity.ComplexPaperFilter;
+import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
@@ -33,7 +33,7 @@ public class JooqPaperSlimServiceTest {
     @Mock
     private SimplePaperFilter simplefilterMock;
     @Mock
-    private ComplexPaperFilter complexFilterMock;
+    private CompositeComplexPaperFilter compositeComplexFilterMock;
     @Mock
     private Pageable pageableMock;
     @Mock
@@ -55,7 +55,7 @@ public class JooqPaperSlimServiceTest {
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(repoMock, simplefilterMock, complexFilterMock, pageableMock, paperSlimPageMock, paperSlimMock, paperMock);
+        verifyNoMoreInteractions(repoMock, simplefilterMock, compositeComplexFilterMock, pageableMock, paperSlimPageMock, paperSlimMock, paperMock);
     }
 
     @Test
@@ -100,9 +100,9 @@ public class JooqPaperSlimServiceTest {
 
     @Test
     public void findingByFilter_withComplexFilter_delegatesToRepo() {
-        when(repoMock.findByFilter(complexFilterMock)).thenReturn(papers);
-        assertThat(service.findByFilter(complexFilterMock)).containsAll(papers);
-        verify(repoMock).findByFilter(complexFilterMock);
+        when(repoMock.findByFilter(compositeComplexFilterMock)).thenReturn(papers);
+        assertThat(service.findByFilter(compositeComplexFilterMock)).containsAll(papers);
+        verify(repoMock).findByFilter(compositeComplexFilterMock);
     }
 
 }

@@ -7,6 +7,7 @@ import org.apache.wicket.injection.Injector;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.ComplexPaperFilter;
+import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 
@@ -15,16 +16,12 @@ import ch.difty.sipamato.entity.projection.PaperSlim;
  *
  * @author u.joss
  */
-public class ComplexSortablePaperSlimProvider extends SortablePaperSlimProvider<ComplexPaperFilter> {
+public class ComplexSortablePaperSlimProvider extends SortablePaperSlimProvider<CompositeComplexPaperFilter> {
 
     private static final long serialVersionUID = 1L;
 
-    public ComplexSortablePaperSlimProvider() {
-        this(new ComplexPaperFilter());
-    }
-
-    public ComplexSortablePaperSlimProvider(ComplexPaperFilter filter) {
-        super(filter);
+    public ComplexSortablePaperSlimProvider(CompositeComplexPaperFilter complexFilter) {
+        super(complexFilter);
         Injector.get().inject(this);
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
     }

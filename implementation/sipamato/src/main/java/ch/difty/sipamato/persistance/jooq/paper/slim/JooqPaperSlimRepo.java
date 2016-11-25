@@ -21,9 +21,11 @@ import ch.difty.sipamato.entity.ComplexPaperFilter;
 import ch.difty.sipamato.entity.ComplexPaperFilter.BooleanSearchTerm;
 import ch.difty.sipamato.entity.ComplexPaperFilter.IntegerSearchTerm;
 import ch.difty.sipamato.entity.ComplexPaperFilter.StringSearchTerm;
+import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
 import ch.difty.sipamato.entity.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.persistance.jooq.ConditionalSupplier;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
 import ch.difty.sipamato.persistance.jooq.JooqReadOnlyRepo;
 import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
@@ -60,63 +62,92 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
         return PAPER.ID;
     }
 
+    /** {@inheritDoc} */
     @Override
-    public List<PaperSlim> findByFilter(final ComplexPaperFilter filter) {
-        AssertAs.notNull(filter, "filter");
-        // Query By example simply uses eq (without ignore case) and is thus not flexible enough.
-        //        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(DSL.condition(record)).fetchInto(getRecordClass());
-        Condition c = extractConditions(filter);
-        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(c).fetchInto(getRecordClass());
+    public List<PaperSlim> findByFilter(final CompositeComplexPaperFilter compositeFilter) {
+        AssertAs.notNull(compositeFilter, "filter");
+
+        final Condition compositeCondition = getConditionsFrom(compositeFilter);
+        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(compositeCondition).fetchInto(getRecordClass());
         final List<PaperSlim> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
         enrichAssociatedEntitiesOfAll(entities);
 
         return entities;
     }
 
-    // TODO implement search patterns as follows:
-    /*
-        Strings:
-    
-        foo     likeIgnoreCase '%foo%'  "*foo*"
-        "foo"   equalsIgnoreCase 'foo'
-        foo*  likeIgnoreCase 'foo%'
-        *foo  likeIgnoreCase '%foo'
-    
-    
-        Numbers:
-    
-        2016        = 2016
-        >2016       > 2016
-        >=2016      >= 2016
-        <2016       < 2016
-        <=2016      <= 2016
-        2016-2018   between 2016 and 2018
-     */
-    private Condition extractConditions(ComplexPaperFilter filter) {
-        Condition c = DSL.trueCondition();
-        for (BooleanSearchTerm st : filter.getBooleanSearchTerms()) {
-            // TODO key to field name ???
-            c = c.and(DSL.field(st.key).equal(DSL.val(st.rawValue)));
-        }
-        for (IntegerSearchTerm st : filter.getIntegerSearchTerms()) {
-            c = c.and(DSL.field(st.key).equal(DSL.val(st.rawValue)));
-        }
-        for (StringSearchTerm st : filter.getStringSearchTerms()) {
-            c = c.and(DSL.field(st.key).lower().contains(DSL.val(st.rawValue).lower()));
-        }
-        return c;
-    }
-
+    /** {@inheritDoc} */
     @Override
-    public Page<PaperSlim> findByFilter(ComplexPaperFilter filter, Pageable pageable) {
+    public Page<PaperSlim> findByFilter(CompositeComplexPaperFilter filter, Pageable pageable) {
         final List<PaperSlim> entities = findByFilter(filter);
         return new PageImpl<>(entities, pageable, (long) countByFilter(filter));
     }
 
+    /** {@inheritDoc} */
     @Override
-    public int countByFilter(ComplexPaperFilter filter) {
-        final Condition conditions = extractConditions(filter);
+    public int countByFilter(CompositeComplexPaperFilter compositeFilter) {
+        final Condition conditions = getConditionsFrom(compositeFilter);
         return getDsl().fetchCount(getDsl().selectOne().from(getTable()).where(conditions));
+    }
+
+    /*
+     * Combines the search terms of different ComplexPaperFilters using OR operators.
+     */
+    private Condition getConditionsFrom(final CompositeComplexPaperFilter filter) {
+        final ConditionalSupplier conditions = new ConditionalSupplier();
+        for (final ComplexPaperFilter cpf : filter.getFilters())
+            conditions.add(() -> getConditionFromSingleComplexFilter(cpf));
+        return conditions.combineWithOr();
+    }
+
+    /*
+     * Combines the individual search terms of a single ComplexPaperFilter using AND operators
+     */
+    private Condition getConditionFromSingleComplexFilter(ComplexPaperFilter filter) {
+        final ConditionalSupplier conditions = new ConditionalSupplier();
+        for (final BooleanSearchTerm st : filter.getBooleanSearchTerms())
+            conditions.add(() -> applyBooleanSearchLogic(st));
+        for (final IntegerSearchTerm st : filter.getIntegerSearchTerms())
+            conditions.add(() -> applyIntegerSearchLogic(st));
+        for (final StringSearchTerm st : filter.getStringSearchTerms())
+            conditions.add(() -> applyStringSearchLogic(st));
+        return conditions.combineWithAnd();
+    }
+
+    /**
+     * Evaluates the raw search term for boolean fields and applies the actual condition. 
+     */
+    private Condition applyBooleanSearchLogic(final BooleanSearchTerm st) {
+        return DSL.field(st.key).equal(DSL.val(st.rawValue));
+    }
+
+    /**
+     * Evaluates the raw search term for integer fields and applies the actual condition
+     *
+     * <ul>
+     * <li><literal>2016</literal> --- <code>= 2016</code></li>
+     * <li>TODO <literal>>=2016</literal> --- <code>>= 2016</code></li>
+     * <li>TODO <literal><2016</literal> --- <code>< 2016</code></li>
+     * <li>TODO <literal><=2016</literal> --- <code><= 2016</code></li>
+     * <li>TODO <literal>2016-2018</literal> --- <code>between 2016 and 2018</code></li>
+     * </ul>
+     */
+    private Condition applyIntegerSearchLogic(final IntegerSearchTerm st) {
+        return DSL.field(st.key).equal(DSL.val(st.rawValue));
+    }
+
+    /**
+     * Evaluates the raw search term for string fields and applies the actual condition
+     *
+     * <ul>
+     * <li> <literal>foo</literal> --- <code>likeIgnoreCase '%foo%'</code></li>
+     * <li> TODO <literal>*foo*</literal> --- <code>likeIgnoreCase '%foo%'</code></li>
+     * <li> TODO <literal>"foo"</literal> --- <code>equalsIgnoreCase 'foo'</code></li>
+     * <li> TODO <literal>foo*</literal> --- <code>likeIgnoreCase 'foo%'</code></li>
+     * <li> TODO <literal>*foo</literal> --- <code>likeIgnoreCase '%foo'</code></li>
+     * </ul>
+     */
+    private Condition applyStringSearchLogic(final StringSearchTerm st) {
+        return DSL.field(st.key).lower().contains(DSL.val(st.rawValue).lower());
     }
 
 }
