@@ -414,4 +414,15 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
         }
     }
 
+    @Override
+    public String toString() {
+        // TODO silly first primer to get some kind of representation
+        final StringBuilder sb = new StringBuilder();
+        sb.append(stringSearchTerms.size());
+        sb.append("/");
+        sb.append(integerSearchTerms.size());
+        sb.append("/");
+        sb.append(booleanSearchTerms.size());
+        return sb.toString();
+    }
 }

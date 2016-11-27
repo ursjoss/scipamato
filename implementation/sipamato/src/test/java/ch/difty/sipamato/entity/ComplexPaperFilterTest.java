@@ -498,4 +498,11 @@ public class ComplexPaperFilterTest {
         assertThat(f.getStringSearchTerms()).isEmpty();
     }
 
+    @Test
+    public void testToString() {
+        f.setAuthors("fooAuth");
+        f.setPublicationYear("2016");
+        f.setFirstAuthorOverridden(true);
+        assertThat(f.toString()).isEqualTo("1/1/1");
+    }
 }

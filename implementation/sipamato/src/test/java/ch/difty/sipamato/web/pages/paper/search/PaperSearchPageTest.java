@@ -10,6 +10,7 @@ import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
 import ch.difty.sipamato.web.pages.BasePageTest;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
@@ -35,6 +36,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     private void assertForm(String b) {
         getTester().assertComponent(b, Form.class);
         getTester().assertComponent(b + ":addSearch", BootstrapAjaxButton.class);
+        getTester().assertComponent(b + ":searchTerms", BootstrapDefaultDataTable.class);
     }
 
     private void assertResultPanel(String b) {
