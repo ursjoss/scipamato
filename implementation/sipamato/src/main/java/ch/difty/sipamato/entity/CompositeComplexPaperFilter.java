@@ -45,4 +45,15 @@ public class CompositeComplexPaperFilter extends SipamatoFilter {
     public void merge(final CompositeComplexPaperFilter other) {
         filterList.addAll(other.getFilters());
     }
+
+    /**
+     * Removes the specified {@link ComplexPaperFilter} - if not null and present.
+     *
+     * @param filter the filter to remove
+     */
+    public void remove(ComplexPaperFilter filter) {
+        if (filter != null) {
+            filterList.remove(filter);
+        }
+    }
 }

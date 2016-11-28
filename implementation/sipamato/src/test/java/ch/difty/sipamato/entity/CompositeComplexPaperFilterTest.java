@@ -62,4 +62,36 @@ public class CompositeComplexPaperFilterTest {
 
         assertThat(f.getFilters()).hasSize(3);
     }
+
+    @Test
+    public void whenRemovingFilter_withNullParameter_doesNothing() {
+        f.add(mockFilter1);
+        f.add(mockFilter2);
+        assertThat(f.getFilters()).containsExactly(mockFilter1, mockFilter2);
+
+        f.remove(null);
+
+        assertThat(f.getFilters()).containsExactly(mockFilter1, mockFilter2);
+    }
+
+    @Test
+    public void whenRemovingFilter_withFilterWhichIsPresent_doesRemoveIt() {
+        f.add(mockFilter1);
+        f.add(mockFilter2);
+        assertThat(f.getFilters()).containsExactly(mockFilter1, mockFilter2);
+
+        f.remove(mockFilter2);
+
+        assertThat(f.getFilters()).containsExactly(mockFilter1);
+    }
+
+    @Test
+    public void whenRemovingFilter_withFilterWhichIsNotPresent_doesNothing() {
+        f.add(mockFilter2);
+        assertThat(f.getFilters()).containsExactly(mockFilter2);
+
+        f.remove(mockFilter1);
+
+        assertThat(f.getFilters()).containsExactly(mockFilter2);
+    }
 }
