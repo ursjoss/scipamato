@@ -136,4 +136,24 @@ public class CompositeComplexPaperFilterTest {
 
         assertThat(f.toString()).isEqualTo("f1ToString; OR f2ToString");
     }
+
+    @Test
+    public void cannotAddTheSameSearchTermTwice() {
+        ComplexPaperFilter f1 = new ComplexPaperFilter();
+        f1.setAuthors("baz");
+        f1.setTitle("foo");
+        f1.setPublicationYear("2016");
+        f1.setFirstAuthorOverridden(true);
+        ComplexPaperFilter f2 = new ComplexPaperFilter();
+        f2.setAuthors("baz");
+        f2.setTitle("foo");
+        f2.setPublicationYear("2016");
+        f2.setFirstAuthorOverridden(true);
+
+        assertThat(f.getFilters()).hasSize(0);
+        f.add(f1);
+        assertThat(f.getFilters()).hasSize(1);
+        f.add(f2);
+        assertThat(f.getFilters()).hasSize(1);
+    }
 }

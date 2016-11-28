@@ -35,7 +35,7 @@ public class CompositeComplexPaperFilter extends SipamatoFilter {
      * @param filter to be added.
      */
     public void add(final ComplexPaperFilter filter) {
-        if (filter != null)
+        if (filter != null && !filterList.contains(filter))
             filterList.add(filter);
     }
 

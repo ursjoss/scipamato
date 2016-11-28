@@ -7,10 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import ch.difty.sipamato.entity.ComplexPaperFilter.BooleanSearchTerm;
-import ch.difty.sipamato.entity.ComplexPaperFilter.IntegerSearchTerm;
-import ch.difty.sipamato.entity.ComplexPaperFilter.StringSearchTerm;
-
 // TODO test codes
 public class ComplexPaperFilterTest {
 
@@ -508,7 +504,7 @@ public class ComplexPaperFilterTest {
     public void testToString_withTwoStringSearchTerms_joinsThemUsingAnd() {
         f.setAuthors("rag");
         f.setMethodConfounders("bones");
-        assertThat(f.toString()).isEqualTo("bones AND rag");
+        assertThat(f.toString()).isEqualTo("rag AND bones");
     }
 
     @Test
@@ -524,6 +520,66 @@ public class ComplexPaperFilterTest {
         f.setDoi("baz");
         f.setPublicationYear("2016");
         f.setFirstAuthorOverridden(true);
-        assertThat(f.toString()).isEqualTo("bar AND fooAuth AND baz AND 2016 AND first_author_overridden");
+        assertThat(f.toString()).isEqualTo("fooAuth AND bar AND baz AND 2016 AND first_author_overridden");
     }
+
+    @Test
+    public void equalsAndHash() {
+        assertThat(f.hashCode()).isEqualTo(30784);
+        assertThat(f.equals(f)).isTrue();
+        assertThat(f.equals(null)).isFalse();
+        assertThat(f.equals(new String())).isFalse();
+    }
+
+    @Test
+    public void equalsAndHash2() {
+        ComplexPaperFilter f1 = new ComplexPaperFilter();
+        ComplexPaperFilter f2 = new ComplexPaperFilter();
+        assertEquality(f1, f2, 30784);
+    }
+
+    private void assertEquality(ComplexPaperFilter f1, ComplexPaperFilter f2, int hashCode) {
+        assertThat(f1.hashCode()).isEqualTo(f2.hashCode());
+        assertThat(f2.hashCode()).isEqualTo(hashCode);
+        assertThat(f1.equals(f2)).isTrue();
+        assertThat(f2.equals(f1)).isTrue();
+    }
+
+    @Test
+    public void equalsAndHash3() {
+        ComplexPaperFilter f1 = new ComplexPaperFilter();
+        f1.setAuthors("foo");
+        ComplexPaperFilter f2 = new ComplexPaperFilter();
+        f2.setAuthors("foo");
+        assertEquality(f1, f2, -1401938339);
+    }
+
+    @Test
+    public void equalsAndHash4() {
+        ComplexPaperFilter f1 = new ComplexPaperFilter();
+        f1.setAuthors("foo");
+        f1.setComment("bar");
+        f1.setPublicationYear("2014");
+        f1.setFirstAuthor("baz");
+        f1.setFirstAuthorOverridden(true);
+        f1.setMethodOutcome("blup");
+        ComplexPaperFilter f2 = new ComplexPaperFilter();
+        f2.setAuthors("foo");
+        f2.setComment("bar");
+        f2.setPublicationYear("2014");
+        f2.setFirstAuthor("baz");
+        f2.setFirstAuthorOverridden(true);
+        f2.setMethodOutcome("blup");
+        assertEquality(f1, f2, 2003277035);
+
+        f2.setMethodOutcome("blup2");
+        assertThat(f1.equals(f2)).isFalse();
+        assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode());
+
+        f2.setMethodOutcome("blup");
+        f2.setMethodStatistics("bloop");
+        assertThat(f1.equals(f2)).isFalse();
+        assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode());
+    }
+
 }

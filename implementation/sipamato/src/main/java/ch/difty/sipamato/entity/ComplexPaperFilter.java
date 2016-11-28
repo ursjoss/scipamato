@@ -28,12 +28,9 @@ import static ch.difty.sipamato.entity.Paper.FLD_RESULT_EFFECT_ESTIMATE;
 import static ch.difty.sipamato.entity.Paper.FLD_RESULT_EXPOSURE_RANGE;
 import static ch.difty.sipamato.entity.Paper.FLD_TITLE;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -57,9 +54,9 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
 
     private static final String JOIN_DELIMITER = " AND ";
 
-    private final Map<String, StringSearchTerm> stringSearchTerms = new HashMap<>();
-    private final Map<String, IntegerSearchTerm> integerSearchTerms = new HashMap<>();
-    private final Map<String, BooleanSearchTerm> booleanSearchTerms = new HashMap<>();
+    private final StringSearchTerms stringSearchTerms = new StringSearchTerms();
+    private final IntegerSearchTerms integerSearchTerms = new IntegerSearchTerms();
+    private final BooleanSearchTerms booleanSearchTerms = new BooleanSearchTerms();
 
     /**
      * @return all search terms specified for string fields in entity {@link Paper}
@@ -334,26 +331,6 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
         this.codes.addCodes(codes);
     }
 
-    /**
-     * Helper class to capture string specific search terms
-     */
-    public static class StringSearchTerm implements Serializable {
-        private static final long serialVersionUID = 1L;
-
-        public final String key;
-        public final String rawValue;
-
-        private StringSearchTerm(final String key, final String value) {
-            this.key = key;
-            this.rawValue = value;
-        }
-
-        @Override
-        public String toString() {
-            return rawValue;
-        }
-    }
-
     private String getStringValue(String key) {
         final StringSearchTerm st = stringSearchTerms.get(key);
         return st != null ? st.rawValue : null;
@@ -367,26 +344,6 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
         }
     }
 
-    /**
-     * Helper class to capture integer specific search terms
-     */
-    public static class IntegerSearchTerm implements Serializable {
-        private static final long serialVersionUID = 1L;
-
-        public final String key;
-        public final String rawValue;
-
-        private IntegerSearchTerm(final String key, final String value) {
-            this.key = key;
-            this.rawValue = value;
-        }
-
-        @Override
-        public String toString() {
-            return rawValue;
-        }
-    }
-
     private String getIntegerValue(String key) {
         final IntegerSearchTerm st = integerSearchTerms.get(key);
         return st != null ? st.rawValue : null;
@@ -397,26 +354,6 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
             integerSearchTerms.put(key, new IntegerSearchTerm(key, value));
         } else {
             integerSearchTerms.remove(key);
-        }
-    }
-
-    /**
-     * Helper class to capture boolean specific search terms
-     */
-    public static class BooleanSearchTerm implements Serializable {
-        private static final long serialVersionUID = 1L;
-
-        public final String key;
-        public final boolean rawValue;
-
-        private BooleanSearchTerm(final String key, final boolean rawValue) {
-            this.key = key;
-            this.rawValue = rawValue;
-        }
-
-        @Override
-        public String toString() {
-            return key;
         }
     }
 
@@ -439,5 +376,39 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
         final String intString = integerSearchTerms.values().stream().map(IntegerSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
         final String boolString = booleanSearchTerms.values().stream().filter((BooleanSearchTerm st) -> st.rawValue).map(BooleanSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
         return Arrays.asList(textString, intString, boolString).stream().filter((String s) -> !s.isEmpty()).collect(Collectors.joining(JOIN_DELIMITER));
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + stringSearchTerms.hashCode();
+        result = prime * result + integerSearchTerms.hashCode();
+        result = prime * result + booleanSearchTerms.hashCode();
+//        result = prime * result + ((codes == null) ? 0 : codes.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ComplexPaperFilter other = (ComplexPaperFilter) obj;
+        if (!booleanSearchTerms.equals(other.booleanSearchTerms))
+            return false;
+        if (!integerSearchTerms.equals(other.integerSearchTerms))
+            return false;
+        if (!stringSearchTerms.equals(other.stringSearchTerms))
+            return false;
+//        if (codes == null) {
+//            if (other.codes != null)
+//                return false;
+//        } else if (!codes.equals(other.codes))
+//            return false;
+        return true;
     }
 }
