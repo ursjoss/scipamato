@@ -122,17 +122,24 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
 
     /**
      * Evaluates the raw search term for integer fields and applies the actual condition
-     *
-     * <ul>
-     * <li><literal>2016</literal> --- <code>= 2016</code></li>
-     * <li>TODO <literal>>=2016</literal> --- <code>>= 2016</code></li>
-     * <li>TODO <literal><2016</literal> --- <code>< 2016</code></li>
-     * <li>TODO <literal><=2016</literal> --- <code><= 2016</code></li>
-     * <li>TODO <literal>2016-2018</literal> --- <code>between 2016 and 2018</code></li>
-     * </ul>
      */
     private Condition applyIntegerSearchLogic(final IntegerSearchTerm st) {
-        return DSL.field(st.key).equal(DSL.val(st.rawValue));
+        switch (st.type) {
+        case EXACT:
+            return DSL.field(st.key).equal(DSL.val(st.value));
+        case LESS_OR_EQUAL:
+            return DSL.field(st.key).le(DSL.val(st.value));
+        case LESS_THAN:
+            return DSL.field(st.key).lt(DSL.val(st.value));
+        case GREATER_OR_EQUAL:
+            return DSL.field(st.key).ge(DSL.val(st.value));
+        case GREATER_THAN:
+            return DSL.field(st.key).gt(DSL.val(st.value));
+        case RANGE:
+            return DSL.field(st.key).between(DSL.val(st.value), DSL.val(st.value2));
+        default:
+            throw new UnsupportedOperationException("Unable to handle type " + st.type);
+        }
     }
 
     /**
