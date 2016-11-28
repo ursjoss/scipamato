@@ -77,7 +77,16 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Test
     public void clickingRemoveButtonOnSearchTerms_removesFilter() {
-        final List<ComplexPaperFilter> filters = Arrays.asList(new ComplexPaperFilter());
+        final String labelToString = "complexPaperFilterToString";
+        final ComplexPaperFilter f = new ComplexPaperFilter() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public String toString() {
+                return labelToString;
+            }
+        };
+        final List<ComplexPaperFilter> filters = Arrays.asList(f);
         final CompositeComplexPaperFilter compositeFilter = new CompositeComplexPaperFilter(filters);
         PaperSearchPage page = new PaperSearchPage(Model.of(compositeFilter));
 
@@ -87,7 +96,6 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().debugComponentTrees();
 
         final String linkPath = "form:searchTerms:body:rows:1:cells:2:cell:link";
-        final String labelToString = "0/0/0";
         getTester().assertComponent(linkPath, AjaxLink.class);
         getTester().assertContains(labelToString);
         getTester().clickLink(linkPath);

@@ -2,6 +2,7 @@ package ch.difty.sipamato.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The composite filter makes up the entire search, containing one or combining several {@link CompmlexPaperFilter}s
@@ -11,6 +12,8 @@ import java.util.List;
 public class CompositeComplexPaperFilter extends SipamatoFilter {
 
     private static final long serialVersionUID = 1L;
+
+    private static final String JOIN_DELIMITER = "; OR ";
 
     private final List<ComplexPaperFilter> filterList = new ArrayList<>();
 
@@ -55,5 +58,10 @@ public class CompositeComplexPaperFilter extends SipamatoFilter {
         if (filter != null) {
             filterList.remove(filter);
         }
+    }
+
+    @Override
+    public String toString() {
+        return filterList.stream().map(ComplexPaperFilter::toString).collect(Collectors.joining(JOIN_DELIMITER));
     }
 }

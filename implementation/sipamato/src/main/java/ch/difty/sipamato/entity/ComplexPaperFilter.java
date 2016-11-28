@@ -29,10 +29,12 @@ import static ch.difty.sipamato.entity.Paper.FLD_RESULT_EXPOSURE_RANGE;
 import static ch.difty.sipamato.entity.Paper.FLD_TITLE;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * The {@link ComplexPaperFilter} is an instance of {@link SipamatoFilter} that provides
@@ -52,6 +54,8 @@ import java.util.Map;
 public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
 
     private static final long serialVersionUID = 1L;
+
+    private static final String JOIN_DELIMITER = " AND ";
 
     private final Map<String, StringSearchTerm> stringSearchTerms = new HashMap<>();
     private final Map<String, IntegerSearchTerm> integerSearchTerms = new HashMap<>();
@@ -343,6 +347,11 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
             this.key = key;
             this.rawValue = value;
         }
+
+        @Override
+        public String toString() {
+            return rawValue;
+        }
     }
 
     private String getStringValue(String key) {
@@ -370,6 +379,11 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
         private IntegerSearchTerm(final String key, final String value) {
             this.key = key;
             this.rawValue = value;
+        }
+
+        @Override
+        public String toString() {
+            return rawValue;
         }
     }
 
@@ -399,6 +413,11 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
             this.key = key;
             this.rawValue = rawValue;
         }
+
+        @Override
+        public String toString() {
+            return key;
+        }
     }
 
     private Boolean getBooleanRawValue(String key) {
@@ -416,13 +435,9 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
 
     @Override
     public String toString() {
-        // TODO silly first primer to get some kind of representation
-        final StringBuilder sb = new StringBuilder();
-        sb.append(stringSearchTerms.size());
-        sb.append("/");
-        sb.append(integerSearchTerms.size());
-        sb.append("/");
-        sb.append(booleanSearchTerms.size());
-        return sb.toString();
+        final String textString = stringSearchTerms.values().stream().map(StringSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
+        final String intString = integerSearchTerms.values().stream().map(IntegerSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
+        final String boolString = booleanSearchTerms.values().stream().filter((BooleanSearchTerm st) -> st.rawValue).map(BooleanSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
+        return Arrays.asList(textString, intString, boolString).stream().filter((String s) -> !s.isEmpty()).collect(Collectors.joining(JOIN_DELIMITER));
     }
 }

@@ -499,10 +499,31 @@ public class ComplexPaperFilterTest {
     }
 
     @Test
-    public void testToString() {
+    public void testToString_withSingleStringSearchTerms_returnsIt() {
+        f.setAuthors("hoops");
+        assertThat(f.toString()).isEqualTo("hoops");
+    }
+
+    @Test
+    public void testToString_withTwoStringSearchTerms_joinsThemUsingAnd() {
+        f.setAuthors("rag");
+        f.setMethodConfounders("bones");
+        assertThat(f.toString()).isEqualTo("bones AND rag");
+    }
+
+    @Test
+    public void testToString_forBooleanSearchTerms_onlyConsidersTrueOnes() {
+        f.setFirstAuthorOverridden(false);
+        assertThat(f.toString()).isEqualTo("");
+    }
+
+    @Test
+    public void testToString_withMultipleSearchTerms_joinsThemAllUsingAND() {
         f.setAuthors("fooAuth");
+        f.setMethodStudyDesign("bar");
+        f.setDoi("baz");
         f.setPublicationYear("2016");
         f.setFirstAuthorOverridden(true);
-        assertThat(f.toString()).isEqualTo("1/1/1");
+        assertThat(f.toString()).isEqualTo("bar AND fooAuth AND baz AND 2016 AND first_author_overridden");
     }
 }

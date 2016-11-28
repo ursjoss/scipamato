@@ -94,4 +94,46 @@ public class CompositeComplexPaperFilterTest {
 
         assertThat(f.getFilters()).containsExactly(mockFilter2);
     }
+
+    @Test
+    public void testingToString_withNoFilters_returnsBlank() {
+        assertThat(f.getFilters()).hasSize(0);
+        assertThat(f.toString()).isEqualTo("");
+    }
+
+    @Test
+    public void testingToString_withSingleFilter_returnsIt() {
+        f.add(new ComplexPaperFilter() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public String toString() {
+                return "f1ToString";
+            }
+        });
+
+        assertThat(f.toString()).isEqualTo("f1ToString");
+    }
+
+    @Test
+    public void testingToString_withTwoFilters_joinsThemUsingOR() {
+        f.add(new ComplexPaperFilter() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public String toString() {
+                return "f1ToString";
+            }
+        });
+        f.add(new ComplexPaperFilter() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public String toString() {
+                return "f2ToString";
+            }
+        });
+
+        assertThat(f.toString()).isEqualTo("f1ToString; OR f2ToString");
+    }
 }
