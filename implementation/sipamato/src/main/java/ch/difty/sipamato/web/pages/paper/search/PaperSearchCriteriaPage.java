@@ -1,6 +1,7 @@
 package ch.difty.sipamato.web.pages.paper.search;
 
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
@@ -49,10 +50,10 @@ public class PaperSearchCriteriaPage extends BasePage<ComplexPaperFilter> {
      *
      * @param compositeFilter {@link CompositeComplexPaperFilter} defining the criteria of the previously defined search parts.
      */
-    public PaperSearchCriteriaPage(final CompositeComplexPaperFilter compositeFilter) {
+    public PaperSearchCriteriaPage(final IModel<CompositeComplexPaperFilter> compositeFilter) {
         super(new PageParameters());
         initDefaultModel();
-        this.compositeFilter.merge(compositeFilter);
+        this.compositeFilter.merge(compositeFilter.getObject());
     }
 
     @Override

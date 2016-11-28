@@ -1,12 +1,21 @@
 package ch.difty.sipamato.web.pages.paper.search;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.extensions.markup.html.repeater.data.grid.DataGridView;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import ch.difty.sipamato.entity.ComplexPaperFilter;
 import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
+import ch.difty.sipamato.web.component.data.LinkIconPanel;
 import ch.difty.sipamato.web.pages.BasePageTest;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
@@ -19,7 +28,9 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Override
     protected PaperSearchPage makePage() {
-        return new PaperSearchPage(new PageParameters());
+        final List<ComplexPaperFilter> filters = Arrays.asList(new ComplexPaperFilter());
+        final CompositeComplexPaperFilter compositeFilter = new CompositeComplexPaperFilter(filters);
+        return new PaperSearchPage(Model.of(compositeFilter));
     }
 
     @Override
@@ -36,7 +47,17 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     private void assertForm(String b) {
         getTester().assertComponent(b, Form.class);
         getTester().assertComponent(b + ":addSearch", BootstrapAjaxButton.class);
-        getTester().assertComponent(b + ":searchTerms", BootstrapDefaultDataTable.class);
+        assertSearchTerms(b + ":searchTerms");
+    }
+
+    private void assertSearchTerms(String b) {
+        getTester().assertComponent(b, BootstrapDefaultDataTable.class);
+        getTester().assertComponent(b + ":body", WebMarkupContainer.class);
+        getTester().assertComponent(b + ":body:rows", DataGridView.class);
+        getTester().assertComponent(b + ":body:rows:1:cells:1:cell", Label.class);
+        getTester().assertComponent(b + ":body:rows:1:cells:2:cell", LinkIconPanel.class);
+        getTester().assertComponent(b + ":body:rows:1:cells:2:cell:link", AjaxLink.class);
+        getTester().assertComponent(b + ":body:rows:1:cells:2:cell:link:image", Label.class);
     }
 
     private void assertResultPanel(String b) {
@@ -52,6 +73,26 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         formTester.submit("addSearch");
 
         getTester().assertRenderedPage(PaperSearchCriteriaPage.class);
+    }
+
+    @Test
+    public void clickingRemoveButtonOnSearchTerms_removesFilter() {
+        final List<ComplexPaperFilter> filters = Arrays.asList(new ComplexPaperFilter());
+        final CompositeComplexPaperFilter compositeFilter = new CompositeComplexPaperFilter(filters);
+        PaperSearchPage page = new PaperSearchPage(Model.of(compositeFilter));
+
+        getTester().startPage(page);
+        getTester().assertRenderedPage(getPageClass());
+
+        getTester().debugComponentTrees();
+
+        final String linkPath = "form:searchTerms:body:rows:1:cells:2:cell:link";
+        final String labelToString = "0/0/0";
+        getTester().assertComponent(linkPath, AjaxLink.class);
+        getTester().assertContains(labelToString);
+        getTester().clickLink(linkPath);
+        getTester().debugComponentTrees();
+        getTester().assertContainsNot(labelToString);
     }
 
 }
