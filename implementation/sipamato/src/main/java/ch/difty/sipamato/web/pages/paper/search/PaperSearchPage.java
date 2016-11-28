@@ -124,7 +124,7 @@ public class PaperSearchPage extends BasePage<CompositeComplexPaperFilter> {
             }
 
             @Override
-            protected void onClickPerformed(AjaxRequestTarget target, IModel<ComplexPaperFilter> rowModel, AjaxLink link) {
+            protected void onClickPerformed(AjaxRequestTarget target, IModel<ComplexPaperFilter> rowModel, AjaxLink<Void> link) {
                 consumer.accept(rowModel);
                 target.add(searchTerms);
                 target.add(resultPanel);

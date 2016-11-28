@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package ch.difty.sipamato.web.component.data;
 
 import org.apache.wicket.AttributeModifier;
@@ -24,47 +23,59 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
 /**
- * @author lazyman
+ * @author Viliam Repan (lazyman)
  */
-public class LinkIconPanel extends Panel {
+public abstract class LinkIconPanel extends Panel {
+
+    private static final long serialVersionUID = 1L;
 
     private static final String ID_LINK = "link";
     private static final String ID_IMAGE = "image";
+
+    private final IModel<String> titleModel;
 
     public LinkIconPanel(String id, IModel<String> model) {
         this(id, model, null);
     }
 
     public LinkIconPanel(String id, IModel<String> model, IModel<String> titleModel) {
-        super(id);
-
-        initLayout(model, titleModel);
+        super(id, model);
+        this.titleModel = titleModel;
     }
 
-    private void initLayout(IModel<String> model, IModel<String> titleModel) {
-        AjaxLink link = new AjaxLink(ID_LINK) {
+    @Override
+    protected void onInitialize() {
+        super.onInitialize();
+        add(makeLink());
+    }
+
+    private AjaxLink<Void> makeLink() {
+        AjaxLink<Void> link = new AjaxLink<Void>(ID_LINK) {
+            private static final long serialVersionUID = 1L;
 
             @Override
             public void onClick(AjaxRequestTarget target) {
                 onClickPerformed(target);
             }
         };
+        link.add(makeImage(ID_IMAGE));
+        link.setOutputMarkupId(true);
+        return link;
+    }
 
-        Label image = new Label(ID_IMAGE);
-        image.add(AttributeModifier.replace("class", model));
+    private Label makeImage(String id) {
+        Label image = new Label(id);
+        image.add(AttributeModifier.replace("class", getDefaultModel()));
         if (titleModel != null) {
             image.add(AttributeModifier.replace("title", titleModel));
         }
-        link.add(image);
-        link.setOutputMarkupId(true);
-        add(link);
+        return image;
     }
 
-    protected AjaxLink getLink() {
-        return (AjaxLink) get(ID_LINK);
+    @SuppressWarnings("unchecked")
+    protected AjaxLink<Void> getLink() {
+        return (AjaxLink<Void>) get(ID_LINK);
     }
 
-    protected void onClickPerformed(AjaxRequestTarget target) {
-
-    }
+    protected abstract void onClickPerformed(AjaxRequestTarget target);
 }

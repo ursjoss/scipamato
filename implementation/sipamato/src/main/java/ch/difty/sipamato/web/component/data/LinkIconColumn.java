@@ -15,6 +15,8 @@
  */
 package ch.difty.sipamato.web.component.data;
 
+import java.io.Serializable;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
@@ -22,12 +24,12 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColu
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 
-import java.io.Serializable;
-
 /**
  * @author Viliam Repan (lazyman)
  */
-public class LinkIconColumn<T extends Serializable> extends AbstractColumn<T, String> {
+public abstract class LinkIconColumn<T extends Serializable> extends AbstractColumn<T, String> {
+
+    private static final long serialVersionUID = 1L;
 
     public LinkIconColumn(IModel<String> displayModel) {
         super(displayModel);
@@ -36,6 +38,7 @@ public class LinkIconColumn<T extends Serializable> extends AbstractColumn<T, St
     @Override
     public void populateItem(Item<ICellPopulator<T>> cellItem, String componentId, final IModel<T> rowModel) {
         cellItem.add(new LinkIconPanel(componentId, createIconModel(rowModel), createTitleModel(rowModel)) {
+            private static final long serialVersionUID = 1L;
 
             @Override
             protected void onClickPerformed(AjaxRequestTarget target) {
@@ -48,11 +51,8 @@ public class LinkIconColumn<T extends Serializable> extends AbstractColumn<T, St
         return null;
     }
 
-    protected IModel<String> createIconModel(final IModel<T> rowModel) {
-        throw new UnsupportedOperationException("Not implemented, please implement in your column.");
-    }
+    protected abstract IModel<String> createIconModel(final IModel<T> rowModel);
 
-    protected void onClickPerformed(AjaxRequestTarget target, IModel<T> rowModel, AjaxLink link) {
+    protected abstract void onClickPerformed(AjaxRequestTarget target, IModel<T> rowModel, AjaxLink<Void> link);
 
-    }
 }
