@@ -1,5 +1,7 @@
 package ch.difty.sipamato.web.pages.paper.search;
 
+import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
@@ -22,6 +24,12 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
     @Override
     protected void assertSpecificComponents() {
         getTester().assertComponent("contentPanel", SearchablePaperPanel.class);
+        assertForm("contentPanel:form");
+    }
+
+    private void assertForm(String b) {
+        getTester().assertComponent(b, Form.class);
+        getTester().assertComponent(b + ":firstAuthorOverridden", CheckBox.class);
     }
 
     @Test

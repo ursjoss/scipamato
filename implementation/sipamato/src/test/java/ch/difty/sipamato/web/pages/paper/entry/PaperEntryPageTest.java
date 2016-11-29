@@ -50,7 +50,7 @@ public class PaperEntryPageTest extends AutoSaveAwarePageTest<PaperEntryPage> {
 
         assertLabeledTextArea(b, Paper.AUTHORS);
         assertLabeledTextField(b, Paper.FIRST_AUTHOR);
-        assertLabeledCheckBox(b, Paper.FIRST_AUTHOR_OVERRIDDEN);
+        assertLabeledCheckBoxX(b, Paper.FIRST_AUTHOR_OVERRIDDEN);
         assertLabeledTextArea(b, Paper.TITLE);
         assertLabeledTextField(b, Paper.LOCATION);
 

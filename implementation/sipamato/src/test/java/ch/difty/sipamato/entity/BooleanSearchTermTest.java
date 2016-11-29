@@ -14,29 +14,30 @@ public class BooleanSearchTermTest {
         assertThat(st.getKey()).isEqualTo(KEY);
         assertThat(st.getValue()).isEqualTo(value);
         assertThat(st.getRawValue()).isEqualTo(raw);
+        assertThat(st.toString()).isEqualTo((!value ? "-" : "") + KEY);
     }
-    
+
     @Test
     public void ifTrue() {
         final String raw = "true";
         st = new BooleanSearchTerm(KEY, raw);
         assertTerm(true, raw);
     }
-    
+
     @Test
     public void ifTrue_withSpaces() {
         final String raw = " true   ";
         st = new BooleanSearchTerm(KEY, raw);
         assertTerm(true, raw);
     }
-    
+
     @Test
     public void ifFalse() {
         final String raw = "false";
         st = new BooleanSearchTerm(KEY, raw);
         assertTerm(false, raw);
     }
-    
+
     @Test
     public void ifFalse_withSpaces() {
         final String raw = " false  ";

@@ -44,9 +44,6 @@ import java.util.stream.Collectors;
  * to be evaluated by the query engine.
  *
  * @author u.joss
- *
- * TODO parse the type specific information and validate both meta information and the actual query term 
- *      (e.g. that integer search specifications are actually integer values when stripped from the meta information)
  */
 public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
 
@@ -374,7 +371,7 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
     public String toString() {
         final String textString = stringSearchTerms.values().stream().map(StringSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
         final String intString = integerSearchTerms.values().stream().map(IntegerSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
-        final String boolString = booleanSearchTerms.values().stream().filter((BooleanSearchTerm st) -> Boolean.valueOf(st.getValue())).map(BooleanSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
+        final String boolString = booleanSearchTerms.values().stream().map(BooleanSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
         return Arrays.asList(textString, intString, boolString).stream().filter((String s) -> !s.isEmpty()).collect(Collectors.joining(JOIN_DELIMITER));
     }
 

@@ -25,7 +25,7 @@ public class BooleanSearchTerm extends SearchTerm<BooleanSearchTerm> {
         if (getValue()) {
             return getKey();
         } else {
-            return "not " + getKey();
+            return "-" + getKey();
         }
     }
 }

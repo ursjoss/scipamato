@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
@@ -13,6 +12,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.sipamato.service.Localization;
 import ch.difty.sipamato.web.panel.paper.Mode;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 
 public abstract class AbstractPanel<T> extends GenericPanel<T> {
 
@@ -92,7 +92,7 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
         queueFieldAndLabel(field, Optional.ofNullable(pv));
     }
 
-    protected void queueCheckBoxAndLabel(CheckBox field) {
+    protected void queueCheckBoxAndLabel(CheckBoxX field) {
         String id = field.getId();
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));

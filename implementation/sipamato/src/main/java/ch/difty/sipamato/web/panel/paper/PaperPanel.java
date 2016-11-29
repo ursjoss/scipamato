@@ -25,6 +25,7 @@ import org.apache.wicket.model.ChainingModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 
 import ch.difty.sipamato.entity.Code;
@@ -38,6 +39,7 @@ import ch.difty.sipamato.web.model.CodeModel;
 import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 
@@ -135,8 +137,9 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         authors.setEscapeModelStrings(false);
         queueFieldAndLabel(authors, new PropertyValidator<String>());
 
-        // TODO make firstAuthorOverridden a tri-state CheckBox for searching
-        CheckBox firstAuthorOverridden = new CheckBox(firstAuthorOverriddenId);
+        PropertyModel<Boolean> firstAuthorOverriddenModel = new PropertyModel<Boolean>(getModel(), firstAuthorOverriddenId);
+        CheckBoxX firstAuthorOverridden = new CheckBoxX(firstAuthorOverriddenId, firstAuthorOverriddenModel);
+        firstAuthorOverridden.getConfig().withThreeState(canHaveTripeStateOverride()).withUseNative(true);
         queueCheckBoxAndLabel(firstAuthorOverridden);
 
         TextField<String> firstAuthor = makeFirstAuthor(firstAuthorId, firstAuthorOverridden);
@@ -144,6 +147,10 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         queueFieldAndLabel(firstAuthor);
 
         addAuthorBehavior(authors, firstAuthorOverridden, firstAuthor);
+    }
+
+    private boolean canHaveTripeStateOverride() {
+        return getMode() == Mode.SEARCH;
     }
 
     /** override if special behavior is required */

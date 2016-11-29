@@ -510,9 +510,9 @@ public class ComplexPaperFilterTest {
     }
 
     @Test
-    public void testToString_forBooleanSearchTerms_onlyConsidersTrueOnes() {
+    public void testToString_forBooleanSearchTermsBeginFalse() {
         f.setFirstAuthorOverridden(false);
-        assertThat(f.toString()).isEqualTo("");
+        assertThat(f.toString()).isEqualTo("-first_author_overridden");
     }
 
     @Test

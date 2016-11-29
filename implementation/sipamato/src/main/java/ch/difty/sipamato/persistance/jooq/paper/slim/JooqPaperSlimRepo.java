@@ -108,24 +108,12 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     private Condition getConditionFromSingleComplexFilter(ComplexPaperFilter filter) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
         for (final BooleanSearchTerm st : filter.getBooleanSearchTerms())
-            conditions.add(() -> applyBooleanSearchLogic(st));
+            conditions.add(() -> booleanSearchTermEvaluator.evaluate(st));
         for (final IntegerSearchTerm st : filter.getIntegerSearchTerms())
-            conditions.add(() -> applyIntegerSearchLogic(st));
+            conditions.add(() -> integerSearchTermEvaluator.evaluate(st));
         for (final StringSearchTerm st : filter.getStringSearchTerms())
-            conditions.add(() -> applyStringSearchLogic(st));
+            conditions.add(() -> stringSearchTermEvaluator.evaluate(st));
         return conditions.combineWithAnd();
-    }
-
-    private Condition applyBooleanSearchLogic(final BooleanSearchTerm st) {
-        return booleanSearchTermEvaluator.evaluate(st);
-    }
-
-    private Condition applyIntegerSearchLogic(final IntegerSearchTerm st) {
-        return integerSearchTermEvaluator.evaluate(st);
-    }
-
-    private Condition applyStringSearchLogic(final StringSearchTerm st) {
-        return stringSearchTermEvaluator.evaluate(st);
     }
 
 }

@@ -3,7 +3,6 @@ package ch.difty.sipamato.web.pages;
 import java.util.Locale;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -28,6 +27,7 @@ import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.
 import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 import ch.difty.sipamato.web.pages.login.LoginPage;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 
 @SpringBootTest
@@ -131,10 +131,10 @@ public abstract class BasePageTest<T extends BasePage<?>> {
         getTester().assertComponent(bb, TextField.class);
     }
 
-    protected void assertLabeledCheckBox(String b, String id) {
+    protected void assertLabeledCheckBoxX(String b, String id) {
         final String bb = b + ":" + id;
         getTester().assertComponent(bb + "Label", Label.class);
-        getTester().assertComponent(bb, CheckBox.class);
+        getTester().assertComponent(bb, CheckBoxX.class);
     }
 
     protected void assertLabeledMultiSelect(String b, String id) {
