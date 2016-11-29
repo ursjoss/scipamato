@@ -37,6 +37,7 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     private static final long serialVersionUID = 1L;
 
     private final IntegerSearchTermEvaluator integerSearchTermEvaluator = new IntegerSearchTermEvaluator();
+    private final StringSearchTermEvaluator stringSearchTermEvaluator = new StringSearchTermEvaluator();
 
     @Autowired
     public JooqPaperSlimRepo(DSLContext dsl, PaperSlimRecordMapper mapper, JooqSortMapper<PaperRecord, PaperSlim, ch.difty.sipamato.db.tables.Paper> sortMapper,
@@ -122,26 +123,12 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
         return DSL.field(st.key).equal(DSL.val(st.rawValue));
     }
 
-    /**
-     * Evaluates the raw search term for integer fields and applies the actual condition
-     */
     private Condition applyIntegerSearchLogic(final IntegerSearchTerm st) {
         return integerSearchTermEvaluator.evaluate(st);
     }
 
-    /**
-     * Evaluates the raw search term for string fields and applies the actual condition
-     *
-     * <ul>
-     * <li> <literal>foo</literal> --- <code>likeIgnoreCase '%foo%'</code></li>
-     * <li> TODO <literal>*foo*</literal> --- <code>likeIgnoreCase '%foo%'</code></li>
-     * <li> TODO <literal>"foo"</literal> --- <code>equalsIgnoreCase 'foo'</code></li>
-     * <li> TODO <literal>foo*</literal> --- <code>likeIgnoreCase 'foo%'</code></li>
-     * <li> TODO <literal>*foo</literal> --- <code>likeIgnoreCase '%foo'</code></li>
-     * </ul>
-     */
     private Condition applyStringSearchLogic(final StringSearchTerm st) {
-        return DSL.field(st.key).lower().contains(DSL.val(st.rawValue).lower());
+        return stringSearchTermEvaluator.evaluate(st);
     }
 
 }

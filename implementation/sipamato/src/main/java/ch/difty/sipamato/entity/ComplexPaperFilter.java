@@ -333,7 +333,7 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
 
     private String getStringValue(String key) {
         final StringSearchTerm st = stringSearchTerms.get(key);
-        return st != null ? st.rawValue : null;
+        return st != null ? st.getRawValue() : null;
     }
 
     private void setStringValue(final String key, String value) {

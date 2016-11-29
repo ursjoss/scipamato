@@ -13,7 +13,7 @@ import ch.difty.sipamato.lib.AssertAs;
  *
  * @author u.joss
  */
-public abstract class SearchTerm implements Serializable {
+public abstract class SearchTerm<T extends SearchTerm<?>> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -55,7 +55,7 @@ public abstract class SearchTerm implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        final IntegerSearchTerm other = (IntegerSearchTerm) obj;
+        final T other = (T) obj;
         if (!key.equals(other.getKey()))
             return false;
         else if (!rawValue.equals(other.getRawValue()))

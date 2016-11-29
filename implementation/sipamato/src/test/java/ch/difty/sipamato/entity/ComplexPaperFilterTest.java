@@ -107,8 +107,8 @@ public class ComplexPaperFilterTest {
         assertThat(f.getIntegerSearchTerms()).isEmpty();
         assertThat(f.getBooleanSearchTerms()).isEmpty();
         StringSearchTerm st = f.getStringSearchTerms().iterator().next();
-        assertThat(st.key).isEqualTo(FLD_DOI);
-        assertThat(st.rawValue).isEqualTo("101111");
+        assertThat(st.getKey()).isEqualTo(FLD_DOI);
+        assertThat(st.getRawValue()).isEqualTo("101111");
 
         f.setDoi("102222");
         assertThat(f.getDoi()).isEqualTo("102222");
@@ -116,8 +116,8 @@ public class ComplexPaperFilterTest {
         assertThat(f.getIntegerSearchTerms()).isEmpty();
         assertThat(f.getBooleanSearchTerms()).isEmpty();
         st = f.getStringSearchTerms().iterator().next();
-        assertThat(st.key).isEqualTo(FLD_DOI);
-        assertThat(st.rawValue).isEqualTo("102222");
+        assertThat(st.getKey()).isEqualTo(FLD_DOI);
+        assertThat(st.getRawValue()).isEqualTo("102222");
 
         f.setDoi(null);
         assertThat(f.getDoi()).isNull();
