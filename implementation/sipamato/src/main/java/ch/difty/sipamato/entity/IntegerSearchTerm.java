@@ -8,54 +8,70 @@ import java.io.Serializable;
 public class IntegerSearchTerm implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public final String key;
-    public final String rawValue;
-    public final IntegerSearchTermType type;
-    public final int value;
-    public final int value2;
+    private final String key;
+    private final String rawValue;
+    private final MatchType type;
+    private final int value;
+    private final int value2;
 
     IntegerSearchTerm(final String key, final String value) {
         this.key = key;
         this.rawValue = value;
         final String rv = value.trim();
         if (rv.length() > 2 && rv.startsWith(">=")) {
-            this.type = IntegerSearchTermType.GREATER_OR_EQUAL;
+            this.type = MatchType.GREATER_OR_EQUAL;
             this.value = Integer.parseInt(rv.substring(2, rv.length()).trim());
             this.value2 = this.value;
         } else if (rv.length() > 1 && rv.startsWith(">")) {
-            this.type = IntegerSearchTermType.GREATER_THAN;
+            this.type = MatchType.GREATER_THAN;
             this.value = Integer.parseInt(rv.substring(1, rv.length()).trim());
             this.value2 = this.value;
         } else if (rv.length() > 2 && rv.startsWith("<=")) {
-            this.type = IntegerSearchTermType.LESS_OR_EQUAL;
+            this.type = MatchType.LESS_OR_EQUAL;
             this.value = Integer.parseInt(rv.substring(2, rv.length()).trim());
             this.value2 = this.value;
         } else if (rv.length() > 1 && rv.startsWith("<")) {
-            this.type = IntegerSearchTermType.LESS_THAN;
+            this.type = MatchType.LESS_THAN;
             this.value = Integer.parseInt(rv.substring(1, rv.length()).trim());
             this.value2 = this.value;
         } else if (rv.length() > 1 && rv.startsWith("=")) {
-            this.type = IntegerSearchTermType.EXACT;
+            this.type = MatchType.EXACT;
             this.value = Integer.parseInt(rv.substring(1, rv.length()).trim());
             this.value2 = this.value;
         } else if (rv.length() > 1 && rv.contains("-")) {
-            this.type = IntegerSearchTermType.RANGE;
+            this.type = MatchType.RANGE;
             this.value = Integer.parseInt(rv.substring(0, rv.indexOf("-")).trim());
             this.value2 = Integer.parseInt(rv.substring(rv.indexOf("-") + 1, rv.length()).trim());
         } else {
-            this.type = IntegerSearchTermType.EXACT;
+            this.type = MatchType.EXACT;
             this.value = Integer.parseInt(rv.trim());
             this.value2 = this.value;
         }
     }
 
-    @Override
-    public String toString() {
+    public String getKey() {
+        return key;
+    }
+
+    public String getRawValue() {
         return rawValue;
     }
 
-    public IntegerSearchTermType getType() {
+    public int getValue() {
+        return value;
+    }
+
+    public int getValue2() {
+        return value2;
+    }
+
+    public MatchType getType() {
         return type;
+    }
+
+    @Override
+    public String toString() {
+        return rawValue;
     }
 
     @Override
@@ -68,14 +84,14 @@ public class IntegerSearchTerm implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
             return false;
         if (getClass() != obj.getClass())
             return false;
-        IntegerSearchTerm other = (IntegerSearchTerm) obj;
+        final IntegerSearchTerm other = (IntegerSearchTerm) obj;
         if (key == null) {
             if (other.key != null)
                 return false;
@@ -89,7 +105,7 @@ public class IntegerSearchTerm implements Serializable {
         return true;
     }
 
-    public enum IntegerSearchTermType {
+    public enum MatchType {
         EXACT,
         GREATER_THAN,
         GREATER_OR_EQUAL,

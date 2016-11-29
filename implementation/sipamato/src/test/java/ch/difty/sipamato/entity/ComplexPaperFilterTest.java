@@ -75,8 +75,8 @@ public class ComplexPaperFilterTest {
         assertThat(f.getIntegerSearchTerms()).hasSize(1);
         assertThat(f.getBooleanSearchTerms()).isEmpty();
         IntegerSearchTerm st = f.getIntegerSearchTerms().iterator().next();
-        assertThat(st.key).isEqualTo(FLD_ID);
-        assertThat(st.rawValue).isEqualTo("5");
+        assertThat(st.getKey()).isEqualTo(FLD_ID);
+        assertThat(st.getRawValue()).isEqualTo("5");
 
         f.setId("10");
         assertThat(f.getId()).isEqualTo("10");
@@ -84,8 +84,8 @@ public class ComplexPaperFilterTest {
         assertThat(f.getIntegerSearchTerms()).hasSize(1);
         assertThat(f.getBooleanSearchTerms()).isEmpty();
         st = f.getIntegerSearchTerms().iterator().next();
-        assertThat(st.key).isEqualTo(FLD_ID);
-        assertThat(st.rawValue).isEqualTo("10");
+        assertThat(st.getKey()).isEqualTo(FLD_ID);
+        assertThat(st.getRawValue()).isEqualTo("10");
 
         f.setId(null);
         assertThat(f.getId()).isNull();

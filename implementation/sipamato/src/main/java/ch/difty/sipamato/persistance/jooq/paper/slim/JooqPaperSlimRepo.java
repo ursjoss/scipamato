@@ -123,22 +123,22 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     /**
      * Evaluates the raw search term for integer fields and applies the actual condition
      */
-    private Condition applyIntegerSearchLogic(final IntegerSearchTerm st) {
-        switch (st.type) {
+    protected Condition applyIntegerSearchLogic(final IntegerSearchTerm st) {
+        switch (st.getType()) {
         case EXACT:
-            return DSL.field(st.key).equal(DSL.val(st.value));
+            return DSL.field(st.getKey()).equal(DSL.val(st.getValue()));
         case LESS_OR_EQUAL:
-            return DSL.field(st.key).le(DSL.val(st.value));
+            return DSL.field(st.getKey()).le(DSL.val(st.getValue()));
         case LESS_THAN:
-            return DSL.field(st.key).lt(DSL.val(st.value));
+            return DSL.field(st.getKey()).lt(DSL.val(st.getValue()));
         case GREATER_OR_EQUAL:
-            return DSL.field(st.key).ge(DSL.val(st.value));
+            return DSL.field(st.getKey()).ge(DSL.val(st.getValue()));
         case GREATER_THAN:
-            return DSL.field(st.key).gt(DSL.val(st.value));
+            return DSL.field(st.getKey()).gt(DSL.val(st.getValue()));
         case RANGE:
-            return DSL.field(st.key).between(DSL.val(st.value), DSL.val(st.value2));
+            return DSL.field(st.getKey()).between(DSL.val(st.getValue()), DSL.val(st.getValue2()));
         default:
-            throw new UnsupportedOperationException("Unable to handle type " + st.type);
+            throw new UnsupportedOperationException("Unable to handle type " + st.getType());
         }
     }
 

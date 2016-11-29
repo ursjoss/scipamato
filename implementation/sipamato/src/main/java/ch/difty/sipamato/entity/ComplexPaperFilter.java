@@ -346,7 +346,7 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
 
     private String getIntegerValue(String key) {
         final IntegerSearchTerm st = integerSearchTerms.get(key);
-        return st != null ? st.rawValue : null;
+        return st != null ? st.getRawValue() : null;
     }
 
     private void setIntegerValue(final String key, String value) {
