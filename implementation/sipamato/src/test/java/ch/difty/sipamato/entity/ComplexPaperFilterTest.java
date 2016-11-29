@@ -181,8 +181,9 @@ public class ComplexPaperFilterTest {
         assertThat(f.getIntegerSearchTerms()).isEmpty();
         assertThat(f.getBooleanSearchTerms()).hasSize(1);
         BooleanSearchTerm st = f.getBooleanSearchTerms().iterator().next();
-        assertThat(st.key).isEqualTo(FLD_FIRST_AUTHOR_OVERRIDDEN);
-        assertThat(st.rawValue).isEqualTo(true);
+        assertThat(st.getKey()).isEqualTo(FLD_FIRST_AUTHOR_OVERRIDDEN);
+        assertThat(st.getRawValue()).isEqualTo("true");
+        assertThat(st.getValue()).isTrue();
 
         f.setFirstAuthorOverridden(false);
         assertThat(f.isFirstAuthorOverridden()).isFalse();
@@ -190,8 +191,9 @@ public class ComplexPaperFilterTest {
         assertThat(f.getIntegerSearchTerms()).isEmpty();
         assertThat(f.getBooleanSearchTerms()).hasSize(1);
         st = f.getBooleanSearchTerms().iterator().next();
-        assertThat(st.key).isEqualTo(FLD_FIRST_AUTHOR_OVERRIDDEN);
-        assertThat(st.rawValue).isEqualTo(false);
+        assertThat(st.getKey()).isEqualTo(FLD_FIRST_AUTHOR_OVERRIDDEN);
+        assertThat(st.getRawValue()).isEqualTo("false");
+        assertThat(st.getValue()).isFalse();
 
         f.setFirstAuthorOverridden(null);
         assertThat(f.isFirstAuthorOverridden()).isNull();
@@ -570,7 +572,7 @@ public class ComplexPaperFilterTest {
         f2.setFirstAuthor("baz");
         f2.setFirstAuthorOverridden(true);
         f2.setMethodOutcome("blup");
-        assertEquality(f1, f2, 2003277035);
+        assertEquality(f1, f2, 2006844842);
 
         f2.setMethodOutcome("blup2");
         assertThat(f1.equals(f2)).isFalse();

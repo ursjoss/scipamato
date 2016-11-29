@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
-import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -38,6 +37,7 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
 
     private final IntegerSearchTermEvaluator integerSearchTermEvaluator = new IntegerSearchTermEvaluator();
     private final StringSearchTermEvaluator stringSearchTermEvaluator = new StringSearchTermEvaluator();
+    private final BooleanSearchTermEvaluator booleanSearchTermEvaluator = new BooleanSearchTermEvaluator();
 
     @Autowired
     public JooqPaperSlimRepo(DSLContext dsl, PaperSlimRecordMapper mapper, JooqSortMapper<PaperRecord, PaperSlim, ch.difty.sipamato.db.tables.Paper> sortMapper,
@@ -116,11 +116,8 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
         return conditions.combineWithAnd();
     }
 
-    /**
-     * Evaluates the raw search term for boolean fields and applies the actual condition. 
-     */
     private Condition applyBooleanSearchLogic(final BooleanSearchTerm st) {
-        return DSL.field(st.key).equal(DSL.val(st.rawValue));
+        return booleanSearchTermEvaluator.evaluate(st);
     }
 
     private Condition applyIntegerSearchLogic(final IntegerSearchTerm st) {

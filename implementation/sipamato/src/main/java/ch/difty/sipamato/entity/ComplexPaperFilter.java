@@ -124,7 +124,7 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
     }
 
     public Boolean isFirstAuthorOverridden() {
-        return getBooleanRawValue(FLD_FIRST_AUTHOR_OVERRIDDEN);
+        return getBooleanValue(FLD_FIRST_AUTHOR_OVERRIDDEN);
     }
 
     public void setFirstAuthorOverridden(Boolean value) {
@@ -357,14 +357,14 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
         }
     }
 
-    private Boolean getBooleanRawValue(String key) {
+    private Boolean getBooleanValue(String key) {
         final BooleanSearchTerm st = booleanSearchTerms.get(key);
-        return st != null ? st.rawValue : null;
+        return st != null ? st.getValue() : null;
     }
 
     private void setBooleanValue(final String key, Boolean value) {
         if (value != null) {
-            booleanSearchTerms.put(key, new BooleanSearchTerm(key, value.booleanValue()));
+            booleanSearchTerms.put(key, new BooleanSearchTerm(key, value.toString()));
         } else {
             booleanSearchTerms.remove(key);
         }
@@ -374,7 +374,7 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
     public String toString() {
         final String textString = stringSearchTerms.values().stream().map(StringSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
         final String intString = integerSearchTerms.values().stream().map(IntegerSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
-        final String boolString = booleanSearchTerms.values().stream().filter((BooleanSearchTerm st) -> st.rawValue).map(BooleanSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
+        final String boolString = booleanSearchTerms.values().stream().filter((BooleanSearchTerm st) -> Boolean.valueOf(st.getValue())).map(BooleanSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
         return Arrays.asList(textString, intString, boolString).stream().filter((String s) -> !s.isEmpty()).collect(Collectors.joining(JOIN_DELIMITER));
     }
 

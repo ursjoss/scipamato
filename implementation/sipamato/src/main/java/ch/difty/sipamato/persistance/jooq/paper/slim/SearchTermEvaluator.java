@@ -11,7 +11,7 @@ import ch.difty.sipamato.entity.SearchTerm;
  *
  * @param <T> the {@link SearchTerm} implementation to be evaluated
  */
-public interface SearchTermEvaluator<T extends SearchTerm> {
+public interface SearchTermEvaluator<T extends SearchTerm<T>> {
 
     /**
      * Evaluates the searchTerm <code>T</code> to build the {@link Condition}

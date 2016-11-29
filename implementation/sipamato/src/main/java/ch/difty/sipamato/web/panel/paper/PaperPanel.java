@@ -135,6 +135,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         authors.setEscapeModelStrings(false);
         queueFieldAndLabel(authors, new PropertyValidator<String>());
 
+        // TODO make firstAuthorOverridden a tri-state CheckBox for searching
         CheckBox firstAuthorOverridden = new CheckBox(firstAuthorOverriddenId);
         queueCheckBoxAndLabel(firstAuthorOverridden);
 

@@ -55,6 +55,7 @@ public abstract class SearchTerm<T extends SearchTerm<?>> implements Serializabl
             return false;
         if (getClass() != obj.getClass())
             return false;
+        @SuppressWarnings("unchecked")
         final T other = (T) obj;
         if (!key.equals(other.getKey()))
             return false;
