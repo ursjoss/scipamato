@@ -11,74 +11,95 @@ public class IntegerSearchTermTest {
 
     private static final String KEY = "k";
 
+    private IntegerSearchTerm st;
+
+    private void assertTerm(MatchType type, int value, String raw) {
+        assertTerm(type, value, value, raw);
+    }
+
+    private void assertTerm(MatchType type, int value, int value2, String raw) {
+        assertThat(st.getKey()).isEqualTo(KEY);
+        assertThat(st.getType()).isEqualTo(type);
+        assertThat(st.getValue()).isEqualTo(value);
+        assertThat(st.getValue2()).isEqualTo(value2);
+        assertThat(st.getRawValue()).isEqualTo(raw);
+    }
+
     @Test
     public void exactSearch() {
-        IntegerSearchTerm st = new IntegerSearchTerm(KEY, "2016");
-        assertThat(st.getKey()).isEqualTo(KEY);
-        assertThat(st.getRawValue()).isEqualTo("2016");
-        assertThat(st.getType()).isEqualTo(MatchType.EXACT);
-        assertThat(st.getValue()).isEqualTo(2016);
-        assertThat(st.getValue2()).isEqualTo(2016);
+        final String raw = "2016";
+        st = new IntegerSearchTerm(KEY, raw);
+        assertTerm(MatchType.EXACT, 2016, raw);
+    }
+
+    @Test
+    public void exactSearch_withSpaces() {
+        final String raw = "   2016 ";
+        st = new IntegerSearchTerm(KEY, raw);
+        assertTerm(MatchType.EXACT, 2016, raw);
     }
 
     @Test
     public void exactSearch_withEqual() {
-        IntegerSearchTerm st = new IntegerSearchTerm(KEY, "=2016");
-        assertThat(st.getKey()).isEqualTo(KEY);
-        assertThat(st.getRawValue()).isEqualTo("=2016");
-        assertThat(st.getType()).isEqualTo(MatchType.EXACT);
-        assertThat(st.getValue()).isEqualTo(2016);
-        assertThat(st.getValue2()).isEqualTo(2016);
+        final String raw = "=2016";
+        st = new IntegerSearchTerm(KEY, raw);
+        assertTerm(MatchType.EXACT, 2016, raw);
+    }
+
+    @Test
+    public void exactSearch_withEqualAndSpaces() {
+        final String raw = "=    2016";
+        st = new IntegerSearchTerm(KEY, raw);
+        assertTerm(MatchType.EXACT, 2016, raw);
     }
 
     @Test
     public void greaterThanOrEqualSearch() {
-        IntegerSearchTerm st = new IntegerSearchTerm(KEY, ">=2016");
-        assertThat(st.getKey()).isEqualTo(KEY);
-        assertThat(st.getRawValue()).isEqualTo(">=2016");
-        assertThat(st.getType()).isEqualTo(MatchType.GREATER_OR_EQUAL);
-        assertThat(st.getValue()).isEqualTo(2016);
-        assertThat(st.getValue2()).isEqualTo(2016);
+        final String raw = ">=2016";
+        st = new IntegerSearchTerm(KEY, raw);
+        assertTerm(MatchType.GREATER_OR_EQUAL, 2016, raw);
+    }
+
+    @Test
+    public void greaterThanOrEqualSearch_WithSpaces() {
+        final String raw = "   >=    2016 ";
+        st = new IntegerSearchTerm(KEY, raw);
+        assertTerm(MatchType.GREATER_OR_EQUAL, 2016, raw);
     }
 
     @Test
     public void greaterThanSearch() {
-        IntegerSearchTerm st = new IntegerSearchTerm(KEY, ">  2016");
-        assertThat(st.getKey()).isEqualTo(KEY);
-        assertThat(st.getRawValue()).isEqualTo(">  2016");
-        assertThat(st.getType()).isEqualTo(MatchType.GREATER_THAN);
-        assertThat(st.getValue()).isEqualTo(2016);
-        assertThat(st.getValue2()).isEqualTo(2016);
+        final String raw = ">2016";
+        st = new IntegerSearchTerm(KEY, raw);
+        assertTerm(MatchType.GREATER_THAN, 2016, raw);
     }
 
     @Test
     public void lessThanOrEqualSearch() {
-        IntegerSearchTerm st = new IntegerSearchTerm(KEY, "<= 2016");
-        assertThat(st.getKey()).isEqualTo(KEY);
-        assertThat(st.getRawValue()).isEqualTo("<= 2016");
-        assertThat(st.getType()).isEqualTo(MatchType.LESS_OR_EQUAL);
-        assertThat(st.getValue()).isEqualTo(2016);
-        assertThat(st.getValue2()).isEqualTo(2016);
+        final String raw = "<=2016";
+        st = new IntegerSearchTerm(KEY, raw);
+        assertTerm(MatchType.LESS_OR_EQUAL, 2016, raw);
     }
 
     @Test
     public void lessThanSearch() {
-        IntegerSearchTerm st = new IntegerSearchTerm(KEY, "<2016");
-        assertThat(st.getKey()).isEqualTo(KEY);
-        assertThat(st.getRawValue()).isEqualTo("<2016");
-        assertThat(st.getType()).isEqualTo(MatchType.LESS_THAN);
-        assertThat(st.getValue()).isEqualTo(2016);
-        assertThat(st.getValue2()).isEqualTo(2016);
+        final String raw = "<2016";
+        st = new IntegerSearchTerm(KEY, raw);
+        assertTerm(MatchType.LESS_THAN, 2016, raw);
     }
 
     @Test
     public void rangeSearch() {
-        IntegerSearchTerm st = new IntegerSearchTerm(KEY, "2016-2018");
-        assertThat(st.getKey()).isEqualTo(KEY);
-        assertThat(st.getRawValue()).isEqualTo("2016-2018");
-        assertThat(st.getType()).isEqualTo(MatchType.RANGE);
-        assertThat(st.getValue()).isEqualTo(2016);
-        assertThat(st.getValue2()).isEqualTo(2018);
+        final String raw = "2016-2018";
+        st = new IntegerSearchTerm(KEY, raw);
+        assertTerm(MatchType.RANGE, 2016, 2018, raw);
+    }
+
+    @Test
+    public void rangeSearch_withSpaces() {
+        final String raw = "    2016     -    2018 ";
+        st = new IntegerSearchTerm(KEY, raw);
+        assertTerm(MatchType.RANGE, 2016, 2018, raw);
     }
 
     @Test

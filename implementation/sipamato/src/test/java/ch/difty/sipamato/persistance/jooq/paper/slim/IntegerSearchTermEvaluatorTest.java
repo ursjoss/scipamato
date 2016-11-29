@@ -20,7 +20,7 @@ public class IntegerSearchTermEvaluatorTest {
     private final IntegerSearchTermEvaluator e = new IntegerSearchTermEvaluator();
 
     @Mock
-    private IntegerSearchTerm istMock;
+    private IntegerSearchTerm stMock;
 
     @Test
     public void evaluating_withNullParameter_throws() {
@@ -32,57 +32,56 @@ public class IntegerSearchTermEvaluatorTest {
         }
     }
 
-    private void expectIntegerSearchTerm(MatchType type, int v) {
-        expectIntegerSearchTerm(type, v, v);
-
+    private void expectSearchTerm(MatchType type, int v) {
+        expectSearchTerm(type, v, v);
     }
 
-    private void expectIntegerSearchTerm(MatchType type, int v1, int v2) {
-        when(istMock.getType()).thenReturn(type);
-        when(istMock.getKey()).thenReturn("fieldX");
-        when(istMock.getValue()).thenReturn(v1);
-        when(istMock.getValue2()).thenReturn(v2);
+    private void expectSearchTerm(MatchType type, int v1, int v2) {
+        when(stMock.getType()).thenReturn(type);
+        when(stMock.getKey()).thenReturn("fieldX");
+        when(stMock.getValue()).thenReturn(v1);
+        when(stMock.getValue2()).thenReturn(v2);
     }
 
     @Test
-    public void buildingIntegerCondition_withGreaterThanComparison() {
-        expectIntegerSearchTerm(MatchType.GREATER_THAN, 10);
-        Condition c = e.evaluate(istMock);
+    public void buildingCondition_withGreaterThanComparison() {
+        expectSearchTerm(MatchType.GREATER_THAN, 10);
+        Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("fieldX > 10");
     }
 
     @Test
-    public void buildingIntegerCondition_withGreaterThanOrEqualComparison() {
-        expectIntegerSearchTerm(MatchType.GREATER_OR_EQUAL, 10);
-        Condition c = e.evaluate(istMock);
+    public void buildingCondition_withGreaterThanOrEqualComparison() {
+        expectSearchTerm(MatchType.GREATER_OR_EQUAL, 10);
+        Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("fieldX >= 10");
     }
 
     @Test
-    public void buildingIntegerCondition_withExactValue() {
-        expectIntegerSearchTerm(MatchType.EXACT, 10);
-        Condition c = e.evaluate(istMock);
+    public void buildingCondition_withExactValue() {
+        expectSearchTerm(MatchType.EXACT, 10);
+        Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("fieldX = 10");
     }
 
     @Test
-    public void buildingIntegerCondition_withLessThanOrEqualComparison() {
-        expectIntegerSearchTerm(MatchType.LESS_OR_EQUAL, 10);
-        Condition c = e.evaluate(istMock);
+    public void buildingCondition_withLessThanOrEqualComparison() {
+        expectSearchTerm(MatchType.LESS_OR_EQUAL, 10);
+        Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("fieldX <= 10");
     }
 
     @Test
-    public void buildingIntegerCondition_withLessThanComparison() {
-        expectIntegerSearchTerm(MatchType.LESS_THAN, 10);
-        Condition c = e.evaluate(istMock);
+    public void buildingCondition_withLessThanComparison() {
+        expectSearchTerm(MatchType.LESS_THAN, 10);
+        Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("fieldX < 10");
     }
 
     @Test
-    public void buildingIntegerCondition_withRangeomparison() {
-        expectIntegerSearchTerm(MatchType.RANGE, 10, 15);
-        Condition c = e.evaluate(istMock);
+    public void buildingCondition_withRangeomparison() {
+        expectSearchTerm(MatchType.RANGE, 10, 15);
+        Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("fieldX between 10 and 15");
     }
 }
