@@ -1,22 +1,46 @@
 package ch.difty.sipamato.entity;
 
-import java.io.Serializable;
-
 /**
- * Helper class to capture integer specific search terms
+ * Implementation of {@link SearchTerm} working with Integer values.
+ * The following {@link MatchType}s are implemented:
+ *
+ * <ul>
+ * <li> GREATER_THAN: <code> >2014 </code> </li>
+ * <li> GREATER_OR_EQUAL: <code> >=2014 </code> </li>
+ * <li> EXACT: <code> 2014 </code> or <code> =2014 </code> </li>
+ * <li> LESS_OR_EQUAL: <code> <=2014 </code> </li>
+ * <li> LESS_THAN: <code> <2014 </code> </li>
+ * <li> RANGE: <code> 2014-2017 </code> </li>
+ * </ul>
+ *
+ * All rawValues and their individual parts are trimmed, so the following examples are equally valid:
+ *
+ * <ul>
+ * <li> <code> >  2014 </code> </li>
+ * <li> <code> <= 2014 </code> </li>
+ * <li> <code> 2014  - 2017 </code> </li>
+ * </ul>
+ *
+ * @author u.joss
  */
-public class IntegerSearchTerm implements Serializable {
+public class IntegerSearchTerm extends SearchTerm {
     private static final long serialVersionUID = 1L;
 
-    private final String key;
-    private final String rawValue;
+    public enum MatchType {
+        EXACT,
+        GREATER_THAN,
+        GREATER_OR_EQUAL,
+        LESS_THAN,
+        LESS_OR_EQUAL,
+        RANGE;
+    }
+
     private final MatchType type;
     private final int value;
     private final int value2;
 
     IntegerSearchTerm(final String key, final String value) {
-        this.key = key;
-        this.rawValue = value;
+        super(key, value);
         final String rv = value.trim();
         if (rv.length() > 2 && rv.startsWith(">=")) {
             this.type = MatchType.GREATER_OR_EQUAL;
@@ -49,14 +73,6 @@ public class IntegerSearchTerm implements Serializable {
         }
     }
 
-    public String getKey() {
-        return key;
-    }
-
-    public String getRawValue() {
-        return rawValue;
-    }
-
     public int getValue() {
         return value;
     }
@@ -67,51 +83,6 @@ public class IntegerSearchTerm implements Serializable {
 
     public MatchType getType() {
         return type;
-    }
-
-    @Override
-    public String toString() {
-        return rawValue;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((key == null) ? 0 : key.hashCode());
-        result = prime * result + ((rawValue == null) ? 0 : rawValue.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        final IntegerSearchTerm other = (IntegerSearchTerm) obj;
-        if (key == null) {
-            if (other.key != null)
-                return false;
-        } else if (!key.equals(other.key))
-            return false;
-        if (rawValue == null) {
-            if (other.rawValue != null)
-                return false;
-        } else if (!rawValue.equals(other.rawValue))
-            return false;
-        return true;
-    }
-
-    public enum MatchType {
-        EXACT,
-        GREATER_THAN,
-        GREATER_OR_EQUAL,
-        LESS_THAN,
-        LESS_OR_EQUAL,
-        RANGE;
     }
 
 }

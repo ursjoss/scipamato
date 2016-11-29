@@ -36,6 +36,8 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
 
     private static final long serialVersionUID = 1L;
 
+    private final IntegerSearchTermEvaluator integerSearchTermEvaluator = new IntegerSearchTermEvaluator();
+
     @Autowired
     public JooqPaperSlimRepo(DSLContext dsl, PaperSlimRecordMapper mapper, JooqSortMapper<PaperRecord, PaperSlim, ch.difty.sipamato.db.tables.Paper> sortMapper,
             GenericFilterConditionMapper<SimplePaperFilter> filterConditionMapper, Localization localization) {
@@ -123,23 +125,8 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     /**
      * Evaluates the raw search term for integer fields and applies the actual condition
      */
-    protected Condition applyIntegerSearchLogic(final IntegerSearchTerm st) {
-        switch (st.getType()) {
-        case EXACT:
-            return DSL.field(st.getKey()).equal(DSL.val(st.getValue()));
-        case LESS_OR_EQUAL:
-            return DSL.field(st.getKey()).le(DSL.val(st.getValue()));
-        case LESS_THAN:
-            return DSL.field(st.getKey()).lt(DSL.val(st.getValue()));
-        case GREATER_OR_EQUAL:
-            return DSL.field(st.getKey()).ge(DSL.val(st.getValue()));
-        case GREATER_THAN:
-            return DSL.field(st.getKey()).gt(DSL.val(st.getValue()));
-        case RANGE:
-            return DSL.field(st.getKey()).between(DSL.val(st.getValue()), DSL.val(st.getValue2()));
-        default:
-            throw new UnsupportedOperationException("Unable to handle type " + st.getType());
-        }
+    private Condition applyIntegerSearchLogic(final IntegerSearchTerm st) {
+        return integerSearchTermEvaluator.evaluate(st);
     }
 
     /**
