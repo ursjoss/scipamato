@@ -83,7 +83,7 @@ INSERT INTO paper VALUES(
 
 INSERT INTO paper VALUES(
 	DEFAULT
-	, '101234/12345', 1
+	, '10.1234/12345', 1
 	, 'Kutlar Joss M, Joss U.'
 	, 'Kutlar Joss M.', 0
 	, 'Sample Title', 'loc', 2016
