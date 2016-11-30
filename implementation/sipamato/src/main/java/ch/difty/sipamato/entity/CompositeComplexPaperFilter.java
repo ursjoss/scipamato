@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
-import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.entity.filter.SortablePaperSlimFilterState;
 
 /**
@@ -13,24 +12,28 @@ import ch.difty.sipamato.entity.filter.SortablePaperSlimFilterState;
  *
  * @author u.joss
  */
-public class CompositeComplexPaperFilter extends SipamatoFilter implements SortablePaperSlimFilterState {
+public class CompositeComplexPaperFilter extends SipamatoEntity implements SortablePaperSlimFilterState {
 
     private static final long serialVersionUID = 1L;
 
     private static final String JOIN_DELIMITER = "; OR ";
 
-    private final List<ComplexPaperFilter> filterList = new ArrayList<>();
+    private List<ComplexPaperFilter> filters = new ArrayList<>();
 
     public CompositeComplexPaperFilter(final List<ComplexPaperFilter> filters) {
         if (filters != null)
-            this.filterList.addAll(filters);
+            this.filters.addAll(filters);
     }
 
     /**
      * @return the list of individual {@link ComplexPaperFilter}s
      */
     public List<ComplexPaperFilter> getFilters() {
-        return filterList;
+        return filters;
+    }
+
+    public void setFilters(final List<ComplexPaperFilter> filters) {
+        this.filters = filters;
     }
 
     /**
@@ -39,8 +42,8 @@ public class CompositeComplexPaperFilter extends SipamatoFilter implements Sorta
      * @param filter to be added.
      */
     public void add(final ComplexPaperFilter filter) {
-        if (filter != null && !filterList.contains(filter))
-            filterList.add(filter);
+        if (filter != null && !filters.contains(filter))
+            filters.add(filter);
     }
 
     /**
@@ -50,7 +53,7 @@ public class CompositeComplexPaperFilter extends SipamatoFilter implements Sorta
      * @param other the source of filters to merge from
      */
     public void merge(final CompositeComplexPaperFilter other) {
-        filterList.addAll(other.getFilters());
+        filters.addAll(other.getFilters());
     }
 
     /**
@@ -60,12 +63,17 @@ public class CompositeComplexPaperFilter extends SipamatoFilter implements Sorta
      */
     public void remove(ComplexPaperFilter filter) {
         if (filter != null) {
-            filterList.remove(filter);
+            filters.remove(filter);
         }
     }
 
     @Override
     public String toString() {
-        return filterList.stream().map(ComplexPaperFilter::toString).collect(Collectors.joining(JOIN_DELIMITER));
+        return filters.stream().map(ComplexPaperFilter::toString).collect(Collectors.joining(JOIN_DELIMITER));
+    }
+
+    @Override
+    public String getDisplayValue() {
+        return toString();
     }
 }
