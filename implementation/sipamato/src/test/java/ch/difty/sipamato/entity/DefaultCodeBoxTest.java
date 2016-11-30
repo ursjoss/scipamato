@@ -10,13 +10,13 @@ import org.junit.Test;
 
 import ch.difty.sipamato.lib.NullArgumentException;
 
-public class CodeBoxTest {
+public class DefaultCodeBoxTest {
 
     private static final Code CODE_1F = makeCode(CodeClassId.CC1, "F", 1);
     private static final Code CODE_5H = makeCode(CodeClassId.CC5, "H", 7);
     private static final Code CODE_5F = makeCode(CodeClassId.CC5, "F", 5);
 
-    private final CodeBox codeBox = new CodeBox();
+    private final DefaultCodeBox codeBox = new DefaultCodeBox();
 
     private static Code makeCode(CodeClassId codeClassId, String codePart2, int sort) {
         int ccId = codeClassId.getId();

@@ -76,7 +76,7 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
         return booleanSearchTerms.values();
     }
 
-    private final CodeBox codes = new CodeBox();
+    private final CodeBox codes = new DefaultCodeBox();
 
     /** {@link Paper} specific accessors */
 

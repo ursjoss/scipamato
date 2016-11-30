@@ -1,98 +1,49 @@
 package ch.difty.sipamato.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import org.apache.commons.collections4.list.UnmodifiableList;
-import org.springframework.util.CollectionUtils;
-
-import ch.difty.sipamato.lib.AssertAs;
 
 /**
- * The {@link CodeBox} is a container for {@link Code}s.
+ * A class implementing {@link CodeBox} is a container for {@link Code}s.
  * It allows to access all codes cumulated or only the codes of a given {@link CodeClass}.
  *
  * @author u.joss
  */
-class CodeBox implements Serializable {
+public interface CodeBox extends Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * @return all codes contained in the code box.
+     */
+    List<Code> getCodes();
 
-    private final List<Code> codes = new ArrayList<>();
+    /**
+     * returns all codes of the code class with the given id.
+     * @param codeClassId
+     * @return a list of codes
+     */
+    List<Code> getCodesBy(CodeClassId codeClassId);
 
-    boolean isEmpty() {
-        return codes.isEmpty();
-    }
+    /**
+     * Add the code to the code box.
+     * @param code the code to add
+     */
+    void addCode(Code code);
 
-    int size() {
-        return codes.size();
-    }
+    /**
+     * Add all codes to the code box
+     * @param newCodes the codes to add
+     */
+    void addCodes(List<Code> newCodes);
 
-    int sizeOf(final CodeClassId codeClassId) {
-        return collectBy(nullSafe(codeClassId)).size();
-    }
+    /**
+     * Clears all codes in the code box.
+     */
+    void clear();
 
-    private CodeClassId nullSafe(final CodeClassId codeClassId) {
-        return AssertAs.notNull(codeClassId, "codeClassId");
-    }
-
-    private List<Code> collectBy(final CodeClassId ccId) {
-        return codes.stream().filter(isMatching(ccId)).collect(Collectors.toList());
-    }
-
-    private Predicate<? super Code> isMatching(final CodeClassId ccId) {
-        return c -> ccId.getId() == c.getCodeClass().getId().intValue();
-    }
-
-    void addCode(final Code code) {
-        if (isNewAndNonNull(code))
-            codes.add(code);
-    }
-
-    private boolean isNewAndNonNull(final Code code) {
-        return code != null && !codes.contains(code);
-    }
-
-    List<Code> getCodes() {
-        return new UnmodifiableList<Code>(codes);
-    }
-
-    List<Code> getCodesBy(final CodeClassId codeClassId) {
-        return new UnmodifiableList<Code>(collectBy(nullSafe(codeClassId)));
-    }
-
-    void addCodes(final List<Code> newCodes) {
-        if (!CollectionUtils.isEmpty(newCodes))
-            codes.addAll(newCodes.stream().distinct().filter(this::isNewAndNonNull).collect(Collectors.toList()));
-    }
-
-    void clear() {
-        codes.clear();
-    }
-
-    void clearBy(final CodeClassId codeClassId) {
-        codes.removeIf(isMatching(nullSafe(codeClassId)));
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        final Map<CodeClass, List<Code>> map = codes.stream().collect(Collectors.groupingBy(Code::getCodeClass, LinkedHashMap::new, Collectors.toList()));
-        String delim = "";
-        builder.append("[");
-        for (final Entry<CodeClass, List<Code>> e : map.entrySet()) {
-            builder.append(delim).append("codesOfClass").append(e.getKey().getId()).append("=");
-            builder.append(e.getValue());
-            delim = ",";
-        }
-        builder.append("]");
-        return builder.toString();
-    }
+    /**
+     * Clears all codes of a given code class
+     * @param codeClassId the id of the code class to clear all codes for
+     */
+    void clearBy(CodeClassId codeClassId);
 
 }
