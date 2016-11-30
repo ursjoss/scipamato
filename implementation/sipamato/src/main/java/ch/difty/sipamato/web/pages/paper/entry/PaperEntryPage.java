@@ -61,7 +61,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
         if (!manualValidationFails()) {
             Paper p = getModelObject();
             doUpdate(p);
-            success(new StringResourceModel("save.successful.hint", this, null).setParameters(p.getId(), p.getAuthors(), p.getPublicationYear()).getString());
+            success(new StringResourceModel("save.successful.hint", this, null).setParameters(p.getId(), p.getAuthors(), p.getPublicationYear().toString()).getString());
         } else {
             errorValidationMessage();
         }
