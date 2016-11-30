@@ -40,11 +40,14 @@ public class ResultPanel extends GenericPanel<Void> {
     protected void onInitialize() {
         super.onInitialize();
 
-        final DataTable<PaperSlim, String> table = new BootstrapDefaultDataTable<>("table", makeTableColumns(), dataProvider, 20);
+        makeTable("table");
+    }
+
+    private void makeTable(String id) {
+        final DataTable<PaperSlim, String> table = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, 20);
         table.setOutputMarkupId(true);
         table.add(new TableBehavior().striped().hover());
         queue(table);
-
     }
 
     private List<IColumn<PaperSlim, String>> makeTableColumns() {

@@ -18,6 +18,7 @@ import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
 import ch.difty.sipamato.web.component.data.LinkIconPanel;
 import ch.difty.sipamato.web.pages.BasePageTest;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
+import ch.difty.sipamato.web.panel.search.SearchTermPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
@@ -40,8 +41,13 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Override
     protected void assertSpecificComponents() {
-        assertForm("form");
+        assertSearchTermPanel("searchTermPanel");
         assertResultPanel("resultPanel");
+    }
+
+    private void assertSearchTermPanel(String b) {
+        getTester().assertComponent(b, SearchTermPanel.class);
+        assertForm(b + ":form");
     }
 
     private void assertForm(String b) {
@@ -69,7 +75,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
 
-        FormTester formTester = getTester().newFormTester("form");
+        FormTester formTester = getTester().newFormTester("searchTermPanel:form");
         formTester.submit("addSearch");
 
         getTester().assertRenderedPage(PaperSearchCriteriaPage.class);
@@ -95,12 +101,15 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
         getTester().debugComponentTrees();
 
-        final String linkPath = "form:searchTerms:body:rows:1:cells:2:cell:link";
+        final String linkPath = "searchTermPanel:form:searchTerms:body:rows:1:cells:2:cell:link";
         getTester().assertComponent(linkPath, AjaxLink.class);
         getTester().assertContains(labelToString);
         getTester().clickLink(linkPath);
         getTester().debugComponentTrees();
         getTester().assertContainsNot(labelToString);
+
+        // TODO test that the event is sent
+        // TODO also test that receiving the event adds the filter panel to the target
     }
 
 }
