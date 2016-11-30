@@ -1,6 +1,8 @@
 package ch.difty.sipamato.entity;
 
-public class SimplePaperFilter extends SipamatoFilter {
+import ch.difty.sipamato.web.pages.paper.filter.SortablePaperSlimFilterState;
+
+public class SimplePaperFilter extends SipamatoFilter implements SortablePaperSlimFilterState {
 
     private static final long serialVersionUID = 1L;
 

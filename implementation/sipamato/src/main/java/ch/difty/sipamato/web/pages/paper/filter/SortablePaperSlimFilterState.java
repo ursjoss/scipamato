@@ -1,5 +1,7 @@
 package ch.difty.sipamato.web.pages.paper.filter;
 
-public interface SortablePaperSlimFilterState {
+import java.io.Serializable;
+
+public interface SortablePaperSlimFilterState extends Serializable {
 
 }

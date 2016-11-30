@@ -17,12 +17,12 @@ import org.apache.wicket.model.StringResourceModel;
 
 import ch.difty.sipamato.entity.ComplexPaperFilter;
 import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
-import ch.difty.sipamato.entity.SipamatoFilter;
 import ch.difty.sipamato.web.component.SerializableConsumer;
 import ch.difty.sipamato.web.component.SerializableFunction;
 import ch.difty.sipamato.web.component.SerializableSupplier;
 import ch.difty.sipamato.web.component.data.LinkIconColumn;
 import ch.difty.sipamato.web.pages.BasePage;
+import ch.difty.sipamato.web.pages.paper.filter.SortablePaperSlimFilterState;
 import ch.difty.sipamato.web.pages.paper.provider.ComplexPaperFilterProvider;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
 import ch.difty.sipamato.web.pages.paper.search.PaperSearchCriteriaPage;
@@ -36,10 +36,10 @@ public class SearchTermPanel extends AbstractPanel<CompositeComplexPaperFilter> 
 
     private static final long serialVersionUID = 1L;
 
-    private final SortablePaperSlimProvider<? extends SipamatoFilter> dataProvider;
+    private final SortablePaperSlimProvider<? extends SortablePaperSlimFilterState> dataProvider;
     private DataTable<ComplexPaperFilter, String> searchTerms;
 
-    public SearchTermPanel(String id, IModel<CompositeComplexPaperFilter> model, SortablePaperSlimProvider<? extends SipamatoFilter> dataProvider) {
+    public SearchTermPanel(String id, IModel<CompositeComplexPaperFilter> model, SortablePaperSlimProvider<? extends SortablePaperSlimFilterState> dataProvider) {
         super(id, model);
         this.dataProvider = dataProvider;
     }

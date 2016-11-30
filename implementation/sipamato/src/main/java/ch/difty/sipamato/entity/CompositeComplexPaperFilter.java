@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ch.difty.sipamato.web.pages.paper.filter.SortablePaperSlimFilterState;
+
 /**
  * The composite filter makes up the entire search, containing one or combining several {@link CompmlexPaperFilter}s
  *
  * @author u.joss
  */
-public class CompositeComplexPaperFilter extends SipamatoFilter {
+public class CompositeComplexPaperFilter extends SipamatoFilter implements SortablePaperSlimFilterState {
 
     private static final long serialVersionUID = 1L;
 
