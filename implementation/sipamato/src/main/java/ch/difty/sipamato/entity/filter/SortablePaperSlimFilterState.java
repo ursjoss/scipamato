@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.pages.paper.filter;
+package ch.difty.sipamato.entity.filter;
 
 import java.io.Serializable;
 

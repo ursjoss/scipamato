@@ -20,7 +20,7 @@ import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.SimplePaperFilter;
+import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 
 @RunWith(MockitoJUnitRunner.class)

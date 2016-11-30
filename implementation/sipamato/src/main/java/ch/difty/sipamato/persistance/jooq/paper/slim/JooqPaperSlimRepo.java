@@ -16,12 +16,12 @@ import org.springframework.stereotype.Repository;
 
 import ch.difty.sipamato.db.Tables;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
-import ch.difty.sipamato.entity.BooleanSearchTerm;
-import ch.difty.sipamato.entity.ComplexPaperFilter;
 import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
-import ch.difty.sipamato.entity.IntegerSearchTerm;
-import ch.difty.sipamato.entity.SimplePaperFilter;
-import ch.difty.sipamato.entity.StringSearchTerm;
+import ch.difty.sipamato.entity.filter.BooleanSearchTerm;
+import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
+import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
+import ch.difty.sipamato.entity.filter.SimplePaperFilter;
+import ch.difty.sipamato.entity.filter.StringSearchTerm;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.persistance.jooq.ConditionalSupplier;

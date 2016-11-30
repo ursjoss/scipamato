@@ -11,6 +11,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
+
 @RunWith(MockitoJUnitRunner.class)
 public class CompositeComplexPaperFilterTest {
 

@@ -13,12 +13,12 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.filter.SortablePaperSlimFilterState;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.component.SerializableConsumer;
 import ch.difty.sipamato.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
-import ch.difty.sipamato.web.pages.paper.filter.SortablePaperSlimFilterState;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;

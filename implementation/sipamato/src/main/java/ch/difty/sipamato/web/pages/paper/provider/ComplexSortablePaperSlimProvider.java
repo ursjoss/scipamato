@@ -6,9 +6,9 @@ import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.injection.Injector;
 import org.springframework.data.domain.Pageable;
 
-import ch.difty.sipamato.entity.ComplexPaperFilter;
 import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 
 /**

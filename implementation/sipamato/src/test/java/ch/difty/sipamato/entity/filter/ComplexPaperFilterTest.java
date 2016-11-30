@@ -1,4 +1,4 @@
-package ch.difty.sipamato.entity;
+package ch.difty.sipamato.entity.filter;
 
 import static ch.difty.sipamato.entity.Paper.FLD_DOI;
 import static ch.difty.sipamato.entity.Paper.FLD_FIRST_AUTHOR_OVERRIDDEN;

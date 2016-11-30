@@ -11,9 +11,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 
+import ch.difty.sipamato.entity.filter.SortablePaperSlimFilterState;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.service.PaperSlimService;
-import ch.difty.sipamato.web.pages.paper.filter.SortablePaperSlimFilterState;
 
 /**
  * The dataprovider providing the wicket components access to the persisted paper data in the slim format

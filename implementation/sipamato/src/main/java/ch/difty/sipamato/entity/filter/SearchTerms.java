@@ -1,4 +1,4 @@
-package ch.difty.sipamato.entity;
+package ch.difty.sipamato.entity.filter;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;

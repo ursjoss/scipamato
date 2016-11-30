@@ -13,8 +13,8 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ch.difty.sipamato.entity.ComplexPaperFilter;
 import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
+import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
 import ch.difty.sipamato.web.component.data.LinkIconPanel;
 import ch.difty.sipamato.web.pages.BasePageTest;
 import ch.difty.sipamato.web.panel.result.ResultPanel;

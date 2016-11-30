@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ch.difty.sipamato.web.pages.paper.filter.SortablePaperSlimFilterState;
+import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
+import ch.difty.sipamato.entity.filter.SipamatoFilter;
+import ch.difty.sipamato.entity.filter.SortablePaperSlimFilterState;
 
 /**
  * The composite filter makes up the entire search, containing one or combining several {@link CompmlexPaperFilter}s

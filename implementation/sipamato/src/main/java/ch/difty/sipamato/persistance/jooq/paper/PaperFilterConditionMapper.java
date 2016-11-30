@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.jooq.Condition;
 
-import ch.difty.sipamato.entity.SimplePaperFilter;
+import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.persistance.jooq.AbstractFilterConditionMapper;
 import ch.difty.sipamato.persistance.jooq.FilterConditionMapper;
 

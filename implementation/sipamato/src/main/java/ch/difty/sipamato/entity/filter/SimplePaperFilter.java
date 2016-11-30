@@ -1,6 +1,4 @@
-package ch.difty.sipamato.entity;
-
-import ch.difty.sipamato.web.pages.paper.filter.SortablePaperSlimFilterState;
+package ch.difty.sipamato.entity.filter;
 
 public class SimplePaperFilter extends SipamatoFilter implements SortablePaperSlimFilterState {
 

@@ -2,7 +2,7 @@ package ch.difty.sipamato.persistance.jooq.paper.slim;
 
 import org.jooq.Condition;
 
-import ch.difty.sipamato.entity.SearchTerm;
+import ch.difty.sipamato.entity.filter.SearchTerm;
 
 /**
  * Evaluates the {@link SearchTerm} implementation to build a concrete jOOQ Condition

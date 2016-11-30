@@ -6,8 +6,8 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvid
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import ch.difty.sipamato.entity.ComplexPaperFilter;
 import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
+import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
 
 public class ComplexPaperFilterProvider extends SortableDataProvider<ComplexPaperFilter, String> {
 

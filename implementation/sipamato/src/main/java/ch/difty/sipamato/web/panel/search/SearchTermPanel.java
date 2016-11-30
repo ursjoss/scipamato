@@ -15,14 +15,14 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 
-import ch.difty.sipamato.entity.ComplexPaperFilter;
 import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
+import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
+import ch.difty.sipamato.entity.filter.SortablePaperSlimFilterState;
 import ch.difty.sipamato.web.component.SerializableConsumer;
 import ch.difty.sipamato.web.component.SerializableFunction;
 import ch.difty.sipamato.web.component.SerializableSupplier;
 import ch.difty.sipamato.web.component.data.LinkIconColumn;
 import ch.difty.sipamato.web.pages.BasePage;
-import ch.difty.sipamato.web.pages.paper.filter.SortablePaperSlimFilterState;
 import ch.difty.sipamato.web.pages.paper.provider.ComplexPaperFilterProvider;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
 import ch.difty.sipamato.web.pages.paper.search.PaperSearchCriteriaPage;
