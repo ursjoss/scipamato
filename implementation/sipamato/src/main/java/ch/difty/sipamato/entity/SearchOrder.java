@@ -8,11 +8,11 @@ import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
 import ch.difty.sipamato.entity.filter.SortablePaperSlimFilterState;
 
 /**
- * The composite filter makes up the entire search, containing one or combining several {@link CompmlexPaperFilter}s
+ * The {@link SearchOrder} is the entry point for the entire search, containing one or combining several {@link ComplexPaperFilter}s
  *
  * @author u.joss
  */
-public class CompositeComplexPaperFilter extends SipamatoEntity implements SortablePaperSlimFilterState {
+public class SearchOrder extends SipamatoEntity implements SortablePaperSlimFilterState {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,7 +20,7 @@ public class CompositeComplexPaperFilter extends SipamatoEntity implements Sorta
 
     private List<ComplexPaperFilter> filters = new ArrayList<>();
 
-    public CompositeComplexPaperFilter(final List<ComplexPaperFilter> filters) {
+    public SearchOrder(final List<ComplexPaperFilter> filters) {
         if (filters != null)
             this.filters.addAll(filters);
     }
@@ -47,12 +47,12 @@ public class CompositeComplexPaperFilter extends SipamatoEntity implements Sorta
     }
 
     /**
-     * Merges the {@link ComplexPaperFilter}s contained in the <code>other</code> {@link CompositeComplexPaperFilter}
+     * Merges the {@link ComplexPaperFilter}s contained in the <code>other</code> {@link SearchOrder}
      * into its own list.
      *
      * @param other the source of filters to merge from
      */
-    public void merge(final CompositeComplexPaperFilter other) {
+    public void merge(final SearchOrder other) {
         filters.addAll(other.getFilters());
     }
 

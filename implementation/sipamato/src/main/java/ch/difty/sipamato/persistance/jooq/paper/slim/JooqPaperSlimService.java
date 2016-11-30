@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
+import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.service.PaperSlimService;
@@ -50,19 +50,19 @@ public class JooqPaperSlimService implements PaperSlimService {
 
     /** {@inhericDoc} */
     @Override
-    public List<PaperSlim> findByFilter(CompositeComplexPaperFilter compositeFilter) {
-        return repo.findByFilter(compositeFilter);
+    public List<PaperSlim> findBySearchOrder(SearchOrder searchOrder) {
+        return repo.findBySearchOrder(searchOrder);
     }
 
     /** {@inhericDoc} */
     @Override
-    public Page<PaperSlim> findByFilter(CompositeComplexPaperFilter compositeFilter, Pageable pageable) {
-        return repo.findByFilter(compositeFilter, pageable);
+    public Page<PaperSlim> findBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
+        return repo.findBySearchOrder(searchOrder, pageable);
     }
 
     /** {@inhericDoc} */
     @Override
-    public int countByFilter(CompositeComplexPaperFilter compositeFilter) {
-        return repo.countByFilter(compositeFilter);
+    public int countByFilter(SearchOrder searchOrder) {
+        return repo.countBySearch(searchOrder);
     }
 }

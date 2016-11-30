@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
-import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
+import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.persistance.jooq.ReadOnlyRepository;
@@ -14,33 +14,28 @@ import ch.difty.sipamato.persistance.jooq.ReadOnlyRepository;
 public interface PaperSlimRepository extends ReadOnlyRepository<PaperRecord, PaperSlim, Long, PaperSlimRecordMapper, SimplePaperFilter> {
 
     /**
-     * Finds all {@link PaperSlim}s matching the provided {@link CompositeComplexPaperFilter}.
+     * Finds all {@link PaperSlim}s matching the provided {@link SearchOrder} specification.
      *
-     * <ul>
-     * <li>strings are matched <code>contain</code> like ignoring case</li>
-     * <li>numbers are matched exactly</li>
-     * </ul>
-     *
-     * @param compositeFilter {@link CompositeComplexPaperFilter} the combined search specification
+     * @param searchOrder {@link SearchOrder} the search specification
      * @return list of {@link PaperSlim}s
      */
-    List<PaperSlim> findByFilter(CompositeComplexPaperFilter compositeFilter);
+    List<PaperSlim> findBySearchOrder(SearchOrder searchOrder);
 
     /**
-     * Finds all {@link PaperSlim}s matching the provided {@link CompositeComplexPaperFilter}, returned in pages.
+     * Finds all {@link PaperSlim}s matching the provided {@link SearchOrder} specification, returned in pages.
      *
-     * @see #findByFilter(CompositeComplexPaperFilter)
+     * @see #findBySearchOrder(SearchOrder)
      *
      * @return list of {@link PaperSlim}s
      */
-    Page<PaperSlim> findByFilter(CompositeComplexPaperFilter filter, Pageable pageable);
+    Page<PaperSlim> findBySearchOrder(SearchOrder searchOrder, Pageable pageable);
 
     /**
-     * Counts all persisted entities matching the provided {@link CompositeComplexPaperFilter}.
+     * Counts all persisted entities matching the provided {@link SearchOrder} specification.
      *
-     * @param compositeFilter {@link CompositeComplexPaperFilter} the combined search specification
+     * @param searchOrder the search specification
      * @return paper count
      */
-    int countByFilter(CompositeComplexPaperFilter filter);
+    int countBySearch(SearchOrder searchOrder);
 
 }

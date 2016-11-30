@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import ch.difty.sipamato.db.Tables;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
-import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
+import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.BooleanSearchTerm;
 import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
 import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
@@ -67,11 +67,11 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
 
     /** {@inheritDoc} */
     @Override
-    public List<PaperSlim> findByFilter(final CompositeComplexPaperFilter compositeFilter) {
-        AssertAs.notNull(compositeFilter, "filter");
+    public List<PaperSlim> findBySearchOrder(final SearchOrder searchOrder) {
+        AssertAs.notNull(searchOrder, "searchOrder");
 
-        final Condition compositeCondition = getConditionsFrom(compositeFilter);
-        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(compositeCondition).fetchInto(getRecordClass());
+        final Condition searchOrderCondition = getConditionsFrom(searchOrder);
+        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(searchOrderCondition).fetchInto(getRecordClass());
         final List<PaperSlim> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
         enrichAssociatedEntitiesOfAll(entities);
 
@@ -80,22 +80,22 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
 
     /** {@inheritDoc} */
     @Override
-    public Page<PaperSlim> findByFilter(CompositeComplexPaperFilter filter, Pageable pageable) {
-        final List<PaperSlim> entities = findByFilter(filter);
-        return new PageImpl<>(entities, pageable, (long) countByFilter(filter));
+    public Page<PaperSlim> findBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
+        final List<PaperSlim> entities = findBySearchOrder(searchOrder);
+        return new PageImpl<>(entities, pageable, (long) countBySearch(searchOrder));
     }
 
     /** {@inheritDoc} */
     @Override
-    public int countByFilter(CompositeComplexPaperFilter compositeFilter) {
-        final Condition conditions = getConditionsFrom(compositeFilter);
+    public int countBySearch(SearchOrder searchOrder) {
+        final Condition conditions = getConditionsFrom(searchOrder);
         return getDsl().fetchCount(getDsl().selectOne().from(getTable()).where(conditions));
     }
 
     /*
      * Combines the search terms of different ComplexPaperFilters using OR operators.
      */
-    private Condition getConditionsFrom(final CompositeComplexPaperFilter filter) {
+    private Condition getConditionsFrom(final SearchOrder filter) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
         for (final ComplexPaperFilter cpf : filter.getFilters())
             conditions.add(() -> getConditionFromSingleComplexFilter(cpf));
@@ -103,7 +103,7 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     }
 
     /*
-     * Combines the individual search terms of a single ComplexPaperFilter using AND operators
+     * Combines the individual search terms of a single {@link ComplexPaperFilter} using AND operators
      */
     private Condition getConditionFromSingleComplexFilter(ComplexPaperFilter filter) {
         final ConditionalSupplier conditions = new ConditionalSupplier();

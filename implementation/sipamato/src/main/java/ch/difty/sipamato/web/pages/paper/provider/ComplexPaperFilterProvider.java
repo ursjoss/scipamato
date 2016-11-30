@@ -6,27 +6,27 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvid
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
+import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
 
 public class ComplexPaperFilterProvider extends SortableDataProvider<ComplexPaperFilter, String> {
 
     private static final long serialVersionUID = 1L;
 
-    private IModel<CompositeComplexPaperFilter> compositeModel;
+    private IModel<SearchOrder> searchOrderModel;
 
-    public ComplexPaperFilterProvider(IModel<CompositeComplexPaperFilter> compositeModel) {
-        this.compositeModel = compositeModel;
+    public ComplexPaperFilterProvider(IModel<SearchOrder> searchOrderModel) {
+        this.searchOrderModel = searchOrderModel;
     }
 
     @Override
     public Iterator<ComplexPaperFilter> iterator(long offset, long size) {
-        return compositeModel.getObject().getFilters().iterator();
+        return searchOrderModel.getObject().getFilters().iterator();
     }
 
     @Override
     public long size() {
-        return compositeModel.getObject().getFilters().size();
+        return searchOrderModel.getObject().getFilters().size();
     }
 
     @Override

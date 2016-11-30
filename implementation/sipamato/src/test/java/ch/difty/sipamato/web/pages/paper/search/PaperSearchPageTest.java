@@ -13,7 +13,7 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
+import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
 import ch.difty.sipamato.web.component.data.LinkIconPanel;
 import ch.difty.sipamato.web.pages.BasePageTest;
@@ -25,13 +25,13 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Mock
-    private CompositeComplexPaperFilter mockCompositeComplexPaperFilter;
+    private SearchOrder mockSearchOrder;
 
     @Override
     protected PaperSearchPage makePage() {
         final List<ComplexPaperFilter> filters = Arrays.asList(new ComplexPaperFilter());
-        final CompositeComplexPaperFilter compositeFilter = new CompositeComplexPaperFilter(filters);
-        return new PaperSearchPage(Model.of(compositeFilter));
+        final SearchOrder searchOrder = new SearchOrder(filters);
+        return new PaperSearchPage(Model.of(searchOrder));
     }
 
     @Override
@@ -82,7 +82,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     @Test
-    public void clickingRemoveButtonOnSearchTerms_removesFilter() {
+    public void clickingRemoveButtonOnSearchTerms_removesSearchTerm() {
         final String labelToString = "complexPaperFilterToString";
         final ComplexPaperFilter f = new ComplexPaperFilter() {
             private static final long serialVersionUID = 1L;
@@ -93,8 +93,8 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
             }
         };
         final List<ComplexPaperFilter> filters = Arrays.asList(f);
-        final CompositeComplexPaperFilter compositeFilter = new CompositeComplexPaperFilter(filters);
-        PaperSearchPage page = new PaperSearchPage(Model.of(compositeFilter));
+        final SearchOrder searchOrder = new SearchOrder(filters);
+        PaperSearchPage page = new PaperSearchPage(Model.of(searchOrder));
 
         getTester().startPage(page);
         getTester().assertRenderedPage(getPageClass());

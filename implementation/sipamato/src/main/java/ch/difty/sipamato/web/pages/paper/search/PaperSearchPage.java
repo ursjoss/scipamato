@@ -10,7 +10,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.annotation.mount.MountPath;
 
-import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
+import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.provider.ComplexSortablePaperSlimProvider;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
@@ -20,14 +20,14 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCD
 
 /**
  * The PaperSearchPage allows to add and combine individual search terms by instantiating the {@link PaperSearchCriteriaPage}
- * with the currently combined {@link CompositeComplexPaperFilter}. That page will instantiate a new instance of this page
+ * with the currently combined {@link SearchOrder}. That page will instantiate a new instance of this page
  * after adding the new search term.
  *
  * @author u.joss
  */
 @MountPath("search")
 @AuthorizeInstantiation({ "ROLE_USER" })
-public class PaperSearchPage extends BasePage<CompositeComplexPaperFilter> {
+public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,10 +37,10 @@ public class PaperSearchPage extends BasePage<CompositeComplexPaperFilter> {
 
     public PaperSearchPage(final PageParameters parameters) {
         super(parameters);
-        setDefaultModel(Model.of(new CompositeComplexPaperFilter(null)));
+        setDefaultModel(Model.of(new SearchOrder(null)));
     }
 
-    public PaperSearchPage(final IModel<CompositeComplexPaperFilter> filterModel) {
+    public PaperSearchPage(final IModel<SearchOrder> filterModel) {
         super(filterModel);
     }
 

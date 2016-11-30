@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
-import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
+import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.NullArgumentException;
@@ -130,10 +130,10 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
     @Test
     public void findingByFilter_withNullComplex_throws() {
         try {
-            repo.findByFilter((CompositeComplexPaperFilter) null);
+            repo.findBySearchOrder((SearchOrder) null);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("filter must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchOrder must not be null.");
         }
     }
 

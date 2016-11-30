@@ -14,9 +14,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CompositeComplexPaperFilterTest {
+public class SearchOrderTest {
 
-    private final CompositeComplexPaperFilter f = new CompositeComplexPaperFilter(null);
+    private final SearchOrder so = new SearchOrder(null);
 
     @Mock
     public ComplexPaperFilter mockFilter1, mockFilter2;
@@ -25,87 +25,88 @@ public class CompositeComplexPaperFilterTest {
 
     @Test
     public void whenInstantiating_withNullList_noFiltersArePresent() {
-        assertThat(f.getFilters()).isEmpty();
+        assertThat(so.getFilters()).isEmpty();
     }
 
     @Test
     public void whenInstantiating_withEmptyList_noFiltersArePresent() {
-        assertThat(new CompositeComplexPaperFilter(filters).getFilters()).isEmpty();
+        assertThat(new SearchOrder(filters).getFilters()).isEmpty();
     }
 
     @Test
     public void whenInstantiating_withNonEmptyList_handedOverFiltersArePresent() {
         filters.addAll(Arrays.asList(mockFilter1, mockFilter2));
-        assertThat(new CompositeComplexPaperFilter(filters).getFilters()).containsExactly(mockFilter1, mockFilter2);
+        assertThat(new SearchOrder(filters).getFilters()).containsExactly(mockFilter1, mockFilter2);
     }
 
     @Test
     public void whenAddingNullFilter_itIsNotAdded() {
-        f.add(null);
-        assertThat(f.getFilters()).isEmpty();
+        so.add(null);
+        assertThat(so.getFilters()).isEmpty();
     }
 
     @Test
     public void whenAddingFilter_itIsGettingAdded() {
-        f.add(mockFilter1);
-        assertThat(f.getFilters()).containsExactly(mockFilter1);
+        so.add(mockFilter1);
+        assertThat(so.getFilters()).containsExactly(mockFilter1);
     }
 
     @Test
     public void whenMergingCompositeFilterWithFilters_theResultIsMerged() {
-        assertThat(f.getFilters()).isEmpty();
-        f.add(new ComplexPaperFilter());
+        assertThat(so.getFilters()).isEmpty();
+        so.add(new ComplexPaperFilter());
 
         filters.addAll(Arrays.asList(mockFilter1, mockFilter2));
-        CompositeComplexPaperFilter other = new CompositeComplexPaperFilter(filters);
+        SearchOrder other = new SearchOrder(filters);
         assertThat(other.getFilters()).hasSize(2);
 
-        f.merge(other);
+        so.merge(other);
 
-        assertThat(f.getFilters()).hasSize(3);
+        assertThat(so.getFilters()).hasSize(3);
     }
 
     @Test
     public void whenRemovingFilter_withNullParameter_doesNothing() {
-        f.add(mockFilter1);
-        f.add(mockFilter2);
-        assertThat(f.getFilters()).containsExactly(mockFilter1, mockFilter2);
+        so.add(mockFilter1);
+        so.add(mockFilter2);
+        assertThat(so.getFilters()).containsExactly(mockFilter1, mockFilter2);
 
-        f.remove(null);
+        so.remove(null);
 
-        assertThat(f.getFilters()).containsExactly(mockFilter1, mockFilter2);
+        assertThat(so.getFilters()).containsExactly(mockFilter1, mockFilter2);
     }
 
     @Test
     public void whenRemovingFilter_withFilterWhichIsPresent_doesRemoveIt() {
-        f.add(mockFilter1);
-        f.add(mockFilter2);
-        assertThat(f.getFilters()).containsExactly(mockFilter1, mockFilter2);
+        so.add(mockFilter1);
+        so.add(mockFilter2);
+        assertThat(so.getFilters()).containsExactly(mockFilter1, mockFilter2);
 
-        f.remove(mockFilter2);
+        so.remove(mockFilter2);
 
-        assertThat(f.getFilters()).containsExactly(mockFilter1);
+        assertThat(so.getFilters()).containsExactly(mockFilter1);
     }
 
     @Test
     public void whenRemovingFilter_withFilterWhichIsNotPresent_doesNothing() {
-        f.add(mockFilter2);
-        assertThat(f.getFilters()).containsExactly(mockFilter2);
+        so.add(mockFilter2);
+        assertThat(so.getFilters()).containsExactly(mockFilter2);
 
-        f.remove(mockFilter1);
+        so.remove(mockFilter1);
 
-        assertThat(f.getFilters()).containsExactly(mockFilter2);
+        assertThat(so.getFilters()).containsExactly(mockFilter2);
     }
 
     @Test
-    public void testingToString_withNoFilters_returnsBlank() {
-        assertThat(f.getFilters()).hasSize(0);
-        assertThat(f.toString()).isEqualTo("");
+    public void testingToStringOrDisplayValue_withNoFilters_returnsBlank() {
+        assertThat(so.getFilters()).hasSize(0);
+        assertThat(so.toString()).isEqualTo("");
+        assertThat(so.getDisplayValue()).isEqualTo("");
     }
 
     @Test
-    public void testingToString_withSingleFilter_returnsIt() {
-        f.add(new ComplexPaperFilter() {
+    public void testingToStringOrDisplayValue_withSingleFilter_returnsIt() {
+        so.add(new ComplexPaperFilter() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -114,12 +115,13 @@ public class CompositeComplexPaperFilterTest {
             }
         });
 
-        assertThat(f.toString()).isEqualTo("f1ToString");
+        assertThat(so.toString()).isEqualTo("f1ToString");
+        assertThat(so.getDisplayValue()).isEqualTo("f1ToString");
     }
 
     @Test
     public void testingToString_withTwoFilters_joinsThemUsingOR() {
-        f.add(new ComplexPaperFilter() {
+        so.add(new ComplexPaperFilter() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -127,7 +129,7 @@ public class CompositeComplexPaperFilterTest {
                 return "f1ToString";
             }
         });
-        f.add(new ComplexPaperFilter() {
+        so.add(new ComplexPaperFilter() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -136,7 +138,7 @@ public class CompositeComplexPaperFilterTest {
             }
         });
 
-        assertThat(f.toString()).isEqualTo("f1ToString; OR f2ToString");
+        assertThat(so.toString()).isEqualTo("f1ToString; OR f2ToString");
     }
 
     @Test
@@ -152,10 +154,10 @@ public class CompositeComplexPaperFilterTest {
         f2.setPublicationYear("2016");
         f2.setFirstAuthorOverridden(true);
 
-        assertThat(f.getFilters()).hasSize(0);
-        f.add(f1);
-        assertThat(f.getFilters()).hasSize(1);
-        f.add(f2);
-        assertThat(f.getFilters()).hasSize(1);
+        assertThat(so.getFilters()).hasSize(0);
+        so.add(f1);
+        assertThat(so.getFilters()).hasSize(1);
+        so.add(f2);
+        assertThat(so.getFilters()).hasSize(1);
     }
 }
