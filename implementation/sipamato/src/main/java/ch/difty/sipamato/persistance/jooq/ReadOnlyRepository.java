@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
-import ch.difty.sipamato.entity.SipamatoFilter;
+import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
 
 /**

@@ -1,7 +1,7 @@
 package ch.difty.sipamato.service;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
-import ch.difty.sipamato.entity.SipamatoFilter;
+import ch.difty.sipamato.entity.filter.SipamatoFilter;
 
 /**
  * The generic {@link EntityService} interface, defining the common methods for manipulating entities.

@@ -1,4 +1,4 @@
-package ch.difty.sipamato.entity;
+package ch.difty.sipamato.entity.filter;
 
 import static ch.difty.sipamato.entity.Paper.FLD_AUTHORS;
 import static ch.difty.sipamato.entity.Paper.FLD_COMMENT;
@@ -32,6 +32,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import ch.difty.sipamato.entity.Code;
+import ch.difty.sipamato.entity.CodeBox;
+import ch.difty.sipamato.entity.CodeBoxAware;
+import ch.difty.sipamato.entity.CodeClassId;
+import ch.difty.sipamato.entity.DefaultCodeBox;
+import ch.difty.sipamato.entity.Paper;
 
 /**
  * The {@link ComplexPaperFilter} is an instance of {@link SipamatoFilter} that provides
@@ -76,7 +83,7 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
         return booleanSearchTerms.values();
     }
 
-    private final CodeBox codes = new CodeBox();
+    private final CodeBox codes = new DefaultCodeBox();
 
     /** {@link Paper} specific accessors */
 

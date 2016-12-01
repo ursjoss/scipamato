@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import ch.difty.sipamato.db.tables.Paper;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
-import ch.difty.sipamato.entity.SimplePaperFilter;
+import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.persistance.jooq.FilterConditionMapperTest;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
 

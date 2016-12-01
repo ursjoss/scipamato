@@ -34,7 +34,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
-import ch.difty.sipamato.entity.SipamatoFilter;
+import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
 
 @RunWith(MockitoJUnitRunner.class)

@@ -1,10 +1,10 @@
-package ch.difty.sipamato.entity;
+package ch.difty.sipamato.entity.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import ch.difty.sipamato.entity.StringSearchTerm.MatchType;
+import ch.difty.sipamato.entity.filter.StringSearchTerm.MatchType;
 
 public class StringSearchTermTest {
 

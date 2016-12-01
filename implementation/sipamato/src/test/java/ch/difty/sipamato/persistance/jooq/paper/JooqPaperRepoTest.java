@@ -12,7 +12,7 @@ import org.mockito.Mock;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.SimplePaperFilter;
+import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.persistance.jooq.EntityRepository;
 import ch.difty.sipamato.persistance.jooq.JooqEntityRepoTest;

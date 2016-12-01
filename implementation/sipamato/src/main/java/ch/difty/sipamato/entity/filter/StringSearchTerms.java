@@ -1,4 +1,4 @@
-package ch.difty.sipamato.entity;
+package ch.difty.sipamato.entity.filter;
 
 /**
  * The class holds a number of {@link StringSearchTerm}s

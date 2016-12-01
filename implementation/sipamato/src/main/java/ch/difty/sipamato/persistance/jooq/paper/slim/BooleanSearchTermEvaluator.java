@@ -3,7 +3,7 @@ package ch.difty.sipamato.persistance.jooq.paper.slim;
 import org.jooq.Condition;
 import org.jooq.impl.DSL;
 
-import ch.difty.sipamato.entity.BooleanSearchTerm;
+import ch.difty.sipamato.entity.filter.BooleanSearchTerm;
 import ch.difty.sipamato.lib.AssertAs;
 
 /**

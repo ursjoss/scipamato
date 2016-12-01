@@ -6,7 +6,7 @@ import org.jooq.Record;
 import org.jooq.impl.TableImpl;
 import org.junit.Test;
 
-import ch.difty.sipamato.entity.SipamatoFilter;
+import ch.difty.sipamato.entity.filter.SipamatoFilter;
 
 public abstract class FilterConditionMapperTest<R extends Record, TI extends TableImpl<R>, F extends SipamatoFilter> {
 

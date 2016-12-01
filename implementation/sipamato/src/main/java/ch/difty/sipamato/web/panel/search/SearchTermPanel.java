@@ -15,9 +15,9 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 
-import ch.difty.sipamato.entity.ComplexPaperFilter;
-import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
-import ch.difty.sipamato.entity.SipamatoFilter;
+import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
+import ch.difty.sipamato.entity.filter.SortablePaperSlimFilterState;
 import ch.difty.sipamato.web.component.SerializableConsumer;
 import ch.difty.sipamato.web.component.SerializableFunction;
 import ch.difty.sipamato.web.component.SerializableSupplier;
@@ -32,14 +32,14 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
-public class SearchTermPanel extends AbstractPanel<CompositeComplexPaperFilter> {
+public class SearchTermPanel extends AbstractPanel<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 
-    private final SortablePaperSlimProvider<? extends SipamatoFilter> dataProvider;
+    private final SortablePaperSlimProvider<? extends SortablePaperSlimFilterState> dataProvider;
     private DataTable<ComplexPaperFilter, String> searchTerms;
 
-    public SearchTermPanel(String id, IModel<CompositeComplexPaperFilter> model, SortablePaperSlimProvider<? extends SipamatoFilter> dataProvider) {
+    public SearchTermPanel(String id, IModel<SearchOrder> model, SortablePaperSlimProvider<? extends SortablePaperSlimFilterState> dataProvider) {
         super(id, model);
         this.dataProvider = dataProvider;
     }
@@ -53,7 +53,7 @@ public class SearchTermPanel extends AbstractPanel<CompositeComplexPaperFilter> 
 
     private void queueForm(final String id) {
         queue(new FilterForm<>(id, dataProvider));
-        queueNewButton("addSearch", (IModel<CompositeComplexPaperFilter> fm) -> new PaperSearchCriteriaPage(fm), () -> getModel());
+        queueNewButton("addSearch", (IModel<SearchOrder> fm) -> new PaperSearchCriteriaPage(fm), () -> getModel());
 
         ComplexPaperFilterProvider p = new ComplexPaperFilterProvider(getModel());
         searchTerms = new BootstrapDefaultDataTable<ComplexPaperFilter, String>("searchTerms", makeTableColumns(), p, 10);
@@ -62,8 +62,8 @@ public class SearchTermPanel extends AbstractPanel<CompositeComplexPaperFilter> 
         queue(searchTerms);
     }
 
-    private void queueNewButton(String id, SerializableFunction<IModel<CompositeComplexPaperFilter>, BasePage<ComplexPaperFilter>> pageFunction,
-            SerializableSupplier<IModel<CompositeComplexPaperFilter>> modelProvider) {
+    private void queueNewButton(String id, SerializableFunction<IModel<SearchOrder>, BasePage<ComplexPaperFilter>> pageFunction,
+            SerializableSupplier<IModel<SearchOrder>> modelProvider) {
         queue(new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null), Type.Default) {
             private static final long serialVersionUID = 1L;
 

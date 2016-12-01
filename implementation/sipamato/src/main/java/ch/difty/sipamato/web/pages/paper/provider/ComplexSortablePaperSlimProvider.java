@@ -6,9 +6,9 @@ import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.injection.Injector;
 import org.springframework.data.domain.Pageable;
 
-import ch.difty.sipamato.entity.ComplexPaperFilter;
-import ch.difty.sipamato.entity.CompositeComplexPaperFilter;
+import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 
 /**
@@ -16,11 +16,11 @@ import ch.difty.sipamato.entity.projection.PaperSlim;
  *
  * @author u.joss
  */
-public class ComplexSortablePaperSlimProvider extends SortablePaperSlimProvider<CompositeComplexPaperFilter> {
+public class ComplexSortablePaperSlimProvider extends SortablePaperSlimProvider<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 
-    public ComplexSortablePaperSlimProvider(CompositeComplexPaperFilter complexFilter) {
+    public ComplexSortablePaperSlimProvider(SearchOrder complexFilter) {
         super(complexFilter);
         Injector.get().inject(this);
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
@@ -28,7 +28,7 @@ public class ComplexSortablePaperSlimProvider extends SortablePaperSlimProvider<
 
     @Override
     protected Iterator<PaperSlim> findByFilter(Pageable pageable) {
-        return getService().findByFilter(getFilterState(), pageable).iterator();
+        return getService().findBySearchOrder(getFilterState(), pageable).iterator();
     }
 
     @Override

@@ -29,7 +29,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.SimplePaperFilter;
+import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.persistance.jooq.paper.JooqPaperService;
 
 @RunWith(SpringRunner.class)

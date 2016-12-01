@@ -2,7 +2,7 @@ package ch.difty.sipamato.persistance.jooq;
 
 import org.jooq.Condition;
 
-import ch.difty.sipamato.entity.SipamatoFilter;
+import ch.difty.sipamato.entity.filter.SipamatoFilter;
 
 /**
  * Mapper translating the provided filter into matching conditions.

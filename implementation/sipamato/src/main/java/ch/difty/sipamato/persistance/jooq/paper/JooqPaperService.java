@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.SimplePaperFilter;
+import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.service.PaperService;
 
 /**

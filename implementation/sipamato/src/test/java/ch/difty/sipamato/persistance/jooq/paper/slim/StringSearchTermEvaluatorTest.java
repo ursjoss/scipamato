@@ -10,8 +10,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ch.difty.sipamato.entity.StringSearchTerm;
-import ch.difty.sipamato.entity.StringSearchTerm.MatchType;
+import ch.difty.sipamato.entity.filter.StringSearchTerm;
+import ch.difty.sipamato.entity.filter.StringSearchTerm.MatchType;
 import ch.difty.sipamato.lib.NullArgumentException;
 
 @RunWith(MockitoJUnitRunner.class)

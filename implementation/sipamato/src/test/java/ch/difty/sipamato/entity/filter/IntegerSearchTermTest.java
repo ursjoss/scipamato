@@ -1,11 +1,11 @@
-package ch.difty.sipamato.entity;
+package ch.difty.sipamato.entity.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.Test;
 
-import ch.difty.sipamato.entity.IntegerSearchTerm.MatchType;
+import ch.difty.sipamato.entity.filter.IntegerSearchTerm.MatchType;
 
 public class IntegerSearchTermTest {
 

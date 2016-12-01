@@ -2,7 +2,7 @@ package ch.difty.sipamato.web.panel.paper;
 
 import org.apache.wicket.model.IModel;
 
-import ch.difty.sipamato.entity.ComplexPaperFilter;
+import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
 
 public abstract class SearchablePaperPanel extends PaperPanel<ComplexPaperFilter> {
 

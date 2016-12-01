@@ -11,7 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 
-import ch.difty.sipamato.entity.SipamatoFilter;
+import ch.difty.sipamato.entity.filter.SortablePaperSlimFilterState;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.service.PaperSlimService;
 
@@ -20,11 +20,11 @@ import ch.difty.sipamato.service.PaperSlimService;
  *
  * @author u.joss
  */
-public abstract class SortablePaperSlimProvider<F extends SipamatoFilter> extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<F> {
+public abstract class SortablePaperSlimProvider<F extends SortablePaperSlimFilterState> extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<F> {
 
     private static final long serialVersionUID = 1L;
 
-    private F filter;
+    private F filterState;
 
     @SpringBean
     private PaperSlimService service;
@@ -38,8 +38,8 @@ public abstract class SortablePaperSlimProvider<F extends SipamatoFilter> extend
         this.service = service;
     }
 
-    SortablePaperSlimProvider(F filter) {
-        this.filter = filter;
+    SortablePaperSlimProvider(F filterState) {
+        this.filterState = filterState;
     }
 
     @Override
@@ -70,12 +70,12 @@ public abstract class SortablePaperSlimProvider<F extends SipamatoFilter> extend
 
     @Override
     public F getFilterState() {
-        return filter;
+        return filterState;
     }
 
     @Override
     public void setFilterState(F filterState) {
-        this.filter = filterState;
+        this.filterState = filterState;
     }
 
 }

@@ -2,7 +2,7 @@ package ch.difty.sipamato.web.panel.search;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
-import ch.difty.sipamato.entity.SearchTerm;
+import ch.difty.sipamato.entity.filter.SearchTerm;
 import ch.difty.sipamato.web.event.WicketEvent;
 
 /**

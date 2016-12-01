@@ -1,4 +1,4 @@
-package ch.difty.sipamato.entity;
+package ch.difty.sipamato.entity.filter;
 
 /**
  * Implementation of {@link SearchTerm} working with String values.

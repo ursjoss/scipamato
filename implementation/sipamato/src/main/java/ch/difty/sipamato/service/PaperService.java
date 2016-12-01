@@ -1,7 +1,7 @@
 package ch.difty.sipamato.service;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.SimplePaperFilter;
+import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 
 /**
  * The {@link PaperService} interface - defining {@link Paper} specific service methods.
