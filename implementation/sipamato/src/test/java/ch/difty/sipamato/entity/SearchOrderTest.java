@@ -16,12 +16,30 @@ import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
 @RunWith(MockitoJUnitRunner.class)
 public class SearchOrderTest {
 
-    private final SearchOrder so = new SearchOrder(null);
+    private final SearchOrder so = new SearchOrder(10, 1, false, null);
 
     @Mock
     public ComplexPaperFilter mockFilter1, mockFilter2;
 
     private List<ComplexPaperFilter> filters = new ArrayList<>();
+
+    @Test
+    public void testGetters() {
+        assertThat(so.getId()).isEqualTo(10);
+        assertThat(so.getOwner()).isEqualTo(1);
+        assertThat(so.isGlobal()).isEqualTo(false);
+    }
+
+    @Test
+    public void testSetters() {
+        so.setId(11);
+        so.setOwner(2);
+        so.setGlobal(true);
+
+        assertThat(so.getId()).isEqualTo(11);
+        assertThat(so.getOwner()).isEqualTo(2);
+        assertThat(so.isGlobal()).isEqualTo(true);
+    }
 
     @Test
     public void whenInstantiating_withNullList_noFiltersArePresent() {
@@ -49,6 +67,16 @@ public class SearchOrderTest {
     public void whenAddingFilter_itIsGettingAdded() {
         so.add(mockFilter1);
         assertThat(so.getFilters()).containsExactly(mockFilter1);
+    }
+
+    @Test
+    public void whenMergingNullSearchOrder_doNothing() {
+        so.add(mockFilter1);
+        assertThat(so.getFilters()).containsOnly(mockFilter1);
+
+        so.merge(null);
+
+        assertThat(so.getFilters()).containsOnly(mockFilter1);
     }
 
     @Test
@@ -98,14 +126,19 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void testingToStringOrDisplayValue_withNoFilters_returnsBlank() {
+    public void testingToString_withNoFilters() {
         assertThat(so.getFilters()).hasSize(0);
-        assertThat(so.toString()).isEqualTo("");
+        assertThat(so.toString()).isEqualTo("SearchOrder[id=10,owner=1,global=false,filters=[]]");
+    }
+
+    @Test
+    public void testingDisplayValue_withNoFilters_returnsBlank() {
+        assertThat(so.getFilters()).hasSize(0);
         assertThat(so.getDisplayValue()).isEqualTo("");
     }
 
     @Test
-    public void testingToStringOrDisplayValue_withSingleFilter_returnsIt() {
+    public void testingDisplayValue_withSingleFilter_returnsIt() {
         so.add(new ComplexPaperFilter() {
             private static final long serialVersionUID = 1L;
 
@@ -115,12 +148,11 @@ public class SearchOrderTest {
             }
         });
 
-        assertThat(so.toString()).isEqualTo("f1ToString");
         assertThat(so.getDisplayValue()).isEqualTo("f1ToString");
     }
 
     @Test
-    public void testingToString_withTwoFilters_joinsThemUsingOR() {
+    public void testingDisplayValue_withTwoFilters_joinsThemUsingOR() {
         so.add(new ComplexPaperFilter() {
             private static final long serialVersionUID = 1L;
 
@@ -138,7 +170,7 @@ public class SearchOrderTest {
             }
         });
 
-        assertThat(so.toString()).isEqualTo("f1ToString; OR f2ToString");
+        assertThat(so.getDisplayValue()).isEqualTo("f1ToString; OR f2ToString");
     }
 
     @Test

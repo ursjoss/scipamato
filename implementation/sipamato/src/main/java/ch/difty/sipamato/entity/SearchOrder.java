@@ -16,24 +16,65 @@ public class SearchOrder extends SipamatoEntity implements SortablePaperSlimFilt
 
     private static final long serialVersionUID = 1L;
 
+    public static final String ID = "id";
+    public static final String OWNER = "owner";
+    public static final String GLOBAL = "global";
+    public static final String FILTERS = "filters";
+
     private static final String JOIN_DELIMITER = "; OR ";
 
-    private List<ComplexPaperFilter> filters = new ArrayList<>();
+    private Integer id;
+    private int owner;
+    private boolean global;
+    private final List<ComplexPaperFilter> filters = new ArrayList<>();
 
-    public SearchOrder(final List<ComplexPaperFilter> filters) {
-        if (filters != null)
-            this.filters.addAll(filters);
+    public SearchOrder() {
     }
 
-    /**
-     * @return the list of individual {@link ComplexPaperFilter}s
-     */
+    public SearchOrder(final List<ComplexPaperFilter> filters) {
+        setFilters(filters);
+    }
+
+    public SearchOrder(int id, int owner, boolean global, List<ComplexPaperFilter> filters) {
+        setId(id);
+        setOwner(owner);
+        setGlobal(global);
+        setFilters(filters);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public int getOwner() {
+        return owner;
+    }
+
+    public void setOwner(int owner) {
+        this.owner = owner;
+    }
+
+    public boolean isGlobal() {
+        return global;
+    }
+
+    public void setGlobal(boolean global) {
+        this.global = global;
+    }
+
     public List<ComplexPaperFilter> getFilters() {
         return filters;
     }
 
     public void setFilters(final List<ComplexPaperFilter> filters) {
-        this.filters = filters;
+        if (filters != null) {
+            this.filters.clear();
+            this.filters.addAll(filters);
+        }
     }
 
     /**
@@ -53,7 +94,8 @@ public class SearchOrder extends SipamatoEntity implements SortablePaperSlimFilt
      * @param other the source of filters to merge from
      */
     public void merge(final SearchOrder other) {
-        filters.addAll(other.getFilters());
+        if (other != null)
+            filters.addAll(other.getFilters());
     }
 
     /**
@@ -68,12 +110,8 @@ public class SearchOrder extends SipamatoEntity implements SortablePaperSlimFilt
     }
 
     @Override
-    public String toString() {
+    public String getDisplayValue() {
         return filters.stream().map(ComplexPaperFilter::toString).collect(Collectors.joining(JOIN_DELIMITER));
     }
 
-    @Override
-    public String getDisplayValue() {
-        return toString();
-    }
 }
