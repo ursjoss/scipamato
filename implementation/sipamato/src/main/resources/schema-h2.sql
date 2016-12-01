@@ -137,3 +137,17 @@ ALTER TABLE paper_code ADD FOREIGN KEY (code) REFERENCES code(code) on update ca
 
 DROP INDEX IF EXISTS idx_paper_code;
 CREATE UNIQUE INDEX idx_paper_code ON paper_code (paper_id, code);
+
+DROP TABLE IF EXISTS search_order;
+
+CREATE TABLE search_order (
+  id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  owner INT DEFAULT 1,
+  global BOOLEAN NOT NULL DEFAULT false,
+
+  version INT DEFAULT 1,
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
+);
