@@ -30,7 +30,7 @@ import ch.difty.sipamato.entity.SearchOrder;
 public class JooqSearchOrderRepoIntegrationTest {
 
     private static final Integer RECORD_COUNT_PREPOPULATED = 4;
-    private static final Integer MAX_ID_PREPOPULATED = 4;
+    private static final Long MAX_ID_PREPOPULATED = 4l;
 
     @Autowired
     private DSLContext dsl;
@@ -41,7 +41,7 @@ public class JooqSearchOrderRepoIntegrationTest {
     @After
     public void teardown() {
         // Delete all books that were created in any test // TODO add value to TestDbConstants
-        dsl.delete(SEARCH_ORDER).where(SEARCH_ORDER.ID.gt(RECORD_COUNT_PREPOPULATED)).execute();
+        dsl.delete(SEARCH_ORDER).where(SEARCH_ORDER.ID.gt(RECORD_COUNT_PREPOPULATED.longValue())).execute();
     }
 
     @Test
@@ -56,14 +56,14 @@ public class JooqSearchOrderRepoIntegrationTest {
 
     @Test
     public void findingById_withExistingId_returnsEntity() {
-        SearchOrder searchOrder = repo.findById(1);
-        searchOrder = repo.findById(RECORD_COUNT_PREPOPULATED);
+        SearchOrder searchOrder = repo.findById(1l);
+        searchOrder = repo.findById(RECORD_COUNT_PREPOPULATED.longValue());
         assertThat(searchOrder.getId()).isEqualTo(MAX_ID_PREPOPULATED);
     }
 
     @Test
     public void findingById_withNonExistingId_returnsNull() {
-        assertThat(repo.findById(-1)).isNull();
+        assertThat(repo.findById(-1l)).isNull();
     }
 
     @Test
@@ -89,7 +89,7 @@ public class JooqSearchOrderRepoIntegrationTest {
         SearchOrder searchOrder = repo.add(makeMinimalSearchOrder());
         assertThat(searchOrder).isNotNull();
         assertThat(searchOrder.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED);
-        final int id = searchOrder.getId();
+        final long id = searchOrder.getId();
         assertThat(searchOrder.getOwner()).isEqualTo(10);
 
         searchOrder.setOwner(20);
@@ -107,7 +107,7 @@ public class JooqSearchOrderRepoIntegrationTest {
         SearchOrder searchOrder = repo.add(makeMinimalSearchOrder());
         assertThat(searchOrder).isNotNull();
         assertThat(searchOrder.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED);
-        final int id = searchOrder.getId();
+        final long id = searchOrder.getId();
         assertThat(searchOrder.getOwner()).isEqualTo(10);
 
         SearchOrder deleted = repo.delete(id);

@@ -2,33 +2,26 @@ package ch.difty.sipamato.entity;
 
 import javax.validation.constraints.NotNull;
 
-public class CodeClass extends SipamatoEntity {
+public class CodeClass extends IdSipamatoEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String ID = "id";
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
 
-    @NotNull
-    private final Integer id;
     @NotNull
     private final String name;
     @NotNull
     private final String description;
 
     public CodeClass(final Integer id, final String name, final String description) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.description = description;
     }
 
     public CodeClass(final CodeClass from) {
-        this(from.id, from.name, from.description);
-    }
-
-    public Integer getId() {
-        return id;
+        this(from.getId(), from.getName(), from.getDescription());
     }
 
     public String getName() {
@@ -44,7 +37,7 @@ public class CodeClass extends SipamatoEntity {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((description == null) ? 0 : description.hashCode());
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
@@ -58,10 +51,10 @@ public class CodeClass extends SipamatoEntity {
         if (getClass() != obj.getClass())
             return false;
         CodeClass other = (CodeClass) obj;
-        if (id == null) {
-            if (other.id != null)
+        if (getId() == null) {
+            if (other.getId() != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!getId().equals(other.getId()))
             return false;
         if (name == null) {
             if (other.name != null)
@@ -80,7 +73,7 @@ public class CodeClass extends SipamatoEntity {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("CodeClass[id=");
-        builder.append(id);
+        builder.append(getId());
         builder.append("]");
         return builder.toString();
     }

@@ -12,18 +12,16 @@ import ch.difty.sipamato.entity.filter.PaperSlimFilter;
  *
  * @author u.joss
  */
-public class SearchOrder extends SipamatoEntity implements PaperSlimFilter {
+public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilter {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String ID = "id";
     public static final String OWNER = "owner";
     public static final String GLOBAL = "global";
     public static final String FILTERS = "filters";
 
     private static final String JOIN_DELIMITER = "; OR ";
 
-    private Integer id;
     private int owner;
     private boolean global;
     private final List<ComplexPaperFilter> filters = new ArrayList<>();
@@ -35,19 +33,11 @@ public class SearchOrder extends SipamatoEntity implements PaperSlimFilter {
         setFilters(filters);
     }
 
-    public SearchOrder(int id, int owner, boolean global, List<ComplexPaperFilter> filters) {
+    public SearchOrder(long id, int owner, boolean global, List<ComplexPaperFilter> filters) {
         setId(id);
         setOwner(owner);
         setGlobal(global);
         setFilters(filters);
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public int getOwner() {

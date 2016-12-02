@@ -20,7 +20,7 @@ import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 import ch.difty.sipamato.service.Localization;
 
 @Repository
-public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, SearchOrder, Integer, ch.difty.sipamato.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter>
+public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, SearchOrder, Long, ch.difty.sipamato.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter>
         implements SearchOrderRepository {
 
     private static final long serialVersionUID = 1L;
@@ -55,17 +55,17 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     }
 
     @Override
-    protected TableField<SearchOrderRecord, Integer> getTableId() {
+    protected TableField<SearchOrderRecord, Long> getTableId() {
         return SEARCH_ORDER.ID;
     }
 
     @Override
-    protected Integer getIdFrom(SearchOrderRecord record) {
+    protected Long getIdFrom(SearchOrderRecord record) {
         return record.getId();
     }
 
     @Override
-    protected Integer getIdFrom(SearchOrder entity) {
+    protected Long getIdFrom(SearchOrder entity) {
         return entity.getId();
     }
 

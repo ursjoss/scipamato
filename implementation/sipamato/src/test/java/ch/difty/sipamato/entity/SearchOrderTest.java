@@ -16,7 +16,7 @@ import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
 @RunWith(MockitoJUnitRunner.class)
 public class SearchOrderTest {
 
-    private final SearchOrder so = new SearchOrder(10, 1, false, null);
+    private final SearchOrder so = new SearchOrder(10l, 1, false, null);
 
     @Mock
     public ComplexPaperFilter mockFilter1, mockFilter2;
@@ -32,7 +32,7 @@ public class SearchOrderTest {
 
     @Test
     public void testSetters() {
-        so.setId(11);
+        so.setId(11l);
         so.setOwner(2);
         so.setGlobal(true);
 
@@ -128,7 +128,7 @@ public class SearchOrderTest {
     @Test
     public void testingToString_withNoFilters() {
         assertThat(so.getFilters()).hasSize(0);
-        assertThat(so.toString()).isEqualTo("SearchOrder[id=10,owner=1,global=false,filters=[]]");
+        assertThat(so.toString()).isEqualTo("SearchOrder[owner=1,global=false,filters=[],id=10]");
     }
 
     @Test

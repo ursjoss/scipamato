@@ -1,7 +1,7 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
-import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
+import ch.difty.sipamato.entity.filter.SipamatoFilter;
 
 public class PaperFilter extends SipamatoFilter implements PaperSlimFilter {
 

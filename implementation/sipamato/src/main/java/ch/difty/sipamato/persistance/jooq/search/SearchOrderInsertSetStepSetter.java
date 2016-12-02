@@ -32,9 +32,9 @@ public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<Searc
     public void considerSettingKeyOf(InsertSetMoreStep<SearchOrderRecord> step, SearchOrder entity) {
         AssertAs.notNull(step, "step");
         AssertAs.notNull(entity, "entity");
-        Integer id = entity.getId();
+        Long id = entity.getId();
         if (id != null)
-            step.set(SEARCH_ORDER.ID, id.intValue());
+            step.set(SEARCH_ORDER.ID, id.longValue());
     }
 
 }

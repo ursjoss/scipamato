@@ -18,7 +18,6 @@ public class SearchOrderRecordMapper implements RecordMapper<SearchOrderRecord, 
         to.setId(from.getId());
         to.setOwner(from.getOwner());
         to.setGlobal(from.getGlobal());
-
         return to;
     }
 

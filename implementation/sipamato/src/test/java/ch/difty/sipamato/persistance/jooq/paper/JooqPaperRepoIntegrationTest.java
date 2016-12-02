@@ -31,9 +31,10 @@ import ch.difty.sipamato.entity.Paper;
 @ActiveProfiles({ "DB_JOOQ" })
 public class JooqPaperRepoIntegrationTest {
 
+    private static final String ID_PART = ",id=1";
     // @formatter:off
     private static final String PAPER1_WO_CODE_CLASSES =
-            "Paper[id=1,doi=10.1093/aje/kwu275,pmId=25395026"
+            "Paper[doi=10.1093/aje/kwu275,pmId=25395026"
             + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewski D, Beckermann BS, Samet, JM.,firstAuthor=Turner,firstAuthorOverridden=false"
             + ",title=Interactions Between Cigarette Smoking and Fine Particulate Matter in the Risk of Lung Cancer Mortality in Cancer Prevention Study II."
             + ",location=Am J Epidemiol 2014 15; 180 (12) 1145-1149."
@@ -164,6 +165,7 @@ public class JooqPaperRepoIntegrationTest {
            +         "Code[code=8O,name=Aussenluft,comment=<null>,internal=false,codeClass=CodeClass[id=8],sort=2]"
            +      "]"
            +    "]"
+           + ID_PART
            + "]");
         // @formatter:on
     }

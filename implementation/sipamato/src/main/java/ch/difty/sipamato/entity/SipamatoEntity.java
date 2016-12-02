@@ -26,4 +26,5 @@ public abstract class SipamatoEntity implements Serializable {
     }
 
     public abstract String getDisplayValue();
+
 }

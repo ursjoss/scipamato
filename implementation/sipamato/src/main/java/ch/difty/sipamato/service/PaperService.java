@@ -8,6 +8,6 @@ import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
  *
  * @author u.joss
  */
-public interface PaperService extends EntityService<Paper, PaperFilter> {
+public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
 
 }

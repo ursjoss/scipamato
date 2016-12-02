@@ -62,8 +62,7 @@ public class SearchTermPanel extends AbstractPanel<SearchOrder> {
         queue(searchTerms);
     }
 
-    private void queueNewButton(String id, SerializableFunction<IModel<SearchOrder>, BasePage<ComplexPaperFilter>> pageFunction,
-            SerializableSupplier<IModel<SearchOrder>> modelProvider) {
+    private void queueNewButton(String id, SerializableFunction<IModel<SearchOrder>, BasePage<ComplexPaperFilter>> pageFunction, SerializableSupplier<IModel<SearchOrder>> modelProvider) {
         queue(new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null), Type.Default) {
             private static final long serialVersionUID = 1L;
 

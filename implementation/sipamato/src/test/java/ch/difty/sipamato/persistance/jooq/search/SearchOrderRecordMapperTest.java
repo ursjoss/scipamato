@@ -11,7 +11,7 @@ import ch.difty.sipamato.persistance.jooq.RecordMapperTest;
 
 public class SearchOrderRecordMapperTest extends RecordMapperTest<SearchOrderRecord, SearchOrder> {
 
-    static final Integer ID = 2;
+    static final Long ID = 2l;
     static final Integer OWNER = 1;
     static final boolean GLOBAL = true;
 

@@ -141,7 +141,7 @@ CREATE UNIQUE INDEX idx_paper_code ON paper_code (paper_id, code);
 DROP TABLE IF EXISTS search_order;
 
 CREATE TABLE search_order (
-  id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   owner INT DEFAULT 1,
   global BOOLEAN NOT NULL DEFAULT false,
 

@@ -16,14 +16,14 @@ import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.persistance.jooq.EntityRepository;
 import ch.difty.sipamato.persistance.jooq.JooqEntityRepoTest;
 
-public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecord, SearchOrder, Integer, ch.difty.sipamato.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter> {
+public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecord, SearchOrder, Long, ch.difty.sipamato.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter> {
 
-    private static final Integer SAMPLE_ID = 3;
+    private static final Long SAMPLE_ID = 3l;
 
     private JooqSearchOrderRepo repo;
 
     @Override
-    protected Integer getSampleId() {
+    protected Long getSampleId() {
         return SAMPLE_ID;
     }
 
@@ -36,12 +36,12 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
     }
 
     @Override
-    protected EntityRepository<SearchOrderRecord, SearchOrder, Integer, SearchOrderRecordMapper, SearchOrderFilter> makeRepoFindingEntityById(SearchOrder searchOrder) {
+    protected EntityRepository<SearchOrderRecord, SearchOrder, Long, SearchOrderRecordMapper, SearchOrderFilter> makeRepoFindingEntityById(SearchOrder searchOrder) {
         return new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig()) {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public SearchOrder findById(Integer id) {
+            public SearchOrder findById(Long id) {
                 return searchOrder;
             }
         };
@@ -92,7 +92,7 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
     }
 
     @Override
-    protected TableField<SearchOrderRecord, Integer> getTableId() {
+    protected TableField<SearchOrderRecord, Long> getTableId() {
         return SEARCH_ORDER.ID;
     }
 

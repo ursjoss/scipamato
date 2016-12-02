@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern.Flag;
 
 import org.hibernate.validator.constraints.Range;
 
-public class Paper extends SipamatoEntity implements CodeBoxAware {
+public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
 
     private static final long serialVersionUID = 1L;
 
@@ -92,8 +92,6 @@ public class Paper extends SipamatoEntity implements CodeBoxAware {
 
     public static final String FLD_CODES = "codes";
 
-    private Long id;
-
     /*
      * Digital Object Identifier (see http://www.doi.org)
      *
@@ -148,14 +146,6 @@ public class Paper extends SipamatoEntity implements CodeBoxAware {
     private String mainCodeOfCodeclass1;
 
     private final CodeBox codes = new DefaultCodeBox();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getDoi() {
         return doi;
