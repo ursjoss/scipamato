@@ -7,35 +7,31 @@ import org.apache.wicket.injection.Injector;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
 /**
- * Simple implementation of SortablePaperSlimProvider using the {@link PaperFilter} as filter class.
+ * Extension of the {@link SortablePaperSlimProvider} using the {@link SearchOrder} as filter class.
  *
  * @author u.joss
  */
-public class SimpleSortablePaperSlimProvider extends SortablePaperSlimProvider<PaperFilter> {
+public class SearchOrderBasedSortablePaperSlimProvider extends SortablePaperSlimProvider<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 
-    public SimpleSortablePaperSlimProvider() {
-        this(new PaperFilter());
-    }
-
-    public SimpleSortablePaperSlimProvider(PaperFilter filter) {
-        super(filter);
+    public SearchOrderBasedSortablePaperSlimProvider(SearchOrder searchOrder) {
+        super(searchOrder);
         Injector.get().inject(this);
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
     }
 
     @Override
     protected Iterator<PaperSlim> findByFilter(Pageable pageable) {
-        return getService().findByFilter(getFilterState(), pageable).iterator();
+        return getService().findBySearchOrder(getFilterState(), pageable).iterator();
     }
 
     @Override
     protected long getSize() {
-        return getService().countByFilter(getFilterState());
+        return getService().countBySearchOrder(getFilterState());
     }
 }

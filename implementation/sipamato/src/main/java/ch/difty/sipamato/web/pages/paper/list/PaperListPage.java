@@ -12,7 +12,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
-import ch.difty.sipamato.web.pages.paper.provider.SimpleSortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.provider.FilterBasedSortablePaperSlimProvider;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
 
 @MountPath("list")
@@ -22,7 +22,7 @@ public class PaperListPage extends BasePage<Void> {
     private static final long serialVersionUID = 1L;
 
     private PaperFilter filter;
-    private SimpleSortablePaperSlimProvider dataProvider;
+    private FilterBasedSortablePaperSlimProvider dataProvider;
 
     public PaperListPage(PageParameters parameters) {
         super(parameters);
@@ -31,7 +31,7 @@ public class PaperListPage extends BasePage<Void> {
 
     private void initFilterAndProvider() {
         filter = new PaperFilter();
-        dataProvider = new SimpleSortablePaperSlimProvider(filter);
+        dataProvider = new FilterBasedSortablePaperSlimProvider(filter);
     }
 
     protected void onInitialize() {

@@ -12,7 +12,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.web.pages.BasePage;
-import ch.difty.sipamato.web.pages.paper.provider.ComplexSortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.provider.SearchOrderBasedSortablePaperSlimProvider;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
 import ch.difty.sipamato.web.panel.search.SearchTermModifiedEvent;
 import ch.difty.sipamato.web.panel.search.SearchTermPanel;
@@ -31,7 +31,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 
-    private ComplexSortablePaperSlimProvider dataProvider;
+    private SearchOrderBasedSortablePaperSlimProvider dataProvider;
     private SearchTermPanel searchTermPanel;
     private ResultPanel resultPanel;
 
@@ -53,7 +53,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     protected void onInitialize() {
         super.onInitialize();
 
-        dataProvider = new ComplexSortablePaperSlimProvider(getModelObject());
+        dataProvider = new SearchOrderBasedSortablePaperSlimProvider(getModelObject());
 
         makeSearchTermPanel("searchTermPanel");
         makeResultPanel("resultPanel");

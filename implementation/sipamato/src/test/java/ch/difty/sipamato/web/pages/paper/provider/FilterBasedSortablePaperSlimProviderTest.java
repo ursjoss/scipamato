@@ -34,9 +34,9 @@ import ch.difty.sipamato.persistance.jooq.paper.slim.JooqPaperSlimService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SimpleSortablePaperSlimProviderTest {
+public class FilterBasedSortablePaperSlimProviderTest {
 
-    private SimpleSortablePaperSlimProvider provider;
+    private FilterBasedSortablePaperSlimProvider provider;
 
     @Mock
     private JooqPaperSlimService serviceMock;
@@ -55,7 +55,7 @@ public class SimpleSortablePaperSlimProviderTest {
     @Before
     public void setUp() {
         new WicketTester(application);
-        provider = new SimpleSortablePaperSlimProvider(filterMock);
+        provider = new FilterBasedSortablePaperSlimProvider(filterMock);
         provider.setService(serviceMock);
 
         papers.addAll(Arrays.asList(entityMock, entityMock, entityMock));
@@ -68,7 +68,7 @@ public class SimpleSortablePaperSlimProviderTest {
 
     @Test
     public void defaultFilterIsNewPaperFilter() {
-        provider = new SimpleSortablePaperSlimProvider();
+        provider = new FilterBasedSortablePaperSlimProvider();
         assertThat(provider.getFilterState()).isEqualToComparingFieldByField(new PaperFilter());
     }
 
@@ -93,7 +93,7 @@ public class SimpleSortablePaperSlimProviderTest {
 
     @Test
     public void settingFilterState() {
-        provider = new SimpleSortablePaperSlimProvider();
+        provider = new FilterBasedSortablePaperSlimProvider();
         assertThat(provider.getFilterState()).isNotEqualTo(filterMock);
         provider.setFilterState(filterMock);
         assertThat(provider.getFilterState()).isEqualTo(filterMock);

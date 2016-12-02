@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
-import ch.difty.sipamato.entity.filter.SortablePaperSlimFilterState;
+import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 
 /**
- * The {@link SearchOrder} is the entry point for the entire search, containing one or combining several {@link ComplexPaperFilter}s
+ * The {@link SearchOrder} is the entry point for the entire (complex) search, containing one or combining several {@link ComplexPaperFilter}s
  *
  * @author u.joss
  */
-public class SearchOrder extends SipamatoEntity implements SortablePaperSlimFilterState {
+public class SearchOrder extends SipamatoEntity implements PaperSlimFilter {
 
     private static final long serialVersionUID = 1L;
 

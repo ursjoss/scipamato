@@ -17,7 +17,7 @@ import org.apache.wicket.model.StringResourceModel;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
-import ch.difty.sipamato.entity.filter.SortablePaperSlimFilterState;
+import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.web.component.SerializableConsumer;
 import ch.difty.sipamato.web.component.SerializableFunction;
 import ch.difty.sipamato.web.component.SerializableSupplier;
@@ -36,10 +36,10 @@ public class SearchTermPanel extends AbstractPanel<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 
-    private final SortablePaperSlimProvider<? extends SortablePaperSlimFilterState> dataProvider;
+    private final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider;
     private DataTable<ComplexPaperFilter, String> searchTerms;
 
-    public SearchTermPanel(String id, IModel<SearchOrder> model, SortablePaperSlimProvider<? extends SortablePaperSlimFilterState> dataProvider) {
+    public SearchTermPanel(String id, IModel<SearchOrder> model, SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
         super(id, model);
         this.dataProvider = dataProvider;
     }

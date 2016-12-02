@@ -11,16 +11,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 
-import ch.difty.sipamato.entity.filter.SortablePaperSlimFilterState;
+import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.service.PaperSlimService;
 
 /**
- * The dataprovider providing the wicket components access to the persisted paper data in the slim format
+ * Abstract baseclass for dataproviders providing the wicket components access to the persisted paper data in the slim format.
  *
  * @author u.joss
  */
-public abstract class SortablePaperSlimProvider<F extends SortablePaperSlimFilterState> extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<F> {
+public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<F> {
 
     private static final long serialVersionUID = 1L;
 

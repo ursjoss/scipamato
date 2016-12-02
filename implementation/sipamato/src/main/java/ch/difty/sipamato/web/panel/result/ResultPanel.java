@@ -13,7 +13,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.filter.SortablePaperSlimFilterState;
+import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.component.SerializableConsumer;
@@ -29,9 +29,9 @@ public class ResultPanel extends GenericPanel<Void> {
     @SpringBean
     private PaperService paperService;
 
-    private final SortablePaperSlimProvider<? extends SortablePaperSlimFilterState> dataProvider;
+    private final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider;
 
-    public ResultPanel(String id, SortablePaperSlimProvider<? extends SortablePaperSlimFilterState> dataProvider) {
+    public ResultPanel(String id, SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
         super(id);
         this.dataProvider = dataProvider;
     }
