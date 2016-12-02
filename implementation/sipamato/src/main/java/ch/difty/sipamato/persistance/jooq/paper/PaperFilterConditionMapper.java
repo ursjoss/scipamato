@@ -6,20 +6,19 @@ import java.util.List;
 
 import org.jooq.Condition;
 
-import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.persistance.jooq.AbstractFilterConditionMapper;
 import ch.difty.sipamato.persistance.jooq.FilterConditionMapper;
 
 /**
- * Mapper turning the provider {@link SimplePaperFilter} into a jOOQ {@link Condition}.
+ * Mapper turning the provider {@link PaperFilter} into a jOOQ {@link Condition}.
  *
  * @author u.joss
  */
 @FilterConditionMapper
-public class PaperFilterConditionMapper extends AbstractFilterConditionMapper<SimplePaperFilter> {
+public class PaperFilterConditionMapper extends AbstractFilterConditionMapper<PaperFilter> {
 
     @Override
-    public void map(final SimplePaperFilter filter, final List<Condition> conditions) {
+    public void map(final PaperFilter filter, final List<Condition> conditions) {
         if (filter.getAuthorMask() != null) {
             final String likeExpression = "%" + filter.getAuthorMask() + "%";
             conditions.add(PAPER.FIRST_AUTHOR.likeIgnoreCase(likeExpression).or(PAPER.AUTHORS.likeIgnoreCase(likeExpression)));

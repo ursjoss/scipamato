@@ -33,6 +33,6 @@ public class ComplexSortablePaperSlimProvider extends SortablePaperSlimProvider<
 
     @Override
     protected long getSize() {
-        return getService().countByFilter(getFilterState());
+        return getService().countBySearchOrder(getFilterState());
     }
 }

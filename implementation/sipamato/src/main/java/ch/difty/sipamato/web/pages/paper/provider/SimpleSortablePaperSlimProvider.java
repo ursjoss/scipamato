@@ -7,23 +7,23 @@ import org.apache.wicket.injection.Injector;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
 /**
- * Simple implementation of SortablePaperSlimProvider using the {@link SimplePaperFilter} as filter class.
+ * Simple implementation of SortablePaperSlimProvider using the {@link PaperFilter} as filter class.
  *
  * @author u.joss
  */
-public class SimpleSortablePaperSlimProvider extends SortablePaperSlimProvider<SimplePaperFilter> {
+public class SimpleSortablePaperSlimProvider extends SortablePaperSlimProvider<PaperFilter> {
 
     private static final long serialVersionUID = 1L;
 
     public SimpleSortablePaperSlimProvider() {
-        this(new SimplePaperFilter());
+        this(new PaperFilter());
     }
 
-    public SimpleSortablePaperSlimProvider(SimplePaperFilter filter) {
+    public SimpleSortablePaperSlimProvider(PaperFilter filter) {
         super(filter);
         Injector.get().inject(this);
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);

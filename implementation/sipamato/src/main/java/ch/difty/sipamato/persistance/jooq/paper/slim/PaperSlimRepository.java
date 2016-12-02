@@ -7,11 +7,11 @@ import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.SearchOrder;
-import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.persistance.jooq.ReadOnlyRepository;
+import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
-public interface PaperSlimRepository extends ReadOnlyRepository<PaperRecord, PaperSlim, Long, PaperSlimRecordMapper, SimplePaperFilter> {
+public interface PaperSlimRepository extends ReadOnlyRepository<PaperRecord, PaperSlim, Long, PaperSlimRecordMapper, PaperFilter> {
 
     /**
      * Finds all {@link PaperSlim}s matching the provided {@link SearchOrder} specification.
@@ -36,6 +36,6 @@ public interface PaperSlimRepository extends ReadOnlyRepository<PaperRecord, Pap
      * @param searchOrder the search specification
      * @return paper count
      */
-    int countBySearch(SearchOrder searchOrder);
+    int countBySearchOrder(SearchOrder searchOrder);
 
 }

@@ -20,7 +20,6 @@ import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.BooleanSearchTerm;
 import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
 import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
-import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.entity.filter.StringSearchTerm;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.AssertAs;
@@ -28,10 +27,11 @@ import ch.difty.sipamato.persistance.jooq.ConditionalSupplier;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
 import ch.difty.sipamato.persistance.jooq.JooqReadOnlyRepo;
 import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
+import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.service.Localization;
 
 @Repository
-public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, Long, ch.difty.sipamato.db.tables.Paper, PaperSlimRecordMapper, SimplePaperFilter> implements PaperSlimRepository {
+public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, Long, ch.difty.sipamato.db.tables.Paper, PaperSlimRecordMapper, PaperFilter> implements PaperSlimRepository {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,7 +41,7 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
 
     @Autowired
     public JooqPaperSlimRepo(DSLContext dsl, PaperSlimRecordMapper mapper, JooqSortMapper<PaperRecord, PaperSlim, ch.difty.sipamato.db.tables.Paper> sortMapper,
-            GenericFilterConditionMapper<SimplePaperFilter> filterConditionMapper, Localization localization) {
+            GenericFilterConditionMapper<PaperFilter> filterConditionMapper, Localization localization) {
         super(dsl, mapper, sortMapper, filterConditionMapper, localization);
     }
 
@@ -82,12 +82,12 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     @Override
     public Page<PaperSlim> findBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
         final List<PaperSlim> entities = findBySearchOrder(searchOrder);
-        return new PageImpl<>(entities, pageable, (long) countBySearch(searchOrder));
+        return new PageImpl<>(entities, pageable, (long) countBySearchOrder(searchOrder));
     }
 
     /** {@inheritDoc} */
     @Override
-    public int countBySearch(SearchOrder searchOrder) {
+    public int countBySearchOrder(SearchOrder searchOrder) {
         final Condition conditions = getConditionsFrom(searchOrder);
         return getDsl().fetchCount(getDsl().selectOne().from(getTable()).where(conditions));
     }
