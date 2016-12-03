@@ -17,14 +17,13 @@ import org.apache.wicket.model.StringResourceModel;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
-import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.web.component.SerializableConsumer;
 import ch.difty.sipamato.web.component.SerializableFunction;
 import ch.difty.sipamato.web.component.SerializableSupplier;
 import ch.difty.sipamato.web.component.data.LinkIconColumn;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.provider.ComplexPaperFilterProvider;
-import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.provider.SearchOrderBasedSortablePaperSlimProvider;
 import ch.difty.sipamato.web.pages.paper.search.PaperSearchCriteriaPage;
 import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
@@ -32,14 +31,14 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
-public class SearchTermPanel extends AbstractPanel<SearchOrder> {
+public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 
-    private final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider;
+    private final SearchOrderBasedSortablePaperSlimProvider dataProvider;
     private DataTable<ComplexPaperFilter, String> searchTerms;
 
-    public SearchTermPanel(String id, IModel<SearchOrder> model, SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
+    public SearchOrderPanel(String id, IModel<SearchOrder> model, SearchOrderBasedSortablePaperSlimProvider dataProvider) {
         super(id, model);
         this.dataProvider = dataProvider;
     }
@@ -94,7 +93,7 @@ public class SearchTermPanel extends AbstractPanel<SearchOrder> {
             protected void onClickPerformed(AjaxRequestTarget target, IModel<ComplexPaperFilter> rowModel, AjaxLink<Void> link) {
                 consumer.accept(rowModel);
                 target.add(searchTerms);
-                send(getPage(), Broadcast.BREADTH, new SearchTermModifiedEvent(target));
+                send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
             }
         };
     }

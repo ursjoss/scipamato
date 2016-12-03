@@ -11,21 +11,17 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
 import ch.difty.sipamato.web.component.data.LinkIconPanel;
 import ch.difty.sipamato.web.pages.BasePageTest;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
-import ch.difty.sipamato.web.panel.search.SearchTermPanel;
+import ch.difty.sipamato.web.panel.search.SearchOrderPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
-
-    @Mock
-    private SearchOrder mockSearchOrder;
 
     @Override
     protected PaperSearchPage makePage() {
@@ -41,12 +37,12 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Override
     protected void assertSpecificComponents() {
-        assertSearchTermPanel("searchTermPanel");
+        assertSearchOrderPanel("searchOrderPanel");
         assertResultPanel("resultPanel");
     }
 
-    private void assertSearchTermPanel(String b) {
-        getTester().assertComponent(b, SearchTermPanel.class);
+    private void assertSearchOrderPanel(String b) {
+        getTester().assertComponent(b, SearchOrderPanel.class);
         assertForm(b + ":form");
     }
 
@@ -75,7 +71,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
 
-        FormTester formTester = getTester().newFormTester("searchTermPanel:form");
+        FormTester formTester = getTester().newFormTester("searchOrderPanel:form");
         formTester.submit("addSearch");
 
         getTester().assertRenderedPage(PaperSearchCriteriaPage.class);
@@ -101,7 +97,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
         getTester().debugComponentTrees();
 
-        final String linkPath = "searchTermPanel:form:searchTerms:body:rows:1:cells:2:cell:link";
+        final String linkPath = "searchOrderPanel:form:searchTerms:body:rows:1:cells:2:cell:link";
         getTester().assertComponent(linkPath, AjaxLink.class);
         getTester().assertContains(labelToString);
         getTester().clickLink(linkPath);
