@@ -101,7 +101,14 @@ public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilt
 
     @Override
     public String getDisplayValue() {
-        return filters.stream().map(ComplexPaperFilter::toString).collect(Collectors.joining(JOIN_DELIMITER));
+        StringBuilder sb = new StringBuilder();
+        sb.append(filters.stream().map(ComplexPaperFilter::toString).collect(Collectors.joining(JOIN_DELIMITER)));
+        if (sb.length() > 0)
+            sb.append(" ");
+        sb.append("(").append(getId()).append(")");
+        if (isGlobal())
+            sb.append("*");
+        return sb.toString();
     }
 
 }

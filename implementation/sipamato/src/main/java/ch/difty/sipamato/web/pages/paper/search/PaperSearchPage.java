@@ -16,6 +16,7 @@ import ch.difty.sipamato.web.pages.paper.provider.SearchOrderBasedSortablePaperS
 import ch.difty.sipamato.web.panel.result.ResultPanel;
 import ch.difty.sipamato.web.panel.search.SearchOrderChangeEvent;
 import ch.difty.sipamato.web.panel.search.SearchOrderPanel;
+import ch.difty.sipamato.web.panel.search.SearchOrderSelectorPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
 
 /**
@@ -32,12 +33,18 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     private static final long serialVersionUID = 1L;
 
     private SearchOrderBasedSortablePaperSlimProvider dataProvider;
+
+    private SearchOrderSelectorPanel searchOrderSelectorPanel;
     private SearchOrderPanel searchOrderPanel;
     private ResultPanel resultPanel;
 
     public PaperSearchPage(final PageParameters parameters) {
         super(parameters);
-        setDefaultModel(Model.of(new SearchOrder(null)));
+        setDefaultModel(Model.of(makeEmptyModelObject()));
+    }
+
+    private SearchOrder makeEmptyModelObject() {
+        return new SearchOrder(null);
     }
 
     public PaperSearchPage(final IModel<SearchOrder> searchOrderModel) {
@@ -55,12 +62,19 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
         dataProvider = new SearchOrderBasedSortablePaperSlimProvider(getModelObject());
 
+        makeSearchOrderSelectorPanel("searchOrderSelectorPanel");
         makeSearchOrderPanel("searchOrderPanel");
         makeResultPanel("resultPanel");
     }
 
+    private void makeSearchOrderSelectorPanel(String id) {
+        searchOrderSelectorPanel = new SearchOrderSelectorPanel(id, getModel());
+        searchOrderSelectorPanel.setOutputMarkupId(true);
+        queue(searchOrderSelectorPanel);
+    }
+
     private void makeSearchOrderPanel(final String id) {
-        searchOrderPanel = new SearchOrderPanel(id, getModel(), dataProvider);
+        searchOrderPanel = new SearchOrderPanel(id, getModel());
         searchOrderPanel.setOutputMarkupId(true);
         queue(searchOrderPanel);
     }
@@ -74,12 +88,25 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     @Override
     public void onEvent(final IEvent<?> event) {
         if (event.getPayload().getClass() == SearchOrderChangeEvent.class) {
-            // Refresh the result panel upon changes in the searchOrderPanel
-            final AjaxRequestTarget target = ((SearchOrderChangeEvent) event.getPayload()).getTarget();
-            if (target != null) {
-                target.add(resultPanel);
-            }
+            resetProviderModel();
+            addSubPanelsAsTarget(event);
             event.dontBroadcastDeeper();
+        }
+    }
+
+    private void resetProviderModel() {
+        if (getModelObject() != null) {
+            dataProvider.setFilterState(getModelObject());
+        } else {
+            dataProvider.setFilterState(makeEmptyModelObject());
+        }
+    }
+
+    private void addSubPanelsAsTarget(final IEvent<?> event) {
+        final AjaxRequestTarget target = ((SearchOrderChangeEvent) event.getPayload()).getTarget();
+        if (target != null) {
+            target.add(searchOrderPanel);
+            target.add(resultPanel);
         }
     }
 

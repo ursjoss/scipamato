@@ -57,7 +57,7 @@ public class ComplexPaperFilterProviderTest {
             new ComplexPaperFilterProvider(Model.of((SearchOrder) null));
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchOrder.filters must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchOrder must not be null.");
         }
     }
 
@@ -87,5 +87,17 @@ public class ComplexPaperFilterProviderTest {
     public void gettingModel() {
         IModel<ComplexPaperFilter> model = provider.model(mockFilter1);
         assertThat(model.getObject()).isEqualTo(mockFilter1);
+    }
+
+    @Test
+    public void settingModelObjectToNullAfterInstantiation_doesNotThrow() {
+        Model<SearchOrder> searchOrderModel = Model.of(mockSearchOrder);
+        assertThat(searchOrderModel.getObject()).isNotNull();
+        ComplexPaperFilterProvider p = new ComplexPaperFilterProvider(searchOrderModel);
+        assertThat(p.size()).isEqualTo(2l);
+
+        searchOrderModel.setObject(null);
+
+        assertThat(p.size()).isEqualTo(0l);
     }
 }

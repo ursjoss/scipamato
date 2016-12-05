@@ -1,5 +1,6 @@
 package ch.difty.sipamato.web.pages.paper.provider;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,23 +22,31 @@ public class ComplexPaperFilterProvider extends SortableDataProvider<ComplexPape
 
     private static final long serialVersionUID = 1L;
 
-    private final List<ComplexPaperFilter> filters;
+    private final IModel<SearchOrder> searchOrderModel;
 
     public ComplexPaperFilterProvider(final IModel<SearchOrder> searchOrderModel) {
         AssertAs.notNull(searchOrderModel, "searchOrderModel");
-        AssertAs.notNull(searchOrderModel.getObject(), "searchOrder.filters");
-        this.filters = searchOrderModel.getObject().getFilters();
+        AssertAs.notNull(searchOrderModel.getObject(), "searchOrder");
+        this.searchOrderModel = searchOrderModel;
     }
 
     @Override
     public Iterator<ComplexPaperFilter> iterator(final long offset, final long size) {
         // TODO currently ignoring offset and size. Might need to implement
-        return filters.iterator();
+        return getFilters().iterator();
+    }
+
+    /*
+     * The modelObject can become null if the external model changes after instantiation of the provider
+     */
+    private List<ComplexPaperFilter> getFilters() {
+        final SearchOrder searchOrder = searchOrderModel.getObject();
+        return searchOrder != null ? searchOrder.getFilters() : new ArrayList<ComplexPaperFilter>();
     }
 
     @Override
     public long size() {
-        return filters.size();
+        return getFilters().size();
     }
 
     @Override

@@ -132,9 +132,16 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void testingDisplayValue_withNoFilters_returnsBlank() {
+    public void testingDisplayValue_withNoFilters_returnsIDOnly() {
         assertThat(so.getFilters()).hasSize(0);
-        assertThat(so.getDisplayValue()).isEqualTo("");
+        assertThat(so.getDisplayValue()).isEqualTo("(10)");
+    }
+
+    @Test
+    public void testingDisplayValue_forGlobalFilterwithNoFilters_returnsIDPlusGlobalIndicator() {
+        assertThat(so.getFilters()).hasSize(0);
+        so.setGlobal(true);
+        assertThat(so.getDisplayValue()).isEqualTo("(10)*");
     }
 
     @Test
@@ -148,7 +155,7 @@ public class SearchOrderTest {
             }
         });
 
-        assertThat(so.getDisplayValue()).isEqualTo("f1ToString");
+        assertThat(so.getDisplayValue()).isEqualTo("f1ToString (10)");
     }
 
     @Test
@@ -170,7 +177,7 @@ public class SearchOrderTest {
             }
         });
 
-        assertThat(so.getDisplayValue()).isEqualTo("f1ToString; OR f2ToString");
+        assertThat(so.getDisplayValue()).isEqualTo("f1ToString; OR f2ToString (10)");
     }
 
     @Test

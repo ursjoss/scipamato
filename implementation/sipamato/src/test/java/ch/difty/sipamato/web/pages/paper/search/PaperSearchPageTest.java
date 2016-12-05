@@ -18,6 +18,7 @@ import ch.difty.sipamato.web.component.data.LinkIconPanel;
 import ch.difty.sipamato.web.pages.BasePageTest;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
 import ch.difty.sipamato.web.panel.search.SearchOrderPanel;
+import ch.difty.sipamato.web.panel.search.SearchOrderSelectorPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
@@ -37,16 +38,26 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Override
     protected void assertSpecificComponents() {
+        assertSearchOrderSelectorPanel("searchOrderSelectorPanel");
         assertSearchOrderPanel("searchOrderPanel");
         assertResultPanel("resultPanel");
     }
 
-    private void assertSearchOrderPanel(String b) {
-        getTester().assertComponent(b, SearchOrderPanel.class);
-        assertForm(b + ":form");
+    private void assertSearchOrderSelectorPanel(String b) {
+        getTester().assertComponent(b, SearchOrderSelectorPanel.class);
+        assertSearchOrderSelectorPanelForm(b + ":form");
     }
 
-    private void assertForm(String b) {
+    private void assertSearchOrderSelectorPanelForm(String b) {
+        getTester().assertComponent(b, Form.class);
+    }
+
+    private void assertSearchOrderPanel(String b) {
+        getTester().assertComponent(b, SearchOrderPanel.class);
+        assertSearchOrderPanelForm(b + ":form");
+    }
+
+    private void assertSearchOrderPanelForm(String b) {
         getTester().assertComponent(b, Form.class);
         getTester().assertComponent(b + ":addSearch", BootstrapAjaxButton.class);
         assertSearchTerms(b + ":searchTerms");

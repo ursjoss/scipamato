@@ -30,8 +30,8 @@ public class SearchOrderFilter extends SipamatoFilter {
         return ownerIncludingGlobal;
     }
 
-    public void setOwnerIncludingGlobal(Integer ownerIncludingGlobal) {
-        this.ownerIncludingGlobal = ownerIncludingGlobal;
+    public void setOwnerIncludingGlobal(Integer owner) {
+        this.ownerIncludingGlobal = owner;
     }
 
 }

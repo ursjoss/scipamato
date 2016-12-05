@@ -9,7 +9,6 @@ import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -23,7 +22,6 @@ import ch.difty.sipamato.web.component.SerializableSupplier;
 import ch.difty.sipamato.web.component.data.LinkIconColumn;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.provider.ComplexPaperFilterProvider;
-import ch.difty.sipamato.web.pages.paper.provider.SearchOrderBasedSortablePaperSlimProvider;
 import ch.difty.sipamato.web.pages.paper.search.PaperSearchCriteriaPage;
 import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
@@ -35,12 +33,10 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 
-    private final SearchOrderBasedSortablePaperSlimProvider dataProvider;
     private DataTable<ComplexPaperFilter, String> searchTerms;
 
-    public SearchOrderPanel(String id, IModel<SearchOrder> model, SearchOrderBasedSortablePaperSlimProvider dataProvider) {
+    public SearchOrderPanel(String id, IModel<SearchOrder> model) {
         super(id, model);
-        this.dataProvider = dataProvider;
     }
 
     @Override
@@ -51,7 +47,7 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
     }
 
     private void queueForm(final String id) {
-        queue(new FilterForm<>(id, dataProvider));
+        queue(new Form<>(id));
         queueNewButton("addSearch", (IModel<SearchOrder> fm) -> new PaperSearchCriteriaPage(fm), () -> getModel());
 
         ComplexPaperFilterProvider p = new ComplexPaperFilterProvider(getModel());
