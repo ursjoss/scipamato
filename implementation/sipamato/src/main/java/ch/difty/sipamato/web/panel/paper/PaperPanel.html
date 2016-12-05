@@ -2,44 +2,42 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
     <form wicket:id="form">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-10">
-                    <div class="row">
-                        <div class="col-lg-10">
-                            <div wicket:id="authorsLabel"></div>
-                            <textarea wicket:id="authors" rows="2" cols="80" class="form-control"></textarea>
-                        </div>
-                        <div class="col-lg-2">
-                            <div wicket:id="firstAuthorLabel"></div>
-                            <input wicket:id="firstAuthor" class="form-control"></input> <input
-                                wicket:id="firstAuthorOverridden" type="checkbox"></input> <span
-                                wicket:id="firstAuthorOverriddenLabel"></span>
-                        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div wicket:id="authorsLabel"></div>
+                        <textarea wicket:id="authors" rows="2" cols="80" class="form-control"></textarea>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div wicket:id="locationLabel"></div>
-                            <input wicket:id="location" class="form-control"></input>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div wicket:id="titleLabel"></div>
-                            <textarea wicket:id="title" rows="3" cols="100" class="form-control"></textarea>
-                        </div>
+                    <div class="col-md-2">
+                        <div wicket:id="firstAuthorLabel"></div>
+                        <input wicket:id="firstAuthor" class="form-control"></input> <input
+                            wicket:id="firstAuthorOverridden" type="checkbox"></input> <span
+                            wicket:id="firstAuthorOverriddenLabel"></span>
                     </div>
                 </div>
-                <div class="col-lg-2">
-                    <div wicket:id="idLabel"></div>
-                    <input wicket:id="id" class="form-control"></input>
-                    <div wicket:id="publicationYearLabel"></div>
-                    <input wicket:id="publicationYear" class="form-control"></input>
-                    <div wicket:id="pmIdLabel"></div>
-                    <input wicket:id="pmId" class="form-control"></input>
-                    <div wicket:id="doiLabel"></div>
-                    <input wicket:id="doi" class="form-control"></input> <a wicket:id="submit">Query</a>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div wicket:id="locationLabel"></div>
+                        <input wicket:id="location" class="form-control"></input>
+                    </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div wicket:id="titleLabel"></div>
+                        <textarea wicket:id="title" rows="3" cols="100" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div wicket:id="idLabel"></div>
+                <input wicket:id="id" class="form-control"></input>
+                <div wicket:id="publicationYearLabel"></div>
+                <input wicket:id="publicationYear" class="form-control"></input>
+                <div wicket:id="pmIdLabel"></div>
+                <input wicket:id="pmId" class="form-control"></input>
+                <div wicket:id="doiLabel"></div>
+                <input wicket:id="doi" class="form-control"></input> <a wicket:id="submit">Query</a>
             </div>
         </div>
 
