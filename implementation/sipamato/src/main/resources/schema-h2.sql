@@ -151,3 +151,38 @@ CREATE TABLE search_order (
   last_modified TIMESTAMP DEFAULT current_timestamp(),
   last_modified_by INT DEFAULT 1,
 );
+
+
+DROP TABLE IF EXISTS search_condition;
+
+CREATE TABLE search_condition (
+  id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  search_order_id BIGINT NOT NULL,
+  
+  version INT DEFAULT 1,
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
+);
+
+ALTER TABLE search_condition ADD FOREIGN KEY (search_order_id) REFERENCES search_order(id) on delete cascade on update cascade;
+
+
+DROP TABLE IF EXISTS search_term;
+
+CREATE TABLE search_term (
+  id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  search_condition_id BIGINT NOT NULL,
+  search_term_type INT NOT NULL,
+  field_name VARCHAR NOT NULL,
+  raw_value VARCHAR NOT NULL,
+  
+  version INT DEFAULT 1,
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
+);
+
+ALTER TABLE search_term ADD FOREIGN KEY (search_condition_id) REFERENCES search_condition(id) on delete cascade on update cascade;
