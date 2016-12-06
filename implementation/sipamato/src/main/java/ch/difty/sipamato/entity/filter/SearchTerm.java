@@ -5,11 +5,11 @@ import java.io.Serializable;
 import ch.difty.sipamato.lib.AssertAs;
 
 /**
- * Implementations of {@link SearchTerm} accept a <code>key</code> and a <code>rawValue</code>.
- * They key defines a field name and the rawValue a comparison type holding a value and some
- * meta information on how to compare the key with the provided value.
+ * Implementations of {@link SearchTerm} accept a <code>fieldName</code> as key and a <code>rawSearchTerm</code> as value.
+ * The rawSearchTerm holds a comparison specification holding a value and some meta information on how to compare the field
+ * with the provided value.
  * 
- * Identity is based on key and rawValue only.
+ * Identity is based on fielName and rawSearchTerm only.
  *
  * @author u.joss
  */
@@ -17,33 +17,45 @@ public abstract class SearchTerm<T extends SearchTerm<?>> implements Serializabl
 
     private static final long serialVersionUID = 1L;
 
-    private final String key;
-    private final String rawValue;
-
-    SearchTerm(String key, String rawValue) {
-        this.key = AssertAs.notNull(key, "key");
-        this.rawValue = AssertAs.notNull(rawValue, "rawValue");
+    enum SearchTermType {
+        BOOLEAN,
+        INTEGER,
+        STRING;
     }
 
-    public String getKey() {
-        return key;
+    private final SearchTermType searchTermType;
+    private final String fieldName;
+    private final String searchTerm;
+
+    SearchTerm(final SearchTermType type, final String fieldName, final String rawSearchTerm) {
+        this.searchTermType = AssertAs.notNull(type);
+        this.fieldName = AssertAs.notNull(fieldName, "fieldName");
+        this.searchTerm = AssertAs.notNull(rawSearchTerm, "rawSearchTerm");
     }
 
-    public String getRawValue() {
-        return rawValue;
+    public SearchTermType getSearchTermType() {
+        return searchTermType;
+    }
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public String getRawSearchTerm() {
+        return searchTerm;
     }
 
     @Override
     public String toString() {
-        return rawValue;
+        return searchTerm;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + key.hashCode();
-        result = prime * result + rawValue.hashCode();
+        result = prime * result + fieldName.hashCode();
+        result = prime * result + searchTerm.hashCode();
         return result;
     }
 
@@ -57,9 +69,9 @@ public abstract class SearchTerm<T extends SearchTerm<?>> implements Serializabl
             return false;
         @SuppressWarnings("unchecked")
         final T other = (T) obj;
-        if (!key.equals(other.getKey()))
+        if (!fieldName.equals(other.getFieldName()))
             return false;
-        else if (!rawValue.equals(other.getRawValue()))
+        else if (!searchTerm.equals(other.getRawSearchTerm()))
             return false;
         return true;
     }

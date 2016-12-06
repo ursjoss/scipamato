@@ -337,7 +337,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
 
     private String getStringValue(String key) {
         final StringSearchTerm st = stringSearchTerms.get(key);
-        return st != null ? st.getRawValue() : null;
+        return st != null ? st.getRawSearchTerm() : null;
     }
 
     private void setStringValue(final String key, String value) {
@@ -350,7 +350,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
 
     private String getIntegerValue(String key) {
         final IntegerSearchTerm st = integerSearchTerms.get(key);
-        return st != null ? st.getRawValue() : null;
+        return st != null ? st.getRawSearchTerm() : null;
     }
 
     private void setIntegerValue(final String key, String value) {

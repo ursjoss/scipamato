@@ -75,8 +75,8 @@ public class SearchConditionTest {
         assertThat(sc.getIntegerSearchTerms()).hasSize(1);
         assertThat(sc.getBooleanSearchTerms()).isEmpty();
         IntegerSearchTerm st = sc.getIntegerSearchTerms().iterator().next();
-        assertThat(st.getKey()).isEqualTo(FLD_ID);
-        assertThat(st.getRawValue()).isEqualTo("5");
+        assertThat(st.getFieldName()).isEqualTo(FLD_ID);
+        assertThat(st.getRawSearchTerm()).isEqualTo("5");
 
         sc.setId("10");
         assertThat(sc.getId()).isEqualTo("10");
@@ -84,8 +84,8 @@ public class SearchConditionTest {
         assertThat(sc.getIntegerSearchTerms()).hasSize(1);
         assertThat(sc.getBooleanSearchTerms()).isEmpty();
         st = sc.getIntegerSearchTerms().iterator().next();
-        assertThat(st.getKey()).isEqualTo(FLD_ID);
-        assertThat(st.getRawValue()).isEqualTo("10");
+        assertThat(st.getFieldName()).isEqualTo(FLD_ID);
+        assertThat(st.getRawSearchTerm()).isEqualTo("10");
 
         sc.setId(null);
         assertThat(sc.getId()).isNull();
@@ -107,8 +107,8 @@ public class SearchConditionTest {
         assertThat(sc.getIntegerSearchTerms()).isEmpty();
         assertThat(sc.getBooleanSearchTerms()).isEmpty();
         StringSearchTerm st = sc.getStringSearchTerms().iterator().next();
-        assertThat(st.getKey()).isEqualTo(FLD_DOI);
-        assertThat(st.getRawValue()).isEqualTo("101111");
+        assertThat(st.getFieldName()).isEqualTo(FLD_DOI);
+        assertThat(st.getRawSearchTerm()).isEqualTo("101111");
 
         sc.setDoi("102222");
         assertThat(sc.getDoi()).isEqualTo("102222");
@@ -116,8 +116,8 @@ public class SearchConditionTest {
         assertThat(sc.getIntegerSearchTerms()).isEmpty();
         assertThat(sc.getBooleanSearchTerms()).isEmpty();
         st = sc.getStringSearchTerms().iterator().next();
-        assertThat(st.getKey()).isEqualTo(FLD_DOI);
-        assertThat(st.getRawValue()).isEqualTo("102222");
+        assertThat(st.getFieldName()).isEqualTo(FLD_DOI);
+        assertThat(st.getRawSearchTerm()).isEqualTo("102222");
 
         sc.setDoi(null);
         assertThat(sc.getDoi()).isNull();
@@ -181,8 +181,8 @@ public class SearchConditionTest {
         assertThat(sc.getIntegerSearchTerms()).isEmpty();
         assertThat(sc.getBooleanSearchTerms()).hasSize(1);
         BooleanSearchTerm st = sc.getBooleanSearchTerms().iterator().next();
-        assertThat(st.getKey()).isEqualTo(FLD_FIRST_AUTHOR_OVERRIDDEN);
-        assertThat(st.getRawValue()).isEqualTo("true");
+        assertThat(st.getFieldName()).isEqualTo(FLD_FIRST_AUTHOR_OVERRIDDEN);
+        assertThat(st.getRawSearchTerm()).isEqualTo("true");
         assertThat(st.getValue()).isTrue();
 
         sc.setFirstAuthorOverridden(false);
@@ -191,8 +191,8 @@ public class SearchConditionTest {
         assertThat(sc.getIntegerSearchTerms()).isEmpty();
         assertThat(sc.getBooleanSearchTerms()).hasSize(1);
         st = sc.getBooleanSearchTerms().iterator().next();
-        assertThat(st.getKey()).isEqualTo(FLD_FIRST_AUTHOR_OVERRIDDEN);
-        assertThat(st.getRawValue()).isEqualTo("false");
+        assertThat(st.getFieldName()).isEqualTo(FLD_FIRST_AUTHOR_OVERRIDDEN);
+        assertThat(st.getRawSearchTerm()).isEqualTo("false");
         assertThat(st.getValue()).isFalse();
 
         sc.setFirstAuthorOverridden(null);

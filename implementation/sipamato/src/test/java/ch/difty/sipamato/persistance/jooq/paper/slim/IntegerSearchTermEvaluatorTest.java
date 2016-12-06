@@ -38,7 +38,7 @@ public class IntegerSearchTermEvaluatorTest {
 
     private void expectSearchTerm(MatchType type, int v1, int v2) {
         when(stMock.getType()).thenReturn(type);
-        when(stMock.getKey()).thenReturn("fieldX");
+        when(stMock.getFieldName()).thenReturn("fieldX");
         when(stMock.getValue()).thenReturn(v1);
         when(stMock.getValue2()).thenReturn(v2);
     }
