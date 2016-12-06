@@ -41,7 +41,7 @@ import ch.difty.sipamato.entity.DefaultCodeBox;
 import ch.difty.sipamato.entity.Paper;
 
 /**
- * The {@link ComplexPaperFilter} is an instance of {@link SipamatoFilter} that provides
+ * The {@link SearchCondition} is an instance of {@link SipamatoFilter} that provides
  * accessors for all fields present in the entity {@link Paper}, but all in String form.
  *
  * The provided String values may contain query specific meta information that can be interpreted
@@ -52,7 +52,7 @@ import ch.difty.sipamato.entity.Paper;
  *
  * @author u.joss
  */
-public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
+public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
 
     private static final long serialVersionUID = 1L;
 
@@ -401,7 +401,7 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        ComplexPaperFilter other = (ComplexPaperFilter) obj;
+        SearchCondition other = (SearchCondition) obj;
         if (!booleanSearchTerms.equals(other.booleanSearchTerms))
             return false;
         if (!integerSearchTerms.equals(other.integerSearchTerms))

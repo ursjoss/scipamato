@@ -15,13 +15,13 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 
 import ch.difty.sipamato.entity.SearchOrder;
-import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
+import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.web.component.SerializableConsumer;
 import ch.difty.sipamato.web.component.SerializableFunction;
 import ch.difty.sipamato.web.component.SerializableSupplier;
 import ch.difty.sipamato.web.component.data.LinkIconColumn;
 import ch.difty.sipamato.web.pages.BasePage;
-import ch.difty.sipamato.web.pages.paper.provider.ComplexPaperFilterProvider;
+import ch.difty.sipamato.web.pages.paper.provider.SearchConditionProvider;
 import ch.difty.sipamato.web.pages.paper.search.PaperSearchCriteriaPage;
 import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
@@ -33,7 +33,7 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 
-    private DataTable<ComplexPaperFilter, String> searchTerms;
+    private DataTable<SearchCondition, String> searchTerms;
 
     public SearchOrderPanel(String id, IModel<SearchOrder> model) {
         super(id, model);
@@ -50,14 +50,14 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
         queue(new Form<>(id));
         queueNewButton("addSearch", (IModel<SearchOrder> fm) -> new PaperSearchCriteriaPage(fm), () -> getModel());
 
-        ComplexPaperFilterProvider p = new ComplexPaperFilterProvider(getModel());
-        searchTerms = new BootstrapDefaultDataTable<ComplexPaperFilter, String>("searchTerms", makeTableColumns(), p, 10);
+        SearchConditionProvider p = new SearchConditionProvider(getModel());
+        searchTerms = new BootstrapDefaultDataTable<SearchCondition, String>("searchTerms", makeTableColumns(), p, 10);
         searchTerms.setOutputMarkupId(true);
         searchTerms.add(new TableBehavior().striped().hover());
         queue(searchTerms);
     }
 
-    private void queueNewButton(String id, SerializableFunction<IModel<SearchOrder>, BasePage<ComplexPaperFilter>> pageFunction, SerializableSupplier<IModel<SearchOrder>> modelProvider) {
+    private void queueNewButton(String id, SerializableFunction<IModel<SearchOrder>, BasePage<SearchCondition>> pageFunction, SerializableSupplier<IModel<SearchOrder>> modelProvider) {
         queue(new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null), Type.Default) {
             private static final long serialVersionUID = 1L;
 
@@ -69,24 +69,24 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
         });
     }
 
-    private List<IColumn<ComplexPaperFilter, String>> makeTableColumns() {
-        final List<IColumn<ComplexPaperFilter, String>> columns = new ArrayList<>();
+    private List<IColumn<SearchCondition, String>> makeTableColumns() {
+        final List<IColumn<SearchCondition, String>> columns = new ArrayList<>();
         columns.add(makePropertyColumn("toString", null));
-        columns.add(makeLinkIconColumn("remove", (IModel<ComplexPaperFilter> m) -> getModelObject().remove(m.getObject())));
+        columns.add(makeLinkIconColumn("remove", (IModel<SearchCondition> m) -> getModelObject().remove(m.getObject())));
         return columns;
     }
 
-    private IColumn<ComplexPaperFilter, String> makeLinkIconColumn(String id, SerializableConsumer<IModel<ComplexPaperFilter>> consumer) {
-        return new LinkIconColumn<ComplexPaperFilter>(new StringResourceModel("column.header." + id, this, null)) {
+    private IColumn<SearchCondition, String> makeLinkIconColumn(String id, SerializableConsumer<IModel<SearchCondition>> consumer) {
+        return new LinkIconColumn<SearchCondition>(new StringResourceModel("column.header." + id, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected IModel<String> createIconModel(IModel<ComplexPaperFilter> rowModel) {
+            protected IModel<String> createIconModel(IModel<SearchCondition> rowModel) {
                 return Model.of("fa fa-fw fa-trash-o text-danger");
             }
 
             @Override
-            protected void onClickPerformed(AjaxRequestTarget target, IModel<ComplexPaperFilter> rowModel, AjaxLink<Void> link) {
+            protected void onClickPerformed(AjaxRequestTarget target, IModel<SearchCondition> rowModel, AjaxLink<Void> link) {
                 consumer.accept(rowModel);
                 target.add(searchTerms);
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
@@ -94,8 +94,8 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
         };
     }
 
-    private PropertyColumn<ComplexPaperFilter, String> makePropertyColumn(String propExpression, String sortProperty) {
-        return new PropertyColumn<ComplexPaperFilter, String>(new StringResourceModel("column.header." + propExpression, this, null), sortProperty, propExpression);
+    private PropertyColumn<SearchCondition, String> makePropertyColumn(String propExpression, String sortProperty) {
+        return new PropertyColumn<SearchCondition, String>(new StringResourceModel("column.header." + propExpression, this, null), sortProperty, propExpression);
     }
 
 }

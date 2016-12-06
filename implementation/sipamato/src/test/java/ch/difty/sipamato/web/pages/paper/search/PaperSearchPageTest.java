@@ -13,7 +13,7 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
 
 import ch.difty.sipamato.entity.SearchOrder;
-import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
+import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.web.component.data.LinkIconPanel;
 import ch.difty.sipamato.web.pages.BasePageTest;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
@@ -26,8 +26,8 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Override
     protected PaperSearchPage makePage() {
-        final List<ComplexPaperFilter> filters = Arrays.asList(new ComplexPaperFilter());
-        final SearchOrder searchOrder = new SearchOrder(filters);
+        final List<SearchCondition> conditions = Arrays.asList(new SearchCondition());
+        final SearchOrder searchOrder = new SearchOrder(conditions);
         return new PaperSearchPage(Model.of(searchOrder));
     }
 
@@ -90,8 +90,8 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Test
     public void clickingRemoveButtonOnSearchTerms_removesSearchTerm() {
-        final String labelToString = "complexPaperFilterToString";
-        final ComplexPaperFilter f = new ComplexPaperFilter() {
+        final String labelToString = "searchConditionToString";
+        final SearchCondition sc = new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -99,8 +99,8 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
                 return labelToString;
             }
         };
-        final List<ComplexPaperFilter> filters = Arrays.asList(f);
-        final SearchOrder searchOrder = new SearchOrder(filters);
+        final List<SearchCondition> conditions = Arrays.asList(sc);
+        final SearchOrder searchOrder = new SearchOrder(conditions);
         PaperSearchPage page = new PaperSearchPage(Model.of(searchOrder));
 
         getTester().startPage(page);

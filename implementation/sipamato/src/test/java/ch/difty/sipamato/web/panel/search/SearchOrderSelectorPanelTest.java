@@ -15,7 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.SearchOrder;
-import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
+import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.persistance.jooq.search.SearchOrderFilter;
 import ch.difty.sipamato.service.SearchOrderService;
 import ch.difty.sipamato.web.panel.PanelTest;
@@ -32,7 +32,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     private SearchOrder searchOrderMock;
 
     private final List<SearchOrder> searchOrders = new ArrayList<>();
-    private final List<ComplexPaperFilter> filters = new ArrayList<>();
+    private final List<SearchCondition> searchConditions = new ArrayList<>();
 
     @Override
     protected SearchOrderSelectorPanel makePanel() {
@@ -44,7 +44,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         super.setUpHook();
 
         searchOrders.add(searchOrderMock);
-        searchOrders.add(new SearchOrder(20l, 2, true, filters));
+        searchOrders.add(new SearchOrder(20l, 2, true, searchConditions));
         when(searchOrderServiceMock.findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class))).thenReturn(searchOrders);
     }
 

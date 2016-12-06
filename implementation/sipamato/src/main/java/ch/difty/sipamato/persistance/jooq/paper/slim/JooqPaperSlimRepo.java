@@ -18,8 +18,8 @@ import ch.difty.sipamato.db.Tables;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.BooleanSearchTerm;
-import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
 import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
+import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.entity.filter.StringSearchTerm;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.AssertAs;
@@ -92,26 +92,26 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
         return getDsl().fetchCount(getDsl().selectOne().from(getTable()).where(conditions));
     }
 
-    /*
-     * Combines the search terms of different ComplexPaperFilters using OR operators.
+    /**
+     * Combines the search terms of different {@link SearchOrder} using OR operators.
      */
-    private Condition getConditionsFrom(final SearchOrder filter) {
+    private Condition getConditionsFrom(final SearchOrder searchOrder) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
-        for (final ComplexPaperFilter cpf : filter.getFilters())
-            conditions.add(() -> getConditionFromSingleComplexFilter(cpf));
+        for (final SearchCondition sc : searchOrder.getSearchConditions())
+            conditions.add(() -> getConditionFromSingleSearchCondition(sc));
         return conditions.combineWithOr();
     }
 
-    /*
-     * Combines the individual search terms of a single {@link ComplexPaperFilter} using AND operators
+    /**
+     * Combines the individual search terms of a single {@link SearchCondition} using AND operators
      */
-    private Condition getConditionFromSingleComplexFilter(ComplexPaperFilter filter) {
+    private Condition getConditionFromSingleSearchCondition(SearchCondition searchCondition) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
-        for (final BooleanSearchTerm st : filter.getBooleanSearchTerms())
+        for (final BooleanSearchTerm st : searchCondition.getBooleanSearchTerms())
             conditions.add(() -> booleanSearchTermEvaluator.evaluate(st));
-        for (final IntegerSearchTerm st : filter.getIntegerSearchTerms())
+        for (final IntegerSearchTerm st : searchCondition.getIntegerSearchTerms())
             conditions.add(() -> integerSearchTermEvaluator.evaluate(st));
-        for (final StringSearchTerm st : filter.getStringSearchTerms())
+        for (final StringSearchTerm st : searchCondition.getStringSearchTerms())
             conditions.add(() -> stringSearchTermEvaluator.evaluate(st));
         return conditions.combineWithAnd();
     }
