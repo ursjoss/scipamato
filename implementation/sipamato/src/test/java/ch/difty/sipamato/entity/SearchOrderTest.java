@@ -82,15 +82,26 @@ public class SearchOrderTest {
     @Test
     public void whenMergingSearchOrderWithConditions_theResultIsMerged() {
         assertThat(so.getSearchConditions()).isEmpty();
+        assertThat(so.getId()).isEqualTo(10l);
+        assertThat(so.getOwner()).isEqualTo(1);
+        assertThat(so.isGlobal()).isFalse();
         so.add(new SearchCondition());
-
         searchConditions.addAll(Arrays.asList(mockCondition1, mockCondition2));
+
         SearchOrder other = new SearchOrder(searchConditions);
+        other.setId(100l);
+        other.setOwner(1000);
+        other.setGlobal(true);
         assertThat(other.getSearchConditions()).hasSize(2);
 
         so.merge(other);
 
         assertThat(so.getSearchConditions()).hasSize(3);
+
+        assertThat(so.getId()).isEqualTo(100l);
+        assertThat(so.getOwner()).isEqualTo(1000);
+        assertThat(so.isGlobal()).isTrue();
+
     }
 
     @Test

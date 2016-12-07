@@ -297,7 +297,6 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             makeCodeClassComplex(CodeClassId.CC6, codeClasses);
             makeCodeClassComplex(CodeClassId.CC7, codeClasses);
             makeCodeClassComplex(CodeClassId.CC8, codeClasses);
-
         }
 
         private void makeCodeClass1Complex(final List<CodeClass> codeClasses, Form<T> form) {

@@ -4,9 +4,13 @@ import org.apache.wicket.authroles.authorization.strategies.role.annotations.Aut
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.StringValue;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.service.SearchOrderService;
+import ch.difty.sipamato.web.PageParameterNames;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.panel.paper.SearchablePaperPanel;
 
@@ -14,6 +18,7 @@ import ch.difty.sipamato.web.panel.paper.SearchablePaperPanel;
  * Lookalike of the PaperEditPage that works with a {@link SearchCondition} instead of a Paper entity,
  * which can be used as a kind of Query by example (QBE) functionality.
  *
+ * The page is instantiated with a model of a {@link SearchCondition} capturing the specification from this form.
  * If instantiated with a {@link SearchOrder} as parameter, it will add the current query
  * specification {@link SearchCondition} to the search order.
  *
@@ -26,21 +31,11 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
 
     private static final long serialVersionUID = 1L;
 
-    private SearchOrder searchOrder = new SearchOrder(null);
+    @SpringBean
+    private SearchOrderService searchOrderService;
 
-    /**
-     * Instantiates the page using the {@link PageParameters}.
-     * Initiates the default model with a new empty {@link SearchCondition}
-     * and uses a freshly initiated {@link SearchOrder}.
-     *
-     * @param parameters
-     */
     public PaperSearchCriteriaPage(final PageParameters parameters) {
         super(parameters);
-        initDefaultModel();
-    }
-
-    private void initDefaultModel() {
         setDefaultModel(Model.of(new SearchCondition()));
     }
 
@@ -49,11 +44,11 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
      * the {@link SearchOrder} of all previous specification steps.
      *
      * @param searchOrderModel the model of the {@link SearchOrder} defining the criteria of the previously defined search steps.
+     * @param searchConditionModel the model of the {@link SearchCondition capturing the search terms from this form
      */
-    public PaperSearchCriteriaPage(final IModel<SearchOrder> searchOrderModel) {
-        super(new PageParameters());
-        initDefaultModel();
-        this.searchOrder.merge(searchOrderModel.getObject());
+    public PaperSearchCriteriaPage(final IModel<SearchCondition> searchConditionModel, final long searchOrderId) {
+        super(searchConditionModel);
+        getPageParameters().add(PageParameterNames.SEARCH_ORDER_ID, searchOrderId);
     }
 
     @Override
@@ -69,10 +64,15 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
 
             @Override
             protected void onFormSubmit() {
-                searchOrder.add(getModelObject());
-                setResponsePage(new PaperSearchPage(Model.of(searchOrder)));
+                searchOrderService.saveOrUpdateSearchCondition(getModelObject(), getSearchOrderId());
+                setResponsePage(new PaperSearchPage(getPageParameters()));
             }
         };
+    }
+
+    private Long getSearchOrderId() {
+        final StringValue sv = getPageParameters().get(PageParameterNames.SEARCH_ORDER_ID);
+        return sv.isNull() ? null : sv.toLong();
     }
 
 }

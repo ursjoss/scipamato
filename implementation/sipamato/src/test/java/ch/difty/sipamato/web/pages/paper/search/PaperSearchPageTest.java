@@ -1,7 +1,12 @@
 package ch.difty.sipamato.web.pages.paper.search;
 
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.DataGridView;
@@ -9,11 +14,15 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.service.SearchOrderService;
+import ch.difty.sipamato.web.PageParameterNames;
 import ch.difty.sipamato.web.component.data.LinkIconPanel;
 import ch.difty.sipamato.web.pages.BasePageTest;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
@@ -24,10 +33,23 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 
 public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
+    private static final long SEARCH_ORDER_ID = 7;
+
+    @MockBean
+    private SearchOrderService searchOrderServiceMock;
+
+    private final SearchOrder searchOrder = new SearchOrder(SEARCH_ORDER_ID, 1, false, null);
+
+    @Override
+    protected void setUpHook() {
+        when(searchOrderServiceMock.findById(SEARCH_ORDER_ID)).thenReturn(Optional.of(searchOrder));
+    }
+
     @Override
     protected PaperSearchPage makePage() {
         final List<SearchCondition> conditions = Arrays.asList(new SearchCondition());
         final SearchOrder searchOrder = new SearchOrder(conditions);
+        searchOrder.setId(5l);
         return new PaperSearchPage(Model.of(searchOrder));
     }
 
@@ -90,14 +112,17 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     @Test
-    public void clickingAddSearch_forwardsToPaperSearchCriteriaPage() {
-        getTester().startPage(getPageClass());
+    public void clickingAddSearch_forwardsToPaperSearchCriteriaPageToLoadSearchOrder() {
+        PageParameters pp = new PageParameters().add(PageParameterNames.SEARCH_ORDER_ID, SEARCH_ORDER_ID);
+        getTester().startPage(getPageClass(), pp);
         getTester().assertRenderedPage(getPageClass());
 
         FormTester formTester = getTester().newFormTester("searchOrderPanel:form");
         formTester.submit("addSearch");
 
         getTester().assertRenderedPage(PaperSearchCriteriaPage.class);
+
+        verify(searchOrderServiceMock).findById(SEARCH_ORDER_ID);
     }
 
     @Test
@@ -112,6 +137,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         };
         final List<SearchCondition> conditions = Arrays.asList(sc);
         final SearchOrder searchOrder = new SearchOrder(conditions);
+        searchOrder.setId(6l);
         PaperSearchPage page = new PaperSearchPage(Model.of(searchOrder));
 
         getTester().startPage(page);
@@ -128,6 +154,30 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
         // TODO test that the event is sent
         // TODO also test that receiving the event adds the filter panel to the target
+        verify(searchOrderServiceMock, never()).findById(SEARCH_ORDER_ID);
+    }
+
+    @Test
+    public void constructingPage_withPageParametersHavingSearchOrderId_loadsSearchOrderFromDb() {
+        PageParameters pp = new PageParameters().add(PageParameterNames.SEARCH_ORDER_ID, SEARCH_ORDER_ID);
+        getTester().startPage(getPageClass(), pp);
+        getTester().assertRenderedPage(getPageClass());
+
+        getTester().debugComponentTrees();
+
+        getTester().assertModelValue("searchOrderSelectorPanel:form:searchOrder", searchOrder);
+
+        verify(searchOrderServiceMock).findById(SEARCH_ORDER_ID);
+    }
+
+    @Test
+    public void constructingPage_withPageParametersLackingSearchOrderId_setsFreshSearchOrder() {
+        getTester().startPage(getPageClass(), new PageParameters());
+        getTester().assertRenderedPage(getPageClass());
+
+        getTester().debugComponentTrees();
+
+        verify(searchOrderServiceMock, never()).findById(SEARCH_ORDER_ID);
     }
 
 }

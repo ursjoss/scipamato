@@ -84,8 +84,12 @@ public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilt
      * @param other the source of search conditions to merge from
      */
     public void merge(final SearchOrder other) {
-        if (other != null)
+        if (other != null) {
+            setId(other.getId());
+            setOwner(other.getOwner());
+            setGlobal(other.isGlobal());
             searchConditions.addAll(other.getSearchConditions());
+        }
     }
 
     /**

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.service.SearchOrderService;
 
 /**
@@ -47,11 +48,21 @@ public class JooqSearchOrderService implements SearchOrderService {
 
     /** {@inheritDoc} */
     @Override
-    public SearchOrder saveOrUpdate(SearchOrder entity) {
-        if (entity.getId() == null) {
-            return repo.add(entity);
+    public SearchOrder saveOrUpdate(SearchOrder searchOrder) {
+        if (searchOrder.getId() == null) {
+            return repo.add(searchOrder);
         } else {
-            return repo.update(entity);
+            return repo.update(searchOrder);
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public SearchCondition saveOrUpdateSearchCondition(SearchCondition searchCondition, long searchOrderId) {
+        if (searchCondition.getConditionId() == null) {
+            return repo.addSearchCondition(searchCondition, searchOrderId);
+        } else {
+            return repo.updateSearchCondition(searchCondition, searchOrderId);
         }
     }
 }

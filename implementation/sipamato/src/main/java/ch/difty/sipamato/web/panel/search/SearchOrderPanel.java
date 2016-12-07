@@ -16,8 +16,8 @@ import org.apache.wicket.model.StringResourceModel;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.web.component.SerializableBiFunction;
 import ch.difty.sipamato.web.component.SerializableConsumer;
-import ch.difty.sipamato.web.component.SerializableFunction;
 import ch.difty.sipamato.web.component.SerializableSupplier;
 import ch.difty.sipamato.web.component.data.LinkIconColumn;
 import ch.difty.sipamato.web.pages.BasePage;
@@ -48,7 +48,7 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
 
     private void queueForm(final String id) {
         queue(new Form<>(id));
-        queueNewButton("addSearch", (IModel<SearchOrder> fm) -> new PaperSearchCriteriaPage(fm), () -> getModel());
+        queueNewButton("addSearch", (scModel, soId) -> new PaperSearchCriteriaPage(scModel, soId), () -> Model.of(new SearchCondition()));
 
         SearchConditionProvider p = new SearchConditionProvider(getModel());
         searchTerms = new BootstrapDefaultDataTable<SearchCondition, String>("searchTerms", makeTableColumns(), p, 10);
@@ -57,16 +57,26 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
         queue(searchTerms);
     }
 
-    private void queueNewButton(String id, SerializableFunction<IModel<SearchOrder>, BasePage<SearchCondition>> pageFunction, SerializableSupplier<IModel<SearchOrder>> modelProvider) {
+    private void queueNewButton(String id, SerializableBiFunction<IModel<SearchCondition>, Long, BasePage<SearchCondition>> pageFunction, SerializableSupplier<IModel<SearchCondition>> modelProvider) {
         queue(new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null), Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setEnabled(SearchOrderPanel.this.isSearchOrderIdDefined());
+            }
+
+            @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                 super.onSubmit(target, form);
-                setResponsePage(pageFunction.apply(modelProvider.get()));
+                setResponsePage(pageFunction.apply(modelProvider.get(), SearchOrderPanel.this.getModelObject().getId()));
             }
         });
+    }
+
+    protected boolean isSearchOrderIdDefined() {
+        return getModelObject() != null && getModelObject().getId() != null;
     }
 
     private List<IColumn<SearchCondition, String>> makeTableColumns() {
