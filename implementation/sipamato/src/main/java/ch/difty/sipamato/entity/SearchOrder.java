@@ -103,9 +103,9 @@ public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilt
     public String getDisplayValue() {
         StringBuilder sb = new StringBuilder();
         sb.append(searchConditions.stream().map(SearchCondition::toString).collect(Collectors.joining(JOIN_DELIMITER)));
-        if (sb.length() > 0)
-            sb.append(" ");
-        sb.append("(").append(getId()).append(")");
+        if (sb.length() == 0)
+            sb.append("--");
+        sb.append(" (").append(getId()).append(")");
         if (isGlobal())
             sb.append("*");
         return sb.toString();

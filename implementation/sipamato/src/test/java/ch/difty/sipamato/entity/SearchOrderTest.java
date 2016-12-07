@@ -134,14 +134,14 @@ public class SearchOrderTest {
     @Test
     public void testingDisplayValue_withNoConditions_returnsIDOnly() {
         assertThat(so.getSearchConditions()).hasSize(0);
-        assertThat(so.getDisplayValue()).isEqualTo("(10)");
+        assertThat(so.getDisplayValue()).isEqualTo("-- (10)");
     }
 
     @Test
     public void testingDisplayValue_forGlobalCSearchOrderWithNoConditions_returnsIdPlusGlobalIndicator() {
         assertThat(so.getSearchConditions()).hasSize(0);
         so.setGlobal(true);
-        assertThat(so.getDisplayValue()).isEqualTo("(10)*");
+        assertThat(so.getDisplayValue()).isEqualTo("-- (10)*");
     }
 
     @Test
