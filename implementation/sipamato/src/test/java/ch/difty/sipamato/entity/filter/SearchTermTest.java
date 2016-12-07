@@ -8,10 +8,11 @@ public class SearchTermTest {
 
     @Test
     public void booleanSearchTerm() {
-        SearchTerm<?> st = SearchTerm.of(0, 1l, "fn", "true");
+        SearchTerm<?> st = SearchTerm.of(10, 0, 1l, "fn", "true");
         assertThat(st).isInstanceOf(BooleanSearchTerm.class);
 
         BooleanSearchTerm bst = (BooleanSearchTerm) st;
+        assertThat(bst.getId()).isEqualTo(10);
         assertThat(bst.getSearchTermType()).isEqualTo(SearchTermType.BOOLEAN);
         assertThat(bst.getSearchConditionId()).isEqualTo(1l);
         assertThat(bst.getFieldName()).isEqualTo("fn");
@@ -21,10 +22,11 @@ public class SearchTermTest {
 
     @Test
     public void integerSearchTerm() {
-        SearchTerm<?> st = SearchTerm.of(1, 2l, "fn2", "5-7");
+        SearchTerm<?> st = SearchTerm.of(11, 1, 2l, "fn2", "5-7");
         assertThat(st).isInstanceOf(IntegerSearchTerm.class);
 
         IntegerSearchTerm ist = (IntegerSearchTerm) st;
+        assertThat(ist.getId()).isEqualTo(11);
         assertThat(ist.getSearchTermType()).isEqualTo(SearchTermType.INTEGER);
         assertThat(ist.getSearchConditionId()).isEqualTo(2l);
         assertThat(ist.getFieldName()).isEqualTo("fn2");
@@ -35,10 +37,11 @@ public class SearchTermTest {
 
     @Test
     public void stringSearchTerm() {
-        SearchTerm<?> st = SearchTerm.of(2, 3l, "fn3", "foo*");
+        SearchTerm<?> st = SearchTerm.of(12, 2, 3l, "fn3", "foo*");
         assertThat(st).isInstanceOf(StringSearchTerm.class);
 
         StringSearchTerm sst = (StringSearchTerm) st;
+        assertThat(sst.getId()).isEqualTo(12);
         assertThat(sst.getSearchTermType()).isEqualTo(SearchTermType.STRING);
         assertThat(sst.getSearchConditionId()).isEqualTo(3l);
         assertThat(sst.getFieldName()).isEqualTo("fn3");

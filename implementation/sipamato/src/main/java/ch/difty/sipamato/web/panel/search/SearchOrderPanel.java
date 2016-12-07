@@ -71,7 +71,7 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
 
     private List<IColumn<SearchCondition, String>> makeTableColumns() {
         final List<IColumn<SearchCondition, String>> columns = new ArrayList<>();
-        columns.add(makePropertyColumn("toString", null));
+        columns.add(makePropertyColumn("displayValue", null));
         columns.add(makeLinkIconColumn("remove", (IModel<SearchCondition> m) -> getModelObject().remove(m.getObject())));
         return columns;
     }

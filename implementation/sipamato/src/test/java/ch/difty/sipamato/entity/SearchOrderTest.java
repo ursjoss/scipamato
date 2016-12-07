@@ -150,12 +150,12 @@ public class SearchOrderTest {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public String toString() {
-                return "f1ToString";
+            public String getDisplayValue() {
+                return "f1DisplayValue";
             }
         });
 
-        assertThat(so.getDisplayValue()).isEqualTo("f1ToString (10)");
+        assertThat(so.getDisplayValue()).isEqualTo("f1DisplayValue (10)");
     }
 
     @Test
@@ -164,20 +164,20 @@ public class SearchOrderTest {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public String toString() {
-                return "c1ToString";
+            public String getDisplayValue() {
+                return "c1DisplayValue";
             }
         });
         so.add(new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public String toString() {
-                return "c2ToString";
+            public String getDisplayValue() {
+                return "c2DisplayValue";
             }
         });
 
-        assertThat(so.getDisplayValue()).isEqualTo("c1ToString; OR c2ToString (10)");
+        assertThat(so.getDisplayValue()).isEqualTo("c1DisplayValue; OR c2DisplayValue (10)");
     }
 
     @Test

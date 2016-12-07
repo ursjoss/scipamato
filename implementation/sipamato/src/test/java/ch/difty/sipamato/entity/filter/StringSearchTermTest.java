@@ -20,6 +20,7 @@ public class StringSearchTermTest {
         assertThat(st.getType()).isEqualTo(type);
         assertThat(st.getValue()).isEqualTo(value);
         assertThat(st.getRawSearchTerm()).isEqualTo(raw);
+        assertThat(st.getDisplayValue()).isEqualTo(raw);
     }
 
     @Test

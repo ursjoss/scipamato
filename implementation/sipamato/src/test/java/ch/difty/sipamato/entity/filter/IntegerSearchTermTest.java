@@ -26,6 +26,7 @@ public class IntegerSearchTermTest {
         assertThat(st.getValue()).isEqualTo(value);
         assertThat(st.getValue2()).isEqualTo(value2);
         assertThat(st.getRawSearchTerm()).isEqualTo(raw);
+        assertThat(st.getDisplayValue()).isEqualTo(raw);
     }
 
     @Test

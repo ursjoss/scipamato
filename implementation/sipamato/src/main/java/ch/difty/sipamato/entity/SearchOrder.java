@@ -102,7 +102,7 @@ public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilt
     @Override
     public String getDisplayValue() {
         StringBuilder sb = new StringBuilder();
-        sb.append(searchConditions.stream().map(SearchCondition::toString).collect(Collectors.joining(JOIN_DELIMITER)));
+        sb.append(searchConditions.stream().map(SearchCondition::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER)));
         if (sb.length() == 0)
             sb.append("--");
         sb.append(" (").append(getId()).append(")");

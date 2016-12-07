@@ -17,7 +17,7 @@ public class BooleanSearchTermTest {
         assertThat(st.getFieldName()).isEqualTo(FIELD_NAME);
         assertThat(st.getValue()).isEqualTo(value);
         assertThat(st.getRawSearchTerm()).isEqualTo(raw);
-        assertThat(st.toString()).isEqualTo((!value ? "-" : "") + FIELD_NAME);
+        assertThat(st.getDisplayValue()).isEqualTo((!value ? "-" : "") + FIELD_NAME);
     }
 
     @Test

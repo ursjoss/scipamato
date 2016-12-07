@@ -102,13 +102,12 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Test
     public void clickingRemoveButtonOnSearchTerms_removesSearchTerm() {
-        final String labelToString = "searchConditionToString";
+        final String labelDisplayValue = "searchConditionDisplayValue";
         final SearchCondition sc = new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
-            @Override
-            public String toString() {
-                return labelToString;
+            public String getDisplayValue() {
+                return labelDisplayValue;
             }
         };
         final List<SearchCondition> conditions = Arrays.asList(sc);
@@ -122,10 +121,10 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
         final String linkPath = "searchOrderPanel:form:searchTerms:body:rows:1:cells:2:cell:link";
         getTester().assertComponent(linkPath, AjaxLink.class);
-        getTester().assertContains(labelToString);
+        getTester().assertContains(labelDisplayValue);
         getTester().clickLink(linkPath);
         getTester().debugComponentTrees();
-        getTester().assertContainsNot(labelToString);
+        getTester().assertContainsNot(labelDisplayValue);
 
         // TODO test that the event is sent
         // TODO also test that receiving the event adds the filter panel to the target

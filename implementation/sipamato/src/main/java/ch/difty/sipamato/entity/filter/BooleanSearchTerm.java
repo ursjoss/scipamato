@@ -14,11 +14,15 @@ public class BooleanSearchTerm extends SearchTerm<BooleanSearchTerm> {
     private final boolean value;
 
     BooleanSearchTerm(final String fieldName, final String rawSearchTerm) {
-        this(null, fieldName, rawSearchTerm);
+        this(null, null, fieldName, rawSearchTerm);
     }
 
     BooleanSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
-        super(SearchTermType.BOOLEAN, searchConditionId, fieldName, rawSearchTerm);
+        this(null, searchConditionId, fieldName, rawSearchTerm);
+    }
+
+    BooleanSearchTerm(final Long id, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+        super(id, SearchTermType.BOOLEAN, searchConditionId, fieldName, rawSearchTerm);
         final String rst = rawSearchTerm.trim();
         this.value = Boolean.valueOf(rst);
     }
@@ -32,7 +36,7 @@ public class BooleanSearchTerm extends SearchTerm<BooleanSearchTerm> {
      * If false: <code>-fieldName</code>
      */
     @Override
-    public String toString() {
+    public String getDisplayValue() {
         if (getValue()) {
             return getFieldName();
         } else {

@@ -497,32 +497,32 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void testToString_withSingleStringSearchTerms_returnsIt() {
+    public void testDisplayValue_withSingleStringSearchTerms_returnsIt() {
         sc.setAuthors("hoops");
-        assertThat(sc.toString()).isEqualTo("hoops");
+        assertThat(sc.getDisplayValue()).isEqualTo("hoops");
     }
 
     @Test
-    public void testToString_withTwoStringSearchTerms_joinsThemUsingAnd() {
+    public void testDisplayValue_withTwoStringSearchTerms_joinsThemUsingAnd() {
         sc.setAuthors("rag");
         sc.setMethodConfounders("bones");
-        assertThat(sc.toString()).isEqualTo("rag AND bones");
+        assertThat(sc.getDisplayValue()).isEqualTo("rag AND bones");
     }
 
     @Test
-    public void testToString_forBooleanSearchTermsBeginFalse() {
+    public void testDisplayValue_forBooleanSearchTermsBeginFalse() {
         sc.setFirstAuthorOverridden(false);
-        assertThat(sc.toString()).isEqualTo("-first_author_overridden");
+        assertThat(sc.getDisplayValue()).isEqualTo("-first_author_overridden");
     }
 
     @Test
-    public void testToString_withMultipleSearchTerms_joinsThemAllUsingAND() {
+    public void testDisplayValue_withMultipleSearchTerms_joinsThemAllUsingAND() {
         sc.setAuthors("fooAuth");
         sc.setMethodStudyDesign("bar");
         sc.setDoi("baz");
         sc.setPublicationYear("2016");
         sc.setFirstAuthorOverridden(true);
-        assertThat(sc.toString()).isEqualTo("fooAuth AND bar AND baz AND 2016 AND first_author_overridden");
+        assertThat(sc.getDisplayValue()).isEqualTo("fooAuth AND bar AND baz AND 2016 AND first_author_overridden");
     }
 
     @Test

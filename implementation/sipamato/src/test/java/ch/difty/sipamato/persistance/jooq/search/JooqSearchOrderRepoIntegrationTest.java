@@ -128,13 +128,13 @@ public class JooqSearchOrderRepoIntegrationTest {
         SearchCondition so1 = so.getSearchConditions().get(0);
         assertThat(so1).isNotNull();
         assertThat(so1.getAuthors()).isEqualTo("kutlar");
-        assertThat(so1.toString()).isEqualTo("kutlar");
+        assertThat(so1.getDisplayValue()).isEqualTo("kutlar");
 
         SearchCondition so2 = so.getSearchConditions().get(1);
         assertThat(so2).isNotNull();
         assertThat(so2.getAuthors()).isEqualTo("turner");
         assertThat(so2.getPublicationYear()).isEqualTo("2014-2015");
-        assertThat(so2.toString()).isEqualTo("turner AND 2014-2015");
+        assertThat(so2.getDisplayValue()).isEqualTo("turner AND 2014-2015");
 
     }
 

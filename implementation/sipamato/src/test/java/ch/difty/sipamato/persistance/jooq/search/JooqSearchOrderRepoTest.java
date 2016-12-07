@@ -202,9 +202,9 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         return new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig()) {
             private static final long serialVersionUID = 1L;
 
-            SearchTerm<?> st1 = SearchTerm.of(2, 3, "authors", "joss");
-            SearchTerm<?> st2 = SearchTerm.of(1, 3, "publication_year", "2014");
-            SearchTerm<?> st3 = SearchTerm.of(1, 4, "publication_year", "2014-2016");
+            SearchTerm<?> st1 = SearchTerm.of(1, 2, 3, "authors", "joss");
+            SearchTerm<?> st2 = SearchTerm.of(2, 1, 3, "publication_year", "2014");
+            SearchTerm<?> st3 = SearchTerm.of(3, 1, 4, "publication_year", "2014-2016");
 
             @Override
             protected List<SearchTerm<?>> fetchSearchTermsFor(long searchOrderId) {
@@ -232,12 +232,12 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         assertThat(so1).isNotNull();
         assertThat(so1.getAuthors()).isEqualTo("joss");
         assertThat(so1.getPublicationYear()).isEqualTo("2014");
-        assertThat(so1.toString()).isEqualTo("joss AND 2014");
+        assertThat(so1.getDisplayValue()).isEqualTo("joss AND 2014");
 
         SearchCondition so2 = so.getSearchConditions().get(1);
         assertThat(so2).isNotNull();
         assertThat(so2.getPublicationYear()).isEqualTo("2014-2016");
-        assertThat(so2.toString()).isEqualTo("2014-2016");
+        assertThat(so2.getDisplayValue()).isEqualTo("2014-2016");
     }
 
 }
