@@ -78,6 +78,8 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     }
 
     private void makeSearchOrderPanel(final String id) {
+        queue(new Label(id + LABEL_TAG, new StringResourceModel(id + PANEL_HEADER_RESOURCE_TAG, this, null)));
+
         searchOrderPanel = new SearchOrderPanel(id, getModel());
         searchOrderPanel.setOutputMarkupId(true);
         queue(searchOrderPanel);
