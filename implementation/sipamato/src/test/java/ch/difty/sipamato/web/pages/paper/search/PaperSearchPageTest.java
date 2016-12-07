@@ -83,6 +83,10 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     private void assertResultPanel(String b) {
         getTester().assertComponent(b, ResultPanel.class);
+
+        String bb = b + "Label";
+        getTester().assertComponent(bb, Label.class);
+        getTester().assertModelValue(bb, "Search Results");
     }
 
     @Test

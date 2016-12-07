@@ -152,4 +152,8 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         queue(newButton);
     }
 
+    protected void queuePanelHeadingFor(String id) {
+        queue(new Label(id + LABEL_TAG, new StringResourceModel(id + PANEL_HEADER_RESOURCE_TAG, this, null)));
+    }
+
 }
