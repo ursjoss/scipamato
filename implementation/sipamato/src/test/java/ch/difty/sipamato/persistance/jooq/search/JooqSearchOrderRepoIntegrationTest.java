@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.entity.filter.SearchCondition;
 
 /**
  * Note: The test will insert some records into the DB. It will try to wipe those records after the test suite terminates.
@@ -114,6 +115,27 @@ public class JooqSearchOrderRepoIntegrationTest {
         assertThat(deleted.getId()).isEqualTo(id);
 
         assertThat(repo.findById(id)).isNull();
+    }
+
+    @Test
+    public void enrichingAssociatedEntities_hasConditionsAndTerms() {
+        final SearchOrder so = new SearchOrder();
+        so.setId(1l);
+        repo.enrichAssociatedEntitiesOf(so);
+
+        assertThat(so.getSearchConditions()).hasSize(2);
+
+        SearchCondition so1 = so.getSearchConditions().get(0);
+        assertThat(so1).isNotNull();
+        assertThat(so1.getAuthors()).isEqualTo("kutlar");
+        assertThat(so1.getPublicationYear()).isEqualTo("2014");
+        assertThat(so1.toString()).isEqualTo("kutlar AND 2014");
+
+        SearchCondition so2 = so.getSearchConditions().get(1);
+        assertThat(so2).isNotNull();
+        assertThat(so2.getPublicationYear()).isEqualTo("2014-2015");
+        assertThat(so2.toString()).isEqualTo("2014-2015");
+
     }
 
 }

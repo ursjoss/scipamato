@@ -21,7 +21,7 @@ public class StringSearchTermsTest {
     public void compareEmptySearchTerms_withSingleIdenticalKeyValueSearchTerm_match() {
         st1.put("key", new StringSearchTerm("key", "value"));
         st2.put("key", new StringSearchTerm("key", "value"));
-        assertEqualityBetween(st1, st2, 115262162);
+        assertEqualityBetween(st1, st2, 213944462);
     }
 
     @Test
@@ -30,7 +30,7 @@ public class StringSearchTermsTest {
         st2.put("key1", new StringSearchTerm("key1", "value"));
         st1.put("key2", new StringSearchTerm("key2", "value2"));
         st2.put("key2", new StringSearchTerm("key2", "value2"));
-        assertEqualityBetween(st1, st2, 1614595920);
+        assertEqualityBetween(st1, st2, 696972082);
     }
 
     private void assertEqualityBetween(StringSearchTerms st1, StringSearchTerms st2, int hashValue) {
@@ -43,7 +43,7 @@ public class StringSearchTermsTest {
     @Test
     public void compareEmptySearchTerms_withDiffernetSearchTerms_dontMatch() {
         st1.put("key", new StringSearchTerm("key", "value"));
-        assertInequalityBetween(st1, st2, 115262162, 1);
+        assertInequalityBetween(st1, st2, 213944462, 1);
     }
 
     private void assertInequalityBetween(StringSearchTerms st1, StringSearchTerms st2, int hashValue1, int hashValue2) {
@@ -58,7 +58,7 @@ public class StringSearchTermsTest {
     public void compareEmptySearchTerms_withDiffernetSearchTermValues_dontMatch() {
         st1.put("key", new StringSearchTerm("key", "value"));
         st2.put("key", new StringSearchTerm("key", "valueX"));
-        assertInequalityBetween(st1, st2, 115262162, -820523416);
+        assertInequalityBetween(st1, st2, 213944462, -721841116);
     }
 
     @Test

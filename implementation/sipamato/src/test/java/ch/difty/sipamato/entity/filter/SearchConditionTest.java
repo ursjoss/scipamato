@@ -553,7 +553,7 @@ public class SearchConditionTest {
         f1.setAuthors("foo");
         SearchCondition f2 = new SearchCondition();
         f2.setAuthors("foo");
-        assertEquality(f1, f2, -1401938339);
+        assertEquality(f1, f2, 854384907);
     }
 
     @Test
@@ -572,7 +572,7 @@ public class SearchConditionTest {
         f2.setFirstAuthor("baz");
         f2.setFirstAuthorOverridden(true);
         f2.setMethodOutcome("blup");
-        assertEquality(f1, f2, 2006844842);
+        assertEquality(f1, f2, -1183920866);
 
         f2.setMethodOutcome("blup2");
         assertThat(f1.equals(f2)).isFalse();

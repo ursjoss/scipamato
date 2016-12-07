@@ -50,6 +50,9 @@ import ch.difty.sipamato.entity.Paper;
  * Internally it stores any of the fields that were explicitly set in Maps that can be accessed
  * to be evaluated by the query engine.
  *
+ * <b>Note:</b> the actual ID of the {@link SearchCondition} is called <code>searchConditionId</code>
+ * as it overlaps with the id for filtering papers by id.
+ *
  * @author u.joss
  */
 public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
@@ -58,9 +61,45 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
 
     private static final String JOIN_DELIMITER = " AND ";
 
+    private Long conditionId;
+
     private final StringSearchTerms stringSearchTerms = new StringSearchTerms();
     private final IntegerSearchTerms integerSearchTerms = new IntegerSearchTerms();
     private final BooleanSearchTerms booleanSearchTerms = new BooleanSearchTerms();
+
+    public SearchCondition() {
+    }
+
+    public SearchCondition(Long id) {
+        setConditionId(id);
+    }
+
+    public Long getConditionId() {
+        return conditionId;
+    }
+
+    public void setConditionId(Long conditionId) {
+        this.conditionId = conditionId;
+    }
+
+    public void addSearchTerm(final SearchTerm<?> searchTerm) {
+        switch (searchTerm.getSearchTermType()) {
+        case BOOLEAN:
+            final BooleanSearchTerm bst = (BooleanSearchTerm) searchTerm;
+            booleanSearchTerms.put(bst.getFieldName(), bst);
+            break;
+        case INTEGER:
+            final IntegerSearchTerm ist = (IntegerSearchTerm) searchTerm;
+            integerSearchTerms.put(ist.getFieldName(), ist);
+            break;
+        case STRING:
+            final StringSearchTerm sst = (StringSearchTerm) searchTerm;
+            stringSearchTerms.put(sst.getFieldName(), sst);
+            break;
+        default:
+            throw new UnsupportedOperationException("SearchTermType." + searchTerm.getSearchTermType() + " is not supported");
+        }
+    }
 
     /**
      * @return all search terms specified for string fields in entity {@link Paper}
@@ -415,4 +454,5 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
 //            return false;
         return true;
     }
+
 }

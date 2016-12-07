@@ -14,7 +14,11 @@ public class BooleanSearchTerm extends SearchTerm<BooleanSearchTerm> {
     private final boolean value;
 
     BooleanSearchTerm(final String fieldName, final String rawSearchTerm) {
-        super(SearchTermType.BOOLEAN, fieldName, rawSearchTerm);
+        this(null, fieldName, rawSearchTerm);
+    }
+
+    BooleanSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+        super(SearchTermType.BOOLEAN, searchConditionId, fieldName, rawSearchTerm);
         final String rst = rawSearchTerm.trim();
         this.value = Boolean.valueOf(rst);
     }

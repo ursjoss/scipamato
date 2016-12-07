@@ -34,7 +34,11 @@ public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
     private final String value;
 
     StringSearchTerm(final String fieldName, final String rawSearchTerm) {
-        super(SearchTermType.STRING, fieldName, rawSearchTerm);
+        this(null, fieldName, rawSearchTerm);
+    }
+
+    StringSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+        super(SearchTermType.STRING, searchConditionId, fieldName, rawSearchTerm);
         final String rst = rawSearchTerm.trim();
         if (rst.length() >= 3 && rst.startsWith("=\"") && rst.endsWith("\"")) {
             this.type = MatchType.EXACT;

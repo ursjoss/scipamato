@@ -40,7 +40,11 @@ public class IntegerSearchTerm extends SearchTerm<IntegerSearchTerm> {
     private final int value2;
 
     IntegerSearchTerm(final String fieldName, final String rawSearchTerm) {
-        super(SearchTermType.INTEGER, fieldName, rawSearchTerm);
+        this(null, fieldName, rawSearchTerm);
+    }
+
+    IntegerSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+        super(SearchTermType.INTEGER, searchConditionId, fieldName, rawSearchTerm);
         final String rst = rawSearchTerm.trim();
         if (rst.length() > 2 && rst.startsWith(">=")) {
             this.type = MatchType.GREATER_OR_EQUAL;
