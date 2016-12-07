@@ -5,8 +5,10 @@ import org.apache.wicket.authroles.authorization.strategies.role.annotations.Aut
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.annotation.mount.MountPath;
 
@@ -68,6 +70,8 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     }
 
     private void makeSearchOrderSelectorPanel(String id) {
+        queue(new Label(id + LABEL_TAG, new StringResourceModel(id + PANEL_HEADER_RESOURCE_TAG, this, null)));
+
         searchOrderSelectorPanel = new SearchOrderSelectorPanel(id, getModel());
         searchOrderSelectorPanel.setOutputMarkupId(true);
         queue(searchOrderSelectorPanel);

@@ -4,7 +4,6 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.event.Broadcast;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
@@ -36,11 +35,9 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     private void queueForm(String id) {
         queue(new Form<Void>(id));
 
-        final String selectId = "searchOrder";
-        queue(new Label(selectId + LABEL_TAG, new StringResourceModel(selectId + LABEL_RECOURCE_TAG, this, null)));
-
         final SearchOrderModel choices = new SearchOrderModel(1); // TODO use real user id
         final IChoiceRenderer<SearchOrder> choiceRenderer = new ChoiceRenderer<SearchOrder>(SearchOrder.DISPLAY_VALUE, SearchOrder.ID);
+        final String selectId = "searchOrder";
         final StringResourceModel noneSelectedModel = new StringResourceModel(selectId + ".noneSelected", this, null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig().withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);
         final BootstrapSelect<SearchOrder> searchOrder = new BootstrapSelect<SearchOrder>(selectId, getModel(), choices, choiceRenderer).with(config);

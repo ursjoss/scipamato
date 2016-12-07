@@ -39,6 +39,7 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
     protected static final String LABEL_TAG = "Label";
     protected static final String LABEL_RECOURCE_TAG = ".label";
+    protected static final String PANEL_HEADER_RESOURCE_TAG = ".header";
 
     private NotificationPanel feedbackPanel;
     private Navbar navBar;

@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
@@ -59,11 +58,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     private void assertForm(String b) {
         getTester().assertComponent(b, Form.class);
 
-        String bb = b + ":searchOrderLabel";
-        getTester().assertComponent(bb, Label.class);
-        getTester().assertModelValue(bb, "Saved Searches");
-
-        bb = b + ":searchOrder";
+        String bb = b + ":searchOrder";
         getTester().assertComponent(bb, BootstrapSelect.class);
     }
 

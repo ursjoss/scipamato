@@ -46,6 +46,10 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     private void assertSearchOrderSelectorPanel(String b) {
         getTester().assertComponent(b, SearchOrderSelectorPanel.class);
         assertSearchOrderSelectorPanelForm(b + ":form");
+
+        String bb = b + "Label";
+        getTester().assertComponent(bb, Label.class);
+        getTester().assertModelValue(bb, "Saved Searches");
     }
 
     private void assertSearchOrderSelectorPanelForm(String b) {
