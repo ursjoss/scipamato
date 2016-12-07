@@ -1,5 +1,6 @@
 package ch.difty.sipamato.web.panel.search;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.event.Broadcast;
@@ -14,6 +15,7 @@ import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.web.model.SearchOrderModel;
 import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 
 public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     private static final long serialVersionUID = 1L;
@@ -39,8 +41,10 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
 
         final SearchOrderModel choices = new SearchOrderModel(1); // TODO use real user id
         final IChoiceRenderer<SearchOrder> choiceRenderer = new ChoiceRenderer<SearchOrder>(SearchOrder.DISPLAY_VALUE, SearchOrder.ID);
-        final BootstrapSelect<SearchOrder> select = new BootstrapSelect<SearchOrder>("searchOrder", getModel(), choices, choiceRenderer);
-        select.add(new AjaxFormComponentUpdatingBehavior(CHANGE) {
+        final StringResourceModel noneSelectedModel = new StringResourceModel(selectId + ".noneSelected", this, null);
+        final BootstrapSelectConfig config = new BootstrapSelectConfig().withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);
+        final BootstrapSelect<SearchOrder> searchOrder = new BootstrapSelect<SearchOrder>(selectId, getModel(), choices, choiceRenderer).with(config);
+        searchOrder.add(new AjaxFormComponentUpdatingBehavior(CHANGE) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -48,7 +52,8 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
             }
         });
-        queue(select);
+        searchOrder.add(new AttributeModifier("data-width", "fit"));
+        queue(searchOrder);
     }
 
 }
