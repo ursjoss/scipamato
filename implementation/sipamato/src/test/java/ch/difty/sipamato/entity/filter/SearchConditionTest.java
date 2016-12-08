@@ -614,4 +614,51 @@ public class SearchConditionTest {
         f2.setSearchConditionId(3l);
         assertEquality(f1, f2, -1400955236);
     }
+
+    @Test
+    public void newSearchCondition_hasEmptyRemovedKeys() {
+        assertThat(new SearchCondition().getRemovedKeys()).isEmpty();
+    }
+
+    @Test
+    public void addingSearchTerms_leavesRemovedKeysEmpty() {
+        SearchCondition sc = new SearchCondition();
+        sc.setAuthors("foo");
+        sc.setPublicationYear("2014");
+        sc.setFirstAuthorOverridden(true);
+        assertThat(sc.getRemovedKeys()).isEmpty();
+    }
+
+    @Test
+    public void removingSearchTerms_addsThemToRemovedKeys() {
+        SearchCondition sc = new SearchCondition();
+        sc.setAuthors("foo");
+        sc.setPublicationYear("2014");
+        sc.setGoals("bar");
+
+        sc.setPublicationYear(null);
+        assertThat(sc.getRemovedKeys()).hasSize(1).containsOnly("publication_year");
+    }
+
+    @Test
+    public void addingSearchTerm_afterRemovingIt_removesItFromRemovedKeys() {
+        SearchCondition sc = new SearchCondition();
+        sc.setPublicationYear("2014");
+        sc.setPublicationYear(null);
+        sc.setPublicationYear("2015");
+        assertThat(sc.getRemovedKeys()).isEmpty();
+    }
+
+    @Test
+    public void addingSearchTerm_xafterRemovingIt_removesItFromRemovedKeys() {
+        SearchCondition sc = new SearchCondition();
+        sc.setAuthors("foo");
+        sc.setAuthors(null);
+        sc.setPublicationYear("2014");
+        sc.setPublicationYear(null);
+        assertThat(sc.getRemovedKeys()).hasSize(2);
+
+        sc.clearRemovedKeys();
+        assertThat(sc.getRemovedKeys()).isEmpty();
+    }
 }

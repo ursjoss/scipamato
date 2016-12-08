@@ -30,7 +30,9 @@ import static ch.difty.sipamato.entity.Paper.FLD_TITLE;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import ch.difty.sipamato.entity.Code;
@@ -66,6 +68,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     private final StringSearchTerms stringSearchTerms = new StringSearchTerms();
     private final IntegerSearchTerms integerSearchTerms = new IntegerSearchTerms();
     private final BooleanSearchTerms booleanSearchTerms = new BooleanSearchTerms();
+    private final Set<String> removedKeys = new HashSet<>();
 
     public SearchCondition() {
     }
@@ -382,7 +385,9 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     private void setStringValue(final String key, String value) {
         if (value != null) {
             stringSearchTerms.put(key, new StringSearchTerm(key, value));
+            getRemovedKeys().remove(key);
         } else {
+            getRemovedKeys().add(key);
             stringSearchTerms.remove(key);
         }
     }
@@ -395,7 +400,9 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     private void setIntegerValue(final String key, String value) {
         if (value != null) {
             integerSearchTerms.put(key, new IntegerSearchTerm(key, value));
+            getRemovedKeys().remove(key);
         } else {
+            getRemovedKeys().add(key);
             integerSearchTerms.remove(key);
         }
     }
@@ -408,7 +415,9 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     private void setBooleanValue(final String key, Boolean value) {
         if (value != null) {
             booleanSearchTerms.put(key, new BooleanSearchTerm(key, value.toString()));
+            getRemovedKeys().remove(key);
         } else {
+            getRemovedKeys().add(key);
             booleanSearchTerms.remove(key);
         }
     }
@@ -460,4 +469,11 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         return true;
     }
 
+    public Set<String> getRemovedKeys() {
+        return removedKeys;
+    }
+
+    public void clearRemovedKeys() {
+        removedKeys.clear();
+    }
 }
