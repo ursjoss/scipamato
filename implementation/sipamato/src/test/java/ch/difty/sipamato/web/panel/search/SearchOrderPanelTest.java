@@ -11,7 +11,6 @@ import java.util.List;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.DataGridView;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
@@ -70,10 +69,10 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
         getTester().assertComponent(b, BootstrapDefaultDataTable.class);
         getTester().assertComponent(b + ":body", WebMarkupContainer.class);
         getTester().assertComponent(b + ":body:rows", DataGridView.class);
-        getTester().assertComponent(b + ":body:rows:1:cells:1:cell", Label.class);
+        getTester().assertLabel(b + ":body:rows:1:cells:1:cell", "foo");
         getTester().assertComponent(b + ":body:rows:1:cells:2:cell", LinkIconPanel.class);
         getTester().assertComponent(b + ":body:rows:1:cells:2:cell:link", AjaxLink.class);
-        getTester().assertComponent(b + ":body:rows:1:cells:2:cell:link:image", Label.class);
+        getTester().assertLabel(b + ":body:rows:1:cells:2:cell:link:image", "");
     }
 
     @Test
@@ -105,6 +104,7 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
         getTester().assertContains("foo");
         getTester().clickLink("panel:form:searchTerms:body:rows:1:cells:2:cell:link");
         getTester().assertInfoMessages("Removed foo");
+        getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:searchTerms");
     }
 
 }
