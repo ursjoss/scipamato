@@ -10,9 +10,10 @@ import org.junit.Test;
 // TODO test codes
 public class SearchConditionTest {
 
+    private static final long SEARCH_CONDITION_ID = 1;
     private static final String X = "x";
 
-    private final SearchCondition sc = new SearchCondition();
+    private final SearchCondition sc = new SearchCondition(1l);
 
     @Test
     public void allStringSearchTerms() {
@@ -43,6 +44,8 @@ public class SearchConditionTest {
         assertThat(sc.getStringSearchTerms()).hasSize(24);
         assertThat(sc.getIntegerSearchTerms()).isEmpty();
         assertThat(sc.getBooleanSearchTerms()).isEmpty();
+
+        assertThat(sc.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
     }
 
     @Test
@@ -52,6 +55,8 @@ public class SearchConditionTest {
         assertThat(sc.getStringSearchTerms()).isEmpty();
         assertThat(sc.getIntegerSearchTerms()).hasSize(2);
         assertThat(sc.getBooleanSearchTerms()).isEmpty();
+
+        assertThat(sc.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
     }
 
     @Test
@@ -60,6 +65,8 @@ public class SearchConditionTest {
         assertThat(sc.getStringSearchTerms()).isEmpty();
         assertThat(sc.getIntegerSearchTerms()).isEmpty();
         assertThat(sc.getBooleanSearchTerms()).hasSize(1);
+
+        assertThat(sc.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
     }
 
     @Test
@@ -124,6 +131,8 @@ public class SearchConditionTest {
         assertThat(sc.getStringSearchTerms()).isEmpty();
         assertThat(sc.getIntegerSearchTerms()).isEmpty();
         assertThat(sc.getBooleanSearchTerms()).isEmpty();
+
+        assertThat(sc.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
     }
 
     @Test
@@ -526,18 +535,18 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash() {
-        assertThat(sc.hashCode()).isEqualTo(30784);
+    public void equalsAndHash1_ofFieldSc() {
+        assertThat(sc.hashCode()).isEqualTo(954305);
         assertThat(sc.equals(sc)).isTrue();
         assertThat(sc.equals(null)).isFalse();
         assertThat(sc.equals(new String())).isFalse();
     }
 
     @Test
-    public void equalsAndHash2() {
+    public void equalsAndHash2_withEmptySearchConditions() {
         SearchCondition f1 = new SearchCondition();
         SearchCondition f2 = new SearchCondition();
-        assertEquality(f1, f2, 30784);
+        assertEquality(f1, f2, 924514);
     }
 
     private void assertEquality(SearchCondition f1, SearchCondition f2, int hashCode) {
@@ -548,16 +557,16 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash3() {
+    public void equalsAndHash3_withSingleAttribute() {
         SearchCondition f1 = new SearchCondition();
         f1.setAuthors("foo");
         SearchCondition f2 = new SearchCondition();
         f2.setAuthors("foo");
-        assertEquality(f1, f2, 854384907);
+        assertEquality(f1, f2, 855278637);
     }
 
     @Test
-    public void equalsAndHash4() {
+    public void equalsAndHash4_withManyAttributes() {
         SearchCondition f1 = new SearchCondition();
         f1.setAuthors("foo");
         f1.setComment("bar");
@@ -572,7 +581,7 @@ public class SearchConditionTest {
         f2.setFirstAuthor("baz");
         f2.setFirstAuthorOverridden(true);
         f2.setMethodOutcome("blup");
-        assertEquality(f1, f2, -1183920866);
+        assertEquality(f1, f2, -1183027136);
 
         f2.setMethodOutcome("blup2");
         assertThat(f1.equals(f2)).isFalse();
@@ -584,4 +593,25 @@ public class SearchConditionTest {
         assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode());
     }
 
+    @Test
+    public void equalsAndHash5_withDifferentSearchConditionIds() {
+        SearchCondition f1 = new SearchCondition();
+        f1.setAuthors("foo");
+        SearchCondition f2 = new SearchCondition();
+        f2.setAuthors("foo");
+        assertEquality(f1, f2, 855278637);
+
+        f1.setSearchConditionId(3l);
+        assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode());
+        assertThat(f1.equals(f2)).isFalse();
+        assertThat(f2.equals(f1)).isFalse();
+
+        f2.setSearchConditionId(4l);
+        assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode());
+        assertThat(f1.equals(f2)).isFalse();
+        assertThat(f2.equals(f1)).isFalse();
+
+        f2.setSearchConditionId(3l);
+        assertEquality(f1, f2, 855368010);
+    }
 }

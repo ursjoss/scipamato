@@ -112,7 +112,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
                         SEARCH_TERM.RAW_VALUE.as("rv"))
                 .from(SEARCH_TERM)
                 .innerJoin(SEARCH_CONDITION)
-                .on(SEARCH_CONDITION.ID.equal(SEARCH_TERM.SEARCH_CONDITION_ID))
+                .on(SEARCH_CONDITION.SEARCH_CONDITION_ID.equal(SEARCH_TERM.SEARCH_CONDITION_ID))
                 .where(SEARCH_CONDITION.SEARCH_ORDER_ID.equal(searchOrderId))
                 .fetch(r -> SearchTerm.of((long) r.get("id"), (int) r.get("stt"), (long) r.get("scid"), (String) r.get("fn"), (String) r.get("rv")));
         // @formatter:on
@@ -147,7 +147,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     private void storeExistingConditionsOf(SearchOrder searchOrder) {
         final Long searchOrderId = searchOrder.getId();
         for (final SearchCondition sc : searchOrder.getSearchConditions()) {
-            Long searchConditionId = sc.getConditionId();
+            Long searchConditionId = sc.getSearchConditionId();
             if (searchConditionId == null) {
                 addSearchCondition(sc, searchOrderId);
             } else {
@@ -165,17 +165,16 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     }
 
     private void deleteObsoleteConditionsFrom(SearchOrder searchOrder) {
-        final List<Long> conditionIds = searchOrder.getSearchConditions().stream().map(SearchCondition::getConditionId).collect(Collectors.toList());
-        getDsl().deleteFrom(SEARCH_CONDITION).where(SEARCH_CONDITION.SEARCH_ORDER_ID.equal(searchOrder.getId()).and(SEARCH_CONDITION.ID.notIn(conditionIds))).execute();
+        final List<Long> conditionIds = searchOrder.getSearchConditions().stream().map(SearchCondition::getSearchConditionId).collect(Collectors.toList());
+        getDsl().deleteFrom(SEARCH_CONDITION).where(SEARCH_CONDITION.SEARCH_ORDER_ID.equal(searchOrder.getId()).and(SEARCH_CONDITION.SEARCH_CONDITION_ID.notIn(conditionIds))).execute();
         // TODO delete search terms of remaining conditions
     }
 
     @Override
     public SearchCondition addSearchCondition(SearchCondition searchCondition, long searchOrderId) {
         final SearchConditionRecord searchConditionRecord = getDsl().insertInto(SEARCH_CONDITION, SEARCH_CONDITION.SEARCH_ORDER_ID).values(searchOrderId).returning().fetchOne();
-        persistSearchTerms(searchCondition, searchConditionRecord.getId());
-        // TODO fetchInto(SearchCondition.class does not fill in the searchconditionId -> mismatch ID vs searchconditionId
-        return getDsl().selectFrom(SEARCH_CONDITION).where(SEARCH_CONDITION.ID.eq(searchConditionRecord.getId())).fetchOneInto(SearchCondition.class);
+        persistSearchTerms(searchCondition, searchConditionRecord.getSearchConditionId());
+        return getDsl().selectFrom(SEARCH_CONDITION).where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchConditionRecord.getSearchConditionId())).fetchOneInto(SearchCondition.class);
     }
 
     private void persistSearchTerms(SearchCondition searchCondition, Long searchConditionId) {
@@ -218,10 +217,10 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     public SearchCondition updateSearchCondition(SearchCondition searchCondition, long searchOrderId) {
         getDsl().update(SEARCH_CONDITION)
                 .set(row(SEARCH_CONDITION.SEARCH_ORDER_ID, SEARCH_CONDITION.LAST_MODIFIED, SEARCH_CONDITION.LAST_MODIFIED_BY), row(searchOrderId, getTs(), getOwner()))
-                .where(SEARCH_CONDITION.ID.eq(searchCondition.getConditionId()))
+                .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchCondition.getSearchConditionId()))
                 .execute();
-        persistSearchTerms(searchCondition, searchCondition.getConditionId());
-        return getDsl().selectFrom(SEARCH_CONDITION).where(SEARCH_CONDITION.ID.eq(searchCondition.getConditionId())).fetchOneInto(SearchCondition.class);
+        persistSearchTerms(searchCondition, searchCondition.getSearchConditionId());
+        return getDsl().selectFrom(SEARCH_CONDITION).where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchCondition.getSearchConditionId())).fetchOneInto(SearchCondition.class);
     }
 
     // TODO replace with currentDate bean

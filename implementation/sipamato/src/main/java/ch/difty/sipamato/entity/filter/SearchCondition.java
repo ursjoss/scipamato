@@ -42,16 +42,18 @@ import ch.difty.sipamato.entity.Paper;
 
 /**
  * The {@link SearchCondition} is an instance of {@link SipamatoFilter} that provides
- * accessors for all fields present in the entity {@link Paper}, but all in String form.
+ * accessors for all fields present in the entity {@link Paper}, but all in String form.<p/>
  *
  * The provided String values may contain query specific meta information that can be interpreted
- * by the query infrastructure to specify e.g. ranges or wildcards.
+ * by the query infrastructure to specify e.g. ranges or wildcards.<p/>
  *
  * Internally it stores any of the fields that were explicitly set in Maps that can be accessed
- * to be evaluated by the query engine.
+ * to be evaluated by the query engine.<p/>
  *
  * <b>Note:</b> the actual ID of the {@link SearchCondition} is called <code>searchConditionId</code>
- * as it overlaps with the id for filtering papers by id.
+ * due to the name clash with its search condition id, which holds the search term for the paper id.<p/>
+ *
+ * TODO it's currently possible to add a search term twice if saved after first (first has id, second does not. Need to check this
  *
  * @author u.joss
  */
@@ -61,7 +63,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
 
     private static final String JOIN_DELIMITER = " AND ";
 
-    private Long conditionId;
+    private Long searchConditionId;
 
     private final StringSearchTerms stringSearchTerms = new StringSearchTerms();
     private final IntegerSearchTerms integerSearchTerms = new IntegerSearchTerms();
@@ -70,16 +72,16 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     public SearchCondition() {
     }
 
-    public SearchCondition(Long id) {
-        setConditionId(id);
+    public SearchCondition(Long searchConditionId) {
+        setSearchConditionId(searchConditionId);
     }
 
-    public Long getConditionId() {
-        return conditionId;
+    public Long getSearchConditionId() {
+        return searchConditionId;
     }
 
-    public void setConditionId(Long conditionId) {
-        this.conditionId = conditionId;
+    public void setSearchConditionId(Long searchConditionId) {
+        this.searchConditionId = searchConditionId;
     }
 
     public void addSearchTerm(final SearchTerm<?> searchTerm) {
@@ -424,6 +426,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + (searchConditionId == null ? 0 : searchConditionId.hashCode());
         result = prime * result + stringSearchTerms.hashCode();
         result = prime * result + integerSearchTerms.hashCode();
         result = prime * result + booleanSearchTerms.hashCode();
@@ -440,6 +443,11 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         if (getClass() != obj.getClass())
             return false;
         SearchCondition other = (SearchCondition) obj;
+        if (searchConditionId == null) {
+            if (other.searchConditionId != null)
+                return false;
+        } else if (!searchConditionId.equals(other.searchConditionId))
+            return false;
         if (!booleanSearchTerms.equals(other.booleanSearchTerms))
             return false;
         if (!integerSearchTerms.equals(other.integerSearchTerms))

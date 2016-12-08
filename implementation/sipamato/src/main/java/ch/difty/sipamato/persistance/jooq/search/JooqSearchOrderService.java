@@ -59,7 +59,7 @@ public class JooqSearchOrderService implements SearchOrderService {
     /** {@inheritDoc} */
     @Override
     public SearchCondition saveOrUpdateSearchCondition(SearchCondition searchCondition, long searchOrderId) {
-        if (searchCondition.getConditionId() == null) {
+        if (searchCondition.getSearchConditionId() == null) {
             return repo.addSearchCondition(searchCondition, searchOrderId);
         } else {
             return repo.updateSearchCondition(searchCondition, searchOrderId);

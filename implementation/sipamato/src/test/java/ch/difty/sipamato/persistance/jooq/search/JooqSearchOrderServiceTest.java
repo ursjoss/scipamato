@@ -115,21 +115,21 @@ public class JooqSearchOrderServiceTest {
     @Test
     public void savingOrUpdatingSearchCondition_withConditionWithNullId_delegatesAddingToRepo() {
         final long searchOrderId = 3;
-        when(searchConditionMock.getConditionId()).thenReturn(null);
+        when(searchConditionMock.getSearchConditionId()).thenReturn(null);
         when(repoMock.addSearchCondition(searchConditionMock, searchOrderId)).thenReturn(searchConditionMock);
         assertThat(service.saveOrUpdateSearchCondition(searchConditionMock, searchOrderId)).isEqualTo(searchConditionMock);
         verify(repoMock).addSearchCondition(searchConditionMock, searchOrderId);
-        verify(searchConditionMock).getConditionId();
+        verify(searchConditionMock).getSearchConditionId();
     }
 
     @Test
     public void savingOrUpdatingSearchCondition_withConditionWithId_delegatesUpdatingToRepo() {
         final long searchOrderId = 3;
-        when(searchConditionMock.getConditionId()).thenReturn(17l);
+        when(searchConditionMock.getSearchConditionId()).thenReturn(17l);
         when(repoMock.updateSearchCondition(searchConditionMock, searchOrderId)).thenReturn(searchConditionMock);
         assertThat(service.saveOrUpdateSearchCondition(searchConditionMock, searchOrderId)).isEqualTo(searchConditionMock);
         verify(repoMock).updateSearchCondition(searchConditionMock, searchOrderId);
-        verify(searchConditionMock).getConditionId();
+        verify(searchConditionMock).getSearchConditionId();
     }
 
 }

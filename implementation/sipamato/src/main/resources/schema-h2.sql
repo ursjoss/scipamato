@@ -156,7 +156,7 @@ CREATE TABLE search_order (
 DROP TABLE IF EXISTS search_condition;
 
 CREATE TABLE search_condition (
-  id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  search_condition_id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   search_order_id BIGINT NOT NULL,
   
   version INT DEFAULT 1,
@@ -185,4 +185,4 @@ CREATE TABLE search_term (
   last_modified_by INT DEFAULT 1,
 );
 
-ALTER TABLE search_term ADD FOREIGN KEY (search_condition_id) REFERENCES search_condition(id) on delete cascade on update cascade;
+ALTER TABLE search_term ADD FOREIGN KEY (search_condition_id) REFERENCES search_condition(search_condition_id) on delete cascade on update cascade;
