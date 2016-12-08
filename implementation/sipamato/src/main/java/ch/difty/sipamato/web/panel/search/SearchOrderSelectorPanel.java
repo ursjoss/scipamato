@@ -16,6 +16,21 @@ import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 
+/**
+ * Panel offering the user the option of:
+ *
+ * <ul>
+ * <li>selecting from previously saved search orders via a select box</li>
+ * <li>changing the global flag of search orders (TODO)</li>
+ * <li>saving new or modified search orders (TODO)</li>
+ * </ul>
+ *
+ * Once a modification has been issued, the panel will issue a {@link SearchOrderChangeEvent} to the page.
+ * The page and other panels within the page can then react to the new or modified selection.
+ *
+ * @author u.joss
+ *
+ */
 public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     private static final long serialVersionUID = 1L;
 
@@ -28,25 +43,27 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     @Override
     protected void onInitialize() {
         super.onInitialize();
-
         queueForm("form");
     }
 
     private void queueForm(String id) {
         queue(new Form<Void>(id));
+        makeAndQueueSearchOrderSelectBox("searchOrder");
+    }
 
+    private void makeAndQueueSearchOrderSelectBox(final String id) {
         final SearchOrderModel choices = new SearchOrderModel(1); // TODO use real user id
         final IChoiceRenderer<SearchOrder> choiceRenderer = new ChoiceRenderer<SearchOrder>(SearchOrder.DISPLAY_VALUE, SearchOrder.ID);
-        final String selectId = "searchOrder";
-        final StringResourceModel noneSelectedModel = new StringResourceModel(selectId + ".noneSelected", this, null);
+        final StringResourceModel noneSelectedModel = new StringResourceModel(id + ".noneSelected", this, null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig().withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);
-        final BootstrapSelect<SearchOrder> searchOrder = new BootstrapSelect<SearchOrder>(selectId, getModel(), choices, choiceRenderer).with(config);
+        final BootstrapSelect<SearchOrder> searchOrder = new BootstrapSelect<SearchOrder>(id, getModel(), choices, choiceRenderer).with(config);
         searchOrder.add(new AjaxFormComponentUpdatingBehavior(CHANGE) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
+                info("Sent SearchOrderChangeEvent");
             }
         });
         searchOrder.add(new AttributeModifier("data-width", "fit"));

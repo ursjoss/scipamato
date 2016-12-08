@@ -21,6 +21,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.service.CodeClassService;
+import ch.difty.sipamato.service.CodeService;
+import ch.difty.sipamato.service.PaperSlimService;
 import ch.difty.sipamato.service.SearchOrderService;
 import ch.difty.sipamato.web.PageParameterNames;
 import ch.difty.sipamato.web.component.data.LinkIconPanel;
@@ -37,6 +40,12 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @MockBean
     private SearchOrderService searchOrderServiceMock;
+    @MockBean
+    private PaperSlimService paperSlimServiceMock;
+    @MockBean
+    private CodeClassService codeClassServiceMock;
+    @MockBean
+    private CodeService codeServiceMock;
 
     private final SearchOrder searchOrder = new SearchOrder(SEARCH_ORDER_ID, 1, false, null);
 
@@ -67,15 +76,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     private void assertSearchOrderSelectorPanel(String b) {
         getTester().assertComponent(b, SearchOrderSelectorPanel.class);
-        assertSearchOrderSelectorPanelForm(b + ":form");
-
-        String bb = b + "Label";
-        getTester().assertComponent(bb, Label.class);
-        getTester().assertModelValue(bb, "Saved Searches");
-    }
-
-    private void assertSearchOrderSelectorPanelForm(String b) {
-        getTester().assertComponent(b, Form.class);
+        getTester().assertLabel(b + "Label", "Saved Searches");
     }
 
     private void assertSearchOrderPanel(String b) {
