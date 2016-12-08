@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.panel.paper;
+package ch.difty.sipamato.web.pages;
 
 public enum Mode {
     EDIT,

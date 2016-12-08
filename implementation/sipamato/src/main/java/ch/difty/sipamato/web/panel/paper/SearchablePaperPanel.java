@@ -3,6 +3,7 @@ package ch.difty.sipamato.web.panel.paper;
 import org.apache.wicket.model.IModel;
 
 import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.web.pages.Mode;
 
 public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
 
