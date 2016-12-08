@@ -53,8 +53,6 @@ import ch.difty.sipamato.entity.Paper;
  * <b>Note:</b> the actual ID of the {@link SearchCondition} is called <code>searchConditionId</code>
  * due to the name clash with its search condition id, which holds the search term for the paper id.<p/>
  *
- * TODO it's currently possible to add a search term twice if saved after first (first has id, second does not. Need to check this
- *
  * @author u.joss
  */
 public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
