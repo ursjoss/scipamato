@@ -23,6 +23,12 @@ import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
+/**
+ * The result panel shows the results of searches (by filter or by search order) which are provided
+ * by the instantiating page through the dataprovider holding the filter specification.
+ *
+ * @author u.joss
+ */
 public class ResultPanel extends GenericPanel<Void> {
     private static final long serialVersionUID = 1L;
 
@@ -31,6 +37,12 @@ public class ResultPanel extends GenericPanel<Void> {
 
     private final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider;
 
+    /**
+     * Instantiate the panel.
+     *
+     * @param id the id of the panel
+     * @param dataProvider the datapprovider extending {@link SortablePaperSlimProvider} holding the filter specs
+     */
     public ResultPanel(String id, SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
         super(id);
         this.dataProvider = dataProvider;

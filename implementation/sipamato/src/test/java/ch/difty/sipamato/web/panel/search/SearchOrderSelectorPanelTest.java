@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Pageable;
@@ -60,6 +61,16 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
         String bb = b + ":searchOrder";
         getTester().assertComponent(bb, BootstrapSelect.class);
+    }
+
+    @Test
+    public void testSelectUpdateBehavior() {
+        getTester().startComponentInPage(makePanel());
+
+        getTester().executeAjaxEvent(PANEL_ID + ":form:searchOrder", "change");
+
+        // TODO how to assert the event was actually broadcast without issuing the test info message
+        getTester().assertInfoMessages("Sent SearchOrderChangeEvent");
     }
 
 }
