@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
@@ -79,11 +78,8 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     private void assertResultPanel(String b) {
+        getTester().assertLabel(b + "Label", "Search Results");
         getTester().assertComponent(b, ResultPanel.class);
-
-        String bb = b + "Label";
-        getTester().assertComponent(bb, Label.class);
-        getTester().assertModelValue(bb, "Search Results");
     }
 
     @Test
