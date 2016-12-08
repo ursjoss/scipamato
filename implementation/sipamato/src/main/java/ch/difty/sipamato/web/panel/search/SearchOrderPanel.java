@@ -100,6 +100,7 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
                 consumer.accept(rowModel);
                 target.add(searchTerms);
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
+                info("Removed " + rowModel.getObject().getDisplayValue());
             }
         };
     }

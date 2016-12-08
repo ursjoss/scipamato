@@ -9,10 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.extensions.markup.html.repeater.data.grid.DataGridView;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
@@ -26,13 +23,10 @@ import ch.difty.sipamato.service.CodeService;
 import ch.difty.sipamato.service.PaperSlimService;
 import ch.difty.sipamato.service.SearchOrderService;
 import ch.difty.sipamato.web.PageParameterNames;
-import ch.difty.sipamato.web.component.data.LinkIconPanel;
 import ch.difty.sipamato.web.pages.BasePageTest;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
 import ch.difty.sipamato.web.panel.search.SearchOrderPanel;
 import ch.difty.sipamato.web.panel.search.SearchOrderSelectorPanel;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
@@ -75,33 +69,13 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     private void assertSearchOrderSelectorPanel(String b) {
-        getTester().assertComponent(b, SearchOrderSelectorPanel.class);
         getTester().assertLabel(b + "Label", "Saved Searches");
+        getTester().assertComponent(b, SearchOrderSelectorPanel.class);
     }
 
     private void assertSearchOrderPanel(String b) {
+        getTester().assertLabel(b + "Label", "Search Conditions");
         getTester().assertComponent(b, SearchOrderPanel.class);
-        assertSearchOrderPanelForm(b + ":form");
-
-        String bb = b + "Label";
-        getTester().assertComponent(bb, Label.class);
-        getTester().assertModelValue(bb, "Search Conditions");
-    }
-
-    private void assertSearchOrderPanelForm(String b) {
-        getTester().assertComponent(b, Form.class);
-        getTester().assertComponent(b + ":addSearch", BootstrapAjaxButton.class);
-        assertSearchTerms(b + ":searchTerms");
-    }
-
-    private void assertSearchTerms(String b) {
-        getTester().assertComponent(b, BootstrapDefaultDataTable.class);
-        getTester().assertComponent(b + ":body", WebMarkupContainer.class);
-        getTester().assertComponent(b + ":body:rows", DataGridView.class);
-        getTester().assertComponent(b + ":body:rows:1:cells:1:cell", Label.class);
-        getTester().assertComponent(b + ":body:rows:1:cells:2:cell", LinkIconPanel.class);
-        getTester().assertComponent(b + ":body:rows:1:cells:2:cell:link", AjaxLink.class);
-        getTester().assertComponent(b + ":body:rows:1:cells:2:cell:link:image", Label.class);
     }
 
     private void assertResultPanel(String b) {
