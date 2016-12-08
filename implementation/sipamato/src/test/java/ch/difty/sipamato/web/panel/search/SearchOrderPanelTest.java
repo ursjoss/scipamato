@@ -69,7 +69,7 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
         getTester().assertComponent(b, BootstrapDefaultDataTable.class);
         getTester().assertComponent(b + ":body", WebMarkupContainer.class);
         getTester().assertComponent(b + ":body:rows", DataGridView.class);
-        getTester().assertLabel(b + ":body:rows:1:cells:1:cell", "foo");
+        getTester().assertLabel(b + ":body:rows:1:cells:1:cell:link:label", "foo");
         getTester().assertComponent(b + ":body:rows:1:cells:2:cell", LinkIconPanel.class);
         getTester().assertComponent(b + ":body:rows:1:cells:2:cell:link", AjaxLink.class);
         getTester().assertLabel(b + ":body:rows:1:cells:2:cell:link:image", "");
@@ -105,6 +105,13 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
         getTester().clickLink("panel:form:searchTerms:body:rows:1:cells:2:cell:link");
         getTester().assertInfoMessages("Removed foo");
         getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:searchTerms");
+    }
+
+    @Test
+    public void clickingLink_opensPaperSearchCriteriaPage() {
+        getTester().startComponentInPage(makePanel());
+        getTester().clickLink(PANEL_ID + ":form:searchTerms:body:rows:1:cells:1:cell:link");
+        getTester().assertRenderedPage(PaperSearchCriteriaPage.class);
     }
 
 }
