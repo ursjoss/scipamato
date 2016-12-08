@@ -207,7 +207,7 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
             SearchTerm<?> st3 = SearchTerm.of(3, 1, 4, "publication_year", "2014-2016");
 
             @Override
-            protected List<SearchTerm<?>> fetchSearchTermsFor(long searchOrderId) {
+            protected List<SearchTerm<?>> fetchSearchTermsForSearchOrderWithId(long searchOrderId) {
                 if (searchOrderId == SAMPLE_ID) {
                     return Arrays.asList(st1, st2, st3);
                 } else {

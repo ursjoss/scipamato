@@ -6,9 +6,10 @@ import ch.difty.sipamato.lib.AssertAs;
 /**
  * Implementations of {@link SearchTerm} accept a <code>fieldName</code> as key and a <code>rawSearchTerm</code> as value.
  * The rawSearchTerm holds a comparison specification holding a value and some meta information on how to compare the field
- * with the provided value.
- * 
- * Identity is based on fielName and rawSearchTerm, as well as the searchConditionId only.
+ * with the provided value.<p/>
+ *
+ * <b>Note:</b>Identity is based on <code>fieldName</code> and <code>rawSearchTerm</code> only, thus ignoring <code>id</code>
+ *             or <code>searchConditionId</code>. This might be an issue in some use cases in the future!
  *
  * @author u.joss
  */
@@ -73,7 +74,6 @@ public abstract class SearchTerm<T extends SearchTerm<?>> extends IdSipamatoEnti
         final int prime = 31;
         int result = 1;
         result = prime * result + fieldName.hashCode();
-        result = prime * result + (searchConditionId == null ? 0 : (int) (searchConditionId ^ (searchConditionId >>> 32)));
         result = prime * result + searchTerm.hashCode();
         return result;
     }
@@ -88,11 +88,6 @@ public abstract class SearchTerm<T extends SearchTerm<?>> extends IdSipamatoEnti
             return false;
         @SuppressWarnings("unchecked")
         final T other = (T) obj;
-        if (searchConditionId == null) {
-            if (other.getSearchConditionId() != null)
-                return false;
-        } else if (!searchConditionId.equals(other.getSearchConditionId()))
-            return false;
         if (!fieldName.equals(other.getFieldName()))
             return false;
         else if (!searchTerm.equals(other.getRawSearchTerm()))

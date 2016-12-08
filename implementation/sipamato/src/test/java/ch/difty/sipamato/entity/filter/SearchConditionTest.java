@@ -562,7 +562,7 @@ public class SearchConditionTest {
         f1.setAuthors("foo");
         SearchCondition f2 = new SearchCondition();
         f2.setAuthors("foo");
-        assertEquality(f1, f2, 855278637);
+        assertEquality(f1, f2, -1401044609);
     }
 
     @Test
@@ -581,7 +581,7 @@ public class SearchConditionTest {
         f2.setFirstAuthor("baz");
         f2.setFirstAuthorOverridden(true);
         f2.setMethodOutcome("blup");
-        assertEquality(f1, f2, -1183027136);
+        assertEquality(f1, f2, 2007738572);
 
         f2.setMethodOutcome("blup2");
         assertThat(f1.equals(f2)).isFalse();
@@ -599,7 +599,7 @@ public class SearchConditionTest {
         f1.setAuthors("foo");
         SearchCondition f2 = new SearchCondition();
         f2.setAuthors("foo");
-        assertEquality(f1, f2, 855278637);
+        assertEquality(f1, f2, -1401044609);
 
         f1.setSearchConditionId(3l);
         assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode());
@@ -612,6 +612,6 @@ public class SearchConditionTest {
         assertThat(f2.equals(f1)).isFalse();
 
         f2.setSearchConditionId(3l);
-        assertEquality(f1, f2, 855368010);
+        assertEquality(f1, f2, -1400955236);
     }
 }

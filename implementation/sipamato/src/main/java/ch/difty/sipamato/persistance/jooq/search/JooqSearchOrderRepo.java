@@ -8,6 +8,7 @@ import static org.jooq.impl.DSL.row;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
@@ -97,11 +98,11 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     }
 
     private Map<Long, List<SearchTerm<?>>> mapSearchTermsToSearchConditions(final SearchOrder searchOrder) {
-        final List<SearchTerm<?>> searchTerms = fetchSearchTermsFor(searchOrder.getId());
+        final List<SearchTerm<?>> searchTerms = fetchSearchTermsForSearchOrderWithId(searchOrder.getId());
         return searchTerms.stream().collect(Collectors.groupingBy(st -> st.getSearchConditionId()));
     }
 
-    protected List<SearchTerm<?>> fetchSearchTermsFor(final long searchOrderId) {
+    protected List<SearchTerm<?>> fetchSearchTermsForSearchOrderWithId(final long searchOrderId) {
         // @formatter:off
         return getDsl()
                 .select(
@@ -125,6 +126,36 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
                 sc.addSearchTerm(st);
             }
             searchOrder.add(sc);
+        }
+    }
+
+    private Map<Long, List<SearchTerm<?>>> mapSearchTermsToSearchConditions(final SearchCondition searchCondition) {
+        final List<SearchTerm<?>> searchTerms = fetchSearchTermsForSearchConditionWithId(searchCondition.getSearchConditionId());
+        return searchTerms.stream().collect(Collectors.groupingBy(st -> st.getSearchConditionId()));
+    }
+    
+    protected List<SearchTerm<?>> fetchSearchTermsForSearchConditionWithId(final long searchConditionId) {
+        // @formatter:off
+        return getDsl()
+                .select(
+                        SEARCH_TERM.ID.as("id"),
+                        SEARCH_TERM.SEARCH_TERM_TYPE.as("stt"),
+                        SEARCH_TERM.SEARCH_CONDITION_ID.as("scid"),
+                        SEARCH_TERM.FIELD_NAME.as("fn"),
+                        SEARCH_TERM.RAW_VALUE.as("rv"))
+                .from(SEARCH_TERM)
+                .innerJoin(SEARCH_CONDITION)
+                .on(SEARCH_CONDITION.SEARCH_CONDITION_ID.equal(SEARCH_TERM.SEARCH_CONDITION_ID))
+                .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.equal(searchConditionId))
+                .fetch(r -> SearchTerm.of((long) r.get("id"), (int) r.get("stt"), (long) r.get("scid"), (String) r.get("fn"), (String) r.get("rv")));
+        // @formatter:on
+    }
+
+    private void fillSearchTermsInto(SearchCondition searchCondition, Map<Long, List<SearchTerm<?>>> map) {
+        for (final Entry<Long, List<SearchTerm<?>>> entry : map.entrySet()) {
+            for (final SearchTerm<?> st : entry.getValue()) {
+                searchCondition.addSearchTerm(st);
+            }
         }
     }
 
@@ -172,9 +203,37 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
 
     @Override
     public SearchCondition addSearchCondition(SearchCondition searchCondition, long searchOrderId) {
-        final SearchConditionRecord searchConditionRecord = getDsl().insertInto(SEARCH_CONDITION, SEARCH_CONDITION.SEARCH_ORDER_ID).values(searchOrderId).returning().fetchOne();
-        persistSearchTerms(searchCondition, searchConditionRecord.getSearchConditionId());
-        return getDsl().selectFrom(SEARCH_CONDITION).where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchConditionRecord.getSearchConditionId())).fetchOneInto(SearchCondition.class);
+        final Optional<SearchCondition> optionalPersisted = findEquivalentPersisted(searchCondition, searchOrderId);
+        if (optionalPersisted.isPresent()) {
+            return optionalPersisted.get();
+        } else {
+            final SearchConditionRecord searchConditionRecord = getDsl().insertInto(SEARCH_CONDITION, SEARCH_CONDITION.SEARCH_ORDER_ID).values(searchOrderId).returning().fetchOne();
+            persistSearchTerms(searchCondition, searchConditionRecord.getSearchConditionId());
+            final SearchCondition persistedSearchCondition = getDsl().selectFrom(SEARCH_CONDITION).where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchConditionRecord.getSearchConditionId())).fetchOneInto(SearchCondition.class);
+            fillSearchTermsInto(persistedSearchCondition, mapSearchTermsToSearchConditions(persistedSearchCondition));
+            return persistedSearchCondition;
+        }
+    }
+
+    /**
+     * Tries to load an already persisted instance of {@link SearchCondition} for the given search order (identified by the 
+     * <code>searchOrderId</code>) semantically covering the same searchConditions.
+     * @param searchCondition the search condition we're trying to find the semantically identical persisted version for.
+     * @param searchOrderId identifying the search order
+     * @return optional of the persisted version (if found - empty othewise)
+     */
+    private Optional<SearchCondition> findEquivalentPersisted(final SearchCondition searchCondition, final long searchOrderId) {
+        final List<SearchCondition> persisted = getDsl().selectFrom(SEARCH_CONDITION).where(SEARCH_CONDITION.SEARCH_ORDER_ID.eq(searchOrderId)).fetchInto(SearchCondition.class);
+        for (final SearchCondition sc : persisted) {
+            Long searchConditionId = sc.getSearchConditionId();
+            fillSearchTermsInto(sc, mapSearchTermsToSearchConditions(sc));
+            sc.setSearchConditionId(null);
+            if (searchCondition.equals(sc)) {
+                sc.setSearchConditionId(searchConditionId);
+                return Optional.ofNullable(sc);
+            }
+        }
+        return Optional.empty();
     }
 
     private void persistSearchTerms(SearchCondition searchCondition, Long searchConditionId) {
@@ -220,7 +279,9 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
                 .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchCondition.getSearchConditionId()))
                 .execute();
         persistSearchTerms(searchCondition, searchCondition.getSearchConditionId());
-        return getDsl().selectFrom(SEARCH_CONDITION).where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchCondition.getSearchConditionId())).fetchOneInto(SearchCondition.class);
+        SearchCondition persistedSearchCondition = getDsl().selectFrom(SEARCH_CONDITION).where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchCondition.getSearchConditionId())).fetchOneInto(SearchCondition.class);
+        fillSearchTermsInto(persistedSearchCondition, mapSearchTermsToSearchConditions(persistedSearchCondition));
+        return persistedSearchCondition;
     }
 
     // TODO replace with currentDate bean
