@@ -36,6 +36,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.web.model.CodeClassModel;
 import ch.difty.sipamato.web.model.CodeModel;
+import ch.difty.sipamato.web.pages.Mode;
 import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
@@ -297,7 +298,6 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             makeCodeClassComplex(CodeClassId.CC6, codeClasses);
             makeCodeClassComplex(CodeClassId.CC7, codeClasses);
             makeCodeClassComplex(CodeClassId.CC8, codeClasses);
-
         }
 
         private void makeCodeClass1Complex(final List<CodeClass> codeClasses, Form<T> form) {

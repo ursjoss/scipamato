@@ -39,6 +39,7 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
     protected static final String LABEL_TAG = "Label";
     protected static final String LABEL_RECOURCE_TAG = ".label";
+    protected static final String PANEL_HEADER_RESOURCE_TAG = ".header";
 
     private NotificationPanel feedbackPanel;
     private Navbar navBar;
@@ -149,6 +150,10 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
             }
         };
         queue(newButton);
+    }
+
+    protected void queuePanelHeadingFor(String id) {
+        queue(new Label(id + LABEL_TAG, new StringResourceModel(id + PANEL_HEADER_RESOURCE_TAG, this, null)));
     }
 
 }

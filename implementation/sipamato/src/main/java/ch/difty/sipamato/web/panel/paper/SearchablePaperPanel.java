@@ -2,9 +2,10 @@ package ch.difty.sipamato.web.panel.paper;
 
 import org.apache.wicket.model.IModel;
 
-import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
+import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.web.pages.Mode;
 
-public abstract class SearchablePaperPanel extends PaperPanel<ComplexPaperFilter> {
+public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
 
     private static final long serialVersionUID = 1L;
 
@@ -12,11 +13,11 @@ public abstract class SearchablePaperPanel extends PaperPanel<ComplexPaperFilter
         super(id, null, Mode.SEARCH);
     }
 
-    public SearchablePaperPanel(String id, IModel<ComplexPaperFilter> model) {
+    public SearchablePaperPanel(String id, IModel<SearchCondition> model) {
         super(id, model, Mode.SEARCH);
     }
 
-    public SearchablePaperPanel(String id, IModel<ComplexPaperFilter> model, Mode ignoredMode) {
+    public SearchablePaperPanel(String id, IModel<SearchCondition> model, Mode ignoredMode) {
         super(id, model, Mode.SEARCH);
     }
 

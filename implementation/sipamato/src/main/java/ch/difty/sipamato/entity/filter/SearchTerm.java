@@ -1,49 +1,80 @@
 package ch.difty.sipamato.entity.filter;
 
-import java.io.Serializable;
-
+import ch.difty.sipamato.entity.IdSipamatoEntity;
 import ch.difty.sipamato.lib.AssertAs;
 
 /**
- * Implementations of {@link SearchTerm} accept a <code>key</code> and a <code>rawValue</code>.
- * They key defines a field name and the rawValue a comparison type holding a value and some
- * meta information on how to compare the key with the provided value.
- * 
- * Identity is based on key and rawValue only.
+ * Implementations of {@link SearchTerm} accept a <code>fieldName</code> as key and a <code>rawSearchTerm</code> as value.
+ * The rawSearchTerm holds a comparison specification holding a value and some meta information on how to compare the field
+ * with the provided value.<p/>
+ *
+ * <b>Note:</b>Identity is based on <code>fieldName</code> and <code>rawSearchTerm</code> only, thus ignoring <code>id</code>
+ *             or <code>searchConditionId</code>. This might be an issue in some use cases in the future!
  *
  * @author u.joss
  */
-public abstract class SearchTerm<T extends SearchTerm<?>> implements Serializable {
+public abstract class SearchTerm<T extends SearchTerm<?>> extends IdSipamatoEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 
-    private final String key;
-    private final String rawValue;
+    private final Long searchConditionId;
+    private final SearchTermType searchTermType;
+    private final String fieldName;
+    private final String searchTerm;
 
-    SearchTerm(String key, String rawValue) {
-        this.key = AssertAs.notNull(key, "key");
-        this.rawValue = AssertAs.notNull(rawValue, "rawValue");
+    SearchTerm(final SearchTermType type, final String fieldName, final String rawSearchTerm) {
+        this(null, type, null, fieldName, rawSearchTerm);
     }
 
-    public String getKey() {
-        return key;
+    SearchTerm(final Long id, final SearchTermType type, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+        super(id);
+        this.searchConditionId = searchConditionId;
+        this.searchTermType = AssertAs.notNull(type);
+        this.fieldName = AssertAs.notNull(fieldName, "fieldName");
+        this.searchTerm = AssertAs.notNull(rawSearchTerm, "rawSearchTerm");
     }
 
-    public String getRawValue() {
-        return rawValue;
+    public static SearchTerm<?> of(final long id, final int searchTermTypeId, final long searchConditionId, final String fieldName, final String rawSearchTerm) {
+        SearchTermType type = SearchTermType.byId(searchTermTypeId);
+        switch (type) {
+        case BOOLEAN:
+            return new BooleanSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+        case INTEGER:
+            return new IntegerSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+        case STRING:
+            return new StringSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+        default:
+            throw new UnsupportedOperationException("SearchTermType." + type + " is not supported");
+        }
+    }
+
+    public SearchTermType getSearchTermType() {
+        return searchTermType;
+    }
+
+    public Long getSearchConditionId() {
+        return searchConditionId;
+    }
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public String getRawSearchTerm() {
+        return searchTerm;
     }
 
     @Override
-    public String toString() {
-        return rawValue;
+    public String getDisplayValue() {
+        return searchTerm;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + key.hashCode();
-        result = prime * result + rawValue.hashCode();
+        result = prime * result + fieldName.hashCode();
+        result = prime * result + searchTerm.hashCode();
         return result;
     }
 
@@ -57,9 +88,9 @@ public abstract class SearchTerm<T extends SearchTerm<?>> implements Serializabl
             return false;
         @SuppressWarnings("unchecked")
         final T other = (T) obj;
-        if (!key.equals(other.getKey()))
+        if (!fieldName.equals(other.getFieldName()))
             return false;
-        else if (!rawValue.equals(other.getRawValue()))
+        else if (!searchTerm.equals(other.getRawSearchTerm()))
             return false;
         return true;
     }

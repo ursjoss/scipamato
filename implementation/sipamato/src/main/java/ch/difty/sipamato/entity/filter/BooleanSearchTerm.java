@@ -1,7 +1,10 @@
 package ch.difty.sipamato.entity.filter;
 
 /**
- * Implementation of {@link SearchTerm} working with Boolean values.
+ * Implementation of {@link SearchTerm} working with Boolean fields.
+ *
+ * There is no meta-specification possible in boolean {@link SearchTerm}s.
+ * The value can either be <code>true</code> or <code>false</code>.
  *
  * @author u.joss
  */
@@ -10,22 +13,34 @@ public class BooleanSearchTerm extends SearchTerm<BooleanSearchTerm> {
 
     private final boolean value;
 
-    BooleanSearchTerm(final String key, final String rawValue) {
-        super(key, rawValue);
-        final String rv = rawValue.trim();
-        this.value = Boolean.valueOf(rv);
+    BooleanSearchTerm(final String fieldName, final String rawSearchTerm) {
+        this(null, null, fieldName, rawSearchTerm);
+    }
+
+    BooleanSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+        this(null, searchConditionId, fieldName, rawSearchTerm);
+    }
+
+    BooleanSearchTerm(final Long id, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+        super(id, SearchTermType.BOOLEAN, searchConditionId, fieldName, rawSearchTerm);
+        final String rst = rawSearchTerm.trim();
+        this.value = Boolean.valueOf(rst);
     }
 
     public boolean getValue() {
         return value;
     }
 
+    /**
+     * If true: <code>fieldName</code>
+     * If false: <code>-fieldName</code>
+     */
     @Override
-    public String toString() {
+    public String getDisplayValue() {
         if (getValue()) {
-            return getKey();
+            return getFieldName();
         } else {
-            return "-" + getKey();
+            return "-" + getFieldName();
         }
     }
 }

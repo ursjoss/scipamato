@@ -12,12 +12,11 @@ import org.mockito.Mock;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.persistance.jooq.EntityRepository;
 import ch.difty.sipamato.persistance.jooq.JooqEntityRepoTest;
 
-public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Long, ch.difty.sipamato.db.tables.Paper, PaperRecordMapper, SimplePaperFilter> {
+public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Long, ch.difty.sipamato.db.tables.Paper, PaperRecordMapper, PaperFilter> {
 
     private static final Long SAMPLE_ID = 3l;
 
@@ -37,7 +36,7 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     }
 
     @Override
-    protected EntityRepository<PaperRecord, Paper, Long, PaperRecordMapper, SimplePaperFilter> makeRepoFindingEntityById(Paper paper) {
+    protected EntityRepository<PaperRecord, Paper, Long, PaperRecordMapper, PaperFilter> makeRepoFindingEntityById(Paper paper) {
         return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getJooqConfig()) {
             private static final long serialVersionUID = 1L;
 
@@ -98,10 +97,10 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     }
 
     @Mock
-    private SimplePaperFilter filterMock;
+    private PaperFilter filterMock;
 
     @Override
-    protected SimplePaperFilter getFilter() {
+    protected PaperFilter getFilter() {
         return filterMock;
     }
 

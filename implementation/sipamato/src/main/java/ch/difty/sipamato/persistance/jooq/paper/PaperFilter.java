@@ -1,6 +1,9 @@
-package ch.difty.sipamato.entity.filter;
+package ch.difty.sipamato.persistance.jooq.paper;
 
-public class SimplePaperFilter extends SipamatoFilter implements SortablePaperSlimFilterState {
+import ch.difty.sipamato.entity.filter.PaperSlimFilter;
+import ch.difty.sipamato.entity.filter.SipamatoFilter;
+
+public class PaperFilter extends SipamatoFilter implements PaperSlimFilter {
 
     private static final long serialVersionUID = 1L;
 

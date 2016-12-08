@@ -41,26 +41,65 @@ import ch.difty.sipamato.entity.DefaultCodeBox;
 import ch.difty.sipamato.entity.Paper;
 
 /**
- * The {@link ComplexPaperFilter} is an instance of {@link SipamatoFilter} that provides
- * accessors for all fields present in the entity {@link Paper}, but all in String form.
+ * The {@link SearchCondition} is an instance of {@link SipamatoFilter} that provides
+ * accessors for all fields present in the entity {@link Paper}, but all in String form.<p/>
  *
  * The provided String values may contain query specific meta information that can be interpreted
- * by the query infrastructure to specify e.g. ranges or wildcards.
+ * by the query infrastructure to specify e.g. ranges or wildcards.<p/>
  *
  * Internally it stores any of the fields that were explicitly set in Maps that can be accessed
- * to be evaluated by the query engine.
+ * to be evaluated by the query engine.<p/>
+ *
+ * <b>Note:</b> the actual ID of the {@link SearchCondition} is called <code>searchConditionId</code>
+ * due to the name clash with its search condition id, which holds the search term for the paper id.<p/>
  *
  * @author u.joss
  */
-public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
+public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
 
     private static final long serialVersionUID = 1L;
 
     private static final String JOIN_DELIMITER = " AND ";
 
+    private Long searchConditionId;
+
     private final StringSearchTerms stringSearchTerms = new StringSearchTerms();
     private final IntegerSearchTerms integerSearchTerms = new IntegerSearchTerms();
     private final BooleanSearchTerms booleanSearchTerms = new BooleanSearchTerms();
+
+    public SearchCondition() {
+    }
+
+    public SearchCondition(Long searchConditionId) {
+        setSearchConditionId(searchConditionId);
+    }
+
+    public Long getSearchConditionId() {
+        return searchConditionId;
+    }
+
+    public void setSearchConditionId(Long searchConditionId) {
+        this.searchConditionId = searchConditionId;
+    }
+
+    public void addSearchTerm(final SearchTerm<?> searchTerm) {
+        switch (searchTerm.getSearchTermType()) {
+        case BOOLEAN:
+            final BooleanSearchTerm bst = (BooleanSearchTerm) searchTerm;
+            booleanSearchTerms.put(bst.getFieldName(), bst);
+            break;
+        case INTEGER:
+            final IntegerSearchTerm ist = (IntegerSearchTerm) searchTerm;
+            integerSearchTerms.put(ist.getFieldName(), ist);
+            break;
+        case STRING:
+            final StringSearchTerm sst = (StringSearchTerm) searchTerm;
+            stringSearchTerms.put(sst.getFieldName(), sst);
+            break;
+        default:
+            throw new UnsupportedOperationException("SearchTermType." + searchTerm.getSearchTermType() + " is not supported");
+        }
+    }
 
     /**
      * @return all search terms specified for string fields in entity {@link Paper}
@@ -337,7 +376,7 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
 
     private String getStringValue(String key) {
         final StringSearchTerm st = stringSearchTerms.get(key);
-        return st != null ? st.getRawValue() : null;
+        return st != null ? st.getRawSearchTerm() : null;
     }
 
     private void setStringValue(final String key, String value) {
@@ -350,7 +389,7 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
 
     private String getIntegerValue(String key) {
         final IntegerSearchTerm st = integerSearchTerms.get(key);
-        return st != null ? st.getRawValue() : null;
+        return st != null ? st.getRawSearchTerm() : null;
     }
 
     private void setIntegerValue(final String key, String value) {
@@ -374,11 +413,10 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
         }
     }
 
-    @Override
-    public String toString() {
-        final String textString = stringSearchTerms.values().stream().map(StringSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
-        final String intString = integerSearchTerms.values().stream().map(IntegerSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
-        final String boolString = booleanSearchTerms.values().stream().map(BooleanSearchTerm::toString).collect(Collectors.joining(JOIN_DELIMITER));
+    public String getDisplayValue() {
+        final String textString = stringSearchTerms.values().stream().map(StringSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
+        final String intString = integerSearchTerms.values().stream().map(IntegerSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
+        final String boolString = booleanSearchTerms.values().stream().map(BooleanSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
         return Arrays.asList(textString, intString, boolString).stream().filter((String s) -> !s.isEmpty()).collect(Collectors.joining(JOIN_DELIMITER));
     }
 
@@ -386,6 +424,7 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + (searchConditionId == null ? 0 : searchConditionId.hashCode());
         result = prime * result + stringSearchTerms.hashCode();
         result = prime * result + integerSearchTerms.hashCode();
         result = prime * result + booleanSearchTerms.hashCode();
@@ -401,7 +440,12 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        ComplexPaperFilter other = (ComplexPaperFilter) obj;
+        SearchCondition other = (SearchCondition) obj;
+        if (searchConditionId == null) {
+            if (other.searchConditionId != null)
+                return false;
+        } else if (!searchConditionId.equals(other.searchConditionId))
+            return false;
         if (!booleanSearchTerms.equals(other.booleanSearchTerms))
             return false;
         if (!integerSearchTerms.equals(other.integerSearchTerms))
@@ -415,4 +459,5 @@ public class ComplexPaperFilter extends SipamatoFilter implements CodeBoxAware {
 //            return false;
         return true;
     }
+
 }

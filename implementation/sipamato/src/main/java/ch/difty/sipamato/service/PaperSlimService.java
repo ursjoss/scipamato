@@ -6,15 +6,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.SearchOrder;
-import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
 /**
  * The {@link PaperSlimService} interface - defining {@link PaperSlim} specific service methods.
  *
  * @author u.joss
  */
-public interface PaperSlimService extends ReadOnlyService<PaperSlim, Long, SimplePaperFilter> {
+public interface PaperSlimService extends ReadOnlyService<PaperSlim, Long, PaperFilter> {
 
     /**
      * Find any paper matching the provided {@link SearchOrder}.
@@ -40,6 +40,6 @@ public interface PaperSlimService extends ReadOnlyService<PaperSlim, Long, Simpl
      * @param searchOrder {@link SearchOrder}
      * @return entity count
      */
-    int countByFilter(SearchOrder searchOrder);
+    int countBySearchOrder(SearchOrder searchOrder);
 
 }

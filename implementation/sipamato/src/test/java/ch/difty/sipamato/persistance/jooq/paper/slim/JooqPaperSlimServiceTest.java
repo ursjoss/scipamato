@@ -20,8 +20,8 @@ import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
-import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JooqPaperSlimServiceTest {
@@ -31,7 +31,7 @@ public class JooqPaperSlimServiceTest {
     @Mock
     private PaperSlimRepository repoMock;
     @Mock
-    private SimplePaperFilter simplefilterMock;
+    private PaperFilter filterMock;
     @Mock
     private SearchOrder searchOrderMock;
     @Mock
@@ -55,7 +55,7 @@ public class JooqPaperSlimServiceTest {
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(repoMock, simplefilterMock, searchOrderMock, pageableMock, paperSlimPageMock, paperSlimMock, paperMock);
+        verifyNoMoreInteractions(repoMock, filterMock, searchOrderMock, pageableMock, paperSlimPageMock, paperSlimMock, paperMock);
     }
 
     @Test
@@ -82,20 +82,20 @@ public class JooqPaperSlimServiceTest {
 
     @Test
     public void findingByFilter_delegatesToRepo() {
-        when(repoMock.findByFilter(simplefilterMock, pageableMock)).thenReturn(paperSlimPageMock);
+        when(repoMock.findByFilter(filterMock, pageableMock)).thenReturn(paperSlimPageMock);
         when(paperSlimPageMock.getContent()).thenReturn(papers);
 
-        assertThat(service.findByFilter(simplefilterMock, pageableMock)).isEqualTo(papers);
+        assertThat(service.findByFilter(filterMock, pageableMock)).isEqualTo(papers);
 
-        verify(repoMock).findByFilter(simplefilterMock, pageableMock);
+        verify(repoMock).findByFilter(filterMock, pageableMock);
         verify(paperSlimPageMock).getContent();
     }
 
     @Test
     public void countingByFilter_withSimpleFilter_delegatesToRepo() {
-        when(repoMock.countByFilter(simplefilterMock)).thenReturn(3);
-        assertThat(service.countByFilter(simplefilterMock)).isEqualTo(3);
-        verify(repoMock).countByFilter(simplefilterMock);
+        when(repoMock.countByFilter(filterMock)).thenReturn(3);
+        assertThat(service.countByFilter(filterMock)).isEqualTo(3);
+        verify(repoMock).countByFilter(filterMock);
     }
 
     @Test

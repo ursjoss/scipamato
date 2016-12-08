@@ -11,153 +11,168 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ch.difty.sipamato.entity.filter.ComplexPaperFilter;
+import ch.difty.sipamato.entity.filter.SearchCondition;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SearchOrderTest {
 
-    private final SearchOrder so = new SearchOrder(null);
+    private final SearchOrder so = new SearchOrder(10l, 1, false, null);
 
     @Mock
-    public ComplexPaperFilter mockFilter1, mockFilter2;
+    public SearchCondition mockCondition1, mockCondition2;
 
-    private List<ComplexPaperFilter> filters = new ArrayList<>();
+    private List<SearchCondition> searchConditions = new ArrayList<>();
 
     @Test
-    public void whenInstantiating_withNullList_noFiltersArePresent() {
-        assertThat(so.getFilters()).isEmpty();
+    public void testGetters() {
+        assertThat(so.getId()).isEqualTo(10);
+        assertThat(so.getOwner()).isEqualTo(1);
+        assertThat(so.isGlobal()).isEqualTo(false);
     }
 
     @Test
-    public void whenInstantiating_withEmptyList_noFiltersArePresent() {
-        assertThat(new SearchOrder(filters).getFilters()).isEmpty();
+    public void testSetters() {
+        so.setId(11l);
+        so.setOwner(2);
+        so.setGlobal(true);
+
+        assertThat(so.getId()).isEqualTo(11);
+        assertThat(so.getOwner()).isEqualTo(2);
+        assertThat(so.isGlobal()).isEqualTo(true);
     }
 
     @Test
-    public void whenInstantiating_withNonEmptyList_handedOverFiltersArePresent() {
-        filters.addAll(Arrays.asList(mockFilter1, mockFilter2));
-        assertThat(new SearchOrder(filters).getFilters()).containsExactly(mockFilter1, mockFilter2);
+    public void whenInstantiating_withNullList_hasNoConditions() {
+        assertThat(so.getSearchConditions()).isEmpty();
     }
 
     @Test
-    public void whenAddingNullFilter_itIsNotAdded() {
+    public void whenInstantiating_withEmptyList_hasNoConditions() {
+        assertThat(new SearchOrder(searchConditions).getSearchConditions()).isEmpty();
+    }
+
+    @Test
+    public void whenInstantiating_withNonEmptyList_hasHandedOverConditions() {
+        searchConditions.addAll(Arrays.asList(mockCondition1, mockCondition2));
+        assertThat(new SearchOrder(searchConditions).getSearchConditions()).containsExactly(mockCondition1, mockCondition2);
+    }
+
+    @Test
+    public void whenAddingNullCondition_itIsNotAdded() {
         so.add(null);
-        assertThat(so.getFilters()).isEmpty();
+        assertThat(so.getSearchConditions()).isEmpty();
     }
 
     @Test
-    public void whenAddingFilter_itIsGettingAdded() {
-        so.add(mockFilter1);
-        assertThat(so.getFilters()).containsExactly(mockFilter1);
+    public void whenAddingCondition_itIsGettingAdded() {
+        so.add(mockCondition1);
+        assertThat(so.getSearchConditions()).containsExactly(mockCondition1);
     }
 
     @Test
-    public void whenMergingCompositeFilterWithFilters_theResultIsMerged() {
-        assertThat(so.getFilters()).isEmpty();
-        so.add(new ComplexPaperFilter());
-
-        filters.addAll(Arrays.asList(mockFilter1, mockFilter2));
-        SearchOrder other = new SearchOrder(filters);
-        assertThat(other.getFilters()).hasSize(2);
-
-        so.merge(other);
-
-        assertThat(so.getFilters()).hasSize(3);
-    }
-
-    @Test
-    public void whenRemovingFilter_withNullParameter_doesNothing() {
-        so.add(mockFilter1);
-        so.add(mockFilter2);
-        assertThat(so.getFilters()).containsExactly(mockFilter1, mockFilter2);
+    public void whenRemovingSearchCondition_withNullParameter_doesNothing() {
+        so.add(mockCondition1);
+        so.add(mockCondition2);
+        assertThat(so.getSearchConditions()).containsExactly(mockCondition1, mockCondition2);
 
         so.remove(null);
 
-        assertThat(so.getFilters()).containsExactly(mockFilter1, mockFilter2);
+        assertThat(so.getSearchConditions()).containsExactly(mockCondition1, mockCondition2);
     }
 
     @Test
-    public void whenRemovingFilter_withFilterWhichIsPresent_doesRemoveIt() {
-        so.add(mockFilter1);
-        so.add(mockFilter2);
-        assertThat(so.getFilters()).containsExactly(mockFilter1, mockFilter2);
+    public void whenRemovingSearchCondition_withConditionWhichIsPresent_doesRemoveIt() {
+        so.add(mockCondition1);
+        so.add(mockCondition2);
+        assertThat(so.getSearchConditions()).containsExactly(mockCondition1, mockCondition2);
 
-        so.remove(mockFilter2);
+        so.remove(mockCondition2);
 
-        assertThat(so.getFilters()).containsExactly(mockFilter1);
+        assertThat(so.getSearchConditions()).containsExactly(mockCondition1);
     }
 
     @Test
-    public void whenRemovingFilter_withFilterWhichIsNotPresent_doesNothing() {
-        so.add(mockFilter2);
-        assertThat(so.getFilters()).containsExactly(mockFilter2);
+    public void whenRemovingCondition_withConditionWhichIsNotPresent_doesNothing() {
+        so.add(mockCondition2);
+        assertThat(so.getSearchConditions()).containsExactly(mockCondition2);
 
-        so.remove(mockFilter1);
+        so.remove(mockCondition1);
 
-        assertThat(so.getFilters()).containsExactly(mockFilter2);
+        assertThat(so.getSearchConditions()).containsExactly(mockCondition2);
     }
 
     @Test
-    public void testingToStringOrDisplayValue_withNoFilters_returnsBlank() {
-        assertThat(so.getFilters()).hasSize(0);
-        assertThat(so.toString()).isEqualTo("");
-        assertThat(so.getDisplayValue()).isEqualTo("");
+    public void testingToString_withNoConditions() {
+        assertThat(so.getSearchConditions()).hasSize(0);
+        assertThat(so.toString()).isEqualTo("SearchOrder[owner=1,global=false,searchConditions=[],id=10]");
     }
 
     @Test
-    public void testingToStringOrDisplayValue_withSingleFilter_returnsIt() {
-        so.add(new ComplexPaperFilter() {
+    public void testingDisplayValue_withNoConditions_returnsIDOnly() {
+        assertThat(so.getSearchConditions()).hasSize(0);
+        assertThat(so.getDisplayValue()).isEqualTo("-- (10)");
+    }
+
+    @Test
+    public void testingDisplayValue_forGlobalCSearchOrderWithNoConditions_returnsIdPlusGlobalIndicator() {
+        assertThat(so.getSearchConditions()).hasSize(0);
+        so.setGlobal(true);
+        assertThat(so.getDisplayValue()).isEqualTo("-- (10)*");
+    }
+
+    @Test
+    public void testingDisplayValue_withSingleCondition_returnsIt() {
+        so.add(new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public String toString() {
-                return "f1ToString";
+            public String getDisplayValue() {
+                return "f1DisplayValue";
             }
         });
 
-        assertThat(so.toString()).isEqualTo("f1ToString");
-        assertThat(so.getDisplayValue()).isEqualTo("f1ToString");
+        assertThat(so.getDisplayValue()).isEqualTo("f1DisplayValue (10)");
     }
 
     @Test
-    public void testingToString_withTwoFilters_joinsThemUsingOR() {
-        so.add(new ComplexPaperFilter() {
+    public void testingDisplayValue_withTwoConditions_joinsThemUsingOR() {
+        so.add(new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public String toString() {
-                return "f1ToString";
+            public String getDisplayValue() {
+                return "c1DisplayValue";
             }
         });
-        so.add(new ComplexPaperFilter() {
+        so.add(new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public String toString() {
-                return "f2ToString";
+            public String getDisplayValue() {
+                return "c2DisplayValue";
             }
         });
 
-        assertThat(so.toString()).isEqualTo("f1ToString; OR f2ToString");
+        assertThat(so.getDisplayValue()).isEqualTo("c1DisplayValue; OR c2DisplayValue (10)");
     }
 
     @Test
     public void cannotAddTheSameSearchTermTwice() {
-        ComplexPaperFilter f1 = new ComplexPaperFilter();
-        f1.setAuthors("baz");
-        f1.setTitle("foo");
-        f1.setPublicationYear("2016");
-        f1.setFirstAuthorOverridden(true);
-        ComplexPaperFilter f2 = new ComplexPaperFilter();
-        f2.setAuthors("baz");
-        f2.setTitle("foo");
-        f2.setPublicationYear("2016");
-        f2.setFirstAuthorOverridden(true);
+        SearchCondition c1 = new SearchCondition();
+        c1.setAuthors("baz");
+        c1.setTitle("foo");
+        c1.setPublicationYear("2016");
+        c1.setFirstAuthorOverridden(true);
+        SearchCondition c2 = new SearchCondition();
+        c2.setAuthors("baz");
+        c2.setTitle("foo");
+        c2.setPublicationYear("2016");
+        c2.setFirstAuthorOverridden(true);
 
-        assertThat(so.getFilters()).hasSize(0);
-        so.add(f1);
-        assertThat(so.getFilters()).hasSize(1);
-        so.add(f2);
-        assertThat(so.getFilters()).hasSize(1);
+        assertThat(so.getSearchConditions()).hasSize(0);
+        so.add(c1);
+        assertThat(so.getSearchConditions()).hasSize(1);
+        so.add(c2);
+        assertThat(so.getSearchConditions()).hasSize(1);
     }
 }

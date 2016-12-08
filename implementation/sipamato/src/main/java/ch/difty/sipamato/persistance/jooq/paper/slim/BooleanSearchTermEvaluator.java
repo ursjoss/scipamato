@@ -17,7 +17,7 @@ class BooleanSearchTermEvaluator implements SearchTermEvaluator<BooleanSearchTer
     @Override
     public Condition evaluate(final BooleanSearchTerm searchTerm) {
         AssertAs.notNull(searchTerm, "searchTerm");
-        return DSL.field(searchTerm.getKey()).equal(DSL.val(searchTerm.getValue()));
+        return DSL.field(searchTerm.getFieldName()).equal(DSL.val(searchTerm.getValue()));
     }
 
 }

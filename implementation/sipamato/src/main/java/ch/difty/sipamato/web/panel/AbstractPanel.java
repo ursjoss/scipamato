@@ -11,7 +11,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.sipamato.service.Localization;
-import ch.difty.sipamato.web.panel.paper.Mode;
+import ch.difty.sipamato.web.pages.Mode;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 
 public abstract class AbstractPanel<T> extends GenericPanel<T> {

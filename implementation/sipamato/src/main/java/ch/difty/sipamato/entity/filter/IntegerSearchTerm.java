@@ -1,7 +1,7 @@
 package ch.difty.sipamato.entity.filter;
 
 /**
- * Implementation of {@link SearchTerm} working with Integer values.
+ * Implementation of {@link SearchTerm} working with Integer fields.
  * The following {@link MatchType}s are implemented:
  *
  * <ul>
@@ -39,36 +39,44 @@ public class IntegerSearchTerm extends SearchTerm<IntegerSearchTerm> {
     private final int value;
     private final int value2;
 
-    IntegerSearchTerm(final String key, final String value) {
-        super(key, value);
-        final String rv = value.trim();
-        if (rv.length() > 2 && rv.startsWith(">=")) {
+    IntegerSearchTerm(final String fieldName, final String rawSearchTerm) {
+        this(null, fieldName, rawSearchTerm);
+    }
+
+    IntegerSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+        this(null, searchConditionId, fieldName, rawSearchTerm);
+    }
+
+    IntegerSearchTerm(final Long id, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+        super(id, SearchTermType.INTEGER, searchConditionId, fieldName, rawSearchTerm);
+        final String rst = rawSearchTerm.trim();
+        if (rst.length() > 2 && rst.startsWith(">=")) {
             this.type = MatchType.GREATER_OR_EQUAL;
-            this.value = Integer.parseInt(rv.substring(2, rv.length()).trim());
+            this.value = Integer.parseInt(rst.substring(2, rst.length()).trim());
             this.value2 = this.value;
-        } else if (rv.length() > 1 && rv.startsWith(">")) {
+        } else if (rst.length() > 1 && rst.startsWith(">")) {
             this.type = MatchType.GREATER_THAN;
-            this.value = Integer.parseInt(rv.substring(1, rv.length()).trim());
+            this.value = Integer.parseInt(rst.substring(1, rst.length()).trim());
             this.value2 = this.value;
-        } else if (rv.length() > 2 && rv.startsWith("<=")) {
+        } else if (rst.length() > 2 && rst.startsWith("<=")) {
             this.type = MatchType.LESS_OR_EQUAL;
-            this.value = Integer.parseInt(rv.substring(2, rv.length()).trim());
+            this.value = Integer.parseInt(rst.substring(2, rst.length()).trim());
             this.value2 = this.value;
-        } else if (rv.length() > 1 && rv.startsWith("<")) {
+        } else if (rst.length() > 1 && rst.startsWith("<")) {
             this.type = MatchType.LESS_THAN;
-            this.value = Integer.parseInt(rv.substring(1, rv.length()).trim());
+            this.value = Integer.parseInt(rst.substring(1, rst.length()).trim());
             this.value2 = this.value;
-        } else if (rv.length() > 1 && rv.startsWith("=")) {
+        } else if (rst.length() > 1 && rst.startsWith("=")) {
             this.type = MatchType.EXACT;
-            this.value = Integer.parseInt(rv.substring(1, rv.length()).trim());
+            this.value = Integer.parseInt(rst.substring(1, rst.length()).trim());
             this.value2 = this.value;
-        } else if (rv.length() > 1 && rv.contains("-")) {
+        } else if (rst.length() > 1 && rst.contains("-")) {
             this.type = MatchType.RANGE;
-            this.value = Integer.parseInt(rv.substring(0, rv.indexOf("-")).trim());
-            this.value2 = Integer.parseInt(rv.substring(rv.indexOf("-") + 1, rv.length()).trim());
+            this.value = Integer.parseInt(rst.substring(0, rst.indexOf("-")).trim());
+            this.value2 = Integer.parseInt(rst.substring(rst.indexOf("-") + 1, rst.length()).trim());
         } else {
             this.type = MatchType.EXACT;
-            this.value = Integer.parseInt(rv.trim());
+            this.value = Integer.parseInt(rst.trim());
             this.value2 = this.value;
         }
     }

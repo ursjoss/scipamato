@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 
+import ch.difty.sipamato.entity.IdSipamatoEntity;
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
@@ -19,7 +20,7 @@ import ch.difty.sipamato.lib.NullArgumentException;
  * @param <ID> the type of the ID of entity <literal>T</literal>
  * @param <F> the filter, extending {@link SipamatoFilter}
  */
-public interface ReadOnlyService<T extends SipamatoEntity, ID, F extends SipamatoFilter> extends Serializable {
+public interface ReadOnlyService<T extends IdSipamatoEntity<ID>, ID extends Number, F extends SipamatoFilter> extends Serializable {
 
     /**
      * Finds an individual entity by ID. Returns it as an optional of type <literal>T</literal>

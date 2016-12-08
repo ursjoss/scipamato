@@ -1,7 +1,7 @@
 package ch.difty.sipamato.entity.filter;
 
 /**
- * Implementation of {@link SearchTerm} working with String values.
+ * Implementation of {@link SearchTerm} working with String fields.
  * The following {@link MatchType}s are implemented:
  *
  * <ul>
@@ -11,7 +11,7 @@ package ch.difty.sipamato.entity.filter;
  * <li> ENDS_WITH: <code> *foo </code> or <code> "*foo" </code> </li>
  * </ul>
  *
- * The rawValues and their individual parts outside of quotation marks are trimmed, so the following examples are equally valid:
+ * The rawSearchTerms and their individual parts outside of quotation marks are trimmed, so the following examples are equally valid:
  *
  * <ul>
  * <li> <code>   foo </code> </li>
@@ -33,36 +33,44 @@ public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
     private final MatchType type;
     private final String value;
 
-    StringSearchTerm(final String key, final String value) {
-        super(key, value);
-        final String rv = value.trim();
-        if (rv.length() >= 3 && rv.startsWith("=\"") && rv.endsWith("\"")) {
+    StringSearchTerm(final String fieldName, final String rawSearchTerm) {
+        this(null, fieldName, rawSearchTerm);
+    }
+
+    StringSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+        this(null, searchConditionId, fieldName, rawSearchTerm);
+    }
+
+    StringSearchTerm(final Long id, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+        super(id, SearchTermType.STRING, searchConditionId, fieldName, rawSearchTerm);
+        final String rst = rawSearchTerm.trim();
+        if (rst.length() >= 3 && rst.startsWith("=\"") && rst.endsWith("\"")) {
             this.type = MatchType.EXACT;
-            this.value = rv.substring(2, rv.length() - 1).trim();
-        } else if (rv.length() >= 4 && rv.startsWith("\"*") && rv.endsWith("*\"")) {
+            this.value = rst.substring(2, rst.length() - 1).trim();
+        } else if (rst.length() >= 4 && rst.startsWith("\"*") && rst.endsWith("*\"")) {
             this.type = MatchType.CONTAINS;
-            this.value = rv.substring(2, rv.length() - 2);
-        } else if (rv.length() >= 2 && rv.startsWith("*") && rv.endsWith("*")) {
+            this.value = rst.substring(2, rst.length() - 2);
+        } else if (rst.length() >= 2 && rst.startsWith("*") && rst.endsWith("*")) {
             this.type = MatchType.CONTAINS;
-            this.value = rv.substring(1, rv.length() - 1);
-        } else if (rv.length() >= 3 && rv.startsWith("\"") && rv.endsWith("*\"")) {
+            this.value = rst.substring(1, rst.length() - 1);
+        } else if (rst.length() >= 3 && rst.startsWith("\"") && rst.endsWith("*\"")) {
             this.type = MatchType.STARTS_WITH;
-            this.value = rv.substring(1, rv.length() - 2);
-        } else if (rv.length() >= 3 && rv.startsWith("\"*") && rv.endsWith("\"")) {
+            this.value = rst.substring(1, rst.length() - 2);
+        } else if (rst.length() >= 3 && rst.startsWith("\"*") && rst.endsWith("\"")) {
             this.type = MatchType.ENDS_WITH;
-            this.value = rv.substring(2, rv.length() - 1);
-        } else if (rv.length() >= 2 && rv.startsWith("\"") && rv.endsWith("\"")) {
+            this.value = rst.substring(2, rst.length() - 1);
+        } else if (rst.length() >= 2 && rst.startsWith("\"") && rst.endsWith("\"")) {
             this.type = MatchType.EXACT;
-            this.value = rv.substring(1, rv.length() - 1).trim();
-        } else if (rv.length() >= 2 && rv.endsWith("*")) {
+            this.value = rst.substring(1, rst.length() - 1).trim();
+        } else if (rst.length() >= 2 && rst.endsWith("*")) {
             this.type = MatchType.STARTS_WITH;
-            this.value = rv.substring(0, rv.length() - 1);
-        } else if (rv.length() >= 2 && rv.startsWith("*")) {
+            this.value = rst.substring(0, rst.length() - 1);
+        } else if (rst.length() >= 2 && rst.startsWith("*")) {
             this.type = MatchType.ENDS_WITH;
-            this.value = rv.substring(1, rv.length());
+            this.value = rst.substring(1, rst.length());
         } else {
             this.type = MatchType.CONTAINS;
-            this.value = rv;
+            this.value = rst;
         }
     }
 

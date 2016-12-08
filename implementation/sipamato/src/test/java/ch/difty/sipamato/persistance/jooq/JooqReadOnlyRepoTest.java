@@ -35,13 +35,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import ch.difty.sipamato.entity.SipamatoEntity;
+import ch.difty.sipamato.entity.IdSipamatoEntity;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.service.Localization;
 
 @RunWith(MockitoJUnitRunner.class)
-public abstract class JooqReadOnlyRepoTest<R extends Record, T extends SipamatoEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends SipamatoFilter> {
+public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdSipamatoEntity<ID>, ID extends Number, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends SipamatoFilter> {
 
     private ReadOnlyRepository<R, T, ID, M, F> repo;
 

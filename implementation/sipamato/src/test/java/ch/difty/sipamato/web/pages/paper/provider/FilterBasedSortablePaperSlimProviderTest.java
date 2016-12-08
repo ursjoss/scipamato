@@ -28,21 +28,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.sipamato.SipamatoApplication;
-import ch.difty.sipamato.entity.filter.SimplePaperFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.persistance.jooq.paper.slim.JooqPaperSlimService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SimpleSortablePaperSlimProviderTest {
+public class FilterBasedSortablePaperSlimProviderTest {
 
-    private SimpleSortablePaperSlimProvider provider;
+    private FilterBasedSortablePaperSlimProvider provider;
 
     @Mock
     private JooqPaperSlimService serviceMock;
 
     @Mock
-    private SimplePaperFilter filterMock;
+    private PaperFilter filterMock;
 
     @Mock
     private PaperSlim entityMock;
@@ -55,7 +55,7 @@ public class SimpleSortablePaperSlimProviderTest {
     @Before
     public void setUp() {
         new WicketTester(application);
-        provider = new SimpleSortablePaperSlimProvider(filterMock);
+        provider = new FilterBasedSortablePaperSlimProvider(filterMock);
         provider.setService(serviceMock);
 
         papers.addAll(Arrays.asList(entityMock, entityMock, entityMock));
@@ -68,8 +68,8 @@ public class SimpleSortablePaperSlimProviderTest {
 
     @Test
     public void defaultFilterIsNewPaperFilter() {
-        provider = new SimpleSortablePaperSlimProvider();
-        assertThat(provider.getFilterState()).isEqualToComparingFieldByField(new SimplePaperFilter());
+        provider = new FilterBasedSortablePaperSlimProvider();
+        assertThat(provider.getFilterState()).isEqualToComparingFieldByField(new PaperFilter());
     }
 
     @Test
@@ -93,7 +93,7 @@ public class SimpleSortablePaperSlimProviderTest {
 
     @Test
     public void settingFilterState() {
-        provider = new SimpleSortablePaperSlimProvider();
+        provider = new FilterBasedSortablePaperSlimProvider();
         assertThat(provider.getFilterState()).isNotEqualTo(filterMock);
         provider.setFilterState(filterMock);
         assertThat(provider.getFilterState()).isEqualTo(filterMock);

@@ -32,7 +32,7 @@ public class BooleanSearchTermEvaluatorTest {
     }
 
     private void expectSearchTerm(boolean v) {
-        when(stMock.getKey()).thenReturn("fieldX");
+        when(stMock.getFieldName()).thenReturn("fieldX");
         when(stMock.getValue()).thenReturn(v);
     }
 

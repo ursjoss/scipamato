@@ -1,8 +1,10 @@
-package ch.difty.sipamato.web.panel.paper;
+package ch.difty.sipamato.web.pages;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
+
+import ch.difty.sipamato.web.pages.Mode;
 
 public class ModeTest {
 

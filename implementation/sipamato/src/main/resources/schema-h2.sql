@@ -33,7 +33,10 @@ CREATE TABLE paper (
   main_code_of_codeclass1 CHAR(2) NULL,
 
   version INT DEFAULT 1,
-  timestamp TIMESTAMP DEFAULT current_timestamp(),
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
 );
 
 
@@ -44,7 +47,10 @@ CREATE TABLE code_class (
   id INT NOT NULL PRIMARY KEY,
 
   version INT DEFAULT 1,
-  timestamp TIMESTAMP DEFAULT current_timestamp(),
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
 );
 
 DROP TABLE IF EXISTS code_class_tr;
@@ -57,7 +63,10 @@ CREATE TABLE code_class_tr (
   description VARCHAR NOT NULL,
 
   version INT DEFAULT 1,
-  timestamp TIMESTAMP DEFAULT current_timestamp(),
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
 );
 
 ALTER TABLE code_class_tr ADD FOREIGN KEY (code_class_id) REFERENCES code_class(id) on delete cascade on update cascade;
@@ -76,7 +85,10 @@ CREATE TABLE code (
   internal BOOLEAN NOT NULL DEFAULT 0,
 
   version INT DEFAULT 1,
-  timestamp TIMESTAMP DEFAULT current_timestamp(),
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
 );
 
 DROP INDEX IF EXISTS idx_code_unique;
@@ -93,7 +105,10 @@ CREATE TABLE code_tr (
   comment VARCHAR NULL,
 
   version INT DEFAULT 1,
-  timestamp TIMESTAMP DEFAULT current_timestamp(),
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
 );
 
 ALTER TABLE code_tr ADD FOREIGN KEY (code) REFERENCES code(code) on delete cascade on update cascade;
@@ -110,7 +125,10 @@ CREATE TABLE paper_code (
   code CHAR(2) NOT NULL,
 
   version INT DEFAULT 1,
-  timestamp TIMESTAMP DEFAULT current_timestamp(),
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
 );
 
 ALTER TABLE paper_code ADD PRIMARY KEY (paper_id, code);
@@ -119,3 +137,52 @@ ALTER TABLE paper_code ADD FOREIGN KEY (code) REFERENCES code(code) on update ca
 
 DROP INDEX IF EXISTS idx_paper_code;
 CREATE UNIQUE INDEX idx_paper_code ON paper_code (paper_id, code);
+
+DROP TABLE IF EXISTS search_order;
+
+CREATE TABLE search_order (
+  id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  owner INT DEFAULT 1,
+  global BOOLEAN NOT NULL DEFAULT false,
+
+  version INT DEFAULT 1,
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
+);
+
+
+DROP TABLE IF EXISTS search_condition;
+
+CREATE TABLE search_condition (
+  search_condition_id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  search_order_id BIGINT NOT NULL,
+  
+  version INT DEFAULT 1,
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
+);
+
+ALTER TABLE search_condition ADD FOREIGN KEY (search_order_id) REFERENCES search_order(id) on delete cascade on update cascade;
+
+
+DROP TABLE IF EXISTS search_term;
+
+CREATE TABLE search_term (
+  id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  search_condition_id BIGINT NOT NULL,
+  search_term_type INT NOT NULL,
+  field_name VARCHAR NOT NULL,
+  raw_value VARCHAR NOT NULL,
+  
+  version INT DEFAULT 1,
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
+);
+
+ALTER TABLE search_term ADD FOREIGN KEY (search_condition_id) REFERENCES search_condition(search_condition_id) on delete cascade on update cascade;
