@@ -78,21 +78,6 @@ public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilt
     }
 
     /**
-     * Merges the {@link SearchCondition}s contained in the <code>other</code> {@link SearchOrder}
-     * into its own list.
-     *
-     * @param other the source of search conditions to merge from
-     */
-    public void merge(final SearchOrder other) {
-        if (other != null) {
-            setId(other.getId());
-            setOwner(other.getOwner());
-            setGlobal(other.isGlobal());
-            searchConditions.addAll(other.getSearchConditions());
-        }
-    }
-
-    /**
      * Removes the specified {@link SearchCondition} - if not null and present.
      *
      * @param searchCondition the condition to remove

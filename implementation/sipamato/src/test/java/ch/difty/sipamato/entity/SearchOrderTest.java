@@ -70,41 +70,6 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void whenMergingNullSearchOrder_doNothing() {
-        so.add(mockCondition1);
-        assertThat(so.getSearchConditions()).containsOnly(mockCondition1);
-
-        so.merge(null);
-
-        assertThat(so.getSearchConditions()).containsOnly(mockCondition1);
-    }
-
-    @Test
-    public void whenMergingSearchOrderWithConditions_theResultIsMerged() {
-        assertThat(so.getSearchConditions()).isEmpty();
-        assertThat(so.getId()).isEqualTo(10l);
-        assertThat(so.getOwner()).isEqualTo(1);
-        assertThat(so.isGlobal()).isFalse();
-        so.add(new SearchCondition());
-        searchConditions.addAll(Arrays.asList(mockCondition1, mockCondition2));
-
-        SearchOrder other = new SearchOrder(searchConditions);
-        other.setId(100l);
-        other.setOwner(1000);
-        other.setGlobal(true);
-        assertThat(other.getSearchConditions()).hasSize(2);
-
-        so.merge(other);
-
-        assertThat(so.getSearchConditions()).hasSize(3);
-
-        assertThat(so.getId()).isEqualTo(100l);
-        assertThat(so.getOwner()).isEqualTo(1000);
-        assertThat(so.isGlobal()).isTrue();
-
-    }
-
-    @Test
     public void whenRemovingSearchCondition_withNullParameter_doesNothing() {
         so.add(mockCondition1);
         so.add(mockCondition2);
