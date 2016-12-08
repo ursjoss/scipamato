@@ -8,7 +8,6 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -16,10 +15,12 @@ import org.apache.wicket.model.StringResourceModel;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.web.component.SerializableBiConsumer;
 import ch.difty.sipamato.web.component.SerializableBiFunction;
 import ch.difty.sipamato.web.component.SerializableConsumer;
 import ch.difty.sipamato.web.component.SerializableSupplier;
 import ch.difty.sipamato.web.component.data.LinkIconColumn;
+import ch.difty.sipamato.web.component.table.column.ClickablePropertyColumn2;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.provider.SearchConditionProvider;
 import ch.difty.sipamato.web.pages.paper.search.PaperSearchCriteriaPage;
@@ -81,9 +82,15 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
 
     private List<IColumn<SearchCondition, String>> makeTableColumns() {
         final List<IColumn<SearchCondition, String>> columns = new ArrayList<>();
-        columns.add(makePropertyColumn("displayValue", null));
+        columns.add(makeClickableColumn("displayValue", null, (IModel<SearchCondition> m, Long soId) -> setResponsePage(new PaperSearchCriteriaPage(m, soId))));
         columns.add(makeLinkIconColumn("remove", (IModel<SearchCondition> m) -> getModelObject().remove(m.getObject())));
         return columns;
+    }
+
+    private ClickablePropertyColumn2<SearchCondition, String, Long> makeClickableColumn(String propExpression, String sortProperty, SerializableBiConsumer<IModel<SearchCondition>, Long> consumer) {
+        final StringResourceModel displayModel = new StringResourceModel("column.header." + propExpression, this, null);
+        final Long searchOrderId = SearchOrderPanel.this.getModelObject().getId();
+        return new ClickablePropertyColumn2<SearchCondition, String, Long>(displayModel, sortProperty, propExpression, consumer, searchOrderId);
     }
 
     private IColumn<SearchCondition, String> makeLinkIconColumn(String id, SerializableConsumer<IModel<SearchCondition>> consumer) {
@@ -103,10 +110,6 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
                 info("Removed " + rowModel.getObject().getDisplayValue());
             }
         };
-    }
-
-    private PropertyColumn<SearchCondition, String> makePropertyColumn(String propExpression, String sortProperty) {
-        return new PropertyColumn<SearchCondition, String>(new StringResourceModel("column.header." + propExpression, this, null), sortProperty, propExpression);
     }
 
 }
