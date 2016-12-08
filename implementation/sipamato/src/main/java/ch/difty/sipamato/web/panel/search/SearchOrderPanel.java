@@ -82,15 +82,15 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
 
     private List<IColumn<SearchCondition, String>> makeTableColumns() {
         final List<IColumn<SearchCondition, String>> columns = new ArrayList<>();
-        columns.add(makeClickableColumn("displayValue", null, (IModel<SearchCondition> m, Long soId) -> setResponsePage(new PaperSearchCriteriaPage(m, soId))));
+        columns.add(makeClickableColumn("displayValue", null, (IModel<SearchCondition> m, Long soId) -> setResponsePage(new PaperSearchCriteriaPage(m, soId)), () -> getModelObject().getId()));
         columns.add(makeLinkIconColumn("remove", (IModel<SearchCondition> m) -> getModelObject().remove(m.getObject())));
         return columns;
     }
 
-    private ClickablePropertyColumn2<SearchCondition, String, Long> makeClickableColumn(String propExpression, String sortProperty, SerializableBiConsumer<IModel<SearchCondition>, Long> consumer) {
+    private ClickablePropertyColumn2<SearchCondition, String, Long> makeClickableColumn(String propExpression, String sortProperty, SerializableBiConsumer<IModel<SearchCondition>, Long> consumer,
+            SerializableSupplier<Long> supplier) {
         final StringResourceModel displayModel = new StringResourceModel("column.header." + propExpression, this, null);
-        final Long searchOrderId = SearchOrderPanel.this.getModelObject().getId();
-        return new ClickablePropertyColumn2<SearchCondition, String, Long>(displayModel, sortProperty, propExpression, consumer, searchOrderId);
+        return new ClickablePropertyColumn2<SearchCondition, String, Long>(displayModel, sortProperty, propExpression, consumer, supplier);
     }
 
     private IColumn<SearchCondition, String> makeLinkIconColumn(String id, SerializableConsumer<IModel<SearchCondition>> consumer) {
