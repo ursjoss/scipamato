@@ -34,8 +34,6 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 
 public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
 
-    private static final String PANEL_ID = "panel";
-
     @MockBean
     private CodeClassService codeClassServiceMock;
     @MockBean

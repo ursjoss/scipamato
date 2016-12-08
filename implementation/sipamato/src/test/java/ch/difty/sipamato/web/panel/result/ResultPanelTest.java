@@ -34,7 +34,6 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 
 public class ResultPanelTest extends PanelTest<ResultPanel> {
 
-    private static final String PANEL_ID = "panel";
     private static final long ID = 1l;
 
     @MockBean

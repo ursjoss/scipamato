@@ -23,8 +23,6 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 
 public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorPanel> {
 
-    private static final String PANEL_ID = "panel";
-
     @MockBean
     private SearchOrderService searchOrderServiceMock;
 
@@ -53,7 +51,6 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         String b = PANEL_ID;
         getTester().assertComponent(b, Panel.class);
         assertForm(b + ":form");
-
     }
 
     private void assertForm(String b) {

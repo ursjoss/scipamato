@@ -7,6 +7,8 @@ import ch.difty.sipamato.web.WicketTest;
 
 public abstract class PanelTest<T extends Panel> extends WicketTest {
 
+    protected static final String PANEL_ID = "panel";
+
     @Test
     public void assertPanel() {
         getTester().startComponentInPage(makePanel());
