@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.service.Localization;
 
 /**
@@ -37,6 +38,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
 
     private static final long serialVersionUID = 1L;
 
+    private final DateTimeService dateTimeService;
     private final InsertSetStepSetter<R, T> insertSetStepSetter;
     private final UpdateSetStepSetter<R, T> updateSetStepSetter;
     private final Configuration jooqConfig;
@@ -46,17 +48,23 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
      * @param mapper record mapper mapping record <literal>R</literal> into entity <literal>T</literal>
      * @param sortMapper {@link JooqSortMapper} mapping spring data sort specifications into jOOQ specific sort specs
      * @param filterConditionMapper the {@link GenericFilterConditionMapper} mapping a derivative of {@link SipamatoFilter} into jOOC Condition
+     * @param dateTimeService the {@link DateTimeService} providing access to the system time
      * @param localization {@link Localization} been providing the information about the requested localization code.
      * @param insertSetStepSetter {@link InsertSetStepSetter} mapping the entity fields into the jOOQ {@link InsertSetStep}.
-     * @param jooqConfig the {@link Configuration} needed to detect and manage db implementation specific aspects.
      * @param updateSetStepSetter{ @link UpdateSetStepSetter} mapping the entity fields into the jOOQ {@link UpdateSetStep}.
+     * @param jooqConfig the {@link Configuration} needed to detect and manage db implementation specific aspects.
      */
-    protected JooqEntityRepo(DSLContext dsl, M mapper, JooqSortMapper<R, T, TI> sortMapper, GenericFilterConditionMapper<F> filterConditionMapper, Localization localization,
-            InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter, Configuration jooqConfig) {
+    protected JooqEntityRepo(DSLContext dsl, M mapper, JooqSortMapper<R, T, TI> sortMapper, GenericFilterConditionMapper<F> filterConditionMapper, DateTimeService dateTimeService,
+            Localization localization, InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter, Configuration jooqConfig) {
         super(dsl, mapper, sortMapper, filterConditionMapper, localization);
         this.insertSetStepSetter = AssertAs.notNull(insertSetStepSetter, "insertSetStepSetter");
         this.updateSetStepSetter = AssertAs.notNull(updateSetStepSetter, "updateSetStepSetter");
+        this.dateTimeService = AssertAs.notNull(dateTimeService, "dateTimeService");
         this.jooqConfig = AssertAs.notNull(jooqConfig, "jooqConfig");
+    }
+
+    protected DateTimeService getDateTimeService() {
+        return dateTimeService;
     }
 
     /**

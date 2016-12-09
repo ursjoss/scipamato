@@ -5,7 +5,7 @@ import static ch.difty.sipamato.db.tables.SearchOrder.SEARCH_ORDER;
 import static ch.difty.sipamato.db.tables.SearchTerm.SEARCH_TERM;
 import static org.jooq.impl.DSL.row;
 
-import java.util.Calendar;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -30,6 +30,7 @@ import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.entity.filter.SearchTerm;
 import ch.difty.sipamato.entity.filter.StringSearchTerm;
+import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
 import ch.difty.sipamato.persistance.jooq.JooqEntityRepo;
@@ -47,9 +48,9 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
 
     @Autowired
     public JooqSearchOrderRepo(DSLContext dsl, SearchOrderRecordMapper mapper, JooqSortMapper<SearchOrderRecord, SearchOrder, ch.difty.sipamato.db.tables.SearchOrder> sortMapper,
-            GenericFilterConditionMapper<SearchOrderFilter> filterConditionMapper, Localization localization, InsertSetStepSetter<SearchOrderRecord, SearchOrder> insertSetStepSetter,
-            UpdateSetStepSetter<SearchOrderRecord, SearchOrder> updateSetStepSetter, Configuration jooqConfig) {
-        super(dsl, mapper, sortMapper, filterConditionMapper, localization, insertSetStepSetter, updateSetStepSetter, jooqConfig);
+            GenericFilterConditionMapper<SearchOrderFilter> filterConditionMapper, DateTimeService dateTimeService, Localization localization,
+            InsertSetStepSetter<SearchOrderRecord, SearchOrder> insertSetStepSetter, UpdateSetStepSetter<SearchOrderRecord, SearchOrder> updateSetStepSetter, Configuration jooqConfig) {
+        super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, localization, insertSetStepSetter, updateSetStepSetter, jooqConfig);
     }
 
     @Override
@@ -293,9 +294,8 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         return persistedSearchCondition;
     }
 
-    // TODO replace with currentDate bean
-    private java.sql.Timestamp getTs() {
-        return new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+    private Timestamp getTs() {
+        return getDateTimeService().getCurrentTimestamp();
     }
 
     // TODO replace with real ID from session
