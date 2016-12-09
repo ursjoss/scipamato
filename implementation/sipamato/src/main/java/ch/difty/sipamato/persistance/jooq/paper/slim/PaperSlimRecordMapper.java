@@ -7,6 +7,11 @@ import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.AssertAs;
 
+/**
+ * Mapper mapping {@link PaperRecord} into entity {@link PaperSlim}
+ *
+ * @author u.joss
+ */
 @Component
 public class PaperSlimRecordMapper implements RecordMapper<PaperRecord, PaperSlim> {
 

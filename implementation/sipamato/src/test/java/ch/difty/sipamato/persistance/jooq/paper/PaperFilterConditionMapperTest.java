@@ -52,7 +52,7 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
                 , "METHOD_STATISTICS"
                 , "METHOD_CONFOUNDERS"
         ));
-        // @formatter:off
+        // @formatter:on
     }
 
     @Test
@@ -75,7 +75,7 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
                 , "COMMENT"
                 , "INTERN"
         ));
-        // @formatter:off
+        // @formatter:on
     }
 
     @Test
@@ -89,9 +89,5 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
         filter.setPublicationYearUntil(2016);
         assertThat(mapper.map(filter).toString()).isEqualTo("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" <= 2016");
     }
-
-
-
-
 
 }

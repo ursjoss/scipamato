@@ -9,6 +9,12 @@ public class SearchOrderFilterTest {
     @Test
     public void canInstantiate() {
         SearchOrderFilter f = new SearchOrderFilter();
-        assertThat(f).isNotNull();
+        f.setOwner(3);
+        f.setOwnerIncludingGlobal(4);
+        f.setGlobal(true);
+
+        assertThat(f.getOwner()).isEqualTo(3);
+        assertThat(f.getOwnerIncludingGlobal()).isEqualTo(4);
+        assertThat(f.getGlobal()).isEqualTo(true);
     }
 }

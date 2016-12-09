@@ -38,6 +38,11 @@ import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 import ch.difty.sipamato.service.Localization;
 
+/**
+ * The repository to manage {@link SearchOrder}s - including the nested list of {@link SearchCondition}s.
+ *
+ * @author u.joss
+ */
 @Repository
 public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, SearchOrder, Long, ch.difty.sipamato.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter>
         implements SearchOrderRepository {

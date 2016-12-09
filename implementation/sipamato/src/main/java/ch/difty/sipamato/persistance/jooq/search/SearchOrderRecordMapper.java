@@ -5,8 +5,16 @@ import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.db.tables.records.SearchOrderRecord;
 import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.lib.AssertAs;
 
+/**
+ * Mapper mapping {@link SearchOrderRecord}s into entity {@link SearchOrder}.<p/>
+ *
+ * <b>Note:</b> the mapper leaves the nested list of {@link SearchCondition}s empty.
+ *
+ * @author u.joss
+ */
 @Component
 public class SearchOrderRecordMapper implements RecordMapper<SearchOrderRecord, SearchOrder> {
 

@@ -8,9 +8,17 @@ import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.db.tables.records.SearchOrderRecord;
 import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
 
+/**
+ * The insert step setter used for inserting new {@link SearchOrder}s.<p/>
+ *
+ * <b>Note:</b> the {@link SearchCondition}s are not inserted here.
+ *
+ * @author u.joss
+ */
 @Component
 public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<SearchOrderRecord, SearchOrder> {
 

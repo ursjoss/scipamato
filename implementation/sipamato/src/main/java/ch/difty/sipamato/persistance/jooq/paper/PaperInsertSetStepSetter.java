@@ -7,10 +7,18 @@ import org.jooq.InsertSetStep;
 import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
+import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
 
+/**
+ * The insert step setter used for inserting new {@link Paper}s.<p/>
+ *
+ * <b>Note:</b> the {@link Code}s are not inserted here.
+ *
+ * @author u.joss
+ */
 @Component
 public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord, Paper> {
 
