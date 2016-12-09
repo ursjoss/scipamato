@@ -24,6 +24,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 
 import ch.difty.sipamato.SipamatoApplication;
+import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 import ch.difty.sipamato.web.pages.login.LoginPage;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
@@ -42,6 +43,9 @@ public abstract class WicketTest {
     @Autowired
     private ApplicationContext applicationContextMock;
 
+    @Autowired
+    private DateTimeService dateTimeService;
+
     @SpyBean
     private CustomAuthenticationManager customAuthenticationManager;
 
@@ -53,6 +57,10 @@ public abstract class WicketTest {
 
     public WicketTester getTester() {
         return tester;
+    }
+
+    public DateTimeService getDateTimeService() {
+        return dateTimeService;
     }
 
     @Before
