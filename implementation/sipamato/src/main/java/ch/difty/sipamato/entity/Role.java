@@ -19,6 +19,8 @@ public class Role extends IdSipamatoEntity<Integer> {
     public static final String COMMENT = "comment";
     public static final String USERS = "users";
 
+    private static final String ROLE_TAG = "ROLE_";
+
     @NotNull
     @Size(max = 45)
     private String name;
@@ -74,6 +76,15 @@ public class Role extends IdSipamatoEntity<Integer> {
     @Override
     public String getDisplayValue() {
         return name;
+    }
+
+    public String getRole() {
+        return new StringBuilder().append(ROLE_TAG).append(name).toString();
+    }
+
+    @Override
+    public String toString() {
+        return getRole();
     }
 
 }

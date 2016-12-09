@@ -109,4 +109,18 @@ public class JooqUserServiceTest {
         verify(userMock).getId();
     }
 
+    @Test
+    public void findingByUserName_whenFindingUser_delegatesToRepoAndReturnsOptionalOfFoundUser() {
+        when(repoMock.findByUserName("foo")).thenReturn(userMock);
+        assertThat(service.findByUserName("foo")).isEqualTo(Optional.ofNullable(userMock));
+        verify(repoMock).findByUserName("foo");
+    }
+
+    @Test
+    public void findingByUserName_whenNotFindingUser_delegatesToRepoAndReturnsOptionalEmpty() {
+        when(repoMock.findByUserName("foo")).thenReturn(null);
+        assertThat(service.findByUserName("foo")).isEqualTo(Optional.empty());
+        verify(repoMock).findByUserName("foo");
+    }
+
 }

@@ -18,7 +18,6 @@ public class WicketWebSecurityTestConfig extends WicketWebSecurityConfig {
     private static final String ADMIN = "testadmin";
     private static final String PASSWORD = "secretpw";
 
-    @Override
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
      // @formatter:off

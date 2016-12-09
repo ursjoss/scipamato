@@ -119,4 +119,17 @@ public class JooqUserRepo extends JooqEntityRepo<UserRecord, User, Integer, ch.d
         getDsl().deleteFrom(USER_ROLE).where(USER_ROLE.USER_ID.equal(user.getId()).and(USER_ROLE.ROLE_ID.notIn(roleIds))).execute();
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public User findByUserName(String userName) {
+        final List<User> users = getDsl().selectFrom(USER).where(USER.USER_NAME.eq(userName)).fetchInto(User.class);
+        if (users.isEmpty()) {
+            return null;
+        } else {
+            User user = users.get(0);
+            enrichAssociatedEntitiesOf(user);
+            return user;
+        }
+    }
+
 }

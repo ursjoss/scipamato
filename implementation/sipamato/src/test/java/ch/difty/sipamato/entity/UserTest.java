@@ -44,6 +44,10 @@ public class UserTest {
         u.setEnabled(ENABLED);
         u.setRoles(roles);
 
+        assertUser(u);
+    }
+
+    private void assertUser(User u) {
         assertThat(u.getId()).isEqualTo(1);
         assertThat(u.getUserName()).isEqualTo(USER_NAME);
         assertThat(u.getFirstName()).isEqualTo(FIRST_NAME);
@@ -52,6 +56,13 @@ public class UserTest {
         assertThat(u.getPassword()).isEqualTo(PASSWORD);
         assertThat(u.isEnabled()).isEqualTo(ENABLED);
         assertThat(u.getRoles()).containsExactly(roleMock1, roleMock2);
+    }
+
+    @Test
+    public void constructingByUser() {
+        final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles);
+        final User u1 = new User(u);
+        assertUser(u1);
     }
 
     @Test

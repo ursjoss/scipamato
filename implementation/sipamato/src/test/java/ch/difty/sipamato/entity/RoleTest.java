@@ -40,6 +40,10 @@ public class RoleTest {
         assertThat(r.getName()).isEqualTo(NAME);
         assertThat(r.getComment()).isEqualTo(COMMENT);
         assertThat(r.getUsers()).containsExactly(userMock1, userMock2);
+
+        String roleName = "ROLE_" + NAME;
+        assertThat(r.getRole()).isEqualTo(roleName);
+        assertThat(r.toString()).isEqualTo(roleName);
     }
 
     @Test

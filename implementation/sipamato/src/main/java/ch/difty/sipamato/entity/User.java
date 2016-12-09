@@ -61,6 +61,17 @@ public class User extends IdSipamatoEntity<Integer> {
         this(id, userName, firstName, lastName, email, password, false, null);
     }
 
+    public User(User user) {
+        setId(user.getId());
+        this.userName = user.getUserName();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.enabled = user.isEnabled();
+        setRoles(user.getRoles());
+    }
+
     public String getUserName() {
         return userName;
     }
