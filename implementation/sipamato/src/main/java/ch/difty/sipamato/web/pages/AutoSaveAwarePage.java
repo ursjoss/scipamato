@@ -14,7 +14,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
 
 import ch.difty.sipamato.config.ApplicationProperties;
-import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.service.Localization;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarText;
@@ -34,9 +33,6 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
 
     @SpringBean
     private ApplicationProperties applicationProperties;
-
-    @SpringBean
-    private DateTimeService dateTimeService;
 
     @SpringBean
     private Localization localization;
@@ -64,7 +60,7 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
     protected final void onInitialize() {
         super.onInitialize();
 
-        lastSaveTimestamp = dateTimeService.getCurrentDateTime();
+        lastSaveTimestamp = getDateTimeService().getCurrentDateTime();
         implSpecificOnInitialize();
 
         getNavBar().setOutputMarkupId(true);
@@ -176,7 +172,7 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
                         setClean();
                         target.add(getNavBar());
                         target.add(getFeedbackPanel());
-                        lastSaveTimestamp = dateTimeService.getCurrentDateTime();
+                        lastSaveTimestamp = getDateTimeService().getCurrentDateTime();
                     } else {
                         errorValidationMessage();
                         target.add(getNavBar());
@@ -186,7 +182,7 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
             }
 
             private boolean keepAliveReached() {
-                return dateTimeService.getCurrentDateTime().minusSeconds(Double.valueOf(KEEPALIVE_SECONDS.seconds()).intValue()).isAfter(lastSaveTimestamp);
+                return getDateTimeService().getCurrentDateTime().minusSeconds(Double.valueOf(KEEPALIVE_SECONDS.seconds()).intValue()).isAfter(lastSaveTimestamp);
             }
         };
     }

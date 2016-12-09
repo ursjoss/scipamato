@@ -30,14 +30,16 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.sipamato.entity.IdSipamatoEntity;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
+import ch.difty.sipamato.lib.DateTimeService;
+import ch.difty.sipamato.lib.FrozenDateTimeService;
 import ch.difty.sipamato.lib.NullArgumentException;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringRunner.class)
 public abstract class JooqEntityRepoTest<R extends Record, T extends IdSipamatoEntity<ID>, ID extends Number, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends SipamatoFilter>
         extends JooqReadOnlyRepoTest<R, T, ID, TI, M, F> {
 
@@ -47,6 +49,12 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdSipamatoE
     private final List<R> records = new ArrayList<>();
 
     private final ID id = getSampleId();
+
+    private final DateTimeService dateTimeService = new FrozenDateTimeService();
+
+    protected DateTimeService getDateTimeService() {
+        return dateTimeService;
+    }
 
     @Mock
     private InsertSetStepSetter<R, T> insertSetStepSetterMock;

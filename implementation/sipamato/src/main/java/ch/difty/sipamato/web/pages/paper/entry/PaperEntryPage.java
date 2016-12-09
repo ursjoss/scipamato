@@ -1,7 +1,5 @@
 package ch.difty.sipamato.web.pages.paper.entry;
 
-import java.time.LocalDate;
-
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
@@ -35,7 +33,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
     private void initDefaultModel() {
         final Paper p = new Paper();
-        p.setPublicationYear(LocalDate.now().getYear());
+        p.setPublicationYear(getDateTimeService().getCurrentDate().getYear());
         setDefaultModel(Model.of(p));
     }
 

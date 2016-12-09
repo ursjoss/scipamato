@@ -1,7 +1,5 @@
 package ch.difty.sipamato.web.pages.home;
 
-import org.apache.wicket.markup.html.basic.Label;
-
 import ch.difty.sipamato.web.pages.BasePageTest;
 
 public class SipamatoHomePageTest extends BasePageTest<SipamatoHomePage> {
@@ -18,7 +16,8 @@ public class SipamatoHomePageTest extends BasePageTest<SipamatoHomePage> {
 
     @Override
     protected void assertSpecificComponents() {
-        getTester().assertComponent("message", Label.class);
+        getTester().assertLabel("message", "Hello SiPaMaTo!");
+        getTester().assertLabel("currentTime", "2016-12-09T06:02:13");
     }
 
 }

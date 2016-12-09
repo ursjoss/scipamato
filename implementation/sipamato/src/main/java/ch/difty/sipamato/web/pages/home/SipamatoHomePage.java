@@ -1,7 +1,5 @@
 package ch.difty.sipamato.web.pages.home;
 
-import java.util.Date;
-
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -25,6 +23,6 @@ public class SipamatoHomePage extends BasePage<Void> {
     protected void onInitialize() {
         super.onInitialize();
         add(new Label("message", "Hello SiPaMaTo!"));
-        add(new Label("currentTime", new Date().toString()));
+        add(new Label("currentTime", getDateTimeService().getCurrentDateTime()));
     };
 }

@@ -2,6 +2,7 @@ package ch.difty.sipamato.lib;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.junit.Test;
@@ -18,9 +19,17 @@ public class CurrentDateTimeServiceTest {
     }
 
     @Test
+    public void gettingCurrentDate() {
+        LocalDate snapshot = LocalDate.now();
+        LocalDate ld = dts.getCurrentDate();
+        assertThat(ld).isEqualTo(snapshot);
+    }
+
+    @Test
     public void gettingCurrentTimeStamp() {
         LocalDateTime snapshot = LocalDateTime.now();
         LocalDateTime ldt = dts.getCurrentTimestamp().toLocalDateTime();
         assertThat(ldt).isBetween(snapshot, snapshot.plusSeconds(1));
     }
+
 }

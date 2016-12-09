@@ -18,7 +18,9 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 import ch.difty.sipamato.web.pages.login.LogoutPage;
 import ch.difty.sipamato.web.pages.paper.list.PaperListPage;
@@ -40,6 +42,9 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
     protected static final String LABEL_TAG = "Label";
     protected static final String LABEL_RECOURCE_TAG = ".label";
     protected static final String PANEL_HEADER_RESOURCE_TAG = ".header";
+
+    @SpringBean
+    private DateTimeService dateTimeService;
 
     private NotificationPanel feedbackPanel;
     private Navbar navBar;
@@ -154,6 +159,10 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
     protected void queuePanelHeadingFor(String id) {
         queue(new Label(id + LABEL_TAG, new StringResourceModel(id + PANEL_HEADER_RESOURCE_TAG, this, null)));
+    }
+
+    protected DateTimeService getDateTimeService() {
+        return dateTimeService;
     }
 
 }

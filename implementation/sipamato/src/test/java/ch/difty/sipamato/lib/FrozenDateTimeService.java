@@ -4,32 +4,37 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 /**
- * Implementation of {@link DateTimeService} actually providing access to the system clock.
- * To be used in production.
+ * Implementation of {@link DateTimeService} constantly returning a frozen moment.
+ * This is the implementation to be used in test context.
  *
  * @author u.joss
  */
 @Component
-public class CurrentDateTimeService implements DateTimeService {
+@Primary
+public class FrozenDateTimeService implements DateTimeService {
+
+    private static final LocalDateTime FROZEN = LocalDateTime.parse("2016-12-09T06:02:13");
 
     /** {@inheritDoc} */
     @Override
     public LocalDateTime getCurrentDateTime() {
-        return LocalDateTime.now();
+        return FROZEN;
     }
 
     /** {@inheritDoc} */
     @Override
     public Timestamp getCurrentTimestamp() {
-        return new Timestamp(System.currentTimeMillis());
+        return Timestamp.valueOf(FROZEN);
     }
 
     /** {@inheritDoc} */
     @Override
     public LocalDate getCurrentDate() {
-        return LocalDate.now();
+        return LocalDate.from(FROZEN);
     }
+
 }
