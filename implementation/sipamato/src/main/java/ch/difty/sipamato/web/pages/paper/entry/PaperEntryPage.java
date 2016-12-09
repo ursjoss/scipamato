@@ -16,7 +16,7 @@ import ch.difty.sipamato.web.pages.AutoSaveAwarePage;
 import ch.difty.sipamato.web.panel.paper.EditablePaperPanel;
 
 @MountPath("entry")
-@AuthorizeInstantiation({ "ROLE_USER" })
+@AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
 public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
 
     private static final long serialVersionUID = 1L;

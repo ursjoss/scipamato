@@ -26,7 +26,7 @@ import ch.difty.sipamato.web.panel.paper.SearchablePaperPanel;
  *
  * @author u.joss
  */
-@AuthorizeInstantiation({ "ROLE_USER" })
+@AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
 public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
 
     private static final long serialVersionUID = 1L;

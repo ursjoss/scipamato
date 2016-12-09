@@ -64,7 +64,8 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     }
 
     private void makeAndQueueSearchOrderSelectBox(final String id) {
-        final SearchOrderModel choices = new SearchOrderModel(1); // TODO use real user id
+
+        final SearchOrderModel choices = new SearchOrderModel(getActiveUser().getId());
         final IChoiceRenderer<SearchOrder> choiceRenderer = new ChoiceRenderer<SearchOrder>(SearchOrder.DISPLAY_VALUE, SearchOrder.ID);
         final StringResourceModel noneSelectedModel = new StringResourceModel(id + ".noneSelected", this, null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig().withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);

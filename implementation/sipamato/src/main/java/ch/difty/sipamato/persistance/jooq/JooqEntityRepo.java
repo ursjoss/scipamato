@@ -11,9 +11,11 @@ import org.jooq.UpdateSetStep;
 import org.jooq.impl.TableImpl;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
+import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.lib.DateTimeService;
@@ -171,4 +173,10 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
     protected void updateAssociatedEntities(final T entity) {
     }
 
+    /**
+     * @return the current {@link User}
+     */
+    protected User getActiveUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
 }

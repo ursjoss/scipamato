@@ -288,7 +288,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     @Override
     public SearchCondition updateSearchCondition(SearchCondition searchCondition, long searchOrderId) {
         getDsl().update(SEARCH_CONDITION)
-                .set(row(SEARCH_CONDITION.SEARCH_ORDER_ID, SEARCH_CONDITION.LAST_MODIFIED, SEARCH_CONDITION.LAST_MODIFIED_BY), row(searchOrderId, getTs(), getOwner()))
+                .set(row(SEARCH_CONDITION.SEARCH_ORDER_ID, SEARCH_CONDITION.LAST_MODIFIED, SEARCH_CONDITION.LAST_MODIFIED_BY), row(searchOrderId, getTs(), getActiveUser().getId()))
                 .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchCondition.getSearchConditionId()))
                 .execute();
         persistSearchTerms(searchCondition, searchCondition.getSearchConditionId());
@@ -303,8 +303,4 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         return getDateTimeService().getCurrentTimestamp();
     }
 
-    // TODO replace with real ID from session
-    private int getOwner() {
-        return 1;
-    }
 }

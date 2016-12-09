@@ -39,7 +39,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCD
  * @author u.joss
  */
 @MountPath("search")
-@AuthorizeInstantiation({ "ROLE_USER" })
+@AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
 public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
