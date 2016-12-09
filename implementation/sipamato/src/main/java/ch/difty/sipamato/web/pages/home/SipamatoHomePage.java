@@ -22,7 +22,13 @@ public class SipamatoHomePage extends BasePage<Void> {
 
     protected void onInitialize() {
         super.onInitialize();
-        add(new Label("message", "Hello SiPaMaTo!"));
+        add(new Label("message", makeMessage()));
         add(new Label("currentTime", getDateTimeService().getCurrentDateTime()));
+    }
+
+    private String makeMessage() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("Hello ").append(getAuthentication().getName()).append(" - welcome to SiPaMaTo!");
+        return sb.toString();
     };
 }

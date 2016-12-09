@@ -16,7 +16,7 @@ public class SipamatoHomePageTest extends BasePageTest<SipamatoHomePage> {
 
     @Override
     protected void assertSpecificComponents() {
-        getTester().assertLabel("message", "Hello SiPaMaTo!");
+        getTester().assertLabel("message", "Hello testuser - welcome to SiPaMaTo!");
         getTester().assertLabel("currentTime", "2016-12-09T06:02:13");
     }
 
