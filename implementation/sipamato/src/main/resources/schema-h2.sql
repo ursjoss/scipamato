@@ -211,24 +211,6 @@ DROP INDEX IF EXISTS idx_user_username;
 CREATE UNIQUE INDEX idx_user_username ON user (user_name);
 
 
-DROP TABLE IF EXISTS role;
-
-CREATE TABLE role (
-  id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-  name VARCHAR(45) NOT NULL,
-  comment VARCHAR NULL,
-  
-  version INT DEFAULT 1,
-  created TIMESTAMP DEFAULT current_timestamp(),
-  created_by INT DEFAULT 1,
-  last_modified TIMESTAMP DEFAULT current_timestamp(),
-  last_modified_by INT DEFAULT 1,
-);
-
-DROP INDEX IF EXISTS idx_role_name;
-CREATE UNIQUE INDEX idx_role_name ON role (name);
-
-
 DROP TABLE IF EXISTS user_role;
 
 CREATE TABLE user_role (
@@ -244,6 +226,3 @@ CREATE TABLE user_role (
 );
 
 ALTER TABLE user_role ADD FOREIGN KEY (user_id) REFERENCES user(id) on delete cascade on update cascade;
-ALTER TABLE user_role ADD FOREIGN KEY (role_id) REFERENCES role(id) on delete cascade on update cascade;
-
-

@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import ch.difty.sipamato.auth.Role;
+
 public class UserTest {
 
     private static final int ID = 1;
