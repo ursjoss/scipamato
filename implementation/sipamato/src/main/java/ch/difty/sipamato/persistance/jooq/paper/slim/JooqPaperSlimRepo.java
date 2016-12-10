@@ -1,12 +1,15 @@
 package ch.difty.sipamato.persistance.jooq.paper.slim;
 
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
+import static ch.difty.sipamato.db.tables.SearchExclusion.SEARCH_EXCLUSION;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.jooq.Condition;
 import org.jooq.DSLContext;
+import org.jooq.Record1;
+import org.jooq.SelectConditionStep;
 import org.jooq.TableField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -71,11 +74,21 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
         AssertAs.notNull(searchOrder, "searchOrder");
 
         final Condition searchOrderCondition = getConditionsFrom(searchOrder);
-        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(searchOrderCondition).fetchInto(getRecordClass());
+        final Condition exclusionCondition = makeExclusionCondition(searchOrder);
+        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(searchOrderCondition).and(exclusionCondition).fetchInto(getRecordClass());
         final List<PaperSlim> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
         enrichAssociatedEntitiesOfAll(entities);
 
         return entities;
+    }
+
+    private Condition makeExclusionCondition(final SearchOrder searchOrder) {
+        final SelectConditionStep<Record1<Long>> excludedIds = getDsl().select(SEARCH_EXCLUSION.PAPER_ID).from(SEARCH_EXCLUSION).where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrder.getId()));
+        if (searchOrder.isInvertExclusions()) {
+            return PAPER.ID.in(excludedIds);
+        } else {
+            return PAPER.ID.notIn(excludedIds);
+        }
     }
 
     /** {@inheritDoc} */

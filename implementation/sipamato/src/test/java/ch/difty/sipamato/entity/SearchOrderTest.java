@@ -28,6 +28,7 @@ public class SearchOrderTest {
         assertThat(so.getId()).isEqualTo(10);
         assertThat(so.getOwner()).isEqualTo(1);
         assertThat(so.isGlobal()).isEqualTo(false);
+        assertThat(so.isInvertExclusions()).isEqualTo(false);
     }
 
     @Test
@@ -35,10 +36,12 @@ public class SearchOrderTest {
         so.setId(11l);
         so.setOwner(2);
         so.setGlobal(true);
+        so.setInvertExclusions(true);
 
         assertThat(so.getId()).isEqualTo(11);
         assertThat(so.getOwner()).isEqualTo(2);
         assertThat(so.isGlobal()).isEqualTo(true);
+        assertThat(so.isInvertExclusions()).isEqualTo(true);
     }
 
     @Test
@@ -104,7 +107,7 @@ public class SearchOrderTest {
     @Test
     public void testingToString_withNoConditions() {
         assertThat(so.getSearchConditions()).hasSize(0);
-        assertThat(so.toString()).isEqualTo("SearchOrder[owner=1,global=false,searchConditions=[],id=10]");
+        assertThat(so.toString()).isEqualTo("SearchOrder[owner=1,global=false,searchConditions=[],invertExclusions=false,id=10]");
     }
 
     @Test
