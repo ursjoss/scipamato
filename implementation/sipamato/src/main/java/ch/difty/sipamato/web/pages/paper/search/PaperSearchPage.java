@@ -14,6 +14,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import ch.difty.sipamato.auth.Roles;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.service.SearchOrderService;
@@ -39,7 +40,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCD
  * @author u.joss
  */
 @MountPath("search")
-@AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
+@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private static final long serialVersionUID = 1L;

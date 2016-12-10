@@ -7,10 +7,11 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 
+import ch.difty.sipamato.auth.Roles;
 import ch.difty.sipamato.web.pages.BasePage;
 
 @MountPath("/")
-@AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
+@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 @WicketHomePage
 public class SipamatoHomePage extends BasePage<Void> {
 
