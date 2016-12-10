@@ -13,12 +13,22 @@ import org.springframework.stereotype.Service;
 import ch.difty.sipamato.auth.Role;
 import ch.difty.sipamato.entity.User;
 
+/**
+ * This service has precedence over the productive implementations of {@UserDetailsService}. It will not be
+ * instantiated on production as it is in the test package, so the productive implementation will be the
+ * only one.
+ *
+ * We're using two hard-coded users, ignoring the database entirely.
+ *
+ * @author u.joss
+ */
 @Service("testUserDetailService")
 @Primary
 public class TestUserDetailService implements UserDetailsService {
 
     private static final String ADMIN = "testadmin";
     private static final String USER = "testuser";
+    // BCrypt encrypted password 'secretpw' as defined in {@link WicketTest}
     private static final String PASSWORD = "$2a$08$O/YZvh/jf1RWaZkpLPzfUeCkVczIaGLV0.vTKDCbxb0qn37qpj.Je";
 
     private final Map<String, User> users = new HashMap<>();
