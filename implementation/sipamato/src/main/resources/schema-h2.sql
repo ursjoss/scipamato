@@ -138,6 +138,8 @@ ALTER TABLE paper_code ADD FOREIGN KEY (code) REFERENCES code(code) on update ca
 DROP INDEX IF EXISTS idx_paper_code;
 CREATE UNIQUE INDEX idx_paper_code ON paper_code (paper_id, code);
 
+
+
 DROP TABLE IF EXISTS search_order;
 
 CREATE TABLE search_order (
@@ -151,6 +153,23 @@ CREATE TABLE search_order (
   last_modified TIMESTAMP DEFAULT current_timestamp(),
   last_modified_by INT DEFAULT 1,
 );
+
+DROP TABLE IF EXISTS search_exclusion;
+
+CREATE TABLE search_exclusion (
+  id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  search_order_id BIGINT NOT NULL,
+  paper_id BIGINT NOT NULL,
+  comment VARCHAR NULL,
+  
+  version INT DEFAULT 1,
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
+);
+
+ALTER TABLE search_exclusion ADD FOREIGN KEY (search_order_id) REFERENCES search_order(id) on delete cascade on update cascade;
 
 
 DROP TABLE IF EXISTS search_condition;
