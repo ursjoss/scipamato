@@ -1,15 +1,12 @@
 package ch.difty.sipamato.persistance.jooq.paper.slim;
 
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
-import static ch.difty.sipamato.db.tables.SearchExclusion.SEARCH_EXCLUSION;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.jooq.Condition;
 import org.jooq.DSLContext;
-import org.jooq.Record1;
-import org.jooq.SelectConditionStep;
 import org.jooq.TableField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -83,7 +80,7 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     }
 
     private Condition makeExclusionCondition(final SearchOrder searchOrder) {
-        final SelectConditionStep<Record1<Long>> excludedIds = getDsl().select(SEARCH_EXCLUSION.PAPER_ID).from(SEARCH_EXCLUSION).where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrder.getId()));
+        List<Long> excludedIds = searchOrder.getExcludedPaperIds();
         if (searchOrder.isInvertExclusions()) {
             return PAPER.ID.in(excludedIds);
         } else {

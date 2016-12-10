@@ -28,12 +28,14 @@ import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.RES
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.RESULT_EFFECT_ESTIMATE;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.RESULT_EXPOSURE_RANGE;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.TITLE;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
@@ -47,6 +49,9 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
     @Mock
     private Paper entityMock;
 
+    @Mock
+    private PaperRecord recordMock;
+
     @Override
     protected InsertSetStepSetter<PaperRecord, Paper> getSetter() {
         return setter;
@@ -59,7 +64,7 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
 
     @Override
     protected void specificTearDown() {
-        verifyNoMoreInteractions(entityMock);
+        verifyNoMoreInteractions(entityMock, recordMock);
     }
 
     @Override
@@ -191,4 +196,17 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
         verify(getMoreStep()).set(PAPER.ID, ID);
     }
 
+    @Test
+    public void resettingIdToEntity_withNullRecord_doesNothing() {
+        getSetter().resetIdToEntity(entityMock, null);
+        verify(entityMock, never()).setId(Mockito.anyLong());
+    }
+
+    @Test
+    public void resettingIdToEntity_withNonNullRecord_setsId() {
+        when(recordMock.getId()).thenReturn(3l);
+        getSetter().resetIdToEntity(entityMock, recordMock);
+        verify(recordMock).getId();
+        verify(entityMock).setId(Mockito.anyLong());
+    }
 }

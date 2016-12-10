@@ -26,6 +26,8 @@ public class SearchOrderRecordMapper implements RecordMapper<SearchOrderRecord, 
         to.setId(from.getId());
         to.setOwner(from.getOwner());
         to.setGlobal(from.getGlobal());
+
+        // invertExclusions is not persisted and therefore always false after mapping
         return to;
     }
 

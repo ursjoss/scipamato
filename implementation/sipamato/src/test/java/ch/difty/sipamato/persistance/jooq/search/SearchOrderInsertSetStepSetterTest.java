@@ -4,12 +4,14 @@ import static ch.difty.sipamato.db.tables.SearchOrder.SEARCH_ORDER;
 import static ch.difty.sipamato.persistance.jooq.search.SearchOrderRecordMapperTest.GLOBAL;
 import static ch.difty.sipamato.persistance.jooq.search.SearchOrderRecordMapperTest.ID;
 import static ch.difty.sipamato.persistance.jooq.search.SearchOrderRecordMapperTest.OWNER;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import ch.difty.sipamato.db.tables.records.SearchOrderRecord;
 import ch.difty.sipamato.entity.SearchOrder;
@@ -23,6 +25,9 @@ public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<
     @Mock
     private SearchOrder entityMock;
 
+    @Mock
+    private SearchOrderRecord recordMock;
+
     @Override
     protected InsertSetStepSetter<SearchOrderRecord, SearchOrder> getSetter() {
         return setter;
@@ -35,7 +40,7 @@ public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<
 
     @Override
     protected void specificTearDown() {
-        verifyNoMoreInteractions(entityMock);
+        verifyNoMoreInteractions(entityMock, recordMock);
     }
 
     @Override
@@ -78,6 +83,20 @@ public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<
 
         verify(getEntity()).getId();
         verify(getMoreStep()).set(SEARCH_ORDER.ID, ID);
+    }
+
+    @Test
+    public void resettingIdToEntity_withNullRecord_doesNothing() {
+        getSetter().resetIdToEntity(entityMock, null);
+        verify(entityMock, never()).setId(Mockito.anyLong());
+    }
+
+    @Test
+    public void resettingIdToEntity_withNonNullRecord_setsId() {
+        when(recordMock.getId()).thenReturn(3l);
+        getSetter().resetIdToEntity(entityMock, recordMock);
+        verify(recordMock).getId();
+        verify(entityMock).setId(Mockito.anyLong());
     }
 
 }

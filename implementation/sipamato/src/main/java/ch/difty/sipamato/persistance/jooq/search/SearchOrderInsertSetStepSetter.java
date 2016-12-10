@@ -45,4 +45,11 @@ public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<Searc
             step.set(SEARCH_ORDER.ID, id.longValue());
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void resetIdToEntity(SearchOrder entity, SearchOrderRecord saved) {
+        if (saved != null) {
+            entity.setId(saved.getId());
+        }
+    }
 }

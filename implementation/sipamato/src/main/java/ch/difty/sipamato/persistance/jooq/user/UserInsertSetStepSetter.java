@@ -49,4 +49,12 @@ public class UserInsertSetStepSetter implements InsertSetStepSetter<UserRecord, 
             step.set(USER.ID, id.intValue());
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void resetIdToEntity(User entity, UserRecord saved) {
+        if (saved != null) {
+            entity.setId(saved.getId());
+        }
+    }
+
 }
