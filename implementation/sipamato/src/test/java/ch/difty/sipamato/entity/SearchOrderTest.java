@@ -16,12 +16,13 @@ import ch.difty.sipamato.entity.filter.SearchCondition;
 @RunWith(MockitoJUnitRunner.class)
 public class SearchOrderTest {
 
-    private final SearchOrder so = new SearchOrder(10l, 1, false, null);
+    private final SearchOrder so = new SearchOrder(10l, 1, false, null, null);
 
     @Mock
     public SearchCondition mockCondition1, mockCondition2;
 
     private List<SearchCondition> searchConditions = new ArrayList<>();
+    private List<Long> excludedIds = new ArrayList<>();
 
     @Test
     public void testGetters() {
@@ -45,19 +46,33 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void whenInstantiating_withNullList_hasNoConditions() {
+    public void whenInstantiating_withNullLists_containsNoItems() {
         assertThat(so.getSearchConditions()).isEmpty();
+        assertThat(so.getExcludedPaperIds()).isEmpty();
     }
 
     @Test
-    public void whenInstantiating_withEmptyList_hasNoConditions() {
+    public void whenInstantiating_withEmptyConditionList_hasNoConditions() {
         assertThat(new SearchOrder(searchConditions).getSearchConditions()).isEmpty();
     }
 
     @Test
-    public void whenInstantiating_withNonEmptyList_hasHandedOverConditions() {
+    public void whenInstantiating_withEmptyExclusionList_hasNoExclusions() {
+        assertThat(excludedIds).isEmpty();
+        assertThat(new SearchOrder(10l, 1, false, null, excludedIds).getExcludedPaperIds()).isEmpty();
+    }
+
+    @Test
+    public void whenInstantiating_withNonEmptyConditionList_hasHandedOverConditions() {
         searchConditions.addAll(Arrays.asList(mockCondition1, mockCondition2));
         assertThat(new SearchOrder(searchConditions).getSearchConditions()).containsExactly(mockCondition1, mockCondition2);
+    }
+
+    @Test
+    public void whenInstantiating_withNonEmptyExlusionList_hasHandedOverExclusions() {
+        excludedIds.add(3l);
+        excludedIds.add(5l);
+        assertThat(new SearchOrder(10l, 1, false, null, excludedIds).getExcludedPaperIds()).containsExactly(3l, 5l);
     }
 
     @Test
@@ -105,9 +120,54 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void testingToString_withNoConditions() {
+    public void whenAddingExclusion_itIsGettingAdded() {
+        so.addExclusionOfPaperWithId(5l);
+        assertThat(so.getExcludedPaperIds()).containsExactly(5l);
+    }
+
+    @Test
+    public void whenAddingExclusion_withExclusionAlreadyPresent_doesNotAddItAnymore() {
+        so.addExclusionOfPaperWithId(5l);
+        assertThat(so.getExcludedPaperIds()).containsExactly(5l);
+        so.addExclusionOfPaperWithId(5l);
+        assertThat(so.getExcludedPaperIds()).containsExactly(5l);
+    }
+
+    @Test
+    public void whenRemovingExclusion_whichWasExcluded_doesRemoveIt() {
+        so.addExclusionOfPaperWithId(5l);
+        so.addExclusionOfPaperWithId(8l);
+        assertThat(so.getExcludedPaperIds()).containsExactly(5l, 8l);
+
+        so.removeExlusionOfPaperWithId(5l);
+
+        assertThat(so.getExcludedPaperIds()).containsExactly(8l);
+    }
+
+    @Test
+    public void whenRemovingExclusion_whichWasNotExcluded_doesNothing() {
+        so.addExclusionOfPaperWithId(5l);
+        assertThat(so.getExcludedPaperIds()).containsExactly(5l);
+
+        so.removeExlusionOfPaperWithId(8l);
+
+        assertThat(so.getExcludedPaperIds()).containsExactly(5l);
+    }
+
+    @Test
+    public void testingToString_withNoConditionsOrExclusions() {
         assertThat(so.getSearchConditions()).hasSize(0);
-        assertThat(so.toString()).isEqualTo("SearchOrder[owner=1,global=false,searchConditions=[],invertExclusions=false,id=10]");
+        assertThat(so.getExcludedPaperIds()).hasSize(0);
+        assertThat(so.toString()).isEqualTo("SearchOrder[owner=1,global=false,searchConditions=[],excludedPaperIds=[],invertExclusions=false,id=10]");
+    }
+
+    @Test
+    public void testingToString_withConditionsAndExclusions() {
+        so.add(mockCondition1);
+        so.add(mockCondition2);
+        so.addExclusionOfPaperWithId(3l);
+        so.addExclusionOfPaperWithId(5l);
+        assertThat(so.toString()).isEqualTo("SearchOrder[owner=1,global=false,searchConditions=[mockCondition1, mockCondition2],excludedPaperIds=[3, 5],invertExclusions=false,id=10]");
     }
 
     @Test

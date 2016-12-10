@@ -27,6 +27,8 @@ public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilt
     private boolean global;
     private final List<SearchCondition> searchConditions = new ArrayList<>();
 
+    private final List<Long> excludedPaperIds = new ArrayList<>();
+
     // this will not get not persisted
     private boolean invertExclusions = false;
 
@@ -37,11 +39,12 @@ public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilt
         setSearchConditions(searchConditions);
     }
 
-    public SearchOrder(long id, int owner, boolean global, List<SearchCondition> searchConditions) {
+    public SearchOrder(long id, int owner, boolean global, List<SearchCondition> searchConditions, List<Long> excludedPaperIds) {
         setId(id);
         setOwner(owner);
         setGlobal(global);
         setSearchConditions(searchConditions);
+        setExcludedPaperIds(excludedPaperIds);
     }
 
     public int getOwner() {
@@ -92,6 +95,44 @@ public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilt
         }
     }
 
+    public List<Long> getExcludedPaperIds() {
+        return excludedPaperIds;
+    }
+
+    public void setExcludedPaperIds(final List<Long> excludedPaperIds) {
+        if (excludedPaperIds != null) {
+            this.excludedPaperIds.clear();
+            this.excludedPaperIds.addAll(excludedPaperIds);
+        }
+    }
+
+    /**
+     * Add a new paper id for exclusion.
+     *
+     * @param id paper id to be added to exclusions
+     */
+    public void addExclusionOfPaperWithId(final long paperId) {
+        if (!excludedPaperIds.contains(paperId))
+            excludedPaperIds.add(paperId);
+    }
+
+    /**
+     * Removes the specified paperId from the list of exclusions.
+     *
+     * @param paperId the id to remove from exclusions
+     */
+    public void removeExlusionOfPaperWithId(long paperId) {
+        excludedPaperIds.remove(paperId);
+    }
+
+    public boolean isInvertExclusions() {
+        return invertExclusions;
+    }
+
+    public void setInvertExclusions(boolean invertExclusions) {
+        this.invertExclusions = invertExclusions;
+    }
+
     @Override
     public String getDisplayValue() {
         StringBuilder sb = new StringBuilder();
@@ -102,14 +143,6 @@ public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilt
         if (isGlobal())
             sb.append("*");
         return sb.toString();
-    }
-
-    public boolean isInvertExclusions() {
-        return invertExclusions;
-    }
-
-    public void setInvertExclusions(boolean invertExclusions) {
-        this.invertExclusions = invertExclusions;
     }
 
 }

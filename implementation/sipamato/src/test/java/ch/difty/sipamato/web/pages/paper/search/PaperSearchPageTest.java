@@ -40,7 +40,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     @MockBean
     private CodeService codeServiceMock;
 
-    private final SearchOrder searchOrder = new SearchOrder(SEARCH_ORDER_ID, 1, false, null);
+    private final SearchOrder searchOrder = new SearchOrder(SEARCH_ORDER_ID, 1, false, null, null);
 
     @Override
     protected void setUpHook() {
