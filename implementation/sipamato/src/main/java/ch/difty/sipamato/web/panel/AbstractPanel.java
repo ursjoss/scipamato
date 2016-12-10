@@ -14,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.service.Localization;
 import ch.difty.sipamato.web.pages.Mode;
-import ch.difty.sipamato.web.security.SipamatoUserDetails;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 
 public abstract class AbstractPanel<T> extends GenericPanel<T> {
@@ -108,12 +107,6 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
      */
     protected User getActiveUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal.getClass() == SipamatoUserDetails.class) {
-            return (User) principal;
-        } else {
-            User user = new User(0, "testuser", "un", "fn", "ln", "pw");
-            user.setEnabled(true);
-            return user;
-        }
+        return (User) principal;
     }
 }
