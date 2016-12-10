@@ -18,8 +18,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import ch.difty.sipamato.entity.PaperFilter;
+import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JooqPaperSlimServiceTest {
@@ -31,11 +33,15 @@ public class JooqPaperSlimServiceTest {
     @Mock
     private PaperFilter filterMock;
     @Mock
+    private SearchOrder searchOrderMock;
+    @Mock
     private Pageable pageableMock;
     @Mock
     private Page<PaperSlim> paperSlimPageMock;
     @Mock
     private PaperSlim paperSlimMock;
+    @Mock
+    private Paper paperMock;
 
     private final List<PaperSlim> papers = new ArrayList<>();
 
@@ -49,7 +55,7 @@ public class JooqPaperSlimServiceTest {
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(repoMock, filterMock, pageableMock, paperSlimPageMock, paperSlimMock);
+        verifyNoMoreInteractions(repoMock, filterMock, searchOrderMock, pageableMock, paperSlimPageMock, paperSlimMock, paperMock);
     }
 
     @Test
@@ -86,10 +92,17 @@ public class JooqPaperSlimServiceTest {
     }
 
     @Test
-    public void countingByFilter_delegatesToRepo() {
+    public void countingByFilter_withSimpleFilter_delegatesToRepo() {
         when(repoMock.countByFilter(filterMock)).thenReturn(3);
         assertThat(service.countByFilter(filterMock)).isEqualTo(3);
         verify(repoMock).countByFilter(filterMock);
+    }
+
+    @Test
+    public void findingByFilter_withComplexFilter_delegatesToRepo() {
+        when(repoMock.findBySearchOrder(searchOrderMock)).thenReturn(papers);
+        assertThat(service.findBySearchOrder(searchOrderMock)).containsAll(papers);
+        verify(repoMock).findBySearchOrder(searchOrderMock);
     }
 
 }

@@ -29,12 +29,6 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     }
 
     @Test
-    public void validatingCodeClass_withNullId_fails() {
-        CodeClass cc = new CodeClass(null, "foo", "bar");
-        validateAndAssertFailure(cc, CodeClass.ID, null, "{javax.validation.constraints.NotNull.message}");
-    }
-
-    @Test
     public void validatingCodeClass_withNullName_fails() {
         CodeClass cc = new CodeClass(1, null, "bar");
         validateAndAssertFailure(cc, CodeClass.NAME, null, "{javax.validation.constraints.NotNull.message}");

@@ -7,10 +7,18 @@ import org.jooq.UpdateSetMoreStep;
 import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
+import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 
+/**
+ * The update step setter used for updating {@link Paper}s.<p/>
+ *
+ * <b>Note:</b> the {@link Code}s are not updated here.
+ *
+ * @author u.joss
+ */
 @Component
 public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord, Paper> {
 

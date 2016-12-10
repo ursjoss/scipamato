@@ -1,22 +1,28 @@
 package ch.difty.sipamato.entity.projection;
 
-import ch.difty.sipamato.entity.SipamatoEntity;
+import javax.validation.constraints.NotNull;
 
-public class PaperSlim extends SipamatoEntity {
+import ch.difty.sipamato.entity.IdSipamatoEntity;
+
+public class PaperSlim extends IdSipamatoEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    @NotNull
     private String firstAuthor;
-    private int publicationYear;
+    @NotNull
+    private Integer publicationYear;
+    @NotNull
     private String title;
 
-    public Long getId() {
-        return id;
+    public PaperSlim() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public PaperSlim(Long id, String firstAuthor, Integer publicationYear, String title) {
+        setId(id);
+        setFirstAuthor(firstAuthor);
+        setPublicationYear(publicationYear);
+        setTitle(title);
     }
 
     public String getFirstAuthor() {
@@ -27,11 +33,11 @@ public class PaperSlim extends SipamatoEntity {
         this.firstAuthor = firstAuthor;
     }
 
-    public int getPublicationYear() {
+    public Integer getPublicationYear() {
         return publicationYear;
     }
 
-    public void setPublicationYear(int publicationYear) {
+    public void setPublicationYear(Integer publicationYear) {
         this.publicationYear = publicationYear;
     }
 

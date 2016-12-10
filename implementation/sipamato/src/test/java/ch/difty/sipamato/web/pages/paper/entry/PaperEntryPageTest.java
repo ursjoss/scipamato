@@ -16,6 +16,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.pages.AutoSaveAwarePageTest;
+import ch.difty.sipamato.web.panel.paper.PaperPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
 public class PaperEntryPageTest extends AutoSaveAwarePageTest<PaperEntryPage> {
@@ -41,12 +42,15 @@ public class PaperEntryPageTest extends AutoSaveAwarePageTest<PaperEntryPage> {
 
     @Override
     protected void assertSpecificComponents() {
-        String b = "form";
+        String b = "contentPanel";
+        getTester().assertComponent(b, PaperPanel.class);
+
+        b += ":form";
         getTester().assertComponent(b, Form.class);
 
         assertLabeledTextArea(b, Paper.AUTHORS);
         assertLabeledTextField(b, Paper.FIRST_AUTHOR);
-        assertLabeledCheckBox(b, Paper.FIRST_AUTHOR_OVERRIDDEN);
+        assertLabeledCheckBoxX(b, Paper.FIRST_AUTHOR_OVERRIDDEN);
         assertLabeledTextArea(b, Paper.TITLE);
         assertLabeledTextField(b, Paper.LOCATION);
 

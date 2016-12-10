@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import ch.difty.sipamato.db.tables.Paper;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
-import ch.difty.sipamato.entity.PaperFilter;
 import ch.difty.sipamato.persistance.jooq.FilterConditionMapperTest;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
 
@@ -53,7 +52,7 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
                 , "METHOD_STATISTICS"
                 , "METHOD_CONFOUNDERS"
         ));
-        // @formatter:off
+        // @formatter:on
     }
 
     @Test
@@ -76,7 +75,7 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
                 , "COMMENT"
                 , "INTERN"
         ));
-        // @formatter:off
+        // @formatter:on
     }
 
     @Test
@@ -90,9 +89,5 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
         filter.setPublicationYearUntil(2016);
         assertThat(mapper.map(filter).toString()).isEqualTo("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" <= 2016");
     }
-
-
-
-
 
 }

@@ -18,7 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
-import ch.difty.sipamato.entity.SipamatoFilter;
+import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.service.Localization;
 
@@ -106,7 +106,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntit
         return entities;
     }
 
-    private void enrichAssociatedEntitiesOfAll(final List<T> entities) {
+    protected void enrichAssociatedEntitiesOfAll(final List<T> entities) {
         for (final T e : entities) {
             enrichAssociatedEntitiesOf(e);
         }

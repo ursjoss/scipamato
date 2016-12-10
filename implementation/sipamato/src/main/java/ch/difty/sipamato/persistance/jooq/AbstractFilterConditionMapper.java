@@ -6,7 +6,7 @@ import java.util.List;
 import org.jooq.Condition;
 import org.jooq.impl.DSL;
 
-import ch.difty.sipamato.entity.SipamatoFilter;
+import ch.difty.sipamato.entity.filter.SipamatoFilter;
 
 /**
  * Abstract class providing the basic algorithm as template method to map the filter into the conditions.

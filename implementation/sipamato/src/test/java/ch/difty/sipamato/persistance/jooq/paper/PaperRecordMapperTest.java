@@ -19,7 +19,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
     public static final boolean FIRST_AUTHOR_OVERRIDDEN = false;
     public static final String TITLE = "title";
     public static final String LOCATION = "location";
-    public static final int PUBLICATION_YEAR = 3;
+    public static final Integer PUBLICATION_YEAR = 3;
     public static final String GOALS = "goals";
     public static final String POPULATION = "population";
     public static final String METHODS = "methods";
@@ -113,6 +113,12 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
         record.setResultEffectEstimate(RESULT_EFFECT_ESTIMATE);
 
         record.setMainCodeOfCodeclass1(MAIN_CODE_OF_CODECLASS1);
+
+        record.setVersion(VERSION);
+        record.setCreated(CREATED);
+        record.setCreatedBy(CREATED_BY);
+        record.setLastModified(LAST_MOD);
+        record.setLastModifiedBy(LAST_MOD_BY);
         return record;
     }
 
@@ -150,6 +156,8 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
         assertThat(e.getResultEffectEstimate()).isEqualTo(RESULT_EFFECT_ESTIMATE);
 
         assertThat(e.getMainCodeOfCodeclass1()).isEqualTo(MAIN_CODE_OF_CODECLASS1);
+
+        assertThat(e.getCodes()).isEmpty();
     }
 
 }

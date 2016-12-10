@@ -2,6 +2,7 @@ package ch.difty.sipamato.web.pages;
 
 import java.util.Optional;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.devutils.debugbar.DebugBar;
@@ -9,6 +10,7 @@ import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.IModel;
@@ -16,11 +18,18 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 import ch.difty.sipamato.web.pages.login.LogoutPage;
 import ch.difty.sipamato.web.pages.paper.list.PaperListPage;
+import ch.difty.sipamato.web.pages.paper.search.PaperSearchPage;
 import ch.difty.sipamato.web.resources.MainCssResourceReference;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
@@ -34,6 +43,10 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
     protected static final String LABEL_TAG = "Label";
     protected static final String LABEL_RECOURCE_TAG = ".label";
+    protected static final String PANEL_HEADER_RESOURCE_TAG = ".header";
+
+    @SpringBean
+    private DateTimeService dateTimeService;
 
     private NotificationPanel feedbackPanel;
     private Navbar navBar;
@@ -70,7 +83,7 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
     private void createAndAddNavBar(String id) {
         navBar = newNavbar(id);
-        add(navBar);
+        queue(navBar);
         extendNavBar();
     }
 
@@ -83,14 +96,14 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
     private void createAndAddFeedbackPanel(String label) {
         feedbackPanel = new NotificationPanel(label);
         feedbackPanel.setOutputMarkupId(true);
-        add(feedbackPanel);
+        queue(feedbackPanel);
     }
 
     private void createAndAddDebugBar(String label) {
         if (getApplication().getDebugSettings().isDevelopmentUtilitiesEnabled()) {
-            add(new DebugBar(label).positionBottom());
+            queue(new DebugBar(label).positionBottom());
         } else {
-            add(new EmptyPanel(label).setVisible(false));
+            queue(new EmptyPanel(label).setVisible(false));
         }
     }
 
@@ -103,6 +116,7 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
         addPageLink(navbar, SipamatoHomePage.class, new StringResourceModel("menu.home", this, null).getString(), GlyphIconType.home);
         addPageLink(navbar, PaperListPage.class, new StringResourceModel("menu.papers", this, null).getString(), GlyphIconType.list);
+        addPageLink(navbar, PaperSearchPage.class, new StringResourceModel("menu.search", this, null).getString(), GlyphIconType.search);
         addPageLink(navbar, LogoutPage.class, new StringResourceModel("menu.logout", this, null).getString(), GlyphIconType.edit);
 
         return navbar;
@@ -121,6 +135,10 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         return AuthenticatedWebSession.get().signIn(username, password);
     }
 
+    protected Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
+
     protected void queueFieldAndLabel(FormComponent<?> field, Optional<PropertyValidator<?>> pv) {
         String id = field.getId();
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
@@ -130,6 +148,27 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         if (pv.isPresent()) {
             field.add(pv.get());
         }
+    }
+
+    protected void queueResponsePageButton(final String id, BasePage<?> responsePage) {
+        BootstrapAjaxButton newButton = new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null), Type.Default) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                super.onSubmit(target, form);
+                setResponsePage(responsePage);
+            }
+        };
+        queue(newButton);
+    }
+
+    protected void queuePanelHeadingFor(String id) {
+        queue(new Label(id + LABEL_TAG, new StringResourceModel(id + PANEL_HEADER_RESOURCE_TAG, this, null)));
+    }
+
+    protected DateTimeService getDateTimeService() {
+        return dateTimeService;
     }
 
 }

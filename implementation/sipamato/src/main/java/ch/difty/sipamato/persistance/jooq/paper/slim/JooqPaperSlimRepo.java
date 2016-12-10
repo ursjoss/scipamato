@@ -2,23 +2,42 @@ package ch.difty.sipamato.persistance.jooq.paper.slim;
 
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import ch.difty.sipamato.db.Tables;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
-import ch.difty.sipamato.entity.PaperFilter;
+import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.entity.filter.BooleanSearchTerm;
+import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
+import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.entity.filter.StringSearchTerm;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.persistance.jooq.ConditionalSupplier;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
 import ch.difty.sipamato.persistance.jooq.JooqReadOnlyRepo;
 import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
+import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.service.Localization;
 
 @Repository
 public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, Long, ch.difty.sipamato.db.tables.Paper, PaperSlimRecordMapper, PaperFilter> implements PaperSlimRepository {
 
     private static final long serialVersionUID = 1L;
+
+    private final IntegerSearchTermEvaluator integerSearchTermEvaluator = new IntegerSearchTermEvaluator();
+    private final StringSearchTermEvaluator stringSearchTermEvaluator = new StringSearchTermEvaluator();
+    private final BooleanSearchTermEvaluator booleanSearchTermEvaluator = new BooleanSearchTermEvaluator();
 
     @Autowired
     public JooqPaperSlimRepo(DSLContext dsl, PaperSlimRecordMapper mapper, JooqSortMapper<PaperRecord, PaperSlim, ch.difty.sipamato.db.tables.Paper> sortMapper,
@@ -44,6 +63,57 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     @Override
     protected TableField<PaperRecord, Long> getTableId() {
         return PAPER.ID;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public List<PaperSlim> findBySearchOrder(final SearchOrder searchOrder) {
+        AssertAs.notNull(searchOrder, "searchOrder");
+
+        final Condition searchOrderCondition = getConditionsFrom(searchOrder);
+        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(searchOrderCondition).fetchInto(getRecordClass());
+        final List<PaperSlim> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
+        enrichAssociatedEntitiesOfAll(entities);
+
+        return entities;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Page<PaperSlim> findBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
+        final List<PaperSlim> entities = findBySearchOrder(searchOrder);
+        return new PageImpl<>(entities, pageable, (long) countBySearchOrder(searchOrder));
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int countBySearchOrder(SearchOrder searchOrder) {
+        final Condition conditions = getConditionsFrom(searchOrder);
+        return getDsl().fetchCount(getDsl().selectOne().from(getTable()).where(conditions));
+    }
+
+    /**
+     * Combines the search terms of different {@link SearchOrder} using OR operators.
+     */
+    private Condition getConditionsFrom(final SearchOrder searchOrder) {
+        final ConditionalSupplier conditions = new ConditionalSupplier();
+        for (final SearchCondition sc : searchOrder.getSearchConditions())
+            conditions.add(() -> getConditionFromSingleSearchCondition(sc));
+        return conditions.combineWithOr();
+    }
+
+    /**
+     * Combines the individual search terms of a single {@link SearchCondition} using AND operators
+     */
+    private Condition getConditionFromSingleSearchCondition(SearchCondition searchCondition) {
+        final ConditionalSupplier conditions = new ConditionalSupplier();
+        for (final BooleanSearchTerm st : searchCondition.getBooleanSearchTerms())
+            conditions.add(() -> booleanSearchTermEvaluator.evaluate(st));
+        for (final IntegerSearchTerm st : searchCondition.getIntegerSearchTerms())
+            conditions.add(() -> integerSearchTermEvaluator.evaluate(st));
+        for (final StringSearchTerm st : searchCondition.getStringSearchTerms())
+            conditions.add(() -> stringSearchTermEvaluator.evaluate(st));
+        return conditions.combineWithAnd();
     }
 
 }
