@@ -9,6 +9,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import ch.difty.sipamato.auth.Roles;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
@@ -16,7 +17,7 @@ import ch.difty.sipamato.web.pages.paper.provider.FilterBasedSortablePaperSlimPr
 import ch.difty.sipamato.web.panel.result.ResultPanel;
 
 @MountPath("list")
-@AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
+@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 public class PaperListPage extends BasePage<Void> {
 
     private static final long serialVersionUID = 1L;

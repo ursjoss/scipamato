@@ -8,14 +8,14 @@ import java.util.List;
 
 import org.junit.Test;
 
-import ch.difty.sipamato.entity.Role;
+import ch.difty.sipamato.auth.Role;
 import ch.difty.sipamato.entity.User;
 
 public class SipamatoUserDetailsTest {
 
-    private User user;
+    private final List<Role> roles = Arrays.asList(Role.ADMIN, Role.USER);
 
-    private final List<Role> roles = Arrays.asList(new Role(1, "R1"), new Role(2, "R2"));
+    private User user;
 
     @Test
     public void test() {
@@ -29,9 +29,9 @@ public class SipamatoUserDetailsTest {
         assertThat(sud.getEmail()).isEqualTo("em");
         assertThat(sud.getPassword()).isEqualTo("pw");
         assertThat(sud.isEnabled()).isEqualTo(true);
-        assertThat(extractProperty("name").from(sud.getRoles())).containsExactly("R1", "R2");
+        assertThat(extractProperty("key").from(sud.getRoles())).containsExactly("ROLE_ADMIN", "ROLE_USER");
 
-        assertThat(extractProperty("authority").from(sud.getAuthorities())).containsExactly("ROLE_R1", "ROLE_R2");
+        assertThat(extractProperty("authority").from(sud.getAuthorities())).containsExactly("ROLE_ADMIN", "ROLE_USER");
         assertThat(sud.getUsername()).isEqualTo("un");
     }
 

@@ -6,8 +6,8 @@ import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
 import org.springframework.stereotype.Component;
 
+import ch.difty.sipamato.auth.Role;
 import ch.difty.sipamato.db.tables.records.UserRecord;
-import ch.difty.sipamato.entity.Role;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;

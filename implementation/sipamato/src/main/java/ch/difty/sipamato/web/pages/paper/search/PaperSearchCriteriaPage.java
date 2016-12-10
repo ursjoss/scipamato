@@ -7,6 +7,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
+import ch.difty.sipamato.auth.Roles;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.service.SearchOrderService;
@@ -26,7 +27,7 @@ import ch.difty.sipamato.web.panel.paper.SearchablePaperPanel;
  *
  * @author u.joss
  */
-@AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
+@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
 
     private static final long serialVersionUID = 1L;

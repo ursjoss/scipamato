@@ -107,12 +107,6 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
      */
     protected User getActiveUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal.getClass() == User.class) {
-            return (User) principal;
-        } else {
-            User user = new User(1, "testuser", "un", "fn", "ln", "pw");
-            user.setEnabled(true);
-            return user;
-        }
+        return (User) principal;
     }
 }

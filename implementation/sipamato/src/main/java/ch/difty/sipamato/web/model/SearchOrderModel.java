@@ -27,9 +27,9 @@ public class SearchOrderModel extends LoadableDetachableModel<List<SearchOrder>>
 
     private final int owner;
 
-    public SearchOrderModel(int owner) {
+    public SearchOrderModel(int userId) {
         Injector.get().inject(this);
-        this.owner = owner;
+        this.owner = userId;
     }
 
     @Override

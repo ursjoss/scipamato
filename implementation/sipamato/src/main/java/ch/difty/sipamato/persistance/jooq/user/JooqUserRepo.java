@@ -1,6 +1,5 @@
 package ch.difty.sipamato.persistance.jooq.user;
 
-import static ch.difty.sipamato.db.tables.Role.ROLE;
 import static ch.difty.sipamato.db.tables.User.USER;
 import static ch.difty.sipamato.db.tables.UserRole.USER_ROLE;
 
@@ -18,9 +17,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ch.difty.sipamato.auth.Role;
 import ch.difty.sipamato.db.tables.records.UserRecord;
 import ch.difty.sipamato.db.tables.records.UserRoleRecord;
-import ch.difty.sipamato.entity.Role;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
@@ -87,7 +86,7 @@ public class JooqUserRepo extends JooqEntityRepo<UserRecord, User, Integer, ch.d
     @Override
     protected void enrichAssociatedEntitiesOf(User entity) {
         if (entity != null) {
-            final List<Role> roles = getDsl().select().from(USER_ROLE).join(ROLE).on(USER_ROLE.ROLE_ID.eq(ROLE.ID)).where(USER_ROLE.USER_ID.eq(entity.getId())).fetchInto(Role.class);
+            final List<Role> roles = getDsl().select(USER_ROLE.ROLE_ID).from(USER_ROLE).where(USER_ROLE.USER_ID.eq(entity.getId())).fetch().map(rec -> Role.of((Integer) rec.getValue(0)));
             if (CollectionUtils.isNotEmpty(roles)) {
                 entity.setRoles(roles);
             }

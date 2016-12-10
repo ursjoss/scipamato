@@ -8,7 +8,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 
-import ch.difty.sipamato.entity.Role;
+import ch.difty.sipamato.auth.Role;
 import ch.difty.sipamato.entity.User;
 
 /**
