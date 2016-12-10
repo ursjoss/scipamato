@@ -19,6 +19,8 @@ import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
@@ -131,6 +133,10 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
     protected boolean signIn(String username, String password) {
         return AuthenticatedWebSession.get().signIn(username, password);
+    }
+
+    protected Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
     protected void queueFieldAndLabel(FormComponent<?> field, Optional<PropertyValidator<?>> pv) {

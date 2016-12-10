@@ -16,7 +16,7 @@ import ch.difty.sipamato.web.pages.paper.provider.FilterBasedSortablePaperSlimPr
 import ch.difty.sipamato.web.panel.result.ResultPanel;
 
 @MountPath("list")
-@AuthorizeInstantiation({ "ROLE_USER" })
+@AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
 public class PaperListPage extends BasePage<Void> {
 
     private static final long serialVersionUID = 1L;

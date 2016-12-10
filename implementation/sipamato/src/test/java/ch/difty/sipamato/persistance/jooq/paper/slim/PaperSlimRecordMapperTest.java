@@ -33,6 +33,13 @@ public class PaperSlimRecordMapperTest extends RecordMapperTest<PaperRecord, Pap
         record.setFirstAuthor(FIRST_AUTHOR);
         record.setTitle(TITLE);
         record.setPublicationYear(PUBLICATION_YEAR);
+
+        record.setVersion(VERSION);
+        record.setCreated(CREATED);
+        record.setCreatedBy(CREATED_BY);
+        record.setLastModified(LAST_MOD);
+        record.setLastModifiedBy(LAST_MOD_BY);
+
         return record;
     }
 

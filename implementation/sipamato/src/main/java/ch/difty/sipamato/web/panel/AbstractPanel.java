@@ -9,7 +9,9 @@ import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.service.Localization;
 import ch.difty.sipamato.web.pages.Mode;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
@@ -100,4 +102,17 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
         queue(field);
     }
 
+    /**
+     * Get the currently active user
+     */
+    protected User getActiveUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal.getClass() == User.class) {
+            return (User) principal;
+        } else {
+            User user = new User(1, "testuser", "un", "fn", "ln", "pw");
+            user.setEnabled(true);
+            return user;
+        }
+    }
 }

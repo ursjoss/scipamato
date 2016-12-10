@@ -34,6 +34,11 @@ import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 import ch.difty.sipamato.service.Localization;
 
+/**
+ * The repository to manage {@link Paper}s - including the nested list of {@link Code}s.
+ *
+ * @author u.joss
+ */
 @Repository
 public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.difty.sipamato.db.tables.Paper, PaperRecordMapper, PaperFilter> implements PaperRepository {
 

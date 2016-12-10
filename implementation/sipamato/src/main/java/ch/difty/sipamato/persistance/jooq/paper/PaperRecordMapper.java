@@ -4,9 +4,17 @@ import org.jooq.RecordMapper;
 import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
+import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;
 
+/**
+ * Mapper mapping {@link PaperRecord}s into entity {@link Paper}.<p/>
+ *
+ * <b>Note:</b> the mapper leaves the {@link Code}s empty.
+ *
+ * @author u.joss
+ */
 @Component
 public class PaperRecordMapper implements RecordMapper<PaperRecord, Paper> {
 

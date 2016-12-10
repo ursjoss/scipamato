@@ -186,3 +186,64 @@ CREATE TABLE search_term (
 );
 
 ALTER TABLE search_term ADD FOREIGN KEY (search_condition_id) REFERENCES search_condition(search_condition_id) on delete cascade on update cascade;
+
+
+
+DROP TABLE IF EXISTS user;
+
+CREATE TABLE user (
+  id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  user_name VARCHAR(30) NOT NULL,
+  first_name VARCHAR NOT NULL,
+  last_name VARCHAR NOT NULL,
+  email VARCHAR NOT NULL,
+  password VARCHAR NOT NULL,
+  enabled BOOLEAN NOT NULL DEFAULT false,
+  
+  version INT DEFAULT 1,
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
+);
+
+DROP INDEX IF EXISTS idx_user_username;
+CREATE UNIQUE INDEX idx_user_username ON user (user_name);
+
+
+DROP TABLE IF EXISTS role;
+
+CREATE TABLE role (
+  id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  name VARCHAR(45) NOT NULL,
+  comment VARCHAR NULL,
+  
+  version INT DEFAULT 1,
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
+);
+
+DROP INDEX IF EXISTS idx_role_name;
+CREATE UNIQUE INDEX idx_role_name ON role (name);
+
+
+DROP TABLE IF EXISTS user_role;
+
+CREATE TABLE user_role (
+  id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  user_id INT NOT NULL,
+  role_id INT NOT NULL,
+  
+  version INT DEFAULT 1,
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
+);
+
+ALTER TABLE user_role ADD FOREIGN KEY (user_id) REFERENCES user(id) on delete cascade on update cascade;
+ALTER TABLE user_role ADD FOREIGN KEY (role_id) REFERENCES role(id) on delete cascade on update cascade;
+
+

@@ -32,6 +32,13 @@ public class SearchOrderRecordMapperTest extends RecordMapperTest<SearchOrderRec
         record.setId(ID);
         record.setOwner(OWNER);
         record.setGlobal(GLOBAL);
+
+        record.setVersion(VERSION);
+        record.setCreated(CREATED);
+        record.setCreatedBy(CREATED_BY);
+        record.setLastModified(LAST_MOD);
+        record.setLastModifiedBy(LAST_MOD_BY);
+
         return record;
     }
 
@@ -40,6 +47,8 @@ public class SearchOrderRecordMapperTest extends RecordMapperTest<SearchOrderRec
         assertThat(entity.getId()).isEqualTo(ID);
         assertThat(entity.getOwner()).isEqualTo(OWNER);
         assertThat(entity.isGlobal()).isEqualTo(GLOBAL);
+
+        assertThat(entity.getSearchConditions()).isEmpty();
     }
 
 }
