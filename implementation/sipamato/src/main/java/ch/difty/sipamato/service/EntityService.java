@@ -23,4 +23,11 @@ public interface EntityService<ID extends Number, T extends IdSipamatoEntity<ID>
      */
     T saveOrUpdate(T entity);
 
+    /**
+     * Removes the provided entity.
+     *
+     * @param entity
+     */
+    void remove(T entity);
+
 }

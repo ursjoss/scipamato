@@ -65,4 +65,12 @@ public class JooqSearchOrderService implements SearchOrderService {
             return repo.updateSearchCondition(searchCondition, searchOrderId);
         }
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public void remove(SearchOrder entity) {
+        if (entity != null && entity.getId() != null) {
+            repo.delete(entity.getId());
+        }
+    }
 }

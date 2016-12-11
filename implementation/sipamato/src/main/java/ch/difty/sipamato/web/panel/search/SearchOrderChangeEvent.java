@@ -8,13 +8,19 @@ import ch.difty.sipamato.web.event.WicketEvent;
  * The event indicates that there were changes in the search order deriving from the {@link SearchOrderPanel}
  * that will or may affect other child components of the parent page container holding the {@link SearchOrderPanel}.
  *
- * It may optionally contain the information about an excluded Id, which will need to be handled by the event sink.
+ * There are a couple of special options that can be achieved with the event:
+ *
+ * <ul>
+ * <li> if the excluded id is set, the sink will be requested to handle that id an treat it as an excluded id.</li>
+ * <li>if the newSearchOrderRequestd flag is set, the sink will need to take care of creating a new SearchOrder and set it as the model.</li>
+ * </ul>
  *
  * @author u.joss
  */
 public class SearchOrderChangeEvent extends WicketEvent {
 
-    private final Long excludedId;
+    private Long excludedId;
+    private boolean newSearchOrderRequested;
 
     public SearchOrderChangeEvent(final AjaxRequestTarget target) {
         this(target, null);
@@ -27,6 +33,16 @@ public class SearchOrderChangeEvent extends WicketEvent {
 
     public Long getExcludedId() {
         return excludedId;
+    }
+
+    public SearchOrderChangeEvent requestNewSearchOrder() {
+        newSearchOrderRequested = true;
+        excludedId = null;
+        return this;
+    }
+
+    public boolean isNewSearchOrderRequested() {
+        return newSearchOrderRequested;
     }
 
 }
