@@ -238,4 +238,5 @@ public class SearchOrderTest {
         so.add(c2);
         assertThat(so.getSearchConditions()).hasSize(1);
     }
+
 }

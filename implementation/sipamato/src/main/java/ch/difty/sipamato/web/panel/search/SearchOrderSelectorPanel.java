@@ -1,14 +1,16 @@
 package ch.difty.sipamato.web.panel.search;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
-import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -18,6 +20,7 @@ import ch.difty.sipamato.web.model.SearchOrderModel;
 import ch.difty.sipamato.web.pages.Mode;
 import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 
@@ -26,7 +29,8 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
  *
  * <ul>
  * <li>selecting from previously saved search orders via a select box</li>
- * <li>changing the global flag of search orders (TODO)</li>
+ * <li>changing the global flag of search orders </li>
+ * <li>changing whether excluded papers are excluded or selected</li>
  * <li>saving new or modified search orders</li>
  * </ul>
  *
@@ -44,7 +48,10 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     private SearchOrderService searchOrderService;
 
     private Form<SearchOrder> form;
-    private SubmitLink submitLink;
+    private CheckBoxX global;
+    private CheckBoxX invertExclusions;
+    private AjaxSubmitLink queryLink;
+    private AjaxSubmitLink saveLink;
 
     public SearchOrderSelectorPanel(String id, IModel<SearchOrder> model) {
         super(id, model, Mode.EDIT);
@@ -60,7 +67,10 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
         form = new Form<SearchOrder>(id, getModel());
         queue(form);
         makeAndQueueSearchOrderSelectBox("searchOrder");
-        makeAndQueueSubmitButton("submit");
+        makeAndQueueGlobalCheckBox("global");
+        makeAndQueueQueryButton("query");
+        makeAndQueueInvertExclusionsCheckBox("invertExclusions");
+        makeAndQueueSaveButton("save");
     }
 
     private void makeAndQueueSearchOrderSelectBox(final String id) {
@@ -74,7 +84,10 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                target.add(submitLink);
+                target.add(global);
+                target.add(invertExclusions);
+                target.add(queryLink);
+                target.add(saveLink);
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
                 info("Sent SearchOrderChangeEvent");
             }
@@ -83,8 +96,22 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
         queue(searchOrder);
     }
 
-    private void makeAndQueueSubmitButton(String id) {
-        submitLink = new SubmitLink(id, form) {
+    private void makeAndQueueGlobalCheckBox(String id) {
+        global = new CheckBoxX(id, new PropertyModel<Boolean>(getModel(), SearchOrder.GLOBAL)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setEnabled(SearchOrderSelectorPanel.this.isUserEntitled());
+            }
+        };
+        global.getConfig().withThreeState(false).withUseNative(true);
+        queueCheckBoxAndLabel(global);
+    }
+
+    private void makeAndQueueQueryButton(String id) {
+        queryLink = new AjaxSubmitLink(id, form) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -94,23 +121,74 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
             }
 
             @Override
-            public void onSubmit() {
-                super.onSubmit();
+            protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form) {
+                super.onAfterSubmit(target, form);
+                send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
+            }
+        };
+        queryLink.add(new ButtonBehavior());
+        queryLink.setBody(new StringResourceModel("button.query.label"));
+        queryLink.setDefaultFormProcessing(true);
+        queryLink.setOutputMarkupId(true);
+        queue(queryLink);
+    }
+
+    private void makeAndQueueSaveButton(String id) {
+        saveLink = new AjaxSubmitLink(id, form) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setEnabled(SearchOrderSelectorPanel.this.isModelSelected() && SearchOrderSelectorPanel.this.isUserEntitled());
+            }
+
+            @Override
+            protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form) {
+                super.onAfterSubmit(target, form);
                 if (getModelObject() != null) {
                     searchOrderService.saveOrUpdate(getModelObject());
                 }
             }
         };
-        submitLink.add(new ButtonBehavior());
-        submitLink.setBody(new StringResourceModel(getSubmitLinkResourceLabel()));
-        submitLink.setDefaultFormProcessing(false);
-        submitLink.setEnabled(!isViewMode());
-        submitLink.setOutputMarkupId(true);
-        queue(submitLink);
+        saveLink.add(new ButtonBehavior());
+        saveLink.setBody(new StringResourceModel(getSubmitLinkResourceLabel()));
+        saveLink.setDefaultFormProcessing(false);
+        saveLink.setEnabled(!isViewMode());
+        saveLink.setOutputMarkupId(true);
+        queue(saveLink);
     }
 
     protected boolean isModelSelected() {
         return getModelObject() != null && getModelObject().getId() != null;
+    }
+
+    protected boolean isUserEntitled() {
+        return getModelObject() != null && getModelObject().getOwner() == getActiveUser().getId();
+    }
+
+    private void makeAndQueueInvertExclusionsCheckBox(String id) {
+        invertExclusions = new CheckBoxX(id, new PropertyModel<Boolean>(getModel(), SearchOrder.INVERT_EXCLUSIONS)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                boolean hasExclusions = SearchOrderSelectorPanel.this.hasExclusions();
+                setEnabled(hasExclusions);
+                if (!hasExclusions) {
+                    SearchOrder so = SearchOrderSelectorPanel.this.getModelObject();
+                    if (so != null)
+                        so.setInvertExclusions(false);
+                }
+            }
+        };
+        invertExclusions.getConfig().withThreeState(false).withUseNative(true);
+        queueCheckBoxAndLabel(invertExclusions);
+    }
+
+    protected boolean hasExclusions() {
+        return getModelObject() != null && CollectionUtils.isNotEmpty(getModelObject().getExcludedPaperIds());
     }
 
 }
