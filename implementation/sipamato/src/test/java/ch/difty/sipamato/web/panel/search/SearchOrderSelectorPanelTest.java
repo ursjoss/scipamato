@@ -72,6 +72,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponent(b + ":new", AjaxSubmitLink.class);
         getTester().assertComponent(b + ":save", AjaxSubmitLink.class);
         getTester().assertComponent(b + ":invertExclusions", CheckBox.class);
+        getTester().assertComponent(b + ":delete", AjaxSubmitLink.class);
     }
 
     @Test
@@ -95,7 +96,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
         formTester.submit("query");
 
-        verify(searchOrderMock, times(7)).getId();
+        verify(searchOrderMock, times(8)).getId();
         verify(searchOrderServiceMock, times(3)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
         verify(searchOrderServiceMock, never()).saveOrUpdate(searchOrderMock);
     }
@@ -109,7 +110,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
         getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:searchOrder");
 
-        verify(searchOrderMock, times(8)).getId();
+        verify(searchOrderMock, times(9)).getId();
         verify(searchOrderServiceMock, times(3)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
         verify(searchOrderServiceMock).saveOrUpdate(searchOrderMock);
     }
@@ -122,29 +123,29 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
         formTester.submit("new");
 
-        verify(searchOrderMock, times(6)).getId();
+        verify(searchOrderMock, times(7)).getId();
         verify(searchOrderServiceMock, times(2)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
         verify(searchOrderServiceMock, never()).saveOrUpdate(searchOrderMock);
     }
 
     @Test
-    public void withGlobalSearchOrders_withOtherOwner_globalCheckBox_disabled() {
+    public void withGlobalSearchOrders_withSameOwner_globalCheckBox_enabled() {
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
 
         getTester().assertEnabled(PANEL_ID + ":form:global");
 
-        verify(searchOrderMock, times(2)).getOwner();
+        verify(searchOrderMock, times(3)).getOwner();
     }
 
     @Test
-    public void withGlobalSearchOrders_withOtherxOwner_globalCheckBox_disabled() {
+    public void withGlobalSearchOrders_withOtherOwner_globalCheckBox_disabled() {
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID + 1);
         getTester().startComponentInPage(makePanel());
 
         getTester().assertDisabled(PANEL_ID + ":form:global");
 
-        verify(searchOrderMock, times(2)).getOwner();
+        verify(searchOrderMock, times(3)).getOwner();
     }
 
 }

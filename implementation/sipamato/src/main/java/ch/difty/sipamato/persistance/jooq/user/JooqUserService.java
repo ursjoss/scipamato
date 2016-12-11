@@ -61,4 +61,12 @@ public class JooqUserService implements UserService {
         return Optional.ofNullable(repo.findByUserName(userName));
     }
 
+    /** {@inhericDoc} */
+    @Override
+    public void remove(User entity) {
+        if (entity != null && entity.getId() != null) {
+            repo.delete(entity.getId());
+        }
+    }
+
 }

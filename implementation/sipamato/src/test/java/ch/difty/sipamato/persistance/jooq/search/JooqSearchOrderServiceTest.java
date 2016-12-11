@@ -1,6 +1,8 @@
 package ch.difty.sipamato.persistance.jooq.search;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -14,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -130,6 +133,32 @@ public class JooqSearchOrderServiceTest {
         assertThat(service.saveOrUpdateSearchCondition(searchConditionMock, searchOrderId)).isEqualTo(searchConditionMock);
         verify(repoMock).updateSearchCondition(searchConditionMock, searchOrderId);
         verify(searchConditionMock).getSearchConditionId();
+    }
+
+    @Test
+    public void deleting_withNullEntity_doesNothing() {
+        service.remove(null);
+        verify(repoMock, never()).delete(Mockito.anyLong());
+    }
+
+    @Test
+    public void deleting_withEntityWithNullId_doesNothing() {
+        when(searchOrderMock.getId()).thenReturn(null);
+
+        service.remove(searchOrderMock);
+
+        verify(searchOrderMock).getId();
+        verify(repoMock, never()).delete(Mockito.anyLong());
+    }
+
+    @Test
+    public void deleting_withEntityWithNormald_delegatesToRepo() {
+        when(searchOrderMock.getId()).thenReturn(3l);
+
+        service.remove(searchOrderMock);
+
+        verify(searchOrderMock, times(2)).getId();
+        verify(repoMock, times(1)).delete(3l);
     }
 
 }

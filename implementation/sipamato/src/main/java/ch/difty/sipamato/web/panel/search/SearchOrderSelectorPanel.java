@@ -54,6 +54,7 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     private AjaxSubmitLink queryLink;
     private AjaxSubmitLink newLink;
     private AjaxSubmitLink saveLink;
+    private AjaxSubmitLink deleteLink;
 
     public SearchOrderSelectorPanel(String id, IModel<SearchOrder> model) {
         super(id, model, Mode.EDIT);
@@ -74,6 +75,7 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
         makeAndQueueQueryButton("query");
         makeAndQueueNewButton("new");
         makeAndQueueSaveButton("save");
+        makeAndQueueDeleteButton("delete");
     }
 
     private void makeAndQueueSearchOrderSelectBox(final String id) {
@@ -211,4 +213,30 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
         queueCheckBoxAndLabel(invertExclusions);
     }
 
+    private void makeAndQueueDeleteButton(String id) {
+        deleteLink = new AjaxSubmitLink(id, form) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setEnabled(SearchOrderSelectorPanel.this.isModelSelected() && SearchOrderSelectorPanel.this.isUserEntitled());
+            }
+
+            @Override
+            protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form) {
+                super.onAfterSubmit(target, form);
+                if (getModelObject() != null) {
+                    searchOrderService.remove(getModelObject());
+                    target.add(searchOrder);
+                }
+            }
+        };
+        deleteLink.add(new ButtonBehavior());
+        deleteLink.setBody(new StringResourceModel("button.delete.label"));
+        deleteLink.setDefaultFormProcessing(false);
+        deleteLink.setEnabled(!isViewMode());
+        deleteLink.setOutputMarkupId(true);
+        queue(deleteLink);
+    }
 }

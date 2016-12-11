@@ -55,4 +55,12 @@ public class JooqPaperService implements PaperService {
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void remove(Paper entity) {
+        if (entity != null && entity.getId() != null) {
+            repo.delete(entity.getId());
+        }
+    }
+
 }
