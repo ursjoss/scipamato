@@ -7,8 +7,10 @@ import org.apache.wicket.authroles.authorization.strategies.role.annotations.Aut
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
@@ -50,6 +52,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     private SearchOrderSelectorPanel searchOrderSelectorPanel;
     private SearchOrderPanel searchOrderPanel;
     private ResultPanel resultPanel;
+    private Label resultPanelLabel;
 
     @SpringBean
     private SearchOrderService searchOrderService;
@@ -132,7 +135,22 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     }
 
     private void makeResultPanel(final String id) {
-        queuePanelHeadingFor(id);
+        resultPanelLabel = new Label(id + LABEL_TAG) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                if (PaperSearchPage.this.getModelObject() != null && PaperSearchPage.this.getModelObject().isInvertExclusions()) {
+                    setDefaultModel(new StringResourceModel(id + "-excluded" + PANEL_HEADER_RESOURCE_TAG, this, null));
+                } else {
+                    setDefaultModel(new StringResourceModel(id + PANEL_HEADER_RESOURCE_TAG, this, null));
+                }
+            }
+
+        };
+        resultPanelLabel.setOutputMarkupId(true);
+        queue(resultPanelLabel);
 
         resultPanel = new ResultPanel(id, dataProvider);
         resultPanel.setOutputMarkupId(true);
@@ -177,6 +195,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         if (target != null) {
             target.add(searchOrderSelectorPanel);
             target.add(searchOrderPanel);
+            target.add(resultPanelLabel);
             target.add(resultPanel);
         }
     }

@@ -29,8 +29,8 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
  *
  * <ul>
  * <li>selecting from previously saved search orders via a select box</li>
- * <li>changing the global flag of search orders (TODO)</li>
- * <li>changing whether excluded papers are excluded or selected (TODO)</li>
+ * <li>changing the global flag of search orders </li>
+ * <li>changing whether excluded papers are excluded or selected</li>
  * <li>saving new or modified search orders</li>
  * </ul>
  *
