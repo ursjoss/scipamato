@@ -1,6 +1,7 @@
 package ch.difty.sipamato.web.panel.search;
 
 import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -8,9 +9,9 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
@@ -67,7 +68,9 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
         getTester().assertComponent(b + ":searchOrder", BootstrapSelect.class);
         getTester().assertComponent(b + ":global", CheckBox.class);
-        getTester().assertComponent(b + ":submit", SubmitLink.class);
+        getTester().assertComponent(b + ":query", AjaxSubmitLink.class);
+        getTester().assertComponent(b + ":save", AjaxSubmitLink.class);
+        getTester().assertComponent(b + ":invertExclusions", CheckBox.class);
     }
 
     @Test
@@ -79,18 +82,32 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         // TODO how to assert the event was actually broadcast without issuing the test info message
         getTester().assertInfoMessages("Sent SearchOrderChangeEvent");
 
-        getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:submit");
+        getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:global");
+        getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:save");
+        getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:invertExclusions");
     }
 
     @Test
-    public void testSubmitting_saveSearchOrder() {
+    public void testSubmittingWithQueryutton_sendsUpdateEvent() {
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
-        formTester.submit("submit");
+        formTester.submit("query");
 
-        verify(searchOrderMock, times(8)).getId();
+        verify(searchOrderMock, times(7)).getId();
         verify(searchOrderServiceMock, times(3)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
+        verify(searchOrderServiceMock, never()).saveOrUpdate(searchOrderMock);
+    }
+
+    @Test
+    public void testSubmittingWithSaveButton_saveSearchOrder() {
+        when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
+        getTester().startComponentInPage(makePanel());
+        FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
+        formTester.submit("save");
+
+        verify(searchOrderMock, times(6)).getId();
+        verify(searchOrderServiceMock, times(2)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
         verify(searchOrderServiceMock).saveOrUpdate(searchOrderMock);
     }
 
@@ -113,4 +130,5 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
         verify(searchOrderMock, times(2)).getOwner();
     }
+
 }

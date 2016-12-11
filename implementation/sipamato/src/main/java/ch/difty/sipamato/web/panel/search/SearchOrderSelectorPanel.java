@@ -3,11 +3,11 @@ package ch.difty.sipamato.web.panel.search;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
-import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
@@ -48,7 +48,9 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
 
     private Form<SearchOrder> form;
     private CheckBoxX global;
-    private SubmitLink submitLink;
+    private CheckBoxX invertExclusions;
+    private AjaxSubmitLink queryLink;
+    private AjaxSubmitLink saveLink;
 
     public SearchOrderSelectorPanel(String id, IModel<SearchOrder> model) {
         super(id, model, Mode.EDIT);
@@ -65,7 +67,9 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
         queue(form);
         makeAndQueueSearchOrderSelectBox("searchOrder");
         makeAndQueueGlobalCheckBox("global");
-        makeAndQueueSubmitButton("submit");
+        makeAndQueueQueryButton("query");
+        makeAndQueueInvertExclusionsCheckBox("invertExclusions");
+        makeAndQueueSaveButton("save");
     }
 
     private void makeAndQueueSearchOrderSelectBox(final String id) {
@@ -79,8 +83,10 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                target.add(submitLink);
                 target.add(global);
+                target.add(invertExclusions);
+                target.add(queryLink);
+                target.add(saveLink);
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
                 info("Sent SearchOrderChangeEvent");
             }
@@ -103,8 +109,31 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
         queueCheckBoxAndLabel(global);
     }
 
-    private void makeAndQueueSubmitButton(String id) {
-        submitLink = new SubmitLink(id, form) {
+    private void makeAndQueueQueryButton(String id) {
+        queryLink = new AjaxSubmitLink(id, form) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setEnabled(SearchOrderSelectorPanel.this.isModelSelected());
+            }
+
+            @Override
+            protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form) {
+                super.onAfterSubmit(target, form);
+                send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
+            }
+        };
+        queryLink.add(new ButtonBehavior());
+        queryLink.setBody(new StringResourceModel("button.query.label"));
+        queryLink.setDefaultFormProcessing(true);
+        queryLink.setOutputMarkupId(true);
+        queue(queryLink);
+    }
+
+    private void makeAndQueueSaveButton(String id) {
+        saveLink = new AjaxSubmitLink(id, form) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -114,19 +143,19 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
             }
 
             @Override
-            public void onSubmit() {
-                super.onSubmit();
+            protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form) {
+                super.onAfterSubmit(target, form);
                 if (getModelObject() != null) {
                     searchOrderService.saveOrUpdate(getModelObject());
                 }
             }
         };
-        submitLink.add(new ButtonBehavior());
-        submitLink.setBody(new StringResourceModel(getSubmitLinkResourceLabel()));
-        submitLink.setDefaultFormProcessing(false);
-        submitLink.setEnabled(!isViewMode());
-        submitLink.setOutputMarkupId(true);
-        queue(submitLink);
+        saveLink.add(new ButtonBehavior());
+        saveLink.setBody(new StringResourceModel(getSubmitLinkResourceLabel()));
+        saveLink.setDefaultFormProcessing(false);
+        saveLink.setEnabled(!isViewMode());
+        saveLink.setOutputMarkupId(true);
+        queue(saveLink);
     }
 
     protected boolean isModelSelected() {
@@ -135,6 +164,12 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
 
     protected boolean isUserEntitled() {
         return getModelObject() != null && getModelObject().getOwner() == getActiveUser().getId();
+    }
+
+    private void makeAndQueueInvertExclusionsCheckBox(String id) {
+        invertExclusions = new CheckBoxX(id, new PropertyModel<Boolean>(getModel(), SearchOrder.INVERT_EXCLUSIONS));
+        invertExclusions.getConfig().withThreeState(false).withUseNative(true);
+        queueCheckBoxAndLabel(invertExclusions);
     }
 
 }
