@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.Optional;
 
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -85,6 +86,8 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         getTester().assertLabel(bb + ":2:cell", "firstAuthor");
         getTester().assertLabel(bb + ":3:cell", "2016");
         getTester().assertLabel(bb + ":4:cell:link:label", "title");
+        getTester().assertComponent(bb + ":5:cell:link", AjaxLink.class);
+        getTester().assertLabel(bb + ":5:cell:link:image", "");
     }
 
     @Test
@@ -100,6 +103,15 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(paperServiceMock).findById(ID);
         verify(codeClassServiceMock).find(anyString());
         verify(codeServiceMock, times(8)).findCodesOfClass(isA(CodeClassId.class), anyString());
+    }
+
+    @Test
+    public void clickingDeleteIconLink_() {
+        getTester().startComponentInPage(makePanel());
+        getTester().clickLink(PANEL_ID + ":table:body:rows:1:cells:5:cell:link");
+        getTester().assertInfoMessages("Excluded firstAuthor (2016): title.");
+        getTester().assertComponentOnAjaxResponse(PANEL_ID + ":table");
+        // TODO how to verify the response was sent with the id to be excluded
     }
 
 }

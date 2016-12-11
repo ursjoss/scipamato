@@ -74,4 +74,11 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
             step.set(PAPER.ID, id.longValue());
     }
 
+    @Override
+    public void resetIdToEntity(Paper entity, PaperRecord saved) {
+        if (saved != null) {
+            entity.setId(saved.getId());
+        }
+    }
+
 }

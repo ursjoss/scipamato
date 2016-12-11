@@ -8,12 +8,14 @@ import static ch.difty.sipamato.persistance.jooq.user.UserRecordMapperTest.ID;
 import static ch.difty.sipamato.persistance.jooq.user.UserRecordMapperTest.LAST_NAME;
 import static ch.difty.sipamato.persistance.jooq.user.UserRecordMapperTest.PASSWORD;
 import static ch.difty.sipamato.persistance.jooq.user.UserRecordMapperTest.USER_NAME;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import ch.difty.sipamato.db.tables.records.UserRecord;
 import ch.difty.sipamato.entity.User;
@@ -27,6 +29,9 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<UserRec
     @Mock
     private User entityMock;
 
+    @Mock
+    private UserRecord recordMock;
+
     @Override
     protected InsertSetStepSetter<UserRecord, User> getSetter() {
         return setter;
@@ -39,7 +44,7 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<UserRec
 
     @Override
     protected void specificTearDown() {
-        verifyNoMoreInteractions(entityMock);
+        verifyNoMoreInteractions(entityMock, recordMock);
     }
 
     @Override
@@ -94,6 +99,21 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<UserRec
 
         verify(getEntity()).getId();
         verify(getMoreStep()).set(USER.ID, ID);
+    }
+
+
+    @Test
+    public void resettingIdToEntity_withNullRecord_doesNothing() {
+        getSetter().resetIdToEntity(entityMock, null);
+        verify(entityMock, never()).setId(Mockito.anyInt());
+    }
+
+    @Test
+    public void resettingIdToEntity_withNonNullRecord_setsId() {
+        when(recordMock.getId()).thenReturn(3);
+        getSetter().resetIdToEntity(entityMock, recordMock);
+        verify(recordMock).getId();
+        verify(entityMock).setId(Mockito.anyInt());
     }
 
 }

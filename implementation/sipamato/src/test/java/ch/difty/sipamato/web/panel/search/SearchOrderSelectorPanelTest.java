@@ -48,7 +48,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         super.setUpHook();
 
         searchOrders.add(searchOrderMock);
-        searchOrders.add(new SearchOrder(20l, 2, true, searchConditions));
+        searchOrders.add(new SearchOrder(20l, 2, true, searchConditions, null));
         when(searchOrderServiceMock.findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class))).thenReturn(searchOrders);
         when(searchOrderMock.getId()).thenReturn(ID);
     }

@@ -70,12 +70,23 @@ public class JooqSearchOrderRepoIntegrationTest {
     @Test
     public void addingRecord_savesRecordAndRefreshesId() {
         SearchOrder so = makeMinimalSearchOrder();
+        SearchCondition searchCondition = new SearchCondition();
+        searchCondition.setAuthors("foo");
+        so.add(searchCondition);
+        so.addExclusionOfPaperWithId(7l);
         assertThat(so.getId()).isNull();
+        assertThat(so.getSearchConditions().get(0).getId()).isNull();
+        assertThat(so.getSearchConditions().get(0).getStringSearchTerms().iterator().next().getId()).isNull();
 
         SearchOrder saved = repo.add(so);
+
         assertThat(saved).isNotNull();
         assertThat(saved.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED);
         assertThat(saved.getOwner()).isEqualTo(10);
+        assertThat(saved.getSearchConditions().get(0).getSearchConditionId()).isNotNull().isGreaterThan(5l);
+        assertThat(saved.getSearchConditions().get(0).getStringSearchTerms().iterator().next().getId()).isNotNull();
+
+        assertThat(saved.getExcludedPaperIds()).containsOnly(7l);
     }
 
     private SearchOrder makeMinimalSearchOrder() {
@@ -135,7 +146,15 @@ public class JooqSearchOrderRepoIntegrationTest {
         assertThat(so2.getAuthors()).isEqualTo("turner");
         assertThat(so2.getPublicationYear()).isEqualTo("2014-2015");
         assertThat(so2.getDisplayValue()).isEqualTo("turner AND 2014-2015");
+    }
 
+    @Test
+    public void enrichingAssociatedEntities_hasExcludedIds() {
+        final SearchOrder so = new SearchOrder();
+        so.setId(4l);
+        repo.enrichAssociatedEntitiesOf(so);
+
+        assertThat(so.getExcludedPaperIds()).hasSize(1).containsExactly(1l);
     }
 
 }

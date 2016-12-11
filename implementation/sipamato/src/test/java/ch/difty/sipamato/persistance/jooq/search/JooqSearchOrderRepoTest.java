@@ -211,7 +211,7 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         assertThat(so.getSearchConditions()).isEmpty();
     }
 
-    private JooqSearchOrderRepo makeRepoFindingSearchTerms() {
+    private JooqSearchOrderRepo makeRepoFindingNestedEntities() {
         return new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
                 getJooqConfig()) {
             private static final long serialVersionUID = 1L;
@@ -228,12 +228,21 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
                     return new ArrayList<>();
                 }
             }
+
+            @Override
+            protected List<Long> fetchExcludedPaperIdsForSearchOrderWithId(long searchOrderId) {
+                if (searchOrderId == SAMPLE_ID) {
+                    return Arrays.asList(17l, 33l, 42l);
+                } else {
+                    return new ArrayList<>();
+                }
+            }
         };
     }
 
     @Test
     public void enrichingAssociatedEntities_withEntityId_fillsTheSearchConditionsAndTerms() {
-        JooqSearchOrderRepo repoSpy = makeRepoFindingSearchTerms();
+        JooqSearchOrderRepo repoSpy = makeRepoFindingNestedEntities();
         SearchOrder so = new SearchOrder();
         so.setId(SAMPLE_ID);
         assertThat(so.getSearchConditions()).isEmpty();
@@ -252,6 +261,18 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         assertThat(so2).isNotNull();
         assertThat(so2.getPublicationYear()).isEqualTo("2014-2016");
         assertThat(so2.getDisplayValue()).isEqualTo("2014-2016");
+    }
+
+    @Test
+    public void enrichingAssociatedEntities_withEntityId_fillsTheExcludedPaperIds() {
+        JooqSearchOrderRepo repoSpy = makeRepoFindingNestedEntities();
+        SearchOrder so = new SearchOrder();
+        so.setId(SAMPLE_ID);
+        assertThat(so.getExcludedPaperIds()).isEmpty();
+
+        repoSpy.enrichAssociatedEntitiesOf(so);
+
+        assertThat(so.getExcludedPaperIds()).hasSize(3).containsExactly(17l, 33l, 42l);
     }
 
 }

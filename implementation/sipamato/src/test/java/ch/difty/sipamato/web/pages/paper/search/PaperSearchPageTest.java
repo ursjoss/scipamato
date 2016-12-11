@@ -1,6 +1,7 @@
 package ch.difty.sipamato.web.pages.paper.search;
 
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -13,10 +14,15 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.service.CodeClassService;
 import ch.difty.sipamato.service.CodeService;
 import ch.difty.sipamato.service.PaperSlimService;
@@ -39,8 +45,14 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     private CodeClassService codeClassServiceMock;
     @MockBean
     private CodeService codeServiceMock;
+    @Mock
+    private PaperSlim paperSlimMock;
+    @Mock
+    private SearchOrder searchOrderMock;
+    @Mock
+    private Page<PaperSlim> pageMock;
 
-    private final SearchOrder searchOrder = new SearchOrder(SEARCH_ORDER_ID, 1, false, null);
+    private final SearchOrder searchOrder = new SearchOrder(SEARCH_ORDER_ID, 1, false, null, null);
 
     @Override
     protected void setUpHook() {
@@ -114,18 +126,41 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().startPage(page);
         getTester().assertRenderedPage(getPageClass());
 
-        getTester().debugComponentTrees();
-
         final String linkPath = "searchOrderPanel:form:searchTerms:body:rows:1:cells:2:cell:link";
         getTester().assertComponent(linkPath, AjaxLink.class);
         getTester().assertContains(labelDisplayValue);
         getTester().clickLink(linkPath);
-        getTester().debugComponentTrees();
         getTester().assertContainsNot(labelDisplayValue);
 
         // TODO test that the event is sent
         // TODO also test that receiving the event adds the filter panel to the target
         verify(searchOrderServiceMock, never()).findById(SEARCH_ORDER_ID);
+    }
+
+    @Test
+    public void clickingRemoveButtonOnResults_removesResults() {
+        when(searchOrderMock.getId()).thenReturn(SEARCH_ORDER_ID);
+
+        when(paperSlimServiceMock.countBySearchOrder(Mockito.eq(searchOrderMock))).thenReturn(1);
+        when(paperSlimServiceMock.findBySearchOrder(Mockito.eq(searchOrderMock), Mockito.isA(Pageable.class))).thenReturn(pageMock);
+        when(pageMock.iterator()).thenReturn(Arrays.asList(paperSlimMock).iterator());
+
+        PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock));
+
+        getTester().startPage(page);
+        getTester().assertRenderedPage(getPageClass());
+
+        String someTextInPage = "fa fa-fw fa-trash-o text-danger";
+        getTester().assertContains(someTextInPage);
+
+        final String linkPath = "resultPanel:table:body:rows:1:cells:5:cell:link";
+        getTester().assertComponent(linkPath, AjaxLink.class);
+        getTester().clickLink(linkPath);
+        getTester().assertContainsNot(someTextInPage);
+        // TODO test that the event is sent
+        verify(paperSlimServiceMock, times(2)).countBySearchOrder(Mockito.eq(searchOrderMock));
+        verify(paperSlimServiceMock, times(2)).findBySearchOrder(Mockito.eq(searchOrderMock), Mockito.isA(Pageable.class));
+        verify(pageMock, times(2)).iterator();
     }
 
     @Test

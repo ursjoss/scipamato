@@ -34,4 +34,12 @@ public interface InsertSetStepSetter<R extends Record, T extends SipamatoEntity>
      */
     void considerSettingKeyOf(InsertSetMoreStep<R> step, T entity);
 
+    /**
+     * Sets the id of the saved record into the entity (unless the saved record is null).
+     *
+     * @param entity still missing the id
+     * @param saved the record that has the id assigned from the db
+     */
+    void resetIdToEntity(T entity, R saved);
+
 }

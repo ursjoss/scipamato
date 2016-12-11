@@ -1,6 +1,7 @@
 package ch.difty.sipamato.persistance.jooq.search;
 
 import static ch.difty.sipamato.db.tables.SearchCondition.SEARCH_CONDITION;
+import static ch.difty.sipamato.db.tables.SearchExclusion.SEARCH_EXCLUSION;
 import static ch.difty.sipamato.db.tables.SearchOrder.SEARCH_ORDER;
 import static ch.difty.sipamato.db.tables.SearchTerm.SEARCH_TERM;
 import static org.jooq.impl.DSL.row;
@@ -39,7 +40,7 @@ import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 import ch.difty.sipamato.service.Localization;
 
 /**
- * The repository to manage {@link SearchOrder}s - including the nested list of {@link SearchCondition}s.
+ * The repository to manage {@link SearchOrder}s - including the nested list of {@link SearchCondition}s and excluded paper ids.
  *
  * @author u.joss
  */
@@ -100,6 +101,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     protected void enrichAssociatedEntitiesOf(final SearchOrder searchOrder) {
         if (searchOrder != null && searchOrder.getId() != null) {
             fillSearchTermsInto(searchOrder, mapSearchTermsToSearchConditions(searchOrder));
+            fillExcludedPaperIdsInto(searchOrder);
         }
     }
 
@@ -165,20 +167,36 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         }
     }
 
+    private void fillExcludedPaperIdsInto(SearchOrder searchOrder) {
+        final List<Long> excludedPaperIds = fetchExcludedPaperIdsForSearchOrderWithId(searchOrder.getId());
+        searchOrder.setExcludedPaperIds(excludedPaperIds);
+    }
+
+    protected List<Long> fetchExcludedPaperIdsForSearchOrderWithId(final long searchOrderId) {
+        // @formatter:off
+        return getDsl()
+                .select(SEARCH_EXCLUSION.PAPER_ID)
+                .from(SEARCH_EXCLUSION)
+                .where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.equal(searchOrderId))
+                .fetch(r -> (Long) r.get(0));
+        // @formatter:on
+    }
+
     @Override
     protected void updateAssociatedEntities(final SearchOrder searchOrder) {
         storeSearchConditionsOf(searchOrder);
+        storeExcludedIdsOf(searchOrder);
     }
 
     @Override
     protected void saveAssociatedEntitiesOf(final SearchOrder searchOrder) {
         storeSearchConditionsOf(searchOrder);
+        storeExcludedIdsOf(searchOrder);
     }
 
     private void storeSearchConditionsOf(SearchOrder searchOrder) {
         storeExistingConditionsOf(searchOrder);
         deleteObsoleteConditionsFrom(searchOrder);
-
     }
 
     private void storeExistingConditionsOf(SearchOrder searchOrder) {
@@ -204,9 +222,25 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     private void deleteObsoleteConditionsFrom(SearchOrder searchOrder) {
         final List<Long> conditionIds = searchOrder.getSearchConditions().stream().map(SearchCondition::getSearchConditionId).collect(Collectors.toList());
         getDsl().deleteFrom(SEARCH_CONDITION).where(SEARCH_CONDITION.SEARCH_ORDER_ID.equal(searchOrder.getId()).and(SEARCH_CONDITION.SEARCH_CONDITION_ID.notIn(conditionIds))).execute();
-        for (SearchCondition sc : searchOrder.getSearchConditions()) {
+        for (final SearchCondition sc : searchOrder.getSearchConditions()) {
             removeObsoleteSearchConditionsFrom(sc, sc.getSearchConditionId());
         }
+    }
+
+    private void storeExcludedIdsOf(SearchOrder searchOrder) {
+        storeExistingExclusionsOf(searchOrder);
+        deleteObsoleteExclusionsOf(searchOrder);
+    }
+
+    private void storeExistingExclusionsOf(SearchOrder searchOrder) {
+        final long searchOrderId = searchOrder.getId();
+        for (final Long excludedId : searchOrder.getExcludedPaperIds()) {
+            getDsl().insertInto(SEARCH_EXCLUSION, SEARCH_EXCLUSION.SEARCH_ORDER_ID, SEARCH_EXCLUSION.PAPER_ID).values(searchOrderId, excludedId).onDuplicateKeyIgnore().execute();
+        }
+    }
+
+    private void deleteObsoleteExclusionsOf(SearchOrder searchOrder) {
+        getDsl().deleteFrom(SEARCH_EXCLUSION).where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrder.getId())).and(SEARCH_EXCLUSION.PAPER_ID.notIn(searchOrder.getExcludedPaperIds())).execute();
     }
 
     @Override
