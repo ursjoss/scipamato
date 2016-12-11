@@ -22,6 +22,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 import ch.difty.sipamato.web.pages.login.LogoutPage;
@@ -47,6 +48,10 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
     @SpringBean
     private DateTimeService dateTimeService;
+
+    protected DateTimeService getDateTimeService() {
+        return dateTimeService;
+    }
 
     private NotificationPanel feedbackPanel;
     private Navbar navBar;
@@ -167,8 +172,8 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         queue(new Label(id + LABEL_TAG, new StringResourceModel(id + PANEL_HEADER_RESOURCE_TAG, this, null)));
     }
 
-    protected DateTimeService getDateTimeService() {
-        return dateTimeService;
+    protected User getActiveUser() {
+        return (User) getAuthentication().getPrincipal();
     }
 
 }

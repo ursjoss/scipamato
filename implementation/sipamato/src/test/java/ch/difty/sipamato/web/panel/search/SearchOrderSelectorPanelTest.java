@@ -69,6 +69,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponent(b + ":searchOrder", BootstrapSelect.class);
         getTester().assertComponent(b + ":global", CheckBox.class);
         getTester().assertComponent(b + ":query", AjaxSubmitLink.class);
+        getTester().assertComponent(b + ":new", AjaxSubmitLink.class);
         getTester().assertComponent(b + ":save", AjaxSubmitLink.class);
         getTester().assertComponent(b + ":invertExclusions", CheckBox.class);
     }
@@ -106,9 +107,24 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
         formTester.submit("save");
 
+        getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:searchOrder");
+
+        verify(searchOrderMock, times(8)).getId();
+        verify(searchOrderServiceMock, times(3)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
+        verify(searchOrderServiceMock).saveOrUpdate(searchOrderMock);
+    }
+
+    @Test
+    public void testSubmittingWithNewButton_createsNewSearchOrder() {
+        when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
+        getTester().startComponentInPage(makePanel());
+        FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
+
+        formTester.submit("new");
+
         verify(searchOrderMock, times(6)).getId();
         verify(searchOrderServiceMock, times(2)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
-        verify(searchOrderServiceMock).saveOrUpdate(searchOrderMock);
+        verify(searchOrderServiceMock, never()).saveOrUpdate(searchOrderMock);
     }
 
     @Test

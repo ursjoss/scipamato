@@ -84,9 +84,16 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     }
 
     private SearchOrder makeEmptyModelObject() {
-        final SearchOrder searchOrder = new SearchOrder(null);
-        searchOrder.setId(getSearchOrderId());
-        return searchOrder;
+        final SearchOrder so = new SearchOrder(null);
+        so.setId(getSearchOrderId());
+        so.setOwner(getActiveUser().getId());
+        return so;
+    }
+
+    private SearchOrder makeNewModelObject() {
+        final SearchOrder so = new SearchOrder(null);
+        so.setOwner(getActiveUser().getId());
+        return so;
     }
 
     /**
@@ -166,7 +173,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     private void handleSearchOrderEvent(final IEvent<?> event) {
         final SearchOrderChangeEvent soce = (SearchOrderChangeEvent) event.getPayload();
         setExclusionIntoModel(soce);
-        resetProviderModel();
+        resetProviderModel(soce);
         addSubPanelsAsTarget(soce);
         event.dontBroadcastDeeper();
     }
@@ -182,11 +189,15 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         }
     }
 
-    private void resetProviderModel() {
-        if (getModelObject() != null) {
+    private void resetProviderModel(SearchOrderChangeEvent soce) {
+        if (getModelObject() != null && !soce.isNewSearchOrderRequested()) {
             dataProvider.setFilterState(getModelObject());
         } else {
-            dataProvider.setFilterState(makeEmptyModelObject());
+            SearchOrder newSearchOrder = makeNewModelObject();
+            SearchOrder persistedNewSearchOrder = searchOrderService.saveOrUpdate(newSearchOrder);
+            PageParameters pp = new PageParameters();
+            pp.add(PageParameterNames.SEARCH_ORDER_ID, persistedNewSearchOrder.getId());
+            setResponsePage(new PaperSearchPage(pp));
         }
     }
 
