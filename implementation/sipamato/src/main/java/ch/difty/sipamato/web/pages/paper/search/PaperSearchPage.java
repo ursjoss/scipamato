@@ -141,11 +141,21 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     @Override
     public void onEvent(final IEvent<?> event) {
-        if (event.getPayload().getClass() == SearchOrderChangeEvent.class) {
-            resetProviderModel();
-            addSubPanelsAsTarget(event);
-            event.dontBroadcastDeeper();
-        }
+        if (event.getPayload().getClass() == SearchOrderChangeEvent.class)
+            handleSearchOrderEvent(event);
+    }
+
+    private void handleSearchOrderEvent(final IEvent<?> event) {
+        final SearchOrderChangeEvent soce = (SearchOrderChangeEvent) event.getPayload();
+        setExclusionIntoModel(soce);
+        resetProviderModel();
+        addSubPanelsAsTarget(soce);
+        event.dontBroadcastDeeper();
+    }
+
+    private void setExclusionIntoModel(SearchOrderChangeEvent soce) {
+        if (soce.getExcludedId() != null)
+            getModelObject().addExclusionOfPaperWithId(soce.getExcludedId());
     }
 
     private void resetProviderModel() {
@@ -156,8 +166,8 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         }
     }
 
-    private void addSubPanelsAsTarget(final IEvent<?> event) {
-        final AjaxRequestTarget target = ((SearchOrderChangeEvent) event.getPayload()).getTarget();
+    private void addSubPanelsAsTarget(final SearchOrderChangeEvent soce) {
+        final AjaxRequestTarget target = soce.getTarget();
         if (target != null) {
             target.add(searchOrderPanel);
             target.add(resultPanel);
