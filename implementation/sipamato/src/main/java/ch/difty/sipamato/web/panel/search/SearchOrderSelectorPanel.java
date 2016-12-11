@@ -1,5 +1,6 @@
 package ch.difty.sipamato.web.panel.search;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
@@ -167,9 +168,27 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     }
 
     private void makeAndQueueInvertExclusionsCheckBox(String id) {
-        invertExclusions = new CheckBoxX(id, new PropertyModel<Boolean>(getModel(), SearchOrder.INVERT_EXCLUSIONS));
+        invertExclusions = new CheckBoxX(id, new PropertyModel<Boolean>(getModel(), SearchOrder.INVERT_EXCLUSIONS)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                boolean hasExclusions = SearchOrderSelectorPanel.this.hasExclusions();
+                setEnabled(hasExclusions);
+                if (!hasExclusions) {
+                    SearchOrder so = SearchOrderSelectorPanel.this.getModelObject();
+                    if (so != null)
+                        so.setInvertExclusions(false);
+                }
+            }
+        };
         invertExclusions.getConfig().withThreeState(false).withUseNative(true);
         queueCheckBoxAndLabel(invertExclusions);
+    }
+
+    protected boolean hasExclusions() {
+        return getModelObject() != null && CollectionUtils.isNotEmpty(getModelObject().getExcludedPaperIds());
     }
 
 }

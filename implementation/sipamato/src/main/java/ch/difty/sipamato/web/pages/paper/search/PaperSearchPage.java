@@ -153,9 +153,15 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         event.dontBroadcastDeeper();
     }
 
+    /* Adds or removes an excluded id - depending on whether the invertExclusion flag is set in the model */
     private void setExclusionIntoModel(SearchOrderChangeEvent soce) {
-        if (soce.getExcludedId() != null)
-            getModelObject().addExclusionOfPaperWithId(soce.getExcludedId());
+        if (soce.getExcludedId() != null) {
+            if (!getModelObject().isInvertExclusions()) {
+                getModelObject().addExclusionOfPaperWithId(soce.getExcludedId());
+            } else {
+                getModelObject().removeExlusionOfPaperWithId(soce.getExcludedId());
+            }
+        }
     }
 
     private void resetProviderModel() {
@@ -169,6 +175,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     private void addSubPanelsAsTarget(final SearchOrderChangeEvent soce) {
         final AjaxRequestTarget target = soce.getTarget();
         if (target != null) {
+            target.add(searchOrderSelectorPanel);
             target.add(searchOrderPanel);
             target.add(resultPanel);
         }
