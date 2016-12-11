@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -18,6 +19,7 @@ import ch.difty.sipamato.web.model.SearchOrderModel;
 import ch.difty.sipamato.web.pages.Mode;
 import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 
@@ -27,6 +29,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
  * <ul>
  * <li>selecting from previously saved search orders via a select box</li>
  * <li>changing the global flag of search orders (TODO)</li>
+ * <li>changing whether excluded papers are excluded or selected (TODO)</li>
  * <li>saving new or modified search orders</li>
  * </ul>
  *
@@ -44,6 +47,7 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     private SearchOrderService searchOrderService;
 
     private Form<SearchOrder> form;
+    private CheckBoxX global;
     private SubmitLink submitLink;
 
     public SearchOrderSelectorPanel(String id, IModel<SearchOrder> model) {
@@ -60,6 +64,7 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
         form = new Form<SearchOrder>(id, getModel());
         queue(form);
         makeAndQueueSearchOrderSelectBox("searchOrder");
+        makeAndQueueGlobalCheckBox("global");
         makeAndQueueSubmitButton("submit");
     }
 
@@ -75,12 +80,27 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 target.add(submitLink);
+                target.add(global);
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
                 info("Sent SearchOrderChangeEvent");
             }
         });
         searchOrder.add(new AttributeModifier("data-width", "fit"));
         queue(searchOrder);
+    }
+
+    private void makeAndQueueGlobalCheckBox(String id) {
+        global = new CheckBoxX(id, new PropertyModel<Boolean>(getModel(), SearchOrder.GLOBAL)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setEnabled(SearchOrderSelectorPanel.this.isUserEntitled());
+            }
+        };
+        global.getConfig().withThreeState(false).withUseNative(true);
+        queueCheckBoxAndLabel(global);
     }
 
     private void makeAndQueueSubmitButton(String id) {
@@ -90,7 +110,7 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                setEnabled(SearchOrderSelectorPanel.this.isModelSelected());
+                setEnabled(SearchOrderSelectorPanel.this.isModelSelected() && SearchOrderSelectorPanel.this.isUserEntitled());
             }
 
             @Override
@@ -111,6 +131,10 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
 
     protected boolean isModelSelected() {
         return getModelObject() != null && getModelObject().getId() != null;
+    }
+
+    protected boolean isUserEntitled() {
+        return getModelObject() != null && getModelObject().getOwner() == getActiveUser().getId();
     }
 
 }

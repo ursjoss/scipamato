@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -28,6 +29,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorPanel> {
 
     private final long ID = 17l;
+    private static final int OWNER_ID = 2;
 
     @MockBean
     private SearchOrderService searchOrderServiceMock;
@@ -48,7 +50,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         super.setUpHook();
 
         searchOrders.add(searchOrderMock);
-        searchOrders.add(new SearchOrder(20l, 2, true, searchConditions, null));
+        searchOrders.add(new SearchOrder(20l, OWNER_ID, true, searchConditions, null));
         when(searchOrderServiceMock.findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class))).thenReturn(searchOrders);
         when(searchOrderMock.getId()).thenReturn(ID);
     }
@@ -63,11 +65,9 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     private void assertForm(String b) {
         getTester().assertComponent(b, Form.class);
 
-        String bb = b + ":searchOrder";
-        getTester().assertComponent(bb, BootstrapSelect.class);
-
-        bb = b + ":submit";
-        getTester().assertComponent(bb, SubmitLink.class);
+        getTester().assertComponent(b + ":searchOrder", BootstrapSelect.class);
+        getTester().assertComponent(b + ":global", CheckBox.class);
+        getTester().assertComponent(b + ":submit", SubmitLink.class);
     }
 
     @Test
@@ -84,6 +84,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
     @Test
     public void testSubmitting_saveSearchOrder() {
+        when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
         formTester.submit("submit");
@@ -93,4 +94,23 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         verify(searchOrderServiceMock).saveOrUpdate(searchOrderMock);
     }
 
+    @Test
+    public void withGlobalSearchOrders_withOtherOwner_globalCheckBox_disabled() {
+        when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
+        getTester().startComponentInPage(makePanel());
+
+        getTester().assertEnabled(PANEL_ID + ":form:global");
+
+        verify(searchOrderMock, times(2)).getOwner();
+    }
+
+    @Test
+    public void withGlobalSearchOrders_withOtherxOwner_globalCheckBox_disabled() {
+        when(searchOrderMock.getOwner()).thenReturn(OWNER_ID + 1);
+        getTester().startComponentInPage(makePanel());
+
+        getTester().assertDisabled(PANEL_ID + ":form:global");
+
+        verify(searchOrderMock, times(2)).getOwner();
+    }
 }

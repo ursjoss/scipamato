@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
-    <form wicket:id="form">
-        <select wicket:id="searchOrder"></select><a wicket:id="submit">Save</a>
+    <form wicket:id="form" class="form-inline">
+        <select wicket:id="searchOrder"></select>
+        <div class="form-group">
+            <input wicket:id="global" type="checkbox"></input> <span wicket:id="globalLabel"></span>
+        </div>
+        <a wicket:id="submit">Save</a>
     </form>
 </wicket:panel>
 </html>
