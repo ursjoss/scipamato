@@ -437,7 +437,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         result = prime * result + stringSearchTerms.hashCode();
         result = prime * result + integerSearchTerms.hashCode();
         result = prime * result + booleanSearchTerms.hashCode();
-//        result = prime * result + ((codes == null) ? 0 : codes.hashCode());
+        result = prime * result + ((codes == null) ? 0 : codes.hashCode());
         return result;
     }
 
@@ -461,11 +461,11 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
             return false;
         if (!stringSearchTerms.equals(other.stringSearchTerms))
             return false;
-//        if (codes == null) {
-//            if (other.codes != null)
-//                return false;
-//        } else if (!codes.equals(other.codes))
-//            return false;
+        if (codes == null) {
+            if (other.codes != null)
+                return false;
+        } else if (!codes.equals(other.codes))
+            return false;
         return true;
     }
 

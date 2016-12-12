@@ -105,4 +105,32 @@ public class DefaultCodeBox implements CodeBox {
         return builder.toString();
     }
 
+    @Override
+    public int hashCode() {
+        final List<Code> sorted = new ArrayList<Code>(codes);
+        sorted.sort((c1, c2) -> c1.getCode().compareTo(c2.getCode()));
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + sorted.hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        final List<Code> thisSorted = new ArrayList<Code>(codes);
+        thisSorted.sort((c1, c2) -> c1.getCode().compareTo(c2.getCode()));
+        final DefaultCodeBox other = (DefaultCodeBox) obj;
+        final List<Code> otherSorted = new ArrayList<Code>(other.codes);
+        otherSorted.sort((c1, c2) -> c1.getCode().compareTo(c2.getCode()));
+        if (!thisSorted.equals(otherSorted))
+            return false;
+        return true;
+    }
+
 }

@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-// TODO test codes
 public class SearchConditionTest {
 
     private static final long SEARCH_CONDITION_ID = 1;
@@ -536,7 +535,7 @@ public class SearchConditionTest {
 
     @Test
     public void equalsAndHash1_ofFieldSc() {
-        assertThat(sc.hashCode()).isEqualTo(954305);
+        assertThat(sc.hashCode()).isEqualTo(29583487);
         assertThat(sc.equals(sc)).isTrue();
         assertThat(sc.equals(null)).isFalse();
         assertThat(sc.equals(new String())).isFalse();
@@ -546,7 +545,7 @@ public class SearchConditionTest {
     public void equalsAndHash2_withEmptySearchConditions() {
         SearchCondition f1 = new SearchCondition();
         SearchCondition f2 = new SearchCondition();
-        assertEquality(f1, f2, 924514);
+        assertEquality(f1, f2, 28659966);
     }
 
     private void assertEquality(SearchCondition f1, SearchCondition f2, int hashCode) {
@@ -562,7 +561,7 @@ public class SearchConditionTest {
         f1.setAuthors("foo");
         SearchCondition f2 = new SearchCondition();
         f2.setAuthors("foo");
-        assertEquality(f1, f2, -1401044609);
+        assertEquality(f1, f2, -482709887);
     }
 
     @Test
@@ -581,7 +580,7 @@ public class SearchConditionTest {
         f2.setFirstAuthor("baz");
         f2.setFirstAuthorOverridden(true);
         f2.setMethodOutcome("blup");
-        assertEquality(f1, f2, 2007738572);
+        assertEquality(f1, f2, 2110353620);
 
         f2.setMethodOutcome("blup2");
         assertThat(f1.equals(f2)).isFalse();
@@ -599,7 +598,7 @@ public class SearchConditionTest {
         f1.setAuthors("foo");
         SearchCondition f2 = new SearchCondition();
         f2.setAuthors("foo");
-        assertEquality(f1, f2, -1401044609);
+        assertEquality(f1, f2, -482709887);
 
         f1.setSearchConditionId(3l);
         assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode());
@@ -612,7 +611,7 @@ public class SearchConditionTest {
         assertThat(f2.equals(f1)).isFalse();
 
         f2.setSearchConditionId(3l);
-        assertEquality(f1, f2, -1400955236);
+        assertEquality(f1, f2, -479939324);
     }
 
     @Test
