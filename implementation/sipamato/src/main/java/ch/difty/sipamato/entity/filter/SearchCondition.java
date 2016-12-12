@@ -39,8 +39,8 @@ import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.CodeBox;
 import ch.difty.sipamato.entity.CodeBoxAware;
 import ch.difty.sipamato.entity.CodeClassId;
-import ch.difty.sipamato.entity.PaperCodeBox;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.SearchConditionCodeBox;
 
 /**
  * The {@link SearchCondition} is an instance of {@link SipamatoFilter} that provides
@@ -125,7 +125,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         return booleanSearchTerms.values();
     }
 
-    private final CodeBox codes = new PaperCodeBox();
+    private final CodeBox codes = new SearchConditionCodeBox();
 
     /** {@link Paper} specific accessors */
 
@@ -430,7 +430,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         sb.append(Arrays.asList(textString, intString, boolString).stream().filter((String s) -> !s.isEmpty()).collect(Collectors.joining(JOIN_DELIMITER)));
         if (!codes.isEmpty()) {
             if (sb.length() > 0)
-                sb.append(" - ");
+                sb.append(" AND ");
             sb.append(codes.toString());
         }
         return sb.toString();

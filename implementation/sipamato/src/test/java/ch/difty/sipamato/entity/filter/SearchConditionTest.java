@@ -536,12 +536,18 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void testDisplayValue_withOnlyCodes() {
+    public void testDisplayValue_withCodesOnly() {
         sc.addCode(new Code("1F", "C1F", "", false, 1, "CC1", "", 0));
         sc.addCode(new Code("5H", "C5H", "", false, 5, "CC5", "", 0));
-        // TODO simplify displayValue for Codes in SearchConditions
-        assertThat(sc.getDisplayValue()).isEqualTo(
-                "[codesOfClass1=[Code[code=1F,name=C1F,comment=,internal=false,codeClass=CodeClass[id=1],sort=0]],codesOfClass5=[Code[code=5H,name=C5H,comment=,internal=false,codeClass=CodeClass[id=5],sort=0]]]");
+        assertThat(sc.getDisplayValue()).isEqualTo("1F&5H");
+    }
+
+    @Test
+    public void testDisplayValue_withSearchTermsAndCodes() {
+        sc.setAuthors("foobar");
+        sc.addCode(new Code("1F", "C1F", "", false, 1, "CC1", "", 0));
+        sc.addCode(new Code("5H", "C5H", "", false, 5, "CC5", "", 0));
+        assertThat(sc.getDisplayValue()).isEqualTo("foobar AND 1F&5H");
     }
 
     @Test

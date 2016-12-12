@@ -261,12 +261,12 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         assertThat(so1).isNotNull();
         assertThat(so1.getAuthors()).isEqualTo("joss");
         assertThat(so1.getPublicationYear()).isEqualTo("2014");
-        assertThat(so1.getDisplayValue()).isEqualTo("joss AND 2014 - [codesOfClass1=[Code[code=1F,name=Code 1F,comment=,internal=false,codeClass=CodeClass[id=1],sort=0]]]");
+        assertThat(so1.getDisplayValue()).isEqualTo("joss AND 2014 AND 1F");
 
         SearchCondition so2 = so.getSearchConditions().get(1);
         assertThat(so2).isNotNull();
         assertThat(so2.getPublicationYear()).isEqualTo("2014-2016");
-        assertThat(so2.getDisplayValue()).isEqualTo("2014-2016 - [codesOfClass1=[Code[code=1F,name=Code 1F,comment=,internal=false,codeClass=CodeClass[id=1],sort=0]]]");
+        assertThat(so2.getDisplayValue()).isEqualTo("2014-2016 AND 1F");
     }
 
     @Test
