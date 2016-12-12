@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import ch.difty.sipamato.db.tables.records.SearchOrderRecord;
+import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.entity.filter.SearchTerm;
@@ -236,6 +237,11 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
                 } else {
                     return new ArrayList<>();
                 }
+            }
+
+            @Override
+            protected List<Code> fetchCodesForSearchConditionWithId(SearchCondition searchCondition) {
+                return Arrays.asList(new Code("1F", "Code 1F", "", false, 1, "CC 1", "", 0));
             }
         };
     }
