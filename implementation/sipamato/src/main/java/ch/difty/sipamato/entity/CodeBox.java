@@ -46,4 +46,9 @@ public interface CodeBox extends Serializable {
      */
     void clearBy(CodeClassId codeClassId);
 
+    /**
+     * @return true if the CodeBox holds not codes - false otherwise
+     */
+    boolean isEmpty();
+
 }

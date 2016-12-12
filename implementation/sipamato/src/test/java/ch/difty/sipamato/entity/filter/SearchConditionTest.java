@@ -7,6 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
+import ch.difty.sipamato.entity.Code;
+
 public class SearchConditionTest {
 
     private static final long SEARCH_CONDITION_ID = 1;
@@ -531,6 +533,15 @@ public class SearchConditionTest {
         sc.setPublicationYear("2016");
         sc.setFirstAuthorOverridden(true);
         assertThat(sc.getDisplayValue()).isEqualTo("fooAuth AND bar AND baz AND 2016 AND first_author_overridden");
+    }
+
+    @Test
+    public void testDisplayValue_withOnlyCodes() {
+        sc.addCode(new Code("1F", "C1F", "", false, 1, "CC1", "", 0));
+        sc.addCode(new Code("5H", "C5H", "", false, 5, "CC5", "", 0));
+        // TODO simplify displayValue for Codes in SearchConditions
+        assertThat(sc.getDisplayValue()).isEqualTo(
+                "[codesOfClass1=[Code[code=1F,name=C1F,comment=,internal=false,codeClass=CodeClass[id=1],sort=0]],codesOfClass5=[Code[code=5H,name=C5H,comment=,internal=false,codeClass=CodeClass[id=5],sort=0]]]");
     }
 
     @Test

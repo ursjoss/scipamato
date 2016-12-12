@@ -24,7 +24,8 @@ public class DefaultCodeBox implements CodeBox {
 
     private final List<Code> codes = new ArrayList<>();
 
-    boolean isEmpty() {
+    @Override
+    public boolean isEmpty() {
         return codes.isEmpty();
     }
 
