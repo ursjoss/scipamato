@@ -39,7 +39,7 @@ import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.CodeBox;
 import ch.difty.sipamato.entity.CodeBoxAware;
 import ch.difty.sipamato.entity.CodeClassId;
-import ch.difty.sipamato.entity.DefaultCodeBox;
+import ch.difty.sipamato.entity.PaperCodeBox;
 import ch.difty.sipamato.entity.Paper;
 
 /**
@@ -125,7 +125,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         return booleanSearchTerms.values();
     }
 
-    private final CodeBox codes = new DefaultCodeBox();
+    private final CodeBox codes = new PaperCodeBox();
 
     /** {@link Paper} specific accessors */
 

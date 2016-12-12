@@ -14,11 +14,11 @@ import org.springframework.util.CollectionUtils;
 import ch.difty.sipamato.lib.AssertAs;
 
 /**
- * The default implementation of the {@link CodeBox} interface.
+ * The paper specific implementation of the {@link CodeBox} interface.
  *
  * @author u.joss
  */
-public class DefaultCodeBox implements CodeBox {
+public class PaperCodeBox implements CodeBox {
 
     private static final long serialVersionUID = 1L;
 
@@ -126,7 +126,7 @@ public class DefaultCodeBox implements CodeBox {
             return false;
         final List<Code> thisSorted = new ArrayList<Code>(codes);
         thisSorted.sort((c1, c2) -> c1.getCode().compareTo(c2.getCode()));
-        final DefaultCodeBox other = (DefaultCodeBox) obj;
+        final PaperCodeBox other = (PaperCodeBox) obj;
         final List<Code> otherSorted = new ArrayList<Code>(other.codes);
         otherSorted.sort((c1, c2) -> c1.getCode().compareTo(c2.getCode()));
         if (!thisSorted.equals(otherSorted))

@@ -10,13 +10,13 @@ import org.junit.Test;
 
 import ch.difty.sipamato.lib.NullArgumentException;
 
-public class DefaultCodeBoxTest {
+public class PaperCodeBoxTest {
 
     private static final Code CODE_1F = makeCode(CodeClassId.CC1, "F", 1);
     private static final Code CODE_5H = makeCode(CodeClassId.CC5, "H", 7);
     private static final Code CODE_5F = makeCode(CodeClassId.CC5, "F", 5);
 
-    private final DefaultCodeBox codeBox = new DefaultCodeBox();
+    private final PaperCodeBox codeBox = new PaperCodeBox();
 
     private static Code makeCode(CodeClassId codeClassId, String codePart2, int sort) {
         int ccId = codeClassId.getId();
@@ -171,17 +171,17 @@ public class DefaultCodeBoxTest {
 
     @Test
     public void equality_ofEmptyCodeBoxes() {
-        CodeBox cb1 = new DefaultCodeBox();
-        CodeBox cb2 = new DefaultCodeBox();
+        CodeBox cb1 = new PaperCodeBox();
+        CodeBox cb2 = new PaperCodeBox();
         assertEqualityOf(cb1, cb2);
     }
 
     @Test
     public void equality_ofCodeHoldingCodeBoxes() {
-        CodeBox cb1 = new DefaultCodeBox();
+        CodeBox cb1 = new PaperCodeBox();
         cb1.addCode(CODE_1F);
         cb1.addCode(CODE_5H);
-        CodeBox cb2 = new DefaultCodeBox();
+        CodeBox cb2 = new PaperCodeBox();
         cb2.addCode(CODE_1F);
         cb2.addCode(CODE_5H);
         assertEqualityOf(cb1, cb2);
@@ -189,10 +189,10 @@ public class DefaultCodeBoxTest {
 
     @Test
     public void equality_ofCodeHoldingCodeBoxes_despiteDifferentOrder() {
-        CodeBox cb1 = new DefaultCodeBox();
+        CodeBox cb1 = new PaperCodeBox();
         cb1.addCode(CODE_1F);
         cb1.addCode(CODE_5H);
-        CodeBox cb2 = new DefaultCodeBox();
+        CodeBox cb2 = new PaperCodeBox();
         cb2.addCode(CODE_5H);
         cb2.addCode(CODE_1F);
         assertEqualityOf(cb1, cb2);
@@ -210,9 +210,9 @@ public class DefaultCodeBoxTest {
 
     @Test
     public void inequality_ofCodeBoxes() {
-        CodeBox cb1 = new DefaultCodeBox();
+        CodeBox cb1 = new PaperCodeBox();
         cb1.addCode(CODE_1F);
-        CodeBox cb2 = new DefaultCodeBox();
+        CodeBox cb2 = new PaperCodeBox();
         cb2.addCode(CODE_1F);
         cb2.addCode(CODE_5H);
         assertInequalityOf(cb1, cb2);
@@ -220,8 +220,8 @@ public class DefaultCodeBoxTest {
 
     @Test
     public void inequality_ofCodeBoxes2() {
-        CodeBox cb1 = new DefaultCodeBox();
-        CodeBox cb2 = new DefaultCodeBox();
+        CodeBox cb1 = new PaperCodeBox();
+        CodeBox cb2 = new PaperCodeBox();
         cb2.addCode(CODE_5H);
         assertInequalityOf(cb1, cb2);
     }
