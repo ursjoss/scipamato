@@ -102,18 +102,24 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     /** {@inheritDoc} */
     @Override
     public int countBySearchOrder(SearchOrder searchOrder) {
+        AssertAs.notNull(searchOrder, "searchOrder");
+
         final Condition paperMatches = getConditionsFrom(searchOrder);
         return getDsl().fetchCount(getDsl().selectOne().from(getTable()).where(paperMatches));
     }
 
     /**
      * Combines the search terms of different {@link SearchOrder} using OR operators.
+     *
+     * Note: searchOrder must not be null. this is to be guarded from the public entry methods.
+     *
+     * protected for test purposes
      */
-    private Condition getConditionsFrom(final SearchOrder searchOrder) {
+    protected Condition getConditionsFrom(final SearchOrder searchOrder) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
         for (final SearchCondition sc : searchOrder.getSearchConditions())
             conditions.add(() -> getConditionFromSingleSearchCondition(sc));
-        Condition scConditions = conditions.combineWithOr();
+        final Condition scConditions = conditions.combineWithOr();
         final Condition exclusionCondition = makeExclusionCondition(searchOrder);
         return scConditions.and(exclusionCondition);
     }
