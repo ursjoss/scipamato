@@ -532,8 +532,10 @@ INSERT INTO search_order VALUES(2, 3, 1, DEFAULT, DEFAULT, 3, DEFAULT, 3);
 INSERT INTO search_order VALUES(3, 4, 0, DEFAULT, DEFAULT, 4, DEFAULT, 4);
 	INSERT INTO search_condition VALUES(4, 3, DEFAULT, DEFAULT, 4, DEFAULT, 4);
         INSERT INTO search_term VALUES(5, 4, 0, 'first_author_overridden', 'true', DEFAULT, DEFAULT, 4, DEFAULT, 4);
+        INSERT INTO search_condition_code VALUES(4, '1F', DEFAULT, DEFAULT, 4, DEFAULT, 4);
 INSERT INTO search_order VALUES(4, 4, 1, DEFAULT, DEFAULT, 4, DEFAULT, 4);
     INSERT INTO search_exclusion VALUES(2, 4, 1, NULL, DEFAULT, DEFAULT, 4, DEFAULT, 4);
 	INSERT INTO search_condition VALUES(5, 4, DEFAULT, DEFAULT, 4, DEFAULT, 4);
         INSERT INTO search_term VALUES(6, 5, 0, 'first_author_overridden', 'false', DEFAULT, DEFAULT, 4, DEFAULT, 4);
+        INSERT INTO search_condition_code VALUES(5, '1F', DEFAULT, DEFAULT, 4, DEFAULT, 4);
 

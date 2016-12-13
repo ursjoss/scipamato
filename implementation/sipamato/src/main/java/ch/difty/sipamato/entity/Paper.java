@@ -145,7 +145,7 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
     private String intern;
     private String mainCodeOfCodeclass1;
 
-    private final CodeBox codes = new DefaultCodeBox();
+    private final CodeBox codes = new PaperCodeBox();
 
     public String getDoi() {
         return doi;

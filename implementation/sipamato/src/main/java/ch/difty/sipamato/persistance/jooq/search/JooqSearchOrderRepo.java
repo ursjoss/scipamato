@@ -1,6 +1,11 @@
 package ch.difty.sipamato.persistance.jooq.search;
 
+import static ch.difty.sipamato.db.tables.Code.CODE;
+import static ch.difty.sipamato.db.tables.CodeClass.CODE_CLASS;
+import static ch.difty.sipamato.db.tables.CodeClassTr.CODE_CLASS_TR;
+import static ch.difty.sipamato.db.tables.CodeTr.CODE_TR;
 import static ch.difty.sipamato.db.tables.SearchCondition.SEARCH_CONDITION;
+import static ch.difty.sipamato.db.tables.SearchConditionCode.SEARCH_CONDITION_CODE;
 import static ch.difty.sipamato.db.tables.SearchExclusion.SEARCH_EXCLUSION;
 import static ch.difty.sipamato.db.tables.SearchOrder.SEARCH_ORDER;
 import static ch.difty.sipamato.db.tables.SearchTerm.SEARCH_TERM;
@@ -13,18 +18,23 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.jooq.InsertValuesStep2;
 import org.jooq.InsertValuesStep4;
 import org.jooq.TableField;
+import org.jooq.impl.DSL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ch.difty.sipamato.db.tables.records.SearchConditionCodeRecord;
 import ch.difty.sipamato.db.tables.records.SearchConditionRecord;
 import ch.difty.sipamato.db.tables.records.SearchOrderRecord;
 import ch.difty.sipamato.db.tables.records.SearchTermRecord;
+import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.BooleanSearchTerm;
 import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
@@ -32,6 +42,7 @@ import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.entity.filter.SearchTerm;
 import ch.difty.sipamato.entity.filter.StringSearchTerm;
 import ch.difty.sipamato.lib.DateTimeService;
+import ch.difty.sipamato.lib.TranslationUtils;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
 import ch.difty.sipamato.persistance.jooq.JooqEntityRepo;
@@ -102,6 +113,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         if (searchOrder != null && searchOrder.getId() != null) {
             fillSearchTermsInto(searchOrder, mapSearchTermsToSearchConditions(searchOrder));
             fillExcludedPaperIdsInto(searchOrder);
+            fillCodesIntoSearchConditionsOf(searchOrder);
         }
     }
 
@@ -182,6 +194,12 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         // @formatter:on
     }
 
+    private void fillCodesIntoSearchConditionsOf(SearchOrder searchOrder) {
+        for (SearchCondition sc : searchOrder.getSearchConditions()) {
+            fillCodesInto(sc);
+        }
+    }
+
     @Override
     protected void updateAssociatedEntities(final SearchOrder searchOrder) {
         storeSearchConditionsOf(searchOrder);
@@ -251,10 +269,12 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         } else {
             final SearchConditionRecord searchConditionRecord = getDsl().insertInto(SEARCH_CONDITION, SEARCH_CONDITION.SEARCH_ORDER_ID).values(searchOrderId).returning().fetchOne();
             persistSearchTerms(searchCondition, searchConditionRecord.getSearchConditionId());
+            persistCodes(searchCondition, searchConditionRecord.getSearchConditionId());
             final SearchCondition persistedSearchCondition = getDsl().selectFrom(SEARCH_CONDITION)
                     .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchConditionRecord.getSearchConditionId()))
                     .fetchOneInto(SearchCondition.class);
             fillSearchTermsInto(persistedSearchCondition, mapSearchTermsToSearchConditions(persistedSearchCondition));
+            fillCodesInto(persistedSearchCondition);
             return persistedSearchCondition;
         }
     }
@@ -271,6 +291,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         for (final SearchCondition sc : persisted) {
             Long searchConditionId = sc.getSearchConditionId();
             fillSearchTermsInto(sc, mapSearchTermsToSearchConditions(sc));
+            fillCodesInto(sc);
             sc.setSearchConditionId(null);
             if (searchCondition.equals(sc)) {
                 sc.setSearchConditionId(searchConditionId);
@@ -283,6 +304,37 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     private void persistSearchTerms(SearchCondition searchCondition, Long searchConditionId) {
         saveOrUpdateValidSearchConditions(searchCondition, searchConditionId);
         removeObsoleteSearchConditionsFrom(searchCondition, searchConditionId);
+    }
+
+    private void fillCodesInto(SearchCondition searchCondition) {
+        final List<Code> codes = fetchCodesForSearchConditionWithId(searchCondition);
+        if (CollectionUtils.isNotEmpty(codes)) {
+            searchCondition.addCodes(codes);
+        }
+    }
+
+    protected List<Code> fetchCodesForSearchConditionWithId(final SearchCondition searchCondition) {
+        final String localizationCode = getLocalization().getLocalization();
+        final List<Code> codes = getDsl()
+        // @formatter:off
+            .select(CODE.CODE_.as("C_ID")
+                    , DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL).as("C_NAME")
+                    , CODE_TR.COMMENT.as("C_COMMENT")
+                    , CODE.INTERNAL.as("C_INTERNAL")
+                    , CODE_CLASS.ID.as("CC_ID")
+                    , DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL).as("CC_NAME")
+                    , DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL).as("CC_DESCRIPTION")
+                    , CODE.SORT)
+            .from(SEARCH_CONDITION_CODE)
+            .join(SEARCH_CONDITION).on(SEARCH_CONDITION_CODE.SEARCH_CONDITION_ID.equal(SEARCH_CONDITION.SEARCH_CONDITION_ID))
+            .join(CODE).on(SEARCH_CONDITION_CODE.CODE.equal(CODE.CODE_))
+            .join(CODE_CLASS).on(CODE.CODE_CLASS_ID.equal(CODE_CLASS.ID))
+            .leftOuterJoin(CODE_TR).on(CODE.CODE_.equal(CODE_TR.CODE).and(CODE_TR.LANG_CODE.equal(localizationCode)))
+            .leftOuterJoin(CODE_CLASS_TR).on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID).and(CODE_CLASS_TR.LANG_CODE.equal(localizationCode)))
+            .where(SEARCH_CONDITION_CODE.SEARCH_CONDITION_ID.equal(searchCondition.getSearchConditionId()))
+            .fetchInto(Code.class);
+        // @formatter:on
+        return codes;
     }
 
     private void saveOrUpdateValidSearchConditions(SearchCondition searchCondition, Long searchConditionId) {
@@ -319,6 +371,24 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         }
     }
 
+    private void persistCodes(SearchCondition searchCondition, Long searchConditionId) {
+        saveOrUpdateCodes(searchCondition, searchConditionId);
+        removeObsoleteCodesFrom(searchCondition, searchConditionId);
+    }
+
+    private void saveOrUpdateCodes(SearchCondition searchCondition, Long searchConditionId) {
+        InsertValuesStep2<SearchConditionCodeRecord, Long, String> step = getDsl().insertInto(SEARCH_CONDITION_CODE, SEARCH_CONDITION_CODE.SEARCH_CONDITION_ID, SEARCH_CONDITION_CODE.CODE);
+        for (final Code c : searchCondition.getCodes()) {
+            step = step.values(searchConditionId, c.getCode());
+        }
+        step.onDuplicateKeyIgnore().execute();
+    }
+
+    private void removeObsoleteCodesFrom(SearchCondition searchCondition, Long searchConditionId) {
+        final List<String> codes = searchCondition.getCodes().stream().map(Code::getCode).collect(Collectors.toList());
+        getDsl().deleteFrom(SEARCH_CONDITION_CODE).where(SEARCH_CONDITION_CODE.SEARCH_CONDITION_ID.equal(searchConditionId).and(SEARCH_CONDITION_CODE.CODE.notIn(codes))).execute();
+    }
+
     @Override
     public SearchCondition updateSearchCondition(SearchCondition searchCondition, long searchOrderId) {
         getDsl().update(SEARCH_CONDITION)
@@ -326,10 +396,12 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
                 .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchCondition.getSearchConditionId()))
                 .execute();
         persistSearchTerms(searchCondition, searchCondition.getSearchConditionId());
+        persistCodes(searchCondition, searchCondition.getSearchConditionId());
         SearchCondition persistedSearchCondition = getDsl().selectFrom(SEARCH_CONDITION)
                 .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchCondition.getSearchConditionId()))
                 .fetchOneInto(SearchCondition.class);
         fillSearchTermsInto(persistedSearchCondition, mapSearchTermsToSearchConditions(persistedSearchCondition));
+        fillCodesInto(persistedSearchCondition);
         return persistedSearchCondition;
     }
 

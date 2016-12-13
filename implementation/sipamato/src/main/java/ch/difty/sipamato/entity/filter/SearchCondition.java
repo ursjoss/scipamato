@@ -39,8 +39,8 @@ import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.CodeBox;
 import ch.difty.sipamato.entity.CodeBoxAware;
 import ch.difty.sipamato.entity.CodeClassId;
-import ch.difty.sipamato.entity.DefaultCodeBox;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.SearchConditionCodeBox;
 
 /**
  * The {@link SearchCondition} is an instance of {@link SipamatoFilter} that provides
@@ -125,7 +125,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         return booleanSearchTerms.values();
     }
 
-    private final CodeBox codes = new DefaultCodeBox();
+    private final CodeBox codes = new SearchConditionCodeBox();
 
     /** {@link Paper} specific accessors */
 
@@ -426,7 +426,14 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         final String textString = stringSearchTerms.values().stream().map(StringSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
         final String intString = integerSearchTerms.values().stream().map(IntegerSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
         final String boolString = booleanSearchTerms.values().stream().map(BooleanSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
-        return Arrays.asList(textString, intString, boolString).stream().filter((String s) -> !s.isEmpty()).collect(Collectors.joining(JOIN_DELIMITER));
+        StringBuffer sb = new StringBuffer();
+        sb.append(Arrays.asList(textString, intString, boolString).stream().filter((String s) -> !s.isEmpty()).collect(Collectors.joining(JOIN_DELIMITER)));
+        if (!codes.isEmpty()) {
+            if (sb.length() > 0)
+                sb.append(" AND ");
+            sb.append(codes.toString());
+        }
+        return sb.toString();
     }
 
     @Override
@@ -437,7 +444,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         result = prime * result + stringSearchTerms.hashCode();
         result = prime * result + integerSearchTerms.hashCode();
         result = prime * result + booleanSearchTerms.hashCode();
-//        result = prime * result + ((codes == null) ? 0 : codes.hashCode());
+        result = prime * result + ((codes == null) ? 0 : codes.hashCode());
         return result;
     }
 
@@ -461,11 +468,11 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
             return false;
         if (!stringSearchTerms.equals(other.stringSearchTerms))
             return false;
-//        if (codes == null) {
-//            if (other.codes != null)
-//                return false;
-//        } else if (!codes.equals(other.codes))
-//            return false;
+        if (codes == null) {
+            if (other.codes != null)
+                return false;
+        } else if (!codes.equals(other.codes))
+            return false;
         return true;
     }
 

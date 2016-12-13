@@ -1,13 +1,17 @@
 package ch.difty.sipamato.persistance.jooq.paper.slim;
 
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
+import static ch.difty.sipamato.db.tables.PaperCode.PAPER_CODE;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.jooq.Condition;
 import org.jooq.DSLContext;
+import org.jooq.Record1;
+import org.jooq.SelectConditionStep;
 import org.jooq.TableField;
+import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import ch.difty.sipamato.db.Tables;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
+import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.BooleanSearchTerm;
 import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
@@ -70,9 +75,8 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     public List<PaperSlim> findBySearchOrder(final SearchOrder searchOrder) {
         AssertAs.notNull(searchOrder, "searchOrder");
 
-        final Condition searchOrderCondition = getConditionsFrom(searchOrder);
-        final Condition exclusionCondition = makeExclusionCondition(searchOrder);
-        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(searchOrderCondition).and(exclusionCondition).fetchInto(getRecordClass());
+        final Condition paperMatches = getConditionsFrom(searchOrder);
+        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(paperMatches).fetchInto(getRecordClass());
         final List<PaperSlim> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
         enrichAssociatedEntitiesOfAll(entities);
 
@@ -98,8 +102,8 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     /** {@inheritDoc} */
     @Override
     public int countBySearchOrder(SearchOrder searchOrder) {
-        final Condition conditions = getConditionsFrom(searchOrder);
-        return getDsl().fetchCount(getDsl().selectOne().from(getTable()).where(conditions));
+        final Condition paperMatches = getConditionsFrom(searchOrder);
+        return getDsl().fetchCount(getDsl().selectOne().from(getTable()).where(paperMatches));
     }
 
     /**
@@ -109,7 +113,9 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
         final ConditionalSupplier conditions = new ConditionalSupplier();
         for (final SearchCondition sc : searchOrder.getSearchConditions())
             conditions.add(() -> getConditionFromSingleSearchCondition(sc));
-        return conditions.combineWithOr();
+        Condition scConditions = conditions.combineWithOr();
+        final Condition exclusionCondition = makeExclusionCondition(searchOrder);
+        return scConditions.and(exclusionCondition);
     }
 
     /**
@@ -123,7 +129,19 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
             conditions.add(() -> integerSearchTermEvaluator.evaluate(st));
         for (final StringSearchTerm st : searchCondition.getStringSearchTerms())
             conditions.add(() -> stringSearchTermEvaluator.evaluate(st));
+        if (!searchCondition.getCodes().isEmpty()) {
+            conditions.add(() -> codeConditions(searchCondition.getCodes()));
+        }
         return conditions.combineWithAnd();
+    }
+
+    private Condition codeConditions(List<Code> codes) {
+        final ConditionalSupplier codeConditions = new ConditionalSupplier();
+        for (final String code : codes.stream().map(Code::getCode).collect(Collectors.toList())) {
+            final SelectConditionStep<Record1<Integer>> step = DSL.selectOne().from(PAPER_CODE).where(PAPER_CODE.PAPER_ID.eq(PAPER.ID));
+            codeConditions.add(() -> DSL.exists(step.and(DSL.lower(PAPER_CODE.CODE).eq(code.toLowerCase()))));
+        }
+        return codeConditions.combineWithAnd();
     }
 
 }

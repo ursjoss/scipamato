@@ -207,6 +207,24 @@ CREATE TABLE search_term (
 ALTER TABLE search_term ADD FOREIGN KEY (search_condition_id) REFERENCES search_condition(search_condition_id) on delete cascade on update cascade;
 
 
+DROP TABLE IF EXISTS search_condition_code;
+
+CREATE TABLE search_condition_code (
+  search_condition_id BIGINT NOT NULL,
+  code CHAR(2) NOT NULL,
+
+  version INT DEFAULT 1,
+  created TIMESTAMP DEFAULT current_timestamp(),
+  created_by INT DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp(),
+  last_modified_by INT DEFAULT 1,
+);
+
+ALTER TABLE search_condition_code ADD PRIMARY KEY (search_condition_id, code);
+ALTER TABLE search_condition_code ADD FOREIGN KEY (search_condition_id) REFERENCES search_condition(search_condition_id) on delete cascade on update cascade;
+ALTER TABLE search_condition_code ADD FOREIGN KEY (code) REFERENCES code(code) on update cascade;
+
+
 
 DROP TABLE IF EXISTS user;
 

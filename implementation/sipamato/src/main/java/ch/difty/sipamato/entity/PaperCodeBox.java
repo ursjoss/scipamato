@@ -14,17 +14,18 @@ import org.springframework.util.CollectionUtils;
 import ch.difty.sipamato.lib.AssertAs;
 
 /**
- * The default implementation of the {@link CodeBox} interface.
+ * The paper specific implementation of the {@link CodeBox} interface.
  *
  * @author u.joss
  */
-public class DefaultCodeBox implements CodeBox {
+public class PaperCodeBox implements CodeBox {
 
     private static final long serialVersionUID = 1L;
 
     private final List<Code> codes = new ArrayList<>();
 
-    boolean isEmpty() {
+    @Override
+    public boolean isEmpty() {
         return codes.isEmpty();
     }
 
@@ -103,6 +104,34 @@ public class DefaultCodeBox implements CodeBox {
         }
         builder.append("]");
         return builder.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        final List<Code> sorted = new ArrayList<Code>(codes);
+        sorted.sort((c1, c2) -> c1.getCode().compareTo(c2.getCode()));
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + sorted.hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        final List<Code> thisSorted = new ArrayList<Code>(codes);
+        thisSorted.sort((c1, c2) -> c1.getCode().compareTo(c2.getCode()));
+        final PaperCodeBox other = (PaperCodeBox) obj;
+        final List<Code> otherSorted = new ArrayList<Code>(other.codes);
+        otherSorted.sort((c1, c2) -> c1.getCode().compareTo(c2.getCode()));
+        if (!thisSorted.equals(otherSorted))
+            return false;
+        return true;
     }
 
 }

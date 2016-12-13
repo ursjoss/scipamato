@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import ch.difty.sipamato.db.tables.records.SearchOrderRecord;
+import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.entity.filter.SearchTerm;
@@ -237,6 +238,11 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
                     return new ArrayList<>();
                 }
             }
+
+            @Override
+            protected List<Code> fetchCodesForSearchConditionWithId(SearchCondition searchCondition) {
+                return Arrays.asList(new Code("1F", "Code 1F", "", false, 1, "CC 1", "", 0));
+            }
         };
     }
 
@@ -255,12 +261,12 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         assertThat(so1).isNotNull();
         assertThat(so1.getAuthors()).isEqualTo("joss");
         assertThat(so1.getPublicationYear()).isEqualTo("2014");
-        assertThat(so1.getDisplayValue()).isEqualTo("joss AND 2014");
+        assertThat(so1.getDisplayValue()).isEqualTo("joss AND 2014 AND 1F");
 
         SearchCondition so2 = so.getSearchConditions().get(1);
         assertThat(so2).isNotNull();
         assertThat(so2.getPublicationYear()).isEqualTo("2014-2016");
-        assertThat(so2.getDisplayValue()).isEqualTo("2014-2016");
+        assertThat(so2.getDisplayValue()).isEqualTo("2014-2016 AND 1F");
     }
 
     @Test
