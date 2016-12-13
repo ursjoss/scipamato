@@ -159,18 +159,11 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
     }
 
     @Test
-    public void getConditions_withEmptySearchOrderWithExclusion() {
+    public void getConditions_withEmptySearchOrderWithExclusion_IgnoresTheExclusions() {
         SearchOrder searchOrder = new SearchOrder();
         searchOrder.addExclusionOfPaperWithId(3);
         Condition cond = repo.getConditionsFrom(searchOrder);
-        assertThat(cond.toString()).isEqualTo(
-        // @formatter:off
-            "(\n" +
-            "  1 = 0\n" +
-            "  and \"PUBLIC\".\"PAPER\".\"ID\" not in (3)\n" +
-            ")"
-        // @formatter:on
-        );
+        assertThat(cond.toString()).isEqualTo("1 = 0");
     }
 
     @Test

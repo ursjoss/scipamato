@@ -120,7 +120,7 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
         for (final SearchCondition sc : searchOrder.getSearchConditions())
             conditions.add(() -> getConditionFromSingleSearchCondition(sc));
         final Condition scConditions = conditions.combineWithOr();
-        if (searchOrder.getExcludedPaperIds().isEmpty()) {
+        if (searchOrder.getExcludedPaperIds().isEmpty() || scConditions.toString().equals("1 = 0")) {
             return scConditions;
         } else {
             final Condition exclusionCondition = makeExclusionCondition(searchOrder);
