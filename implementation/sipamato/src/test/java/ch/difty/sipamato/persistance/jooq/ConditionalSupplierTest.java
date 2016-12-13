@@ -13,22 +13,30 @@ public class ConditionalSupplierTest {
     private Condition c;
 
     @Test
-    public void combiningWithAnd_withNoConditions_selectsAllRecords() {
+    public void combiningWithAnd_withNoConditions_createsDummySelectAllCondition() {
         c = cs.combineWithAnd();
         assertThat(c.toString()).isEqualTo("1 = 1");
     }
 
     @Test
-    public void combiningWithAnd_withSingleCondition_appliesDummyTermWithCondition() {
+    public void combiningWithAnd_withSingleCondition_returnsSingleElementCondition() {
         cs.add(() -> DSL.field("foo").eq(DSL.value("bar")));
         c = cs.combineWithAnd();
+        assertThat(c.toString()).isEqualTo("foo = 'bar'");
+    }
+
+    @Test
+    public void combiningWithAnd_withTwoConditions_appliesDummyTermWithConditions() {
+        cs.add(() -> DSL.field("foo").eq(DSL.value("bar")));
+        cs.add(() -> DSL.field("baz").eq(DSL.value("boo")));
+        c = cs.combineWithAnd();
         assertThat(c.toString()).isEqualTo(
-        // @formatter:off
+            // @formatter:off
             "(\n" +
-            "  1 = 1\n" +
-            "  and foo = 'bar'\n" +
+            "  foo = 'bar'\n" +
+            "  and baz = 'boo'\n" +
             ")"
-        // @formatter:on
+            // @formatter:on
         );
     }
 
@@ -39,16 +47,30 @@ public class ConditionalSupplierTest {
     }
 
     @Test
+    public void combiningWithOr_withNoConditions_createsDummySelectNothingCondition() {
+        c = cs.combineWithOr();
+        assertThat(c.toString()).isEqualTo("1 = 0");
+    }
+
+    @Test
     public void combiningWithOr_withSingleConditions_appliesDummyTermWith() {
         cs.add(() -> DSL.field("foo").eq(DSL.value("bar")));
         c = cs.combineWithOr();
+        assertThat(c.toString()).isEqualTo("foo = 'bar'");
+    }
+
+    @Test
+    public void combiningWithOr_withDoubleConditions() {
+        cs.add(() -> DSL.field("foo").eq(DSL.value("bar")));
+        cs.add(() -> DSL.field("baz").eq(DSL.value("boo")));
+        c = cs.combineWithOr();
         assertThat(c.toString()).isEqualTo(
-        // @formatter:off
+            // @formatter:off
             "(\n" +
-            "  1 = 0\n" +
-            "  or foo = 'bar'\n" +
+            "  foo = 'bar'\n" +
+            "  or baz = 'boo'\n" +
             ")"
-        // @formatter:on
+            // @formatter:on
         );
     }
 }

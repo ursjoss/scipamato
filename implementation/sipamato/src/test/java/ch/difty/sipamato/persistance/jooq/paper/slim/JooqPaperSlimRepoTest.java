@@ -181,17 +181,7 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
         searchOrder.add(sc1);
 
         Condition cond = repo.getConditionsFrom(searchOrder);
-        assertThat(cond.toString()).isEqualTo(
-        // @formatter:off
-            "(\n" +
-            "  1 = 0\n" +
-            "  or (\n" +
-            "    1 = 1\n" +
-            "    and publicationYear > 2014\n" +
-            "  )\n" +
-            ")"
-        // @formatter:on
-        );
+        assertThat(cond.toString()).isEqualTo("publicationYear > 2014");
     }
 
     @Test
@@ -202,10 +192,8 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
         assertThat(cond.toString()).isEqualTo(
         // @formatter:off
             "(\n" +
-            "  1 = 0\n" +
-            "  or (\n" +
-            "    1 = 1\n" +
-            "    and publicationYear between 2014 and 2015\n" +
+            "  (\n" +
+            "    publicationYear between 2014 and 2015\n" +
             "    and lower(cast(authors as varchar)) like ('%' || replace(\n" +
             "      replace(\n" +
             "        replace(\n" +
@@ -221,9 +209,7 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
             "    ) || '%') escape '!'\n" +
             "  )\n" +
             "  or (\n" +
-            "    1 = 1\n" +
-            "    and firstAuthorOverridden = false\n" +
-            "    and 1 = 1\n" +
+            "    firstAuthorOverridden = false\n" +
             "    and exists (\n" +
             "      select 1 \"one\"\n" +
             "      from \"PUBLIC\".\"PAPER_CODE\"\n" +
@@ -258,10 +244,8 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
         // @formatter:off
             "(\n" +
             "  (\n" +
-            "    1 = 0\n" +
-            "    or (\n" +
-            "      1 = 1\n" +
-            "      and publicationYear between 2014 and 2015\n" +
+            "    (\n" +
+            "      publicationYear between 2014 and 2015\n" +
             "      and lower(cast(authors as varchar)) like ('%' || replace(\n" +
             "        replace(\n" +
             "          replace(\n" +
@@ -277,9 +261,7 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
             "      ) || '%') escape '!'\n" +
             "    )\n" +
             "    or (\n" +
-            "      1 = 1\n" +
-            "      and firstAuthorOverridden = false\n" +
-            "      and 1 = 1\n" +
+            "      firstAuthorOverridden = false\n" +
             "      and exists (\n" +
             "        select 1 \"one\"\n" +
             "        from \"PUBLIC\".\"PAPER_CODE\"\n" +
