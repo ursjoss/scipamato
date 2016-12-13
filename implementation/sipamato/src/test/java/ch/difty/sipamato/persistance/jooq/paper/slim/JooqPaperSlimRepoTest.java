@@ -155,29 +155,15 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
     public void getConditions_withEmptySearchOrder() {
         SearchOrder searchOrder = new SearchOrder();
         Condition cond = repo.getConditionsFrom(searchOrder);
-        assertThat(cond.toString()).isEqualTo(
-        // @formatter:off
-            "(\n" +
-            "  1 = 0\n" +
-            "  and 1 = 1\n" +
-            ")"
-        // @formatter:on
-        );
+        assertThat(cond.toString()).isEqualTo("1 = 0");
     }
 
     @Test
-    public void getConditions_withEmptySearchOrderWithExclusion() {
+    public void getConditions_withEmptySearchOrderWithExclusion_IgnoresTheExclusions() {
         SearchOrder searchOrder = new SearchOrder();
         searchOrder.addExclusionOfPaperWithId(3);
         Condition cond = repo.getConditionsFrom(searchOrder);
-        assertThat(cond.toString()).isEqualTo(
-        // @formatter:off
-            "(\n" +
-            "  1 = 0\n" +
-            "  and \"PUBLIC\".\"PAPER\".\"ID\" not in (3)\n" +
-            ")"
-        // @formatter:on
-        );
+        assertThat(cond.toString()).isEqualTo("1 = 0");
     }
 
     @Test
@@ -188,20 +174,7 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
         searchOrder.add(sc1);
 
         Condition cond = repo.getConditionsFrom(searchOrder);
-        assertThat(cond.toString()).isEqualTo(
-        // @formatter:off
-            "(\n" +
-            "  (\n" +
-            "    1 = 0\n" +
-            "    or (\n" +
-            "      1 = 1\n" +
-            "      and publicationYear > 2014\n" +
-            "    )\n" +
-            "  )\n" +
-            "  and 1 = 1\n" +
-            ")"
-        // @formatter:on
-        );
+        assertThat(cond.toString()).isEqualTo("publicationYear > 2014");
     }
 
     @Test
@@ -213,47 +186,40 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
         // @formatter:off
             "(\n" +
             "  (\n" +
-            "    1 = 0\n" +
-            "    or (\n" +
-            "      1 = 1\n" +
-            "      and publicationYear between 2014 and 2015\n" +
-            "      and lower(cast(authors as varchar)) like ('%' || replace(\n" +
+            "    publicationYear between 2014 and 2015\n" +
+            "    and lower(cast(authors as varchar)) like ('%' || replace(\n" +
+            "      replace(\n" +
             "        replace(\n" +
-            "          replace(\n" +
-            "            lower('turner'), \n" +
-            "            '!', \n" +
-            "            '!!'\n" +
-            "          ), \n" +
-            "          '%', \n" +
-            "          '!%'\n" +
+            "          lower('turner'), \n" +
+            "          '!', \n" +
+            "          '!!'\n" +
             "        ), \n" +
-            "        '_', \n" +
-            "        '!_'\n" +
-            "      ) || '%') escape '!'\n" +
-            "    )\n" +
-            "    or (\n" +
-            "      1 = 1\n" +
-            "      and firstAuthorOverridden = false\n" +
-            "      and 1 = 1\n" +
-            "      and exists (\n" +
-            "        select 1 \"one\"\n" +
-            "        from \"PUBLIC\".\"PAPER_CODE\"\n" +
-            "        where (\n" +
-            "          \"PUBLIC\".\"PAPER_CODE\".\"PAPER_ID\" = \"PUBLIC\".\"PAPER\".\"ID\"\n" +
-            "          and lower(\"PUBLIC\".\"PAPER_CODE\".\"CODE\") = '1f'\n" +
-            "        )\n" +
+            "        '%', \n" +
+            "        '!%'\n" +
+            "      ), \n" +
+            "      '_', \n" +
+            "      '!_'\n" +
+            "    ) || '%') escape '!'\n" +
+            "  )\n" +
+            "  or (\n" +
+            "    firstAuthorOverridden = false\n" +
+            "    and exists (\n" +
+            "      select 1 \"one\"\n" +
+            "      from \"PUBLIC\".\"PAPER_CODE\"\n" +
+            "      where (\n" +
+            "        \"PUBLIC\".\"PAPER_CODE\".\"PAPER_ID\" = \"PUBLIC\".\"PAPER\".\"ID\"\n" +
+            "        and lower(\"PUBLIC\".\"PAPER_CODE\".\"CODE\") = '1f'\n" +
             "      )\n" +
-            "      and exists (\n" +
-            "        select 1 \"one\"\n" +
-            "        from \"PUBLIC\".\"PAPER_CODE\"\n" +
-            "        where (\n" +
-            "          \"PUBLIC\".\"PAPER_CODE\".\"PAPER_ID\" = \"PUBLIC\".\"PAPER\".\"ID\"\n" +
-            "          and lower(\"PUBLIC\".\"PAPER_CODE\".\"CODE\") = '5s'\n" +
-            "        )\n" +
+            "    )\n" +
+            "    and exists (\n" +
+            "      select 1 \"one\"\n" +
+            "      from \"PUBLIC\".\"PAPER_CODE\"\n" +
+            "      where (\n" +
+            "        \"PUBLIC\".\"PAPER_CODE\".\"PAPER_ID\" = \"PUBLIC\".\"PAPER\".\"ID\"\n" +
+            "        and lower(\"PUBLIC\".\"PAPER_CODE\".\"CODE\") = '5s'\n" +
             "      )\n" +
             "    )\n" +
             "  )\n" +
-            "  and 1 = 1\n" +
             ")"
         // @formatter:on
         );
@@ -271,10 +237,8 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
         // @formatter:off
             "(\n" +
             "  (\n" +
-            "    1 = 0\n" +
-            "    or (\n" +
-            "      1 = 1\n" +
-            "      and publicationYear between 2014 and 2015\n" +
+            "    (\n" +
+            "      publicationYear between 2014 and 2015\n" +
             "      and lower(cast(authors as varchar)) like ('%' || replace(\n" +
             "        replace(\n" +
             "          replace(\n" +
@@ -290,9 +254,7 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
             "      ) || '%') escape '!'\n" +
             "    )\n" +
             "    or (\n" +
-            "      1 = 1\n" +
-            "      and firstAuthorOverridden = false\n" +
-            "      and 1 = 1\n" +
+            "      firstAuthorOverridden = false\n" +
             "      and exists (\n" +
             "        select 1 \"one\"\n" +
             "        from \"PUBLIC\".\"PAPER_CODE\"\n" +
