@@ -76,7 +76,7 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
     public static final String FLD_POPULATION_DURATION = "population_duration";
     public static final String FLD_EXPOSURE_POLLUTANT = "exposure_pollutant";
     public static final String FLD_EXPOSURE_ASSESSMENT = "exposure_assessment";
-    public static final String FLD_METHOD_STUDY_DESIGN = "method_studydesign";
+    public static final String FLD_METHOD_STUDY_DESIGN = "method_study_design";
     public static final String FLD_METHOD_OUTCOME = "method_outcome";
     public static final String FLD_METHOD_STATISTICS = "method_statistics";
     public static final String FLD_METHOD_CONFOUNDERS = "method_confounders";
