@@ -12,6 +12,7 @@ import java.util.List;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
@@ -30,6 +31,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorPanel> {
 
     private final long ID = 17l;
+    private static final String NAME = "soName";
     private static final int OWNER_ID = 2;
 
     @MockBean
@@ -67,6 +69,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponent(b, Form.class);
 
         getTester().assertComponent(b + ":searchOrder", BootstrapSelect.class);
+        getTester().assertComponent(b + ":name", TextField.class);
         getTester().assertComponent(b + ":global", CheckBox.class);
         getTester().assertComponent(b + ":query", AjaxSubmitLink.class);
         getTester().assertComponent(b + ":new", AjaxSubmitLink.class);
@@ -84,6 +87,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         // TODO how to assert the event was actually broadcast without issuing the test info message
         getTester().assertInfoMessages("Sent SearchOrderChangeEvent");
 
+        getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:name");
         getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:global");
         getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:save");
         getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:invertExclusions");
@@ -91,6 +95,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
     @Test
     public void testSubmittingWithQueryutton_sendsUpdateEvent() {
+        when(searchOrderMock.getName()).thenReturn(NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
@@ -103,12 +108,15 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
     @Test
     public void testSubmittingWithSaveButton_saveSearchOrder() {
+        when(searchOrderMock.getName()).thenReturn(NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
         formTester.submit("save");
 
         getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:searchOrder");
+        getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:name");
+        getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:global");
 
         verify(searchOrderMock, times(9)).getId();
         verify(searchOrderServiceMock, times(3)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
@@ -117,6 +125,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
     @Test
     public void testSubmittingWithNewButton_createsNewSearchOrder() {
+        when(searchOrderMock.getName()).thenReturn(NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
@@ -130,6 +139,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
     @Test
     public void withGlobalSearchOrders_withSameOwner_globalCheckBox_enabled() {
+        when(searchOrderMock.getName()).thenReturn(NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
 
@@ -140,6 +150,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
     @Test
     public void withGlobalSearchOrders_withOtherOwner_globalCheckBox_disabled() {
+        when(searchOrderMock.getName()).thenReturn(NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID + 1);
         getTester().startComponentInPage(makePanel());
 

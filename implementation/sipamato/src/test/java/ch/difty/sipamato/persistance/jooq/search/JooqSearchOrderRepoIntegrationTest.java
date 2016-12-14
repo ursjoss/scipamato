@@ -91,6 +91,7 @@ public class JooqSearchOrderRepoIntegrationTest {
 
     private SearchOrder makeMinimalSearchOrder() {
         SearchOrder so = new SearchOrder();
+        so.setName(null);
         so.setOwner(10);
         so.setGlobal(true);
         return so;

@@ -349,9 +349,11 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     private void saveOrUpdateValidSearchConditions(SearchCondition searchCondition, Long searchConditionId) {
         InsertValuesStep4<SearchTermRecord, Long, Integer, String, String> insertStep = getDsl().insertInto(SEARCH_TERM, SEARCH_TERM.SEARCH_CONDITION_ID, SEARCH_TERM.SEARCH_TERM_TYPE,
                 SEARCH_TERM.FIELD_NAME, SEARCH_TERM.RAW_VALUE);
+        boolean hasPendingInsert = false;
         for (BooleanSearchTerm bst : searchCondition.getBooleanSearchTerms()) {
             if (bst.getId() == null) {
                 insertStep = insertStep.values(searchConditionId, bst.getSearchTermType().getId(), bst.getFieldName(), bst.getRawSearchTerm());
+                hasPendingInsert = true;
             } else {
                 updateSearchTerm(bst, searchConditionId);
             }
@@ -359,6 +361,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         for (IntegerSearchTerm ist : searchCondition.getIntegerSearchTerms()) {
             if (ist.getId() == null) {
                 insertStep = insertStep.values(searchConditionId, ist.getSearchTermType().getId(), ist.getFieldName(), ist.getRawSearchTerm());
+                hasPendingInsert = true;
             } else {
                 updateSearchTerm(ist, searchConditionId);
             }
@@ -366,11 +369,13 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         for (StringSearchTerm sst : searchCondition.getStringSearchTerms()) {
             if (sst.getId() == null) {
                 insertStep = insertStep.values(searchConditionId, sst.getSearchTermType().getId(), sst.getFieldName(), sst.getRawSearchTerm());
+                hasPendingInsert = true;
             } else {
                 updateSearchTerm(sst, searchConditionId);
             }
         }
-        insertStep.execute();
+        if (hasPendingInsert)
+            insertStep.execute();
     }
 
     private void removeObsoleteSearchConditionsFrom(SearchCondition searchCondition, Long searchConditionId) {
