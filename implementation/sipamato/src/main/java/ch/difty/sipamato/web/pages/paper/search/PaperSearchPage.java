@@ -87,6 +87,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         final SearchOrder so = new SearchOrder(null);
         so.setId(getSearchOrderId());
         so.setOwner(getActiveUser().getId());
+        so.setName(null);
         return so;
     }
 

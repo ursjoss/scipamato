@@ -103,15 +103,19 @@ public class JooqSearchOrderRepoIntegrationTest {
         assertThat(searchOrder.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED);
         final long id = searchOrder.getId();
         assertThat(searchOrder.getOwner()).isEqualTo(10);
+        assertThat(searchOrder.getName()).isNull();
 
         searchOrder.setOwner(20);
+        searchOrder.setName("soName");
         repo.update(searchOrder);
         assertThat(searchOrder.getId()).isEqualTo(id);
+        assertThat(searchOrder.getName()).isEqualTo("soName");
 
         SearchOrder newCopy = repo.findById(id);
         assertThat(newCopy).isNotEqualTo(searchOrder);
         assertThat(newCopy.getId()).isEqualTo(id);
         assertThat(newCopy.getOwner()).isEqualTo(20);
+        assertThat(newCopy.getName()).isEqualTo("soName");
     }
 
     @Test

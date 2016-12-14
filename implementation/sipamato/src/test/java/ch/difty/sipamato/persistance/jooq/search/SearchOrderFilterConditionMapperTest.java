@@ -32,6 +32,12 @@ public class SearchOrderFilterConditionMapperTest extends FilterConditionMapperT
     }
 
     @Test
+    public void creatingWhereCondition_withNameMaskl_searchesForName() {
+        filter.setNameMask("fOo");
+        assertThat(mapper.map(filter).toString()).isEqualTo("lower(\"PUBLIC\".\"SEARCH_ORDER\".\"NAME\") like ('%' || 'foo' || '%') escape '!'");
+    }
+
+    @Test
     public void creatingWhereCondition_withOwnerIncludingGlobal_searchesForOwnerIdOrGlobal() {
         filter.setOwnerIncludingGlobal(10);
         assertThat(mapper.map(filter).toString()).isEqualTo("(\n  \"PUBLIC\".\"SEARCH_ORDER\".\"OWNER\" = 10\n  or \"PUBLIC\".\"SEARCH_ORDER\".\"GLOBAL\" = true\n)");

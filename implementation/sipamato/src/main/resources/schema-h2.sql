@@ -144,6 +144,7 @@ DROP TABLE IF EXISTS search_order;
 
 CREATE TABLE search_order (
   id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  name VARCHAR NULL,
   owner INT DEFAULT 1,
   global BOOLEAN NOT NULL DEFAULT false,
 

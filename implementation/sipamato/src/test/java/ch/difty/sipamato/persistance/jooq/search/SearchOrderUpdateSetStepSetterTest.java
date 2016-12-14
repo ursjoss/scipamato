@@ -3,6 +3,7 @@ package ch.difty.sipamato.persistance.jooq.search;
 import static ch.difty.sipamato.db.tables.SearchOrder.SEARCH_ORDER;
 import static ch.difty.sipamato.persistance.jooq.search.SearchOrderRecordMapperTest.GLOBAL;
 import static ch.difty.sipamato.persistance.jooq.search.SearchOrderRecordMapperTest.ID;
+import static ch.difty.sipamato.persistance.jooq.search.SearchOrderRecordMapperTest.NAME;
 import static ch.difty.sipamato.persistance.jooq.search.SearchOrderRecordMapperTest.OWNER;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -45,20 +46,23 @@ public class SearchOrderUpdateSetStepSetterTest extends UpdateSetStepSetterTest<
 
     @Override
     protected void stepSetFixture() {
-        when(getStep().set(SEARCH_ORDER.OWNER, OWNER)).thenReturn(getMoreStep());
+        when(getStep().set(SEARCH_ORDER.NAME, NAME)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SEARCH_ORDER.OWNER, OWNER)).thenReturn(getMoreStep());
 
         when(getMoreStep().set(SEARCH_ORDER.GLOBAL, GLOBAL)).thenReturn(getMoreStep());
     }
 
     @Override
     protected void verifyCallToAllFields() {
+        verify(entityMock).getName();
         verify(entityMock).getOwner();
         verify(entityMock).isGlobal();
     }
 
     @Override
     protected void verifySetting() {
-        verify(getStep()).set(SEARCH_ORDER.OWNER, OWNER);
+        verify(getStep()).set(SEARCH_ORDER.NAME, NAME);
+        verify(getMoreStep()).set(SEARCH_ORDER.OWNER, OWNER);
         verify(getMoreStep()).set(SEARCH_ORDER.GLOBAL, GLOBAL);
     }
 
