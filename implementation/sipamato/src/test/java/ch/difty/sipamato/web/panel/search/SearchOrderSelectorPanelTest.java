@@ -69,6 +69,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponent(b, Form.class);
 
         getTester().assertComponent(b + ":searchOrder", BootstrapSelect.class);
+        getTester().assertLabel(b + ":nameLabel", "Name");
         getTester().assertComponent(b + ":name", TextField.class);
         getTester().assertComponent(b + ":global", CheckBox.class);
         getTester().assertComponent(b + ":query", AjaxSubmitLink.class);

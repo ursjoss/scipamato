@@ -6,6 +6,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.event.Broadcast;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
@@ -110,7 +111,9 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
         name = new TextField<String>(id);
         name.setConvertEmptyInputStringToNull(true);
         name.setOutputMarkupId(true);
-        name.setLabel(new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null));
+        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
+        queue(new Label(id + LABEL_TAG, labelModel));
+        name.setLabel(labelModel);
         name.add(new AjaxFormComponentUpdatingBehavior(CHANGE) {
             private static final long serialVersionUID = 1L;
 
