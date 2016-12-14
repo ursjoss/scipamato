@@ -20,4 +20,10 @@ public interface SearchOrderService extends EntityService<Long, SearchOrder, Sea
      */
     SearchCondition saveOrUpdateSearchCondition(SearchCondition searchCondition, long searchOrderId);
 
+    /**
+     * Remove SearchCondition from Database.
+     * @param searchConditionId
+     */
+    void removeSearchConditionWithId(Long searchConditionId);
+
 }

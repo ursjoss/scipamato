@@ -106,7 +106,7 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
             protected void onClickPerformed(AjaxRequestTarget target, IModel<SearchCondition> rowModel, AjaxLink<Void> link) {
                 consumer.accept(rowModel);
                 target.add(searchTerms);
-                send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
+                send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).withDroppedConditionId(rowModel.getObject().getSearchConditionId()));
                 info("Removed " + rowModel.getObject().getDisplayValue());
             }
         };

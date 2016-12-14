@@ -20,25 +20,40 @@ import ch.difty.sipamato.web.event.WicketEvent;
 public class SearchOrderChangeEvent extends WicketEvent {
 
     private Long excludedId;
+    private Long droppedConditionId;
     private boolean newSearchOrderRequested;
 
     public SearchOrderChangeEvent(final AjaxRequestTarget target) {
-        this(target, null);
+        super(target);
     }
 
-    public SearchOrderChangeEvent(final AjaxRequestTarget target, final Long excludedId) {
-        super(target);
+    public SearchOrderChangeEvent withExcludedPaperId(Long excludedId) {
         this.excludedId = excludedId;
+        this.droppedConditionId = null;
+        this.newSearchOrderRequested = false;
+        return this;
+    }
+
+    public SearchOrderChangeEvent withDroppedConditionId(Long id) {
+        this.droppedConditionId = id;
+        this.excludedId = null;
+        this.newSearchOrderRequested = false;
+        return this;
+    }
+
+    public SearchOrderChangeEvent requestingNewSearchOrder() {
+        newSearchOrderRequested = true;
+        droppedConditionId = null;
+        excludedId = null;
+        return this;
     }
 
     public Long getExcludedId() {
         return excludedId;
     }
 
-    public SearchOrderChangeEvent requestNewSearchOrder() {
-        newSearchOrderRequested = true;
-        excludedId = null;
-        return this;
+    public Long getDroppedConditionId() {
+        return droppedConditionId;
     }
 
     public boolean isNewSearchOrderRequested() {

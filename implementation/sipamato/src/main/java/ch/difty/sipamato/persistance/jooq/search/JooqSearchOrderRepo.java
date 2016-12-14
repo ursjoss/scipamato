@@ -269,6 +269,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         getDsl().deleteFrom(SEARCH_EXCLUSION).where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrder.getId())).and(SEARCH_EXCLUSION.PAPER_ID.notIn(searchOrder.getExcludedPaperIds())).execute();
     }
 
+    /** {@inheritDoc} */
     @Override
     public SearchCondition addSearchCondition(SearchCondition searchCondition, long searchOrderId) {
         final Optional<SearchCondition> optionalPersisted = findEquivalentPersisted(searchCondition, searchOrderId);
@@ -369,7 +370,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
                 updateSearchTerm(sst, searchConditionId);
             }
         }
-        insertStep.onDuplicateKeyIgnore().execute();
+        insertStep.execute();
     }
 
     private void removeObsoleteSearchConditionsFrom(SearchCondition searchCondition, Long searchConditionId) {
@@ -397,6 +398,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         getDsl().deleteFrom(SEARCH_CONDITION_CODE).where(SEARCH_CONDITION_CODE.SEARCH_CONDITION_ID.equal(searchConditionId).and(SEARCH_CONDITION_CODE.CODE.notIn(codes))).execute();
     }
 
+    /** {@inheritDoc} */
     @Override
     public SearchCondition updateSearchCondition(SearchCondition searchCondition, long searchOrderId) {
         getDsl().update(SEARCH_CONDITION)
@@ -415,6 +417,12 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
 
     private Timestamp getTs() {
         return getDateTimeService().getCurrentTimestamp();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void deleteSearchConditionWithId(long searchConditionId) {
+        getDsl().deleteFrom(SEARCH_CONDITION).where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchConditionId)).execute();
     }
 
 }
