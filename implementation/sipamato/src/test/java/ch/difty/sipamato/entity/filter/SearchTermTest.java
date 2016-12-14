@@ -38,15 +38,17 @@ public class SearchTermTest {
     @Test
     public void stringSearchTerm() {
         SearchTerm<?> st = SearchTerm.of(12, 2, 3l, "fn3", "foo*");
-        assertThat(st).isInstanceOf(StringSearchTerm.class);
+        assertThat(st).isInstanceOf(StringSearchTerm2.class);
 
-        StringSearchTerm sst = (StringSearchTerm) st;
+        StringSearchTerm2 sst = (StringSearchTerm2) st;
         assertThat(sst.getId()).isEqualTo(12);
         assertThat(sst.getSearchTermType()).isEqualTo(SearchTermType.STRING);
         assertThat(sst.getSearchConditionId()).isEqualTo(3l);
         assertThat(sst.getFieldName()).isEqualTo("fn3");
         assertThat(sst.getRawSearchTerm()).isEqualTo("foo*");
-        assertThat(sst.getValue()).isEqualTo("foo");
+        assertThat(sst.getTokens()).hasSize(1);
+        assertThat(sst.getTokens().get(0).sqlData).isEqualTo("foo%");
+        assertThat(sst.getTokens().get(0).negate).isFalse();
     }
 
     @Test

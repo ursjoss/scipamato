@@ -20,6 +20,7 @@ package ch.difty.sipamato.entity.filter;
  *
  * @author u.joss
  */
+@Deprecated
 public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
     private static final long serialVersionUID = 1L;
 

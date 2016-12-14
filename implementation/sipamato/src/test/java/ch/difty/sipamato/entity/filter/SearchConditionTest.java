@@ -114,7 +114,7 @@ public class SearchConditionTest {
         assertThat(sc.getStringSearchTerms()).hasSize(1);
         assertThat(sc.getIntegerSearchTerms()).isEmpty();
         assertThat(sc.getBooleanSearchTerms()).isEmpty();
-        StringSearchTerm st = sc.getStringSearchTerms().iterator().next();
+        StringSearchTerm2 st = sc.getStringSearchTerms().iterator().next();
         assertThat(st.getFieldName()).isEqualTo(FLD_DOI);
         assertThat(st.getRawSearchTerm()).isEqualTo("101111");
 

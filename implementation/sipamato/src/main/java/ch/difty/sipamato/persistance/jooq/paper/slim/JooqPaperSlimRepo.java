@@ -25,7 +25,7 @@ import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.BooleanSearchTerm;
 import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
 import ch.difty.sipamato.entity.filter.SearchCondition;
-import ch.difty.sipamato.entity.filter.StringSearchTerm;
+import ch.difty.sipamato.entity.filter.StringSearchTerm2;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.persistance.jooq.ConditionalSupplier;
@@ -137,7 +137,7 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
             conditions.add(() -> booleanSearchTermEvaluator.evaluate(st));
         for (final IntegerSearchTerm st : searchCondition.getIntegerSearchTerms())
             conditions.add(() -> integerSearchTermEvaluator.evaluate(st));
-        for (final StringSearchTerm st : searchCondition.getStringSearchTerms())
+        for (final StringSearchTerm2 st : searchCondition.getStringSearchTerms())
             conditions.add(() -> stringSearchTermEvaluator.evaluate(st));
         if (!searchCondition.getCodes().isEmpty()) {
             conditions.add(() -> codeConditions(searchCondition.getCodes()));
