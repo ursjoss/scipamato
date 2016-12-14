@@ -12,6 +12,7 @@ import static ch.difty.sipamato.db.tables.SearchTerm.SEARCH_TERM;
 import static org.jooq.impl.DSL.row;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -252,8 +253,15 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
 
     private void storeExistingExclusionsOf(SearchOrder searchOrder) {
         final long searchOrderId = searchOrder.getId();
-        for (final Long excludedId : searchOrder.getExcludedPaperIds()) {
-            getDsl().insertInto(SEARCH_EXCLUSION, SEARCH_EXCLUSION.SEARCH_ORDER_ID, SEARCH_EXCLUSION.PAPER_ID).values(searchOrderId, excludedId).onDuplicateKeyIgnore().execute();
+        final List<Long> saved = getDsl().select(SEARCH_EXCLUSION.PAPER_ID)
+                .from(SEARCH_EXCLUSION)
+                .where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId))
+                .and(SEARCH_EXCLUSION.PAPER_ID.in(searchOrder.getExcludedPaperIds()))
+                .fetchInto(Long.class);
+        final List<Long> unsaved = new ArrayList<>(searchOrder.getExcludedPaperIds());
+        unsaved.removeAll(saved);
+        for (final Long excludedId : unsaved) {
+            getDsl().insertInto(SEARCH_EXCLUSION, SEARCH_EXCLUSION.SEARCH_ORDER_ID, SEARCH_EXCLUSION.PAPER_ID).values(searchOrderId, excludedId).execute();
         }
     }
 
