@@ -152,7 +152,7 @@ public class JooqSearchOrderServiceTest {
     }
 
     @Test
-    public void deleting_withEntityWithNormald_delegatesToRepo() {
+    public void deleting_withEntityWithNormalId_delegatesToRepo() {
         when(searchOrderMock.getId()).thenReturn(3l);
 
         service.remove(searchOrderMock);
@@ -161,4 +161,16 @@ public class JooqSearchOrderServiceTest {
         verify(repoMock, times(1)).delete(3l);
     }
 
+    @Test
+    public void removingSearchConditionWithId_withNullId_doesNothing() {
+        service.removeSearchConditionWithId(null);
+        verify(repoMock, never()).deleteSearchConditionWithId(Mockito.anyLong());
+    }
+
+    @Test
+    public void removingSearchConditionWithId_delegatesToRepo() {
+        long id = 3l;
+        service.removeSearchConditionWithId(id);
+        verify(repoMock, times(1)).deleteSearchConditionWithId(id);
+    }
 }

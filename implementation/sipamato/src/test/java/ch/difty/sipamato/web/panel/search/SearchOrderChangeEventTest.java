@@ -23,43 +23,43 @@ public class SearchOrderChangeEventTest {
     }
 
     @Test
-    public void usingMinimalConstructor_doesNotAddExclusionId() {
+    public void usingMinimalConstructor_doesNotSetAnySpecialStuff() {
         e = new SearchOrderChangeEvent(targetMock);
         assertThat(e.getExcludedId()).isNull();
+        assertThat(e.getDroppedConditionId()).isNull();
+        assertThat(e.isNewSearchOrderRequested()).isFalse();
     }
 
     @Test
-    public void usingMinimalConstructor_doesNotRequestNewSearchOrder() {
-        e = new SearchOrderChangeEvent(targetMock);
-    }
-
-    @Test
-    public void usingSecondConstructorWithNullId_doesNotAddExclusionId() {
-        e = new SearchOrderChangeEvent(targetMock, null);
-        assertThat(e.getExcludedId()).isNull();
-    }
-
-    @Test
-    public void usingSecondConstructor_doesAddExclusionId() {
-        e = new SearchOrderChangeEvent(targetMock, 5l);
+    public void usingWithExcludedPaperId_doesAddExclusionId() {
+        e = new SearchOrderChangeEvent(targetMock).withExcludedPaperId(5l);
         assertThat(e.getExcludedId()).isEqualTo(5l);
     }
 
     @Test
+    public void usingWithDroppedConditionId_doesAddConditionId() {
+        e = new SearchOrderChangeEvent(targetMock).withDroppedConditionId(5l);
+        assertThat(e.getDroppedConditionId()).isEqualTo(5l);
+    }
+
+    @Test
     public void requestingNewSearchOrder_setsFlagAccordingly() {
-        e = new SearchOrderChangeEvent(targetMock).requestNewSearchOrder();
+        e = new SearchOrderChangeEvent(targetMock).requestingNewSearchOrder();
         assertThat(e.isNewSearchOrderRequested()).isTrue();
     }
 
     @Test
-    public void requestingNewSearchOrder_whenExcludeIdIsSetAlso_setsFlagNevertheless() {
-        e = new SearchOrderChangeEvent(targetMock, 5l).requestNewSearchOrder();
+    public void requestingNewSearchOrder_withExcludedPaperIdAndNewSearchOrderRequest_newSearchOrderRequestWins() {
+        e = new SearchOrderChangeEvent(targetMock).withExcludedPaperId(5l).requestingNewSearchOrder();
         assertThat(e.isNewSearchOrderRequested()).isTrue();
-    }
-
-    @Test
-    public void requestingNewSearchOrder_whenExcludeIdIsSetAlso_dropsExcludedId() {
-        e = new SearchOrderChangeEvent(targetMock, 5l).requestNewSearchOrder();
         assertThat(e.getExcludedId()).isNull();
     }
+
+    @Test
+    public void requestingNewSearchOrder_withNewSearchOrderRequestAndthenExcludedPaperId_exclusionWins() {
+        e = new SearchOrderChangeEvent(targetMock).requestingNewSearchOrder().withExcludedPaperId(5l);
+        assertThat(e.getExcludedId()).isEqualTo(5l);
+        assertThat(e.isNewSearchOrderRequested()).isFalse();
+    }
+
 }

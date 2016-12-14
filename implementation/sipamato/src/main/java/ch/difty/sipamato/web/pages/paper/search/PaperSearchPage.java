@@ -173,6 +173,9 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     private void handleSearchOrderEvent(final IEvent<?> event) {
         final SearchOrderChangeEvent soce = (SearchOrderChangeEvent) event.getPayload();
         setExclusionIntoModel(soce);
+        if (soce.getDroppedConditionId() != null) {
+            searchOrderService.removeSearchConditionWithId(soce.getDroppedConditionId());
+        }
         resetProviderModel(soce);
         addSubPanelsAsTarget(soce);
         event.dontBroadcastDeeper();

@@ -145,7 +145,7 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
             @Override
             protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form) {
                 super.onAfterSubmit(target, form);
-                send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).requestNewSearchOrder());
+                send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).requestingNewSearchOrder());
             }
         };
         newLink.add(new ButtonBehavior());

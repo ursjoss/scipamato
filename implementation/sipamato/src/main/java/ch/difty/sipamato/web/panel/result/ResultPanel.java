@@ -102,7 +102,7 @@ public class ResultPanel extends GenericPanel<Void> {
                 final Long excludedId = rowModel.getObject().getId();
                 info("Excluded " + rowModel.getObject().getDisplayValue());
                 target.add(results);
-                send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target, excludedId));
+                send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).withExcludedPaperId(excludedId));
             }
         };
     }
