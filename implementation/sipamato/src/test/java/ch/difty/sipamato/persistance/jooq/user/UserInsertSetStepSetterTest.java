@@ -101,7 +101,6 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<UserRec
         verify(getMoreStep()).set(USER.ID, ID);
     }
 
-
     @Test
     public void resettingIdToEntity_withNullRecord_doesNothing() {
         getSetter().resetIdToEntity(entityMock, null);

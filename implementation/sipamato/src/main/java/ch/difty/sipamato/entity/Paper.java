@@ -15,7 +15,6 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
     /**
      * One or more of the extended word characters including - and '
      */
-    private static final String RE_WW = "[" + RE_W + "-']+";
     private static final String RE_S_WW = "\\s" + RE_WW;
 
     private static final String AUTHOR_REGEX = "^" + RE_WW + "(" + RE_S_WW + "){0,}(," + RE_S_WW + "(" + RE_S_WW + "){0,}){0,}\\.$";

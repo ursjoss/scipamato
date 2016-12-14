@@ -1,6 +1,9 @@
 package ch.difty.sipamato.entity.filter;
 
-import static ch.difty.sipamato.entity.filter.SearchTermType.*;
+import static ch.difty.sipamato.entity.filter.SearchTermType.BOOLEAN;
+import static ch.difty.sipamato.entity.filter.SearchTermType.INTEGER;
+import static ch.difty.sipamato.entity.filter.SearchTermType.STRING;
+import static ch.difty.sipamato.entity.filter.SearchTermType.values;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 

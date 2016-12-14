@@ -19,6 +19,10 @@ public abstract class SipamatoEntity implements Serializable {
      * Thanks to hqx5 @see http://stackoverflow.com/questions/4043307/why-this-regex-is-not-working-for-german-words
      */
     protected static final String RE_W = "\\w\\u00C0-\\u024f";
+    protected static final String RE_WW = "[" + RE_W + "-']+";
+    protected static final String RE_WW2 = "[." + RE_W + "-']+";
+    // White Space
+    protected static final String RE_S = "[ \\t\\f\\r\\n]";
 
     @Override
     public String toString() {

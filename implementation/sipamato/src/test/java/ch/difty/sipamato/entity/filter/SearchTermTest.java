@@ -46,7 +46,9 @@ public class SearchTermTest {
         assertThat(sst.getSearchConditionId()).isEqualTo(3l);
         assertThat(sst.getFieldName()).isEqualTo("fn3");
         assertThat(sst.getRawSearchTerm()).isEqualTo("foo*");
-        assertThat(sst.getValue()).isEqualTo("foo");
+        assertThat(sst.getTokens()).hasSize(1);
+        assertThat(sst.getTokens().get(0).sqlData).isEqualTo("foo%");
+        assertThat(sst.getTokens().get(0).negate).isFalse();
     }
 
     @Test
