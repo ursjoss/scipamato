@@ -20,6 +20,7 @@ public abstract class SipamatoEntity implements Serializable {
      */
     protected static final String RE_W = "\\w\\u00C0-\\u024f";
     protected static final String RE_WW = "[" + RE_W + "-']+";
+    protected static final String RE_WW2 = "[." + RE_W + "-']+";
     // White Space
     protected static final String RE_S = "[ \\t\\f\\r\\n]";
 

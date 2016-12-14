@@ -98,8 +98,8 @@ public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
         OPENLEFT(RE_AST + "\\b(" + RE_FOO + ")\\b", MatchType.LIKE, 30, true, false, false),
         NOTQUOTED(RE_NOT + RE_QUOTE + "([^" + RE_QUOTE + "]+)" + RE_QUOTE, MatchType.EQUALS, 32, false, false, true),
         QUOTED(RE_QUOTE + "([^" + RE_QUOTE + "]+)" + RE_QUOTE, MatchType.EQUALS, 34, false, false, false),
-        NOTWORD(RE_NOT + "\\b(" + RE_WW + "\\b)", MatchType.CONTAINS, 36, false, false, true),
-        WORD("\\b(" + RE_WW + ")\\b", MatchType.CONTAINS, 38, false, false, false),
+        NOTWORD(RE_NOT + "\\b(" + RE_WW2 + "\\b)", MatchType.CONTAINS, 36, false, false, true),
+        WORD("\\b(" + RE_WW2 + ")\\b", MatchType.CONTAINS, 38, false, false, false),
         RAW("", MatchType.NONE, 40, false, false, false);
 
         public final String pattern;

@@ -251,14 +251,11 @@ public class StringSearchTermTest {
 
     }
 
-    // TODO fix wrong parsing of dot
     @Test
     public void lexingPm2dot5_shouldOnlyFindOneToken() {
         st = new StringSearchTerm(FIELD_NAME, "pm2.5");
-
-        assertThat(st.getTokens()).hasSize(2); // wrong
-        assertToken(0, TokenType.WORD, "pm2", "pm2", false);
-        assertToken(1, TokenType.WORD, "5", "5", false);
+        assertThat(st.getTokens()).hasSize(1);
+        assertToken(0, TokenType.WORD, "pm2.5", "pm2.5", false);
     }
 
 }
