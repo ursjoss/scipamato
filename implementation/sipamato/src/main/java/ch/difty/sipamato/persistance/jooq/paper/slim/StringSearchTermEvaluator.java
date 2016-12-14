@@ -4,8 +4,8 @@ import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.impl.DSL;
 
-import ch.difty.sipamato.entity.filter.StringSearchTerm2;
-import ch.difty.sipamato.entity.filter.StringSearchTerm2.Token;
+import ch.difty.sipamato.entity.filter.StringSearchTerm;
+import ch.difty.sipamato.entity.filter.StringSearchTerm.Token;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.persistance.jooq.ConditionalSupplier;
 
@@ -14,11 +14,11 @@ import ch.difty.sipamato.persistance.jooq.ConditionalSupplier;
  *
  * @author u.joss
  */
-class StringSearchTermEvaluator implements SearchTermEvaluator<StringSearchTerm2> {
+class StringSearchTermEvaluator implements SearchTermEvaluator<StringSearchTerm> {
 
     /** {@inheritDoc} */
     @Override
-    public Condition evaluate(final StringSearchTerm2 searchTerm) {
+    public Condition evaluate(final StringSearchTerm searchTerm) {
         AssertAs.notNull(searchTerm, "searchTerm");
 
         final ConditionalSupplier conditions = new ConditionalSupplier();

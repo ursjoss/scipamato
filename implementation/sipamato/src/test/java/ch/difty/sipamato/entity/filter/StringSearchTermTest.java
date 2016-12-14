@@ -1,38 +1,38 @@
 package ch.difty.sipamato.entity.filter;
 
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.NOTOPENLEFT;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.NOTOPENLEFTQUOTED;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.NOTOPENLEFTRIGHT;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.NOTOPENLEFTRIGHTQUOTED;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.NOTOPENRIGHT;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.NOTOPENRIGHTQUOTED;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.NOTQUOTED;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.NOTREGEX;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.NOTWORD;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.OPENLEFT;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.OPENLEFTQUOTED;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.OPENLEFTRIGHT;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.OPENLEFTRIGHTQUOTED;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.OPENRIGHT;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.OPENRIGHTQUOTED;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.QUOTED;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.RAW;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.REGEX;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.SOME;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.WHITESPACE;
-import static ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType.WORD;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.NOTOPENLEFT;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.NOTOPENLEFTQUOTED;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.NOTOPENLEFTRIGHT;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.NOTOPENLEFTRIGHTQUOTED;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.NOTOPENRIGHT;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.NOTOPENRIGHTQUOTED;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.NOTQUOTED;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.NOTREGEX;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.NOTWORD;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.OPENLEFT;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.OPENLEFTQUOTED;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.OPENLEFTRIGHT;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.OPENLEFTRIGHTQUOTED;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.OPENRIGHT;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.OPENRIGHTQUOTED;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.QUOTED;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.RAW;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.REGEX;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.SOME;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.WHITESPACE;
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.WORD;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import ch.difty.sipamato.entity.filter.StringSearchTerm2.MatchType;
-import ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType;
+import ch.difty.sipamato.entity.filter.StringSearchTerm.MatchType;
+import ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType;
 
-public class StringSearchTerm2Test {
+public class StringSearchTermTest {
 
     private static final String FIELD_NAME = "fooField";
 
-    private StringSearchTerm2 st;
+    private StringSearchTerm st;
 
     private void assertSingleToken(TokenType tt, String rawData, String data, boolean negate) {
         assertThat(st.getFieldName()).isEqualTo(FIELD_NAME);
@@ -49,50 +49,50 @@ public class StringSearchTerm2Test {
 
     @Test
     public void lexingRegex_withValidRegex_withoutWhitespaceBeforeOrAfter_matchesRegexWithoutMeta() {
-        st = new StringSearchTerm2(FIELD_NAME, "s/bar/");
+        st = new StringSearchTerm(FIELD_NAME, "s/bar/");
         assertSingleToken(TokenType.REGEX, "bar", "bar", false);
     }
 
     @Test
     public void lexingRegex_withValidRegex_negated_withoutWhitespaceBeforeOrAfter_matchesRegexNegatedWithoutMeta() {
-        st = new StringSearchTerm2(FIELD_NAME, "-s/bar/");
+        st = new StringSearchTerm(FIELD_NAME, "-s/bar/");
         assertSingleToken(TokenType.NOTREGEX, "bar", "bar", true);
     }
 
     @Test
     public void lexingRegex_withValidRegex_withWhitespaceBeforeAndAfter_matchesTrimmedRegexWithoutMeta() {
-        st = new StringSearchTerm2(FIELD_NAME, "  s/foo bar/    " + "\n  ");
+        st = new StringSearchTerm(FIELD_NAME, "  s/foo bar/    " + "\n  ");
         assertSingleToken(TokenType.REGEX, "foo bar", "foo bar", false);
     }
 
     @Test
     public void lexingRegex_withInvalidSeparator_matchesWord() {
-        st = new StringSearchTerm2(FIELD_NAME, "s|bar|");
+        st = new StringSearchTerm(FIELD_NAME, "s|bar|");
         assertToken(0, TokenType.WORD, "s", "s", false);
         assertToken(1, TokenType.WORD, "bar", "bar", false);
     }
 
     @Test
     public void lexingQuotedString_matchesContentWithoutQuotes() {
-        st = new StringSearchTerm2(FIELD_NAME, "\"hi there\"");
+        st = new StringSearchTerm(FIELD_NAME, "\"hi there\"");
         assertSingleToken(TokenType.QUOTED, "hi there", "hi there", false);
     }
 
     @Test
     public void lexingOpenRight_withQuotedString_matchesContentWithoutQuotes() {
-        st = new StringSearchTerm2(FIELD_NAME, "\"hi the*\"");
+        st = new StringSearchTerm(FIELD_NAME, "\"hi the*\"");
         assertSingleToken(TokenType.OPENRIGHTQUOTED, "hi the", "hi the%", false);
     }
 
     @Test
     public void lexingOpenRight_withQuotedStringNegated_matchesContentWithoutQuotes() {
-        st = new StringSearchTerm2(FIELD_NAME, "-\"hi the*\"");
+        st = new StringSearchTerm(FIELD_NAME, "-\"hi the*\"");
         assertSingleToken(TokenType.NOTOPENRIGHTQUOTED, "hi the", "hi the%", true);
     }
 
     @Test
     public void lexingOpenRight_withUnQuotedString_matchesContentWithoutQuotes() {
-        st = new StringSearchTerm2(FIELD_NAME, "hi ho*");
+        st = new StringSearchTerm(FIELD_NAME, "hi ho*");
         assertThat(st.getTokens()).hasSize(2);
         assertToken(0, TokenType.WORD, "hi", "hi", false);
         assertToken(1, TokenType.OPENRIGHT, "ho", "ho%", false);
@@ -100,13 +100,13 @@ public class StringSearchTerm2Test {
 
     @Test
     public void lexingOpenLeft_withQuotedString_matchesContentWithoutQuotes() {
-        st = new StringSearchTerm2(FIELD_NAME, "\"*hi the\"");
+        st = new StringSearchTerm(FIELD_NAME, "\"*hi the\"");
         assertSingleToken(TokenType.OPENLEFTQUOTED, "hi the", "%hi the", false);
     }
 
     @Test
     public void lexingOpenLeft_withUnQuotedString_matchesContentWithoutQuotes() {
-        st = new StringSearchTerm2(FIELD_NAME, "*hi lo");
+        st = new StringSearchTerm(FIELD_NAME, "*hi lo");
         assertThat(st.getTokens()).hasSize(2);
         assertToken(0, TokenType.OPENLEFT, "hi", "%hi", false);
         assertToken(1, TokenType.WORD, "lo", "lo", false);
@@ -114,7 +114,7 @@ public class StringSearchTerm2Test {
 
     @Test
     public void lexingOpenLeftRight_withQuotedString_matchesContentWithoutQuotes() {
-        st = new StringSearchTerm2(FIELD_NAME, "\"*abc*\" foo *def* ");
+        st = new StringSearchTerm(FIELD_NAME, "\"*abc*\" foo *def* ");
         assertThat(st.getTokens()).hasSize(3);
         assertToken(0, TokenType.OPENLEFTRIGHTQUOTED, "abc", "%abc%", false);
         assertToken(1, TokenType.WORD, "foo", "foo", false);
@@ -123,7 +123,7 @@ public class StringSearchTerm2Test {
 
     @Test
     public void lexingCombination_matchesQuotedTrimmedContent() {
-        st = new StringSearchTerm2(FIELD_NAME, " foo \"hi there\"   bar ");
+        st = new StringSearchTerm(FIELD_NAME, " foo \"hi there\"   bar ");
 
         assertThat(st.getFieldName()).isEqualTo(FIELD_NAME);
         assertThat(st.getTokens()).hasSize(3);
@@ -134,7 +134,7 @@ public class StringSearchTerm2Test {
 
     @Test
     public void lexingNot_() {
-        st = new StringSearchTerm2(FIELD_NAME, "foo -bar");
+        st = new StringSearchTerm(FIELD_NAME, "foo -bar");
 
         assertThat(st.getTokens()).hasSize(2);
         assertToken(0, TokenType.WORD, "foo", "foo", false);
@@ -143,7 +143,7 @@ public class StringSearchTerm2Test {
 
     @Test
     public void lexingNotQuoted() {
-        st = new StringSearchTerm2(FIELD_NAME, "foo -\"bar baz\"");
+        st = new StringSearchTerm(FIELD_NAME, "foo -\"bar baz\"");
 
         assertThat(st.getTokens()).hasSize(2);
         assertToken(0, TokenType.WORD, "foo", "foo", false);
@@ -152,7 +152,7 @@ public class StringSearchTerm2Test {
 
     @Test
     public void lexingNotOpenLeftQuoted() {
-        st = new StringSearchTerm2(FIELD_NAME, "foo -\"*bar baz\"");
+        st = new StringSearchTerm(FIELD_NAME, "foo -\"*bar baz\"");
 
         assertThat(st.getTokens()).hasSize(2);
         assertToken(0, TokenType.WORD, "foo", "foo", false);
@@ -161,7 +161,7 @@ public class StringSearchTerm2Test {
 
     @Test
     public void lexingNotOpenRightQuoted() {
-        st = new StringSearchTerm2(FIELD_NAME, "foo -\"bar baz*\"");
+        st = new StringSearchTerm(FIELD_NAME, "foo -\"bar baz*\"");
 
         assertThat(st.getTokens()).hasSize(2);
         assertToken(0, TokenType.WORD, "foo", "foo", false);
@@ -170,7 +170,7 @@ public class StringSearchTerm2Test {
 
     @Test
     public void lexingNotOpenLeftRightQuoted() {
-        st = new StringSearchTerm2(FIELD_NAME, "foo -\"*bar baz*\"");
+        st = new StringSearchTerm(FIELD_NAME, "foo -\"*bar baz*\"");
 
         assertThat(st.getTokens()).hasSize(2);
         assertToken(0, TokenType.WORD, "foo", "foo", false);
@@ -179,7 +179,7 @@ public class StringSearchTerm2Test {
 
     @Test
     public void lexingNot_withNotOpenRight_() {
-        st = new StringSearchTerm2(FIELD_NAME, "foo -bar*");
+        st = new StringSearchTerm(FIELD_NAME, "foo -bar*");
 
         assertThat(st.getTokens()).hasSize(2);
         assertToken(0, TokenType.WORD, "foo", "foo", false);
@@ -188,7 +188,7 @@ public class StringSearchTerm2Test {
 
     @Test
     public void lexingNot_withNotOpenLeft() {
-        st = new StringSearchTerm2(FIELD_NAME, "foo -*bar");
+        st = new StringSearchTerm(FIELD_NAME, "foo -*bar");
 
         assertThat(st.getTokens()).hasSize(2);
         assertToken(0, TokenType.WORD, "foo", "foo", false);
@@ -197,7 +197,7 @@ public class StringSearchTerm2Test {
 
     @Test
     public void lexingNot_withNotOpenLeftRight() {
-        st = new StringSearchTerm2(FIELD_NAME, "foo -*bar* baz ");
+        st = new StringSearchTerm(FIELD_NAME, "foo -*bar* baz ");
 
         assertThat(st.getTokens()).hasSize(3);
         assertToken(0, TokenType.WORD, "foo", "foo", false);
@@ -207,7 +207,7 @@ public class StringSearchTerm2Test {
 
     @Test
     public void lexingSome() {
-        st = new StringSearchTerm2(FIELD_NAME, ">\"\"");
+        st = new StringSearchTerm(FIELD_NAME, ">\"\"");
 
         assertThat(st.getTokens()).hasSize(1);
         assertToken(0, TokenType.SOME, ">\"\"", ">\"\"", false);
@@ -215,7 +215,7 @@ public class StringSearchTerm2Test {
 
     @Test
     public void assertTokenTypes() {
-        assertThat(StringSearchTerm2.TokenType.values()).containsExactly(NOTREGEX, REGEX, WHITESPACE, SOME, NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED, NOTOPENLEFTRIGHT, OPENLEFTRIGHT,
+        assertThat(StringSearchTerm.TokenType.values()).containsExactly(NOTREGEX, REGEX, WHITESPACE, SOME, NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED, NOTOPENLEFTRIGHT, OPENLEFTRIGHT,
                 NOTOPENRIGHTQUOTED, OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT, NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT, NOTQUOTED, QUOTED, NOTWORD, WORD, RAW);
     }
 

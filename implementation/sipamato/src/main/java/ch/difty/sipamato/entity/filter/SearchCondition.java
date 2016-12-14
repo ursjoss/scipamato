@@ -65,7 +65,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
 
     private Long searchConditionId;
 
-    private final StringSearchTerms2 stringSearchTerms = new StringSearchTerms2();
+    private final StringSearchTerms stringSearchTerms = new StringSearchTerms();
     private final IntegerSearchTerms integerSearchTerms = new IntegerSearchTerms();
     private final BooleanSearchTerms booleanSearchTerms = new BooleanSearchTerms();
     private final Set<String> removedKeys = new HashSet<>();
@@ -96,7 +96,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
             integerSearchTerms.put(ist.getFieldName(), ist);
             break;
         case STRING:
-            final StringSearchTerm2 sst = (StringSearchTerm2) searchTerm;
+            final StringSearchTerm sst = (StringSearchTerm) searchTerm;
             stringSearchTerms.put(sst.getFieldName(), sst);
             break;
         default:
@@ -107,7 +107,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     /**
      * @return all search terms specified for string fields in entity {@link Paper}
      */
-    public Collection<StringSearchTerm2> getStringSearchTerms() {
+    public Collection<StringSearchTerm> getStringSearchTerms() {
         return stringSearchTerms.values();
     }
 
@@ -378,13 +378,13 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     private String getStringValue(String key) {
-        final StringSearchTerm2 st = stringSearchTerms.get(key);
+        final StringSearchTerm st = stringSearchTerms.get(key);
         return st != null ? st.getRawSearchTerm() : null;
     }
 
     private void setStringValue(final String key, String value) {
         if (value != null) {
-            stringSearchTerms.put(key, new StringSearchTerm2(key, value));
+            stringSearchTerms.put(key, new StringSearchTerm(key, value));
             getRemovedKeys().remove(key);
         } else {
             getRemovedKeys().add(key);
@@ -423,7 +423,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public String getDisplayValue() {
-        final String textString = stringSearchTerms.values().stream().map(StringSearchTerm2::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
+        final String textString = stringSearchTerms.values().stream().map(StringSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
         final String intString = integerSearchTerms.values().stream().map(IntegerSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
         final String boolString = booleanSearchTerms.values().stream().map(BooleanSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
         StringBuffer sb = new StringBuffer();

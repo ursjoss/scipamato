@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
  *
  * @see http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html
  */
-public class StringSearchTerm2 extends SearchTerm<StringSearchTerm2> {
+public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
     private static final long serialVersionUID = 1L;
 
     private static final String RE_NOT = "-";
@@ -52,15 +52,15 @@ public class StringSearchTerm2 extends SearchTerm<StringSearchTerm2> {
 
     private final List<Token> tokens;
 
-    StringSearchTerm2(final String fieldName, final String rawSearchTerm) {
+    StringSearchTerm(final String fieldName, final String rawSearchTerm) {
         this(null, fieldName, rawSearchTerm);
     }
 
-    StringSearchTerm2(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+    StringSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
         this(null, searchConditionId, fieldName, rawSearchTerm);
     }
 
-    StringSearchTerm2(final Long id, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+    StringSearchTerm(final Long id, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
         super(id, SearchTermType.STRING, searchConditionId, fieldName, rawSearchTerm);
         tokens = lex(rawSearchTerm.trim());
     }

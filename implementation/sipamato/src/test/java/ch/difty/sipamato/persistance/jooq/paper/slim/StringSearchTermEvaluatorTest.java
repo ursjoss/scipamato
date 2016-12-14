@@ -12,9 +12,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ch.difty.sipamato.entity.filter.StringSearchTerm2;
-import ch.difty.sipamato.entity.filter.StringSearchTerm2.Token;
-import ch.difty.sipamato.entity.filter.StringSearchTerm2.TokenType;
+import ch.difty.sipamato.entity.filter.StringSearchTerm;
+import ch.difty.sipamato.entity.filter.StringSearchTerm.Token;
+import ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType;
 import ch.difty.sipamato.lib.NullArgumentException;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,7 +24,7 @@ public class StringSearchTermEvaluatorTest {
 
     private final List<Token> tokens = new ArrayList<>();
     @Mock
-    private StringSearchTerm2 stMock;
+    private StringSearchTerm stMock;
     @Mock
     private Token tokenMock;
 

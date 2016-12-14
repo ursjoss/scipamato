@@ -40,7 +40,7 @@ import ch.difty.sipamato.entity.filter.BooleanSearchTerm;
 import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.entity.filter.SearchTerm;
-import ch.difty.sipamato.entity.filter.StringSearchTerm2;
+import ch.difty.sipamato.entity.filter.StringSearchTerm;
 import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.lib.TranslationUtils;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
@@ -354,7 +354,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
                 updateSearchTerm(ist, searchConditionId);
             }
         }
-        for (StringSearchTerm2 sst : searchCondition.getStringSearchTerms()) {
+        for (StringSearchTerm sst : searchCondition.getStringSearchTerms()) {
             if (sst.getId() == null) {
                 insertStep = insertStep.values(searchConditionId, sst.getSearchTermType().getId(), sst.getFieldName(), sst.getRawSearchTerm());
             } else {

@@ -38,9 +38,9 @@ public class SearchTermTest {
     @Test
     public void stringSearchTerm() {
         SearchTerm<?> st = SearchTerm.of(12, 2, 3l, "fn3", "foo*");
-        assertThat(st).isInstanceOf(StringSearchTerm2.class);
+        assertThat(st).isInstanceOf(StringSearchTerm.class);
 
-        StringSearchTerm2 sst = (StringSearchTerm2) st;
+        StringSearchTerm sst = (StringSearchTerm) st;
         assertThat(sst.getId()).isEqualTo(12);
         assertThat(sst.getSearchTermType()).isEqualTo(SearchTermType.STRING);
         assertThat(sst.getSearchConditionId()).isEqualTo(3l);

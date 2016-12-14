@@ -42,7 +42,7 @@ public abstract class SearchTerm<T extends SearchTerm<?>> extends IdSipamatoEnti
         case INTEGER:
             return new IntegerSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
         case STRING:
-            return new StringSearchTerm2(id, searchConditionId, fieldName, rawSearchTerm);
+            return new StringSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
         default:
             throw new UnsupportedOperationException("SearchTermType." + type + " is not supported");
         }
