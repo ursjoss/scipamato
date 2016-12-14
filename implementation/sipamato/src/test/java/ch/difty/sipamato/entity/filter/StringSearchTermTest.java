@@ -248,5 +248,17 @@ public class StringSearchTermTest {
     @Test
     public void assertTokenTypes_none() {
         assertThat(TokenType.byMatchType(MatchType.NONE)).containsExactly(WHITESPACE, RAW);
+
     }
+
+    // TODO fix wrong parsing of dot
+    @Test
+    public void lexingPm2dot5_shouldOnlyFindOneToken() {
+        st = new StringSearchTerm(FIELD_NAME, "pm2.5");
+
+        assertThat(st.getTokens()).hasSize(2); // wrong
+        assertToken(0, TokenType.WORD, "pm2", "pm2", false);
+        assertToken(1, TokenType.WORD, "5", "5", false);
+    }
+
 }
