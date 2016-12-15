@@ -12,11 +12,13 @@ import ch.difty.sipamato.persistance.jooq.RecordMapperTest;
 public class SearchOrderRecordMapperTest extends RecordMapperTest<SearchOrderRecord, SearchOrder> {
 
     static final Long ID = 2l;
+    static final String NAME = "soName";
     static final Integer OWNER = 1;
     static final boolean GLOBAL = true;
 
     public static void entityFixtureWithoutIdFields(SearchOrder entityMock) {
         when(entityMock.getId()).thenReturn(ID);
+        when(entityMock.getName()).thenReturn(NAME);
         when(entityMock.getOwner()).thenReturn(OWNER);
         when(entityMock.isGlobal()).thenReturn(GLOBAL);
     }
@@ -30,6 +32,7 @@ public class SearchOrderRecordMapperTest extends RecordMapperTest<SearchOrderRec
     protected SearchOrderRecord makeRecord() {
         SearchOrderRecord record = new SearchOrderRecord();
         record.setId(ID);
+        record.setName(NAME);
         record.setOwner(OWNER);
         record.setGlobal(GLOBAL);
 
@@ -45,6 +48,7 @@ public class SearchOrderRecordMapperTest extends RecordMapperTest<SearchOrderRec
     @Override
     protected void assertEntity(SearchOrder entity) {
         assertThat(entity.getId()).isEqualTo(ID);
+        assertThat(entity.getName()).isEqualTo(NAME);
         assertThat(entity.getOwner()).isEqualTo(OWNER);
         assertThat(entity.isGlobal()).isEqualTo(GLOBAL);
 

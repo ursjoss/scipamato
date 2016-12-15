@@ -16,7 +16,7 @@ import ch.difty.sipamato.entity.filter.SearchCondition;
 @RunWith(MockitoJUnitRunner.class)
 public class SearchOrderTest {
 
-    private final SearchOrder so = new SearchOrder(10l, 1, false, null, null);
+    private final SearchOrder so = new SearchOrder(10l, "soName", 1, false, null, null);
 
     @Mock
     public SearchCondition mockCondition1, mockCondition2;
@@ -36,10 +36,12 @@ public class SearchOrderTest {
     public void testSetters() {
         so.setId(11l);
         so.setOwner(2);
+        so.setName("soName");
         so.setGlobal(true);
         so.setInvertExclusions(true);
 
         assertThat(so.getId()).isEqualTo(11);
+        assertThat(so.getName()).isEqualTo("soName");
         assertThat(so.getOwner()).isEqualTo(2);
         assertThat(so.isGlobal()).isEqualTo(true);
         assertThat(so.isInvertExclusions()).isEqualTo(true);
@@ -59,7 +61,7 @@ public class SearchOrderTest {
     @Test
     public void whenInstantiating_withEmptyExclusionList_hasNoExclusions() {
         assertThat(excludedIds).isEmpty();
-        assertThat(new SearchOrder(10l, 1, false, null, excludedIds).getExcludedPaperIds()).isEmpty();
+        assertThat(new SearchOrder(10l, "soName", 1, false, null, excludedIds).getExcludedPaperIds()).isEmpty();
     }
 
     @Test
@@ -72,7 +74,7 @@ public class SearchOrderTest {
     public void whenInstantiating_withNonEmptyExlusionList_hasHandedOverExclusions() {
         excludedIds.add(3l);
         excludedIds.add(5l);
-        assertThat(new SearchOrder(10l, 1, false, null, excludedIds).getExcludedPaperIds()).containsExactly(3l, 5l);
+        assertThat(new SearchOrder(10l, "soName", 1, false, null, excludedIds).getExcludedPaperIds()).containsExactly(3l, 5l);
     }
 
     @Test
@@ -158,7 +160,7 @@ public class SearchOrderTest {
     public void testingToString_withNoConditionsOrExclusions() {
         assertThat(so.getSearchConditions()).hasSize(0);
         assertThat(so.getExcludedPaperIds()).hasSize(0);
-        assertThat(so.toString()).isEqualTo("SearchOrder[owner=1,global=false,searchConditions=[],excludedPaperIds=[],invertExclusions=false,id=10]");
+        assertThat(so.toString()).isEqualTo("SearchOrder[name=soName,owner=1,global=false,searchConditions=[],excludedPaperIds=[],invertExclusions=false,id=10]");
     }
 
     @Test
@@ -167,20 +169,43 @@ public class SearchOrderTest {
         so.add(mockCondition2);
         so.addExclusionOfPaperWithId(3l);
         so.addExclusionOfPaperWithId(5l);
-        assertThat(so.toString()).isEqualTo("SearchOrder[owner=1,global=false,searchConditions=[mockCondition1, mockCondition2],excludedPaperIds=[3, 5],invertExclusions=false,id=10]");
+        assertThat(so.toString()).isEqualTo("SearchOrder[name=soName,owner=1,global=false,searchConditions=[mockCondition1, mockCondition2],excludedPaperIds=[3, 5],invertExclusions=false,id=10]");
     }
 
     @Test
     public void testingDisplayValue_withNoConditions_returnsIDOnly() {
         assertThat(so.getSearchConditions()).hasSize(0);
-        assertThat(so.getDisplayValue()).isEqualTo("-- (10)");
+        assertThat(so.getDisplayValue()).isEqualTo("soName:  (10)");
     }
 
     @Test
-    public void testingDisplayValue_forGlobalCSearchOrderWithNoConditions_returnsIdPlusGlobalIndicator() {
+    public void testingDisplayValue_forGlobalSearchOrderWithNoConditions_returnsIdPlusGlobalIndicator() {
+        assertThat(so.getSearchConditions()).hasSize(0);
+        so.setGlobal(true);
+        assertThat(so.getDisplayValue()).isEqualTo("soName:  (10)*");
+    }
+
+    @Test
+    public void testingDisplayValue_withoutName_forGlobalSearchOrderWithNoConditions_returnsIdPlusGlobalIndicator() {
+        so.setName(null);
         assertThat(so.getSearchConditions()).hasSize(0);
         so.setGlobal(true);
         assertThat(so.getDisplayValue()).isEqualTo("-- (10)*");
+    }
+
+    @Test
+    public void testingDisplayValue_withoutNameButWithSingleCondition_returnsIt() {
+        SearchOrder so = new SearchOrder(10l, null, 1, false, null, excludedIds);
+        so.add(new SearchCondition() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public String getDisplayValue() {
+                return "f1DisplayValue";
+            }
+        });
+
+        assertThat(so.getDisplayValue()).isEqualTo("f1DisplayValue (10)");
     }
 
     @Test
@@ -194,7 +219,7 @@ public class SearchOrderTest {
             }
         });
 
-        assertThat(so.getDisplayValue()).isEqualTo("f1DisplayValue (10)");
+        assertThat(so.getDisplayValue()).isEqualTo("soName: f1DisplayValue (10)");
     }
 
     @Test
@@ -216,7 +241,7 @@ public class SearchOrderTest {
             }
         });
 
-        assertThat(so.getDisplayValue()).isEqualTo("c1DisplayValue; OR c2DisplayValue (10)");
+        assertThat(so.getDisplayValue()).isEqualTo("soName: c1DisplayValue; OR c2DisplayValue (10)");
     }
 
     @Test

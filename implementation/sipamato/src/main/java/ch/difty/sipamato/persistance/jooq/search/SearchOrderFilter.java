@@ -6,9 +6,18 @@ public class SearchOrderFilter extends SipamatoFilter {
 
     private static final long serialVersionUID = 1L;
 
+    private String nameMask;
     private Integer owner;
     private Boolean global;
     private Integer ownerIncludingGlobal;
+
+    public String getNameMask() {
+        return nameMask;
+    }
+
+    public void setNameMask(String nameMask) {
+        this.nameMask = nameMask;
+    }
 
     public Integer getOwner() {
         return owner;

@@ -519,21 +519,21 @@ INSERT INTO user_role VALUES(5, 4, 1, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAUL
 INSERT INTO user_role VALUES(6, 4, 2, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
 
 
-INSERT INTO search_order VALUES(1, 2, 0, DEFAULT, DEFAULT, 2, DEFAULT, 2);
+INSERT INTO search_order VALUES(1, null, 2, 0, DEFAULT, DEFAULT, 2, DEFAULT, 2);
     INSERT INTO search_condition VALUES(1, 1, DEFAULT, DEFAULT, 2, DEFAULT, 2);
         INSERT INTO search_term VALUES(1, 1, 2, 'authors', 'kutlar', DEFAULT, DEFAULT, 2, DEFAULT, 2);
     INSERT INTO search_condition VALUES(2, 1, DEFAULT, DEFAULT, 2, DEFAULT, 2);
 		INSERT INTO search_term VALUES(2, 2, 1, 'publication_year', '2014-2015', DEFAULT, DEFAULT, 2, DEFAULT, 2);
 		INSERT INTO search_term VALUES(3, 2, 2, 'authors', 'turner', DEFAULT, DEFAULT, 2, DEFAULT, 2);
-INSERT INTO search_order VALUES(2, 3, 1, DEFAULT, DEFAULT, 3, DEFAULT, 3);
+INSERT INTO search_order VALUES(2, null, 3, 1, DEFAULT, DEFAULT, 3, DEFAULT, 3);
     INSERT INTO search_exclusion VALUES(1, 2, 3, NULL, DEFAULT, DEFAULT, 4, DEFAULT, 4);
     INSERT INTO search_condition VALUES(3, 2, DEFAULT, DEFAULT, 3, DEFAULT, 3);
 		INSERT INTO search_term VALUES(4, 3, 2, 'goals', 'pm2.5', DEFAULT, DEFAULT, 3, DEFAULT, 3);
-INSERT INTO search_order VALUES(3, 4, 0, DEFAULT, DEFAULT, 4, DEFAULT, 4);
+INSERT INTO search_order VALUES(3, null, 4, 0, DEFAULT, DEFAULT, 4, DEFAULT, 4);
 	INSERT INTO search_condition VALUES(4, 3, DEFAULT, DEFAULT, 4, DEFAULT, 4);
         INSERT INTO search_term VALUES(5, 4, 0, 'first_author_overridden', 'true', DEFAULT, DEFAULT, 4, DEFAULT, 4);
         INSERT INTO search_condition_code VALUES(4, '1F', DEFAULT, DEFAULT, 4, DEFAULT, 4);
-INSERT INTO search_order VALUES(4, 4, 1, DEFAULT, DEFAULT, 4, DEFAULT, 4);
+INSERT INTO search_order VALUES(4, 'test suche', 4, 1, DEFAULT, DEFAULT, 4, DEFAULT, 4);
     INSERT INTO search_exclusion VALUES(2, 4, 1, NULL, DEFAULT, DEFAULT, 4, DEFAULT, 4);
 	INSERT INTO search_condition VALUES(5, 4, DEFAULT, DEFAULT, 4, DEFAULT, 4);
         INSERT INTO search_term VALUES(6, 5, 0, 'first_author_overridden', 'false', DEFAULT, DEFAULT, 4, DEFAULT, 4);

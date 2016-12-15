@@ -2,17 +2,28 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
     <form wicket:id="form" class="form-inline">
-        <select wicket:id="searchOrder"></select>
-        <div class="form-group">
-            <input wicket:id="global" type="checkbox"></input> <span wicket:id="globalLabel"></span>
+        <div class="row">
+            <div class="col-md-10">
+                <select wicket:id="searchOrder"></select>
+                <div class="form-group">
+                    <wicket:container wicket:id="nameLabel" class="control-label" />
+                    <input wicket:id="name" type="text" class="form-control"></input>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-inline"> <input wicket:id="global" type="checkbox"> <wicket:container
+                            wicket:id="globalLabel" /></label>
+                </div>
+                <div class="form-group">
+                    <a wicket:id="save">Save</a> <a wicket:id="delete">Delete</a> <a wicket:id="new">New</a>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="checkbox-inline"> <input wicket:id="invertExclusions" type="checkbox">
+                        <wicket:container wicket:id="invertExclusionsLabel" /></label>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <input wicket:id="invertExclusions" type="checkbox"></input> <span wicket:id="invertExclusionsLabel"></span>
-        </div>
-        <a wicket:id="query">Query</a>
-        <a wicket:id="new">New</a>
-        <a wicket:id="save">Save</a>
-        <a wicket:id="delete">Delete</a>
     </form>
 </wicket:panel>
 </html>

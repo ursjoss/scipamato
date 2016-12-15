@@ -24,6 +24,7 @@ public class SearchOrderRecordMapper implements RecordMapper<SearchOrderRecord, 
         AssertAs.notNull(from, "from");
         SearchOrder to = new SearchOrder();
         to.setId(from.getId());
+        to.setName(from.getName());
         to.setOwner(from.getOwner());
         to.setGlobal(from.getGlobal());
 

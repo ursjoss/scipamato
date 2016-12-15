@@ -30,6 +30,7 @@ public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<Searc
 
         // @formatter:off
         return step
+            .set(SEARCH_ORDER.NAME, e.getName())
             .set(SEARCH_ORDER.OWNER, e.getOwner())
             .set(SEARCH_ORDER.GLOBAL, e.isGlobal());
         // @formatter:on

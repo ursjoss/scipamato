@@ -23,6 +23,9 @@ public class SearchOrderFilterConditionMapper extends AbstractFilterConditionMap
         if (filter.getOwnerIncludingGlobal() != null) {
             conditions.add(DSL.or(SEARCH_ORDER.OWNER.equal(filter.getOwnerIncludingGlobal()), SEARCH_ORDER.GLOBAL.equal(true)));
         } else {
+            if (filter.getNameMask() != null) {
+                conditions.add(SEARCH_ORDER.NAME.lower().contains(filter.getNameMask().toLowerCase()));
+            }
             if (filter.getOwner() != null) {
                 conditions.add(SEARCH_ORDER.OWNER.equal(filter.getOwner()));
             }

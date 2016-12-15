@@ -52,7 +52,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     @Mock
     private Page<PaperSlim> pageMock;
 
-    private final SearchOrder searchOrder = new SearchOrder(SEARCH_ORDER_ID, 1, false, null, null);
+    private final SearchOrder searchOrder = new SearchOrder(SEARCH_ORDER_ID, "soName", 1, false, null, null);
 
     @Override
     protected void setUpHook() {

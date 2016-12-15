@@ -16,6 +16,7 @@ public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilt
 
     private static final long serialVersionUID = 1L;
 
+    public static final String NAME = "name";
     public static final String OWNER = "owner";
     public static final String GLOBAL = "global";
     public static final String CONDITIONS = "searchConditions";
@@ -23,6 +24,7 @@ public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilt
 
     private static final String JOIN_DELIMITER = "; OR ";
 
+    private String name;
     private int owner;
     private boolean global;
     private final List<SearchCondition> searchConditions = new ArrayList<>();
@@ -39,12 +41,21 @@ public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilt
         setSearchConditions(searchConditions);
     }
 
-    public SearchOrder(long id, int owner, boolean global, List<SearchCondition> searchConditions, List<Long> excludedPaperIds) {
+    public SearchOrder(long id, String name, int owner, boolean global, List<SearchCondition> searchConditions, List<Long> excludedPaperIds) {
         setId(id);
+        setName(name);
         setOwner(owner);
         setGlobal(global);
         setSearchConditions(searchConditions);
         setExcludedPaperIds(excludedPaperIds);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getOwner() {
@@ -136,6 +147,9 @@ public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilt
     @Override
     public String getDisplayValue() {
         StringBuilder sb = new StringBuilder();
+        if (getName() != null) {
+            sb.append(getName()).append(": ");
+        }
         sb.append(searchConditions.stream().map(SearchCondition::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER)));
         if (sb.length() == 0)
             sb.append("--");

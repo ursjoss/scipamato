@@ -86,12 +86,14 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     private SearchOrder makeEmptyModelObject() {
         final SearchOrder so = new SearchOrder(null);
         so.setId(getSearchOrderId());
+        so.setName(null);
         so.setOwner(getActiveUser().getId());
         return so;
     }
 
     private SearchOrder makeNewModelObject() {
         final SearchOrder so = new SearchOrder(null);
+        so.setName(null);
         so.setOwner(getActiveUser().getId());
         return so;
     }
