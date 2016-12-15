@@ -4,17 +4,23 @@
     <form wicket:id="form" class="form-inline">
         <div class="row">
             <div class="col-md-10">
-                <select wicket:id="searchOrder"></select> <label for="name" wicket:id="nameLabel"> </label><input
-                    wicket:id="name" type="text" class="form-control"></input>
+                <select wicket:id="searchOrder"></select>
                 <div class="form-group">
-                    <input wicket:id="global" type="checkbox"></input> <label for="global" wicket:id="globalLabel"></label>
+                    <wicket:container wicket:id="nameLabel" class="control-label" />
+                    <input wicket:id="name" type="text" class="form-control"></input>
                 </div>
-                <a wicket:id="save">Save</a> <a wicket:id="delete">Delete</a> <a wicket:id="new">New</a> 
+                <div class="form-group">
+                    <label class="checkbox-inline"> <input wicket:id="global" type="checkbox"> <wicket:container
+                            wicket:id="globalLabel" /></label>
+                </div>
+                <div class="form-group">
+                    <a wicket:id="save">Save</a> <a wicket:id="delete">Delete</a> <a wicket:id="new">New</a>
+                </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
-                    <input wicket:id="invertExclusions" type="checkbox"></input> <label for="invertExclusions"
-                        wicket:id="invertExclusionsLabel"></label> <a wicket:id="query">Query</a>
+                    <label class="checkbox-inline"> <input wicket:id="invertExclusions" type="checkbox">
+                        <wicket:container wicket:id="invertExclusionsLabel" /></label>
                 </div>
             </div>
         </div>
