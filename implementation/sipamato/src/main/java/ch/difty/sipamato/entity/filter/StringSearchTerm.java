@@ -167,6 +167,10 @@ public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
             return sb.toString();
         }
 
+        public TokenType getType() {
+            return type;
+        }
+
         @Override
         public String toString() {
             return String.format("(%s %s)", type.name(), sqlData);
