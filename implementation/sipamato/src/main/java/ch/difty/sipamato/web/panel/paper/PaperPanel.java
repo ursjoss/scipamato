@@ -16,7 +16,6 @@ import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
-import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
@@ -38,7 +37,8 @@ import ch.difty.sipamato.web.model.CodeClassModel;
 import ch.difty.sipamato.web.model.CodeModel;
 import ch.difty.sipamato.web.pages.Mode;
 import ch.difty.sipamato.web.panel.AbstractPanel;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
@@ -168,12 +168,10 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     }
 
     private void makeAndQueueSubmitButton(String id) {
-        SubmitLink submitLink = new SubmitLink(id, form);
-        submitLink.add(new ButtonBehavior());
-        submitLink.setBody(new StringResourceModel(getSubmitLinkResourceLabel()));
-        submitLink.setDefaultFormProcessing(true);
-        submitLink.setEnabled(!isViewMode());
-        queue(submitLink);
+        BootstrapButton submit = new BootstrapButton(id, new StringResourceModel(getSubmitLinkResourceLabel()), Buttons.Type.Default);
+        submit.setDefaultFormProcessing(true);
+        submit.setEnabled(!isViewMode());
+        queue(submit);
     }
 
     private abstract class AbstractTabPanel extends Panel {
