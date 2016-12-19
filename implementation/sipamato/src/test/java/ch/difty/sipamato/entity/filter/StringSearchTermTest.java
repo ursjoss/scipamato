@@ -1,5 +1,6 @@
 package ch.difty.sipamato.entity.filter;
 
+import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.EMPTY;
 import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.NOTOPENLEFT;
 import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.NOTOPENLEFTQUOTED;
 import static ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType.NOTOPENLEFTRIGHT;
@@ -214,8 +215,16 @@ public class StringSearchTermTest {
     }
 
     @Test
+    public void lexingEmpty() {
+        st = new StringSearchTerm(FIELD_NAME, "=\"\"");
+
+        assertThat(st.getTokens()).hasSize(1);
+        assertToken(0, TokenType.EMPTY, "=\"\"", "=\"\"", true);
+    }
+
+    @Test
     public void assertTokenTypes() {
-        assertThat(StringSearchTerm.TokenType.values()).containsExactly(NOTREGEX, REGEX, WHITESPACE, SOME, NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED, NOTOPENLEFTRIGHT, OPENLEFTRIGHT,
+        assertThat(StringSearchTerm.TokenType.values()).containsExactly(NOTREGEX, REGEX, WHITESPACE, SOME, EMPTY, NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED, NOTOPENLEFTRIGHT, OPENLEFTRIGHT,
                 NOTOPENRIGHTQUOTED, OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT, NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT, NOTQUOTED, QUOTED, NOTWORD, WORD, RAW);
     }
 
@@ -242,7 +251,7 @@ public class StringSearchTermTest {
 
     @Test
     public void assertTokenTypes_length() {
-        assertThat(TokenType.byMatchType(MatchType.LENGTH)).containsExactly(SOME);
+        assertThat(TokenType.byMatchType(MatchType.LENGTH)).containsExactly(SOME, EMPTY);
     }
 
     @Test
