@@ -58,115 +58,135 @@ public class StringSearchTermEvaluatorTest {
     }
 
     @Test
-    public void buildingonditionForNotRegex_appliesNotRegex() {
+    public void buildingConditionForNotRegex_appliesNotRegex() {
         expectToken(TokenType.NOTREGEX, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("not(fieldX like_regex 'foo')");
     }
 
     @Test
-    public void buildingonditionForRegex_appliesRegex() {
+    public void buildingConditionForRegex_appliesRegex() {
         expectToken(TokenType.REGEX, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("fieldX like_regex 'foo'");
     }
 
     @Test
-    public void buildingonditionForWhitespace_appliesTrueCondition() {
+    public void buildingConditionForWhitespace_appliesTrueCondition() {
         expectToken(TokenType.WHITESPACE, "   ");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("1 = 1");
     }
 
     @Test
-    public void buildingonditionForSome_appliesNotEmpty() {
+    public void buildingConditionForSome_appliesNotEmpty() {
         expectToken(TokenType.SOME, "whatever");
-        assertThat(e.evaluate(stMock).toString()).isEqualTo("char_length(cast(fieldX as varchar)) > 0");
+        assertThat(e.evaluate(stMock).toString()).isEqualTo(
+            // @formatter:off
+            "(\n" +
+            "  fieldX is not null\n" +
+            "  and char_length(cast(fieldX as varchar)) > 0\n" +
+            ")"
+            // @formatter:on
+        );
     }
 
     @Test
-    public void buildingonditionForNotOpenLeftRightQuoted_appliesLike() {
+    public void buildingConditionForEmpty_appliesEmpty() {
+        expectToken(TokenType.EMPTY, "whatever");
+        assertThat(e.evaluate(stMock).toString()).isEqualTo(
+            // @formatter:off
+            "(\n" +
+            "  fieldX is null\n" +
+            "  or char_length(cast(fieldX as varchar)) = 0\n" +
+            ")"
+            // @formatter:on);
+        );
+    }
+
+    @Test
+    public void buildingConditionForNotOpenLeftRightQuoted_appliesLike() {
         expectToken(TokenType.NOTOPENLEFTRIGHTQUOTED, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("lower(cast(fieldX as varchar)) not like lower('%foo%')");
     }
 
     @Test
-    public void buildingonditionForOpenLeftRightQuoted_appliesLike() {
+    public void buildingConditionForOpenLeftRightQuoted_appliesLike() {
         expectToken(TokenType.OPENLEFTRIGHTQUOTED, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("lower(cast(fieldX as varchar)) like lower('%foo%')");
     }
 
     @Test
-    public void buildingonditionForNotOpenLeftRight_appliesNotLike() {
+    public void buildingConditionForNotOpenLeftRight_appliesNotLike() {
         expectToken(TokenType.NOTOPENLEFTRIGHT, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("lower(cast(fieldX as varchar)) not like lower('%foo%')");
     }
 
     @Test
-    public void buildingonditionForOpenLeftRight_appliesLike() {
+    public void buildingConditionForOpenLeftRight_appliesLike() {
         expectToken(TokenType.OPENLEFTRIGHT, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("lower(cast(fieldX as varchar)) like lower('%foo%')");
     }
 
     @Test
-    public void buildingonditionForNotOpenRightQuoted_appliesLike() {
+    public void buildingConditionForNotOpenRightQuoted_appliesLike() {
         expectToken(TokenType.NOTOPENRIGHTQUOTED, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("lower(cast(fieldX as varchar)) not like lower('foo%')");
     }
 
     @Test
-    public void buildingonditionForOpenRightQuoted_appliesLike() {
+    public void buildingConditionForOpenRightQuoted_appliesLike() {
         expectToken(TokenType.OPENRIGHTQUOTED, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("lower(cast(fieldX as varchar)) like lower('foo%')");
     }
 
     @Test
-    public void buildingonditionForNotOpenRight_appliesNotLike() {
+    public void buildingConditionForNotOpenRight_appliesNotLike() {
         expectToken(TokenType.NOTOPENRIGHT, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("lower(cast(fieldX as varchar)) not like lower('foo%')");
     }
 
     @Test
-    public void buildingonditionForOpenRight_appliesLike() {
+    public void buildingConditionForOpenRight_appliesLike() {
         expectToken(TokenType.OPENRIGHT, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("lower(cast(fieldX as varchar)) like lower('foo%')");
     }
 
     @Test
-    public void buildingonditionForNotOpenLeftQuoted_appliesLike() {
+    public void buildingConditionForNotOpenLeftQuoted_appliesLike() {
         expectToken(TokenType.NOTOPENLEFTQUOTED, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("lower(cast(fieldX as varchar)) not like lower('%foo')");
     }
 
     @Test
-    public void buildingonditionForOpenLeftQuoted_appliesLike() {
+    public void buildingConditionForOpenLeftQuoted_appliesLike() {
         expectToken(TokenType.OPENLEFTQUOTED, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("lower(cast(fieldX as varchar)) like lower('%foo')");
     }
 
     @Test
-    public void buildingonditionForNotOpenLeft_appliesNotLike() {
+    public void buildingConditionForNotOpenLeft_appliesNotLike() {
         expectToken(TokenType.NOTOPENLEFT, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("lower(cast(fieldX as varchar)) not like lower('%foo')");
     }
 
     @Test
-    public void buildingonditionForOpenLeft_appliesLike() {
+    public void buildingConditionForOpenLeft_appliesLike() {
         expectToken(TokenType.OPENLEFT, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("lower(cast(fieldX as varchar)) like lower('%foo')");
     }
 
     @Test
-    public void buildingonditionForNotQuoted_appliesInequal() {
+    public void buildingConditionForNotQuoted_appliesInequal() {
         expectToken(TokenType.NOTQUOTED, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("lower(cast(fieldX as varchar)) <> lower('foo')");
     }
 
     @Test
-    public void buildingonditionForQuoted_appliesEqual() {
+    public void buildingConditionForQuoted_appliesEqual() {
         expectToken(TokenType.QUOTED, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("lower(cast(fieldX as varchar)) = lower('foo')");
     }
 
     @Test
-    public void buildingonditionForNotWord_appliesNotContains() {
+    public void buildingConditionForNotWord_appliesNotContains() {
         expectToken(TokenType.NOTWORD, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo(prepare(
             // @formatter:off
@@ -188,7 +208,7 @@ public class StringSearchTermEvaluatorTest {
     }
 
     @Test
-    public void buildingonditionForWord_appliesContains() {
+    public void buildingConditionForWord_appliesContains() {
         expectToken(TokenType.WORD, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo(prepare(
             // @formatter:off
@@ -210,7 +230,7 @@ public class StringSearchTermEvaluatorTest {
     }
 
     @Test
-    public void buildingonditionForRaw_appliesDummyTrue() {
+    public void buildingConditionForRaw_appliesDummyTrue() {
         expectToken(TokenType.RAW, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("1 = 1");
     }

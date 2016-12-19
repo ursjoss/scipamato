@@ -46,7 +46,7 @@ class StringSearchTermEvaluator implements SearchTermEvaluator<StringSearchTerm>
                 break;
             case LENGTH:
                 final Field<Integer> length = field.length();
-                conditions.add(() -> (negate ? length.equal(0) : length.greaterThan(0)));
+                conditions.add(() -> (negate ? field.isNull().or(length.equal(0)) : field.isNotNull().and(length.greaterThan(0))));
                 break;
             default:
                 throw new UnsupportedOperationException("Evaluation of type " + token.type.matchType + " is not supported...");
