@@ -3,7 +3,11 @@ package ch.difty.sipamato.web.pages.paper.list;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
+import ch.difty.sipamato.persistance.jooq.paper.slim.PaperSlimRepository;
+import ch.difty.sipamato.service.CodeClassService;
+import ch.difty.sipamato.service.CodeService;
 import ch.difty.sipamato.web.pages.BasePageTest;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
@@ -11,6 +15,15 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButt
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 public class PaperListPageTest extends BasePageTest<PaperListPage> {
+
+    @MockBean
+    private PaperSlimRepository paperSlimRepoMock;
+
+    @MockBean
+    private CodeService codeServiceMock;
+
+    @MockBean
+    private CodeClassService codeClassServiceMock;
 
     @Override
     protected PaperListPage makePage() {

@@ -14,6 +14,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
+import ch.difty.sipamato.service.CodeClassService;
+import ch.difty.sipamato.service.CodeService;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.pages.AutoSaveAwarePageTest;
 import ch.difty.sipamato.web.panel.paper.PaperPanel;
@@ -26,6 +28,12 @@ public class PaperEntryPageTest extends AutoSaveAwarePageTest<PaperEntryPage> {
 
     @MockBean
     private AuthorParserFactory authorParserFactoryMock;
+
+    @MockBean
+    private CodeService codeServiceMock;
+
+    @MockBean
+    private CodeClassService codeClassServiceMock;
 
     @Mock
     private Paper persistedPaperMock;

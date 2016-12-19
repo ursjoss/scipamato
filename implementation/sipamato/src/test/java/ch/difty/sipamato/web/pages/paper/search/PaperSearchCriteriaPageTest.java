@@ -15,6 +15,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.service.CodeClassService;
+import ch.difty.sipamato.service.CodeService;
+import ch.difty.sipamato.service.PaperSlimService;
 import ch.difty.sipamato.service.SearchOrderService;
 import ch.difty.sipamato.web.pages.BasePageTest;
 import ch.difty.sipamato.web.panel.paper.SearchablePaperPanel;
@@ -25,6 +28,15 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
 
     @MockBean
     private SearchOrderService searchOrderServiceMock;
+
+    @MockBean
+    private PaperSlimService serviceMock;
+
+    @MockBean
+    private CodeService codeServiceMock;
+
+    @MockBean
+    private CodeClassService codeClassServiceMock;
 
     @Mock
     private SearchCondition searchConditionMock;
