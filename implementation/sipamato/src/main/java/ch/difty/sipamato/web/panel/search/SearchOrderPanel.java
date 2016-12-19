@@ -34,7 +34,7 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 
-    private DataTable<SearchCondition, String> searchTerms;
+    private DataTable<SearchCondition, String> searchConditions;
 
     public SearchOrderPanel(String id, IModel<SearchOrder> model) {
         super(id, model);
@@ -49,13 +49,13 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
 
     private void queueForm(final String id) {
         queue(new Form<>(id));
-        queueNewButton("addSearch", (scModel, soId) -> new PaperSearchCriteriaPage(scModel, soId), () -> Model.of(new SearchCondition()));
+        queueNewButton("addSearchCondition", (scModel, soId) -> new PaperSearchCriteriaPage(scModel, soId), () -> Model.of(new SearchCondition()));
 
         SearchConditionProvider p = new SearchConditionProvider(getModel());
-        searchTerms = new BootstrapDefaultDataTable<SearchCondition, String>("searchTerms", makeTableColumns(), p, 10);
-        searchTerms.setOutputMarkupId(true);
-        searchTerms.add(new TableBehavior().striped().hover());
-        queue(searchTerms);
+        searchConditions = new BootstrapDefaultDataTable<SearchCondition, String>("searchConditions", makeTableColumns(), p, 10);
+        searchConditions.setOutputMarkupId(true);
+        searchConditions.add(new TableBehavior().striped().hover());
+        queue(searchConditions);
     }
 
     private void queueNewButton(String id, SerializableBiFunction<IModel<SearchCondition>, Long, BasePage<SearchCondition>> pageFunction, SerializableSupplier<IModel<SearchCondition>> modelProvider) {
@@ -105,7 +105,7 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
             @Override
             protected void onClickPerformed(AjaxRequestTarget target, IModel<SearchCondition> rowModel, AjaxLink<Void> link) {
                 consumer.accept(rowModel);
-                target.add(searchTerms);
+                target.add(searchConditions);
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).withDroppedConditionId(rowModel.getObject().getSearchConditionId()));
                 info("Removed " + rowModel.getObject().getDisplayValue());
             }

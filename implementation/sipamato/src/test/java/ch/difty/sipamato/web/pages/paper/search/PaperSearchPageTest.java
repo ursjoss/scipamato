@@ -95,13 +95,13 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     @Test
-    public void clickingAddSearch_forwardsToPaperSearchCriteriaPageToLoadSearchOrder() {
+    public void clickingAddSearchCondition_forwardsToPaperSearchCriteriaPageToLoadSearchOrder() {
         PageParameters pp = new PageParameters().add(PageParameterNames.SEARCH_ORDER_ID, SEARCH_ORDER_ID);
         getTester().startPage(getPageClass(), pp);
         getTester().assertRenderedPage(getPageClass());
 
         FormTester formTester = getTester().newFormTester("searchOrderPanel:form");
-        formTester.submit("addSearch");
+        formTester.submit("addSearchCondition");
 
         getTester().assertRenderedPage(PaperSearchCriteriaPage.class);
 
@@ -109,7 +109,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     @Test
-    public void clickingRemoveButtonOnSearchTerms_removesSearchTerm() {
+    public void clickingRemoveButtonOnSearchCondition_removesSearchCondition() {
         final String labelDisplayValue = "searchConditionDisplayValue";
         final SearchCondition sc = new SearchCondition() {
             private static final long serialVersionUID = 1L;
@@ -126,7 +126,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().startPage(page);
         getTester().assertRenderedPage(getPageClass());
 
-        final String linkPath = "searchOrderPanel:form:searchTerms:body:rows:1:cells:2:cell:link";
+        final String linkPath = "searchOrderPanel:form:searchConditions:body:rows:1:cells:2:cell:link";
         getTester().assertComponent(linkPath, AjaxLink.class);
         getTester().assertContains(labelDisplayValue);
         getTester().clickLink(linkPath);

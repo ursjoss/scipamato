@@ -58,14 +58,14 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
     private void assertForm(String b) {
         getTester().assertComponent(b, Form.class);
 
-        String bb = b + ":addSearch";
+        String bb = b + ":addSearchCondition";
         getTester().assertComponent(bb, BootstrapAjaxButton.class);
-        getTester().assertModelValue(bb, "Add Search Term");
+        getTester().assertModelValue(bb, "Add Search Condition");
 
-        assertSearchTerms(b + ":searchTerms");
+        assertSearchConditions(b + ":searchConditions");
     }
 
-    private void assertSearchTerms(String b) {
+    private void assertSearchConditions(String b) {
         getTester().assertComponent(b, BootstrapDefaultDataTable.class);
         getTester().assertComponent(b + ":body", WebMarkupContainer.class);
         getTester().assertComponent(b + ":body:rows", DataGridView.class);
@@ -78,20 +78,20 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
     @Test
     public void newButtonIsEnabled_ifSearchOrderIdPresent() {
         getTester().startComponentInPage(makePanel());
-        getTester().isEnabled(PANEL_ID + ":form:addSearch");
+        getTester().isEnabled(PANEL_ID + ":form:addSearchCondition");
     }
 
     @Test
     public void newButtonIsDisabled_ifSearchOrderIdNotPresent() {
         getTester().startComponentInPage(new SearchOrderPanel(PANEL_ID, Model.of(new SearchOrder())));
-        getTester().isDisabled(PANEL_ID + ":form:addSearch");
+        getTester().isDisabled(PANEL_ID + ":form:addSearchCondition");
     }
 
     @Test
     public void clickingNewButton_forwardsTopaperSearchCriteriaPage() {
         getTester().startComponentInPage(makePanel());
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form", false);
-        formTester.submit("addSearch");
+        formTester.submit("addSearchCondition");
         getTester().assertRenderedPage(PaperSearchCriteriaPage.class);
 
         verify(codeClassServiceMock).find(anyString());
@@ -102,15 +102,15 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
     public void clickingDeleteIconLink_() {
         getTester().startComponentInPage(makePanel());
         getTester().assertContains("foo");
-        getTester().clickLink("panel:form:searchTerms:body:rows:1:cells:2:cell:link");
+        getTester().clickLink("panel:form:searchConditions:body:rows:1:cells:2:cell:link");
         getTester().assertInfoMessages("Removed foo");
-        getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:searchTerms");
+        getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:searchConditions");
     }
 
     @Test
     public void clickingLink_opensPaperSearchCriteriaPage() {
         getTester().startComponentInPage(makePanel());
-        getTester().clickLink(PANEL_ID + ":form:searchTerms:body:rows:1:cells:1:cell:link");
+        getTester().clickLink(PANEL_ID + ":form:searchConditions:body:rows:1:cells:1:cell:link");
         getTester().assertRenderedPage(PaperSearchCriteriaPage.class);
     }
 
