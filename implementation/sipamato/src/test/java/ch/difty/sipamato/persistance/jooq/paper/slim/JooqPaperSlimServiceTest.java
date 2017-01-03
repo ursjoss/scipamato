@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -21,10 +19,11 @@ import org.springframework.data.domain.Pageable;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.persistance.jooq.AbstractServiceTest;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
 @RunWith(MockitoJUnitRunner.class)
-public class JooqPaperSlimServiceTest {
+public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSlim, PaperSlimRepository> {
 
     private final JooqPaperSlimService service = new JooqPaperSlimService();
 
@@ -45,16 +44,27 @@ public class JooqPaperSlimServiceTest {
 
     private final List<PaperSlim> papers = new ArrayList<>();
 
-    @Before
-    public void setUp() {
+    @Override
+    protected PaperSlimRepository getRepo() {
+        return repoMock;
+    }
+
+    @Override
+    protected PaperSlim getEntity() {
+        return paperSlimMock;
+    }
+
+    @Override
+    public void specificSetUp() {
         service.setRepository(repoMock);
+        service.setUserRepository(userRepoMock);
 
         papers.add(paperSlimMock);
         papers.add(paperSlimMock);
     }
 
-    @After
-    public void tearDown() {
+    @Override
+    public void specificTearDown() {
         verifyNoMoreInteractions(repoMock, filterMock, searchOrderMock, pageableMock, paperSlimPageMock, paperSlimMock, paperMock);
     }
 
@@ -68,6 +78,8 @@ public class JooqPaperSlimServiceTest {
         assertThat(optPaper.get()).isEqualTo(paperSlimMock);
 
         verify(repoMock).findById(id);
+
+        verifyAudit(1);
     }
 
     @Test
@@ -89,6 +101,8 @@ public class JooqPaperSlimServiceTest {
 
         verify(repoMock).findByFilter(filterMock, pageableMock);
         verify(paperSlimPageMock).getContent();
+
+        verifyAudit(2);
     }
 
     @Test

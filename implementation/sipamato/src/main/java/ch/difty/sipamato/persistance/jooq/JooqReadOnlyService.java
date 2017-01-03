@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.IdSipamatoEntity;
 import ch.difty.sipamato.entity.SipamatoEntity;
+import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.persistance.jooq.user.UserRepository;
 import ch.difty.sipamato.service.ReadOnlyService;
@@ -55,13 +56,41 @@ public abstract class JooqReadOnlyService<ID extends Number, R extends Record, T
     /** {@inheritDoc} */
     @Override
     public Optional<T> findById(ID id) {
-        return Optional.ofNullable(repo.findById(id));
+        T entity = repo.findById(id);
+        enrichAuditNamesOf(entity);
+        return Optional.ofNullable(entity);
+    }
+
+    private void enrichAuditNamesOf(T entity) {
+        if (entity != null) {
+            entity.setCreatedByName(getNameOfUserWithId(entity.getCreatedBy()));
+            entity.setLastModifiedByName(getNameOfUserWithId(entity.getLastModifiedBy()));
+        }
+
+    }
+
+    private String getNameOfUserWithId(final Integer id) {
+        if (id != null && userRepo != null) {
+            final User u = userRepo.findById(id);
+            if (u != null) {
+                return u.getDisplayValue();
+            }
+        }
+        return null;
     }
 
     /** {@inheritDoc} */
     @Override
     public List<T> findByFilter(F filter, Pageable pageable) {
-        return repo.findByFilter(filter, pageable).getContent();
+        List<T> entities = repo.findByFilter(filter, pageable).getContent();
+        enrichAuditNamesOfAll(entities);
+        return entities;
+    }
+
+    private void enrichAuditNamesOfAll(final List<T> entities) {
+        for (final T e : entities) {
+            enrichAuditNamesOf(e);
+        }
     }
 
     /** {@inheritDoc} */

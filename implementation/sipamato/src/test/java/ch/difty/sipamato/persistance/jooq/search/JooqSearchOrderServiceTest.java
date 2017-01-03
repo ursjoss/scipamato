@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -23,9 +21,10 @@ import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.persistance.jooq.AbstractServiceTest;
 
 @RunWith(MockitoJUnitRunner.class)
-public class JooqSearchOrderServiceTest {
+public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, SearchOrder, SearchOrderRepository> {
 
     private final JooqSearchOrderService service = new JooqSearchOrderService();
 
@@ -44,16 +43,27 @@ public class JooqSearchOrderServiceTest {
 
     private final List<SearchOrder> searchorders = new ArrayList<>();
 
-    @Before
-    public void setUp() {
+    @Override
+    protected SearchOrderRepository getRepo() {
+        return repoMock;
+    }
+
+    @Override
+    protected SearchOrder getEntity() {
+        return searchOrderMock;
+    }
+
+    @Override
+    public void specificSetUp() {
         service.setRepository(repoMock);
+        service.setUserRepository(userRepoMock);
 
         searchorders.add(searchOrderMock);
         searchorders.add(searchOrderMock);
     }
 
-    @After
-    public void tearDown() {
+    @Override
+    public void specificTearDown() {
         verifyNoMoreInteractions(repoMock, filterMock, pageableMock, searchOrderPageMock, searchOrderMock, searchConditionMock);
     }
 
@@ -67,6 +77,7 @@ public class JooqSearchOrderServiceTest {
         assertThat(optSearchOrder.get()).isEqualTo(searchOrderMock);
 
         verify(repoMock).findById(id);
+        verifyAudit(1);
     }
 
     @Test
@@ -88,6 +99,7 @@ public class JooqSearchOrderServiceTest {
 
         verify(repoMock).findByFilter(filterMock, pageableMock);
         verify(searchOrderPageMock).getContent();
+        verifyAudit(2);
     }
 
     @Test
@@ -173,4 +185,5 @@ public class JooqSearchOrderServiceTest {
         service.removeSearchConditionWithId(id);
         verify(repoMock, times(1)).deleteSearchConditionWithId(id);
     }
+
 }
