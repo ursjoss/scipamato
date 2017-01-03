@@ -16,11 +16,11 @@ import ch.difty.sipamato.lib.NullArgumentException;
  *
  * @author u.joss
  *
- * @param <T> the entity type, extending {@link SipamatoEntity}
  * @param <ID> the type of the ID of entity <literal>T</literal>
+ * @param <T> the entity type, extending {@link SipamatoEntity}
  * @param <F> the filter, extending {@link SipamatoFilter}
  */
-public interface ReadOnlyService<T extends IdSipamatoEntity<ID>, ID extends Number, F extends SipamatoFilter> extends Serializable {
+public interface ReadOnlyService<ID extends Number, T extends IdSipamatoEntity<ID>, F extends SipamatoFilter> extends Serializable {
 
     /**
      * Finds an individual entity by ID. Returns it as an optional of type <literal>T</literal>
