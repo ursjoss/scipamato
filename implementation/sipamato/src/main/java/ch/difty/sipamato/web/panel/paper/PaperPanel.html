@@ -3,7 +3,7 @@
 <wicket:panel>
     <form wicket:id="form">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-12">
                         <div wicket:id="authorsLabel"></div>
@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div wicket:id="titleLabel"></div>
-                        <textarea wicket:id="title" rows="3" cols="100" class="form-control"></textarea>
+                        <textarea wicket:id="title" rows="4" cols="100" class="form-control"></textarea>
                     </div>
                 </div>
             </div>
@@ -27,42 +27,33 @@
                 <div wicket:id="firstAuthorLabel"></div>
                 <input wicket:id="firstAuthor" class="form-control"></input> <input wicket:id="firstAuthorOverridden"
                     type="checkbox"></input> <span wicket:id="firstAuthorOverriddenLabel"></span>
+
                 <div wicket:id="publicationYearLabel"></div>
                 <input wicket:id="publicationYear" class="form-control"></input>
+
                 <div wicket:id="pmIdLabel"></div>
                 <input wicket:id="pmId" class="form-control"></input>
+
                 <div wicket:id="doiLabel"></div>
                 <input wicket:id="doi" class="form-control"></input>
             </div>
-            <div class="col-md-3">
-                <div wicket:id="idLabel"></div>
-                <input wicket:id="id" class="form-control"></input>
-                <div class="row">
+            <div class="col-md-2">
+                <div class="row form-group">
                     <div class="col-md-12">
-                        <div wicket:id="createdByNameLabel" class="control-label"></div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <input wicket:id="createdByName" class="form-control"></input>
-                    </div>
-                    <div class="col-md-6">
-                        <div wicket:id="createdLabel" class="sr-only"></div>
-                        <input wicket:id="created" class="form-control"></input>
+                        <div wicket:id="idLabel"></div>
+                        <input wicket:id="id" class="form-control"></input>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div wicket:id="lastModifiedByNameLabel" class="control-label"></div>
+                        <div wicket:id="createdDisplayValueLabel"></div>
+                        <input wicket:id="createdDisplayValue" class="form-control"></input>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col-md-6">
-                        <input wicket:id="lastModifiedByName" class="form-control"></input>
-                    </div>
-                    <div class="col-md-6">
-                        <div wicket:id="lastModifiedLabel" class="sr-only"></div>
-                        <input wicket:id="lastModified" class="form-control"></input>
+                    <div class="col-md-12">
+                        <div wicket:id="modifiedDisplayValueLabel"></div>
+                        <input wicket:id="modifiedDisplayValue" class="form-control"></input>
                     </div>
                 </div>
                 <div class="row">

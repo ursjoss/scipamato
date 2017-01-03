@@ -37,8 +37,10 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
         p.setCreated(LocalDateTime.parse("2017-01-01T22:15:13.111"));
         p.setCreatedBy(10);
+        p.setCreatedByName("creator");
         p.setLastModified(LocalDateTime.parse("2017-01-10T22:15:13.111"));
         p.setLastModifiedBy(20);
+        p.setLastModifiedByName("modifier");
         p.setVersion(10);
     }
 
@@ -289,5 +291,15 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Test
     public void displayValue() {
         assertThat(p.getDisplayValue()).isEqualTo("Turner MC (2016): Title.");
+    }
+
+    @Test
+    public void createdDisplayValue() {
+        assertThat(p.getCreatedDisplayValue()).isEqualTo("creator (2017-01-01 22:15:13)");
+    }
+
+    @Test
+    public void modifiedDisplayValue() {
+        assertThat(p.getModifiedDisplayValue()).isEqualTo("modifier (2017-01-10 22:15:13)");
     }
 }

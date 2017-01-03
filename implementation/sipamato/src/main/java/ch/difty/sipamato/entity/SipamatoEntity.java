@@ -2,6 +2,7 @@ package ch.difty.sipamato.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -25,6 +26,8 @@ public abstract class SipamatoEntity implements Serializable {
     // White Space
     protected static final String RE_S = "[ \\t\\f\\r\\n]";
 
+    public static final String CREATED_DV = "createdDisplayValue";
+    public static final String MODIFIED_DV = "modifiedDisplayValue";
     public static final String CREATED = "created";
     public static final String CREATOR_ID = "createdBy";
     public static final String CREATOR_NAME = "createdByName";
@@ -105,4 +108,15 @@ public abstract class SipamatoEntity implements Serializable {
 
     public abstract String getDisplayValue();
 
+    public String getCreatedDisplayValue() {
+        return makeDisplayValue(createdByName, created);
+    }
+
+    private String makeDisplayValue(String name, LocalDateTime ldt) {
+        return new StringBuilder().append(name).append(" (").append(ldt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).append(")").toString();
+    }
+
+    public String getModifiedDisplayValue() {
+        return makeDisplayValue(lastModifiedByName, lastModified);
+    }
 }
