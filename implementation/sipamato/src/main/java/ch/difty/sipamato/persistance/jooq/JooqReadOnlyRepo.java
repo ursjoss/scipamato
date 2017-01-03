@@ -52,7 +52,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntit
      * @param mapper record mapper mapping record <literal>R</literal> into entity <literal>T</literal>
      * @param sortMapper {@link JooqSortMapper} mapping spring data sort specifications into jOOQ specific sort specs
      * @param filterConditionMapper the {@link GenericFilterConditionMapper} mapping a derivative of {@link SipamatoFilter} into jOOC {@link Condition}s
-     * @param localization {@link Localization} been providing the information about the requested localization code.
+     * @param localization {@link Localization} bean providing the information about the requested localization code.
      */
     protected JooqReadOnlyRepo(final DSLContext dsl, final M mapper, final JooqSortMapper<R, T, TI> sortMapper, GenericFilterConditionMapper<F> filterConditionMapper, Localization localization) {
         this.dsl = AssertAs.notNull(dsl, "dsl");
@@ -123,10 +123,10 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntit
 
     /**
      * Implement if associated entities need separate saving.
-     * @param entities
+     * @param entity entity of type <code>T</code> with sub entities to be enriched.
      */
-    protected void enrichAssociatedEntitiesOf(T entity) {
-    };
+    protected void enrichAssociatedEntitiesOf(final T entity) {
+    }
 
     /** {@inheritDoc} */
     @Override
