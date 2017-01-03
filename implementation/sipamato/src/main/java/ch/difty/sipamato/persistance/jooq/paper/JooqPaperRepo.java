@@ -101,7 +101,12 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
                         , CODE_CLASS.ID.as("CC_ID")
                         , DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL).as("CC_NAME")
                         , DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL).as("CC_DESCRIPTION")
-                        , CODE.SORT)
+                        , CODE.SORT
+                        , CODE.CREATED
+                        , CODE.CREATED_BY
+                        , CODE.LAST_MODIFIED
+                        , CODE.LAST_MODIFIED_BY
+                        , CODE.VERSION)
                 .from(PAPER_CODE)
                 .join(PAPER).on(PAPER_CODE.PAPER_ID.equal(PAPER.ID))
                 .join(CODE).on(PAPER_CODE.CODE.equal(CODE.CODE_))

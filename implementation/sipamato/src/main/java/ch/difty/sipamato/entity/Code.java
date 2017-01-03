@@ -1,5 +1,7 @@
 package ch.difty.sipamato.entity;
 
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -34,6 +36,11 @@ public class Code extends SipamatoEntity {
 
     public Code(final String code, final String name, final String comment, final boolean internal, final Integer codeClassId, final String codeClassName, final String codeClassDescription,
             final int sort) {
+        this(code, name, comment, internal, codeClassId, codeClassName, codeClassDescription, sort, null, null, null, null, null);
+    }
+
+    public Code(final String code, final String name, final String comment, final boolean internal, final Integer codeClassId, final String codeClassName, final String codeClassDescription,
+            final int sort, final LocalDateTime created, final Integer createdBy, final LocalDateTime lastModified, final Integer lastModifiedBy, final Integer version) {
         this.code = code;
         this.name = name;
         this.comment = comment;
@@ -43,19 +50,31 @@ public class Code extends SipamatoEntity {
         else
             this.codeClass = null;
         this.sort = sort;
+        setCreated(created);
+        setCreatedBy(createdBy);
+        setLastModified(lastModified);
+        setLastModifiedBy(lastModifiedBy);
+        setVersion(version != null ? version : 0);
     }
 
     public Code(final Code from) {
-        this(from.code, from.name, from.comment, from.internal, new CodeClass(from.codeClass), from.sort);
+        this(from.code, from.name, from.comment, from.internal, new CodeClass(from.codeClass), from.sort, from.getCreated(), from.getCreatedBy(), from.getLastModified(), from.getLastModifiedBy(),
+                from.getVersion());
     }
 
-    private Code(final String code, final String name, final String comment, final boolean internal, final CodeClass codeClass, final int sort) {
+    private Code(final String code, final String name, final String comment, final boolean internal, final CodeClass codeClass, final int sort, final LocalDateTime created, final Integer createdBy,
+            final LocalDateTime lastModified, final Integer lastModifiedBy, final Integer version) {
         this.code = code;
         this.name = name;
         this.comment = comment;
         this.internal = internal;
         this.codeClass = codeClass;
         this.sort = sort;
+        setCreated(created);
+        setCreatedBy(createdBy);
+        setLastModified(lastModified);
+        setLastModifiedBy(lastModifiedBy);
+        setVersion(version);
     }
 
     public String getCode() {

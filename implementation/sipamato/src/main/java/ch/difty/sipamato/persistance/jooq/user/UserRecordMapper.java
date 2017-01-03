@@ -23,9 +23,16 @@ public class UserRecordMapper implements RecordMapper<UserRecord, User> {
     public User map(UserRecord from) {
         AssertAs.notNull(from, "from");
 
-        User role = new User(from.getId(), from.getUserName(), from.getFirstName(), from.getLastName(), from.getEmail(), from.getPassword());
-        role.setEnabled(from.getEnabled());
-        return role;
+        User to = new User(from.getId(), from.getUserName(), from.getFirstName(), from.getLastName(), from.getEmail(), from.getPassword());
+        to.setEnabled(from.getEnabled());
+
+        to.setCreated(from.getCreated() != null ? from.getCreated().toLocalDateTime() : null);
+        to.setCreatedBy(from.getCreatedBy());
+        to.setLastModified(from.getLastModified() != null ? from.getLastModified().toLocalDateTime() : null);
+        to.setLastModifiedBy(from.getLastModifiedBy());
+        to.setVersion(from.getVersion() != null ? from.getVersion() : 1);
+
+        return to;
     }
 
 }

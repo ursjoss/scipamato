@@ -160,7 +160,8 @@ public class SearchOrderTest {
     public void testingToString_withNoConditionsOrExclusions() {
         assertThat(so.getSearchConditions()).hasSize(0);
         assertThat(so.getExcludedPaperIds()).hasSize(0);
-        assertThat(so.toString()).isEqualTo("SearchOrder[name=soName,owner=1,global=false,searchConditions=[],excludedPaperIds=[],invertExclusions=false,id=10]");
+        assertThat(so.toString()).isEqualTo(
+                "SearchOrder[name=soName,owner=1,global=false,searchConditions=[],excludedPaperIds=[],invertExclusions=false,id=10,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]");
     }
 
     @Test
@@ -169,7 +170,8 @@ public class SearchOrderTest {
         so.add(mockCondition2);
         so.addExclusionOfPaperWithId(3l);
         so.addExclusionOfPaperWithId(5l);
-        assertThat(so.toString()).isEqualTo("SearchOrder[name=soName,owner=1,global=false,searchConditions=[mockCondition1, mockCondition2],excludedPaperIds=[3, 5],invertExclusions=false,id=10]");
+        assertThat(so.toString()).isEqualTo(
+                "SearchOrder[name=soName,owner=1,global=false,searchConditions=[mockCondition1, mockCondition2],excludedPaperIds=[3, 5],invertExclusions=false,id=10,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]");
     }
 
     @Test

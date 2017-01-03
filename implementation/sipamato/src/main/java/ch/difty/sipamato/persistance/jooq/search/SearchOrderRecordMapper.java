@@ -28,6 +28,12 @@ public class SearchOrderRecordMapper implements RecordMapper<SearchOrderRecord, 
         to.setOwner(from.getOwner());
         to.setGlobal(from.getGlobal());
 
+        to.setCreated(from.getCreated() != null ? from.getCreated().toLocalDateTime() : null);
+        to.setCreatedBy(from.getCreatedBy());
+        to.setLastModified(from.getLastModified() != null ? from.getLastModified().toLocalDateTime() : null);
+        to.setLastModifiedBy(from.getLastModifiedBy());
+        to.setVersion(from.getVersion() != null ? from.getVersion() : 1);
+
         // invertExclusions is not persisted and therefore always false after mapping
         return to;
     }

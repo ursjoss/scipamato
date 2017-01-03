@@ -25,6 +25,12 @@ public class PaperSlimRecordMapper implements RecordMapper<PaperRecord, PaperSli
         to.setTitle(from.getTitle());
         to.setPublicationYear(from.getPublicationYear());
 
+        to.setCreated(from.getCreated() != null ? from.getCreated().toLocalDateTime() : null);
+        to.setCreatedBy(from.getCreatedBy());
+        to.setLastModified(from.getLastModified() != null ? from.getLastModified().toLocalDateTime() : null);
+        to.setLastModifiedBy(from.getLastModifiedBy());
+        to.setVersion(from.getVersion() != null ? from.getVersion() : 1);
+
         return to;
     }
 

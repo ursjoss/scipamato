@@ -3,6 +3,7 @@ package ch.difty.sipamato.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -11,6 +12,9 @@ import org.junit.Test;
 import ch.difty.sipamato.lib.NullArgumentException;
 
 public class PaperCodeBoxTest {
+
+    private static final LocalDateTime CREAT = LocalDateTime.parse("2017-01-01T08:00:00.123");
+    private static final LocalDateTime MOD = LocalDateTime.parse("2017-01-02T09:00:00.456");
 
     private static final Code CODE_1F = makeCode(CodeClassId.CC1, "F", 1);
     private static final Code CODE_5H = makeCode(CodeClassId.CC5, "H", 7);
@@ -21,7 +25,8 @@ public class PaperCodeBoxTest {
     private static Code makeCode(CodeClassId codeClassId, String codePart2, int sort) {
         int ccId = codeClassId.getId();
         String code = ccId + codePart2;
-        return new Code(code, "Code " + code, null, false, ccId, codeClassId.name(), "", sort);
+
+        return new Code(code, "Code " + code, null, false, ccId, codeClassId.name(), "", sort, CREAT, 1, MOD, 2, 3);
     }
 
     @Test
@@ -158,11 +163,11 @@ public class PaperCodeBoxTest {
          // @formatter:off
               "["
             +   "codesOfClass1=["
-            +     "Code[code=1F,name=Code 1F,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1]"
+            +     "Code[code=1F,name=Code 1F,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,created=2017-01-01T08:00:00.123,createdBy=1,lastModified=2017-01-02T09:00:00.456,lastModifiedBy=2,version=3]"
             +   "]"
             +  ",codesOfClass5=["
-            +     "Code[code=5H,name=Code 5H,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=7]"
-            +   ", Code[code=5F,name=Code 5F,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=5]"
+            +     "Code[code=5H,name=Code 5H,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=7,created=2017-01-01T08:00:00.123,createdBy=1,lastModified=2017-01-02T09:00:00.456,lastModifiedBy=2,version=3]"
+            +   ", Code[code=5F,name=Code 5F,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=5,created=2017-01-01T08:00:00.123,createdBy=1,lastModified=2017-01-02T09:00:00.456,lastModifiedBy=2,version=3]"
             +   "]"
             + "]"
          // @formatter:on

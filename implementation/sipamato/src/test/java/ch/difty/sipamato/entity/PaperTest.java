@@ -3,6 +3,7 @@ package ch.difty.sipamato.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import javax.validation.ConstraintViolation;
@@ -33,6 +34,12 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         p.setLocation(NON_NULL_STRING);
         p.setPublicationYear(2016);
         p.setGoals(NON_NULL_STRING);
+
+        p.setCreated(LocalDateTime.parse("2017-01-01T22:15:13.111"));
+        p.setCreatedBy(10);
+        p.setLastModified(LocalDateTime.parse("2017-01-10T22:15:13.111"));
+        p.setLastModifiedBy(20);
+        p.setVersion(10);
     }
 
     private void verifySuccessfulValidation() {
@@ -200,7 +207,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
             + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
             + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
             + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,comment=<null>,intern=<null>"
-            + ",mainCodeOfCodeclass1=<null>,codes=[],id=1]");
+            + ",mainCodeOfCodeclass1=<null>,codes=[],id=1,created=2017-01-01T22:15:13.111,createdBy=10,lastModified=2017-01-10T22:15:13.111,lastModifiedBy=20,version=10]");
      // @formatter:on
     }
 
@@ -217,7 +224,10 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
             + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
             + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
             + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,comment=<null>,intern=<null>"
-            + ",mainCodeOfCodeclass1=1D,codes=[codesOfClass1=[Code[code=1D,name=code 1D,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1]],codesOfClass1=[Code[code=1E,name=code 1E,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1]],codesOfClass5=[Code[code=5A,name=code 5A,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=1]]],id=1]");
+            + ",mainCodeOfCodeclass1=1D,codes=[codesOfClass1=[Code[code=1D,name=code 1D,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]]"
+            + ",codesOfClass1=[Code[code=1E,name=code 1E,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]]"
+            + ",codesOfClass5=[Code[code=5A,name=code 5A,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=1,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]]]"
+            + ",id=1,created=2017-01-01T22:15:13.111,createdBy=10,lastModified=2017-01-10T22:15:13.111,lastModifiedBy=20,version=10]");
         // @formatter:on
     }
 

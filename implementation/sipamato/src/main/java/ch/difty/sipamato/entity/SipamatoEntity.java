@@ -1,6 +1,7 @@
 package ch.difty.sipamato.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -23,6 +24,71 @@ public abstract class SipamatoEntity implements Serializable {
     protected static final String RE_WW2 = "[." + RE_W + "-']+";
     // White Space
     protected static final String RE_S = "[ \\t\\f\\r\\n]";
+
+    private LocalDateTime created;
+    private Integer createdBy;
+    private LocalDateTime lastModified;
+    private Integer lastModifiedBy;
+    private int version;
+
+    private transient String createdByName;
+    private transient String lastModifiedByName;
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public LocalDateTime getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(LocalDateTime lastModified) {
+        this.lastModified = lastModified;
+    }
+
+    public Integer getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(Integer lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public String getCreatedByName() {
+        return createdByName;
+    }
+
+    public void setCreatedByName(String createdByName) {
+        this.createdByName = createdByName;
+    }
+
+    public String getLastModifiedByName() {
+        return lastModifiedByName;
+    }
+
+    public void setLastModifiedByName(String lastModifiedByName) {
+        this.lastModifiedByName = lastModifiedByName;
+    }
 
     @Override
     public String toString() {
