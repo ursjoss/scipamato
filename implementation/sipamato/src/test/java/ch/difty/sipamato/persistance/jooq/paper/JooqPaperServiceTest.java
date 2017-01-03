@@ -112,6 +112,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         assertThat(service.saveOrUpdate(paperMock)).isEqualTo(paperMock);
         verify(repoMock).add(paperMock);
         verify(paperMock).getId();
+        verifyAudit(1);
     }
 
     @Test
@@ -121,6 +122,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         assertThat(service.saveOrUpdate(paperMock)).isEqualTo(paperMock);
         verify(repoMock).update(paperMock);
         verify(paperMock).getId();
+        verifyAudit(1);
     }
 
     @Test

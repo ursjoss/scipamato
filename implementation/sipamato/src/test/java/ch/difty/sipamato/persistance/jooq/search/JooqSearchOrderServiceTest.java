@@ -116,6 +116,7 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
         assertThat(service.saveOrUpdate(searchOrderMock)).isEqualTo(searchOrderMock);
         verify(repoMock).add(searchOrderMock);
         verify(searchOrderMock).getId();
+        verifyAudit(1);
     }
 
     @Test
@@ -125,6 +126,7 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
         assertThat(service.saveOrUpdate(searchOrderMock)).isEqualTo(searchOrderMock);
         verify(repoMock).update(searchOrderMock);
         verify(searchOrderMock).getId();
+        verifyAudit(1);
     }
 
     @Test

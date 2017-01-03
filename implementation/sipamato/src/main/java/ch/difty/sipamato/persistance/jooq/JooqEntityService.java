@@ -29,9 +29,13 @@ public abstract class JooqEntityService<ID extends Number, R extends Record, T e
     @Override
     public T saveOrUpdate(T entity) {
         if (entity.getId() == null) {
-            return getRepository().add(entity);
+            T added = getRepository().add(entity);
+            enrichAuditNamesOf(added);
+            return added;
         } else {
-            return getRepository().update(entity);
+            T updated = getRepository().update(entity);
+            enrichAuditNamesOf(updated);
+            return updated;
         }
     }
 

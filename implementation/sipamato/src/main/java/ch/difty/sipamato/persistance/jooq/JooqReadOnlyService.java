@@ -61,7 +61,7 @@ public abstract class JooqReadOnlyService<ID extends Number, R extends Record, T
         return Optional.ofNullable(entity);
     }
 
-    private void enrichAuditNamesOf(T entity) {
+    protected void enrichAuditNamesOf(T entity) {
         if (entity != null) {
             entity.setCreatedByName(getNameOfUserWithId(entity.getCreatedBy()));
             entity.setLastModifiedByName(getNameOfUserWithId(entity.getLastModifiedBy()));
