@@ -1,14 +1,11 @@
 package ch.difty.sipamato.persistance.jooq.search;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import ch.difty.sipamato.db.tables.records.SearchOrderRecord;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.persistance.jooq.JooqEntityService;
 import ch.difty.sipamato.service.SearchOrderService;
 
 /**
@@ -17,60 +14,17 @@ import ch.difty.sipamato.service.SearchOrderService;
  * @author u.joss
  */
 @Service
-public class JooqSearchOrderService implements SearchOrderService {
+public class JooqSearchOrderService extends JooqEntityService<Long, SearchOrderRecord, SearchOrder, SearchOrderFilter, SearchOrderRecordMapper, SearchOrderRepository> implements SearchOrderService {
 
     private static final long serialVersionUID = 1L;
-
-    private SearchOrderRepository repo;
-
-    @Autowired
-    public void setRepository(SearchOrderRepository repo) {
-        this.repo = repo;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Optional<SearchOrder> findById(Long id) {
-        return Optional.ofNullable(repo.findById(id));
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public List<SearchOrder> findByFilter(SearchOrderFilter filter, Pageable pageable) {
-        return repo.findByFilter(filter, pageable).getContent();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public int countByFilter(SearchOrderFilter filter) {
-        return repo.countByFilter(filter);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public SearchOrder saveOrUpdate(SearchOrder searchOrder) {
-        if (searchOrder.getId() == null) {
-            return repo.add(searchOrder);
-        } else {
-            return repo.update(searchOrder);
-        }
-    }
 
     /** {@inheritDoc} */
     @Override
     public SearchCondition saveOrUpdateSearchCondition(SearchCondition searchCondition, long searchOrderId) {
         if (searchCondition.getSearchConditionId() == null) {
-            return repo.addSearchCondition(searchCondition, searchOrderId);
+            return getRepository().addSearchCondition(searchCondition, searchOrderId);
         } else {
-            return repo.updateSearchCondition(searchCondition, searchOrderId);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void remove(SearchOrder entity) {
-        if (entity != null && entity.getId() != null) {
-            repo.delete(entity.getId());
+            return getRepository().updateSearchCondition(searchCondition, searchOrderId);
         }
     }
 
@@ -78,7 +32,7 @@ public class JooqSearchOrderService implements SearchOrderService {
     @Override
     public void removeSearchConditionWithId(Long searchConditionId) {
         if (searchConditionId != null) {
-            repo.deleteSearchConditionWithId(searchConditionId);
+            getRepository().deleteSearchConditionWithId(searchConditionId);
         }
 
     }
