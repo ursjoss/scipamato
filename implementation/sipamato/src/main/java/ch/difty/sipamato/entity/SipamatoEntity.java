@@ -25,6 +25,14 @@ public abstract class SipamatoEntity implements Serializable {
     // White Space
     protected static final String RE_S = "[ \\t\\f\\r\\n]";
 
+    public static final String CREATED = "created";
+    public static final String CREATOR_ID = "createdBy";
+    public static final String CREATOR_NAME = "createdByName";
+    public static final String MODIFIED = "lastModified";
+    public static final String MODIFIER_ID = "lastModifiedBy";
+    public static final String MODIFIER_NAME = "lastModifiedByName";
+    public static final String VERSION = "version";
+
     private LocalDateTime created;
     private Integer createdBy;
     private LocalDateTime lastModified;
