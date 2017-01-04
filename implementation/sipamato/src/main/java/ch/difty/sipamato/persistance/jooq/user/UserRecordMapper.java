@@ -1,12 +1,12 @@
 package ch.difty.sipamato.persistance.jooq.user;
 
-import org.jooq.RecordMapper;
 import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.auth.Role;
 import ch.difty.sipamato.db.tables.records.UserRecord;
 import ch.difty.sipamato.entity.User;
-import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.persistance.jooq.AuditFields;
+import ch.difty.sipamato.persistance.jooq.EntityRecordMapper;
 
 /**
  * Record mapper mapping {@link UserRecord} into entity {@link User}.<p/>
@@ -16,23 +16,27 @@ import ch.difty.sipamato.lib.AssertAs;
  * @author u.joss
  */
 @Component
-public class UserRecordMapper implements RecordMapper<UserRecord, User> {
+public class UserRecordMapper extends EntityRecordMapper<UserRecord, User> {
 
-    /** {@inheritDoc} */
     @Override
-    public User map(UserRecord from) {
-        AssertAs.notNull(from, "from");
+    protected User makeEntity() {
+        return new User();
+    }
 
-        User to = new User(from.getId(), from.getUserName(), from.getFirstName(), from.getLastName(), from.getEmail(), from.getPassword());
+    @Override
+    protected AuditFields getAuditFieldsOf(UserRecord r) {
+        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion());
+    }
+
+    @Override
+    protected void mapFields(UserRecord from, User to) {
+        to.setId(from.getId());
+        to.setUserName(from.getUserName());
+        to.setFirstName(from.getFirstName());
+        to.setLastName(from.getLastName());
+        to.setEmail(from.getEmail());
         to.setEnabled(from.getEnabled());
-
-        to.setCreated(from.getCreated() != null ? from.getCreated().toLocalDateTime() : null);
-        to.setCreatedBy(from.getCreatedBy());
-        to.setLastModified(from.getLastModified() != null ? from.getLastModified().toLocalDateTime() : null);
-        to.setLastModifiedBy(from.getLastModifiedBy());
-        to.setVersion(from.getVersion() != null ? from.getVersion() : 1);
-
-        return to;
+        to.setPassword(from.getPassword());
     }
 
 }

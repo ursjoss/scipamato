@@ -248,6 +248,16 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
             protected SearchCondition fetchSearchConditionWithId(Long scId) {
                 return new SearchCondition(scId);
             }
+
+            @Override
+            protected List<Long> findConditionIdsWithSearchTerms(Long searchOrderId) {
+                return new ArrayList<Long>();
+            }
+
+            @Override
+            protected List<SearchCondition> findTermLessConditions(Long searchOrderId, List<Long> conditionIdsWithSearchTerms) {
+                return new ArrayList<SearchCondition>();
+            }
         };
     }
 

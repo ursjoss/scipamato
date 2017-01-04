@@ -1,6 +1,8 @@
 package ch.difty.sipamato.persistance.jooq.user;
 
 import static ch.difty.sipamato.db.tables.User.USER;
+import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.CREATED_BY;
+import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.LAST_MOD_BY;
 import static ch.difty.sipamato.persistance.jooq.user.UserRecordMapperTest.EMAIL;
 import static ch.difty.sipamato.persistance.jooq.user.UserRecordMapperTest.ENABLED;
 import static ch.difty.sipamato.persistance.jooq.user.UserRecordMapperTest.FIRST_NAME;
@@ -53,7 +55,7 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<UserRec
     }
 
     @Override
-    protected void stepSetFixture() {
+    protected void stepSetFixtureExceptAudit() {
         when(getStep().set(USER.USER_NAME, USER_NAME)).thenReturn(getMoreStep());
 
         when(getMoreStep().set(USER.FIRST_NAME, FIRST_NAME)).thenReturn(getMoreStep());
@@ -64,7 +66,13 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<UserRec
     }
 
     @Override
-    protected void verifyCallToAllNonKeyFields() {
+    protected void setStepFixtureAudit() {
+        when(getMoreStep().set(USER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
+        when(getMoreStep().set(USER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
+    }
+
+    @Override
+    protected void verifyCallToFieldsExceptKeyAndAudit() {
         verify(entityMock).getUserName();
         verify(entityMock).getFirstName();
         verify(entityMock).getLastName();
@@ -74,7 +82,7 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<UserRec
     }
 
     @Override
-    protected void verifySetting() {
+    protected void verifySettingFieldsExceptKeyAndAudit() {
         verify(getStep()).set(USER.USER_NAME, USER_NAME);
 
         verify(getMoreStep()).set(USER.FIRST_NAME, FIRST_NAME);
@@ -82,6 +90,12 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<UserRec
         verify(getMoreStep()).set(USER.EMAIL, EMAIL);
         verify(getMoreStep()).set(USER.PASSWORD, PASSWORD);
         verify(getMoreStep()).set(USER.ENABLED, ENABLED);
+    }
+
+    @Override
+    protected void verifySettingAuditFields() {
+        verify(getMoreStep()).set(USER.CREATED_BY, CREATED_BY);
+        verify(getMoreStep()).set(USER.LAST_MODIFIED_BY, LAST_MOD_BY);
     }
 
     @Test

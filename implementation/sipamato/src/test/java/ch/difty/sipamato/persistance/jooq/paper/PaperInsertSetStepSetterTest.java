@@ -1,6 +1,8 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
+import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.CREATED_BY;
+import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.LAST_MOD_BY;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.AUTHORS;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.COMMENT;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.DOI;
@@ -73,7 +75,7 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
     }
 
     @Override
-    protected void stepSetFixture() {
+    protected void stepSetFixtureExceptAudit() {
         when(getStep().set(PAPER.PM_ID, PM_ID)).thenReturn(getMoreStep());
 
         when(getMoreStep().set(PAPER.DOI, DOI)).thenReturn(getMoreStep());
@@ -109,7 +111,13 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
     }
 
     @Override
-    protected void verifyCallToAllNonKeyFields() {
+    protected void setStepFixtureAudit() {
+        when(getMoreStep().set(PAPER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
+        when(getMoreStep().set(PAPER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
+    }
+
+    @Override
+    protected void verifyCallToFieldsExceptKeyAndAudit() {
         verify(entityMock).getPmId();
         verify(entityMock).getDoi();
         verify(entityMock).getAuthors();
@@ -144,7 +152,7 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
     }
 
     @Override
-    protected void verifySetting() {
+    protected void verifySettingFieldsExceptKeyAndAudit() {
         verify(getStep()).set(PAPER.PM_ID, PM_ID);
 
         verify(getMoreStep()).set(PAPER.DOI, DOI);
@@ -179,6 +187,12 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
         verify(getMoreStep()).set(PAPER.MAIN_CODE_OF_CODECLASS1, MAIN_CODE_OF_CODECLASS1);
     }
 
+    @Override
+    protected void verifySettingAuditFields() {
+        verify(getMoreStep()).set(PAPER.CREATED_BY, CREATED_BY);
+        verify(getMoreStep()).set(PAPER.LAST_MODIFIED_BY, LAST_MOD_BY);
+    }
+
     @Test
     public void consideringSettingKeyOf_withNullId_doesNotSetId() {
         when(getEntity().getId()).thenReturn(null);
@@ -209,4 +223,5 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
         verify(recordMock).getId();
         verify(entityMock).setId(Mockito.anyLong());
     }
+
 }

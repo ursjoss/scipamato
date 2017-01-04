@@ -60,7 +60,10 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
             .set(PAPER.RESULT_EXPOSURE_RANGE, e.getResultExposureRange())
             .set(PAPER.RESULT_EFFECT_ESTIMATE, e.getResultEffectEstimate())
 
-            .set(PAPER.MAIN_CODE_OF_CODECLASS1, e.getMainCodeOfCodeclass1());
+            .set(PAPER.MAIN_CODE_OF_CODECLASS1, e.getMainCodeOfCodeclass1())
+
+            .set(PAPER.CREATED_BY, e.getCreatedBy())
+            .set(PAPER.LAST_MODIFIED_BY, e.getLastModifiedBy());
         // @formatter:on
     }
 

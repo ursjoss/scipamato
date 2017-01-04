@@ -1,12 +1,12 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
-import org.jooq.RecordMapper;
 import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.persistance.jooq.AuditFields;
+import ch.difty.sipamato.persistance.jooq.EntityRecordMapper;
 
 /**
  * Mapper mapping {@link PaperRecord}s into entity {@link Paper}.<p/>
@@ -16,13 +16,20 @@ import ch.difty.sipamato.lib.AssertAs;
  * @author u.joss
  */
 @Component
-public class PaperRecordMapper implements RecordMapper<PaperRecord, Paper> {
+public class PaperRecordMapper extends EntityRecordMapper<PaperRecord, Paper> {
 
-    /** {@inheritDoc} */
     @Override
-    public Paper map(PaperRecord from) {
-        AssertAs.notNull(from, "from");
-        Paper to = new Paper();
+    protected Paper makeEntity() {
+        return new Paper();
+    }
+
+    @Override
+    protected AuditFields getAuditFieldsOf(PaperRecord r) {
+        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion());
+    }
+
+    @Override
+    protected void mapFields(PaperRecord from, Paper to) {
         to.setId(from.getId());
         to.setPmId(from.getPmId());
         to.setDoi(from.getDoi());
@@ -55,14 +62,6 @@ public class PaperRecordMapper implements RecordMapper<PaperRecord, Paper> {
         to.setResultEffectEstimate(from.getResultEffectEstimate());
 
         to.setMainCodeOfCodeclass1(from.getMainCodeOfCodeclass1());
-
-        to.setCreated(from.getCreated() != null ? from.getCreated().toLocalDateTime() : null);
-        to.setCreatedBy(from.getCreatedBy());
-        to.setLastModified(from.getLastModified() != null ? from.getLastModified().toLocalDateTime() : null);
-        to.setLastModifiedBy(from.getLastModifiedBy());
-        to.setVersion(from.getVersion() != null ? from.getVersion() : 1);
-
-        return to;
     }
 
 }

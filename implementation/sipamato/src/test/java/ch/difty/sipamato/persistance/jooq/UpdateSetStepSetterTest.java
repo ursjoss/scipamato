@@ -2,6 +2,7 @@ package ch.difty.sipamato.persistance.jooq;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.jooq.Record;
@@ -40,12 +41,40 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends Sipama
     @Before
     public void setUp() {
         entityFixture();
-        stepSetFixture();
+        stepSetFixtureExceptAudit();
+        stepSetFixtureAudit();
     }
 
+    /**
+     * set up the test fixture fot the entity mock, including audit fields.
+     */
     protected abstract void entityFixture();
 
-    protected abstract void stepSetFixture();
+    /**
+     * fixture for stepSet, starting with <code>getStep()</code>, following up with <code>getMoreStep()</code>, e.g.
+     *
+     * <code><pre>
+     * when(getStep().set(PAPER.PM_ID, PM_ID)).thenReturn(getMoreStep());
+     *
+     * when(getMoreStep().set(PAPER.DOI, DOI)).thenReturn(getMoreStep());
+     * when(getMoreStep().set(PAPER.AUTHORS, AUTHORS)).thenReturn(getMoreStep());
+     * ...
+     * </pre></code>
+     */
+    protected abstract void stepSetFixtureExceptAudit();
+
+    /**
+     * fixture for stepSet for audit fields, starting with getMoreStep(), e.g.
+     *
+     * <code><pre>
+     * when(getMoreStep().set(PAPER.CREATED, CREATED)).thenReturn(getMoreStep());
+     * when(getMoreStep().set(PAPER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
+     * when(getMoreStep().set(PAPER.LAST_MODIFIED, LAST_MOD)).thenReturn(getMoreStep());
+     * when(getMoreStep().set(PAPER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
+     * when(getMoreStep().set(PAPER.VERSION, VERSION + 1)).thenReturn(getMoreStep());
+     * </pre></code>
+     */
+    protected abstract void stepSetFixtureAudit();
 
     @After
     public void tearDown() {
@@ -85,12 +114,34 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends Sipama
     public void settingNonKeyFields() {
         getSetter().setFieldsFor(stepMock, getEntity());
 
-        verifyCallToAllFields();
-        verifySetting();
+        verifyCallToAllFieldsExceptAudit();
+        verifyCallToAuditFields();
+        verifyStepSettingExceptAudit();
+        verifyStepSettingAudit();
     }
 
-    protected abstract void verifyCallToAllFields();
+    /**
+     * Verify the calls to all fields of the entity except the audit fields.
+     */
+    protected abstract void verifyCallToAllFieldsExceptAudit();
 
-    protected abstract void verifySetting();
+    private void verifyCallToAuditFields() {
+        E entityMock = getEntity();
+        verify(entityMock).getCreated();
+        verify(entityMock).getCreatedBy();
+        verify(entityMock).getLastModified();
+        verify(entityMock).getLastModifiedBy();
+        verify(entityMock).getVersion();
+    }
+
+    /**
+     * Verify the stepSetting has been called on all fields except the audit fields
+     */
+    protected abstract void verifyStepSettingExceptAudit();
+
+    /**
+     * Verify the stepSetting has been called on the audit fields.
+     */
+    protected abstract void verifyStepSettingAudit();
 
 }

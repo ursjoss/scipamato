@@ -31,6 +31,8 @@ public class UserRecordMapperTest extends RecordMapperTest<UserRecord, User> {
         when(entityMock.getEmail()).thenReturn(EMAIL);
         when(entityMock.getPassword()).thenReturn(PASSWORD);
         when(entityMock.isEnabled()).thenReturn(ENABLED);
+
+        auditFixtureFor(entityMock);
     }
 
     @Override
@@ -41,6 +43,10 @@ public class UserRecordMapperTest extends RecordMapperTest<UserRecord, User> {
     @Override
     protected UserRecord makeRecord() {
         return new UserRecord(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, VERSION, CREATED, CREATED_BY, LAST_MOD, LAST_MOD_BY);
+    }
+
+    @Override
+    protected void setAuditFieldsIn(UserRecord record) {
     }
 
     @Override

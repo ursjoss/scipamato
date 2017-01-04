@@ -71,6 +71,8 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
         when(entityMock.getResultEffectEstimate()).thenReturn(RESULT_EFFECT_ESTIMATE);
 
         when(entityMock.getMainCodeOfCodeclass1()).thenReturn(MAIN_CODE_OF_CODECLASS1);
+
+        auditFixtureFor(entityMock);
     }
 
     @Override
@@ -114,12 +116,16 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
 
         record.setMainCodeOfCodeclass1(MAIN_CODE_OF_CODECLASS1);
 
-        record.setVersion(VERSION);
-        record.setCreated(CREATED);
-        record.setCreatedBy(CREATED_BY);
-        record.setLastModified(LAST_MOD);
-        record.setLastModifiedBy(LAST_MOD_BY);
         return record;
+    }
+
+    @Override
+    protected void setAuditFieldsIn(PaperRecord r) {
+        r.setCreated(CREATED);
+        r.setCreatedBy(CREATED_BY);
+        r.setLastModified(LAST_MOD);
+        r.setLastModifiedBy(LAST_MOD_BY);
+        r.setVersion(VERSION);
     }
 
     @Override

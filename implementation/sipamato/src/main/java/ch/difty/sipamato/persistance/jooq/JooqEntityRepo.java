@@ -96,6 +96,9 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
     public T add(final T entity) {
         AssertAs.notNull(entity, "entity");
 
+        entity.setCreatedBy(getUserId());
+        entity.setLastModifiedBy(getUserId());
+
         InsertSetMoreStep<R> step = insertSetStepSetter.setNonKeyFieldsFor(getDsl().insertInto(getTable()), entity);
         insertSetStepSetter.considerSettingKeyOf(step, entity);
 
@@ -152,6 +155,9 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
     public T update(final T entity) {
         AssertAs.notNull(entity, "entity");
         ID id = AssertAs.notNull(getIdFrom(entity), "entity.id");
+
+        entity.setLastModified(now());
+        entity.setLastModifiedBy(getUserId());
 
         R updated = updateSetStepSetter.setFieldsFor(getDsl().update(getTable()), entity).where(getTableId().equal(id)).returning().fetchOne();
         updateAssociatedEntities(entity);

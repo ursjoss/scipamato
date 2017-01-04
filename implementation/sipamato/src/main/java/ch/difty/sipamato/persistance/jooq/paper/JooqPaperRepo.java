@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
-import org.jooq.InsertValuesStep2;
+import org.jooq.InsertValuesStep4;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
@@ -134,10 +134,12 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     }
 
     private void storeNewCodesOf(Paper paper) {
-        InsertValuesStep2<PaperCodeRecord, Long, String> step = getDsl().insertInto(PAPER_CODE, PAPER_CODE.PAPER_ID, PAPER_CODE.CODE);
+        InsertValuesStep4<PaperCodeRecord, Long, String, Integer, Integer> step = getDsl().insertInto(PAPER_CODE, PAPER_CODE.PAPER_ID, PAPER_CODE.CODE, PAPER_CODE.CREATED_BY,
+                PAPER_CODE.LAST_MODIFIED_BY);
         final Long paperId = paper.getId();
+        final Integer userId = getUserId();
         for (final Code c : paper.getCodes()) {
-            step = step.values(paperId, c.getCode());
+            step = step.values(paperId, c.getCode(), userId, userId);
         }
         step.onDuplicateKeyIgnore().execute();
     }
