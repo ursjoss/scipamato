@@ -285,8 +285,8 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         }
     }
 
-    private void updateSearchTerm(SearchTerm<?> st, Long searchConditionId) {
-        final Condition idMatches = SEARCH_TERM.ID.eq(st.getId());
+    private void updateSearchTerm(final SearchTerm<?> st, final Long searchTermId, final Long searchConditionId) {
+        final Condition idMatches = SEARCH_TERM.ID.eq(searchTermId);
         getDsl().update(SEARCH_TERM)
                 .set(row(SEARCH_TERM.SEARCH_CONDITION_ID, SEARCH_TERM.SEARCH_TERM_TYPE, SEARCH_TERM.FIELD_NAME, SEARCH_TERM.RAW_VALUE, SEARCH_TERM.LAST_MODIFIED, SEARCH_TERM.LAST_MODIFIED_BY,
                         SEARCH_TERM.VERSION),
@@ -418,32 +418,50 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
                 SEARCH_TERM.SEARCH_TERM_TYPE, SEARCH_TERM.FIELD_NAME, SEARCH_TERM.RAW_VALUE, SEARCH_TERM.CREATED_BY, SEARCH_TERM.LAST_MODIFIED_BY);
         final Integer userId = getUserId();
         boolean hasPendingInsert = false;
-        for (BooleanSearchTerm bst : searchCondition.getBooleanSearchTerms()) {
-            if (bst.getId() == null) {
-                insertStep = insertStep.values(searchConditionId, bst.getSearchTermType().getId(), bst.getFieldName(), bst.getRawSearchTerm(), userId, userId);
-                hasPendingInsert = true;
+        for (final BooleanSearchTerm bst : searchCondition.getBooleanSearchTerms()) {
+            final int typeId = bst.getSearchTermType().getId();
+            final String fieldName = bst.getFieldName();
+            final BooleanSearchTerm pbst = (BooleanSearchTerm) getPersistedTerm(searchConditionId, fieldName, BooleanSearchTerm.class, typeId);
+            if (pbst != null) {
+                updateSearchTerm(bst, pbst.getId(), searchConditionId);
             } else {
-                updateSearchTerm(bst, searchConditionId);
+                insertStep = insertStep.values(searchConditionId, typeId, fieldName, bst.getRawSearchTerm(), userId, userId);
+                hasPendingInsert = true;
             }
         }
-        for (IntegerSearchTerm ist : searchCondition.getIntegerSearchTerms()) {
-            if (ist.getId() == null) {
-                insertStep = insertStep.values(searchConditionId, ist.getSearchTermType().getId(), ist.getFieldName(), ist.getRawSearchTerm(), userId, userId);
-                hasPendingInsert = true;
+        for (final IntegerSearchTerm ist : searchCondition.getIntegerSearchTerms()) {
+            final int typeId = ist.getSearchTermType().getId();
+            final String fieldName = ist.getFieldName();
+            final IntegerSearchTerm pist = (IntegerSearchTerm) getPersistedTerm(searchConditionId, fieldName, BooleanSearchTerm.class, typeId);
+            if (pist != null) {
+                updateSearchTerm(ist, pist.getId(), searchConditionId);
             } else {
-                updateSearchTerm(ist, searchConditionId);
+                insertStep = insertStep.values(searchConditionId, typeId, fieldName, ist.getRawSearchTerm(), userId, userId);
+                hasPendingInsert = true;
             }
         }
-        for (StringSearchTerm sst : searchCondition.getStringSearchTerms()) {
-            if (sst.getId() == null) {
-                insertStep = insertStep.values(searchConditionId, sst.getSearchTermType().getId(), sst.getFieldName(), sst.getRawSearchTerm(), userId, userId);
-                hasPendingInsert = true;
+        for (final StringSearchTerm sst : searchCondition.getStringSearchTerms()) {
+            final int typeId = sst.getSearchTermType().getId();
+            final String fieldName = sst.getFieldName();
+            final StringSearchTerm pist = (StringSearchTerm) getPersistedTerm(searchConditionId, fieldName, BooleanSearchTerm.class, typeId);
+            if (pist != null) {
+                updateSearchTerm(sst, pist.getId(), searchConditionId);
             } else {
-                updateSearchTerm(sst, searchConditionId);
+                insertStep = insertStep.values(searchConditionId, typeId, fieldName, sst.getRawSearchTerm(), userId, userId);
+                hasPendingInsert = true;
             }
         }
         if (hasPendingInsert)
             insertStep.execute();
+    }
+
+    private SearchTerm<?> getPersistedTerm(final Long searchConditionId, final String fieldName, final Class<BooleanSearchTerm> termClass, final int typeId) {
+        return getDsl().select(SEARCH_TERM.ID, SEARCH_TERM.SEARCH_CONDITION_ID, SEARCH_TERM.FIELD_NAME, SEARCH_TERM.RAW_VALUE)
+                .from(SEARCH_TERM)
+                .where(SEARCH_TERM.SEARCH_CONDITION_ID.eq(searchConditionId))
+                .and(SEARCH_TERM.SEARCH_TERM_TYPE.eq(typeId))
+                .and(SEARCH_TERM.FIELD_NAME.eq(fieldName))
+                .fetchOneInto(termClass);
     }
 
     private void removeObsoleteSearchTerms(SearchCondition searchCondition, Long searchConditionId) {
