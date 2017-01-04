@@ -2,6 +2,7 @@ package ch.difty.sipamato.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -266,4 +267,29 @@ public class SearchOrderTest {
         assertThat(so.getSearchConditions()).hasSize(1);
     }
 
+    @Test
+    public void createdDisplayValue_withNullValues_isEmpty() {
+        assertThat(so.getCreatedDisplayValue()).isEqualTo("");
+    }
+
+    @Test
+    public void createdDisplayValue_withNameOnly_hasName() {
+        so.setCreatedByName("foo");
+        assertThat(so.getCreated()).isNull();
+        assertThat(so.getCreatedDisplayValue()).isEqualTo("foo");
+    }
+
+    @Test
+    public void createdDisplayValue_withDateOnly_hasDate() {
+        assertThat(so.getCreatedByName()).isNull();
+        so.setCreated(LocalDateTime.parse("2017-01-01T10:11:12.345"));
+        assertThat(so.getCreatedDisplayValue()).isEqualTo("2017-01-01 10:11:12");
+    }
+
+    @Test
+    public void createdDisplayValue() {
+        so.setCreatedByName("foo");
+        so.setCreated(LocalDateTime.parse("2017-01-01T10:11:12.345"));
+        assertThat(so.getCreatedDisplayValue()).isEqualTo("foo (2017-01-01 10:11:12)");
+    }
 }

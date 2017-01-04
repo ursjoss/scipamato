@@ -1,5 +1,8 @@
 package ch.difty.sipamato.persistance.jooq;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.InsertSetMoreStep;
@@ -11,6 +14,7 @@ import org.jooq.UpdateSetStep;
 import org.jooq.impl.TableImpl;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -178,6 +182,33 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
      * @return the current {@link User}
      */
     protected User getActiveUser() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            return (User) auth.getPrincipal();
+        } else {
+            return User.NO_USER;
+        }
     }
+
+    /**
+     * @return the id of the currently active {@link User}
+     */
+    protected Integer getUserId() {
+        return getActiveUser().getId();
+    }
+
+    /**
+     * @return the current date as {@link Timestamp}
+     */
+    protected Timestamp getTs() {
+        return getDateTimeService().getCurrentTimestamp();
+    }
+
+    /**
+     * @return the current date as {@link Timestamp}
+     */
+    protected LocalDateTime now() {
+        return getDateTimeService().getCurrentDateTime();
+    }
+
 }

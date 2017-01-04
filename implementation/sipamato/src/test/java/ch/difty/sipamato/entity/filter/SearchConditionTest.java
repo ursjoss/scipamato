@@ -45,6 +45,8 @@ public class SearchConditionTest {
         assertThat(sc.getStringSearchTerms()).hasSize(24);
         assertThat(sc.getIntegerSearchTerms()).isEmpty();
         assertThat(sc.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc.getCreatedDisplayValue()).isNull();
+        assertThat(sc.getModifiedDisplayValue()).isNull();
 
         assertThat(sc.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
     }
@@ -56,6 +58,8 @@ public class SearchConditionTest {
         assertThat(sc.getStringSearchTerms()).isEmpty();
         assertThat(sc.getIntegerSearchTerms()).hasSize(2);
         assertThat(sc.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc.getCreatedDisplayValue()).isNull();
+        assertThat(sc.getModifiedDisplayValue()).isNull();
 
         assertThat(sc.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
     }
@@ -66,6 +70,21 @@ public class SearchConditionTest {
         assertThat(sc.getStringSearchTerms()).isEmpty();
         assertThat(sc.getIntegerSearchTerms()).isEmpty();
         assertThat(sc.getBooleanSearchTerms()).hasSize(1);
+        assertThat(sc.getCreatedDisplayValue()).isNull();
+        assertThat(sc.getModifiedDisplayValue()).isNull();
+
+        assertThat(sc.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
+    }
+
+    @Test
+    public void createdAndModifiedDisplayValues() {
+        sc.setCreatedDisplayValue(X);
+        sc.setModifiedDisplayValue(X + X);
+        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc.getCreatedDisplayValue()).isEqualTo(X);
+        assertThat(sc.getModifiedDisplayValue()).isEqualTo(X + X);
 
         assertThat(sc.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
     }
@@ -507,6 +526,34 @@ public class SearchConditionTest {
     }
 
     @Test
+    public void createdDisplayValue() {
+        assertThat(sc.getCreatedDisplayValue()).isNull();
+        assertThat(sc.getStringSearchTerms()).isEmpty();
+
+        sc.setCreatedDisplayValue(X);
+        assertThat(sc.getCreatedDisplayValue()).isEqualTo(X);
+        assertThat(sc.getStringSearchTerms()).hasSize(0);
+
+        sc.setCreatedDisplayValue(null);
+        assertThat(sc.getCreatedDisplayValue()).isNull();
+        assertThat(sc.getStringSearchTerms()).isEmpty();
+    }
+
+    @Test
+    public void modifiedDisplayValue() {
+        assertThat(sc.getModifiedDisplayValue()).isNull();
+        assertThat(sc.getStringSearchTerms()).isEmpty();
+
+        sc.setModifiedDisplayValue(X);
+        assertThat(sc.getModifiedDisplayValue()).isEqualTo(X);
+        assertThat(sc.getStringSearchTerms()).hasSize(0);
+
+        sc.setModifiedDisplayValue(null);
+        assertThat(sc.getModifiedDisplayValue()).isNull();
+        assertThat(sc.getStringSearchTerms()).isEmpty();
+    }
+
+    @Test
     public void testDisplayValue_withSingleStringSearchTerms_returnsIt() {
         sc.setAuthors("hoops");
         assertThat(sc.getDisplayValue()).isEqualTo("hoops");
@@ -552,7 +599,7 @@ public class SearchConditionTest {
 
     @Test
     public void equalsAndHash1_ofFieldSc() {
-        assertThat(sc.hashCode()).isEqualTo(29583487);
+        assertThat(sc.hashCode()).isEqualTo(-1664622465);
         assertThat(sc.equals(sc)).isTrue();
         assertThat(sc.equals(null)).isFalse();
         assertThat(sc.equals(new String())).isFalse();
@@ -562,7 +609,7 @@ public class SearchConditionTest {
     public void equalsAndHash2_withEmptySearchConditions() {
         SearchCondition f1 = new SearchCondition();
         SearchCondition f2 = new SearchCondition();
-        assertEquality(f1, f2, 28659966);
+        assertEquality(f1, f2, 1742841150);
     }
 
     private void assertEquality(SearchCondition f1, SearchCondition f2, int hashCode) {
@@ -578,7 +625,7 @@ public class SearchConditionTest {
         f1.setAuthors("foo");
         SearchCondition f2 = new SearchCondition();
         f2.setAuthors("foo");
-        assertEquality(f1, f2, -482709887);
+        assertEquality(f1, f2, 1231471297);
     }
 
     @Test
@@ -597,7 +644,7 @@ public class SearchConditionTest {
         f2.setFirstAuthor("baz");
         f2.setFirstAuthorOverridden(true);
         f2.setMethodOutcome("blup");
-        assertEquality(f1, f2, 2110353620);
+        assertEquality(f1, f2, -470432492);
 
         f2.setMethodOutcome("blup2");
         assertThat(f1.equals(f2)).isFalse();
@@ -615,7 +662,7 @@ public class SearchConditionTest {
         f1.setAuthors("foo");
         SearchCondition f2 = new SearchCondition();
         f2.setAuthors("foo");
-        assertEquality(f1, f2, -482709887);
+        assertEquality(f1, f2, 1231471297);
 
         f1.setSearchConditionId(3l);
         assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode());
@@ -628,7 +675,41 @@ public class SearchConditionTest {
         assertThat(f2.equals(f1)).isFalse();
 
         f2.setSearchConditionId(3l);
-        assertEquality(f1, f2, -479939324);
+        assertEquality(f1, f2, -400984956);
+    }
+
+    @Test
+    public void equalsAndHash6_withCreatedDisplayValue() {
+        SearchCondition f1 = new SearchCondition();
+        f1.setCreatedDisplayValue("foo");
+        SearchCondition f2 = new SearchCondition();
+        assertThat(f1.equals(f2)).isFalse();
+
+        f2.setCreatedDisplayValue("foo");
+        assertEquality(f1, f2, 2027365432);
+
+        f2.setCreatedDisplayValue("bar");
+        assertThat(f1.equals(f2)).isFalse();
+
+        f1.setCreatedDisplayValue(null);
+        assertThat(f2.equals(f1)).isFalse();
+    }
+
+    @Test
+    public void equalsAndHash7_withModifiedDisplayValue() {
+        SearchCondition f1 = new SearchCondition();
+        f1.setModifiedDisplayValue("foo");
+        SearchCondition f2 = new SearchCondition();
+        assertThat(f1.equals(f2)).isFalse();
+
+        f2.setModifiedDisplayValue("foo");
+        assertEquality(f1, f2, 1059282692);
+
+        f2.setModifiedDisplayValue("bar");
+        assertThat(f1.equals(f2)).isFalse();
+
+        f1.setCreatedDisplayValue(null);
+        assertThat(f2.equals(f1)).isFalse();
     }
 
     @Test

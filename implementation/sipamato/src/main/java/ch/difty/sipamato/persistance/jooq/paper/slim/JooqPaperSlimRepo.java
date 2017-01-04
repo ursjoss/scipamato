@@ -2,6 +2,7 @@ package ch.difty.sipamato.persistance.jooq.paper.slim;
 
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
 import static ch.difty.sipamato.db.tables.PaperCode.PAPER_CODE;
+import static ch.difty.sipamato.db.tables.User.USER;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -142,6 +143,12 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
         if (!searchCondition.getCodes().isEmpty()) {
             conditions.add(() -> codeConditions(searchCondition.getCodes()));
         }
+        if (searchCondition.getCreatedDisplayValue() != null) {
+            conditions.add(() -> userCondition(PAPER.CREATED_BY, searchCondition.getCreatedDisplayValue()));
+        }
+        if (searchCondition.getModifiedDisplayValue() != null) {
+            conditions.add(() -> userCondition(PAPER.LAST_MODIFIED_BY, searchCondition.getModifiedDisplayValue()));
+        }
         return conditions.combineWithAnd();
     }
 
@@ -152,6 +159,14 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
             codeConditions.add(() -> DSL.exists(step.and(DSL.lower(PAPER_CODE.CODE).eq(code.toLowerCase()))));
         }
         return codeConditions.combineWithAnd();
+    }
+
+    private Condition userCondition(final TableField<PaperRecord, Integer> userField, final String user) {
+        final ConditionalSupplier c = new ConditionalSupplier();
+        final String userName = "%" + user.toLowerCase() + "%";
+        final SelectConditionStep<Record1<Long>> step = DSL.select(PAPER.ID).from(PAPER).innerJoin(USER).on(userField.eq(USER.ID)).where(USER.USER_NAME.lower().like(userName));
+        c.add(() -> PAPER.ID.in(step));
+        return c.combineWithAnd();
     }
 
 }

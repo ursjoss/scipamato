@@ -113,7 +113,19 @@ public abstract class SipamatoEntity implements Serializable {
     }
 
     private String makeDisplayValue(String name, LocalDateTime ldt) {
-        return new StringBuilder().append(name).append(" (").append(ldt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).append(")").toString();
+        final StringBuilder sb = new StringBuilder();
+        String close = "";
+        if (name != null) {
+            sb.append(name);
+        }
+        if (ldt != null) {
+            if (sb.length() > 0) {
+                sb.append(" (");
+                close = ")";
+            }
+            sb.append(ldt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).append(close);
+        }
+        return sb.toString();
     }
 
     public String getModifiedDisplayValue() {
