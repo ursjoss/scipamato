@@ -11,20 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.persistance.jooq.AbstractServiceTest;
 
-@RunWith(MockitoJUnitRunner.class)
-public class JooqPaperServiceTest {
+public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
 
     private final JooqPaperService service = new JooqPaperService();
 
@@ -37,20 +33,31 @@ public class JooqPaperServiceTest {
     @Mock
     private Page<Paper> paperPageMock;
     @Mock
-    private Paper paperMock;
+    protected Paper paperMock;
+
+    @Override
+    protected Paper getEntity() {
+        return paperMock;
+    }
+
+    @Override
+    protected PaperRepository getRepo() {
+        return repoMock;
+    }
 
     private final List<Paper> papers = new ArrayList<>();
 
-    @Before
-    public void setUp() {
+    @Override
+    public void specificSetUp() {
         service.setRepository(repoMock);
+        service.setUserRepository(userRepoMock);
 
         papers.add(paperMock);
         papers.add(paperMock);
     }
 
-    @After
-    public void tearDown() {
+    @Override
+    public void specificTearDown() {
         verifyNoMoreInteractions(repoMock, filterMock, pageableMock, paperPageMock, paperMock);
     }
 
@@ -64,6 +71,8 @@ public class JooqPaperServiceTest {
         assertThat(optPaper.get()).isEqualTo(paperMock);
 
         verify(repoMock).findById(id);
+
+        verifyAudit(1);
     }
 
     @Test
@@ -85,6 +94,8 @@ public class JooqPaperServiceTest {
 
         verify(repoMock).findByFilter(filterMock, pageableMock);
         verify(paperPageMock).getContent();
+
+        verifyAudit(2);
     }
 
     @Test
@@ -101,6 +112,7 @@ public class JooqPaperServiceTest {
         assertThat(service.saveOrUpdate(paperMock)).isEqualTo(paperMock);
         verify(repoMock).add(paperMock);
         verify(paperMock).getId();
+        verifyAudit(1);
     }
 
     @Test
@@ -110,6 +122,7 @@ public class JooqPaperServiceTest {
         assertThat(service.saveOrUpdate(paperMock)).isEqualTo(paperMock);
         verify(repoMock).update(paperMock);
         verify(paperMock).getId();
+        verifyAudit(1);
     }
 
     @Test
@@ -137,4 +150,5 @@ public class JooqPaperServiceTest {
         verify(paperMock, times(2)).getId();
         verify(repoMock, times(1)).delete(3l);
     }
+
 }

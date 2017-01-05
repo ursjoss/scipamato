@@ -21,6 +21,8 @@ public class SearchOrderRecordMapperTest extends RecordMapperTest<SearchOrderRec
         when(entityMock.getName()).thenReturn(NAME);
         when(entityMock.getOwner()).thenReturn(OWNER);
         when(entityMock.isGlobal()).thenReturn(GLOBAL);
+
+        auditFixtureFor(entityMock);
     }
 
     @Override
@@ -35,14 +37,16 @@ public class SearchOrderRecordMapperTest extends RecordMapperTest<SearchOrderRec
         record.setName(NAME);
         record.setOwner(OWNER);
         record.setGlobal(GLOBAL);
+        return record;
+    }
 
-        record.setVersion(VERSION);
+    @Override
+    protected void setAuditFieldsIn(SearchOrderRecord record) {
         record.setCreated(CREATED);
         record.setCreatedBy(CREATED_BY);
         record.setLastModified(LAST_MOD);
         record.setLastModifiedBy(LAST_MOD_BY);
-
-        return record;
+        record.setVersion(VERSION);
     }
 
     @Override

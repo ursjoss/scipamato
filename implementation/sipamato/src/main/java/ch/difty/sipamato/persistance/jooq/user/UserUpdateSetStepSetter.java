@@ -10,6 +10,7 @@ import ch.difty.sipamato.auth.Role;
 import ch.difty.sipamato.db.tables.records.UserRecord;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.lib.DateUtils;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 
 /**
@@ -34,7 +35,13 @@ public class UserUpdateSetStepSetter implements UpdateSetStepSetter<UserRecord, 
             .set(USER.LAST_NAME, e.getLastName())
             .set(USER.EMAIL, e.getEmail())
             .set(USER.PASSWORD, e.getPassword())
-            .set(USER.ENABLED, e.isEnabled());
+            .set(USER.ENABLED, e.isEnabled())
+
+            .set(USER.CREATED, DateUtils.tsOf(e.getCreated()))
+            .set(USER.CREATED_BY, e.getCreatedBy())
+            .set(USER.LAST_MODIFIED, DateUtils.tsOf(e.getLastModified()))
+            .set(USER.LAST_MODIFIED_BY, e.getLastModifiedBy())
+            .set(USER.VERSION, e.getVersion() + 1);
         // @formatter:on
     }
 

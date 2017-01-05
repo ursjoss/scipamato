@@ -1,13 +1,10 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.persistance.jooq.JooqEntityService;
 import ch.difty.sipamato.service.PaperService;
 
 /**
@@ -16,51 +13,8 @@ import ch.difty.sipamato.service.PaperService;
  * @author u.joss
  */
 @Service
-public class JooqPaperService implements PaperService {
+public class JooqPaperService extends JooqEntityService<Long, PaperRecord, Paper, PaperFilter, PaperRecordMapper, PaperRepository> implements PaperService {
 
     private static final long serialVersionUID = 1L;
-
-    private PaperRepository repo;
-
-    @Autowired
-    public void setRepository(PaperRepository repo) {
-        this.repo = repo;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Optional<Paper> findById(Long id) {
-        return Optional.ofNullable(repo.findById(id));
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public List<Paper> findByFilter(PaperFilter filter, Pageable pageable) {
-        return repo.findByFilter(filter, pageable).getContent();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public int countByFilter(PaperFilter filter) {
-        return repo.countByFilter(filter);
-    }
-
-    /** {@inhericDoc} */
-    @Override
-    public Paper saveOrUpdate(Paper paper) {
-        if (paper.getId() == null) {
-            return repo.add(paper);
-        } else {
-            return repo.update(paper);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void remove(Paper entity) {
-        if (entity != null && entity.getId() != null) {
-            repo.delete(entity.getId());
-        }
-    }
 
 }

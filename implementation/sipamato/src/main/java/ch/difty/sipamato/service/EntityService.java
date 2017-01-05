@@ -13,7 +13,7 @@ import ch.difty.sipamato.entity.filter.SipamatoFilter;
  * @param <T> the entity type, extending {@link SipamatoEntity}
  * @param <F> the filter, extending {@link SipamatoFilter}
  */
-public interface EntityService<ID extends Number, T extends IdSipamatoEntity<ID>, F extends SipamatoFilter> extends ReadOnlyService<T, ID, F> {
+public interface EntityService<ID extends Number, T extends IdSipamatoEntity<ID>, F extends SipamatoFilter> extends ReadOnlyService<ID, T, F> {
 
     /**
      * Update the provided entity.

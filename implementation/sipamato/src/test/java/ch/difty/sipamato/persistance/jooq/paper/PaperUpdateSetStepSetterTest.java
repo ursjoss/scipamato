@@ -1,6 +1,11 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
+import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.CREATED;
+import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.CREATED_BY;
+import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.LAST_MOD;
+import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.LAST_MOD_BY;
+import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.VERSION;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.AUTHORS;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.COMMENT;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.DOI;
@@ -68,7 +73,7 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
     }
 
     @Override
-    protected void stepSetFixture() {
+    protected void stepSetFixtureExceptAudit() {
         when(getStep().set(PAPER.PM_ID, PM_ID)).thenReturn(getMoreStep());
 
         when(getMoreStep().set(PAPER.DOI, DOI)).thenReturn(getMoreStep());
@@ -103,8 +108,16 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
         when(getMoreStep().set(PAPER.MAIN_CODE_OF_CODECLASS1, MAIN_CODE_OF_CODECLASS1)).thenReturn(getMoreStep());
     }
 
+    protected void stepSetFixtureAudit() {
+        when(getMoreStep().set(PAPER.CREATED, CREATED)).thenReturn(getMoreStep());
+        when(getMoreStep().set(PAPER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
+        when(getMoreStep().set(PAPER.LAST_MODIFIED, LAST_MOD)).thenReturn(getMoreStep());
+        when(getMoreStep().set(PAPER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
+        when(getMoreStep().set(PAPER.VERSION, VERSION + 1)).thenReturn(getMoreStep());
+    }
+
     @Override
-    protected void verifyCallToAllFields() {
+    protected void verifyCallToAllFieldsExceptAudit() {
         verify(entityMock).getPmId();
         verify(entityMock).getDoi();
         verify(entityMock).getAuthors();
@@ -139,7 +152,7 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
     }
 
     @Override
-    protected void verifySetting() {
+    protected void verifyStepSettingExceptAudit() {
         verify(getStep()).set(PAPER.PM_ID, PM_ID);
         verify(getMoreStep()).set(PAPER.DOI, DOI);
         verify(getMoreStep()).set(PAPER.AUTHORS, AUTHORS);
@@ -171,6 +184,15 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
         verify(getMoreStep()).set(PAPER.RESULT_EFFECT_ESTIMATE, RESULT_EFFECT_ESTIMATE);
 
         verify(getMoreStep()).set(PAPER.MAIN_CODE_OF_CODECLASS1, MAIN_CODE_OF_CODECLASS1);
+    }
+
+    @Override
+    protected void verifyStepSettingAudit() {
+        verify(getMoreStep()).set(PAPER.CREATED, CREATED);
+        verify(getMoreStep()).set(PAPER.CREATED_BY, CREATED_BY);
+        verify(getMoreStep()).set(PAPER.LAST_MODIFIED, LAST_MOD);
+        verify(getMoreStep()).set(PAPER.LAST_MODIFIED_BY, LAST_MOD_BY);
+        verify(getMoreStep()).set(PAPER.VERSION, VERSION + 1);
     }
 
 }

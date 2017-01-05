@@ -14,7 +14,7 @@ import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
  *
  * @author u.joss
  */
-public interface PaperSlimService extends ReadOnlyService<PaperSlim, Long, PaperFilter> {
+public interface PaperSlimService extends ReadOnlyService<Long, PaperSlim, PaperFilter> {
 
     /**
      * Find any paper matching the provided {@link SearchOrder}.

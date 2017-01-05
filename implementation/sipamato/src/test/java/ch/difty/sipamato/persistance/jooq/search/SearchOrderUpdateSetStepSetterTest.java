@@ -1,6 +1,11 @@
 package ch.difty.sipamato.persistance.jooq.search;
 
 import static ch.difty.sipamato.db.tables.SearchOrder.SEARCH_ORDER;
+import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.CREATED;
+import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.CREATED_BY;
+import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.LAST_MOD;
+import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.LAST_MOD_BY;
+import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.VERSION;
 import static ch.difty.sipamato.persistance.jooq.search.SearchOrderRecordMapperTest.GLOBAL;
 import static ch.difty.sipamato.persistance.jooq.search.SearchOrderRecordMapperTest.ID;
 import static ch.difty.sipamato.persistance.jooq.search.SearchOrderRecordMapperTest.NAME;
@@ -45,25 +50,42 @@ public class SearchOrderUpdateSetStepSetterTest extends UpdateSetStepSetterTest<
     }
 
     @Override
-    protected void stepSetFixture() {
+    protected void stepSetFixtureExceptAudit() {
         when(getStep().set(SEARCH_ORDER.NAME, NAME)).thenReturn(getMoreStep());
         when(getMoreStep().set(SEARCH_ORDER.OWNER, OWNER)).thenReturn(getMoreStep());
-
         when(getMoreStep().set(SEARCH_ORDER.GLOBAL, GLOBAL)).thenReturn(getMoreStep());
     }
 
     @Override
-    protected void verifyCallToAllFields() {
+    protected void stepSetFixtureAudit() {
+        when(getMoreStep().set(SEARCH_ORDER.CREATED, CREATED)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SEARCH_ORDER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SEARCH_ORDER.LAST_MODIFIED, LAST_MOD)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SEARCH_ORDER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SEARCH_ORDER.VERSION, VERSION + 1)).thenReturn(getMoreStep());
+    }
+
+    @Override
+    protected void verifyCallToAllFieldsExceptAudit() {
         verify(entityMock).getName();
         verify(entityMock).getOwner();
         verify(entityMock).isGlobal();
     }
 
     @Override
-    protected void verifySetting() {
+    protected void verifyStepSettingExceptAudit() {
         verify(getStep()).set(SEARCH_ORDER.NAME, NAME);
         verify(getMoreStep()).set(SEARCH_ORDER.OWNER, OWNER);
         verify(getMoreStep()).set(SEARCH_ORDER.GLOBAL, GLOBAL);
+    }
+
+    @Override
+    protected void verifyStepSettingAudit() {
+        verify(getMoreStep()).set(SEARCH_ORDER.CREATED, CREATED);
+        verify(getMoreStep()).set(SEARCH_ORDER.CREATED_BY, CREATED_BY);
+        verify(getMoreStep()).set(SEARCH_ORDER.LAST_MODIFIED, LAST_MOD);
+        verify(getMoreStep()).set(SEARCH_ORDER.LAST_MODIFIED_BY, LAST_MOD_BY);
+        verify(getMoreStep()).set(SEARCH_ORDER.VERSION, VERSION + 1);
     }
 
 }

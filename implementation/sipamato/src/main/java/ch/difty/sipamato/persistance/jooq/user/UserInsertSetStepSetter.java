@@ -35,7 +35,10 @@ public class UserInsertSetStepSetter implements InsertSetStepSetter<UserRecord, 
             .set(USER.LAST_NAME, e.getLastName())
             .set(USER.EMAIL, e.getEmail())
             .set(USER.PASSWORD, e.getPassword())
-            .set(USER.ENABLED, e.isEnabled());
+            .set(USER.ENABLED, e.isEnabled())
+
+            .set(USER.CREATED_BY, e.getCreatedBy())
+            .set(USER.LAST_MODIFIED_BY, e.getLastModifiedBy());
         // @formatter:on
     }
 

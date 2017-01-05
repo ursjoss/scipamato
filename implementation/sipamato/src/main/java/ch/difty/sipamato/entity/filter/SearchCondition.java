@@ -64,10 +64,12 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     private static final String JOIN_DELIMITER = " AND ";
 
     private Long searchConditionId;
+    private String createdTerm, modifiedTerm;
 
     private final StringSearchTerms stringSearchTerms = new StringSearchTerms();
     private final IntegerSearchTerms integerSearchTerms = new IntegerSearchTerms();
     private final BooleanSearchTerms booleanSearchTerms = new BooleanSearchTerms();
+    private final CodeBox codes = new SearchConditionCodeBox();
     private final Set<String> removedKeys = new HashSet<>();
 
     public SearchCondition() {
@@ -124,8 +126,6 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     public Collection<BooleanSearchTerm> getBooleanSearchTerms() {
         return booleanSearchTerms.values();
     }
-
-    private final CodeBox codes = new SearchConditionCodeBox();
 
     /** {@link Paper} specific accessors */
 
@@ -345,6 +345,22 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         setStringValue(FLD_MAIN_CODE_OF_CODECLASS1, value);
     }
 
+    public String getCreatedDisplayValue() {
+        return createdTerm;
+    }
+
+    public void setCreatedDisplayValue(String value) {
+        this.createdTerm = value;
+    }
+
+    public String getModifiedDisplayValue() {
+        return modifiedTerm;
+    }
+
+    public void setModifiedDisplayValue(String value) {
+        this.modifiedTerm = value;
+    }
+
     /** {@link CodeBoxAware} methods */
 
     @Override
@@ -433,7 +449,25 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
                 sb.append(" AND ");
             sb.append(codes.toString());
         }
+        considerAdding(createdTerm, sb);
+        considerAdding(modifiedTerm, sb);
         return sb.toString();
+    }
+
+    private void considerAdding(String term, StringBuffer sb) {
+        if (term != null) {
+            if (sb.length() > 0)
+                sb.append(" AND ");
+            sb.append(term);
+        }
+    }
+
+    public Set<String> getRemovedKeys() {
+        return removedKeys;
+    }
+
+    public void clearRemovedKeys() {
+        removedKeys.clear();
     }
 
     @Override
@@ -441,6 +475,8 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         final int prime = 31;
         int result = 1;
         result = prime * result + (searchConditionId == null ? 0 : searchConditionId.hashCode());
+        result = prime * result + ((createdTerm == null) ? 0 : createdTerm.hashCode());
+        result = prime * result + ((modifiedTerm == null) ? 0 : modifiedTerm.hashCode());
         result = prime * result + stringSearchTerms.hashCode();
         result = prime * result + integerSearchTerms.hashCode();
         result = prime * result + booleanSearchTerms.hashCode();
@@ -462,6 +498,16 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
                 return false;
         } else if (!searchConditionId.equals(other.searchConditionId))
             return false;
+        if (createdTerm == null) {
+            if (other.createdTerm != null)
+                return false;
+        } else if (!createdTerm.equals(other.createdTerm))
+            return false;
+        if (modifiedTerm == null) {
+            if (other.modifiedTerm != null)
+                return false;
+        } else if (!modifiedTerm.equals(other.modifiedTerm))
+            return false;
         if (!booleanSearchTerms.equals(other.booleanSearchTerms))
             return false;
         if (!integerSearchTerms.equals(other.integerSearchTerms))
@@ -476,11 +522,4 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         return true;
     }
 
-    public Set<String> getRemovedKeys() {
-        return removedKeys;
-    }
-
-    public void clearRemovedKeys() {
-        removedKeys.clear();
-    }
 }

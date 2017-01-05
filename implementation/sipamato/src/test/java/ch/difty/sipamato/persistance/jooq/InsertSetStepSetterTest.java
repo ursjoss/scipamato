@@ -2,6 +2,8 @@ package ch.difty.sipamato.persistance.jooq;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.jooq.InsertSetMoreStep;
@@ -40,12 +42,39 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends Sipama
     @Before
     public void setUp() {
         entityFixture();
-        stepSetFixture();
+        stepSetFixtureExceptAudit();
+        setStepFixtureAudit();
     }
 
     protected abstract void entityFixture();
 
-    protected abstract void stepSetFixture();
+    /**
+     * Create the test fixture for the set steps, starting with getStep(), continuing with getMoreStep(), e.g.
+     *
+     * <code><pre>
+     *  when(getStep().set(PAPER.PM_ID, PM_ID)).thenReturn(getMoreStep());
+     *
+     *  when(getMoreStep().set(PAPER.DOI, DOI)).thenReturn(getMoreStep());
+     *  when(getMoreStep().set(PAPER.AUTHORS, AUTHORS)).thenReturn(getMoreStep());
+     *  ...
+     * </pre></code
+     *
+     * <b>Note:</b> No need to set the audit fields - those are managed later
+     */
+    protected abstract void stepSetFixtureExceptAudit();
+
+    /**
+     * Create the test fixture for set steps, continuing with getMoreStep(), e.g.
+     *
+     * <code><pre>
+     * when(getMoreStep().set(PAPER.CREATED, CREATED)).thenReturn(getMoreStep());
+     * when(getMoreStep().set(PAPER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
+     * when(getMoreStep().set(PAPER.LAST_MODIFIED, LAST_MOD)).thenReturn(getMoreStep());
+     * when(getMoreStep().set(PAPER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
+     * when(getMoreStep().set(PAPER.VERSION, VERSION)).thenReturn(getMoreStep());
+     * </pre></code
+     */
+    protected abstract void setStepFixtureAudit();
 
     @After
     public void tearDown() {
@@ -85,13 +114,26 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends Sipama
     public void settingNonKeyFields() {
         getSetter().setNonKeyFieldsFor(getStep(), getEntity());
 
-        verifyCallToAllNonKeyFields();
-        verifySetting();
+        verifyCallToFieldsExceptKeyAndAudit();
+        verifyCallToAuditFields();
+        verifySettingFieldsExceptKeyAndAudit();
+        verifySettingAuditFields();
     }
 
-    protected abstract void verifyCallToAllNonKeyFields();
+    protected abstract void verifyCallToFieldsExceptKeyAndAudit();
 
-    protected abstract void verifySetting();
+    private void verifyCallToAuditFields() {
+        E entityMock = getEntity();
+        verify(entityMock, never()).getCreated();
+        verify(entityMock).getCreatedBy();
+        verify(entityMock, never()).getLastModified();
+        verify(entityMock).getLastModifiedBy();
+        verify(entityMock, never()).getVersion();
+    }
+
+    protected abstract void verifySettingFieldsExceptKeyAndAudit();
+
+    protected abstract void verifySettingAuditFields();
 
     @Test
     public void consideringSettingKeyOf_withNullSetter_throws() {

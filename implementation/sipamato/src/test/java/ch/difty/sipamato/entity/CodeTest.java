@@ -2,11 +2,16 @@ package ch.difty.sipamato.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDateTime;
+
 import javax.validation.ConstraintViolation;
 
 import org.junit.Test;
 
 public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
+
+    private static final LocalDateTime CREATED = LocalDateTime.parse("2017-01-01T08:01:33.821");
+    private static final LocalDateTime LAST_MOD = LocalDateTime.parse("2017-02-02T08:01:33.821");
 
     private final Code c = new Code("1A", "code1", null, false, 1, "c1", "", 1);
 
@@ -71,7 +76,9 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void testingToString() {
-        assertThat(c.toString()).isEqualTo("Code[code=1A,name=code1,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1]");
+        final Code c = new Code("1A", "code1", null, false, 1, "c1", "", 1, CREATED, 10, LAST_MOD, 20, 3);
+        assertThat(c.toString()).isEqualTo(
+                "Code[code=1A,name=code1,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,created=2017-01-01T08:01:33.821,createdBy=10,lastModified=2017-02-02T08:01:33.821,lastModifiedBy=20,version=3]");
     }
 
     @Test

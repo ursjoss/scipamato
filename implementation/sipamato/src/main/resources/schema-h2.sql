@@ -178,6 +178,8 @@ DROP TABLE IF EXISTS search_condition;
 CREATE TABLE search_condition (
   search_condition_id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   search_order_id BIGINT NOT NULL,
+  created_term VARCHAR NULL,
+  modified_term VARCHAR NULL,
   
   version INT DEFAULT 1,
   created TIMESTAMP DEFAULT current_timestamp(),

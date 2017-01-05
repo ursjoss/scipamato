@@ -19,6 +19,8 @@ public class PaperSlimRecordMapperTest extends RecordMapperTest<PaperRecord, Pap
         when(entity.getFirstAuthor()).thenReturn(FIRST_AUTHOR);
         when(entity.getTitle()).thenReturn(TITLE);
         when(entity.getPublicationYear()).thenReturn(PUBLICATION_YEAR);
+
+        auditFixtureFor(entity);
     }
 
     @Override
@@ -33,14 +35,16 @@ public class PaperSlimRecordMapperTest extends RecordMapperTest<PaperRecord, Pap
         record.setFirstAuthor(FIRST_AUTHOR);
         record.setTitle(TITLE);
         record.setPublicationYear(PUBLICATION_YEAR);
+        return record;
+    }
 
-        record.setVersion(VERSION);
+    @Override
+    protected void setAuditFieldsIn(PaperRecord record) {
         record.setCreated(CREATED);
         record.setCreatedBy(CREATED_BY);
         record.setLastModified(LAST_MOD);
         record.setLastModifiedBy(LAST_MOD_BY);
-
-        return record;
+        record.setVersion(VERSION);
     }
 
     @Override

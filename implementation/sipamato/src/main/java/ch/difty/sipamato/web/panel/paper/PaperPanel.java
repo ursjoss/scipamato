@@ -91,12 +91,22 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         queueFieldAndLabel(new TextArea<String>(Paper.TITLE), new PropertyValidator<String>());
         queueFieldAndLabel(new TextField<String>(Paper.LOCATION), new PropertyValidator<String>());
 
-        TextField<Integer> id = new TextField<Integer>(Paper.ID);
-        id.setEnabled(isSearchMode());
-        queueFieldAndLabel(id);
         queueFieldAndLabel(new TextField<Integer>(Paper.PUBL_YEAR), new PropertyValidator<Integer>());
         queueFieldAndLabel(new TextField<Integer>(Paper.PMID));
         queueFieldAndLabel(new TextField<String>(Paper.DOI), new PropertyValidator<String>());
+
+        TextField<Integer> id = new TextField<Integer>(Paper.ID);
+        id.setEnabled(isSearchMode());
+        queueFieldAndLabel(id);
+
+        TextField<String> created = new TextField<String>(Paper.CREATED_DV);
+        created.setEnabled(isSearchMode());
+        queueFieldAndLabel(created);
+
+        TextField<String> modified = new TextField<String>(Paper.MODIFIED_DV);
+        modified.setEnabled(isSearchMode());
+        queueFieldAndLabel(modified);
+
         makeAndQueueSubmitButton("submit");
     }
 

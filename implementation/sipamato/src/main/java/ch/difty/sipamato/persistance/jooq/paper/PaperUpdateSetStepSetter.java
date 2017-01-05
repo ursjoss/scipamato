@@ -10,6 +10,7 @@ import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.lib.DateUtils;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 
 /**
@@ -59,7 +60,13 @@ public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord
             .set(PAPER.RESULT_EXPOSURE_RANGE, e.getResultExposureRange())
             .set(PAPER.RESULT_EFFECT_ESTIMATE, e.getResultEffectEstimate())
 
-            .set(PAPER.MAIN_CODE_OF_CODECLASS1, e.getMainCodeOfCodeclass1());
+            .set(PAPER.MAIN_CODE_OF_CODECLASS1, e.getMainCodeOfCodeclass1())
+
+            .set(PAPER.CREATED, DateUtils.tsOf(e.getCreated()))
+            .set(PAPER.CREATED_BY, e.getCreatedBy())
+            .set(PAPER.LAST_MODIFIED, DateUtils.tsOf(e.getLastModified()))
+            .set(PAPER.LAST_MODIFIED_BY, e.getLastModifiedBy())
+            .set(PAPER.VERSION, e.getVersion() + 1);
          // @formatter:on
     }
 

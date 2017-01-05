@@ -10,6 +10,7 @@ import ch.difty.sipamato.db.tables.records.SearchOrderRecord;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.lib.DateUtils;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 
 /**
@@ -31,7 +32,13 @@ public class SearchOrderUpdateSetStepSetter implements UpdateSetStepSetter<Searc
         return step
             .set(SEARCH_ORDER.NAME, e.getName())
             .set(SEARCH_ORDER.OWNER, e.getOwner())
-            .set(SEARCH_ORDER.GLOBAL, e.isGlobal());
+            .set(SEARCH_ORDER.GLOBAL, e.isGlobal())
+
+            .set(SEARCH_ORDER.CREATED, DateUtils.tsOf(e.getCreated()))
+            .set(SEARCH_ORDER.CREATED_BY, e.getCreatedBy())
+            .set(SEARCH_ORDER.LAST_MODIFIED, DateUtils.tsOf(e.getLastModified()))
+            .set(SEARCH_ORDER.LAST_MODIFIED_BY, e.getLastModifiedBy())
+            .set(SEARCH_ORDER.VERSION, e.getVersion() + 1);
          // @formatter:on
     }
 
