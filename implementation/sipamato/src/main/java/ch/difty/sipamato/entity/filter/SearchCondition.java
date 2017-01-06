@@ -17,6 +17,7 @@ import static ch.difty.sipamato.entity.Paper.FLD_METHOD_CONFOUNDERS;
 import static ch.difty.sipamato.entity.Paper.FLD_METHOD_OUTCOME;
 import static ch.difty.sipamato.entity.Paper.FLD_METHOD_STATISTICS;
 import static ch.difty.sipamato.entity.Paper.FLD_METHOD_STUDY_DESIGN;
+import static ch.difty.sipamato.entity.Paper.FLD_ORIGINAL_ABSTRACT;
 import static ch.difty.sipamato.entity.Paper.FLD_PMID;
 import static ch.difty.sipamato.entity.Paper.FLD_POPULATION;
 import static ch.difty.sipamato.entity.Paper.FLD_POPULATION_DURATION;
@@ -247,6 +248,14 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
 
     public void setIntern(String value) {
         setStringValue(FLD_INTERN, value);
+    }
+
+    public String getOriginalAbstract() {
+        return getStringValue(FLD_ORIGINAL_ABSTRACT);
+    }
+
+    public void setOriginalAbstract(String value) {
+        setStringValue(FLD_ORIGINAL_ABSTRACT, value);
     }
 
     public String getPopulationPlace() {

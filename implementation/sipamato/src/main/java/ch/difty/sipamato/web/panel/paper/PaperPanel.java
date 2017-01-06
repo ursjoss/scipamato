@@ -136,6 +136,14 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 return new TabPanel3(panelId, form.getModel());
             }
         });
+        tabs.add(new AbstractTab(new StringResourceModel("tab4" + LABEL_RECOURCE_TAG, this, null)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Panel getPanel(String panelId) {
+                return new TabPanel4(panelId, form.getModel());
+            }
+        });
         queue(new ClientSideBootstrapTabbedPanel<ITab>(tabId, tabs));
     }
 
@@ -254,7 +262,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             queueNewFieldTo(form, Paper.METHOD_STATISTICS);
             queueNewFieldTo(form, Paper.METHOD_CONFOUNDERS);
         }
-    };
+    }
 
     private class TabPanel2 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
@@ -277,7 +285,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             queueNewFieldTo(form, Paper.RESULT_EXPOSURE_RANGE);
             queueNewFieldTo(form, Paper.RESULT_EFFECT_ESTIMATE);
         }
-    };
+    }
 
     private class TabPanel3 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
@@ -357,6 +365,24 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             multiSelect.add(new AttributeModifier("data-width", "fit"));
             queue(multiSelect);
             return multiSelect;
+        }
+    }
+
+    private class TabPanel4 extends AbstractTabPanel {
+        private static final long serialVersionUID = 1L;
+
+        public TabPanel4(String id, IModel<T> model) {
+            super(id, model);
+        }
+
+        @Override
+        protected void onInitialize() {
+            super.onInitialize();
+
+            Form<T> form = new Form<>("tab4Form");
+            queue(form);
+
+            queueTo(form, Paper.ORIGINAL_ABSTRACT);
         }
     }
 

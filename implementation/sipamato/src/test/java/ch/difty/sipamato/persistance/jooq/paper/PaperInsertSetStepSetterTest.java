@@ -20,6 +20,7 @@ import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.MET
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.METHOD_OUTCOME;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.METHOD_STATISTICS;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.METHOD_STUDY_DESIGN;
+import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.ORIGINAL_ABSTRACT;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.PM_ID;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.POPULATION;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.POPULATION_DURATION;
@@ -107,6 +108,8 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
         when(getMoreStep().set(PAPER.RESULT_EXPOSURE_RANGE, RESULT_EXPOSURE_RANGE)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.RESULT_EFFECT_ESTIMATE, RESULT_EFFECT_ESTIMATE)).thenReturn(getMoreStep());
 
+        when(getMoreStep().set(PAPER.ORIGINAL_ABSTRACT, ORIGINAL_ABSTRACT)).thenReturn(getMoreStep());
+
         when(getMoreStep().set(PAPER.MAIN_CODE_OF_CODECLASS1, MAIN_CODE_OF_CODECLASS1)).thenReturn(getMoreStep());
     }
 
@@ -148,6 +151,8 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
         verify(entityMock).getResultExposureRange();
         verify(entityMock).getResultEffectEstimate();
 
+        verify(entityMock).getOriginalAbstract();
+
         verify(entityMock).getMainCodeOfCodeclass1();
     }
 
@@ -183,6 +188,8 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
 
         verify(getMoreStep()).set(PAPER.RESULT_EXPOSURE_RANGE, RESULT_EXPOSURE_RANGE);
         verify(getMoreStep()).set(PAPER.RESULT_EFFECT_ESTIMATE, RESULT_EFFECT_ESTIMATE);
+
+        verify(getMoreStep()).set(PAPER.ORIGINAL_ABSTRACT, ORIGINAL_ABSTRACT);
 
         verify(getMoreStep()).set(PAPER.MAIN_CODE_OF_CODECLASS1, MAIN_CODE_OF_CODECLASS1);
     }

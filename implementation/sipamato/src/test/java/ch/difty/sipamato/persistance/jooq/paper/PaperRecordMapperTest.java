@@ -37,6 +37,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
     public static final String INTERN = "intern";
     public static final String RESULT_EXPOSURE_RANGE = "result exposure range";
     public static final String RESULT_EFFECT_ESTIMATE = "result effect estimate";
+    public static final String ORIGINAL_ABSTRACT = "oa";
     public static final String MAIN_CODE_OF_CODECLASS1 = "1F";
 
     public static void entityFixtureWithoutIdFields(Paper entityMock) {
@@ -69,6 +70,8 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
 
         when(entityMock.getResultExposureRange()).thenReturn(RESULT_EXPOSURE_RANGE);
         when(entityMock.getResultEffectEstimate()).thenReturn(RESULT_EFFECT_ESTIMATE);
+
+        when(entityMock.getOriginalAbstract()).thenReturn(ORIGINAL_ABSTRACT);
 
         when(entityMock.getMainCodeOfCodeclass1()).thenReturn(MAIN_CODE_OF_CODECLASS1);
 
@@ -113,6 +116,8 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
 
         record.setResultExposureRange(RESULT_EXPOSURE_RANGE);
         record.setResultEffectEstimate(RESULT_EFFECT_ESTIMATE);
+
+        record.setOriginalAbstract(ORIGINAL_ABSTRACT);
 
         record.setMainCodeOfCodeclass1(MAIN_CODE_OF_CODECLASS1);
 
@@ -160,6 +165,8 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
 
         assertThat(e.getResultExposureRange()).isEqualTo(RESULT_EXPOSURE_RANGE);
         assertThat(e.getResultEffectEstimate()).isEqualTo(RESULT_EFFECT_ESTIMATE);
+
+        assertThat(e.getOriginalAbstract()).isEqualTo(ORIGINAL_ABSTRACT);
 
         assertThat(e.getMainCodeOfCodeclass1()).isEqualTo(MAIN_CODE_OF_CODECLASS1);
 

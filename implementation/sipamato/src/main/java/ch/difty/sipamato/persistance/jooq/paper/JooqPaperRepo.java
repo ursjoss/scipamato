@@ -16,6 +16,7 @@ import org.jooq.DSLContext;
 import org.jooq.InsertValuesStep4;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,18 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
             GenericFilterConditionMapper<PaperFilter> filterConditionMapper, DateTimeService dateTimeService, Localization localization, InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter,
             UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter, Configuration jooqConfig) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, localization, insertSetStepSetter, updateSetStepSetter, jooqConfig);
+        adHocMigrationOfPaperTable();
+    }
+
+    // ad hoc migration for users - TOTO remove after next deployment and readjust 
+    private void adHocMigrationOfPaperTable() {
+        try {
+            getDsl().select(PAPER.ORIGINAL_ABSTRACT).from(PAPER).where(PAPER.ID.eq(-1l)).fetch();
+            // all good, columns exists
+        } catch (Exception ex) {
+            getDsl().alterTable(PAPER).addColumn(PAPER.ORIGINAL_ABSTRACT, SQLDataType.VARCHAR.nullable(true)).execute();
+            LOGGER.info("Field originalAbstractadded to table Paper.");
+        }
     }
 
     @Override

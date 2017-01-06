@@ -30,6 +30,8 @@ CREATE TABLE paper (
   comment VARCHAR,
   intern VARCHAR,
 
+  original_abstract VARCHAR,
+
   main_code_of_codeclass1 CHAR(2) NULL,
 
   version INT DEFAULT 1,
