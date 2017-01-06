@@ -65,7 +65,7 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>${org.jooq.version}</version>
+            <version>${org.jooq.version}</version><!--$NO-MVN-MAN-VER$-->
         </dependency>
         <dependency>
             <groupId>org.jooq</groupId>
@@ -325,7 +325,7 @@
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>${org.jooq.version}</version>
+                <version>${org.jooq.version}</version><!--$NO-MVN-MAN-VER$-->
 
                 <executions>
                     <execution>
