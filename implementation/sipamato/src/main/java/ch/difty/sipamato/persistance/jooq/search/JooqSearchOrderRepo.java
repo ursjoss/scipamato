@@ -436,7 +436,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         for (final IntegerSearchTerm ist : searchCondition.getIntegerSearchTerms()) {
             final int typeId = ist.getSearchTermType().getId();
             final String fieldName = ist.getFieldName();
-            final IntegerSearchTerm pist = (IntegerSearchTerm) getPersistedTerm(searchConditionId, fieldName, BooleanSearchTerm.class, typeId);
+            final IntegerSearchTerm pist = (IntegerSearchTerm) getPersistedTerm(searchConditionId, fieldName, IntegerSearchTerm.class, typeId);
             if (pist != null) {
                 updateSearchTerm(ist, pist.getId(), searchConditionId);
             } else {
@@ -447,7 +447,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         for (final StringSearchTerm sst : searchCondition.getStringSearchTerms()) {
             final int typeId = sst.getSearchTermType().getId();
             final String fieldName = sst.getFieldName();
-            final StringSearchTerm pist = (StringSearchTerm) getPersistedTerm(searchConditionId, fieldName, BooleanSearchTerm.class, typeId);
+            final StringSearchTerm pist = (StringSearchTerm) getPersistedTerm(searchConditionId, fieldName, StringSearchTerm.class, typeId);
             if (pist != null) {
                 updateSearchTerm(sst, pist.getId(), searchConditionId);
             } else {
@@ -459,7 +459,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
             insertStep.execute();
     }
 
-    private SearchTerm<?> getPersistedTerm(final Long searchConditionId, final String fieldName, final Class<BooleanSearchTerm> termClass, final int typeId) {
+    private SearchTerm<?> getPersistedTerm(final Long searchConditionId, final String fieldName, final Class<? extends SearchTerm<?>> termClass, final int typeId) {
         return getDsl().select(SEARCH_TERM.ID, SEARCH_TERM.SEARCH_CONDITION_ID, SEARCH_TERM.FIELD_NAME, SEARCH_TERM.RAW_VALUE)
                 .from(SEARCH_TERM)
                 .where(SEARCH_TERM.SEARCH_CONDITION_ID.eq(searchConditionId))
