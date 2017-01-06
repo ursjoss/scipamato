@@ -522,7 +522,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         getDsl().deleteFrom(SEARCH_CONDITION).where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchConditionId)).execute();
     }
 
-    // Ad hoc migration until the test users databases are up to date. TODO remove in next version
+    // Ad hoc migration until the test users databases are up to date. TODO remove in next version, re-enable affected tests in JooqSearchOrderRepoTest
     private void adHocMigrationOfSearchCondition() {
         if (!migrationDone) {
             boolean did = false;
