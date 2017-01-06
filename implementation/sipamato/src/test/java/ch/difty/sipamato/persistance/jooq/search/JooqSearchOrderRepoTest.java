@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.TableField;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 
@@ -198,12 +197,12 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         }
     }
 
-    @Test@Ignore // TODO due to adHocMigration
+    @Test
     public void enrichingAssociatedEntities_withNullEntity_doesNothing() {
         repo.enrichAssociatedEntitiesOf(null);
     }
 
-    @Test@Ignore // TODO due to adHocMigration
+    @Test
     public void enrichingAssociatedEntities_withEntityWithNullId_doesNothing() {
         SearchOrder so = new SearchOrder();
         assertThat(so.getId()).isNull();
@@ -262,7 +261,7 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         };
     }
 
-    @Test@Ignore // TODO due to adHocMigration
+    @Test
     public void enrichingAssociatedEntities_withEntityId_fillsTheSearchConditionsAndTerms() {
         JooqSearchOrderRepo repoSpy = makeRepoFindingNestedEntities();
         SearchOrder so = new SearchOrder();
@@ -285,7 +284,7 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         assertThat(so2.getDisplayValue()).isEqualTo("2014-2016 AND 1F");
     }
 
-    @Test@Ignore // TODO due to adHocMigration
+    @Test
     public void enrichingAssociatedEntities_withEntityId_fillsTheExcludedPaperIds() {
         JooqSearchOrderRepo repoSpy = makeRepoFindingNestedEntities();
         SearchOrder so = new SearchOrder();

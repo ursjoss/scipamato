@@ -26,7 +26,6 @@ import org.jooq.InsertValuesStep4;
 import org.jooq.InsertValuesStep6;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
-import org.jooq.impl.SQLDataType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,8 +61,6 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         implements SearchOrderRepository {
 
     private static final long serialVersionUID = 1L;
-
-    private boolean migrationDone = false;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JooqSearchOrderRepo.class);
 
@@ -114,7 +111,6 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
      */
     @Override
     protected void enrichAssociatedEntitiesOf(final SearchOrder searchOrder) {
-        adHocMigrationOfSearchCondition();
         if (searchOrder != null && searchOrder.getId() != null) {
             fillSearchTermsInto(searchOrder, mapSearchTermsToSearchConditions(searchOrder));
             addSearchTermLessConditionsOf(searchOrder);
@@ -520,30 +516,6 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     @Override
     public void deleteSearchConditionWithId(long searchConditionId) {
         getDsl().deleteFrom(SEARCH_CONDITION).where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchConditionId)).execute();
-    }
-
-    // Ad hoc migration until the test users databases are up to date. TODO remove in next version, re-enable affected tests in JooqSearchOrderRepoTest
-    private void adHocMigrationOfSearchCondition() {
-        if (!migrationDone) {
-            boolean did = false;
-            try {
-                getDsl().select(SEARCH_CONDITION.CREATED_TERM).from(SEARCH_CONDITION).where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(-1l)).fetch();
-                // all good, columns exists
-            } catch (Exception ex) {
-                getDsl().alterTable(SEARCH_CONDITION).addColumn(SEARCH_CONDITION.CREATED_TERM, SQLDataType.VARCHAR.nullable(true)).execute();
-                did = true;
-            }
-            try {
-                getDsl().select(SEARCH_CONDITION.MODIFIED_TERM).from(SEARCH_CONDITION).where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(-1l)).fetch();
-                // all good, columns exists
-            } catch (Exception ex) {
-                getDsl().alterTable(SEARCH_CONDITION).addColumn(SEARCH_CONDITION.MODIFIED_TERM, SQLDataType.VARCHAR.nullable(true)).execute();
-                did = true;
-            }
-            if (did)
-                LOGGER.info("Fields CreatedTerm and ModifiedTerm added to SearchCondition");
-        }
-        migrationDone = true;
     }
 
 }
