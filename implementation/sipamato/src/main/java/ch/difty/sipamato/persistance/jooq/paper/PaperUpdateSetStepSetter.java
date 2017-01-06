@@ -60,6 +60,8 @@ public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord
             .set(PAPER.RESULT_EXPOSURE_RANGE, e.getResultExposureRange())
             .set(PAPER.RESULT_EFFECT_ESTIMATE, e.getResultEffectEstimate())
 
+            .set(PAPER.ORIGINAL_ABSTRACT, e.getOriginalAbstract())
+
             .set(PAPER.MAIN_CODE_OF_CODECLASS1, e.getMainCodeOfCodeclass1())
 
             .set(PAPER.CREATED, DateUtils.tsOf(e.getCreated()))

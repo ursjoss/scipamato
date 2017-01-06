@@ -74,6 +74,7 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
                 , "RESULT_EFFECT_ESTIMATE"
                 , "COMMENT"
                 , "INTERN"
+                , "ORIGINAL_ABSTRACT"
         ));
         // @formatter:on
     }
