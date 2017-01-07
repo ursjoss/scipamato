@@ -33,7 +33,6 @@
         <wicket-bootstrap.version>0.10.11</wicket-bootstrap.version>
         <wicket-spring-boot-starter.version>1.0.1</wicket-spring-boot-starter.version>
         <wicket.version>7.6.0</wicket.version>
-        <wicket-lag.version>7.5.0</wicket-lag.version>
         <org.jooq.version>3.9.0</org.jooq.version>
         <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
     </properties>
@@ -120,7 +119,7 @@
         <dependency>
             <groupId>org.wicketstuff</groupId>
             <artifactId>wicketstuff-annotation</artifactId>
-            <version>${wicket-lag.version}</version>
+            <version>${wicket.version}</version>
         </dependency>
         <dependency>
             <groupId>de.agilecoders.wicket</groupId>
