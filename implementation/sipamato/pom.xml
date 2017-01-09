@@ -30,8 +30,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <wicket-bootstrap.version>0.10.11</wicket-bootstrap.version>
-        <wicket-spring-boot-starter.version>1.0.1</wicket-spring-boot-starter.version>
+        <wicket-bootstrap.version>0.10.12-SNAPSHOT</wicket-bootstrap.version>
+        <wicket-spring-boot-starter.version>1.0.2-SNAPSHOT</wicket-spring-boot-starter.version>
         <wicket.version>7.6.0</wicket.version>
         <org.jooq.version>3.9.0</org.jooq.version>
         <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
