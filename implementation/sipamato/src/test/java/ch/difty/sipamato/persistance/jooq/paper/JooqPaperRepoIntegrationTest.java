@@ -64,13 +64,15 @@ public class JooqPaperRepoIntegrationTest {
         assertThat(papers.get(1).getId()).isEqualTo(2);
         assertThat(papers.get(2).getId()).isEqualTo(3);
         assertThat(papers.get(3).getId()).isEqualTo(4);
+        assertThat(papers.get(4).getId()).isEqualTo(10);
+        assertThat(papers.get(13).getId()).isEqualTo(19);
     }
 
     @Test
     public void findingById_withExistingId_returnsEntity() {
-        Paper paper = repo.findById(1l);
-        paper = repo.findById((long) RECORD_COUNT_PREPOPULATED);
-        assertThat(paper.getId()).isEqualTo(MAX_ID_PREPOPULATED);
+        long id = 4;
+        Paper paper = repo.findById(id);
+        assertThat(paper.getId()).isEqualTo(id);
         assertThat(paper.getAuthors()).isEqualTo("Kutlar Joss M, Joss U.");
     }
 
