@@ -31,7 +31,7 @@ import ch.difty.sipamato.entity.Paper;
 @ActiveProfiles({ "DB_JOOQ" })
 public class JooqPaperRepoIntegrationTest {
 
-    private static final String ID_PART = ",id=1,created=2017-01-01T09:13:33.821,createdBy=1,lastModified=2017-01-02T12:22:11.763,lastModifiedBy=2,version=2";
+    private static final String ID_PART = ",id=1,created=2016-12-14T14:47:29.431,createdBy=1,lastModified=2016-12-14T14:47:29.431,lastModifiedBy=1,version=1";
     // @formatter:off
     private static final String PAPER1_WO_CODE_CLASSES =
             "Paper[doi=10.1093/aje/kwu275,pmId=25395026"

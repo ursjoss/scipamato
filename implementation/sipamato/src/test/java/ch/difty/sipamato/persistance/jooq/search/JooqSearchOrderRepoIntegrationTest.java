@@ -41,7 +41,7 @@ public class JooqSearchOrderRepoIntegrationTest {
 
     @After
     public void teardown() {
-        // Delete all books that were created in any test // TODO add value to TestDbConstants
+        // Delete all search orders that were created in any test
         dsl.delete(SEARCH_ORDER).where(SEARCH_ORDER.ID.gt(RECORD_COUNT_PREPOPULATED.longValue())).execute();
     }
 
