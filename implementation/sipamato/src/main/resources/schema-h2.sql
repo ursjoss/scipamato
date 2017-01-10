@@ -173,6 +173,7 @@ CREATE TABLE search_exclusion (
 );
 
 ALTER TABLE search_exclusion ADD FOREIGN KEY (search_order_id) REFERENCES search_order(id) on delete cascade on update cascade;
+ALTER TABLE search_exclusion ADD FOREIGN KEY (paper_id) REFERENCES paper(id) on delete cascade on update cascade;
 
 
 DROP TABLE IF EXISTS search_condition;
