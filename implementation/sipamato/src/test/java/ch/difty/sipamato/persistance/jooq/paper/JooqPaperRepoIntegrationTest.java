@@ -31,7 +31,7 @@ import ch.difty.sipamato.entity.Paper;
 @ActiveProfiles({ "DB_JOOQ" })
 public class JooqPaperRepoIntegrationTest {
 
-    private static final String ID_PART = ",id=1,created=2017-01-01T09:13:33.821,createdBy=1,lastModified=2017-01-02T12:22:11.763,lastModifiedBy=2,version=2";
+    private static final String ID_PART = ",id=1,created=2016-12-14T14:47:29.431,createdBy=1,lastModified=2016-12-14T14:47:29.431,lastModifiedBy=1,version=1";
     // @formatter:off
     private static final String PAPER1_WO_CODE_CLASSES =
             "Paper[doi=10.1093/aje/kwu275,pmId=25395026"
@@ -64,13 +64,15 @@ public class JooqPaperRepoIntegrationTest {
         assertThat(papers.get(1).getId()).isEqualTo(2);
         assertThat(papers.get(2).getId()).isEqualTo(3);
         assertThat(papers.get(3).getId()).isEqualTo(4);
+        assertThat(papers.get(4).getId()).isEqualTo(10);
+        assertThat(papers.get(13).getId()).isEqualTo(19);
     }
 
     @Test
     public void findingById_withExistingId_returnsEntity() {
-        Paper paper = repo.findById(1l);
-        paper = repo.findById((long) RECORD_COUNT_PREPOPULATED);
-        assertThat(paper.getId()).isEqualTo(MAX_ID_PREPOPULATED);
+        long id = 4;
+        Paper paper = repo.findById(id);
+        assertThat(paper.getId()).isEqualTo(id);
         assertThat(paper.getAuthors()).isEqualTo("Kutlar Joss M, Joss U.");
     }
 

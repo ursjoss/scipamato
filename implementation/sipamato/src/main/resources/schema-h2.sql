@@ -4,14 +4,14 @@ CREATE TABLE paper (
   id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   doi VARCHAR,
   pm_id INT,
-  authors VARCHAR NOT NULL,
-  first_author VARCHAR NOT NULL,
-  first_author_overridden BOOLEAN NOT NULL,
-  title VARCHAR NOT NULL,
-  location VARCHAR NOT NULL,
+  authors VARCHAR,
+  first_author VARCHAR,
+  first_author_overridden BOOLEAN NOT NULL DEFAULT 0,
+  title VARCHAR,
+  location VARCHAR,
   publication_year INT,
   
-  goals VARCHAR NOT NULL,
+  goals VARCHAR,
   population VARCHAR,
   population_place VARCHAR,
   population_participants VARCHAR,
@@ -173,6 +173,7 @@ CREATE TABLE search_exclusion (
 );
 
 ALTER TABLE search_exclusion ADD FOREIGN KEY (search_order_id) REFERENCES search_order(id) on delete cascade on update cascade;
+ALTER TABLE search_exclusion ADD FOREIGN KEY (paper_id) REFERENCES paper(id) on delete cascade on update cascade;
 
 
 DROP TABLE IF EXISTS search_condition;
