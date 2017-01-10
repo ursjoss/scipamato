@@ -25,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
+import ch.difty.sipamato.web.pages.jasper.LinkToPdfPage;
 import ch.difty.sipamato.web.pages.login.LogoutPage;
 import ch.difty.sipamato.web.pages.paper.list.PaperListPage;
 import ch.difty.sipamato.web.pages.paper.search.PaperSearchPage;
@@ -123,6 +124,7 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         addPageLink(navbar, PaperListPage.class, new StringResourceModel("menu.papers", this, null).getString(), GlyphIconType.list);
         addPageLink(navbar, PaperSearchPage.class, new StringResourceModel("menu.search", this, null).getString(), GlyphIconType.search);
         addPageLink(navbar, LogoutPage.class, new StringResourceModel("menu.logout", this, null).getString(), GlyphIconType.edit);
+        addPageLink(navbar, LinkToPdfPage.class, new StringResourceModel("menu.pdfl", this, null).getString(), GlyphIconType.picture);
 
         return navbar;
     }

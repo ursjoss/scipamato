@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sipamato_study_summary_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8862e4a6-fdb2-4c5b-b003-40e0e237f591">
+    <field name="authors" class="java.lang.String"/>
+    <field name="title" class="java.lang.String"/>
+    <field name="location" class="java.lang.String"/>
+    <field name="goals" class="java.lang.String"/>
+    <field name="populationLabel" class="java.lang.String"/>
+    <field name="population" class="java.lang.String"/>
+    <field name="methodsLabel" class="java.lang.String"/>
+    <field name="methods" class="java.lang.String"/>
+    <field name="resultsLabel" class="java.lang.String"/>
+    <field name="results" class="java.lang.String"/>
+    <field name="header" class="java.lang.String"/>
+    <field name="brand" class="java.lang.String"/>
+    <field name="user" class="java.lang.String"/>
+    <field name="year" class="java.lang.String"/>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="0" splitType="Stretch">
+        </band>
+    </title>
+    <pageHeader>
+        <band height="35" splitType="Stretch">
+            <textField>
+                <reportElement x="0" y="0" width="300" height="30" uuid="7902ec84-b06b-4cbf-ac74-e2c5385cf646"/>
+                <textElement textAlignment="Left">
+                    <font size="10" isBold="true" isItalic="false" isUnderline="false"/>
+                    <paragraph leftIndent="0"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{header}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="300" y="0" width="100" height="30"/>
+                <textElement textAlignment="Right">
+                    <font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+                    <paragraph leftIndent="0"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA["© " + $F{brand} + " " + $F{year} + " " + $F{user}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageHeader>
+    <columnHeader>
+        <band height="0" splitType="Stretch"/>
+    </columnHeader>
+    <detail>
+        <band height="350" splitType="Stretch">
+            <textField>
+                <reportElement x="0" y="0" width="500" height="30"/>
+                <textElement textAlignment="Left">
+                    <font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+                    <paragraph leftIndent="0"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{authors}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="35" width="500" height="30"/>
+                <textElement textAlignment="Left">
+                    <font size="10" isBold="true" isItalic="false" isUnderline="false"/>
+                    <paragraph leftIndent="0"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{title}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="70" width="500" height="30"/>
+                <textElement textAlignment="Left">
+                    <font size="10" isBold="true" isItalic="false" isUnderline="false"/>
+                    <paragraph leftIndent="0"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{location}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="110" width="500" height="30"/>
+                <textElement textAlignment="Left">
+                    <font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+                    <paragraph leftIndent="0"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{goals}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="140" width="500" height="30"/>
+                <textElement textAlignment="Left">
+                    <font size="10" isBold="true" isItalic="false" isUnderline="false"/>
+                    <paragraph leftIndent="0"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{populationLabel}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="170" width="500" height="30"/>
+                <textElement textAlignment="Left">
+                    <font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+                    <paragraph leftIndent="0"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{population}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="205" width="500" height="30"/>
+                <textElement textAlignment="Left">
+                    <font size="10" isBold="true" isItalic="false" isUnderline="false"/>
+                    <paragraph leftIndent="0"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{methodsLabel}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="235" width="500" height="30"/>
+                <textElement textAlignment="Left">
+                    <font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+                    <paragraph leftIndent="0"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{methods}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="280" width="500" height="30"/>
+                <textElement textAlignment="Left">
+                    <font size="10" isBold="true" isItalic="false" isUnderline="false"/>
+                    <paragraph leftIndent="0"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{resultsLabel}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="310" width="500" height="30"/>
+                <textElement textAlignment="Left">
+                    <font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+                    <paragraph leftIndent="0"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{results}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="0" splitType="Stretch"/>
+    </columnFooter>
+    <pageFooter>
+        <band height="0" splitType="Stretch"/>
+    </pageFooter>
+    <summary>
+        <band height="42" splitType="Stretch"/>
+    </summary>
+</jasperReport>

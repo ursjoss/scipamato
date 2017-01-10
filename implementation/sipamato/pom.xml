@@ -35,6 +35,9 @@
         <wicket.version>7.6.0</wicket.version>
         <org.jooq.version>3.9.0</org.jooq.version>
         <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
+
+        <!-- Imposed by the wicketstuff-jasperreport module -->
+        <jasperreports.version>5.5.0</jasperreports.version>
     </properties>
 
     <dependencies>
@@ -153,6 +156,13 @@
             <version>${wicket.version}</version>
         </dependency>
 
+        <!-- JasperReport -->
+        <dependency>
+            <groupId>org.wicketstuff</groupId>
+            <artifactId>wicketstuff-jasperreports</artifactId>
+            <version>${wicket.version}</version>
+        </dependency>
+
         <!-- The debug bar is only rendered visible in development mode -->
         <dependency>
             <groupId>org.apache.wicket</groupId>
@@ -243,6 +253,19 @@
                                     </pluginExecutionFilter>
                                     <action>
                                         <ignore />
+                                    </action>
+                                </pluginExecution>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>jasperreports-maven-plugin</artifactId>
+                                        <versionRange>[1.0-beta-2,)</versionRange>
+                                        <goals>
+                                            <goal>compile-reports</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
@@ -386,6 +409,45 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!-- Jasper Report Maven Plugin -> compiling the jrxml files into jasper report files -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jasperreports-maven-plugin</artifactId>
+                <version>1.0-beta-2</version>
+                <configuration>
+                    <sourceDirectory>src/main/jasperreports</sourceDirectory>
+                    <outputDirectory>src/main/webapp/reports</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!-- Need to bind to the compile phase cuz the reports uses classes under target/classes. The default is the generate-resources phase. -->
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile-reports</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sf.jasperreports</groupId>
+                        <artifactId>jasperreports</artifactId>
+                        <version>${jasperreports.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-all</artifactId>
+                        <version>2.0.8</version>
+                        <scope>compile</scope>
+                        <optional>true</optional>
+                    </dependency>
+                    <dependency>
+                        <groupId>javax.servlet</groupId>
+                        <artifactId>javax.servlet-api</artifactId>
+                        <version>3.0.1</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
