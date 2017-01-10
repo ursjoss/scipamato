@@ -86,6 +86,8 @@ public class JooqPaperSlimRepoIntegrationTest {
         sc.setResultExposureRange(x);
         sc.setResultEffectEstimate(x);
 
+        sc.setOriginalAbstract(x);
+
         assertThat(repo.findBySearchOrder(so)).isEmpty();
     }
 
