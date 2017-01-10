@@ -515,6 +515,8 @@ INSERT INTO user VALUES(1, 'testuser', 'user', 'test', 'testuser@sipamato.org', 
 INSERT INTO user VALUES(2, 'admin', 'admin', 'admin', 'admin@sipamato.org', '$2a$04$oOL75tgCf3kXdr6vO5gagu6sIUZWfXyEhZHmDd4LpGvOPTaO5xEoO', true, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
 INSERT INTO user VALUES(3, 'mkj', 'm', 'k j', 'mkj@sipamato.org', '$2a$04$9n.7Iv3eBNU6gqq5cOg8X.QRFBrDbzUOW/wBq5KdHKjOeVt4r0jwG', true, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
 INSERT INTO user VALUES(4, 'rk', 'r', 'k', 'rk@sipamato.org', '$2a$04$UrFcx9Rqadw5JKkJwDpF8unmfubbgna8IZT6FsqW0uEoSd8kMs8.6', true, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO user VALUES(5, 'rr', 'r', 'r', 'rr@sipamato.org', '$2a$04$HbvKICm3qVe/WVqG7I5j9ObL90s3GCpPzSYWPRQ8nGkxVedGYC5Q.', true, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO user VALUES(6, 'dd', 'd', 'd', 'dd@sipamato.org', '$2a$04$5CUjjStiKkQigxhxqzZo2uzZpACBWtEl7H9QxEytNhfAj82VJYgxq', true, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
 
 INSERT INTO user_role VALUES(1, 1, 2, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
 INSERT INTO user_role VALUES(2, 2, 1, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
