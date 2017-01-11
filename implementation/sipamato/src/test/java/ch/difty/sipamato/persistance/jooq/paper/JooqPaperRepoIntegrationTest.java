@@ -66,6 +66,7 @@ public class JooqPaperRepoIntegrationTest {
         assertThat(papers.get(3).getId()).isEqualTo(4);
         assertThat(papers.get(4).getId()).isEqualTo(10);
         assertThat(papers.get(13).getId()).isEqualTo(19);
+        assertThat(papers.get(22).getId()).isEqualTo(28);
     }
 
     @Test
