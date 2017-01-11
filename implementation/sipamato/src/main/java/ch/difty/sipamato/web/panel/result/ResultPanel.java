@@ -35,6 +35,9 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
  * @author u.joss
  */
 public class ResultPanel extends GenericPanel<Void> {
+
+    private static final int ROWS_PER_PAGE = 12;
+
     private static final long serialVersionUID = 1L;
 
     @SpringBean
@@ -63,7 +66,7 @@ public class ResultPanel extends GenericPanel<Void> {
     }
 
     private void makeTable(String id) {
-        results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, 20);
+        results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, ROWS_PER_PAGE);
         results.setOutputMarkupId(true);
         results.add(new TableBehavior().striped().hover());
         queue(results);
