@@ -1,4 +1,8 @@
 wicket:
+  core:
+    settings:
+      markup:
+        stripWicketTags: true
   stuff:
     htmlcompressor:
       enabled: false
