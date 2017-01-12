@@ -33,9 +33,7 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
     }
 
     private void initDefaultModel() {
-        final Paper p = new Paper();
-        p.setPublicationYear(getDateTimeService().getCurrentDate().getYear());
-        setDefaultModel(Model.of(p));
+        setDefaultModel(Model.of(new Paper()));
     }
 
     public PaperEntryPage(IModel<Paper> paperModel) {
