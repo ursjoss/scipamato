@@ -24,4 +24,10 @@ public class JasperReportExceptionTest {
         exception = new JasperReportException(e);
         assertThat(exception.getMessage()).isEqualTo("org.apache.wicket.util.resource.ResourceStreamNotFoundException: foo");
     }
+
+    @Test
+    public void makeJasperReportException_withStringMessage() {
+        exception = new JasperReportException("foo");
+        assertThat(exception.getMessage()).isEqualTo("foo");
+    }
 }

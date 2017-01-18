@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sipamato_study_summary_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8862e4a6-fdb2-4c5b-b003-40e0e237f591">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="paper_summary_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8862e4a6-fdb2-4c5b-b003-40e0e237f591">
     <field name="authors" class="java.lang.String"/>
     <field name="title" class="java.lang.String"/>
     <field name="location" class="java.lang.String"/>
@@ -8,8 +8,8 @@
     <field name="population" class="java.lang.String"/>
     <field name="methodsLabel" class="java.lang.String"/>
     <field name="methods" class="java.lang.String"/>
-    <field name="resultsLabel" class="java.lang.String"/>
-    <field name="results" class="java.lang.String"/>
+    <field name="resultLabel" class="java.lang.String"/>
+    <field name="result" class="java.lang.String"/>
     <field name="header" class="java.lang.String"/>
     <field name="brand" class="java.lang.String"/>
     <field name="user" class="java.lang.String"/>
@@ -116,7 +116,7 @@
                     <font size="10" isBold="true" isItalic="false" isUnderline="false"/>
                     <paragraph leftIndent="0"/>
                 </textElement>
-                <textFieldExpression class="java.lang.String"><![CDATA[$F{resultsLabel}]]></textFieldExpression>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{resultLabel}]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement x="0" y="310" width="500" height="30"/>
@@ -124,7 +124,7 @@
                     <font size="10" isBold="false" isItalic="false" isUnderline="false"/>
                     <paragraph leftIndent="0"/>
                 </textElement>
-                <textFieldExpression class="java.lang.String"><![CDATA[$F{results}]]></textFieldExpression>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{result}]]></textFieldExpression>
             </textField>
         </band>
     </detail>
