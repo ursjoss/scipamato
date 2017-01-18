@@ -3,6 +3,7 @@ package ch.difty.sipamato.web.panel.paper;
 import org.apache.wicket.model.IModel;
 
 import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.web.jasper.summary_sp.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.Mode;
 
 public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
@@ -19,6 +20,11 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
 
     public SearchablePaperPanel(String id, IModel<SearchCondition> model, Mode ignoredMode) {
         super(id, model, Mode.SEARCH);
+    }
+
+    @Override
+    protected PaperSummaryDataSource getSummaryDataSource() {
+        return null;
     }
 
 }

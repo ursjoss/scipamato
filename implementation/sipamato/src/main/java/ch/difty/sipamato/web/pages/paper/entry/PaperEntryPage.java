@@ -48,7 +48,6 @@ public class PaperEntryPage extends AutoSaveAwarePage<Paper> {
             @Override
             protected void onFormSubmit() {
                 PaperEntryPage.this.doUpdate();
-
             }
         };
         queue(contentPanel);

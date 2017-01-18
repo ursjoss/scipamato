@@ -16,6 +16,7 @@ import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
+import ch.difty.sipamato.web.jasper.summary_sp.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.Mode;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 
@@ -51,6 +52,11 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         };
         firstAuthor.add(new PropertyValidator<String>());
         return firstAuthor;
+    }
+
+    @Override
+    protected PaperSummaryDataSource getSummaryDataSource() {
+        return new PaperSummaryDataSource(getModelObject(), getActiveUser().getUserName());
     }
 
     @Override
@@ -119,7 +125,6 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             }
 
         };
-
     }
 
 }

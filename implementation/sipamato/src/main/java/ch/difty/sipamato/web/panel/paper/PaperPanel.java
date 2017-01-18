@@ -19,6 +19,7 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
+import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.ChainingModel;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -33,6 +34,7 @@ import ch.difty.sipamato.entity.CodeClass;
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.web.jasper.summary_sp.PaperSummaryDataSource;
 import ch.difty.sipamato.web.model.CodeClassModel;
 import ch.difty.sipamato.web.model.CodeModel;
 import ch.difty.sipamato.web.pages.Mode;
@@ -108,6 +110,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         queueFieldAndLabel(modified);
 
         makeAndQueueSubmitButton("submit");
+
+        makeAndQueueSummaryLink("summaryLink");
     }
 
     private void queueTabPanel(String tabId) {
@@ -191,6 +195,17 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         submit.setEnabled(!isViewMode());
         queue(submit);
     }
+
+    private void makeAndQueueSummaryLink(String id) {
+        ResourceLink<Void> summaryLink = new ResourceLink<Void>(id, getSummaryDataSource());
+        summaryLink.setVisible(!isSearchMode());
+        summaryLink.setOutputMarkupId(true);
+        summaryLink.setBody(new StringResourceModel("link.summary.label"));
+        queue(summaryLink);
+    }
+
+    /** implement to return PaperSummaryDataSource */
+    protected abstract PaperSummaryDataSource getSummaryDataSource();
 
     private abstract class AbstractTabPanel extends Panel {
 
