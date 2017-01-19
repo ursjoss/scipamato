@@ -9,7 +9,7 @@ import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
-import org.apache.wicket.markup.html.panel.GenericPanel;
+import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
@@ -22,8 +22,10 @@ import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.component.SerializableConsumer;
 import ch.difty.sipamato.web.component.data.LinkIconColumn;
 import ch.difty.sipamato.web.component.table.column.ClickablePropertyColumn;
+import ch.difty.sipamato.web.jasper.summary_sp.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import ch.difty.sipamato.web.panel.AbstractPanel;
 import ch.difty.sipamato.web.panel.search.SearchOrderChangeEvent;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
@@ -34,7 +36,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
  *
  * @author u.joss
  */
-public class ResultPanel extends GenericPanel<Void> {
+public class ResultPanel extends AbstractPanel<Void> {
 
     private static final int ROWS_PER_PAGE = 12;
 
@@ -62,10 +64,11 @@ public class ResultPanel extends GenericPanel<Void> {
     protected void onInitialize() {
         super.onInitialize();
 
-        makeTable("table");
+        makeAndQueueTable("table");
+        makeAndQueuePdfLink("summaryLink");
     }
 
-    private void makeTable(String id) {
+    private void makeAndQueueTable(String id) {
         results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, ROWS_PER_PAGE);
         results.setOutputMarkupId(true);
         results.add(new TableBehavior().striped().hover());
@@ -108,6 +111,13 @@ public class ResultPanel extends GenericPanel<Void> {
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).withExcludedPaperId(excludedId));
             }
         };
+    }
+
+    private void makeAndQueuePdfLink(String id) {
+        ResourceLink<Void> summaryLink = new ResourceLink<Void>(id, new PaperSummaryDataSource(dataProvider, paperService));
+        summaryLink.setOutputMarkupId(true);
+        summaryLink.setBody(new StringResourceModel("link.summary.label"));
+        queue(summaryLink);
     }
 
 }

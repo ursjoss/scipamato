@@ -187,4 +187,13 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
         }
     }
 
+    @Test
+    public void gettingByIds_withNullIdList_throwsNullArgumentException() {
+        try {
+            repo.findByIds(null);
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("ids must not be null.");
+        }
+    }
+
 }

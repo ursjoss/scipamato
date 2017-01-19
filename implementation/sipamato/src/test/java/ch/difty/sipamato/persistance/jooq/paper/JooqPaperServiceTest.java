@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -151,4 +152,23 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         verify(repoMock, times(1)).delete(3l);
     }
 
+    @Test
+    public void findingByIds_delegatesToRepo() {
+        final List<Long> ids = Arrays.asList(2l, 3l);
+        when(repoMock.findByIds(ids)).thenReturn(papers);
+
+        assertThat(service.findByIds(ids)).contains(paperMock, paperMock);
+
+        verify(repoMock).findByIds(ids);
+    }
+
+    @Test
+    public void findingByIds_() {
+        final List<Long> ids = null;
+        when(repoMock.findByIds(ids)).thenReturn(papers);
+
+        assertThat(service.findByIds(ids)).contains(paperMock, paperMock);
+
+        verify(repoMock).findByIds(ids);
+    }
 }

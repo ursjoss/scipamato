@@ -3,15 +3,19 @@ package ch.difty.sipamato.web.panel.result;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.Optional;
 
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.junit.After;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -62,6 +66,11 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         when(pageMock.iterator()).thenReturn(Arrays.asList(paperSlim).iterator());
     }
 
+    @After
+    public void tearDown() {
+        verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeClassServiceMock, codeServiceMock, searchOrderMock, pageMock);
+    }
+
     @Override
     protected ResultPanel makePanel() {
         provider = new SearchOrderBasedSortablePaperSlimProvider(searchOrderMock);
@@ -75,6 +84,9 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         String bb = b + ":table";
         getTester().assertComponent(bb, BootstrapDefaultDataTable.class);
         assertTableRow(bb + ":body:rows:1:cells");
+
+        bb = b + ":summaryLink";
+        getTester().assertComponent(bb, ResourceLink.class);
 
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findBySearchOrder(eq(searchOrderMock), isA(Pageable.class));
@@ -100,6 +112,9 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         getTester().clickLink(PANEL_ID + ":table:body:rows:1:cells:4:cell:link");
         getTester().assertRenderedPage(PaperEntryPage.class);
 
+        verify(paperSlimServiceMock).countBySearchOrder(searchOrderMock);
+        verify(paperSlimServiceMock).findBySearchOrder(eq(searchOrderMock), isA(Pageable.class));
+        verify(pageMock).iterator();
         verify(paperServiceMock).findById(ID);
         verify(codeClassServiceMock).find(anyString());
         verify(codeServiceMock, times(8)).findCodesOfClass(isA(CodeClassId.class), anyString());
@@ -112,6 +127,35 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         getTester().assertInfoMessages("Excluded firstAuthor (2016): title.");
         getTester().assertComponentOnAjaxResponse(PANEL_ID + ":table");
         // TODO how to verify the response was sent with the id to be excluded
+
+        verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
+        verify(paperSlimServiceMock, times(2)).findBySearchOrder(eq(searchOrderMock), isA(Pageable.class));
+        verify(pageMock, times(2)).iterator();
+    }
+
+    /**
+     * Note, we're partially also testing the PaperSummaryDataSource and even the Provider here in order to make
+     * sure the functionality is triggered. Not sure how to verify the action otherwise.
+     */
+    @SuppressWarnings("unchecked")
+    @Test
+    public void clickingSummaryLink_retrievesPaperSlimsViaProvider_thenPapersViaService_toBuildPaperSummaries() {
+        Paper paperMock = mock(Paper.class);
+        when(paperMock.getId()).thenReturn(ID);
+
+        when(pageMock.iterator()).thenReturn(Arrays.asList(paperSlim).iterator(), Arrays.asList(paperSlim).iterator());
+        when(paperServiceMock.findByIds(Arrays.asList(ID))).thenReturn(Arrays.asList(paperMock));
+
+        getTester().startComponentInPage(makePanel());
+        getTester().clickLink(PANEL_ID + ":summaryLink");
+
+        verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
+        verify(paperSlimServiceMock, times(2)).findBySearchOrder(eq(searchOrderMock), isA(Pageable.class));
+        verify(pageMock, times(2)).iterator();
+        verify(paperServiceMock).findByIds(Arrays.asList(ID));
+        verify(paperMock).getId();
+        verify(paperMock).getAuthors();
+        // and other fields not verified here
     }
 
 }

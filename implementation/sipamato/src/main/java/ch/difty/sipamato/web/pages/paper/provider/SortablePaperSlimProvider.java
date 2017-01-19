@@ -53,7 +53,8 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
     protected abstract Iterator<PaperSlim> findByFilter(Pageable pageable);
 
     private int getPageIndex(long from, long size) {
-        return (int) (from / size);
+        System.out.println("from: " + from + " - size: " + size);
+        return size > 0 ? (int) (from / size) : 1;
     }
 
     @Override
