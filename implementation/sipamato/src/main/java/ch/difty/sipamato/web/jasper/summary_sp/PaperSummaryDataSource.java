@@ -15,6 +15,7 @@ import org.wicketstuff.jasperreports.handlers.PdfResourceHandler;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
 import ch.difty.sipamato.web.resources.jasper.PaperSummaryReportResourceReference;
@@ -46,52 +47,57 @@ public class PaperSummaryDataSource extends JRConcreteResource<PdfResourceHandle
     // TODO: retrieve labels dynamically, Define and retrieve headerPart and brand, timeService to get now
 
     /**
-     * Instantiate by {@link Paper}
-     * @param paper
+     * Build up the paper summary from a {@link Paper} and any additional information not contained within the paper
+     * @param paper an instance of {@link Paper} - must not be null.
      * @param userName
      */
-    public PaperSummaryDataSource(final Paper paper, final String userName) {
-        this(Arrays.asList(new PaperSummary(paper, "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK", userName, LocalDateTime.now())));
+    // TODO additional fields as parameters
+    public PaperSummaryDataSource(final Paper paper) {
+        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK", LocalDateTime.now())));
     }
 
     /**
-     * Instantiate by {@link PaperSummary}
-     * @param paperSummary
+     * Uses as single {@link PaperSummary} transparently as data source
+     * @param paperSummary an instance of {@link PaperSummary} - must not be null
      */
     public PaperSummaryDataSource(final PaperSummary paperSummary) {
-        this(Arrays.asList(paperSummary));
+        this(Arrays.asList(AssertAs.notNull(paperSummary, "paperSummary")));
     }
 
     /**
-     * Instantiate by collection of {@link PaperSummary} entities
-     * @param paperSummaries
+     * Using a collection of {@link PaperSummary} instances as data source
+     * @param paperSummaries collection of {@link PaperSummary} instances - must not be null
      */
     public PaperSummaryDataSource(final Collection<PaperSummary> paperSummaries) {
         super(new PdfResourceHandler());
-        setJasperReport(PaperSummaryReportResourceReference.get().getReport());
-        setReportParameters(new HashMap<String, Object>());
-        this.paperSummaries.clear();
+        init();
+        AssertAs.notNull(paperSummaries, "paperSummaries");
         this.paperSummaries.addAll(paperSummaries);
     }
 
-    /**
-     * Instantiating by {@link SortablePaperSlimProvider} and {@link PaperService}
-     * @param dataProvider
-     * @param paperService
-     */
-    public PaperSummaryDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final PaperService paperService) {
-        super(new PdfResourceHandler());
+    private void init() {
         setJasperReport(PaperSummaryReportResourceReference.get().getReport());
         setReportParameters(new HashMap<String, Object>());
         this.paperSummaries.clear();
-        this.dataProvider = dataProvider;
-        this.paperService = paperService;
+    }
+
+    /**
+     * Using the dataProvider for the Result Panel as record source. Needs the {@link PaperService} to retrieve the papers
+     * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
+     * @param dataProvider the {@link SortablePaperSlimProvider} - must not be null
+     * @param paperService the {@link PaperService} - must not be null
+     */
+    public PaperSummaryDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final PaperService paperService) {
+        super(new PdfResourceHandler());
+        init();
+        this.dataProvider = AssertAs.notNull(dataProvider, "dataProvider");
+        this.paperService = AssertAs.notNull(paperService, "paperService");
     }
 
     /** {@iheritDoc} */
     @Override
     public JRDataSource getReportDataSource() {
-        if (dataProvider != null && paperService != null) {
+        if (dataProvider != null) {
             paperSummaries.clear();
             fetchSummariesFromDataProvider();
         }
@@ -117,11 +123,9 @@ public class PaperSummaryDataSource extends JRConcreteResource<PdfResourceHandle
             @SuppressWarnings("unchecked")
             final List<PaperSlim> paperSlims = IteratorUtils.toList(dataProvider.iterator(0, records));
             final List<Long> ids = paperSlims.stream().map(p -> p.getId()).collect(Collectors.toList());
-            if (!ids.isEmpty()) {
-                final List<Paper> papers = paperService.findByIds(ids);
-                for (Paper p : papers) {
-                    paperSummaries.add(new PaperSummary(p, "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK", "userName", LocalDateTime.now()));
-                }
+            final List<Paper> papers = paperService.findByIds(ids);
+            for (final Paper p : papers) {
+                paperSummaries.add(new PaperSummary(p, "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK", LocalDateTime.now()));
             }
         }
     }

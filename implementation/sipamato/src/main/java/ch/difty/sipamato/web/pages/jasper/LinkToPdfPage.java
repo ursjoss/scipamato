@@ -55,8 +55,8 @@ public class LinkToPdfPage extends BasePage<Void> {
         p2.setPopulation("all the population XX");
         p2.setMethods("all the methods XX");
         p2.setResult("all the results XX");
-        PaperSummary ps1 = new PaperSummary(p1, "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK", getActiveUser().getUserName(), LocalDateTime.now());
-        PaperSummary ps2 = new PaperSummary(p2, "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK", getActiveUser().getUserName(), LocalDateTime.now());
+        PaperSummary ps1 = new PaperSummary(p1, "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK", LocalDateTime.now());
+        PaperSummary ps2 = new PaperSummary(p2, "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK", LocalDateTime.now());
         add(new ResourceLink<Void>("linkToPdf", new PaperSummaryDataSource(Arrays.asList(ps1, ps2))));
     }
 

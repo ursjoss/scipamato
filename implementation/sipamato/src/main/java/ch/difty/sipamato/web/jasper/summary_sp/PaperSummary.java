@@ -8,7 +8,7 @@ import ch.difty.sipamato.lib.AssertAs;
 
 /**
  * DTO to feed the PaperSummaryDataSource
- * 
+ *
  * @author u.joss
  */
 public class PaperSummary implements Serializable {
@@ -28,11 +28,37 @@ public class PaperSummary implements Serializable {
 
     private final String header;
     private final String brand;
-    private final String user;
+    private final String createdBy;
     private final String year;
 
-    public PaperSummary(Long id, String authors, String title, String location, String goals, String population, String methods, String result, String populationLabel, String methodsLabel,
-            String resultLabel, String headerPart, String brand, String user, LocalDateTime now) {
+    /**
+     * Instantiation with a {@link Paper} and additional fields
+     *
+     * @param p
+     *      the paper
+     * @param populationLabel
+     *      localized label for the population field
+     * @param methodsLabel
+     *      localized label for the methods field
+     * @param resultsLabel
+     *      localized label for the result field
+     * @param headerPart
+     *      Static part of the header - will be supplemented with the id
+     * @param brand
+     *      Brand of the application
+     * @param now
+     *      current timestamp -> will be used to print the year
+     */
+    public PaperSummary(final Paper p, final String populationLabel, final String methodsLabel, final String resultsLabel, final String headerPart, final String brand, final LocalDateTime now) {
+        this(p.getId(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulation(), p.getMethods(), p.getResult(), populationLabel, methodsLabel, resultsLabel, headerPart, brand,
+                p.getCreatedByName(), now);
+    }
+
+    /**
+     * Instantiation with all individual fields (those that are part of a {@link Paper} and all other from the other constructor.
+     */
+    public PaperSummary(final Long id, final String authors, final String title, final String location, final String goals, final String population, final String methods, final String result,
+            final String populationLabel, final String methodsLabel, final String resultLabel, final String headerPart, final String brand, final String createdBy, final LocalDateTime now) {
         AssertAs.notNull(now, "now");
         this.id = id != null ? String.valueOf(id) : "";
         this.authors = na(authors);
@@ -49,12 +75,12 @@ public class PaperSummary implements Serializable {
 
         this.header = makeHeader(id, headerPart);
         this.brand = na(brand);
-        this.user = na(user);
+        this.createdBy = na(createdBy);
         this.year = String.valueOf(now.getYear());
     }
 
-    private String makeHeader(Long id, String headerPart) {
-        StringBuilder sb = new StringBuilder();
+    private String makeHeader(final Long id, final String headerPart) {
+        final StringBuilder sb = new StringBuilder();
         if (headerPart != null) {
             sb.append(headerPart);
         }
@@ -66,13 +92,8 @@ public class PaperSummary implements Serializable {
         return sb.toString();
     }
 
-    private String na(String s) {
+    private String na(final String s) {
         return s != null ? s : "";
-    }
-
-    public PaperSummary(Paper p, String populationLabel, String methodsLabel, String resultsLabel, String headerPart, String brand, String user, LocalDateTime now) {
-        this(p.getId(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulation(), p.getMethods(), p.getResult(), populationLabel, methodsLabel, resultsLabel, headerPart, brand,
-                user, now);
     }
 
     public String getId() {
@@ -127,8 +148,8 @@ public class PaperSummary implements Serializable {
         return brand;
     }
 
-    public String getUser() {
-        return user;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
     public String getYear() {

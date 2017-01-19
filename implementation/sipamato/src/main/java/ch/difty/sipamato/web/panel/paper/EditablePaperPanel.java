@@ -56,7 +56,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @Override
     protected PaperSummaryDataSource getSummaryDataSource() {
-        return new PaperSummaryDataSource(getModelObject(), getActiveUser().getUserName());
+        return new PaperSummaryDataSource(getModelObject());
     }
 
     @Override

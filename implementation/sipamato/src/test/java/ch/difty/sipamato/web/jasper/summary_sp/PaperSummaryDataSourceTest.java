@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.WicketTest;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
@@ -36,7 +37,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
     private static final String POPULATION = "population";
     private static final String METHODS = "methods";
     private static final String RESULT = "result";
-    private static final String USER_NAME = "userName";
+    private static final String CREATED_BY = "creatingUser";
 
     private PaperSummaryDataSource ds;
 
@@ -57,6 +58,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
         when(paperMock.getPopulation()).thenReturn(POPULATION);
         when(paperMock.getMethods()).thenReturn(METHODS);
         when(paperMock.getResult()).thenReturn(RESULT);
+        when(paperMock.getCreatedByName()).thenReturn(CREATED_BY);
     }
 
     @After
@@ -66,7 +68,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
 
     @Test
     public void instantiatingWithPaper_returnsPdfDataSourceWithOneRecord() throws JRException {
-        ds = new PaperSummaryDataSource(paperMock, USER_NAME);
+        ds = new PaperSummaryDataSource(paperMock);
 
         assertDataSource();
 
@@ -78,6 +80,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
         verify(paperMock).getPopulation();
         verify(paperMock).getMethods();
         verify(paperMock).getResult();
+        verify(paperMock).getCreatedByName();
     }
 
     private void assertDataSource() throws JRException {
@@ -108,7 +111,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
 
         assertFieldValue("header", "LUDOK-Zusammenfassung Nr. 10", f, jsds);
         assertFieldValue("brand", "LUDOK", f, jsds);
-        assertFieldValue("user", USER_NAME, f, jsds);
+        assertFieldValue("createdBy", CREATED_BY, f, jsds);
         assertFieldValue("year", "2017", f, jsds); // TODO use fix value with timeService
 
         assertThat(jsds.next()).isFalse();
@@ -121,14 +124,13 @@ public class PaperSummaryDataSourceTest extends WicketTest {
 
     @Test
     public void instantiatingWithPaperSummary_returnsPdfDataSourceWithOneRecord() throws JRException {
-        PaperSummary ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK", USER_NAME,
+        PaperSummary ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK", CREATED_BY,
                 LocalDateTime.parse("2017-01-01T15:13:12"));
         ds = new PaperSummaryDataSource(ps);
 
         assertDataSource();
     }
 
-    // TODO continue
     @Test
     public void instantiatingWithProvider_returnsPdfDataSourceWithOneRecord() throws JRException {
         @SuppressWarnings("unchecked")
@@ -160,7 +162,34 @@ public class PaperSummaryDataSourceTest extends WicketTest {
         verify(paperMock).getPopulation();
         verify(paperMock).getMethods();
         verify(paperMock).getResult();
+        verify(paperMock).getCreatedByName();
 
         verifyNoMoreInteractions(itMock, paperSlimMock);
+    }
+
+    @Test
+    public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
+        when(dataProviderMock.size()).thenReturn(0l);
+        ds = new PaperSummaryDataSource(dataProviderMock, paperServiceMock);
+        assertThat(ds.getReportDataSource().next()).isFalse();
+        verify(dataProviderMock).size();
+    }
+
+    @Test
+    public void instantiatingWithProvider_withNullProivder_throws() throws JRException {
+        try {
+            new PaperSummaryDataSource(null, paperServiceMock);
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dataProvider must not be null.");
+        }
+    }
+
+    @Test
+    public void instantiatingWithProvider_withNullService_throws() throws JRException {
+        try {
+            new PaperSummaryDataSource(dataProviderMock, null);
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("paperService must not be null.");
+        }
     }
 }

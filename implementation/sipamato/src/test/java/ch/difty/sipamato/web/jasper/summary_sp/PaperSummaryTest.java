@@ -24,7 +24,7 @@ public class PaperSummaryTest {
     private static final String RESULTS_LABEL = "resultsLabel";
     private static final String HEADER_PART = "headerPart";
     private static final String BRAND = "brand";
-    private static final String USER = "user";
+    private static final String CREATED_BY = "creatingUser";
     private static final String YEAR = "2017";
     private static final LocalDateTime NOW = LocalDateTime.parse(YEAR + "-01-18T15:32:00");
 
@@ -32,7 +32,7 @@ public class PaperSummaryTest {
 
     @Test
     public void instantiatingUsingIndividualFields() {
-        ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, POPULATION_LABEL, METHODS_LABEL, RESULTS_LABEL, HEADER_PART, BRAND, USER, NOW);
+        ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, POPULATION_LABEL, METHODS_LABEL, RESULTS_LABEL, HEADER_PART, BRAND, CREATED_BY, NOW);
 
         assertPaperSummary();
     }
@@ -48,7 +48,8 @@ public class PaperSummaryTest {
         p.setPopulation(POPULATION);
         p.setMethods(METHODS);
         p.setResult(RESULT);
-        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULTS_LABEL, HEADER_PART, BRAND, USER, NOW);
+        p.setCreatedByName(CREATED_BY);
+        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULTS_LABEL, HEADER_PART, BRAND, NOW);
 
         assertPaperSummary();
     }
@@ -69,13 +70,13 @@ public class PaperSummaryTest {
 
         assertThat(ps.getHeader()).isEqualTo(HEADER_PART + " " + ID);
         assertThat(ps.getBrand()).isEqualTo(BRAND);
-        assertThat(ps.getUser()).isEqualTo(USER);
+        assertThat(ps.getCreatedBy()).isEqualTo(CREATED_BY);
         assertThat(ps.getYear()).isEqualTo(YEAR);
     }
 
     @Test(expected = NullArgumentException.class)
     public void withNullTimestamp_throws() {
-        new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, POPULATION_LABEL, METHODS_LABEL, RESULTS_LABEL, HEADER_PART, BRAND, USER, null);
+        new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, POPULATION_LABEL, METHODS_LABEL, RESULTS_LABEL, HEADER_PART, BRAND, CREATED_BY, null);
     }
 
     @Test
@@ -97,7 +98,7 @@ public class PaperSummaryTest {
 
         assertThat(ps.getHeader()).isEmpty();
         assertThat(ps.getBrand()).isEmpty();
-        assertThat(ps.getUser()).isEmpty();
+        assertThat(ps.getCreatedBy()).isEmpty();
         assertThat(ps.getYear()).isEqualTo(YEAR);
     }
 
