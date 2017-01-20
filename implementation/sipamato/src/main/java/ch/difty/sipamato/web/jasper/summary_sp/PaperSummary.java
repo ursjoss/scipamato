@@ -1,10 +1,8 @@
 package ch.difty.sipamato.web.jasper.summary_sp;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.lib.AssertAs;
 
 /**
  * DTO to feed the PaperSummaryDataSource
@@ -29,7 +27,6 @@ public class PaperSummary implements Serializable {
     private final String header;
     private final String brand;
     private final String createdBy;
-    private final String year;
 
     /**
      * Instantiation with a {@link Paper} and additional fields
@@ -46,20 +43,17 @@ public class PaperSummary implements Serializable {
      *      Static part of the header - will be supplemented with the id
      * @param brand
      *      Brand of the application
-     * @param now
-     *      current timestamp -> will be used to print the year
      */
-    public PaperSummary(final Paper p, final String populationLabel, final String methodsLabel, final String resultsLabel, final String headerPart, final String brand, final LocalDateTime now) {
+    public PaperSummary(final Paper p, final String populationLabel, final String methodsLabel, final String resultsLabel, final String headerPart, final String brand) {
         this(p.getId(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulation(), p.getMethods(), p.getResult(), populationLabel, methodsLabel, resultsLabel, headerPart, brand,
-                p.getCreatedByName(), now);
+                p.getCreatedByName());
     }
 
     /**
      * Instantiation with all individual fields (those that are part of a {@link Paper} and all other from the other constructor.
      */
     public PaperSummary(final Long id, final String authors, final String title, final String location, final String goals, final String population, final String methods, final String result,
-            final String populationLabel, final String methodsLabel, final String resultLabel, final String headerPart, final String brand, final String createdBy, final LocalDateTime now) {
-        AssertAs.notNull(now, "now");
+            final String populationLabel, final String methodsLabel, final String resultLabel, final String headerPart, final String brand, final String createdBy) {
         this.id = id != null ? String.valueOf(id) : "";
         this.authors = na(authors);
         this.title = na(title);
@@ -76,7 +70,6 @@ public class PaperSummary implements Serializable {
         this.header = makeHeader(id, headerPart);
         this.brand = na(brand);
         this.createdBy = na(createdBy);
-        this.year = String.valueOf(now.getYear());
     }
 
     private String makeHeader(final Long id, final String headerPart) {
@@ -152,7 +145,4 @@ public class PaperSummary implements Serializable {
         return createdBy;
     }
 
-    public String getYear() {
-        return year;
-    }
 }

@@ -1,6 +1,5 @@
 package ch.difty.sipamato.web.jasper.summary_sp;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -49,11 +48,10 @@ public class PaperSummaryDataSource extends JRConcreteResource<PdfResourceHandle
     /**
      * Build up the paper summary from a {@link Paper} and any additional information not contained within the paper
      * @param paper an instance of {@link Paper} - must not be null.
-     * @param userName
      */
     // TODO additional fields as parameters
     public PaperSummaryDataSource(final Paper paper) {
-        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK", LocalDateTime.now())));
+        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK")));
     }
 
     /**
@@ -125,7 +123,7 @@ public class PaperSummaryDataSource extends JRConcreteResource<PdfResourceHandle
             final List<Long> ids = paperSlims.stream().map(p -> p.getId()).collect(Collectors.toList());
             final List<Paper> papers = paperService.findByIds(ids);
             for (final Paper p : papers) {
-                paperSummaries.add(new PaperSummary(p, "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK", LocalDateTime.now()));
+                paperSummaries.add(new PaperSummary(p, "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK"));
             }
         }
     }

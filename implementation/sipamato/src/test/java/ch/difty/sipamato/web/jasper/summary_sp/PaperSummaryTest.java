@@ -2,12 +2,9 @@ package ch.difty.sipamato.web.jasper.summary_sp;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDateTime;
-
 import org.junit.Test;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.lib.NullArgumentException;
 
 public class PaperSummaryTest {
 
@@ -25,14 +22,12 @@ public class PaperSummaryTest {
     private static final String HEADER_PART = "headerPart";
     private static final String BRAND = "brand";
     private static final String CREATED_BY = "creatingUser";
-    private static final String YEAR = "2017";
-    private static final LocalDateTime NOW = LocalDateTime.parse(YEAR + "-01-18T15:32:00");
 
     private PaperSummary ps;
 
     @Test
     public void instantiatingUsingIndividualFields() {
-        ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, POPULATION_LABEL, METHODS_LABEL, RESULTS_LABEL, HEADER_PART, BRAND, CREATED_BY, NOW);
+        ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, POPULATION_LABEL, METHODS_LABEL, RESULTS_LABEL, HEADER_PART, BRAND, CREATED_BY);
 
         assertPaperSummary();
     }
@@ -49,7 +44,7 @@ public class PaperSummaryTest {
         p.setMethods(METHODS);
         p.setResult(RESULT);
         p.setCreatedByName(CREATED_BY);
-        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULTS_LABEL, HEADER_PART, BRAND, NOW);
+        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULTS_LABEL, HEADER_PART, BRAND);
 
         assertPaperSummary();
     }
@@ -71,17 +66,11 @@ public class PaperSummaryTest {
         assertThat(ps.getHeader()).isEqualTo(HEADER_PART + " " + ID);
         assertThat(ps.getBrand()).isEqualTo(BRAND);
         assertThat(ps.getCreatedBy()).isEqualTo(CREATED_BY);
-        assertThat(ps.getYear()).isEqualTo(YEAR);
-    }
-
-    @Test(expected = NullArgumentException.class)
-    public void withNullTimestamp_throws() {
-        new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, POPULATION_LABEL, METHODS_LABEL, RESULTS_LABEL, HEADER_PART, BRAND, CREATED_BY, null);
     }
 
     @Test
     public void withNullFieldsWherePossible_providesEmptyStrings() {
-        ps = new PaperSummary(null, null, null, null, null, null, null, null, null, null, null, null, null, null, NOW);
+        ps = new PaperSummary(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         assertThat(ps.getId()).isEmpty();
         assertThat(ps.getAuthors()).isEmpty();
@@ -99,12 +88,11 @@ public class PaperSummaryTest {
         assertThat(ps.getHeader()).isEmpty();
         assertThat(ps.getBrand()).isEmpty();
         assertThat(ps.getCreatedBy()).isEmpty();
-        assertThat(ps.getYear()).isEqualTo(YEAR);
     }
 
     @Test
     public void withNullFieldsExceptId_providesHeaderWithIdOnly() {
-        ps = new PaperSummary(ID, null, null, null, null, null, null, null, null, null, null, null, null, null, NOW);
+        ps = new PaperSummary(ID, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         assertThat(ps.getId()).isEqualTo(String.valueOf(ID));
         assertThat(ps.getHeader()).isEqualTo(String.valueOf(ID));
@@ -112,7 +100,7 @@ public class PaperSummaryTest {
 
     @Test
     public void withNullFieldsExceptHeaderPart_providesHeaderPartOnly() {
-        ps = new PaperSummary(null, null, null, null, null, null, null, null, null, null, null, HEADER_PART, null, null, NOW);
+        ps = new PaperSummary(null, null, null, null, null, null, null, null, null, null, null, HEADER_PART, null, null);
 
         assertThat(ps.getId()).isEmpty();
         assertThat(ps.getHeader()).isEqualTo(HEADER_PART);

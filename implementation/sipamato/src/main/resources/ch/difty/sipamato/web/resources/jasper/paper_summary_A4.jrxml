@@ -13,7 +13,6 @@
     <field name="header" class="java.lang.String"/>
     <field name="brand" class="java.lang.String"/>
     <field name="createdBy" class="java.lang.String"/>
-    <field name="year" class="java.lang.String"/>
     <background>
         <band splitType="Stretch"/>
     </background>
@@ -37,7 +36,7 @@
                     <font size="10" isBold="false" isItalic="false" isUnderline="false"/>
                     <paragraph leftIndent="0"/>
                 </textElement>
-                <textFieldExpression class="java.lang.String"><![CDATA["© " + $F{brand} + " " + $F{year} + " " + $F{createdBy}]]></textFieldExpression>
+                <textFieldExpression class="java.lang.String"><![CDATA["© " + $F{brand} + " " + java.util.Calendar.getInstance().get(Calendar.YEAR) + " " + $F{createdBy}]]></textFieldExpression>
             </textField>
         </band>
     </pageHeader>

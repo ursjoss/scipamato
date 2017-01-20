@@ -7,7 +7,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -112,7 +111,6 @@ public class PaperSummaryDataSourceTest extends WicketTest {
         assertFieldValue("header", "LUDOK-Zusammenfassung Nr. 10", f, jsds);
         assertFieldValue("brand", "LUDOK", f, jsds);
         assertFieldValue("createdBy", CREATED_BY, f, jsds);
-        assertFieldValue("year", "2017", f, jsds); // TODO use fix value with timeService
 
         assertThat(jsds.next()).isFalse();
     }
@@ -124,8 +122,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
 
     @Test
     public void instantiatingWithPaperSummary_returnsPdfDataSourceWithOneRecord() throws JRException {
-        PaperSummary ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK", CREATED_BY,
-                LocalDateTime.parse("2017-01-01T15:13:12"));
+        PaperSummary ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK", CREATED_BY);
         ds = new PaperSummaryDataSource(ps);
 
         assertDataSource();
@@ -192,4 +189,5 @@ public class PaperSummaryDataSourceTest extends WicketTest {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("paperService must not be null.");
         }
     }
+
 }
