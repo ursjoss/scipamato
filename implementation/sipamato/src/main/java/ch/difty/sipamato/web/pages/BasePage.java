@@ -22,6 +22,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import ch.difty.sipamato.config.ApplicationProperties;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
@@ -52,6 +53,13 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
     protected DateTimeService getDateTimeService() {
         return dateTimeService;
+    }
+
+    @SpringBean
+    private ApplicationProperties applicationProperties;
+
+    protected ApplicationProperties getProperties() {
+        return applicationProperties;
     }
 
     private NotificationPanel feedbackPanel;
@@ -117,7 +125,7 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         Navbar navbar = new Navbar(markupId);
 
         navbar.setPosition(Navbar.Position.TOP);
-        navbar.setBrandName(new ResourceModel("brandname", "SiPaMaTo"));
+        navbar.setBrandName(new ResourceModel("brandname", getProperties().getBrand()));
         navbar.setInverted(true);
 
         addPageLink(navbar, SipamatoHomePage.class, new StringResourceModel("menu.home", this, null).getString(), GlyphIconType.home);
