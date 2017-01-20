@@ -27,11 +27,13 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  * Can be instantiated in different ways, either by passing in
  *
  * <ul>
- * <li> a single {@link Paper}</li>
+ * <li> a single {@link Paper} + meta fields</li>
  * <li> a single {@link PaperSummary}</li>
  * <li> a collection of {@link PaperSummary} entities or</li>
- * <li> an instance of a {@link SortablePaperSlimProvider} and the {@link PaperService}</li>
+ * <li> an instance of a {@link SortablePaperSlimProvider} and the {@link PaperService} + meta fields</li>
  * </ul>
+ *
+ * The meta fields are not contained within a paper instance and make up e.g. localized labels, the brand or part of the header.
  * @author u.joss
  */
 public class PaperSummaryDataSource extends JRConcreteResource<PdfResourceHandler> {
@@ -43,15 +45,29 @@ public class PaperSummaryDataSource extends JRConcreteResource<PdfResourceHandle
     private SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider;
     private PaperService paperService;
 
-    // TODO: retrieve labels dynamically, Define and retrieve headerPart and brand, timeService to get now
+    private String populationLabel;
+    private String methodsLabel;
+    private String resultLabel;
+    private String headerPart;
+    private String brand;
 
     /**
      * Build up the paper summary from a {@link Paper} and any additional information not contained within the paper
-     * @param paper an instance of {@link Paper} - must not be null.
+     * @param paper
+     *      an instance of {@link Paper} - must not be null.
+     * @param populationLabel
+     *      localized label for the population field
+     * @param methodsLabel
+     *      localized label for the methods field
+     * @param resultLabel
+     *      localized label for the result field
+     * @param headerPart
+     *      Static part of the header - will be supplemented with the id
+     * @param brand
+     *      Brand of the application
      */
-    // TODO additional fields as parameters
-    public PaperSummaryDataSource(final Paper paper) {
-        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK")));
+    public PaperSummaryDataSource(final Paper paper, final String populationLabel, final String methodsLabel, final String resultLabel, final String headerPart, final String brand) {
+        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), populationLabel, methodsLabel, resultLabel, headerPart, brand)));
     }
 
     /**
@@ -82,14 +98,32 @@ public class PaperSummaryDataSource extends JRConcreteResource<PdfResourceHandle
     /**
      * Using the dataProvider for the Result Panel as record source. Needs the {@link PaperService} to retrieve the papers
      * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
-     * @param dataProvider the {@link SortablePaperSlimProvider} - must not be null
-     * @param paperService the {@link PaperService} - must not be null
+     * @param dataProvider
+     *      the {@link SortablePaperSlimProvider} - must not be null
+     * @param paperService
+     *      the {@link PaperService} - must not be null
+     * @param populationLabel
+     *      localized label for the population field
+     * @param methodsLabel
+     *      localized label for the methods field
+     * @param resultLabel
+     *      localized label for the result field
+     * @param headerPart
+     *      Static part of the header - will be supplemented with the id
+     * @param brand
+     *      Brand of the application
      */
-    public PaperSummaryDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final PaperService paperService) {
+    public PaperSummaryDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final PaperService paperService, final String populationLabel, final String methodsLabel,
+            final String resultLabel, final String headerPart, final String brand) {
         super(new PdfResourceHandler());
         init();
         this.dataProvider = AssertAs.notNull(dataProvider, "dataProvider");
         this.paperService = AssertAs.notNull(paperService, "paperService");
+        this.populationLabel = populationLabel;
+        this.methodsLabel = methodsLabel;
+        this.resultLabel = resultLabel;
+        this.headerPart = headerPart;
+        this.brand = brand;
     }
 
     /** {@iheritDoc} */
@@ -123,7 +157,7 @@ public class PaperSummaryDataSource extends JRConcreteResource<PdfResourceHandle
             final List<Long> ids = paperSlims.stream().map(p -> p.getId()).collect(Collectors.toList());
             final List<Paper> papers = paperService.findByIds(ids);
             for (final Paper p : papers) {
-                paperSummaries.add(new PaperSummary(p, "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK"));
+                paperSummaries.add(new PaperSummary(p, populationLabel, methodsLabel, resultLabel, headerPart, brand));
             }
         }
     }

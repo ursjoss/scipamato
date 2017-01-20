@@ -16,14 +16,16 @@ public class SipamatoProperties implements ApplicationProperties {
     private final String defaultLocalization;
     private final AuthorParserStrategy authorParserStrategy;
     private final int autoSaveIntervalInSeconds;
+    private final String brand;
 
     private static final String S = "${", E = ":n.a.}";
 
     public SipamatoProperties(@Value(S + LOCALIZATION_DEFAULT + ":en}") String defaultLocalization, @Value(S + AUTHOR_PARSER_FACTORY + E) String authorParserStrategy,
-            @Value(S + AUTO_SAVE_INTERVAL + E) String paperAutoSaveInterval) {
+            @Value(S + AUTO_SAVE_INTERVAL + E) String paperAutoSaveInterval, @Value(S + BRAND + E) String brand) {
         this.defaultLocalization = defaultLocalization;
         this.authorParserStrategy = AuthorParserStrategy.fromProperty(authorParserStrategy);
         this.autoSaveIntervalInSeconds = PropertyUtils.parseInt(paperAutoSaveInterval, AUTO_SAVE_HINT, DEFAULT_AUTO_SAVE_INTERVAL_IN_SECONDS, AUTO_SAVE_INTERVAL);
+        this.brand = brand;
     }
 
     /** {@inheritDoc} */
@@ -48,6 +50,11 @@ public class SipamatoProperties implements ApplicationProperties {
     @Override
     public boolean isAutoSavingEnabled() {
         return getAutoSaveIntervalInSeconds() > 0;
+    }
+
+    @Override
+    public String getBrand() {
+        return brand;
     }
 
 }

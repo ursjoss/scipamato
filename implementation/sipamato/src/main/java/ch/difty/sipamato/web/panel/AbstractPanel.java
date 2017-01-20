@@ -11,6 +11,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import ch.difty.sipamato.config.ApplicationProperties;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.service.Localization;
 import ch.difty.sipamato.web.pages.Mode;
@@ -29,6 +30,13 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
 
     @SpringBean
     private Localization localization;
+
+    @SpringBean
+    private ApplicationProperties properties;
+
+    protected ApplicationProperties getProperties() {
+        return properties;
+    }
 
     protected String getSubmitLinkResourceLabel() {
         return submitLinkResourceLabel;

@@ -36,6 +36,7 @@ public abstract class AutoSaveAwarePageTest<T extends BasePage<?>> extends BaseP
         when(applicationProperties.getAutoSaveIntervalInSeconds()).thenReturn(0);
         when(applicationProperties.isAutoSavingEnabled()).thenReturn(false);
         when(applicationProperties.getDefaultLocalization()).thenReturn("de");
+        when(applicationProperties.getBrand()).thenReturn("SiPaMaTo");
         when(localization.getLocalization()).thenReturn("de");
     }
 

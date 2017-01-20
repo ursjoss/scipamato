@@ -18,7 +18,7 @@ public class PaperSummaryTest {
     private static final String RESULT = "results";
     private static final String POPULATION_LABEL = "populationLabel";
     private static final String METHODS_LABEL = "methodsLabel";
-    private static final String RESULTS_LABEL = "resultsLabel";
+    private static final String RESULT_LABEL = "resultLabel";
     private static final String HEADER_PART = "headerPart";
     private static final String BRAND = "brand";
     private static final String CREATED_BY = "creatingUser";
@@ -27,7 +27,7 @@ public class PaperSummaryTest {
 
     @Test
     public void instantiatingUsingIndividualFields() {
-        ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, POPULATION_LABEL, METHODS_LABEL, RESULTS_LABEL, HEADER_PART, BRAND, CREATED_BY);
+        ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND, CREATED_BY);
 
         assertPaperSummary();
     }
@@ -44,7 +44,7 @@ public class PaperSummaryTest {
         p.setMethods(METHODS);
         p.setResult(RESULT);
         p.setCreatedByName(CREATED_BY);
-        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULTS_LABEL, HEADER_PART, BRAND);
+        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND);
 
         assertPaperSummary();
     }
@@ -61,7 +61,7 @@ public class PaperSummaryTest {
 
         assertThat(ps.getPopulationLabel()).isEqualTo(POPULATION_LABEL);
         assertThat(ps.getMethodsLabel()).isEqualTo(METHODS_LABEL);
-        assertThat(ps.getResultLabel()).isEqualTo(RESULTS_LABEL);
+        assertThat(ps.getResultLabel()).isEqualTo(RESULT_LABEL);
 
         assertThat(ps.getHeader()).isEqualTo(HEADER_PART + " " + ID);
         assertThat(ps.getBrand()).isEqualTo(BRAND);

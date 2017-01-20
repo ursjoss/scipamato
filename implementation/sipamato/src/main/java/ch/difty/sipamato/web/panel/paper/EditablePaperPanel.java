@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.sipamato.entity.Code;
@@ -56,7 +57,12 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @Override
     protected PaperSummaryDataSource getSummaryDataSource() {
-        return new PaperSummaryDataSource(getModelObject());
+        String populationLabel = new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString();
+        String methodsLabel = new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString();
+        String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
+        String brand = getProperties().getBrand();
+        String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
+        return new PaperSummaryDataSource(getModelObject(), populationLabel, methodsLabel, resultLabel, headerPart, brand);
     }
 
     @Override

@@ -37,15 +37,15 @@ public class PaperSummary implements Serializable {
      *      localized label for the population field
      * @param methodsLabel
      *      localized label for the methods field
-     * @param resultsLabel
+     * @param resultLabel
      *      localized label for the result field
      * @param headerPart
      *      Static part of the header - will be supplemented with the id
      * @param brand
      *      Brand of the application
      */
-    public PaperSummary(final Paper p, final String populationLabel, final String methodsLabel, final String resultsLabel, final String headerPart, final String brand) {
-        this(p.getId(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulation(), p.getMethods(), p.getResult(), populationLabel, methodsLabel, resultsLabel, headerPart, brand,
+    public PaperSummary(final Paper p, final String populationLabel, final String methodsLabel, final String resultLabel, final String headerPart, final String brand) {
+        this(p.getId(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulation(), p.getMethods(), p.getResult(), populationLabel, methodsLabel, resultLabel, headerPart, brand,
                 p.getCreatedByName());
     }
 

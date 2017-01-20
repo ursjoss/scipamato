@@ -38,6 +38,13 @@ public class PaperSummaryDataSourceTest extends WicketTest {
     private static final String RESULT = "result";
     private static final String CREATED_BY = "creatingUser";
 
+    private static final String POPULATION_LABEL = "Kollektiv";
+    private static final String METHODS_LABEL = "Methoden";
+    private static final String RESULT_LABEL = "Resultat";
+    private static final String HEADER_PART = "LUDOK-Zusammenfassung Nr.";
+    private static final String HEADER = HEADER_PART + " " + ID;
+    private static final String BRAND = "LUDOK";
+
     private PaperSummaryDataSource ds;
 
     @Mock
@@ -67,7 +74,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
 
     @Test
     public void instantiatingWithPaper_returnsPdfDataSourceWithOneRecord() throws JRException {
-        ds = new PaperSummaryDataSource(paperMock);
+        ds = new PaperSummaryDataSource(paperMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND);
 
         assertDataSource();
 
@@ -104,12 +111,12 @@ public class PaperSummaryDataSourceTest extends WicketTest {
         assertFieldValue("methods", METHODS, f, jsds);
         assertFieldValue("result", RESULT, f, jsds);
 
-        assertFieldValue("populationLabel", "Kollektiv", f, jsds);
-        assertFieldValue("methodsLabel", "Methoden", f, jsds);
-        assertFieldValue("resultLabel", "Resultat", f, jsds);
+        assertFieldValue("populationLabel", POPULATION_LABEL, f, jsds);
+        assertFieldValue("methodsLabel", METHODS_LABEL, f, jsds);
+        assertFieldValue("resultLabel", RESULT_LABEL, f, jsds);
 
-        assertFieldValue("header", "LUDOK-Zusammenfassung Nr. 10", f, jsds);
-        assertFieldValue("brand", "LUDOK", f, jsds);
+        assertFieldValue("header", HEADER, f, jsds);
+        assertFieldValue("brand", BRAND, f, jsds);
         assertFieldValue("createdBy", CREATED_BY, f, jsds);
 
         assertThat(jsds.next()).isFalse();
@@ -122,7 +129,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
 
     @Test
     public void instantiatingWithPaperSummary_returnsPdfDataSourceWithOneRecord() throws JRException {
-        PaperSummary ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, "Kollektiv", "Methoden", "Resultat", "LUDOK-Zusammenfassung Nr.", "LUDOK", CREATED_BY);
+        PaperSummary ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND, CREATED_BY);
         ds = new PaperSummaryDataSource(ps);
 
         assertDataSource();
@@ -141,7 +148,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
         when(paperSlimMock.getId()).thenReturn(ID);
         when(paperServiceMock.findByIds(Arrays.asList(ID))).thenReturn(Arrays.asList(paperMock));
 
-        ds = new PaperSummaryDataSource(dataProviderMock, paperServiceMock);
+        ds = new PaperSummaryDataSource(dataProviderMock, paperServiceMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND);
         assertDataSource();
 
         verify(dataProviderMock).size();
@@ -167,7 +174,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
     @Test
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0l);
-        ds = new PaperSummaryDataSource(dataProviderMock, paperServiceMock);
+        ds = new PaperSummaryDataSource(dataProviderMock, paperServiceMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND);
         assertThat(ds.getReportDataSource().next()).isFalse();
         verify(dataProviderMock).size();
     }
@@ -175,7 +182,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
     @Test
     public void instantiatingWithProvider_withNullProivder_throws() throws JRException {
         try {
-            new PaperSummaryDataSource(null, paperServiceMock);
+            new PaperSummaryDataSource(null, paperServiceMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dataProvider must not be null.");
         }
@@ -184,7 +191,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
     @Test
     public void instantiatingWithProvider_withNullService_throws() throws JRException {
         try {
-            new PaperSummaryDataSource(dataProviderMock, null);
+            new PaperSummaryDataSource(dataProviderMock, null, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("paperService must not be null.");
         }

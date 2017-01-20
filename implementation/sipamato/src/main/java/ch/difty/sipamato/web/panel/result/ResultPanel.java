@@ -114,7 +114,12 @@ public class ResultPanel extends AbstractPanel<Void> {
     }
 
     private void makeAndQueuePdfLink(String id) {
-        ResourceLink<Void> summaryLink = new ResourceLink<Void>(id, new PaperSummaryDataSource(dataProvider, paperService));
+        String populationLabel = new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString();
+        String methodsLabel = new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString();
+        String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
+        String brand = getProperties().getBrand();
+        String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
+        ResourceLink<Void> summaryLink = new ResourceLink<Void>(id, new PaperSummaryDataSource(dataProvider, paperService, populationLabel, methodsLabel, resultLabel, headerPart, brand));
         summaryLink.setOutputMarkupId(true);
         summaryLink.setBody(new StringResourceModel("link.summary.label"));
         queue(summaryLink);

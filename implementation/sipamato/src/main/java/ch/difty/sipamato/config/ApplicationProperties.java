@@ -16,6 +16,7 @@ public interface ApplicationProperties {
     String LOCALIZATION_DEFAULT = "sipamato.localization.default";
     String AUTHOR_PARSER_FACTORY = "sipamato.author.parser";
     String AUTO_SAVE_INTERVAL = "sipamato.autosave.interval.seconds";
+    String BRAND = "sipamato.brand";
 
     int DEFAULT_AUTO_SAVE_INTERVAL_IN_SECONDS = 0;
     String AUTO_SAVE_HINT = "0: auto-saving disabled, >=1: save interval in seconds";
@@ -49,4 +50,8 @@ public interface ApplicationProperties {
      */
     boolean isAutoSavingEnabled();
 
+    /**
+     * @return the brand name
+     */
+    String getBrand();
 }
