@@ -87,7 +87,7 @@ public abstract class JooqReadOnlyService<ID extends Number, R extends Record, T
         return entities;
     }
 
-    private void enrichAuditNamesOfAll(final List<T> entities) {
+    protected void enrichAuditNamesOfAll(final List<T> entities) {
         for (final T e : entities) {
             enrichAuditNamesOf(e);
         }

@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.persistance.jooq.AbstractServiceTest;
 
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
@@ -55,6 +56,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
         papers.add(paperMock);
         papers.add(paperMock);
+
+        when(paperMock.getCreatedBy()).thenReturn(10);
     }
 
     @Override
@@ -160,15 +163,13 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         assertThat(service.findByIds(ids)).contains(paperMock, paperMock);
 
         verify(repoMock).findByIds(ids);
+        verify(paperMock, times(2)).getCreatedBy();
+        verifyAudit(2);
     }
 
     @Test
-    public void findingByIds_() {
+    public void findingByIds_withNullIds() {
         final List<Long> ids = null;
-        when(repoMock.findByIds(ids)).thenReturn(papers);
-
-        assertThat(service.findByIds(ids)).contains(paperMock, paperMock);
-
-        verify(repoMock).findByIds(ids);
+        assertThat(service.findByIds(ids)).isEmpty();
     }
 }

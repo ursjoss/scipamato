@@ -1,5 +1,6 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -21,7 +22,14 @@ public class JooqPaperService extends JooqEntityService<Long, PaperRecord, Paper
 
     @Override
     public List<Paper> findByIds(List<Long> ids) {
-        return getRepository().findByIds(ids);
+        if (ids != null && !ids.isEmpty()) {
+            List<Paper> papers = getRepository().findByIds(ids);
+            enrichAuditNamesOfAll(papers);
+            return papers;
+        } else {
+            return new ArrayList<Paper>();
+        }
+
     }
 
 }
