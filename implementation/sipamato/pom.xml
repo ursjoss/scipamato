@@ -36,8 +36,7 @@
         <org.jooq.version>3.9.0</org.jooq.version>
         <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
 
-        <!-- Imposed by the wicketstuff-jasperreport module -->
-        <jasperreports.version>5.5.0</jasperreports.version>
+        <jasperreports.version>6.4.0</jasperreports.version>
     </properties>
 
     <dependencies>
@@ -161,6 +160,17 @@
             <groupId>org.wicketstuff</groupId>
             <artifactId>wicketstuff-jasperreports</artifactId>
             <version>${wicket.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.sf.jasperreports</groupId>
+                    <artifactId>jasperreports</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>${jasperreports.version}</version>
         </dependency>
 
         <!-- The debug bar is only rendered visible in development mode -->
