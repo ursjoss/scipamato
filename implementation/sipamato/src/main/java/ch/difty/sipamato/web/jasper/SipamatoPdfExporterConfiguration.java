@@ -30,20 +30,22 @@ public class SipamatoPdfExporterConfiguration extends SimplePdfExporterConfigura
         if (builder.title != null) {
             final StringBuilder sb = new StringBuilder();
             sb.append(builder.title);
-            if (builder.paperTitle != null) {
-                sb.append(": ").append(builder.paperTitle);
-            }
+            if (sb.length() > 0 && (builder.paperAuthors != null || builder.paperTitle != null))
+                sb.append(" - ");
+            if (builder.paperAuthors != null)
+                sb.append(builder.paperAuthors);
+            if (builder.paperAuthors != null && builder.paperTitle != null)
+                sb.append(": ");
+            if (builder.paperTitle != null)
+                sb.append(builder.paperTitle);
             setMetadataTitle(sb.toString());
         }
-        if (getMetadataTitle() != null) {
+        if (getMetadataTitle() != null)
             setDisplayMetadataTitle(true);
-        }
-        if (builder.subject != null) {
+        if (builder.subject != null)
             setMetadataSubject(builder.subject);
-        }
-        if (builder.creator != null) {
+        if (builder.creator != null)
             setMetadataCreator(builder.creator);
-        }
         if (builder.keywords != null) {
             setMetadataKeywords(builder.keywords);
             setTagged(true);
@@ -57,6 +59,7 @@ public class SipamatoPdfExporterConfiguration extends SimplePdfExporterConfigura
         private final String title;
         private String author;
         private String paperTitle;
+        private String paperAuthors;
         private String subject;
         private String creator;
         private String keywords;
@@ -104,6 +107,11 @@ public class SipamatoPdfExporterConfiguration extends SimplePdfExporterConfigura
 
         public Builder withPaperTitle(final String paperTitle) {
             this.paperTitle = paperTitle;
+            return this;
+        }
+
+        public Builder withPaperAuthors(final String paperAuthors) {
+            this.paperAuthors = paperAuthors;
             return this;
         }
 

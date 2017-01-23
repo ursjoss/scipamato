@@ -83,7 +83,18 @@ public class SipamatoPdfExporterConfigurationTest {
         config = new SipamatoPdfExporterConfiguration.Builder(TITLE).withPaperTitle("papertitle").build();
         assertThat(config.getMetadataCreator()).isNull();
         assertThat(config.getMetadataAuthor()).isNull();
-        assertThat(config.getMetadataTitle()).isEqualTo(TITLE + ": papertitle");
+        assertThat(config.getMetadataTitle()).isEqualTo(TITLE + " - papertitle");
+        assertThat(config.getMetadataSubject()).isNull();
+        assertThat(config.getMetadataKeywords()).isNull();
+        assertThat(config.isCompressed()).isFalse();
+    }
+
+    @Test
+    public void withPaperTitle_concatsTitleAndPaperAuthorAndPaperTitleIntoMetadataTitle() {
+        config = new SipamatoPdfExporterConfiguration.Builder(TITLE).withPaperTitle("papertitle").withPaperAuthors("paperAuthors").build();
+        assertThat(config.getMetadataCreator()).isNull();
+        assertThat(config.getMetadataAuthor()).isNull();
+        assertThat(config.getMetadataTitle()).isEqualTo(TITLE + " - paperAuthors: papertitle");
         assertThat(config.getMetadataSubject()).isNull();
         assertThat(config.getMetadataKeywords()).isNull();
         assertThat(config.isCompressed()).isFalse();
@@ -155,10 +166,17 @@ public class SipamatoPdfExporterConfigurationTest {
     public void withAllAttributes() {
         codes.add(new Code("1A", "c1", null, false, 1, "c1", "", 1));
         codes.add(new Code("2B", "c2 with spaces", null, false, 2, "c2", "", 1));
-        config = new SipamatoPdfExporterConfiguration.Builder("hp:", 10l).withAuthor("a").withPaperTitle("pt").withSubject("s").withCreator("c").withCodes(codes).withCompression().build();
+        config = new SipamatoPdfExporterConfiguration.Builder("hp:", 10l).withAuthor("a")
+                .withPaperTitle("pt")
+                .withPaperAuthors("pa")
+                .withSubject("s")
+                .withCreator("c")
+                .withCodes(codes)
+                .withCompression()
+                .build();
         assertThat(config.getMetadataCreator()).isEqualTo("c");
         assertThat(config.getMetadataAuthor()).isEqualTo("a");
-        assertThat(config.getMetadataTitle()).isEqualTo("hp: 10: pt");
+        assertThat(config.getMetadataTitle()).isEqualTo("hp: 10 - pa: pt");
         assertThat(config.getMetadataSubject()).isEqualTo("s");
         assertThat(config.getMetadataKeywords()).isEqualTo("c1,\"c2 with spaces\"");
         assertThat(config.isCompressed()).isTrue();

@@ -68,11 +68,13 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
         // TODO consider setting Full name of creator into Paper too - if so use here
         String author = getModelObject().getCreatedByName();
+        String paperlAuthors = getModelObject().getAuthors();
         String paperTitle = getModelObject().getTitle();
         String subject = getModelObject().getGoals();
         List<Code> codes = getModelObject().getCodes();
         SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getId()).withCreator(brand)
                 .withPaperTitle(paperTitle)
+                .withPaperAuthors(paperlAuthors)
                 .withSubject(subject)
                 .withAuthor(author)
                 .withCodes(codes)
