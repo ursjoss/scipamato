@@ -23,6 +23,8 @@ public class PaperSummary implements Serializable {
     private final String methods;
     private final String resultLabel;
     private final String result;
+    private final String comment;
+    private final String commentLabel;
 
     private final String header;
     private final String brand;
@@ -39,21 +41,24 @@ public class PaperSummary implements Serializable {
      *      localized label for the methods field
      * @param resultLabel
      *      localized label for the result field
+     * @param commentLabel
+     *      localized label for the comment field
      * @param headerPart
      *      Static part of the header - will be supplemented with the id
      * @param brand
      *      Brand of the application
      */
-    public PaperSummary(final Paper p, final String populationLabel, final String methodsLabel, final String resultLabel, final String headerPart, final String brand) {
-        this(p.getId(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulation(), p.getMethods(), p.getResult(), populationLabel, methodsLabel, resultLabel, headerPart, brand,
-                p.getCreatedByName());
+    public PaperSummary(final Paper p, final String populationLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart, final String brand) {
+        this(p.getId(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulation(), p.getMethods(), p.getResult(), p.getComment(), populationLabel, methodsLabel, resultLabel,
+                commentLabel, headerPart, brand, p.getCreatedByName());
     }
 
     /**
      * Instantiation with all individual fields (those that are part of a {@link Paper} and all other from the other constructor.
      */
     public PaperSummary(final Long id, final String authors, final String title, final String location, final String goals, final String population, final String methods, final String result,
-            final String populationLabel, final String methodsLabel, final String resultLabel, final String headerPart, final String brand, final String createdBy) {
+            final String comment, final String populationLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart, final String brand,
+            final String createdBy) {
         this.id = id != null ? String.valueOf(id) : "";
         this.authors = na(authors);
         this.title = na(title);
@@ -62,10 +67,12 @@ public class PaperSummary implements Serializable {
         this.population = na(population);
         this.methods = na(methods);
         this.result = na(result);
+        this.comment = na(comment);
 
         this.populationLabel = na(populationLabel);
         this.methodsLabel = na(methodsLabel);
         this.resultLabel = na(resultLabel);
+        this.commentLabel = na(commentLabel);
 
         this.header = makeHeader(id, headerPart);
         this.brand = na(brand);
@@ -131,6 +138,14 @@ public class PaperSummary implements Serializable {
 
     public String getResult() {
         return result;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public String getCommentLabel() {
+        return commentLabel;
     }
 
     public String getHeader() {

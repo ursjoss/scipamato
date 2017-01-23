@@ -16,9 +16,11 @@ public class PaperSummaryTest {
     private static final String POPULATION = "population";
     private static final String METHODS = "methods";
     private static final String RESULT = "results";
+    private static final String COMMENT = "comment";
     private static final String POPULATION_LABEL = "populationLabel";
     private static final String METHODS_LABEL = "methodsLabel";
     private static final String RESULT_LABEL = "resultLabel";
+    private static final String COMMENT_LABEL = "commentLabel";
     private static final String HEADER_PART = "headerPart";
     private static final String BRAND = "brand";
     private static final String CREATED_BY = "creatingUser";
@@ -27,7 +29,7 @@ public class PaperSummaryTest {
 
     @Test
     public void instantiatingUsingIndividualFields() {
-        ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND, CREATED_BY);
+        ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, COMMENT, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, CREATED_BY);
 
         assertPaperSummary();
     }
@@ -43,8 +45,9 @@ public class PaperSummaryTest {
         p.setPopulation(POPULATION);
         p.setMethods(METHODS);
         p.setResult(RESULT);
+        p.setComment(COMMENT);
         p.setCreatedByName(CREATED_BY);
-        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND);
+        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
 
         assertPaperSummary();
     }
@@ -58,10 +61,12 @@ public class PaperSummaryTest {
         assertThat(ps.getPopulation()).isEqualTo(POPULATION);
         assertThat(ps.getMethods()).isEqualTo(METHODS);
         assertThat(ps.getResult()).isEqualTo(RESULT);
+        assertThat(ps.getComment()).isEqualTo(COMMENT);
 
         assertThat(ps.getPopulationLabel()).isEqualTo(POPULATION_LABEL);
         assertThat(ps.getMethodsLabel()).isEqualTo(METHODS_LABEL);
         assertThat(ps.getResultLabel()).isEqualTo(RESULT_LABEL);
+        assertThat(ps.getCommentLabel()).isEqualTo(COMMENT_LABEL);
 
         assertThat(ps.getHeader()).isEqualTo(HEADER_PART + " " + ID);
         assertThat(ps.getBrand()).isEqualTo(BRAND);
@@ -70,7 +75,7 @@ public class PaperSummaryTest {
 
     @Test
     public void withNullFieldsWherePossible_providesEmptyStrings() {
-        ps = new PaperSummary(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        ps = new PaperSummary(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         assertThat(ps.getId()).isEmpty();
         assertThat(ps.getAuthors()).isEmpty();
@@ -79,11 +84,13 @@ public class PaperSummaryTest {
         assertThat(ps.getGoals()).isEmpty();
         assertThat(ps.getPopulation()).isEmpty();
         assertThat(ps.getMethods()).isEmpty();
+        assertThat(ps.getComment()).isEmpty();
         assertThat(ps.getResult()).isEmpty();
 
         assertThat(ps.getPopulationLabel()).isEmpty();
         assertThat(ps.getMethodsLabel()).isEmpty();
         assertThat(ps.getResultLabel()).isEmpty();
+        assertThat(ps.getCommentLabel()).isEmpty();
 
         assertThat(ps.getHeader()).isEmpty();
         assertThat(ps.getBrand()).isEmpty();
@@ -92,7 +99,7 @@ public class PaperSummaryTest {
 
     @Test
     public void withNullFieldsExceptId_providesHeaderWithIdOnly() {
-        ps = new PaperSummary(ID, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        ps = new PaperSummary(ID, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         assertThat(ps.getId()).isEqualTo(String.valueOf(ID));
         assertThat(ps.getHeader()).isEqualTo(String.valueOf(ID));
@@ -100,7 +107,7 @@ public class PaperSummaryTest {
 
     @Test
     public void withNullFieldsExceptHeaderPart_providesHeaderPartOnly() {
-        ps = new PaperSummary(null, null, null, null, null, null, null, null, null, null, null, HEADER_PART, null, null);
+        ps = new PaperSummary(null, null, null, null, null, null, null, null, null, null, null, null, null, HEADER_PART, null, null);
 
         assertThat(ps.getId()).isEmpty();
         assertThat(ps.getHeader()).isEqualTo(HEADER_PART);

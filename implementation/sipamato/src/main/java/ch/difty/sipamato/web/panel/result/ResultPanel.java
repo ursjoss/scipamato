@@ -118,6 +118,7 @@ public class ResultPanel extends AbstractPanel<Void> {
         String populationLabel = new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString();
         String methodsLabel = new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString();
         String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
+        String commentLabel = new StringResourceModel("comment" + LABEL_RECOURCE_TAG, this, null).getString();
         String brand = getProperties().getBrand();
         String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
 
@@ -128,7 +129,8 @@ public class ResultPanel extends AbstractPanel<Void> {
                 .withCreator(brand)
                 .withCompression()
                 .build();
-        ResourceLink<Void> summaryLink = new ResourceLink<Void>(id, new PaperSummaryDataSource(dataProvider, paperService, populationLabel, methodsLabel, resultLabel, headerPart, brand, config));
+        ResourceLink<Void> summaryLink = new ResourceLink<Void>(id,
+                new PaperSummaryDataSource(dataProvider, paperService, populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand, config));
         summaryLink.setOutputMarkupId(true);
         summaryLink.setBody(new StringResourceModel("link.summary.label"));
         queue(summaryLink);

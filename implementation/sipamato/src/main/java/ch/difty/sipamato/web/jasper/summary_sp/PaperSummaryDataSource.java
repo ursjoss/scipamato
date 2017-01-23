@@ -55,6 +55,7 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
     private String populationLabel;
     private String methodsLabel;
     private String resultLabel;
+    private String commentLabel;
     private String headerPart;
     private String brand;
 
@@ -68,14 +69,16 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
      *      localized label for the methods field
      * @param resultLabel
      *      localized label for the result field
+     * @param commentLabel
+     *      localized label for the comment field
      * @param headerPart
      *      Static part of the header - will be supplemented with the id
      * @param brand
      *      Brand of the application
      */
-    public PaperSummaryDataSource(final Paper paper, final String populationLabel, final String methodsLabel, final String resultLabel, final String headerPart, final String brand,
-            PdfExporterConfiguration config) {
-        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), populationLabel, methodsLabel, resultLabel, headerPart, brand)), config);
+    public PaperSummaryDataSource(final Paper paper, final String populationLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart,
+            final String brand, PdfExporterConfiguration config) {
+        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand)), config);
     }
 
     /**
@@ -116,13 +119,15 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
      *      localized label for the methods field
      * @param resultLabel
      *      localized label for the result field
+     * @param commentLabel
+     *      localized label for the comment field
      * @param headerPart
      *      Static part of the header - will be supplemented with the id
      * @param brand
      *      Brand of the application
      */
     public PaperSummaryDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final PaperService paperService, final String populationLabel, final String methodsLabel,
-            final String resultLabel, final String headerPart, final String brand, PdfExporterConfiguration config) {
+            final String resultLabel, final String commentLabel, final String headerPart, final String brand, PdfExporterConfiguration config) {
         super(new SipamatoPdfResourceHandler(config));
         init();
         this.dataProvider = AssertAs.notNull(dataProvider, "dataProvider");
@@ -130,6 +135,7 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
         this.populationLabel = populationLabel;
         this.methodsLabel = methodsLabel;
         this.resultLabel = resultLabel;
+        this.commentLabel = commentLabel;
         this.headerPart = headerPart;
         this.brand = brand;
     }
@@ -165,7 +171,7 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
             final List<Long> ids = paperSlims.stream().map(p -> p.getId()).collect(Collectors.toList());
             final List<Paper> papers = paperService.findByIds(ids);
             for (final Paper p : papers) {
-                paperSummaries.add(new PaperSummary(p, populationLabel, methodsLabel, resultLabel, headerPart, brand));
+                paperSummaries.add(new PaperSummary(p, populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand));
             }
         }
     }

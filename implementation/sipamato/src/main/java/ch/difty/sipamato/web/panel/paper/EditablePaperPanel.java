@@ -62,6 +62,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         String populationLabel = new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString();
         String methodsLabel = new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString();
         String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
+        String commentLabel = new StringResourceModel("comment" + LABEL_RECOURCE_TAG, this, null).getString();
         String brand = getProperties().getBrand();
         String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
 
@@ -77,7 +78,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 .withCodes(codes)
                 .withCompression()
                 .build();
-        return new PaperSummaryDataSource(getModelObject(), populationLabel, methodsLabel, resultLabel, headerPart, brand, config);
+        return new PaperSummaryDataSource(getModelObject(), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand, config);
     }
 
     @Override

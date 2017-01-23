@@ -17,6 +17,8 @@
 	<field name="methods" class="java.lang.String"/>
 	<field name="resultLabel" class="java.lang.String"/>
 	<field name="result" class="java.lang.String"/>
+	<field name="commentLabel" class="java.lang.String"/>
+	<field name="comment" class="java.lang.String"/>
 	<field name="header" class="java.lang.String"/>
 	<field name="brand" class="java.lang.String"/>
 	<field name="createdBy" class="java.lang.String"/>
@@ -128,7 +130,7 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="155" splitType="Stretch">
+		<band height="195" splitType="Stretch">
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
@@ -226,6 +228,33 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{result}]]></textFieldExpression>
 			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="160" width="555" height="15" isPrintWhenDetailOverflows="true" uuid="4f7b1bbd-6d8c-484e-ad30-6e88dd3ad78d">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true" isItalic="true" isUnderline="false"/>
+					<paragraph leftIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{commentLabel}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="175" width="555" height="15" isPrintWhenDetailOverflows="true" uuid="59f613eb-6edc-4fc8-b937-b4ae280894a4">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+					<paragraph leftIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{comment}]]></textFieldExpression>
+			</textField>
+
 		</band>
 	</detail>
 	<columnFooter>
