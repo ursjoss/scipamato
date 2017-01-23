@@ -6,7 +6,7 @@
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="mm"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
-	<style name="Style1" isDefault="true" fontName="DejaVu Sans" fontSize="10" isBold="false" pdfFontName="Helvetica" isPdfEmbedded="true"/>
+	<style name="Style1" isDefault="true" fontName="DejaVu Sans" fontSize="10" isBold="false" pdfFontName="DejaVu Sans" isPdfEmbedded="true"/>
 	<field name="authors" class="java.lang.String"/>
 	<field name="title" class="java.lang.String"/>
 	<field name="location" class="java.lang.String"/>

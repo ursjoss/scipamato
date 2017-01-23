@@ -172,6 +172,11 @@
             <artifactId>jasperreports</artifactId>
             <version>${jasperreports.version}</version>
         </dependency>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports-fonts</artifactId>
+            <version>6.0.0</version>
+        </dependency>
 
         <!-- The debug bar is only rendered visible in development mode -->
         <dependency>
