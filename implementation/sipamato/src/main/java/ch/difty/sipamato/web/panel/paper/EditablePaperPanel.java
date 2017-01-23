@@ -1,6 +1,7 @@
 package ch.difty.sipamato.web.panel.paper;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -17,6 +18,7 @@ import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
+import ch.difty.sipamato.web.jasper.SipamatoPdfExporterConfiguration;
 import ch.difty.sipamato.web.jasper.summary_sp.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.Mode;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
@@ -62,7 +64,20 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
         String brand = getProperties().getBrand();
         String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
-        return new PaperSummaryDataSource(getModelObject(), populationLabel, methodsLabel, resultLabel, headerPart, brand);
+
+        // TODO consider setting Full name of creator into Paper too - if so use here
+        String author = getModelObject().getCreatedByName();
+        String paperTitle = getModelObject().getTitle();
+        String subject = getModelObject().getGoals();
+        List<Code> codes = getModelObject().getCodes();
+        SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getId()).withCreator(brand)
+                .withPaperTitle(paperTitle)
+                .withSubject(subject)
+                .withAuthor(author)
+                .withCodes(codes)
+                .withCompression()
+                .build();
+        return new PaperSummaryDataSource(getModelObject(), populationLabel, methodsLabel, resultLabel, headerPart, brand, config);
     }
 
     @Override

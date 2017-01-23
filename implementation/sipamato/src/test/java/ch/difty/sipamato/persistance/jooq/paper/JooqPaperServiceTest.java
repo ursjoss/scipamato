@@ -19,7 +19,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.persistance.jooq.AbstractServiceTest;
 
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {

@@ -25,6 +25,7 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JRDesignField;
+import net.sf.jasperreports.export.PdfExporterConfiguration;
 
 public class PaperSummaryDataSourceTest extends WicketTest {
 
@@ -53,6 +54,8 @@ public class PaperSummaryDataSourceTest extends WicketTest {
     private PaperService paperServiceMock;
     @Mock
     private Paper paperMock;
+    @Mock
+    private PdfExporterConfiguration pdfExporterConfigMock;
 
     @Override
     public void setUpHook() {
@@ -74,7 +77,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
 
     @Test
     public void instantiatingWithPaper_returnsPdfDataSourceWithOneRecord() throws JRException {
-        ds = new PaperSummaryDataSource(paperMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND);
+        ds = new PaperSummaryDataSource(paperMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
 
         assertDataSource();
 
@@ -130,7 +133,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
     @Test
     public void instantiatingWithPaperSummary_returnsPdfDataSourceWithOneRecord() throws JRException {
         PaperSummary ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND, CREATED_BY);
-        ds = new PaperSummaryDataSource(ps);
+        ds = new PaperSummaryDataSource(ps, pdfExporterConfigMock);
 
         assertDataSource();
     }
@@ -148,7 +151,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
         when(paperSlimMock.getId()).thenReturn(ID);
         when(paperServiceMock.findByIds(Arrays.asList(ID))).thenReturn(Arrays.asList(paperMock));
 
-        ds = new PaperSummaryDataSource(dataProviderMock, paperServiceMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND);
+        ds = new PaperSummaryDataSource(dataProviderMock, paperServiceMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
         assertDataSource();
 
         verify(dataProviderMock).size();
@@ -174,7 +177,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
     @Test
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0l);
-        ds = new PaperSummaryDataSource(dataProviderMock, paperServiceMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND);
+        ds = new PaperSummaryDataSource(dataProviderMock, paperServiceMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
         assertThat(ds.getReportDataSource().next()).isFalse();
         verify(dataProviderMock).size();
     }
@@ -182,7 +185,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
     @Test
     public void instantiatingWithProvider_withNullProivder_throws() throws JRException {
         try {
-            new PaperSummaryDataSource(null, paperServiceMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND);
+            new PaperSummaryDataSource(null, paperServiceMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dataProvider must not be null.");
         }
@@ -191,7 +194,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
     @Test
     public void instantiatingWithProvider_withNullService_throws() throws JRException {
         try {
-            new PaperSummaryDataSource(dataProviderMock, null, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND);
+            new PaperSummaryDataSource(dataProviderMock, null, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("paperService must not be null.");
         }

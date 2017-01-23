@@ -8,18 +8,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.IteratorUtils;
+import org.apache.wicket.util.io.ByteArrayOutputStream;
 import org.wicketstuff.jasperreports.JRConcreteResource;
-import org.wicketstuff.jasperreports.handlers.PdfResourceHandler;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.service.PaperService;
+import ch.difty.sipamato.web.jasper.SipamatoPdfResourceHandler;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
 import ch.difty.sipamato.web.resources.jasper.PaperSummaryReportResourceReference;
+import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.export.PdfExporterConfiguration;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 /**
  * DataSource for the PaperSummaryReport.
@@ -36,7 +43,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  * The meta fields are not contained within a paper instance and make up e.g. localized labels, the brand or part of the header.
  * @author u.joss
  */
-public class PaperSummaryDataSource extends JRConcreteResource<PdfResourceHandler> {
+public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResourceHandler> {
 
     private static final long serialVersionUID = 1L;
 
@@ -66,24 +73,25 @@ public class PaperSummaryDataSource extends JRConcreteResource<PdfResourceHandle
      * @param brand
      *      Brand of the application
      */
-    public PaperSummaryDataSource(final Paper paper, final String populationLabel, final String methodsLabel, final String resultLabel, final String headerPart, final String brand) {
-        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), populationLabel, methodsLabel, resultLabel, headerPart, brand)));
+    public PaperSummaryDataSource(final Paper paper, final String populationLabel, final String methodsLabel, final String resultLabel, final String headerPart, final String brand,
+            PdfExporterConfiguration config) {
+        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), populationLabel, methodsLabel, resultLabel, headerPart, brand)), config);
     }
 
     /**
      * Uses as single {@link PaperSummary} transparently as data source
      * @param paperSummary an instance of {@link PaperSummary} - must not be null
      */
-    public PaperSummaryDataSource(final PaperSummary paperSummary) {
-        this(Arrays.asList(AssertAs.notNull(paperSummary, "paperSummary")));
+    public PaperSummaryDataSource(final PaperSummary paperSummary, PdfExporterConfiguration config) {
+        this(Arrays.asList(AssertAs.notNull(paperSummary, "paperSummary")), config);
     }
 
     /**
      * Using a collection of {@link PaperSummary} instances as data source
      * @param paperSummaries collection of {@link PaperSummary} instances - must not be null
      */
-    public PaperSummaryDataSource(final Collection<PaperSummary> paperSummaries) {
-        super(new PdfResourceHandler());
+    public PaperSummaryDataSource(final Collection<PaperSummary> paperSummaries, PdfExporterConfiguration config) {
+        super(new SipamatoPdfResourceHandler(config));
         init();
         AssertAs.notNull(paperSummaries, "paperSummaries");
         this.paperSummaries.addAll(paperSummaries);
@@ -114,8 +122,8 @@ public class PaperSummaryDataSource extends JRConcreteResource<PdfResourceHandle
      *      Brand of the application
      */
     public PaperSummaryDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final PaperService paperService, final String populationLabel, final String methodsLabel,
-            final String resultLabel, final String headerPart, final String brand) {
-        super(new PdfResourceHandler());
+            final String resultLabel, final String headerPart, final String brand, PdfExporterConfiguration config) {
+        super(new SipamatoPdfResourceHandler(config));
         init();
         this.dataProvider = AssertAs.notNull(dataProvider, "dataProvider");
         this.paperService = AssertAs.notNull(paperService, "paperService");
@@ -162,4 +170,17 @@ public class PaperSummaryDataSource extends JRConcreteResource<PdfResourceHandle
         }
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    protected byte[] getExporterData(JasperPrint print, JRAbstractExporter exporter) throws JRException {
+        // prepare a stream to trap the exporter's output
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        exporter.setExporterInput(new SimpleExporterInput(print));
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+
+        // execute the export and return the trapped result
+        exporter.exportReport();
+
+        return baos.toByteArray();
+    }
 }

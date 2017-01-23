@@ -22,6 +22,7 @@ import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.component.SerializableConsumer;
 import ch.difty.sipamato.web.component.data.LinkIconColumn;
 import ch.difty.sipamato.web.component.table.column.ClickablePropertyColumn;
+import ch.difty.sipamato.web.jasper.SipamatoPdfExporterConfiguration;
 import ch.difty.sipamato.web.jasper.summary_sp.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
@@ -119,7 +120,15 @@ public class ResultPanel extends AbstractPanel<Void> {
         String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
         String brand = getProperties().getBrand();
         String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
-        ResourceLink<Void> summaryLink = new ResourceLink<Void>(id, new PaperSummaryDataSource(dataProvider, paperService, populationLabel, methodsLabel, resultLabel, headerPart, brand));
+
+        String pdfTitle = brand + "- " + new StringResourceModel("pdf.titlePart", this, null).getString();
+        String pdfSubject = new StringResourceModel("pdf.subject", this, null).getString();
+        SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(pdfTitle).withSubject(pdfSubject)
+                .withAuthor(getActiveUser())
+                .withCreator(brand)
+                .withCompression()
+                .build();
+        ResourceLink<Void> summaryLink = new ResourceLink<Void>(id, new PaperSummaryDataSource(dataProvider, paperService, populationLabel, methodsLabel, resultLabel, headerPart, brand, config));
         summaryLink.setOutputMarkupId(true);
         summaryLink.setBody(new StringResourceModel("link.summary.label"));
         queue(summaryLink);
