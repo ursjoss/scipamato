@@ -66,7 +66,7 @@
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
+						<font size="10" isBold="false" isItalic="false" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{location}]]></textFieldExpression>
