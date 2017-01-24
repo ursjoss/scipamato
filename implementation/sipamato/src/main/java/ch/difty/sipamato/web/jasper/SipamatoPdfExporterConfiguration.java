@@ -30,11 +30,11 @@ public class SipamatoPdfExporterConfiguration extends SimplePdfExporterConfigura
         if (builder.title != null) {
             final StringBuilder sb = new StringBuilder();
             sb.append(builder.title);
-            if (sb.length() > 0 && (builder.paperAuthors != null || builder.paperTitle != null))
+            if (sb.length() > 0 && (builder.paperAuthor != null || builder.paperTitle != null))
                 sb.append(" - ");
-            if (builder.paperAuthors != null)
-                sb.append(builder.paperAuthors);
-            if (builder.paperAuthors != null && builder.paperTitle != null)
+            if (builder.paperAuthor != null)
+                sb.append(builder.paperAuthor).append(" et al.");
+            if (builder.paperAuthor != null && builder.paperTitle != null)
                 sb.append(": ");
             if (builder.paperTitle != null)
                 sb.append(builder.paperTitle);
@@ -59,7 +59,7 @@ public class SipamatoPdfExporterConfiguration extends SimplePdfExporterConfigura
         private final String title;
         private String author;
         private String paperTitle;
-        private String paperAuthors;
+        private String paperAuthor;
         private String subject;
         private String creator;
         private String keywords;
@@ -110,8 +110,8 @@ public class SipamatoPdfExporterConfiguration extends SimplePdfExporterConfigura
             return this;
         }
 
-        public Builder withPaperAuthors(final String paperAuthors) {
-            this.paperAuthors = paperAuthors;
+        public Builder withPaperAuthor(final String paperAuthor) {
+            this.paperAuthor = paperAuthor;
             return this;
         }
 

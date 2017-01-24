@@ -67,13 +67,13 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
 
         String author = getModelObject().getCreatedByFullName();
-        String paperlAuthors = getModelObject().getAuthors();
+        String paperAuthor = getModelObject().getFirstAuthor();
         String paperTitle = getModelObject().getTitle();
         String subject = getModelObject().getGoals();
         List<Code> codes = getModelObject().getCodes();
         SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getId()).withCreator(brand)
                 .withPaperTitle(paperTitle)
-                .withPaperAuthors(paperlAuthors)
+                .withPaperAuthor(paperAuthor)
                 .withSubject(subject)
                 .withAuthor(author)
                 .withCodes(codes)
