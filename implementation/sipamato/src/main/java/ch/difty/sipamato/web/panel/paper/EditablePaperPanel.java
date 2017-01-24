@@ -66,8 +66,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         String brand = getProperties().getBrand();
         String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
 
-        // TODO consider setting Full name of creator into Paper too - if so use here
-        String author = getModelObject().getCreatedByName();
+        String author = getModelObject().getCreatedByFullName();
         String paperlAuthors = getModelObject().getAuthors();
         String paperTitle = getModelObject().getTitle();
         String subject = getModelObject().getGoals();

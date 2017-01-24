@@ -38,6 +38,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         p.setCreated(LocalDateTime.parse("2017-01-01T22:15:13.111"));
         p.setCreatedBy(10);
         p.setCreatedByName("creator");
+        p.setCreatedByFullName("creator full name");
         p.setLastModified(LocalDateTime.parse("2017-01-10T22:15:13.111"));
         p.setLastModifiedBy(20);
         p.setLastModifiedByName("modifier");

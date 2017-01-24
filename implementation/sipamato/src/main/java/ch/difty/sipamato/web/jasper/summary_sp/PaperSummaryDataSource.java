@@ -160,8 +160,6 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
      *
      * We could refactor this to have PaperSlim have all the fields needed in PaperSummary and then
      * derive the PaperSummary from PaperSlim instead of from Paper. But that adds overhead in PaperSlim instead.
-     *
-     * TODO evaluate which way to go later
      */
     private void fetchSummariesFromDataProvider() {
         final long records = dataProvider.size();
@@ -176,6 +174,9 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
         }
     }
 
+    /**
+     * Overriding in order to not use the deprecated and incompatible methods still used in JRResource (expoerter.setParameter)
+     */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     protected byte[] getExporterData(JasperPrint print, JRAbstractExporter exporter) throws JRException {

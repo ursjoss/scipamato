@@ -12,8 +12,7 @@ public class PaperSummaryReportResourceReference extends JasperReportResourceRef
     private static final String NAME = "paper_summary_A4";
 
     // Use the respective constructor depending on whether your developing the report or are in production.
-    // TODO this could be dependent on a property.
-    private static final PaperSummaryReportResourceReference INSTANCE = new PaperSummaryReportResourceReference(false); // TODO use other constructor
+    private static final PaperSummaryReportResourceReference INSTANCE = new PaperSummaryReportResourceReference();
 
     /**
      * Use this constructor in production

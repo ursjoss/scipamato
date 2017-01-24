@@ -84,6 +84,7 @@ public abstract class RecordMapperTest<R extends Record, E extends SipamatoEntit
 
         // not enriched by service
         assertThat(e.getCreatedByName()).isNull();
+        assertThat(e.getCreatedByFullName()).isNull();
         assertThat(e.getLastModifiedByName()).isNull();
     }
 

@@ -70,7 +70,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
         when(paperMock.getMethods()).thenReturn(METHODS);
         when(paperMock.getResult()).thenReturn(RESULT);
         when(paperMock.getComment()).thenReturn(COMMENT);
-        when(paperMock.getCreatedByName()).thenReturn(CREATED_BY);
+        when(paperMock.getCreatedByFullName()).thenReturn(CREATED_BY);
     }
 
     @After
@@ -93,7 +93,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
         verify(paperMock).getMethods();
         verify(paperMock).getResult();
         verify(paperMock).getComment();
-        verify(paperMock).getCreatedByName();
+        verify(paperMock).getCreatedByFullName();
     }
 
     private void assertDataSource() throws JRException {
@@ -177,7 +177,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
         verify(paperMock).getMethods();
         verify(paperMock).getResult();
         verify(paperMock).getComment();
-        verify(paperMock).getCreatedByName();
+        verify(paperMock).getCreatedByFullName();
 
         verifyNoMoreInteractions(itMock, paperSlimMock);
     }

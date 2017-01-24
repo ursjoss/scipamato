@@ -40,8 +40,7 @@ public class PaperSummaryTest {
         p.setMethods(METHODS);
         p.setResult(RESULT);
         p.setComment(COMMENT);
-        p.setCreatedByName(CREATED_BY);
-
+        p.setCreatedByFullName(CREATED_BY);
     }
 
     @Test

@@ -37,7 +37,6 @@ public class LoginPage extends BasePage<Void> {
         add(new LoginForm("form"));
     }
 
-    // TODO consider using SignInPanel
     private class LoginForm extends Form<LoginForm> {
         private static final long serialVersionUID = 1L;
 
