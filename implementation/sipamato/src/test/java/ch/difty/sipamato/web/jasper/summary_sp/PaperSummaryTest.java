@@ -2,6 +2,7 @@ package ch.difty.sipamato.web.jasper.summary_sp;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import ch.difty.sipamato.entity.Paper;
@@ -26,17 +27,10 @@ public class PaperSummaryTest {
     private static final String CREATED_BY = "creatingUser";
 
     private PaperSummary ps;
+    Paper p = new Paper();
 
-    @Test
-    public void instantiatingUsingIndividualFields() {
-        ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, COMMENT, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, CREATED_BY);
-
-        assertPaperSummary();
-    }
-
-    @Test
-    public void instantiatingUsingPaper() {
-        Paper p = new Paper();
+    @Before
+    public void setUp() {
         p.setId(ID);
         p.setAuthors(AUTHORS);
         p.setTitle(TITLE);
@@ -47,6 +41,18 @@ public class PaperSummaryTest {
         p.setResult(RESULT);
         p.setComment(COMMENT);
         p.setCreatedByName(CREATED_BY);
+
+    }
+
+    @Test
+    public void instantiatingUsingIndividualFields() {
+        ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, COMMENT, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, CREATED_BY);
+
+        assertPaperSummary();
+    }
+
+    @Test
+    public void instantiatingUsingPaper() {
         ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
 
         assertPaperSummary();
@@ -111,6 +117,42 @@ public class PaperSummaryTest {
 
         assertThat(ps.getId()).isEmpty();
         assertThat(ps.getHeader()).isEqualTo(HEADER_PART);
+    }
+
+    @Test
+    public void populationLabelIsBlankIfPopulationIsBlank() {
+        p.setPopulation("");
+        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
+
+        assertThat(ps.getPopulation()).isEqualTo("");
+        assertThat(ps.getPopulationLabel()).isEqualTo("");
+    }
+
+    @Test
+    public void methodsLabelIsBlankIfMethodsIsBlank() {
+        p.setMethods("");
+        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
+
+        assertThat(ps.getMethods()).isEqualTo("");
+        assertThat(ps.getMethodsLabel()).isEqualTo("");
+    }
+
+    @Test
+    public void resultLabelIsBlankIfResultIsBlank() {
+        p.setResult("");
+        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
+
+        assertThat(ps.getResult()).isEqualTo("");
+        assertThat(ps.getResultLabel()).isEqualTo("");
+    }
+
+    @Test
+    public void commentLabelIsBlankIfCommentIsBlank() {
+        p.setComment("");
+        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
+
+        assertThat(ps.getComment()).isEqualTo("");
+        assertThat(ps.getCommentLabel()).isEqualTo("");
     }
 
 }

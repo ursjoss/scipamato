@@ -69,10 +69,10 @@ public class PaperSummary implements Serializable {
         this.result = na(result);
         this.comment = na(comment);
 
-        this.populationLabel = na(populationLabel);
-        this.methodsLabel = na(methodsLabel);
-        this.resultLabel = na(resultLabel);
-        this.commentLabel = na(commentLabel);
+        this.populationLabel = na(populationLabel, this.population);
+        this.methodsLabel = na(methodsLabel, this.methods);
+        this.resultLabel = na(resultLabel, this.result);
+        this.commentLabel = na(commentLabel, this.comment);
 
         this.header = makeHeader(id, headerPart);
         this.brand = na(brand);
@@ -94,6 +94,21 @@ public class PaperSummary implements Serializable {
 
     private String na(final String s) {
         return s != null ? s : "";
+    }
+
+    /**
+     * Sets the label with the real value if present or a default value if null.
+     * However, if the associated value is blank or null, the label is blank as well.
+     * @param label
+     * @param value
+     * @return
+     */
+    private String na(final String label, String value) {
+        if (!value.isEmpty())
+            return label != null ? label : "";
+        else
+            return "";
+
     }
 
     public String getId() {
