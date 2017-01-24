@@ -91,10 +91,10 @@ public class SipamatoPdfExporterConfigurationTest {
 
     @Test
     public void withPaperTitle_concatsTitleAndPaperAuthorAndPaperTitleIntoMetadataTitle() {
-        config = new SipamatoPdfExporterConfiguration.Builder(TITLE).withPaperTitle("papertitle").withPaperAuthors("paperAuthors").build();
+        config = new SipamatoPdfExporterConfiguration.Builder(TITLE).withPaperTitle("papertitle").withPaperAuthor("paperAuthor").build();
         assertThat(config.getMetadataCreator()).isNull();
         assertThat(config.getMetadataAuthor()).isNull();
-        assertThat(config.getMetadataTitle()).isEqualTo(TITLE + " - paperAuthors: papertitle");
+        assertThat(config.getMetadataTitle()).isEqualTo(TITLE + " - paperAuthor et al.: papertitle");
         assertThat(config.getMetadataSubject()).isNull();
         assertThat(config.getMetadataKeywords()).isNull();
         assertThat(config.isCompressed()).isFalse();
@@ -168,7 +168,7 @@ public class SipamatoPdfExporterConfigurationTest {
         codes.add(new Code("2B", "c2 with spaces", null, false, 2, "c2", "", 1));
         config = new SipamatoPdfExporterConfiguration.Builder("hp:", 10l).withAuthor("a")
                 .withPaperTitle("pt")
-                .withPaperAuthors("pa")
+                .withPaperAuthor("pa")
                 .withSubject("s")
                 .withCreator("c")
                 .withCodes(codes)
@@ -176,7 +176,7 @@ public class SipamatoPdfExporterConfigurationTest {
                 .build();
         assertThat(config.getMetadataCreator()).isEqualTo("c");
         assertThat(config.getMetadataAuthor()).isEqualTo("a");
-        assertThat(config.getMetadataTitle()).isEqualTo("hp: 10 - pa: pt");
+        assertThat(config.getMetadataTitle()).isEqualTo("hp: 10 - pa et al.: pt");
         assertThat(config.getMetadataSubject()).isEqualTo("s");
         assertThat(config.getMetadataKeywords()).isEqualTo("c1,\"c2 with spaces\"");
         assertThat(config.isCompressed()).isTrue();

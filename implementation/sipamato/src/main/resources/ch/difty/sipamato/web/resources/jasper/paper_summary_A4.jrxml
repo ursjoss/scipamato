@@ -66,7 +66,7 @@
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
+						<font size="10" isBold="false" isItalic="false" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{location}]]></textFieldExpression>
@@ -96,7 +96,7 @@
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="20" splitType="Stretch">
+		<band height="28" splitType="Stretch">
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>

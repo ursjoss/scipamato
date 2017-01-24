@@ -1,7 +1,6 @@
 package ch.difty.sipamato.web.panel.paper;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -66,17 +65,12 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         String brand = getProperties().getBrand();
         String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
 
-        String author = getModelObject().getCreatedByFullName();
-        String paperlAuthors = getModelObject().getAuthors();
-        String paperTitle = getModelObject().getTitle();
-        String subject = getModelObject().getGoals();
-        List<Code> codes = getModelObject().getCodes();
         SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getId()).withCreator(brand)
-                .withPaperTitle(paperTitle)
-                .withPaperAuthors(paperlAuthors)
-                .withSubject(subject)
-                .withAuthor(author)
-                .withCodes(codes)
+                .withPaperTitle(getModelObject().getTitle())
+                .withPaperAuthor(getModelObject().getFirstAuthor())
+                .withSubject(getModelObject().getMethods())
+                .withAuthor(getModelObject().getCreatedByFullName())
+                .withCodes(getModelObject().getCodes())
                 .withCompression()
                 .build();
         return new PaperSummaryDataSource(getModelObject(), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand, config);

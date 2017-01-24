@@ -52,7 +52,7 @@ public class PaperSummary implements Serializable {
      */
     public PaperSummary(final Paper p, final String populationLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart, final String brand) {
         this(p.getId(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulation(), p.getMethods(), p.getResult(), p.getComment(), populationLabel, methodsLabel, resultLabel,
-                commentLabel, headerPart, brand, p.getCreatedByFullName());
+                commentLabel, headerPart, brand, p.getCreatedByName());
     }
 
     /**
