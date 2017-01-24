@@ -31,6 +31,7 @@ public abstract class SipamatoEntity implements Serializable {
     public static final String CREATED = "created";
     public static final String CREATOR_ID = "createdBy";
     public static final String CREATOR_NAME = "createdByName";
+    public static final String CREATOR_FULL_NAME = "createdByFullName";
     public static final String MODIFIED = "lastModified";
     public static final String MODIFIER_ID = "lastModifiedBy";
     public static final String MODIFIER_NAME = "lastModifiedByName";
@@ -43,6 +44,7 @@ public abstract class SipamatoEntity implements Serializable {
     private int version;
 
     private transient String createdByName;
+    private transient String createdByFullName;
     private transient String lastModifiedByName;
 
     public LocalDateTime getCreated() {
@@ -91,6 +93,14 @@ public abstract class SipamatoEntity implements Serializable {
 
     public void setCreatedByName(String createdByName) {
         this.createdByName = createdByName;
+    }
+
+    public String getCreatedByFullName() {
+        return createdByFullName;
+    }
+
+    public void setCreatedByFullName(String createdByFullName) {
+        this.createdByFullName = createdByFullName;
     }
 
     public String getLastModifiedByName() {

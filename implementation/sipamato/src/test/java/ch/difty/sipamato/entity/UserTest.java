@@ -58,6 +58,7 @@ public class UserTest {
         assertThat(u.getPassword()).isEqualTo(PASSWORD);
         assertThat(u.isEnabled()).isEqualTo(ENABLED);
         assertThat(u.getRoles()).containsExactly(roleMock1, roleMock2);
+        assertThat(u.getFullName()).isEqualTo(FIRST_NAME + " " + LAST_NAME);
     }
 
     @Test

@@ -47,10 +47,12 @@ public class PaperSummary implements Serializable {
      *      Static part of the header - will be supplemented with the id
      * @param brand
      *      Brand of the application
+     * @param createdBy
+     *      The full name of the creator
      */
     public PaperSummary(final Paper p, final String populationLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart, final String brand) {
         this(p.getId(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulation(), p.getMethods(), p.getResult(), p.getComment(), populationLabel, methodsLabel, resultLabel,
-                commentLabel, headerPart, brand, p.getCreatedByName());
+                commentLabel, headerPart, brand, p.getCreatedByFullName());
     }
 
     /**
