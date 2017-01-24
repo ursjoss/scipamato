@@ -60,10 +60,17 @@ public class DefaultAuthorParserTest {
         assertFirstAuthorOf("Lloyd   Webber   Andrew", "Lloyd Webber");
     }
 
-    // TODO here we'd only expect 'Pope' as firstAuthor
     @Test
-    public void canReturnFirstAuthor_specialScenarios() {
-        assertFirstAuthorOf("Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.", "Pope CA");
+    public void canParseNameWithCardinality() {
+        p = new DefaultAuthorParser("Ln FN 1st, Ln FN 2nd, Ln FN 3rd, Ln FN 4th, Ln FN 5th, Ln FN 100th, Ln FN.");
+        assertThat(p.getFirstAuthor().orElse("n.a.")).isEqualTo("Ln");
+        assertThat(p.getAuthors().map(Author::getLastName).toArray()).containsOnly("Ln");
+        assertThat(p.getAuthors().map(Author::getFirstName).toArray()).containsExactly("FN 1st", "FN 2nd", "FN 3rd", "FN 4th", "FN 5th", "FN 100th", "FN");
+    }
+
+    @Test
+    public void canReturnFirstAuthor_evenWhenCardinalityStandsAfterFirstName() {
+        assertFirstAuthorOf("Pope CA 3rd, Lloyd Webber A.", "Pope");
     }
 
     @Test

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import org.apache.wicket.util.string.Strings;
@@ -27,6 +29,8 @@ import ch.difty.sipamato.lib.AssertAs;
  */
 public class DefaultAuthorParser implements AuthorParser {
 
+    private static final Pattern CARDINALITY_PATTERN = Pattern.compile("(?:1st|2nd|3rd)|(?:\\d+th)");
+
     private final String authorsString;
     private final List<Author> authors;
 
@@ -46,11 +50,11 @@ public class DefaultAuthorParser implements AuthorParser {
         }
     }
 
-    private List<String> lexAuthors(String authors) {
+    private List<String> lexAuthors(final String authors) {
         return Arrays.asList(authors.split(" *, *"));
     }
 
-    private List<Author> parseAuthors(List<String> authorStrings) {
+    private List<Author> parseAuthors(final List<String> authorStrings) {
         final List<Author> authors = new ArrayList<>();
         for (final String as : authorStrings) {
             authors.add(parseAuthor(as));
@@ -64,11 +68,20 @@ public class DefaultAuthorParser implements AuthorParser {
 
         final List<String> tokens = Arrays.asList(authorString.split(" +"));
         if (tokens.size() > 1) {
-            int i = tokens.size() - 1;
-            firstName = tokens.get(i).trim();
-            lastName = Strings.join(" ", tokens.subList(0, i));
+            final int i = getIndexOfFirstName(tokens);
+            firstName = Strings.join(" ", tokens.subList(i, tokens.size())).trim();
+            lastName = Strings.join(" ", tokens.subList(0, i)).trim();
         }
         return new Author(authorString, lastName, firstName);
+    }
+
+    private int getIndexOfFirstName(final List<String> tokens) {
+        final int i = tokens.size() - 1;
+        final Matcher m = CARDINALITY_PATTERN.matcher(tokens.get(i));
+        if (i > 0 && m.find())
+            return i - 1;
+        else
+            return i;
     }
 
     /** {@inheritDoc} */
