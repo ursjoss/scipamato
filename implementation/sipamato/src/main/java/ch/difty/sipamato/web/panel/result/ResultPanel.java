@@ -123,12 +123,7 @@ public class ResultPanel extends AbstractPanel<Void> {
         String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
 
         String pdfTitle = brand + "- " + new StringResourceModel("pdf.titlePart", this, null).getString();
-        String pdfSubject = new StringResourceModel("pdf.subject", this, null).getString();
-        SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(pdfTitle).withSubject(pdfSubject)
-                .withAuthor(getActiveUser())
-                .withCreator(brand)
-                .withCompression()
-                .build();
+        SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(pdfTitle).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
         ResourceLink<Void> summaryLink = new ResourceLink<Void>(id,
                 new PaperSummaryDataSource(dataProvider, paperService, populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand, config));
         summaryLink.setOutputMarkupId(true);
