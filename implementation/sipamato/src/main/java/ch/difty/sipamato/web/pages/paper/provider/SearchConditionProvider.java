@@ -30,10 +30,17 @@ public class SearchConditionProvider extends SortableDataProvider<SearchConditio
         this.searchOrderModel = searchOrderModel;
     }
 
+    /**
+     * Returns paged {@link SearchCondition} iterator
+     * @param offset
+     *          skipping records
+     * @param size
+     *          page size
+     * @return
+     */
     @Override
     public Iterator<SearchCondition> iterator(final long offset, final long size) {
-        // TODO currently ignoring offset and size. Might need to implement
-        return getConditions().iterator();
+        return getConditions().stream().skip(offset).limit(size).iterator();
     }
 
     /*
@@ -44,11 +51,13 @@ public class SearchConditionProvider extends SortableDataProvider<SearchConditio
         return searchOrder != null ? searchOrder.getSearchConditions() : new ArrayList<SearchCondition>();
     }
 
+    /** {@inheritDoc} */
     @Override
     public long size() {
         return getConditions().size();
     }
 
+    /** {@inheritDoc} */
     @Override
     public IModel<SearchCondition> model(final SearchCondition searchCondition) {
         return new Model<SearchCondition>(searchCondition);
