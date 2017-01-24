@@ -143,4 +143,9 @@ public class User extends IdSipamatoEntity<Integer> {
         return userName;
     }
 
+    public String getFullName() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(firstName).append(" ").append(lastName);
+        return sb.toString();
+    }
 }

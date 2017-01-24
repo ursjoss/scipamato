@@ -25,6 +25,7 @@ import ch.difty.sipamato.db.tables.records.PaperCodeRecord;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.lib.TranslationUtils;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
@@ -147,6 +148,13 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     private void deleteObsoleteCodesFrom(Paper paper) {
         final List<String> codes = paper.getCodes().stream().map(Code::getCode).collect(Collectors.toList());
         getDsl().deleteFrom(PAPER_CODE).where(PAPER_CODE.PAPER_ID.equal(paper.getId()).and(PAPER_CODE.CODE.notIn(codes))).execute();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public List<Paper> findByIds(List<Long> ids) {
+        AssertAs.notNull(ids, "ids");
+        return getDsl().selectFrom(PAPER).where(PAPER.ID.in(ids)).fetchInto(Paper.class);
     }
 
 }

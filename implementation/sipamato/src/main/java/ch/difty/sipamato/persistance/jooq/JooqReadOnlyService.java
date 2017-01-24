@@ -63,20 +63,28 @@ public abstract class JooqReadOnlyService<ID extends Number, R extends Record, T
 
     protected void enrichAuditNamesOf(T entity) {
         if (entity != null) {
-            entity.setCreatedByName(getNameOfUserWithId(entity.getCreatedBy()));
-            entity.setLastModifiedByName(getNameOfUserWithId(entity.getLastModifiedBy()));
+            setCreatedMetaData(entity);
+            setModifiedMeta(entity);
         }
 
     }
 
-    private String getNameOfUserWithId(final Integer id) {
+    private void setCreatedMetaData(T entity) {
+        final Optional<User> user = getUserWithId(entity.getCreatedBy());
+        entity.setCreatedByName(user.map(User::getDisplayValue).orElse(null));
+        entity.setCreatedByFullName(user.map(User::getFullName).orElse(null));
+    }
+
+    private void setModifiedMeta(T entity) {
+        entity.setLastModifiedByName(getUserWithId(entity.getLastModifiedBy()).map(User::getDisplayValue).orElse(null));
+    }
+
+    private Optional<User> getUserWithId(final Integer id) {
         if (id != null && userRepo != null) {
-            final User u = userRepo.findById(id);
-            if (u != null) {
-                return u.getDisplayValue();
-            }
+            return Optional.ofNullable(userRepo.findById(id));
         }
-        return null;
+        return Optional.empty();
+
     }
 
     /** {@inheritDoc} */
@@ -87,7 +95,7 @@ public abstract class JooqReadOnlyService<ID extends Number, R extends Record, T
         return entities;
     }
 
-    private void enrichAuditNamesOfAll(final List<T> entities) {
+    protected void enrichAuditNamesOfAll(final List<T> entities) {
         for (final T e : entities) {
             enrichAuditNamesOf(e);
         }

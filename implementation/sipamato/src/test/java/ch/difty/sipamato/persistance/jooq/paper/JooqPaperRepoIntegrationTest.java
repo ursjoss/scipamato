@@ -5,6 +5,7 @@ import static ch.difty.sipamato.persistance.jooq.TestDbConstants.MAX_ID_PREPOPUL
 import static ch.difty.sipamato.persistance.jooq.TestDbConstants.RECORD_COUNT_PREPOPULATED;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.DSLContext;
@@ -287,5 +288,17 @@ public class JooqPaperRepoIntegrationTest {
     //    }
 
     // TODO test findByExpression
+
+    @Test
+    public void gettingByIds_returnsRecordForEveryIdExisting() {
+        List<Paper> papers = repo.findByIds(Arrays.asList(1l, 2l, 3l, 10l, -17l));
+        assertThat(papers).hasSize(4);
+        assertThat(papers).extracting("id").containsExactly(1l, 2l, 3l, 10l);
+    }
+
+    @Test
+    public void gettingByIds_returnsEmptyListForEmptyIdList() {
+        assertThat(repo.findByIds(Arrays.asList())).isEmpty();
+    }
 
 }

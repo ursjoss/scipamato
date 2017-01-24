@@ -10,12 +10,15 @@ import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
+import ch.difty.sipamato.web.jasper.SipamatoPdfExporterConfiguration;
+import ch.difty.sipamato.web.jasper.summary_sp.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.Mode;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 
@@ -51,6 +54,26 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         };
         firstAuthor.add(new PropertyValidator<String>());
         return firstAuthor;
+    }
+
+    @Override
+    protected PaperSummaryDataSource getSummaryDataSource() {
+        String populationLabel = new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString();
+        String methodsLabel = new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString();
+        String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
+        String commentLabel = new StringResourceModel("comment" + LABEL_RECOURCE_TAG, this, null).getString();
+        String brand = getProperties().getBrand();
+        String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
+
+        SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getId()).withCreator(brand)
+                .withPaperTitle(getModelObject().getTitle())
+                .withPaperAuthor(getModelObject().getFirstAuthor())
+                .withSubject(getModelObject().getMethods())
+                .withAuthor(getModelObject().getCreatedByFullName())
+                .withCodes(getModelObject().getCodes())
+                .withCompression()
+                .build();
+        return new PaperSummaryDataSource(getModelObject(), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand, config);
     }
 
     @Override
@@ -119,7 +142,6 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             }
 
         };
-
     }
 
 }

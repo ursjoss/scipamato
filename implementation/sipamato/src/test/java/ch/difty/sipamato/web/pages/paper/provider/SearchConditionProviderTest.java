@@ -29,13 +29,13 @@ public class SearchConditionProviderTest {
     private SearchOrder mockSearchOrder;
 
     @Mock
-    private SearchCondition mockCondition1, mockCondition2;
+    private SearchCondition mockCondition1, mockCondition2, mockCondition3, mockCondition4;
 
     private final List<SearchCondition> conditions = new ArrayList<>();
 
     @Before
     public void setUp() {
-        conditions.addAll(Arrays.asList(mockCondition1, mockCondition2));
+        conditions.addAll(Arrays.asList(mockCondition1, mockCondition2, mockCondition3, mockCondition4));
         when(mockSearchOrder.getSearchConditions()).thenReturn(conditions);
 
         provider = new SearchConditionProvider(Model.of(mockSearchOrder));
@@ -67,20 +67,18 @@ public class SearchConditionProviderTest {
     }
 
     @Test
-    public void iterator_from0ToGreaterThanActualSize_returnsAll() {
-        assertThat(provider.iterator(0, 100)).containsExactly(mockCondition1, mockCondition2);
+    public void iterator_fromStartWithPageSizeLargerThanActualSize_returnsAll() {
+        assertThat(provider.iterator(0, 100)).containsExactly(mockCondition1, mockCondition2, mockCondition3, mockCondition4);
     }
 
     @Test
-    public void iterator_from0ToLessThanActualSize_stillReturnsAll_TODO() {
-        // paging not yet implemented
-        assertThat(provider.iterator(0, 1)).containsExactly(mockCondition1, mockCondition2);
+    public void iterator_fromStartWithLimitingPageSize_returnsPageFullFromStart() {
+        assertThat(provider.iterator(0, 2)).containsExactly(mockCondition1, mockCondition2);
     }
 
     @Test
-    public void iterator_from1ToActualSize_stillReturnsAll_TODO() {
-        // paging not yet implemented
-        assertThat(provider.iterator(1, 2)).containsExactly(mockCondition1, mockCondition2);
+    public void iterator_fromIndex1WithLimitingPageSize_returnsPageFullFromIndex() {
+        assertThat(provider.iterator(1, 2)).containsExactly(mockCondition2, mockCondition3);
     }
 
     @Test
@@ -94,7 +92,7 @@ public class SearchConditionProviderTest {
         Model<SearchOrder> searchOrderModel = Model.of(mockSearchOrder);
         assertThat(searchOrderModel.getObject()).isNotNull();
         SearchConditionProvider p = new SearchConditionProvider(searchOrderModel);
-        assertThat(p.size()).isEqualTo(2l);
+        assertThat(p.size()).isEqualTo(4l);
 
         searchOrderModel.setObject(null);
 

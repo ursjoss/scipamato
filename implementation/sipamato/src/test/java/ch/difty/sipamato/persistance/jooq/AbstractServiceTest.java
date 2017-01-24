@@ -54,6 +54,7 @@ public abstract class AbstractServiceTest<ID extends Number, T extends IdSipamat
         when(getEntity().getLastModifiedBy()).thenReturn(MODIFIER_ID);
 
         when(creatorMock.getDisplayValue()).thenReturn("creatingUser");
+        when(creatorMock.getFullName()).thenReturn("creatingUserFullName");
         when(modifierMock.getDisplayValue()).thenReturn("modifyingUser");
 
         when(userRepoMock.findById(CREATOR_ID)).thenReturn(creatorMock);
@@ -80,6 +81,7 @@ public abstract class AbstractServiceTest<ID extends Number, T extends IdSipamat
         verify(getEntity(), times(times)).getCreatedBy();
         verify(userRepoMock, times(times)).findById(CREATOR_ID);
         verify(getEntity(), times(times)).setCreatedByName("creatingUser");
+        verify(getEntity(), times(times)).setCreatedByFullName("creatingUserFullName");
         verify(getEntity(), times(times)).getLastModifiedBy();
         verify(userRepoMock, times(times)).findById(MODIFIER_ID);
         verify(getEntity(), times(times)).setLastModifiedByName("modifyingUser");
