@@ -1,32 +1,19 @@
 package ch.difty.sipamato.web.jasper.summary_sp;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.apache.commons.collections.IteratorUtils;
-import org.apache.wicket.util.io.ByteArrayOutputStream;
-import org.wicketstuff.jasperreports.JRConcreteResource;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.service.PaperService;
+import ch.difty.sipamato.web.jasper.JasperPaperDataSource;
 import ch.difty.sipamato.web.jasper.SipamatoPdfResourceHandler;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
 import ch.difty.sipamato.web.resources.jasper.PaperSummaryReportResourceReference;
-import net.sf.jasperreports.engine.JRAbstractExporter;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.export.PdfExporterConfiguration;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 /**
  * DataSource for the PaperSummaryReport.
@@ -41,16 +28,15 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
  * </ul>
  *
  * The meta fields are not contained within a paper instance and make up e.g. localized labels, the brand or part of the header.
+ *
  * @author u.joss
  */
-public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResourceHandler> {
+public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> {
 
     private static final long serialVersionUID = 1L;
 
-    private final Collection<PaperSummary> paperSummaries = new ArrayList<>();
-
-    private SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider;
-    private PaperService paperService;
+    private static final String BASE_NAME_SINGLE = "paper_summary_id_";
+    private static final String BASE_NAME_MULTIPLE = "paper_summaries";
 
     private String populationLabel;
     private String methodsLabel;
@@ -58,6 +44,16 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
     private String commentLabel;
     private String headerPart;
     private String brand;
+
+    @Override
+    protected JasperReport getReport() {
+        return PaperSummaryReportResourceReference.get().getReport();
+    }
+
+    @Override
+    protected PaperSummary makeEntity(Paper p) {
+        return new PaperSummary(p, populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand);
+    }
 
     /**
      * Build up the paper summary from a {@link Paper} and any additional information not contained within the paper
@@ -78,12 +74,15 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
      */
     public PaperSummaryDataSource(final Paper paper, final String populationLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart,
             final String brand, PdfExporterConfiguration config) {
-        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand)), config);
-        setFileNameForSinglePaper(String.valueOf(paper.getId()));
+        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand)), config, makeSinglePaperBaseName(paper));
     }
 
-    private void setFileNameForSinglePaper(final String id) {
-        setFileName("paper_summary_id_" + id + "." + getExtension());
+    private static String makeSinglePaperBaseName(final Paper paper) {
+        if (paper != null && paper.getId() != null) {
+            return BASE_NAME_SINGLE + paper.getId();
+        } else {
+            return BASE_NAME_MULTIPLE;
+        }
     }
 
     /**
@@ -91,8 +90,15 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
      * @param paperSummary an instance of {@link PaperSummary} - must not be null
      */
     public PaperSummaryDataSource(final PaperSummary paperSummary, PdfExporterConfiguration config) {
-        this(Arrays.asList(AssertAs.notNull(paperSummary, "paperSummary")), config);
-        setFileNameForSinglePaper(paperSummary.getId());
+        this(Arrays.asList(AssertAs.notNull(paperSummary, "paperSummary")), config, makeSinglePaperBaseName(paperSummary));
+    }
+
+    private static String makeSinglePaperBaseName(final PaperSummary paperSummary) {
+        if (paperSummary != null && paperSummary.getId() != null) {
+            return BASE_NAME_SINGLE + paperSummary.getId();
+        } else {
+            return BASE_NAME_MULTIPLE;
+        }
     }
 
     /**
@@ -100,17 +106,15 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
      * @param paperSummaries collection of {@link PaperSummary} instances - must not be null
      */
     public PaperSummaryDataSource(final Collection<PaperSummary> paperSummaries, PdfExporterConfiguration config) {
-        super(new SipamatoPdfResourceHandler(config));
-        init();
-        AssertAs.notNull(paperSummaries, "paperSummaries");
-        this.paperSummaries.addAll(paperSummaries);
+        this(paperSummaries, config, BASE_NAME_MULTIPLE);
     }
 
-    private void init() {
-        setJasperReport(PaperSummaryReportResourceReference.get().getReport());
-        setReportParameters(new HashMap<String, Object>());
-        setFileName("paper_summaries." + getExtension());
-        this.paperSummaries.clear();
+    /**
+     * Using a collection of {@link PaperSummary} instances as data source
+     * @param paperSummaries collection of {@link PaperSummary} instances - must not be null
+     */
+    private PaperSummaryDataSource(final Collection<PaperSummary> paperSummaries, PdfExporterConfiguration config, String baseName) {
+        super(new SipamatoPdfResourceHandler(config), baseName, paperSummaries);
     }
 
     /**
@@ -135,10 +139,7 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
      */
     public PaperSummaryDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final PaperService paperService, final String populationLabel, final String methodsLabel,
             final String resultLabel, final String commentLabel, final String headerPart, final String brand, PdfExporterConfiguration config) {
-        super(new SipamatoPdfResourceHandler(config));
-        init();
-        this.dataProvider = AssertAs.notNull(dataProvider, "dataProvider");
-        this.paperService = AssertAs.notNull(paperService, "paperService");
+        super(new SipamatoPdfResourceHandler(config), BASE_NAME_MULTIPLE, dataProvider, paperService);
         this.populationLabel = populationLabel;
         this.methodsLabel = methodsLabel;
         this.resultLabel = resultLabel;
@@ -147,54 +148,4 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
         this.brand = brand;
     }
 
-    /** {@iheritDoc} */
-    @Override
-    public JRDataSource getReportDataSource() {
-        if (dataProvider != null) {
-            paperSummaries.clear();
-            fetchSummariesFromDataProvider();
-        }
-        return new JRBeanCollectionDataSource(paperSummaries);
-    }
-
-    /**
-     * This is admittedly a bit of a hack, as this will actually cause two service calls to the database:
-     *
-     * <ol>
-     * <li> a call to the paperSlimService (within the dataprovider) to get thePaperSlims</li>
-     * <li> a second call to the paperService to get the Papers from the paperSlim Ids</li>
-     * </ol>
-     *
-     * We could refactor this to have PaperSlim have all the fields needed in PaperSummary and then
-     * derive the PaperSummary from PaperSlim instead of from Paper. But that adds overhead in PaperSlim instead.
-     */
-    private void fetchSummariesFromDataProvider() {
-        final long records = dataProvider.size();
-        if (records > 0) {
-            @SuppressWarnings("unchecked")
-            final List<PaperSlim> paperSlims = IteratorUtils.toList(dataProvider.iterator(0, records));
-            final List<Long> ids = paperSlims.stream().map(p -> p.getId()).collect(Collectors.toList());
-            final List<Paper> papers = paperService.findByIds(ids);
-            for (final Paper p : papers) {
-                paperSummaries.add(new PaperSummary(p, populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand));
-            }
-        }
-    }
-
-    /**
-     * Overriding in order to not use the deprecated and incompatible methods still used in JRResource (expoerter.setParameter)
-     */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    protected byte[] getExporterData(JasperPrint print, JRAbstractExporter exporter) throws JRException {
-        // prepare a stream to trap the exporter's output
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        exporter.setExporterInput(new SimpleExporterInput(print));
-        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
-
-        // execute the export and return the trapped result
-        exporter.exportReport();
-
-        return baos.toByteArray();
-    }
 }
