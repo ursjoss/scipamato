@@ -79,6 +79,11 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
     public PaperSummaryDataSource(final Paper paper, final String populationLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart,
             final String brand, PdfExporterConfiguration config) {
         this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand)), config);
+        setFileNameForSinglePaper(String.valueOf(paper.getId()));
+    }
+
+    private void setFileNameForSinglePaper(final String id) {
+        setFileName("paper_summary_id_" + id + "." + getExtension());
     }
 
     /**
@@ -87,6 +92,7 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
      */
     public PaperSummaryDataSource(final PaperSummary paperSummary, PdfExporterConfiguration config) {
         this(Arrays.asList(AssertAs.notNull(paperSummary, "paperSummary")), config);
+        setFileNameForSinglePaper(paperSummary.getId());
     }
 
     /**
@@ -103,6 +109,7 @@ public class PaperSummaryDataSource extends JRConcreteResource<SipamatoPdfResour
     private void init() {
         setJasperReport(PaperSummaryReportResourceReference.get().getReport());
         setReportParameters(new HashMap<String, Object>());
+        setFileName("paper_summaries." + getExtension());
         this.paperSummaries.clear();
     }
 

@@ -48,6 +48,9 @@ public class PaperSummaryDataSourceTest extends WicketTest {
     private static final String HEADER = HEADER_PART + " " + ID;
     private static final String BRAND = "LUDOK";
 
+    private static final String FILE_NAME_SINGLE = "paper_summary_id_" + ID + ".pdf";
+    private static final String FILE_NAME_MULTIPLE = "paper_summaries.pdf";
+
     private PaperSummaryDataSource ds;
 
     @Mock
@@ -82,9 +85,9 @@ public class PaperSummaryDataSourceTest extends WicketTest {
     public void instantiatingWithPaper_returnsPdfDataSourceWithOneRecord() throws JRException {
         ds = new PaperSummaryDataSource(paperMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
 
-        assertDataSource();
+        assertDataSource(FILE_NAME_SINGLE);
 
-        verify(paperMock).getId();
+        verify(paperMock, times(2)).getId();
         verify(paperMock).getAuthors();
         verify(paperMock).getTitle();
         verify(paperMock).getLocation();
@@ -96,14 +99,15 @@ public class PaperSummaryDataSourceTest extends WicketTest {
         verify(paperMock).getCreatedByName();
     }
 
-    private void assertDataSource() throws JRException {
+    private void assertDataSource(String fileName) throws JRException {
         assertThat(ds.getConnectionProvider()).isNull();
         assertThat(ds.getContentDisposition().toString()).isEqualTo("ATTACHMENT");
         assertThat(ds.getContentType()).isEqualTo("application/pdf");
         assertThat(ds.getExtension()).isEqualTo("pdf");
-        assertThat(ds.getFileName()).isEqualTo("paper_summary_A4.pdf");
         assertThat(ds.getJasperReport()).isInstanceOf(JasperReport.class);
         assertThat(ds.getReportParameters()).isEmpty();
+
+        assertThat(ds.getFileName()).isEqualTo(fileName);
 
         final JRDataSource jsds = ds.getReportDataSource();
         JRDesignField f = new JRDesignField();
@@ -142,7 +146,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
                 CREATED_BY);
         ds = new PaperSummaryDataSource(ps, pdfExporterConfigMock);
 
-        assertDataSource();
+        assertDataSource(FILE_NAME_SINGLE);
     }
 
     @Test
@@ -159,7 +163,7 @@ public class PaperSummaryDataSourceTest extends WicketTest {
         when(paperServiceMock.findByIds(Arrays.asList(ID))).thenReturn(Arrays.asList(paperMock));
 
         ds = new PaperSummaryDataSource(dataProviderMock, paperServiceMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
-        assertDataSource();
+        assertDataSource(FILE_NAME_MULTIPLE);
 
         verify(dataProviderMock).size();
         verify(dataProviderMock).iterator(0, 1);
