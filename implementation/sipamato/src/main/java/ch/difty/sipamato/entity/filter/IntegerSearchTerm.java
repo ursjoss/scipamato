@@ -5,12 +5,12 @@ package ch.difty.sipamato.entity.filter;
  * The following {@link MatchType}s are implemented:
  *
  * <ul>
- * <li> GREATER_THAN: <code> >2014 </code> </li>
- * <li> GREATER_OR_EQUAL: <code> >=2014 </code> </li>
- * <li> EXACT: <code> 2014 </code> or <code> =2014 </code> </li>
- * <li> LESS_OR_EQUAL: <code> <=2014 </code> </li>
- * <li> LESS_THAN: <code> <2014 </code> </li>
- * <li> RANGE: <code> 2014-2017 </code> </li>
+ * <li> <b>GREATER_THAN:</b> <code> >2014 </code> </li>
+ * <li> <b>GREATER_OR_EQUAL:</b> <code> >=2014 </code> </li>
+ * <li> <b>EXACT:</b> <code> 2014 </code> or <code> =2014 </code> </li>
+ * <li> <b>LESS_OR_EQUAL:</b> <code> <=2014 </code> </li>
+ * <li> <b>LESS_THAN:</b> <code> <2014 </code> </li>
+ * <li> <b>RANGE:</b> <code> 2014-2017 </code> </li>
  * </ul>
  *
  * All rawValues and their individual parts are trimmed, so the following examples are equally valid:
