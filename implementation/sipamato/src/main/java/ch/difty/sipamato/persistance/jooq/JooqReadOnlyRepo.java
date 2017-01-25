@@ -140,7 +140,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntit
     public Page<T> findByFilter(final F filter, final Pageable pageable) {
         final Condition conditions = filterConditionMapper.map(filter);
         final Collection<SortField<T>> sortCriteria = getSortMapper().map(pageable.getSort(), getTable());
-        final List<R> queryResults = getDsl().selectFrom(getTable()).where(conditions).orderBy(sortCriteria).fetchInto(getRecordClass());
+        final List<R> queryResults = getDsl().selectFrom(getTable()).where(conditions).orderBy(sortCriteria).limit(pageable.getPageSize()).offset(pageable.getOffset()).fetchInto(getRecordClass());
 
         final List<T> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
 

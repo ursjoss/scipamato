@@ -24,6 +24,8 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
 
     private static final long serialVersionUID = 1L;
 
+    private final Integer pageSize;
+
     private F filterState;
 
     @SpringBean
@@ -38,23 +40,24 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
         this.service = service;
     }
 
-    SortablePaperSlimProvider(F filterState) {
+    SortablePaperSlimProvider(F filterState, final Integer pageSize) {
         this.filterState = filterState;
+        this.pageSize = pageSize;
     }
 
     @Override
-    public Iterator<PaperSlim> iterator(long offset, long size) {
+    public Iterator<PaperSlim> iterator(long offset, long actualSize) {
+        int pageSizeToUse = pageSize != null ? pageSize.intValue() : (int) actualSize;
         Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         String sortProp = getSort().getProperty();
-        Pageable pageable = new PageRequest(getPageIndex(offset, size), (int) size, dir, sortProp);
+        Pageable pageable = new PageRequest(getPageIndex(offset, pageSizeToUse), (int) pageSizeToUse, dir, sortProp);
         return findByFilter(pageable);
     }
 
     protected abstract Iterator<PaperSlim> findByFilter(Pageable pageable);
 
     private int getPageIndex(long from, long size) {
-        System.out.println("from: " + from + " - size: " + size);
-        return size > 0 ? (int) (from / size) : 1;
+        return size > 0 ? (int) (from / size) : 0;
     }
 
     @Override
@@ -77,6 +80,14 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
     @Override
     public void setFilterState(F filterState) {
         this.filterState = filterState;
+    }
+
+    /**
+     * Return the (max) pageSize, regardless of the number of records actually available on the page.
+     * @return pageSize if specified, null otherwise
+     */
+    public Integer getPageSize() {
+        return pageSize;
     }
 
 }

@@ -24,7 +24,11 @@ public class FilterBasedSortablePaperSlimProvider extends SortablePaperSlimProvi
     }
 
     public FilterBasedSortablePaperSlimProvider(PaperFilter filter) {
-        super(filter);
+        this(filter, null);
+    }
+
+    public FilterBasedSortablePaperSlimProvider(PaperFilter filter, Integer pageSize) {
+        super(filter, pageSize);
         Injector.get().inject(this);
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
     }

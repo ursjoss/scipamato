@@ -22,6 +22,8 @@ public class PaperListPage extends BasePage<Void> {
 
     private static final long serialVersionUID = 1L;
 
+    private static final int RESULT_PAGE_SIZE = 12;
+
     private PaperFilter filter;
     private FilterBasedSortablePaperSlimProvider dataProvider;
 
@@ -32,7 +34,7 @@ public class PaperListPage extends BasePage<Void> {
 
     private void initFilterAndProvider() {
         filter = new PaperFilter();
-        dataProvider = new FilterBasedSortablePaperSlimProvider(filter);
+        dataProvider = new FilterBasedSortablePaperSlimProvider(filter, RESULT_PAGE_SIZE);
     }
 
     protected void onInitialize() {

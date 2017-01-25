@@ -20,7 +20,11 @@ public class SearchOrderBasedSortablePaperSlimProvider extends SortablePaperSlim
     private static final long serialVersionUID = 1L;
 
     public SearchOrderBasedSortablePaperSlimProvider(SearchOrder searchOrder) {
-        super(searchOrder);
+        this(searchOrder, null);
+    }
+
+    public SearchOrderBasedSortablePaperSlimProvider(SearchOrder searchOrder, final Integer pageSize) {
+        super(searchOrder, pageSize);
         Injector.get().inject(this);
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
     }
