@@ -23,10 +23,12 @@ import ch.difty.sipamato.web.component.SerializableConsumer;
 import ch.difty.sipamato.web.component.data.LinkIconColumn;
 import ch.difty.sipamato.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.sipamato.web.jasper.SipamatoPdfExporterConfiguration;
+import ch.difty.sipamato.web.jasper.review.PaperReviewDataSource;
 import ch.difty.sipamato.web.jasper.summary_sp.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
 import ch.difty.sipamato.web.panel.AbstractPanel;
+import ch.difty.sipamato.web.panel.paper.PaperPanel;
 import ch.difty.sipamato.web.panel.search.SearchOrderChangeEvent;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
@@ -68,7 +70,8 @@ public class ResultPanel extends AbstractPanel<Void> {
         super.onInitialize();
 
         makeAndQueueTable("table");
-        makeAndQueuePdfLink("summaryLink");
+        makeAndQueuePdfSummaryLink("summaryLink");
+        makeAndQueuePdfReviewLink("reviewLink");
     }
 
     private void makeAndQueueTable(String id) {
@@ -116,7 +119,7 @@ public class ResultPanel extends AbstractPanel<Void> {
         };
     }
 
-    private void makeAndQueuePdfLink(String id) {
+    private void makeAndQueuePdfSummaryLink(String id) {
         String populationLabel = new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString();
         String methodsLabel = new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString();
         String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
@@ -131,6 +134,35 @@ public class ResultPanel extends AbstractPanel<Void> {
         summaryLink.setOutputMarkupId(true);
         summaryLink.setBody(new StringResourceModel("link.summary.label"));
         queue(summaryLink);
+    }
+
+    private void makeAndQueuePdfReviewLink(String id) {
+        final String idLabel = new StringResourceModel("id" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String authorYearLabel = new StringResourceModel("authorYear" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String locationLabel = new StringResourceModel("location" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodOutcomeLabel = new StringResourceModel("methodOutcome" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String exposurePollutantLabel = new StringResourceModel("exposurePollutant" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodStudyDesignLabel = new StringResourceModel("methodStudyDesign" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String populationDurationLabel = new StringResourceModel("populationDuration" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodStatisticsLabel = new StringResourceModel("methodStatistics" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String populationParticipantsLabel = new StringResourceModel("populationParticipants" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String exposureAssessmentLabel = new StringResourceModel("exposureAssessment" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String resultExposureRangeLabel = new StringResourceModel("resultExposureRange" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodConfoundersLabel = new StringResourceModel("methodConfounders" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String resultEffectEstimateLabel = new StringResourceModel("resultEffectEstimate" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String brand = getProperties().getBrand();
+        final String createdBy = getActiveUser().getFullName();
+
+        final String pdfTitle = brand + "- " + new StringResourceModel("pdf.titlePart", this, null).getString();
+        final SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(pdfTitle).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
+
+        ResourceLink<Void> reviewLink = new ResourceLink<Void>(id,
+                new PaperReviewDataSource(dataProvider, paperService, idLabel, authorYearLabel, locationLabel, methodOutcomeLabel, exposurePollutantLabel, methodStudyDesignLabel,
+                        populationDurationLabel, methodStatisticsLabel, populationParticipantsLabel, exposureAssessmentLabel, resultExposureRangeLabel, methodConfoundersLabel,
+                        resultEffectEstimateLabel, brand, createdBy, config));
+        reviewLink.setOutputMarkupId(true);
+        reviewLink.setBody(new StringResourceModel("link.review.label"));
+        queue(reviewLink);
     }
 
 }

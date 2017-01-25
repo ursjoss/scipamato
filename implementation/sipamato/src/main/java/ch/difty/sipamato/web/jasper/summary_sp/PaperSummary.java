@@ -1,15 +1,14 @@
 package ch.difty.sipamato.web.jasper.summary_sp;
 
-import java.io.Serializable;
-
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.web.jasper.JasperEntity;
 
 /**
  * DTO to feed the PaperSummaryDataSource
  *
  * @author u.joss
  */
-public class PaperSummary implements Serializable {
+public class PaperSummary extends JasperEntity {
     private static final long serialVersionUID = 1L;
 
     private final String id;
@@ -92,25 +91,6 @@ public class PaperSummary implements Serializable {
             sb.append(id);
         }
         return sb.toString();
-    }
-
-    private String na(final String s) {
-        return s != null ? s : "";
-    }
-
-    /**
-     * Sets the label with the real value if present or a default value if null.
-     * However, if the associated value is blank or null, the label is blank as well.
-     * @param label
-     * @param value
-     * @return
-     */
-    private String na(final String label, String value) {
-        if (!value.isEmpty())
-            return label != null ? label : "";
-        else
-            return "";
-
     }
 
     public String getId() {

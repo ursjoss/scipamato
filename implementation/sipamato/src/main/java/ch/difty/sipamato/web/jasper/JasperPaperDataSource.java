@@ -1,0 +1,123 @@
+package ch.difty.sipamato.web.jasper;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.commons.collections.IteratorUtils;
+import org.apache.wicket.util.io.ByteArrayOutputStream;
+import org.wicketstuff.jasperreports.JRConcreteResource;
+
+import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.filter.PaperSlimFilter;
+import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.service.PaperService;
+import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import net.sf.jasperreports.engine.JRAbstractExporter;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+
+public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRConcreteResource<SipamatoPdfResourceHandler> {
+
+    private static final long serialVersionUID = 1L;
+
+    private final Collection<E> jasperEntities = new ArrayList<>();
+    private final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider;
+    private final PaperService paperService;
+    private final String baseName;
+
+    public JasperPaperDataSource(SipamatoPdfResourceHandler handler, String baseName, Collection<E> jasperEntities) {
+        super(handler);
+        this.baseName = AssertAs.notNull(baseName, "baseName");
+        this.jasperEntities.clear();
+        this.jasperEntities.addAll(AssertAs.notNull(jasperEntities, "jasperEntities"));
+        this.dataProvider = null;
+        this.paperService = null;
+        init();
+    }
+
+    public JasperPaperDataSource(SipamatoPdfResourceHandler handler, String baseName, SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, PaperService paperService) {
+        super(handler);
+        this.baseName = AssertAs.notNull(baseName, "baseName");
+        this.jasperEntities.clear();
+        this.dataProvider = AssertAs.notNull(dataProvider, "dataProvider");
+        this.paperService = AssertAs.notNull(paperService, "paperService");
+        init();
+    }
+
+    private void init() {
+        setJasperReport(getReport());
+        setReportParameters(new HashMap<String, Object>());
+        setFileName(baseName + "." + getExtension());
+    }
+
+    protected abstract JasperReport getReport();
+
+    /** {@iheritDoc} */
+    @Override
+    public JRDataSource getReportDataSource() {
+        fetchSummariesFromDataProvider();
+        return new JRBeanCollectionDataSource(jasperEntities);
+    }
+
+    /**
+     * This is admittedly a bit of a hack, as this will actually cause two service calls to the database:
+     *
+     * <ol>
+     * <li> a call to the paperSlimService (within the dataprovider) to get the PaperSlims</li>
+     * <li> a second call to the paperService to get the Papers from the paperSlim Ids</li>
+     * </ol>
+     *
+     * We could refactor this to have PaperSlim have all the fields needed in the reports and then
+     * derive the JasperEntity from PaperSlim instead of from Paper. But that adds overhead in PaperSlim instead.
+     */
+    private void fetchSummariesFromDataProvider() {
+        if (dataProvider != null) {
+            jasperEntities.clear();
+            final long records = dataProvider.size();
+            if (records > 0) {
+                @SuppressWarnings("unchecked")
+                final List<PaperSlim> paperSlims = IteratorUtils.toList(dataProvider.iterator(0, records));
+                final List<Long> ids = paperSlims.stream().map(p -> p.getId()).collect(Collectors.toList());
+                final List<Paper> papers = paperService.findByIds(ids);
+                for (final Paper p : papers) {
+                    jasperEntities.add(makeEntity(p));
+                }
+            }
+        }
+    }
+
+    /**
+     * Implement to instantiate an entity <code>E</code> from the provided {@link Paper} and additional information
+     * required to build it.
+     * @param p the Paper
+     * @return the entity
+     */
+    protected abstract E makeEntity(final Paper p);
+
+    /**
+     * Overriding in order to not use the deprecated and incompatible methods still used in JRResource (expoerter.setParameter)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    protected byte[] getExporterData(JasperPrint print, JRAbstractExporter exporter) throws JRException {
+        // prepare a stream to trap the exporter's output
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        exporter.setExporterInput(new SimpleExporterInput(print));
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+
+        // execute the export and return the trapped result
+        exporter.exportReport();
+
+        return baos.toByteArray();
+    }
+
+}

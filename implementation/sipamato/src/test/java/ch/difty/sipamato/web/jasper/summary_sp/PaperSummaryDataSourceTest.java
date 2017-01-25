@@ -10,24 +10,17 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import org.junit.After;
 import org.junit.Test;
-import org.mockito.Mock;
 
-import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.NullArgumentException;
-import ch.difty.sipamato.service.PaperService;
-import ch.difty.sipamato.web.WicketTest;
-import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import ch.difty.sipamato.web.jasper.PaperDataSourceTest;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JRDesignField;
-import net.sf.jasperreports.export.PdfExporterConfiguration;
 
-public class PaperSummaryDataSourceTest extends WicketTest {
+public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
     private static final Long ID = 10l;
     private static final String AUTHORS = "authors";
@@ -53,15 +46,6 @@ public class PaperSummaryDataSourceTest extends WicketTest {
 
     private PaperSummaryDataSource ds;
 
-    @Mock
-    private SortablePaperSlimProvider<? extends PaperSlimFilter> dataProviderMock;
-    @Mock
-    private PaperService paperServiceMock;
-    @Mock
-    private Paper paperMock;
-    @Mock
-    private PdfExporterConfiguration pdfExporterConfigMock;
-
     @Override
     public void setUpHook() {
         when(paperMock.getId()).thenReturn(ID);
@@ -76,18 +60,13 @@ public class PaperSummaryDataSourceTest extends WicketTest {
         when(paperMock.getCreatedByName()).thenReturn(CREATED_BY);
     }
 
-    @After
-    public void tearDown() {
-        verifyNoMoreInteractions(dataProviderMock, paperServiceMock, paperMock);
-    }
-
     @Test
     public void instantiatingWithPaper_returnsPdfDataSourceWithOneRecord() throws JRException {
         ds = new PaperSummaryDataSource(paperMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
 
         assertDataSource(FILE_NAME_SINGLE);
 
-        verify(paperMock, times(2)).getId();
+        verify(paperMock, times(3)).getId();
         verify(paperMock).getAuthors();
         verify(paperMock).getTitle();
         verify(paperMock).getLocation();
@@ -133,11 +112,6 @@ public class PaperSummaryDataSourceTest extends WicketTest {
         assertFieldValue("createdBy", CREATED_BY, f, jsds);
 
         assertThat(jsds.next()).isFalse();
-    }
-
-    private void assertFieldValue(String fieldName, String value, JRDesignField f, final JRDataSource jsds) throws JRException {
-        f.setName(fieldName);
-        assertThat(jsds.getFieldValue(f)).isEqualTo(value);
     }
 
     @Test
