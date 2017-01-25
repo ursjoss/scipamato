@@ -39,14 +39,15 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
  */
 public class ResultPanel extends AbstractPanel<Void> {
 
-    private static final int ROWS_PER_PAGE = 12;
-
     private static final long serialVersionUID = 1L;
+
+    private static final int DEFAULT_PAGE_SIZE = 12;
 
     @SpringBean
     private PaperService paperService;
 
     private final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider;
+    private final int rowsPerPage;
 
     private DataTable<PaperSlim, String> results;
 
@@ -59,6 +60,7 @@ public class ResultPanel extends AbstractPanel<Void> {
     public ResultPanel(String id, SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
         super(id);
         this.dataProvider = dataProvider;
+        this.rowsPerPage = dataProvider != null && dataProvider.getPageSize() != null ? dataProvider.getPageSize().intValue() : DEFAULT_PAGE_SIZE;
     }
 
     @Override
@@ -70,7 +72,7 @@ public class ResultPanel extends AbstractPanel<Void> {
     }
 
     private void makeAndQueueTable(String id) {
-        results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, ROWS_PER_PAGE);
+        results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, rowsPerPage);
         results.setOutputMarkupId(true);
         results.add(new TableBehavior().striped().hover());
         queue(results);

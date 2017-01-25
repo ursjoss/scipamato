@@ -47,6 +47,8 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 
+    private static final int RESULT_PAGE_SIZE = 12;
+
     private SearchOrderBasedSortablePaperSlimProvider dataProvider;
 
     private SearchOrderSelectorPanel searchOrderSelectorPanel;
@@ -120,7 +122,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     protected void onInitialize() {
         super.onInitialize();
 
-        dataProvider = new SearchOrderBasedSortablePaperSlimProvider(getModelObject());
+        dataProvider = new SearchOrderBasedSortablePaperSlimProvider(getModelObject(), RESULT_PAGE_SIZE);
 
         makeSearchOrderSelectorPanel("searchOrderSelectorPanel");
         makeSearchOrderPanel("searchOrderPanel");

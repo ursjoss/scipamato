@@ -16,6 +16,8 @@ import ch.difty.sipamato.service.SearchOrderService;
 /**
  * Model that offers a wicket page to load {@link SearchOrder}s.
  *
+ * <b>Note:</b> Currently limited to the first 20 search orders (globals first, then natural sort order) HARDCODED TODO
+ *
  * @author u.joss
  */
 public class SearchOrderModel extends LoadableDetachableModel<List<SearchOrder>> {

@@ -131,7 +131,7 @@ public class FilterBasedSortablePaperSlimProviderTest {
     }
 
     @Test
-    public void iterating_throughFirst() {
+    public void iterating_throughFirstFullPage() {
         when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(papers);
         Iterator<PaperSlim> it = provider.iterator(0, 3);
         assertRecordsIn(it);
@@ -148,7 +148,7 @@ public class FilterBasedSortablePaperSlimProviderTest {
     }
 
     @Test
-    public void iterating_throughSeconPage() {
+    public void iterating_throughSecondFullPage() {
         when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(papers);
         Iterator<PaperSlim> it = provider.iterator(3, 3);
         assertRecordsIn(it);
@@ -163,4 +163,48 @@ public class FilterBasedSortablePaperSlimProviderTest {
         assertRecordsIn(it);
         verify(serviceMock).findByFilter(eq(filterMock), argThat(new PageableMatcher(2, 3, "title: DESC")));
     }
+
+    @Test
+    public void instantiationWithoutPageSize_returnsPageSizeNull() {
+        assertThat(provider.getPageSize()).isNull();
+    }
+
+    @Test
+    public void instantiationWithPageSize_returnsGivenPageSize() {
+        final int pageSize = 12;
+        provider = new FilterBasedSortablePaperSlimProvider(filterMock, pageSize);
+        assertThat(provider.getPageSize()).isEqualTo(pageSize);
+    }
+
+    @Test
+    public void iterating_withDefaultPageSize_throughFirstFullPage_withPageSizeMatchingActualSize() {
+        int pageSize = 3;
+        int actualSize = 3;
+        assertThat(pageSize).isEqualTo(actualSize);
+
+        provider = new FilterBasedSortablePaperSlimProvider(filterMock, pageSize);
+        provider.setService(serviceMock);
+
+        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(papers);
+        Iterator<PaperSlim> it = provider.iterator(0, actualSize);
+        assertRecordsIn(it);
+        verify(serviceMock).findByFilter(eq(filterMock), argThat(new PageableMatcher(0, pageSize, "authors: ASC")));
+    }
+
+    @Test
+    public void iterating_withDefaultPageSize_throughThirdNotFullPage_withPageSizeHigherThanActualSize() {
+        int pageSize = 3;
+        int actualSize = 2;
+        assertThat(pageSize).isGreaterThan(actualSize);
+
+        provider = new FilterBasedSortablePaperSlimProvider(filterMock, pageSize);
+        provider.setService(serviceMock);
+
+        provider.setSort("title", SortOrder.DESCENDING);
+        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(papers);
+        Iterator<PaperSlim> it = provider.iterator(6, actualSize);
+        assertRecordsIn(it);
+        verify(serviceMock).findByFilter(eq(filterMock), argThat(new PageableMatcher(2, pageSize, "title: DESC")));
+    }
+
 }

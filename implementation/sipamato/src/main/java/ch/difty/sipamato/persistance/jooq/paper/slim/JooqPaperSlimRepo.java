@@ -4,6 +4,7 @@ import static ch.difty.sipamato.db.tables.Paper.PAPER;
 import static ch.difty.sipamato.db.tables.PaperCode.PAPER_CODE;
 import static ch.difty.sipamato.db.tables.User.USER;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,7 @@ import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Record1;
 import org.jooq.SelectConditionStep;
+import org.jooq.SortField;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,8 +98,22 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     /** {@inheritDoc} */
     @Override
     public Page<PaperSlim> findBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
-        final List<PaperSlim> entities = findBySearchOrder(searchOrder);
+        final List<PaperSlim> entities = findPagedBySearchOrder(searchOrder, pageable);
         return new PageImpl<>(entities, pageable, (long) countBySearchOrder(searchOrder));
+    }
+
+    private List<PaperSlim> findPagedBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
+        final Condition paperMatches = getConditionsFrom(searchOrder);
+        final Collection<SortField<PaperSlim>> sortCriteria = getSortMapper().map(pageable.getSort(), getTable());
+        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER)
+                .where(paperMatches)
+                .orderBy(sortCriteria)
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .fetchInto(getRecordClass());
+        final List<PaperSlim> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
+        enrichAssociatedEntitiesOfAll(entities);
+        return entities;
     }
 
     /** {@inheritDoc} */
