@@ -107,6 +107,20 @@ public class IntegerSearchTermTest {
     }
 
     @Test
+    public void hasNoValue() {
+        final String raw = "=\"\"";
+        st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
+        assertTerm(MatchType.MISSING, 0, 0, raw);
+    }
+
+    @Test
+    public void hasAnyValue() {
+        final String raw = ">\"\"";
+        st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
+        assertTerm(MatchType.PRESENT, 0, 0, raw);
+    }
+
+    @Test
     public void invalidSearch_withNonNumericCharacters() {
         try {
             new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, "2014a");
