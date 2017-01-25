@@ -31,6 +31,10 @@ class IntegerSearchTermEvaluator implements SearchTermEvaluator<IntegerSearchTer
             return DSL.field(searchTerm.getFieldName()).gt(DSL.val(searchTerm.getValue()));
         case RANGE:
             return DSL.field(searchTerm.getFieldName()).between(DSL.val(searchTerm.getValue()), DSL.val(searchTerm.getValue2()));
+        case MISSING:
+            return DSL.field(searchTerm.getFieldName()).isNull();
+        case PRESENT:
+            return DSL.field(searchTerm.getFieldName()).isNotNull();
         default:
             throw new UnsupportedOperationException("Evaluation of type " + searchTerm.getType() + " is not supported...");
         }

@@ -84,4 +84,21 @@ public class IntegerSearchTermEvaluatorTest {
         Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("fieldX between 10 and 15");
     }
+
+    @Test
+    public void buildingCondition_withFieldValueMissing() {
+        int any = 0;
+        expectSearchTerm(MatchType.MISSING, any, any);
+        Condition c = e.evaluate(stMock);
+        assertThat(c.toString()).isEqualTo("fieldX is null");
+    }
+
+    @Test
+    public void buildingCondition_withAnyFieldValuePresent() {
+        int any = 0;
+        expectSearchTerm(MatchType.PRESENT, any, any);
+        Condition c = e.evaluate(stMock);
+        assertThat(c.toString()).isEqualTo("fieldX is not null");
+    }
+
 }

@@ -5,12 +5,14 @@ package ch.difty.sipamato.entity.filter;
  * The following {@link MatchType}s are implemented:
  *
  * <ul>
- * <li> GREATER_THAN: <code> >2014 </code> </li>
- * <li> GREATER_OR_EQUAL: <code> >=2014 </code> </li>
- * <li> EXACT: <code> 2014 </code> or <code> =2014 </code> </li>
- * <li> LESS_OR_EQUAL: <code> <=2014 </code> </li>
- * <li> LESS_THAN: <code> <2014 </code> </li>
- * <li> RANGE: <code> 2014-2017 </code> </li>
+ * <li> <b>GREATER_THAN:</b> <code> >2014 </code> </li>
+ * <li> <b>GREATER_OR_EQUAL:</b> <code> >=2014 </code> </li>
+ * <li> <b>EXACT:</b> <code> 2014 </code> or <code> =2014 </code> </li>
+ * <li> <b>LESS_OR_EQUAL:</b> <code> <=2014 </code> </li>
+ * <li> <b>LESS_THAN:</b> <code> <2014 </code> </li>
+ * <li> <b>RANGE:</b> <code> 2014-2017 </code> </li>
+ * <li> <b>MISSING:</b> the field has no value.</li>
+ * <li> <b>PRESENT:</b> the field has any value.</li>
  * </ul>
  *
  * All rawValues and their individual parts are trimmed, so the following examples are equally valid:
@@ -32,7 +34,9 @@ public class IntegerSearchTerm extends SearchTerm<IntegerSearchTerm> {
         GREATER_OR_EQUAL,
         LESS_THAN,
         LESS_OR_EQUAL,
-        RANGE;
+        RANGE,
+        MISSING,
+        PRESENT;
     }
 
     private final MatchType type;
@@ -50,7 +54,15 @@ public class IntegerSearchTerm extends SearchTerm<IntegerSearchTerm> {
     IntegerSearchTerm(final Long id, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
         super(id, SearchTermType.INTEGER, searchConditionId, fieldName, rawSearchTerm);
         final String rst = rawSearchTerm.trim();
-        if (rst.length() > 2 && rst.startsWith(">=")) {
+        if (rst.equals("=\"\"")) {
+            this.type = MatchType.MISSING;
+            this.value = 0;
+            this.value2 = 0;
+        } else if (rst.equals(">\"\"")) {
+            this.type = MatchType.PRESENT;
+            this.value = 0;
+            this.value2 = 0;
+        } else if (rst.length() > 2 && rst.startsWith(">=")) {
             this.type = MatchType.GREATER_OR_EQUAL;
             this.value = Integer.parseInt(rst.substring(2, rst.length()).trim());
             this.value2 = this.value;
