@@ -28,7 +28,6 @@ import ch.difty.sipamato.web.jasper.summary_sp.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
 import ch.difty.sipamato.web.panel.AbstractPanel;
-import ch.difty.sipamato.web.panel.paper.PaperPanel;
 import ch.difty.sipamato.web.panel.search.SearchOrderChangeEvent;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
@@ -139,7 +138,7 @@ public class ResultPanel extends AbstractPanel<Void> {
     private void makeAndQueuePdfReviewLink(String id) {
         final String idLabel = new StringResourceModel("id" + LABEL_RECOURCE_TAG, this, null).getString();
         final String authorYearLabel = new StringResourceModel("authorYear" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String locationLabel = new StringResourceModel("location" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String populationPlaceLabel = new StringResourceModel("populationPlace" + LABEL_RECOURCE_TAG, this, null).getString();
         final String methodOutcomeLabel = new StringResourceModel("methodOutcome" + LABEL_RECOURCE_TAG, this, null).getString();
         final String exposurePollutantLabel = new StringResourceModel("exposurePollutant" + LABEL_RECOURCE_TAG, this, null).getString();
         final String methodStudyDesignLabel = new StringResourceModel("methodStudyDesign" + LABEL_RECOURCE_TAG, this, null).getString();
@@ -157,7 +156,7 @@ public class ResultPanel extends AbstractPanel<Void> {
         final SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(pdfTitle).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
 
         ResourceLink<Void> reviewLink = new ResourceLink<Void>(id,
-                new PaperReviewDataSource(dataProvider, paperService, idLabel, authorYearLabel, locationLabel, methodOutcomeLabel, exposurePollutantLabel, methodStudyDesignLabel,
+                new PaperReviewDataSource(dataProvider, paperService, idLabel, authorYearLabel, populationPlaceLabel, methodOutcomeLabel, exposurePollutantLabel, methodStudyDesignLabel,
                         populationDurationLabel, methodStatisticsLabel, populationParticipantsLabel, exposureAssessmentLabel, resultExposureRangeLabel, methodConfoundersLabel,
                         resultEffectEstimateLabel, brand, createdBy, config));
         reviewLink.setOutputMarkupId(true);

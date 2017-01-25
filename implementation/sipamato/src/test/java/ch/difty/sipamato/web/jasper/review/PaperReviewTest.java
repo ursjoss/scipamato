@@ -30,7 +30,7 @@ public class PaperReviewTest {
         when(paperMock.getId()).thenReturn(5l);
         when(paperMock.getFirstAuthor()).thenReturn("fa");
         when(paperMock.getPublicationYear()).thenReturn(2017);
-        when(paperMock.getLocation()).thenReturn("l");
+        when(paperMock.getPopulationPlace()).thenReturn("pp");
         when(paperMock.getMethodOutcome()).thenReturn("mo");
         when(paperMock.getExposurePollutant()).thenReturn("ep");
         when(paperMock.getMethodStudyDesign()).thenReturn("msd");
@@ -51,7 +51,7 @@ public class PaperReviewTest {
     @Test
     public void degenerateConstruction_withNullPaper_throws() {
         try {
-            new PaperReview(null, "idl", "ayl", "ll", "mol", "epl", "msdl", "pdl", "msl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb");
+            new PaperReview(null, "idl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "msl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("paper must not be null.");
         }
@@ -65,7 +65,7 @@ public class PaperReviewTest {
 
         assertThat(pr.getId()).isEmpty();
         assertThat(pr.getAuthorYear()).isEmpty();
-        assertThat(pr.getLocation()).isEmpty();
+        assertThat(pr.getPopulationPlace()).isEmpty();
         assertThat(pr.getMethodOutcome()).isEmpty();
         assertThat(pr.getExposurePollutant()).isEmpty();
         assertThat(pr.getMethodStudyDesign()).isEmpty();
@@ -85,7 +85,7 @@ public class PaperReviewTest {
     private void assertBlankLabels() {
         assertThat(pr.getIdLabel()).isEmpty();
         assertThat(pr.getAuthorYearLabel()).isEmpty();
-        assertThat(pr.getLocationLabel()).isEmpty();
+        assertThat(pr.getPopulationPlaceLabel()).isEmpty();
         assertThat(pr.getMethodOutcomeLabel()).isEmpty();
         assertThat(pr.getExposurePollutantLabel()).isEmpty();
         assertThat(pr.getMethodStudyDesignLabel()).isEmpty();
@@ -104,7 +104,7 @@ public class PaperReviewTest {
         verify(paperMock, times(callsToId)).getId();
         verify(paperMock).getFirstAuthor();
         verify(paperMock).getPublicationYear();
-        verify(paperMock).getLocation();
+        verify(paperMock).getPopulationPlace();
         verify(paperMock).getMethodOutcome();
         verify(paperMock).getExposurePollutant();
         verify(paperMock).getMethodStudyDesign();
@@ -130,7 +130,7 @@ public class PaperReviewTest {
     private void assertFieldValues() {
         assertThat(pr.getId()).isEqualTo("5");
         assertThat(pr.getAuthorYear()).isEqualTo("fa 2017");
-        assertThat(pr.getLocation()).isEqualTo("l");
+        assertThat(pr.getPopulationPlace()).isEqualTo("pp");
         assertThat(pr.getMethodOutcome()).isEqualTo("mo");
         assertThat(pr.getExposurePollutant()).isEqualTo("ep");
         assertThat(pr.getMethodStudyDesign()).isEqualTo("msd");
@@ -145,13 +145,13 @@ public class PaperReviewTest {
 
     @Test
     public void instantiatingWithValidFieldsAndvalidLabels() {
-        pr = new PaperReview(paperMock, "idl", "ayl", "ll", "mol", "epl", "msdl", "pdl", "msl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb");
+        pr = new PaperReview(paperMock, "idl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "msl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb");
 
         assertFieldValues();
 
         assertThat(pr.getIdLabel()).isEqualTo("idl");
         assertThat(pr.getAuthorYearLabel()).isEqualTo("ayl");
-        assertThat(pr.getLocationLabel()).isEqualTo("ll");
+        assertThat(pr.getPopulationPlaceLabel()).isEqualTo("ppl");
         assertThat(pr.getMethodOutcomeLabel()).isEqualTo("mol");
         assertThat(pr.getExposurePollutantLabel()).isEqualTo("epl");
         assertThat(pr.getMethodStudyDesignLabel()).isEqualTo("msdl");
