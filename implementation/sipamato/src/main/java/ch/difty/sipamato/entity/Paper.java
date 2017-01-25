@@ -57,7 +57,8 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
 
     public static final String CODES = "codes";
 
-    // TODO Leaky abstraction!!! Should not use the table fields in the entity layer, but how to avoid it???
+    // TODO Leaky abstraction!!! Should not use the table fields in the entity layer:
+    // Would need some mapper component in {@link SortMapper} converting the entity field names into table field names
     public static final String FLD_ID = "id";
     public static final String FLD_DOI = "doi";
     public static final String FLD_PMID = "pm_id";
