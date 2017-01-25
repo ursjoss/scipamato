@@ -14,7 +14,7 @@ public class PaperReview extends JasperEntity {
 
     private final String id;
     private final String authorYear;
-    private final String location;
+    private final String populationPlace;
     private final String methodStatistics;
     private final String methodOutcome;
     private final String exposurePollutant;
@@ -28,7 +28,7 @@ public class PaperReview extends JasperEntity {
 
     private final String idLabel;
     private final String authorYearLabel;
-    private final String locationLabel;
+    private final String populationPlaceLabel;
     private final String methodStatisticsLabel;
     private final String methodOutcomeLabel;
     private final String exposurePollutantLabel;
@@ -48,7 +48,7 @@ public class PaperReview extends JasperEntity {
      * @param p paper
      * @param idLabel
      * @param authorYearLabel
-     * @param locationLabel
+     * @param populationPlaceLabel
      * @param methodOutcomeLabel
      * @param exposurePollutantLabel
      * @param methodStudyDesignLabel
@@ -62,7 +62,7 @@ public class PaperReview extends JasperEntity {
      * @param brand
      * @param createdBy
      */
-    public PaperReview(final Paper p, final String idLabel, final String authorYearLabel, final String locationLabel, final String methodOutcomeLabel, final String exposurePollutantLabel,
+    public PaperReview(final Paper p, final String idLabel, final String authorYearLabel, final String populationPlaceLabel, final String methodOutcomeLabel, final String exposurePollutantLabel,
             final String methodStudyDesignLabel, final String populationDurationLabel, final String methodStatisticsLabel, final String populationParticipantsLabel,
             final String exposureAssessmentLabel, final String resultExposureRangeLabel, final String methodConfoundersLabel, final String resultEffectEstimateLabel, final String brand,
             final String createdBy) {
@@ -70,7 +70,7 @@ public class PaperReview extends JasperEntity {
         AssertAs.notNull(p, "paper");
         this.id = p.getId() != null ? String.valueOf(p.getId()) : "";
         this.authorYear = makeAuthorYearFrom(p);
-        this.location = na(p.getLocation());
+        this.populationPlace = na(p.getPopulationPlace());
         this.methodOutcome = na(p.getMethodOutcome());
         this.exposurePollutant = na(p.getExposurePollutant());
         this.methodStudyDesign = na(p.getMethodStudyDesign());
@@ -83,7 +83,7 @@ public class PaperReview extends JasperEntity {
         this.resultEffectEstimate = na(p.getResultEffectEstimate());
         this.idLabel = na(idLabel, id);
         this.authorYearLabel = na(authorYearLabel);
-        this.locationLabel = na(locationLabel);
+        this.populationPlaceLabel = na(populationPlaceLabel);
         this.methodOutcomeLabel = na(methodOutcomeLabel);
         this.exposurePollutantLabel = na(exposurePollutantLabel);
         this.methodStudyDesignLabel = na(methodStudyDesignLabel);
@@ -133,12 +133,12 @@ public class PaperReview extends JasperEntity {
         return authorYearLabel;
     }
 
-    public String getLocation() {
-        return location;
+    public String getPopulationPlace() {
+        return populationPlace;
     }
 
-    public String getLocationLabel() {
-        return locationLabel;
+    public String getPopulationPlaceLabel() {
+        return populationPlaceLabel;
     }
 
     public String getMethodOutcome() {

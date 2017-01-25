@@ -32,7 +32,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         when(paperMock.getId()).thenReturn(ID);
         when(paperMock.getFirstAuthor()).thenReturn("fa");
         when(paperMock.getPublicationYear()).thenReturn(2017);
-        when(paperMock.getLocation()).thenReturn("l");
+        when(paperMock.getPopulationPlace()).thenReturn("pp");
         when(paperMock.getMethodOutcome()).thenReturn("mo");
         when(paperMock.getExposurePollutant()).thenReturn("ep");
         when(paperMock.getMethodStudyDesign()).thenReturn("msd");
@@ -61,7 +61,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         assertThat(jsds.next()).isTrue();
         assertFieldValue("id", String.valueOf(ID), f, jsds);
         assertFieldValue("authorYear", "fa 2017", f, jsds);
-        assertFieldValue("location", "l", f, jsds);
+        assertFieldValue("populationPlace", "pp", f, jsds);
         assertFieldValue("methodOutcome", "mo", f, jsds);
         assertFieldValue("exposurePollutant", "ep", f, jsds);
         assertFieldValue("methodStudyDesign", "msd", f, jsds);
@@ -75,7 +75,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
 
         assertFieldValue("idLabel", "idl", f, jsds);
         assertFieldValue("authorYearLabel", "ayl", f, jsds);
-        assertFieldValue("locationLabel", "ll", f, jsds);
+        assertFieldValue("populationPlaceLabel", "ppl", f, jsds);
         assertFieldValue("methodOutcomeLabel", "mol", f, jsds);
         assertFieldValue("exposurePollutantLabel", "epl", f, jsds);
         assertFieldValue("methodStudyDesignLabel", "msdl", f, jsds);
@@ -106,7 +106,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         when(paperSlimMock.getId()).thenReturn(ID);
         when(paperServiceMock.findByIds(Arrays.asList(ID))).thenReturn(Arrays.asList(paperMock));
 
-        ds = new PaperReviewDataSource(dataProviderMock, paperServiceMock, "idl", "ayl", "ll", "mol", "epl", "msdl", "pdl", "msl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb",
+        ds = new PaperReviewDataSource(dataProviderMock, paperServiceMock, "idl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "msl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb",
                 pdfExporterConfigMock);
         assertDataSource(FILE_NAME);
 
@@ -120,7 +120,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         verify(paperMock, times(2)).getId();
         verify(paperMock).getFirstAuthor();
         verify(paperMock).getPublicationYear();
-        verify(paperMock).getLocation();
+        verify(paperMock).getPopulationPlace();
         verify(paperMock).getMethodOutcome();
         verify(paperMock).getExposurePollutant();
         verify(paperMock).getMethodStudyDesign();
