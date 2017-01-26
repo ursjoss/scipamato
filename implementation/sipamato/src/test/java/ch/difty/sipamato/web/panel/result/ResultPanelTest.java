@@ -20,13 +20,13 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
 import ch.difty.sipamato.service.CodeClassService;
 import ch.difty.sipamato.service.CodeService;
 import ch.difty.sipamato.service.PaperService;
@@ -63,7 +63,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     @Override
     protected void setUpHook() {
         when(paperSlimServiceMock.countBySearchOrder(searchOrderMock)).thenReturn(1);
-        when(paperSlimServiceMock.findBySearchOrder(eq(searchOrderMock), isA(Pageable.class))).thenReturn(pageMock);
+        when(paperSlimServiceMock.findBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class))).thenReturn(pageMock);
         when(pageMock.iterator()).thenReturn(Arrays.asList(paperSlim).iterator());
     }
 
@@ -90,7 +90,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         getTester().assertComponent(bb, ResourceLink.class);
 
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
-        verify(paperSlimServiceMock).findBySearchOrder(eq(searchOrderMock), isA(Pageable.class));
+        verify(paperSlimServiceMock).findBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));
         verify(pageMock).iterator();
     }
 
@@ -114,7 +114,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         getTester().assertRenderedPage(PaperEntryPage.class);
 
         verify(paperSlimServiceMock).countBySearchOrder(searchOrderMock);
-        verify(paperSlimServiceMock).findBySearchOrder(eq(searchOrderMock), isA(Pageable.class));
+        verify(paperSlimServiceMock).findBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));
         verify(pageMock).iterator();
         verify(paperServiceMock).findById(ID);
         verify(codeClassServiceMock).find(anyString());
@@ -130,7 +130,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         // TODO how to verify the response was sent with the id to be excluded
 
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
-        verify(paperSlimServiceMock, times(2)).findBySearchOrder(eq(searchOrderMock), isA(Pageable.class));
+        verify(paperSlimServiceMock, times(2)).findBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));
         verify(pageMock, times(2)).iterator();
     }
 
@@ -151,7 +151,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         getTester().clickLink(PANEL_ID + ":summaryLink");
 
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
-        verify(paperSlimServiceMock, times(2)).findBySearchOrder(eq(searchOrderMock), isA(Pageable.class));
+        verify(paperSlimServiceMock, times(2)).findBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));
         verify(pageMock, times(2)).iterator();
         verify(paperServiceMock).findByIds(Arrays.asList(ID));
         verify(paperMock).getId();

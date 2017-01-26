@@ -39,7 +39,7 @@ public class SearchOrderModel extends LoadableDetachableModel<List<SearchOrder>>
     protected List<SearchOrder> load() {
         final SearchOrderFilter filter = new SearchOrderFilter();
         filter.setOwnerIncludingGlobal(owner);
-        final Pageable pageable = new SipamatoPageRequest(0, 20, Direction.ASC, "global");
+        final Pageable pageable = new SipamatoPageRequest(0, 20, 20, Direction.ASC, "global");
         final Page<SearchOrder> searchOrderPage = service.findByFilter(filter, pageable);
         return searchOrderPage.getContent();
     }
