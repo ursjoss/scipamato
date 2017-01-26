@@ -7,12 +7,12 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvid
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
 import ch.difty.sipamato.service.PaperSlimService;
 
 /**
@@ -24,7 +24,7 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
 
     private static final long serialVersionUID = 1L;
 
-    private final int maxRowsPerPage;
+    private int maxRowsPerPage;
 
     private F filterState;
 
@@ -46,45 +46,17 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
     }
 
     /**
-     * Retrieves the paged data as iterator according to the paging instructions from the calling component.
-     * <p/>
-     * <b>Note:</b>
-     * <p/>
-     * The offset calculation in the spring data Pageable implementation accepts the 0-based page
-     * index and the page size. It later re-calculates the actual record offset from those two parameters. This
-     * dictates that the page size is constant across  all pages (even the last one).
-     * <p/>
-     * The wicket implementation of DataTable is backed by the DataGridView. This component will adjust the page
-     * size it uses to call iterator - depending on the actual number of records on the page. If the last page
-     * is not full, the pageSize passed into iterator will be smaller than the theoretical page size. This screws
-     * up the offset calculation of the spring data Pageable for the last page.
-     * <p/>
-     * I'm therefore ignoring the page size passed in from the calling component and simply use the maxRowsPerPage
-     * field passed in during construction.
-     *
-     * TODO consider implementing a pageable implementation that directly uses the offset and recordcount instead of converting from offset to pageSize and back.
-     *
-     * @param offset
-     *      the record offset
-     * @param ignoredRecordsOnPage
-     *      the size indicator - ignored!
-     *
-     * @see org.springframework.data.domain.AbstractPageRequest#getOffset
-     * @see org.apache.wicket.markup.repeater.AbstractPageableView#getViewSize
+     * provides an iterator going through the records, starting with the {@literal first} (offset) and providing {@literal count}
+     * number of records.
      */
     @Override
-    public Iterator<PaperSlim> iterator(final long offset, final long ignoredRecordsOnPage) {
+    public Iterator<PaperSlim> iterator(final long first, final long count) {
         final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         final String sortProp = getSort().getProperty();
-        final int pageIndex = getPageIndex(offset, getRowsPerPage());
-        return findByFilter(new PageRequest(pageIndex, getRowsPerPage(), dir, sortProp));
+        return findByFilter(new SipamatoPageRequest((int) first, maxRowsPerPage, (int) count, dir, sortProp));
     }
 
     protected abstract Iterator<PaperSlim> findByFilter(Pageable pageable);
-
-    private int getPageIndex(final long from, final long size) {
-        return size > 0 ? (int) (from / size) : 0;
-    }
 
     @Override
     public long size() {
@@ -114,6 +86,15 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
      */
     public int getRowsPerPage() {
         return maxRowsPerPage;
+    }
+
+    /**
+     * Sets the number of rows per page.
+     *
+     * @param rowsPerPage
+     */
+    public void setRowsPerPage(final int rowsPerPage) {
+        this.maxRowsPerPage = rowsPerPage;
     }
 
 }

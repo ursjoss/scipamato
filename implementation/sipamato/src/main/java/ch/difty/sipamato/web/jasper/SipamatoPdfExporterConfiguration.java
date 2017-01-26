@@ -3,7 +3,7 @@ package ch.difty.sipamato.web.jasper;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.User;

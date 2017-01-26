@@ -6,11 +6,11 @@ import org.apache.wicket.injection.Injector;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 
 import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
 import ch.difty.sipamato.persistance.jooq.search.SearchOrderFilter;
 import ch.difty.sipamato.service.SearchOrderService;
 
@@ -39,7 +39,7 @@ public class SearchOrderModel extends LoadableDetachableModel<List<SearchOrder>>
     protected List<SearchOrder> load() {
         final SearchOrderFilter filter = new SearchOrderFilter();
         filter.setOwnerIncludingGlobal(owner);
-        final Pageable pageable = new PageRequest(0, 20, Direction.ASC, "global");
+        final Pageable pageable = new SipamatoPageRequest(0, 20, 20, Direction.ASC, "global");
         final Page<SearchOrder> searchOrderPage = service.findByFilter(filter, pageable);
         return searchOrderPage.getContent();
     }

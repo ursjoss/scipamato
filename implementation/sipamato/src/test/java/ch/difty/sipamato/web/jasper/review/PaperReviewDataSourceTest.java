@@ -112,6 +112,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
 
         verify(dataProviderMock).size();
         verify(dataProviderMock).iterator(0, 1);
+        verify(dataProviderMock).setRowsPerPage(Integer.MAX_VALUE);
         verify(itMock, times(2)).hasNext();
         verify(itMock).next();
         verify(paperSlimMock).getId();

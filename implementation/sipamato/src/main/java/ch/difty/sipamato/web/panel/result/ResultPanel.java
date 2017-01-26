@@ -134,17 +134,17 @@ public class ResultPanel extends AbstractPanel<Void> {
     private void makeAndQueuePdfReviewLink(String id) {
         final String idLabel = new StringResourceModel("id" + LABEL_RECOURCE_TAG, this, null).getString();
         final String authorYearLabel = new StringResourceModel("authorYear" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String populationPlaceLabel = new StringResourceModel("populationPlace" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String methodOutcomeLabel = new StringResourceModel("methodOutcome" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String populationPlaceLabel = new StringResourceModel("populationPlace" + HORT_LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodOutcomeLabel = new StringResourceModel("methodOutcome" + HORT_LABEL_RECOURCE_TAG, this, null).getString();
         final String exposurePollutantLabel = new StringResourceModel("exposurePollutant" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String methodStudyDesignLabel = new StringResourceModel("methodStudyDesign" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String populationDurationLabel = new StringResourceModel("populationDuration" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String methodStatisticsLabel = new StringResourceModel("methodStatistics" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String populationParticipantsLabel = new StringResourceModel("populationParticipants" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String exposureAssessmentLabel = new StringResourceModel("exposureAssessment" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String resultExposureRangeLabel = new StringResourceModel("resultExposureRange" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodStudyDesignLabel = new StringResourceModel("methodStudyDesign" + HORT_LABEL_RECOURCE_TAG, this, null).getString();
+        final String populationDurationLabel = new StringResourceModel("populationDuration" + HORT_LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodStatisticsLabel = new StringResourceModel("methodStatistics" + HORT_LABEL_RECOURCE_TAG, this, null).getString();
+        final String populationParticipantsLabel = new StringResourceModel("populationParticipants" + HORT_LABEL_RECOURCE_TAG, this, null).getString();
+        final String exposureAssessmentLabel = new StringResourceModel("exposureAssessment" + HORT_LABEL_RECOURCE_TAG, this, null).getString();
+        final String resultExposureRangeLabel = new StringResourceModel("resultExposureRange" + HORT_LABEL_RECOURCE_TAG, this, null).getString();
         final String methodConfoundersLabel = new StringResourceModel("methodConfounders" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String resultEffectEstimateLabel = new StringResourceModel("resultEffectEstimate" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String resultEffectEstimateLabel = new StringResourceModel("resultEffectEstimate" + HORT_LABEL_RECOURCE_TAG, this, null).getString();
         final String brand = getProperties().getBrand();
         final String createdBy = getActiveUser().getFullName();
 
