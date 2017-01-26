@@ -7,12 +7,12 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvid
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
 import ch.difty.sipamato.service.PaperSlimService;
 
 /**
@@ -77,7 +77,7 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
         final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         final String sortProp = getSort().getProperty();
         final int pageIndex = getPageIndex(offset, getRowsPerPage());
-        return findByFilter(new PageRequest(pageIndex, getRowsPerPage(), dir, sortProp));
+        return findByFilter(new SipamatoPageRequest(pageIndex, getRowsPerPage(), dir, sortProp));
     }
 
     protected abstract Iterator<PaperSlim> findByFilter(Pageable pageable);
