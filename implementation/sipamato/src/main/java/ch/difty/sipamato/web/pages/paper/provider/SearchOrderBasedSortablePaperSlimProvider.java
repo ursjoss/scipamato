@@ -19,21 +19,25 @@ public class SearchOrderBasedSortablePaperSlimProvider extends SortablePaperSlim
 
     private static final long serialVersionUID = 1L;
 
-    public SearchOrderBasedSortablePaperSlimProvider(SearchOrder searchOrder) {
-        this(searchOrder, null);
-    }
-
-    public SearchOrderBasedSortablePaperSlimProvider(SearchOrder searchOrder, final Integer pageSize) {
-        super(searchOrder, pageSize);
+    /**
+     * Instantiate the provider with a {@link SearchOrder} and a specific number of rews per page (pageSize)
+     * @param searchOrder
+     *          the search specification 
+     * @param rowsPerPage
+     */
+    public SearchOrderBasedSortablePaperSlimProvider(final SearchOrder searchOrder, final int rowsPerPage) {
+        super(searchOrder, rowsPerPage);
         Injector.get().inject(this);
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
     }
 
+    /** {@inheritDoc} */
     @Override
-    protected Iterator<PaperSlim> findByFilter(Pageable pageable) {
+    protected Iterator<PaperSlim> findByFilter(final Pageable pageable) {
         return getService().findBySearchOrder(getFilterState(), pageable).iterator();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected long getSize() {
         return getService().countBySearchOrder(getFilterState());

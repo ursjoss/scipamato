@@ -1,9 +1,9 @@
 package ch.difty.sipamato.service;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.IdSipamatoEntity;
@@ -36,9 +36,9 @@ public interface ReadOnlyService<ID extends Number, T extends IdSipamatoEntity<I
      *
      * @param filter the filter
      * @param pageable defining paging and sorting
-     * @return a list of entities of type <literal>T</literal>
+     * @return a page of entities of type <literal>T</literal>
      */
-    List<T> findByFilter(F filter, Pageable pageable);
+    Page<T> findByFilter(F filter, Pageable pageable);
 
     /**
      * Counts the number of entities matching the specified filter.

@@ -1,5 +1,6 @@
 package ch.difty.sipamato.web.pages.paper.search;
 
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -23,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.persistance.jooq.search.SearchOrderFilter;
 import ch.difty.sipamato.service.CodeClassService;
 import ch.difty.sipamato.service.CodeService;
 import ch.difty.sipamato.service.PaperSlimService;
@@ -51,12 +53,16 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     private SearchOrder searchOrderMock;
     @Mock
     private Page<PaperSlim> pageMock;
+    @Mock
+    private Page<SearchOrder> searchOrderPageMock;
 
     private final SearchOrder searchOrder = new SearchOrder(SEARCH_ORDER_ID, "soName", 1, false, null, null);
 
     @Override
     protected void setUpHook() {
         when(searchOrderServiceMock.findById(SEARCH_ORDER_ID)).thenReturn(Optional.of(searchOrder));
+        when(searchOrderServiceMock.findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class))).thenReturn(searchOrderPageMock);
+        when(searchOrderPageMock.getContent()).thenReturn(Arrays.asList(searchOrder));
     }
 
     @Override

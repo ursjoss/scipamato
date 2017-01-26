@@ -40,6 +40,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 public class ResultPanelTest extends PanelTest<ResultPanel> {
 
     private static final long ID = 1l;
+    private static final int ROWS_PER_PAGE = 12;
 
     @MockBean
     private PaperSlimService paperSlimServiceMock;
@@ -73,7 +74,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
     @Override
     protected ResultPanel makePanel() {
-        provider = new SearchOrderBasedSortablePaperSlimProvider(searchOrderMock);
+        provider = new SearchOrderBasedSortablePaperSlimProvider(searchOrderMock, ROWS_PER_PAGE);
         return new ResultPanel(PANEL_ID, provider);
     }
 

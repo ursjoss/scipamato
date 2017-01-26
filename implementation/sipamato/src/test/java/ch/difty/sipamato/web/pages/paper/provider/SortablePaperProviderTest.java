@@ -8,10 +8,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.model.IModel;
@@ -24,6 +22,8 @@ import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -50,7 +50,7 @@ public class SortablePaperProviderTest {
     @Autowired
     private SipamatoApplication application;
 
-    private final List<Paper> papers = new ArrayList<>();
+    private Page<Paper> pageOfPapers;
 
     @Before
     public void setUp() {
@@ -58,7 +58,7 @@ public class SortablePaperProviderTest {
         provider = new SortablePaperProvider(filterMock);
         provider.setService(serviceMock);
 
-        papers.addAll(Arrays.asList(entityMock, entityMock, entityMock));
+        pageOfPapers = new PageImpl<Paper>(Arrays.asList(entityMock, entityMock, entityMock));
     }
 
     @After
@@ -118,13 +118,12 @@ public class SortablePaperProviderTest {
             }
             return false;
         }
-
     }
 
     @Test
     public void iterating_withNoRecords_returnsNoRecords() {
-        papers.clear();
-        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(papers);
+        pageOfPapers = new PageImpl<Paper>(Arrays.asList());
+        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(pageOfPapers);
         Iterator<Paper> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
         verify(serviceMock).findByFilter(eq(filterMock), argThat(new PageableMatcher(0, 3, "authors: ASC")));
@@ -132,7 +131,7 @@ public class SortablePaperProviderTest {
 
     @Test
     public void iterating_throughFirst() {
-        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(papers);
+        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(pageOfPapers);
         Iterator<Paper> it = provider.iterator(0, 3);
         assertRecordsIn(it);
         verify(serviceMock).findByFilter(eq(filterMock), argThat(new PageableMatcher(0, 3, "authors: ASC")));
@@ -149,7 +148,7 @@ public class SortablePaperProviderTest {
 
     @Test
     public void iterating_throughSeconPage() {
-        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(papers);
+        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(pageOfPapers);
         Iterator<Paper> it = provider.iterator(3, 3);
         assertRecordsIn(it);
         verify(serviceMock).findByFilter(eq(filterMock), argThat(new PageableMatcher(1, 3, "authors: ASC")));
@@ -158,7 +157,7 @@ public class SortablePaperProviderTest {
     @Test
     public void iterating_throughThirdPage() {
         provider.setSort("title", SortOrder.DESCENDING);
-        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(papers);
+        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(pageOfPapers);
         Iterator<Paper> it = provider.iterator(6, 3);
         assertRecordsIn(it);
         verify(serviceMock).findByFilter(eq(filterMock), argThat(new PageableMatcher(2, 3, "title: DESC")));

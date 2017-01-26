@@ -79,12 +79,8 @@ public class JooqUserServiceTest {
     @Test
     public void findingByFilter_delegatesToRepo() {
         when(repoMock.findByFilter(filterMock, pageableMock)).thenReturn(userPageMock);
-        when(userPageMock.getContent()).thenReturn(users);
-
-        assertThat(service.findByFilter(filterMock, pageableMock)).isEqualTo(users);
-
+        assertThat(service.findByFilter(filterMock, pageableMock)).isEqualTo(userPageMock);
         verify(repoMock).findByFilter(filterMock, pageableMock);
-        verify(userPageMock).getContent();
     }
 
     @Test

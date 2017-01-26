@@ -19,25 +19,25 @@ public class FilterBasedSortablePaperSlimProvider extends SortablePaperSlimProvi
 
     private static final long serialVersionUID = 1L;
 
-    public FilterBasedSortablePaperSlimProvider() {
-        this(new PaperFilter());
-    }
-
-    public FilterBasedSortablePaperSlimProvider(PaperFilter filter) {
-        this(filter, null);
-    }
-
-    public FilterBasedSortablePaperSlimProvider(PaperFilter filter, Integer pageSize) {
-        super(filter, pageSize);
+    /**
+     * Instantiate the provider with a {@link PaperFilter} and a specific number of rews per page (pageSize)
+     * @param filter
+     *     the paper filter search specification
+     * @param rowsPerPage
+     */
+    public FilterBasedSortablePaperSlimProvider(final PaperFilter filter, final int rowsPerPage) {
+        super(filter, rowsPerPage);
         Injector.get().inject(this);
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
     }
 
+    /** {@inheritDoc} */
     @Override
-    protected Iterator<PaperSlim> findByFilter(Pageable pageable) {
+    protected Iterator<PaperSlim> findByFilter(final Pageable pageable) {
         return getService().findByFilter(getFilterState(), pageable).iterator();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected long getSize() {
         return getService().countByFilter(getFilterState());

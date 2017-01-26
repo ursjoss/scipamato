@@ -21,6 +21,8 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.SearchOrder;
@@ -43,7 +45,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     @Mock
     private SearchOrder searchOrderMock, searchOrderMock2;
 
-    private final List<SearchOrder> searchOrders = new ArrayList<>();
+    private Page<SearchOrder> pageOfSearchOrders;
     private final List<SearchCondition> searchConditions = new ArrayList<>();
 
     @Override
@@ -55,9 +57,8 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     protected void setUpHook() {
         super.setUpHook();
 
-        searchOrders.add(searchOrderMock);
-        searchOrders.add(new SearchOrder(20l, "soName", OWNER_ID, true, searchConditions, null));
-        when(searchOrderServiceMock.findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class))).thenReturn(searchOrders);
+        pageOfSearchOrders = new PageImpl<SearchOrder>(Arrays.asList(searchOrderMock, new SearchOrder(20l, "soName", OWNER_ID, true, searchConditions, null)));
+        when(searchOrderServiceMock.findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class))).thenReturn(pageOfSearchOrders);
         when(searchOrderMock.getId()).thenReturn(ID);
     }
 

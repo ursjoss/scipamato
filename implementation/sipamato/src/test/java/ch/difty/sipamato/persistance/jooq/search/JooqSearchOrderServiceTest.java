@@ -1,6 +1,7 @@
 package ch.difty.sipamato.persistance.jooq.search;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -10,6 +11,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -90,16 +92,23 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
         verify(repoMock).findById(id);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void findingByFilter_delegatesToRepo() {
         when(repoMock.findByFilter(filterMock, pageableMock)).thenReturn(searchOrderPageMock);
         when(searchOrderPageMock.getContent()).thenReturn(searchorders);
 
-        assertThat(service.findByFilter(filterMock, pageableMock)).isEqualTo(searchorders);
+        Page<SearchOrder> pageOfPapers = service.findByFilter(filterMock, pageableMock);
+
+        assertThat(pageOfPapers).isEqualTo(searchOrderPageMock);
+        assertThat(pageOfPapers.getContent()).isEqualTo(searchorders);
 
         verify(repoMock).findByFilter(filterMock, pageableMock);
         verify(searchOrderPageMock).getContent();
-        verifyAudit(2);
+
+        // TODO how to stub this and verify the audit???
+        verify(searchOrderPageMock).forEach(isA(Consumer.class));
+        //        verifyAudit(2);
     }
 
     @Test

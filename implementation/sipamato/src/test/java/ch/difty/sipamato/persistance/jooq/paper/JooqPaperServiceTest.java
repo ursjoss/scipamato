@@ -1,6 +1,7 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import org.junit.Test;
 import org.mockito.Mock;
@@ -88,17 +90,23 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         verify(repoMock).findById(id);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void findingByFilter_delegatesToRepo() {
         when(repoMock.findByFilter(filterMock, pageableMock)).thenReturn(paperPageMock);
         when(paperPageMock.getContent()).thenReturn(papers);
 
-        assertThat(service.findByFilter(filterMock, pageableMock)).isEqualTo(papers);
+        Page<Paper> pageOfPapers = service.findByFilter(filterMock, pageableMock);
+
+        assertThat(pageOfPapers).isEqualTo(paperPageMock);
+        assertThat(pageOfPapers.getContent()).isEqualTo(papers);
 
         verify(repoMock).findByFilter(filterMock, pageableMock);
         verify(paperPageMock).getContent();
 
-        verifyAudit(2);
+        // TODO how to stub this and verify the audit???
+        verify(paperPageMock).forEach(isA(Consumer.class));
+        //        verifyAudit(2);
     }
 
     @Test

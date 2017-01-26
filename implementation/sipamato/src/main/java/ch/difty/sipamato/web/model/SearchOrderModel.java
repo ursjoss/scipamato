@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.wicket.injection.Injector;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -39,7 +40,8 @@ public class SearchOrderModel extends LoadableDetachableModel<List<SearchOrder>>
         final SearchOrderFilter filter = new SearchOrderFilter();
         filter.setOwnerIncludingGlobal(owner);
         final Pageable pageable = new PageRequest(0, 20, Direction.ASC, "global");
-        return service.findByFilter(filter, pageable);
+        final Page<SearchOrder> searchOrderPage = service.findByFilter(filter, pageable);
+        return searchOrderPage.getContent();
     }
 
 }

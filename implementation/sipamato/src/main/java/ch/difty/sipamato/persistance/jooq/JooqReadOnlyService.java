@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.IdSipamatoEntity;
@@ -89,10 +90,10 @@ public abstract class JooqReadOnlyService<ID extends Number, R extends Record, T
 
     /** {@inheritDoc} */
     @Override
-    public List<T> findByFilter(F filter, Pageable pageable) {
-        List<T> entities = repo.findByFilter(filter, pageable).getContent();
-        enrichAuditNamesOfAll(entities);
-        return entities;
+    public Page<T> findByFilter(F filter, Pageable pageable) {
+        final Page<T> page = repo.findByFilter(filter, pageable);
+        page.forEach(e -> enrichAuditNamesOf(e));
+        return page;
     }
 
     protected void enrichAuditNamesOfAll(final List<T> entities) {
