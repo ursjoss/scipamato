@@ -23,6 +23,7 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
 
     // TODO duplicated from BasePage
     protected static final String LABEL_RECOURCE_TAG = ".label";
+    protected static final String HORT_LABEL_RECOURCE_TAG = ".short.label";
     protected static final String LABEL_TAG = "Label";
 
     private final Mode mode;
