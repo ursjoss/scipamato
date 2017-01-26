@@ -24,7 +24,7 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
 
     private static final long serialVersionUID = 1L;
 
-    private final int maxRowsPerPage;
+    private int maxRowsPerPage;
 
     private F filterState;
 
@@ -114,6 +114,15 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
      */
     public int getRowsPerPage() {
         return maxRowsPerPage;
+    }
+
+    /**
+     * Sets the number of rows per page.
+     *
+     * @param rowsPerPage
+     */
+    public void setRowsPerPage(final int rowsPerPage) {
+        this.maxRowsPerPage = rowsPerPage;
     }
 
 }

@@ -141,6 +141,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
         verify(dataProviderMock).size();
         verify(dataProviderMock).iterator(0, 1);
+        verify(dataProviderMock).setRowsPerPage(Integer.MAX_VALUE);
         verify(itMock, times(2)).hasNext();
         verify(itMock).next();
         verify(paperSlimMock).getId();
@@ -166,6 +167,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
         ds = new PaperSummaryDataSource(dataProviderMock, paperServiceMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
         assertThat(ds.getReportDataSource().next()).isFalse();
         verify(dataProviderMock).size();
+        verify(dataProviderMock).setRowsPerPage(Integer.MAX_VALUE);
     }
 
     @Test

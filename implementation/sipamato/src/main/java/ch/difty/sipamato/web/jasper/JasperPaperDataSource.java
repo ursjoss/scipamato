@@ -39,8 +39,8 @@ public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRCo
         this.baseName = AssertAs.notNull(baseName, "baseName");
         this.jasperEntities.clear();
         this.jasperEntities.addAll(AssertAs.notNull(jasperEntities, "jasperEntities"));
-        this.dataProvider = null;
         this.paperService = null;
+        this.dataProvider = null;
         init();
     }
 
@@ -48,8 +48,9 @@ public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRCo
         super(handler);
         this.baseName = AssertAs.notNull(baseName, "baseName");
         this.jasperEntities.clear();
-        this.dataProvider = AssertAs.notNull(dataProvider, "dataProvider");
         this.paperService = AssertAs.notNull(paperService, "paperService");
+        this.dataProvider = AssertAs.notNull(dataProvider, "dataProvider");
+        this.dataProvider.setRowsPerPage(Integer.MAX_VALUE);
         init();
     }
 
