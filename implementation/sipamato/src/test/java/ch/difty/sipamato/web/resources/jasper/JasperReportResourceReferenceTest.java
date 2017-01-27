@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import ch.difty.sipamato.web.WicketTest;
 
-public abstract class ReportResourceReferenceTest<E extends JasperReportResourceReference> extends WicketTest {
+public abstract class JasperReportResourceReferenceTest<E extends JasperReportResourceReference> extends WicketTest {
 
     private static final String TAG = "jrxml";
     private static final String DOTTAG = "." + TAG;
@@ -52,4 +52,13 @@ public abstract class ReportResourceReferenceTest<E extends JasperReportResource
         assertThat(ref.getReport().getName()).isEqualTo(getReportBaseName());
     }
 
+    /**
+     * In production the reports should be cached for performance reasons (it does not need to be recompiled every time).
+     * For development purposes the caching can be omitted. This test indicates that the cache flag should be reset to true...
+     */
+    @Test
+    public void doCacheReport() {
+        E ref = getResourceReference();
+        assertThat(ref.isCacheReport()).isTrue();
+    }
 }
