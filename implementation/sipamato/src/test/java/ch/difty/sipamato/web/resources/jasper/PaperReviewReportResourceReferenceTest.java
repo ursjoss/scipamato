@@ -1,6 +1,6 @@
 package ch.difty.sipamato.web.resources.jasper;
 
-public class PaperReviewReportResourceReferenceTest extends ReportResourceReferenceTest<PaperReviewReportResourceReference> {
+public class PaperReviewReportResourceReferenceTest extends JasperReportResourceReferenceTest<PaperReviewReportResourceReference> {
 
     @Override
     protected PaperReviewReportResourceReference getResourceReference() {

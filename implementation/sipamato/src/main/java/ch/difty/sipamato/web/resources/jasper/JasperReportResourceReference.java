@@ -80,4 +80,7 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
         }
     }
 
+    public boolean isCacheReport() {
+        return cacheReport;
+    }
 }
