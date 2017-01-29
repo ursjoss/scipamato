@@ -1,52 +1,16 @@
 package ch.difty.sipamato.web.jasper.review;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.NullArgumentException;
+import ch.difty.sipamato.web.jasper.JasperEntityTest;
 
-@RunWith(MockitoJUnitRunner.class)
-public class PaperReviewTest {
+public class PaperReviewTest extends JasperEntityTest {
 
     private PaperReview pr;
-
-    @Mock
-    private Paper paperMock;
-
-    @Before
-    public void setUp() {
-        when(paperMock.getId()).thenReturn(5l);
-        when(paperMock.getFirstAuthor()).thenReturn("fa");
-        when(paperMock.getPublicationYear()).thenReturn(2017);
-        when(paperMock.getPopulationPlace()).thenReturn("pp");
-        when(paperMock.getMethodOutcome()).thenReturn("mo");
-        when(paperMock.getExposurePollutant()).thenReturn("ep");
-        when(paperMock.getMethodStudyDesign()).thenReturn("msd");
-        when(paperMock.getPopulationDuration()).thenReturn("pd");
-        when(paperMock.getMethodStatistics()).thenReturn("ms");
-        when(paperMock.getPopulationParticipants()).thenReturn("pp");
-        when(paperMock.getExposureAssessment()).thenReturn("ea");
-        when(paperMock.getResultExposureRange()).thenReturn("rer");
-        when(paperMock.getMethodConfounders()).thenReturn("mc");
-        when(paperMock.getResultEffectEstimate()).thenReturn("ree");
-    }
-
-    @After
-    public void tearDown() {
-        verifyNoMoreInteractions(paperMock);
-    }
 
     @Test
     public void degenerateConstruction_withNullPaper_throws() {
@@ -59,9 +23,7 @@ public class PaperReviewTest {
 
     @Test
     public void instantiatingWithAllNullFields_returnsBlankValues() {
-        Mockito.reset(paperMock);
-
-        pr = new PaperReview(paperMock, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        pr = new PaperReview(new Paper(), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         assertThat(pr.getId()).isEmpty();
         assertThat(pr.getAuthorYear()).isEmpty();
@@ -78,8 +40,6 @@ public class PaperReviewTest {
         assertThat(pr.getResultEffectEstimate()).isEmpty();
 
         assertBlankLabels();
-
-        verifyPaperCalls(1);
     }
 
     private void assertBlankLabels() {
@@ -100,52 +60,33 @@ public class PaperReviewTest {
         assertThat(pr.getCreatedBy()).isEmpty();
     }
 
-    private void verifyPaperCalls(int callsToId) {
-        verify(paperMock, times(callsToId)).getId();
-        verify(paperMock).getFirstAuthor();
-        verify(paperMock).getPublicationYear();
-        verify(paperMock).getPopulationPlace();
-        verify(paperMock).getMethodOutcome();
-        verify(paperMock).getExposurePollutant();
-        verify(paperMock).getMethodStudyDesign();
-        verify(paperMock).getPopulationDuration();
-        verify(paperMock).getMethodStatistics();
-        verify(paperMock).getPopulationParticipants();
-        verify(paperMock).getExposureAssessment();
-        verify(paperMock).getResultExposureRange();
-        verify(paperMock).getMethodConfounders();
-        verify(paperMock).getResultEffectEstimate();
-    }
-
     @Test
     public void instantiatingWithValidFieldsButNullLabels() {
-        pr = new PaperReview(paperMock, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        pr = new PaperReview(p, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         assertFieldValues();
         assertBlankLabels();
-
-        verifyPaperCalls(2);
     }
 
     private void assertFieldValues() {
-        assertThat(pr.getId()).isEqualTo("5");
-        assertThat(pr.getAuthorYear()).isEqualTo("fa 2017");
-        assertThat(pr.getPopulationPlace()).isEqualTo("pp");
-        assertThat(pr.getMethodOutcome()).isEqualTo("mo");
-        assertThat(pr.getExposurePollutant()).isEqualTo("ep");
-        assertThat(pr.getMethodStudyDesign()).isEqualTo("msd");
-        assertThat(pr.getPopulationDuration()).isEqualTo("pd");
-        assertThat(pr.getMethodStatistics()).isEqualTo("ms");
-        assertThat(pr.getPopulationParticipants()).isEqualTo("pp");
-        assertThat(pr.getExposureAssessment()).isEqualTo("ea");
-        assertThat(pr.getResultExposureRange()).isEqualTo("rer");
-        assertThat(pr.getMethodConfounders()).isEqualTo("mc");
-        assertThat(pr.getResultEffectEstimate()).isEqualTo("ree");
+        assertThat(pr.getId()).isEqualTo(String.valueOf(ID));
+        assertThat(pr.getAuthorYear()).isEqualTo(FIRST_AUTHOR + " " + String.valueOf(PUBLICATION_YEAR));
+        assertThat(pr.getPopulationPlace()).isEqualTo(POPULATION_PLACE);
+        assertThat(pr.getMethodOutcome()).isEqualTo(METHOD_OUTCOME);
+        assertThat(pr.getExposurePollutant()).isEqualTo(EXPOSURE_POLLUTANT);
+        assertThat(pr.getMethodStudyDesign()).isEqualTo(METHOD_STUDY_DESIGN);
+        assertThat(pr.getPopulationDuration()).isEqualTo(POPULATION_DURATION);
+        assertThat(pr.getMethodStatistics()).isEqualTo(METHOD_STATISTICS);
+        assertThat(pr.getPopulationParticipants()).isEqualTo(POPULATION_PARTICIPANTS);
+        assertThat(pr.getExposureAssessment()).isEqualTo(EXPOSURE_ASSESSMENT);
+        assertThat(pr.getResultExposureRange()).isEqualTo(RESULT_EXPOSURE_RANGE);
+        assertThat(pr.getMethodConfounders()).isEqualTo(METHOD_CONFOUNDERS);
+        assertThat(pr.getResultEffectEstimate()).isEqualTo(RESULT_EFFECT_ESTIMATE);
     }
 
     @Test
     public void instantiatingWithValidFieldsAndvalidLabels() {
-        pr = new PaperReview(paperMock, "idl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "msl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb");
+        pr = new PaperReview(p, "idl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "msl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb");
 
         assertFieldValues();
 
@@ -164,47 +105,36 @@ public class PaperReviewTest {
         assertThat(pr.getResultEffectEstimateLabel()).isEqualTo("reel");
         assertThat(pr.getBrand()).isEqualTo("b");
         assertThat(pr.getCreatedBy()).isEqualTo("cb");
-
-        verifyPaperCalls(2);
     }
 
     @Test
     public void authorYear_withNullFirstAuthorAndYear() {
-        Mockito.reset(paperMock);
-        when(paperMock.getFirstAuthor()).thenReturn(null);
-        when(paperMock.getPublicationYear()).thenReturn(null);
+        p.setFirstAuthor(null);
+        p.setPublicationYear(null);
 
-        pr = new PaperReview(paperMock, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        pr = new PaperReview(p, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         assertThat(pr.getAuthorYear()).isEqualTo("");
-
-        verifyPaperCalls(1);
     }
 
     @Test
     public void authorYear_withOnlyFirstAuthor() {
-        Mockito.reset(paperMock);
-        when(paperMock.getFirstAuthor()).thenReturn("fa");
-        when(paperMock.getPublicationYear()).thenReturn(null);
+        assertThat(p.getFirstAuthor()).isNotNull();
+        p.setPublicationYear(null);
 
-        pr = new PaperReview(paperMock, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        pr = new PaperReview(p, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
-        assertThat(pr.getAuthorYear()).isEqualTo("fa");
-
-        verifyPaperCalls(1);
+        assertThat(pr.getAuthorYear()).isEqualTo(FIRST_AUTHOR);
     }
 
     @Test
     public void authorYear_withOnlyPubYear() {
-        Mockito.reset(paperMock);
-        when(paperMock.getFirstAuthor()).thenReturn(null);
-        when(paperMock.getPublicationYear()).thenReturn(2017);
+        p.setFirstAuthor(null);
+        assertThat(p.getPublicationYear()).isNotNull();
 
-        pr = new PaperReview(paperMock, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        pr = new PaperReview(p, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
-        assertThat(pr.getAuthorYear()).isEqualTo("2017");
-
-        verifyPaperCalls(1);
+        assertThat(pr.getAuthorYear()).isEqualTo(String.valueOf(PUBLICATION_YEAR));
     }
 
 }

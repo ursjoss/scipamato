@@ -2,46 +2,13 @@ package ch.difty.sipamato.web.jasper.summary_sp;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.web.jasper.JasperEntityTest;
 
-public class PaperSummaryTest {
-
-    private static final long ID = 1l;
-    private static final String AUTHORS = "authors";
-    private static final String TITLE = "title";
-    private static final String LOCATION = "location";
-    private static final String GOALS = "goals";
-    private static final String POPULATION = "population";
-    private static final String METHODS = "methods";
-    private static final String RESULT = "results";
-    private static final String COMMENT = "comment";
-    private static final String POPULATION_LABEL = "populationLabel";
-    private static final String METHODS_LABEL = "methodsLabel";
-    private static final String RESULT_LABEL = "resultLabel";
-    private static final String COMMENT_LABEL = "commentLabel";
-    private static final String HEADER_PART = "headerPart";
-    private static final String BRAND = "brand";
-    private static final String CREATED_BY = "creatingUser";
+public class PaperSummaryTest extends JasperEntityTest {
 
     private PaperSummary ps;
-    Paper p = new Paper();
-
-    @Before
-    public void setUp() {
-        p.setId(ID);
-        p.setAuthors(AUTHORS);
-        p.setTitle(TITLE);
-        p.setLocation(LOCATION);
-        p.setGoals(GOALS);
-        p.setPopulation(POPULATION);
-        p.setMethods(METHODS);
-        p.setResult(RESULT);
-        p.setComment(COMMENT);
-        p.setCreatedByName(CREATED_BY);
-    }
 
     @Test
     public void instantiatingUsingIndividualFields() {
