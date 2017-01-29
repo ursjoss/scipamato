@@ -20,6 +20,7 @@ public class JooqPaperService extends JooqEntityService<Long, PaperRecord, Paper
 
     private static final long serialVersionUID = 1L;
 
+    /** {@inheritDocs} */
     @Override
     public List<Paper> findByIds(List<Long> ids) {
         if (ids != null && !ids.isEmpty()) {
@@ -29,7 +30,18 @@ public class JooqPaperService extends JooqEntityService<Long, PaperRecord, Paper
         } else {
             return new ArrayList<Paper>();
         }
+    }
 
+    /** {@inheritDocs} */
+    @Override
+    public List<Paper> findWithCodesByIds(List<Long> ids) {
+        if (ids != null && !ids.isEmpty()) {
+            List<Paper> papers = getRepository().findWithCodesByIds(ids);
+            enrichAuditNamesOfAll(papers);
+            return papers;
+        } else {
+            return new ArrayList<Paper>();
+        }
     }
 
 }

@@ -9,15 +9,15 @@ import ch.difty.sipamato.web.jasper.JasperEntityTest;
 
 public class PaperSummaryTableTest extends JasperEntityTest {
 
-    private static final String CAPTION_PART = "caption";
-    private static final String CAPTION = CAPTION_PART + " " + ID;
+    private static final String BRAND = "brand";
+    private static final String CAPTION = "caption";
 
     private PaperSummaryTable pst;
 
     @Test
     public void degenerateConstruction_withNullPaper_throws() {
         try {
-            new PaperSummaryTable(null, "foo");
+            new PaperSummaryTable(null, "foo", "bar");
         } catch (Exception e) {
             assertThat(e).isInstanceOf(NullArgumentException.class).hasMessage("paper must not be null.");
         }
@@ -25,8 +25,10 @@ public class PaperSummaryTableTest extends JasperEntityTest {
 
     @Test
     public void constructionWithPaper() {
-        pst = new PaperSummaryTable(p, CAPTION_PART);
+        pst = new PaperSummaryTable(p, CAPTION, BRAND);
         assertThat(pst.getCaption()).isEqualTo(CAPTION);
+        assertThat(pst.getBrand()).isEqualTo(BRAND);
+
         assertThat(pst.getId()).isEqualTo(String.valueOf(ID));
         assertThat(pst.getFirstAuthor()).isEqualTo(FIRST_AUTHOR);
         assertThat(pst.getPublicationYear()).isEqualTo(String.valueOf(PUBLICATION_YEAR));
@@ -40,22 +42,9 @@ public class PaperSummaryTableTest extends JasperEntityTest {
     }
 
     @Test
-    public void constructionWithPaper_withNullCaption_returnsIdOnly() {
-        pst = new PaperSummaryTable(p, null);
-        assertThat(pst.getCaption()).isEqualTo("1");
-    }
-
-    @Test
-    public void constructionWithPaperWithNoId_withNullCaption_returnsBlankCaption() {
-        p.setId(null);
-        pst = new PaperSummaryTable(p, null);
-        assertThat(pst.getCaption()).isEqualTo("");
-    }
-
-    @Test
     public void constructionWithPaperWithNoCodeOfClass7_returnsBlank() {
         p.clearCodes();
-        pst = new PaperSummaryTable(p, CAPTION_PART);
+        pst = new PaperSummaryTable(p, CAPTION, BRAND);
         assertThat(pst.getCodesOfClass4()).isEqualTo("");
     }
 }

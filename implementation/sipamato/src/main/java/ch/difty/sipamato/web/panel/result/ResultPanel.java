@@ -25,6 +25,7 @@ import ch.difty.sipamato.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.sipamato.web.jasper.SipamatoPdfExporterConfiguration;
 import ch.difty.sipamato.web.jasper.review.PaperReviewDataSource;
 import ch.difty.sipamato.web.jasper.summary_sp.PaperSummaryDataSource;
+import ch.difty.sipamato.web.jasper.summary_table.PaperSummaryTableDataSource;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
 import ch.difty.sipamato.web.panel.AbstractPanel;
@@ -67,6 +68,7 @@ public class ResultPanel extends AbstractPanel<Void> {
         makeAndQueueTable("table");
         makeAndQueuePdfSummaryLink("summaryLink");
         makeAndQueuePdfReviewLink("reviewLink");
+        makeAndQueuePdfSummaryTableLink("summaryTableLink");
     }
 
     private void makeAndQueueTable(String id) {
@@ -122,7 +124,7 @@ public class ResultPanel extends AbstractPanel<Void> {
         String brand = getProperties().getBrand();
         String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
 
-        String pdfTitle = brand + "- " + new StringResourceModel("pdf.titlePart", this, null).getString();
+        String pdfTitle = brand + "- " + new StringResourceModel("paper_summary.titlePart", this, null).getString();
         SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(pdfTitle).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
         ResourceLink<Void> summaryLink = new ResourceLink<Void>(id,
                 new PaperSummaryDataSource(dataProvider, paperService, populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand, config));
@@ -148,7 +150,7 @@ public class ResultPanel extends AbstractPanel<Void> {
         final String brand = getProperties().getBrand();
         final String createdBy = getActiveUser().getFullName();
 
-        final String pdfTitle = brand + "- " + new StringResourceModel("pdf.titlePart", this, null).getString();
+        final String pdfTitle = brand + "- " + new StringResourceModel("paper_review.titlePart", this, null).getString();
         final SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(pdfTitle).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
 
         ResourceLink<Void> reviewLink = new ResourceLink<Void>(id,
@@ -157,6 +159,17 @@ public class ResultPanel extends AbstractPanel<Void> {
                         resultEffectEstimateLabel, brand, createdBy, config));
         reviewLink.setOutputMarkupId(true);
         reviewLink.setBody(new StringResourceModel("link.review.label"));
+        queue(reviewLink);
+    }
+
+    private void makeAndQueuePdfSummaryTableLink(String id) {
+        final String pdfCaption = new StringResourceModel("paper_summary_table.titlePart", this, null).getString();
+        final String brand = getProperties().getBrand();
+        final SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(pdfCaption).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
+
+        ResourceLink<Void> reviewLink = new ResourceLink<Void>(id, new PaperSummaryTableDataSource(dataProvider, paperService, pdfCaption, brand, config));
+        reviewLink.setOutputMarkupId(true);
+        reviewLink.setBody(new StringResourceModel("link.summary_table.label"));
         queue(reviewLink);
     }
 

@@ -32,11 +32,11 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     private static final String GOALS = "goals";
     private static final String TITLE = "title";
     private static final String RESULT = "result";
-    private static final String CAPTION_PART = "caption";
-    private static final String CAPTION = CAPTION_PART + " " + ID;
     private static final String CODES_OF_CC1 = "1F";
     private static final String CODES_OF_CC4 = "4A,4C";
     private static final String CODES_OF_CC7 = "7B";
+    private static final String CAPTION = "caption";
+    private static final String BRAND = "brand";
 
     private static final String FILE_NAME = "paper_summary_table.pdf";
 
@@ -90,6 +90,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
         assertFieldValue("codesOfClass7", CODES_OF_CC7, f, jsds);
 
         assertFieldValue("caption", CAPTION, f, jsds);
+        assertFieldValue("brand", BRAND, f, jsds);
 
         assertThat(jsds.next()).isFalse();
     }
@@ -105,9 +106,9 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
         when(itMock.hasNext()).thenReturn(true, false);
         when(itMock.next()).thenReturn(paperSlimMock);
         when(paperSlimMock.getId()).thenReturn(ID);
-        when(paperServiceMock.findByIds(Arrays.asList(ID))).thenReturn(Arrays.asList(paperMock));
+        when(paperServiceMock.findWithCodesByIds(Arrays.asList(ID))).thenReturn(Arrays.asList(paperMock));
 
-        ds = new PaperSummaryTableDataSource(dataProviderMock, paperServiceMock, CAPTION_PART, pdfExporterConfigMock);
+        ds = new PaperSummaryTableDataSource(dataProviderMock, paperServiceMock, CAPTION, BRAND, pdfExporterConfigMock);
         assertDataSource(FILE_NAME);
 
         verify(dataProviderMock).size();
@@ -116,7 +117,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
         verify(itMock, times(2)).hasNext();
         verify(itMock).next();
         verify(paperSlimMock).getId();
-        verify(paperServiceMock).findByIds(Arrays.asList(ID));
+        verify(paperServiceMock).findWithCodesByIds(Arrays.asList(ID));
 
         verify(paperMock).getId();
         verify(paperMock).getFirstAuthor();
@@ -134,7 +135,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0l);
-        ds = new PaperSummaryTableDataSource(dataProviderMock, paperServiceMock, CAPTION_PART, pdfExporterConfigMock);
+        ds = new PaperSummaryTableDataSource(dataProviderMock, paperServiceMock, CAPTION, BRAND, pdfExporterConfigMock);
         assertThat(ds.getReportDataSource().next()).isFalse();
         verify(dataProviderMock).size();
         verify(dataProviderMock).setRowsPerPage(Integer.MAX_VALUE);
@@ -143,7 +144,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_withNullProivder_throws() throws JRException {
         try {
-            new PaperSummaryTableDataSource(null, paperServiceMock, CAPTION_PART, pdfExporterConfigMock);
+            new PaperSummaryTableDataSource(null, paperServiceMock, CAPTION, BRAND, pdfExporterConfigMock);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dataProvider must not be null.");
         }
@@ -152,7 +153,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_withNullService_throws() throws JRException {
         try {
-            new PaperSummaryTableDataSource(dataProviderMock, null, CAPTION_PART, pdfExporterConfigMock);
+            new PaperSummaryTableDataSource(dataProviderMock, null, CAPTION, BRAND, pdfExporterConfigMock);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("paperService must not be null.");
         }

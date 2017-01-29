@@ -88,6 +88,10 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
         bb = b + ":summaryLink";
         getTester().assertComponent(bb, ResourceLink.class);
+        bb = b + ":reviewLink";
+        getTester().assertComponent(bb, ResourceLink.class);
+        bb = b + ":summaryTableLink";
+        getTester().assertComponent(bb, ResourceLink.class);
 
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));

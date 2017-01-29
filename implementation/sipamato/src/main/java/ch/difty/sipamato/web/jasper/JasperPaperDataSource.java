@@ -34,6 +34,10 @@ public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRCo
     private final PaperService paperService;
     private final String baseName;
 
+    protected PaperService getPaperService() {
+        return paperService;
+    }
+
     public JasperPaperDataSource(SipamatoPdfResourceHandler handler, String baseName, Collection<E> jasperEntities) {
         super(handler);
         this.baseName = AssertAs.notNull(baseName, "baseName");
@@ -87,12 +91,16 @@ public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRCo
             if (records > 0) {
                 final List<PaperSlim> paperSlims = IteratorUtils.toList(dataProvider.iterator(0, records));
                 final List<Long> ids = paperSlims.stream().map(p -> p.getId()).collect(Collectors.toList());
-                final List<Paper> papers = paperService.findByIds(ids);
+                final List<Paper> papers = findPapersById(ids);
                 for (final Paper p : papers) {
                     jasperEntities.add(makeEntity(p));
                 }
             }
         }
+    }
+
+    protected List<Paper> findPapersById(final List<Long> ids) {
+        return paperService.findByIds(ids);
     }
 
     /**

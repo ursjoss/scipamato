@@ -13,9 +13,17 @@ import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
 
     /**
-     * Find the papers with the given ids.
+     * Find the papers with the given ids. (codes are not enriched)
      * @param ids
      * @return list of papers
      */
     List<Paper> findByIds(List<Long> ids);
+
+    /**
+     * Find the papers (enriched with codes) with the given ids.
+     * @param ids
+     * @return list of papers
+     */
+    List<Paper> findWithCodesByIds(List<Long> ids);
+
 }

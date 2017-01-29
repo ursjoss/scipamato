@@ -31,6 +31,7 @@ public class PaperSummaryTable extends JasperEntity {
     private final String result;
 
     private final String caption;
+    private final String brand;
 
     /**
      * Instantiation with a {@link Paper} and additional fields
@@ -40,16 +41,16 @@ public class PaperSummaryTable extends JasperEntity {
      * @param caption
      *      localized caption
      */
-    public PaperSummaryTable(final Paper p, final String caption) {
+    public PaperSummaryTable(final Paper p, final String caption, final String brand) {
         this(AssertAs.notNull(p, "paper").getId(), p.getFirstAuthor(), String.valueOf(p.getPublicationYear()), p.getCodesOf(CodeClassId.CC1), p.getCodesOf(CodeClassId.CC4),
-                p.getCodesOf(CodeClassId.CC7), p.getGoals(), p.getTitle(), p.getResult(), caption);
+                p.getCodesOf(CodeClassId.CC7), p.getGoals(), p.getTitle(), p.getResult(), caption, brand);
     }
 
     /**
      * Instantiation with all individual fields (those that are part of a {@link Paper} and all other from the other constructor.
      */
     public PaperSummaryTable(final Long id, final String firstAuthor, final String publicationYear, final List<Code> codesOfClass1, final List<Code> codesOfClass4, final List<Code> codesOfClass7,
-            final String goals, final String title, final String result, final String caption) {
+            final String goals, final String title, final String result, final String caption, final String brand) {
         this.id = id != null ? String.valueOf(id) : "";
         this.firstAuthor = na(firstAuthor);
         this.publicationYear = na(publicationYear);
@@ -60,20 +61,8 @@ public class PaperSummaryTable extends JasperEntity {
         this.title = na(title);
         this.result = na(result);
 
-        this.caption = makeCaption(id, caption);
-    }
-
-    private String makeCaption(final Long id, final String headerPart) {
-        final StringBuilder sb = new StringBuilder();
-        if (headerPart != null) {
-            sb.append(headerPart);
-        }
-        if (id != null) {
-            if (sb.length() > 0)
-                sb.append(" ");
-            sb.append(id);
-        }
-        return sb.toString();
+        this.caption = na(caption);
+        this.brand = na(brand);
     }
 
     public String getId() {
@@ -114,6 +103,10 @@ public class PaperSummaryTable extends JasperEntity {
 
     public String getCaption() {
         return caption;
+    }
+
+    public String getBrand() {
+        return brand;
     }
 
 }
