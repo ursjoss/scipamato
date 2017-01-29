@@ -157,4 +157,12 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
         return getDsl().selectFrom(PAPER).where(PAPER.ID.in(ids)).fetchInto(Paper.class);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public List<Paper> findWithCodesByIds(List<Long> ids) {
+        final List<Paper> papers = findByIds(ids);
+        enrichAssociatedEntitiesOfAll(papers);
+        return papers;
+    }
+
 }

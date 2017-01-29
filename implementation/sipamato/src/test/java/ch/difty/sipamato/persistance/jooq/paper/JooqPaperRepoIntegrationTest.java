@@ -294,11 +294,24 @@ public class JooqPaperRepoIntegrationTest {
         List<Paper> papers = repo.findByIds(Arrays.asList(1l, 2l, 3l, 10l, -17l));
         assertThat(papers).hasSize(4);
         assertThat(papers).extracting("id").containsExactly(1l, 2l, 3l, 10l);
+
+        // codes not enriched
+        assertThat(papers.get(0).getCodes()).isEmpty();
     }
 
     @Test
     public void gettingByIds_returnsEmptyListForEmptyIdList() {
         assertThat(repo.findByIds(Arrays.asList())).isEmpty();
+    }
+
+    @Test
+    public void gettingWithCodesByIds_returnsRecordForEveryIdExisting() {
+        List<Paper> papers = repo.findWithCodesByIds(Arrays.asList(1l, 2l, 3l, 10l, -17l));
+        assertThat(papers).hasSize(4);
+        assertThat(papers).extracting("id").containsExactly(1l, 2l, 3l, 10l);
+
+        // codes are present
+        assertThat(papers.get(0).getCodes()).isNotEmpty();
     }
 
 }

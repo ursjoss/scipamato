@@ -179,4 +179,22 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         final List<Long> ids = null;
         assertThat(service.findByIds(ids)).isEmpty();
     }
+
+    @Test
+    public void findingWithCodesByIds_delegatesToRepo() {
+        final List<Long> ids = Arrays.asList(2l, 3l);
+        when(repoMock.findWithCodesByIds(ids)).thenReturn(papers);
+
+        assertThat(service.findWithCodesByIds(ids)).contains(paperMock, paperMock);
+
+        verify(repoMock).findWithCodesByIds(ids);
+        verify(paperMock, times(2)).getCreatedBy();
+        verifyAudit(2);
+    }
+
+    @Test
+    public void findingWithCodesByIds_withNullIds() {
+        final List<Long> ids = null;
+        assertThat(service.findWithCodesByIds(ids)).isEmpty();
+    }
 }
