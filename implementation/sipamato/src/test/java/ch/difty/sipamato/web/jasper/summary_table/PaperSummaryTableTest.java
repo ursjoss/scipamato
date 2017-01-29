@@ -17,15 +17,20 @@ public class PaperSummaryTableTest extends JasperEntityTest {
     @Test
     public void degenerateConstruction_withNullPaper_throws() {
         try {
-            new PaperSummaryTable(null, "foo", "bar");
+            new PaperSummaryTable(null, true, "foo", "bar");
         } catch (Exception e) {
             assertThat(e).isInstanceOf(NullArgumentException.class).hasMessage("paper must not be null.");
         }
     }
 
     @Test
-    public void constructionWithPaper() {
-        pst = new PaperSummaryTable(p, CAPTION, BRAND);
+    public void constructionWithPaper_includingResults() {
+        pst = new PaperSummaryTable(p, true, CAPTION, BRAND);
+        assertPst();
+        assertThat(pst.getResult()).isEqualTo(RESULT);
+    }
+
+    private void assertPst() {
         assertThat(pst.getCaption()).isEqualTo(CAPTION);
         assertThat(pst.getBrand()).isEqualTo(BRAND);
 
@@ -34,7 +39,6 @@ public class PaperSummaryTableTest extends JasperEntityTest {
         assertThat(pst.getPublicationYear()).isEqualTo(String.valueOf(PUBLICATION_YEAR));
         assertThat(pst.getGoals()).isEqualTo(GOALS);
         assertThat(pst.getTitle()).isEqualTo(TITLE);
-        assertThat(pst.getResult()).isEqualTo(RESULT);
 
         assertThat(pst.getCodesOfClass1()).isEqualTo("1F");
         assertThat(pst.getCodesOfClass4()).isEqualTo("4A,4C");
@@ -42,9 +46,16 @@ public class PaperSummaryTableTest extends JasperEntityTest {
     }
 
     @Test
+    public void constructionWithPaper_notIncludingResults() {
+        pst = new PaperSummaryTable(p, false, CAPTION, BRAND);
+        assertPst();
+        assertThat(pst.getResult()).isEmpty();
+    }
+
+    @Test
     public void constructionWithPaperWithNoCodeOfClass7_returnsBlank() {
         p.clearCodes();
-        pst = new PaperSummaryTable(p, CAPTION, BRAND);
+        pst = new PaperSummaryTable(p, true, CAPTION, BRAND);
         assertThat(pst.getCodesOfClass4()).isEqualTo("");
     }
 }

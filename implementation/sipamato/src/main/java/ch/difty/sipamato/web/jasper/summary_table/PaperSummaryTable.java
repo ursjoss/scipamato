@@ -41,9 +41,9 @@ public class PaperSummaryTable extends JasperEntity {
      * @param caption
      *      localized caption
      */
-    public PaperSummaryTable(final Paper p, final String caption, final String brand) {
+    public PaperSummaryTable(final Paper p, final boolean includeResults, final String caption, final String brand) {
         this(AssertAs.notNull(p, "paper").getId(), p.getFirstAuthor(), String.valueOf(p.getPublicationYear()), p.getCodesOf(CodeClassId.CC1), p.getCodesOf(CodeClassId.CC4),
-                p.getCodesOf(CodeClassId.CC7), p.getGoals(), p.getTitle(), p.getResult(), caption, brand);
+                p.getCodesOf(CodeClassId.CC7), p.getGoals(), p.getTitle(), (includeResults ? p.getResult() : ""), caption, brand);
     }
 
     /**

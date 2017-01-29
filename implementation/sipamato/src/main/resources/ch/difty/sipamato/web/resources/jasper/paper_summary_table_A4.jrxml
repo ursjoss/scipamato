@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
-<!-- 2017-01-29T17:03:48 -->
+<!-- 2017-01-29T17:45:04 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="paper_summary_table_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Empty" uuid="8862e4a6-fdb2-4c5b-b003-40e0e237f591">
 	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -25,14 +25,14 @@
 	<field name="goals" class="java.lang.String"/>
 	<field name="title" class="java.lang.String"/>
 	<field name="result" class="java.lang.String"/>
-	<group name="id">
+	<group name="id" minHeightToStartNewPage="5">
 		<groupExpression><![CDATA[$F{id}]]></groupExpression>
 		<groupHeader>
-			<band height="74" splitType="Prevent">
+			<band height="69" splitType="Prevent">
 				<property name="local_mesure_unitheight" value="pixel"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<rectangle>
-					<reportElement style="Zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="-2" y="-2" width="559" height="74" forecolor="#FFFFFF" uuid="024634be-b0d7-48f4-9a2c-815437dd8f28">
+					<reportElement style="Zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="-2" y="-2" width="559" height="71" forecolor="#FFFFFF" uuid="024634be-b0d7-48f4-9a2c-815437dd8f28">
 						<property name="local_mesure_unitwidth" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="local_mesure_unitheight" value="pixel"/>

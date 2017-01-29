@@ -108,7 +108,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
         when(paperSlimMock.getId()).thenReturn(ID);
         when(paperServiceMock.findWithCodesByIds(Arrays.asList(ID))).thenReturn(Arrays.asList(paperMock));
 
-        ds = new PaperSummaryTableDataSource(dataProviderMock, paperServiceMock, CAPTION, BRAND, pdfExporterConfigMock);
+        ds = new PaperSummaryTableDataSource(dataProviderMock, paperServiceMock, true, CAPTION, BRAND, pdfExporterConfigMock);
         assertDataSource(FILE_NAME);
 
         verify(dataProviderMock).size();
@@ -135,7 +135,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0l);
-        ds = new PaperSummaryTableDataSource(dataProviderMock, paperServiceMock, CAPTION, BRAND, pdfExporterConfigMock);
+        ds = new PaperSummaryTableDataSource(dataProviderMock, paperServiceMock, true, CAPTION, BRAND, pdfExporterConfigMock);
         assertThat(ds.getReportDataSource().next()).isFalse();
         verify(dataProviderMock).size();
         verify(dataProviderMock).setRowsPerPage(Integer.MAX_VALUE);
@@ -144,7 +144,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_withNullProivder_throws() throws JRException {
         try {
-            new PaperSummaryTableDataSource(null, paperServiceMock, CAPTION, BRAND, pdfExporterConfigMock);
+            new PaperSummaryTableDataSource(null, paperServiceMock, true, CAPTION, BRAND, pdfExporterConfigMock);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dataProvider must not be null.");
         }
@@ -153,7 +153,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_withNullService_throws() throws JRException {
         try {
-            new PaperSummaryTableDataSource(dataProviderMock, null, CAPTION, BRAND, pdfExporterConfigMock);
+            new PaperSummaryTableDataSource(dataProviderMock, null, true, CAPTION, BRAND, pdfExporterConfigMock);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("paperService must not be null.");
         }

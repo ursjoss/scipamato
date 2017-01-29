@@ -13,7 +13,7 @@ public class PaperSummaryTableReportResourceReference extends JasperReportResour
 
     // Use the respective constructor depending on whether your developing the report or are in production.
     // Note: the concrete file that is read resides in target/classes/ch/difty/sipamato/web/resources/jasper/
-    private static final PaperSummaryTableReportResourceReference INSTANCE = new PaperSummaryTableReportResourceReference(false);
+    private static final PaperSummaryTableReportResourceReference INSTANCE = new PaperSummaryTableReportResourceReference();
 
     /**
      * Use this constructor in production
