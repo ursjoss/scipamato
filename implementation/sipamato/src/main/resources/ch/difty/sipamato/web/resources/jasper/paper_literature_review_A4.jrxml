@@ -29,7 +29,7 @@
 				<property name="local_mesure_unitheight" value="pixel"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<rectangle>
-					<reportElement style="Zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="-2" y="-2" width="559" height="71" forecolor="#FFFFFF" uuid="024634be-b0d7-48f4-9a2c-815437dd8f28">
+					<reportElement style="Zebra" stretchType="RelativeToBandHeight" mode="Opaque" x="-2" y="-2" width="559" height="81" forecolor="#FFFFFF" uuid="024634be-b0d7-48f4-9a2c-815437dd8f28">
 						<property name="local_mesure_unitwidth" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="local_mesure_unitheight" value="pixel"/>
@@ -64,7 +64,7 @@
 					<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement x="0" y="40" width="465" height="15" isPrintWhenDetailOverflows="true" uuid="c7405287-3b6d-40a6-9e60-658313b6bd04">
+					<reportElement positionType="Float" x="0" y="40" width="465" height="15" isPrintWhenDetailOverflows="true" uuid="c7405287-3b6d-40a6-9e60-658313b6bd04">
 						<property name="local_mesure_unity" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="local_mesure_unitwidth" value="pixel"/>
