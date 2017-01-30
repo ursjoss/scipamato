@@ -24,6 +24,7 @@ import ch.difty.sipamato.web.component.SerializableConsumer;
 import ch.difty.sipamato.web.component.data.LinkIconColumn;
 import ch.difty.sipamato.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.sipamato.web.jasper.SipamatoPdfExporterConfiguration;
+import ch.difty.sipamato.web.jasper.literature_review.PaperLiteratureReviewDataSource;
 import ch.difty.sipamato.web.jasper.review.PaperReviewDataSource;
 import ch.difty.sipamato.web.jasper.summary_sp.PaperSummaryDataSource;
 import ch.difty.sipamato.web.jasper.summary_table.PaperSummaryTableDataSource;
@@ -69,6 +70,7 @@ public class ResultPanel extends AbstractPanel<Void> {
         makeAndQueueTable("table");
         makeAndQueuePdfSummaryLink("summaryLink");
         makeAndQueuePdfReviewLink("reviewLink");
+        makeAndQueuePdfLiteratureReviewLink("literatureReviewLink");
         makeAndQueuePdfSummaryTableLink("summaryTableLink");
         makeAndQueuePdfSummaryTableWithoutResultsLink("summaryTableWithoutResultsLink");
     }
@@ -163,6 +165,18 @@ public class ResultPanel extends AbstractPanel<Void> {
         reviewLink.setOutputMarkupId(true);
         reviewLink.setBody(new StringResourceModel("link.review.label"));
         reviewLink.add(new AttributeModifier("title", new StringResourceModel("link.review.title", this, null).getString()));
+        queue(reviewLink);
+    }
+
+    private void makeAndQueuePdfLiteratureReviewLink(String id) {
+        final String brand = getProperties().getBrand();
+        final String pdfCaption = new StringResourceModel("paper_literature_review.caption", this, null).setParameters(brand).getString();
+        final SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(pdfCaption).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
+
+        ResourceLink<Void> reviewLink = new ResourceLink<Void>(id, new PaperLiteratureReviewDataSource(dataProvider, paperService, pdfCaption, brand, config));
+        reviewLink.setOutputMarkupId(true);
+        reviewLink.setBody(new StringResourceModel("link.literature_review.label"));
+        reviewLink.add(new AttributeModifier("title", new StringResourceModel("link.literature_review.title", this, null).getString()));
         queue(reviewLink);
     }
 
