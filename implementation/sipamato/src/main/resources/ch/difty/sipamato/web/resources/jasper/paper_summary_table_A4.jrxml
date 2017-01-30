@@ -13,6 +13,10 @@
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
 			<style backcolor="#E6E3E3"/>
 		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 1]]></conditionExpression>
+			<style backcolor="#FBFBFB"/>
+		</conditionalStyle>
 	</style>
 	<field name="caption" class="java.lang.String"/>
 	<field name="brand" class="java.lang.String"/>
