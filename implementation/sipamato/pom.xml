@@ -418,6 +418,16 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- have actuator report the git version the project was built with (http://localhost:8080/actuator/info -->
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <configuration>
+                    <dotGitDirectory>${project.basedir}../../.git</dotGitDirectory>
+                    <verbose>true</verbose>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
