@@ -90,6 +90,8 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         getTester().assertComponent(bb, ResourceLink.class);
         bb = b + ":reviewLink";
         getTester().assertComponent(bb, ResourceLink.class);
+        bb = b + ":literatureReviewLink";
+        getTester().assertComponent(bb, ResourceLink.class);
         bb = b + ":summaryTableLink";
         getTester().assertComponent(bb, ResourceLink.class);
 
