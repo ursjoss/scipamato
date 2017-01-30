@@ -37,6 +37,8 @@ public abstract class JasperEntityTest {
     protected static final String RESULT_EXPOSURE_RANGE = "resultExposureRange";
     protected static final String RESULT_EFFECT_ESTIMATE = "resultEffectEstimate";
 
+    protected static final int PM_ID = 1234;
+
     protected static final String FIRST_AUTHOR = "firstAuthor";
     protected static final int PUBLICATION_YEAR = 2017;
 
@@ -68,6 +70,8 @@ public abstract class JasperEntityTest {
         p.setExposureAssessment(EXPOSURE_ASSESSMENT);
         p.setResultExposureRange(RESULT_EXPOSURE_RANGE);
         p.setResultEffectEstimate(RESULT_EFFECT_ESTIMATE);
+
+        p.setPmId(PM_ID);
 
         p.addCode(new Code("1F", "Code1F", "", false, CodeClassId.CC1.getId(), "CC1", "CC1D", 1));
         p.addCode(new Code("4A", "Code4A", "", false, CodeClassId.CC4.getId(), "CC4", "CC4D", 1));
