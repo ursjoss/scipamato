@@ -14,14 +14,14 @@
 			<style backcolor="#E6E3E3"/>
 		</conditionalStyle>
 	</style>
-	<field name="caption" class="java.lang.String"/>
-	<field name="brand" class="java.lang.String"/>
+	<field name="id" class="java.lang.String"/>
 	<field name="authors" class="java.lang.String"/>
 	<field name="publicationYear" class="java.lang.String"/>
 	<field name="title" class="java.lang.String"/>
 	<field name="location" class="java.lang.String"/>
-	<field name="id" class="java.lang.String"/>
 	<field name="pubmedLink" class="java.lang.String"/>
+	<field name="caption" class="java.lang.String"/>
+	<field name="brand" class="java.lang.String"/>
 	<group name="id" minHeightToStartNewPage="5">
 		<groupExpression><![CDATA[$F{id}]]></groupExpression>
 		<groupHeader>
