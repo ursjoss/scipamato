@@ -111,6 +111,11 @@ public class ResultPanel extends AbstractPanel<Void> {
             }
 
             @Override
+            protected IModel<String> createTitleModel(IModel<PaperSlim> rowModel) {
+                return new StringResourceModel("column.title.exclude", ResultPanel.this, null);
+            }
+
+            @Override
             protected void onClickPerformed(AjaxRequestTarget target, IModel<PaperSlim> rowModel, AjaxLink<Void> link) {
                 final Long excludedId = rowModel.getObject().getId();
                 info("Excluded " + rowModel.getObject().getDisplayValue());
