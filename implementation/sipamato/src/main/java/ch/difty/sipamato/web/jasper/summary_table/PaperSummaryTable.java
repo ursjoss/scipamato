@@ -38,8 +38,12 @@ public class PaperSummaryTable extends JasperEntity {
      *
      * @param p
      *      the paper
+     * @param includeResults
+     *      true: the result field will be printed - false: it will not be printed
      * @param caption
      *      localized caption
+     * @param brand
+     *      the application brand name
      */
     public PaperSummaryTable(final Paper p, final boolean includeResults, final String caption, final String brand) {
         this(AssertAs.notNull(p, "paper").getId(), p.getFirstAuthor(), String.valueOf(p.getPublicationYear()), p.getCodesOf(CodeClassId.CC1), p.getCodesOf(CodeClassId.CC4),
