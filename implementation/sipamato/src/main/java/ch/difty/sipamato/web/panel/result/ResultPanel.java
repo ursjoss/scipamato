@@ -107,7 +107,7 @@ public class ResultPanel extends AbstractPanel<Void> {
 
             @Override
             protected IModel<String> createIconModel(IModel<PaperSlim> rowModel) {
-                return Model.of("fa fa-fw fa-trash-o text-danger");
+                return Model.of("fa fa-fw fa-ban");
             }
 
             @Override
