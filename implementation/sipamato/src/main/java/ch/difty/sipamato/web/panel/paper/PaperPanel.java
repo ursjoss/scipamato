@@ -297,6 +297,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             queueTo(form, Paper.COMMENT);
             queueTo(form, Paper.INTERN);
 
+            queueNewFieldTo(form, Paper.RESULT_MEASURED_OUTCOME);
             queueNewFieldTo(form, Paper.RESULT_EXPOSURE_RANGE);
             queueNewFieldTo(form, Paper.RESULT_EFFECT_ESTIMATE);
         }
@@ -432,7 +433,6 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 String key = resourceKey();
                 error(mainCode, key + ".mainCodeOfCodeclass1Required");
             }
-
         }
     }
 

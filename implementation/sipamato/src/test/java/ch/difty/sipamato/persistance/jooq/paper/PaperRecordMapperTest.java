@@ -37,6 +37,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
     public static final String INTERN = "intern";
     public static final String RESULT_EXPOSURE_RANGE = "result exposure range";
     public static final String RESULT_EFFECT_ESTIMATE = "result effect estimate";
+    public static final String RESULT_MEASURED_OUTCOME = "result measured outcome";
     public static final String ORIGINAL_ABSTRACT = "oa";
     public static final String MAIN_CODE_OF_CODECLASS1 = "1F";
 
@@ -70,6 +71,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
 
         when(entityMock.getResultExposureRange()).thenReturn(RESULT_EXPOSURE_RANGE);
         when(entityMock.getResultEffectEstimate()).thenReturn(RESULT_EFFECT_ESTIMATE);
+        when(entityMock.getResultMeasuredOutcome()).thenReturn(RESULT_MEASURED_OUTCOME);
 
         when(entityMock.getOriginalAbstract()).thenReturn(ORIGINAL_ABSTRACT);
 
@@ -116,6 +118,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
 
         record.setResultExposureRange(RESULT_EXPOSURE_RANGE);
         record.setResultEffectEstimate(RESULT_EFFECT_ESTIMATE);
+        record.setResultMeasuredOutcome(RESULT_MEASURED_OUTCOME);
 
         record.setOriginalAbstract(ORIGINAL_ABSTRACT);
 
@@ -165,6 +168,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
 
         assertThat(e.getResultExposureRange()).isEqualTo(RESULT_EXPOSURE_RANGE);
         assertThat(e.getResultEffectEstimate()).isEqualTo(RESULT_EFFECT_ESTIMATE);
+        assertThat(e.getResultMeasuredOutcome()).isEqualTo(RESULT_MEASURED_OUTCOME);
 
         assertThat(e.getOriginalAbstract()).isEqualTo(ORIGINAL_ABSTRACT);
 

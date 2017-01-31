@@ -27,6 +27,7 @@ import static ch.difty.sipamato.entity.Paper.FLD_PUBL_YEAR;
 import static ch.difty.sipamato.entity.Paper.FLD_RESULT;
 import static ch.difty.sipamato.entity.Paper.FLD_RESULT_EFFECT_ESTIMATE;
 import static ch.difty.sipamato.entity.Paper.FLD_RESULT_EXPOSURE_RANGE;
+import static ch.difty.sipamato.entity.Paper.FLD_RESULT_MEASURED_OUTCOME;
 import static ch.difty.sipamato.entity.Paper.FLD_TITLE;
 
 import java.util.Arrays;
@@ -344,6 +345,14 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
 
     public void setResultEffectEstimate(String value) {
         setStringValue(FLD_RESULT_EFFECT_ESTIMATE, value);
+    }
+
+    public String getResultMeasuredOutcome() {
+        return getStringValue(FLD_RESULT_MEASURED_OUTCOME);
+    }
+
+    public void setResultMeasuredOutcome(String value) {
+        setStringValue(FLD_RESULT_MEASURED_OUTCOME, value);
     }
 
     public String getMainCodeOfCodeclass1() {

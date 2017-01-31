@@ -33,6 +33,7 @@ import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.PUB
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.RESULT;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.RESULT_EFFECT_ESTIMATE;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.RESULT_EXPOSURE_RANGE;
+import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.RESULT_MEASURED_OUTCOME;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.TITLE;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -105,6 +106,7 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
         when(getMoreStep().set(PAPER.RESULT_EXPOSURE_RANGE, RESULT_EXPOSURE_RANGE)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.RESULT_EFFECT_ESTIMATE, RESULT_EFFECT_ESTIMATE)).thenReturn(getMoreStep());
+        when(getMoreStep().set(PAPER.RESULT_MEASURED_OUTCOME, RESULT_MEASURED_OUTCOME)).thenReturn(getMoreStep());
 
         when(getMoreStep().set(PAPER.ORIGINAL_ABSTRACT, ORIGINAL_ABSTRACT)).thenReturn(getMoreStep());
 
@@ -150,6 +152,7 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
         verify(entityMock).getResultExposureRange();
         verify(entityMock).getResultEffectEstimate();
+        verify(entityMock).getResultMeasuredOutcome();
 
         verify(entityMock).getOriginalAbstract();
 
@@ -187,6 +190,7 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
         verify(getMoreStep()).set(PAPER.RESULT_EXPOSURE_RANGE, RESULT_EXPOSURE_RANGE);
         verify(getMoreStep()).set(PAPER.RESULT_EFFECT_ESTIMATE, RESULT_EFFECT_ESTIMATE);
+        verify(getMoreStep()).set(PAPER.RESULT_MEASURED_OUTCOME, RESULT_MEASURED_OUTCOME);
 
         verify(getMoreStep()).set(PAPER.ORIGINAL_ABSTRACT, ORIGINAL_ABSTRACT);
 
