@@ -27,6 +27,7 @@ CREATE TABLE paper (
   result VARCHAR,
   result_exposure_range VARCHAR,
   result_effect_estimate VARCHAR,
+  result_measured_outcome VARCHAR,
   comment VARCHAR,
   intern VARCHAR,
 
