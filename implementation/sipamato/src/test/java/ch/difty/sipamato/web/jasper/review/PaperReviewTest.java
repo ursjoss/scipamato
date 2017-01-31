@@ -15,7 +15,7 @@ public class PaperReviewTest extends JasperEntityTest {
     @Test
     public void degenerateConstruction_withNullPaper_throws() {
         try {
-            new PaperReview(null, "idl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "msl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb");
+            new PaperReview(null, "idl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("paper must not be null.");
         }
@@ -23,7 +23,7 @@ public class PaperReviewTest extends JasperEntityTest {
 
     @Test
     public void instantiatingWithAllNullFields_returnsBlankValues() {
-        pr = new PaperReview(new Paper(), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        pr = new PaperReview(new Paper(), null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         assertThat(pr.getId()).isEmpty();
         assertThat(pr.getAuthorYear()).isEmpty();
@@ -32,7 +32,6 @@ public class PaperReviewTest extends JasperEntityTest {
         assertThat(pr.getExposurePollutant()).isEmpty();
         assertThat(pr.getMethodStudyDesign()).isEmpty();
         assertThat(pr.getPopulationDuration()).isEmpty();
-        assertThat(pr.getMethodStatistics()).isEmpty();
         assertThat(pr.getPopulationParticipants()).isEmpty();
         assertThat(pr.getExposureAssessment()).isEmpty();
         assertThat(pr.getResultExposureRange()).isEmpty();
@@ -50,7 +49,6 @@ public class PaperReviewTest extends JasperEntityTest {
         assertThat(pr.getExposurePollutantLabel()).isEmpty();
         assertThat(pr.getMethodStudyDesignLabel()).isEmpty();
         assertThat(pr.getPopulationDurationLabel()).isEmpty();
-        assertThat(pr.getMethodStatisticsLabel()).isEmpty();
         assertThat(pr.getPopulationParticipantsLabel()).isEmpty();
         assertThat(pr.getExposureAssessmentLabel()).isEmpty();
         assertThat(pr.getResultExposureRangeLabel()).isEmpty();
@@ -62,7 +60,7 @@ public class PaperReviewTest extends JasperEntityTest {
 
     @Test
     public void instantiatingWithValidFieldsButNullLabels() {
-        pr = new PaperReview(p, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        pr = new PaperReview(p, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         assertFieldValues();
         assertBlankLabels();
@@ -76,7 +74,6 @@ public class PaperReviewTest extends JasperEntityTest {
         assertThat(pr.getExposurePollutant()).isEqualTo(EXPOSURE_POLLUTANT);
         assertThat(pr.getMethodStudyDesign()).isEqualTo(METHOD_STUDY_DESIGN);
         assertThat(pr.getPopulationDuration()).isEqualTo(POPULATION_DURATION);
-        assertThat(pr.getMethodStatistics()).isEqualTo(METHOD_STATISTICS);
         assertThat(pr.getPopulationParticipants()).isEqualTo(POPULATION_PARTICIPANTS);
         assertThat(pr.getExposureAssessment()).isEqualTo(EXPOSURE_ASSESSMENT);
         assertThat(pr.getResultExposureRange()).isEqualTo(RESULT_EXPOSURE_RANGE);
@@ -86,7 +83,7 @@ public class PaperReviewTest extends JasperEntityTest {
 
     @Test
     public void instantiatingWithValidFieldsAndvalidLabels() {
-        pr = new PaperReview(p, "idl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "msl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb");
+        pr = new PaperReview(p, "idl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb");
 
         assertFieldValues();
 
@@ -97,7 +94,6 @@ public class PaperReviewTest extends JasperEntityTest {
         assertThat(pr.getExposurePollutantLabel()).isEqualTo("epl");
         assertThat(pr.getMethodStudyDesignLabel()).isEqualTo("msdl");
         assertThat(pr.getPopulationDurationLabel()).isEqualTo("pdl");
-        assertThat(pr.getMethodStatisticsLabel()).isEqualTo("msl");
         assertThat(pr.getPopulationParticipantsLabel()).isEqualTo("ppl");
         assertThat(pr.getExposureAssessmentLabel()).isEqualTo("eal");
         assertThat(pr.getResultExposureRangeLabel()).isEqualTo("rerl");
@@ -112,7 +108,7 @@ public class PaperReviewTest extends JasperEntityTest {
         p.setFirstAuthor(null);
         p.setPublicationYear(null);
 
-        pr = new PaperReview(p, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        pr = new PaperReview(p, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         assertThat(pr.getAuthorYear()).isEqualTo("");
     }
@@ -122,7 +118,7 @@ public class PaperReviewTest extends JasperEntityTest {
         assertThat(p.getFirstAuthor()).isNotNull();
         p.setPublicationYear(null);
 
-        pr = new PaperReview(p, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        pr = new PaperReview(p, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         assertThat(pr.getAuthorYear()).isEqualTo(FIRST_AUTHOR);
     }
@@ -132,7 +128,7 @@ public class PaperReviewTest extends JasperEntityTest {
         p.setFirstAuthor(null);
         assertThat(p.getPublicationYear()).isNotNull();
 
-        pr = new PaperReview(p, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        pr = new PaperReview(p, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         assertThat(pr.getAuthorYear()).isEqualTo(String.valueOf(PUBLICATION_YEAR));
     }

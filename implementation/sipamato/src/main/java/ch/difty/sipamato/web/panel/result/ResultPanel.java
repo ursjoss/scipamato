@@ -151,7 +151,6 @@ public class ResultPanel extends AbstractPanel<Void> {
         final String exposurePollutantLabel = new StringResourceModel("exposurePollutant" + LABEL_RECOURCE_TAG, this, null).getString();
         final String methodStudyDesignLabel = new StringResourceModel("methodStudyDesign" + HORT_LABEL_RECOURCE_TAG, this, null).getString();
         final String populationDurationLabel = new StringResourceModel("populationDuration" + HORT_LABEL_RECOURCE_TAG, this, null).getString();
-        final String methodStatisticsLabel = new StringResourceModel("methodStatistics" + HORT_LABEL_RECOURCE_TAG, this, null).getString();
         final String populationParticipantsLabel = new StringResourceModel("populationParticipants" + HORT_LABEL_RECOURCE_TAG, this, null).getString();
         final String exposureAssessmentLabel = new StringResourceModel("exposureAssessment" + HORT_LABEL_RECOURCE_TAG, this, null).getString();
         final String resultExposureRangeLabel = new StringResourceModel("resultExposureRange" + HORT_LABEL_RECOURCE_TAG, this, null).getString();
@@ -165,8 +164,8 @@ public class ResultPanel extends AbstractPanel<Void> {
 
         ResourceLink<Void> reviewLink = new ResourceLink<Void>(id,
                 new PaperReviewDataSource(dataProvider, paperService, idLabel, authorYearLabel, populationPlaceLabel, methodOutcomeLabel, exposurePollutantLabel, methodStudyDesignLabel,
-                        populationDurationLabel, methodStatisticsLabel, populationParticipantsLabel, exposureAssessmentLabel, resultExposureRangeLabel, methodConfoundersLabel,
-                        resultEffectEstimateLabel, brand, createdBy, config));
+                        populationDurationLabel, populationParticipantsLabel, exposureAssessmentLabel, resultExposureRangeLabel, methodConfoundersLabel, resultEffectEstimateLabel, brand, createdBy,
+                        config));
         reviewLink.setOutputMarkupId(true);
         reviewLink.setBody(new StringResourceModel("link.review.label"));
         reviewLink.add(new AttributeModifier("title", new StringResourceModel("link.review.title", this, null).getString()));

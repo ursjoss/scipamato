@@ -26,7 +26,6 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
     private String idLabel;
     private String authorYearLabel;
     private String populationPlaceLabel;
-    private String methodStatisticsLabel;
     private String methodOutcomeLabel;
     private String exposurePollutantLabel;
     private String methodStudyDesignLabel;
@@ -46,7 +45,7 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
 
     @Override
     protected PaperReview makeEntity(final Paper p) {
-        return new PaperReview(p, idLabel, authorYearLabel, populationPlaceLabel, methodOutcomeLabel, exposurePollutantLabel, methodStudyDesignLabel, populationDurationLabel, methodStatisticsLabel,
+        return new PaperReview(p, idLabel, authorYearLabel, populationPlaceLabel, methodOutcomeLabel, exposurePollutantLabel, methodStudyDesignLabel, populationDurationLabel,
                 populationParticipantsLabel, exposureAssessmentLabel, resultExposureRangeLabel, methodConfoundersLabel, resultEffectEstimateLabel, brand, createdBy);
     }
 
@@ -56,8 +55,8 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
      */
     public PaperReviewDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final PaperService paperService, final String idLabel, final String authorYearLabel,
             final String populationPlaceLabel, final String methodOutcomeLabel, final String exposurePollutantLabel, final String methodStudyDesignLabel, final String populationDurationLabel,
-            final String methodStatisticsLabel, final String populationParticipantsLabel, final String exposureAssessmentLabel, final String resultExposureRangeLabel,
-            final String methodConfoundersLabel, final String resultEffectEstimateLabel, final String brand, final String createdBy, PdfExporterConfiguration config) {
+            final String populationParticipantsLabel, final String exposureAssessmentLabel, final String resultExposureRangeLabel, final String methodConfoundersLabel,
+            final String resultEffectEstimateLabel, final String brand, final String createdBy, PdfExporterConfiguration config) {
         super(new SipamatoPdfResourceHandler(config), FILE_BASE_NAME, dataProvider, paperService);
 
         this.idLabel = idLabel;
@@ -67,7 +66,6 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
         this.exposurePollutantLabel = exposurePollutantLabel;
         this.methodStudyDesignLabel = methodStudyDesignLabel;
         this.populationDurationLabel = populationDurationLabel;
-        this.methodStatisticsLabel = methodStatisticsLabel;
         this.populationParticipantsLabel = populationParticipantsLabel;
         this.exposureAssessmentLabel = exposureAssessmentLabel;
         this.resultExposureRangeLabel = resultExposureRangeLabel;
