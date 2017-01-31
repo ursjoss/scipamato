@@ -156,7 +156,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().startPage(page);
         getTester().assertRenderedPage(getPageClass());
 
-        String someTextInPage = "fa fa-fw fa-trash-o text-danger";
+        String someTextInPage = "fa fa-fw fa-ban";
         getTester().assertContains(someTextInPage);
 
         final String linkPath = "resultPanel:table:body:rows:1:cells:5:cell:link";

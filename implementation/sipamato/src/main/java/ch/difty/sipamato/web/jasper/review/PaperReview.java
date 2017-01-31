@@ -15,7 +15,6 @@ public class PaperReview extends JasperEntity {
     private final String id;
     private final String authorYear;
     private final String populationPlace;
-    private final String methodStatistics;
     private final String methodOutcome;
     private final String exposurePollutant;
     private final String methodStudyDesign;
@@ -29,7 +28,6 @@ public class PaperReview extends JasperEntity {
     private final String idLabel;
     private final String authorYearLabel;
     private final String populationPlaceLabel;
-    private final String methodStatisticsLabel;
     private final String methodOutcomeLabel;
     private final String exposurePollutantLabel;
     private final String methodStudyDesignLabel;
@@ -53,7 +51,6 @@ public class PaperReview extends JasperEntity {
      * @param exposurePollutantLabel
      * @param methodStudyDesignLabel
      * @param populationDurationLabel
-     * @param methodStatisticsLabel
      * @param populationParticipantsLabel
      * @param exposureAssessmentLabel
      * @param resultExposureRangeLabel
@@ -63,9 +60,8 @@ public class PaperReview extends JasperEntity {
      * @param createdBy
      */
     public PaperReview(final Paper p, final String idLabel, final String authorYearLabel, final String populationPlaceLabel, final String methodOutcomeLabel, final String exposurePollutantLabel,
-            final String methodStudyDesignLabel, final String populationDurationLabel, final String methodStatisticsLabel, final String populationParticipantsLabel,
-            final String exposureAssessmentLabel, final String resultExposureRangeLabel, final String methodConfoundersLabel, final String resultEffectEstimateLabel, final String brand,
-            final String createdBy) {
+            final String methodStudyDesignLabel, final String populationDurationLabel, final String populationParticipantsLabel, final String exposureAssessmentLabel,
+            final String resultExposureRangeLabel, final String methodConfoundersLabel, final String resultEffectEstimateLabel, final String brand, final String createdBy) {
         super();
         AssertAs.notNull(p, "paper");
         this.id = p.getId() != null ? String.valueOf(p.getId()) : "";
@@ -75,7 +71,6 @@ public class PaperReview extends JasperEntity {
         this.exposurePollutant = na(p.getExposurePollutant());
         this.methodStudyDesign = na(p.getMethodStudyDesign());
         this.populationDuration = na(p.getPopulationDuration());
-        this.methodStatistics = na(p.getMethodStatistics());
         this.populationParticipants = na(p.getPopulationParticipants());
         this.exposureAssessment = na(p.getExposureAssessment());
         this.resultExposureRange = na(p.getResultExposureRange());
@@ -88,7 +83,6 @@ public class PaperReview extends JasperEntity {
         this.exposurePollutantLabel = na(exposurePollutantLabel);
         this.methodStudyDesignLabel = na(methodStudyDesignLabel);
         this.populationDurationLabel = na(populationDurationLabel);
-        this.methodStatisticsLabel = na(methodStatisticsLabel);
         this.populationParticipantsLabel = na(populationParticipantsLabel);
         this.exposureAssessmentLabel = na(exposureAssessmentLabel);
         this.resultExposureRangeLabel = na(resultExposureRangeLabel);
@@ -171,14 +165,6 @@ public class PaperReview extends JasperEntity {
 
     public String getPopulationDurationLabel() {
         return populationDurationLabel;
-    }
-
-    public String getMethodStatistics() {
-        return methodStatistics;
-    }
-
-    public String getMethodStatisticsLabel() {
-        return methodStatisticsLabel;
     }
 
     public String getPopulationParticipants() {
