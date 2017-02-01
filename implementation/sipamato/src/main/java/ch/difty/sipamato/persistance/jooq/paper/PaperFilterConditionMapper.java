@@ -48,6 +48,7 @@ public class PaperFilterConditionMapper extends AbstractFilterConditionMapper<Pa
                     .or(PAPER.RESULT.likeIgnoreCase(likeExpression))
                     .or(PAPER.RESULT_EXPOSURE_RANGE.likeIgnoreCase(likeExpression))
                     .or(PAPER.RESULT_EFFECT_ESTIMATE.likeIgnoreCase(likeExpression))
+                    .or(PAPER.RESULT_MEASURED_OUTCOME.likeIgnoreCase(likeExpression))
                     .or(PAPER.COMMENT.likeIgnoreCase(likeExpression))
                     .or(PAPER.INTERN.likeIgnoreCase(likeExpression))
                     .or(PAPER.ORIGINAL_ABSTRACT.likeIgnoreCase(likeExpression)));

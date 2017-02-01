@@ -72,6 +72,7 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
                 , "RESULT"
                 , "RESULT_EXPOSURE_RANGE"
                 , "RESULT_EFFECT_ESTIMATE"
+                , "RESULT_MEASURED_OUTCOME"
                 , "COMMENT"
                 , "INTERN"
                 , "ORIGINAL_ABSTRACT"

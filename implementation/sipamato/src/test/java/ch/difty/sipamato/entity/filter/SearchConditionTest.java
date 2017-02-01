@@ -39,11 +39,12 @@ public class SearchConditionTest {
         sc.setResult(X);
         sc.setResultExposureRange(X);
         sc.setResultEffectEstimate(X);
+        sc.setResultMeasuredOutcome(X);
         sc.setComment(X);
         sc.setIntern(X);
         sc.setOriginalAbstract(X);
         sc.setMainCodeOfCodeclass1(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(25);
+        assertThat(sc.getStringSearchTerms()).hasSize(26);
         assertThat(sc.getIntegerSearchTerms()).isEmpty();
         assertThat(sc.getBooleanSearchTerms()).isEmpty();
         assertThat(sc.getCreatedDisplayValue()).isNull();
@@ -481,6 +482,20 @@ public class SearchConditionTest {
 
         sc.setResultEffectEstimate(null);
         assertThat(sc.getResultEffectEstimate()).isNull();
+        assertThat(sc.getStringSearchTerms()).isEmpty();
+    }
+
+    @Test
+    public void resultMeasuredOutcome() {
+        assertThat(sc.getResultMeasuredOutcome()).isNull();
+        assertThat(sc.getStringSearchTerms()).isEmpty();
+
+        sc.setResultMeasuredOutcome(X);
+        assertThat(sc.getResultMeasuredOutcome()).isEqualTo(X);
+        assertThat(sc.getStringSearchTerms()).hasSize(1);
+
+        sc.setResultMeasuredOutcome(null);
+        assertThat(sc.getResultMeasuredOutcome()).isNull();
         assertThat(sc.getStringSearchTerms()).isEmpty();
     }
 

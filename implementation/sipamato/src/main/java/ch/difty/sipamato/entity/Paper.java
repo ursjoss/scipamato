@@ -50,6 +50,7 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
 
     public static final String RESULT_EXPOSURE_RANGE = "resultExposureRange";
     public static final String RESULT_EFFECT_ESTIMATE = "resultEffectEstimate";
+    public static final String RESULT_MEASURED_OUTCOME = "resultMeasuredOutcome";
 
     public static final String ORIGINAL_ABSTRACT = "originalAbstract";
 
@@ -89,6 +90,7 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
 
     public static final String FLD_RESULT_EXPOSURE_RANGE = "result_exposure_range";
     public static final String FLD_RESULT_EFFECT_ESTIMATE = "result_effect_estimate";
+    public static final String FLD_RESULT_MEASURED_OUTCOME = "result_measured_outcome";
 
     public static final String FLD_ORIGINAL_ABSTRACT = "original_abstract";
 
@@ -145,6 +147,7 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
     private String result;
     private String resultExposureRange;
     private String resultEffectEstimate;
+    private String resultMeasuredOutcome;
     private String comment;
     private String intern;
     private String originalAbstract;
@@ -350,6 +353,14 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
 
     public void setResultEffectEstimate(String resultEffectEstimate) {
         this.resultEffectEstimate = resultEffectEstimate;
+    }
+
+    public String getResultMeasuredOutcome() {
+        return resultMeasuredOutcome;
+    }
+
+    public void setResultMeasuredOutcome(String resultMeasuredOutcome) {
+        this.resultMeasuredOutcome = resultMeasuredOutcome;
     }
 
     public String getOriginalAbstract() {
