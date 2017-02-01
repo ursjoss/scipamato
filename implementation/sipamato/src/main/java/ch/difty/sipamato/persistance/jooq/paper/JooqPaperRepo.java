@@ -16,7 +16,6 @@ import org.jooq.DSLContext;
 import org.jooq.InsertValuesStep4;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
-import org.jooq.impl.SQLDataType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

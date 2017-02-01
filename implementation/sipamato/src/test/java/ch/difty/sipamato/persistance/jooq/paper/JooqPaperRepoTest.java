@@ -7,7 +7,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.jooq.TableField;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 
@@ -17,7 +16,6 @@ import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.persistance.jooq.EntityRepository;
 import ch.difty.sipamato.persistance.jooq.JooqEntityRepoTest;
 
-@Ignore // TODO remove after ad-hoc migration of table Paper
 public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Long, ch.difty.sipamato.db.tables.Paper, PaperRecordMapper, PaperFilter> {
 
     private static final Long SAMPLE_ID = 3l;
