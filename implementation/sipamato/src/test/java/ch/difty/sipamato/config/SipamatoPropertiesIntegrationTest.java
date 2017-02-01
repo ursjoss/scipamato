@@ -41,7 +41,7 @@ public class SipamatoPropertiesIntegrationTest {
     public void assertDefaultlocalization() {
         assertThat(appProperties.getDefaultLocalization()).isEqualTo("de");
     }
-    
+
     @Test
     public void assertBrand() {
         assertThat(appProperties.getBrand()).isEqualTo("SiPaMaTo");

@@ -121,10 +121,24 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
     }
 
     @Test
-    public void findingByFilter_withComplexFilter_delegatesToRepo() {
+    public void findingBySearchOrder_delegatesToRepo() {
         when(repoMock.findBySearchOrder(searchOrderMock)).thenReturn(papers);
         assertThat(service.findBySearchOrder(searchOrderMock)).containsAll(papers);
         verify(repoMock).findBySearchOrder(searchOrderMock);
+    }
+
+    @Test
+    public void findingPagedBySearchOrder_delegatesToRepo() {
+        when(repoMock.findBySearchOrder(searchOrderMock, pageableMock)).thenReturn(paperSlimPageMock);
+        assertThat(service.findBySearchOrder(searchOrderMock, pageableMock)).isEqualTo(paperSlimPageMock);
+        verify(repoMock).findBySearchOrder(searchOrderMock, pageableMock);
+    }
+
+    @Test
+    public void countingBySearchOrder_delegatesToRepo() {
+        when(repoMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
+        assertThat(service.countBySearchOrder(searchOrderMock)).isEqualTo(2);
+        verify(repoMock).countBySearchOrder(searchOrderMock);
     }
 
 }

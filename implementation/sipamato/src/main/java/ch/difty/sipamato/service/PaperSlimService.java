@@ -25,12 +25,12 @@ public interface PaperSlimService extends ReadOnlyService<Long, PaperSlim, Paper
     List<PaperSlim> findBySearchOrder(SearchOrder searchOrder);
 
     /**
-     * Finds a page of records of type <literal>T</literal> matching the provided {@link SearchOrder},
+     * Finds a page of {@link PaperSlim}s matching the provided {@link SearchOrder},
      * returned in pages.
      *
      * @param searchOrder the filter
      * @param pageable defining paging and sorting
-     * @return a list of entities of type <literal>T</literal>
+     * @return a list of papers
      */
     Page<PaperSlim> findBySearchOrder(SearchOrder searchOrder, Pageable pageable);
 
@@ -38,7 +38,7 @@ public interface PaperSlimService extends ReadOnlyService<Long, PaperSlim, Paper
      * Counts the number of entities matching the specified {@link SearchOrder}.
      *
      * @param searchOrder {@link SearchOrder}
-     * @return entity count
+     * @return paper count
      */
     int countBySearchOrder(SearchOrder searchOrder);
 

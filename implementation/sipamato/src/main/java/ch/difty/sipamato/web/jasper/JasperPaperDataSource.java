@@ -4,16 +4,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.apache.commons.collections4.IteratorUtils;
+import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
 import org.apache.wicket.util.io.ByteArrayOutputStream;
+import org.springframework.data.domain.Sort.Direction;
 import org.wicketstuff.jasperreports.JRConcreteResource;
 
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
-import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
+import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
 import net.sf.jasperreports.engine.JRAbstractExporter;
@@ -54,7 +56,6 @@ public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRCo
         this.jasperEntities.clear();
         this.paperService = AssertAs.notNull(paperService, "paperService");
         this.dataProvider = AssertAs.notNull(dataProvider, "dataProvider");
-        this.dataProvider.setRowsPerPage(Integer.MAX_VALUE);
         init();
     }
 
@@ -69,33 +70,30 @@ public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRCo
     /** {@iheritDoc} */
     @Override
     public JRDataSource getReportDataSource() {
-        fetchSummariesFromDataProvider();
+        fetchEntitiesFromDataProvider();
         return new JRBeanCollectionDataSource(jasperEntities);
     }
 
-    /**
-     * This is admittedly a bit of a hack, as this will actually cause two service calls to the database:
-     *
-     * <ol>
-     * <li> a call to the paperSlimService (within the dataprovider) to get the PaperSlims</li>
-     * <li> a second call to the paperService to get the Papers from the paperSlim Ids</li>
-     * </ol>
-     *
-     * We could refactor this to have PaperSlim have all the fields needed in the reports and then
-     * derive the JasperEntity from PaperSlim instead of from Paper. But that adds overhead in PaperSlim instead.
-     */
-    private void fetchSummariesFromDataProvider() {
+    private void fetchEntitiesFromDataProvider() {
         if (dataProvider != null) {
             jasperEntities.clear();
-            final long records = dataProvider.size();
-            if (records > 0) {
-                final List<PaperSlim> paperSlims = IteratorUtils.toList(dataProvider.iterator(0, records));
-                final List<Long> ids = paperSlims.stream().map(p -> p.getId()).collect(Collectors.toList());
-                final List<Paper> papers = findPapersById(ids);
-                for (final Paper p : papers) {
+            if (dataProvider.size() > 0)
+                for (final Paper p : getRecordsInPage(dataProvider.getFilterState(), dataProvider.getSort()))
                     jasperEntities.add(makeEntity(p));
-                }
-            }
+        }
+    }
+
+    private List<Paper> getRecordsInPage(final PaperSlimFilter filter, final SortParam<String> sort) {
+        final Direction dir = sort.isAscending() ? Direction.ASC : Direction.DESC;
+        final String sortProp = sort.getProperty();
+        if (filter instanceof PaperFilter) {
+            final PaperFilter paperFilter = (PaperFilter) filter;
+            return paperService.findByFilter(paperFilter, new SipamatoPageRequest(dir, sortProp)).getContent();
+        } else if (filter instanceof SearchOrder) {
+            final SearchOrder searchOrder = (SearchOrder) filter;
+            return paperService.findBySearchOrder(searchOrder, new SipamatoPageRequest(dir, sortProp)).getContent();
+        } else {
+            return new ArrayList<Paper>();
         }
     }
 

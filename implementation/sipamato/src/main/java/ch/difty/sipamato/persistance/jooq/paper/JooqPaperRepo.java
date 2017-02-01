@@ -20,12 +20,16 @@ import org.jooq.impl.SQLDataType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.sipamato.db.tables.records.PaperCodeRecord;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.lib.TranslationUtils;
@@ -34,6 +38,8 @@ import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
 import ch.difty.sipamato.persistance.jooq.JooqEntityRepo;
 import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
+import ch.difty.sipamato.persistance.jooq.paper.searchorder.BySearchOrderFinder;
+import ch.difty.sipamato.persistance.jooq.paper.searchorder.DefaultBySearchOrderFinder;
 import ch.difty.sipamato.service.Localization;
 
 /**
@@ -48,11 +54,14 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JooqPaperRepo.class);
 
+    private final BySearchOrderFinder<Paper, PaperRecordMapper> searchOrderHelper;
+
     @Autowired
     public JooqPaperRepo(DSLContext dsl, PaperRecordMapper mapper, JooqSortMapper<PaperRecord, Paper, ch.difty.sipamato.db.tables.Paper> sortMapper,
             GenericFilterConditionMapper<PaperFilter> filterConditionMapper, DateTimeService dateTimeService, Localization localization, InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter,
             UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter, Configuration jooqConfig) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, localization, insertSetStepSetter, updateSetStepSetter, jooqConfig);
+        searchOrderHelper = new DefaultBySearchOrderFinder<Paper, PaperRecordMapper>(dsl, mapper, sortMapper, getRecordClass());
         adHocMigrationOfPaperTable();
     }
 
@@ -176,6 +185,28 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
         final List<Paper> papers = findByIds(ids);
         enrichAssociatedEntitiesOfAll(papers);
         return papers;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public List<Paper> findBySearchOrder(final SearchOrder searchOrder) {
+        List<Paper> papers = searchOrderHelper.findBySearchOrder(searchOrder);
+        enrichAssociatedEntitiesOfAll(papers);
+        return papers;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Page<Paper> findBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
+        final List<Paper> entities = searchOrderHelper.findPagedBySearchOrder(searchOrder, pageable);
+        enrichAssociatedEntitiesOfAll(entities);
+        return new PageImpl<>(entities, pageable, (long) countBySearchOrder(searchOrder));
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int countBySearchOrder(SearchOrder searchOrder) {
+        return searchOrderHelper.countBySearchOrder(searchOrder);
     }
 
 }
