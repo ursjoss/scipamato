@@ -97,10 +97,6 @@ public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRCo
         }
     }
 
-    protected List<Paper> findPapersById(final List<Long> ids) {
-        return paperService.findByIds(ids);
-    }
-
     /**
      * Implement to instantiate an entity <code>E</code> from the provided {@link Paper} and additional information
      * required to build it.

@@ -1,7 +1,5 @@
 package ch.difty.sipamato.web.jasper.summary_table;
 
-import java.util.List;
-
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
@@ -38,13 +36,6 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
     @Override
     protected PaperSummaryTable makeEntity(Paper p) {
         return new PaperSummaryTable(p, includeResults, caption, brand);
-    }
-
-    /**
-     * We need the codes here too...
-     */
-    protected List<Paper> findPapersById(final List<Long> ids) {
-        return getPaperService().findWithCodesByIds(ids);
     }
 
     /**
