@@ -1,4 +1,4 @@
-package ch.difty.sipamato.persistance.jooq.paper.slim;
+package ch.difty.sipamato.persistance.jooq.paper.searchorder;
 
 import org.jooq.Condition;
 

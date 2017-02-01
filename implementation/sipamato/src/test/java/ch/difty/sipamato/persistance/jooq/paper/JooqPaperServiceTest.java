@@ -21,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.persistance.jooq.AbstractServiceTest;
 
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
@@ -31,6 +32,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     private PaperRepository repoMock;
     @Mock
     private PaperFilter filterMock;
+    @Mock
+    private SearchOrder searchOrderMock;
     @Mock
     private Pageable pageableMock;
     @Mock
@@ -63,7 +66,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Override
     public void specificTearDown() {
-        verifyNoMoreInteractions(repoMock, filterMock, pageableMock, paperPageMock, paperMock);
+        verifyNoMoreInteractions(repoMock, filterMock, searchOrderMock, pageableMock, paperPageMock, paperMock);
     }
 
     @Test
@@ -196,5 +199,26 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void findingWithCodesByIds_withNullIds() {
         final List<Long> ids = null;
         assertThat(service.findWithCodesByIds(ids)).isEmpty();
+    }
+
+    @Test
+    public void findingBySearchOrder_delegatesToRepo() {
+        when(repoMock.findBySearchOrder(searchOrderMock)).thenReturn(papers);
+        assertThat(service.findBySearchOrder(searchOrderMock)).containsAll(papers);
+        verify(repoMock).findBySearchOrder(searchOrderMock);
+    }
+
+    @Test
+    public void findingPagedBySearchOrder_delegatesToRepo() {
+        when(repoMock.findBySearchOrder(searchOrderMock, pageableMock)).thenReturn(paperPageMock);
+        assertThat(service.findBySearchOrder(searchOrderMock, pageableMock)).isEqualTo(paperPageMock);
+        verify(repoMock).findBySearchOrder(searchOrderMock, pageableMock);
+    }
+
+    @Test
+    public void countingBySearchOrder_delegatesToRepo() {
+        when(repoMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
+        assertThat(service.countBySearchOrder(searchOrderMock)).isEqualTo(2);
+        verify(repoMock).countBySearchOrder(searchOrderMock);
     }
 }

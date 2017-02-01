@@ -1,19 +1,18 @@
 package ch.difty.sipamato.web.jasper.summary_sp;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import java.util.Iterator;
 
 import org.junit.Test;
 
-import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.NullArgumentException;
+import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
+import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.web.jasper.PaperDataSourceTest;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -125,27 +124,25 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
     @Test
     public void instantiatingWithProvider_returnsPdfDataSourceWithOneRecord() throws JRException {
-        @SuppressWarnings("unchecked")
-        Iterator<PaperSlim> itMock = mock(Iterator.class);
-        PaperSlim paperSlimMock = mock(PaperSlim.class);
-
         when(dataProviderMock.size()).thenReturn(1l);
-        when(dataProviderMock.iterator(0, 1)).thenReturn(itMock);
-        when(itMock.hasNext()).thenReturn(true, false);
-        when(itMock.next()).thenReturn(paperSlimMock);
-        when(paperSlimMock.getId()).thenReturn(ID);
-        when(paperServiceMock.findByIds(Arrays.asList(ID))).thenReturn(Arrays.asList(paperMock));
+        when(dataProviderMock.getFilterState()).thenReturn(paperFilterMock);
+        when(dataProviderMock.getSort()).thenReturn(sortParamMock);
+        when(sortParamMock.isAscending()).thenReturn(true);
+        when(sortParamMock.getProperty()).thenReturn("foo");
+        // TODO be more specific and also refactor part of this test into the base class
+        when(paperServiceMock.findByFilter(isA(PaperFilter.class), isA(SipamatoPageRequest.class))).thenReturn(pageMock);
+        when(pageMock.getContent()).thenReturn(Arrays.asList(paperMock));
 
         ds = new PaperSummaryDataSource(dataProviderMock, paperServiceMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
         assertDataSource(FILE_NAME_MULTIPLE);
 
         verify(dataProviderMock).size();
-        verify(dataProviderMock).iterator(0, 1);
-        verify(dataProviderMock).setRowsPerPage(Integer.MAX_VALUE);
-        verify(itMock, times(2)).hasNext();
-        verify(itMock).next();
-        verify(paperSlimMock).getId();
-        verify(paperServiceMock).findByIds(Arrays.asList(ID));
+        verify(dataProviderMock).getFilterState();
+        verify(dataProviderMock).getSort();
+        verify(sortParamMock).isAscending();
+        verify(sortParamMock).getProperty();
+        verify(paperServiceMock).findByFilter(isA(PaperFilter.class), isA(SipamatoPageRequest.class));
+        verify(pageMock).getContent();
 
         verify(paperMock).getId();
         verify(paperMock).getAuthors();
@@ -157,8 +154,6 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
         verify(paperMock).getResult();
         verify(paperMock).getComment();
         verify(paperMock).getCreatedByName();
-
-        verifyNoMoreInteractions(itMock, paperSlimMock);
     }
 
     @Test
@@ -167,7 +162,6 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
         ds = new PaperSummaryDataSource(dataProviderMock, paperServiceMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
         assertThat(ds.getReportDataSource().next()).isFalse();
         verify(dataProviderMock).size();
-        verify(dataProviderMock).setRowsPerPage(Integer.MAX_VALUE);
     }
 
     @Test

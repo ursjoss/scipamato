@@ -1,4 +1,4 @@
-package ch.difty.sipamato.persistance.jooq.paper.slim;
+package ch.difty.sipamato.persistance.jooq.paper.searchorder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;

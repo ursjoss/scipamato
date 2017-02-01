@@ -41,6 +41,21 @@ public class SipamatoPageRequestTest {
     }
 
     @Test
+    public void pageRequestWithSortButNoPaging() {
+        sort = "foo: DESC";
+        pr = new SipamatoPageRequest(Direction.DESC, "foo");
+
+        assertPageRequest(pr, 0, 0, Integer.MAX_VALUE, sort);
+        assertThat(pr.toString()).isEqualTo("Page request [offset: 0, size 2147483647, records 2147483647, sort: foo: DESC]");
+
+        assertThat(pr.hasPrevious()).isFalse();
+        assertPageRequest(pr.first(), 0, 0, Integer.MAX_VALUE, sort);
+        assertPageRequest(pr.previous(), 0, 0, Integer.MAX_VALUE, sort);
+        assertPageRequest(pr.previousOrFirst(), 0, 0, Integer.MAX_VALUE, sort);
+        assertPageRequest(pr.next(), 1, Integer.MAX_VALUE, Integer.MAX_VALUE, sort);
+    }
+
+    @Test
     public void pageRequestWithSort_withOffset0_andPageSize10_andRecordCount10() {
         sort = "foo: DESC";
         pr = new SipamatoPageRequest(0, 10, 10, Direction.DESC, "foo");

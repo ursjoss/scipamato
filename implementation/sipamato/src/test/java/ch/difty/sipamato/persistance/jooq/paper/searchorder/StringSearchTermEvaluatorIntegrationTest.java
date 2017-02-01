@@ -1,4 +1,4 @@
-package ch.difty.sipamato.persistance.jooq.paper.slim;
+package ch.difty.sipamato.persistance.jooq.paper.searchorder;
 
 import static ch.difty.sipamato.entity.filter.StringSearchTerm.MatchType.CONTAINS;
 import static ch.difty.sipamato.entity.filter.StringSearchTerm.MatchType.EQUALS;

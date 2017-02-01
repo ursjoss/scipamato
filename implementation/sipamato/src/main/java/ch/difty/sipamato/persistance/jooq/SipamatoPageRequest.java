@@ -78,6 +78,15 @@ public class SipamatoPageRequest implements Pageable, Serializable {
         this.sort = sort;
     }
 
+    /**
+     * Creates a new {@link PageRequest} only applying sort, but retrieving all records (no paging).
+     * @param direction the direction of the {@link Sort} to be specified, can be {@literal null}.
+     * @param properties the properties to sort by, must not be {@literal null} or empty.
+     */
+    public SipamatoPageRequest(Direction direction, String... properties) {
+        this(0, Integer.MAX_VALUE, Integer.MAX_VALUE, new Sort(direction, properties));
+    }
+
     private void checkConstraints(int offset, int pageSize, int recordCount) {
         if (offset < 0)
             throw new IllegalArgumentException("offset must not be less than zero!");

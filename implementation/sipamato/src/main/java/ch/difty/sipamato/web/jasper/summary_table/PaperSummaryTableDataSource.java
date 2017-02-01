@@ -61,8 +61,8 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
      * @param brand
      *      localized brand
      */
-    public PaperSummaryTableDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final PaperService paperService, boolean includeResults, final String caption, String brand,
-            PdfExporterConfiguration config) {
+    public PaperSummaryTableDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final PaperService paperService, boolean includeResults, final String caption,
+            String brand, PdfExporterConfiguration config) {
         super(new SipamatoPdfResourceHandler(config), FILE_NAME, dataProvider, paperService);
         this.caption = caption;
         this.brand = brand;
