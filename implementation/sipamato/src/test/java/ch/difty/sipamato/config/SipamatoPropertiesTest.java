@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class SipamatoPropertiesTest {
 
-    private final SipamatoProperties sp = new SipamatoProperties("de", "DEFAULT", "15", "SiPaMaTo");
+    private final SipamatoProperties sp = new SipamatoProperties("de", "DEFAULT", "SiPaMaTo");
 
     @Test
     public void canResolveDefaultLocalization() {
@@ -16,19 +16,6 @@ public class SipamatoPropertiesTest {
     @Test
     public void canResolveAuthorParserStrategy() {
         assertThat(sp.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.DEFAULT);
-    }
-
-    @Test
-    public void withAutoSaveIntervalGreaterThan0() {
-        assertThat(sp.getAutoSaveIntervalInSeconds()).isEqualTo(15);
-        assertThat(sp.isAutoSavingEnabled()).isTrue();
-    }
-
-    @Test
-    public void withAutoSaveIntervalEqual0() {
-        SipamatoProperties sp = new SipamatoProperties("xy", "DEFAULT", "0", "SiPaMaTo");
-        assertThat(sp.getAutoSaveIntervalInSeconds()).isEqualTo(0);
-        assertThat(sp.isAutoSavingEnabled()).isFalse();
     }
 
     @Test

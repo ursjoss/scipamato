@@ -1,7 +1,5 @@
 package ch.difty.sipamato.config;
 
-import ch.difty.sipamato.web.pages.AutoSaveAwarePage;
-
 /**
  * Manages property based configuration parameters.
  * <ol>
@@ -15,11 +13,7 @@ public interface ApplicationProperties {
 
     String LOCALIZATION_DEFAULT = "sipamato.localization.default";
     String AUTHOR_PARSER_FACTORY = "sipamato.author.parser";
-    String AUTO_SAVE_INTERVAL = "sipamato.autosave.interval.seconds";
     String BRAND = "sipamato.brand";
-
-    int DEFAULT_AUTO_SAVE_INTERVAL_IN_SECONDS = 0;
-    String AUTO_SAVE_HINT = "0: auto-saving disabled, >=1: save interval in seconds";
 
     /**
      * Defines the localization the application starts with.
@@ -34,21 +28,6 @@ public interface ApplicationProperties {
      * @return
      */
     AuthorParserStrategy getAuthorParserStrategy();
-
-    /**
-     * The auto-save interval for pages extending {@link AutoSaveAwarePage}s.
-     * <ul>
-     * <li>   0: auto saving disabled -> resort to pure submit based saving
-     * <li> >=1: auto saving enabled every x seconds - provided the form is dirty, i.e. there are changes
-     * </ul>
-     * @return auto save interval in seconds
-     */
-    int getAutoSaveIntervalInSeconds();
-
-    /**
-     * @return shall pages extending {@link AutoSaveAwarePage} activate auto-saving - or not?
-     */
-    boolean isAutoSavingEnabled();
 
     /**
      * @return the brand name

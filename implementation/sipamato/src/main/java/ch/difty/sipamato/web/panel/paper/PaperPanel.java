@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
@@ -27,6 +29,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.util.time.Duration;
 
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.CodeBoxAware;
@@ -49,6 +52,8 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T> {
 
     private static final long serialVersionUID = 1L;
+
+    ResourceLink<Void> summaryLink;
 
     public PaperPanel(String id) {
         super(id);
@@ -111,8 +116,30 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
         makeAndQueueSubmitButton("submit");
 
-        makeAndQueueSummaryLink("summaryLink");
+        queue(makeSummaryLink("summaryLink"));
+
+        // make sure attributes updated during persisting are reflected
+        reflectPersistedChangesViaTimer(id, created, modified);
     }
+
+    /**
+     * Override this if you don't want to add the timer behavior or implement it differently.
+     * @param id
+     * @param created
+     * @param modified
+     */
+    protected  void reflectPersistedChangesViaTimer(TextField<Integer> id, TextField<String> created, TextField<String> modified) {
+        add(new AbstractAjaxTimerBehavior(Duration.seconds(1d)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onTimer(AjaxRequestTarget target) {
+                target.add(id);
+                target.add(created);
+                target.add(modified);
+            }
+        }); 
+    };
 
     private void queueTabPanel(String tabId) {
         List<ITab> tabs = new ArrayList<>();
@@ -190,18 +217,26 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     }
 
     private void makeAndQueueSubmitButton(String id) {
-        BootstrapButton submit = new BootstrapButton(id, new StringResourceModel(getSubmitLinkResourceLabel()), Buttons.Type.Default);
+        BootstrapButton submit = new BootstrapButton(id, new StringResourceModel(getSubmitLinkResourceLabel()), Buttons.Type.Default) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onAfterSubmit() {
+                super.onAfterSubmit();
+                summaryLink.replaceWith(makeSummaryLink("summaryLink"));
+            }
+        };
         submit.setDefaultFormProcessing(true);
         submit.setEnabled(!isViewMode());
         queue(submit);
     }
 
-    private void makeAndQueueSummaryLink(String id) {
-        ResourceLink<Void> summaryLink = new ResourceLink<Void>(id, getSummaryDataSource());
+    private ResourceLink<Void> makeSummaryLink(String id) {
+        summaryLink = new ResourceLink<Void>(id, getSummaryDataSource());
         summaryLink.setVisible(!isSearchMode());
         summaryLink.setOutputMarkupId(true);
         summaryLink.setBody(new StringResourceModel("link.summary.label"));
-        queue(summaryLink);
+        return summaryLink;
     }
 
     /** implement to return PaperSummaryDataSource */

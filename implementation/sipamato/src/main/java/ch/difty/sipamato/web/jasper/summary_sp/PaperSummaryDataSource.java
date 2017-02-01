@@ -71,6 +71,7 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      *      Static part of the header - will be supplemented with the id
      * @param brand
      *      Brand of the application
+     * @param config {@link PdfExporterConfiguration}
      */
     public PaperSummaryDataSource(final Paper paper, final String populationLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart,
             final String brand, PdfExporterConfiguration config) {

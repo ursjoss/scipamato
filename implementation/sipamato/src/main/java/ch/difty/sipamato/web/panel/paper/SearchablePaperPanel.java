@@ -1,5 +1,6 @@
 package ch.difty.sipamato.web.panel.paper;
 
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 
 import ch.difty.sipamato.entity.filter.SearchCondition;
@@ -25,6 +26,11 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
     @Override
     protected PaperSummaryDataSource getSummaryDataSource() {
         return null;
+    }
+
+    @Override
+    protected void reflectPersistedChangesViaTimer(TextField<Integer> id, TextField<String> created, TextField<String> modified) {
+        // don't add the beheavior
     }
 
 }

@@ -28,16 +28,6 @@ public class SipamatoPropertiesIntegrationTest {
     }
 
     @Test
-    public void gettingAutoSaveInterval() {
-        assertThat(appProperties.getAutoSaveIntervalInSeconds()).isEqualTo(15);
-    }
-
-    @Test
-    public void isAutoSavingEnabled() {
-        assertThat(appProperties.isAutoSavingEnabled()).isTrue();
-    }
-
-    @Test
     public void assertDefaultlocalization() {
         assertThat(appProperties.getDefaultLocalization()).isEqualTo("de");
     }

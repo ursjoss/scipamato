@@ -17,11 +17,11 @@ import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.service.CodeClassService;
 import ch.difty.sipamato.service.CodeService;
 import ch.difty.sipamato.service.PaperService;
-import ch.difty.sipamato.web.pages.AutoSaveAwarePageTest;
+import ch.difty.sipamato.web.pages.SelfUpdatingPageTest;
 import ch.difty.sipamato.web.panel.paper.PaperPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
-public class PaperEntryPageTest extends AutoSaveAwarePageTest<PaperEntryPage> {
+public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
     @MockBean
     private PaperService serviceMock;
