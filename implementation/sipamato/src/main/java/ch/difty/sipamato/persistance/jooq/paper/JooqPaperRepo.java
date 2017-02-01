@@ -62,18 +62,6 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
             UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter, Configuration jooqConfig) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, localization, insertSetStepSetter, updateSetStepSetter, jooqConfig);
         searchOrderHelper = new DefaultBySearchOrderFinder<Paper, PaperRecordMapper>(dsl, mapper, sortMapper, getRecordClass());
-        adHocMigrationOfPaperTable();
-    }
-
-    // ad hoc migration for users - TOTO remove after next deployment and readjust 
-    private void adHocMigrationOfPaperTable() {
-        try {
-            getDsl().select(PAPER.RESULT_MEASURED_OUTCOME).from(PAPER).where(PAPER.ID.eq(-1l)).fetch();
-            // all good, columns exists
-        } catch (Exception ex) {
-            getDsl().alterTable(PAPER).addColumn(PAPER.RESULT_MEASURED_OUTCOME, SQLDataType.VARCHAR.nullable(true)).execute();
-            LOGGER.info("Field resultMeasuredOutcome added to table Paper.");
-        }
     }
 
     @Override
