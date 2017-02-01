@@ -85,7 +85,7 @@ public abstract class AutoSaveAwarePage<T> extends BasePage<T> {
             }
         };
         dirtyHint.position(Navbar.ComponentPosition.RIGHT);
-        dirtyHint.add(AttributeAppender.prepend("style", "color: red"));
+        dirtyHint.add(AttributeAppender.prepend("style", "color: red; font-weight: bold;"));
         getNavBar().addComponents(dirtyHint);
     }
 
