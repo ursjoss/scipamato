@@ -1,6 +1,5 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -22,30 +21,6 @@ import ch.difty.sipamato.service.PaperService;
 public class JooqPaperService extends JooqEntityService<Long, PaperRecord, Paper, PaperFilter, PaperRecordMapper, PaperRepository> implements PaperService {
 
     private static final long serialVersionUID = 1L;
-
-    /** {@inheritDocs} */
-    @Override
-    public List<Paper> findByIds(List<Long> ids) {
-        if (ids != null && !ids.isEmpty()) {
-            List<Paper> papers = getRepository().findByIds(ids);
-            enrichAuditNamesOfAll(papers);
-            return papers;
-        } else {
-            return new ArrayList<Paper>();
-        }
-    }
-
-    /** {@inheritDocs} */
-    @Override
-    public List<Paper> findWithCodesByIds(List<Long> ids) {
-        if (ids != null && !ids.isEmpty()) {
-            List<Paper> papers = getRepository().findWithCodesByIds(ids);
-            enrichAuditNamesOfAll(papers);
-            return papers;
-        } else {
-            return new ArrayList<Paper>();
-        }
-    }
 
     /** {@inheritDocs} */
     @Override

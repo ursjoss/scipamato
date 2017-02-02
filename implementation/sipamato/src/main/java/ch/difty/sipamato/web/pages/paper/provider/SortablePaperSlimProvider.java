@@ -1,6 +1,7 @@
 package ch.difty.sipamato.web.pages.paper.provider;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.IFilterStateLocator;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
@@ -10,9 +11,11 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 
+import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
+import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.service.PaperSlimService;
 
 /**
@@ -40,6 +43,18 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
         this.service = service;
     }
 
+    @SpringBean
+    private PaperService paperService;
+
+    protected PaperService getPaperService() {
+        return paperService;
+    }
+
+    /** protected for test purposes */
+    protected void setPaperService(final PaperService paperService) {
+        this.paperService = paperService;
+    }
+
     SortablePaperSlimProvider(final F filterState, final Integer rowsPerPage) {
         this.filterState = filterState;
         this.maxRowsPerPage = rowsPerPage;
@@ -57,6 +72,18 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
     }
 
     protected abstract Iterator<PaperSlim> findByFilter(Pageable pageable);
+
+    /**
+     * Applies the normal filter and the sort aspect of the pageable to return all records as {@link Paper}s.
+     * @return list of all papers
+     */
+    public List<Paper> findAllPapersByFilter() {
+        final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
+        final String sortProp = getSort().getProperty();
+        return findAllPapersByFilter(dir, sortProp);
+    }
+
+    protected abstract List<Paper> findAllPapersByFilter(Direction dir, String sortProp);
 
     @Override
     public long size() {
@@ -86,15 +113,6 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
      */
     public int getRowsPerPage() {
         return maxRowsPerPage;
-    }
-
-    /**
-     * Sets the number of rows per page.
-     *
-     * @param rowsPerPage
-     */
-    public void setRowsPerPage(final int rowsPerPage) {
-        this.maxRowsPerPage = rowsPerPage;
     }
 
 }

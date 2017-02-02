@@ -3,7 +3,6 @@ package ch.difty.sipamato.web.panel.result;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -16,7 +15,6 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -55,22 +53,30 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     @Mock
     private SearchOrder searchOrderMock;
     @Mock
-    private Page<PaperSlim> pageMock;
+    private Page<PaperSlim> paperSlimPageMock;
+    @Mock
+    private Page<Paper> paperPageMock;
 
     private final PaperSlim paperSlim = new PaperSlim(ID, "firstAuthor", 2016, "title");
+
+    @Mock
+    private Paper paperMock;
 
     private SortablePaperSlimProvider<? extends PaperSlimFilter> provider;
 
     @Override
     protected void setUpHook() {
         when(paperSlimServiceMock.countBySearchOrder(searchOrderMock)).thenReturn(1);
-        when(paperSlimServiceMock.findBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class))).thenReturn(pageMock);
-        when(pageMock.iterator()).thenReturn(Arrays.asList(paperSlim).iterator());
+        when(paperSlimServiceMock.findBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class))).thenReturn(paperSlimPageMock);
+        when(paperSlimPageMock.iterator()).thenReturn(Arrays.asList(paperSlim).iterator());
+
+        when(paperServiceMock.findBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class))).thenReturn(paperPageMock);
+        when(paperPageMock.getContent()).thenReturn(Arrays.asList(paperMock));
     }
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeClassServiceMock, codeServiceMock, searchOrderMock, pageMock);
+        verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeClassServiceMock, codeServiceMock, searchOrderMock, paperSlimPageMock, paperPageMock);
     }
 
     @Override
@@ -98,7 +104,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));
-        verify(pageMock).iterator();
+        verify(paperSlimPageMock).iterator();
     }
 
     private void assertTableRow(String bb) {
@@ -122,7 +128,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
         verify(paperSlimServiceMock).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));
-        verify(pageMock).iterator();
+        verify(paperSlimPageMock).iterator();
         verify(paperServiceMock).findById(ID);
         verify(codeClassServiceMock).find(anyString());
         verify(codeServiceMock, times(8)).findCodesOfClass(isA(CodeClassId.class), anyString());
@@ -138,32 +144,56 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock, times(2)).findBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));
-        verify(pageMock, times(2)).iterator();
+        verify(paperSlimPageMock, times(2)).iterator();
     }
 
     /**
      * Note, we're partially also testing the PaperSummaryDataSource and even the Provider here in order to make
      * sure the functionality is triggered. Not sure how to verify the action otherwise.
+     * 
+     * Also, this is not really asserting anything, just verifying the methods have been called. Bit of a workaround
      */
-    @SuppressWarnings("unchecked")
+    private void verifyPdfExport() {
+        verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
+        verify(paperSlimServiceMock, times(1)).findBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));
+        verify(paperSlimPageMock, times(1)).iterator();
+        verify(paperServiceMock).findBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));
+        verify(paperPageMock).getContent();
+    }
+
     @Test
-    @Ignore // TODO get this back to work, using the fixture from PaperSummaryDataSourceTest#instantiatingWithProvider_returnsPdfDataSourceWithOneRecord
-    public void clickingSummaryLink_retrievesPaperSlimsViaProvider_thenPapersViaService_toBuildPaperSummaries() {
-        Paper paperMock = mock(Paper.class);
-        when(paperMock.getId()).thenReturn(ID);
-
-        when(paperServiceMock.findByIds(Arrays.asList(ID))).thenReturn(Arrays.asList(paperMock));
-
+    public void clickingSummaryLink_succeeds() {
         getTester().startComponentInPage(makePanel());
         getTester().clickLink(PANEL_ID + ":summaryLink");
+        verifyPdfExport();
+    }
 
-        verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
-        verify(paperSlimServiceMock, times(2)).findBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));
-        verify(pageMock, times(2)).iterator();
-        verify(paperServiceMock).findByIds(Arrays.asList(ID));
-        verify(paperMock).getId();
-        verify(paperMock).getAuthors();
-        // and other fields not verified here
+    @Test
+    public void clickingReviewLink_succeeds() {
+        getTester().startComponentInPage(makePanel());
+        getTester().clickLink(PANEL_ID + ":reviewLink");
+        verifyPdfExport();
+    }
+
+    @Test
+    public void clickingLiteratureReviewLink_succeeds() {
+        getTester().startComponentInPage(makePanel());
+        getTester().clickLink(PANEL_ID + ":literatureReviewLink");
+        verifyPdfExport();
+    }
+
+    @Test
+    public void clickingSummaryTableLink_succeeds() {
+        getTester().startComponentInPage(makePanel());
+        getTester().clickLink(PANEL_ID + ":summaryTableLink");
+        verifyPdfExport();
+    }
+
+    @Test
+    public void clickingSummaryTableWithoutResultLink_succeeds() {
+        getTester().startComponentInPage(makePanel());
+        getTester().clickLink(PANEL_ID + ":summaryTableWithoutResultsLink");
+        verifyPdfExport();
     }
 
 }

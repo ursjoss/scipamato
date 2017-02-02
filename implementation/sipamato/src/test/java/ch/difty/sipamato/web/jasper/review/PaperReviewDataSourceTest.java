@@ -1,7 +1,6 @@
 package ch.difty.sipamato.web.jasper.review;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -10,8 +9,6 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
-import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.web.jasper.PaperDataSourceTest;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -92,24 +89,13 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_returnsPdfDataSourceWithOneRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(1l);
-        when(dataProviderMock.getFilterState()).thenReturn(paperFilterMock);
-        when(dataProviderMock.getSort()).thenReturn(sortParamMock);
-        when(sortParamMock.isAscending()).thenReturn(true);
-        when(sortParamMock.getProperty()).thenReturn("foo");
-        // TODO be more specific and also refactor part of this test into the base class
-        when(paperServiceMock.findByFilter(isA(PaperFilter.class), isA(SipamatoPageRequest.class))).thenReturn(pageMock);
-        when(pageMock.getContent()).thenReturn(Arrays.asList(paperMock));
+        when(dataProviderMock.findAllPapersByFilter()).thenReturn(Arrays.asList(paperMock));
 
-        ds = new PaperReviewDataSource(dataProviderMock, paperServiceMock, "idl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb", pdfExporterConfigMock);
+        ds = new PaperReviewDataSource(dataProviderMock, "idl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb", pdfExporterConfigMock);
         assertDataSource(FILE_NAME);
 
         verify(dataProviderMock).size();
-        verify(dataProviderMock).getFilterState();
-        verify(dataProviderMock).getSort();
-        verify(sortParamMock).isAscending();
-        verify(sortParamMock).getProperty();
-        verify(paperServiceMock).findByFilter(isA(PaperFilter.class), isA(SipamatoPageRequest.class));
-        verify(pageMock).getContent();
+        verify(dataProviderMock).findAllPapersByFilter();
 
         verify(paperMock, times(2)).getId();
         verify(paperMock).getFirstAuthor();

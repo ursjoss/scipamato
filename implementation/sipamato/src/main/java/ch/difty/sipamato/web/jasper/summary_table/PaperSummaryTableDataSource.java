@@ -2,8 +2,6 @@ package ch.difty.sipamato.web.jasper.summary_table;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
-import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.jasper.JasperPaperDataSource;
 import ch.difty.sipamato.web.jasper.SipamatoPdfResourceHandler;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
@@ -39,22 +37,21 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
     }
 
     /**
-     * Using the dataProvider for the Result Panel as record source. Needs the {@link PaperService} to retrieve the papers
-     * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
+     * Using the dataProvider for the Result Panel as record source.
      * @param dataProvider
      *      the {@link SortablePaperSlimProvider} - must not be null
-     * @param paperService
-     *      the {@link PaperService} - must not be null
      * @param caption
      *      localized caption
      * @param includeResults
      *      whether or not to include the results field
      * @param brand
      *      localized brand
+     * @param config
+     *      PdfExporterConfiguration
      */
-    public PaperSummaryTableDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final PaperService paperService, boolean includeResults, final String caption,
-            String brand, PdfExporterConfiguration config) {
-        super(new SipamatoPdfResourceHandler(config), FILE_NAME, dataProvider, paperService);
+    public PaperSummaryTableDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, boolean includeResults, final String caption, String brand,
+            PdfExporterConfiguration config) {
+        super(new SipamatoPdfResourceHandler(config), FILE_NAME, dataProvider);
         this.caption = caption;
         this.brand = brand;
         this.includeResults = includeResults;

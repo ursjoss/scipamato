@@ -211,7 +211,6 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdSipamat
     protected void specificNullCheck() {
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     @Ignore
     // TODO find more clever way of testing the jooq part - my current way is not maintainable

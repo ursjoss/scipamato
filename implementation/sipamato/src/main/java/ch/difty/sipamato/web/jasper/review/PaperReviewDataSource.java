@@ -2,8 +2,6 @@ package ch.difty.sipamato.web.jasper.review;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
-import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.jasper.JasperPaperDataSource;
 import ch.difty.sipamato.web.jasper.SipamatoPdfResourceHandler;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
@@ -50,14 +48,13 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
     }
 
     /**
-     * Using the dataProvider for the Result Panel as record source. Needs the {@link PaperService} to retrieve the papers
-     * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
+     * Using the dataProvider for the Result Panel as record source.
      */
-    public PaperReviewDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final PaperService paperService, final String idLabel, final String authorYearLabel,
-            final String populationPlaceLabel, final String methodOutcomeLabel, final String exposurePollutantLabel, final String methodStudyDesignLabel, final String populationDurationLabel,
-            final String populationParticipantsLabel, final String exposureAssessmentLabel, final String resultExposureRangeLabel, final String methodConfoundersLabel,
-            final String resultEffectEstimateLabel, final String brand, final String createdBy, PdfExporterConfiguration config) {
-        super(new SipamatoPdfResourceHandler(config), FILE_BASE_NAME, dataProvider, paperService);
+    public PaperReviewDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String idLabel, final String authorYearLabel, final String populationPlaceLabel,
+            final String methodOutcomeLabel, final String exposurePollutantLabel, final String methodStudyDesignLabel, final String populationDurationLabel, final String populationParticipantsLabel,
+            final String exposureAssessmentLabel, final String resultExposureRangeLabel, final String methodConfoundersLabel, final String resultEffectEstimateLabel, final String brand,
+            final String createdBy, PdfExporterConfiguration config) {
+        super(new SipamatoPdfResourceHandler(config), FILE_BASE_NAME, dataProvider);
 
         this.idLabel = idLabel;
         this.authorYearLabel = authorYearLabel;

@@ -42,16 +42,15 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
      * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
      * @param dataProvider
      *      the {@link SortablePaperSlimProvider} - must not be null
-     * @param paperService
-     *      the {@link PaperService} - must not be null
      * @param caption
      *      localized caption
      * @param brand
      *      localized brand
+     * @param config
+     *      PdfExporterConfiguration
      */
-    public PaperLiteratureReviewDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final PaperService paperService, final String caption, String brand,
-            PdfExporterConfiguration config) {
-        super(new SipamatoPdfResourceHandler(config), FILE_NAME, dataProvider, paperService);
+    public PaperLiteratureReviewDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String caption, String brand, PdfExporterConfiguration config) {
+        super(new SipamatoPdfResourceHandler(config), FILE_NAME, dataProvider);
         this.caption = caption;
         this.brand = brand;
     }

@@ -24,7 +24,7 @@ import net.sf.jasperreports.export.PdfExporterConfiguration;
  * <li> a single {@link Paper} + meta fields</li>
  * <li> a single {@link PaperSummary}</li>
  * <li> a collection of {@link PaperSummary} entities or</li>
- * <li> an instance of a {@link SortablePaperSlimProvider} and the {@link PaperService} + meta fields</li>
+ * <li> an instance of a {@link SortablePaperSlimProvider} + meta fields</li>
  * </ul>
  *
  * The meta fields are not contained within a paper instance and make up e.g. localized labels, the brand or part of the header.
@@ -123,8 +123,6 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
      * @param dataProvider
      *      the {@link SortablePaperSlimProvider} - must not be null
-     * @param paperService
-     *      the {@link PaperService} - must not be null
      * @param populationLabel
      *      localized label for the population field
      * @param methodsLabel
@@ -137,10 +135,12 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      *      Static part of the header - will be supplemented with the id
      * @param brand
      *      Brand of the application
+     * @param config
+     *      PdfExporterConfiguration
      */
-    public PaperSummaryDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final PaperService paperService, final String populationLabel, final String methodsLabel,
-            final String resultLabel, final String commentLabel, final String headerPart, final String brand, PdfExporterConfiguration config) {
-        super(new SipamatoPdfResourceHandler(config), BASE_NAME_MULTIPLE, dataProvider, paperService);
+    public PaperSummaryDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String populationLabel, final String methodsLabel, final String resultLabel,
+            final String commentLabel, final String headerPart, final String brand, PdfExporterConfiguration config) {
+        super(new SipamatoPdfResourceHandler(config), BASE_NAME_MULTIPLE, dataProvider);
         this.populationLabel = populationLabel;
         this.methodsLabel = methodsLabel;
         this.resultLabel = resultLabel;

@@ -7,11 +7,15 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.data.domain.Pageable;
 
+import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
 public class FilterBasedSortablePaperSlimProviderTest extends SortablePaperSlimProviderTest<PaperFilter, FilterBasedSortablePaperSlimProvider> {
@@ -21,7 +25,7 @@ public class FilterBasedSortablePaperSlimProviderTest extends SortablePaperSlimP
 
     @Override
     protected void localFixture() {
-        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(pageOfPapers);
+        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(pageOfSlimPapers);
     }
 
     @Override
@@ -53,6 +57,16 @@ public class FilterBasedSortablePaperSlimProviderTest extends SortablePaperSlimP
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
         provider.setFilterState(filterMock2);
         assertThat(provider.getFilterState()).isEqualTo(filterMock2);
+    }
+
+    @Test
+    public void gettingAllPapersByFilter() {
+        provider.setSort("title", SortOrder.DESCENDING);
+        when(paperServiceMock.findByFilter(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(pageOfPapers);
+        List<Paper> papers = provider.findAllPapersByFilter();
+        assertThat(papers).hasSize(5);
+        assertThat(papers).containsOnly(paperMock);
+        verify(paperServiceMock).findByFilter(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "title: DESC")));
     }
 
 }

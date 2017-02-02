@@ -1,7 +1,6 @@
 package ch.difty.sipamato.web.jasper.summary_table;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -14,8 +13,6 @@ import org.junit.Test;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.lib.NullArgumentException;
-import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
-import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.web.jasper.PaperDataSourceTest;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -96,24 +93,13 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_returnsPdfDataSourceWithOneRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(1l);
-        when(dataProviderMock.getFilterState()).thenReturn(paperFilterMock);
-        when(dataProviderMock.getSort()).thenReturn(sortParamMock);
-        when(sortParamMock.isAscending()).thenReturn(true);
-        when(sortParamMock.getProperty()).thenReturn("foo");
-        // TODO be more specific and also refactor part of this test into the base class
-        when(paperServiceMock.findByFilter(isA(PaperFilter.class), isA(SipamatoPageRequest.class))).thenReturn(pageMock);
-        when(pageMock.getContent()).thenReturn(Arrays.asList(paperMock));
+        when(dataProviderMock.findAllPapersByFilter()).thenReturn(Arrays.asList(paperMock));
 
-        ds = new PaperSummaryTableDataSource(dataProviderMock, paperServiceMock, true, CAPTION, BRAND, pdfExporterConfigMock);
+        ds = new PaperSummaryTableDataSource(dataProviderMock, true, CAPTION, BRAND, pdfExporterConfigMock);
         assertDataSource(FILE_NAME);
 
         verify(dataProviderMock).size();
-        verify(dataProviderMock).getFilterState();
-        verify(dataProviderMock).getSort();
-        verify(sortParamMock).isAscending();
-        verify(sortParamMock).getProperty();
-        verify(paperServiceMock).findByFilter(isA(PaperFilter.class), isA(SipamatoPageRequest.class));
-        verify(pageMock).getContent();
+        verify(dataProviderMock).findAllPapersByFilter();
 
         verify(paperMock).getId();
         verify(paperMock).getFirstAuthor();
@@ -129,7 +115,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0l);
-        ds = new PaperSummaryTableDataSource(dataProviderMock, paperServiceMock, true, CAPTION, BRAND, pdfExporterConfigMock);
+        ds = new PaperSummaryTableDataSource(dataProviderMock, true, CAPTION, BRAND, pdfExporterConfigMock);
         assertThat(ds.getReportDataSource().next()).isFalse();
         verify(dataProviderMock).size();
     }
@@ -137,18 +123,9 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_withNullProivder_throws() throws JRException {
         try {
-            new PaperSummaryTableDataSource(null, paperServiceMock, true, CAPTION, BRAND, pdfExporterConfigMock);
+            new PaperSummaryTableDataSource(null, true, CAPTION, BRAND, pdfExporterConfigMock);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dataProvider must not be null.");
-        }
-    }
-
-    @Test
-    public void instantiatingWithProvider_withNullService_throws() throws JRException {
-        try {
-            new PaperSummaryTableDataSource(dataProviderMock, null, true, CAPTION, BRAND, pdfExporterConfigMock);
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("paperService must not be null.");
         }
     }
 

@@ -7,11 +7,15 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.data.domain.Pageable;
 
+import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 
 public class SearchOrderBasedSortablePaperSlimProviderTest extends SortablePaperSlimProviderTest<SearchOrder, SearchOrderBasedSortablePaperSlimProvider> {
@@ -21,7 +25,7 @@ public class SearchOrderBasedSortablePaperSlimProviderTest extends SortablePaper
 
     @Override
     protected void localFixture() {
-        when(serviceMock.findBySearchOrder(eq(searchOrder), isA(Pageable.class))).thenReturn(pageOfPapers);
+        when(serviceMock.findBySearchOrder(eq(searchOrder), isA(Pageable.class))).thenReturn(pageOfSlimPapers);
     }
 
     @Override
@@ -54,4 +58,15 @@ public class SearchOrderBasedSortablePaperSlimProviderTest extends SortablePaper
         provider.setFilterState(searchOrder2);
         assertThat(provider.getFilterState()).isEqualTo(searchOrder2);
     }
+
+    @Test
+    public void gettingAllPapersByFilter() {
+        provider.setSort("authors", SortOrder.ASCENDING);
+        when(paperServiceMock.findBySearchOrder(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "authors: ASC")))).thenReturn(pageOfPapers);
+        List<Paper> papers = provider.findAllPapersByFilter();
+        assertThat(papers).hasSize(5);
+        assertThat(papers).containsOnly(paperMock);
+        verify(paperServiceMock).findBySearchOrder(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "authors: ASC")));
+    }
+
 }

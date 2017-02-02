@@ -3,20 +3,13 @@ package ch.difty.sipamato.web.jasper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
-import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
 import org.apache.wicket.util.io.ByteArrayOutputStream;
-import org.springframework.data.domain.Sort.Direction;
 import org.wicketstuff.jasperreports.JRConcreteResource;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.lib.AssertAs;
-import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
-import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
-import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
 import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -33,28 +26,21 @@ public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRCo
 
     private final Collection<E> jasperEntities = new ArrayList<>();
     private final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider;
-    private final PaperService paperService;
     private final String baseName;
-
-    protected PaperService getPaperService() {
-        return paperService;
-    }
 
     public JasperPaperDataSource(SipamatoPdfResourceHandler handler, String baseName, Collection<E> jasperEntities) {
         super(handler);
         this.baseName = AssertAs.notNull(baseName, "baseName");
         this.jasperEntities.clear();
         this.jasperEntities.addAll(AssertAs.notNull(jasperEntities, "jasperEntities"));
-        this.paperService = null;
         this.dataProvider = null;
         init();
     }
 
-    public JasperPaperDataSource(SipamatoPdfResourceHandler handler, String baseName, SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, PaperService paperService) {
+    public JasperPaperDataSource(SipamatoPdfResourceHandler handler, String baseName, SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
         super(handler);
         this.baseName = AssertAs.notNull(baseName, "baseName");
         this.jasperEntities.clear();
-        this.paperService = AssertAs.notNull(paperService, "paperService");
         this.dataProvider = AssertAs.notNull(dataProvider, "dataProvider");
         init();
     }
@@ -78,22 +64,8 @@ public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRCo
         if (dataProvider != null) {
             jasperEntities.clear();
             if (dataProvider.size() > 0)
-                for (final Paper p : getRecordsInPage(dataProvider.getFilterState(), dataProvider.getSort()))
+                for (final Paper p : dataProvider.findAllPapersByFilter())
                     jasperEntities.add(makeEntity(p));
-        }
-    }
-
-    private List<Paper> getRecordsInPage(final PaperSlimFilter filter, final SortParam<String> sort) {
-        final Direction dir = sort.isAscending() ? Direction.ASC : Direction.DESC;
-        final String sortProp = sort.getProperty();
-        if (filter instanceof PaperFilter) {
-            final PaperFilter paperFilter = (PaperFilter) filter;
-            return paperService.findByFilter(paperFilter, new SipamatoPageRequest(dir, sortProp)).getContent();
-        } else if (filter instanceof SearchOrder) {
-            final SearchOrder searchOrder = (SearchOrder) filter;
-            return paperService.findBySearchOrder(searchOrder, new SipamatoPageRequest(dir, sortProp)).getContent();
-        } else {
-            return new ArrayList<Paper>();
         }
     }
 
