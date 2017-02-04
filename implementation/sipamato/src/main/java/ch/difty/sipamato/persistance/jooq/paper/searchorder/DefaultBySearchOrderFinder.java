@@ -84,28 +84,20 @@ public class DefaultBySearchOrderFinder<T extends IdSipamatoEntity<Long>, M exte
      * Note: searchOrder must not be null. this is to be guarded from the public entry methods.
      *
      * protected for test purposes
-     * 
-     * TODO: In case of inverted exclusions, we could skip the entire condition stuff and only select the exclusions..
      */
     protected Condition getConditionsFrom(final SearchOrder searchOrder) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
-        for (final SearchCondition sc : searchOrder.getSearchConditions())
-            conditions.add(() -> getConditionFromSingleSearchCondition(sc));
-        final Condition scConditions = conditions.combineWithOr();
-        if (searchOrder.getExcludedPaperIds().isEmpty() || scConditions.toString().equals("1 = 0")) {
-            return scConditions;
-        } else {
-            final Condition exclusionCondition = makeExclusionCondition(searchOrder);
-            return scConditions.and(exclusionCondition);
-        }
-    }
-
-    private Condition makeExclusionCondition(final SearchOrder searchOrder) {
-        List<Long> excludedIds = searchOrder.getExcludedPaperIds();
         if (searchOrder.isInvertExclusions()) {
-            return PAPER.ID.in(excludedIds);
+            return PAPER.ID.in(searchOrder.getExcludedPaperIds());
         } else {
-            return PAPER.ID.notIn(excludedIds);
+            for (final SearchCondition sc : searchOrder.getSearchConditions())
+                conditions.add(() -> getConditionFromSingleSearchCondition(sc));
+            final Condition scConditions = conditions.combineWithOr();
+            if (searchOrder.getExcludedPaperIds().isEmpty() || scConditions.toString().equals("1 = 0")) {
+                return scConditions;
+            } else {
+                return scConditions.and(PAPER.ID.notIn(searchOrder.getExcludedPaperIds()));
+            }
         }
     }
 
