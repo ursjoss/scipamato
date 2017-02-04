@@ -104,7 +104,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponent(b, AjaxCheckBox.class);
         getTester().assertLabel(b + "Label", "Show Exclusions");
 
-        verify(searchOrderMock, times(2)).getExcludedPaperIds();
+        verify(searchOrderMock, times(3)).getExcludedPaperIds();
     }
 
     @Test
@@ -118,7 +118,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponent(b, AjaxCheckBox.class);
         getTester().assertLabel(b + "Label", "Show Results");
 
-        verify(searchOrderMock, times(2)).getExcludedPaperIds();
+        verify(searchOrderMock, times(3)).getExcludedPaperIds();
     }
 
     @Test
@@ -183,7 +183,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS);
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS + "Label");
 
-        verify(searchOrderMock, times(11)).getId();
+        verify(searchOrderMock, times(12)).getId();
         verify(searchOrderServiceMock, times(2)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
         verify(searchOrderServiceMock, never()).saveOrUpdate(searchOrderMock);
     }
@@ -205,7 +205,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS);
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS + "Label");
 
-        verify(searchOrderMock, times(12)).getId();
+        verify(searchOrderMock, times(13)).getId();
         verify(searchOrderServiceMock, times(3)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
         verify(searchOrderServiceMock).saveOrUpdate(searchOrderMock);
     }
@@ -223,7 +223,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         b = b + ":";
         getTester().assertComponentOnAjaxResponse(b);
 
-        verify(searchOrderMock, times(14)).getId();
+        verify(searchOrderMock, times(15)).getId();
         verify(searchOrderServiceMock, times(3)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
         verify(searchOrderServiceMock).remove(searchOrderMock);
     }

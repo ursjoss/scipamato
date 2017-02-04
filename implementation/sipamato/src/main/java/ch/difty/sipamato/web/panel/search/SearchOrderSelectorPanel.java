@@ -249,6 +249,9 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
+                if (isVisible() && !SearchOrderSelectorPanel.this.hasExclusions()) {
+                    setModelObject(false);
+                }
                 setVisible(SearchOrderSelectorPanel.this.hasExclusions());
             }
 
