@@ -98,6 +98,11 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
 
     public static final String FLD_CODES = "codes";
 
+    public static final String FLD_CREATED = "PAPER.CREATED";
+    public static final String FLD_CREATED_BY = "PAPER.CREATED_BY";
+    public static final String FLD_LAST_MOD = "PAPER.LAST_MODIFIED";
+    public static final String FLD_LAST_MOD_BY = "PAPER.LAST_MODIFIED_BY";
+
     /*
      * Digital Object Identifier (see http://www.doi.org)
      *

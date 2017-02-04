@@ -7,11 +7,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of {@link SearchTerm} working with String fields. The search term (applying to
- * one particular field) is lexed and transferred into one or more {@link Token}s.
+ * Implementation of {@link SearchTerm} working with String fields. The search term (applying to one particular field)
+ * is lexed and transferred into one or more {@link Token}s.
  * <p>
- * There are different {@link TokenType}s, each of which is able to lex particular elements of
- * the raw search terms string.
+ * There are different {@link TokenType}s, each of which is able to lex particular elements of the raw search terms string.
  * <p>
  * Every token type implements a particular {@link MatchType} which will be relevant for building
  * up the search logic for the particular token. The different {@link TokenType}s of one particular
@@ -22,7 +21,7 @@ import java.util.regex.Pattern;
  * <p> 
  * Each token returned by the class offers the lexed <code>rawData</code>, an sql-ized form of it already
  * containing the wild-card indicator (%) as well as an indication of whether the search applies positively
- * (e.g. <code>like 'foo%'</code>) or positively (<code>not like 'foo%'<code>).
+ * (e.g. <code>like 'foo%'</code>) or negatively (<code>not like 'foo%'<code>).
  * <p>
  * The following {@link MatchType}s are implemented (using pseudo-code examples):
  * <ul>
@@ -79,7 +78,7 @@ public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
     }
 
     public static enum TokenType {
-        // Token types cannot have underscores
+        // Token types must not have underscores. Otherwise the named capturing groups in the constructed regexes will break
         NOTREGEX("-s/(.+)/", MatchType.REGEX, 2, false, false, true),
         REGEX("s/(.+)/", MatchType.REGEX, 4, false, false, false),
         WHITESPACE(RE_S + "+", MatchType.NONE, 5, false, false, false),
@@ -209,7 +208,6 @@ public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
             tokens.add(new Token(TokenType.RAW, input));
         }
         return tokens;
-
     }
 
 }

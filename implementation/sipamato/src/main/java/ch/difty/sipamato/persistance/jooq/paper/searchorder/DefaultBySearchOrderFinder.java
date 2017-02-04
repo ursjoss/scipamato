@@ -2,7 +2,6 @@ package ch.difty.sipamato.persistance.jooq.paper.searchorder;
 
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
 import static ch.difty.sipamato.db.tables.PaperCode.PAPER_CODE;
-import static ch.difty.sipamato.db.tables.User.USER;
 
 import java.util.Collection;
 import java.util.List;
@@ -13,7 +12,6 @@ import org.jooq.DSLContext;
 import org.jooq.Record1;
 import org.jooq.SelectConditionStep;
 import org.jooq.SortField;
-import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.springframework.data.domain.Pageable;
 
@@ -22,6 +20,7 @@ import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.IdSipamatoEntity;
 import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.entity.filter.AuditSearchTerm;
 import ch.difty.sipamato.entity.filter.BooleanSearchTerm;
 import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
 import ch.difty.sipamato.entity.filter.SearchCondition;
@@ -36,6 +35,7 @@ public class DefaultBySearchOrderFinder<T extends IdSipamatoEntity<Long>, M exte
     private final IntegerSearchTermEvaluator integerSearchTermEvaluator = new IntegerSearchTermEvaluator();
     private final StringSearchTermEvaluator stringSearchTermEvaluator = new StringSearchTermEvaluator();
     private final BooleanSearchTermEvaluator booleanSearchTermEvaluator = new BooleanSearchTermEvaluator();
+    private final AuditSearchTermEvaluator auditSearchTermEvaluator = new AuditSearchTermEvaluator();
 
     private final DSLContext dsl;
     private final M mapper;
@@ -84,6 +84,8 @@ public class DefaultBySearchOrderFinder<T extends IdSipamatoEntity<Long>, M exte
      * Note: searchOrder must not be null. this is to be guarded from the public entry methods.
      *
      * protected for test purposes
+     * 
+     * TODO: In case of inverted exclusions, we could skip the entire condition stuff and only select the exclusions..
      */
     protected Condition getConditionsFrom(final SearchOrder searchOrder) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
@@ -118,14 +120,10 @@ public class DefaultBySearchOrderFinder<T extends IdSipamatoEntity<Long>, M exte
             conditions.add(() -> integerSearchTermEvaluator.evaluate(st));
         for (final StringSearchTerm st : searchCondition.getStringSearchTerms())
             conditions.add(() -> stringSearchTermEvaluator.evaluate(st));
+        for (final AuditSearchTerm st : searchCondition.getAuditSearchTerms())
+            conditions.add(() -> auditSearchTermEvaluator.evaluate(st));
         if (!searchCondition.getCodes().isEmpty()) {
             conditions.add(() -> codeConditions(searchCondition.getCodes()));
-        }
-        if (searchCondition.getCreatedDisplayValue() != null) {
-            conditions.add(() -> userCondition(PAPER.CREATED_BY, searchCondition.getCreatedDisplayValue()));
-        }
-        if (searchCondition.getModifiedDisplayValue() != null) {
-            conditions.add(() -> userCondition(PAPER.LAST_MODIFIED_BY, searchCondition.getModifiedDisplayValue()));
         }
         return conditions.combineWithAnd();
     }
@@ -137,14 +135,6 @@ public class DefaultBySearchOrderFinder<T extends IdSipamatoEntity<Long>, M exte
             codeConditions.add(() -> DSL.exists(step.and(DSL.lower(PAPER_CODE.CODE).eq(code.toLowerCase()))));
         }
         return codeConditions.combineWithAnd();
-    }
-
-    private Condition userCondition(final TableField<PaperRecord, Integer> userField, final String user) {
-        final ConditionalSupplier c = new ConditionalSupplier();
-        final String userName = "%" + user.toLowerCase() + "%";
-        final SelectConditionStep<Record1<Long>> step = DSL.select(PAPER.ID).from(PAPER).innerJoin(USER).on(userField.eq(USER.ID)).where(USER.USER_NAME.lower().like(userName));
-        c.add(() -> PAPER.ID.in(step));
-        return c.combineWithAnd();
     }
 
     /** {@inheritDoc} */

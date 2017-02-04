@@ -16,9 +16,11 @@ import org.mockito.Mock;
 
 import ch.difty.sipamato.db.tables.records.SearchOrderRecord;
 import ch.difty.sipamato.entity.Code;
+import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.entity.filter.SearchTerm;
+import ch.difty.sipamato.entity.filter.SearchTermType;
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.persistance.jooq.EntityRepository;
 import ch.difty.sipamato.persistance.jooq.JooqEntityRepoTest;
@@ -217,14 +219,15 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
                 getJooqConfig()) {
             private static final long serialVersionUID = 1L;
 
-            SearchTerm<?> st1 = SearchTerm.of(1, 2, 3, "authors", "joss");
-            SearchTerm<?> st2 = SearchTerm.of(2, 1, 3, "publication_year", "2014");
-            SearchTerm<?> st3 = SearchTerm.of(3, 1, 4, "publication_year", "2014-2016");
+            SearchTerm<?> st1 = SearchTerm.of(1, SearchTermType.STRING.getId(), 3, Paper.FLD_AUTHORS, "joss");
+            SearchTerm<?> st2 = SearchTerm.of(2, SearchTermType.INTEGER.getId(), 3, Paper.FLD_PUBL_YEAR, "2014");
+            SearchTerm<?> st3 = SearchTerm.of(3, SearchTermType.INTEGER.getId(), 4, Paper.FLD_PUBL_YEAR, "2014-2016");
+            SearchTerm<?> st4 = SearchTerm.of(4, SearchTermType.AUDIT.getId(), 5, Paper.FLD_CREATED_BY, "mkj");
 
             @Override
             protected List<SearchTerm<?>> fetchSearchTermsForSearchOrderWithId(long searchOrderId) {
                 if (searchOrderId == SAMPLE_ID) {
-                    return Arrays.asList(st1, st2, st3);
+                    return Arrays.asList(st1, st2, st3, st4);
                 } else {
                     return new ArrayList<>();
                 }
@@ -270,7 +273,7 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
 
         repoSpy.enrichAssociatedEntitiesOf(so);
 
-        assertThat(so.getSearchConditions()).hasSize(2);
+        assertThat(so.getSearchConditions()).hasSize(3);
 
         SearchCondition so1 = so.getSearchConditions().get(0);
         assertThat(so1).isNotNull();
@@ -282,6 +285,11 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         assertThat(so2).isNotNull();
         assertThat(so2.getPublicationYear()).isEqualTo("2014-2016");
         assertThat(so2.getDisplayValue()).isEqualTo("2014-2016 AND 1F");
+
+        SearchCondition so3 = so.getSearchConditions().get(2);
+        assertThat(so3).isNotNull();
+        assertThat(so3.getCreatedBy()).isEqualTo("mkj");
+        assertThat(so3.getDisplayValue()).isEqualTo("mkj AND 1F");
     }
 
     @Test
