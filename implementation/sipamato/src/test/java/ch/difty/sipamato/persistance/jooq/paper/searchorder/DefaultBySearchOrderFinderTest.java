@@ -232,57 +232,14 @@ public class DefaultBySearchOrderFinderTest {
         );
     }
 
-    @Test // TODO We could skip the entire condition stuff in case of inverted exclusions and only select the exclusions 
+    @Test
     public void getConditions_withSearchOrderWithConditionsAndInvertedExclusions_onlySelectsTheExclusions() {
         SearchOrder searchOrder = makeSearchOrderWithConditions();
         searchOrder.setInvertExclusions(true);
         searchOrder.addExclusionOfPaperWithId(3);
 
         Condition cond = finder.getConditionsFrom(searchOrder);
-        assertThat(cond.toString()).isEqualTo(
-            // @formatter:off
-            "(\n" +
-            "  (\n" +
-            "    (\n" +
-            "      publicationYear between 2014 and 2015\n" +
-            "      and lower(cast(authors as varchar)) like ('%' || replace(\n" +
-            "        replace(\n" +
-            "          replace(\n" +
-            "            lower('turner'), \n" +
-            "            '!', \n" +
-            "            '!!'\n" +
-            "          ), \n" +
-            "          '%', \n" +
-            "          '!%'\n" +
-            "        ), \n" +
-            "        '_', \n" +
-            "        '!_'\n" +
-            "      ) || '%') escape '!'\n" +
-            "    )\n" +
-            "    or (\n" +
-            "      firstAuthorOverridden = false\n" +
-            "      and exists (\n" +
-            "        select 1 \"one\"\n" +
-            "        from \"PUBLIC\".\"PAPER_CODE\"\n" +
-            "        where (\n" +
-            "          \"PUBLIC\".\"PAPER_CODE\".\"PAPER_ID\" = \"PUBLIC\".\"PAPER\".\"ID\"\n" +
-            "          and lower(\"PUBLIC\".\"PAPER_CODE\".\"CODE\") = '1f'\n" +
-            "        )\n" +
-            "      )\n" +
-            "      and exists (\n" +
-            "        select 1 \"one\"\n" +
-            "        from \"PUBLIC\".\"PAPER_CODE\"\n" +
-            "        where (\n" +
-            "          \"PUBLIC\".\"PAPER_CODE\".\"PAPER_ID\" = \"PUBLIC\".\"PAPER\".\"ID\"\n" +
-            "          and lower(\"PUBLIC\".\"PAPER_CODE\".\"CODE\") = '5s'\n" +
-            "        )\n" +
-            "      )\n" +
-            "    )\n" +
-            "  )\n" +
-            "  and \"PUBLIC\".\"PAPER\".\"ID\" in (3)\n" +
-            ")"
-            // @formatter:on
-        );
+        assertThat(cond.toString()).isEqualTo("\"PUBLIC\".\"PAPER\".\"ID\" in (3)");
     }
 
     @Test
