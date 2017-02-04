@@ -52,6 +52,40 @@ public class SearchTermTest {
     }
 
     @Test
+    public void auditSearchTerm_forUserField_returnsUserTokenOnly() {
+        String userFieldName = "fn4_BY";
+        SearchTerm<?> st = SearchTerm.of(13, 3, 4l, userFieldName, "foo >=\"2017-02-01\"");
+        assertThat(st).isInstanceOf(AuditSearchTerm.class);
+
+        AuditSearchTerm ast = (AuditSearchTerm) st;
+        assertThat(ast.getId()).isEqualTo(13);
+        assertThat(ast.getSearchTermType()).isEqualTo(SearchTermType.AUDIT);
+        assertThat(ast.getSearchConditionId()).isEqualTo(4l);
+        assertThat(ast.getFieldName()).isEqualTo(userFieldName);
+        assertThat(ast.getRawSearchTerm()).isEqualTo("foo >=\"2017-02-01\"");
+        assertThat(ast.getTokens()).hasSize(1);
+        assertThat(ast.getTokens().get(0).getUserSqlData()).isEqualTo("foo");
+        assertThat(ast.getTokens().get(0).getDateSqlData()).isNull();
+    }
+
+    @Test
+    public void auditSearchTerm_forDateField_returnsDateTokenOnly() {
+        String userFieldName = "fn4";
+        SearchTerm<?> st = SearchTerm.of(13, 3, 4l, userFieldName, "foo >=\"2017-02-01\"");
+        assertThat(st).isInstanceOf(AuditSearchTerm.class);
+
+        AuditSearchTerm ast = (AuditSearchTerm) st;
+        assertThat(ast.getId()).isEqualTo(13);
+        assertThat(ast.getSearchTermType()).isEqualTo(SearchTermType.AUDIT);
+        assertThat(ast.getSearchConditionId()).isEqualTo(4l);
+        assertThat(ast.getFieldName()).isEqualTo(userFieldName);
+        assertThat(ast.getRawSearchTerm()).isEqualTo("foo >=\"2017-02-01\"");
+        assertThat(ast.getTokens()).hasSize(1);
+        assertThat(ast.getTokens().get(0).getUserSqlData()).isNull();
+        assertThat(ast.getTokens().get(0).getDateSqlData()).isEqualTo("2017-02-01 00:00:00");
+    }
+
+    @Test
     public void equality_withEqualValuesIncludingNonNullIds_equal() {
         SearchTerm<?> st1 = SearchTerm.of(12, 2, 3l, "fn3", "foo*");
         SearchTerm<?> st2 = SearchTerm.of(12, 2, 3l, "fn3", "foo*");
@@ -111,4 +145,5 @@ public class SearchTermTest {
         assertThat(st1.equals(null)).isFalse();
         assertThat(st1.equals(new String())).isFalse();
     }
+
 }

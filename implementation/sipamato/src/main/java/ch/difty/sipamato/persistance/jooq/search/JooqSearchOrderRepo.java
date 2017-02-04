@@ -37,6 +37,7 @@ import ch.difty.sipamato.db.tables.records.SearchOrderRecord;
 import ch.difty.sipamato.db.tables.records.SearchTermRecord;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.entity.filter.AuditSearchTerm;
 import ch.difty.sipamato.entity.filter.BooleanSearchTerm;
 import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
 import ch.difty.sipamato.entity.filter.SearchCondition;
@@ -152,7 +153,6 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
             }
             searchOrder.add(sc);
         }
-        enrichSearchConditionsOf(searchOrder);
     }
 
     private Map<Long, List<SearchTerm<?>>> mapSearchTermsToSearchConditions(final SearchCondition searchCondition) {
@@ -181,20 +181,6 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         for (final Entry<Long, List<SearchTerm<?>>> entry : map.entrySet()) {
             for (final SearchTerm<?> st : entry.getValue()) {
                 searchCondition.addSearchTerm(st);
-            }
-        }
-    }
-
-    private void enrichSearchConditionsOf(final SearchOrder searchOrder) {
-        if (searchOrder.getSearchConditions() != null) {
-            for (final SearchCondition sc : searchOrder.getSearchConditions()) {
-                if (sc != null && sc.getSearchConditionId() != null) {
-                    final SearchCondition persisted = fetchSearchConditionWithId(sc.getSearchConditionId());
-                    if (persisted != null) {
-                        sc.setCreatedDisplayValue(persisted.getCreatedDisplayValue());
-                        sc.setModifiedDisplayValue(persisted.getModifiedDisplayValue());
-                    }
-                }
             }
         }
     }
@@ -443,11 +429,22 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         for (final StringSearchTerm sst : searchCondition.getStringSearchTerms()) {
             final int typeId = sst.getSearchTermType().getId();
             final String fieldName = sst.getFieldName();
-            final StringSearchTerm pist = (StringSearchTerm) getPersistedTerm(searchConditionId, fieldName, StringSearchTerm.class, typeId);
-            if (pist != null) {
-                updateSearchTerm(sst, pist.getId(), searchConditionId);
+            final StringSearchTerm psst = (StringSearchTerm) getPersistedTerm(searchConditionId, fieldName, StringSearchTerm.class, typeId);
+            if (psst != null) {
+                updateSearchTerm(sst, psst.getId(), searchConditionId);
             } else {
                 insertStep = insertStep.values(searchConditionId, typeId, fieldName, sst.getRawSearchTerm(), userId, userId);
+                hasPendingInsert = true;
+            }
+        }
+        for (final AuditSearchTerm ast : searchCondition.getAuditSearchTerms()) {
+            final int typeId = ast.getSearchTermType().getId();
+            final String fieldName = ast.getFieldName();
+            final AuditSearchTerm past = (AuditSearchTerm) getPersistedTerm(searchConditionId, fieldName, AuditSearchTerm.class, typeId);
+            if (past != null) {
+                updateSearchTerm(ast, past.getId(), searchConditionId);
+            } else {
+                insertStep = insertStep.values(searchConditionId, typeId, fieldName, ast.getRawSearchTerm(), userId, userId);
                 hasPendingInsert = true;
             }
         }

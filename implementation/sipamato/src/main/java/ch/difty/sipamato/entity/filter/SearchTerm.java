@@ -43,6 +43,8 @@ public abstract class SearchTerm<T extends SearchTerm<?>> extends IdSipamatoEnti
             return new IntegerSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
         case STRING:
             return new StringSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+        case AUDIT:
+            return new AuditSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
         default:
             throw new UnsupportedOperationException("SearchTermType." + type + " is not supported");
         }
@@ -88,9 +90,9 @@ public abstract class SearchTerm<T extends SearchTerm<?>> extends IdSipamatoEnti
             return false;
         @SuppressWarnings("unchecked")
         final T other = (T) obj;
-        if (!fieldName.equals(other.getFieldName()))
+        if (fieldName.hashCode() != other.getFieldName().hashCode())
             return false;
-        else if (!searchTerm.equals(other.getRawSearchTerm()))
+        if (!searchTerm.equals(other.getRawSearchTerm()))
             return false;
         return true;
     }

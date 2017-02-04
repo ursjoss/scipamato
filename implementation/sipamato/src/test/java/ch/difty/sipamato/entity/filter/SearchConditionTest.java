@@ -5,9 +5,12 @@ import static ch.difty.sipamato.entity.Paper.FLD_FIRST_AUTHOR_OVERRIDDEN;
 import static ch.difty.sipamato.entity.Paper.FLD_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 import ch.difty.sipamato.entity.Code;
+import ch.difty.sipamato.entity.CodeClassId;
 
 public class SearchConditionTest {
 
@@ -47,6 +50,7 @@ public class SearchConditionTest {
         assertThat(sc.getStringSearchTerms()).hasSize(26);
         assertThat(sc.getIntegerSearchTerms()).isEmpty();
         assertThat(sc.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc.getAuditSearchTerms()).isEmpty();
         assertThat(sc.getCreatedDisplayValue()).isNull();
         assertThat(sc.getModifiedDisplayValue()).isNull();
 
@@ -60,6 +64,7 @@ public class SearchConditionTest {
         assertThat(sc.getStringSearchTerms()).isEmpty();
         assertThat(sc.getIntegerSearchTerms()).hasSize(2);
         assertThat(sc.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc.getAuditSearchTerms()).isEmpty();
         assertThat(sc.getCreatedDisplayValue()).isNull();
         assertThat(sc.getModifiedDisplayValue()).isNull();
 
@@ -72,6 +77,7 @@ public class SearchConditionTest {
         assertThat(sc.getStringSearchTerms()).isEmpty();
         assertThat(sc.getIntegerSearchTerms()).isEmpty();
         assertThat(sc.getBooleanSearchTerms()).hasSize(1);
+        assertThat(sc.getAuditSearchTerms()).isEmpty();
         assertThat(sc.getCreatedDisplayValue()).isNull();
         assertThat(sc.getModifiedDisplayValue()).isNull();
 
@@ -79,14 +85,13 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void createdAndModifiedDisplayValues() {
+    public void allAuditSearchTerms() {
         sc.setCreatedDisplayValue(X);
         sc.setModifiedDisplayValue(X + X);
         assertThat(sc.getStringSearchTerms()).isEmpty();
         assertThat(sc.getIntegerSearchTerms()).isEmpty();
         assertThat(sc.getBooleanSearchTerms()).isEmpty();
-        assertThat(sc.getCreatedDisplayValue()).isEqualTo(X);
-        assertThat(sc.getModifiedDisplayValue()).isEqualTo(X + X);
+        assertThat(sc.getAuditSearchTerms()).hasSize(4);
 
         assertThat(sc.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
     }
@@ -562,6 +567,10 @@ public class SearchConditionTest {
 
         sc.setCreatedDisplayValue(X);
         assertThat(sc.getCreatedDisplayValue()).isEqualTo(X);
+        assertThat(sc.getCreated()).isEqualTo(X);
+        assertThat(sc.getCreatedBy()).isEqualTo(X);
+        assertThat(sc.getLastModified()).isNull();
+        assertThat(sc.getLastModifiedBy()).isNull();
         assertThat(sc.getStringSearchTerms()).hasSize(0);
 
         sc.setCreatedDisplayValue(null);
@@ -576,6 +585,10 @@ public class SearchConditionTest {
 
         sc.setModifiedDisplayValue(X);
         assertThat(sc.getModifiedDisplayValue()).isEqualTo(X);
+        assertThat(sc.getLastModified()).isEqualTo(X);
+        assertThat(sc.getLastModifiedBy()).isEqualTo(X);
+        assertThat(sc.getCreated()).isNull();
+        assertThat(sc.getCreatedBy()).isNull();
         assertThat(sc.getStringSearchTerms()).hasSize(0);
 
         sc.setModifiedDisplayValue(null);
@@ -600,6 +613,30 @@ public class SearchConditionTest {
     public void testDisplayValue_forBooleanSearchTermsBeginFalse() {
         sc.setFirstAuthorOverridden(false);
         assertThat(sc.getDisplayValue()).isEqualTo("-first_author_overridden");
+    }
+
+    @Test
+    public void testDisplayValue_forIntegerSearchTerms() {
+        sc.setPublicationYear("2017");
+        assertThat(sc.getDisplayValue()).isEqualTo("2017");
+    }
+
+    @Test
+    public void testDisplayValue_forAuditSearchTermsForAuthorSearch() {
+        sc.setCreatedDisplayValue("mkj");
+        assertThat(sc.getDisplayValue()).isEqualTo("mkj");
+    }
+
+    @Test
+    public void testDisplayValue_forAuditSearchTermsForDateSearch() {
+        sc.setCreatedDisplayValue(">2017-01-23");
+        assertThat(sc.getDisplayValue()).isEqualTo(">2017-01-23");
+    }
+
+    @Test
+    public void testDisplayValue_forAuditSearchTermsForCombinedSearch() {
+        sc.setModifiedDisplayValue("rk >=2017-01-23");
+        assertThat(sc.getDisplayValue()).isEqualTo("rk >=2017-01-23");
     }
 
     @Test
@@ -629,7 +666,7 @@ public class SearchConditionTest {
 
     @Test
     public void equalsAndHash1_ofFieldSc() {
-        assertThat(sc.hashCode()).isEqualTo(-1664622465);
+        assertThat(sc.hashCode()).isEqualTo(917087168);
         assertThat(sc.equals(sc)).isTrue();
         assertThat(sc.equals(null)).isFalse();
         assertThat(sc.equals(new String())).isFalse();
@@ -639,7 +676,7 @@ public class SearchConditionTest {
     public void equalsAndHash2_withEmptySearchConditions() {
         SearchCondition f1 = new SearchCondition();
         SearchCondition f2 = new SearchCondition();
-        assertEquality(f1, f2, 1742841150);
+        assertEquality(f1, f2, 888458017);
     }
 
     private void assertEquality(SearchCondition f1, SearchCondition f2, int hashCode) {
@@ -655,7 +692,7 @@ public class SearchConditionTest {
         f1.setAuthors("foo");
         SearchCondition f2 = new SearchCondition();
         f2.setAuthors("foo");
-        assertEquality(f1, f2, 1231471297);
+        assertEquality(f1, f2, -2079105538);
     }
 
     @Test
@@ -674,7 +711,7 @@ public class SearchConditionTest {
         f2.setFirstAuthor("baz");
         f2.setFirstAuthorOverridden(true);
         f2.setMethodOutcome("blup");
-        assertEquality(f1, f2, -470432492);
+        assertEquality(f1, f2, 996451851);
 
         f2.setMethodOutcome("blup2");
         assertThat(f1.equals(f2)).isFalse();
@@ -692,7 +729,7 @@ public class SearchConditionTest {
         f1.setAuthors("foo");
         SearchCondition f2 = new SearchCondition();
         f2.setAuthors("foo");
-        assertEquality(f1, f2, 1231471297);
+        assertEquality(f1, f2, -2079105538);
 
         f1.setSearchConditionId(3l);
         assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode());
@@ -705,7 +742,7 @@ public class SearchConditionTest {
         assertThat(f2.equals(f1)).isFalse();
 
         f2.setSearchConditionId(3l);
-        assertEquality(f1, f2, -400984956);
+        assertEquality(f1, f2, -1993218085);
     }
 
     @Test
@@ -716,7 +753,7 @@ public class SearchConditionTest {
         assertThat(f1.equals(f2)).isFalse();
 
         f2.setCreatedDisplayValue("foo");
-        assertEquality(f1, f2, 2027365432);
+        assertEquality(f1, f2, -1754170281);
 
         f2.setCreatedDisplayValue("bar");
         assertThat(f1.equals(f2)).isFalse();
@@ -733,13 +770,64 @@ public class SearchConditionTest {
         assertThat(f1.equals(f2)).isFalse();
 
         f2.setModifiedDisplayValue("foo");
-        assertEquality(f1, f2, 1059282692);
+        assertEquality(f1, f2, -781192085);
 
         f2.setModifiedDisplayValue("bar");
         assertThat(f1.equals(f2)).isFalse();
 
         f1.setCreatedDisplayValue(null);
         assertThat(f2.equals(f1)).isFalse();
+    }
+
+    @Test
+    public void equalsAndHash8_withDifferentBooleanSearchTerms() {
+        SearchCondition f1 = new SearchCondition();
+        f1.addSearchTerm(new BooleanSearchTerm("f1", "false"));
+        SearchCondition f2 = new SearchCondition();
+        f2.addSearchTerm(new BooleanSearchTerm("f1", "true"));
+        assertInequality(f1, f2);
+    }
+
+    private void assertInequality(SearchCondition f1, SearchCondition f2) {
+        assertThat(f1.equals(f2)).isFalse();
+        assertThat(f2.equals(f1)).isFalse();
+        assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode());
+    }
+
+    @Test
+    public void equalsAndHash8_withDifferentIntegerSearchTerms() {
+        SearchCondition f1 = new SearchCondition();
+        f1.addSearchTerm(new IntegerSearchTerm("f1", "1"));
+        SearchCondition f2 = new SearchCondition();
+        f2.addSearchTerm(new IntegerSearchTerm("f1", "2"));
+        assertInequality(f1, f2);
+    }
+
+    @Test
+    public void equalsAndHash9_withDifferentStringSearchTerms() {
+        SearchCondition f1 = new SearchCondition();
+        f1.addSearchTerm(new StringSearchTerm("f1", "foo"));
+        SearchCondition f2 = new SearchCondition();
+        f2.addSearchTerm(new StringSearchTerm("f1", "bar"));
+        assertInequality(f1, f2);
+    }
+
+    @Test
+    public void equalsAndHash10_withDifferentStringAuditTerms() {
+        SearchCondition f1 = new SearchCondition();
+        f1.addSearchTerm(new AuditSearchTerm("f1", "foo"));
+        SearchCondition f2 = new SearchCondition();
+        f2.addSearchTerm(new AuditSearchTerm("f1", "bar"));
+        assertInequality(f1, f2);
+    }
+
+    @Test
+    public void equalsAndHash11_withDifferentCodes() {
+        SearchCondition f1 = new SearchCondition();
+        f1.addCode(new Code("1F", "C1F", "", false, 1, "CC1", "", 0));
+        SearchCondition f2 = new SearchCondition();
+        f2.addCode(new Code("1G", "C1G", "", false, 1, "CC1", "", 0));
+        assertInequality(f1, f2);
     }
 
     @Test
@@ -788,4 +876,63 @@ public class SearchConditionTest {
         sc.clearRemovedKeys();
         assertThat(sc.getRemovedKeys()).isEmpty();
     }
+
+    @Test
+    public void addingBooleanTermString() {
+        SearchCondition sc = new SearchCondition();
+        sc.addSearchTerm(new BooleanSearchTerm("fn", "rst"));
+        assertThat(sc.getBooleanSearchTerms()).hasSize(1);
+        assertThat(sc.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc.getAuditSearchTerms()).isEmpty();
+    }
+
+    @Test
+    public void addingIntegerTermString() {
+        SearchCondition sc = new SearchCondition();
+        sc.addSearchTerm(new IntegerSearchTerm("fn", "1"));
+        assertThat(sc.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc.getIntegerSearchTerms()).hasSize(1);
+        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc.getAuditSearchTerms()).isEmpty();
+    }
+
+    @Test
+    public void addingSearchTermString() {
+        SearchCondition sc = new SearchCondition();
+        sc.addSearchTerm(new StringSearchTerm("fn", "rst"));
+        assertThat(sc.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        assertThat(sc.getAuditSearchTerms()).isEmpty();
+    }
+
+    @Test
+    public void addingAuditTermString() {
+        SearchCondition sc = new SearchCondition();
+        sc.addSearchTerm(new AuditSearchTerm("fn", "rst"));
+        assertThat(sc.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc.getAuditSearchTerms()).hasSize(1);
+    }
+
+    @Test
+    public void addingCodes() {
+        SearchCondition sc = new SearchCondition();
+        Code c1 = new Code("c1", "c1", "", false, 1, "cc1", "", 0);
+        Code c2 = new Code("c2", "c2", "", false, 2, "cc2", "", 0);
+        Code c3 = new Code("c3", "c3", "", false, 3, "cc3", "", 0);
+        Code c4 = new Code("c4", "c4", "", false, 3, "cc3", "", 0);
+        sc.addCodes(Arrays.asList(c1, c2, c3, c4));
+        assertThat(sc.getCodes()).hasSize(4);
+        assertThat(sc.getCodesOf(CodeClassId.CC3)).containsExactly(c3, c4);
+
+        sc.clearCodesOf(CodeClassId.CC3);
+        assertThat(sc.getCodes()).hasSize(2);
+        sc.clearCodes();
+        assertThat(sc.getCodes()).isEmpty();
+        ;
+    }
+
 }

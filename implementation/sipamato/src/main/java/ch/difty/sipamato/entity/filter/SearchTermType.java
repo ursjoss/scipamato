@@ -8,7 +8,8 @@ package ch.difty.sipamato.entity.filter;
 public enum SearchTermType {
     BOOLEAN(0),
     INTEGER(1),
-    STRING(2);
+    STRING(2),
+    AUDIT(3);
 
     private final int id;
 

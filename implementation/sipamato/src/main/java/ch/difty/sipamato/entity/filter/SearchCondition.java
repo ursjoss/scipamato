@@ -2,6 +2,8 @@ package ch.difty.sipamato.entity.filter;
 
 import static ch.difty.sipamato.entity.Paper.FLD_AUTHORS;
 import static ch.difty.sipamato.entity.Paper.FLD_COMMENT;
+import static ch.difty.sipamato.entity.Paper.FLD_CREATED;
+import static ch.difty.sipamato.entity.Paper.FLD_CREATED_BY;
 import static ch.difty.sipamato.entity.Paper.FLD_DOI;
 import static ch.difty.sipamato.entity.Paper.FLD_EXPOSURE_ASSESSMENT;
 import static ch.difty.sipamato.entity.Paper.FLD_EXPOSURE_POLLUTANT;
@@ -10,6 +12,8 @@ import static ch.difty.sipamato.entity.Paper.FLD_FIRST_AUTHOR_OVERRIDDEN;
 import static ch.difty.sipamato.entity.Paper.FLD_GOALS;
 import static ch.difty.sipamato.entity.Paper.FLD_ID;
 import static ch.difty.sipamato.entity.Paper.FLD_INTERN;
+import static ch.difty.sipamato.entity.Paper.FLD_LAST_MOD;
+import static ch.difty.sipamato.entity.Paper.FLD_LAST_MOD_BY;
 import static ch.difty.sipamato.entity.Paper.FLD_LOCATION;
 import static ch.difty.sipamato.entity.Paper.FLD_MAIN_CODE_OF_CODECLASS1;
 import static ch.difty.sipamato.entity.Paper.FLD_METHODS;
@@ -66,11 +70,11 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     private static final String JOIN_DELIMITER = " AND ";
 
     private Long searchConditionId;
-    private String createdTerm, modifiedTerm;
 
     private final StringSearchTerms stringSearchTerms = new StringSearchTerms();
     private final IntegerSearchTerms integerSearchTerms = new IntegerSearchTerms();
     private final BooleanSearchTerms booleanSearchTerms = new BooleanSearchTerms();
+    private final AuditSearchTerms auditSearchTerms = new AuditSearchTerms();
     private final CodeBox codes = new SearchConditionCodeBox();
     private final Set<String> removedKeys = new HashSet<>();
 
@@ -103,6 +107,10 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
             final StringSearchTerm sst = (StringSearchTerm) searchTerm;
             stringSearchTerms.put(sst.getFieldName(), sst);
             break;
+        case AUDIT:
+            final AuditSearchTerm ast = (AuditSearchTerm) searchTerm;
+            auditSearchTerms.put(ast.getFieldName(), ast);
+            break;
         default:
             throw new UnsupportedOperationException("SearchTermType." + searchTerm.getSearchTermType() + " is not supported");
         }
@@ -129,6 +137,13 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         return booleanSearchTerms.values();
     }
 
+    /**
+     * @return all search terms specified for audit fields in entity {@link Paper}
+     */
+    public Collection<AuditSearchTerm> getAuditSearchTerms() {
+        return auditSearchTerms.values();
+    }
+
     /** {@link Paper} specific accessors */
 
     public String getId() {
@@ -136,7 +151,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setId(String value) {
-        setIntegerValue(FLD_ID, value);
+        setIntegerValue(value, FLD_ID);
     }
 
     public String getDoi() {
@@ -144,7 +159,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setDoi(String value) {
-        setStringValue(FLD_DOI, value);
+        setStringValue(value, FLD_DOI);
     }
 
     public String getPmId() {
@@ -152,7 +167,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setPmId(String value) {
-        setStringValue(FLD_PMID, value);
+        setStringValue(value, FLD_PMID);
     }
 
     public String getAuthors() {
@@ -160,7 +175,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setAuthors(String value) {
-        setStringValue(FLD_AUTHORS, value);
+        setStringValue(value, FLD_AUTHORS);
     }
 
     public String getFirstAuthor() {
@@ -168,7 +183,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setFirstAuthor(String value) {
-        setStringValue(FLD_FIRST_AUTHOR, value);
+        setStringValue(value, FLD_FIRST_AUTHOR);
     }
 
     public Boolean isFirstAuthorOverridden() {
@@ -184,7 +199,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setTitle(String value) {
-        setStringValue(FLD_TITLE, value);
+        setStringValue(value, FLD_TITLE);
     }
 
     public String getLocation() {
@@ -192,7 +207,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setLocation(String value) {
-        setStringValue(FLD_LOCATION, value);
+        setStringValue(value, FLD_LOCATION);
     }
 
     public String getPublicationYear() {
@@ -200,7 +215,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setPublicationYear(String value) {
-        setIntegerValue(FLD_PUBL_YEAR, value);
+        setIntegerValue(value, FLD_PUBL_YEAR);
     }
 
     public String getGoals() {
@@ -208,7 +223,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setGoals(String value) {
-        setStringValue(FLD_GOALS, value);
+        setStringValue(value, FLD_GOALS);
     }
 
     public String getPopulation() {
@@ -216,7 +231,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setPopulation(String value) {
-        setStringValue(FLD_POPULATION, value);
+        setStringValue(value, FLD_POPULATION);
     }
 
     public String getMethods() {
@@ -224,7 +239,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setMethods(String value) {
-        setStringValue(FLD_METHODS, value);
+        setStringValue(value, FLD_METHODS);
     }
 
     public String getResult() {
@@ -232,7 +247,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setResult(String value) {
-        setStringValue(FLD_RESULT, value);
+        setStringValue(value, FLD_RESULT);
     }
 
     public String getComment() {
@@ -240,7 +255,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setComment(String value) {
-        setStringValue(FLD_COMMENT, value);
+        setStringValue(value, FLD_COMMENT);
     }
 
     public String getIntern() {
@@ -248,7 +263,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setIntern(String value) {
-        setStringValue(FLD_INTERN, value);
+        setStringValue(value, FLD_INTERN);
     }
 
     public String getOriginalAbstract() {
@@ -256,7 +271,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setOriginalAbstract(String value) {
-        setStringValue(FLD_ORIGINAL_ABSTRACT, value);
+        setStringValue(value, FLD_ORIGINAL_ABSTRACT);
     }
 
     public String getPopulationPlace() {
@@ -264,7 +279,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setPopulationPlace(String value) {
-        setStringValue(FLD_POPULATION_PLACE, value);
+        setStringValue(value, FLD_POPULATION_PLACE);
     }
 
     public String getPopulationParticipants() {
@@ -272,7 +287,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setPopulationParticipants(String value) {
-        setStringValue(FLD_POPULATION_PARTICIPANTS, value);
+        setStringValue(value, FLD_POPULATION_PARTICIPANTS);
     }
 
     public String getPopulationDuration() {
@@ -280,7 +295,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setPopulationDuration(String value) {
-        setStringValue(FLD_POPULATION_DURATION, value);
+        setStringValue(value, FLD_POPULATION_DURATION);
     }
 
     public String getExposurePollutant() {
@@ -288,7 +303,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setExposurePollutant(String value) {
-        setStringValue(FLD_EXPOSURE_POLLUTANT, value);
+        setStringValue(value, FLD_EXPOSURE_POLLUTANT);
     }
 
     public String getExposureAssessment() {
@@ -296,7 +311,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setExposureAssessment(String value) {
-        setStringValue(FLD_EXPOSURE_ASSESSMENT, value);
+        setStringValue(value, FLD_EXPOSURE_ASSESSMENT);
     }
 
     public String getMethodStudyDesign() {
@@ -304,7 +319,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setMethodStudyDesign(String value) {
-        setStringValue(FLD_METHOD_STUDY_DESIGN, value);
+        setStringValue(value, FLD_METHOD_STUDY_DESIGN);
     }
 
     public String getMethodOutcome() {
@@ -312,7 +327,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setMethodOutcome(String value) {
-        setStringValue(FLD_METHOD_OUTCOME, value);
+        setStringValue(value, FLD_METHOD_OUTCOME);
     }
 
     public String getMethodStatistics() {
@@ -320,7 +335,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setMethodStatistics(String value) {
-        setStringValue(FLD_METHOD_STATISTICS, value);
+        setStringValue(value, FLD_METHOD_STATISTICS);
     }
 
     public String getMethodConfounders() {
@@ -328,7 +343,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setMethodConfounders(String value) {
-        setStringValue(FLD_METHOD_CONFOUNDERS, value);
+        setStringValue(value, FLD_METHOD_CONFOUNDERS);
     }
 
     public String getResultExposureRange() {
@@ -336,7 +351,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setResultExposureRange(String value) {
-        setStringValue(FLD_RESULT_EXPOSURE_RANGE, value);
+        setStringValue(value, FLD_RESULT_EXPOSURE_RANGE);
     }
 
     public String getResultEffectEstimate() {
@@ -344,7 +359,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setResultEffectEstimate(String value) {
-        setStringValue(FLD_RESULT_EFFECT_ESTIMATE, value);
+        setStringValue(value, FLD_RESULT_EFFECT_ESTIMATE);
     }
 
     public String getResultMeasuredOutcome() {
@@ -352,7 +367,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setResultMeasuredOutcome(String value) {
-        setStringValue(FLD_RESULT_MEASURED_OUTCOME, value);
+        setStringValue(value, FLD_RESULT_MEASURED_OUTCOME);
     }
 
     public String getMainCodeOfCodeclass1() {
@@ -360,23 +375,39 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public void setMainCodeOfCodeclass1(String value) {
-        setStringValue(FLD_MAIN_CODE_OF_CODECLASS1, value);
+        setStringValue(value, FLD_MAIN_CODE_OF_CODECLASS1);
     }
 
     public String getCreatedDisplayValue() {
-        return createdTerm;
+        return getAuditValue(FLD_CREATED_BY);
     }
 
     public void setCreatedDisplayValue(String value) {
-        this.createdTerm = value;
+        setAuditValue(value, FLD_CREATED_BY, FLD_CREATED);
     }
 
     public String getModifiedDisplayValue() {
-        return modifiedTerm;
+        return getAuditValue(FLD_LAST_MOD_BY);
     }
 
     public void setModifiedDisplayValue(String value) {
-        this.modifiedTerm = value;
+        setAuditValue(value, FLD_LAST_MOD_BY, FLD_LAST_MOD);
+    }
+
+    public String getCreated() {
+        return getAuditValue(FLD_CREATED);
+    }
+
+    public String getCreatedBy() {
+        return getAuditValue(FLD_CREATED_BY);
+    }
+
+    public String getLastModified() {
+        return getAuditValue(FLD_LAST_MOD);
+    }
+
+    public String getLastModifiedBy() {
+        return getAuditValue(FLD_LAST_MOD_BY);
     }
 
     /** {@link CodeBoxAware} methods */
@@ -416,7 +447,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         return st != null ? st.getRawSearchTerm() : null;
     }
 
-    private void setStringValue(final String key, String value) {
+    private void setStringValue(String value, final String key) {
         if (value != null) {
             stringSearchTerms.put(key, new StringSearchTerm(key, value));
             getRemovedKeys().remove(key);
@@ -431,7 +462,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         return st != null ? st.getRawSearchTerm() : null;
     }
 
-    private void setIntegerValue(final String key, String value) {
+    private void setIntegerValue(String value, final String key) {
         if (value != null) {
             integerSearchTerms.put(key, new IntegerSearchTerm(key, value));
             getRemovedKeys().remove(key);
@@ -456,28 +487,41 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         }
     }
 
+    private String getAuditValue(String key) {
+        final AuditSearchTerm st = auditSearchTerms.get(key);
+        return st != null ? st.getRawSearchTerm() : null;
+    }
+
+    /**
+     * Here we allow multiple keys (i.e. fields)
+     */
+    private void setAuditValue(String value, final String... keys) {
+        if (keys.length == 0)
+            throw new IllegalArgumentException("You must provide at least one key");
+        for (String key : keys) {
+            if (value != null) {
+                auditSearchTerms.put(key, new AuditSearchTerm(key, value));
+                getRemovedKeys().remove(key);
+            } else {
+                getRemovedKeys().add(key);
+                auditSearchTerms.remove(key);
+            }
+        }
+    }
+
     public String getDisplayValue() {
+        StringBuffer sb = new StringBuffer();
         final String textString = stringSearchTerms.values().stream().map(StringSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
         final String intString = integerSearchTerms.values().stream().map(IntegerSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
         final String boolString = booleanSearchTerms.values().stream().map(BooleanSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
-        StringBuffer sb = new StringBuffer();
-        sb.append(Arrays.asList(textString, intString, boolString).stream().filter((String s) -> !s.isEmpty()).collect(Collectors.joining(JOIN_DELIMITER)));
+        final String auditString = auditSearchTerms.values().stream().map(AuditSearchTerm::getDisplayValue).distinct().collect(Collectors.joining(JOIN_DELIMITER));
+        sb.append(Arrays.asList(textString, intString, boolString, auditString).stream().filter((String s) -> !s.isEmpty()).collect(Collectors.joining(JOIN_DELIMITER)));
         if (!codes.isEmpty()) {
             if (sb.length() > 0)
                 sb.append(" AND ");
             sb.append(codes.toString());
         }
-        considerAdding(createdTerm, sb);
-        considerAdding(modifiedTerm, sb);
         return sb.toString();
-    }
-
-    private void considerAdding(String term, StringBuffer sb) {
-        if (term != null) {
-            if (sb.length() > 0)
-                sb.append(" AND ");
-            sb.append(term);
-        }
     }
 
     public Set<String> getRemovedKeys() {
@@ -493,12 +537,11 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         final int prime = 31;
         int result = 1;
         result = prime * result + (searchConditionId == null ? 0 : searchConditionId.hashCode());
-        result = prime * result + ((createdTerm == null) ? 0 : createdTerm.hashCode());
-        result = prime * result + ((modifiedTerm == null) ? 0 : modifiedTerm.hashCode());
         result = prime * result + stringSearchTerms.hashCode();
         result = prime * result + integerSearchTerms.hashCode();
         result = prime * result + booleanSearchTerms.hashCode();
-        result = prime * result + ((codes == null) ? 0 : codes.hashCode());
+        result = prime * result + auditSearchTerms.hashCode();
+        result = prime * result + codes.hashCode();
         return result;
     }
 
@@ -516,26 +559,15 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
                 return false;
         } else if (!searchConditionId.equals(other.searchConditionId))
             return false;
-        if (createdTerm == null) {
-            if (other.createdTerm != null)
-                return false;
-        } else if (!createdTerm.equals(other.createdTerm))
-            return false;
-        if (modifiedTerm == null) {
-            if (other.modifiedTerm != null)
-                return false;
-        } else if (!modifiedTerm.equals(other.modifiedTerm))
-            return false;
         if (!booleanSearchTerms.equals(other.booleanSearchTerms))
             return false;
         if (!integerSearchTerms.equals(other.integerSearchTerms))
             return false;
         if (!stringSearchTerms.equals(other.stringSearchTerms))
             return false;
-        if (codes == null) {
-            if (other.codes != null)
-                return false;
-        } else if (!codes.equals(other.codes))
+        if (!auditSearchTerms.equals(other.auditSearchTerms))
+            return false;
+        if (!codes.equals(other.codes))
             return false;
         return true;
     }
