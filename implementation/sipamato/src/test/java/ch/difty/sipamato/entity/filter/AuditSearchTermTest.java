@@ -57,6 +57,13 @@ public class AuditSearchTermTest {
     }
 
     @Test
+    public void lexingMinimumDateWithoutTime_usesTimestampAtStartOfDay() {
+        String fieldName = "CREATED";
+        st = new AuditSearchTerm(fieldName, ">=2017-12-01");
+        assertSingleToken(fieldName, TokenType.GREATEROREQUAL, null, null, "2017-12-01", "2017-12-01 00:00:00");
+    }
+
+    @Test
     public void lexingMinimumDateQuoted_findsDate() {
         String fieldName = "CREATED";
         st = new AuditSearchTerm(fieldName, ">=\"2017-12-01 23:15:13\"");
@@ -68,6 +75,13 @@ public class AuditSearchTermTest {
         String fieldName = "CREATED";
         st = new AuditSearchTerm(fieldName, ">2017-12-01 23:15:13");
         assertSingleToken(fieldName, TokenType.GREATERTHAN, null, null, "2017-12-01 23:15:13", "2017-12-01 23:15:13");
+    }
+
+    @Test
+    public void lexingMinimumDateExcludedWithoutDate_usesTimestampAtEndOfDay() {
+        String fieldName = "CREATED";
+        st = new AuditSearchTerm(fieldName, ">2017-12-01");
+        assertSingleToken(fieldName, TokenType.GREATERTHAN, null, null, "2017-12-01", "2017-12-01 23:59:59");
     }
 
     @Test
@@ -85,6 +99,13 @@ public class AuditSearchTermTest {
     }
 
     @Test
+    public void lexingMaximumDateWithoutTime_usesTimestampAtEndOfDay() {
+        String fieldName = "CREATED";
+        st = new AuditSearchTerm(fieldName, "<=2017-12-01");
+        assertSingleToken(fieldName, TokenType.LESSOREQUAL, null, null, "2017-12-01", "2017-12-01 23:59:59");
+    }
+
+    @Test
     public void lexingMaximumDateQuoted_findsDate() {
         String fieldName = "CREATED";
         st = new AuditSearchTerm(fieldName, "<=\"2017-12-01 23:15:13\"");
@@ -99,6 +120,13 @@ public class AuditSearchTermTest {
     }
 
     @Test
+    public void lexingMaximumDateExcludedQuotedWithoutTime_usesTimestampAtStartOfDay() {
+        String fieldName = "CREATED";
+        st = new AuditSearchTerm(fieldName, "<\"2017-12-01\"");
+        assertSingleToken(fieldName, TokenType.LESSTHANQUOTED, null, null, "2017-12-01", "2017-12-01 00:00:00");
+    }
+
+    @Test
     public void lexingMaximumDateExcluded_findsDate() {
         String fieldName = "CREATED";
         st = new AuditSearchTerm(fieldName, "<2017-12-01 23:15:13");
@@ -110,6 +138,16 @@ public class AuditSearchTermTest {
         String fieldName = "CREATED";
         st = new AuditSearchTerm(fieldName, "2017-12-01 23:15:13");
         assertSingleToken(fieldName, TokenType.EXACT, null, null, "2017-12-01 23:15:13", "2017-12-01 23:15:13");
+    }
+
+    /**
+     * This might turn out questionable and might have to be rewritten to include the entire day. Let's see
+     */
+    @Test
+    public void lexingExactDateWithoutTime_usesTimestampAtStartOfDay() {
+        String fieldName = "CREATED";
+        st = new AuditSearchTerm(fieldName, "2017-12-01");
+        assertSingleToken(fieldName, TokenType.EXACT, null, null, "2017-12-01", "2017-12-01 00:00:00");
     }
 
     @Test
@@ -134,13 +172,6 @@ public class AuditSearchTermTest {
     }
 
     @Test
-    public void lexingExactDateWihtoutTime_findsDateWithTimeMidnight() {
-        String fieldName = "CREATED";
-        st = new AuditSearchTerm(fieldName, "=2017-12-01");
-        assertSingleToken(fieldName, TokenType.EXACT, null, null, "2017-12-01 00:00:00", "2017-12-01 00:00:00");
-    }
-
-    @Test
     public void lexingImproperDate_findsNothing() {
         String fieldName = "CREATED";
         st = new AuditSearchTerm(fieldName, "\"2017-12- 01 23:15:13\"");
@@ -160,5 +191,21 @@ public class AuditSearchTermTest {
         String fieldName = "CREATED";
         st = new AuditSearchTerm(fieldName, "user =\"2017-12-01 23:15:13\"");
         assertSingleToken(fieldName, TokenType.EXACTQUOTED, null, null, "2017-12-01 23:15:13", "2017-12-01 23:15:13");
+    }
+
+    @Test
+    public void tokenToString_forDateField() {
+        String fieldName = "CREATED";
+        st = new AuditSearchTerm(fieldName, "user =\"2017-12-01 23:15:13\"");
+        assertThat(st.getTokens()).hasSize(1);
+        assertThat(st.getTokens().get(0).toString()).isEqualTo("(DATE EXACTQUOTED 2017-12-01 23:15:13)");
+    }
+
+    @Test
+    public void tokenToString_forUserField() {
+        String fieldName = "CREATED_BY";
+        st = new AuditSearchTerm(fieldName, "foo =\"2017-12-01 23:15:13\"");
+        assertThat(st.getTokens()).hasSize(1);
+        assertThat(st.getTokens().get(0).toString()).isEqualTo("(USER WORD foo)");
     }
 }

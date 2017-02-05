@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 /**
  * Implementation of {@link SearchTerm} working with the two audit fields createdDisplayValue and lastModifiedDisplayValue,
- * both of which handling both the user and the date of the create or last change.
+ * both of which handle both the user and the date of the create or last change.
  * <p>
  * There are different {@link TokenType}s, each of which is able to lex particular elements of the raw search terms string.
  * <p>
@@ -23,20 +23,23 @@ import java.util.regex.Pattern;
  * search logic to the database.
  * <p>
  * Each token returned by the class offers the lexed <code>rawData</code>, an sql-ized form of it already
- * containing the wild-card indicator (%) for both the user part and the date part.
+ * containing the wild-card indicator (%) for appropriate.
  * <p>
+ * The tokens targeted for the user fields, could be of match type: 
  * <ul>
  * <li> <b>CONTAINS:</b> searchterm contained within field, e.g. <code>createdBy like '%foo%'</code> </code> </li>
  * <li> <b>NONE:</b> dummy category which will be ignored.</li>
  * </ul>
  * <p>
- * And for the dates:
+ * The date fields may either contain a complete time stamp in the format <code>yyyy-MM-dd hh:mm:ss</code> or only
+ * the date part <code>yyyy-MM-dd</code>. In the latter case, the date will be completed with a time part, depending
+ * on the match type with ' 23:59:59' or with ' 00:00:00'.
  * <ul>
- * <li> <b>EQUALS:</b> exact search, e.g. <code>field = 'foo'</code> </li>
- * <li> <b>GREATER_THAN:</b> date is after the specified date </li>
- * <li> <b>GREATER_OR_EQUAL:</b> the date is at or after the specified date </li>
- * <li> <b>LESS_THAN:</b> the date is before the specified date</li>
- * <li> <b>LESS_OR_EQUAL:</b> the date is at or before the specified date</li>
+ * <li> <b>EQUALS:</b> exact search, e.g. <code>field = 'foo'</code> (dates are completed with ' 00:00:00') </li>
+ * <li> <b>GREATER_THAN:</b> date is after the specified date (dates are completed with ' 23:59:59') </li>
+ * <li> <b>GREATER_OR_EQUAL:</b> the date is at or after the specified date (dates are completed with ' 00:00:00')</li>
+ * <li> <b>LESS_THAN:</b> the date is before the specified date (dates are completed with ' 00:00:00')</li>
+ * <li> <b>LESS_OR_EQUAL:</b> the date is at or before the specified date(dates are completed with ' 23:59:59')</li>
  * <li> <b>NONE:</b> dummy category which will be ignored.</li>
  * </ul>
  * <p>
@@ -150,7 +153,18 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
         public Token(final TokenType type, final String data) {
             this.type = type;
             this.rawDataMap.put(type.fieldType, data);
-            this.sqlDataMap.put(type.fieldType, sqlize(data));
+            this.sqlDataMap.put(type.fieldType, sqlize(completeDateTimeIfNecessary(type, data)));
+        }
+
+        private String completeDateTimeIfNecessary(final TokenType type, final String data) {
+            if (type.fieldType != FieldType.DATE || data.length() != 10) {
+                return data;
+            } else {
+                if (type.matchType == MatchType.GREATER_THAN || type.matchType == MatchType.LESS_OR_EQUAL)
+                    return data + " 23:59:59";
+                else
+                    return data + " 00:00:00";
+            }
         }
 
         private String sqlize(String data) {
@@ -186,7 +200,7 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
         public String toString() {
             final StringBuilder sb = new StringBuilder();
             for (final Entry<FieldType, String> e : sqlDataMap.entrySet()) {
-                sb.append("(").append(e.getKey()).append(" ").append(type.name()).append(" ").append(e.getValue());
+                sb.append("(").append(e.getKey()).append(" ").append(type.name()).append(" ").append(e.getValue()).append(")");
             }
             return sb.toString();
         }
@@ -214,25 +228,28 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
                 if (matcher.group(TokenType.WHITESPACE.name()) != null)
                     continue;
                 else if (matcher.group(tk.name()) != null) {
-                    String group = matcher.group(tk.group);
-                    switch (group) {
-                    default:
-                    }
-                    if (tk.fieldType == FieldType.DATE && group.length() == 10) {
-                        group += " 00:00:00";
-                    }
-                    if ((tk.fieldType == FieldType.DATE && isDateType) || tk.fieldType == FieldType.USER && isUserType) {
-                        tokens.add(new Token(tk, group));
+                    if (isDateRelevant(isDateType, tk) || isUserRelevant(isUserType, tk)) {
+                        tokens.add(new Token(tk, matcher.group(tk.group)));
                     }
                     continue tokenIteration;
                 }
             }
         }
-        if (tokens.size() > 2) {
-            return new ArrayList<Token>();
-        } else {
-            return tokens;
-        }
+        return tokens;
+    }
+
+    /**
+     * Both the field and the token are of type user -> relevant for the user fields created_by, last_modified_by
+     */
+    private static boolean isUserRelevant(final boolean isUserType, final TokenType tk) {
+        return tk.fieldType == FieldType.USER && isUserType;
+    }
+
+    /**
+     * Both the field and the token are of type date -> relevant for the date fields created, last_modified
+     */
+    private static boolean isDateRelevant(final boolean isDateType, final TokenType tk) {
+        return tk.fieldType == FieldType.DATE && isDateType;
     }
 
 }

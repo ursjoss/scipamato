@@ -267,4 +267,10 @@ public class StringSearchTermTest {
         assertToken(0, TokenType.WORD, "pm2.5", "pm2.5", false);
     }
 
+    @Test
+    public void tokenToString_forUserField() {
+        st = new StringSearchTerm(FIELD_NAME, "pm2.5");
+        assertThat(st.getTokens()).hasSize(1);
+        assertThat(st.getTokens().get(0).toString()).isEqualTo("(WORD pm2.5)");
+    }
 }
