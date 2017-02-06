@@ -53,6 +53,8 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
 
     private static final long serialVersionUID = 1L;
 
+    private static final String USER_FIELD_TAG = "_BY";
+
     private static final String RE_DATE = "\\d{4}-\\d{2}-\\d{2}(?: \\d{2}:\\d{2}:\\d{2})?";
     private static final String RE_QUOTE = "\"";
 
@@ -73,7 +75,7 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
     }
 
     protected boolean isUserTypeSearchTerm() {
-        return getFieldName().toLowerCase().endsWith("by");
+        return getFieldName().toUpperCase().endsWith(USER_FIELD_TAG);
     }
 
     protected boolean isDateTypeSearchTerm() {

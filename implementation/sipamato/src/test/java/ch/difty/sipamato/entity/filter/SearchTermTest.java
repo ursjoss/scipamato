@@ -52,8 +52,17 @@ public class SearchTermTest {
     }
 
     @Test
-    public void auditSearchTerm_forUserField_returnsUserTokenOnly() {
-        String userFieldName = "fn4_BY";
+    public void auditSearchTerm_forFieldEndingWithUserTag_akaUserField_returnsUserTokenOnly() {
+        assertUserFieldEndingWith("_BY");
+    }
+
+    @Test
+    public void auditSearchTerm_forFieldEndingWithUserTagLC_akaUserField_returnsUserTokenOnly() {
+        assertUserFieldEndingWith("_by");
+    }
+
+    private void assertUserFieldEndingWith(String userFieldTag) {
+        String userFieldName = "fn4" + userFieldTag;
         SearchTerm<?> st = SearchTerm.of(13, 3, 4l, userFieldName, "foo >=\"2017-02-01\"");
         assertThat(st).isInstanceOf(AuditSearchTerm.class);
 
@@ -69,7 +78,7 @@ public class SearchTermTest {
     }
 
     @Test
-    public void auditSearchTerm_forDateField_returnsDateTokenOnly() {
+    public void auditSearchTerm_forFieldNotEndingWithUserTag_akaDateField_returnsDateTokenOnly() {
         String userFieldName = "fn4";
         SearchTerm<?> st = SearchTerm.of(13, 3, 4l, userFieldName, "foo >=\"2017-02-01\"");
         assertThat(st).isInstanceOf(AuditSearchTerm.class);
@@ -144,6 +153,13 @@ public class SearchTermTest {
         assertThat(st1.equals(st1)).isTrue();
         assertThat(st1.equals(null)).isFalse();
         assertThat(st1.equals(new String())).isFalse();
+    }
+
+    @Test
+    public void displayValueEqualsSearchTerm() {
+        SearchTerm<?> st = SearchTerm.of(11, 1, 2l, "fn2", "5-7");
+        assertThat(st).isInstanceOf(IntegerSearchTerm.class);
+        assertThat(st.getDisplayValue()).isEqualTo(st.getRawSearchTerm());
     }
 
 }
