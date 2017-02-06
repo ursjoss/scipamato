@@ -189,7 +189,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
         PropertyModel<Boolean> firstAuthorOverriddenModel = new PropertyModel<Boolean>(getModel(), firstAuthorOverriddenId);
         CheckBoxX firstAuthorOverridden = new CheckBoxX(firstAuthorOverriddenId, firstAuthorOverriddenModel);
-        firstAuthorOverridden.getConfig().withThreeState(canHaveTripeStateOverride()).withUseNative(true);
+        firstAuthorOverridden.getConfig().withThreeState(isSearchMode()).withUseNative(true);
         queueCheckBoxAndLabel(firstAuthorOverridden);
 
         TextField<String> firstAuthor = makeFirstAuthor(firstAuthorId, firstAuthorOverridden);
@@ -197,10 +197,6 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         queueFieldAndLabel(firstAuthor);
 
         addAuthorBehavior(authors, firstAuthorOverridden, firstAuthor);
-    }
-
-    private boolean canHaveTripeStateOverride() {
-        return getMode() == Mode.SEARCH;
     }
 
     /** override if special behavior is required */
@@ -382,7 +378,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             field.add(new PropertyValidator<String>());
             field.setOutputMarkupId(true);
             field.setLabel(labelModel);
-            field.setEnabled(false);
+            field.setEnabled(isSearchMode());
             queue(field);
         }
 

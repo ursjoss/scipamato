@@ -30,7 +30,7 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
 
     @Override
     protected void reflectPersistedChangesViaTimer(TextField<Integer> id, TextField<String> created, TextField<String> modified) {
-        // don't add the beheavior
+        // don't add the behavior
     }
 
 }
