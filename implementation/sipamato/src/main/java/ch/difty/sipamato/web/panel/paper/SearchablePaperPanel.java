@@ -7,6 +7,12 @@ import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.web.jasper.summary_sp.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.Mode;
 
+/**
+ * The {@link SearchablePaperPanel} does not implement specific behavior and therefore
+ * simply implements the abstract methods of the {@link PaperPanel} as no-ops.
+ *
+ * @author u.joss
+ */
 public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
 
     private static final long serialVersionUID = 1L;

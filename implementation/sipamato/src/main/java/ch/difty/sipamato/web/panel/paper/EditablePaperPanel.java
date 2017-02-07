@@ -22,6 +22,12 @@ import ch.difty.sipamato.web.jasper.summary_sp.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.Mode;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 
+/**
+ * The {@link EditablePaperPanel} is backed by the {@link Paper} entity. The purpose is to create new papers
+ * or edit existing papers.
+ *
+ * @author u.joss
+ */
 public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     private static final long serialVersionUID = 1L;
@@ -41,6 +47,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         super(id, model, Mode.EDIT);
     }
 
+    /**
+     * If the user does not choose to override the first author, the field can be disabled. 
+     */
     @Override
     protected TextField<String> makeFirstAuthor(String firstAuthorId, CheckBox firstAuthorOverridden) {
         TextField<String> firstAuthor = new TextField<String>(firstAuthorId) {
@@ -56,26 +65,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return firstAuthor;
     }
 
-    @Override
-    protected PaperSummaryDataSource getSummaryDataSource() {
-        String populationLabel = new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString();
-        String methodsLabel = new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString();
-        String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
-        String commentLabel = new StringResourceModel("comment" + LABEL_RECOURCE_TAG, this, null).getString();
-        String brand = getProperties().getBrand();
-        String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
-
-        SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getId()).withCreator(brand)
-                .withPaperTitle(getModelObject().getTitle())
-                .withPaperAuthor(getModelObject().getFirstAuthor())
-                .withSubject(getModelObject().getMethods())
-                .withAuthor(getModelObject().getCreatedByFullName())
-                .withCodes(getModelObject().getCodes())
-                .withCompression()
-                .build();
-        return new PaperSummaryDataSource(getModelObject(), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand, config);
-    }
-
+    /**
+     * Add the behavior to derive the first author from the authors field (unless overridden).
+     */
     @Override
     protected void addAuthorBehavior(TextArea<String> authors, CheckBox firstAuthorOverridden, TextField<String> firstAuthor) {
         firstAuthorOverridden.add(makeFirstAuthorChangeBehavior(authors, firstAuthorOverridden, firstAuthor));
@@ -100,11 +92,41 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         };
     }
 
+    /**
+     * Prepares the {@link PaperSummaryDatasource} for exporting the current entity into the pdf.
+     */
+    @Override
+    protected PaperSummaryDataSource getSummaryDataSource() {
+        String populationLabel = new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString();
+        String methodsLabel = new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString();
+        String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
+        String commentLabel = new StringResourceModel("comment" + LABEL_RECOURCE_TAG, this, null).getString();
+        String brand = getProperties().getBrand();
+        String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
+
+        SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getId()).withCreator(brand)
+                .withPaperTitle(getModelObject().getTitle())
+                .withPaperAuthor(getModelObject().getFirstAuthor())
+                .withSubject(getModelObject().getMethods())
+                .withAuthor(getModelObject().getCreatedByFullName())
+                .withCodes(getModelObject().getCodes())
+                .withCompression()
+                .build();
+        return new PaperSummaryDataSource(getModelObject(), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand, config);
+    }
+
+    /**
+     * Enable the codeClass1 field to update the mainCodeOfCodeClass1 field automatically.
+     */
     @Override
     protected void addCodeClass1ChangeBehavior(final TextField<String> mainCodeOfCodeClass1, final BootstrapMultiSelect<Code> codeClass1) {
         codeClass1.add(makeCodeClass1ChangeBehavior(codeClass1, mainCodeOfCodeClass1));
     }
 
+    /*
+     * Behavior to set the field mainCodeOfCodeClass1 to the first selection of the codeClass1 field.
+     * Needs to be capable of handling the situation where the initial first choice is removed from the codeClass1 field.
+     */
     private OnChangeAjaxBehavior makeCodeClass1ChangeBehavior(final BootstrapMultiSelect<Code> codeClass1, final TextField<String> mainCodeOfCodeClass1) {
         return new OnChangeAjaxBehavior() {
             private static final long serialVersionUID = 1L;
@@ -140,7 +162,6 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                     target.add(mainCodeOfCodeClass1);
                 }
             }
-
         };
     }
 
