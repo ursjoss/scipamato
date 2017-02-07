@@ -27,6 +27,18 @@
         <relativePath />
     </parent>
 
+    <scm>
+        <connection>scm:git:https://github.com/ursjoss/sipamato/</connection>
+        <developerConnection>scm:git:https://github.com/ursjoss/sipamato/</developerConnection>
+        <url>https://github.com/ursjoss/sipamato/</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/ursjoss/sipamato/issues</url>
+    </issueManagement>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
