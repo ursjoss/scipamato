@@ -128,7 +128,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
      * @param created
      * @param modified
      */
-    protected  void reflectPersistedChangesViaTimer(TextField<Integer> id, TextField<String> created, TextField<String> modified) {
+    protected void reflectPersistedChangesViaTimer(TextField<Integer> id, TextField<String> created, TextField<String> modified) {
         add(new AbstractAjaxTimerBehavior(Duration.seconds(1d)) {
             private static final long serialVersionUID = 1L;
 
@@ -138,7 +138,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 target.add(created);
                 target.add(modified);
             }
-        }); 
+        });
     };
 
     private void queueTabPanel(String tabId) {
@@ -216,6 +216,9 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         BootstrapButton submit = new BootstrapButton(id, new StringResourceModel(getSubmitLinkResourceLabel()), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
+            /**
+             * Refresh the summary link to use the updated model
+             */
             @Override
             public void onAfterSubmit() {
                 super.onAfterSubmit();

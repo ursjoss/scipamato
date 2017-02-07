@@ -11,6 +11,12 @@ import ch.difty.sipamato.service.Localization;
 
 /**
  * Abstract page that enables the implementing concrete pages to auto-update the model.
+ * <p>
+ * Offers the implementing pages to limit feedback messages to one message only or set
+ * it back to showing all feedback messages without filtering. This can be helpful
+ * if validations prevent saving a new entity <code>T</code> which does not yet have all
+ * required fields or does not pass validation until more data has been entered. See
+ * {{@link #tuneDownFeedbackMessages()/@link #resetFeedbackMessages()}}.
  *
  * @author u.joss
  *
@@ -73,5 +79,21 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
      * Override to provide the form
      */
     protected abstract Form<T> getForm();
+
+    /**
+     * Indicates the entity <code>T</code> has not been persisted. Turns down the number of feedback messages
+     * (one message only) in order not to flood the user with too much information.
+     */
+    protected void tuneDownFeedbackMessages() {
+        getFeedbackPanel().setMaxMessages(1);
+    }
+
+    /**
+     * Indicates the entity <code>T</code> has successfully been persisted. Turns back on feedback messages
+     * to the max value, so further validation issues can be indicated to the user in full detail.
+     */
+    protected void resetFeedbackMessages() {
+        getFeedbackPanel().setMaxMessages(Integer.MAX_VALUE);
+    }
 
 }
