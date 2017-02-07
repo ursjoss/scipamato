@@ -78,7 +78,6 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertLabel(b + ":globalLabel", "Global");
         getTester().assertComponent(b + ":global", CheckBoxX.class);
         getTester().assertComponent(b + ":new", AjaxSubmitLink.class);
-        getTester().assertComponent(b + ":save", AjaxSubmitLink.class);
         getTester().assertComponent(b + ":delete", AjaxSubmitLink.class);
     }
 
@@ -129,7 +128,6 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
         String b = PANEL_ID + ":form:";
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.GLOBAL);
-        getTester().assertComponentOnAjaxResponse(b + "save");
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.NAME);
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS);
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS + "Label");
@@ -146,7 +144,6 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
         String b = PANEL_ID + ":form:";
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.GLOBAL);
-        getTester().assertComponentOnAjaxResponse(b + "save");
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.NAME);
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS);
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS + "Label");
@@ -178,36 +175,13 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
         String b = PANEL_ID + ":form:";
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.GLOBAL);
-        getTester().assertComponentOnAjaxResponse(b + "save");
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.NAME);
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS);
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS + "Label");
 
-        verify(searchOrderMock, times(12)).getId();
+        verify(searchOrderMock, times(10)).getId();
         verify(searchOrderServiceMock, times(2)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
         verify(searchOrderServiceMock, never()).saveOrUpdate(searchOrderMock);
-    }
-
-    @Test
-    public void testSubmittingWithSaveButton_saveSearchOrder() {
-        when(searchOrderMock.getName()).thenReturn(NAME);
-        when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
-        getTester().startComponentInPage(makePanel());
-
-        String b = PANEL_ID + ":form";
-        FormTester formTester = getTester().newFormTester(b);
-        formTester.submit("save");
-
-        b = b + ":";
-        getTester().assertComponentOnAjaxResponse(b + "searchOrder");
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.NAME);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.GLOBAL);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS + "Label");
-
-        verify(searchOrderMock, times(13)).getId();
-        verify(searchOrderServiceMock, times(3)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
-        verify(searchOrderServiceMock).saveOrUpdate(searchOrderMock);
     }
 
     @Test
@@ -223,7 +197,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         b = b + ":";
         getTester().assertComponentOnAjaxResponse(b);
 
-        verify(searchOrderMock, times(15)).getId();
+        verify(searchOrderMock, times(13)).getId();
         verify(searchOrderServiceMock, times(3)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
         verify(searchOrderServiceMock).remove(searchOrderMock);
     }
@@ -236,7 +210,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
         getTester().assertEnabled(PANEL_ID + ":form:global");
 
-        verify(searchOrderMock, times(3)).getOwner();
+        verify(searchOrderMock, times(2)).getOwner();
     }
 
     @Test
@@ -247,7 +221,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
         getTester().assertDisabled(PANEL_ID + ":form:global");
 
-        verify(searchOrderMock, times(3)).getOwner();
+        verify(searchOrderMock, times(2)).getOwner();
     }
 
 }

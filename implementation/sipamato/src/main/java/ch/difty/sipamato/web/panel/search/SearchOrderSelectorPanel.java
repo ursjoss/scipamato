@@ -57,7 +57,6 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     private AjaxCheckBox invertExclusions;
     private Label invertExclusionsLabel;
     private AjaxSubmitLink newLink;
-    private AjaxSubmitLink saveLink;
     private AjaxSubmitLink deleteLink;
 
     public SearchOrderSelectorPanel(String id, IModel<SearchOrder> model) {
@@ -77,7 +76,6 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
         makeAndQueueName(SearchOrder.NAME);
         makeAndQueueGlobalCheckBox(SearchOrder.GLOBAL);
         makeAndQueueNewButton("new");
-        makeAndQueueSaveButton("save");
         makeAndQueueDeleteButton("delete");
         makeAndQueueInvertExclusionsCheckBox(SearchOrder.INVERT_EXCLUSIONS);
     }
@@ -95,7 +93,6 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
             protected void onUpdate(AjaxRequestTarget target) {
                 modelChanged();
                 target.add(global);
-                target.add(saveLink);
                 target.add(name);
                 target.add(invertExclusions);
                 target.add(invertExclusionsLabel);
@@ -119,10 +116,9 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                modelChanged();
+                saveOrUpdate();
                 target.add(name);
                 target.add(global);
-                target.add(saveLink);
                 target.add(invertExclusions);
                 target.add(invertExclusionsLabel);
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
@@ -140,6 +136,13 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
                 super.onConfigure();
                 setEnabled(SearchOrderSelectorPanel.this.isUserEntitled());
             }
+
+            @Override
+            protected void onChange(Boolean value, AjaxRequestTarget target) {
+                super.onChange(value, target);
+                saveOrUpdate();
+                target.add(searchOrder);
+            }
         };
         global.setOutputMarkupId(true);
         global.getConfig().withThreeState(false).withUseNative(true);
@@ -155,7 +158,6 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
                 super.onSubmit(target, form);
                 target.add(name);
                 target.add(global);
-                target.add(saveLink);
                 target.add(invertExclusions);
                 target.add(invertExclusionsLabel);
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).requestingNewSearchOrder());
@@ -167,40 +169,12 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
         queue(newLink);
     }
 
-    private void makeAndQueueSaveButton(String id) {
-        saveLink = new AjaxSubmitLink(id, form) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onConfigure() {
-                super.onConfigure();
-                setEnabled(SearchOrderSelectorPanel.this.isModelSelected() && SearchOrderSelectorPanel.this.isUserEntitled());
-            }
-
-            @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                super.onSubmit(target, form);
-                if (getModelObject() != null) {
-                    SearchOrder so = searchOrderService.saveOrUpdate(getModelObject());
-                    if (so != null) {
-                        getForm().setDefaultModelObject(so);
-                    }
-                    modelChanged();
-                    target.add(searchOrder);
-                    target.add(name);
-                    target.add(global);
-                    target.add(invertExclusions);
-                    target.add(invertExclusionsLabel);
-                    send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
-                }
-            }
-        };
-        saveLink.add(new ButtonBehavior());
-        saveLink.setBody(new StringResourceModel(getSubmitLinkResourceLabel()));
-        saveLink.setDefaultFormProcessing(false);
-        saveLink.setEnabled(!isViewMode());
-        saveLink.setOutputMarkupId(true);
-        queue(saveLink);
+    protected void saveOrUpdate() {
+        SearchOrder so = searchOrderService.saveOrUpdate(getModelObject());
+        if (so != null) {
+            form.setDefaultModelObject(so);
+        }
+        modelChanged();
     }
 
     protected boolean isModelSelected() {
