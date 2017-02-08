@@ -34,14 +34,13 @@ public class Code extends SipamatoEntity {
 
     private final int sort;
 
-    public Code(@NotNull final String code, @NotNull final String name, final String comment, final boolean internal, @NotNull final Integer codeClassId, @NotNull final String codeClassName,
-            @NotNull final String codeClassDescription, final int sort) {
+    public Code(final String code, final String name, final String comment, final boolean internal, final Integer codeClassId, final String codeClassName, final String codeClassDescription,
+            final int sort) {
         this(code, name, comment, internal, codeClassId, codeClassName, codeClassDescription, sort, null, null, null, null, null);
     }
 
-    public Code(@NotNull final String code, @NotNull final String name, final String comment, final boolean internal, @NotNull final Integer codeClassId, @NotNull final String codeClassName,
-            @NotNull final String codeClassDescription, final int sort, final LocalDateTime created, final Integer createdBy, final LocalDateTime lastModified, final Integer lastModifiedBy,
-            final Integer version) {
+    public Code(final String code, final String name, final String comment, final boolean internal, final Integer codeClassId, final String codeClassName, final String codeClassDescription,
+            final int sort, final LocalDateTime created, final Integer createdBy, final LocalDateTime lastModified, final Integer lastModifiedBy, final Integer version) {
         this.code = code;
         this.name = name;
         this.comment = comment;
@@ -58,13 +57,13 @@ public class Code extends SipamatoEntity {
         setVersion(version != null ? version : 0);
     }
 
-    public Code(@NotNull final Code from) {
+    public Code(final Code from) {
         this(from.code, from.name, from.comment, from.internal, new CodeClass(from.codeClass), from.sort, from.getCreated(), from.getCreatedBy(), from.getLastModified(), from.getLastModifiedBy(),
                 from.getVersion());
     }
 
-    private Code(@NotNull final String code, @NotNull final String name, final String comment, final boolean internal, @NotNull final CodeClass codeClass, final int sort, final LocalDateTime created,
-            final Integer createdBy, final LocalDateTime lastModified, final Integer lastModifiedBy, final Integer version) {
+    private Code(final String code, final String name, final String comment, final boolean internal, final CodeClass codeClass, final int sort, final LocalDateTime created, final Integer createdBy,
+            final LocalDateTime lastModified, final Integer lastModifiedBy, final Integer version) {
         this.code = code;
         this.name = name;
         this.comment = comment;
