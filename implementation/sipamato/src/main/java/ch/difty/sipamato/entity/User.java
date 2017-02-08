@@ -48,6 +48,7 @@ public class User extends IdSipamatoEntity<Integer> {
     private final List<Role> roles = new ArrayList<>();
 
     public User() {
+        // default constructor
     }
 
     public User(final int id, final String userName, final String firstName, final String lastName, final String email, final String password, final boolean enabled, final List<Role> roles) {

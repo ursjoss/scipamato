@@ -79,6 +79,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     private final Set<String> removedKeys = new HashSet<>();
 
     public SearchCondition() {
+        // default constructor
     }
 
     public SearchCondition(Long searchConditionId) {

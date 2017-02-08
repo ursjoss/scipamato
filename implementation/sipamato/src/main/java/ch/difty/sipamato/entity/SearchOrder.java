@@ -35,6 +35,7 @@ public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilt
     private boolean invertExclusions = false;
 
     public SearchOrder() {
+        // default constructor
     }
 
     public SearchOrder(final List<SearchCondition> searchConditions) {
