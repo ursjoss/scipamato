@@ -56,8 +56,6 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     private CheckBoxX global;
     private AjaxCheckBox invertExclusions;
     private Label invertExclusionsLabel;
-    private AjaxSubmitLink newLink;
-    private AjaxSubmitLink deleteLink;
 
     public SearchOrderSelectorPanel(String id, IModel<SearchOrder> model) {
         super(id, model, Mode.EDIT);
@@ -70,7 +68,7 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     }
 
     private void queueForm(String id) {
-        form = new Form<SearchOrder>(id, new CompoundPropertyModel<SearchOrder>(getModel()));
+        form = new Form<>(id, new CompoundPropertyModel<SearchOrder>(getModel()));
         queue(form);
         makeAndQueueSearchOrderSelectBox("searchOrder");
         makeAndQueueName(SearchOrder.NAME);
@@ -82,7 +80,7 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
 
     private void makeAndQueueSearchOrderSelectBox(final String id) {
         final SearchOrderModel choices = new SearchOrderModel(getActiveUser().getId());
-        final IChoiceRenderer<SearchOrder> choiceRenderer = new ChoiceRenderer<SearchOrder>(SearchOrder.DISPLAY_VALUE, SearchOrder.ID);
+        final IChoiceRenderer<SearchOrder> choiceRenderer = new ChoiceRenderer<>(SearchOrder.DISPLAY_VALUE, SearchOrder.ID);
         final StringResourceModel noneSelectedModel = new StringResourceModel(id + ".noneSelected", this, null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig().withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);
         searchOrder = new BootstrapSelect<SearchOrder>(id, getModel(), choices, choiceRenderer).with(config);
@@ -105,7 +103,7 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     }
 
     private void makeAndQueueName(String id) {
-        name = new TextField<String>(id);
+        name = new TextField<>(id);
         name.setConvertEmptyInputStringToNull(true);
         name.setOutputMarkupId(true);
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
@@ -150,7 +148,7 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     }
 
     private void makeAndQueueNewButton(String id) {
-        newLink = new AjaxSubmitLink(id, form) {
+        AjaxSubmitLink newLink = new AjaxSubmitLink(id, form) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -190,7 +188,7 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     }
 
     private void makeAndQueueDeleteButton(String id) {
-        deleteLink = new AjaxSubmitLink(id, form) {
+        AjaxSubmitLink deleteLink = new AjaxSubmitLink(id, form) {
             private static final long serialVersionUID = 1L;
 
             @Override

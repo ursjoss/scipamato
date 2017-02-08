@@ -14,15 +14,15 @@ import ch.difty.sipamato.lib.NullArgumentException;
 
 public abstract class RecordMapperTest<R extends Record, E extends SipamatoEntity> {
 
-    private final RecordMapper<R, E> mapper = getMapper();
-
-    protected abstract RecordMapper<R, E> getMapper();
-
     public static final int VERSION = 1;
     public static final Timestamp CREATED = new Timestamp(1469999999999l);
     public static final Integer CREATED_BY = 1;
     public static final Timestamp LAST_MOD = new Timestamp(1479999999999l);
     public static final Integer LAST_MOD_BY = 2;
+
+    private final RecordMapper<R, E> mapper = getMapper();
+
+    protected abstract RecordMapper<R, E> getMapper();
 
     /**
      * Test fixture for the entity mock audit fields.

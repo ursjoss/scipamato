@@ -32,17 +32,17 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void constructing_withAllValues_populatesCodeClass() {
-        Code c = new Code("C1", "c1", null, false, 10, "cc10", "codeclass10", 2);
-        assertThat(c.getCodeClass()).isNotNull();
-        assertThat(c.getCodeClass().getId()).isEqualTo(10);
-        assertThat(c.getCodeClass().getName()).isEqualTo("cc10");
-        assertThat(c.getCodeClass().getDescription()).isEqualTo("codeclass10");
+        Code c1 = new Code("C1", "c1", null, false, 10, "cc10", "codeclass10", 2);
+        assertThat(c1.getCodeClass()).isNotNull();
+        assertThat(c1.getCodeClass().getId()).isEqualTo(10);
+        assertThat(c1.getCodeClass().getName()).isEqualTo("cc10");
+        assertThat(c1.getCodeClass().getDescription()).isEqualTo("codeclass10");
     }
 
     @Test
     public void constructing_withNullCodeClassId_leaveCodeClassNull() {
-        Code c = new Code("C1", "c1", null, false, null, "cc10", "codeclass10", 1);
-        assertThat(c.getCodeClass()).isNull();
+        Code c1 = new Code("C1", "c1", null, false, null, "cc10", "codeclass10", 1);
+        assertThat(c1.getCodeClass()).isNull();
     }
 
     @Test
@@ -52,32 +52,32 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void validatingCode_withNullCode_fails() {
-        Code c = new Code(null, "code1", null, false, 1, "c1", "", 1);
-        validateAndAssertFailure(c, Code.CODE, null, "{javax.validation.constraints.NotNull.message}");
+        Code c1 = new Code(null, "code1", null, false, 1, "c1", "", 1);
+        validateAndAssertFailure(c1, Code.CODE, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingCode_withNullName_fails() {
-        Code c = new Code("1A", null, null, false, 1, "c1", "", 1);
-        validateAndAssertFailure(c, Code.NAME, null, "{javax.validation.constraints.NotNull.message}");
+        Code c1 = new Code("1A", null, null, false, 1, "c1", "", 1);
+        validateAndAssertFailure(c1, Code.NAME, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingCode_withNullCodeClass_fails() {
-        Code c = new Code("1A", "code1", null, false, null, null, null, 1);
-        validateAndAssertFailure(c, Code.CODE_CLASS, null, "{javax.validation.constraints.NotNull.message}");
+        Code c1 = new Code("1A", "code1", null, false, null, null, null, 1);
+        validateAndAssertFailure(c1, Code.CODE_CLASS, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingCode_withWrongCodeFormat_fails() {
-        Code c = new Code("xyz", "code1", null, false, 1, "c1", "", 1);
-        validateAndAssertFailure(c, Code.CODE, "xyz", "{code.invalidCode}");
+        Code c1 = new Code("xyz", "code1", null, false, 1, "c1", "", 1);
+        validateAndAssertFailure(c1, Code.CODE, "xyz", "{code.invalidCode}");
     }
 
     @Test
     public void testingToString() {
-        final Code c = new Code("1A", "code1", null, false, 1, "c1", "", 1, CREATED, 10, LAST_MOD, 20, 3);
-        assertThat(c.toString()).isEqualTo(
+        final Code c1 = new Code("1A", "code1", null, false, 1, "c1", "", 1, CREATED, 10, LAST_MOD, 20, 3);
+        assertThat(c1.toString()).isEqualTo(
                 "Code[code=1A,name=code1,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,created=2017-01-01T08:01:33.821,createdBy=10,lastModified=2017-02-02T08:01:33.821,lastModifiedBy=20,version=3]");
     }
 
