@@ -169,13 +169,8 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
             }
         }
 
-        private String sqlize(String data) {
-            final StringBuilder sb = new StringBuilder();
-            switch (type.matchType) {
-            default:
-                sb.append(data);
-            }
-            return sb.toString();
+        private String sqlize(final String data) {
+            return data;
         }
 
         public TokenType getType() {
@@ -221,23 +216,27 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
     }
 
     private static List<Token> tokenize(final String input, final Pattern pattern, final boolean isUserType, final boolean isDateType) {
-        final List<Token> tokens = new ArrayList<Token>();
-        final Matcher matcher = pattern.matcher(input);
+        return processTokens(pattern.matcher(input), isUserType, isDateType);
+    }
+
+    private static List<Token> processTokens(final Matcher matcher, final boolean isUserType, final boolean isDateType) {
+        final List<Token> tokens = new ArrayList<>();
         tokenIteration: while (matcher.find()) {
             for (final TokenType tk : TokenType.values()) {
-                if (tk == TokenType.RAW)
-                    continue;
-                if (matcher.group(TokenType.WHITESPACE.name()) != null)
+                if (tk == TokenType.RAW || matcher.group(TokenType.WHITESPACE.name()) != null)
                     continue;
                 else if (matcher.group(tk.name()) != null) {
-                    if (isDateRelevant(isDateType, tk) || isUserRelevant(isUserType, tk)) {
+                    if (isAppropriate(tk, isUserType, isDateType))
                         tokens.add(new Token(tk, matcher.group(tk.group)));
-                    }
                     continue tokenIteration;
                 }
             }
         }
         return tokens;
+    }
+
+    private static boolean isAppropriate(final TokenType tk, final boolean isUserType, final boolean isDateType) {
+        return isDateRelevant(isDateType, tk) || isUserRelevant(isUserType, tk);
     }
 
     /**
