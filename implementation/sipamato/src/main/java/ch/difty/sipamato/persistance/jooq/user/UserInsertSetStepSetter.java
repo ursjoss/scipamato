@@ -49,7 +49,7 @@ public class UserInsertSetStepSetter implements InsertSetStepSetter<UserRecord, 
         AssertAs.notNull(entity, "entity");
         Integer id = entity.getId();
         if (id != null)
-            step.set(USER.ID, id.intValue());
+            step.set(USER.ID, id);
     }
 
     /** {@inheritDoc} */

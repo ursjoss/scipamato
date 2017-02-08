@@ -77,7 +77,7 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
         AssertAs.notNull(entity, "entity");
         Long id = entity.getId();
         if (id != null)
-            step.set(PAPER.ID, id.longValue());
+            step.set(PAPER.ID, id);
     }
 
     @Override

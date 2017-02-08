@@ -46,7 +46,7 @@ public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<Searc
         AssertAs.notNull(entity, "entity");
         Long id = entity.getId();
         if (id != null)
-            step.set(SEARCH_ORDER.ID, id.longValue());
+            step.set(SEARCH_ORDER.ID, id);
     }
 
     /** {@inheritDoc} */
