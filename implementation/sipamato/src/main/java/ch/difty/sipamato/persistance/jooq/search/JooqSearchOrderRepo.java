@@ -157,7 +157,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
 
     private Map<Long, List<SearchTerm>> mapSearchTermsToSearchConditions(final SearchCondition searchCondition) {
         final List<SearchTerm> searchTerms = fetchSearchTermsForSearchConditionWithId(searchCondition.getSearchConditionId());
-        return searchTerms.stream().collect(Collectors.groupingBy(st -> st.getSearchConditionId()));
+        return searchTerms.stream().collect(Collectors.groupingBy(SearchTerm::getSearchConditionId));
     }
 
     protected List<SearchTerm> fetchSearchTermsForSearchConditionWithId(final long searchConditionId) {

@@ -45,38 +45,12 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdSipamatoE
 
     private EntityRepository<T, ID, F> repo;
 
-    private final List<T> entities = new ArrayList<>();
-    private final List<R> records = new ArrayList<>();
-
-    private final ID id = getSampleId();
-
-    private final DateTimeService dateTimeService = new FrozenDateTimeService();
-
-    protected DateTimeService getDateTimeService() {
-        return dateTimeService;
-    }
-
     @Mock
     private InsertSetStepSetter<R, T> insertSetStepSetterMock;
-
-    protected InsertSetStepSetter<R, T> getInsertSetStepSetter() {
-        return insertSetStepSetterMock;
-    }
-
     @Mock
     private UpdateSetStepSetter<R, T> updateSetStepSetterMock;
-
-    protected UpdateSetStepSetter<R, T> getUpdateSetStepSetter() {
-        return updateSetStepSetterMock;
-    }
-
     @Mock
     private Configuration jooqConfig;
-
-    protected Configuration getJooqConfig() {
-        return jooqConfig;
-    }
-
     @Mock
     private InsertSetStep<R> insertSetStepMock;
     @Mock
@@ -95,9 +69,31 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdSipamatoE
     private UpdateSetMoreStep<R> updateSetMoreStepMock;
     @Mock
     private UpdateResultStep<R> updateResultStepMock;
-
     @Mock
     private Pageable pageableMock;
+
+    private final List<T> entities = new ArrayList<>();
+    private final List<R> records = new ArrayList<>();
+
+    private final ID id = getSampleId();
+
+    private final DateTimeService dateTimeService = new FrozenDateTimeService();
+
+    protected DateTimeService getDateTimeService() {
+        return dateTimeService;
+    }
+
+    protected InsertSetStepSetter<R, T> getInsertSetStepSetter() {
+        return insertSetStepSetterMock;
+    }
+
+    protected UpdateSetStepSetter<R, T> getUpdateSetStepSetter() {
+        return updateSetStepSetterMock;
+    }
+
+    protected Configuration getJooqConfig() {
+        return jooqConfig;
+    }
 
     protected abstract ID getSampleId();
 

@@ -35,7 +35,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 
 public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorPanel> {
 
-    private final long ID = 17l;
+    private static final long ID = 17l;
     private static final String NAME = "soName";
     private static final int OWNER_ID = 2;
 
@@ -43,7 +43,9 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     private SearchOrderService searchOrderServiceMock;
 
     @Mock
-    private SearchOrder searchOrderMock, searchOrderMock2;
+    private SearchOrder searchOrderMock;
+    @Mock
+    private SearchOrder searchOrderMock2;
 
     private Page<SearchOrder> pageOfSearchOrders;
     private final List<SearchCondition> searchConditions = new ArrayList<>();
@@ -57,7 +59,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     protected void setUpHook() {
         super.setUpHook();
 
-        pageOfSearchOrders = new PageImpl<SearchOrder>(Arrays.asList(searchOrderMock, new SearchOrder(20l, "soName", OWNER_ID, true, searchConditions, null)));
+        pageOfSearchOrders = new PageImpl<>(Arrays.asList(searchOrderMock, new SearchOrder(20l, "soName", OWNER_ID, true, searchConditions, null)));
         when(searchOrderServiceMock.findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class))).thenReturn(pageOfSearchOrders);
         when(searchOrderMock.getId()).thenReturn(ID);
     }

@@ -23,7 +23,9 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     private JooqPaperRepo repo;
 
     @Mock
-    private Paper unpersistedEntity, persistedEntity;
+    private Paper unpersistedEntity;
+    @Mock
+    private Paper persistedEntity;
     @Mock
     private PaperRecord persistedRecord;
     @Mock

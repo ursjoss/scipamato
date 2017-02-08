@@ -202,8 +202,8 @@ public class SearchOrderTest {
 
     @Test
     public void testingDisplayValue_withoutNameButWithSingleCondition_returnsIt() {
-        SearchOrder so = new SearchOrder(10l, null, 1, false, null, excludedIds);
-        so.add(new SearchCondition() {
+        SearchOrder so1 = new SearchOrder(10l, null, 1, false, null, excludedIds);
+        so1.add(new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -212,7 +212,7 @@ public class SearchOrderTest {
             }
         });
 
-        assertThat(so.getDisplayValue()).isEqualTo("f1DisplayValue (10)");
+        assertThat(so1.getDisplayValue()).isEqualTo("f1DisplayValue (10)");
     }
 
     @Test

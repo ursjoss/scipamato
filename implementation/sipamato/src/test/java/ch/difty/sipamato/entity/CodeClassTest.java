@@ -8,6 +8,9 @@ import org.junit.Test;
 
 public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
 
+    private static final String JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE = "{javax.validation.constraints.NotNull.message}";
+    private static final String THIS_IS_CC1 = "this is cc1";
+
     private void verifySuccessfulValidation(final CodeClass cc) {
         validate(cc);
         assertThat(getViolations()).isEmpty();
@@ -31,13 +34,13 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     @Test
     public void validatingCodeClass_withNullName_fails() {
         CodeClass cc = new CodeClass(1, null, "bar");
-        validateAndAssertFailure(cc, CodeClass.NAME, null, "{javax.validation.constraints.NotNull.message}");
+        validateAndAssertFailure(cc, CodeClass.NAME, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
     }
 
     @Test
     public void validatingCodeClass_withNullDescription_fails() {
         CodeClass cc = new CodeClass(1, "foo", null);
-        validateAndAssertFailure(cc, CodeClass.DESCRIPTION, null, "{javax.validation.constraints.NotNull.message}");
+        validateAndAssertFailure(cc, CodeClass.DESCRIPTION, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
     }
 
     @Test
@@ -48,14 +51,14 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
 
     @Test
     public void cloning_copiesValues() {
-        CodeClass orig = new CodeClass(1, "cc1", "this is cc1");
+        CodeClass orig = new CodeClass(1, "cc1", THIS_IS_CC1);
         CodeClass copy = new CodeClass(orig);
         assertThat(copy).isEqualToComparingFieldByField(orig);
     }
 
     @Test
     public void sameValues_makeEquality() {
-        CodeClass cc1 = new CodeClass(1, "cc1", "this is cc1");
+        CodeClass cc1 = new CodeClass(1, "cc1", THIS_IS_CC1);
         CodeClass cc2 = new CodeClass(cc1);
         assertThat(cc1.equals(cc2)).isTrue();
         assertThat(cc2.equals(cc1)).isTrue();
@@ -64,9 +67,9 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
 
     @Test
     public void differingValues_makeInequality() {
-        CodeClass cc1 = new CodeClass(1, "cc1", "this is cc1");
-        CodeClass cc2 = new CodeClass(2, "cc1", "this is cc1");
-        CodeClass cc3 = new CodeClass(1, "cc2", "this is cc1");
+        CodeClass cc1 = new CodeClass(1, "cc1", THIS_IS_CC1);
+        CodeClass cc2 = new CodeClass(2, "cc1", THIS_IS_CC1);
+        CodeClass cc3 = new CodeClass(1, "cc2", THIS_IS_CC1);
         CodeClass cc4 = new CodeClass(1, "cc1", "this is cc2");
 
         assertThat(cc1.equals(cc2)).isFalse();
@@ -86,7 +89,7 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
 
     @Test
     public void equalingToSpecialCases() {
-        CodeClass cc1 = new CodeClass(1, "cc1", "this is cc1");
+        CodeClass cc1 = new CodeClass(1, "cc1", THIS_IS_CC1);
 
         assertThat(cc1.equals(cc1)).isTrue();
         assertThat(cc1.equals(null)).isFalse();
@@ -95,7 +98,7 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
 
     @Test
     public void displayValue() {
-        CodeClass cc1 = new CodeClass(1, "cc1", "this is cc1");
+        CodeClass cc1 = new CodeClass(1, "cc1", THIS_IS_CC1);
         assertThat(cc1.getDisplayValue()).isEqualTo("cc1");
     }
 }

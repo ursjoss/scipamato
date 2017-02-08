@@ -23,9 +23,10 @@ public abstract class AbstractServiceTest<ID extends Number, T extends IdSipamat
 
     @Mock
     protected UserRepository userRepoMock;
-
     @Mock
-    private User creatorMock, modifierMock;
+    private User creatorMock;
+    @Mock
+    private User modifierMock;
 
     /**
      * @return the service specific repo mock

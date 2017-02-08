@@ -10,10 +10,13 @@ import org.junit.Test;
 
 public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
+    private static final String CODE1 = "code1";
+    private static final String JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE = "{javax.validation.constraints.NotNull.message}";
+    private static final String CODECLASS10 = "codeclass10";
     private static final LocalDateTime CREATED = LocalDateTime.parse("2017-01-01T08:01:33.821");
     private static final LocalDateTime LAST_MOD = LocalDateTime.parse("2017-02-02T08:01:33.821");
 
-    private final Code c = new Code("1A", "code1", null, false, 1, "c1", "", 1);
+    private final Code c = new Code("1A", CODE1, null, false, 1, "c1", "", 1);
 
     private void verifySuccessfulValidation(Code code) {
         validate(code);
@@ -32,16 +35,16 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void constructing_withAllValues_populatesCodeClass() {
-        Code c1 = new Code("C1", "c1", null, false, 10, "cc10", "codeclass10", 2);
+        Code c1 = new Code("C1", "c1", null, false, 10, "cc10", CODECLASS10, 2);
         assertThat(c1.getCodeClass()).isNotNull();
         assertThat(c1.getCodeClass().getId()).isEqualTo(10);
         assertThat(c1.getCodeClass().getName()).isEqualTo("cc10");
-        assertThat(c1.getCodeClass().getDescription()).isEqualTo("codeclass10");
+        assertThat(c1.getCodeClass().getDescription()).isEqualTo(CODECLASS10);
     }
 
     @Test
     public void constructing_withNullCodeClassId_leaveCodeClassNull() {
-        Code c1 = new Code("C1", "c1", null, false, null, "cc10", "codeclass10", 1);
+        Code c1 = new Code("C1", "c1", null, false, null, "cc10", CODECLASS10, 1);
         assertThat(c1.getCodeClass()).isNull();
     }
 
@@ -52,41 +55,41 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void validatingCode_withNullCode_fails() {
-        Code c1 = new Code(null, "code1", null, false, 1, "c1", "", 1);
-        validateAndAssertFailure(c1, Code.CODE, null, "{javax.validation.constraints.NotNull.message}");
+        Code c1 = new Code(null, CODE1, null, false, 1, "c1", "", 1);
+        validateAndAssertFailure(c1, Code.CODE, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
     }
 
     @Test
     public void validatingCode_withNullName_fails() {
         Code c1 = new Code("1A", null, null, false, 1, "c1", "", 1);
-        validateAndAssertFailure(c1, Code.NAME, null, "{javax.validation.constraints.NotNull.message}");
+        validateAndAssertFailure(c1, Code.NAME, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
     }
 
     @Test
     public void validatingCode_withNullCodeClass_fails() {
-        Code c1 = new Code("1A", "code1", null, false, null, null, null, 1);
-        validateAndAssertFailure(c1, Code.CODE_CLASS, null, "{javax.validation.constraints.NotNull.message}");
+        Code c1 = new Code("1A", CODE1, null, false, null, null, null, 1);
+        validateAndAssertFailure(c1, Code.CODE_CLASS, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
     }
 
     @Test
     public void validatingCode_withWrongCodeFormat_fails() {
-        Code c1 = new Code("xyz", "code1", null, false, 1, "c1", "", 1);
+        Code c1 = new Code("xyz", CODE1, null, false, 1, "c1", "", 1);
         validateAndAssertFailure(c1, Code.CODE, "xyz", "{code.invalidCode}");
     }
 
     @Test
     public void testingToString() {
-        final Code c1 = new Code("1A", "code1", null, false, 1, "c1", "", 1, CREATED, 10, LAST_MOD, 20, 3);
+        final Code c1 = new Code("1A", CODE1, null, false, 1, "c1", "", 1, CREATED, 10, LAST_MOD, 20, 3);
         assertThat(c1.toString()).isEqualTo(
                 "Code[code=1A,name=code1,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,created=2017-01-01T08:01:33.821,createdBy=10,lastModified=2017-02-02T08:01:33.821,lastModifiedBy=20,version=3]");
     }
 
     @Test
     public void cloning_copiesValues() {
-        Code c1 = new Code("1A", "code1", "foo", true, 1, "c1", "", 2);
+        Code c1 = new Code("1A", CODE1, "foo", true, 1, "c1", "", 2);
         Code c2 = new Code(c1);
         assertThat(c2.getCode()).isEqualTo("1A");
-        assertThat(c2.getName()).isEqualTo("code1");
+        assertThat(c2.getName()).isEqualTo(CODE1);
         assertThat(c2.getComment()).isEqualTo("foo");
         assertThat(c2.isInternal()).isTrue();
         assertThat(c2.getCodeClass()).isEqualToComparingFieldByField(c1.getCodeClass());
@@ -103,13 +106,13 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void differingValues_makeInequality() {
-        Code c1 = new Code("1A", "code1", null, false, 1, "c1", "", 1);
-        Code c2 = new Code("1B", "code1", null, false, 1, "c1", "", 1);
+        Code c1 = new Code("1A", CODE1, null, false, 1, "c1", "", 1);
+        Code c2 = new Code("1B", CODE1, null, false, 1, "c1", "", 1);
         Code c3 = new Code("1A", "code2", null, false, 1, "c1", "", 1);
-        Code c4 = new Code("1A", "code1", null, false, 2, "c2", "", 1);
-        Code c5 = new Code("1A", "code1", null, false, 1, "c2", "", 2);
-        Code c6 = new Code("1A", "code1", "foo", false, 1, "c1", "", 1);
-        Code c7 = new Code("1A", "code1", null, true, 1, "c1", "", 1);
+        Code c4 = new Code("1A", CODE1, null, false, 2, "c2", "", 1);
+        Code c5 = new Code("1A", CODE1, null, false, 1, "c2", "", 2);
+        Code c6 = new Code("1A", CODE1, "foo", false, 1, "c1", "", 1);
+        Code c7 = new Code("1A", CODE1, null, true, 1, "c1", "", 1);
 
         assertThat(c1.equals(c2)).isFalse();
         assertThat(c1.equals(c3)).isFalse();

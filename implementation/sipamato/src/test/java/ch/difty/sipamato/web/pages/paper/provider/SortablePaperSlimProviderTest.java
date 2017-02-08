@@ -88,7 +88,8 @@ public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P
 
     class PageableMatcher extends ArgumentMatcher<Pageable> {
 
-        private final int offset, pageSize;
+        private final int offset;
+        private final int pageSize;
         private final String sort;
 
         PageableMatcher(int offset, int pageSize, String sort) {

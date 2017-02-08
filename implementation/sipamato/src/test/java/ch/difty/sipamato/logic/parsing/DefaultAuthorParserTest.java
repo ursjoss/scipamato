@@ -11,7 +11,6 @@ import ch.difty.sipamato.lib.NullArgumentException;
 public class DefaultAuthorParserTest {
 
     private DefaultAuthorParser p;
-    private String authorsString;
 
     @Test
     public void degenerateConstruction() {
@@ -25,7 +24,7 @@ public class DefaultAuthorParserTest {
 
     @Test
     public void canReturnOriginalAuthorsString() {
-        authorsString = "Bond J.";
+        String authorsString = "Bond J.";
         p = new DefaultAuthorParser(authorsString);
         assertThat(p.getAuthorsString()).isEqualTo(authorsString);
     }
