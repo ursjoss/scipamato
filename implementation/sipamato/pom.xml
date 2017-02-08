@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ch.difty</groupId>
     <artifactId>sipamato</artifactId>
-    <version>0.3.5-SNAPSHOT</version>
+    <version>0.3.5</version>
     <packaging>jar</packaging>
     <name>sipamato</name>
     <description>Scientific Paper Management Tool</description>
