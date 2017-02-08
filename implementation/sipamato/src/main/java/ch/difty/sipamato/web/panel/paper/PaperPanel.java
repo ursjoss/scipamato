@@ -253,19 +253,19 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             super(id, model);
         }
 
-        void queueTo(Form<T> form, String id) {
-            queueTo(form, id, false, Optional.empty());
+        void queueTo(String id) {
+            queueTo(id, false, Optional.empty());
         }
 
-        void queueTo(Form<T> form, String id, PropertyValidator<?> pv) {
-            queueTo(form, id, false, Optional.ofNullable(pv));
+        void queueTo(String id, PropertyValidator<?> pv) {
+            queueTo(id, false, Optional.ofNullable(pv));
         }
 
-        void queueNewFieldTo(Form<T> form, String id) {
-            queueTo(form, id, true, Optional.empty());
+        void queueNewFieldTo(String id) {
+            queueTo(id, true, Optional.empty());
         }
 
-        void queueTo(Form<T> form, String id, boolean newField, Optional<PropertyValidator<?>> pv) {
+        void queueTo(String id, boolean newField, Optional<PropertyValidator<?>> pv) {
             TextArea<String> field = new TextArea<>(id);
             field.setOutputMarkupId(true);
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
@@ -295,21 +295,21 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             Form<T> tab1Form = new Form<>("tab1Form");
             queue(tab1Form);
 
-            queueTo(tab1Form, Paper.GOALS, new PropertyValidator<String>());
-            queueTo(tab1Form, Paper.POPULATION);
-            queueTo(tab1Form, Paper.METHODS);
+            queueTo(Paper.GOALS, new PropertyValidator<String>());
+            queueTo(Paper.POPULATION);
+            queueTo(Paper.METHODS);
 
-            queueNewFieldTo(tab1Form, Paper.POPULATION_PLACE);
-            queueNewFieldTo(tab1Form, Paper.POPULATION_PARTICIPANTS);
-            queueNewFieldTo(tab1Form, Paper.POPULATION_DURATION);
+            queueNewFieldTo(Paper.POPULATION_PLACE);
+            queueNewFieldTo(Paper.POPULATION_PARTICIPANTS);
+            queueNewFieldTo(Paper.POPULATION_DURATION);
 
-            queueNewFieldTo(tab1Form, Paper.EXPOSURE_POLLUTANT);
-            queueNewFieldTo(tab1Form, Paper.EXPOSURE_ASSESSMENT);
+            queueNewFieldTo(Paper.EXPOSURE_POLLUTANT);
+            queueNewFieldTo(Paper.EXPOSURE_ASSESSMENT);
 
-            queueNewFieldTo(tab1Form, Paper.METHOD_STUDY_DESIGN);
-            queueNewFieldTo(tab1Form, Paper.METHOD_OUTCOME);
-            queueNewFieldTo(tab1Form, Paper.METHOD_STATISTICS);
-            queueNewFieldTo(tab1Form, Paper.METHOD_CONFOUNDERS);
+            queueNewFieldTo(Paper.METHOD_STUDY_DESIGN);
+            queueNewFieldTo(Paper.METHOD_OUTCOME);
+            queueNewFieldTo(Paper.METHOD_STATISTICS);
+            queueNewFieldTo(Paper.METHOD_CONFOUNDERS);
         }
     }
 
@@ -327,13 +327,13 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             Form<T> tab2Form = new Form<>("tab2Form");
             queue(tab2Form);
 
-            queueTo(tab2Form, Paper.RESULT);
-            queueTo(tab2Form, Paper.COMMENT);
-            queueTo(tab2Form, Paper.INTERN);
+            queueTo(Paper.RESULT);
+            queueTo(Paper.COMMENT);
+            queueTo(Paper.INTERN);
 
-            queueNewFieldTo(tab2Form, Paper.RESULT_MEASURED_OUTCOME);
-            queueNewFieldTo(tab2Form, Paper.RESULT_EXPOSURE_RANGE);
-            queueNewFieldTo(tab2Form, Paper.RESULT_EFFECT_ESTIMATE);
+            queueNewFieldTo(Paper.RESULT_MEASURED_OUTCOME);
+            queueNewFieldTo(Paper.RESULT_EXPOSURE_RANGE);
+            queueNewFieldTo(Paper.RESULT_EFFECT_ESTIMATE);
         }
     }
 
@@ -433,7 +433,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             Form<T> tab4Form = new Form<>("tab4Form");
             queue(tab4Form);
 
-            queueTo(tab4Form, Paper.ORIGINAL_ABSTRACT);
+            queueTo(Paper.ORIGINAL_ABSTRACT);
         }
     }
 
