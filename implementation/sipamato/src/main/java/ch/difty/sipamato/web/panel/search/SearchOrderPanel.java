@@ -90,7 +90,7 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
     private ClickablePropertyColumn2<SearchCondition, String, Long> makeClickableColumn(String propExpression, String sortProperty, SerializableBiConsumer<IModel<SearchCondition>, Long> consumer,
             SerializableSupplier<Long> supplier) {
         final StringResourceModel displayModel = new StringResourceModel("column.header." + propExpression, this, null);
-        return new ClickablePropertyColumn2<SearchCondition, String, Long>(displayModel, sortProperty, propExpression, consumer, supplier);
+        return new ClickablePropertyColumn2<>(displayModel, sortProperty, propExpression, consumer, supplier);
     }
 
     private IColumn<SearchCondition, String> makeLinkIconColumn(String id, SerializableConsumer<IModel<SearchCondition>> consumer) {

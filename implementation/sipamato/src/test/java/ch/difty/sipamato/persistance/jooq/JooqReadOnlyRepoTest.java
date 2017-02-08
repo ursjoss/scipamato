@@ -52,49 +52,18 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdSipamat
 
     @Mock
     private DSLContext dslMock;
-
-    protected DSLContext getDsl() {
-        return dslMock;
-    }
-
     @Mock
     private GenericFilterConditionMapper<F> filterConditionMapperMock;
-
-    protected GenericFilterConditionMapper<F> getFilterConditionMapper() {
-        return filterConditionMapperMock;
-    }
-
     @Mock
     private Localization localizationMock;
-
-    protected Localization getLocalization() {
-        return localizationMock;
-    }
-
     @Mock
     private R unpersistedRecord;
-
     @Mock
     private JooqSortMapper<R, T, TI> sortMapperMock;
-
-    protected JooqSortMapper<R, T, TI> getSortMapper() {
-        return sortMapperMock;
-    }
-
     @Mock
     private SelectWhereStep<R> selectWhereStepMock;
-
-    protected SelectWhereStep<R> getSelectWhereStepMock() {
-        return selectWhereStepMock;
-    }
-
     @Mock
     private SelectConditionStep<R> selectConditionStepMock;
-
-    protected SelectConditionStep<R> getSelectConditionStepMock() {
-        return selectConditionStepMock;
-    }
-
     @Mock
     private SelectSelectStep<Record1<Integer>> selectSelectStepMock;
     @Mock
@@ -113,6 +82,30 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdSipamat
 
     @Mock
     private Condition conditionMock;
+
+    protected DSLContext getDsl() {
+        return dslMock;
+    }
+
+    protected GenericFilterConditionMapper<F> getFilterConditionMapper() {
+        return filterConditionMapperMock;
+    }
+
+    protected Localization getLocalization() {
+        return localizationMock;
+    }
+
+    protected JooqSortMapper<R, T, TI> getSortMapper() {
+        return sortMapperMock;
+    }
+
+    protected SelectWhereStep<R> getSelectWhereStepMock() {
+        return selectWhereStepMock;
+    }
+
+    protected SelectConditionStep<R> getSelectConditionStepMock() {
+        return selectConditionStepMock;
+    }
 
     protected abstract ID getSampleId();
 

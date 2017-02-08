@@ -6,6 +6,9 @@ import org.junit.Test;
 
 public class AuditSearchTermsTest {
 
+    private static final String KEY = "key";
+    private static final String VALUE = "value";
+    
     private final AuditSearchTerms st1 = new AuditSearchTerms();
     private final AuditSearchTerms st2 = new AuditSearchTerms();
 
@@ -13,21 +16,21 @@ public class AuditSearchTermsTest {
     public void compareEmptySearchTerms_withEmptySearchTerms_match() {
         assertEqualityBetween(st1, st2, 1);
 
-        st1.put("key", new AuditSearchTerm("key", "value"));
-        st2.put("key", new AuditSearchTerm("key", "value"));
+        st1.put(KEY, new AuditSearchTerm(KEY, VALUE));
+        st2.put(KEY, new AuditSearchTerm(KEY, VALUE));
     }
 
     @Test
     public void compareEmptySearchTerms_withSingleIdenticalKeyValueSearchTerm_match() {
-        st1.put("key", new AuditSearchTerm("key", "value"));
-        st2.put("key", new AuditSearchTerm("key", "value"));
+        st1.put(KEY, new AuditSearchTerm(KEY, VALUE));
+        st2.put(KEY, new AuditSearchTerm(KEY, VALUE));
         assertEqualityBetween(st1, st2, 115262162);
     }
 
     @Test
     public void compareEmptySearchTerms_withDoubleIdenticalKeyValueSearchTerm_match() {
-        st1.put("key1", new AuditSearchTerm("key1", "value"));
-        st2.put("key1", new AuditSearchTerm("key1", "value"));
+        st1.put("key1", new AuditSearchTerm("key1", VALUE));
+        st2.put("key1", new AuditSearchTerm("key1", VALUE));
         st1.put("key2", new AuditSearchTerm("key2", "value2"));
         st2.put("key2", new AuditSearchTerm("key2", "value2"));
         assertEqualityBetween(st1, st2, 1614595920);
@@ -42,7 +45,7 @@ public class AuditSearchTermsTest {
 
     @Test
     public void compareEmptySearchTerms_withDiffernetSearchTerms_dontMatch() {
-        st1.put("key", new AuditSearchTerm("key", "value"));
+        st1.put(KEY, new AuditSearchTerm(KEY, VALUE));
         assertInequalityBetween(st1, st2, 115262162, 1);
     }
 
@@ -56,8 +59,8 @@ public class AuditSearchTermsTest {
 
     @Test
     public void compareEmptySearchTerms_withDiffernetSearchTermValues_dontMatch() {
-        st1.put("key", new AuditSearchTerm("key", "value"));
-        st2.put("key", new AuditSearchTerm("key", "valueX"));
+        st1.put(KEY, new AuditSearchTerm(KEY, VALUE));
+        st2.put(KEY, new AuditSearchTerm(KEY, "valueX"));
         assertInequalityBetween(st1, st2, 115262162, -820523416);
     }
 

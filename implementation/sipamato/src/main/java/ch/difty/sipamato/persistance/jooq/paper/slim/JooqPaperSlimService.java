@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.persistance.jooq.JooqReadOnlyService;
@@ -19,7 +18,7 @@ import ch.difty.sipamato.service.PaperSlimService;
  * @author u.joss
  */
 @Service
-public class JooqPaperSlimService extends JooqReadOnlyService<Long, PaperRecord, PaperSlim, PaperFilter, PaperSlimRecordMapper, PaperSlimRepository> implements PaperSlimService {
+public class JooqPaperSlimService extends JooqReadOnlyService<Long, PaperSlim, PaperFilter, PaperSlimRepository> implements PaperSlimService {
 
     private static final long serialVersionUID = 1L;
 

@@ -34,7 +34,7 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     public JooqPaperSlimRepo(DSLContext dsl, PaperSlimRecordMapper mapper, JooqSortMapper<PaperRecord, PaperSlim, ch.difty.sipamato.db.tables.Paper> sortMapper,
             GenericFilterConditionMapper<PaperFilter> filterConditionMapper, Localization localization) {
         super(dsl, mapper, sortMapper, filterConditionMapper, localization);
-        bySearchOrderFinder = new DefaultBySearchOrderFinder<PaperSlim, PaperSlimRecordMapper>(dsl, mapper, sortMapper, getRecordClass());
+        bySearchOrderFinder = new DefaultBySearchOrderFinder<>(dsl, mapper, sortMapper, getRecordClass());
     }
 
     @Override

@@ -2,7 +2,6 @@ package ch.difty.sipamato.persistance.jooq.search;
 
 import org.springframework.stereotype.Service;
 
-import ch.difty.sipamato.db.tables.records.SearchOrderRecord;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.persistance.jooq.JooqEntityService;
@@ -14,7 +13,7 @@ import ch.difty.sipamato.service.SearchOrderService;
  * @author u.joss
  */
 @Service
-public class JooqSearchOrderService extends JooqEntityService<Long, SearchOrderRecord, SearchOrder, SearchOrderFilter, SearchOrderRecordMapper, SearchOrderRepository> implements SearchOrderService {
+public class JooqSearchOrderService extends JooqEntityService<Long, SearchOrder, SearchOrderFilter, SearchOrderRepository> implements SearchOrderService {
 
     private static final long serialVersionUID = 1L;
 

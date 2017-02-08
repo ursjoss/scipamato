@@ -19,16 +19,16 @@ public class SipamatoPdfResourceHandler extends PdfResourceHandler {
         this.config = makeDefaultExporterConfig();
     }
 
-    private SipamatoPdfExporterConfiguration makeDefaultExporterConfig() {
-        return new SipamatoPdfExporterConfiguration.Builder(null).build();
-    }
-
     public SipamatoPdfResourceHandler(final PdfExporterConfiguration config) {
         if (config != null) {
             this.config = config;
         } else {
             this.config = makeDefaultExporterConfig();
         }
+    }
+
+    private SipamatoPdfExporterConfiguration makeDefaultExporterConfig() {
+        return new SipamatoPdfExporterConfiguration.Builder(null).build();
     }
 
     /**
