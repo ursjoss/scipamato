@@ -55,11 +55,11 @@ public class DefaultAuthorParser implements AuthorParser {
     }
 
     private List<Author> parseAuthors(final List<String> authorStrings) {
-        final List<Author> authors = new ArrayList<>();
+        final List<Author> parsedAuthors = new ArrayList<>();
         for (final String as : authorStrings) {
-            authors.add(parseAuthor(as));
+            parsedAuthors.add(parseAuthor(as));
         }
-        return authors;
+        return parsedAuthors;
     }
 
     private Author parseAuthor(final String authorString) {
