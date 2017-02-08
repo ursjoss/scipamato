@@ -46,7 +46,7 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
     }
 
     @Override
-    protected EntityRepository<SearchOrderRecord, SearchOrder, Long, SearchOrderRecordMapper, SearchOrderFilter> makeRepoFindingEntityById(SearchOrder searchOrder) {
+    protected EntityRepository<SearchOrder, Long, SearchOrderFilter> makeRepoFindingEntityById(SearchOrder searchOrder) {
         return new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
                 getJooqConfig()) {
             private static final long serialVersionUID = 1L;

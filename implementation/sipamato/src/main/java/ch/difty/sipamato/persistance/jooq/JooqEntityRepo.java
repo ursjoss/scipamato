@@ -40,7 +40,7 @@ import ch.difty.sipamato.service.Localization;
 @Profile("DB_JOOQ")
 @Transactional(readOnly = true)
 public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends SipamatoFilter>
-        extends JooqReadOnlyRepo<R, T, ID, TI, M, F> implements EntityRepository<R, T, ID, M, F> {
+        extends JooqReadOnlyRepo<R, T, ID, TI, M, F> implements EntityRepository<T, ID, F> {
 
     private static final long serialVersionUID = 1L;
 

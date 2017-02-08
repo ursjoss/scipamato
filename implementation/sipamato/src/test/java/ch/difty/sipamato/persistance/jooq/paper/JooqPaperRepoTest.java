@@ -37,7 +37,7 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     }
 
     @Override
-    protected EntityRepository<PaperRecord, Paper, Long, PaperRecordMapper, PaperFilter> makeRepoFindingEntityById(Paper paper) {
+    protected EntityRepository<Paper, Long, PaperFilter> makeRepoFindingEntityById(Paper paper) {
         return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
                 getJooqConfig()) {
             private static final long serialVersionUID = 1L;

@@ -3,8 +3,6 @@ package ch.difty.sipamato.persistance.jooq;
 import java.io.Serializable;
 import java.util.List;
 
-import org.jooq.Record;
-import org.jooq.RecordMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,13 +15,11 @@ import ch.difty.sipamato.lib.NullArgumentException;
  *
  * @author u.joss
  *
- * @param <R> the type of the record, extending {@link Record}
  * @param <T> the type of the entity, extending {@link SipamatoEntity}
  * @param <ID> the type of the ID of the entity
- * @param <M> the type of the record mapper mapping records of type <literal>R</literal> into the entity of type <literal>T</literal>
  * @param <F> the type of the filter extending {@link SipamatorFilter}
  */
-public interface ReadOnlyRepository<R extends Record, T extends SipamatoEntity, ID, M extends RecordMapper<R, T>, F extends SipamatoFilter> extends Serializable {
+public interface ReadOnlyRepository<T extends SipamatoEntity, ID, F extends SipamatoFilter> extends Serializable {
 
     /**
      * Finds all persisted entities.

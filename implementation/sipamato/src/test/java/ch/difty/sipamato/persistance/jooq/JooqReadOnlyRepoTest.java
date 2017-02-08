@@ -43,7 +43,7 @@ import ch.difty.sipamato.service.Localization;
 @RunWith(MockitoJUnitRunner.class)
 public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdSipamatoEntity<ID>, ID extends Number, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends SipamatoFilter> {
 
-    private ReadOnlyRepository<R, T, ID, M, F> repo;
+    private ReadOnlyRepository<T, ID, F> repo;
 
     private final List<T> entities = new ArrayList<>();
     private final List<R> records = new ArrayList<>();
@@ -119,7 +119,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdSipamat
     /**
      * @return the specific repository instantiated
      */
-    protected abstract ReadOnlyRepository<R, T, ID, M, F> getRepo();
+    protected abstract ReadOnlyRepository<T, ID, F> getRepo();
 
     /**
      * Hand-rolled spy that returns the provided entity in the method <code>findById(ID id)</code>
@@ -127,7 +127,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdSipamat
      * @param entity the entity to be found.
      * @return the entity
      */
-    protected abstract ReadOnlyRepository<R, T, ID, M, F> makeRepoFindingEntityById(T entity);
+    protected abstract ReadOnlyRepository<T, ID, F> makeRepoFindingEntityById(T entity);
 
     protected abstract T getPersistedEntity();
 

@@ -5,14 +5,13 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.persistance.jooq.ReadOnlyRepository;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.persistance.jooq.paper.searchorder.BySearchOrderFinder;
 
-public interface PaperSlimRepository extends ReadOnlyRepository<PaperRecord, PaperSlim, Long, PaperSlimRecordMapper, PaperFilter> {
+public interface PaperSlimRepository extends ReadOnlyRepository<PaperSlim, Long, PaperFilter> {
 
     /**
      * {@link BySearchOrderFinder#findBySearchOrder(SearchOrder)}
