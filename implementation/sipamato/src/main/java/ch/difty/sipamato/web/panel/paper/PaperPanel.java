@@ -95,22 +95,22 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
     private void queueHeaderFields() {
         queueAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
-        queueFieldAndLabel(new TextArea<String>(Paper.TITLE), new PropertyValidator<String>());
-        queueFieldAndLabel(new TextField<String>(Paper.LOCATION), new PropertyValidator<String>());
+        queueFieldAndLabel(new TextArea<>(Paper.TITLE), new PropertyValidator<String>());
+        queueFieldAndLabel(new TextField<>(Paper.LOCATION), new PropertyValidator<String>());
 
-        queueFieldAndLabel(new TextField<Integer>(Paper.PUBL_YEAR), new PropertyValidator<Integer>());
-        queueFieldAndLabel(new TextField<Integer>(Paper.PMID));
-        queueFieldAndLabel(new TextField<String>(Paper.DOI), new PropertyValidator<String>());
+        queueFieldAndLabel(new TextField<>(Paper.PUBL_YEAR), new PropertyValidator<Integer>());
+        queueFieldAndLabel(new TextField<>(Paper.PMID));
+        queueFieldAndLabel(new TextField<>(Paper.DOI), new PropertyValidator<String>());
 
-        TextField<Integer> id = new TextField<Integer>(Paper.ID);
+        TextField<Integer> id = new TextField<>(Paper.ID);
         id.setEnabled(isSearchMode());
         queueFieldAndLabel(id);
 
-        TextField<String> created = new TextField<String>(Paper.CREATED_DV);
+        TextField<String> created = new TextField<>(Paper.CREATED_DV);
         created.setEnabled(isSearchMode());
         queueFieldAndLabel(created);
 
-        TextField<String> modified = new TextField<String>(Paper.MODIFIED_DV);
+        TextField<String> modified = new TextField<>(Paper.MODIFIED_DV);
         modified.setEnabled(isSearchMode());
         queueFieldAndLabel(modified);
 
@@ -183,11 +183,11 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
      * or in the override checkbox can have an effect on the firstAuthor field (enabled, content) 
      */
     private void queueAuthorComplex(String authorsId, String firstAuthorId, String firstAuthorOverriddenId) {
-        TextArea<String> authors = new TextArea<String>(authorsId);
+        TextArea<String> authors = new TextArea<>(authorsId);
         authors.setEscapeModelStrings(false);
         queueFieldAndLabel(authors, new PropertyValidator<String>());
 
-        PropertyModel<Boolean> firstAuthorOverriddenModel = new PropertyModel<Boolean>(getModel(), firstAuthorOverriddenId);
+        PropertyModel<Boolean> firstAuthorOverriddenModel = new PropertyModel<>(getModel(), firstAuthorOverriddenId);
         CheckBoxX firstAuthorOverridden = new CheckBoxX(firstAuthorOverriddenId, firstAuthorOverriddenModel);
         firstAuthorOverridden.getConfig().withThreeState(isSearchMode()).withUseNative(true);
         queueCheckBoxAndLabel(firstAuthorOverridden);
@@ -201,7 +201,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
     /** override if special behavior is required */
     protected TextField<String> makeFirstAuthor(String firstAuthorId, CheckBox firstAuthorOverridden) {
-        return new TextField<String>(firstAuthorId);
+        return new TextField<>(firstAuthorId);
     }
 
     /** override if special behavior is required */
@@ -231,7 +231,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     }
 
     private ResourceLink<Void> makeSummaryLink(String id) {
-        summaryLink = new ResourceLink<Void>(id, getSummaryDataSource());
+        summaryLink = new ResourceLink<>(id, getSummaryDataSource());
         summaryLink.setVisible(!isSearchMode());
         summaryLink.setOutputMarkupId(true);
         summaryLink.setBody(new StringResourceModel("link.summary.label"));
@@ -266,7 +266,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         }
 
         void queueTo(Form<T> form, String id, boolean newField, Optional<PropertyValidator<?>> pv) {
-            TextArea<String> field = new TextArea<String>(id);
+            TextArea<String> field = new TextArea<>(id);
             field.setOutputMarkupId(true);
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
             queue(new Label(id + LABEL_TAG, labelModel));
@@ -292,24 +292,24 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> form = new Form<>("tab1Form");
-            queue(form);
+            Form<T> tab1Form = new Form<>("tab1Form");
+            queue(tab1Form);
 
-            queueTo(form, Paper.GOALS, new PropertyValidator<String>());
-            queueTo(form, Paper.POPULATION);
-            queueTo(form, Paper.METHODS);
+            queueTo(tab1Form, Paper.GOALS, new PropertyValidator<String>());
+            queueTo(tab1Form, Paper.POPULATION);
+            queueTo(tab1Form, Paper.METHODS);
 
-            queueNewFieldTo(form, Paper.POPULATION_PLACE);
-            queueNewFieldTo(form, Paper.POPULATION_PARTICIPANTS);
-            queueNewFieldTo(form, Paper.POPULATION_DURATION);
+            queueNewFieldTo(tab1Form, Paper.POPULATION_PLACE);
+            queueNewFieldTo(tab1Form, Paper.POPULATION_PARTICIPANTS);
+            queueNewFieldTo(tab1Form, Paper.POPULATION_DURATION);
 
-            queueNewFieldTo(form, Paper.EXPOSURE_POLLUTANT);
-            queueNewFieldTo(form, Paper.EXPOSURE_ASSESSMENT);
+            queueNewFieldTo(tab1Form, Paper.EXPOSURE_POLLUTANT);
+            queueNewFieldTo(tab1Form, Paper.EXPOSURE_ASSESSMENT);
 
-            queueNewFieldTo(form, Paper.METHOD_STUDY_DESIGN);
-            queueNewFieldTo(form, Paper.METHOD_OUTCOME);
-            queueNewFieldTo(form, Paper.METHOD_STATISTICS);
-            queueNewFieldTo(form, Paper.METHOD_CONFOUNDERS);
+            queueNewFieldTo(tab1Form, Paper.METHOD_STUDY_DESIGN);
+            queueNewFieldTo(tab1Form, Paper.METHOD_OUTCOME);
+            queueNewFieldTo(tab1Form, Paper.METHOD_STATISTICS);
+            queueNewFieldTo(tab1Form, Paper.METHOD_CONFOUNDERS);
         }
     }
 
@@ -324,16 +324,16 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> form = new Form<>("tab2Form");
-            queue(form);
+            Form<T> tab2Form = new Form<>("tab2Form");
+            queue(tab2Form);
 
-            queueTo(form, Paper.RESULT);
-            queueTo(form, Paper.COMMENT);
-            queueTo(form, Paper.INTERN);
+            queueTo(tab2Form, Paper.RESULT);
+            queueTo(tab2Form, Paper.COMMENT);
+            queueTo(tab2Form, Paper.INTERN);
 
-            queueNewFieldTo(form, Paper.RESULT_MEASURED_OUTCOME);
-            queueNewFieldTo(form, Paper.RESULT_EXPOSURE_RANGE);
-            queueNewFieldTo(form, Paper.RESULT_EFFECT_ESTIMATE);
+            queueNewFieldTo(tab2Form, Paper.RESULT_MEASURED_OUTCOME);
+            queueNewFieldTo(tab2Form, Paper.RESULT_EXPOSURE_RANGE);
+            queueNewFieldTo(tab2Form, Paper.RESULT_EFFECT_ESTIMATE);
         }
     }
 
@@ -350,13 +350,13 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> form = new Form<>("tab3Form");
-            queue(form);
+            Form<T> tab3Form = new Form<>("tab3Form");
+            queue(tab3Form);
 
             CodeClassModel codeClassModel = new CodeClassModel(getLocalization().getLocalization());
             List<CodeClass> codeClasses = codeClassModel.getObject();
 
-            makeCodeClass1Complex(codeClasses, form);
+            makeCodeClass1Complex(codeClasses, tab3Form);
             makeCodeClassComplex(CodeClassId.CC2, codeClasses);
             makeCodeClassComplex(CodeClassId.CC3, codeClasses);
             makeCodeClassComplex(CodeClassId.CC4, codeClasses);
@@ -367,7 +367,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         }
 
         private void makeCodeClass1Complex(final List<CodeClass> codeClasses, Form<T> form) {
-            final TextField<String> mainCodeOfCodeClass1 = new TextField<String>(Paper.MAIN_CODE_OF_CODECLASS1);
+            final TextField<String> mainCodeOfCodeClass1 = new TextField<>(Paper.MAIN_CODE_OF_CODECLASS1);
             final BootstrapMultiSelect<Code> codeClass1 = makeCodeClassComplex(CodeClassId.CC1, codeClasses);
             addCodeClass1ChangeBehavior(mainCodeOfCodeClass1, codeClass1);
             addMainCodeOfClass1(mainCodeOfCodeClass1);
@@ -408,7 +408,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 }
             };
             final CodeModel choices = new CodeModel(ccId, getLocalization().getLocalization());
-            final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<Code>(Code.DISPLAY_VALUE, Code.CODE);
+            final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(Code.DISPLAY_VALUE, Code.CODE);
             final StringResourceModel noneSelectedModel = new StringResourceModel("codes.noneSelected", this, null);
             final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true).withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);
             final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<Code>(CODES_CLASS_BASE_NAME + id, model, choices, choiceRenderer).with(config);
@@ -429,10 +429,10 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> form = new Form<>("tab4Form");
-            queue(form);
+            Form<T> tab4Form = new Form<>("tab4Form");
+            queue(tab4Form);
 
-            queueTo(form, Paper.ORIGINAL_ABSTRACT);
+            queueTo(tab4Form, Paper.ORIGINAL_ABSTRACT);
         }
     }
 
