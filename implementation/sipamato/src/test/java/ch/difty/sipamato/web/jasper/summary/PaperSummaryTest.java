@@ -1,10 +1,11 @@
-package ch.difty.sipamato.web.jasper.summary_sp;
+package ch.difty.sipamato.web.jasper.summary;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
 import ch.difty.sipamato.web.jasper.JasperEntityTest;
+import ch.difty.sipamato.web.jasper.summary.PaperSummary;
 
 public class PaperSummaryTest extends JasperEntityTest {
 

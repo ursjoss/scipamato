@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.jasper.literature_review;
+package ch.difty.sipamato.web.jasper.literaturereview;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;

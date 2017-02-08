@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.jasper.summary_table;
+package ch.difty.sipamato.web.jasper.summarytable;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;

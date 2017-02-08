@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.jasper.summary_sp;
+package ch.difty.sipamato.web.jasper.summary;
 
 import java.util.Arrays;
 import java.util.Collection;
