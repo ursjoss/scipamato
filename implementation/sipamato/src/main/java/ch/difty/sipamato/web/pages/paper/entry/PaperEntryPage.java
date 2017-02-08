@@ -90,7 +90,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
                 error(new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId()).getString());
             }
         } catch (Exception ex) {
-            error(new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId()).getString());
+            error(new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId(), ex.getMessage()).getString());
         }
     }
 
