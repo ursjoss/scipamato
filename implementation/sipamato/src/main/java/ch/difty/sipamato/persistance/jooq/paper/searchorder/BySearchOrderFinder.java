@@ -4,10 +4,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
-import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.IdSipamatoEntity;
 import ch.difty.sipamato.entity.SearchOrder;
-import ch.difty.sipamato.persistance.jooq.EntityRecordMapper;
 
 /**
  * Helper to find papers or paperSlims based on SearchOrder specifications.
@@ -16,10 +14,8 @@ import ch.difty.sipamato.persistance.jooq.EntityRecordMapper;
  *
  * @param <T>
  *      derivatives of {@link IdSipamatoEntity<Long>}, should actually be Paper or PaperSlim
- * @param <M>
- *      {@link EntityRecordMapper} implementation mapping entities of type <code>T</code> into PaperRecord
  */
-public interface BySearchOrderFinder<T extends IdSipamatoEntity<Long>, M extends EntityRecordMapper<PaperRecord, T>> {
+public interface BySearchOrderFinder<T extends IdSipamatoEntity<Long>> {
 
     /**
      * Finds all entities of type <code>T</code> matching the provided {@link SearchOrder} specification.
