@@ -28,7 +28,7 @@ public class SipamatoUserDetailService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(final String username) {
         final Optional<User> userOption = userService.findByUserName(username);
         if (!userOption.isPresent()) {
             throw new UsernameNotFoundException("No user found with name " + username);
