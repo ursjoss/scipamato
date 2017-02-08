@@ -48,16 +48,25 @@ class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearchTerm> {
 
     private void handleUserField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions, final Token token) {
         final String fieldName = searchTerm.getFieldName();
-        assert (Paper.FLD_CREATED_BY.equals(fieldName) || Paper.FLD_LAST_MOD_BY.equals(fieldName));
+        if (!(Paper.FLD_CREATED_BY.equals(fieldName) || Paper.FLD_LAST_MOD_BY.equals(fieldName))) {
+            checkFields(fieldName, "user", Paper.FLD_CREATED_BY, Paper.FLD_LAST_MOD_BY, "CONTAINS");
+        }
         final Field<Object> field = DSL.field(fieldName);
         final String userName = "%" + token.getUserSqlData().toLowerCase() + "%";
         final SelectConditionStep<Record1<Long>> step = DSL.select(PAPER.ID).from(PAPER).innerJoin(USER).on(field.eq(USER.ID)).where(USER.USER_NAME.lower().like(userName));
         conditions.add(() -> PAPER.ID.in(step));
     }
 
+    private void checkFields(final String fieldName, String fieldType, String fld1, String fld2, String matchType) {
+        final String msg = String.format("Field %s is not one of the expected %s fields [%s, %s] entitled to use MatchType.%s", fieldName, fieldType, fld1, fld2, matchType);
+        throw new IllegalArgumentException(msg);
+    }
+
     private void handleDateField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions, final Token token) {
         final String fieldName = searchTerm.getFieldName();
-        assert (Paper.FLD_CREATED.equals(fieldName) || Paper.FLD_LAST_MOD.equals(fieldName));
+        if (!(Paper.FLD_CREATED.equals(fieldName) || Paper.FLD_LAST_MOD.equals(fieldName))) {
+            checkFields(fieldName, "date", Paper.FLD_CREATED, Paper.FLD_LAST_MOD, token.getType().matchType.name());
+        }
         final Field<Object> field = DSL.field(fieldName);
         String searchString = token.getDateSqlData();
         LocalDateTime ldt = LocalDateTime.parse(searchString, DateTimeFormatter.ofPattern(DATE_FORMAT));
