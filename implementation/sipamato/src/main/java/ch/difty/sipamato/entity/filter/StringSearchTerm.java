@@ -139,7 +139,8 @@ public class StringSearchTerm extends SearchTerm {
 
         public final TokenType type;
         public final boolean negate;
-        public final String rawData, sqlData;
+        public final String rawData;
+        public final String sqlData;
 
         public Token(final TokenType type, final String data) {
             this.type = type;
