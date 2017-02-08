@@ -24,22 +24,10 @@ public class SipamatoPdfExporterConfiguration extends SimplePdfExporterConfigura
     private static final long serialVersionUID = 1L;
 
     private SipamatoPdfExporterConfiguration(final Builder builder) {
-        if (builder.author != null) {
+        if (builder.author != null)
             setMetadataAuthor(builder.author);
-        }
-        if (builder.title != null) {
-            final StringBuilder sb = new StringBuilder();
-            sb.append(builder.title);
-            if (sb.length() > 0 && (builder.paperAuthor != null || builder.paperTitle != null))
-                sb.append(" - ");
-            if (builder.paperAuthor != null)
-                sb.append(builder.paperAuthor).append(" et al.");
-            if (builder.paperAuthor != null && builder.paperTitle != null)
-                sb.append(": ");
-            if (builder.paperTitle != null)
-                sb.append(builder.paperTitle);
-            setMetadataTitle(sb.toString());
-        }
+        if (builder.title != null)
+            setMetadataTitle(makeTitle(builder));
         if (getMetadataTitle() != null)
             setDisplayMetadataTitle(true);
         if (builder.subject != null)
@@ -51,6 +39,20 @@ public class SipamatoPdfExporterConfiguration extends SimplePdfExporterConfigura
             setTagged(true);
         }
         setCompressed(builder.compression);
+    }
+
+    private String makeTitle(final Builder builder) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(builder.title);
+        if (sb.length() > 0 && (builder.paperAuthor != null || builder.paperTitle != null))
+            sb.append(" - ");
+        if (builder.paperAuthor != null)
+            sb.append(builder.paperAuthor).append(" et al.");
+        if (builder.paperAuthor != null && builder.paperTitle != null)
+            sb.append(": ");
+        if (builder.paperTitle != null)
+            sb.append(builder.paperTitle);
+        return sb.toString();
     }
 
     public static class Builder {
