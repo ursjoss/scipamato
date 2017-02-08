@@ -53,7 +53,9 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
     private static final long serialVersionUID = 1L;
 
-    ResourceLink<Void> summaryLink;
+    private ResourceLink<Void> summaryLink;
+
+    private Form<T> form;
 
     public PaperPanel(String id) {
         super(id);
@@ -66,8 +68,6 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     public PaperPanel(String id, IModel<T> model, Mode mode) {
         super(id, model, mode);
     }
-
-    private Form<T> form;
 
     @Override
     public void onInitialize() {
