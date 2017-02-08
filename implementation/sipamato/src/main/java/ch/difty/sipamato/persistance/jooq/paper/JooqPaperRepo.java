@@ -60,7 +60,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
             GenericFilterConditionMapper<PaperFilter> filterConditionMapper, DateTimeService dateTimeService, Localization localization, InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter,
             UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter, Configuration jooqConfig) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, localization, insertSetStepSetter, updateSetStepSetter, jooqConfig);
-        searchOrderHelper = new DefaultBySearchOrderFinder<Paper, PaperRecordMapper>(dsl, mapper, sortMapper, getRecordClass());
+        searchOrderHelper = new DefaultBySearchOrderFinder<>(dsl, mapper, sortMapper, getRecordClass());
     }
 
     @Override

@@ -94,7 +94,7 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
 
     @Override
     public IModel<PaperSlim> model(final PaperSlim entity) {
-        return new Model<PaperSlim>(entity);
+        return new Model<>(entity);
     }
 
     @Override

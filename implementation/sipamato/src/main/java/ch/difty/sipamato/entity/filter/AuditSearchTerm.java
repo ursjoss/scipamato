@@ -149,8 +149,8 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
         private static final long serialVersionUID = 1L;
 
         private final TokenType type;
-        private Map<FieldType, String> rawDataMap = new EnumMap<FieldType, String>(FieldType.class);
-        private Map<FieldType, String> sqlDataMap = new EnumMap<FieldType, String>(FieldType.class);
+        private final Map<FieldType, String> rawDataMap = new EnumMap<>(FieldType.class);
+        private final Map<FieldType, String> sqlDataMap = new EnumMap<>(FieldType.class);
 
         public Token(final TokenType type, final String data) {
             this.type = type;

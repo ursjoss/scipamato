@@ -190,7 +190,7 @@ public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
     }
 
     private static List<Token> tokenize(final String input, final Pattern pattern) {
-        final List<Token> tokens = new ArrayList<Token>();
+        final List<Token> tokens = new ArrayList<>();
         final Matcher matcher = pattern.matcher(input);
         tokenIteration: while (matcher.find()) {
             for (final TokenType tk : TokenType.values()) {

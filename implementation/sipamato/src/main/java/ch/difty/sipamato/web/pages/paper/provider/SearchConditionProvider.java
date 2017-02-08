@@ -48,7 +48,7 @@ public class SearchConditionProvider extends SortableDataProvider<SearchConditio
      */
     private List<SearchCondition> getConditions() {
         final SearchOrder searchOrder = searchOrderModel.getObject();
-        return searchOrder != null ? searchOrder.getSearchConditions() : new ArrayList<SearchCondition>();
+        return searchOrder != null ? searchOrder.getSearchConditions() : new ArrayList<>();
     }
 
     /** {@inheritDoc} */
@@ -60,7 +60,7 @@ public class SearchConditionProvider extends SortableDataProvider<SearchConditio
     /** {@inheritDoc} */
     @Override
     public IModel<SearchCondition> model(final SearchCondition searchCondition) {
-        return new Model<SearchCondition>(searchCondition);
+        return new Model<>(searchCondition);
     }
 
 }
