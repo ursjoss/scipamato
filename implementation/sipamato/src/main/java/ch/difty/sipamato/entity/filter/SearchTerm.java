@@ -13,7 +13,7 @@ import ch.difty.sipamato.lib.AssertAs;
  *
  * @author u.joss
  */
-public abstract class SearchTerm<T extends SearchTerm<?>> extends IdSipamatoEntity<Long> {
+public abstract class SearchTerm extends IdSipamatoEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,7 +34,7 @@ public abstract class SearchTerm<T extends SearchTerm<?>> extends IdSipamatoEnti
         this.rawSearchTerm = AssertAs.notNull(rawSearchTerm, "rawSearchTerm");
     }
 
-    public static SearchTerm<?> of(final long id, final int searchTermTypeId, final long searchConditionId, final String fieldName, final String rawSearchTerm) {
+    public static SearchTerm of(final long id, final int searchTermTypeId, final long searchConditionId, final String fieldName, final String rawSearchTerm) {
         SearchTermType type = SearchTermType.byId(searchTermTypeId);
         switch (type) {
         case BOOLEAN:
@@ -88,8 +88,7 @@ public abstract class SearchTerm<T extends SearchTerm<?>> extends IdSipamatoEnti
             return false;
         if (getClass() != obj.getClass())
             return false;
-        @SuppressWarnings("unchecked")
-        final T other = (T) obj;
+        final SearchTerm other = (SearchTerm) obj;
         if (fieldName.hashCode() != other.getFieldName().hashCode())
             return false;
         if (!rawSearchTerm.equals(other.getRawSearchTerm()))

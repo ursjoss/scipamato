@@ -120,12 +120,12 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         }
     }
 
-    private Map<Long, List<SearchTerm<?>>> mapSearchTermsToSearchConditions(final SearchOrder searchOrder) {
-        final List<SearchTerm<?>> searchTerms = fetchSearchTermsForSearchOrderWithId(searchOrder.getId());
+    private Map<Long, List<SearchTerm>> mapSearchTermsToSearchConditions(final SearchOrder searchOrder) {
+        final List<SearchTerm> searchTerms = fetchSearchTermsForSearchOrderWithId(searchOrder.getId());
         return searchTerms.stream().collect(Collectors.groupingBy(st -> st.getSearchConditionId()));
     }
 
-    protected List<SearchTerm<?>> fetchSearchTermsForSearchOrderWithId(final long searchOrderId) {
+    protected List<SearchTerm> fetchSearchTermsForSearchOrderWithId(final long searchOrderId) {
         // @formatter:off
         return getDsl()
                 .select(
@@ -145,22 +145,22 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     /*
      * Note: This method only adds searchConditions that have searchTerms. It will not add conditions that e.g. only have createdTerms or modifiedTerms.
      */
-    private void fillSearchTermsInto(SearchOrder searchOrder, Map<Long, List<SearchTerm<?>>> map) {
-        for (final Entry<Long, List<SearchTerm<?>>> entry : map.entrySet()) {
+    private void fillSearchTermsInto(SearchOrder searchOrder, Map<Long, List<SearchTerm>> map) {
+        for (final Entry<Long, List<SearchTerm>> entry : map.entrySet()) {
             final SearchCondition sc = new SearchCondition(entry.getKey());
-            for (final SearchTerm<?> st : entry.getValue()) {
+            for (final SearchTerm st : entry.getValue()) {
                 sc.addSearchTerm(st);
             }
             searchOrder.add(sc);
         }
     }
 
-    private Map<Long, List<SearchTerm<?>>> mapSearchTermsToSearchConditions(final SearchCondition searchCondition) {
-        final List<SearchTerm<?>> searchTerms = fetchSearchTermsForSearchConditionWithId(searchCondition.getSearchConditionId());
+    private Map<Long, List<SearchTerm>> mapSearchTermsToSearchConditions(final SearchCondition searchCondition) {
+        final List<SearchTerm> searchTerms = fetchSearchTermsForSearchConditionWithId(searchCondition.getSearchConditionId());
         return searchTerms.stream().collect(Collectors.groupingBy(st -> st.getSearchConditionId()));
     }
 
-    protected List<SearchTerm<?>> fetchSearchTermsForSearchConditionWithId(final long searchConditionId) {
+    protected List<SearchTerm> fetchSearchTermsForSearchConditionWithId(final long searchConditionId) {
         // @formatter:off
         return getDsl()
                 .select(
@@ -177,9 +177,9 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         // @formatter:on
     }
 
-    private void fillSearchTermsInto(SearchCondition searchCondition, Map<Long, List<SearchTerm<?>>> map) {
-        for (final Entry<Long, List<SearchTerm<?>>> entry : map.entrySet()) {
-            for (final SearchTerm<?> st : entry.getValue()) {
+    private void fillSearchTermsInto(SearchCondition searchCondition, Map<Long, List<SearchTerm>> map) {
+        for (final Entry<Long, List<SearchTerm>> entry : map.entrySet()) {
+            for (final SearchTerm st : entry.getValue()) {
                 searchCondition.addSearchTerm(st);
             }
         }
@@ -269,7 +269,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
         }
     }
 
-    private void updateSearchTerm(final SearchTerm<?> st, final Long searchTermId, final Long searchConditionId) {
+    private void updateSearchTerm(final SearchTerm st, final Long searchTermId, final Long searchConditionId) {
         final Condition idMatches = SEARCH_TERM.ID.eq(searchTermId);
         getDsl().update(SEARCH_TERM)
                 .set(row(SEARCH_TERM.SEARCH_CONDITION_ID, SEARCH_TERM.SEARCH_TERM_TYPE, SEARCH_TERM.FIELD_NAME, SEARCH_TERM.RAW_VALUE, SEARCH_TERM.LAST_MODIFIED, SEARCH_TERM.LAST_MODIFIED_BY,
@@ -449,7 +449,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
             insertStep.execute();
     }
 
-    private SearchTerm<?> getPersistedTerm(final Long searchConditionId, final String fieldName, final Class<? extends SearchTerm<?>> termClass, final int typeId) {
+    private SearchTerm getPersistedTerm(final Long searchConditionId, final String fieldName, final Class<? extends SearchTerm> termClass, final int typeId) {
         return getDsl().select(SEARCH_TERM.ID, SEARCH_TERM.SEARCH_CONDITION_ID, SEARCH_TERM.FIELD_NAME, SEARCH_TERM.RAW_VALUE)
                 .from(SEARCH_TERM)
                 .where(SEARCH_TERM.SEARCH_CONDITION_ID.eq(searchConditionId))

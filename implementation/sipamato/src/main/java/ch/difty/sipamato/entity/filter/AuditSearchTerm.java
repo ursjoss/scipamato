@@ -49,7 +49,7 @@ import java.util.regex.Pattern;
  *
  * @see http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html
  */
-public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
+public class AuditSearchTerm extends SearchTerm {
 
     private static final long serialVersionUID = 1L;
 

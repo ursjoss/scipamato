@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
  *
  * @see http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html
  */
-public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
+public class StringSearchTerm extends SearchTerm {
     private static final long serialVersionUID = 1L;
 
     private static final String RE_NOT = "-";

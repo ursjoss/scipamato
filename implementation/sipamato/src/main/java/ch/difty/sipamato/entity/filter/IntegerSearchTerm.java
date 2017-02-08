@@ -25,7 +25,7 @@ package ch.difty.sipamato.entity.filter;
  *
  * @author u.joss
  */
-public class IntegerSearchTerm extends SearchTerm<IntegerSearchTerm> {
+public class IntegerSearchTerm extends SearchTerm {
     private static final long serialVersionUID = 1L;
 
     public enum MatchType {

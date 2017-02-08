@@ -111,7 +111,7 @@ public class DefaultBySearchOrderFinderTest {
     public void getConditions_withSearchOrderWithAuditSearchTermForCreationTimeStamp() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1l);
-        SearchTerm<?> st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "PAPER.CREATED", ">=\"2017-02-01 23:55:12\"");
+        SearchTerm st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "PAPER.CREATED", ">=\"2017-02-01 23:55:12\"");
         sc1.addSearchTerm(st);
         searchOrder.add(sc1);
 
@@ -123,7 +123,7 @@ public class DefaultBySearchOrderFinderTest {
     public void getConditions_withSearchOrderWithAuditSearchTermForLastModTimeStamp() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1l);
-        SearchTerm<?> st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "PAPER.LAST_MODIFIED", "<2017-02-01 23:55:12");
+        SearchTerm st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "PAPER.LAST_MODIFIED", "<2017-02-01 23:55:12");
         sc1.addSearchTerm(st);
         searchOrder.add(sc1);
 

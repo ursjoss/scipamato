@@ -219,13 +219,13 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
                 getJooqConfig()) {
             private static final long serialVersionUID = 1L;
 
-            SearchTerm<?> st1 = SearchTerm.of(1, SearchTermType.STRING.getId(), 3, Paper.FLD_AUTHORS, "joss");
-            SearchTerm<?> st2 = SearchTerm.of(2, SearchTermType.INTEGER.getId(), 3, Paper.FLD_PUBL_YEAR, "2014");
-            SearchTerm<?> st3 = SearchTerm.of(3, SearchTermType.INTEGER.getId(), 4, Paper.FLD_PUBL_YEAR, "2014-2016");
-            SearchTerm<?> st4 = SearchTerm.of(4, SearchTermType.AUDIT.getId(), 5, Paper.FLD_CREATED_BY, "mkj");
+            SearchTerm st1 = SearchTerm.of(1, SearchTermType.STRING.getId(), 3, Paper.FLD_AUTHORS, "joss");
+            SearchTerm st2 = SearchTerm.of(2, SearchTermType.INTEGER.getId(), 3, Paper.FLD_PUBL_YEAR, "2014");
+            SearchTerm st3 = SearchTerm.of(3, SearchTermType.INTEGER.getId(), 4, Paper.FLD_PUBL_YEAR, "2014-2016");
+            SearchTerm st4 = SearchTerm.of(4, SearchTermType.AUDIT.getId(), 5, Paper.FLD_CREATED_BY, "mkj");
 
             @Override
-            protected List<SearchTerm<?>> fetchSearchTermsForSearchOrderWithId(long searchOrderId) {
+            protected List<SearchTerm> fetchSearchTermsForSearchOrderWithId(long searchOrderId) {
                 if (searchOrderId == SAMPLE_ID) {
                     return Arrays.asList(st1, st2, st3, st4);
                 } else {
