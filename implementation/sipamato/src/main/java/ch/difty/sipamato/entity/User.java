@@ -17,7 +17,7 @@ public class User extends IdSipamatoEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 
-    public static User NO_USER = new User(-1, "noUser", "n.a", "n.a.", "n.a.", "n.a");
+    public static final User NO_USER = new User(-1, "noUser", "n.a", "n.a.", "n.a.", "n.a");
 
     public static final String USER_NAME = "userName";
     public static final String FIRST_NAME = "firstName";
