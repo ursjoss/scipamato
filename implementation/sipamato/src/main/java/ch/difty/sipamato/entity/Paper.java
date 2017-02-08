@@ -20,7 +20,6 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
     private static final String AUTHOR_REGEX = "^" + RE_WW + "(" + RE_S_WW + "){0,}(," + RE_S_WW + "(" + RE_S_WW + "){0,}){0,}\\.$";
     private static final String DOI_REGEX = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$";
 
-    public static final String ID = "id";
     public static final String DOI = "doi";
     public static final String PMID = "pmId";
     public static final String AUTHORS = "authors";
@@ -60,7 +59,6 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
 
     // TODO Leaky abstraction!!! Should not use the table fields in the entity layer:
     // Would need some mapper component in {@link SortMapper} converting the entity field names into table field names
-    public static final String FLD_ID = "id";
     public static final String FLD_DOI = "doi";
     public static final String FLD_PMID = "pm_id";
     public static final String FLD_AUTHORS = "authors";
