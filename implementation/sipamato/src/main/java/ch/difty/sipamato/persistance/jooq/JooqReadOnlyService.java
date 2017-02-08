@@ -92,7 +92,7 @@ public abstract class JooqReadOnlyService<ID extends Number, R extends Record, T
     @Override
     public Page<T> findByFilter(F filter, Pageable pageable) {
         final Page<T> page = repo.findByFilter(filter, pageable);
-        page.forEach(e -> enrichAuditNamesOf(e));
+        page.forEach(this::enrichAuditNamesOf);
         return page;
     }
 

@@ -156,7 +156,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
             private void ensureMainCodeIsPartOfCodes(Collection<Code> codesOfClass1, TextField<String> mainCodeOfCodeClass1, AjaxRequestTarget target) {
                 final Optional<String> main = Optional.ofNullable(mainCodeOfCodeClass1.getModelObject());
-                final Optional<String> match = codesOfClass1.stream().map(c -> c.getCode()).filter(c -> main.isPresent() && main.get().equals(c)).findFirst();
+                final Optional<String> match = codesOfClass1.stream().map(Code::getCode).filter(c -> main.isPresent() && main.get().equals(c)).findFirst();
                 if (main.isPresent() && !match.isPresent()) {
                     mainCodeOfCodeClass1.setModelObject(null);
                     target.add(mainCodeOfCodeClass1);
