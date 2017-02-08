@@ -12,11 +12,11 @@ import ch.difty.sipamato.web.pages.BasePage;
 @AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
 public class LogoutPage extends BasePage<Void> {
 
+    private static final long serialVersionUID = 1L;
+
     public LogoutPage(PageParameters parameters) {
         super(parameters);
     }
-
-    private static final long serialVersionUID = 1L;
 
     @Override
     protected void onInitialize() {

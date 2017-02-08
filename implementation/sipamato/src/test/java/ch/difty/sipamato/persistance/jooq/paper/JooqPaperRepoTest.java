@@ -22,6 +22,15 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
 
     private JooqPaperRepo repo;
 
+    @Mock
+    private Paper unpersistedEntity, persistedEntity;
+    @Mock
+    private PaperRecord persistedRecord;
+    @Mock
+    private PaperRecordMapper mapperMock;
+    @Mock
+    private PaperFilter filterMock;
+
     @Override
     protected Long getSampleId() {
         return SAMPLE_ID;
@@ -49,9 +58,6 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
         };
     }
 
-    @Mock
-    private Paper unpersistedEntity, persistedEntity;
-
     @Override
     protected Paper getUnpersistedEntity() {
         return unpersistedEntity;
@@ -62,16 +68,10 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
         return persistedEntity;
     }
 
-    @Mock
-    private PaperRecord persistedRecord;
-
     @Override
     protected PaperRecord getPersistedRecord() {
         return persistedRecord;
     }
-
-    @Mock
-    private PaperRecordMapper mapperMock;
 
     @Override
     protected PaperRecordMapper getMapper() {
@@ -97,9 +97,6 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     protected TableField<PaperRecord, Long> getTableId() {
         return PAPER.ID;
     }
-
-    @Mock
-    private PaperFilter filterMock;
 
     @Override
     protected PaperFilter getFilter() {

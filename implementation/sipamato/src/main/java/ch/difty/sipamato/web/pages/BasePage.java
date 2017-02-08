@@ -50,16 +50,8 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
     @SpringBean
     private DateTimeService dateTimeService;
 
-    protected DateTimeService getDateTimeService() {
-        return dateTimeService;
-    }
-
     @SpringBean
     private ApplicationProperties applicationProperties;
-
-    protected ApplicationProperties getProperties() {
-        return applicationProperties;
-    }
 
     private NotificationPanel feedbackPanel;
     private Navbar navBar;
@@ -70,6 +62,14 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
     public BasePage(final IModel<T> model) {
         super(model);
+    }
+
+    protected DateTimeService getDateTimeService() {
+        return dateTimeService;
+    }
+
+    protected ApplicationProperties getProperties() {
+        return applicationProperties;
     }
 
     protected Navbar getNavBar() {

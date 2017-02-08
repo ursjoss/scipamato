@@ -34,6 +34,14 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
     @SpringBean
     private PaperSlimService service;
 
+    @SpringBean
+    private PaperService paperService;
+
+    SortablePaperSlimProvider(final F filterState, final Integer rowsPerPage) {
+        this.filterState = filterState;
+        this.maxRowsPerPage = rowsPerPage;
+    }
+
     protected PaperSlimService getService() {
         return service;
     }
@@ -43,9 +51,6 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
         this.service = service;
     }
 
-    @SpringBean
-    private PaperService paperService;
-
     protected PaperService getPaperService() {
         return paperService;
     }
@@ -53,11 +58,6 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
     /** protected for test purposes */
     protected void setPaperService(final PaperService paperService) {
         this.paperService = paperService;
-    }
-
-    SortablePaperSlimProvider(final F filterState, final Integer rowsPerPage) {
-        this.filterState = filterState;
-        this.maxRowsPerPage = rowsPerPage;
     }
 
     /**

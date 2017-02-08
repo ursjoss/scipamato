@@ -42,6 +42,13 @@ public class DefaultBySearchOrderFinder<T extends IdSipamatoEntity<Long>, M exte
     private final JooqSortMapper<PaperRecord, T, ch.difty.sipamato.db.tables.Paper> sortMapper;
     private final Class<? extends PaperRecord> recordClass;
 
+    public DefaultBySearchOrderFinder(final DSLContext dsl, final M mapper, JooqSortMapper<PaperRecord, T, ch.difty.sipamato.db.tables.Paper> sortMapper, Class<? extends PaperRecord> recordClass) {
+        this.dsl = dsl;
+        this.mapper = mapper;
+        this.sortMapper = sortMapper;
+        this.recordClass = recordClass;
+    }
+
     private DSLContext getDsl() {
         return dsl;
     }
@@ -56,13 +63,6 @@ public class DefaultBySearchOrderFinder<T extends IdSipamatoEntity<Long>, M exte
 
     private Class<? extends PaperRecord> getRecordClass() {
         return recordClass;
-    }
-
-    public DefaultBySearchOrderFinder(final DSLContext dsl, final M mapper, JooqSortMapper<PaperRecord, T, ch.difty.sipamato.db.tables.Paper> sortMapper, Class<? extends PaperRecord> recordClass) {
-        this.dsl = dsl;
-        this.mapper = mapper;
-        this.sortMapper = sortMapper;
-        this.recordClass = recordClass;
     }
 
     /** {@inheritDoc} */

@@ -53,12 +53,12 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         initDefaultModel();
     }
 
-    private void initDefaultModel() {
-        setDefaultModel(Model.of(new Paper()));
-    }
-
     public PaperEntryPage(IModel<Paper> paperModel) {
         super(paperModel);
+    }
+
+    private void initDefaultModel() {
+        setDefaultModel(Model.of(new Paper()));
     }
 
     @Override

@@ -74,6 +74,19 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         trySettingSearchOrderModelFromDb();
     }
 
+    /**
+     * Instantiate the page with the provided model of the {@link SearchOrder}. It must have a valid id.
+     *
+     * @param searchOrderModel
+     */
+    public PaperSearchPage(final IModel<SearchOrder> searchOrderModel) {
+        super(searchOrderModel);
+        AssertAs.notNull(searchOrderModel, "searchOrderModel");
+        AssertAs.notNull(searchOrderModel.getObject(), "searchOrderModel.object");
+        AssertAs.notNull(searchOrderModel.getObject().getId(), "searchOrderModel.object.id");
+        getPageParameters().add(PageParameterNames.SEARCH_ORDER_ID, searchOrderModel.getObject().getId());
+    }
+
     private void trySettingSearchOrderModelFromDb() {
         final Long searchOrderId = getSearchOrderId();
         final Optional<SearchOrder> so = searchOrderId != null ? searchOrderService.findById(searchOrderId) : Optional.empty();
@@ -98,19 +111,6 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         so.setName(null);
         so.setOwner(getActiveUser().getId());
         return so;
-    }
-
-    /**
-     * Instantiate the page with the provided model of the {@link SearchOrder}. It must have a valid id.
-     *
-     * @param searchOrderModel
-     */
-    public PaperSearchPage(final IModel<SearchOrder> searchOrderModel) {
-        super(searchOrderModel);
-        AssertAs.notNull(searchOrderModel, "searchOrderModel");
-        AssertAs.notNull(searchOrderModel.getObject(), "searchOrderModel.object");
-        AssertAs.notNull(searchOrderModel.getObject().getId(), "searchOrderModel.object.id");
-        getPageParameters().add(PageParameterNames.SEARCH_ORDER_ID, searchOrderModel.getObject().getId());
     }
 
     @Override

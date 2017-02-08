@@ -36,17 +36,6 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
     private String brand;
     private String createdBy;
 
-    @Override
-    protected JasperReport getReport() {
-        return PaperReviewReportResourceReference.get().getReport();
-    }
-
-    @Override
-    protected PaperReview makeEntity(final Paper p) {
-        return new PaperReview(p, idLabel, authorYearLabel, populationPlaceLabel, methodOutcomeLabel, exposurePollutantLabel, methodStudyDesignLabel, populationDurationLabel,
-                populationParticipantsLabel, exposureAssessmentLabel, resultExposureRangeLabel, methodConfoundersLabel, resultEffectEstimateLabel, brand, createdBy);
-    }
-
     /**
      * Using the dataProvider for the Result Panel as record source.
      */
@@ -70,6 +59,17 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
         this.resultEffectEstimateLabel = resultEffectEstimateLabel;
         this.brand = brand;
         this.createdBy = createdBy;
+    }
+
+    @Override
+    protected JasperReport getReport() {
+        return PaperReviewReportResourceReference.get().getReport();
+    }
+
+    @Override
+    protected PaperReview makeEntity(final Paper p) {
+        return new PaperReview(p, idLabel, authorYearLabel, populationPlaceLabel, methodOutcomeLabel, exposurePollutantLabel, methodStudyDesignLabel, populationDurationLabel,
+                populationParticipantsLabel, exposureAssessmentLabel, resultExposureRangeLabel, methodConfoundersLabel, resultEffectEstimateLabel, brand, createdBy);
     }
 
 }
