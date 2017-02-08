@@ -67,25 +67,26 @@ class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearchTerm> {
         if (!(Paper.FLD_CREATED.equals(fieldName) || Paper.FLD_LAST_MOD.equals(fieldName))) {
             checkFields(fieldName, "date", Paper.FLD_CREATED, Paper.FLD_LAST_MOD, token.getType().matchType.name());
         }
-        final Field<Object> field = DSL.field(fieldName);
-        String searchString = token.getDateSqlData();
-        LocalDateTime ldt = LocalDateTime.parse(searchString, DateTimeFormatter.ofPattern(DATE_FORMAT));
-        final Field<Timestamp> value = DSL.val(Timestamp.valueOf(ldt));
+        final LocalDateTime ldt = LocalDateTime.parse(token.getDateSqlData(), DateTimeFormatter.ofPattern(DATE_FORMAT));
+        addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt)), conditions);
+    }
+
+    private void addToConditions(final Token token, final Field<Object> field, final Field<Timestamp> value, final ConditionalSupplier conditions) {
         switch (token.getType().matchType) {
         case GREATER_THAN:
-            conditions.add(() -> (field.greaterThan(value)));
+            conditions.add(() -> field.greaterThan(value));
             break;
         case GREATER_OR_EQUAL:
-            conditions.add(() -> (field.greaterOrEqual(value)));
+            conditions.add(() -> field.greaterOrEqual(value));
             break;
         case EQUALS:
-            conditions.add(() -> (field.equal(value)));
+            conditions.add(() -> field.equal(value));
             break;
         case LESS_OR_EQUAL:
-            conditions.add(() -> (field.lessOrEqual(value)));
+            conditions.add(() -> field.lessOrEqual(value));
             break;
         case LESS_THAN:
-            conditions.add(() -> (field.lessThan(value)));
+            conditions.add(() -> field.lessThan(value));
             break;
         case CONTAINS:
         case NONE:

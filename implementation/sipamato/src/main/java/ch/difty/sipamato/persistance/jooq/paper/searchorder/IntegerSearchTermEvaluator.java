@@ -1,6 +1,8 @@
 package ch.difty.sipamato.persistance.jooq.paper.searchorder;
 
 import org.jooq.Condition;
+import org.jooq.Field;
+import org.jooq.Param;
 import org.jooq.impl.DSL;
 
 import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
@@ -18,23 +20,26 @@ class IntegerSearchTermEvaluator implements SearchTermEvaluator<IntegerSearchTer
     public Condition evaluate(final IntegerSearchTerm searchTerm) {
         AssertAs.notNull(searchTerm, "searchTerm");
 
+        final Field<Object> field = DSL.field(searchTerm.getFieldName());
+        final Param<Integer> value = DSL.val(searchTerm.getValue());
+
         switch (searchTerm.getType()) {
         case EXACT:
-            return DSL.field(searchTerm.getFieldName()).equal(DSL.val(searchTerm.getValue()));
+            return field.equal(value);
         case LESS_OR_EQUAL:
-            return DSL.field(searchTerm.getFieldName()).le(DSL.val(searchTerm.getValue()));
+            return field.le(value);
         case LESS_THAN:
-            return DSL.field(searchTerm.getFieldName()).lt(DSL.val(searchTerm.getValue()));
+            return field.lt(value);
         case GREATER_OR_EQUAL:
-            return DSL.field(searchTerm.getFieldName()).ge(DSL.val(searchTerm.getValue()));
+            return field.ge(value);
         case GREATER_THAN:
-            return DSL.field(searchTerm.getFieldName()).gt(DSL.val(searchTerm.getValue()));
+            return field.gt(value);
         case RANGE:
-            return DSL.field(searchTerm.getFieldName()).between(DSL.val(searchTerm.getValue()), DSL.val(searchTerm.getValue2()));
+            return field.between(value, DSL.val(searchTerm.getValue2()));
         case MISSING:
-            return DSL.field(searchTerm.getFieldName()).isNull();
+            return field.isNull();
         case PRESENT:
-            return DSL.field(searchTerm.getFieldName()).isNotNull();
+            return field.isNotNull();
         default:
             throw new UnsupportedOperationException("Evaluation of type " + searchTerm.getType() + " is not supported...");
         }
