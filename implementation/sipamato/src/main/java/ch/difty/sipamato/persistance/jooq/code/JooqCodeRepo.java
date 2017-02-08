@@ -33,7 +33,7 @@ public class JooqCodeRepo implements CodeRepository {
         AssertAs.notNull(codeClassId, "codeClassId");
         final String lang = TranslationUtils.trimLanguageCode(languageCode);
         // @formatter:off
-        final List<Code> codes = dslContext
+        return dslContext
             .select(CODE.CODE_.as("C_ID")
                     , DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL).as("C_NAME")
                     , CODE_TR.COMMENT.as("C_COMMENT")
@@ -50,8 +50,6 @@ public class JooqCodeRepo implements CodeRepository {
             .orderBy(CODE_CLASS.ID, CODE.SORT)
             .fetchInto(Code.class);
         // @formatter:on
-
-        return codes;
     }
 
 }

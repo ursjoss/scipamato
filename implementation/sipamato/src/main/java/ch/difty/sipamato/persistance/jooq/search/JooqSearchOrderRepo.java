@@ -204,21 +204,19 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     }
 
     protected List<Long> findConditionIdsWithSearchTerms(final Long searchOrderId) {
-        final List<Long> conditionIdsWithSearchTerms = getDsl().select(SEARCH_TERM.SEARCH_CONDITION_ID)
+        return getDsl().select(SEARCH_TERM.SEARCH_CONDITION_ID)
                 .from(SEARCH_TERM)
                 .innerJoin(SEARCH_CONDITION)
                 .on(SEARCH_TERM.SEARCH_CONDITION_ID.eq(SEARCH_CONDITION.SEARCH_CONDITION_ID))
                 .where(SEARCH_CONDITION.SEARCH_ORDER_ID.eq(searchOrderId))
                 .fetchInto(Long.class);
-        return conditionIdsWithSearchTerms;
     }
 
     protected List<SearchCondition> findTermLessConditions(final Long searchOrderId, final List<Long> conditionIdsWithSearchTerms) {
-        final List<SearchCondition> termLessConditions = getDsl().selectFrom(SEARCH_CONDITION)
+        return getDsl().selectFrom(SEARCH_CONDITION)
                 .where(SEARCH_CONDITION.SEARCH_ORDER_ID.eq(searchOrderId))
                 .and(SEARCH_CONDITION.SEARCH_CONDITION_ID.notIn(conditionIdsWithSearchTerms))
                 .fetchInto(SearchCondition.class);
-        return termLessConditions;
     }
 
     private void fillExcludedPaperIdsInto(SearchOrder searchOrder) {
@@ -377,8 +375,8 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
 
     protected List<Code> fetchCodesForSearchConditionWithId(final SearchCondition searchCondition) {
         final String localizationCode = getLocalization().getLocalization();
-        final List<Code> codes = getDsl()
         // @formatter:off
+        return getDsl()
             .select(CODE.CODE_.as("C_ID")
                     , DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL).as("C_NAME")
                     , CODE_TR.COMMENT.as("C_COMMENT")
@@ -396,7 +394,6 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
             .where(SEARCH_CONDITION_CODE.SEARCH_CONDITION_ID.equal(searchCondition.getSearchConditionId()))
             .fetchInto(Code.class);
         // @formatter:on
-        return codes;
     }
 
     private void saveOrUpdateValidTerms(SearchCondition searchCondition, Long searchConditionId) {

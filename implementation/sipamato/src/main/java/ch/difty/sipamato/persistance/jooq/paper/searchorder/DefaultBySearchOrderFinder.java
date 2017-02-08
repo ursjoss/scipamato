@@ -72,10 +72,8 @@ public class DefaultBySearchOrderFinder<T extends IdSipamatoEntity<Long>, M exte
 
         final Condition paperMatches = getConditionsFrom(searchOrder);
         final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(paperMatches).fetchInto(getRecordClass());
-        final List<T> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
 
-        return entities;
-
+        return queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
     }
 
     /**
