@@ -6,6 +6,7 @@ package ch.difty.sipamato.logic.parsing;
  *
  * @author u.joss
  */
+@FunctionalInterface
 public interface AuthorParserFactory {
 
     /**

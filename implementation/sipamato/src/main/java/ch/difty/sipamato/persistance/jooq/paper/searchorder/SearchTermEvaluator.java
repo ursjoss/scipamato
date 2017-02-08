@@ -11,6 +11,7 @@ import ch.difty.sipamato.entity.filter.SearchTerm;
  *
  * @param <T> the {@link SearchTerm} implementation to be evaluated
  */
+@FunctionalInterface
 public interface SearchTermEvaluator<T extends SearchTerm<T>> {
 
     /**

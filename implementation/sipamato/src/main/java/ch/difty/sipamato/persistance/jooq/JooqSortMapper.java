@@ -18,6 +18,7 @@ import ch.difty.sipamato.entity.SipamatoEntity;
  * @param <T> the type of the entity, extending {@link SipamatoEntity}
  * @param <TI> the type of the table implementation of record <literal>R</literal>
  */
+@FunctionalInterface
 public interface JooqSortMapper<R extends Record, T extends SipamatoEntity, TI extends TableImpl<R>> {
 
     /**
