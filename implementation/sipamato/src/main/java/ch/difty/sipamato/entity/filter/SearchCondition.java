@@ -510,7 +510,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     }
 
     public String getDisplayValue() {
-        StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
         final String textString = stringSearchTerms.values().stream().map(StringSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
         final String intString = integerSearchTerms.values().stream().map(IntegerSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
         final String boolString = booleanSearchTerms.values().stream().map(BooleanSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));

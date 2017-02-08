@@ -54,11 +54,11 @@ public class IntegerSearchTerm extends SearchTerm<IntegerSearchTerm> {
     IntegerSearchTerm(final Long id, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
         super(id, SearchTermType.INTEGER, searchConditionId, fieldName, rawSearchTerm);
         final String rst = rawSearchTerm.trim();
-        if (rst.equals("=\"\"")) {
+        if ("=\"\"".equals(rst)) {
             this.type = MatchType.MISSING;
             this.value = 0;
             this.value2 = 0;
-        } else if (rst.equals(">\"\"")) {
+        } else if (">\"\"".equals(rst)) {
             this.type = MatchType.PRESENT;
             this.value = 0;
             this.value2 = 0;
@@ -84,8 +84,8 @@ public class IntegerSearchTerm extends SearchTerm<IntegerSearchTerm> {
             this.value2 = this.value;
         } else if (rst.length() > 1 && rst.contains("-")) {
             this.type = MatchType.RANGE;
-            this.value = Integer.parseInt(rst.substring(0, rst.indexOf("-")).trim());
-            this.value2 = Integer.parseInt(rst.substring(rst.indexOf("-") + 1, rst.length()).trim());
+            this.value = Integer.parseInt(rst.substring(0, rst.indexOf('-')).trim());
+            this.value2 = Integer.parseInt(rst.substring(rst.indexOf('-') + 1, rst.length()).trim());
         } else {
             this.type = MatchType.EXACT;
             this.value = Integer.parseInt(rst.trim());

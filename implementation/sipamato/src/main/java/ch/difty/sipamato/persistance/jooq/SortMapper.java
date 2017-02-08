@@ -64,7 +64,7 @@ public class SortMapper<R extends Record, T extends SipamatoEntity, TI extends T
             Field tableField = table.getClass().getField(sortFieldName.toUpperCase());
             sortField = (TableField<R, T>) tableField.get(table);
         } catch (NoSuchFieldException | IllegalAccessException ex) {
-            String errorMessage = String.format("Could not find table field: {}", sortFieldName);
+            String errorMessage = String.format("Could not find table field: %s", sortFieldName);
             throw new InvalidDataAccessApiUsageException(errorMessage, ex);
         }
 

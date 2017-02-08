@@ -31,5 +31,5 @@ public class SipamatoHomePage extends BasePage<Void> {
         final StringBuilder sb = new StringBuilder();
         sb.append("Hello ").append(getAuthentication().getName()).append(" - welcome to ").append(getProperties().getBrand()).append("!");
         return sb.toString();
-    };
+    }
 }

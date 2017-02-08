@@ -9,7 +9,7 @@ public class AssertAsTest {
 
     @Test
     public void assertingNonNullField_doesNothing() {
-        assertThat(AssertAs.notNull(new String(), "myparam")).isEmpty();
+        assertThat(AssertAs.notNull("", "myparam")).isEmpty();
     }
 
     @Test
@@ -24,7 +24,7 @@ public class AssertAsTest {
 
     @Test
     public void assertingNonNullField_withoutName_doesNothing() {
-        assertThat(AssertAs.notNull(new String())).isEmpty();
+        assertThat(AssertAs.notNull("")).isEmpty();
     }
 
     @Test

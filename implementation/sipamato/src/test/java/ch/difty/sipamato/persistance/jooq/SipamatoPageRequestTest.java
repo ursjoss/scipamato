@@ -125,7 +125,7 @@ public class SipamatoPageRequestTest {
     @Test
     public void inequality_ofDifferentClass() {
         pr = new SipamatoPageRequest(5, 5, 5);
-        assertThat(pr.equals("foo")).isFalse();
+        assertThat("foo".equals(pr)).isFalse();
     }
 
     @Test

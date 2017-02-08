@@ -48,7 +48,7 @@ class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearchTerm> {
 
     private void handleUserField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions, final Token token) {
         final String fieldName = searchTerm.getFieldName();
-        assert (fieldName.equals(Paper.FLD_CREATED_BY) || fieldName.equals(Paper.FLD_LAST_MOD_BY));
+        assert (Paper.FLD_CREATED_BY.equals(fieldName) || Paper.FLD_LAST_MOD_BY.equals(fieldName));
         final Field<Object> field = DSL.field(fieldName);
         final String userName = "%" + token.getUserSqlData().toLowerCase() + "%";
         final SelectConditionStep<Record1<Long>> step = DSL.select(PAPER.ID).from(PAPER).innerJoin(USER).on(field.eq(USER.ID)).where(USER.USER_NAME.lower().like(userName));
@@ -57,7 +57,7 @@ class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearchTerm> {
 
     private void handleDateField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions, final Token token) {
         final String fieldName = searchTerm.getFieldName();
-        assert (fieldName.equals(Paper.FLD_CREATED) || fieldName.equals(Paper.FLD_LAST_MOD));
+        assert (Paper.FLD_CREATED.equals(fieldName) || Paper.FLD_LAST_MOD.equals(fieldName));
         final Field<Object> field = DSL.field(fieldName);
         String searchString = token.getDateSqlData();
         LocalDateTime ldt = LocalDateTime.parse(searchString, DateTimeFormatter.ofPattern(DATE_FORMAT));
@@ -79,7 +79,6 @@ class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearchTerm> {
             conditions.add(() -> (field.lessThan(value)));
             break;
         case CONTAINS:
-            break;
         case NONE:
             break;
         default:

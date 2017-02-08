@@ -57,8 +57,7 @@ public class JooqUserRepoIntegrationTest {
 
     @Test
     public void findingById_withExistingId_returnsEntity() {
-        User user = repo.findById(3);
-        user = repo.findById(RECORD_COUNT_PREPOPULATED);
+        User user = repo.findById(RECORD_COUNT_PREPOPULATED);
         assertThat(user.getId()).isEqualTo(MAX_ID_PREPOPULATED);
 
         assertThat(user.getRoles()).hasSize(2);

@@ -93,7 +93,7 @@ public class DefaultBySearchOrderFinder<T extends IdSipamatoEntity<Long>, M exte
             for (final SearchCondition sc : searchOrder.getSearchConditions())
                 conditions.add(() -> getConditionFromSingleSearchCondition(sc));
             final Condition scConditions = conditions.combineWithOr();
-            if (searchOrder.getExcludedPaperIds().isEmpty() || scConditions.toString().equals("1 = 0")) {
+            if (searchOrder.getExcludedPaperIds().isEmpty() || "1 = 0".equals(scConditions.toString())) {
                 return scConditions;
             } else {
                 return scConditions.and(PAPER.ID.notIn(searchOrder.getExcludedPaperIds()));

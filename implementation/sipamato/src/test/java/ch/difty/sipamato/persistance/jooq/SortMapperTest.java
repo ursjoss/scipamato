@@ -81,7 +81,7 @@ public class SortMapperTest {
             mapper.getTableField(notExistingFieldName, ch.difty.sipamato.db.tables.Paper.PAPER);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(InvalidDataAccessApiUsageException.class).hasMessage("Could not find table field: {}; nested exception is java.lang.NoSuchFieldException: FOO");
+            assertThat(ex).isInstanceOf(InvalidDataAccessApiUsageException.class).hasMessage("Could not find table field: foo; nested exception is java.lang.NoSuchFieldException: FOO");
         }
     }
 

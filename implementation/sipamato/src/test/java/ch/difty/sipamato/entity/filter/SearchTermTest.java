@@ -152,7 +152,7 @@ public class SearchTermTest {
         SearchTerm<?> st1 = SearchTerm.of(12, 2, 3l, "fn3", "foo*");
         assertThat(st1.equals(st1)).isTrue();
         assertThat(st1.equals(null)).isFalse();
-        assertThat(st1.equals(new String())).isFalse();
+        assertThat(st1.equals("")).isFalse();
     }
 
     @Test

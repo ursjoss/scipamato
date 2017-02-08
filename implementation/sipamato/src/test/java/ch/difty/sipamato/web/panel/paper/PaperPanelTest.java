@@ -120,8 +120,8 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
         getTester().assertLabel(path + "Label", labelText);
     }
 
-    protected void assertCommonComponents(String b) {
-        b += ":form";
+    protected void assertCommonComponents(String id) {
+        String b = id + ":form";
         getTester().assertComponent(b, Form.class);
 
         assertTextAreaWithLabel(b + ":authors", "a", "Authors");

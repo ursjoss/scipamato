@@ -38,8 +38,7 @@ public class JooqPaperSlimRepoIntegrationTest {
 
     @Test
     public void findingById_withExistingId_returnsEntity() {
-        PaperSlim paper = repo.findById(1l);
-        paper = repo.findById((long) MAX_ID_PREPOPULATED);
+        PaperSlim paper = repo.findById((long) MAX_ID_PREPOPULATED);
         assertThat(paper.getId()).isEqualTo(MAX_ID_PREPOPULATED);
     }
 

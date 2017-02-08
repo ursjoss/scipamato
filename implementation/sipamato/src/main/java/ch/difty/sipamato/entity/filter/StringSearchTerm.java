@@ -186,7 +186,7 @@ public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
         for (final TokenType tokenType : TokenType.values())
             if (tokenType != TokenType.RAW)
                 tokenPatternBuilder.append(String.format("|(?<%s>%s)", tokenType.name(), tokenType.pattern));
-        return Pattern.compile(new String(tokenPatternBuilder.substring(1)));
+        return Pattern.compile(tokenPatternBuilder.substring(1));
     }
 
     private static List<Token> tokenize(final String input, final Pattern pattern) {

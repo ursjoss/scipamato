@@ -669,7 +669,7 @@ public class SearchConditionTest {
         assertThat(sc.hashCode()).isEqualTo(917087168);
         assertThat(sc.equals(sc)).isTrue();
         assertThat(sc.equals(null)).isFalse();
-        assertThat(sc.equals(new String())).isFalse();
+        assertThat(sc.equals("")).isFalse();
     }
 
     @Test
@@ -932,7 +932,6 @@ public class SearchConditionTest {
         assertThat(sc.getCodes()).hasSize(2);
         sc.clearCodes();
         assertThat(sc.getCodes()).isEmpty();
-        ;
     }
 
 }

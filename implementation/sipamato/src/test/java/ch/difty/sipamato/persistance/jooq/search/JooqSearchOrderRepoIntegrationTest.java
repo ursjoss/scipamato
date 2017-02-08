@@ -57,8 +57,7 @@ public class JooqSearchOrderRepoIntegrationTest {
 
     @Test
     public void findingById_withExistingId_returnsEntity() {
-        SearchOrder searchOrder = repo.findById(1l);
-        searchOrder = repo.findById(RECORD_COUNT_PREPOPULATED.longValue());
+        SearchOrder searchOrder = repo.findById(RECORD_COUNT_PREPOPULATED.longValue());
         assertThat(searchOrder.getId()).isEqualTo(MAX_ID_PREPOPULATED);
     }
 

@@ -2,7 +2,7 @@ package ch.difty.sipamato.entity.filter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -149,8 +149,8 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
         private static final long serialVersionUID = 1L;
 
         private final TokenType type;
-        private Map<FieldType, String> rawDataMap = new HashMap<>();
-        private Map<FieldType, String> sqlDataMap = new HashMap<>();
+        private Map<FieldType, String> rawDataMap = new EnumMap<FieldType, String>(FieldType.class);
+        private Map<FieldType, String> sqlDataMap = new EnumMap<FieldType, String>(FieldType.class);
 
         public Token(final TokenType type, final String data) {
             this.type = type;
@@ -217,7 +217,7 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
         for (final TokenType tokenType : TokenType.values())
             if (tokenType != TokenType.RAW)
                 tokenPatternBuilder.append(String.format("|(?<%s>%s)", tokenType.name(), tokenType.pattern));
-        return Pattern.compile(new String(tokenPatternBuilder.substring(1)));
+        return Pattern.compile(tokenPatternBuilder.substring(1));
     }
 
     private static List<Token> tokenize(final String input, final Pattern pattern, final boolean isUserType, final boolean isDateType) {

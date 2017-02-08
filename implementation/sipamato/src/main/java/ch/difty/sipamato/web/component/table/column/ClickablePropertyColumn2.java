@@ -49,7 +49,7 @@ public class ClickablePropertyColumn2<T, S, U> extends AbstractColumn<T, S> {
 
     protected void onClick(IModel<T> clicked) {
         biConsumer.accept(clicked, supplier.get());
-    };
+    }
 
     private class LinkPanel extends Panel {
         private static final long serialVersionUID = 1L;

@@ -160,7 +160,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     public void equalingToSpecialCases() {
         assertThat(c.equals(c)).isTrue();
         assertThat(c.equals(null)).isFalse();
-        assertThat(c.equals(new String())).isFalse();
+        assertThat(c.equals("")).isFalse();
     }
 
     @Test

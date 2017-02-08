@@ -65,7 +65,7 @@ public class AuditSearchTermsTest {
     public void compareWithNullSelfOrDifferentClass() {
         assertThat(st1.equals(null)).isFalse();
         assertThat(st1.equals(st1)).isTrue();
-        assertThat(st1.equals(new String())).isFalse();
+        assertThat(st1.equals("")).isFalse();
     }
 
 }

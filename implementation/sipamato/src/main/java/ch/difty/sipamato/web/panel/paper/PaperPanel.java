@@ -139,7 +139,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 target.add(modified);
             }
         });
-    };
+    }
 
     private void queueTabPanel(String tabId) {
         List<ITab> tabs = new ArrayList<>();
@@ -397,7 +397,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 @SuppressWarnings("unchecked")
                 public List<Code> getObject() {
                     return ((IModel<CodeBoxAware>) getTarget()).getObject().getCodesOf(ccId);
-                };
+                }
 
                 @SuppressWarnings("unchecked")
                 public void setObject(final List<Code> codes) {

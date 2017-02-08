@@ -207,8 +207,8 @@ public class PaperCodeBoxTest {
         assertThat(cb1.equals(cb1)).isTrue();
         assertThat(cb2.equals(cb2)).isTrue();
         assertThat(cb1.equals(null)).isFalse();
-        assertThat(cb1.equals(new String())).isFalse();
-        assertThat(cb2.equals(new String())).isFalse();
+        assertThat(cb1.equals("")).isFalse();
+        assertThat(cb2.equals("")).isFalse();
         assertThat(cb1.equals(cb2)).isTrue();
         assertThat(cb1.hashCode()).isEqualTo(cb2.hashCode());
     }

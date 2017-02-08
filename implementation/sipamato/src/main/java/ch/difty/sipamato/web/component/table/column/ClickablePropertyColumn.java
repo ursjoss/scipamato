@@ -42,7 +42,7 @@ public class ClickablePropertyColumn<T, S> extends AbstractColumn<T, S> {
 
     protected void onClick(IModel<T> clicked) {
         consumer.accept(clicked);
-    };
+    }
 
     private class LinkPanel extends Panel {
         private static final long serialVersionUID = 1L;
