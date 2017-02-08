@@ -28,7 +28,7 @@ public class JooqEntityDslIntegrationTest {
     private DSLContext create;
 
     @Test
-    public void testPaperRecords() throws Exception {
+    public void testPaperRecords() {
         Result<PaperRecord> result = create.selectFrom(PAPER).orderBy(PAPER.ID).fetch();
         assertThat(result).hasSize(TestDbConstants.RECORD_COUNT_PREPOPULATED);
     }
