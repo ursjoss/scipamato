@@ -386,9 +386,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         }
 
         private BootstrapMultiSelect<Code> makeCodeClassComplex(final CodeClassId codeClassId, final List<CodeClass> codeClasses) {
-            final CodeClassId ccId = CodeClassId.fromId(codeClassId.getId()).get();
-            final int id = ccId.getId();
-            final String className = codeClasses.stream().filter(cc -> cc.getId() == id).map(CodeClass::getName).findFirst().orElse(ccId.name());
+            final int id = codeClassId.getId();
+            final String className = codeClasses.stream().filter(cc -> cc.getId() == id).map(CodeClass::getName).findFirst().orElse(codeClassId.name());
             queue(new Label(CODES_CLASS_BASE_NAME + id + "Label", Model.of(className)));
 
             final ChainingModel<List<Code>> model = new ChainingModel<List<Code>>(getModel()) {
@@ -397,19 +396,19 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 @SuppressWarnings("unchecked")
                 @Override
                 public List<Code> getObject() {
-                    return ((IModel<CodeBoxAware>) getTarget()).getObject().getCodesOf(ccId);
+                    return ((IModel<CodeBoxAware>) getTarget()).getObject().getCodesOf(codeClassId);
                 }
 
                 @SuppressWarnings("unchecked")
                 @Override
                 public void setObject(final List<Code> codes) {
-                    ((IModel<CodeBoxAware>) getTarget()).getObject().clearCodesOf(ccId);
+                    ((IModel<CodeBoxAware>) getTarget()).getObject().clearCodesOf(codeClassId);
                     if (CollectionUtils.isNotEmpty(codes)) {
                         ((IModel<CodeBoxAware>) getTarget()).getObject().addCodes(codes);
                     }
                 }
             };
-            final CodeModel choices = new CodeModel(ccId, getLocalization().getLocalization());
+            final CodeModel choices = new CodeModel(codeClassId, getLocalization().getLocalization());
             final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(Code.DISPLAY_VALUE, Code.CODE);
             final StringResourceModel noneSelectedModel = new StringResourceModel("codes.noneSelected", this, null);
             final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true).withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);
