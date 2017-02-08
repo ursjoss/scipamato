@@ -1,6 +1,10 @@
 package ch.difty.sipamato.web;
 
-public interface PageParameterNames {
+public final class PageParameterNames {
 
-    String SEARCH_ORDER_ID = "searchOrderId";
+    public static final String SEARCH_ORDER_ID = "searchOrderId";
+
+    private PageParameterNames() {
+    }
+
 }
