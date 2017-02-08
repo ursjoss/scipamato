@@ -50,8 +50,10 @@
 
         <jasperreports.version>6.4.0</jasperreports.version>
 
+        <sonar.projectKey>ch.difty.sipamato</sonar.projectKey>
         <sonar.language>java</sonar.language>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
         <sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath>
     </properties>
 
