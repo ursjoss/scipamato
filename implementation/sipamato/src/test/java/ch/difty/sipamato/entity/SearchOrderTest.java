@@ -17,10 +17,14 @@ import ch.difty.sipamato.entity.filter.SearchCondition;
 @RunWith(MockitoJUnitRunner.class)
 public class SearchOrderTest {
 
-    private final SearchOrder so = new SearchOrder(10l, "soName", 1, false, null, null);
+    private static final String SO_NAME = "soName";
+
+    private final SearchOrder so = new SearchOrder(10l, SO_NAME, 1, false, null, null);
 
     @Mock
-    public SearchCondition mockCondition1, mockCondition2;
+    public SearchCondition mockCondition1;
+    @Mock
+    public SearchCondition mockCondition2;
 
     private List<SearchCondition> searchConditions = new ArrayList<>();
     private List<Long> excludedIds = new ArrayList<>();
@@ -37,12 +41,12 @@ public class SearchOrderTest {
     public void testSetters() {
         so.setId(11l);
         so.setOwner(2);
-        so.setName("soName");
+        so.setName(SO_NAME);
         so.setGlobal(true);
         so.setInvertExclusions(true);
 
         assertThat(so.getId()).isEqualTo(11);
-        assertThat(so.getName()).isEqualTo("soName");
+        assertThat(so.getName()).isEqualTo(SO_NAME);
         assertThat(so.getOwner()).isEqualTo(2);
         assertThat(so.isGlobal()).isEqualTo(true);
         assertThat(so.isInvertExclusions()).isEqualTo(true);
@@ -62,7 +66,7 @@ public class SearchOrderTest {
     @Test
     public void whenInstantiating_withEmptyExclusionList_hasNoExclusions() {
         assertThat(excludedIds).isEmpty();
-        assertThat(new SearchOrder(10l, "soName", 1, false, null, excludedIds).getExcludedPaperIds()).isEmpty();
+        assertThat(new SearchOrder(10l, SO_NAME, 1, false, null, excludedIds).getExcludedPaperIds()).isEmpty();
     }
 
     @Test
@@ -75,7 +79,7 @@ public class SearchOrderTest {
     public void whenInstantiating_withNonEmptyExlusionList_hasHandedOverExclusions() {
         excludedIds.add(3l);
         excludedIds.add(5l);
-        assertThat(new SearchOrder(10l, "soName", 1, false, null, excludedIds).getExcludedPaperIds()).containsExactly(3l, 5l);
+        assertThat(new SearchOrder(10l, SO_NAME, 1, false, null, excludedIds).getExcludedPaperIds()).containsExactly(3l, 5l);
     }
 
     @Test

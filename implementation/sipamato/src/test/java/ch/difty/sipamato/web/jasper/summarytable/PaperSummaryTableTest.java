@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.jasper.summary_table;
+package ch.difty.sipamato.web.jasper.summarytable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.web.jasper.JasperEntityTest;
+import ch.difty.sipamato.web.jasper.summarytable.PaperSummaryTable;
 
 public class PaperSummaryTableTest extends JasperEntityTest {
 

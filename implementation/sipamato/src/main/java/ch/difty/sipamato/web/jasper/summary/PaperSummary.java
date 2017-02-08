@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.jasper.summary_sp;
+package ch.difty.sipamato.web.jasper.summary;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.web.jasper.JasperEntity;

@@ -62,8 +62,6 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     @Mock
     private Paper paperMock;
 
-    private SortablePaperSlimProvider<? extends PaperSlimFilter> provider;
-
     @Override
     protected void setUpHook() {
         when(paperSlimServiceMock.countBySearchOrder(searchOrderMock)).thenReturn(1);
@@ -81,8 +79,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
     @Override
     protected ResultPanel makePanel() {
-        provider = new SearchOrderBasedSortablePaperSlimProvider(searchOrderMock, ROWS_PER_PAGE);
-        return new ResultPanel(PANEL_ID, provider);
+        return new ResultPanel(PANEL_ID, (SortablePaperSlimProvider<? extends PaperSlimFilter>) new SearchOrderBasedSortablePaperSlimProvider(searchOrderMock, ROWS_PER_PAGE));
     }
 
     @Override

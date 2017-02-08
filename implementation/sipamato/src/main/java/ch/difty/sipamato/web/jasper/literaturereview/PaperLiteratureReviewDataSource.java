@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.jasper.literature_review;
+package ch.difty.sipamato.web.jasper.literaturereview;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
@@ -27,16 +27,6 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
     private final String caption;
     private final String brand;
 
-    @Override
-    protected JasperReport getReport() {
-        return PaperLiteratureReviewReportResourceReference.get().getReport();
-    }
-
-    @Override
-    protected PaperLiteratureReview makeEntity(Paper p) {
-        return new PaperLiteratureReview(p, caption, brand);
-    }
-
     /**
      * Using the dataProvider for the Result Panel as record source. Needs the {@link PaperService} to retrieve the papers
      * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
@@ -53,6 +43,16 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
         super(new SipamatoPdfResourceHandler(config), FILE_NAME, dataProvider);
         this.caption = caption;
         this.brand = brand;
+    }
+
+    @Override
+    protected JasperReport getReport() {
+        return PaperLiteratureReviewReportResourceReference.get().getReport();
+    }
+
+    @Override
+    protected PaperLiteratureReview makeEntity(Paper p) {
+        return new PaperLiteratureReview(p, caption, brand);
     }
 
 }

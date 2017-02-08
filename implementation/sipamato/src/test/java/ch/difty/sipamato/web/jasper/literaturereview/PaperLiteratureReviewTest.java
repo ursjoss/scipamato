@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.jasper.literature_review;
+package ch.difty.sipamato.web.jasper.literaturereview;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,6 +7,7 @@ import org.junit.Test;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.web.jasper.JasperEntityTest;
+import ch.difty.sipamato.web.jasper.literaturereview.PaperLiteratureReview;
 
 public class PaperLiteratureReviewTest extends JasperEntityTest {
 

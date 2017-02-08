@@ -16,6 +16,7 @@ public class PaperSlim extends IdSipamatoEntity<Long> {
     private String title;
 
     public PaperSlim() {
+        // default constructor
     }
 
     public PaperSlim(Long id, String firstAuthor, Integer publicationYear, String title) {

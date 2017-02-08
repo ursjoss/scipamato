@@ -13,14 +13,14 @@ import ch.difty.sipamato.lib.AssertAs;
  *
  * @author u.joss
  */
-public abstract class SearchTerm<T extends SearchTerm<?>> extends IdSipamatoEntity<Long> {
+public abstract class SearchTerm extends IdSipamatoEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 
     private final Long searchConditionId;
     private final SearchTermType searchTermType;
     private final String fieldName;
-    private final String searchTerm;
+    private final String rawSearchTerm;
 
     SearchTerm(final SearchTermType type, final String fieldName, final String rawSearchTerm) {
         this(null, type, null, fieldName, rawSearchTerm);
@@ -31,10 +31,10 @@ public abstract class SearchTerm<T extends SearchTerm<?>> extends IdSipamatoEnti
         this.searchConditionId = searchConditionId;
         this.searchTermType = AssertAs.notNull(type);
         this.fieldName = AssertAs.notNull(fieldName, "fieldName");
-        this.searchTerm = AssertAs.notNull(rawSearchTerm, "rawSearchTerm");
+        this.rawSearchTerm = AssertAs.notNull(rawSearchTerm, "rawSearchTerm");
     }
 
-    public static SearchTerm<?> of(final long id, final int searchTermTypeId, final long searchConditionId, final String fieldName, final String rawSearchTerm) {
+    public static SearchTerm of(final long id, final int searchTermTypeId, final long searchConditionId, final String fieldName, final String rawSearchTerm) {
         SearchTermType type = SearchTermType.byId(searchTermTypeId);
         switch (type) {
         case BOOLEAN:
@@ -63,12 +63,12 @@ public abstract class SearchTerm<T extends SearchTerm<?>> extends IdSipamatoEnti
     }
 
     public String getRawSearchTerm() {
-        return searchTerm;
+        return rawSearchTerm;
     }
 
     @Override
     public String getDisplayValue() {
-        return searchTerm;
+        return rawSearchTerm;
     }
 
     @Override
@@ -76,7 +76,7 @@ public abstract class SearchTerm<T extends SearchTerm<?>> extends IdSipamatoEnti
         final int prime = 31;
         int result = 1;
         result = prime * result + fieldName.hashCode();
-        result = prime * result + searchTerm.hashCode();
+        result = prime * result + rawSearchTerm.hashCode();
         return result;
     }
 
@@ -88,11 +88,10 @@ public abstract class SearchTerm<T extends SearchTerm<?>> extends IdSipamatoEnti
             return false;
         if (getClass() != obj.getClass())
             return false;
-        @SuppressWarnings("unchecked")
-        final T other = (T) obj;
+        final SearchTerm other = (SearchTerm) obj;
         if (fieldName.hashCode() != other.getFieldName().hashCode())
             return false;
-        if (!searchTerm.equals(other.getRawSearchTerm()))
+        if (!rawSearchTerm.equals(other.getRawSearchTerm()))
             return false;
         return true;
     }

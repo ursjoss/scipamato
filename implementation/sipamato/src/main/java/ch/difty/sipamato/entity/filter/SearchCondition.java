@@ -79,6 +79,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     private final Set<String> removedKeys = new HashSet<>();
 
     public SearchCondition() {
+        // default constructor
     }
 
     public SearchCondition(Long searchConditionId) {
@@ -93,7 +94,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
         this.searchConditionId = searchConditionId;
     }
 
-    public void addSearchTerm(final SearchTerm<?> searchTerm) {
+    public void addSearchTerm(final SearchTerm searchTerm) {
         switch (searchTerm.getSearchTermType()) {
         case BOOLEAN:
             final BooleanSearchTerm bst = (BooleanSearchTerm) searchTerm;

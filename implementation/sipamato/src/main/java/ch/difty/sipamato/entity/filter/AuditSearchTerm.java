@@ -49,7 +49,7 @@ import java.util.regex.Pattern;
  *
  * @see http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html
  */
-public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
+public class AuditSearchTerm extends SearchTerm {
 
     private static final long serialVersionUID = 1L;
 
@@ -86,13 +86,13 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
         return tokens;
     }
 
-    public static enum FieldType {
+    public enum FieldType {
         USER,
         DATE,
         NONE;
     }
 
-    public static enum MatchType {
+    public enum MatchType {
         EQUALS,
         CONTAINS,
         GREATER_THAN,
@@ -102,7 +102,7 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
         NONE;
     }
 
-    public static enum TokenType {
+    public enum TokenType {
         // Token types must not have underscores. Otherwise the named capturing groups in the constructed regexes will break
         WHITESPACE(RE_S + "+", MatchType.NONE, FieldType.NONE, 1),
 
@@ -149,8 +149,8 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
         private static final long serialVersionUID = 1L;
 
         private final TokenType type;
-        private Map<FieldType, String> rawDataMap = new EnumMap<FieldType, String>(FieldType.class);
-        private Map<FieldType, String> sqlDataMap = new EnumMap<FieldType, String>(FieldType.class);
+        private final Map<FieldType, String> rawDataMap = new EnumMap<>(FieldType.class);
+        private final Map<FieldType, String> sqlDataMap = new EnumMap<>(FieldType.class);
 
         public Token(final TokenType type, final String data) {
             this.type = type;
@@ -169,13 +169,8 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
             }
         }
 
-        private String sqlize(String data) {
-            final StringBuilder sb = new StringBuilder();
-            switch (type.matchType) {
-            default:
-                sb.append(data);
-            }
-            return sb.toString();
+        private String sqlize(final String data) {
+            return data;
         }
 
         public TokenType getType() {
@@ -221,23 +216,27 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
     }
 
     private static List<Token> tokenize(final String input, final Pattern pattern, final boolean isUserType, final boolean isDateType) {
-        final List<Token> tokens = new ArrayList<Token>();
-        final Matcher matcher = pattern.matcher(input);
+        return processTokens(pattern.matcher(input), isUserType, isDateType);
+    }
+
+    private static List<Token> processTokens(final Matcher matcher, final boolean isUserType, final boolean isDateType) {
+        final List<Token> tokens = new ArrayList<>();
         tokenIteration: while (matcher.find()) {
             for (final TokenType tk : TokenType.values()) {
-                if (tk == TokenType.RAW)
-                    continue;
-                if (matcher.group(TokenType.WHITESPACE.name()) != null)
+                if (tk == TokenType.RAW || matcher.group(TokenType.WHITESPACE.name()) != null)
                     continue;
                 else if (matcher.group(tk.name()) != null) {
-                    if (isDateRelevant(isDateType, tk) || isUserRelevant(isUserType, tk)) {
+                    if (isAppropriate(tk, isUserType, isDateType))
                         tokens.add(new Token(tk, matcher.group(tk.group)));
-                    }
                     continue tokenIteration;
                 }
             }
         }
         return tokens;
+    }
+
+    private static boolean isAppropriate(final TokenType tk, final boolean isUserType, final boolean isDateType) {
+        return isDateRelevant(isDateType, tk) || isUserRelevant(isUserType, tk);
     }
 
     /**

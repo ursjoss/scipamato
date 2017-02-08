@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.jasper.literature_review;
+package ch.difty.sipamato.web.jasper.literaturereview;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -9,6 +9,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import ch.difty.sipamato.web.jasper.PaperDataSourceTest;
+import ch.difty.sipamato.web.jasper.literaturereview.PaperLiteratureReviewDataSource;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;

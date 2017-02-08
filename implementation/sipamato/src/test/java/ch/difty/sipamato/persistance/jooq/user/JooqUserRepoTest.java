@@ -37,7 +37,7 @@ public class JooqUserRepoTest extends JooqEntityRepoTest<UserRecord, User, Integ
     }
 
     @Override
-    protected EntityRepository<UserRecord, User, Integer, UserRecordMapper, UserFilter> makeRepoFindingEntityById(User user) {
+    protected EntityRepository<User, Integer, UserFilter> makeRepoFindingEntityById(User user) {
         return new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
                 getJooqConfig()) {
             private static final long serialVersionUID = 1L;

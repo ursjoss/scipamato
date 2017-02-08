@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.jasper.summary_table;
+package ch.difty.sipamato.web.jasper.summarytable;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
@@ -26,16 +26,6 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
     private final String brand;
     private final boolean includeResults;
 
-    @Override
-    protected JasperReport getReport() {
-        return PaperSummaryTableReportResourceReference.get().getReport();
-    }
-
-    @Override
-    protected PaperSummaryTable makeEntity(Paper p) {
-        return new PaperSummaryTable(p, includeResults, caption, brand);
-    }
-
     /**
      * Using the dataProvider for the Result Panel as record source.
      * @param dataProvider
@@ -55,6 +45,16 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
         this.caption = caption;
         this.brand = brand;
         this.includeResults = includeResults;
+    }
+
+    @Override
+    protected JasperReport getReport() {
+        return PaperSummaryTableReportResourceReference.get().getReport();
+    }
+
+    @Override
+    protected PaperSummaryTable makeEntity(Paper p) {
+        return new PaperSummaryTable(p, includeResults, caption, brand);
     }
 
 }

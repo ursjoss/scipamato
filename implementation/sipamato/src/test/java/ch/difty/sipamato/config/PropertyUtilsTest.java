@@ -6,6 +6,8 @@ import org.junit.Test;
 
 public class PropertyUtilsTest {
 
+    private static final String PROPERTY_KEY = "propertyKey";
+
     enum PropertyTestEnum {
         VAL1,
         VAL2,
@@ -20,21 +22,21 @@ public class PropertyUtilsTest {
 
     @Test
     public void fromProperty_withNullProperty_resortsToDefaultValue() {
-        assertThat(PropertyUtils.fromProperty(null, values, PropertyTestEnum.DEFAULT, "propertyKey")).isEqualTo(PropertyTestEnum.DEFAULT);
+        assertThat(PropertyUtils.fromProperty(null, values, PropertyTestEnum.DEFAULT, PROPERTY_KEY)).isEqualTo(PropertyTestEnum.DEFAULT);
     }
 
     @Test
     public void fromProperty() {
-        assertThat(PropertyUtils.fromProperty("VAL2", values, PropertyTestEnum.DEFAULT, "propertyKey")).isEqualTo(PropertyTestEnum.VAL2);
+        assertThat(PropertyUtils.fromProperty("VAL2", values, PropertyTestEnum.DEFAULT, PROPERTY_KEY)).isEqualTo(PropertyTestEnum.VAL2);
     }
 
     @Test
     public void parseInt_withValidIntString_returnsParsedInt() {
-        assertThat(PropertyUtils.parseInt("5", "value", 1, "propertyKey")).isEqualTo(5);
+        assertThat(PropertyUtils.parseInt("5", "value", 1, PROPERTY_KEY)).isEqualTo(5);
     }
 
     @Test
     public void parseInt_withInvValidIntString_returnsDefaultValue() {
-        assertThat(PropertyUtils.parseInt("foo", "value", 1, "propertyKey")).isEqualTo(1);
+        assertThat(PropertyUtils.parseInt("foo", "value", 1, PROPERTY_KEY)).isEqualTo(1);
     }
 }

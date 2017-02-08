@@ -18,7 +18,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.web.jasper.SipamatoPdfExporterConfiguration;
-import ch.difty.sipamato.web.jasper.summary_sp.PaperSummaryDataSource;
+import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.Mode;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 
@@ -97,12 +97,12 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      */
     @Override
     protected PaperSummaryDataSource getSummaryDataSource() {
-        String populationLabel = new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString();
-        String methodsLabel = new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString();
-        String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
-        String commentLabel = new StringResourceModel("comment" + LABEL_RECOURCE_TAG, this, null).getString();
-        String brand = getProperties().getBrand();
-        String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
+        final String populationLabel = new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodsLabel = new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String commentLabel = new StringResourceModel("comment" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String brand = getProperties().getBrand();
+        final String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
 
         SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getId()).withCreator(brand)
                 .withPaperTitle(getModelObject().getTitle())
@@ -156,7 +156,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
             private void ensureMainCodeIsPartOfCodes(Collection<Code> codesOfClass1, TextField<String> mainCodeOfCodeClass1, AjaxRequestTarget target) {
                 final Optional<String> main = Optional.ofNullable(mainCodeOfCodeClass1.getModelObject());
-                final Optional<String> match = codesOfClass1.stream().map(c -> c.getCode()).filter(c -> main.isPresent() && main.get().equals(c)).findFirst();
+                final Optional<String> match = codesOfClass1.stream().map(Code::getCode).filter(c -> main.isPresent() && main.get().equals(c)).findFirst();
                 if (main.isPresent() && !match.isPresent()) {
                     mainCodeOfCodeClass1.setModelObject(null);
                     target.add(mainCodeOfCodeClass1);

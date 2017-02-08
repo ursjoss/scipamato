@@ -1,8 +1,5 @@
 package ch.difty.sipamato.persistance.jooq;
 
-import org.jooq.Record;
-import org.jooq.RecordMapper;
-
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
@@ -12,13 +9,11 @@ import ch.difty.sipamato.lib.NullArgumentException;
  *
  * @author u.joss
  *
- * @param <R> the type of the record, extending {@link Record}
  * @param <T> the type of the entity, extending {@link SipamatoEntity}
  * @param <ID> the type of the ID of the entity
- * @param <M> the type of the record mapper mapping records of type <literal>R</literal> into entities of type <literal>T</literal>
  * @param <F> the type of the filter extending {@link SipamatorFilter}
  */
-public interface EntityRepository<R extends Record, T extends SipamatoEntity, ID, M extends RecordMapper<R, T>, F extends SipamatoFilter> extends ReadOnlyRepository<R, T, ID, M, F> {
+public interface EntityRepository<T extends SipamatoEntity, ID, F extends SipamatoFilter> extends ReadOnlyRepository<T, ID, F> {
 
     /**
      * Add an entity <code>T</code> to the database.

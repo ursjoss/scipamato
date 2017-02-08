@@ -63,13 +63,13 @@ public class PaperCodeBox implements CodeBox {
     /** {@inheritDoc} */
     @Override
     public List<Code> getCodes() {
-        return new UnmodifiableList<Code>(codes);
+        return new UnmodifiableList<>(codes);
     }
 
     /** {@inheritDoc} */
     @Override
     public List<Code> getCodesBy(final CodeClassId codeClassId) {
-        return new UnmodifiableList<Code>(collectBy(nullSafe(codeClassId)));
+        return new UnmodifiableList<>(collectBy(nullSafe(codeClassId)));
     }
 
     /** {@inheritDoc} */
@@ -108,7 +108,7 @@ public class PaperCodeBox implements CodeBox {
 
     @Override
     public int hashCode() {
-        final List<Code> sorted = new ArrayList<Code>(codes);
+        final List<Code> sorted = new ArrayList<>(codes);
         sorted.sort((c1, c2) -> c1.getCode().compareTo(c2.getCode()));
         final int prime = 31;
         int result = 1;
@@ -124,10 +124,10 @@ public class PaperCodeBox implements CodeBox {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        final List<Code> thisSorted = new ArrayList<Code>(codes);
+        final List<Code> thisSorted = new ArrayList<>(codes);
         thisSorted.sort((c1, c2) -> c1.getCode().compareTo(c2.getCode()));
         final PaperCodeBox other = (PaperCodeBox) obj;
-        final List<Code> otherSorted = new ArrayList<Code>(other.codes);
+        final List<Code> otherSorted = new ArrayList<>(other.codes);
         otherSorted.sort((c1, c2) -> c1.getCode().compareTo(c2.getCode()));
         if (!thisSorted.equals(otherSorted))
             return false;

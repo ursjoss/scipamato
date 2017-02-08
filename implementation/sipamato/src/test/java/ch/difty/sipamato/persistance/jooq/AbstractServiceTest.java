@@ -16,7 +16,7 @@ import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.persistance.jooq.user.UserRepository;
 
 @RunWith(MockitoJUnitRunner.class)
-public abstract class AbstractServiceTest<ID extends Number, T extends IdSipamatoEntity<ID>, R extends ReadOnlyRepository<?, T, ID, ?, ?>> {
+public abstract class AbstractServiceTest<ID extends Number, T extends IdSipamatoEntity<ID>, R extends ReadOnlyRepository<T, ID, ?>> {
 
     private static final int CREATOR_ID = 10;
     private static final int MODIFIER_ID = 20;

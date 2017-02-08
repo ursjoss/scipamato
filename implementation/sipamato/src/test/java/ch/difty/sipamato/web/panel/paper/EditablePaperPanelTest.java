@@ -67,6 +67,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
             @Override
             protected void onFormSubmit() {
+                // no-op
             }
         };
     }

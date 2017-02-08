@@ -31,6 +31,17 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
 
     private JooqSearchOrderRepo repo;
 
+    @Mock
+    private SearchOrder unpersistedEntity;
+    @Mock
+    private SearchOrder persistedEntity;
+    @Mock
+    private SearchOrderRecord persistedRecord;
+    @Mock
+    private SearchOrderRecordMapper mapperMock;
+    @Mock
+    private SearchOrderFilter filterMock;
+
     @Override
     protected Long getSampleId() {
         return SAMPLE_ID;
@@ -46,7 +57,7 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
     }
 
     @Override
-    protected EntityRepository<SearchOrderRecord, SearchOrder, Long, SearchOrderRecordMapper, SearchOrderFilter> makeRepoFindingEntityById(SearchOrder searchOrder) {
+    protected EntityRepository<SearchOrder, Long, SearchOrderFilter> makeRepoFindingEntityById(SearchOrder searchOrder) {
         return new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
                 getJooqConfig()) {
             private static final long serialVersionUID = 1L;
@@ -58,9 +69,6 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         };
     }
 
-    @Mock
-    private SearchOrder unpersistedEntity, persistedEntity;
-
     @Override
     protected SearchOrder getUnpersistedEntity() {
         return unpersistedEntity;
@@ -71,16 +79,10 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         return persistedEntity;
     }
 
-    @Mock
-    private SearchOrderRecord persistedRecord;
-
     @Override
     protected SearchOrderRecord getPersistedRecord() {
         return persistedRecord;
     }
-
-    @Mock
-    private SearchOrderRecordMapper mapperMock;
 
     @Override
     protected SearchOrderRecordMapper getMapper() {
@@ -106,9 +108,6 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
     protected TableField<SearchOrderRecord, Long> getTableId() {
         return SEARCH_ORDER.ID;
     }
-
-    @Mock
-    private SearchOrderFilter filterMock;
 
     @Override
     protected SearchOrderFilter getFilter() {
@@ -219,13 +218,13 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
                 getJooqConfig()) {
             private static final long serialVersionUID = 1L;
 
-            SearchTerm<?> st1 = SearchTerm.of(1, SearchTermType.STRING.getId(), 3, Paper.FLD_AUTHORS, "joss");
-            SearchTerm<?> st2 = SearchTerm.of(2, SearchTermType.INTEGER.getId(), 3, Paper.FLD_PUBL_YEAR, "2014");
-            SearchTerm<?> st3 = SearchTerm.of(3, SearchTermType.INTEGER.getId(), 4, Paper.FLD_PUBL_YEAR, "2014-2016");
-            SearchTerm<?> st4 = SearchTerm.of(4, SearchTermType.AUDIT.getId(), 5, Paper.FLD_CREATED_BY, "mkj");
+            SearchTerm st1 = SearchTerm.of(1, SearchTermType.STRING.getId(), 3, Paper.FLD_AUTHORS, "joss");
+            SearchTerm st2 = SearchTerm.of(2, SearchTermType.INTEGER.getId(), 3, Paper.FLD_PUBL_YEAR, "2014");
+            SearchTerm st3 = SearchTerm.of(3, SearchTermType.INTEGER.getId(), 4, Paper.FLD_PUBL_YEAR, "2014-2016");
+            SearchTerm st4 = SearchTerm.of(4, SearchTermType.AUDIT.getId(), 5, Paper.FLD_CREATED_BY, "mkj");
 
             @Override
-            protected List<SearchTerm<?>> fetchSearchTermsForSearchOrderWithId(long searchOrderId) {
+            protected List<SearchTerm> fetchSearchTermsForSearchOrderWithId(long searchOrderId) {
                 if (searchOrderId == SAMPLE_ID) {
                     return Arrays.asList(st1, st2, st3, st4);
                 } else {

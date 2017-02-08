@@ -30,7 +30,7 @@ import ch.difty.sipamato.persistance.jooq.ConditionalSupplier;
 import ch.difty.sipamato.persistance.jooq.EntityRecordMapper;
 import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
 
-public class DefaultBySearchOrderFinder<T extends IdSipamatoEntity<Long>, M extends EntityRecordMapper<PaperRecord, T>> implements BySearchOrderFinder<T, M> {
+public class DefaultBySearchOrderFinder<T extends IdSipamatoEntity<Long>, M extends EntityRecordMapper<PaperRecord, T>> implements BySearchOrderFinder<T> {
 
     private final IntegerSearchTermEvaluator integerSearchTermEvaluator = new IntegerSearchTermEvaluator();
     private final StringSearchTermEvaluator stringSearchTermEvaluator = new StringSearchTermEvaluator();
@@ -41,6 +41,13 @@ public class DefaultBySearchOrderFinder<T extends IdSipamatoEntity<Long>, M exte
     private final M mapper;
     private final JooqSortMapper<PaperRecord, T, ch.difty.sipamato.db.tables.Paper> sortMapper;
     private final Class<? extends PaperRecord> recordClass;
+
+    public DefaultBySearchOrderFinder(final DSLContext dsl, final M mapper, JooqSortMapper<PaperRecord, T, ch.difty.sipamato.db.tables.Paper> sortMapper, Class<? extends PaperRecord> recordClass) {
+        this.dsl = dsl;
+        this.mapper = mapper;
+        this.sortMapper = sortMapper;
+        this.recordClass = recordClass;
+    }
 
     private DSLContext getDsl() {
         return dsl;
@@ -58,13 +65,6 @@ public class DefaultBySearchOrderFinder<T extends IdSipamatoEntity<Long>, M exte
         return recordClass;
     }
 
-    public DefaultBySearchOrderFinder(final DSLContext dsl, final M mapper, JooqSortMapper<PaperRecord, T, ch.difty.sipamato.db.tables.Paper> sortMapper, Class<? extends PaperRecord> recordClass) {
-        this.dsl = dsl;
-        this.mapper = mapper;
-        this.sortMapper = sortMapper;
-        this.recordClass = recordClass;
-    }
-
     /** {@inheritDoc} */
     @Override
     public List<T> findBySearchOrder(final SearchOrder searchOrder) {
@@ -72,10 +72,8 @@ public class DefaultBySearchOrderFinder<T extends IdSipamatoEntity<Long>, M exte
 
         final Condition paperMatches = getConditionsFrom(searchOrder);
         final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER).where(paperMatches).fetchInto(getRecordClass());
-        final List<T> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
 
-        return entities;
-
+        return queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
     }
 
     /**

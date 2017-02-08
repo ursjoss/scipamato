@@ -14,6 +14,7 @@ import ch.difty.sipamato.entity.SipamatoEntity;
  * @param <R> Record extending {@link Record}
  * @param <T> Entity extending {@link SipamtoEntity}
  */
+@FunctionalInterface
 public interface UpdateSetStepSetter<R extends Record, T extends SipamatoEntity> {
 
     /**

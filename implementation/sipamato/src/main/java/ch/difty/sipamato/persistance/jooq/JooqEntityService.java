@@ -20,7 +20,7 @@ import ch.difty.sipamato.service.EntityService;
  * @param <F> the filter, extending {@link SipamatoFilter}
  * @param <REPO> the entity repository (extending {@link EntityRepository}
  */
-public abstract class JooqEntityService<ID extends Number, R extends Record, T extends IdSipamatoEntity<ID>, F extends SipamatoFilter, M extends RecordMapper<R, T>, REPO extends EntityRepository<R, T, ID, M, F>>
+public abstract class JooqEntityService<ID extends Number, R extends Record, T extends IdSipamatoEntity<ID>, F extends SipamatoFilter, M extends RecordMapper<R, T>, REPO extends EntityRepository<T, ID, F>>
         extends JooqReadOnlyService<ID, R, T, F, M, REPO> implements EntityService<ID, T, F> {
 
     private static final long serialVersionUID = 1L;

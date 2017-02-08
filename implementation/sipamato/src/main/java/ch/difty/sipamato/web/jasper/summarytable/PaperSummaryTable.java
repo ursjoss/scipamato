@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.jasper.summary_table;
+package ch.difty.sipamato.web.jasper.summarytable;
 
 import java.util.List;
 import java.util.stream.Collectors;

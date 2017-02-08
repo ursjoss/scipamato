@@ -4,7 +4,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 
 import ch.difty.sipamato.entity.filter.SearchCondition;
-import ch.difty.sipamato.web.jasper.summary_sp.PaperSummaryDataSource;
+import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.Mode;
 
 /**

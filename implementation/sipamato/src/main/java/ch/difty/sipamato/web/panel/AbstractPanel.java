@@ -35,6 +35,30 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
     @SpringBean
     private ApplicationProperties properties;
 
+    public AbstractPanel(final String id) {
+        this(id, null, Mode.VIEW);
+    }
+
+    public AbstractPanel(final String id, IModel<T> model) {
+        this(id, model, Mode.VIEW);
+    }
+
+    public AbstractPanel(final String id, IModel<T> model, Mode mode) {
+        super(id, model);
+        this.mode = mode;
+        switch (mode) {
+        case EDIT:
+            this.submitLinkResourceLabel = "button.save.label";
+            break;
+        case SEARCH:
+            this.submitLinkResourceLabel = "button.search.label";
+            break;
+        case VIEW:
+        default:
+            this.submitLinkResourceLabel = "button.disabled.label";
+        }
+    }
+
     protected ApplicationProperties getProperties() {
         return properties;
     }
@@ -61,30 +85,6 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
 
     protected Localization getLocalization() {
         return localization;
-    }
-
-    public AbstractPanel(final String id) {
-        this(id, null, Mode.VIEW);
-    }
-
-    public AbstractPanel(final String id, IModel<T> model) {
-        this(id, model, Mode.VIEW);
-    }
-
-    public AbstractPanel(final String id, IModel<T> model, Mode mode) {
-        super(id, model);
-        this.mode = mode;
-        switch (mode) {
-        case EDIT:
-            this.submitLinkResourceLabel = "button.save.label";
-            break;
-        case SEARCH:
-            this.submitLinkResourceLabel = "button.search.label";
-            break;
-        case VIEW:
-        default:
-            this.submitLinkResourceLabel = "button.disabled.label";
-        }
     }
 
     // TODO duplicated from BasePage

@@ -28,13 +28,13 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
 
     private static final long serialVersionUID = 1L;
 
-    private final BySearchOrderFinder<PaperSlim, PaperSlimRecordMapper> searchOrderHelper;
+    private final BySearchOrderFinder<PaperSlim> bySearchOrderFinder;
 
     @Autowired
     public JooqPaperSlimRepo(DSLContext dsl, PaperSlimRecordMapper mapper, JooqSortMapper<PaperRecord, PaperSlim, ch.difty.sipamato.db.tables.Paper> sortMapper,
             GenericFilterConditionMapper<PaperFilter> filterConditionMapper, Localization localization) {
         super(dsl, mapper, sortMapper, filterConditionMapper, localization);
-        searchOrderHelper = new DefaultBySearchOrderFinder<PaperSlim, PaperSlimRecordMapper>(dsl, mapper, sortMapper, getRecordClass());
+        bySearchOrderFinder = new DefaultBySearchOrderFinder<PaperSlim, PaperSlimRecordMapper>(dsl, mapper, sortMapper, getRecordClass());
     }
 
     @Override
@@ -60,7 +60,7 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     /** {@inheritDoc} */
     @Override
     public List<PaperSlim> findBySearchOrder(final SearchOrder searchOrder) {
-        List<PaperSlim> papers = searchOrderHelper.findBySearchOrder(searchOrder);
+        List<PaperSlim> papers = bySearchOrderFinder.findBySearchOrder(searchOrder);
         enrichAssociatedEntitiesOfAll(papers);
         return papers;
     }
@@ -68,7 +68,7 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     /** {@inheritDoc} */
     @Override
     public Page<PaperSlim> findBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
-        final List<PaperSlim> entities = searchOrderHelper.findPagedBySearchOrder(searchOrder, pageable);
+        final List<PaperSlim> entities = bySearchOrderFinder.findPagedBySearchOrder(searchOrder, pageable);
         enrichAssociatedEntitiesOfAll(entities);
         return new PageImpl<>(entities, pageable, (long) countBySearchOrder(searchOrder));
     }
@@ -76,7 +76,7 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     /** {@inheritDoc} */
     @Override
     public int countBySearchOrder(SearchOrder searchOrder) {
-        return searchOrderHelper.countBySearchOrder(searchOrder);
+        return bySearchOrderFinder.countBySearchOrder(searchOrder);
     }
 
 }

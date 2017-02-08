@@ -49,10 +49,10 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
 
     private void queueForm(final String id) {
         queue(new Form<>(id));
-        queueNewButton("addSearchCondition", (scModel, soId) -> new PaperSearchCriteriaPage(scModel, soId), () -> Model.of(new SearchCondition()));
+        queueNewButton("addSearchCondition", PaperSearchCriteriaPage::new, () -> Model.of(new SearchCondition()));
 
         SearchConditionProvider p = new SearchConditionProvider(getModel());
-        searchConditions = new BootstrapDefaultDataTable<SearchCondition, String>("searchConditions", makeTableColumns(), p, 10);
+        searchConditions = new BootstrapDefaultDataTable<>("searchConditions", makeTableColumns(), p, 10);
         searchConditions.setOutputMarkupId(true);
         searchConditions.add(new TableBehavior().striped().hover());
         queue(searchConditions);

@@ -17,7 +17,7 @@ public class User extends IdSipamatoEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 
-    public static User NO_USER = new User(-1, "noUser", "n.a", "n.a.", "n.a.", "n.a");
+    public static final User NO_USER = new User(-1, "noUser", "n.a", "n.a.", "n.a.", "n.a");
 
     public static final String USER_NAME = "userName";
     public static final String FIRST_NAME = "firstName";
@@ -48,6 +48,7 @@ public class User extends IdSipamatoEntity<Integer> {
     private final List<Role> roles = new ArrayList<>();
 
     public User() {
+        // default constructor
     }
 
     public User(final int id, final String userName, final String firstName, final String lastName, final String email, final String password, final boolean enabled, final List<Role> roles) {

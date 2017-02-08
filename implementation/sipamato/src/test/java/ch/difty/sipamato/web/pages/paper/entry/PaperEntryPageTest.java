@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
-import org.junit.Ignore;
+import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -100,19 +100,50 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     }
 
     private void assertTabPanel(int i, String b) {
-        final String bb = ":" + String.valueOf(i);
+        final String bb = ":" + i;
         getTester().assertComponent(b + bb, Panel.class);
     }
 
     @Test
-    @Ignore // TODO get the submit test kick off the onSubmit event and test it
     public void submitting_shouldActuallyKickoffOnSubmitInTest() {
         when(serviceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
 
         getTester().startPage(makePage());
-        getTester().submitForm("form");
+        FormTester formTester = makeSaveablePaperTester();
+        formTester.submit();
 
-        getTester().assertInfoMessages("foo");
+        getTester().assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
         verify(serviceMock).saveOrUpdate(isA(Paper.class));
+    }
+
+    @Test
+    public void paperFailingValidation_showsAllValidationMessages() {
+        getTester().startPage(makePage());
+        getTester().submitForm("contentPanel:form");
+        getTester().assertErrorMessages("'Authors' is required.", "'Title' is required.", "'Location' is required.", "'Pub. Year' is required.", "'Goals' is required.");
+    }
+
+    @Test
+    public void serviceThrowingError() {
+        when(serviceMock.saveOrUpdate(isA(Paper.class))).thenThrow(new RuntimeException("foo"));
+
+        getTester().startPage(makePage());
+
+        FormTester formTester = makeSaveablePaperTester();
+        formTester.submit();
+
+        getTester().assertErrorMessages("An unexpected error occurred when trying to save Paper [id 0]: foo");
+        verify(serviceMock).saveOrUpdate(isA(Paper.class));
+    }
+
+    private FormTester makeSaveablePaperTester() {
+        FormTester formTester = getTester().newFormTester("contentPanel:form");
+        formTester.setValue("authors", "Poe EA.");
+        formTester.setValue("title", "Title");
+        formTester.setValue("location", "loc");
+        formTester.setValue("publicationYear", "2017");
+        formTester.setValue("tabs:panelsContainer:panels:1:tab1Form:goals", "goals");
+        return formTester;
     }
 }

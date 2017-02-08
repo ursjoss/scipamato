@@ -53,12 +53,12 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         initDefaultModel();
     }
 
-    private void initDefaultModel() {
-        setDefaultModel(Model.of(new Paper()));
-    }
-
     public PaperEntryPage(IModel<Paper> paperModel) {
         super(paperModel);
+    }
+
+    private void initDefaultModel() {
+        setDefaultModel(Model.of(new Paper()));
     }
 
     @Override
@@ -90,7 +90,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
                 error(new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId()).getString());
             }
         } catch (Exception ex) {
-            error(new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId()).getString());
+            error(new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId(), ex.getMessage()).getString());
         }
     }
 

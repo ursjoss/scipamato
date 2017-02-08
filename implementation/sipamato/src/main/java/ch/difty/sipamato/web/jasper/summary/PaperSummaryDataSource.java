@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.jasper.summary_sp;
+package ch.difty.sipamato.web.jasper.summary;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,16 +45,6 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
     private String headerPart;
     private String brand;
 
-    @Override
-    protected JasperReport getReport() {
-        return PaperSummaryReportResourceReference.get().getReport();
-    }
-
-    @Override
-    protected PaperSummary makeEntity(Paper p) {
-        return new PaperSummary(p, populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand);
-    }
-
     /**
      * Build up the paper summary from a {@link Paper} and any additional information not contained within the paper
      * @param paper
@@ -78,28 +68,12 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
         this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand)), config, makeSinglePaperBaseName(paper));
     }
 
-    private static String makeSinglePaperBaseName(final Paper paper) {
-        if (paper != null && paper.getId() != null) {
-            return BASE_NAME_SINGLE + paper.getId();
-        } else {
-            return BASE_NAME_MULTIPLE;
-        }
-    }
-
     /**
      * Uses as single {@link PaperSummary} transparently as data source
      * @param paperSummary an instance of {@link PaperSummary} - must not be null
      */
     public PaperSummaryDataSource(final PaperSummary paperSummary, PdfExporterConfiguration config) {
         this(Arrays.asList(AssertAs.notNull(paperSummary, "paperSummary")), config, makeSinglePaperBaseName(paperSummary));
-    }
-
-    private static String makeSinglePaperBaseName(final PaperSummary paperSummary) {
-        if (paperSummary != null && paperSummary.getId() != null) {
-            return BASE_NAME_SINGLE + paperSummary.getId();
-        } else {
-            return BASE_NAME_MULTIPLE;
-        }
     }
 
     /**
@@ -147,6 +121,32 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
         this.commentLabel = commentLabel;
         this.headerPart = headerPart;
         this.brand = brand;
+    }
+
+    @Override
+    protected JasperReport getReport() {
+        return PaperSummaryReportResourceReference.get().getReport();
+    }
+
+    @Override
+    protected PaperSummary makeEntity(Paper p) {
+        return new PaperSummary(p, populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand);
+    }
+
+    private static String makeSinglePaperBaseName(final Paper paper) {
+        if (paper != null && paper.getId() != null) {
+            return BASE_NAME_SINGLE + paper.getId();
+        } else {
+            return BASE_NAME_MULTIPLE;
+        }
+    }
+
+    private static String makeSinglePaperBaseName(final PaperSummary paperSummary) {
+        if (paperSummary != null && paperSummary.getId() != null) {
+            return BASE_NAME_SINGLE + paperSummary.getId();
+        } else {
+            return BASE_NAME_MULTIPLE;
+        }
     }
 
 }

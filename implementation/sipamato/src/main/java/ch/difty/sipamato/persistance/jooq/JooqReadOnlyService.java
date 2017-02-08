@@ -28,7 +28,7 @@ import ch.difty.sipamato.service.ReadOnlyService;
  * @param <F> the filter, extending {@link SipamatoFilter}
  * @param <REPO> the entity repository (extending {@link EntityRepository}
  */
-public abstract class JooqReadOnlyService<ID extends Number, R extends Record, T extends IdSipamatoEntity<ID>, F extends SipamatoFilter, M extends RecordMapper<R, T>, REPO extends ReadOnlyRepository<R, T, ID, M, F>>
+public abstract class JooqReadOnlyService<ID extends Number, R extends Record, T extends IdSipamatoEntity<ID>, F extends SipamatoFilter, M extends RecordMapper<R, T>, REPO extends ReadOnlyRepository<T, ID, F>>
         implements ReadOnlyService<ID, T, F> {
 
     private static final long serialVersionUID = 1L;
@@ -92,7 +92,7 @@ public abstract class JooqReadOnlyService<ID extends Number, R extends Record, T
     @Override
     public Page<T> findByFilter(F filter, Pageable pageable) {
         final Page<T> page = repo.findByFilter(filter, pageable);
-        page.forEach(e -> enrichAuditNamesOf(e));
+        page.forEach(this::enrichAuditNamesOf);
         return page;
     }
 

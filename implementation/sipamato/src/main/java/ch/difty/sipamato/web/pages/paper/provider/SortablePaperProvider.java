@@ -66,7 +66,7 @@ public class SortablePaperProvider extends SortableDataProvider<Paper, String> i
 
     @Override
     public IModel<Paper> model(Paper entity) {
-        return new Model<Paper>(entity);
+        return new Model<>(entity);
     }
 
     @Override

@@ -22,36 +22,37 @@ class StringSearchTermEvaluator implements SearchTermEvaluator<StringSearchTerm>
         AssertAs.notNull(searchTerm, "searchTerm");
 
         final ConditionalSupplier conditions = new ConditionalSupplier();
-
         for (final Token token : searchTerm.getTokens()) {
-            final Field<Object> field = DSL.field(searchTerm.getFieldName());
-            final Field<String> fieldLowered = field.lower();
-            final Field<String> value = DSL.val(token.sqlData);
-            final Field<String> valueLowered = value.lower();
-            final boolean negate = token.type.negate;
-            switch (token.type.matchType) {
-            case NONE:
-                break;
-            case CONTAINS:
-                conditions.add(() -> (negate ? DSL.not(fieldLowered.contains(valueLowered)) : fieldLowered.contains(valueLowered)));
-                break;
-            case EQUALS:
-                conditions.add(() -> (negate ? fieldLowered.notEqual(valueLowered) : fieldLowered.equal(valueLowered)));
-                break;
-            case LIKE:
-                conditions.add(() -> (negate ? fieldLowered.notLike(valueLowered) : fieldLowered.like(valueLowered)));
-                break;
-            case REGEX:
-                conditions.add(() -> (negate ? field.notLikeRegex(value) : field.likeRegex(value)));
-                break;
-            case LENGTH:
-                final Field<Integer> length = field.length();
-                conditions.add(() -> (negate ? field.isNull().or(length.equal(0)) : field.isNotNull().and(length.greaterThan(0))));
-                break;
-            default:
-                throw new UnsupportedOperationException("Evaluation of type " + token.type.matchType + " is not supported...");
-            }
+            addToConditions(conditions, token, DSL.field(searchTerm.getFieldName()), DSL.val(token.sqlData));
         }
         return conditions.combineWithAnd();
+    }
+
+    private void addToConditions(final ConditionalSupplier cs, final Token tk, final Field<Object> field, final Field<String> value) {
+        final Field<String> fieldLowered = field.lower();
+        final Field<String> valueLowered = value.lower();
+        final boolean negate = tk.type.negate;
+        switch (tk.type.matchType) {
+        case NONE:
+            break;
+        case CONTAINS:
+            cs.add(() -> negate ? DSL.not(fieldLowered.contains(valueLowered)) : fieldLowered.contains(valueLowered));
+            break;
+        case EQUALS:
+            cs.add(() -> negate ? fieldLowered.notEqual(valueLowered) : fieldLowered.equal(valueLowered));
+            break;
+        case LIKE:
+            cs.add(() -> negate ? fieldLowered.notLike(valueLowered) : fieldLowered.like(valueLowered));
+            break;
+        case REGEX:
+            cs.add(() -> negate ? field.notLikeRegex(value) : field.likeRegex(value));
+            break;
+        case LENGTH:
+            final Field<Integer> length = field.length();
+            cs.add(() -> negate ? field.isNull().or(length.equal(0)) : field.isNotNull().and(length.greaterThan(0)));
+            break;
+        default:
+            throw new UnsupportedOperationException("Evaluation of type " + tk.type.matchType + " is not supported...");
+        }
     }
 }

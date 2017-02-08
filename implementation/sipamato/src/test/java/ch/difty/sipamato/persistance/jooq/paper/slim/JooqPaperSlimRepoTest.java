@@ -24,13 +24,24 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
 
     private JooqPaperSlimRepo repo;
 
+    @Mock
+    private PaperSlim unpersistedEntity;
+    @Mock
+    private PaperSlim persistedEntity;
+    @Mock
+    private PaperRecord persistedRecord;
+    @Mock
+    private PaperSlimRecordMapper mapperMock;
+    @Mock
+    private PaperFilter filterMock;
+
     @Override
     protected Long getSampleId() {
         return SAMPLE_ID;
     }
 
     @Override
-    protected ReadOnlyRepository<PaperRecord, PaperSlim, Long, PaperSlimRecordMapper, PaperFilter> getRepo() {
+    protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> getRepo() {
         if (repo == null) {
             repo = new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization());
         }
@@ -38,7 +49,7 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
     }
 
     @Override
-    protected ReadOnlyRepository<PaperRecord, PaperSlim, Long, PaperSlimRecordMapper, PaperFilter> makeRepoFindingEntityById(PaperSlim entity) {
+    protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> makeRepoFindingEntityById(PaperSlim entity) {
         return new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization()) {
             private static final long serialVersionUID = 1L;
 
@@ -48,9 +59,6 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
             }
         };
     }
-
-    @Mock
-    private PaperSlim unpersistedEntity, persistedEntity;
 
     @Override
     protected PaperSlim getPersistedEntity() {
@@ -62,16 +70,10 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
         return unpersistedEntity;
     }
 
-    @Mock
-    private PaperRecord persistedRecord;
-
     @Override
     protected PaperRecord getPersistedRecord() {
         return persistedRecord;
     }
-
-    @Mock
-    private PaperSlimRecordMapper mapperMock;
 
     @Override
     protected PaperSlimRecordMapper getMapper() {
@@ -118,9 +120,6 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
     protected void verifyPersistedRecordId() {
         verify(persistedRecord).getId();
     }
-
-    @Mock
-    private PaperFilter filterMock;
 
     @Override
     protected PaperFilter getFilter() {

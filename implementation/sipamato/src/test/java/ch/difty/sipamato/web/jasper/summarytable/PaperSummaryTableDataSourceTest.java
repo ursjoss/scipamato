@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.jasper.summary_table;
+package ch.difty.sipamato.web.jasper.summarytable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -14,6 +14,7 @@ import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.web.jasper.PaperDataSourceTest;
+import ch.difty.sipamato.web.jasper.summarytable.PaperSummaryTableDataSource;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;

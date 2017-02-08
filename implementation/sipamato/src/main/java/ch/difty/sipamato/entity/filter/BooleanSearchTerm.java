@@ -8,7 +8,7 @@ package ch.difty.sipamato.entity.filter;
  *
  * @author u.joss
  */
-public class BooleanSearchTerm extends SearchTerm<BooleanSearchTerm> {
+public class BooleanSearchTerm extends SearchTerm {
     private static final long serialVersionUID = 1L;
 
     private final boolean value;

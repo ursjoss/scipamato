@@ -52,14 +52,14 @@ public class ConditionalSupplier {
 
     public Condition combineWithAnd() {
         final Tuple2<Optional<Supplier<Condition>>, Seq<Supplier<Condition>>> tuple = splitAtHead(conditionSuppliers.stream());
-        final Condition head = tuple.v1.orElse(() -> DSL.trueCondition()).get();
+        final Condition head = tuple.v1.orElse(DSL::trueCondition).get();
         final Seq<Supplier<Condition>> tail = tuple.v2;
         return tail.stream().map(Supplier::get).reduce(head, Condition::and);
     }
 
     public Condition combineWithOr() {
         final Tuple2<Optional<Supplier<Condition>>, Seq<Supplier<Condition>>> t = splitAtHead(conditionSuppliers.stream());
-        final Condition head = t.v1.orElse(() -> DSL.falseCondition()).get();
+        final Condition head = t.v1.orElse(DSL::falseCondition).get();
         final Seq<Supplier<Condition>> tail = t.v2;
         return tail.stream().map(Supplier::get).reduce(head, Condition::or);
     }

@@ -26,20 +26,19 @@ public class DefaultBySearchOrderFinderTest {
 
     @Mock
     private DSLContext dslMock;
-
     @Mock
     private PaperSlimRecordMapper mapperMock;
-
     @Mock
     private JooqSortMapper<PaperRecord, PaperSlim, ch.difty.sipamato.db.tables.Paper> sortMapperMock;
+    @Mock
+    private PaperSlim unpersistedEntity;
+    @Mock
+    private PaperSlim persistedEntity;
 
     @Before
-    public void stUp() {
-        finder = new DefaultBySearchOrderFinder<PaperSlim, PaperSlimRecordMapper>(dslMock, mapperMock, sortMapperMock, PaperRecord.class);
+    public void setUp() {
+        finder = new DefaultBySearchOrderFinder<>(dslMock, mapperMock, sortMapperMock, PaperRecord.class);
     }
-
-    @Mock
-    private PaperSlim unpersistedEntity, persistedEntity;
 
     @Test
     public void findingBySearchOrder_withNullSearchOrder_throws() {
@@ -111,7 +110,7 @@ public class DefaultBySearchOrderFinderTest {
     public void getConditions_withSearchOrderWithAuditSearchTermForCreationTimeStamp() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1l);
-        SearchTerm<?> st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "PAPER.CREATED", ">=\"2017-02-01 23:55:12\"");
+        SearchTerm st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "PAPER.CREATED", ">=\"2017-02-01 23:55:12\"");
         sc1.addSearchTerm(st);
         searchOrder.add(sc1);
 
@@ -123,7 +122,7 @@ public class DefaultBySearchOrderFinderTest {
     public void getConditions_withSearchOrderWithAuditSearchTermForLastModTimeStamp() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1l);
-        SearchTerm<?> st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "PAPER.LAST_MODIFIED", "<2017-02-01 23:55:12");
+        SearchTerm st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "PAPER.LAST_MODIFIED", "<2017-02-01 23:55:12");
         sc1.addSearchTerm(st);
         searchOrder.add(sc1);
 

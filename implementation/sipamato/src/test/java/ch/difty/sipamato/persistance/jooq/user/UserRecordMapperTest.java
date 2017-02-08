@@ -47,6 +47,7 @@ public class UserRecordMapperTest extends RecordMapperTest<UserRecord, User> {
 
     @Override
     protected void setAuditFieldsIn(UserRecord record) {
+        // no-op
     }
 
     @Override

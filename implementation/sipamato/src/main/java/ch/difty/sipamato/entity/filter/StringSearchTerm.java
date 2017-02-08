@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
  *
  * @see http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html
  */
-public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
+public class StringSearchTerm extends SearchTerm {
     private static final long serialVersionUID = 1L;
 
     private static final String RE_NOT = "-";
@@ -68,7 +68,7 @@ public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
         return tokens;
     }
 
-    public static enum MatchType {
+    public enum MatchType {
         EQUALS,
         CONTAINS,
         LIKE,
@@ -77,7 +77,7 @@ public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
         NONE;
     }
 
-    public static enum TokenType {
+    public enum TokenType {
         // Token types must not have underscores. Otherwise the named capturing groups in the constructed regexes will break
         NOTREGEX("-s/(.+)/", MatchType.REGEX, 2, false, false, true),
         REGEX("s/(.+)/", MatchType.REGEX, 4, false, false, false),
@@ -139,7 +139,8 @@ public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
 
         public final TokenType type;
         public final boolean negate;
-        public final String rawData, sqlData;
+        public final String rawData;
+        public final String sqlData;
 
         public Token(final TokenType type, final String data) {
             this.type = type;
@@ -190,7 +191,7 @@ public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
     }
 
     private static List<Token> tokenize(final String input, final Pattern pattern) {
-        final List<Token> tokens = new ArrayList<Token>();
+        final List<Token> tokens = new ArrayList<>();
         final Matcher matcher = pattern.matcher(input);
         tokenIteration: while (matcher.find()) {
             for (final TokenType tk : TokenType.values()) {

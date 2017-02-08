@@ -7,8 +7,10 @@ import java.time.LocalDateTime;
  * Data transfer object to access the audit fields of the entity record class.
  */
 public class AuditFields {
-    final LocalDateTime created, lastModified;
-    final Integer createdBy, lastModifiedBy;
+    final LocalDateTime created;
+    final LocalDateTime lastModified;
+    final Integer createdBy;
+    final Integer lastModifiedBy;
     final int version;
 
     public AuditFields(final Timestamp c, final Integer cb, final Timestamp lm, final Integer lmb, final Integer v) {

@@ -16,9 +16,12 @@ package ch.difty.sipamato.auth;
  *
  * @author u.joss
  */
-public interface Roles {
+public final class Roles {
 
-    String USER = "ROLE_USER";
-    String ADMIN = "ROLE_ADMIN";
-    String VIEWER = "ROLE_VIEWER";
+    public static final String USER = "ROLE_USER";
+    public static final String ADMIN = "ROLE_ADMIN";
+    public static final String VIEWER = "ROLE_VIEWER";
+
+    private Roles() {
+    }
 }
