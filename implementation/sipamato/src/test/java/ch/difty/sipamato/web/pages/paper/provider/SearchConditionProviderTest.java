@@ -27,7 +27,6 @@ public class SearchConditionProviderTest {
 
     @Mock
     private SearchOrder mockSearchOrder;
-
     @Mock
     private SearchCondition mockCondition1, mockCondition2, mockCondition3, mockCondition4;
 

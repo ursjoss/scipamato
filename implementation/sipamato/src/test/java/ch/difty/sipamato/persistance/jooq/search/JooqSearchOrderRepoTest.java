@@ -31,6 +31,17 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
 
     private JooqSearchOrderRepo repo;
 
+    @Mock
+    private SearchOrder unpersistedEntity;
+    @Mock
+    private SearchOrder persistedEntity;
+    @Mock
+    private SearchOrderRecord persistedRecord;
+    @Mock
+    private SearchOrderRecordMapper mapperMock;
+    @Mock
+    private SearchOrderFilter filterMock;
+
     @Override
     protected Long getSampleId() {
         return SAMPLE_ID;
@@ -58,9 +69,6 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         };
     }
 
-    @Mock
-    private SearchOrder unpersistedEntity, persistedEntity;
-
     @Override
     protected SearchOrder getUnpersistedEntity() {
         return unpersistedEntity;
@@ -71,16 +79,10 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         return persistedEntity;
     }
 
-    @Mock
-    private SearchOrderRecord persistedRecord;
-
     @Override
     protected SearchOrderRecord getPersistedRecord() {
         return persistedRecord;
     }
-
-    @Mock
-    private SearchOrderRecordMapper mapperMock;
 
     @Override
     protected SearchOrderRecordMapper getMapper() {
@@ -106,9 +108,6 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
     protected TableField<SearchOrderRecord, Long> getTableId() {
         return SEARCH_ORDER.ID;
     }
-
-    @Mock
-    private SearchOrderFilter filterMock;
 
     @Override
     protected SearchOrderFilter getFilter() {

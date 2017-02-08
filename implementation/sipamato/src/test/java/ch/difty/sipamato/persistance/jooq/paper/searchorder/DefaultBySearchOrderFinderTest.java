@@ -26,20 +26,19 @@ public class DefaultBySearchOrderFinderTest {
 
     @Mock
     private DSLContext dslMock;
-
     @Mock
     private PaperSlimRecordMapper mapperMock;
-
     @Mock
     private JooqSortMapper<PaperRecord, PaperSlim, ch.difty.sipamato.db.tables.Paper> sortMapperMock;
+    @Mock
+    private PaperSlim unpersistedEntity;
+    @Mock
+    private PaperSlim persistedEntity;
 
     @Before
-    public void stUp() {
-        finder = new DefaultBySearchOrderFinder<PaperSlim, PaperSlimRecordMapper>(dslMock, mapperMock, sortMapperMock, PaperRecord.class);
+    public void setUp() {
+        finder = new DefaultBySearchOrderFinder<>(dslMock, mapperMock, sortMapperMock, PaperRecord.class);
     }
-
-    @Mock
-    private PaperSlim unpersistedEntity, persistedEntity;
 
     @Test
     public void findingBySearchOrder_withNullSearchOrder_throws() {

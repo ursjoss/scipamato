@@ -39,6 +39,8 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     private static final long SEARCH_ORDER_ID = 7;
 
+    private static final String LABEL = "Label";
+
     @MockBean
     private SearchOrderService searchOrderServiceMock;
     @MockBean
@@ -68,9 +70,9 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     @Override
     protected PaperSearchPage makePage() {
         final List<SearchCondition> conditions = Arrays.asList(new SearchCondition());
-        final SearchOrder searchOrder = new SearchOrder(conditions);
-        searchOrder.setId(5l);
-        return new PaperSearchPage(Model.of(searchOrder));
+        final SearchOrder so = new SearchOrder(conditions);
+        so.setId(5l);
+        return new PaperSearchPage(Model.of(so));
     }
 
     @Override
@@ -86,17 +88,17 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     private void assertSearchOrderSelectorPanel(String b) {
-        getTester().assertLabel(b + "Label", "Saved Searches");
+        getTester().assertLabel(b + LABEL, "Saved Searches");
         getTester().assertComponent(b, SearchOrderSelectorPanel.class);
     }
 
     private void assertSearchOrderPanel(String b) {
-        getTester().assertLabel(b + "Label", "Search Conditions");
+        getTester().assertLabel(b + LABEL, "Search Conditions");
         getTester().assertComponent(b, SearchOrderPanel.class);
     }
 
     private void assertResultPanel(String b) {
-        getTester().assertLabel(b + "Label", "Search Results");
+        getTester().assertLabel(b + LABEL, "Search Results");
         getTester().assertComponent(b, ResultPanel.class);
     }
 
@@ -125,9 +127,9 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
             }
         };
         final List<SearchCondition> conditions = Arrays.asList(sc);
-        final SearchOrder searchOrder = new SearchOrder(conditions);
-        searchOrder.setId(6l);
-        PaperSearchPage page = new PaperSearchPage(Model.of(searchOrder));
+        final SearchOrder so = new SearchOrder(conditions);
+        so.setId(6l);
+        PaperSearchPage page = new PaperSearchPage(Model.of(so));
 
         getTester().startPage(page);
         getTester().assertRenderedPage(getPageClass());

@@ -100,7 +100,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     }
 
     private void assertTabPanel(int i, String b) {
-        final String bb = ":" + String.valueOf(i);
+        final String bb = ":" + i;
         getTester().assertComponent(b + bb, Panel.class);
     }
 

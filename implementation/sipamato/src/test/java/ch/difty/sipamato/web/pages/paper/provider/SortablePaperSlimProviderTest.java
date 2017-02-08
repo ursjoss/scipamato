@@ -35,26 +35,23 @@ public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P
 
     protected static final int PAGE_SIZE = 3;
 
-    protected P provider;
+    @Autowired
+    protected SipamatoApplication application;
 
     @Mock
     protected JooqPaperSlimService serviceMock;
-
     @Mock
     protected JooqPaperService paperServiceMock;
-
     @Mock
     protected PaperSlim entityMock;
     @Mock
     protected Paper paperMock;
 
-    @Autowired
-    protected SipamatoApplication application;
-
-    protected abstract F getFilter();
-
+    protected P provider;
     protected Page<PaperSlim> pageOfSlimPapers;
     protected Page<Paper> pageOfPapers;
+
+    protected abstract F getFilter();
 
     @Before
     public final void setUp() {
@@ -63,8 +60,8 @@ public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P
         provider.setService(serviceMock);
         provider.setPaperService(paperServiceMock);
 
-        pageOfSlimPapers = new PageImpl<PaperSlim>(Arrays.asList(entityMock, entityMock, entityMock));
-        pageOfPapers = new PageImpl<Paper>(Arrays.asList(paperMock, paperMock, paperMock, paperMock, paperMock));
+        pageOfSlimPapers = new PageImpl<>(Arrays.asList(entityMock, entityMock, entityMock));
+        pageOfPapers = new PageImpl<>(Arrays.asList(paperMock, paperMock, paperMock, paperMock, paperMock));
 
         localFixture();
     }
@@ -113,7 +110,7 @@ public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P
     @Test
     public void iterating_withNoRecords_returnsNoRecords() {
         // reset the service mock
-        pageOfSlimPapers = new PageImpl<PaperSlim>(Arrays.asList());
+        pageOfSlimPapers = new PageImpl<>(Arrays.asList());
         localFixture();
 
         Iterator<PaperSlim> it = provider.iterator(0, 3);

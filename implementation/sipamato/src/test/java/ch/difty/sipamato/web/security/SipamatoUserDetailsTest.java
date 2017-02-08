@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Test;
 
@@ -13,13 +12,9 @@ import ch.difty.sipamato.entity.User;
 
 public class SipamatoUserDetailsTest {
 
-    private final List<Role> roles = Arrays.asList(Role.ADMIN, Role.USER);
-
-    private User user;
-
     @Test
     public void test() {
-        user = new User(1, "un", "fn", "ln", "em", "pw", true, roles);
+        User user = new User(1, "un", "fn", "ln", "em", "pw", true, Arrays.asList(Role.ADMIN, Role.USER));
         SipamatoUserDetails sud = new SipamatoUserDetails(user);
 
         assertThat(sud.getId()).isEqualTo(1);

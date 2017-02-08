@@ -14,8 +14,6 @@ import ch.difty.sipamato.web.component.SerializableConsumer;
 @RunWith(MockitoJUnitRunner.class)
 public class ClickablePropertyColumnTest {
 
-    private ClickablePropertyColumn<String, String> c;
-
     @Mock
     private SerializableConsumer<IModel<String>> consumerMock;
 
@@ -24,7 +22,7 @@ public class ClickablePropertyColumnTest {
 
     @Test
     public void testOnClick() {
-        c = new ClickablePropertyColumn<>(displayModel, property, consumerMock);
+        ClickablePropertyColumn<String, String> c = new ClickablePropertyColumn<>(displayModel, property, consumerMock);
         Model<String> clickModel = Model.of("bar");
         c.onClick(clickModel);
 

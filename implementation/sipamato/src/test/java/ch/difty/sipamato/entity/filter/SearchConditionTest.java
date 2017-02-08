@@ -17,659 +17,660 @@ public class SearchConditionTest {
     private static final long SEARCH_CONDITION_ID = 1;
     private static final String X = "x";
 
-    private final SearchCondition sc = new SearchCondition(1l);
+    private final SearchCondition sc1 = new SearchCondition(SEARCH_CONDITION_ID);
+    private final SearchCondition sc2 = new SearchCondition();
 
     @Test
     public void allStringSearchTerms() {
-        sc.setDoi(X);
-        sc.setPmId(X);
-        sc.setAuthors(X);
-        sc.setFirstAuthor(X);
-        sc.setTitle(X);
-        sc.setLocation(X);
-        sc.setGoals(X);
-        sc.setPopulation(X);
-        sc.setPopulationPlace(X);
-        sc.setPopulationParticipants(X);
-        sc.setPopulationDuration(X);
-        sc.setExposureAssessment(X);
-        sc.setExposurePollutant(X);
-        sc.setMethods(X);
-        sc.setMethodStudyDesign(X);
-        sc.setMethodOutcome(X);
-        sc.setMethodStatistics(X);
-        sc.setMethodConfounders(X);
-        sc.setResult(X);
-        sc.setResultExposureRange(X);
-        sc.setResultEffectEstimate(X);
-        sc.setResultMeasuredOutcome(X);
-        sc.setComment(X);
-        sc.setIntern(X);
-        sc.setOriginalAbstract(X);
-        sc.setMainCodeOfCodeclass1(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(26);
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
-        assertThat(sc.getAuditSearchTerms()).isEmpty();
-        assertThat(sc.getCreatedDisplayValue()).isNull();
-        assertThat(sc.getModifiedDisplayValue()).isNull();
+        sc1.setDoi(X);
+        sc1.setPmId(X);
+        sc1.setAuthors(X);
+        sc1.setFirstAuthor(X);
+        sc1.setTitle(X);
+        sc1.setLocation(X);
+        sc1.setGoals(X);
+        sc1.setPopulation(X);
+        sc1.setPopulationPlace(X);
+        sc1.setPopulationParticipants(X);
+        sc1.setPopulationDuration(X);
+        sc1.setExposureAssessment(X);
+        sc1.setExposurePollutant(X);
+        sc1.setMethods(X);
+        sc1.setMethodStudyDesign(X);
+        sc1.setMethodOutcome(X);
+        sc1.setMethodStatistics(X);
+        sc1.setMethodConfounders(X);
+        sc1.setResult(X);
+        sc1.setResultExposureRange(X);
+        sc1.setResultEffectEstimate(X);
+        sc1.setResultMeasuredOutcome(X);
+        sc1.setComment(X);
+        sc1.setIntern(X);
+        sc1.setOriginalAbstract(X);
+        sc1.setMainCodeOfCodeclass1(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(26);
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc1.getAuditSearchTerms()).isEmpty();
+        assertThat(sc1.getCreatedDisplayValue()).isNull();
+        assertThat(sc1.getModifiedDisplayValue()).isNull();
 
-        assertThat(sc.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
+        assertThat(sc1.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
     }
 
     @Test
     public void allIntegerSearchTerms() {
-        sc.setId("3");
-        sc.setPublicationYear("2017");
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).hasSize(2);
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
-        assertThat(sc.getAuditSearchTerms()).isEmpty();
-        assertThat(sc.getCreatedDisplayValue()).isNull();
-        assertThat(sc.getModifiedDisplayValue()).isNull();
+        sc1.setId("3");
+        sc1.setPublicationYear("2017");
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).hasSize(2);
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc1.getAuditSearchTerms()).isEmpty();
+        assertThat(sc1.getCreatedDisplayValue()).isNull();
+        assertThat(sc1.getModifiedDisplayValue()).isNull();
 
-        assertThat(sc.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
+        assertThat(sc1.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
     }
 
     @Test
     public void allBooleanSearchTerms() {
-        sc.setFirstAuthorOverridden(true);
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getBooleanSearchTerms()).hasSize(1);
-        assertThat(sc.getAuditSearchTerms()).isEmpty();
-        assertThat(sc.getCreatedDisplayValue()).isNull();
-        assertThat(sc.getModifiedDisplayValue()).isNull();
+        sc1.setFirstAuthorOverridden(true);
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getBooleanSearchTerms()).hasSize(1);
+        assertThat(sc1.getAuditSearchTerms()).isEmpty();
+        assertThat(sc1.getCreatedDisplayValue()).isNull();
+        assertThat(sc1.getModifiedDisplayValue()).isNull();
 
-        assertThat(sc.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
+        assertThat(sc1.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
     }
 
     @Test
     public void allAuditSearchTerms() {
-        sc.setCreatedDisplayValue(X);
-        sc.setModifiedDisplayValue(X + X);
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
-        assertThat(sc.getAuditSearchTerms()).hasSize(4);
+        sc1.setCreatedDisplayValue(X);
+        sc1.setModifiedDisplayValue(X + X);
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc1.getAuditSearchTerms()).hasSize(4);
 
-        assertThat(sc.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
+        assertThat(sc1.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
     }
 
     @Test
     public void id_extensiveTest() {
-        assertThat(sc.getId()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc1.getId()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
 
-        sc.setId("5");
-        assertThat(sc.getId()).isEqualTo("5");
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).hasSize(1);
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
-        IntegerSearchTerm st = sc.getIntegerSearchTerms().iterator().next();
+        sc1.setId("5");
+        assertThat(sc1.getId()).isEqualTo("5");
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).hasSize(1);
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
+        IntegerSearchTerm st = sc1.getIntegerSearchTerms().iterator().next();
         assertThat(st.getFieldName()).isEqualTo(FLD_ID);
         assertThat(st.getRawSearchTerm()).isEqualTo("5");
 
-        sc.setId("10");
-        assertThat(sc.getId()).isEqualTo("10");
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).hasSize(1);
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
-        st = sc.getIntegerSearchTerms().iterator().next();
+        sc1.setId("10");
+        assertThat(sc1.getId()).isEqualTo("10");
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).hasSize(1);
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
+        st = sc1.getIntegerSearchTerms().iterator().next();
         assertThat(st.getFieldName()).isEqualTo(FLD_ID);
         assertThat(st.getRawSearchTerm()).isEqualTo("10");
 
-        sc.setId(null);
-        assertThat(sc.getId()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
+        sc1.setId(null);
+        assertThat(sc1.getId()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
     }
 
     @Test
     public void doi_extensiveTest() {
-        assertThat(sc.getDoi()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc1.getDoi()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
 
-        sc.setDoi("101111");
-        assertThat(sc.getDoi()).isEqualTo("101111");
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
-        StringSearchTerm st = sc.getStringSearchTerms().iterator().next();
+        sc1.setDoi("101111");
+        assertThat(sc1.getDoi()).isEqualTo("101111");
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
+        StringSearchTerm st = sc1.getStringSearchTerms().iterator().next();
         assertThat(st.getFieldName()).isEqualTo(FLD_DOI);
         assertThat(st.getRawSearchTerm()).isEqualTo("101111");
 
-        sc.setDoi("102222");
-        assertThat(sc.getDoi()).isEqualTo("102222");
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
-        st = sc.getStringSearchTerms().iterator().next();
+        sc1.setDoi("102222");
+        assertThat(sc1.getDoi()).isEqualTo("102222");
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
+        st = sc1.getStringSearchTerms().iterator().next();
         assertThat(st.getFieldName()).isEqualTo(FLD_DOI);
         assertThat(st.getRawSearchTerm()).isEqualTo("102222");
 
-        sc.setDoi(null);
-        assertThat(sc.getDoi()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
+        sc1.setDoi(null);
+        assertThat(sc1.getDoi()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
 
-        assertThat(sc.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
+        assertThat(sc1.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
     }
 
     @Test
     public void pmId() {
-        assertThat(sc.getPmId()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getPmId()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setPmId(X);
-        assertThat(sc.getPmId()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setPmId(X);
+        assertThat(sc1.getPmId()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setPmId(null);
-        assertThat(sc.getPmId()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setPmId(null);
+        assertThat(sc1.getPmId()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void authors() {
-        assertThat(sc.getAuthors()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getAuthors()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setAuthors(X);
-        assertThat(sc.getAuthors()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setAuthors(X);
+        assertThat(sc1.getAuthors()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setAuthors(null);
-        assertThat(sc.getAuthors()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setAuthors(null);
+        assertThat(sc1.getAuthors()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void firstAuthor() {
-        assertThat(sc.getFirstAuthor()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getFirstAuthor()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setFirstAuthor(X);
-        assertThat(sc.getFirstAuthor()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setFirstAuthor(X);
+        assertThat(sc1.getFirstAuthor()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setFirstAuthor(null);
-        assertThat(sc.getFirstAuthor()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setFirstAuthor(null);
+        assertThat(sc1.getFirstAuthor()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void firstAuthorOverridden_extensiveTest() {
-        assertThat(sc.isFirstAuthorOverridden()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc1.isFirstAuthorOverridden()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
 
-        sc.setFirstAuthorOverridden(true);
-        assertThat(sc.isFirstAuthorOverridden()).isTrue();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getBooleanSearchTerms()).hasSize(1);
-        BooleanSearchTerm st = sc.getBooleanSearchTerms().iterator().next();
+        sc1.setFirstAuthorOverridden(true);
+        assertThat(sc1.isFirstAuthorOverridden()).isTrue();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getBooleanSearchTerms()).hasSize(1);
+        BooleanSearchTerm st = sc1.getBooleanSearchTerms().iterator().next();
         assertThat(st.getFieldName()).isEqualTo(FLD_FIRST_AUTHOR_OVERRIDDEN);
         assertThat(st.getRawSearchTerm()).isEqualTo("true");
         assertThat(st.getValue()).isTrue();
 
-        sc.setFirstAuthorOverridden(false);
-        assertThat(sc.isFirstAuthorOverridden()).isFalse();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getBooleanSearchTerms()).hasSize(1);
-        st = sc.getBooleanSearchTerms().iterator().next();
+        sc1.setFirstAuthorOverridden(false);
+        assertThat(sc1.isFirstAuthorOverridden()).isFalse();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getBooleanSearchTerms()).hasSize(1);
+        st = sc1.getBooleanSearchTerms().iterator().next();
         assertThat(st.getFieldName()).isEqualTo(FLD_FIRST_AUTHOR_OVERRIDDEN);
         assertThat(st.getRawSearchTerm()).isEqualTo("false");
         assertThat(st.getValue()).isFalse();
 
-        sc.setFirstAuthorOverridden(null);
-        assertThat(sc.isFirstAuthorOverridden()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
+        sc1.setFirstAuthorOverridden(null);
+        assertThat(sc1.isFirstAuthorOverridden()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
     }
 
     @Test
     public void title() {
-        assertThat(sc.getTitle()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getTitle()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setTitle(X);
-        assertThat(sc.getTitle()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setTitle(X);
+        assertThat(sc1.getTitle()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setTitle(null);
-        assertThat(sc.getTitle()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setTitle(null);
+        assertThat(sc1.getTitle()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void location() {
-        assertThat(sc.getLocation()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getLocation()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setLocation(X);
-        assertThat(sc.getLocation()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setLocation(X);
+        assertThat(sc1.getLocation()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setLocation(null);
-        assertThat(sc.getLocation()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setLocation(null);
+        assertThat(sc1.getLocation()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void publicationYear() {
-        assertThat(sc.getPublicationYear()).isNull();
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getPublicationYear()).isNull();
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
 
-        sc.setPublicationYear("2016");
-        assertThat(sc.getPublicationYear()).isEqualTo("2016");
-        assertThat(sc.getIntegerSearchTerms()).hasSize(1);
+        sc1.setPublicationYear("2016");
+        assertThat(sc1.getPublicationYear()).isEqualTo("2016");
+        assertThat(sc1.getIntegerSearchTerms()).hasSize(1);
 
-        sc.setPublicationYear(null);
-        assertThat(sc.getPublicationYear()).isNull();
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
+        sc1.setPublicationYear(null);
+        assertThat(sc1.getPublicationYear()).isNull();
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
     }
 
     @Test
     public void goals() {
-        assertThat(sc.getGoals()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getGoals()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setGoals(X);
-        assertThat(sc.getGoals()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setGoals(X);
+        assertThat(sc1.getGoals()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setGoals(null);
-        assertThat(sc.getGoals()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setGoals(null);
+        assertThat(sc1.getGoals()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void population() {
-        assertThat(sc.getPopulation()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getPopulation()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setPopulation(X);
-        assertThat(sc.getPopulation()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setPopulation(X);
+        assertThat(sc1.getPopulation()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setPopulation(null);
-        assertThat(sc.getPopulation()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setPopulation(null);
+        assertThat(sc1.getPopulation()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void populationPlace() {
-        assertThat(sc.getPopulationPlace()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getPopulationPlace()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setPopulationPlace(X);
-        assertThat(sc.getPopulationPlace()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setPopulationPlace(X);
+        assertThat(sc1.getPopulationPlace()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setPopulationPlace(null);
-        assertThat(sc.getPopulationPlace()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setPopulationPlace(null);
+        assertThat(sc1.getPopulationPlace()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void populationParticipants() {
-        assertThat(sc.getPopulationParticipants()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getPopulationParticipants()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setPopulationParticipants(X);
-        assertThat(sc.getPopulationParticipants()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setPopulationParticipants(X);
+        assertThat(sc1.getPopulationParticipants()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setPopulationParticipants(null);
-        assertThat(sc.getPopulationParticipants()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setPopulationParticipants(null);
+        assertThat(sc1.getPopulationParticipants()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void populationDuration() {
-        assertThat(sc.getPopulationDuration()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getPopulationDuration()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setPopulationDuration(X);
-        assertThat(sc.getPopulationDuration()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setPopulationDuration(X);
+        assertThat(sc1.getPopulationDuration()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setPopulationDuration(null);
-        assertThat(sc.getPopulationDuration()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setPopulationDuration(null);
+        assertThat(sc1.getPopulationDuration()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void exposurePollutant() {
-        assertThat(sc.getExposurePollutant()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getExposurePollutant()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setExposurePollutant(X);
-        assertThat(sc.getExposurePollutant()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setExposurePollutant(X);
+        assertThat(sc1.getExposurePollutant()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setExposurePollutant(null);
-        assertThat(sc.getExposurePollutant()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setExposurePollutant(null);
+        assertThat(sc1.getExposurePollutant()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void exposureAssessment() {
-        assertThat(sc.getExposureAssessment()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getExposureAssessment()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setExposureAssessment(X);
-        assertThat(sc.getExposureAssessment()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setExposureAssessment(X);
+        assertThat(sc1.getExposureAssessment()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setExposureAssessment(null);
-        assertThat(sc.getExposureAssessment()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setExposureAssessment(null);
+        assertThat(sc1.getExposureAssessment()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void methods() {
-        assertThat(sc.getMethods()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getMethods()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setMethods(X);
-        assertThat(sc.getMethods()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setMethods(X);
+        assertThat(sc1.getMethods()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setMethods(null);
-        assertThat(sc.getMethods()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setMethods(null);
+        assertThat(sc1.getMethods()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void methodStudyDesign() {
-        assertThat(sc.getMethodStudyDesign()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getMethodStudyDesign()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setMethodStudyDesign(X);
-        assertThat(sc.getMethodStudyDesign()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setMethodStudyDesign(X);
+        assertThat(sc1.getMethodStudyDesign()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setMethodStudyDesign(null);
-        assertThat(sc.getMethodStudyDesign()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setMethodStudyDesign(null);
+        assertThat(sc1.getMethodStudyDesign()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void methodOutcome() {
-        assertThat(sc.getMethodOutcome()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getMethodOutcome()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setMethodOutcome(X);
-        assertThat(sc.getMethodOutcome()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setMethodOutcome(X);
+        assertThat(sc1.getMethodOutcome()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setMethodOutcome(null);
-        assertThat(sc.getMethodOutcome()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setMethodOutcome(null);
+        assertThat(sc1.getMethodOutcome()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void methodStatistics() {
-        assertThat(sc.getMethodStatistics()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getMethodStatistics()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setMethodStatistics(X);
-        assertThat(sc.getMethodStatistics()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setMethodStatistics(X);
+        assertThat(sc1.getMethodStatistics()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setMethodStatistics(null);
-        assertThat(sc.getMethodStatistics()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setMethodStatistics(null);
+        assertThat(sc1.getMethodStatistics()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void methodConfounders() {
-        assertThat(sc.getMethodConfounders()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getMethodConfounders()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setMethodConfounders(X);
-        assertThat(sc.getMethodConfounders()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setMethodConfounders(X);
+        assertThat(sc1.getMethodConfounders()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setMethodConfounders(null);
-        assertThat(sc.getMethodConfounders()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setMethodConfounders(null);
+        assertThat(sc1.getMethodConfounders()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void result() {
-        assertThat(sc.getResult()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getResult()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setResult(X);
-        assertThat(sc.getResult()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setResult(X);
+        assertThat(sc1.getResult()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setResult(null);
-        assertThat(sc.getResult()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setResult(null);
+        assertThat(sc1.getResult()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void resultExposureRange() {
-        assertThat(sc.getResultExposureRange()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getResultExposureRange()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setResultExposureRange(X);
-        assertThat(sc.getResultExposureRange()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setResultExposureRange(X);
+        assertThat(sc1.getResultExposureRange()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setResultExposureRange(null);
-        assertThat(sc.getResultExposureRange()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setResultExposureRange(null);
+        assertThat(sc1.getResultExposureRange()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void resultEffectEstimate() {
-        assertThat(sc.getResultEffectEstimate()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getResultEffectEstimate()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setResultEffectEstimate(X);
-        assertThat(sc.getResultEffectEstimate()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setResultEffectEstimate(X);
+        assertThat(sc1.getResultEffectEstimate()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setResultEffectEstimate(null);
-        assertThat(sc.getResultEffectEstimate()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setResultEffectEstimate(null);
+        assertThat(sc1.getResultEffectEstimate()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void resultMeasuredOutcome() {
-        assertThat(sc.getResultMeasuredOutcome()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getResultMeasuredOutcome()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setResultMeasuredOutcome(X);
-        assertThat(sc.getResultMeasuredOutcome()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setResultMeasuredOutcome(X);
+        assertThat(sc1.getResultMeasuredOutcome()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setResultMeasuredOutcome(null);
-        assertThat(sc.getResultMeasuredOutcome()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setResultMeasuredOutcome(null);
+        assertThat(sc1.getResultMeasuredOutcome()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void comment() {
-        assertThat(sc.getComment()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getComment()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setComment(X);
-        assertThat(sc.getComment()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setComment(X);
+        assertThat(sc1.getComment()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setComment(null);
-        assertThat(sc.getComment()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setComment(null);
+        assertThat(sc1.getComment()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void intern() {
-        assertThat(sc.getIntern()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntern()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setIntern(X);
-        assertThat(sc.getIntern()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setIntern(X);
+        assertThat(sc1.getIntern()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setIntern(null);
-        assertThat(sc.getIntern()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setIntern(null);
+        assertThat(sc1.getIntern()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void originalAbstract() {
-        assertThat(sc.getOriginalAbstract()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getOriginalAbstract()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setOriginalAbstract(X);
-        assertThat(sc.getOriginalAbstract()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setOriginalAbstract(X);
+        assertThat(sc1.getOriginalAbstract()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setOriginalAbstract(null);
-        assertThat(sc.getOriginalAbstract()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setOriginalAbstract(null);
+        assertThat(sc1.getOriginalAbstract()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void mainCodeOfClass1() {
-        assertThat(sc.getMainCodeOfCodeclass1()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getMainCodeOfCodeclass1()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setMainCodeOfCodeclass1(X);
-        assertThat(sc.getMainCodeOfCodeclass1()).isEqualTo(X);
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
+        sc1.setMainCodeOfCodeclass1(X);
+        assertThat(sc1.getMainCodeOfCodeclass1()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
 
-        sc.setMainCodeOfCodeclass1(null);
-        assertThat(sc.getMainCodeOfCodeclass1()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setMainCodeOfCodeclass1(null);
+        assertThat(sc1.getMainCodeOfCodeclass1()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void createdDisplayValue() {
-        assertThat(sc.getCreatedDisplayValue()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getCreatedDisplayValue()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setCreatedDisplayValue(X);
-        assertThat(sc.getCreatedDisplayValue()).isEqualTo(X);
-        assertThat(sc.getCreated()).isEqualTo(X);
-        assertThat(sc.getCreatedBy()).isEqualTo(X);
-        assertThat(sc.getLastModified()).isNull();
-        assertThat(sc.getLastModifiedBy()).isNull();
-        assertThat(sc.getStringSearchTerms()).hasSize(0);
+        sc1.setCreatedDisplayValue(X);
+        assertThat(sc1.getCreatedDisplayValue()).isEqualTo(X);
+        assertThat(sc1.getCreated()).isEqualTo(X);
+        assertThat(sc1.getCreatedBy()).isEqualTo(X);
+        assertThat(sc1.getLastModified()).isNull();
+        assertThat(sc1.getLastModifiedBy()).isNull();
+        assertThat(sc1.getStringSearchTerms()).hasSize(0);
 
-        sc.setCreatedDisplayValue(null);
-        assertThat(sc.getCreatedDisplayValue()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setCreatedDisplayValue(null);
+        assertThat(sc1.getCreatedDisplayValue()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void modifiedDisplayValue() {
-        assertThat(sc.getModifiedDisplayValue()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getModifiedDisplayValue()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
 
-        sc.setModifiedDisplayValue(X);
-        assertThat(sc.getModifiedDisplayValue()).isEqualTo(X);
-        assertThat(sc.getLastModified()).isEqualTo(X);
-        assertThat(sc.getLastModifiedBy()).isEqualTo(X);
-        assertThat(sc.getCreated()).isNull();
-        assertThat(sc.getCreatedBy()).isNull();
-        assertThat(sc.getStringSearchTerms()).hasSize(0);
+        sc1.setModifiedDisplayValue(X);
+        assertThat(sc1.getModifiedDisplayValue()).isEqualTo(X);
+        assertThat(sc1.getLastModified()).isEqualTo(X);
+        assertThat(sc1.getLastModifiedBy()).isEqualTo(X);
+        assertThat(sc1.getCreated()).isNull();
+        assertThat(sc1.getCreatedBy()).isNull();
+        assertThat(sc1.getStringSearchTerms()).hasSize(0);
 
-        sc.setModifiedDisplayValue(null);
-        assertThat(sc.getModifiedDisplayValue()).isNull();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
+        sc1.setModifiedDisplayValue(null);
+        assertThat(sc1.getModifiedDisplayValue()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
     }
 
     @Test
     public void testDisplayValue_withSingleStringSearchTerms_returnsIt() {
-        sc.setAuthors("hoops");
-        assertThat(sc.getDisplayValue()).isEqualTo("hoops");
+        sc1.setAuthors("hoops");
+        assertThat(sc1.getDisplayValue()).isEqualTo("hoops");
     }
 
     @Test
     public void testDisplayValue_withTwoStringSearchTerms_joinsThemUsingAnd() {
-        sc.setAuthors("rag");
-        sc.setMethodConfounders("bones");
-        assertThat(sc.getDisplayValue()).isEqualTo("rag AND bones");
+        sc1.setAuthors("rag");
+        sc1.setMethodConfounders("bones");
+        assertThat(sc1.getDisplayValue()).isEqualTo("rag AND bones");
     }
 
     @Test
     public void testDisplayValue_forBooleanSearchTermsBeginFalse() {
-        sc.setFirstAuthorOverridden(false);
-        assertThat(sc.getDisplayValue()).isEqualTo("-first_author_overridden");
+        sc1.setFirstAuthorOverridden(false);
+        assertThat(sc1.getDisplayValue()).isEqualTo("-first_author_overridden");
     }
 
     @Test
     public void testDisplayValue_forIntegerSearchTerms() {
-        sc.setPublicationYear("2017");
-        assertThat(sc.getDisplayValue()).isEqualTo("2017");
+        sc1.setPublicationYear("2017");
+        assertThat(sc1.getDisplayValue()).isEqualTo("2017");
     }
 
     @Test
     public void testDisplayValue_forAuditSearchTermsForAuthorSearch() {
-        sc.setCreatedDisplayValue("mkj");
-        assertThat(sc.getDisplayValue()).isEqualTo("mkj");
+        sc1.setCreatedDisplayValue("mkj");
+        assertThat(sc1.getDisplayValue()).isEqualTo("mkj");
     }
 
     @Test
     public void testDisplayValue_forAuditSearchTermsForDateSearch() {
-        sc.setCreatedDisplayValue(">2017-01-23");
-        assertThat(sc.getDisplayValue()).isEqualTo(">2017-01-23");
+        sc1.setCreatedDisplayValue(">2017-01-23");
+        assertThat(sc1.getDisplayValue()).isEqualTo(">2017-01-23");
     }
 
     @Test
     public void testDisplayValue_forAuditSearchTermsForCombinedSearch() {
-        sc.setModifiedDisplayValue("rk >=2017-01-23");
-        assertThat(sc.getDisplayValue()).isEqualTo("rk >=2017-01-23");
+        sc1.setModifiedDisplayValue("rk >=2017-01-23");
+        assertThat(sc1.getDisplayValue()).isEqualTo("rk >=2017-01-23");
     }
 
     @Test
     public void testDisplayValue_withMultipleSearchTerms_joinsThemAllUsingAND() {
-        sc.setAuthors("fooAuth");
-        sc.setMethodStudyDesign("bar");
-        sc.setDoi("baz");
-        sc.setPublicationYear("2016");
-        sc.setFirstAuthorOverridden(true);
-        assertThat(sc.getDisplayValue()).isEqualTo("fooAuth AND bar AND baz AND 2016 AND first_author_overridden");
+        sc1.setAuthors("fooAuth");
+        sc1.setMethodStudyDesign("bar");
+        sc1.setDoi("baz");
+        sc1.setPublicationYear("2016");
+        sc1.setFirstAuthorOverridden(true);
+        assertThat(sc1.getDisplayValue()).isEqualTo("fooAuth AND bar AND baz AND 2016 AND first_author_overridden");
     }
 
     @Test
     public void testDisplayValue_withCodesOnly() {
-        sc.addCode(new Code("1F", "C1F", "", false, 1, "CC1", "", 0));
-        sc.addCode(new Code("5H", "C5H", "", false, 5, "CC5", "", 0));
-        assertThat(sc.getDisplayValue()).isEqualTo("1F&5H");
+        sc1.addCode(new Code("1F", "C1F", "", false, 1, "CC1", "", 0));
+        sc1.addCode(new Code("5H", "C5H", "", false, 5, "CC5", "", 0));
+        assertThat(sc1.getDisplayValue()).isEqualTo("1F&5H");
     }
 
     @Test
     public void testDisplayValue_withSearchTermsAndCodes() {
-        sc.setAuthors("foobar");
-        sc.addCode(new Code("1F", "C1F", "", false, 1, "CC1", "", 0));
-        sc.addCode(new Code("5H", "C5H", "", false, 5, "CC5", "", 0));
-        assertThat(sc.getDisplayValue()).isEqualTo("foobar AND 1F&5H");
+        sc1.setAuthors("foobar");
+        sc1.addCode(new Code("1F", "C1F", "", false, 1, "CC1", "", 0));
+        sc1.addCode(new Code("5H", "C5H", "", false, 5, "CC5", "", 0));
+        assertThat(sc1.getDisplayValue()).isEqualTo("foobar AND 1F&5H");
     }
 
     @Test
     public void equalsAndHash1_ofFieldSc() {
-        assertThat(sc.hashCode()).isEqualTo(917087168);
-        assertThat(sc.equals(sc)).isTrue();
-        assertThat(sc.equals(null)).isFalse();
-        assertThat(sc.equals("")).isFalse();
+        assertThat(sc1.hashCode()).isEqualTo(917087168);
+        assertThat(sc1.equals(sc1)).isTrue();
+        assertThat(sc1.equals(null)).isFalse();
+        assertThat(sc1.equals("")).isFalse();
     }
 
     @Test
@@ -837,101 +838,92 @@ public class SearchConditionTest {
 
     @Test
     public void addingSearchTerms_leavesRemovedKeysEmpty() {
-        SearchCondition sc = new SearchCondition();
-        sc.setAuthors("foo");
-        sc.setPublicationYear("2014");
-        sc.setFirstAuthorOverridden(true);
-        assertThat(sc.getRemovedKeys()).isEmpty();
+        sc2.setAuthors("foo");
+        sc2.setPublicationYear("2014");
+        sc2.setFirstAuthorOverridden(true);
+        assertThat(sc2.getRemovedKeys()).isEmpty();
     }
 
     @Test
     public void removingSearchTerms_addsThemToRemovedKeys() {
-        SearchCondition sc = new SearchCondition();
-        sc.setAuthors("foo");
-        sc.setPublicationYear("2014");
-        sc.setGoals("bar");
+        sc2.setAuthors("foo");
+        sc2.setPublicationYear("2014");
+        sc2.setGoals("bar");
 
-        sc.setPublicationYear(null);
-        assertThat(sc.getRemovedKeys()).hasSize(1).containsOnly("publication_year");
+        sc2.setPublicationYear(null);
+        assertThat(sc2.getRemovedKeys()).hasSize(1).containsOnly("publication_year");
     }
 
     @Test
     public void addingSearchTerm_afterRemovingIt_removesItFromRemovedKeys() {
-        SearchCondition sc = new SearchCondition();
-        sc.setPublicationYear("2014");
-        sc.setPublicationYear(null);
-        sc.setPublicationYear("2015");
-        assertThat(sc.getRemovedKeys()).isEmpty();
+        sc2.setPublicationYear("2014");
+        sc2.setPublicationYear(null);
+        sc2.setPublicationYear("2015");
+        assertThat(sc2.getRemovedKeys()).isEmpty();
     }
 
     @Test
     public void addingSearchTerm_xafterRemovingIt_removesItFromRemovedKeys() {
-        SearchCondition sc = new SearchCondition();
-        sc.setAuthors("foo");
-        sc.setAuthors(null);
-        sc.setPublicationYear("2014");
-        sc.setPublicationYear(null);
-        assertThat(sc.getRemovedKeys()).hasSize(2);
+        sc1.setAuthors("foo");
+        sc1.setAuthors(null);
+        sc1.setPublicationYear("2014");
+        sc1.setPublicationYear(null);
+        assertThat(sc1.getRemovedKeys()).hasSize(2);
 
-        sc.clearRemovedKeys();
-        assertThat(sc.getRemovedKeys()).isEmpty();
+        sc1.clearRemovedKeys();
+        assertThat(sc1.getRemovedKeys()).isEmpty();
     }
 
     @Test
     public void addingBooleanTermString() {
-        SearchCondition sc = new SearchCondition();
-        sc.addSearchTerm(new BooleanSearchTerm("fn", "rst"));
-        assertThat(sc.getBooleanSearchTerms()).hasSize(1);
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getAuditSearchTerms()).isEmpty();
+        sc2.addSearchTerm(new BooleanSearchTerm("fn", "rst"));
+        assertThat(sc2.getBooleanSearchTerms()).hasSize(1);
+        assertThat(sc2.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc2.getStringSearchTerms()).isEmpty();
+        assertThat(sc2.getAuditSearchTerms()).isEmpty();
     }
 
     @Test
     public void addingIntegerTermString() {
-        SearchCondition sc = new SearchCondition();
-        sc.addSearchTerm(new IntegerSearchTerm("fn", "1"));
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).hasSize(1);
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getAuditSearchTerms()).isEmpty();
+        sc2.addSearchTerm(new IntegerSearchTerm("fn", "1"));
+        assertThat(sc2.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc2.getIntegerSearchTerms()).hasSize(1);
+        assertThat(sc2.getStringSearchTerms()).isEmpty();
+        assertThat(sc2.getAuditSearchTerms()).isEmpty();
     }
 
     @Test
     public void addingSearchTermString() {
-        SearchCondition sc = new SearchCondition();
-        sc.addSearchTerm(new StringSearchTerm("fn", "rst"));
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getStringSearchTerms()).hasSize(1);
-        assertThat(sc.getAuditSearchTerms()).isEmpty();
+        sc1.addSearchTerm(new StringSearchTerm("fn", "rst"));
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
+        assertThat(sc1.getAuditSearchTerms()).isEmpty();
     }
 
     @Test
     public void addingAuditTermString() {
-        SearchCondition sc = new SearchCondition();
-        sc.addSearchTerm(new AuditSearchTerm("fn", "rst"));
-        assertThat(sc.getBooleanSearchTerms()).isEmpty();
-        assertThat(sc.getIntegerSearchTerms()).isEmpty();
-        assertThat(sc.getStringSearchTerms()).isEmpty();
-        assertThat(sc.getAuditSearchTerms()).hasSize(1);
+        sc2.addSearchTerm(new AuditSearchTerm("fn", "rst"));
+        assertThat(sc2.getBooleanSearchTerms()).isEmpty();
+        assertThat(sc2.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc2.getStringSearchTerms()).isEmpty();
+        assertThat(sc2.getAuditSearchTerms()).hasSize(1);
     }
 
     @Test
     public void addingCodes() {
-        SearchCondition sc = new SearchCondition();
         Code c1 = new Code("c1", "c1", "", false, 1, "cc1", "", 0);
         Code c2 = new Code("c2", "c2", "", false, 2, "cc2", "", 0);
         Code c3 = new Code("c3", "c3", "", false, 3, "cc3", "", 0);
         Code c4 = new Code("c4", "c4", "", false, 3, "cc3", "", 0);
-        sc.addCodes(Arrays.asList(c1, c2, c3, c4));
-        assertThat(sc.getCodes()).hasSize(4);
-        assertThat(sc.getCodesOf(CodeClassId.CC3)).containsExactly(c3, c4);
+        sc2.addCodes(Arrays.asList(c1, c2, c3, c4));
+        assertThat(sc2.getCodes()).hasSize(4);
+        assertThat(sc2.getCodesOf(CodeClassId.CC3)).containsExactly(c3, c4);
 
-        sc.clearCodesOf(CodeClassId.CC3);
-        assertThat(sc.getCodes()).hasSize(2);
-        sc.clearCodes();
-        assertThat(sc.getCodes()).isEmpty();
+        sc2.clearCodesOf(CodeClassId.CC3);
+        assertThat(sc2.getCodes()).hasSize(2);
+        sc2.clearCodes();
+        assertThat(sc2.getCodes()).isEmpty();
     }
 
 }
