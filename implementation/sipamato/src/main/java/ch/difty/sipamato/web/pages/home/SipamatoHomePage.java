@@ -21,6 +21,7 @@ public class SipamatoHomePage extends BasePage<Void> {
         super(parameters);
     }
 
+    @Override
     protected void onInitialize() {
         super.onInitialize();
         add(new Label("message", makeMessage()));

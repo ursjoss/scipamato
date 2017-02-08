@@ -43,6 +43,7 @@ public class ClickablePropertyColumn2<T, S, U> extends AbstractColumn<T, S> {
         this.supplier = supplier;
     }
 
+    @Override
     public void populateItem(Item<ICellPopulator<T>> cellItem, String componentId, IModel<T> rowModel) {
         cellItem.add(new LinkPanel(componentId, rowModel, new PropertyModel<Object>(rowModel, property)));
     }

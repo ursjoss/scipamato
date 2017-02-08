@@ -101,6 +101,7 @@ public class Code extends SipamatoEntity {
         return sort;
     }
 
+    @Override
     public String getDisplayValue() {
         final StringBuilder sb = new StringBuilder();
         sb.append(name);

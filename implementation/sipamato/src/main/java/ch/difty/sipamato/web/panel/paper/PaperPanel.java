@@ -200,7 +200,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     }
 
     /** override if special behavior is required */
-    protected TextField<String> makeFirstAuthor(String firstAuthorId, CheckBox firstAuthorOverridden) {
+    protected TextField<String> makeFirstAuthor(final String firstAuthorId, final CheckBox firstAuthorOverridden) {
         return new TextField<>(firstAuthorId);
     }
 
@@ -395,11 +395,13 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 private static final long serialVersionUID = 1L;
 
                 @SuppressWarnings("unchecked")
+                @Override
                 public List<Code> getObject() {
                     return ((IModel<CodeBoxAware>) getTarget()).getObject().getCodesOf(ccId);
                 }
 
                 @SuppressWarnings("unchecked")
+                @Override
                 public void setObject(final List<Code> codes) {
                     ((IModel<CodeBoxAware>) getTarget()).getObject().clearCodesOf(ccId);
                     if (CollectionUtils.isNotEmpty(codes)) {

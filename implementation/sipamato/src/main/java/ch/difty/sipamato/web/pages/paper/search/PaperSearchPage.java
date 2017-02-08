@@ -119,6 +119,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         response.render(CssHeaderItem.forReference(FontAwesomeCDNCSSReference.instance()));
     }
 
+    @Override
     protected void onInitialize() {
         super.onInitialize();
 

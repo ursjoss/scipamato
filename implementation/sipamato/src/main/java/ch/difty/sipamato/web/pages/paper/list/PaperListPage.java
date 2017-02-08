@@ -37,6 +37,7 @@ public class PaperListPage extends BasePage<Void> {
         dataProvider = new FilterBasedSortablePaperSlimProvider(filter, RESULT_PAGE_SIZE);
     }
 
+    @Override
     protected void onInitialize() {
         super.onInitialize();
 

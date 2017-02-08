@@ -127,6 +127,7 @@ public class SipamatoPageRequest implements Pageable, Serializable {
      * (non-Javadoc)
      * @see org.springframework.data.domain.Pageable#next()
      */
+    @Override
     public Pageable next() {
         return new SipamatoPageRequest(getOffset() + getPageSize(), getPageSize(), getPageSize(), getSort());
     }
@@ -144,6 +145,7 @@ public class SipamatoPageRequest implements Pageable, Serializable {
      * (non-Javadoc)
      * @see org.springframework.data.domain.Pageable#previousOrFirst()
      */
+    @Override
     public Pageable previousOrFirst() {
         return hasPrevious() ? previous() : first();
     }
