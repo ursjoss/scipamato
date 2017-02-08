@@ -97,12 +97,12 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      */
     @Override
     protected PaperSummaryDataSource getSummaryDataSource() {
-        String populationLabel = new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString();
-        String methodsLabel = new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString();
-        String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
-        String commentLabel = new StringResourceModel("comment" + LABEL_RECOURCE_TAG, this, null).getString();
-        String brand = getProperties().getBrand();
-        String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
+        final String populationLabel = new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodsLabel = new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String commentLabel = new StringResourceModel("comment" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String brand = getProperties().getBrand();
+        final String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
 
         SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getId()).withCreator(brand)
                 .withPaperTitle(getModelObject().getTitle())
