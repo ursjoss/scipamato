@@ -68,7 +68,7 @@ public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
         return tokens;
     }
 
-    public static enum MatchType {
+    public enum MatchType {
         EQUALS,
         CONTAINS,
         LIKE,
@@ -77,7 +77,7 @@ public class StringSearchTerm extends SearchTerm<StringSearchTerm> {
         NONE;
     }
 
-    public static enum TokenType {
+    public enum TokenType {
         // Token types must not have underscores. Otherwise the named capturing groups in the constructed regexes will break
         NOTREGEX("-s/(.+)/", MatchType.REGEX, 2, false, false, true),
         REGEX("s/(.+)/", MatchType.REGEX, 4, false, false, false),

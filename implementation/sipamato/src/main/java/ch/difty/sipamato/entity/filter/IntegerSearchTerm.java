@@ -28,7 +28,7 @@ package ch.difty.sipamato.entity.filter;
 public class IntegerSearchTerm extends SearchTerm<IntegerSearchTerm> {
     private static final long serialVersionUID = 1L;
 
-    public static enum MatchType {
+    public enum MatchType {
         EXACT,
         GREATER_THAN,
         GREATER_OR_EQUAL,

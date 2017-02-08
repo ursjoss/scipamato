@@ -86,13 +86,13 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
         return tokens;
     }
 
-    public static enum FieldType {
+    public enum FieldType {
         USER,
         DATE,
         NONE;
     }
 
-    public static enum MatchType {
+    public enum MatchType {
         EQUALS,
         CONTAINS,
         GREATER_THAN,
@@ -102,7 +102,7 @@ public class AuditSearchTerm extends SearchTerm<AuditSearchTerm> {
         NONE;
     }
 
-    public static enum TokenType {
+    public enum TokenType {
         // Token types must not have underscores. Otherwise the named capturing groups in the constructed regexes will break
         WHITESPACE(RE_S + "+", MatchType.NONE, FieldType.NONE, 1),
 
