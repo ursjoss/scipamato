@@ -32,9 +32,9 @@ public class SipamatoPageRequestTest {
         assertThat(p.getOffset()).isEqualTo(offSet);
         assertThat(p.getPageSize()).isEqualTo(pageSize);
         if (fooSort != null) {
-            final Sort sort = p.getSort();
-            assertThat(sort.getOrderFor("foo").toString()).isEqualTo(fooSort);
-            assertThat(sort.getOrderFor("bar")).isNull();
+            final Sort s = p.getSort();
+            assertThat(s.getOrderFor("foo").toString()).isEqualTo(fooSort);
+            assertThat(s.getOrderFor("bar")).isNull();
         } else {
             assertThat(p.getSort()).isNull();
         }

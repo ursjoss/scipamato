@@ -83,6 +83,8 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdSipamat
     @Mock
     private Condition conditionMock;
 
+    private F filterMock = getFilter();
+
     protected DSLContext getDsl() {
         return dslMock;
     }
@@ -145,8 +147,6 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdSipamat
     protected abstract void verifyUnpersistedEntityId();
 
     protected abstract void verifyPersistedRecordId();
-
-    private F filterMock = getFilter();
 
     protected abstract F getFilter();
 

@@ -29,14 +29,14 @@ import ch.difty.sipamato.lib.NullArgumentException;
 @RunWith(MockitoJUnitRunner.class)
 public class SortMapperTest {
 
+    private static final String SHOULD_HAVE_THROWN_EXCEPTION = "should have thrown exception";
+
     private final SortMapper<PaperRecord, Paper, ch.difty.sipamato.db.tables.Paper> mapper = new SortMapper<>();
 
     @Mock
     private Order orderMock;
 
     private final List<Order> orders = new ArrayList<>();
-
-    private Collection<SortField<Paper>> sortFields;
 
     @After
     public void tearDown() {
@@ -53,7 +53,7 @@ public class SortMapperTest {
         orders.add(new Order(Direction.DESC, "authors"));
         orders.add(new Order(Direction.ASC, "title"));
 
-        sortFields = mapper.map(new Sort(orders), ch.difty.sipamato.db.tables.Paper.PAPER);
+        Collection<SortField<Paper>> sortFields = mapper.map(new Sort(orders), ch.difty.sipamato.db.tables.Paper.PAPER);
         assertThat(sortFields).hasSize(2);
 
         Iterator<SortField<Paper>> it = sortFields.iterator();
@@ -79,7 +79,7 @@ public class SortMapperTest {
         String notExistingFieldName = "foo";
         try {
             mapper.getTableField(notExistingFieldName, ch.difty.sipamato.db.tables.Paper.PAPER);
-            fail("should have thrown exception");
+            fail(SHOULD_HAVE_THROWN_EXCEPTION);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(InvalidDataAccessApiUsageException.class).hasMessage("Could not find table field: foo; nested exception is java.lang.NoSuchFieldException: FOO");
         }
@@ -90,7 +90,7 @@ public class SortMapperTest {
         String nullFieldName = null;
         try {
             mapper.getTableField(nullFieldName, ch.difty.sipamato.db.tables.Paper.PAPER);
-            fail("should have thrown exception");
+            fail(SHOULD_HAVE_THROWN_EXCEPTION);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("sortFieldName must not be null.");
         }
@@ -101,7 +101,7 @@ public class SortMapperTest {
         String existingFieldName = ch.difty.sipamato.db.tables.Paper.PAPER.AUTHORS.getName();
         try {
             mapper.getTableField(existingFieldName, null);
-            fail("should have thrown exception");
+            fail(SHOULD_HAVE_THROWN_EXCEPTION);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("table must not be null.");
         }

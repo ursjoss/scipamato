@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -19,6 +21,8 @@ import ch.difty.sipamato.entity.CodeClass;
 @ActiveProfiles({ "DB_JOOQ" })
 public class JooqCodeClassRepoIntegrationTest {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(JooqCodeClassRepoIntegrationTest.class);
+
     private static final int CODE_CLASS_COUNT = 8;
 
     @Autowired
@@ -26,23 +30,23 @@ public class JooqCodeClassRepoIntegrationTest {
 
     @Test
     public void findingAllCodesClassesInGerman() {
-        List<CodeClass> cc = repo.find("de");
-        assertThat(cc).isNotEmpty().hasSize(CODE_CLASS_COUNT);
-        cc.forEach(System.out::println);
+        List<CodeClass> ccs = repo.find("de");
+        assertThat(ccs).isNotEmpty().hasSize(CODE_CLASS_COUNT);
+        ccs.forEach((cc) -> LOGGER.debug(cc.toString()));
     }
 
     @Test
     public void findingAllCodesClassesInEnglish() {
-        List<CodeClass> cc = repo.find("en");
-        assertThat(cc).isNotEmpty().hasSize(CODE_CLASS_COUNT);
-        cc.forEach(System.out::println);
+        List<CodeClass> ccs = repo.find("en");
+        assertThat(ccs).isNotEmpty().hasSize(CODE_CLASS_COUNT);
+        ccs.forEach((cc) -> LOGGER.debug(cc.toString()));
     }
 
     @Test
     public void findingAllCodesClassesInFrench() {
-        List<CodeClass> cc = repo.find("fr");
-        assertThat(cc).isNotEmpty().hasSize(CODE_CLASS_COUNT);
-        cc.forEach(System.out::println);
+        List<CodeClass> ccs = repo.find("fr");
+        assertThat(ccs).isNotEmpty().hasSize(CODE_CLASS_COUNT);
+        ccs.forEach((cc) -> LOGGER.debug(cc.toString()));
     }
 
 }

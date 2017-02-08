@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -20,6 +22,8 @@ import ch.difty.sipamato.entity.CodeClassId;
 @ActiveProfiles({ "DB_JOOQ" })
 public class JooqCodeRepoIntegrationTest {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(JooqCodeRepoIntegrationTest.class);
+
     @Autowired
     private JooqCodeRepo repo;
 
@@ -27,21 +31,21 @@ public class JooqCodeRepoIntegrationTest {
     public void findingAllCodes1InGerman() {
         List<Code> codesOfClass1 = repo.findCodesOfClass(CodeClassId.CC1, "de");
         assertThat(codesOfClass1).isNotEmpty().hasSize(21);
-        codesOfClass1.forEach(System.out::println);
+        codesOfClass1.forEach((c) -> LOGGER.debug(c.toString()));
     }
 
     @Test
     public void findingAllCodes2InEnglish() {
         List<Code> codesOfClass1 = repo.findCodesOfClass(CodeClassId.CC2, "en");
         assertThat(codesOfClass1).isNotEmpty().hasSize(2);
-        codesOfClass1.forEach(System.out::println);
+        codesOfClass1.forEach((c) -> LOGGER.debug(c.toString()));
     }
 
     @Test
     public void findingAllCodes3InEnglish() {
         List<Code> codesOfClass1 = repo.findCodesOfClass(CodeClassId.CC3, "fr");
         assertThat(codesOfClass1).isNotEmpty().hasSize(14);
-        codesOfClass1.forEach(System.out::println);
+        codesOfClass1.forEach((c) -> LOGGER.debug(c.toString()));
     }
 
 }
