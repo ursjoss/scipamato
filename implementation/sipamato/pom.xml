@@ -54,6 +54,7 @@
         <sonar.language>java</sonar.language>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+        <sonar.exclusions>target/generated-sources</sonar.exclusions>
         <sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath>
     </properties>
 
