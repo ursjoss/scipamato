@@ -5,7 +5,9 @@ import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.Test;
 
-public class TranslationUtilsTest {
+import ch.difty.sipamato.FinalClassTest;
+
+public class TranslationUtilsTest extends FinalClassTest<TranslationUtils> {
 
     @Test
     public void verifyNotTranslatedString() {

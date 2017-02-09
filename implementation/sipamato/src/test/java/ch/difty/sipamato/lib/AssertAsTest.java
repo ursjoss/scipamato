@@ -5,7 +5,9 @@ import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.Test;
 
-public class AssertAsTest {
+import ch.difty.sipamato.FinalClassTest;
+
+public class AssertAsTest extends FinalClassTest<AssertAs> {
 
     @Test
     public void assertingNonNullField_doesNothing() {
@@ -46,4 +48,5 @@ public class AssertAsTest {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("Argument must not be null.");
         }
     }
+
 }

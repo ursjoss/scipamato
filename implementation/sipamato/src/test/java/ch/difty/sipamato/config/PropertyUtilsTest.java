@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-public class PropertyUtilsTest {
+import ch.difty.sipamato.FinalClassTest;
+
+public class PropertyUtilsTest extends FinalClassTest<PropertyUtils> {
 
     private static final String PROPERTY_KEY = "propertyKey";
 
@@ -39,4 +41,5 @@ public class PropertyUtilsTest {
     public void parseInt_withInvValidIntString_returnsDefaultValue() {
         assertThat(PropertyUtils.parseInt("foo", "value", 1, PROPERTY_KEY)).isEqualTo(1);
     }
+
 }
