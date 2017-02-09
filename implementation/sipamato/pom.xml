@@ -6,7 +6,7 @@
     <version>0.4.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>sipamato</name>
-    <description>Scientific Paper Management Tool</description>
+    <description>SiPaMaTo - Scientific Paper Management Tool</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -16,8 +16,6 @@
     </parent>
 
     <url>https://github.com/ursjoss/sipamato</url>
-
-    <description>SiPaMaTo - Scientific Paper Management Tool</description>
 
     <developers>
         <developer>
