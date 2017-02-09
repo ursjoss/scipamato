@@ -1,7 +1,9 @@
 package ch.difty.sipamato.persistance.jooq.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.transaction.TransactionDefinition.PROPAGATION_NESTED;
 
@@ -15,8 +17,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.IllegalTransactionStateException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.DefaultTransactionStatus;
 
 import ch.difty.sipamato.lib.NullArgumentException;
 
@@ -26,7 +30,8 @@ public class SpringTransactionProviderTest {
     private SpringTransactionProvider tp;
 
     @Mock
-    private DataSourceTransactionManager txMgrMock;
+    // important methods like rollback etc. will still be called and not mocked!!!
+    private DataSourceTransactionManager txMgrMock = new DataSourceTransactionManager();
 
     @Mock
     private TransactionContext ctxMock;
@@ -47,7 +52,7 @@ public class SpringTransactionProviderTest {
 
     @After
     public void tearDown() {
-        Mockito.verifyNoMoreInteractions(txMgrMock, ctxMock);
+        verifyNoMoreInteractions(txMgrMock, ctxMock, txMock);
     }
 
     @Test
@@ -81,8 +86,75 @@ public class SpringTransactionProviderTest {
     }
 
     @Test
-    @Ignore // TODO 
-    public void rollback() {
+    public void committing_forAlreadyClosedTransaction_throws() {
+        when(ctxMock.transaction()).thenReturn(transaction);
+        when(txMock.isCompleted()).thenReturn(true);
 
+        assertThat(tp.getTxMgr()).isEqualTo(txMgrMock);
+
+        try {
+            tp.commit(ctxMock);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(IllegalTransactionStateException.class);
+        }
+
+        verify(ctxMock).transaction();
+        verify(txMock).isCompleted();
+    }
+
+    @Test
+    public void committing() {
+        DefaultTransactionStatus dtxMock = Mockito.mock(DefaultTransactionStatus.class);
+        transaction = new SpringTransaction(dtxMock);
+
+        when(ctxMock.transaction()).thenReturn(transaction);
+        when(dtxMock.isCompleted()).thenReturn(false);
+        when(dtxMock.isDebug()).thenReturn(false);
+        when(dtxMock.isLocalRollbackOnly()).thenReturn(true);
+        when(dtxMock.hasSavepoint()).thenReturn(true);
+
+        assertThat(tp.getTxMgr()).isEqualTo(txMgrMock);
+
+        tp.commit(ctxMock);
+
+        verify(ctxMock).transaction();
+        verify(dtxMock).isCompleted();
+    }
+
+    @Test
+    public void rollingback_forAlreadyClosedTransaction_throws() {
+        when(ctxMock.transaction()).thenReturn(transaction);
+        when(txMock.isCompleted()).thenReturn(true);
+
+        assertThat(tp.getTxMgr()).isEqualTo(txMgrMock);
+
+        try {
+            tp.rollback(ctxMock);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(IllegalTransactionStateException.class);
+        }
+
+        verify(ctxMock).transaction();
+        verify(txMock).isCompleted();
+    }
+
+    @Test
+    public void rollingback() {
+        DefaultTransactionStatus dtxMock = Mockito.mock(DefaultTransactionStatus.class);
+        transaction = new SpringTransaction(dtxMock);
+
+        when(ctxMock.transaction()).thenReturn(transaction);
+        when(dtxMock.isCompleted()).thenReturn(false);
+        when(dtxMock.isDebug()).thenReturn(false);
+        when(dtxMock.hasSavepoint()).thenReturn(true);
+
+        assertThat(tp.getTxMgr()).isEqualTo(txMgrMock);
+
+        tp.rollback(ctxMock);
+
+        verify(ctxMock).transaction();
+        verify(dtxMock).isCompleted();
     }
 }

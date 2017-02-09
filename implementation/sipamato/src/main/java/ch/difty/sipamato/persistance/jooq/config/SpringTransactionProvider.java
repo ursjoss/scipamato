@@ -53,15 +53,14 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import ch.difty.sipamato.lib.AssertAs;
 
 /**
- * An example <code>TransactionProvider</code> implementing the {@link TransactionProvider} contract for use with
- * Spring.
+ * An example <code>TransactionProvider</code> implementing the {@link TransactionProvider} contract for use with Spring.
  *
  * @author Lukas Eder
  * @author Urs Joss
  */
 public class SpringTransactionProvider implements TransactionProvider {
 
-    private static final JooqLogger log = JooqLogger.getLogger(SpringTransactionProvider.class);
+    private static final JooqLogger LOGGER = JooqLogger.getLogger(SpringTransactionProvider.class);
 
     private final DataSourceTransactionManager txMgr;
 
@@ -77,25 +76,24 @@ public class SpringTransactionProvider implements TransactionProvider {
 
     @Override
     public void begin(TransactionContext ctx) {
-        log.info("Begin transaction");
+        LOGGER.info("Begin transaction");
 
-        // This TransactionProvider behaves like jOOQ's DefaultTransactionProvider,
-        // which supports nested transactions using Savepoints
-        TransactionStatus tx = txMgr.getTransaction(new DefaultTransactionDefinition(PROPAGATION_NESTED));
+        // This TransactionProvider behaves like jOOQ's DefaultTransactionProvider, which supports nested transactions using Savepoints
+        TransactionStatus tx = getTxMgr().getTransaction(new DefaultTransactionDefinition(PROPAGATION_NESTED));
         ctx.transaction(new SpringTransaction(tx));
     }
 
     @Override
     public void commit(TransactionContext ctx) {
-        log.info("commit transaction");
+        LOGGER.info("commit transaction");
 
-        txMgr.commit(((SpringTransaction) ctx.transaction()).tx);
+        getTxMgr().commit(((SpringTransaction) ctx.transaction()).tx);
     }
 
     @Override
     public void rollback(TransactionContext ctx) {
-        log.info("rollback transaction");
+        LOGGER.info("rollback transaction");
 
-        txMgr.rollback(((SpringTransaction) ctx.transaction()).tx);
+        getTxMgr().rollback(((SpringTransaction) ctx.transaction()).tx);
     }
 }
