@@ -6,7 +6,9 @@ import java.sql.Timestamp;
 
 import org.junit.Test;
 
-public class DateUtilsTest {
+import ch.difty.sipamato.FinalClassTest;
+
+public class DateUtilsTest extends FinalClassTest<DateUtils> {
 
     @Test
     public void tsOf_withNullDate() {
