@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import ch.difty.sipamato.entity.User;
+import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.service.UserService;
 
 /**
@@ -29,9 +30,10 @@ public class SipamatoUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(final String username) {
-        final Optional<User> userOption = userService.findByUserName(username);
+        final String un = AssertAs.notNull(username, "username");
+        final Optional<User> userOption = userService.findByUserName(un);
         if (!userOption.isPresent()) {
-            throw new UsernameNotFoundException("No user found with name " + username);
+            throw new UsernameNotFoundException("No user found with name " + un);
         } else {
             return new SipamatoUserDetails(userOption.get());
         }
