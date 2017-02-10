@@ -35,15 +35,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     @SpringBean
     private AuthorParserFactory authorParserFactory;
 
-    public EditablePaperPanel(String id) {
-        super(id, null, Mode.EDIT);
-    }
-
     public EditablePaperPanel(String id, IModel<Paper> model) {
-        super(id, model, Mode.EDIT);
-    }
-
-    public EditablePaperPanel(String id, IModel<Paper> model, Mode ignoredMode) {
         super(id, model, Mode.EDIT);
     }
 

@@ -89,8 +89,12 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
     }
 
     protected void verifyCodeAndCodeClassCalls(int times) {
+        verifyCodeAndCodeClassCalls(times, times);
+    }
+
+    protected void verifyCodeAndCodeClassCalls(int times, int timesCC1) {
         verify(codeClassServiceMock).find(LOCALE);
-        verify(codeServiceMock, times(times)).findCodesOfClass(CodeClassId.CC1, LOCALE);
+        verify(codeServiceMock, times(timesCC1)).findCodesOfClass(CodeClassId.CC1, LOCALE);
         verify(codeServiceMock, times(times)).findCodesOfClass(CodeClassId.CC2, LOCALE);
         verify(codeServiceMock, times(times)).findCodesOfClass(CodeClassId.CC3, LOCALE);
         verify(codeServiceMock, times(times)).findCodesOfClass(CodeClassId.CC4, LOCALE);

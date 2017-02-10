@@ -1,9 +1,13 @@
 package ch.difty.sipamato.web.panel.paper;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
 
 import ch.difty.sipamato.entity.Paper;
@@ -110,5 +114,138 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().startComponentInPage(makePanel());
         getTester().submitForm("panel:form");
         verifyCodeAndCodeClassCalls(2);
+    }
+
+    @Test
+    public void assertRequiredFields() {
+        String b = "panel:form:";
+        getTester().startComponentInPage(makePanel());
+
+        getTester().assertRequired(b + "authors");
+        getTester().assertRequired(b + "firstAuthor");
+        getTester().assertRequired(b + "title");
+        getTester().assertRequired(b + "location");
+        getTester().assertRequired(b + "publicationYear");
+        getTester().assertRequired(b + "tabs:panelsContainer:panels:1:tab1Form:goals");
+
+        verifyCodeAndCodeClassCalls(1);
+    }
+
+    @Test
+    public void firstAuthorChangeBehavior_withoutTriggering_hasFirstAuthoerOverriddenFalseAndFirstAuthorDisabled() {
+        getTester().startComponentInPage(makePanel());
+
+        String formId = "panel:form:";
+
+        getTester().assertModelValue(formId + "firstAuthorOverridden", false);
+        getTester().assertDisabled(formId + "firstAuthor");
+
+        FormTester formTester = getTester().newFormTester(formId);
+        assertThat(formTester.getTextComponentValue("authors")).isEqualTo("a");
+        assertThat(formTester.getTextComponentValue("firstAuthor")).isEqualTo("fa");
+
+        verifyCodeAndCodeClassCalls(2);
+    }
+
+    @Test
+    public void firstAuthorChangeBehavior_withoutUpdatedAuthor_hasFirstAuthoerOverriddenFalseAndFirstAuthorDisabled() {
+        getTester().startComponentInPage(makePanel());
+
+        String formId = "panel:form:";
+
+        FormTester formTester = getTester().newFormTester(formId);
+        assertThat(formTester.getTextComponentValue("authors")).isEqualTo("a");
+        assertThat(formTester.getTextComponentValue("firstAuthor")).isEqualTo("fa");
+
+        formTester.setValue("authors", "Darwin C.");
+        getTester().executeAjaxEvent(formId + "authors", "change");
+
+        assertThat(formTester.getTextComponentValue("authors")).isEqualTo("Darwin C.");
+        assertThat(formTester.getTextComponentValue("firstAuthor")).isEqualTo("Darwin");
+
+        getTester().assertComponentOnAjaxResponse(formId + "firstAuthor");
+
+        verifyCodeAndCodeClassCalls(2);
+    }
+
+    @Test
+    public void mainCodeOfCodeClass1ChangeBehavior_whenChangingCodesClass1_reflectsInMainCodeOfCodeClass() {
+        getTester().startComponentInPage(makePanel());
+
+        String formId = "panel:form:tabs:panelsContainer:panels:5:tab3Form:";
+        getTester().assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1");
+        getTester().assertModelValue(formId + "codesClass1", Arrays.asList(newC(1, "F")));
+
+        FormTester formTester = getTester().newFormTester(formId);
+        assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("mcocc1");
+
+        getTester().executeAjaxEvent(formId + "codesClass1", "change");
+
+        assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("1F");
+
+        verifyCodeAndCodeClassCalls(2, 3);
+    }
+
+    @Test
+    public void mainCodeOfCodeClass1ChangeBehavior_whenRemovingCodeOfClass1_clearsMainCodeOfCodeClass() {
+        getTester().startComponentInPage(makePanel());
+
+        String formId = "panel:form:tabs:panelsContainer:panels:5:tab3Form:";
+        getTester().assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1");
+        getTester().assertModelValue(formId + "codesClass1", Arrays.asList(newC(1, "F")));
+
+        FormTester formTester = getTester().newFormTester(formId);
+        assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("mcocc1");
+
+        int[] indices = new int[2];
+        indices[0] = 2;
+        formTester.selectMultiple("codesClass1", indices, true);
+        getTester().executeAjaxEvent(formId + "codesClass1", "change");
+
+        assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("");
+
+        verifyCodeAndCodeClassCalls(2, 3);
+    }
+
+    @Test
+    public void mainCodeOfCodeClass1ChangeBehavior_walkThroughStateChanges() {
+        getTester().startComponentInPage(makePanel());
+
+        String formId = "panel:form:tabs:panelsContainer:panels:5:tab3Form:";
+        getTester().assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1");
+        getTester().assertModelValue(formId + "codesClass1", Arrays.asList(newC(1, "F")));
+
+        FormTester formTester = getTester().newFormTester(formId);
+        assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("mcocc1");
+
+        // first choice selected -> keep mainCode as is
+        int[] indices = new int[2];
+        indices[0] = 0;
+        formTester.selectMultiple("codesClass1", indices, true);
+        getTester().executeAjaxEvent(formId + "codesClass1", "change");
+        assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("1F");
+
+        // add additional code to code class1 -> leave mainCodeOfCodeClass as is
+        indices[1] = 1;
+        formTester.selectMultiple("codesClass1", indices, true);
+        getTester().executeAjaxEvent(formId + "codesClass1", "change");
+        assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("1F");
+
+        // only select the second option in codesOfCodeClass1 -> adjusts mainCodeOfCodeClass1 accordingly
+        indices = new int[1];
+        indices[0] = 1;
+        formTester.selectMultiple("codesClass1", indices, true);
+        getTester().executeAjaxEvent(formId + "codesClass1", "change");
+        assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("1G");
+
+        // clear all codes of codeClass1 -> clear mainCodeOfCodeClass1
+        indices = new int[0];
+        formTester.selectMultiple("codesClass1", indices, true);
+        getTester().executeAjaxEvent(formId + "codesClass1", "change");
+        assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("");
+
+        getTester().assertComponentOnAjaxResponse(formId + "mainCodeOfCodeclass1");
+
+        verifyCodeAndCodeClassCalls(2, 5);
     }
 }
