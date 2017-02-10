@@ -2,21 +2,25 @@ package ch.difty.sipamato.persistance.jooq.paper.slim;
 
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jooq.TableField;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.persistance.jooq.JooqReadOnlyRepoTest;
 import ch.difty.sipamato.persistance.jooq.ReadOnlyRepository;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
+import ch.difty.sipamato.persistance.jooq.paper.searchorder.PaperSlimBackedSearchOrderRepository;
 
 public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, PaperSlim, Long, ch.difty.sipamato.db.tables.Paper, PaperSlimRecordMapper, PaperFilter> {
 
@@ -34,6 +38,24 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
     private PaperSlimRecordMapper mapperMock;
     @Mock
     private PaperFilter filterMock;
+    @Mock
+    private PaperSlimBackedSearchOrderRepository bySearchOrderFinderMock;
+    @Mock
+    private SearchOrder searchOrderMock;
+    @Mock
+    private PaperSlim paperSlimMock;
+    @Mock
+    private Pageable pageableMock;
+    @Mock
+    private Page<PaperSlim> pageMock;
+
+    private final List<PaperSlim> paperSlims = new ArrayList<>();
+
+    @Override
+    protected void specificSetUp() {
+        paperSlims.add(paperSlimMock);
+        paperSlims.add(paperSlimMock);
+    }
 
     @Override
     protected Long getSampleId() {
@@ -43,14 +65,14 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
     @Override
     protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> getRepo() {
         if (repo == null) {
-            repo = new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization());
+            repo = new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), bySearchOrderFinderMock);
         }
         return repo;
     }
 
     @Override
     protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> makeRepoFindingEntityById(PaperSlim entity) {
-        return new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization()) {
+        return new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), bySearchOrderFinderMock) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -127,22 +149,45 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
     }
 
     @Test
-    public void findingBySearchOrder_withNullSearchOrder_throws() {
-        try {
-            repo.findBySearchOrder((SearchOrder) null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchOrder must not be null.");
-        }
+    public void gettingEntityClass() {
+        assertThat(repo.getEntityClass()).isEqualTo(getEntityClass());
     }
 
     @Test
-    public void countingBySearchOrder_withNullSearchOrder_throws() {
-        try {
-            repo.countBySearchOrder((SearchOrder) null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchOrder must not be null.");
-        }
+    public void gettingRecordClass() {
+        assertThat(repo.getRecordClass()).isEqualTo(getRecordClass());
     }
+
+    @Test
+    public void gettingTableId() {
+        assertThat(repo.getTableId()).isEqualTo(getTableId());
+    }
+
+    @Test
+    public void findingBySearchOrder_delegatesToSearchOrderFinder() {
+        when(bySearchOrderFinderMock.findBySearchOrder(searchOrderMock)).thenReturn(paperSlims);
+        assertThat(repo.findBySearchOrder(searchOrderMock)).containsExactly(paperSlimMock, paperSlimMock);
+        verify(bySearchOrderFinderMock).findBySearchOrder(searchOrderMock);
+    }
+
+    @Test
+    public void countingBySearchOrder_delegatesToSearchOrderFinder() {
+        when(bySearchOrderFinderMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
+        assertThat(repo.countBySearchOrder(searchOrderMock)).isEqualTo(2);
+        verify(bySearchOrderFinderMock).countBySearchOrder(searchOrderMock);
+    }
+
+    @Test
+    public void findingBySearchOrder_withPageable_delegatesToSearchOrderFinder() {
+        when(bySearchOrderFinderMock.findPagedBySearchOrder(searchOrderMock, pageableMock)).thenReturn(pageMock);
+        when(bySearchOrderFinderMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
+        when(pageMock.getContent()).thenReturn(paperSlims);
+
+        assertThat(repo.findBySearchOrder(searchOrderMock, pageableMock).getContent()).containsExactly(paperSlimMock, paperSlimMock);
+
+        verify(bySearchOrderFinderMock).findPagedBySearchOrder(searchOrderMock, pageableMock);
+        verify(bySearchOrderFinderMock).countBySearchOrder(searchOrderMock);
+        verify(pageMock).getContent();
+    }
+
 }

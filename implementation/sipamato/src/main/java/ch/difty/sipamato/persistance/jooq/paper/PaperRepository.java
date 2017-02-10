@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.persistance.jooq.EntityRepository;
-import ch.difty.sipamato.persistance.jooq.paper.searchorder.BySearchOrderFinder;
+import ch.difty.sipamato.persistance.jooq.paper.searchorder.SearchOrderRepository;
 
 public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilter> {
 
@@ -27,17 +27,17 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     List<Paper> findWithCodesByIds(List<Long> ids);
 
     /**
-     * {@link BySearchOrderFinder#findBySearchOrder(SearchOrder)}
+     * {@link SearchOrderRepository#findBySearchOrder(SearchOrder)}
      */
     List<Paper> findBySearchOrder(SearchOrder searchOrder);
 
     /**
-     * {@link BySearchOrderFinder#findPagedBySearchOrder(SearchOrder, Pageable)}
+     * {@link SearchOrderRepository#findPagedBySearchOrder(SearchOrder, Pageable)}
      */
     Page<Paper> findBySearchOrder(SearchOrder searchOrder, Pageable pageable);
 
     /**
-     * {@link BySearchOrderFinder#countBySearchOrder(SearchOrder)}
+     * {@link SearchOrderRepository#countBySearchOrder(SearchOrder)}
      */
     int countBySearchOrder(SearchOrder searchOrder);
 }
