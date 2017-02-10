@@ -8,7 +8,7 @@ public class AuditSearchTermsTest {
 
     private static final String KEY = "key";
     private static final String VALUE = "value";
-    
+
     private final AuditSearchTerms st1 = new AuditSearchTerms();
     private final AuditSearchTerms st2 = new AuditSearchTerms();
 

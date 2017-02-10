@@ -9,7 +9,6 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import ch.difty.sipamato.web.jasper.PaperDataSourceTest;
-import ch.difty.sipamato.web.jasper.literaturereview.PaperLiteratureReviewDataSource;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;

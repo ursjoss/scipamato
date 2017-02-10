@@ -1,5 +1,6 @@
 package ch.difty.sipamato.entity.filter;
 
+import static ch.difty.sipamato.entity.IdSipamatoEntity.FLD_ID;
 import static ch.difty.sipamato.entity.Paper.FLD_AUTHORS;
 import static ch.difty.sipamato.entity.Paper.FLD_COMMENT;
 import static ch.difty.sipamato.entity.Paper.FLD_CREATED;
@@ -10,7 +11,6 @@ import static ch.difty.sipamato.entity.Paper.FLD_EXPOSURE_POLLUTANT;
 import static ch.difty.sipamato.entity.Paper.FLD_FIRST_AUTHOR;
 import static ch.difty.sipamato.entity.Paper.FLD_FIRST_AUTHOR_OVERRIDDEN;
 import static ch.difty.sipamato.entity.Paper.FLD_GOALS;
-import static ch.difty.sipamato.entity.Paper.FLD_ID;
 import static ch.difty.sipamato.entity.Paper.FLD_INTERN;
 import static ch.difty.sipamato.entity.Paper.FLD_LAST_MOD;
 import static ch.difty.sipamato.entity.Paper.FLD_LAST_MOD_BY;

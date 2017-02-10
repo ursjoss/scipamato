@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.web.jasper.JasperEntityTest;
-import ch.difty.sipamato.web.jasper.summarytable.PaperSummaryTable;
 
 public class PaperSummaryTableTest extends JasperEntityTest {
 

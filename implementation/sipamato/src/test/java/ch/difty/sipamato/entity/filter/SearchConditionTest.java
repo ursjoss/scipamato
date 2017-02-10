@@ -1,8 +1,8 @@
 package ch.difty.sipamato.entity.filter;
 
+import static ch.difty.sipamato.entity.IdSipamatoEntity.FLD_ID;
 import static ch.difty.sipamato.entity.Paper.FLD_DOI;
 import static ch.difty.sipamato.entity.Paper.FLD_FIRST_AUTHOR_OVERRIDDEN;
-import static ch.difty.sipamato.entity.Paper.FLD_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
