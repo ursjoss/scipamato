@@ -19,14 +19,12 @@ import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
-import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.UpdateConditionStep;
 import org.jooq.UpdateResultStep;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
 import org.jooq.impl.TableImpl;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -39,6 +37,14 @@ import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.lib.FrozenDateTimeService;
 import ch.difty.sipamato.lib.NullArgumentException;
 
+/**
+ * TODO find a more feasible approach to test the actual jOOQ part via unit tests. The current approach is too cumbersome.
+ * <p>
+ * I played around with the MockDataProvider (see branch exp/jooq_mocking), see also https://www.jooq.org/doc/3.9/manual/tools/jdbc-mocking/
+ * but that did not seem to solve what I want to achieve (testing the query composition in the repo methods).
+ * <p>
+ * Let's postpone this and remove the ignored test methods for now (gentle pressure of sonarqube :-) )
+ */
 @RunWith(SpringRunner.class)
 public abstract class JooqEntityRepoTest<R extends Record, T extends IdSipamatoEntity<ID>, ID extends Number, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends SipamatoFilter>
         extends JooqReadOnlyRepoTest<R, T, ID, TI, M, F> {
@@ -200,39 +206,6 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdSipamatoE
         repo.add(null);
     }
 
-    @Test
-    @Ignore
-    // TODO find more clever way of testing the jooq part - my current way is not maintainable
-    public void adding_pesistsPaperToDb_andReturnsAsEntity() {
-        when(insertResultStepMock.fetchOne()).thenReturn(getPersistedRecord());
-
-        assertThat(repo.add(getUnpersistedEntity())).isEqualTo(getPersistedEntity());
-
-        verify(getDsl()).insertInto(getTable());
-        verify(insertSetStepSetterMock).setNonKeyFieldsFor(insertSetStepMock, getUnpersistedEntity());
-        verify(insertSetStepSetterMock).considerSettingKeyOf(insertSetMoreStepMock, getUnpersistedEntity());
-        verify(insertSetMoreStepMock).returning();
-        verify(insertResultStepMock).fetchOne();
-        verify(getMapper()).map(getPersistedRecord());
-
-        verifyPersistedRecordId();
-    }
-
-    @Test
-    @Ignore
-    // TODO find more clever way of testing the jooq part - my current way is not maintainable
-    public void adding_pesistsPaperToDb_andReturnsAsEntity1() {
-        when(insertResultStepMock.fetchOne()).thenReturn(null);
-
-        assertThat(repo.add(getUnpersistedEntity())).isNull();
-
-        verify(getDsl()).insertInto(getTable());
-        verify(insertSetStepSetterMock).setNonKeyFieldsFor(insertSetStepMock, getUnpersistedEntity());
-        verify(insertSetStepSetterMock).considerSettingKeyOf(insertSetMoreStepMock, getUnpersistedEntity());
-        verify(insertSetMoreStepMock).returning();
-        verify(insertResultStepMock).fetchOne();
-    }
-
     @Test(expected = NullArgumentException.class)
     public void deleting_withIdNull_throws() {
         repo.delete(null);
@@ -284,93 +257,6 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdSipamatoE
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("entity.id must not be null.");
         }
         verifyUnpersistedEntityId();
-    }
-
-    @Test
-    @Ignore
-    // TODO find more clever way of testing the jooq part - my current way is not maintainable
-    public void updating_withValidEntity_changesAndPersistsEntityToDb_andReturnsFetchedEntity() {
-        expectEntityIdsWithValues();
-        when(updateSetMoreStepMock.where(getTableId().equal(id))).thenReturn(updateConditionStepMock);
-        when(updateResultStepMock.fetchOne()).thenReturn(getPersistedRecord());
-        when(getMapper().map(getPersistedRecord())).thenReturn(getPersistedEntity());
-
-        assertThat(repo.update(getUnpersistedEntity())).isEqualTo(getPersistedEntity());
-
-        verifyUnpersistedEntityId();
-        verify(getDsl()).update(getTable());
-        verify(updateSetStepSetterMock).setFieldsFor(updateSetFirstStepMock, getUnpersistedEntity());
-        verify(updateSetMoreStepMock).where(getTableId().equal(id));
-        verify(updateConditionStepMock).returning();
-        verify(updateResultStepMock).fetchOne();
-        verify(getMapper()).map(getPersistedRecord());
-    }
-
-    @Test
-    @Ignore
-    // TODO find more clever way of testing the jooq part - my current way is not maintainable
-    public void updating_withNonH2Db_withUnsuccessfulRetrievalAfterPersistingAttempt_returnsNull() {
-        when(jooqConfig.dialect()).thenReturn(SQLDialect.POSTGRES_9_5);
-        expectEntityIdsWithValues();
-        when(updateSetMoreStepMock.where(getTableId().equal(id))).thenReturn(updateConditionStepMock);
-        when(updateResultStepMock.fetchOne()).thenReturn(null);
-
-        assertThat(repo.update(getUnpersistedEntity())).isNull();
-
-        verifyUnpersistedEntityId();
-        verify(getDsl()).update(getTable());
-        verify(updateSetStepSetterMock).setFieldsFor(updateSetFirstStepMock, getUnpersistedEntity());
-        verify(updateSetMoreStepMock).where(getTableId().equal(id));
-        verify(updateConditionStepMock).returning();
-        verify(updateResultStepMock).fetchOne();
-    }
-
-    @Test
-    @Ignore
-    // TODO find more clever way of testing the jooq part - my current way is not maintainable
-    public void updating_withH2Db_withUnsuccessfulRetrievalAfterPersistingAttempt_andWithUnsuccessfulH2Retrieval_returnsNull() {
-        when(jooqConfig.dialect()).thenReturn(SQLDialect.H2);
-        expectEntityIdsWithValues();
-        when(updateSetMoreStepMock.where(getTableId().equal(id))).thenReturn(updateConditionStepMock);
-        when(updateResultStepMock.fetchOne()).thenReturn(null);
-        when(getSelectConditionStepMock().fetchOneInto(getEntityClass())).thenReturn(null);
-
-        assertThat(repo.update(getUnpersistedEntity())).isNull();
-
-        verifyUnpersistedEntityId();
-        verify(getDsl()).update(getTable());
-        verify(updateSetStepSetterMock).setFieldsFor(updateSetFirstStepMock, getUnpersistedEntity());
-        verify(updateSetMoreStepMock).where(getTableId().equal(id));
-        verify(updateConditionStepMock).returning();
-        verify(updateResultStepMock).fetchOne();
-
-        verify(getDsl()).selectFrom(getTable());
-        verify(getSelectWhereStepMock()).where(getTableId().equal(id));
-        verify(getSelectConditionStepMock()).fetchOneInto(getEntityClass());
-    }
-
-    @Test
-    @Ignore
-    // TODO find more clever way of testing the jooq part - my current way is not maintainable
-    public void updating_withH2Db_withUnsuccessfulRetrievalAfterPersistingAttempt_butSuccessfulFind_returnsEntity() {
-        when(jooqConfig.dialect()).thenReturn(SQLDialect.H2);
-        expectEntityIdsWithValues();
-        when(updateSetMoreStepMock.where(getTableId().equal(id))).thenReturn(updateConditionStepMock);
-        when(updateResultStepMock.fetchOne()).thenReturn(null);
-        when(getSelectConditionStepMock().fetchOneInto(getEntityClass())).thenReturn(getPersistedEntity());
-
-        assertThat(repo.update(getUnpersistedEntity())).isEqualTo(getPersistedEntity());
-
-        verifyUnpersistedEntityId();
-        verify(getDsl()).update(getTable());
-        verify(updateSetStepSetterMock).setFieldsFor(updateSetFirstStepMock, getUnpersistedEntity());
-        verify(updateSetMoreStepMock).where(getTableId().equal(id));
-        verify(updateConditionStepMock).returning();
-        verify(updateResultStepMock).fetchOne();
-
-        verify(getDsl()).selectFrom(getTable());
-        verify(getSelectWhereStepMock()).where(getTableId().equal(id));
-        verify(getSelectConditionStepMock()).fetchOneInto(getEntityClass());
     }
 
 }

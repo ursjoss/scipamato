@@ -2,7 +2,6 @@ package ch.difty.sipamato.persistance.jooq;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -26,12 +25,10 @@ import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
@@ -204,32 +201,9 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdSipamat
     protected void specificNullCheck() {
     }
 
-    @Test
-    @Ignore
-    // TODO find more clever way of testing the jooq part - my current way is not maintainable
-    public void findingAll_returnsPersistedEntities() {
-        assertThat(repo.findAll()).hasSize(2).containsExactly(getPersistedEntity(), getPersistedEntity());
-
-        verify(dslMock).selectFrom(getTable());
-        verify(selectWhereStepMock).fetchInto(getEntityClass());
-    }
-
     @Test(expected = NullArgumentException.class)
     public void findingByIdNull_throws() {
         repo.findById(null);
-    }
-
-    @Test
-    @Ignore
-    // TODO find more clever way of testing the jooq part - my current way is not maintainable
-    public void findingById() {
-        when(selectConditionStepMock.fetchOneInto(getEntityClass())).thenReturn(getPersistedEntity());
-
-        repo.findById(id);
-
-        verify(dslMock).selectFrom(getTable());
-        verify(selectWhereStepMock).where(getTableId().equal(id));
-        verify(selectConditionStepMock).fetchOneInto(getEntityClass());
     }
 
     @Test
@@ -240,46 +214,6 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdSipamat
         when(dslMock.fetchCount(selectConditionStepMock2)).thenReturn(2);
 
         assertThat(repo.countByFilter(filterMock)).isEqualTo(2);
-
-        verify(dslMock).selectOne();
-        verify(selectSelectStepMock).from(getTable());
-        verify(selectJoinStepMock).where(isA(Condition.class));
-        verify(dslMock).fetchCount(selectConditionStepMock2);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Test
-    @Ignore
-    // TODO find more clever way of testing the jooq part - my current way is not maintainable
-    public void findingByFilter() {
-        when(selectWhereStepMock.where(isA(Condition.class))).thenReturn(selectConditionStepMock);
-        when(pageableMock.getSort()).thenReturn(sortMock);
-        when(sortMapperMock.map(sortMock, getTable())).thenReturn(sortFieldsMock);
-        when(selectConditionStepMock.orderBy(sortFieldsMock)).thenReturn(selectSeekStepNMock);
-        when(selectSeekStepNMock.fetchInto(getRecordClass())).thenReturn(records);
-        when(getMapper().map(getPersistedRecord())).thenReturn(getPersistedEntity());
-        when(pageableMock.getOffset()).thenReturn(0);
-        when(pageableMock.getPageSize()).thenReturn(20);
-
-        when(dslMock.selectOne()).thenReturn(selectSelectStepMock);
-        when(selectSelectStepMock.from(getTable())).thenReturn(selectJoinStepMock);
-        when(selectJoinStepMock.where(isA(Condition.class))).thenReturn(selectConditionStepMock2);
-        when(dslMock.fetchCount(selectConditionStepMock2)).thenReturn(2);
-
-        Page<T> page = repo.findByFilter(filterMock, pageableMock);
-        assertThat(page).isNotNull();
-        assertThat(page.getTotalElements()).isEqualTo(2);
-        assertThat(page.getContent()).hasSize(2).containsOnly(getPersistedEntity());
-
-        verify(getDsl()).selectFrom(getTable());
-        verify(selectWhereStepMock).where(isA(Condition.class));
-        verify(pageableMock).getSort();
-        verify(sortMapperMock).map(sortMock, getTable());
-        verify(selectConditionStepMock).orderBy(sortFieldsMock);
-        verify(selectSeekStepNMock).fetchInto(getRecordClass());
-        verify(getMapper(), times(2)).map(getPersistedRecord());
-        verify(pageableMock, times(2)).getOffset();
-        verify(pageableMock).getPageSize();
 
         verify(dslMock).selectOne();
         verify(selectSelectStepMock).from(getTable());

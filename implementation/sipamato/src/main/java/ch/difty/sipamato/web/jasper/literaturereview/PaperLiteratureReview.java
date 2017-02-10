@@ -11,7 +11,7 @@ import ch.difty.sipamato.web.jasper.JasperEntity;
  */
 public class PaperLiteratureReview extends JasperEntity {
 
-    // HARDCODED TODO - consider moving to settings
+    // HARDCODED - consider moving to settings
     private static final String PUBMED_BASE = "https://www.ncbi.nlm.nih.gov/pubmed/";
 
     private static final long serialVersionUID = 1L;

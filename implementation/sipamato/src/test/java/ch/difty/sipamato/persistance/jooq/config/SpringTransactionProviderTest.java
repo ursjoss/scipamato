@@ -10,7 +10,6 @@ import static org.springframework.transaction.TransactionDefinition.PROPAGATION_
 import org.jooq.TransactionContext;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -29,8 +28,8 @@ public class SpringTransactionProviderTest {
 
     private SpringTransactionProvider tp;
 
-    @Mock
     // important methods like rollback etc. will still be called and not mocked!!!
+    @Mock
     private DataSourceTransactionManager txMgrMock = new DataSourceTransactionManager();
 
     @Mock
@@ -73,8 +72,6 @@ public class SpringTransactionProviderTest {
         assertThat(transaction.tx).isEqualTo(txMock);
     }
 
-    @Test
-    @Ignore
     // Bug??? http://stackoverflow.com/questions/38669278/after-upgrading-to-spring-boot-1-4-0-nullpointerexception-in-abstractplatformtr
     public void beginning() {
         when(txMgrMock.getTransaction(transactionDefinition)).thenReturn(txMock);
