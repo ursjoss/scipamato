@@ -60,6 +60,10 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     public void sameValues_makeEquality() {
         CodeClass cc1 = new CodeClass(1, "cc1", THIS_IS_CC1);
         CodeClass cc2 = new CodeClass(cc1);
+        assertEquality(cc1, cc2);
+    }
+
+    private void assertEquality(CodeClass cc1, CodeClass cc2) {
         assertThat(cc1.equals(cc2)).isTrue();
         assertThat(cc2.equals(cc1)).isTrue();
         assertThat(cc1.hashCode()).isEqualTo(cc2.hashCode());
@@ -100,5 +104,53 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     public void displayValue() {
         CodeClass cc1 = new CodeClass(1, "cc1", THIS_IS_CC1);
         assertThat(cc1.getDisplayValue()).isEqualTo("cc1");
+    }
+
+    @Test
+    public void differingValues_withIdNullOnOne() {
+        CodeClass cc1 = new CodeClass(1, "cc1", THIS_IS_CC1);
+        CodeClass cc2 = new CodeClass(null, "cc1", THIS_IS_CC1);
+        assertInequality(cc1, cc2);
+    }
+
+    private void assertInequality(CodeClass cc1, CodeClass cc2) {
+        assertThat(cc1.equals(cc2)).isFalse();
+        assertThat(cc2.equals(cc1)).isFalse();
+        assertThat(cc1.hashCode()).isNotEqualTo(cc2.hashCode());
+    }
+
+    @Test
+    public void differingValues_withIdNullOnBoth() {
+        CodeClass cc1 = new CodeClass(null, "cc1", THIS_IS_CC1);
+        CodeClass cc2 = new CodeClass(null, "cc1", THIS_IS_CC1);
+        assertEquality(cc1, cc2);
+    }
+
+    @Test
+    public void differingValues_withNameNullOnOne() {
+        CodeClass cc1 = new CodeClass(1, null, THIS_IS_CC1);
+        CodeClass cc2 = new CodeClass(1, "cc1", THIS_IS_CC1);
+        assertInequality(cc1, cc2);
+    }
+
+    @Test
+    public void differingValues_withNameNullOnBoth() {
+        CodeClass cc1 = new CodeClass(1, null, THIS_IS_CC1);
+        CodeClass cc2 = new CodeClass(1, null, THIS_IS_CC1);
+        assertEquality(cc1, cc2);
+    }
+
+    @Test
+    public void differingValues_withDescriptionNullOnOne() {
+        CodeClass cc1 = new CodeClass(1, "cc1", THIS_IS_CC1);
+        CodeClass cc2 = new CodeClass(1, "cc1", null);
+        assertInequality(cc1, cc2);
+    }
+
+    @Test
+    public void differingValues_withDescriptionNullOnBoth() {
+        CodeClass cc1 = new CodeClass(1, "cc1", null);
+        CodeClass cc2 = new CodeClass(1, "cc1", null);
+        assertEquality(cc1, cc2);
     }
 }

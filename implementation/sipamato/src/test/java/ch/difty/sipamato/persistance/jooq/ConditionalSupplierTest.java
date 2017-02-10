@@ -19,6 +19,22 @@ public class ConditionalSupplierTest {
     }
 
     @Test
+    public void combiningWithAnd_withSingleConditionConsideredPresent_returnsSingleElementCondition() {
+        boolean present = true;
+        cs.add(present, () -> DSL.field("baz").eq(DSL.value("boo")));
+        c = cs.combineWithAnd();
+        assertThat(c.toString()).isEqualTo("baz = 'boo'");
+    }
+
+    @Test
+    public void combiningWithAnd_withSingleConditionNotConsideredPresent_returnsDummyTrueCondition() {
+        boolean present = false;
+        cs.add(present, () -> DSL.field("foo").eq(DSL.value("bar")));
+        c = cs.combineWithAnd();
+        assertThat(c.toString()).isEqualTo("1 = 1");
+    }
+
+    @Test
     public void combiningWithAnd_withSingleCondition_returnsSingleElementCondition() {
         cs.add(() -> DSL.field("foo").eq(DSL.value("bar")));
         c = cs.combineWithAnd();
