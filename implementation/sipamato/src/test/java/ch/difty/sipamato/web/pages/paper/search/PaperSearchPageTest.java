@@ -140,8 +140,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().clickLink(linkPath);
         getTester().assertContainsNot(labelDisplayValue);
 
-        // TODO test that the event is sent
-        // TODO also test that receiving the event adds the filter panel to the target
+        // TODO test that the event is sent, and also that receiving the event adds the filter panel to the target. See also next test
         verify(searchOrderServiceMock, never()).findById(SEARCH_ORDER_ID);
     }
 
@@ -165,7 +164,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().assertComponent(linkPath, AjaxLink.class);
         getTester().clickLink(linkPath);
         getTester().assertContainsNot(someTextInPage);
-        // TODO test that the event is sent
+
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(Mockito.eq(searchOrderMock));
         verify(paperSlimServiceMock, times(2)).findBySearchOrder(Mockito.eq(searchOrderMock), Mockito.isA(Pageable.class));
         verify(pageMock, times(2)).iterator();

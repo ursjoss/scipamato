@@ -106,7 +106,6 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
         verify(repoMock).findByFilter(filterMock, pageableMock);
         verify(searchOrderPageMock).getContent();
 
-        // TODO how to stub this and verify the audit???
         verify(searchOrderPageMock).forEach(isA(Consumer.class));
         //        verifyAudit(2);
     }

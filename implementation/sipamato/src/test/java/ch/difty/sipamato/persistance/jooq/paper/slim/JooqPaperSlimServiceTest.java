@@ -108,7 +108,6 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
         verify(repoMock).findByFilter(filterMock, pageableMock);
         verify(paperSlimPageMock).getContent();
 
-        // TODO how to stub this and verify the audit???
         verify(paperSlimPageMock).forEach(isA(Consumer.class));
         //        verifyAudit(2);
     }

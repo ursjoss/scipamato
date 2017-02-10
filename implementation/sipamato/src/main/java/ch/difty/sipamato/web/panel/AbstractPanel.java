@@ -87,7 +87,6 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
         return localization;
     }
 
-    // TODO duplicated from BasePage
     protected void queueFieldAndLabel(FormComponent<?> field, Optional<PropertyValidator<?>> pv) {
         String id = field.getId();
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);

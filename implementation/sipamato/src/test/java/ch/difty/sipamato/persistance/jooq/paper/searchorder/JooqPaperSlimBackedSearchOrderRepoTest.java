@@ -313,5 +313,4 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
         return searchOrder;
     }
 
-    // TODO find simple way to test the jooq part for remaining methods
 }
