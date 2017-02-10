@@ -39,7 +39,7 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
     @Mock
     private PaperFilter filterMock;
     @Mock
-    private PaperSlimBackedSearchOrderRepository bySearchOrderFinderMock;
+    private PaperSlimBackedSearchOrderRepository searchOrderRepositoryMock;
     @Mock
     private SearchOrder searchOrderMock;
     @Mock
@@ -65,14 +65,14 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
     @Override
     protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> getRepo() {
         if (repo == null) {
-            repo = new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), bySearchOrderFinderMock);
+            repo = new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), searchOrderRepositoryMock);
         }
         return repo;
     }
 
     @Override
     protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> makeRepoFindingEntityById(PaperSlim entity) {
-        return new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), bySearchOrderFinderMock) {
+        return new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), searchOrderRepositoryMock) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -165,28 +165,28 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
 
     @Test
     public void findingBySearchOrder_delegatesToSearchOrderFinder() {
-        when(bySearchOrderFinderMock.findBySearchOrder(searchOrderMock)).thenReturn(paperSlims);
+        when(searchOrderRepositoryMock.findBySearchOrder(searchOrderMock)).thenReturn(paperSlims);
         assertThat(repo.findBySearchOrder(searchOrderMock)).containsExactly(paperSlimMock, paperSlimMock);
-        verify(bySearchOrderFinderMock).findBySearchOrder(searchOrderMock);
+        verify(searchOrderRepositoryMock).findBySearchOrder(searchOrderMock);
     }
 
     @Test
     public void countingBySearchOrder_delegatesToSearchOrderFinder() {
-        when(bySearchOrderFinderMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
+        when(searchOrderRepositoryMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
         assertThat(repo.countBySearchOrder(searchOrderMock)).isEqualTo(2);
-        verify(bySearchOrderFinderMock).countBySearchOrder(searchOrderMock);
+        verify(searchOrderRepositoryMock).countBySearchOrder(searchOrderMock);
     }
 
     @Test
     public void findingBySearchOrder_withPageable_delegatesToSearchOrderFinder() {
-        when(bySearchOrderFinderMock.findPagedBySearchOrder(searchOrderMock, pageableMock)).thenReturn(pageMock);
-        when(bySearchOrderFinderMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
+        when(searchOrderRepositoryMock.findPagedBySearchOrder(searchOrderMock, pageableMock)).thenReturn(pageMock);
+        when(searchOrderRepositoryMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
         when(pageMock.getContent()).thenReturn(paperSlims);
 
         assertThat(repo.findBySearchOrder(searchOrderMock, pageableMock).getContent()).containsExactly(paperSlimMock, paperSlimMock);
 
-        verify(bySearchOrderFinderMock).findPagedBySearchOrder(searchOrderMock, pageableMock);
-        verify(bySearchOrderFinderMock).countBySearchOrder(searchOrderMock);
+        verify(searchOrderRepositoryMock).findPagedBySearchOrder(searchOrderMock, pageableMock);
+        verify(searchOrderRepositoryMock).countBySearchOrder(searchOrderMock);
         verify(pageMock).getContent();
     }
 

@@ -28,13 +28,13 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
 
     private static final long serialVersionUID = 1L;
 
-    private final PaperSlimBackedSearchOrderRepository bySearchOrderFinder;
+    private final PaperSlimBackedSearchOrderRepository searchOrderRepository;
 
     @Autowired
     public JooqPaperSlimRepo(DSLContext dsl, PaperSlimRecordMapper mapper, JooqSortMapper<PaperRecord, PaperSlim, ch.difty.sipamato.db.tables.Paper> sortMapper,
-            GenericFilterConditionMapper<PaperFilter> filterConditionMapper, Localization localization, PaperSlimBackedSearchOrderRepository bySearchOrderFinder) {
+            GenericFilterConditionMapper<PaperFilter> filterConditionMapper, Localization localization, PaperSlimBackedSearchOrderRepository searchOrderRepository) {
         super(dsl, mapper, sortMapper, filterConditionMapper, localization);
-        this.bySearchOrderFinder = AssertAs.notNull(bySearchOrderFinder, "bySearchOrderFinder");
+        this.searchOrderRepository = AssertAs.notNull(searchOrderRepository, "searchOrderRepository");
     }
 
     @Override
@@ -60,7 +60,7 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     /** {@inheritDoc} */
     @Override
     public List<PaperSlim> findBySearchOrder(final SearchOrder searchOrder) {
-        List<PaperSlim> papers = bySearchOrderFinder.findBySearchOrder(searchOrder);
+        List<PaperSlim> papers = searchOrderRepository.findBySearchOrder(searchOrder);
         enrichAssociatedEntitiesOfAll(papers);
         return papers;
     }
@@ -68,7 +68,7 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     /** {@inheritDoc} */
     @Override
     public Page<PaperSlim> findBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
-        final Page<PaperSlim> page = bySearchOrderFinder.findPagedBySearchOrder(searchOrder, pageable);
+        final Page<PaperSlim> page = searchOrderRepository.findPagedBySearchOrder(searchOrder, pageable);
         final List<PaperSlim> entities = page.getContent();
         enrichAssociatedEntitiesOfAll(entities);
         return new PageImpl<>(entities, pageable, (long) countBySearchOrder(searchOrder));
@@ -77,7 +77,7 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
     /** {@inheritDoc} */
     @Override
     public int countBySearchOrder(SearchOrder searchOrder) {
-        return bySearchOrderFinder.countBySearchOrder(searchOrder);
+        return searchOrderRepository.countBySearchOrder(searchOrder);
     }
 
 }

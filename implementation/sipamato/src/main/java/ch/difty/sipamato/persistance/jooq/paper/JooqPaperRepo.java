@@ -52,14 +52,14 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JooqPaperRepo.class);
 
-    private final PaperBackedSearchOrderRepository bySearchOrderFinder;
+    private final PaperBackedSearchOrderRepository searchOrderRepository;
 
     @Autowired
     public JooqPaperRepo(DSLContext dsl, PaperRecordMapper mapper, JooqSortMapper<PaperRecord, Paper, ch.difty.sipamato.db.tables.Paper> sortMapper,
             GenericFilterConditionMapper<PaperFilter> filterConditionMapper, DateTimeService dateTimeService, Localization localization, InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter,
-            UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter, Configuration jooqConfig, PaperBackedSearchOrderRepository bySearchOrderFinder) {
+            UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter, Configuration jooqConfig, PaperBackedSearchOrderRepository searchOrderRepository) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, localization, insertSetStepSetter, updateSetStepSetter, jooqConfig);
-        this.bySearchOrderFinder = AssertAs.notNull(bySearchOrderFinder, "bySearchOrderFinder");
+        this.searchOrderRepository = AssertAs.notNull(searchOrderRepository, "searchOrderRepository");
     }
 
     @Override
@@ -176,7 +176,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     /** {@inheritDoc} */
     @Override
     public List<Paper> findBySearchOrder(final SearchOrder searchOrder) {
-        List<Paper> papers = bySearchOrderFinder.findBySearchOrder(searchOrder);
+        List<Paper> papers = searchOrderRepository.findBySearchOrder(searchOrder);
         enrichAssociatedEntitiesOfAll(papers);
         return papers;
     }
@@ -184,7 +184,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     /** {@inheritDoc} */
     @Override
     public Page<Paper> findBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
-        final Page<Paper> page = bySearchOrderFinder.findPagedBySearchOrder(searchOrder, pageable);
+        final Page<Paper> page = searchOrderRepository.findPagedBySearchOrder(searchOrder, pageable);
         final List<Paper> entities = page.getContent();
         enrichAssociatedEntitiesOfAll(entities);
         return new PageImpl<>(entities, pageable, (long) countBySearchOrder(searchOrder));
@@ -193,7 +193,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     /** {@inheritDoc} */
     @Override
     public int countBySearchOrder(SearchOrder searchOrder) {
-        return bySearchOrderFinder.countBySearchOrder(searchOrder);
+        return searchOrderRepository.countBySearchOrder(searchOrder);
     }
 
 }
