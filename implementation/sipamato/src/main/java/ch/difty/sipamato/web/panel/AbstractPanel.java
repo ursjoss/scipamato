@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import ch.difty.sipamato.config.ApplicationProperties;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.service.Localization;
+import ch.difty.sipamato.web.WicketUtils;
 import ch.difty.sipamato.web.pages.Mode;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 
@@ -21,10 +22,9 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
 
     private static final long serialVersionUID = 1L;
 
-    // TODO duplicated from BasePage
-    protected static final String LABEL_RECOURCE_TAG = ".label";
-    protected static final String SHORT_LABEL_RECOURCE_TAG = ".short.label";
-    protected static final String LABEL_TAG = "Label";
+    protected static final String LABEL_TAG = WicketUtils.LABEL_TAG;
+    protected static final String LABEL_RECOURCE_TAG = WicketUtils.LABEL_RECOURCE_TAG;
+    protected static final String SHORT_LABEL_RECOURCE_TAG = WicketUtils.SHORT_LABEL_RECOURCE_TAG;
 
     private final Mode mode;
     private final String submitLinkResourceLabel;

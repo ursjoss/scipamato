@@ -25,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import ch.difty.sipamato.config.ApplicationProperties;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.lib.DateTimeService;
+import ch.difty.sipamato.web.WicketUtils;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 import ch.difty.sipamato.web.pages.login.LogoutPage;
 import ch.difty.sipamato.web.pages.paper.list.PaperListPage;
@@ -43,9 +44,9 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
     private static final long serialVersionUID = 1L;
 
-    protected static final String LABEL_TAG = "Label";
-    protected static final String LABEL_RECOURCE_TAG = ".label";
-    protected static final String PANEL_HEADER_RESOURCE_TAG = ".header";
+    protected static final String LABEL_TAG = WicketUtils.LABEL_TAG;
+    protected static final String LABEL_RECOURCE_TAG = WicketUtils.LABEL_RECOURCE_TAG;
+    protected static final String PANEL_HEADER_RESOURCE_TAG = WicketUtils.PANEL_HEADER_RESOURCE_TAG;
 
     @SpringBean
     private DateTimeService dateTimeService;
