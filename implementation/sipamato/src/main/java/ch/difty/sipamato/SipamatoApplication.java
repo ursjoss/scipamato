@@ -21,7 +21,7 @@ public class SipamatoApplication extends WicketBootSecuredWebApplication {
         registerJasperJrxmlFilesWithPackageResourceGuard();
     }
 
-    //Allow to access only to jrxml files placed in the “jasper” directory.
+    // Allow access to jrxml jasper report definition files
     private void registerJasperJrxmlFilesWithPackageResourceGuard() {
         final IPackageResourceGuard packageResourceGuard = getResourceSettings().getPackageResourceGuard();
         if (packageResourceGuard instanceof SecurePackageResourceGuard) {
