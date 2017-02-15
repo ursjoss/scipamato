@@ -78,6 +78,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <!-- XML processing -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.2.12</version>
+        </dependency>
 
         <!-- Database -->
         <dependency>
@@ -502,6 +512,29 @@
                     </dependency>
                 </dependencies>
             </plugin>
+
+            <!-- jaxb2 maven plugin to generage the java classes from the dtd -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+                    <execution>
+                        <id>xjc</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <packageName>ch.difty.sipamato.pubmed</packageName>
+                    <sourceType>dtd</sourceType>
+                    <sources>
+                        <source>src/main/dtd</source>
+                    </sources>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -515,6 +548,7 @@
                         <configuration>
                             <sources>
                                 <source>${org.jooq.target.dir}</source>
+                                <source>target/generated-sources/jaxb</source>
                             </sources>
                         </configuration>
                     </execution>
