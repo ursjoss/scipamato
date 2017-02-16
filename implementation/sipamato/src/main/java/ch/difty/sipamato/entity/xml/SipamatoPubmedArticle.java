@@ -1,27 +1,18 @@
 package ch.difty.sipamato.entity.xml;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import ch.difty.sipamato.lib.AssertAs;
-import ch.difty.sipamato.pubmed.Abstract;
 import ch.difty.sipamato.pubmed.Article;
-import ch.difty.sipamato.pubmed.Author;
 import ch.difty.sipamato.pubmed.AuthorList;
-import ch.difty.sipamato.pubmed.CollectiveName;
 import ch.difty.sipamato.pubmed.ELocationID;
-import ch.difty.sipamato.pubmed.ForeName;
-import ch.difty.sipamato.pubmed.Initials;
 import ch.difty.sipamato.pubmed.Journal;
 import ch.difty.sipamato.pubmed.JournalIssue;
-import ch.difty.sipamato.pubmed.LastName;
 import ch.difty.sipamato.pubmed.MedlineCitation;
 import ch.difty.sipamato.pubmed.MedlineJournalInfo;
 import ch.difty.sipamato.pubmed.MedlinePgn;
 import ch.difty.sipamato.pubmed.Pagination;
 import ch.difty.sipamato.pubmed.PubmedArticle;
-import ch.difty.sipamato.pubmed.Suffix;
 import ch.difty.sipamato.pubmed.Year;
 
 /**
@@ -46,39 +37,6 @@ public class SipamatoPubmedArticle extends PubmedArticleFacade {
         setTitle(article.getArticleTitle().getvalue());
         setDoi(getDoiFrom(article));
         setOriginalAbstract(getAbstractFrom(article.getAbstract()));
-    }
-
-    private String getAuthorsFrom(final AuthorList authorList) {
-        final List<String> names = new ArrayList<>();
-        for (final Author author : authorList.getAuthor()) {
-            final StringBuilder asb = new StringBuilder();
-            for (final Object o : author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()) {
-                if (o instanceof ForeName || o instanceof CollectiveName)
-                    continue;
-                if (asb.length() > 0)
-                    asb.append(" ");
-                if (o instanceof LastName)
-                    asb.append(((LastName) o).getvalue());
-                else if (o instanceof Initials)
-                    asb.append(((Initials) o).getvalue());
-                else if (o instanceof Suffix)
-                    asb.append(((Suffix) o).getvalue());
-            }
-            names.add(asb.toString());
-        }
-        return names.stream().collect(Collectors.joining(", ", "", "."));
-    }
-
-    private String getFirstAuthorFrom(final AuthorList authorList) {
-        return authorList.getAuthor()
-                .stream()
-                .map(Author::getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName)
-                .flatMap(n -> n.stream())
-                .filter(o -> o instanceof LastName)
-                .map(lm -> ((LastName) lm).getvalue())
-                .limit(1)
-                .findFirst()
-                .orElseGet(null);
     }
 
     private String getPublicationYearFrom(final Journal journal) {
@@ -131,12 +89,6 @@ public class SipamatoPubmedArticle extends PubmedArticleFacade {
         } else {
             return pages;
         }
-    }
-
-    private String getAbstractFrom(final Abstract abstr) {
-        if (abstr == null)
-            return null;
-        return abstr.getAbstractText().stream().map(a -> a.getvalue()).collect(Collectors.joining("\n"));
     }
 
     private String getDoiFrom(final Article article) {
