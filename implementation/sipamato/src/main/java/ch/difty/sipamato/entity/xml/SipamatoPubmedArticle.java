@@ -12,6 +12,7 @@ import ch.difty.sipamato.pubmed.MedlineCitation;
 import ch.difty.sipamato.pubmed.MedlineJournalInfo;
 import ch.difty.sipamato.pubmed.MedlinePgn;
 import ch.difty.sipamato.pubmed.Pagination;
+import ch.difty.sipamato.pubmed.PubDate;
 import ch.difty.sipamato.pubmed.PubmedArticle;
 import ch.difty.sipamato.pubmed.Year;
 
@@ -24,28 +25,32 @@ public class SipamatoPubmedArticle extends PubmedArticleFacade {
 
     protected SipamatoPubmedArticle(final PubmedArticle pubmedArticle) {
         AssertAs.notNull(pubmedArticle, "pubmedArticle");
-        final MedlineCitation medlineCitation = pubmedArticle.getMedlineCitation();
-        final Article article = medlineCitation.getArticle();
-        final Journal journal = article.getJournal();
+        final MedlineCitation medlineCitation = AssertAs.notNull(pubmedArticle.getMedlineCitation(), "pubmedArticle.medlineCitation");
+        final Article article = AssertAs.notNull(medlineCitation.getArticle(), "pubmedArticle.medlineCitation.article");
+        final Journal journal = AssertAs.notNull(article.getJournal(), "pubmedArticle.medlineCitation.article.journal");
         final AuthorList authorList = article.getAuthorList();
 
-        setPmId(medlineCitation.getPMID().getvalue());
-        setAuthors(getAuthorsFrom(authorList));
-        setFirstAuthor(getFirstAuthorFrom(authorList));
+        setPmId(AssertAs.notNull(medlineCitation.getPMID(), "pubmedArticle.medlineCitation.pmid").getvalue());
+        if (authorList != null) {
+            setAuthors(getAuthorsFrom(authorList));
+            setFirstAuthor(getFirstAuthorFrom(authorList));
+        }
         setPublicationYear(getPublicationYearFrom(journal));
         setLocation(makeLocationFrom(medlineCitation.getMedlineJournalInfo(), journal.getJournalIssue(), article.getPaginationOrELocationID()));
-        setTitle(article.getArticleTitle().getvalue());
+        setTitle(AssertAs.notNull(article.getArticleTitle(), "pubmedArticle.medlineCitation.article.articleTitle").getvalue());
         setDoi(getDoiFrom(article));
         setOriginalAbstract(getAbstractFrom(article.getAbstract()));
     }
 
     private String getPublicationYearFrom(final Journal journal) {
-        final JournalIssue journalIssue = journal.getJournalIssue();
-        return journalIssue.getPubDate().getYearOrMonthOrDayOrSeasonOrMedlineDate().stream().filter(o -> o instanceof Year).map(o -> (Year) o).map(Year::getvalue).findFirst().orElse(null);
+        JournalIssue journalIssue = AssertAs.notNull(journal.getJournalIssue(), "pubmedArticle.medlineCitation.article.journal.journalIssue");
+        PubDate pubDate = AssertAs.notNull(journalIssue.getPubDate(), "pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate");
+        return pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate().stream().filter(o -> o instanceof Year).map(o -> (Year) o).map(Year::getvalue).findFirst().orElse(null);
     }
 
     private String makeLocationFrom(final MedlineJournalInfo medlineJournalInfo, final JournalIssue journalIssue, final List<Object> paginationElongation) {
         final StringBuilder sb = new StringBuilder();
+        AssertAs.notNull(medlineJournalInfo, "pubmedArticle.medlineCitation.medlineJournalInfo");
         sb.append(medlineJournalInfo.getMedlineTA()).append(". ");
         sb.append(getPublicationYear()).append(";");
         final String volume = journalIssue.getVolume();

@@ -41,11 +41,9 @@ public class PubmedService {
         try {
             PubmedArticleSet set = unmarshal(xmlString);
             final List<Object> aoba = set.getPubmedArticleOrPubmedBookArticle();
-            if (aoba != null && !aoba.isEmpty()) {
-                articles.addAll(aoba.stream().map(PubmedArticleFacade::of).collect(Collectors.toList()));
-            }
+            articles.addAll(aoba.stream().map(PubmedArticleFacade::of).collect(Collectors.toList()));
         } catch (Exception e) {
-            LOGGER.info("Unable to parse xmlString '{}'", xmlString);
+            LOGGER.info("Unable to parse xmlString '{}': {}", xmlString, e.getMessage());
         }
         return articles;
     }
