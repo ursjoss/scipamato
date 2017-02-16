@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.runner.RunWith;
@@ -25,5 +26,11 @@ public abstract class PubmedIntegrationTest {
         String xml = IOUtils.toString(ClassLoader.getSystemResourceAsStream(fileName), StandardCharsets.UTF_8);
         assertThat(xml).isNotNull();
         return service.unmarshal(xml);
+    }
+
+    protected List<PubmedArticleFacade> getPubmedArticles(String fileName) throws IOException {
+        String xml = IOUtils.toString(ClassLoader.getSystemResourceAsStream(fileName), StandardCharsets.UTF_8);
+        assertThat(xml).isNotNull();
+        return service.getArticlesFrom(xml);
     }
 }

@@ -42,10 +42,9 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
 
     @Test
     public void feedIntoSipamatoArticle() throws XmlMappingException, IOException {
-        PubmedArticleSet articleSet = getPubmedArticleSet(XML_PUBMED_RESULT_XML);
-        assertThat(articleSet.getPubmedArticleOrPubmedBookArticle()).hasSize(1);
-
-        PubmedArticleFacade sa = PubmedArticleFacade.of(articleSet.getPubmedArticleOrPubmedBookArticle().get(0));
+        List<PubmedArticleFacade> articles = getPubmedArticles(XML_PUBMED_RESULT_XML);
+        assertThat(articles).hasSize(1);
+        PubmedArticleFacade sa = articles.get(0);
 
         assertThat(sa.getPmId()).isEqualTo(PM_ID);
         assertThat(sa.getAuthors()).isEqualTo("Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.");
