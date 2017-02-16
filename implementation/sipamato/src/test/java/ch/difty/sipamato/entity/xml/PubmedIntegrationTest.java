@@ -13,14 +13,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.sipamato.pubmed.PubmedArticleSet;
-import ch.difty.sipamato.service.PubmedService;
+import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
+import ch.difty.sipamato.pubmed.service.PubmedXmlService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public abstract class PubmedIntegrationTest {
 
     @Autowired
-    private PubmedService service;
+    private PubmedXmlService service;
 
     protected PubmedArticleSet getPubmedArticleSet(String fileName) throws IOException {
         String xml = IOUtils.toString(ClassLoader.getSystemResourceAsStream(fileName), StandardCharsets.UTF_8);
@@ -31,6 +32,6 @@ public abstract class PubmedIntegrationTest {
     protected List<PubmedArticleFacade> getPubmedArticles(String fileName) throws IOException {
         String xml = IOUtils.toString(ClassLoader.getSystemResourceAsStream(fileName), StandardCharsets.UTF_8);
         assertThat(xml).isNotNull();
-        return service.getArticlesFrom(xml);
+        return service.extractArticlesFrom(xml);
     }
 }

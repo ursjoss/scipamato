@@ -1,4 +1,4 @@
-package ch.difty.sipamato.service;
+package ch.difty.sipamato.pubmed.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -21,21 +21,21 @@ import org.springframework.oxm.UnmarshallingFailureException;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
-import ch.difty.sipamato.entity.xml.SipamatoPubmedArticleTest;
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.pubmed.PubmedArticleSet;
+import ch.difty.sipamato.pubmed.entity.SipamatoPubmedArticleTest;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PubmedServiceTest {
+public class PubmedXmlServiceTest {
 
-    private PubmedService service;
+    private PubmedXmlService service;
 
     @Mock
     private Jaxb2Marshaller unmarshallerMock;
 
     @Before
     public void setUp() {
-        service = new PubmedService(unmarshallerMock);
+        service = new PubmedXmlService(unmarshallerMock);
     }
 
     @After
@@ -46,7 +46,7 @@ public class PubmedServiceTest {
     @Test
     public void degenerateConstruction_nullUnmarshaller_throws() {
         try {
-            new PubmedService(null);
+            new PubmedXmlService(null);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("unmarshaller must not be null.");
@@ -72,7 +72,7 @@ public class PubmedServiceTest {
     @Test
     public void gettingArticles_withUnarshallerException_returnsEmptyList() {
         when(unmarshallerMock.unmarshal(isA(StreamSource.class))).thenThrow(new UnmarshallingFailureException("boom"));
-        assertThat(service.getArticlesFrom("some invalid xml")).isEmpty();
+        assertThat(service.extractArticlesFrom("some invalid xml")).isEmpty();
         verify(unmarshallerMock).unmarshal(isA(StreamSource.class));
     }
 
@@ -80,7 +80,7 @@ public class PubmedServiceTest {
     public void gettingArticles_withPumbedArticleSetWithoutArticleCollection_returnsEmptyList() {
         PubmedArticleSet pubmedArticleSet = new PubmedArticleSet();
         when(unmarshallerMock.unmarshal(isA(StreamSource.class))).thenReturn(pubmedArticleSet);
-        assertThat(service.getArticlesFrom("some valid xml")).isEmpty();
+        assertThat(service.extractArticlesFrom("some valid xml")).isEmpty();
         verify(unmarshallerMock).unmarshal(isA(StreamSource.class));
     }
 
@@ -88,7 +88,7 @@ public class PubmedServiceTest {
     public void gettingArticles_withPumbedArticleSetWithoutArticleCollectionx_returnsEmptyList() {
         when(unmarshallerMock.unmarshal(isA(StreamSource.class))).thenReturn(makeMinimalValidPubmedArticleSet());
 
-        assertThat(service.getArticlesFrom("some valid xml")).isNotEmpty();
+        assertThat(service.extractArticlesFrom("some valid xml")).isNotEmpty();
 
         verify(unmarshallerMock).unmarshal(isA(StreamSource.class));
     }

@@ -1,4 +1,4 @@
-package ch.difty.sipamato.entity.xml;
+package ch.difty.sipamato.pubmed.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;

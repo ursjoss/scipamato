@@ -29,6 +29,7 @@ import ch.difty.sipamato.pubmed.Pagination;
 import ch.difty.sipamato.pubmed.PubmedArticle;
 import ch.difty.sipamato.pubmed.PubmedArticleSet;
 import ch.difty.sipamato.pubmed.Year;
+import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
 
 public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest {
 

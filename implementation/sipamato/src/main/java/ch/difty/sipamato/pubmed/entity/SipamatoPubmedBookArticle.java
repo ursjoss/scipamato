@@ -1,4 +1,4 @@
-package ch.difty.sipamato.entity.xml;
+package ch.difty.sipamato.pubmed.entity;
 
 import java.util.List;
 import java.util.stream.Collectors;

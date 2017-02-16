@@ -1,50 +1,24 @@
 package ch.difty.sipamato.service;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import javax.xml.transform.stream.StreamSource;
+import ch.difty.sipamato.lib.NullArgumentException;
+import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.oxm.Unmarshaller;
-import org.springframework.oxm.XmlMappingException;
-import org.springframework.stereotype.Service;
+/**
+ * Service to handle artifacts from PubMed and present it in a Sipamato specific representation.
+ *
+ * @author u.joss
+ */
+public interface PubmedService {
 
-import ch.difty.sipamato.entity.xml.PubmedArticleFacade;
-import ch.difty.sipamato.lib.AssertAs;
-import ch.difty.sipamato.pubmed.PubmedArticleSet;
+    /**
+     * Extracts pubmed articles and pubmed book articles from the source string provided by Pubmed.
+     *
+     * @param content pubmed content, as String. Must not be null.
+     * @return List of {@link PubmedArticleFacade} entries. Never null. Will be empty if there are issues parsing the content.
+     * @throws NullArgumentException in case of null content.
+     */
+    List<PubmedArticleFacade> extractArticlesFrom(String content);
 
-@Service
-public class PubmedService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PubmedService.class);
-
-    private final Unmarshaller unmarshaller;
-
-    @Autowired
-    public PubmedService(final Unmarshaller unmarshaller) {
-        this.unmarshaller = AssertAs.notNull(unmarshaller, "unmarshaller");
-    }
-
-    public PubmedArticleSet unmarshal(final String xmlString) throws XmlMappingException, IOException {
-        final StringReader reader = new StringReader(AssertAs.notNull(xmlString, "xmlString"));
-        return (PubmedArticleSet) unmarshaller.unmarshal(new StreamSource(reader));
-    }
-
-    public List<PubmedArticleFacade> getArticlesFrom(final String xmlString) {
-        List<PubmedArticleFacade> articles = new ArrayList<>();
-        try {
-            PubmedArticleSet set = unmarshal(xmlString);
-            final List<Object> aoba = set.getPubmedArticleOrPubmedBookArticle();
-            articles.addAll(aoba.stream().map(PubmedArticleFacade::of).collect(Collectors.toList()));
-        } catch (Exception e) {
-            LOGGER.info("Unable to parse xmlString '{}': {}", xmlString, e.getMessage());
-        }
-        return articles;
-    }
 }
