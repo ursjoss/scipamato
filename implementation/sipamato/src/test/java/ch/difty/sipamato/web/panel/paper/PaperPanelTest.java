@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -25,6 +26,7 @@ import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.service.CodeClassService;
 import ch.difty.sipamato.service.CodeService;
 import ch.difty.sipamato.web.panel.PanelTest;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
@@ -125,7 +127,10 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
     }
 
     protected void assertCommonComponents(String id) {
-        String b = id + ":form";
+        String b = id + ":xmlPasteModal";
+        getTester().assertComponent(b, ModalWindow.class);
+
+        b = id + ":form";
         getTester().assertComponent(b, Form.class);
 
         assertTextAreaWithLabel(b + ":authors", "a", "Authors");
@@ -136,6 +141,7 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
         assertTextFieldWithLabel(b + ":location", "l", "Location");
         assertTextFieldWithLabel(b + ":doi", "doi", "DOI");
 
+        getTester().assertComponent(b + ":showXmlPasteModalLink", BootstrapAjaxLink.class);
         getTester().assertComponent(b + ":submit", BootstrapButton.class);
 
         b += ":tabs";

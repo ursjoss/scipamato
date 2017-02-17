@@ -10,6 +10,7 @@ import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
@@ -29,6 +30,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
 
 import ch.difty.sipamato.entity.Code;
@@ -37,11 +39,14 @@ import ch.difty.sipamato.entity.CodeClass;
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
+import ch.difty.sipamato.service.PubmedService;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.model.CodeClassModel;
 import ch.difty.sipamato.web.model.CodeModel;
 import ch.difty.sipamato.web.pages.Mode;
 import ch.difty.sipamato.web.panel.AbstractPanel;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
@@ -54,8 +59,12 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     private static final long serialVersionUID = 1L;
 
     private ResourceLink<Void> summaryLink;
+    private String pubmedXml;
 
     private Form<T> form;
+
+    @SpringBean
+    private PubmedService pubmedService;
 
     public PaperPanel(String id) {
         super(id);
@@ -85,9 +94,15 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
         queueHeaderFields();
         queueTabPanel("tabs");
+
+        queueXmlPasteModalPanelAndLink("xmlPasteModal", "showXmlPasteModalLink");
     }
 
     protected abstract void onFormSubmit();
+
+    protected String getPubmedXml() {
+        return pubmedXml;
+    }
 
     public Form<T> getForm() {
         return form;
@@ -471,4 +486,48 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         }
     }
 
+    private void queueXmlPasteModalPanelAndLink(String modalId, String linkId) {
+        final ModalWindow xmlPasteModal = new ModalWindow(modalId);
+        XmlPasteModalPanel xmlPastePanel = new XmlPasteModalPanel(xmlPasteModal.getContentId());
+        xmlPasteModal.setContent(xmlPastePanel);
+        xmlPasteModal.setTitle(new StringResourceModel("xmlPasteModal.title", this, null).getString());
+        xmlPasteModal.setResizable(true);
+        xmlPasteModal.setAutoSize(true);
+        xmlPasteModal.setCookieName("xmlPasteModal-1");
+        xmlPasteModal.setCloseButtonCallback(new ModalWindow.CloseButtonCallback() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean onCloseButtonClicked(AjaxRequestTarget target) {
+                return true;
+            }
+        });
+
+        xmlPasteModal.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClose(AjaxRequestTarget target) {
+                List<PubmedArticleFacade> articles = pubmedService.extractArticlesFrom(xmlPastePanel.getPastedContent());
+                System.out.println("Imported " + articles.size() + " articles from PubMed");
+                System.out.println(articles.get(0).getTitle());
+                // TODO continue here
+            }
+        });
+
+        queue(xmlPasteModal);
+
+        BootstrapAjaxLink<Void> showXmlPasteModal = new BootstrapAjaxLink<Void>(linkId, Buttons.Type.Primary) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                xmlPasteModal.show(target);
+            }
+        };
+        showXmlPasteModal.setLabel(new StringResourceModel("xmlPasteModalLink.label", this, null));
+        showXmlPasteModal.add(new AttributeModifier("title", new StringResourceModel("xmlPasteModalLink.title", this, null).getString()));
+        queue(showXmlPasteModal);
+
+    }
 }
