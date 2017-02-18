@@ -50,6 +50,7 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
         assertThat(sa.getTitle()).isEqualTo("Interactions between cigarette smoking and fine particulate matter in the Risk of Lung Cancer Mortality in Cancer Prevention Study II.");
         assertThat(sa.getDoi()).isEqualTo("10.1093/aje/kwu275");
         assertThat(sa.getOriginalAbstract()).startsWith("The International Agency for Research on Cancer recently classified outdoor air pollution");
+        assertThat(sa.getOriginalAbstract()).endsWith("based on reducing exposure to either risk factor alone.");
     }
 
     @Test
@@ -67,7 +68,8 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
         assertThat(sa.getTitle())
                 .isEqualTo("Particulate Matter and Subclinical Atherosclerosis: Associations between Different Particle Sizes and Sources with Carotid Intima-Media Thickness in the SAPALDIA Study.");
         assertThat(sa.getDoi()).isEqualTo("10.1289/EHP161");
-        assertThat(sa.getOriginalAbstract()).startsWith("Subclinical atherosclerosis has been associated with long-term exposure to particulate matter (PM)");
+        assertThat(sa.getOriginalAbstract()).startsWith("BACKGROUND: Subclinical atherosclerosis has been associated with long-term exposure to particulate matter (PM)");
+        assertThat(sa.getOriginalAbstract()).endsWith("SAPALDIA study. Environ Health Perspect 124:1700-1706; http://dx.doi.org/10.1289/EHP161.");
     }
 
     @Test

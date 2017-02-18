@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ch.difty.sipamato.pubmed.Abstract;
+import ch.difty.sipamato.pubmed.AbstractText;
 import ch.difty.sipamato.pubmed.ArticleId;
 import ch.difty.sipamato.pubmed.ArticleIdList;
 import ch.difty.sipamato.pubmed.Author;
@@ -95,7 +96,14 @@ public abstract class PubmedArticleFacade {
     protected String getAbstractFrom(final Abstract abstr) {
         if (abstr == null)
             return null;
-        return abstr.getAbstractText().stream().map(a -> a.getvalue()).collect(Collectors.joining("\n"));
+        return abstr.getAbstractText().stream().map(a -> concatenateAbstract(a)).collect(Collectors.joining("\n"));
+    }
+
+    private String concatenateAbstract(AbstractText a) {
+        if (a.getLabel() != null)
+            return a.getLabel() + ": " + a.getvalue();
+        else
+            return a.getvalue();
     }
 
     public String getPmId() {
