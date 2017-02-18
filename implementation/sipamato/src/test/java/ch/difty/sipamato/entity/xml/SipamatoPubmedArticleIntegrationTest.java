@@ -33,33 +33,27 @@ import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
 
 public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest {
 
-    private static final String XML_PUBMED_RESULT_XML = "xml/pubmed_result.xml";
-
-    private static final String PM_ID = "25395026";
-    private static final String PUBLICATION_YEAR = "2014";
-    private static final String TITLE = "Interactions between cigarette smoking and fine particulate matter in the Risk of Lung Cancer Mortality in Cancer Prevention Study II.";
-    private static final String DOI = "10.1093/aje/kwu275";
-    private static final String ABSTRACT_START = "The International Agency for Research on Cancer recently classified outdoor air pollution";
+    private static final String XML_2539026 = "xml/pubmed_result_25395026.xml";
 
     @Test
-    public void feedIntoSipamatoArticle() throws XmlMappingException, IOException {
-        List<PubmedArticleFacade> articles = getPubmedArticles(XML_PUBMED_RESULT_XML);
+    public void feedIntoSipamatoArticle_25395026() throws XmlMappingException, IOException {
+        List<PubmedArticleFacade> articles = getPubmedArticles(XML_2539026);
         assertThat(articles).hasSize(1);
         PubmedArticleFacade sa = articles.get(0);
 
-        assertThat(sa.getPmId()).isEqualTo(PM_ID);
+        assertThat(sa.getPmId()).isEqualTo("25395026");
         assertThat(sa.getAuthors()).isEqualTo("Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.");
         assertThat(sa.getFirstAuthor()).isEqualTo("Turner");
-        assertThat(sa.getPublicationYear()).isEqualTo(PUBLICATION_YEAR);
+        assertThat(sa.getPublicationYear()).isEqualTo("2014");
         assertThat(sa.getLocation()).isEqualTo("Am J Epidemiol. 2014; 180 (12): 1145-1149.");
-        assertThat(sa.getTitle()).isEqualTo(TITLE);
-        assertThat(sa.getDoi()).isEqualTo(DOI);
-        assertThat(sa.getOriginalAbstract()).startsWith(ABSTRACT_START);
+        assertThat(sa.getTitle()).isEqualTo("Interactions between cigarette smoking and fine particulate matter in the Risk of Lung Cancer Mortality in Cancer Prevention Study II.");
+        assertThat(sa.getDoi()).isEqualTo("10.1093/aje/kwu275");
+        assertThat(sa.getOriginalAbstract()).startsWith("The International Agency for Research on Cancer recently classified outdoor air pollution");
     }
 
     @Test
-    public void manualExplorationOfFile() throws XmlMappingException, IOException {
-        PubmedArticleSet articleSet = getPubmedArticleSet(XML_PUBMED_RESULT_XML);
+    public void manualExplorationOfFile_25395026() throws XmlMappingException, IOException {
+        PubmedArticleSet articleSet = getPubmedArticleSet(XML_2539026);
         assertThat(articleSet.getPubmedArticleOrPubmedBookArticle()).hasSize(1);
 
         Object pubmedArticleObject = articleSet.getPubmedArticleOrPubmedBookArticle().get(0);
@@ -68,7 +62,7 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
         PubmedArticle pubmedArticle = (PubmedArticle) articleSet.getPubmedArticleOrPubmedBookArticle().get(0);
 
         MedlineCitation medlineCitation = pubmedArticle.getMedlineCitation();
-        assertThat(medlineCitation.getPMID().getvalue()).isEqualTo(PM_ID);
+        assertThat(medlineCitation.getPMID().getvalue()).isEqualTo("25395026");
 
         Article article = medlineCitation.getArticle();
         Journal journal = article.getJournal();
@@ -81,11 +75,12 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
         assertThat(journalIssue.getPubDate().getYearOrMonthOrDayOrSeasonOrMedlineDate().get(1)).isInstanceOf(Month.class);
         assertThat(journalIssue.getPubDate().getYearOrMonthOrDayOrSeasonOrMedlineDate().get(2)).isInstanceOf(Day.class);
         Year year = (Year) journalIssue.getPubDate().getYearOrMonthOrDayOrSeasonOrMedlineDate().get(0);
-        assertThat(year.getvalue()).isEqualTo(PUBLICATION_YEAR);
+        assertThat(year.getvalue()).isEqualTo("2014");
 
         assertThat(journal.getTitle()).isEqualTo("American journal of epidemiology");
         assertThat(journal.getISOAbbreviation()).isEqualTo("Am. J. Epidemiol.");
-        assertThat(article.getArticleTitle().getvalue()).isEqualTo(TITLE);
+        assertThat(article.getArticleTitle().getvalue())
+                .isEqualTo("Interactions between cigarette smoking and fine particulate matter in the Risk of Lung Cancer Mortality in Cancer Prevention Study II.");
 
         assertThat(article.getPaginationOrELocationID()).hasSize(2);
         assertThat(article.getPaginationOrELocationID().get(0)).isInstanceOf(Pagination.class);
@@ -99,11 +94,11 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
 
         ELocationID elocationId = (ELocationID) article.getPaginationOrELocationID().get(1);
         assertThat(elocationId.getValidYN()).isEqualTo("Y");
-        assertThat(elocationId.getvalue()).isEqualTo(DOI);
+        assertThat(elocationId.getvalue()).isEqualTo("10.1093/aje/kwu275");
         assertThat(elocationId.getEIdType()).isEqualTo("doi");
 
         assertThat(article.getAbstract().getAbstractText()).hasSize(1);
-        assertThat(article.getAbstract().getAbstractText().get(0).getvalue()).startsWith(ABSTRACT_START);
+        assertThat(article.getAbstract().getAbstractText().get(0).getvalue()).startsWith("The International Agency for Research on Cancer recently classified outdoor air pollution");
 
         AuthorList authorList = article.getAuthorList();
         assertThat(authorList.getCompleteYN()).isEqualTo("Y");
@@ -123,7 +118,7 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
         assertThat(article.getArticleDate()).hasSize(1);
         ArticleDate articleDate = article.getArticleDate().get(0);
         assertThat(articleDate.getDateType()).isEqualTo("Electronic");
-        assertThat(articleDate.getYear().getvalue()).isEqualTo(PUBLICATION_YEAR);
+        assertThat(articleDate.getYear().getvalue()).isEqualTo("2014");
 
         MedlineJournalInfo medlineJournalInfo = medlineCitation.getMedlineJournalInfo();
         assertThat(medlineJournalInfo.getCountry()).isEqualTo("United States");
