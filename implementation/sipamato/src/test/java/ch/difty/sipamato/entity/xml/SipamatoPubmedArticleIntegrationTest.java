@@ -34,6 +34,7 @@ import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
 public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest {
 
     private static final String XML_2539026 = "xml/pubmed_result_25395026.xml";
+    private static final String XML_27258721 = "xml/pubmed_result_27258721.xml";
 
     @Test
     public void feedIntoSipamatoArticle_25395026() throws XmlMappingException, IOException {
@@ -49,6 +50,24 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
         assertThat(sa.getTitle()).isEqualTo("Interactions between cigarette smoking and fine particulate matter in the Risk of Lung Cancer Mortality in Cancer Prevention Study II.");
         assertThat(sa.getDoi()).isEqualTo("10.1093/aje/kwu275");
         assertThat(sa.getOriginalAbstract()).startsWith("The International Agency for Research on Cancer recently classified outdoor air pollution");
+    }
+
+    @Test
+    public void feedIntoSipamatoArticle_27258721() throws XmlMappingException, IOException {
+        List<PubmedArticleFacade> articles = getPubmedArticles(XML_27258721);
+        assertThat(articles).hasSize(1);
+        PubmedArticleFacade sa = articles.get(0);
+
+        assertThat(sa.getPmId()).isEqualTo("27258721");
+        assertThat(sa.getAuthors()).isEqualTo(
+                "Aguilera I, Dratva J, Caviezel S, Burdet L, de Groot E, Ducret-Stich RE, Eeftens M, Keidel D, Meier R, Perez L, Rothe T, Schaffner E, Schmit-Trucksäss A, Tsai MY, Schindler C, Künzli N, Probst-Hensch N.");
+        assertThat(sa.getFirstAuthor()).isEqualTo("Aguilera");
+        assertThat(sa.getPublicationYear()).isEqualTo("2016");
+        assertThat(sa.getLocation()).isEqualTo("Environ Health Perspect. 2016; 124 (11): 1700-1706.");
+        assertThat(sa.getTitle())
+                .isEqualTo("Particulate Matter and Subclinical Atherosclerosis: Associations between Different Particle Sizes and Sources with Carotid Intima-Media Thickness in the SAPALDIA Study.");
+        assertThat(sa.getDoi()).isEqualTo("10.1289/EHP161");
+        assertThat(sa.getOriginalAbstract()).startsWith("Subclinical atherosclerosis has been associated with long-term exposure to particulate matter (PM)");
     }
 
     @Test

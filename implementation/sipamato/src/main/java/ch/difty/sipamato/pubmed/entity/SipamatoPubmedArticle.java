@@ -38,7 +38,7 @@ public class SipamatoPubmedArticle extends PubmedArticleFacade {
         setPublicationYear(getPublicationYearFrom(journal));
         setLocation(makeLocationFrom(medlineCitation.getMedlineJournalInfo(), journal.getJournalIssue(), article.getPaginationOrELocationID()));
         setTitle(AssertAs.notNull(article.getArticleTitle(), "pubmedArticle.medlineCitation.article.articleTitle").getvalue());
-        setDoi(getDoiFrom(article));
+        setDoi(getDoiFrom(pubmedArticle));
         setOriginalAbstract(getAbstractFrom(article.getAbstract()));
     }
 
@@ -96,8 +96,16 @@ public class SipamatoPubmedArticle extends PubmedArticleFacade {
         }
     }
 
-    private String getDoiFrom(final Article article) {
-        return article.getPaginationOrELocationID().stream().filter(pel -> pel instanceof ELocationID).map(l -> ((ELocationID) l).getvalue()).findFirst().orElse(null);
+    private String getDoiFrom(final PubmedArticle pubmedArticle) {
+        String doi = null;
+        if (pubmedArticle.getPubmedData() != null) {
+            doi = getDoiFromArticleIdList(pubmedArticle.getPubmedData().getArticleIdList());
+        }
+        if (doi == null) {
+            Article article = pubmedArticle.getMedlineCitation().getArticle();
+            doi = article.getPaginationOrELocationID().stream().filter(pel -> pel instanceof ELocationID).map(l -> ((ELocationID) l).getvalue()).findFirst().orElse(null);
+        }
+        return doi;
     }
 
 }

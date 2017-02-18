@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ch.difty.sipamato.pubmed.Abstract;
+import ch.difty.sipamato.pubmed.ArticleId;
+import ch.difty.sipamato.pubmed.ArticleIdList;
 import ch.difty.sipamato.pubmed.Author;
 import ch.difty.sipamato.pubmed.AuthorList;
 import ch.difty.sipamato.pubmed.CollectiveName;
@@ -81,6 +83,13 @@ public abstract class PubmedArticleFacade {
                 .limit(1)
                 .findFirst()
                 .orElseGet(null);
+    }
+
+    protected String getDoiFromArticleIdList(ArticleIdList articleIdList) {
+        if (articleIdList != null) {
+            return articleIdList.getArticleId().stream().filter(ai -> "doi".equals(ai.getIdType())).map(ArticleId::getvalue).findFirst().orElse(null);
+        }
+        return null;
     }
 
     protected String getAbstractFrom(final Abstract abstr) {

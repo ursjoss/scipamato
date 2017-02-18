@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2017//EN" "https://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_170101.dtd">
+<PubmedArticleSet>
+
+<PubmedArticle>
+    <MedlineCitation Status="In-Data-Review" Owner="NLM">
+        <PMID Version="1">27258721</PMID>
+        <DateCreated>
+            <Year>2016</Year>
+            <Month>06</Month>
+            <Day>03</Day>
+        </DateCreated>
+        <DateRevised>
+            <Year>2016</Year>
+            <Month>11</Month>
+            <Day>03</Day>
+        </DateRevised>
+        <Article PubModel="Print-Electronic">
+            <Journal>
+                <ISSN IssnType="Electronic">1552-9924</ISSN>
+                <JournalIssue CitedMedium="Internet">
+                    <Volume>124</Volume>
+                    <Issue>11</Issue>
+                    <PubDate>
+                        <Year>2016</Year>
+                        <Month>Nov</Month>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Environmental health perspectives</Title>
+                <ISOAbbreviation>Environ. Health Perspect.</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>Particulate Matter and Subclinical Atherosclerosis: Associations between Different Particle Sizes and Sources with Carotid Intima-Media Thickness in the SAPALDIA Study.</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>1700-1706</MedlinePgn>
+            </Pagination>
+            <Abstract>
+                <AbstractText Label="BACKGROUND" NlmCategory="BACKGROUND">Subclinical atherosclerosis has been associated with long-term exposure to particulate matter (PM), but the relevance of particle size and sources of exposure remains unclear.</AbstractText>
+                <AbstractText Label="OBJECTIVES" NlmCategory="OBJECTIVE">We investigated the association of long-term exposure to PM10 (≤ 10 μm), PM2.5 (≤ 2.5 μm: total mass, vehicular, and crustal sources), and ultrafine particles [UFP &lt; 0.1 μm: particle number concentration (PNC) and lung-deposited surface area (LDSA)] with carotid intima-media thickness (CIMT).</AbstractText>
+                <AbstractText Label="METHODS" NlmCategory="METHODS">We used data from 1,503 participants ≥ 50 years old who participated in the third examination of the Swiss SAPALDIA cohort. Exposures were obtained from dispersion models and land-use regression models. Covariate information, including previous cardiovascular risk factors, was obtained from the second and third SAPALDIA examinations.</AbstractText>
+                <AbstractText Label="RESULTS" NlmCategory="RESULTS">The adjusted percent difference in CIMT associated with an exposure contrast between the 10th and 90th percentile was 1.58% (95% CI: -0.30, 3.47%) for PM10, 2.10% (95% CI: 0.04, 4.16%) for PM2.5, 1.67% (95% CI: -0.13, 3.48%) for the vehicular source of PM2.5, -0.58% (95% CI: -3.95, 2.79%) for the crustal source of PM2.5, 2.06% (95% CI: 0.03, 4.10%) for PNC, and 2.32% (95% CI: 0.23, 4.40%) for LDSA. Stronger associations were observed among diabetics, subjects with low-educational level, and those at higher cardiovascular risk.</AbstractText>
+                <AbstractText Label="CONCLUSIONS" NlmCategory="CONCLUSIONS">CIMT was associated with exposure to PM10, PM2.5, and UFP. The PM2.5 source-specific analysis showed a positive association for the vehicular source but not for the crustal source. Although the effects of PNC and LDSA were similar in magnitude, two-pollutant and residual-based models suggested that LDSA may be a better marker for the health relevance of UFP. Citation: Aguilera I, Dratva J, Caviezel S, Burdet L, de Groot E, Ducret-Stich RE, Eeftens M, Keidel D, Meier R, Perez L, Rothe T, Schaffner E, Schmit-Trucksäss A, Tsai MY, Schindler C, Künzli N, Probst-Hensch N. 2016. Particulate matter and subclinical atherosclerosis: associations between different particle sizes and sources with carotid intima-media thickness in the SAPALDIA study. Environ Health Perspect 124:1700-1706; http://dx.doi.org/10.1289/EHP161.</AbstractText>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Aguilera</LastName>
+                    <ForeName>Inmaculada</ForeName>
+                    <Initials>I</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Swiss Tropical and Public Health Institute, Basel, Switzerland.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Dratva</LastName>
+                    <ForeName>Julia</ForeName>
+                    <Initials>J</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Caviezel</LastName>
+                    <ForeName>Seraina</ForeName>
+                    <Initials>S</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Burdet</LastName>
+                    <ForeName>Luc</ForeName>
+                    <Initials>L</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>de Groot</LastName>
+                    <ForeName>Eric</ForeName>
+                    <Initials>E</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Ducret-Stich</LastName>
+                    <ForeName>Regina E</ForeName>
+                    <Initials>RE</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Eeftens</LastName>
+                    <ForeName>Marloes</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Keidel</LastName>
+                    <ForeName>Dirk</ForeName>
+                    <Initials>D</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Meier</LastName>
+                    <ForeName>Reto</ForeName>
+                    <Initials>R</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Perez</LastName>
+                    <ForeName>Laura</ForeName>
+                    <Initials>L</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Rothe</LastName>
+                    <ForeName>Thomas</ForeName>
+                    <Initials>T</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Schaffner</LastName>
+                    <ForeName>Emmanuel</ForeName>
+                    <Initials>E</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Schmit-Trucksäss</LastName>
+                    <ForeName>Arno</ForeName>
+                    <Initials>A</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Tsai</LastName>
+                    <ForeName>Ming-Yi</ForeName>
+                    <Initials>MY</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Schindler</LastName>
+                    <ForeName>Christian</ForeName>
+                    <Initials>C</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Künzli</LastName>
+                    <ForeName>Nino</ForeName>
+                    <Initials>N</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Probst-Hensch</LastName>
+                    <ForeName>Nicole</ForeName>
+                    <Initials>N</Initials>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType UI="">Journal Article</PublicationType>
+            </PublicationTypeList>
+            <ArticleDate DateType="Electronic">
+                <Year>2016</Year>
+                <Month>06</Month>
+                <Day>03</Day>
+            </ArticleDate>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>United States</Country>
+            <MedlineTA>Environ Health Perspect</MedlineTA>
+            <NlmUniqueID>0330411</NlmUniqueID>
+            <ISSNLinking>0091-6765</ISSNLinking>
+        </MedlineJournalInfo>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="received">
+                <Year>2015</Year>
+                <Month>07</Month>
+                <Day>31</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="revised">
+                <Year>2016</Year>
+                <Month>01</Month>
+                <Day>22</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="accepted">
+                <Year>2016</Year>
+                <Month>05</Month>
+                <Day>03</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2016</Year>
+                <Month>11</Month>
+                <Day>2</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2016</Year>
+                <Month>11</Month>
+                <Day>2</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>2016</Year>
+                <Month>6</Month>
+                <Day>4</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pubmed">27258721</ArticleId>
+            <ArticleId IdType="doi">10.1289/EHP161</ArticleId>
+            <ArticleId IdType="pii">EHP161</ArticleId>
+            <ArticleId IdType="pmc">PMC5089877</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+</PubmedArticleSet>

@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ch.difty.sipamato.lib.AssertAs;
-import ch.difty.sipamato.pubmed.ArticleId;
-import ch.difty.sipamato.pubmed.ArticleIdList;
 import ch.difty.sipamato.pubmed.AuthorList;
 import ch.difty.sipamato.pubmed.BookDocument;
 import ch.difty.sipamato.pubmed.LocationLabel;
@@ -36,7 +34,7 @@ public class SipamatoPubmedBookArticle extends PubmedArticleFacade {
         setPublicationYear(bookDocument.getContributionDate() != null ? bookDocument.getContributionDate().getYear().getvalue() : null);
         setLocation(getLocationFrom(bookDocument));
         setTitle(bookDocument.getArticleTitle() != null ? bookDocument.getArticleTitle().getvalue() : null);
-        setDoi(getDoiFrom(bookDocument.getArticleIdList()));
+        setDoi(getDoiFromArticleIdList(bookDocument.getArticleIdList()));
         setOriginalAbstract(getAbstractFrom(bookDocument.getAbstract()));
     }
 
@@ -44,10 +42,4 @@ public class SipamatoPubmedBookArticle extends PubmedArticleFacade {
         return bookDocument.getLocationLabel().stream().map(LocationLabel::getvalue).collect(Collectors.joining(" - "));
     }
 
-    private String getDoiFrom(ArticleIdList articleIdList) {
-        if (articleIdList != null) {
-            return articleIdList.getArticleId().stream().filter(ai -> "doi".equals(ai.getIdType())).map(ArticleId::getvalue).findFirst().orElse(null);
-        }
-        return null;
-    }
 }
