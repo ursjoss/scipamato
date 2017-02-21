@@ -1,6 +1,7 @@
 package ch.difty.sipamato.web.panel.paper;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -17,8 +18,11 @@ import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
+import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
+import ch.difty.sipamato.service.PubmedService;
 import ch.difty.sipamato.web.jasper.SipamatoPdfExporterConfiguration;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
+import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.Mode;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 
@@ -34,6 +38,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @SpringBean
     private AuthorParserFactory authorParserFactory;
+
+    @SpringBean
+    private PubmedService pubmedService;
 
     public EditablePaperPanel(String id, IModel<Paper> model) {
         super(id, model, Mode.EDIT);
@@ -155,6 +162,42 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 }
             }
         };
+    }
+
+    @Override
+    protected void onXmlPasteModalPanelClose(XmlPasteModalPanel xmlPastePanel, AjaxRequestTarget target) {
+        List<PubmedArticleFacade> articles = pubmedService.extractArticlesFrom(xmlPastePanel.getPastedContent());
+        if (articles.isEmpty()) {
+            warn("XML could not be parsed...");
+        } else {
+            info("Extracted " + articles.size() + " articles from PubMed. 1st with pmid " + articles.get(0).getPmId() + " and title " + articles.get(0).getTitle());
+        }
+        Paper paper = getModelObject();
+        if (paper.getPmId() != null) {
+            for (PubmedArticleFacade a : articles) {
+                if (String.valueOf(paper.getPmId()).equals(a.getPmId())) {
+                    compareFieldsOf(paper, a);
+                    break;
+                }
+            }
+        }
+        target.add(((BasePage<?>) getPage()).getFeedbackPanel());
+    }
+
+    private void compareFieldsOf(Paper p, PubmedArticleFacade a) {
+        compareFields(a.getAuthors(), p.getAuthors(), "authors");
+        compareFields(a.getFirstAuthor(), p.getFirstAuthor(), "firstAuthor");
+        compareFields(a.getTitle(), p.getTitle(), "title");
+        compareFields(String.valueOf(a.getPublicationYear()), String.valueOf(p.getPublicationYear()), "publication year");
+        compareFields(a.getLocation(), p.getLocation(), "location");
+        compareFields(a.getDoi(), p.getDoi(), "DOI");
+        compareFields(a.getOriginalAbstract(), p.getOriginalAbstract(), "abstract");
+    }
+
+    private void compareFields(String pmField, String paperField, String fieldName) {
+        if (pmField != null && !pmField.equals(paperField)) {
+            warn("Pubmed " + fieldName + ": " + pmField);
+        }
     }
 
 }

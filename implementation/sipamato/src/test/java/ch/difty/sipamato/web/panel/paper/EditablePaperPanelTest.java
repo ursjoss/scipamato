@@ -5,12 +5,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
 
 import ch.difty.sipamato.entity.Paper;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 
 public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperPanel> {
 
@@ -73,6 +78,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
             protected void onFormSubmit() {
                 // no-op
             }
+
         };
     }
 
@@ -90,6 +96,14 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertLabel(b + ":submit:label", "Save");
         assertTextFieldWithLabel(b + ":createdDisplayValue", "u1 (2017-02-01 13:34:45)", "Created");
         assertTextFieldWithLabel(b + ":modifiedDisplayValue", "u2 (2017-03-01 13:34:45)", "Last Modified");
+
+        getTester().assertComponent(b + ":showXmlPasteModalLink", BootstrapAjaxLink.class);
+        getTester().assertVisible(b + ":showXmlPasteModalLink");
+
+        b = "panel:xmlPasteModal";
+        getTester().assertComponent(b, ModalWindow.class);
+        b += ":content";
+        getTester().assertInvisible(b);
     }
 
     @Test
@@ -248,4 +262,24 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
         verifyCodeAndCodeClassCalls(2, 5);
     }
+
+    @Test
+    public void clickingOnShowXmlPastePanelButton_opensModalWindow() {
+        getTester().startComponentInPage(makePanel());
+        getTester().debugComponentTrees();
+
+        getTester().executeAjaxEvent(PANEL_ID + ":form:showXmlPasteModalLink", "click");
+
+        String b = PANEL_ID + ":xmlPasteModal";
+        getTester().assertComponent(b, ModalWindow.class);
+        b += ":content";
+        getTester().assertComponent(b, XmlPasteModalPanel.class);
+        b += ":form";
+        getTester().assertComponent(b, Form.class);
+        getTester().assertComponent(b + ":content", TextArea.class);
+        getTester().assertComponent(b + ":submit", BootstrapAjaxButton.class);
+
+        verifyCodeAndCodeClassCalls(1);
+    }
+
 }

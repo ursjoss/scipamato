@@ -26,7 +26,6 @@ import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.service.CodeClassService;
 import ch.difty.sipamato.service.CodeService;
 import ch.difty.sipamato.web.panel.PanelTest;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
@@ -141,7 +140,6 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
         assertTextFieldWithLabel(b + ":location", "l", "Location");
         assertTextFieldWithLabel(b + ":doi", "doi", "DOI");
 
-        getTester().assertComponent(b + ":showXmlPasteModalLink", BootstrapAjaxLink.class);
         getTester().assertComponent(b + ":submit", BootstrapButton.class);
 
         b += ":tabs";

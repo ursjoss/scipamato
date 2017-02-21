@@ -30,7 +30,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
 
 import ch.difty.sipamato.entity.Code;
@@ -39,8 +38,6 @@ import ch.difty.sipamato.entity.CodeClass;
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;
-import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
-import ch.difty.sipamato.service.PubmedService;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.model.CodeClassModel;
 import ch.difty.sipamato.web.model.CodeModel;
@@ -62,9 +59,6 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     private String pubmedXml;
 
     private Form<T> form;
-
-    @SpringBean
-    private PubmedService pubmedService;
 
     public PaperPanel(String id) {
         super(id);
@@ -508,10 +502,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
             @Override
             public void onClose(AjaxRequestTarget target) {
-                List<PubmedArticleFacade> articles = pubmedService.extractArticlesFrom(xmlPastePanel.getPastedContent());
-                System.out.println("Imported " + articles.size() + " articles from PubMed");
-                System.out.println(articles.get(0).getTitle());
-                // TODO continue here
+                onXmlPasteModalPanelClose(xmlPastePanel, target);
             }
         });
 
@@ -524,10 +515,23 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             public void onClick(AjaxRequestTarget target) {
                 xmlPasteModal.show(target);
             }
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setVisible(isEditMode());
+            }
         };
+        showXmlPasteModal.setOutputMarkupPlaceholderTag(true);
         showXmlPasteModal.setLabel(new StringResourceModel("xmlPasteModalLink.label", this, null));
         showXmlPasteModal.add(new AttributeModifier("title", new StringResourceModel("xmlPasteModalLink.title", this, null).getString()));
         queue(showXmlPasteModal);
-
     }
+
+    /**
+     * Override to implement some behavior executed when closing the XmlPasteModal
+     */
+    protected void onXmlPasteModalPanelClose(XmlPasteModalPanel xmlPastePanel, AjaxRequestTarget target) {
+    }
+
 }

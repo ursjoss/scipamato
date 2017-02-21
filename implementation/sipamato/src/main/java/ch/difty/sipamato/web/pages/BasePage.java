@@ -77,7 +77,7 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         return navBar;
     }
 
-    protected NotificationPanel getFeedbackPanel() {
+    public NotificationPanel getFeedbackPanel() {
         return feedbackPanel;
     }
 
