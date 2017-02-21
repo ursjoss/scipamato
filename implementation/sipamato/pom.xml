@@ -186,6 +186,18 @@
             <version>${wicket.version}</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-feign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-feign</artifactId>
+            <version>1.2.5.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-jaxb</artifactId>
+            <version>9.4.0</version>
+        </dependency>
+
         <!-- JasperReport -->
         <dependency>
             <groupId>org.wicketstuff</groupId>

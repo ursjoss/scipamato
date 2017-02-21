@@ -6,10 +6,18 @@ import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
+import ch.difty.sipamato.pubmed.PubMed;
+import feign.Feign;
+import feign.jaxb.JAXBContextFactory;
+import feign.jaxb.JAXBDecoder;
+import feign.slf4j.Slf4jLogger;
+
 @Configuration
 public class JaxbConfiguration {
 
     private static final String PACKAGE = "ch.difty.sipamato.pubmed";
+
+    private final JAXBContextFactory jaxbFactory = new JAXBContextFactory.Builder().withMarshallerJAXBEncoding("UTF-8").build();
 
     @Bean
     public Marshaller marshaller() {
@@ -24,5 +32,10 @@ public class JaxbConfiguration {
         unmarshaller.setSupportDtd(true);
         unmarshaller.setPackagesToScan(PACKAGE);
         return unmarshaller;
+    }
+
+    @Bean
+    public PubMed pubMed() {
+        return Feign.builder().logger(new Slf4jLogger()).decoder(new JAXBDecoder(jaxbFactory)).target(PubMed.class, PubMed.URL);
     }
 }

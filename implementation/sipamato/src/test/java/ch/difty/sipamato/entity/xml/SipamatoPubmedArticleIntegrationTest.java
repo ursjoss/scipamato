@@ -42,6 +42,10 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
         assertThat(articles).hasSize(1);
         PubmedArticleFacade sa = articles.get(0);
 
+        assertArticle239026(sa);
+    }
+
+    public static  void assertArticle239026(PubmedArticleFacade sa) {
         assertThat(sa.getPmId()).isEqualTo("25395026");
         assertThat(sa.getAuthors()).isEqualTo("Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.");
         assertThat(sa.getFirstAuthor()).isEqualTo("Turner");

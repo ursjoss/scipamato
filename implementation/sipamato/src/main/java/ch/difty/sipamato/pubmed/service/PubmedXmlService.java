@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.xml.transform.stream.StreamSource;
@@ -17,25 +18,40 @@ import org.springframework.stereotype.Service;
 
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.lib.NullArgumentException;
+import ch.difty.sipamato.pubmed.PubMed;
 import ch.difty.sipamato.pubmed.PubmedArticleSet;
 import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
-import ch.difty.sipamato.service.PubmedService;
+import ch.difty.sipamato.service.PubmedArticleService;
 
 /**
- * Service handling pubmed content exported as XML.
+ * Service handling pubmed content.
  *
  * @author u.joss
  */
 @Service
-public class PubmedXmlService implements PubmedService {
+public class PubmedXmlService implements PubmedArticleService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PubmedXmlService.class);
 
     private final Unmarshaller unmarshaller;
 
+    private final PubMed pubMed;
+
     @Autowired
-    public PubmedXmlService(final Unmarshaller unmarshaller) {
+    public PubmedXmlService(final Unmarshaller unmarshaller, final PubMed pubMed) {
         this.unmarshaller = AssertAs.notNull(unmarshaller, "unmarshaller");
+        this.pubMed = AssertAs.notNull(pubMed, "pubMed");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Optional<PubmedArticleFacade> getPubmedArticleWithPmid(int pmId) {
+        final PubmedArticleSet set = pubMed.articleWithId(String.valueOf(pmId));
+        final List<Object> aoba = set.getPubmedArticleOrPubmedBookArticle();
+        if (aoba != null && !aoba.isEmpty()) {
+            return aoba.stream().map(PubmedArticleFacade::of).findFirst();
+        }
+        return Optional.empty();
     }
 
     /**
@@ -54,6 +70,12 @@ public class PubmedXmlService implements PubmedService {
     /**
      * Extracts pubmed articles and pubmed book articles from the source string representing XML exported from Pubmed.
      *
+     * <p>The XML string could be derived e.g. from
+     * <ul>
+     * <li> via API, e.g. <code>https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=25395026&retmode=xml</code></li>
+     * <li> through the Web UI (e.g. https://www.ncbi.nlm.nih.gov/pubmed/25395026) when sending to <literal>file</literal> in format <literal>XML</literal></li>
+     * </ul>
+     *
      * @param content pubmed content in XML format, as String. Must not be null.
      * @return List of {@link PubmedArticleFacade} entries. Never null. Will be empty if there are issues with the XML.
      * @throws NullArgumentException in case of null xmlString.
@@ -70,4 +92,5 @@ public class PubmedXmlService implements PubmedService {
         }
         return articles;
     }
+
 }

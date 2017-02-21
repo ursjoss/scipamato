@@ -19,7 +19,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
-import ch.difty.sipamato.service.PubmedService;
+import ch.difty.sipamato.service.PubmedArticleService;
 import ch.difty.sipamato.web.jasper.SipamatoPdfExporterConfiguration;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.BasePage;
@@ -40,7 +40,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     private AuthorParserFactory authorParserFactory;
 
     @SpringBean
-    private PubmedService pubmedService;
+    private PubmedArticleService pubmedArticleService;
 
     public EditablePaperPanel(String id, IModel<Paper> model) {
         super(id, model, Mode.EDIT);
@@ -166,7 +166,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @Override
     protected void onXmlPasteModalPanelClose(XmlPasteModalPanel xmlPastePanel, AjaxRequestTarget target) {
-        List<PubmedArticleFacade> articles = pubmedService.extractArticlesFrom(xmlPastePanel.getPastedContent());
+        List<PubmedArticleFacade> articles = pubmedArticleService.extractArticlesFrom(xmlPastePanel.getPastedContent());
         if (articles.isEmpty()) {
             warn("XML could not be parsed...");
         } else {

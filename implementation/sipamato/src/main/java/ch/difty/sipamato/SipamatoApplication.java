@@ -4,10 +4,12 @@ import org.apache.wicket.markup.html.IPackageResourceGuard;
 import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
 
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication;
 
 @SpringBootApplication
+@EnableFeignClients
 public class SipamatoApplication extends WicketBootSecuredWebApplication {
 
     public static void main(String[] args) {
