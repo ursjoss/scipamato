@@ -34,6 +34,7 @@ import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
 public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest {
 
     private static final String XML_2539026 = "xml/pubmed_result_25395026.xml";
+    private static final String XML_23454700 = "xml/pubmed_result_23454700.xml";
     private static final String XML_27214671 = "xml/pubmed_result_27214671.xml";
     private static final String XML_27224452 = "xml/pubmed_result_27224452.xml";
     private static final String XML_27258721 = "xml/pubmed_result_27258721.xml";
@@ -57,6 +58,23 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
         assertThat(sa.getDoi()).isEqualTo("10.1093/aje/kwu275");
         assertThat(sa.getOriginalAbstract()).startsWith("The International Agency for Research on Cancer recently classified outdoor air pollution");
         assertThat(sa.getOriginalAbstract()).endsWith("based on reducing exposure to either risk factor alone.");
+    }
+
+    @Test
+    public void feedIntoSipamatoArticle_23454700_withoutIssue_stillHasColon() throws XmlMappingException, IOException {
+        List<PubmedArticleFacade> articles = getPubmedArticles(XML_23454700);
+        assertThat(articles).hasSize(1);
+        PubmedArticleFacade sa = articles.get(0);
+
+        assertThat(sa.getPmId()).isEqualTo("23454700");
+        assertThat(sa.getAuthors()).isEqualTo("Pascal M, Corso M, Chanel O, Declercq C, Badaloni C, Cesaroni G, Henschel S, Meister K, Haluza D, Martin-Olmedo P, Medina S, Aphekom group.");
+        assertThat(sa.getFirstAuthor()).isEqualTo("Pascal");
+        assertThat(sa.getPublicationYear()).isEqualTo("2013");
+        assertThat(sa.getLocation()).isEqualTo("Sci Total Environ. 2013; 449: 390-400.");
+        assertThat(sa.getTitle()).isEqualTo("Assessing the public health impacts of urban air pollution in 25 European cities: results of the Aphekom project.");
+        assertThat(sa.getDoi()).isEqualTo("10.1016/j.scitotenv.2013.01.077");
+        assertThat(sa.getOriginalAbstract()).startsWith("INTRODUCTION: The Aphekom project aimed to provide new, clear, and meaningful information on the health effects of air pollution in Europe.");
+        assertThat(sa.getOriginalAbstract()).endsWith("EU legislation is being revised for an update in 2013.");
     }
 
     @Test

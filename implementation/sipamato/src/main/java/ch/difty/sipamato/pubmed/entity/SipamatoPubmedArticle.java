@@ -60,11 +60,19 @@ public class SipamatoPubmedArticle extends PubmedArticleFacade {
         sb.append(medlineJournalInfo.getMedlineTA()).append(". ");
         sb.append(getPublicationYear()).append(";");
         final String volume = journalIssue.getVolume();
-        if (volume != null && !volume.isEmpty())
+        boolean hasVolumeOrIssue = false;
+        if (volume != null && !volume.isEmpty()) {
             sb.append(" ").append(volume);
+            hasVolumeOrIssue = true;
+        }
         final String issue = journalIssue.getIssue();
-        if (issue != null && !issue.isEmpty())
-            sb.append(" (").append(issue).append("):");
+        if (issue != null && !issue.isEmpty()) {
+            sb.append(" (").append(issue).append(")");
+            hasVolumeOrIssue = true;
+        }
+        if (hasVolumeOrIssue) {
+            sb.append(":");
+        }
         if (paginationElongation != null && !paginationElongation.isEmpty()) {
             final String pages = paginationElongation.stream()
                     .filter(pe -> pe instanceof Pagination)
