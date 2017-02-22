@@ -7,6 +7,7 @@ import static ch.difty.sipamato.db.tables.CodeTr.CODE_TR;
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
 import static ch.difty.sipamato.db.tables.PaperCode.PAPER_CODE;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -194,6 +195,15 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     @Override
     public int countBySearchOrder(SearchOrder searchOrder) {
         return searchOrderRepository.countBySearchOrder(searchOrder);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public List<Paper> findByPmIds(final List<Integer> pmIds) {
+        if (pmIds == null || pmIds.isEmpty())
+            return new ArrayList<>();
+        else
+            return getDsl().selectFrom(PAPER).where(PAPER.PM_ID.in(pmIds)).fetchInto(Paper.class);
     }
 
 }

@@ -200,4 +200,16 @@ public class JooqPaperRepoIntegrationTest {
         assertThat(papers.get(0).getCodes()).isNotEmpty();
     }
 
+    @Test
+    public void gettingPapersByPmIds_withThreeValidPmIds_returnsThreePapers() {
+        List<Paper> papers = repo.findByPmIds(Arrays.asList(20335815, 27128166, 25104428));
+        assertThat(papers).hasSize(3);
+        assertThat(papers).extracting("pmId").containsOnly(20335815, 27128166, 25104428);
+    }
+
+    @Test
+    public void gettingPapersByPmIds_withInvalidPmIds_returnsEmptyList() {
+        assertThat(repo.findByPmIds(Arrays.asList(-20335815))).isEmpty();
+    }
+
 }

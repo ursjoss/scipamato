@@ -18,7 +18,9 @@ import org.wicketstuff.annotation.mount.MountPath;
 import ch.difty.sipamato.auth.Roles;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
+import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.service.PubmedArticleService;
+import ch.difty.sipamato.service.ServiceResult;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.pages.paper.provider.FilterBasedSortablePaperSlimProvider;
@@ -27,6 +29,14 @@ import ch.difty.sipamato.web.panel.result.ResultPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 
+/**
+ * Page to list all papers and apply simple filters to limit the results.
+ *
+ * <p>Offers the option to create new papers and also to process XML strings exported (as file) from the PubMed User Interface.
+ * Processing those pubmed articles results in inserting papers that are not yet available in sipamato (based on PMID).
+ *
+ * @author u.joss
+ */
 @MountPath("list")
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 public class PaperListPage extends BasePage<Void> {
@@ -37,6 +47,9 @@ public class PaperListPage extends BasePage<Void> {
 
     @SpringBean
     private PubmedArticleService pubmedArticleService;
+
+    @SpringBean
+    private PaperService paperService;
 
     private PaperFilter filter;
     private FilterBasedSortablePaperSlimProvider dataProvider;
@@ -98,9 +111,8 @@ public class PaperListPage extends BasePage<Void> {
 
             @Override
             public void onClose(AjaxRequestTarget target) {
-                onXmlPasteModalPanelClose(xmlPastePanel, target);
+                onXmlPasteModalPanelClose(xmlPastePanel.getPastedContent(), target);
             }
-
         });
 
         queue(xmlPasteModal);
@@ -112,7 +124,6 @@ public class PaperListPage extends BasePage<Void> {
             public void onClick(AjaxRequestTarget target) {
                 xmlPasteModal.show(target);
             }
-
         };
         showXmlPasteModal.setOutputMarkupPlaceholderTag(true);
         showXmlPasteModal.setLabel(new StringResourceModel("xmlPasteModalLink.label", this, null));
@@ -120,14 +131,25 @@ public class PaperListPage extends BasePage<Void> {
         queue(showXmlPasteModal);
     }
 
-    private void onXmlPasteModalPanelClose(XmlPasteModalPanel xmlPastePanel, AjaxRequestTarget target) {
-        // TODO implement proper behavior
-        List<PubmedArticleFacade> articles = pubmedArticleService.extractArticlesFrom(xmlPastePanel.getPastedContent());
-        if (articles.isEmpty()) {
-            warn("XML could not be parsed...");
-        } else {
-            info("Extracted " + articles.size() + " articles from PubMed. 1st with pmid " + articles.get(0).getPmId() + " and title " + articles.get(0).getTitle());
-        }
+    /**
+     * Converts the XML string to articles and dump the new papers into the db. Present the service result messages.
+     *
+     * @param xmlPastePanel
+     * @param target
+     */
+    private void onXmlPasteModalPanelClose(final String pubmedContent, final AjaxRequestTarget target) {
+        final List<PubmedArticleFacade> articles = pubmedArticleService.extractArticlesFrom(pubmedContent);
+        final ServiceResult result = paperService.dumpPubmedArticlesToDb(articles);
+        provideUserFeedback(result, target);
+    }
+
+    private void provideUserFeedback(final ServiceResult result, final AjaxRequestTarget target) {
+        for (final String msg : result.getErrorMessages())
+            error(msg);
+        for (final String msg : result.getWarnMessages())
+            warn(msg);
+        for (final String msg : result.getInfoMessages())
+            info(msg);
         target.add(getFeedbackPanel());
     }
 

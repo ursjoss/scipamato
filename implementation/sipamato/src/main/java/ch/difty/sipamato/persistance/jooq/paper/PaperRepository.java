@@ -40,4 +40,12 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * {@link SearchOrderRepository#countBySearchOrder(SearchOrder)}
      */
     int countBySearchOrder(SearchOrder searchOrder);
+
+    /**
+     * Find Papers by a number of PmIds
+     * @param pmIds
+     * @return list of {@Paper}s
+     */
+    List<Paper> findByPmIds(List<Integer> pmIds);
+
 }
