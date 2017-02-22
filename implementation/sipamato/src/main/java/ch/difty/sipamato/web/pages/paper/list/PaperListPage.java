@@ -144,12 +144,9 @@ public class PaperListPage extends BasePage<Void> {
     }
 
     private void provideUserFeedback(final ServiceResult result, final AjaxRequestTarget target) {
-        for (final String msg : result.getErrorMessages())
-            error(msg);
-        for (final String msg : result.getWarnMessages())
-            warn(msg);
-        for (final String msg : result.getInfoMessages())
-            info(msg);
+        result.getErrorMessages().forEach(msg -> error(msg));
+        result.getWarnMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.exists", this, null).setParameters(msg).getString()).forEach(msg -> warn(msg));
+        result.getInfoMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.saved", this, null).setParameters(msg).getString()).forEach(msg -> info(msg));
         target.add(getFeedbackPanel());
     }
 

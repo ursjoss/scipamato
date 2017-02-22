@@ -28,19 +28,19 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     /** {@inheritDocs} */
     @Override
-    public List<Paper> findBySearchOrder(SearchOrder searchOrder) {
+    public List<Paper> findBySearchOrder(final SearchOrder searchOrder) {
         return getRepository().findBySearchOrder(searchOrder);
     }
 
     /** {@inheritDocs} */
     @Override
-    public Page<Paper> findBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
+    public Page<Paper> findBySearchOrder(final SearchOrder searchOrder, final Pageable pageable) {
         return getRepository().findBySearchOrder(searchOrder, pageable);
     }
 
     /** {@inheritDocs} */
     @Override
-    public int countBySearchOrder(SearchOrder searchOrder) {
+    public int countBySearchOrder(final SearchOrder searchOrder) {
         return getRepository().countBySearchOrder(searchOrder);
     }
 
@@ -55,7 +55,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         return sr;
     }
 
-    private Paper savePubmedArticle(PubmedArticleFacade article) {
+    private Paper savePubmedArticle(final PubmedArticleFacade article) {
         final Paper p = new Paper();
         p.setPmId(Integer.valueOf(article.getPmId()));
         p.setAuthors(article.getAuthors());
@@ -69,9 +69,8 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     }
 
     private void fillServiceResultFrom(final List<String> existingPmIds, final List<Paper> newPapers, final ServiceResult sr) {
-        // TODO localize
-        existingPmIds.stream().map(pmId -> "Paper with PMID " + pmId + "already exists. The Pubmed Article was not imported").forEach(msg -> sr.addWarnMessage(msg));
-        newPapers.stream().map(p -> "Paper with PMID" + p.getPmId() + " (id " + p.getId() + " has been added to the database.").forEach(msg -> sr.addInfoMessage(msg));
+        existingPmIds.stream().map(pmId -> "PMID " + pmId).forEach(msg -> sr.addWarnMessage(msg));
+        newPapers.stream().map(p -> "PMID " + p.getPmId() + " (id " + p.getId() + ")").forEach(msg -> sr.addInfoMessage(msg));
     }
 
 }
