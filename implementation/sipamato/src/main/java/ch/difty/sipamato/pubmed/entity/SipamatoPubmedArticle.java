@@ -24,6 +24,8 @@ import ch.difty.sipamato.pubmed.Year;
  */
 public class SipamatoPubmedArticle extends PubmedArticleFacade {
 
+    private static final String PII = "pii";
+
     protected SipamatoPubmedArticle(final PubmedArticle pubmedArticle) {
         AssertAs.notNull(pubmedArticle, "pubmedArticle");
         final MedlineCitation medlineCitation = AssertAs.notNull(pubmedArticle.getMedlineCitation(), "pubmedArticle.medlineCitation");
@@ -50,40 +52,40 @@ public class SipamatoPubmedArticle extends PubmedArticleFacade {
         final JournalIssue journalIssue = AssertAs.notNull(journal.getJournalIssue(), "pubmedArticle.medlineCitation.article.journal.journalIssue");
         final PubDate pubDate = AssertAs.notNull(journalIssue.getPubDate(), "pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate");
         final List<Object> datishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
-        return datishObjects.stream().filter(o -> o instanceof Year).map(o -> (Year) o).map(Year::getvalue).findFirst().orElse(
-                datishObjects.stream().filter(o -> o instanceof MedlineDate).map(o -> (MedlineDate) o).map(MedlineDate::getvalue).map(mld -> mld.substring(0, 4)).findFirst().orElse("0"));
+        return datishObjects.stream().filter(o -> o instanceof Year).map(o -> (Year) o).map(Year::getvalue).findFirst().orElseGet(
+                () -> datishObjects.stream().filter(o -> o instanceof MedlineDate).map(o -> (MedlineDate) o).map(MedlineDate::getvalue).map(mld -> mld.substring(0, 4)).findFirst().orElse("0"));
     }
 
-    private String makeLocationFrom(final MedlineJournalInfo medlineJournalInfo, final JournalIssue journalIssue, final List<Object> paginationElongation) {
+    private String makeLocationFrom(final MedlineJournalInfo medlineJournalInfo, final JournalIssue journalIssue, final List<Object> paginationElocation) {
         final StringBuilder sb = new StringBuilder();
         AssertAs.notNull(medlineJournalInfo, "pubmedArticle.medlineCitation.medlineJournalInfo");
         sb.append(medlineJournalInfo.getMedlineTA()).append(". ");
         sb.append(getPublicationYear()).append(";");
         final String volume = journalIssue.getVolume();
-        boolean hasVolumeOrIssue = false;
         if (volume != null && !volume.isEmpty()) {
             sb.append(" ").append(volume);
-            hasVolumeOrIssue = true;
         }
         final String issue = journalIssue.getIssue();
         if (issue != null && !issue.isEmpty()) {
             sb.append(" (").append(issue).append(")");
-            hasVolumeOrIssue = true;
         }
-        if (hasVolumeOrIssue) {
-            sb.append(":");
-        }
-        if (paginationElongation != null && !paginationElongation.isEmpty()) {
-            final String pages = paginationElongation.stream()
+        if (paginationElocation != null && !paginationElocation.isEmpty()) {
+            final String pages = paginationElocation.stream()
                     .filter(pe -> pe instanceof Pagination)
                     .flatMap(p -> ((Pagination) p).getStartPageOrEndPageOrMedlinePgn().stream())
                     .filter(mlp -> mlp instanceof MedlinePgn)
-                    .map(mlp -> ((MedlinePgn) mlp).getvalue())
+                    .map(mlp -> complementPageRange(((MedlinePgn) mlp).getvalue()))
+                    .map(range -> ": " + range)
                     .findFirst()
-                    .orElse(null);
-            if (pages != null) {
-                sb.append(" ").append(complementPageRange(pages)).append(".");
-            }
+                    .orElseGet(() -> paginationElocation.stream()
+                            .filter(pe -> pe instanceof ELocationID)
+                            .map(eli -> (ELocationID) eli)
+                            .filter(eli -> PII.equals(eli.getEIdType()))
+                            .map(eli -> ". " + eli.getEIdType() + ": " + eli.getvalue())
+                            .findFirst()
+                            .orElse(null));
+            if (pages != null)
+                sb.append(pages).append(".");
         }
         return sb.toString();
     }

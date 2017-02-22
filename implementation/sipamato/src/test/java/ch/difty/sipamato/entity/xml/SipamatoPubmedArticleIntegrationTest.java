@@ -35,6 +35,7 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
 
     private static final String XML_2539026 = "xml/pubmed_result_25395026.xml";
     private static final String XML_23454700 = "xml/pubmed_result_23454700.xml";
+    private static final String XML_26607712 = "xml/pubmed_result_26607712.xml";
     private static final String XML_27214671 = "xml/pubmed_result_27214671.xml";
     private static final String XML_27224452 = "xml/pubmed_result_27224452.xml";
     private static final String XML_27258721 = "xml/pubmed_result_27258721.xml";
@@ -75,6 +76,24 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
         assertThat(sa.getDoi()).isEqualTo("10.1016/j.scitotenv.2013.01.077");
         assertThat(sa.getOriginalAbstract()).startsWith("INTRODUCTION: The Aphekom project aimed to provide new, clear, and meaningful information on the health effects of air pollution in Europe.");
         assertThat(sa.getOriginalAbstract()).endsWith("EU legislation is being revised for an update in 2013.");
+    }
+
+    @Test
+    public void feedIntoSipamatoArticle_26607712_notHavingPaginationButElocationIdOfTypePii_usesThat() throws XmlMappingException, IOException {
+        List<PubmedArticleFacade> articles = getPubmedArticles(XML_26607712);
+        assertThat(articles).hasSize(1);
+        PubmedArticleFacade sa = articles.get(0);
+
+        assertThat(sa.getPmId()).isEqualTo("26607712");
+        assertThat(sa.getAuthors()).isEqualTo("Hart JE, Puett RC, Rexrode KM, Albert CM, Laden F.");
+        assertThat(sa.getFirstAuthor()).isEqualTo("Hart");
+        assertThat(sa.getPublicationYear()).isEqualTo("2015");
+        assertThat(sa.getLocation()).isEqualTo("J Am Heart Assoc. 2015; 4 (12). pii: e002301.");
+        assertThat(sa.getTitle()).isEqualTo("Effect Modification of Long-Term Air Pollution Exposures and the Risk of Incident Cardiovascular Disease in US Women.");
+        assertThat(sa.getDoi()).isEqualTo("10.1161/JAHA.115.002301");
+        assertThat(sa.getOriginalAbstract()).startsWith(
+                "BACKGROUND: Ambient air pollution exposures have been frequently linked to cardiovascular disease (CVD) morbidity and mortality. However, less is known about the populations most susceptible to these adverse effects.");
+        assertThat(sa.getOriginalAbstract()).endsWith("women with diabetes were identified as the subpopulation most sensitive to the adverse cardiovascular health effects of PM.");
     }
 
     @Test
