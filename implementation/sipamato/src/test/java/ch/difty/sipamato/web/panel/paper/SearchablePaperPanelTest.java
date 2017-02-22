@@ -82,7 +82,7 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
         assertTextFieldWithLabel(b + ":createdDisplayValue", "cdv", "Created");
         assertTextFieldWithLabel(b + ":modifiedDisplayValue", "lmdv", "Last Modified");
 
-        getTester().assertInvisible(b + ":showXmlPasteModalLink");
+        getTester().assertInvisible(b + ":pubmedRetrieval");
     }
 
     @Test

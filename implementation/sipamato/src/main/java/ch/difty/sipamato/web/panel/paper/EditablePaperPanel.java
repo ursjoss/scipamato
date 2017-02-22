@@ -1,13 +1,13 @@
 package ch.difty.sipamato.web.panel.paper;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
@@ -96,10 +96,10 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      */
     @Override
     protected PaperSummaryDataSource getSummaryDataSource() {
-        final String populationLabel = new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String methodsLabel = new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String commentLabel = new StringResourceModel("comment" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String populationLabel = new StringResourceModel(Paper.POPULATION + LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodsLabel = new StringResourceModel(Paper.FLD_METHODS + LABEL_RECOURCE_TAG, this, null).getString();
+        final String resultLabel = new StringResourceModel(Paper.RESULT + LABEL_RECOURCE_TAG, this, null).getString();
+        final String commentLabel = new StringResourceModel(Paper.COMMENT + LABEL_RECOURCE_TAG, this, null).getString();
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
 
@@ -164,40 +164,131 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         };
     }
 
-    @Override
-    protected void onXmlPasteModalPanelClose(XmlPasteModalPanel xmlPastePanel, AjaxRequestTarget target) {
-        List<PubmedArticleFacade> articles = pubmedArticleService.extractArticlesFrom(xmlPastePanel.getPastedContent());
-        if (articles.isEmpty()) {
-            warn("XML could not be parsed...");
-        } else {
-            info("Extracted " + articles.size() + " articles from PubMed. 1st with pmid " + articles.get(0).getPmId() + " and title " + articles.get(0).getTitle());
-        }
+    @SuppressWarnings("unchecked")
+    protected void getPubmedArticleAndCompare(AjaxRequestTarget target) {
         Paper paper = getModelObject();
-        if (paper.getPmId() != null) {
-            for (PubmedArticleFacade a : articles) {
-                if (String.valueOf(paper.getPmId()).equals(a.getPmId())) {
-                    compareFieldsOf(paper, a);
-                    break;
+        Integer pmId = paper.getPmId();
+        if (pmId != null) {
+            Optional<PubmedArticleFacade> pao = pubmedArticleService.getPubmedArticleWithPmid(pmId);
+            if (pao.isPresent()) {
+                PubmedArticleFacade pa = pao.get();
+                if (String.valueOf(pmId).equals(pa.getPmId())) {
+                    setFieldsIfBlankCompareOtherwise(paper, pa, target);
                 }
+            } else {
+                error(new StringResourceModel("pubmedRetrieval.pmid.error", this, getModel()).getString());
             }
+        } else {
+            error(new StringResourceModel("pubmedRetrieval.pmid.missing", this, null).getString());
         }
-        target.add(((BasePage<?>) getPage()).getFeedbackPanel());
+        if (getPage() instanceof BasePage) {
+            target.add(((BasePage<Paper>) getPage()).getFeedbackPanel());
+        }
     }
 
-    private void compareFieldsOf(Paper p, PubmedArticleFacade a) {
-        compareFields(a.getAuthors(), p.getAuthors(), "authors");
-        compareFields(a.getFirstAuthor(), p.getFirstAuthor(), "firstAuthor");
-        compareFields(a.getTitle(), p.getTitle(), "title");
-        compareFields(String.valueOf(a.getPublicationYear()), String.valueOf(p.getPublicationYear()), "publication year");
-        compareFields(a.getLocation(), p.getLocation(), "location");
-        compareFields(a.getDoi(), p.getDoi(), "DOI");
-        compareFields(a.getOriginalAbstract(), p.getOriginalAbstract(), "abstract");
+    /**
+     * If the field in the sipamato paper is null, the value from the pubmed paper is inserted.
+     * Otherwise the two values are compared and differences are alerted (except for the abstract).
+     */
+    private void setFieldsIfBlankCompareOtherwise(Paper p, PubmedArticleFacade a, AjaxRequestTarget target) {
+        boolean allMatching = true;
+
+        String fieldName = getLocalizedFieldName(Paper.AUTHORS);
+        String value = a.getAuthors();
+        if (p.getAuthors() == null) {
+            p.setAuthors(value);
+            allMatching &= informChangedValue(fieldName, value, target, authors, firstAuthor);
+        } else {
+            allMatching &= compareFields(value, p.getAuthors(), fieldName);
+        }
+
+        fieldName = getLocalizedFieldName(Paper.FIRST_AUTHOR);
+        value = a.getFirstAuthor();
+        if (p.getFirstAuthor() == null) {
+            p.setFirstAuthor(value);
+            allMatching &= informChangedValue(fieldName, value, target, firstAuthor);
+        } else {
+            allMatching &= compareFields(value, p.getFirstAuthor(), fieldName);
+        }
+
+        fieldName = getLocalizedFieldName(Paper.TITLE);
+        value = a.getTitle();
+        if (p.getTitle() == null) {
+            p.setTitle(value);
+            allMatching &= informChangedValue(fieldName, value, target, title);
+        } else {
+            allMatching &= compareFields(value, p.getTitle(), fieldName);
+        }
+
+        fieldName = getLocalizedFieldName(Paper.PUBL_YEAR);
+        value = a.getPublicationYear();
+        if (p.getPublicationYear() == null) {
+            try {
+                p.setPublicationYear(Integer.parseInt(value));
+                allMatching &= informChangedValue(fieldName, value, target, publicationYear);
+            } catch (Exception ex) {
+                error(new StringResourceModel("year.parse.error", this, null).setParameters(value).getString());
+            }
+        } else {
+            allMatching &= compareFields(value, String.valueOf(p.getPublicationYear()), fieldName);
+        }
+
+        fieldName = getLocalizedFieldName(Paper.LOCATION);
+        value = a.getLocation();
+        if (p.getLocation() == null) {
+            p.setLocation(value);
+            allMatching &= informChangedValue(fieldName, value, target, location);
+        } else {
+            allMatching &= compareFields(value, p.getLocation(), fieldName);
+        }
+
+        fieldName = getLocalizedFieldName(Paper.DOI);
+        value = a.getDoi();
+        if (p.getDoi() == null) {
+            p.setDoi(value);
+            allMatching &= informChangedValue(fieldName, value, target, doi);
+        } else {
+            allMatching &= compareFields(value, p.getDoi(), fieldName);
+        }
+
+        fieldName = getLocalizedFieldName(Paper.ORIGINAL_ABSTRACT);
+        value = a.getOriginalAbstract();
+        // not comparing abstract on purpose
+        if (p.getOriginalAbstract() == null) {
+            p.setOriginalAbstract(value);
+            allMatching &= informChangedValue(fieldName, value, target, originalAbstract);
+        }
+
+        if (allMatching) {
+            info(new StringResourceModel("pubmedRetrieval.no-difference.info", this, null).getString());
+        }
     }
 
-    private void compareFields(String pmField, String paperField, String fieldName) {
+    private String getLocalizedFieldName(String fieldName) {
+        return new StringResourceModel(fieldName + LABEL_RECOURCE_TAG, this, null).getString();
+    }
+
+    private boolean informChangedValue(String fieldName, String value, AjaxRequestTarget target, FormComponent<?>... fcs) {
+        info(fieldName + ": " + value);
+        if (fcs.length > 0) {
+            target.add(fcs);
+        }
+        return false;
+    }
+
+    /**
+     * compares the pubmed field with the sipamato article field. warns if it does not match.
+     * @param pmField field from pubmed article
+     * @param paperField field from sipamato paper
+     * @param fieldName the (localized) name of the field, used to construct the warn message
+     * @return true if fields match, false if there are differences
+     */
+    private boolean compareFields(String pmField, String paperField, String fieldName) {
         if (pmField != null && !pmField.equals(paperField)) {
-            warn("Pubmed " + fieldName + ": " + pmField);
+            warn("PubMed " + fieldName + ": " + pmField);
+            return false;
         }
+        return true;
     }
 
 }

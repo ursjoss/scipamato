@@ -10,7 +10,6 @@ import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
@@ -58,6 +57,14 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     private ResourceLink<Void> summaryLink;
     private String pubmedXml;
 
+    protected TextArea<String> authors;
+    protected TextField<String> firstAuthor;
+    protected TextArea<Object> title;
+    protected TextField<Object> location;
+    protected TextField<Object> publicationYear;
+    protected TextField<Object> doi;
+    protected TextArea<String> originalAbstract;
+
     private Form<T> form;
 
     public PaperPanel(String id) {
@@ -89,7 +96,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         queueHeaderFields();
         queueTabPanel("tabs");
 
-        queueXmlPasteModalPanelAndLink("xmlPasteModal", "showXmlPasteModalLink");
+        queuePubmedRetrievalLink("pubmedRetrieval");
     }
 
     protected abstract void onFormSubmit();
@@ -104,12 +111,16 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
     private void queueHeaderFields() {
         queueAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
-        queueFieldAndLabel(new TextArea<>(Paper.TITLE), new PropertyValidator<String>());
-        queueFieldAndLabel(new TextField<>(Paper.LOCATION), new PropertyValidator<String>());
+        title = new TextArea<>(Paper.TITLE);
+        queueFieldAndLabel(title, new PropertyValidator<String>());
+        location = new TextField<>(Paper.LOCATION);
+        queueFieldAndLabel(location, new PropertyValidator<String>());
 
-        queueFieldAndLabel(new TextField<>(Paper.PUBL_YEAR), new PropertyValidator<Integer>());
+        publicationYear = new TextField<>(Paper.PUBL_YEAR);
+        queueFieldAndLabel(publicationYear, new PropertyValidator<Integer>());
         queueFieldAndLabel(new TextField<>(Paper.PMID));
-        queueFieldAndLabel(new TextField<>(Paper.DOI), new PropertyValidator<String>());
+        doi = new TextField<>(Paper.DOI);
+        queueFieldAndLabel(doi, new PropertyValidator<String>());
 
         TextField<Integer> id = new TextField<>(Paper.ID);
         id.setEnabled(isSearchMode());
@@ -192,7 +203,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
      * or in the override checkbox can have an effect on the firstAuthor field (enabled, content) 
      */
     private void queueAuthorComplex(String authorsId, String firstAuthorId, String firstAuthorOverriddenId) {
-        TextArea<String> authors = new TextArea<>(authorsId);
+        authors = new TextArea<>(authorsId);
         authors.setEscapeModelStrings(false);
         queueFieldAndLabel(authors, new PropertyValidator<String>());
 
@@ -201,7 +212,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         firstAuthorOverridden.getConfig().withThreeState(isSearchMode()).withUseNative(true);
         queueCheckBoxAndLabel(firstAuthorOverridden);
 
-        TextField<String> firstAuthor = makeFirstAuthor(firstAuthorId, firstAuthorOverridden);
+        firstAuthor = makeFirstAuthor(firstAuthorId, firstAuthorOverridden);
         firstAuthor.setOutputMarkupId(true);
         queueFieldAndLabel(firstAuthor);
 
@@ -262,8 +273,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             super(id, model);
         }
 
-        void queueTo(String id) {
-            queueTo(id, false, Optional.empty());
+        TextArea<String> queueTo(String id) {
+            return queueTo(id, false, Optional.empty());
         }
 
         void queueTo(String id, PropertyValidator<?> pv) {
@@ -274,7 +285,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             queueTo(id, true, Optional.empty());
         }
 
-        void queueTo(String id, boolean newField, Optional<PropertyValidator<?>> pv) {
+        TextArea<String> queueTo(String id, boolean newField, Optional<PropertyValidator<?>> pv) {
             TextArea<String> field = new TextArea<>(id);
             field.setOutputMarkupId(true);
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
@@ -287,6 +298,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 field.add(pv.get());
             }
             queue(field);
+            return field;
         }
     }
 
@@ -442,7 +454,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             Form<T> tab4Form = new Form<>("tab4Form");
             queue(tab4Form);
 
-            queueTo(Paper.ORIGINAL_ABSTRACT);
+            originalAbstract = queueTo(Paper.ORIGINAL_ABSTRACT);
         }
     }
 
@@ -480,40 +492,13 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         }
     }
 
-    private void queueXmlPasteModalPanelAndLink(String modalId, String linkId) {
-        final ModalWindow xmlPasteModal = new ModalWindow(modalId);
-        XmlPasteModalPanel xmlPastePanel = new XmlPasteModalPanel(xmlPasteModal.getContentId());
-        xmlPasteModal.setContent(xmlPastePanel);
-        xmlPasteModal.setTitle(new StringResourceModel("xmlPasteModal.title", this, null).getString());
-        xmlPasteModal.setResizable(true);
-        xmlPasteModal.setAutoSize(true);
-        xmlPasteModal.setCookieName("xmlPasteModal-1");
-        xmlPasteModal.setCloseButtonCallback(new ModalWindow.CloseButtonCallback() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public boolean onCloseButtonClicked(AjaxRequestTarget target) {
-                return true;
-            }
-        });
-
-        xmlPasteModal.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onClose(AjaxRequestTarget target) {
-                onXmlPasteModalPanelClose(xmlPastePanel, target);
-            }
-        });
-
-        queue(xmlPasteModal);
-
-        BootstrapAjaxLink<Void> showXmlPasteModal = new BootstrapAjaxLink<Void>(linkId, Buttons.Type.Primary) {
+    private void queuePubmedRetrievalLink(String linkId) {
+        BootstrapAjaxLink<Void> pubmedRetrieval = new BootstrapAjaxLink<Void>(linkId, Buttons.Type.Primary) {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onClick(AjaxRequestTarget target) {
-                xmlPasteModal.show(target);
+                getPubmedArticleAndCompare(target);
             }
 
             @Override
@@ -522,16 +507,14 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 setVisible(isEditMode());
             }
         };
-        showXmlPasteModal.setOutputMarkupPlaceholderTag(true);
-        showXmlPasteModal.setLabel(new StringResourceModel("xmlPasteModalLink.label", this, null));
-        showXmlPasteModal.add(new AttributeModifier("title", new StringResourceModel("xmlPasteModalLink.title", this, null).getString()));
-        queue(showXmlPasteModal);
+        pubmedRetrieval.setOutputMarkupPlaceholderTag(true);
+        pubmedRetrieval.setLabel(new StringResourceModel("pubmedRetrieval.label", this, null));
+        pubmedRetrieval.add(new AttributeModifier("title", new StringResourceModel("pubmedRetrieval.title", this, null).getString()));
+        queue(pubmedRetrieval);
     }
 
-    /**
-     * Override to implement some behavior executed when closing the XmlPasteModal
-     */
-    protected void onXmlPasteModalPanelClose(XmlPasteModalPanel xmlPastePanel, AjaxRequestTarget target) {
+    /** override to do something with the pasted content */
+    protected void getPubmedArticleAndCompare(AjaxRequestTarget target) {
     }
 
 }

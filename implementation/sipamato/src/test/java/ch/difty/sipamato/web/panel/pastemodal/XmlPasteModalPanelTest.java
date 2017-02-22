@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.panel.paper;
+package ch.difty.sipamato.web.panel.pastemodal;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;

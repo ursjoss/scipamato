@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -52,7 +51,7 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
     private final List<Code> codesOfClass8 = new ArrayList<>();
 
     @Override
-    protected void setUpHook() {
+    protected final void setUpHook() {
         codeClasses.addAll(Arrays.asList(newCC(1), newCC(2), newCC(3), newCC(4), newCC(5), newCC(6), newCC(7), newCC(8)));
         when(codeClassServiceMock.find(LOCALE)).thenReturn(codeClasses);
 
@@ -74,11 +73,21 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
         when(codeServiceMock.findCodesOfClass(CodeClassId.CC6, LOCALE)).thenReturn(codesOfClass6);
         when(codeServiceMock.findCodesOfClass(CodeClassId.CC7, LOCALE)).thenReturn(codesOfClass7);
         when(codeServiceMock.findCodesOfClass(CodeClassId.CC8, LOCALE)).thenReturn(codesOfClass8);
+
+        setUpLocalHook();
+    }
+
+    protected void setUpLocalHook() {
     }
 
     @After
-    public void tearDown() {
+    public final void tearDown() {
         verifyNoMoreInteractions(codeClassServiceMock, codeServiceMock);
+
+        tearDownLocalHook();
+    }
+
+    protected void tearDownLocalHook() {
     }
 
     private CodeClass newCC(int id) {
@@ -126,10 +135,7 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
     }
 
     protected void assertCommonComponents(String id) {
-        String b = id + ":xmlPasteModal";
-        getTester().assertComponent(b, ModalWindow.class);
-
-        b = id + ":form";
+        String b = id + ":form";
         getTester().assertComponent(b, Form.class);
 
         assertTextAreaWithLabel(b + ":authors", "a", "Authors");
