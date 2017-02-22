@@ -35,6 +35,7 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
 
     private static final String XML_2539026 = "xml/pubmed_result_25395026.xml";
     private static final String XML_27214671 = "xml/pubmed_result_27214671.xml";
+    private static final String XML_27224452 = "xml/pubmed_result_27224452.xml";
     private static final String XML_27258721 = "xml/pubmed_result_27258721.xml";
 
     @Test
@@ -59,7 +60,7 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
     }
 
     @Test
-    public void feedIntoSipamatoArticle_27214671() throws XmlMappingException, IOException {
+    public void feedIntoSipamatoArticle_27214671_yearFromMedDate() throws XmlMappingException, IOException {
         List<PubmedArticleFacade> articles = getPubmedArticles(XML_27214671);
         assertThat(articles).hasSize(1);
         PubmedArticleFacade sa = articles.get(0);
@@ -73,6 +74,25 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
         assertThat(sa.getDoi()).isEqualTo("10.1097/FCH.0000000000000112");
         assertThat(sa.getOriginalAbstract()).startsWith("This article examines the effects of children's subjective health status and exposure to residential environmental toxins");
         assertThat(sa.getOriginalAbstract()).endsWith("there is an independent effect of air pollution on children's academic achievement that cannot be explained by poor health alone.");
+    }
+
+    @Test
+    public void feedIntoSipamatoArticle_27224452_authorWithCollectiveName() throws XmlMappingException, IOException {
+        List<PubmedArticleFacade> articles = getPubmedArticles(XML_27224452);
+        assertThat(articles).hasSize(1);
+        PubmedArticleFacade sa = articles.get(0);
+
+        assertThat(sa.getPmId()).isEqualTo("27224452");
+        assertThat(sa.getAuthors())
+                .isEqualTo("Lanzinger S, Schneider A, Breitner S, Stafoggia M, Erzen I, Dostal M, Pastorkova A, Bastian S, Cyrys J, Zscheppang A, Kolodnitska T, Peters A, UFIREG study group.");
+        assertThat(sa.getFirstAuthor()).isEqualTo("Lanzinger");
+        assertThat(sa.getPublicationYear()).isEqualTo("2016");
+        assertThat(sa.getLocation()).isEqualTo("Am J Respir Crit Care Med. 2016; 194 (10): 1233-1241.");
+        assertThat(sa.getTitle()).isEqualTo("Ultrafine and Fine Particles and Hospital Admissions in Central Europe. Results from the UFIREG Study.");
+        assertThat(sa.getDoi()).isEqualTo("10.1164/rccm.201510-2042OC");
+        assertThat(sa.getOriginalAbstract()).startsWith(
+                "RATIONALE: Evidence of short-term effects of ultrafine particles (UFP) on health is still inconsistent and few multicenter studies have been conducted so far especially in Europe.");
+        assertThat(sa.getOriginalAbstract()).endsWith("harmonized UFP measurements to draw definite conclusions on health effects of UFP.");
     }
 
     @Test

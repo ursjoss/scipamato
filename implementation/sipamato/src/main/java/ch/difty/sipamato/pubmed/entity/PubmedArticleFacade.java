@@ -58,7 +58,7 @@ public abstract class PubmedArticleFacade {
         for (final Author author : authorList.getAuthor()) {
             final StringBuilder asb = new StringBuilder();
             for (final Object o : author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()) {
-                if (o instanceof ForeName || o instanceof CollectiveName)
+                if (o instanceof ForeName)
                     continue;
                 if (asb.length() > 0)
                     asb.append(" ");
@@ -68,6 +68,8 @@ public abstract class PubmedArticleFacade {
                     asb.append(((Initials) o).getvalue());
                 else if (o instanceof Suffix)
                     asb.append(((Suffix) o).getvalue());
+                else if (o instanceof CollectiveName)
+                    asb.append(((CollectiveName) o).getvalue());
             }
             names.add(asb.toString());
         }
