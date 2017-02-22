@@ -9,6 +9,7 @@ import ch.difty.sipamato.pubmed.ELocationID;
 import ch.difty.sipamato.pubmed.Journal;
 import ch.difty.sipamato.pubmed.JournalIssue;
 import ch.difty.sipamato.pubmed.MedlineCitation;
+import ch.difty.sipamato.pubmed.MedlineDate;
 import ch.difty.sipamato.pubmed.MedlineJournalInfo;
 import ch.difty.sipamato.pubmed.MedlinePgn;
 import ch.difty.sipamato.pubmed.Pagination;
@@ -42,10 +43,15 @@ public class SipamatoPubmedArticle extends PubmedArticleFacade {
         setOriginalAbstract(getAbstractFrom(article.getAbstract()));
     }
 
+    /**
+     * Get the year from {@link Year} - otherwise from {@link MedlineDate}
+     */
     private String getPublicationYearFrom(final Journal journal) {
-        JournalIssue journalIssue = AssertAs.notNull(journal.getJournalIssue(), "pubmedArticle.medlineCitation.article.journal.journalIssue");
-        PubDate pubDate = AssertAs.notNull(journalIssue.getPubDate(), "pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate");
-        return pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate().stream().filter(o -> o instanceof Year).map(o -> (Year) o).map(Year::getvalue).findFirst().orElse(null);
+        final JournalIssue journalIssue = AssertAs.notNull(journal.getJournalIssue(), "pubmedArticle.medlineCitation.article.journal.journalIssue");
+        final PubDate pubDate = AssertAs.notNull(journalIssue.getPubDate(), "pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate");
+        final List<Object> datishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
+        return datishObjects.stream().filter(o -> o instanceof Year).map(o -> (Year) o).map(Year::getvalue).findFirst().orElse(
+                datishObjects.stream().filter(o -> o instanceof MedlineDate).map(o -> (MedlineDate) o).map(MedlineDate::getvalue).map(mld -> mld.substring(0, 4)).findFirst().orElse("0"));
     }
 
     private String makeLocationFrom(final MedlineJournalInfo medlineJournalInfo, final JournalIssue journalIssue, final List<Object> paginationElongation) {

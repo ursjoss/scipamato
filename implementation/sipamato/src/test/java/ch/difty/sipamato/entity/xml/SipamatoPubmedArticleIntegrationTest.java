@@ -34,6 +34,7 @@ import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
 public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest {
 
     private static final String XML_2539026 = "xml/pubmed_result_25395026.xml";
+    private static final String XML_27214671 = "xml/pubmed_result_27214671.xml";
     private static final String XML_27258721 = "xml/pubmed_result_27258721.xml";
 
     @Test
@@ -45,7 +46,7 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
         assertArticle239026(sa);
     }
 
-    public static  void assertArticle239026(PubmedArticleFacade sa) {
+    public static void assertArticle239026(PubmedArticleFacade sa) {
         assertThat(sa.getPmId()).isEqualTo("25395026");
         assertThat(sa.getAuthors()).isEqualTo("Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.");
         assertThat(sa.getFirstAuthor()).isEqualTo("Turner");
@@ -55,6 +56,23 @@ public class SipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest 
         assertThat(sa.getDoi()).isEqualTo("10.1093/aje/kwu275");
         assertThat(sa.getOriginalAbstract()).startsWith("The International Agency for Research on Cancer recently classified outdoor air pollution");
         assertThat(sa.getOriginalAbstract()).endsWith("based on reducing exposure to either risk factor alone.");
+    }
+
+    @Test
+    public void feedIntoSipamatoArticle_27214671() throws XmlMappingException, IOException {
+        List<PubmedArticleFacade> articles = getPubmedArticles(XML_27214671);
+        assertThat(articles).hasSize(1);
+        PubmedArticleFacade sa = articles.get(0);
+
+        assertThat(sa.getPmId()).isEqualTo("27214671");
+        assertThat(sa.getAuthors()).isEqualTo("Clark-Reyna SE, Grineski SE, Collins TW.");
+        assertThat(sa.getFirstAuthor()).isEqualTo("Clark-Reyna");
+        assertThat(sa.getPublicationYear()).isEqualTo("2016");
+        assertThat(sa.getLocation()).isEqualTo("Fam Community Health. 2016; 39 (3): 160-168.");
+        assertThat(sa.getTitle()).isEqualTo("Health Status and Residential Exposure to Air Toxics: What Are the Effects on Children's Academic Achievement?");
+        assertThat(sa.getDoi()).isEqualTo("10.1097/FCH.0000000000000112");
+        assertThat(sa.getOriginalAbstract()).startsWith("This article examines the effects of children's subjective health status and exposure to residential environmental toxins");
+        assertThat(sa.getOriginalAbstract()).endsWith("there is an independent effect of air pollution on children's academic achievement that cannot be explained by poor health alone.");
     }
 
     @Test

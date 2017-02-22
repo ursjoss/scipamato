@@ -11,10 +11,13 @@ import ch.difty.sipamato.pubmed.ArticleTitle;
 import ch.difty.sipamato.pubmed.Journal;
 import ch.difty.sipamato.pubmed.JournalIssue;
 import ch.difty.sipamato.pubmed.MedlineCitation;
+import ch.difty.sipamato.pubmed.MedlineDate;
 import ch.difty.sipamato.pubmed.MedlineJournalInfo;
+import ch.difty.sipamato.pubmed.Month;
 import ch.difty.sipamato.pubmed.PMID;
 import ch.difty.sipamato.pubmed.PubDate;
 import ch.difty.sipamato.pubmed.PubmedArticle;
+import ch.difty.sipamato.pubmed.Year;
 
 public class SipamatoPubmedArticleTest {
 
@@ -128,6 +131,35 @@ public class SipamatoPubmedArticleTest {
     @Test
     public void validConstruction() {
         assertThat(new SipamatoPubmedArticle(pubmedArticle)).isNotNull();
+    }
+
+    @Test
+    public void extractingYearFromNeitherYearObjectNorMedlineDate_returnsYear0() {
+        assertThat(pubmedArticle.getMedlineCitation().getArticle().getJournal().getJournalIssue().getPubDate().getYearOrMonthOrDayOrSeasonOrMedlineDate()).isEmpty();
+        Month month = new Month();
+        month.setvalue("2016");
+        pubmedArticle.getMedlineCitation().getArticle().getJournal().getJournalIssue().getPubDate().getYearOrMonthOrDayOrSeasonOrMedlineDate().add(month);
+        SipamatoPubmedArticle spa = new SipamatoPubmedArticle(pubmedArticle);
+        assertThat(spa.getPublicationYear()).isEqualTo("0");
+    }
+
+    @Test
+    public void extractYearFromYearObject() {
+        Year year = new Year();
+        year.setvalue("2016");
+        pubmedArticle.getMedlineCitation().getArticle().getJournal().getJournalIssue().getPubDate().getYearOrMonthOrDayOrSeasonOrMedlineDate().add(year);
+        SipamatoPubmedArticle spa = new SipamatoPubmedArticle(pubmedArticle);
+        assertThat(spa.getPublicationYear()).isEqualTo("2016");
+    }
+
+    @Test
+    public void extractYearFromMedlineDate() {
+        MedlineDate md = new MedlineDate();
+        md.setvalue("2016 Nov-Dec");
+        pubmedArticle.getMedlineCitation().getArticle().getJournal().getJournalIssue().getPubDate().getYearOrMonthOrDayOrSeasonOrMedlineDate().add(md);
+
+        SipamatoPubmedArticle spa = new SipamatoPubmedArticle(pubmedArticle);
+        assertThat(spa.getPublicationYear()).isEqualTo("2016");
     }
 
 }
