@@ -382,7 +382,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         when(pubmedArticleMock.getOriginalAbstract()).thenReturn("oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertInfoMessages("Authors: a", "First Author: fa", "Title: t", "Pub. Year: 2017", "Location: l", "DOI: doi", "Original Abstract: oa");
+        getTester().assertInfoMessages("Authors: a", "First Author: fa", "Title: t", "Pub. Year: 2017", "Location: l", "DOI: doi", "Original Abstract: oa",
+                "Above fields have changed. Click save if you want to keep the changes.");
 
         verify(pubmedArticleServiceMock).getPubmedArticleWithPmid(PMID);
         verify(pubmedArticleMock).getPmId();
@@ -413,7 +414,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         when(pubmedArticleMock.getOriginalAbstract()).thenReturn("oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertInfoMessages("Authors: a", "First Author: fa", "Title: t", "Location: l", "DOI: doi", "Original Abstract: oa");
+        getTester().assertInfoMessages("Authors: a", "First Author: fa", "Title: t", "Location: l", "DOI: doi", "Original Abstract: oa",
+                "Above fields have changed. Click save if you want to keep the changes.");
         getTester().assertErrorMessages("Unable to parse the year 'invalid'");
 
         verify(pubmedArticleServiceMock).getPubmedArticleWithPmid(PMID);

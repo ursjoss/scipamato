@@ -192,12 +192,13 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      */
     private void setFieldsIfBlankCompareOtherwise(Paper p, PubmedArticleFacade a, AjaxRequestTarget target) {
         boolean allMatching = true;
+        boolean dirty = false;
 
         String fieldName = getLocalizedFieldName(Paper.AUTHORS);
         String value = a.getAuthors();
         if (p.getAuthors() == null) {
             p.setAuthors(value);
-            allMatching &= informChangedValue(fieldName, value, target, authors, firstAuthor);
+            dirty |= informChangedValue(fieldName, value, target, authors, firstAuthor);
         } else {
             allMatching &= compareFields(value, p.getAuthors(), fieldName);
         }
@@ -206,7 +207,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         value = a.getFirstAuthor();
         if (p.getFirstAuthor() == null) {
             p.setFirstAuthor(value);
-            allMatching &= informChangedValue(fieldName, value, target, firstAuthor);
+            dirty |= informChangedValue(fieldName, value, target, firstAuthor);
         } else {
             allMatching &= compareFields(value, p.getFirstAuthor(), fieldName);
         }
@@ -215,7 +216,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         value = a.getTitle();
         if (p.getTitle() == null) {
             p.setTitle(value);
-            allMatching &= informChangedValue(fieldName, value, target, title);
+            dirty |= informChangedValue(fieldName, value, target, title);
         } else {
             allMatching &= compareFields(value, p.getTitle(), fieldName);
         }
@@ -225,7 +226,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         if (p.getPublicationYear() == null) {
             try {
                 p.setPublicationYear(Integer.parseInt(value));
-                allMatching &= informChangedValue(fieldName, value, target, publicationYear);
+                dirty |= informChangedValue(fieldName, value, target, publicationYear);
             } catch (Exception ex) {
                 error(new StringResourceModel("year.parse.error", this, null).setParameters(value).getString());
             }
@@ -237,7 +238,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         value = a.getLocation();
         if (p.getLocation() == null) {
             p.setLocation(value);
-            allMatching &= informChangedValue(fieldName, value, target, location);
+            dirty |= informChangedValue(fieldName, value, target, location);
         } else {
             allMatching &= compareFields(value, p.getLocation(), fieldName);
         }
@@ -246,7 +247,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         value = a.getDoi();
         if (p.getDoi() == null) {
             p.setDoi(value);
-            allMatching &= informChangedValue(fieldName, value, target, doi);
+            dirty |= informChangedValue(fieldName, value, target, doi);
         } else {
             allMatching &= compareFields(value, p.getDoi(), fieldName);
         }
@@ -256,10 +257,12 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         // not comparing abstract on purpose
         if (p.getOriginalAbstract() == null) {
             p.setOriginalAbstract(value);
-            allMatching &= informChangedValue(fieldName, value, target, originalAbstract);
+            dirty |= informChangedValue(fieldName, value, target, originalAbstract);
         }
 
-        if (allMatching) {
+        if (dirty) {
+            info(new StringResourceModel("pubmedRetrieval.dirty.info", this, null).getString());
+        } else if (allMatching) {
             info(new StringResourceModel("pubmedRetrieval.no-difference.info", this, null).getString());
         }
     }
@@ -273,7 +276,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         if (fcs.length > 0) {
             target.add(fcs);
         }
-        return false;
+        return true;
     }
 
     /**
