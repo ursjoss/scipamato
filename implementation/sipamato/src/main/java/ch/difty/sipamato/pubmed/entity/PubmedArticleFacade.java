@@ -80,7 +80,7 @@ public abstract class PubmedArticleFacade {
         return authorList.getAuthor()
                 .stream()
                 .map(Author::getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName)
-                .flatMap(n -> n.stream())
+                .flatMap(List<Object>::stream)
                 .filter(o -> o instanceof LastName)
                 .map(lm -> ((LastName) lm).getvalue())
                 .limit(1)
@@ -98,7 +98,7 @@ public abstract class PubmedArticleFacade {
     protected String getAbstractFrom(final Abstract abstr) {
         if (abstr == null)
             return null;
-        return abstr.getAbstractText().stream().map(a -> concatenateAbstract(a)).collect(Collectors.joining("\n"));
+        return abstr.getAbstractText().stream().map(this::concatenateAbstract).collect(Collectors.joining("\n"));
     }
 
     private String concatenateAbstract(AbstractText a) {

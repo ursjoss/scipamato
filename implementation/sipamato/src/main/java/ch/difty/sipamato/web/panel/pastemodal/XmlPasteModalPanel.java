@@ -24,7 +24,7 @@ public class XmlPasteModalPanel extends Panel {
     protected void onInitialize() {
         super.onInitialize();
 
-        Form<Void> form = new Form<Void>("form");
+        Form<Void> form = new Form<>("form");
         queue(form);
         queue(new TextArea<>("content", new PropertyModel<String>(this, "pastedContent")));
 

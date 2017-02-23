@@ -50,7 +50,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         final ServiceResult sr = new DefaultServiceResult();
         final List<Integer> pmIds = articles.stream().map(PubmedArticleFacade::getPmId).filter(Objects::nonNull).map(Integer::valueOf).collect(Collectors.toList());
         final List<String> existingPmIds = getRepository().findByPmIds(pmIds).stream().map(Paper::getPmId).map(String::valueOf).collect(Collectors.toList());
-        final List<Paper> newPapers = articles.stream().filter(a -> a.getPmId() != null && !existingPmIds.contains(a.getPmId())).map(a -> savePubmedArticle(a)).collect(Collectors.toList());
+        final List<Paper> newPapers = articles.stream().filter(a -> a.getPmId() != null && !existingPmIds.contains(a.getPmId())).map(this::savePubmedArticle).collect(Collectors.toList());
         fillServiceResultFrom(existingPmIds, newPapers, sr);
         return sr;
     }
@@ -69,8 +69,8 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     }
 
     private void fillServiceResultFrom(final List<String> existingPmIds, final List<Paper> newPapers, final ServiceResult sr) {
-        existingPmIds.stream().map(pmId -> "PMID " + pmId).forEach(msg -> sr.addWarnMessage(msg));
-        newPapers.stream().map(p -> "PMID " + p.getPmId() + " (id " + p.getId() + ")").forEach(msg -> sr.addInfoMessage(msg));
+        existingPmIds.stream().map(pmId -> "PMID " + pmId).forEach(sr::addWarnMessage);
+        newPapers.stream().map(p -> "PMID " + p.getPmId() + " (id " + p.getId() + ")").forEach(sr::addInfoMessage);
     }
 
 }
