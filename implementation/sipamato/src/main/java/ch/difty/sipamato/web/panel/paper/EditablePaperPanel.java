@@ -165,6 +165,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     protected void getPubmedArticleAndCompare(AjaxRequestTarget target) {
         Paper paper = getModelObject();
         Integer pmId = paper.getPmId();
