@@ -261,6 +261,10 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             dirty |= informChangedValue(fieldName, value, target, originalAbstract);
         }
 
+        provideUserInfo(allMatching, dirty);
+    }
+
+    private void provideUserInfo(boolean allMatching, boolean dirty) {
         if (dirty) {
             info(new StringResourceModel("pubmedRetrieval.dirty.info", this, null).getString());
         } else if (allMatching) {
