@@ -1,0 +1,381 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2017//EN" "https://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_170101.dtd">
+<PubmedArticleSet>
+
+<PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+        <PMID Version="1">26607712</PMID>
+        <DateCreated>
+            <Year>2015</Year>
+            <Month>11</Month>
+            <Day>26</Day>
+        </DateCreated>
+        <DateCompleted>
+            <Year>2016</Year>
+            <Month>09</Month>
+            <Day>13</Day>
+        </DateCompleted>
+        <DateRevised>
+            <Year>2016</Year>
+            <Month>10</Month>
+            <Day>19</Day>
+        </DateRevised>
+        <Article PubModel="Electronic">
+            <Journal>
+                <ISSN IssnType="Electronic">2047-9980</ISSN>
+                <JournalIssue CitedMedium="Internet">
+                    <Volume>4</Volume>
+                    <Issue>12</Issue>
+                    <PubDate>
+                        <Year>2015</Year>
+                        <Month>Nov</Month>
+                        <Day>25</Day>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Journal of the American Heart Association</Title>
+                <ISOAbbreviation>J Am Heart Assoc</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>Effect Modification of Long-Term Air Pollution Exposures and the Risk of Incident Cardiovascular Disease in US Women.</ArticleTitle>
+            <ELocationID EIdType="doi" ValidYN="Y">10.1161/JAHA.115.002301</ELocationID>
+            <ELocationID EIdType="pii" ValidYN="Y">e002301</ELocationID>
+            <Abstract>
+                <AbstractText Label="BACKGROUND" NlmCategory="BACKGROUND">Ambient air pollution exposures have been frequently linked to cardiovascular disease (CVD) morbidity and mortality. However, less is known about the populations most susceptible to these adverse effects.</AbstractText>
+                <AbstractText Label="METHODS AND RESULTS" NlmCategory="RESULTS">We assessed the associations of long-term particulate matter (PM) exposures with incident CVD in a nationwide cohort of 114 537 women in the Nurses' Health Study, and performed analyses to identify subpopulations at the greatest risk. Residential address level time-varying monthly exposures to PM2.5, PM10, and PM2.5 to 10 microns in diameter were estimated from spatio-temporal prediction models. In multivariable models, increases in all size fractions of PM were associated with small, but not statistically significant, increased risks of total CVD, coronary heart disease, and stroke. PM-associated CVD risks were statistically significantly higher among women with diabetes as compared to those without (P-for-interaction &lt;0.0001 for PM10 and PM2.5 and 0.007 for PM2.5 to 10). For each 10 μg/m(3) increase in 12-month average PM2.5, PM2.5 to 10, and PM10, the multivariable adjusted hazard ratios were 1.44 (95% CI: 1.23 to 1.68), 1.17 (95% CI: 1.05 to 1.30), and 1.19 (95% CI: 1.10 to 1.28) among women with diabetes. There were also suggestions of higher risks among older (≥70 years) women, the obese, and those living in the Northeast and South. Smoking status and family history did not consistently modify the association between PM and CVD, and risks were most elevated with exposures in the previous 12 months.</AbstractText>
+                <AbstractText Label="CONCLUSIONS" NlmCategory="CONCLUSIONS">In this nationwide cohort, women with diabetes were identified as the subpopulation most sensitive to the adverse cardiovascular health effects of PM.</AbstractText>
+                <CopyrightInformation>© 2015 The Authors. Published on behalf of the American Heart Association, Inc., by Wiley Blackwell.</CopyrightInformation>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Hart</LastName>
+                    <ForeName>Jaime E</ForeName>
+                    <Initials>JE</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Channing Division of Network Medicine, Department of Medicine, Brigham and Women's Hospital and Harvard Medical School, Boston, MA (J.E.H., F.L.) Exposure, Epidemiology, and Risk Program, Department of Environmental Health, Harvard T.H. Chan School of Public Health, Boston, MA (J.E.H., F.L.).</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Puett</LastName>
+                    <ForeName>Robin C</ForeName>
+                    <Initials>RC</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Maryland Institute for Applied Environmental Health, University of Maryland School of Public Health College Park, MD (R.C.P.).</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Rexrode</LastName>
+                    <ForeName>Kathryn M</ForeName>
+                    <Initials>KM</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Division of Preventive Medicine, Department of Medicine, Brigham and Women's Hospital and Harvard Medical School, Boston, MA (K.M.R., C.M.A.).</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Albert</LastName>
+                    <ForeName>Christine M</ForeName>
+                    <Initials>CM</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Division of Preventive Medicine, Department of Medicine, Brigham and Women's Hospital and Harvard Medical School, Boston, MA (K.M.R., C.M.A.) Cardiovascular Division, Department of Medicine, Brigham and Women's Hospital and Harvard Medical School, Boston, MA (C.M.A.).</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Laden</LastName>
+                    <ForeName>Francine</ForeName>
+                    <Initials>F</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Channing Division of Network Medicine, Department of Medicine, Brigham and Women's Hospital and Harvard Medical School, Boston, MA (J.E.H., F.L.) Exposure, Epidemiology, and Risk Program, Department of Environmental Health, Harvard T.H. Chan School of Public Health, Boston, MA (J.E.H., F.L.) Exposure, Epidemiology, and Risk Program, Department of Epidemiology, Harvard T.H. Chan School of Public Health, Boston, MA (F.L.).</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <GrantList CompleteYN="Y">
+                <Grant>
+                    <GrantID>R01 ES017017</GrantID>
+                    <Acronym>ES</Acronym>
+                    <Agency>NIEHS NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>R01 HL034594</GrantID>
+                    <Acronym>HL</Acronym>
+                    <Agency>NHLBI NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>R01 HL088521</GrantID>
+                    <Acronym>HL</Acronym>
+                    <Agency>NHLBI NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+                <Grant>
+                    <GrantID>UM1 CA186107</GrantID>
+                    <Acronym>CA</Acronym>
+                    <Agency>NCI NIH HHS</Agency>
+                    <Country>United States</Country>
+                </Grant>
+            </GrantList>
+            <PublicationTypeList>
+                <PublicationType UI="D016428">Journal Article</PublicationType>
+                <PublicationType UI="D052061">Research Support, N.I.H., Extramural</PublicationType>
+                <PublicationType UI="D013485">Research Support, Non-U.S. Gov't</PublicationType>
+            </PublicationTypeList>
+            <ArticleDate DateType="Electronic">
+                <Year>2015</Year>
+                <Month>11</Month>
+                <Day>25</Day>
+            </ArticleDate>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>England</Country>
+            <MedlineTA>J Am Heart Assoc</MedlineTA>
+            <NlmUniqueID>101580524</NlmUniqueID>
+            <ISSNLinking>2047-9980</ISSNLinking>
+        </MedlineJournalInfo>
+        <ChemicalList>
+            <Chemical>
+                <RegistryNumber>0</RegistryNumber>
+                <NameOfSubstance UI="D052638">Particulate Matter</NameOfSubstance>
+            </Chemical>
+        </ChemicalList>
+        <CitationSubset>IM</CitationSubset>
+        <CommentsCorrectionsList>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Am J Respir Crit Care Med. 2001 Sep 1;164(5):831-3</RefSource>
+                <PMID Version="1">11549541</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Am J Epidemiol. 2013 Sep 15;178(6):865-76</RefSource>
+                <PMID Version="1">23887042</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Epidemiology. 2003 Sep;14(5):528-35</RefSource>
+                <PMID Version="1">14501267</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Circulation. 2004 Jun 1;109(21):2655-71</RefSource>
+                <PMID Version="1">15173049</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>N Engl J Med. 2007 Feb 1;356(5):447-58</RefSource>
+                <PMID Version="1">17267905</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2008 Feb;116(2):196-202</RefSource>
+                <PMID Version="1">18288318</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Am J Epidemiol. 2008 Nov 15;168(10):1161-8</RefSource>
+                <PMID Version="1">18835862</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2009 Aug;117(8):1302-8</RefSource>
+                <PMID Version="1">19672412</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2009 Nov;117(11):1697-701</RefSource>
+                <PMID Version="1">20049120</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>BMJ. 2014;348:f7412</RefSource>
+                <PMID Version="1">24452269</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Lancet. 2014 Mar 1;383(9919):785-95</RefSource>
+                <PMID Version="1">24332274</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2014 Apr;122(4):397-403</RefSource>
+                <PMID Version="1">24518036</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Epidemiology. 2014 May;25(3):368-78</RefSource>
+                <PMID Version="1">24589872</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2014 Jun;122(6):609-15</RefSource>
+                <PMID Version="1">24633320</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Res. 2014 Jul;132:168-75</RefSource>
+                <PMID Version="1">24792413</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health. 2013;12(1):43</RefSource>
+                <PMID Version="1">23714370</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health. 2014;13:63</RefSource>
+                <PMID Version="1">25097007</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Circ Res. 2015 Jan 2;116(1):108-15</RefSource>
+                <PMID Version="1">25348167</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Stroke. 1981 Mar-Apr;12(2 Pt 2 Suppl 1):I13-44</RefSource>
+                <PMID Version="1">7222164</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Am J Epidemiol. 1986 May;123(5):894-900</RefSource>
+                <PMID Version="1">3962971</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Stat Med. 1989 May;8(5):551-61</RefSource>
+                <PMID Version="1">2657958</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 1996 May;104(5):492-9</RefSource>
+                <PMID Version="1">8743436</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 1997 Aug;105(8):826-34</RefSource>
+                <PMID Version="1">9347898</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>J Occup Environ Med. 2004 Nov;46(11):1115-22</RefSource>
+                <PMID Version="1">15534498</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Am J Epidemiol. 2006 May 1;163(9):849-59</RefSource>
+                <PMID Version="1">16554348</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>JAMA. 2002 Mar 6;287(9):1132-41</RefSource>
+                <PMID Version="1">11879110</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Circulation. 2010 Jun 1;121(21):2331-78</RefSource>
+                <PMID Version="1">20458016</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Am J Respir Crit Care Med. 2011 Jan 1;183(1):73-8</RefSource>
+                <PMID Version="1">20656944</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2011 Apr;119(4):501-7</RefSource>
+                <PMID Version="1">21081301</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2011 Aug;119(8):1130-5</RefSource>
+                <PMID Version="1">21454146</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Am J Respir Crit Care Med. 2011 Oct 1;184(7):828-35</RefSource>
+                <PMID Version="1">21700913</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>PLoS One. 2012;7(4):e34664</RefSource>
+                <PMID Version="1">22529923</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2012 May;120(5):708-14</RefSource>
+                <PMID Version="1">22313724</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Sci Total Environ. 2012 Jul 15;430:193-201</RefSource>
+                <PMID Version="1">22647242</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2012 Jul;120(7):965-70</RefSource>
+                <PMID Version="1">22456598</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2013 Mar;121(3):324-31</RefSource>
+                <PMID Version="1">23308401</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>J Air Waste Manag Assoc. 2006 Jun;56(6):709-42</RefSource>
+                <PMID Version="1">16805397</PMID>
+            </CommentsCorrections>
+        </CommentsCorrectionsList>
+        <MeshHeadingList>
+            <MeshHeading>
+                <DescriptorName UI="D000328" MajorTopicYN="N">Adult</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D000397" MajorTopicYN="N">Air Pollution</DescriptorName>
+                <QualifierName UI="Q000009" MajorTopicYN="Y">adverse effects</QualifierName>
+                <QualifierName UI="Q000032" MajorTopicYN="N">analysis</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D002318" MajorTopicYN="N">Cardiovascular Diseases</DescriptorName>
+                <QualifierName UI="Q000453" MajorTopicYN="N">epidemiology</QualifierName>
+                <QualifierName UI="Q000209" MajorTopicYN="Y">etiology</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D005260" MajorTopicYN="N">Female</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D006801" MajorTopicYN="N">Humans</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D015994" MajorTopicYN="N">Incidence</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D019570" MajorTopicYN="N">Inhalation Exposure</DescriptorName>
+                <QualifierName UI="Q000009" MajorTopicYN="Y">adverse effects</QualifierName>
+                <QualifierName UI="Q000032" MajorTopicYN="N">analysis</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D008875" MajorTopicYN="N">Middle Aged</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D052638" MajorTopicYN="N">Particulate Matter</DescriptorName>
+                <QualifierName UI="Q000009" MajorTopicYN="N">adverse effects</QualifierName>
+                <QualifierName UI="Q000032" MajorTopicYN="N">analysis</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D011446" MajorTopicYN="N">Prospective Studies</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D012307" MajorTopicYN="N">Risk Factors</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D014481" MajorTopicYN="N" Type="Geographic">United States</DescriptorName>
+                <QualifierName UI="Q000453" MajorTopicYN="N">epidemiology</QualifierName>
+            </MeshHeading>
+        </MeshHeadingList>
+        <OtherID Source="NLM">PMC4845261</OtherID>
+        <KeywordList Owner="NOTNLM">
+            <Keyword MajorTopicYN="N">air pollution</Keyword>
+            <Keyword MajorTopicYN="N">cardiovascular disease</Keyword>
+            <Keyword MajorTopicYN="N">effect modification</Keyword>
+            <Keyword MajorTopicYN="N">environment</Keyword>
+            <Keyword MajorTopicYN="N">myocardial infarction</Keyword>
+            <Keyword MajorTopicYN="N">stroke</Keyword>
+        </KeywordList>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>2015</Year>
+                <Month>11</Month>
+                <Day>27</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2015</Year>
+                <Month>11</Month>
+                <Day>27</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2016</Year>
+                <Month>9</Month>
+                <Day>14</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>epublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pubmed">26607712</ArticleId>
+            <ArticleId IdType="pii">JAHA.115.002301</ArticleId>
+            <ArticleId IdType="doi">10.1161/JAHA.115.002301</ArticleId>
+            <ArticleId IdType="pmc">PMC4845261</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+</PubmedArticleSet>

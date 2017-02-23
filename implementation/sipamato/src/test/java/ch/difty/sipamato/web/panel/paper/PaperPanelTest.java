@@ -51,7 +51,7 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
     private final List<Code> codesOfClass8 = new ArrayList<>();
 
     @Override
-    protected void setUpHook() {
+    protected final void setUpHook() {
         codeClasses.addAll(Arrays.asList(newCC(1), newCC(2), newCC(3), newCC(4), newCC(5), newCC(6), newCC(7), newCC(8)));
         when(codeClassServiceMock.find(LOCALE)).thenReturn(codeClasses);
 
@@ -73,11 +73,21 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
         when(codeServiceMock.findCodesOfClass(CodeClassId.CC6, LOCALE)).thenReturn(codesOfClass6);
         when(codeServiceMock.findCodesOfClass(CodeClassId.CC7, LOCALE)).thenReturn(codesOfClass7);
         when(codeServiceMock.findCodesOfClass(CodeClassId.CC8, LOCALE)).thenReturn(codesOfClass8);
+
+        setUpLocalHook();
+    }
+
+    protected void setUpLocalHook() {
     }
 
     @After
-    public void tearDown() {
+    public final void tearDown() {
         verifyNoMoreInteractions(codeClassServiceMock, codeServiceMock);
+
+        tearDownLocalHook();
+    }
+
+    protected void tearDownLocalHook() {
     }
 
     private CodeClass newCC(int id) {

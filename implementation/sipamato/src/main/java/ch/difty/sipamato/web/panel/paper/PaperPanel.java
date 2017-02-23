@@ -42,6 +42,7 @@ import ch.difty.sipamato.web.model.CodeClassModel;
 import ch.difty.sipamato.web.model.CodeModel;
 import ch.difty.sipamato.web.pages.Mode;
 import ch.difty.sipamato.web.panel.AbstractPanel;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
@@ -54,6 +55,15 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     private static final long serialVersionUID = 1L;
 
     private ResourceLink<Void> summaryLink;
+    private String pubmedXml;
+
+    protected TextArea<String> authors;
+    protected TextField<String> firstAuthor;
+    protected TextArea<Object> title;
+    protected TextField<Object> location;
+    protected TextField<Object> publicationYear;
+    protected TextField<Object> doi;
+    protected TextArea<String> originalAbstract;
 
     private Form<T> form;
 
@@ -85,9 +95,15 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
         queueHeaderFields();
         queueTabPanel("tabs");
+
+        queuePubmedRetrievalLink("pubmedRetrieval");
     }
 
     protected abstract void onFormSubmit();
+
+    protected String getPubmedXml() {
+        return pubmedXml;
+    }
 
     public Form<T> getForm() {
         return form;
@@ -95,12 +111,16 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
     private void queueHeaderFields() {
         queueAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
-        queueFieldAndLabel(new TextArea<>(Paper.TITLE), new PropertyValidator<String>());
-        queueFieldAndLabel(new TextField<>(Paper.LOCATION), new PropertyValidator<String>());
+        title = new TextArea<>(Paper.TITLE);
+        queueFieldAndLabel(title, new PropertyValidator<String>());
+        location = new TextField<>(Paper.LOCATION);
+        queueFieldAndLabel(location, new PropertyValidator<String>());
 
-        queueFieldAndLabel(new TextField<>(Paper.PUBL_YEAR), new PropertyValidator<Integer>());
+        publicationYear = new TextField<>(Paper.PUBL_YEAR);
+        queueFieldAndLabel(publicationYear, new PropertyValidator<Integer>());
         queueFieldAndLabel(new TextField<>(Paper.PMID));
-        queueFieldAndLabel(new TextField<>(Paper.DOI), new PropertyValidator<String>());
+        doi = new TextField<>(Paper.DOI);
+        queueFieldAndLabel(doi, new PropertyValidator<String>());
 
         TextField<Integer> id = new TextField<>(Paper.ID);
         id.setEnabled(isSearchMode());
@@ -183,7 +203,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
      * or in the override checkbox can have an effect on the firstAuthor field (enabled, content) 
      */
     private void queueAuthorComplex(String authorsId, String firstAuthorId, String firstAuthorOverriddenId) {
-        TextArea<String> authors = new TextArea<>(authorsId);
+        authors = new TextArea<>(authorsId);
         authors.setEscapeModelStrings(false);
         queueFieldAndLabel(authors, new PropertyValidator<String>());
 
@@ -192,7 +212,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         firstAuthorOverridden.getConfig().withThreeState(isSearchMode()).withUseNative(true);
         queueCheckBoxAndLabel(firstAuthorOverridden);
 
-        TextField<String> firstAuthor = makeFirstAuthor(firstAuthorId, firstAuthorOverridden);
+        firstAuthor = makeFirstAuthor(firstAuthorId, firstAuthorOverridden);
         firstAuthor.setOutputMarkupId(true);
         queueFieldAndLabel(firstAuthor);
 
@@ -253,8 +273,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             super(id, model);
         }
 
-        void queueTo(String id) {
-            queueTo(id, false, Optional.empty());
+        TextArea<String> queueTo(String id) {
+            return queueTo(id, false, Optional.empty());
         }
 
         void queueTo(String id, PropertyValidator<?> pv) {
@@ -265,7 +285,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             queueTo(id, true, Optional.empty());
         }
 
-        void queueTo(String id, boolean newField, Optional<PropertyValidator<?>> pv) {
+        TextArea<String> queueTo(String id, boolean newField, Optional<PropertyValidator<?>> pv) {
             TextArea<String> field = new TextArea<>(id);
             field.setOutputMarkupId(true);
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
@@ -278,6 +298,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 field.add(pv.get());
             }
             queue(field);
+            return field;
         }
     }
 
@@ -433,7 +454,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             Form<T> tab4Form = new Form<>("tab4Form");
             queue(tab4Form);
 
-            queueTo(Paper.ORIGINAL_ABSTRACT);
+            originalAbstract = queueTo(Paper.ORIGINAL_ABSTRACT);
         }
     }
 
@@ -469,6 +490,31 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 error(mainCode, key + ".mainCodeOfCodeclass1Required");
             }
         }
+    }
+
+    private void queuePubmedRetrievalLink(String linkId) {
+        BootstrapAjaxLink<Void> pubmedRetrieval = new BootstrapAjaxLink<Void>(linkId, Buttons.Type.Primary) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                getPubmedArticleAndCompare(target);
+            }
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setVisible(isEditMode());
+            }
+        };
+        pubmedRetrieval.setOutputMarkupPlaceholderTag(true);
+        pubmedRetrieval.setLabel(new StringResourceModel("pubmedRetrieval.label", this, null));
+        pubmedRetrieval.add(new AttributeModifier("title", new StringResourceModel("pubmedRetrieval.title", this, null).getString()));
+        queue(pubmedRetrieval);
+    }
+
+    /** override to do something with the pasted content */
+    protected void getPubmedArticleAndCompare(AjaxRequestTarget target) {
     }
 
 }

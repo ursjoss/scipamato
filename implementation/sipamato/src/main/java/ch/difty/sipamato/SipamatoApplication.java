@@ -4,10 +4,12 @@ import org.apache.wicket.markup.html.IPackageResourceGuard;
 import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
 
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication;
 
 @SpringBootApplication
+@EnableFeignClients
 public class SipamatoApplication extends WicketBootSecuredWebApplication {
 
     public static void main(String[] args) {
@@ -21,7 +23,7 @@ public class SipamatoApplication extends WicketBootSecuredWebApplication {
         registerJasperJrxmlFilesWithPackageResourceGuard();
     }
 
-    //Allow to access only to jrxml files placed in the “jasper” directory.
+    // Allow access to jrxml jasper report definition files
     private void registerJasperJrxmlFilesWithPackageResourceGuard() {
         final IPackageResourceGuard packageResourceGuard = getResourceSettings().getPackageResourceGuard();
         if (packageResourceGuard instanceof SecurePackageResourceGuard) {

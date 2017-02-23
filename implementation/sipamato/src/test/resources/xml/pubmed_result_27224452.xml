@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2017//EN" "https://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_170101.dtd">
+<PubmedArticleSet>
+
+<PubmedArticle>
+    <MedlineCitation Status="In-Data-Review" Owner="NLM">
+        <PMID Version="1">27224452</PMID>
+        <DateCreated>
+            <Year>2016</Year>
+            <Month>05</Month>
+            <Day>25</Day>
+        </DateCreated>
+        <DateRevised>
+            <Year>2016</Year>
+            <Month>11</Month>
+            <Day>15</Day>
+        </DateRevised>
+        <Article PubModel="Print">
+            <Journal>
+                <ISSN IssnType="Electronic">1535-4970</ISSN>
+                <JournalIssue CitedMedium="Internet">
+                    <Volume>194</Volume>
+                    <Issue>10</Issue>
+                    <PubDate>
+                        <Year>2016</Year>
+                        <Month>Nov</Month>
+                        <Day>15</Day>
+                    </PubDate>
+                </JournalIssue>
+                <Title>American journal of respiratory and critical care medicine</Title>
+                <ISOAbbreviation>Am. J. Respir. Crit. Care Med.</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>Ultrafine and Fine Particles and Hospital Admissions in Central Europe. Results from the UFIREG Study.</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>1233-1241</MedlinePgn>
+            </Pagination>
+            <Abstract>
+                <AbstractText Label="RATIONALE" NlmCategory="BACKGROUND">Evidence of short-term effects of ultrafine particles (UFP) on health is still inconsistent and few multicenter studies have been conducted so far especially in Europe.</AbstractText>
+                <AbstractText Label="OBJECTIVES" NlmCategory="OBJECTIVE">Within the UFIREG project, we investigated the short-term effects of UFP and fine particulate matter (particulate matter with an aerodynamic diameter less than 2.5 μm [PM2.5]) on daily cause-specific hospital admissions in five Central and Eastern European cities using harmonized protocols for measurements and analyses.</AbstractText>
+                <AbstractText Label="METHODS" NlmCategory="METHODS">Daily counts of cause-specific hospital admissions focusing on cardiovascular and respiratory diseases were obtained for Augsburg and Dresden (Germany), 2011-2012; Chernivtsi (Ukraine), 2013 to March 2014; and Ljubljana (Slovenia) and Prague (Czech Republic), 2012-2013. Air pollution and meteorologic data were measured at fixed monitoring sites in all cities. We analyzed city-specific associations using confounder-adjusted Poisson regression models and pooled the city-specific effect estimates using metaanalysis methods.</AbstractText>
+                <AbstractText Label="MEASUREMENTS AND MAIN RESULTS" NlmCategory="RESULTS">A 2,750 particles/cm(3) increase (average interquartile range across all cities) in the 6-day average of UFP indicated a delayed and prolonged increase in the pooled relative risk of respiratory hospital admissions (3.4% [95% confidence interval, -1.7 to 8.8%]). We also found increases in the pooled relative risk of cardiovascular (exposure average of lag 2-5, 1.8% [0.1-3.4%]) and respiratory (6-d average exposure, 7.5% [4.9-10.2%]) admissions per 12.4 μg/m(3) increase (average interquartile range) in PM2.5.</AbstractText>
+                <AbstractText Label="CONCLUSIONS" NlmCategory="CONCLUSIONS">Our findings indicated delayed and prolonged effects of UFP exposure on respiratory hospital admissions in Central and Eastern Europe. Cardiovascular and respiratory hospital admissions increased in association with an increase in PM2.5. Further multicenter studies are needed using harmonized UFP measurements to draw definite conclusions on health effects of UFP.</AbstractText>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Lanzinger</LastName>
+                    <ForeName>Stefanie</ForeName>
+                    <Initials>S</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>1 Helmholtz Zentrum München-German Research Center for Environmental Health, Institute of Epidemiology II, Neuherberg, Germany.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Schneider</LastName>
+                    <ForeName>Alexandra</ForeName>
+                    <Initials>A</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>1 Helmholtz Zentrum München-German Research Center for Environmental Health, Institute of Epidemiology II, Neuherberg, Germany.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Breitner</LastName>
+                    <ForeName>Susanne</ForeName>
+                    <Initials>S</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>1 Helmholtz Zentrum München-German Research Center for Environmental Health, Institute of Epidemiology II, Neuherberg, Germany.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Stafoggia</LastName>
+                    <ForeName>Massimo</ForeName>
+                    <Initials>M</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>2 Department of Epidemiology, Lazio Region Health Service, Rome, Italy.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Erzen</LastName>
+                    <ForeName>Ivan</ForeName>
+                    <Initials>I</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>3 National Institute of Public Health Slovenia, Ljubljana, Slovenia.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Dostal</LastName>
+                    <ForeName>Miroslav</ForeName>
+                    <Initials>M</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>4 Institute of Experimental Medicine, Academy of Sciences of the Czech Republic, Prague, Czech Republic.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Pastorkova</LastName>
+                    <ForeName>Anna</ForeName>
+                    <Initials>A</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>4 Institute of Experimental Medicine, Academy of Sciences of the Czech Republic, Prague, Czech Republic.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Bastian</LastName>
+                    <ForeName>Susanne</ForeName>
+                    <Initials>S</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>5 Saxon State Office for Environment, Agriculture and Geology, Dresden, Germany.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Cyrys</LastName>
+                    <ForeName>Josef</ForeName>
+                    <Initials>J</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>1 Helmholtz Zentrum München-German Research Center for Environmental Health, Institute of Epidemiology II, Neuherberg, Germany.</Affiliation>
+                    </AffiliationInfo>
+                    <AffiliationInfo>
+                        <Affiliation>6 Environmental Science Center, University of Augsburg, Augsburg, Germany.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Zscheppang</LastName>
+                    <ForeName>Anja</ForeName>
+                    <Initials>A</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>7 Research Association Public Health Saxony and Saxony-Anhalt, Faculty of Medicine Carl Gustav Carus, Technische Universität Dresden, Dresden, Germany; and.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Kolodnitska</LastName>
+                    <ForeName>Tetiana</ForeName>
+                    <Initials>T</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>8 L. I. Medved's Research Center of Preventive Toxicology, Food and Chemical Safety, Ministry of Health, Chernivtsi, Ukraine.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Peters</LastName>
+                    <ForeName>Annette</ForeName>
+                    <Initials>A</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>1 Helmholtz Zentrum München-German Research Center for Environmental Health, Institute of Epidemiology II, Neuherberg, Germany.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <CollectiveName>UFIREG study group</CollectiveName>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType UI="D016428">Journal Article</PublicationType>
+            </PublicationTypeList>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>United States</Country>
+            <MedlineTA>Am J Respir Crit Care Med</MedlineTA>
+            <NlmUniqueID>9421642</NlmUniqueID>
+            <ISSNLinking>1073-449X</ISSNLinking>
+        </MedlineJournalInfo>
+        <KeywordList Owner="NOTNLM">
+            <Keyword MajorTopicYN="N">cardiovascular</Keyword>
+            <Keyword MajorTopicYN="N">hospital admissions</Keyword>
+            <Keyword MajorTopicYN="N">particulate matter</Keyword>
+            <Keyword MajorTopicYN="N">respiratory</Keyword>
+            <Keyword MajorTopicYN="N">ultrafine particles</Keyword>
+        </KeywordList>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2016</Year>
+                <Month>5</Month>
+                <Day>26</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2016</Year>
+                <Month>5</Month>
+                <Day>26</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>2016</Year>
+                <Month>5</Month>
+                <Day>26</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pubmed">27224452</ArticleId>
+            <ArticleId IdType="doi">10.1164/rccm.201510-2042OC</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+</PubmedArticleSet>

@@ -2,6 +2,7 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <body>
     <wicket:extend>
+        <div wicket:id="xmlPasteModal"></div>
         <div class="container-fluid">
             <div class="row">
                 <form wicket:id="searchForm" role="form">
@@ -26,7 +27,7 @@
                         <input wicket:id="fieldSearch" class="form-control"></input>
                     </div>
                     <div class="col-md-2" style="bottom: -20px;">
-                        <a wicket:id="newPaper">New Paper</a>
+                        <a wicket:id="newPaper">New Paper</a> <a wicket:id="showXmlPasteModalLink">PubMed XML</a>
                     </div>
                 </form>
             </div>

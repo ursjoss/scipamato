@@ -299,4 +299,14 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
         verify(pageMock).getContent();
     }
 
+    @Test
+    public void gettingPapersByPmIds_withNoPmIds_returnsEmptyList() {
+        assertThat(repo.findByPmIds(new ArrayList<Integer>())).isEmpty();
+    }
+
+    @Test
+    public void gettingPapersByPmIds_withNullPmIds_returnsEmptyList() {
+        assertThat(repo.findByPmIds(null)).isEmpty();
+    }
+
 }

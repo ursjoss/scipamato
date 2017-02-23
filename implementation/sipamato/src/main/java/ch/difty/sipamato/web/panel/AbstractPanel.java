@@ -92,6 +92,7 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
+        field.setOutputMarkupId(true);
         queue(field);
         if (pv.isPresent() && isEditMode()) {
             field.add(pv.get());

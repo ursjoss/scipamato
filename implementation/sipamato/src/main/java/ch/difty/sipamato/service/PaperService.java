@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
+import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
 
 /**
  * The {@link PaperService} interface - defining {@link Paper} specific service methods.
@@ -40,5 +41,14 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * @return paper count
      */
     int countBySearchOrder(SearchOrder searchOrder);
+
+    /**
+     * Saves some minimally filled {@link Paper}s based on the information received
+     * from PubMed via the {@link PubmedArticleFacade} entities.
+     * 
+     * @param articles list of {@link PubmedArticleFacade}
+     * @return {@link ServiceResult}
+     */
+    ServiceResult dumpPubmedArticlesToDb(List<PubmedArticleFacade> articles);
 
 }

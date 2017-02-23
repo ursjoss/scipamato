@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2017//EN" "https://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_170101.dtd">
+<PubmedArticleSet>
+
+<PubmedArticle>
+    <MedlineCitation Status="In-Data-Review" Owner="NLM">
+        <PMID Version="1">27214671</PMID>
+        <DateCreated>
+            <Year>2016</Year>
+            <Month>05</Month>
+            <Day>24</Day>
+        </DateCreated>
+        <DateRevised>
+            <Year>2016</Year>
+            <Month>05</Month>
+            <Day>24</Day>
+        </DateRevised>
+        <Article PubModel="Print">
+            <Journal>
+                <ISSN IssnType="Electronic">1550-5057</ISSN>
+                <JournalIssue CitedMedium="Internet">
+                    <Volume>39</Volume>
+                    <Issue>3</Issue>
+                    <PubDate>
+                        <MedlineDate>2016 Jul-Sep</MedlineDate>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Family &amp; community health</Title>
+                <ISOAbbreviation>Fam Community Health</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>Health Status and Residential Exposure to Air Toxics: What Are the Effects on Children's Academic Achievement?</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>160-8</MedlinePgn>
+            </Pagination>
+            <ELocationID EIdType="doi" ValidYN="Y">10.1097/FCH.0000000000000112</ELocationID>
+            <Abstract>
+                <AbstractText>This article examines the effects of children's subjective health status and exposure to residential environmental toxins on academic performance for the first time, while adjusting for school-level effects using generalized estimating equations. The analysis employs National Air Toxics Assessment risk estimates and individual-level data collected through a mail survey. Results indicate that poorer subjective health status and higher levels of residential air toxins are statistically significantly associated with lower grade point averages, meaning that there is an independent effect of air pollution on children's academic achievement that cannot be explained by poor health alone.</AbstractText>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Clark-Reyna</LastName>
+                    <ForeName>Stephanie E</ForeName>
+                    <Initials>SE</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Department of Sociology and Anthropology, University of Texas at El Paso, El Paso.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Grineski</LastName>
+                    <ForeName>Sara E</ForeName>
+                    <Initials>SE</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Collins</LastName>
+                    <ForeName>Timothy W</ForeName>
+                    <Initials>TW</Initials>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType UI="D016428">Journal Article</PublicationType>
+            </PublicationTypeList>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>United States</Country>
+            <MedlineTA>Fam Community Health</MedlineTA>
+            <NlmUniqueID>7809641</NlmUniqueID>
+            <ISSNLinking>0160-6379</ISSNLinking>
+        </MedlineJournalInfo>
+        <CitationSubset>IM</CitationSubset>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>2016</Year>
+                <Month>5</Month>
+                <Day>24</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2016</Year>
+                <Month>5</Month>
+                <Day>24</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2016</Year>
+                <Month>5</Month>
+                <Day>24</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pubmed">27214671</ArticleId>
+            <ArticleId IdType="doi">10.1097/FCH.0000000000000112</ArticleId>
+            <ArticleId IdType="pii">00003727-201607000-00004</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+</PubmedArticleSet>
