@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.Unmarshaller;
-import org.springframework.oxm.XmlMappingException;
 import org.springframework.stereotype.Service;
 
 import ch.difty.sipamato.lib.AssertAs;
@@ -59,10 +58,9 @@ public class PubmedXmlService implements PubmedArticleService {
      *
      * @param xmlString
      * @return {@link PubmedArticleSet}
-     * @throws XmlMappingException
      * @throws IOException
      */
-    public PubmedArticleSet unmarshal(final String xmlString) throws XmlMappingException, IOException {
+    public PubmedArticleSet unmarshal(final String xmlString) throws IOException {
         final StringReader reader = new StringReader(AssertAs.notNull(xmlString, "xmlString"));
         return (PubmedArticleSet) unmarshaller.unmarshal(new StreamSource(reader));
     }
