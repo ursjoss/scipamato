@@ -128,15 +128,16 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         navbar.setBrandName(new ResourceModel("brandname", getProperties().getBrand()));
         navbar.setInverted(true);
 
-        addPageLink(navbar, SipamatoHomePage.class, new StringResourceModel("menu.home", this, null).getString(), GlyphIconType.home);
-        addPageLink(navbar, PaperListPage.class, new StringResourceModel("menu.papers", this, null).getString(), GlyphIconType.list);
-        addPageLink(navbar, PaperSearchPage.class, new StringResourceModel("menu.search", this, null).getString(), GlyphIconType.search);
-        addPageLink(navbar, LogoutPage.class, new StringResourceModel("menu.logout", this, null).getString(), GlyphIconType.edit);
+        addPageLink(navbar, SipamatoHomePage.class, "menu.home", GlyphIconType.home);
+        addPageLink(navbar, PaperListPage.class, "menu.papers", GlyphIconType.list);
+        addPageLink(navbar, PaperSearchPage.class, "menu.search", GlyphIconType.search);
+        addPageLink(navbar, LogoutPage.class, "menu.logout", GlyphIconType.edit);
 
         return navbar;
     }
 
-    private <P extends BasePage<?>> void addPageLink(SipamatoNavbar navbar, Class<P> pageClass, String label, IconType iconType) {
+    private <P extends BasePage<?>> void addPageLink(SipamatoNavbar navbar, Class<P> pageClass, String labelResource, IconType iconType) {
+        final String label = new StringResourceModel(labelResource, this, null).getString();
         NavbarButton<Void> button = new NavbarButton<Void>(pageClass, Model.of(label)).setIconType(iconType);
         navbar.addComponents(NavbarComponents.transform(SipamatoNavbar.ComponentPosition.LEFT, button));
     }
