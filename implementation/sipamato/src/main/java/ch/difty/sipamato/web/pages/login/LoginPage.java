@@ -3,9 +3,9 @@ package ch.difty.sipamato.web.pages.login;
 import java.util.Optional;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -42,8 +42,8 @@ public class LoginPage extends BasePage<Void> {
         queue(newLoginForm("form"));
     }
 
-    private Form<Void> newLoginForm(String id) {
-        Form<Void> form = new Form<Void>(id) {
+    private StatelessForm<Void> newLoginForm(String id) {
+        StatelessForm<Void> form = new StatelessForm<Void>(id) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -54,6 +54,7 @@ public class LoginPage extends BasePage<Void> {
                     error(getString("msg.login.failure"));
                 }
             }
+
         };
         form.setDefaultModel(new CompoundPropertyModel<>(this));
 
@@ -70,9 +71,7 @@ public class LoginPage extends BasePage<Void> {
     }
 
     private BootstrapButton newButton(String id) {
-        BootstrapButton button = new BootstrapButton(id, new StringResourceModel(id + ".value", this, null), Buttons.Type.Default);
-        button.setDefaultFormProcessing(true);
-        return button;
+        return new BootstrapButton(id, new StringResourceModel(id + ".value", this, null), Buttons.Type.Default);
     }
 
 }
