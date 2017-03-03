@@ -1,11 +1,13 @@
 package ch.difty.sipamato.web.pages.login;
 
+import java.util.Optional;
+
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.annotation.mount.MountPath;
 
@@ -22,6 +24,9 @@ public class LoginPage extends BasePage<Void> {
 
     private static final long serialVersionUID = 1L;
 
+    private String username;
+    private String password;
+
     public LoginPage(PageParameters parameters) {
         super(parameters);
     }
@@ -34,35 +39,40 @@ public class LoginPage extends BasePage<Void> {
             continueToOriginalDestination();
         }
 
-        add(new LoginForm("form"));
+        queue(newLoginForm("form"));
     }
 
-    private class LoginForm extends Form<LoginForm> {
-        private static final long serialVersionUID = 1L;
+    private Form<Void> newLoginForm(String id) {
+        Form<Void> form = new Form<Void>(id) {
+            private static final long serialVersionUID = 1L;
 
-        private String username;
-        private String password;
-
-        public LoginForm(String id) {
-            super(id);
-            setDefaultModel(new CompoundPropertyModel<>(this));
-
-            add(new Label("header", new ResourceModel("header.label", "h")));
-            add(new Label("usernameLabel", new ResourceModel("username.label", "un")));
-            add(new RequiredTextField<String>("username"));
-            add(new Label("passwordLabel", new ResourceModel("password.label", "pw")));
-            add(new PasswordTextField("password"));
-            add(new BootstrapButton("signin", new ResourceModel("signin.value", "si"), Buttons.Type.Default));
-        }
-
-        @Override
-        protected void onSubmit() {
-            if (signIn(username, password)) {
-                setResponsePage(SipamatoHomePage.class);
-            } else {
-                error(getString("msg.login.failure"));
+            @Override
+            protected void onSubmit() {
+                if (signIn(username, password)) {
+                    setResponsePage(SipamatoHomePage.class);
+                } else {
+                    error(getString("msg.login.failure"));
+                }
             }
-        }
+        };
+        form.setDefaultModel(new CompoundPropertyModel<>(this));
 
+        queue(newHeader("header"));
+        queueFieldAndLabel(new RequiredTextField<String>("username"), Optional.empty());
+        queueFieldAndLabel(new PasswordTextField("password"), Optional.empty());
+        queue(newButton("signin"));
+
+        return form;
     }
+
+    private Label newHeader(String id) {
+        return new Label(id, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null));
+    }
+
+    private BootstrapButton newButton(String id) {
+        BootstrapButton button = new BootstrapButton(id, new StringResourceModel(id + ".value", this, null), Buttons.Type.Default);
+        button.setDefaultFormProcessing(true);
+        return button;
+    }
+
 }
