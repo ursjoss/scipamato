@@ -1,6 +1,5 @@
 package ch.difty.sipamato.web.pages.login;
 
-import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -21,20 +20,21 @@ public class LogoutPage extends BasePage<Void> {
     @Override
     protected void onInitialize() {
         super.onInitialize();
-        add(new LogoutForm("form"));
+
+        queue(newForm("form"));
     }
 
-    private static class LogoutForm extends Form<LogoutForm> {
-        private static final long serialVersionUID = 1L;
+    private Form<Void> newForm(String id) {
+        return new Form<Void>(id) {
 
-        public LogoutForm(String id) {
-            super(id);
-        }
+            private static final long serialVersionUID = 1L;
 
-        @Override
-        protected void onSubmit() {
-            AuthenticatedWebSession.get().invalidate();
-            setResponsePage(getApplication().getHomePage());
-        }
+            @Override
+            protected void onSubmit() {
+                signOutAndInvalidate();
+                setResponsePage(getApplication().getHomePage());
+            }
+        };
     }
+
 }

@@ -149,6 +149,10 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         return AuthenticatedWebSession.get().signIn(username, password);
     }
 
+    protected void signOutAndInvalidate() {
+        AuthenticatedWebSession.get().invalidate();
+    }
+
     protected Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
