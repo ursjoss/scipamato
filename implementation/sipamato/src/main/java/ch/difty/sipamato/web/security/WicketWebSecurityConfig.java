@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import ch.difty.sipamato.auth.Role;
+
 @EnableWebSecurity
 public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -22,11 +24,11 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailService).passwordEncoder(passwordencoder());
+        auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
-    public PasswordEncoder passwordencoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -35,7 +37,7 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
      // @formatter:off
         http.csrf().disable()
             .authorizeRequests()
-                .antMatchers(actuatorEndpoints()).hasRole("ADMIN")
+                .antMatchers(actuatorEndpoints()).hasRole(Role.ADMIN.name())
                 .antMatchers("/**").permitAll()
             .and()
                 .logout().permitAll();
