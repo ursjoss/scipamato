@@ -25,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import ch.difty.sipamato.config.ApplicationProperties;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.lib.DateTimeService;
+import ch.difty.sipamato.web.SipamatoNavbar;
 import ch.difty.sipamato.web.WicketUtils;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 import ch.difty.sipamato.web.pages.login.LogoutPage;
@@ -36,7 +37,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarComponents;
 
@@ -55,7 +55,7 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
     private ApplicationProperties applicationProperties;
 
     private NotificationPanel feedbackPanel;
-    private Navbar navBar;
+    private SipamatoNavbar navbar;
 
     public BasePage(final PageParameters parameters) {
         super(parameters);
@@ -73,8 +73,8 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         return applicationProperties;
     }
 
-    protected Navbar getNavBar() {
-        return navBar;
+    protected SipamatoNavbar getNavBar() {
+        return navbar;
     }
 
     public NotificationPanel getFeedbackPanel() {
@@ -96,13 +96,13 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
     }
 
     private void createAndAddNavBar(String id) {
-        navBar = newNavbar(id);
-        queue(navBar);
+        navbar = newNavbar(id);
+        queue(navbar);
         extendNavBar();
     }
 
     /**
-     * Override if you need to extend the {@link Navbar}
+     * Override if you need to extend the {@link SipamatoNavbar}
      */
     protected void extendNavBar() {
     }
@@ -121,24 +121,25 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         }
     }
 
-    private Navbar newNavbar(String markupId) {
-        Navbar navbar = new Navbar(markupId);
+    private SipamatoNavbar newNavbar(String markupId) {
+        SipamatoNavbar navbar = new SipamatoNavbar(markupId);
 
-        navbar.setPosition(Navbar.Position.TOP);
+        navbar.setPosition(SipamatoNavbar.Position.TOP);
         navbar.setBrandName(new ResourceModel("brandname", getProperties().getBrand()));
         navbar.setInverted(true);
 
-        addPageLink(navbar, SipamatoHomePage.class, new StringResourceModel("menu.home", this, null).getString(), GlyphIconType.home);
-        addPageLink(navbar, PaperListPage.class, new StringResourceModel("menu.papers", this, null).getString(), GlyphIconType.list);
-        addPageLink(navbar, PaperSearchPage.class, new StringResourceModel("menu.search", this, null).getString(), GlyphIconType.search);
-        addPageLink(navbar, LogoutPage.class, new StringResourceModel("menu.logout", this, null).getString(), GlyphIconType.edit);
+        addPageLink(navbar, SipamatoHomePage.class, "menu.home", GlyphIconType.home);
+        addPageLink(navbar, PaperListPage.class, "menu.papers", GlyphIconType.list);
+        addPageLink(navbar, PaperSearchPage.class, "menu.search", GlyphIconType.search);
+        addPageLink(navbar, LogoutPage.class, "menu.logout", GlyphIconType.edit);
 
         return navbar;
     }
 
-    private <P extends BasePage<?>> void addPageLink(Navbar navbar, Class<P> pageClass, String label, IconType iconType) {
+    private <P extends BasePage<?>> void addPageLink(SipamatoNavbar navbar, Class<P> pageClass, String labelResource, IconType iconType) {
+        final String label = new StringResourceModel(labelResource, this, null).getString();
         NavbarButton<Void> button = new NavbarButton<Void>(pageClass, Model.of(label)).setIconType(iconType);
-        navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.LEFT, button));
+        navbar.addComponents(NavbarComponents.transform(SipamatoNavbar.ComponentPosition.LEFT, button));
     }
 
     protected boolean isSignedIn() {
@@ -147,6 +148,10 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
 
     protected boolean signIn(String username, String password) {
         return AuthenticatedWebSession.get().signIn(username, password);
+    }
+
+    protected void signOutAndInvalidate() {
+        AuthenticatedWebSession.get().invalidate();
     }
 
     protected Authentication getAuthentication() {
