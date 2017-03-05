@@ -10,7 +10,7 @@ TODO
 
 ## Preconditions
 
-Currently the project is depending on a snapshot version (0.10.12-SNAPSHOT) of ([wicket-bootstrap](https://github.com/l0rdn1kk0n/wicket-bootstrap). So checkout that project first and build it using
+Currently the project is depending on a snapshot version (0.10.12-SNAPSHOT) of [wicket-bootstrap](https://github.com/l0rdn1kk0n/wicket-bootstrap). So checkout that project first and build it using
 
 `mvn clean install`
 
@@ -30,7 +30,7 @@ In Eclipse:
 
 I use STS (with the Spring Boot Dashboard). Configured with the following parameters:
 
-* Main Type: <literal>ch.difty.sipamato.SipamatoApplication</literal>
-* Profiles: <literal>DB_JOOQ</literal>
+* Main Type: `ch.difty.sipamato.SipamatoApplication`
+* Profiles: `DB_JOOQ`
 
-You might want to add profile <literal>development</literal> as well.
+You might want to add profile `development` as well.
