@@ -2,6 +2,8 @@ package ch.difty.sipamato.web.panel.paper;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
@@ -187,87 +189,110 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         }
     }
 
+    private class ProcessingRecord {
+        boolean dirty = false;
+        boolean allMatching = true;
+
+        public void setDirty() {
+            dirty = true;
+        }
+
+        public void setNonMatching() {
+            allMatching = false;
+        }
+    }
+
     /**
-     * If the field in the sipamato paper is null, the value from the pubmed paper is inserted.
+     * If a field in the sipamato paper is null, the value from the respective pubmed paper is inserted.
      * Otherwise the two values are compared and differences are alerted (except for the abstract).
      */
     private void setFieldsIfBlankCompareOtherwise(Paper p, PubmedArticleFacade a, AjaxRequestTarget target) {
-        boolean allMatching = true;
-        boolean dirty = false;
+        final ProcessingRecord pr = new ProcessingRecord();
 
-        String fieldName = getLocalizedFieldName(Paper.AUTHORS);
-        String value = a.getAuthors();
-        if (p.getAuthors() == null) {
-            p.setAuthors(value);
-            dirty |= informChangedValue(fieldName, value, target, authors, firstAuthor);
-        } else {
-            allMatching &= compareFields(value, p.getAuthors(), fieldName);
-        }
+        processStringField(Paper.AUTHORS, a.getAuthors(), Paper::getAuthors, Paper::setAuthors, p, pr, target, authors, firstAuthor);
+        processStringField(Paper.FIRST_AUTHOR, a.getFirstAuthor(), Paper::getFirstAuthor, Paper::setFirstAuthor, p, pr, target, firstAuthor);
+        processStringField(Paper.TITLE, a.getTitle(), Paper::getTitle, Paper::setTitle, p, pr, target, title);
+        processIntegerField(Paper.PUBL_YEAR, a.getPublicationYear(), Paper::getPublicationYear, Paper::setPublicationYear, "year.parse.error", p, pr, target, publicationYear);
+        processStringField(Paper.LOCATION, a.getLocation(), Paper::getLocation, Paper::setLocation, p, pr, target, location);
+        processStringField(Paper.DOI, a.getDoi(), Paper::getDoi, Paper::setDoi, p, pr, target, doi);
+        processStringField(Paper.ORIGINAL_ABSTRACT, a.getOriginalAbstract(), Paper::getOriginalAbstract, Paper::setOriginalAbstract, p, pr, target, originalAbstract);
 
-        fieldName = getLocalizedFieldName(Paper.FIRST_AUTHOR);
-        value = a.getFirstAuthor();
-        if (p.getFirstAuthor() == null) {
-            p.setFirstAuthor(value);
-            dirty |= informChangedValue(fieldName, value, target, firstAuthor);
-        } else {
-            allMatching &= compareFields(value, p.getFirstAuthor(), fieldName);
-        }
-
-        fieldName = getLocalizedFieldName(Paper.TITLE);
-        value = a.getTitle();
-        if (p.getTitle() == null) {
-            p.setTitle(value);
-            dirty |= informChangedValue(fieldName, value, target, title);
-        } else {
-            allMatching &= compareFields(value, p.getTitle(), fieldName);
-        }
-
-        fieldName = getLocalizedFieldName(Paper.PUBL_YEAR);
-        value = a.getPublicationYear();
-        if (p.getPublicationYear() == null) {
-            try {
-                p.setPublicationYear(Integer.parseInt(value));
-                dirty |= informChangedValue(fieldName, value, target, publicationYear);
-            } catch (Exception ex) {
-                error(new StringResourceModel("year.parse.error", this, null).setParameters(value).getString());
-            }
-        } else {
-            allMatching &= compareFields(value, String.valueOf(p.getPublicationYear()), fieldName);
-        }
-
-        fieldName = getLocalizedFieldName(Paper.LOCATION);
-        value = a.getLocation();
-        if (p.getLocation() == null) {
-            p.setLocation(value);
-            dirty |= informChangedValue(fieldName, value, target, location);
-        } else {
-            allMatching &= compareFields(value, p.getLocation(), fieldName);
-        }
-
-        fieldName = getLocalizedFieldName(Paper.DOI);
-        value = a.getDoi();
-        if (p.getDoi() == null) {
-            p.setDoi(value);
-            dirty |= informChangedValue(fieldName, value, target, doi);
-        } else {
-            allMatching &= compareFields(value, p.getDoi(), fieldName);
-        }
-
-        fieldName = getLocalizedFieldName(Paper.ORIGINAL_ABSTRACT);
-        value = a.getOriginalAbstract();
-        // not comparing abstract on purpose
-        if (p.getOriginalAbstract() == null) {
-            p.setOriginalAbstract(value);
-            dirty |= informChangedValue(fieldName, value, target, originalAbstract);
-        }
-
-        provideUserInfo(allMatching, dirty);
+        provideUserInfo(pr);
     }
 
-    private void provideUserInfo(boolean allMatching, boolean dirty) {
-        if (dirty) {
+    /**
+     * Sets the paper's <literal>fieldName</literal> value if it has been null - and informs about the change.
+     * If the value is not null, it compares the paper's value with the article's value and informs about mismatches - unless it's the original abstract,
+     * which is not compared, as the differences can be subtle but not really that important.
+     * @param fieldName the name of the field (as defined in the entity)
+     * @param articleValue the string value of the article field
+     * @param getter the lambda of the getter for the paper field
+     * @param setter the lambda of the setter for the paper field
+     * @param p the Paper
+     * @param pr the processing record to capture the resulting flags
+     * @param target AjaxRequestTarget
+     * @param fcs the form components that need to be added to the AjaxTargetRequest in case of changed values
+     */
+    private void processStringField(final String fieldName, final String articleValue, final Function<Paper, String> getter, final BiConsumer<Paper, String> setter, final Paper p,
+            final ProcessingRecord pr, final AjaxRequestTarget target, final FormComponent<?>... fcs) {
+        final String localizedFieldName = getLocalizedFieldName(fieldName);
+        final String paperValue = getter.apply(p);
+        if (paperValue == null) {
+            setPaperFieldFromArticleAndInform(localizedFieldName, articleValue, setter, p, pr, target, fcs);
+        } else {
+            if (!Paper.ORIGINAL_ABSTRACT.equals(fieldName))
+                warnNonmatchingFields(localizedFieldName, articleValue, paperValue, pr);
+        }
+    }
+
+    private void setPaperFieldFromArticleAndInform(final String fieldName, final String articleValue, final BiConsumer<Paper, String> setter, final Paper p, final ProcessingRecord pr,
+            final AjaxRequestTarget target, final FormComponent<?>... fcs) {
+        setter.accept(p, articleValue);
+        pr.setDirty();
+        informChangedValue(fieldName, articleValue, target, fcs);
+    }
+
+    /**
+     * Sets the paper's integer <literal>fieldName</literal> value if it has been null - and informs about the change.
+     * If the value is not null, it compares the paper's value with the article's value and informs about mismatches.
+     * If the paper's value cannot be converted to integer, an error message is issued.
+     * @param fieldName the name of the field (as defined in the entity)
+     * @param rawArticleValue the string value of the article field
+     * @param getter the lambda of the getter for the paper field
+     * @param setter the lambda of the setter for the paper field
+     * @param conversionResourceString the resource string for the error message to be issued if the article value cannot be converted to integer.
+     * @param p the Paper
+     * @param pr the processing record to capture the resulting flags
+     * @param target the AjaxRequestTarget
+     * @param fcs the form components that need to be added to the AjaxTargetRequest in case of changed values
+     */
+    private void processIntegerField(final String fieldName, final String rawArticleValue, final Function<Paper, Integer> getter, final BiConsumer<Paper, Integer> setter,
+            final String conversionResourceString, final Paper p, final ProcessingRecord pr, final AjaxRequestTarget target, final FormComponent<?>... fcs) {
+        final String localizedFieldName = getLocalizedFieldName(fieldName);
+        final Integer paperValue = getter.apply(p);
+        if (paperValue == null) {
+            try {
+                final int articleValue = Integer.parseInt(rawArticleValue);
+                setPaperFieldFromArticleAndInform(localizedFieldName, articleValue, setter, p, pr, target, fcs);
+            } catch (final Exception ex) {
+                error(new StringResourceModel(conversionResourceString, this, null).setParameters(rawArticleValue).getString());
+            }
+        } else {
+            warnNonmatchingFields(localizedFieldName, rawArticleValue, String.valueOf(paperValue), pr);
+        }
+    }
+
+    private void setPaperFieldFromArticleAndInform(final String fieldName, final int articleValue, final BiConsumer<Paper, Integer> setter, final Paper p, final ProcessingRecord pr,
+            final AjaxRequestTarget target, final FormComponent<?>... fcs) {
+        setter.accept(p, articleValue);
+        pr.setDirty();
+        informChangedValue(fieldName, String.valueOf(articleValue), target, fcs);
+    }
+
+    private void provideUserInfo(final ProcessingRecord pr) {
+        if (pr.dirty) {
             info(new StringResourceModel("pubmedRetrieval.dirty.info", this, null).getString());
-        } else if (allMatching) {
+        } else if (pr.allMatching) {
             info(new StringResourceModel("pubmedRetrieval.no-difference.info", this, null).getString());
         }
     }
@@ -276,27 +301,25 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return new StringResourceModel(fieldName + LABEL_RECOURCE_TAG, this, null).getString();
     }
 
-    private boolean informChangedValue(String fieldName, String value, AjaxRequestTarget target, FormComponent<?>... fcs) {
+    private void informChangedValue(String fieldName, String value, AjaxRequestTarget target, FormComponent<?>... fcs) {
         info(fieldName + ": " + value);
         if (fcs.length > 0) {
             target.add(fcs);
         }
-        return true;
     }
 
     /**
-     * compares the pubmed field with the sipamato article field. warns if it does not match.
+     * Compares the pubmed field with the sipamato article field. warns if it does not match.
+     * @param fieldName the (localized) name of the field, used to construct the warn message
      * @param pmField field from pubmed article
      * @param paperField field from sipamato paper
-     * @param fieldName the (localized) name of the field, used to construct the warn message
-     * @return true if fields match, false if there are differences
+     * @param ProcessingRecord pr
      */
-    private boolean compareFields(String pmField, String paperField, String fieldName) {
+    private void warnNonmatchingFields(String fieldName, String pmField, String paperField, ProcessingRecord pr) {
         if (pmField != null && !pmField.equals(paperField)) {
             warn("PubMed " + fieldName + ": " + pmField);
-            return false;
+            pr.setNonMatching();
         }
-        return true;
     }
 
 }

@@ -278,7 +278,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     }
 
     @Test
-    public void clickingOnShowXmlPastePanelButton_withNoPmIdInSipamatoPaper_warns() {
+    public void clickingOnPubmedRetrievalButton_withNoPmIdInSipamatoPaper_warns() {
         getTester().startComponentInPage(makePanel());
         getTester().debugComponentTrees();
 
@@ -293,23 +293,33 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     }
 
     @Test
-    public void clickingOnShowXmlPastePanelButton_withMatchingPmId_andWithAllValuesSetAndEqual_informsAboutPerfectMatch() {
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetAndEqual_informsAboutPerfectMatch() {
         getTester().startComponentInPage(makePanel());
         getTester().debugComponentTrees();
 
-        when(pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID)).thenReturn(Optional.of(pubmedArticleMock));
-        when(pubmedArticleMock.getPmId()).thenReturn(String.valueOf(PMID));
-        when(pubmedArticleMock.getAuthors()).thenReturn("a");
-        when(pubmedArticleMock.getFirstAuthor()).thenReturn("fa");
-        when(pubmedArticleMock.getTitle()).thenReturn("t");
-        when(pubmedArticleMock.getLocation()).thenReturn("l");
-        when(pubmedArticleMock.getPublicationYear()).thenReturn("2017");
-        when(pubmedArticleMock.getDoi()).thenReturn("doi");
-        when(pubmedArticleMock.getOriginalAbstract()).thenReturn("oa");
+        fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
         getTester().assertInfoMessages("All compared fields are matching those in PubMed.");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
+        getTester().assertNoErrorMessage();
 
+        verifyPubmedRetrievalButtonClicked();
+    }
+
+    private void fixPubmedRetrievalButtonClicked(String a, String fa, String t, String l, String py, String doi, String oa) {
+        when(pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID)).thenReturn(Optional.of(pubmedArticleMock));
+        when(pubmedArticleMock.getPmId()).thenReturn(String.valueOf(PMID));
+        when(pubmedArticleMock.getAuthors()).thenReturn(a);
+        when(pubmedArticleMock.getFirstAuthor()).thenReturn(fa);
+        when(pubmedArticleMock.getTitle()).thenReturn(t);
+        when(pubmedArticleMock.getLocation()).thenReturn(l);
+        when(pubmedArticleMock.getPublicationYear()).thenReturn(py);
+        when(pubmedArticleMock.getDoi()).thenReturn(doi);
+        when(pubmedArticleMock.getOriginalAbstract()).thenReturn(oa);
+    }
+
+    private void verifyPubmedRetrievalButtonClicked() {
         verify(pubmedArticleServiceMock).getPubmedArticleWithPmid(PMID);
         verify(pubmedArticleMock).getPmId();
         verify(pubmedArticleMock).getAuthors();
@@ -324,39 +334,128 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     }
 
     @Test
-    public void clickingOnShowXmlPastePanelButton_withMatchingPmId_andWithAllValuesSetAndAllDifferent_warnsAboutAllComparedFields() {
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptArticle_warnsAboutDifferingArticle() {
         getTester().startComponentInPage(makePanel());
         getTester().debugComponentTrees();
 
-        when(pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID)).thenReturn(Optional.of(pubmedArticleMock));
-        when(pubmedArticleMock.getPmId()).thenReturn(String.valueOf(PMID));
-        when(pubmedArticleMock.getAuthors()).thenReturn("_a");
-        when(pubmedArticleMock.getFirstAuthor()).thenReturn("_fa");
-        when(pubmedArticleMock.getTitle()).thenReturn("_t");
-        when(pubmedArticleMock.getLocation()).thenReturn("_l");
-        when(pubmedArticleMock.getPublicationYear()).thenReturn("_2017");
-        when(pubmedArticleMock.getDoi()).thenReturn("_doi");
-        when(pubmedArticleMock.getOriginalAbstract()).thenReturn("_oa");
+        fixPubmedRetrievalButtonClicked("_a", "fa", "t", "l", "2017", "doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed Authors: _a", "PubMed First Author: _fa", "PubMed Title: _t",
-                "PubMed Pub. Year: _2017", "PubMed Location: _l", "PubMed DOI: _doi");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed Authors: _a");
+        getTester().assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
 
-        verify(pubmedArticleServiceMock).getPubmedArticleWithPmid(PMID);
-        verify(pubmedArticleMock).getPmId();
-        verify(pubmedArticleMock).getAuthors();
-        verify(pubmedArticleMock).getFirstAuthor();
-        verify(pubmedArticleMock).getTitle();
-        verify(pubmedArticleMock).getLocation();
-        verify(pubmedArticleMock).getPublicationYear();
-        verify(pubmedArticleMock).getDoi();
-        verify(pubmedArticleMock).getOriginalAbstract();
-
-        verifyCodeAndCodeClassCalls(1);
+        verifyPubmedRetrievalButtonClicked();
     }
 
     @Test
-    public void clickingOnShowXmlPastePanelButton_withNullPmId_warnsAboutNotBeingAbleToRetrieveArticle() {
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptFirstAuthor_warnsAboutDifferingFirstAuthor() {
+        getTester().startComponentInPage(makePanel());
+        getTester().debugComponentTrees();
+
+        fixPubmedRetrievalButtonClicked("a", "_fa", "t", "l", "2017", "doi", "oa");
+
+        getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed First Author: _fa");
+        getTester().assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
+
+        verifyPubmedRetrievalButtonClicked();
+    }
+
+    @Test
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptTitle_warnsAboutDifferingTitle() {
+        getTester().startComponentInPage(makePanel());
+        getTester().debugComponentTrees();
+
+        fixPubmedRetrievalButtonClicked("a", "fa", "_t", "l", "2017", "doi", "oa");
+
+        getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed Title: _t");
+        getTester().assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
+
+        verifyPubmedRetrievalButtonClicked();
+    }
+
+    @Test
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptLocation_warnsAboutDifferingLocation() {
+        getTester().startComponentInPage(makePanel());
+        getTester().debugComponentTrees();
+
+        fixPubmedRetrievalButtonClicked("a", "fa", "t", "_l", "2017", "doi", "oa");
+
+        getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed Location: _l");
+        getTester().assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
+
+        verifyPubmedRetrievalButtonClicked();
+    }
+
+    @Test
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptYear_warnsAboutDifferingYear() {
+        getTester().startComponentInPage(makePanel());
+        getTester().debugComponentTrees();
+
+        fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2016", "doi", "oa");
+
+        getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed Pub. Year: 2016");
+        getTester().assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
+
+        verifyPubmedRetrievalButtonClicked();
+    }
+
+    @Test
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptDoi_warnsAboutDifferingDoi() {
+        getTester().startComponentInPage(makePanel());
+        getTester().debugComponentTrees();
+
+        fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "_doi", "oa");
+
+        getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed DOI: _doi");
+        getTester().assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
+
+        verifyPubmedRetrievalButtonClicked();
+    }
+
+    @Test
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptAbstract_doesNotWarnAboutAbstract() {
+        getTester().startComponentInPage(makePanel());
+        getTester().debugComponentTrees();
+
+        fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "_oa");
+
+        getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
+        getTester().assertInfoMessages("All compared fields are matching those in PubMed.");
+        getTester().assertNoErrorMessage();
+
+        verifyPubmedRetrievalButtonClicked();
+    }
+
+    @Test
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetAndAllDifferent_warnsAboutAllComparedFields() {
+        getTester().startComponentInPage(makePanel());
+        getTester().debugComponentTrees();
+
+        fixPubmedRetrievalButtonClicked("_a", "_fa", "_t", "_l", "2016", "_doi", "_oa");
+
+        getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed Authors: _a", "PubMed First Author: _fa", "PubMed Title: _t",
+                "PubMed Pub. Year: 2016", "PubMed Location: _l", "PubMed DOI: _doi");
+        getTester().assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
+
+        verifyPubmedRetrievalButtonClicked();
+    }
+
+    @Test
+    public void clickingOnPubmedRetrievalButton_withNullPmId_warnsAboutNotBeingAbleToRetrieveArticle() {
         getTester().startComponentInPage(makePanelWithEmptyPaper(null));
         getTester().debugComponentTrees();
 
@@ -367,68 +466,98 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     }
 
     @Test
-    public void clickingOnShowXmlPastePanelButton_withMatchingPmId_andWithNoOtherValuesSet_setsThemFromPubmedIncludingOriginalAbstract() {
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithNoOtherValuesSet_setsThemFromPubmedIncludingOriginalAbstract() {
         getTester().startComponentInPage(makePanelWithEmptyPaper(PMID));
         getTester().debugComponentTrees();
 
-        when(pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID)).thenReturn(Optional.of(pubmedArticleMock));
-        when(pubmedArticleMock.getPmId()).thenReturn(String.valueOf(PMID));
-        when(pubmedArticleMock.getAuthors()).thenReturn("a");
-        when(pubmedArticleMock.getFirstAuthor()).thenReturn("fa");
-        when(pubmedArticleMock.getTitle()).thenReturn("t");
-        when(pubmedArticleMock.getLocation()).thenReturn("l");
-        when(pubmedArticleMock.getPublicationYear()).thenReturn("2017");
-        when(pubmedArticleMock.getDoi()).thenReturn("doi");
-        when(pubmedArticleMock.getOriginalAbstract()).thenReturn("oa");
+        fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
         getTester().assertInfoMessages("Authors: a", "First Author: fa", "Title: t", "Pub. Year: 2017", "Location: l", "DOI: doi", "Original Abstract: oa",
                 "Above fields have changed. Click save if you want to keep the changes.");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
+        getTester().assertNoErrorMessage();
 
-        verify(pubmedArticleServiceMock).getPubmedArticleWithPmid(PMID);
-        verify(pubmedArticleMock).getPmId();
-        verify(pubmedArticleMock).getAuthors();
-        verify(pubmedArticleMock).getFirstAuthor();
-        verify(pubmedArticleMock).getTitle();
-        verify(pubmedArticleMock).getLocation();
-        verify(pubmedArticleMock).getPublicationYear();
-        verify(pubmedArticleMock).getDoi();
-        verify(pubmedArticleMock).getOriginalAbstract();
+        verifyPubmedRetrievalButtonClicked();
+    }
 
-        verifyCodeAndCodeClassCalls(1);
+    private void testAndVerifySingleFieldSet(EditablePaperPanel panel, String msg) {
+        getTester().startComponentInPage(panel);
+        getTester().debugComponentTrees();
+
+        fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa");
+
+        getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
+        getTester().assertInfoMessages(msg, "Above fields have changed. Click save if you want to keep the changes.");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
+        getTester().assertNoErrorMessage();
+
+        verifyPubmedRetrievalButtonClicked();
     }
 
     @Test
-    public void clickingOnShowXmlPastePanelButton_withMatchingPmId_andWithNoOtherValuesSetPutInvalidYear_warnsAboutYearButSetsOtherFields() {
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptAuthor_setsAuthor() {
+        EditablePaperPanel panel = makePanel();
+        panel.getModelObject().setAuthors(null);
+        testAndVerifySingleFieldSet(panel, "Authors: a");
+    }
+
+    @Test
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptFirstAuthor_setsFirstAuthor() {
+        EditablePaperPanel panel = makePanel();
+        panel.getModelObject().setFirstAuthor(null);
+        testAndVerifySingleFieldSet(panel, "First Author: fa");
+    }
+
+    @Test
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptTitle_setsTitle() {
+        EditablePaperPanel panel = makePanel();
+        panel.getModelObject().setTitle(null);
+        testAndVerifySingleFieldSet(panel, "Title: t");
+    }
+
+    @Test
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptLocation_setsLocation() {
+        EditablePaperPanel panel = makePanel();
+        panel.getModelObject().setLocation(null);
+        testAndVerifySingleFieldSet(panel, "Location: l");
+    }
+
+    @Test
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptYear_setsYear() {
+        EditablePaperPanel panel = makePanel();
+        panel.getModelObject().setPublicationYear(null);
+        testAndVerifySingleFieldSet(panel, "Pub. Year: 2017");
+    }
+
+    @Test
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptDoi_setsDoi() {
+        EditablePaperPanel panel = makePanel();
+        panel.getModelObject().setDoi(null);
+        testAndVerifySingleFieldSet(panel, "DOI: doi");
+    }
+
+    @Test
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptOriginalAbstract_setsOriginalAbstract() {
+        EditablePaperPanel panel = makePanel();
+        panel.getModelObject().setOriginalAbstract(null);
+        testAndVerifySingleFieldSet(panel, "Original Abstract: oa");
+    }
+
+    @Test
+    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithNoOtherValuesSet_butWithInvalidYear_warnsAboutYearButSetsOtherFields() {
         getTester().startComponentInPage(makePanelWithEmptyPaper(PMID));
         getTester().debugComponentTrees();
 
-        when(pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID)).thenReturn(Optional.of(pubmedArticleMock));
-        when(pubmedArticleMock.getPmId()).thenReturn(String.valueOf(PMID));
-        when(pubmedArticleMock.getAuthors()).thenReturn("a");
-        when(pubmedArticleMock.getFirstAuthor()).thenReturn("fa");
-        when(pubmedArticleMock.getTitle()).thenReturn("t");
-        when(pubmedArticleMock.getLocation()).thenReturn("l");
-        when(pubmedArticleMock.getPublicationYear()).thenReturn("invalid");
-        when(pubmedArticleMock.getDoi()).thenReturn("doi");
-        when(pubmedArticleMock.getOriginalAbstract()).thenReturn("oa");
+        fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "invalid", "doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
         getTester().assertInfoMessages("Authors: a", "First Author: fa", "Title: t", "Location: l", "DOI: doi", "Original Abstract: oa",
                 "Above fields have changed. Click save if you want to keep the changes.");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
         getTester().assertErrorMessages("Unable to parse the year 'invalid'");
 
-        verify(pubmedArticleServiceMock).getPubmedArticleWithPmid(PMID);
-        verify(pubmedArticleMock).getPmId();
-        verify(pubmedArticleMock).getAuthors();
-        verify(pubmedArticleMock).getFirstAuthor();
-        verify(pubmedArticleMock).getTitle();
-        verify(pubmedArticleMock).getLocation();
-        verify(pubmedArticleMock).getPublicationYear();
-        verify(pubmedArticleMock).getDoi();
-        verify(pubmedArticleMock).getOriginalAbstract();
-
-        verifyCodeAndCodeClassCalls(1);
+        verifyPubmedRetrievalButtonClicked();
     }
 
     protected EditablePaperPanel makePanelWithEmptyPaper(Integer pmId) {
@@ -444,4 +573,5 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
         };
     }
+
 }
