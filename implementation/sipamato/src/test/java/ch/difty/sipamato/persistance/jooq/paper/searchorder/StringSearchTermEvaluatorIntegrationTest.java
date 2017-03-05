@@ -23,7 +23,7 @@ import junitparams.Parameters;
 /**
  * Test class to integration test the search term and the search term evaluator.
  */
-public class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<StringSearchTerm, StringSearchTermEvaluator> {
+public class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<StringSearchTerm> {
 
     @SuppressWarnings("unused")
     private Object[] stringParameters() {
@@ -107,7 +107,7 @@ public class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluato
     }
 
     @Override
-    protected StringSearchTermEvaluator makeSearchTermEvaluator() {
+    protected StringSearchTermEvaluator getEvaluator() {
         return new StringSearchTermEvaluator();
     }
 
@@ -119,7 +119,7 @@ public class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluato
 
         assertThat(st.getTokens().get(0).getType().matchType).isEqualTo(type);
 
-        final StringSearchTermEvaluator ste = makeSearchTermEvaluator();
+        final StringSearchTermEvaluator ste = getEvaluator();
         final Condition s = ste.evaluate(st);
 
         assertThat(s.toString()).isEqualTo(condition);

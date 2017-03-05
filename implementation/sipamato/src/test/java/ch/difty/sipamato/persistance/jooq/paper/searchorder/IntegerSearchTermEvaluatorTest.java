@@ -1,7 +1,6 @@
 package ch.difty.sipamato.persistance.jooq.paper.searchorder;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 import org.jooq.Condition;
@@ -12,24 +11,18 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
 import ch.difty.sipamato.entity.filter.IntegerSearchTerm.MatchType;
-import ch.difty.sipamato.lib.NullArgumentException;
 
 @RunWith(MockitoJUnitRunner.class)
-public class IntegerSearchTermEvaluatorTest {
+public class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<IntegerSearchTerm> {
 
     private final IntegerSearchTermEvaluator e = new IntegerSearchTermEvaluator();
 
     @Mock
     private IntegerSearchTerm stMock;
 
-    @Test
-    public void evaluating_withNullParameter_throws() {
-        try {
-            e.evaluate(null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchTerm must not be null.");
-        }
+    @Override
+    protected IntegerSearchTermEvaluator getEvaluator() {
+        return e;
     }
 
     private void expectSearchTerm(MatchType type, int v) {

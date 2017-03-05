@@ -20,7 +20,7 @@ import junitparams.Parameters;
 /**
  * Test class to integration test the search term and the search term evaluator.
  */
-public class IntegerSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<IntegerSearchTerm, IntegerSearchTermEvaluator> {
+public class IntegerSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<IntegerSearchTerm> {
 
     @SuppressWarnings("unused")
     private Object[] integerParameters() {
@@ -48,7 +48,7 @@ public class IntegerSearchTermEvaluatorIntegrationTest extends SearchTermEvaluat
     }
 
     @Override
-    protected IntegerSearchTermEvaluator makeSearchTermEvaluator() {
+    protected IntegerSearchTermEvaluator getEvaluator() {
         return new IntegerSearchTermEvaluator();
     }
 
@@ -60,7 +60,7 @@ public class IntegerSearchTermEvaluatorIntegrationTest extends SearchTermEvaluat
         assertThat(st.getValue2()).isEqualTo(value2);
         assertThat(st.getType()).isEqualTo(type);
 
-        final IntegerSearchTermEvaluator ste = makeSearchTermEvaluator();
+        final IntegerSearchTermEvaluator ste = getEvaluator();
         final Condition s = ste.evaluate(st);
 
         assertThat(s.toString()).isEqualTo(condition);

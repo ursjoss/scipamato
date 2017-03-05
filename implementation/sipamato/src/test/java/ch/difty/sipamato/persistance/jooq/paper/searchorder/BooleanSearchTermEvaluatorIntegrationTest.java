@@ -14,7 +14,7 @@ import junitparams.Parameters;
  * Test class to integration test the search term and the search term evaluator.
  */
 
-public class BooleanSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<BooleanSearchTerm, BooleanSearchTermEvaluator> {
+public class BooleanSearchTermEvaluatorIntegrationTest extends SearchTermEvaluatorIntegrationTest<BooleanSearchTerm> {
 
     @SuppressWarnings("unused")
     private Object[] booleanParameters() {
@@ -37,7 +37,7 @@ public class BooleanSearchTermEvaluatorIntegrationTest extends SearchTermEvaluat
     }
 
     @Override
-    protected BooleanSearchTermEvaluator makeSearchTermEvaluator() {
+    protected BooleanSearchTermEvaluator getEvaluator() {
         return new BooleanSearchTermEvaluator();
     }
 
@@ -47,7 +47,7 @@ public class BooleanSearchTermEvaluatorIntegrationTest extends SearchTermEvaluat
         final BooleanSearchTerm st = makeSearchTerm(rawSearchTerm);
         assertThat(st.getValue()).isEqualTo(value);
 
-        final BooleanSearchTermEvaluator ste = makeSearchTermEvaluator();
+        final BooleanSearchTermEvaluator ste = getEvaluator();
         final Condition s = ste.evaluate(st);
 
         assertThat(s.toString()).isEqualTo(condition);

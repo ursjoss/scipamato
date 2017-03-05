@@ -1,7 +1,6 @@
 package ch.difty.sipamato.persistance.jooq.paper.searchorder;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -15,46 +14,28 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ch.difty.sipamato.entity.filter.StringSearchTerm;
 import ch.difty.sipamato.entity.filter.StringSearchTerm.Token;
 import ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType;
-import ch.difty.sipamato.lib.NullArgumentException;
 
 @RunWith(MockitoJUnitRunner.class)
-public class StringSearchTermEvaluatorTest {
+public class StringSearchTermEvaluatorTest  extends SearchTermEvaluatorTest<StringSearchTerm> {
 
     private final StringSearchTermEvaluator e = new StringSearchTermEvaluator();
 
     private final List<Token> tokens = new ArrayList<>();
+
     @Mock
     private StringSearchTerm stMock;
     @Mock
     private Token tokenMock;
 
-    @Test
-    public void evaluating_withNullParameter_throws() {
-        try {
-            e.evaluate(null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchTerm must not be null.");
-        }
+    @Override
+    protected StringSearchTermEvaluator getEvaluator() {
+        return e;
     }
 
     private void expectToken(TokenType type, String term) {
         when(stMock.getFieldName()).thenReturn("fieldX");
         tokens.add(new Token(type, term));
         when(stMock.getTokens()).thenReturn(tokens);
-    }
-
-    private String prepare(String... strings) {
-        final StringBuilder sb = new StringBuilder();
-        final String nl = System.getProperty("line.separator");
-        for (final String s : strings) {
-            sb.append(s).append(nl);
-        }
-        if (sb.length() > nl.length()) {
-            return sb.substring(0, sb.length() - nl.length());
-        } else {
-            return sb.toString();
-        }
     }
 
     @Test
@@ -188,7 +169,7 @@ public class StringSearchTermEvaluatorTest {
     @Test
     public void buildingConditionForNotWord_appliesNotContains() {
         expectToken(TokenType.NOTWORD, "foo");
-        assertThat(e.evaluate(stMock).toString()).isEqualTo(prepare(
+        assertThat(e.evaluate(stMock).toString()).isEqualTo(concat(
             // @formatter:off
             "not(lower(cast(fieldX as varchar)) like ('%' || replace(",
             "  replace(",
@@ -210,7 +191,7 @@ public class StringSearchTermEvaluatorTest {
     @Test
     public void buildingConditionForWord_appliesContains() {
         expectToken(TokenType.WORD, "foo");
-        assertThat(e.evaluate(stMock).toString()).isEqualTo(prepare(
+        assertThat(e.evaluate(stMock).toString()).isEqualTo(concat(
             // @formatter:off
             "lower(cast(fieldX as varchar)) like ('%' || replace(",
             "  replace(",

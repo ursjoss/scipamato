@@ -6,7 +6,7 @@ import ch.difty.sipamato.entity.filter.SearchTerm;
 import junitparams.JUnitParamsRunner;
 
 @RunWith(JUnitParamsRunner.class)
-public abstract class SearchTermEvaluatorIntegrationTest<T extends SearchTerm, E extends SearchTermEvaluator<T>> {
+public abstract class SearchTermEvaluatorIntegrationTest<T extends SearchTerm> extends SearchTermEvaluatorTest<T> {
 
     protected static final long ID = 1;
     protected static final long SC_ID = 10;
@@ -16,20 +16,5 @@ public abstract class SearchTermEvaluatorIntegrationTest<T extends SearchTerm, E
     protected abstract int getSearchTermType();
 
     protected abstract T makeSearchTerm(String rawSearchTerm);
-
-    protected abstract E makeSearchTermEvaluator();
-
-    protected String concat(String... strings) {
-        final StringBuilder sb = new StringBuilder();
-        final String nl = System.getProperty("line.separator");
-        for (final String s : strings) {
-            sb.append(s).append(nl);
-        }
-        if (sb.length() > nl.length()) {
-            return sb.substring(0, sb.length() - nl.length());
-        } else {
-            return sb.toString();
-        }
-    }
 
 }
