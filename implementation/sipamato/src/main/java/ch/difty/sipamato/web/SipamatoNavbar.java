@@ -41,6 +41,7 @@ public class SipamatoNavbar extends Navbar {
             /**
              * Work around issue with StatelessForm in LoginPage
              */
+            @Override
             public boolean getStatelessHint() {
                 return true;
             }

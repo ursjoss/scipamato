@@ -122,18 +122,18 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
     }
 
     private SipamatoNavbar newNavbar(String markupId) {
-        SipamatoNavbar navbar = new SipamatoNavbar(markupId);
+        SipamatoNavbar nb = new SipamatoNavbar(markupId);
 
-        navbar.setPosition(SipamatoNavbar.Position.TOP);
-        navbar.setBrandName(new ResourceModel("brandname", getProperties().getBrand()));
-        navbar.setInverted(true);
+        nb.setPosition(SipamatoNavbar.Position.TOP);
+        nb.setBrandName(new ResourceModel("brandname", getProperties().getBrand()));
+        nb.setInverted(true);
 
-        addPageLink(navbar, SipamatoHomePage.class, "menu.home", GlyphIconType.home);
-        addPageLink(navbar, PaperListPage.class, "menu.papers", GlyphIconType.list);
-        addPageLink(navbar, PaperSearchPage.class, "menu.search", GlyphIconType.search);
-        addPageLink(navbar, LogoutPage.class, "menu.logout", GlyphIconType.edit);
+        addPageLink(nb, SipamatoHomePage.class, "menu.home", GlyphIconType.home);
+        addPageLink(nb, PaperListPage.class, "menu.papers", GlyphIconType.list);
+        addPageLink(nb, PaperSearchPage.class, "menu.search", GlyphIconType.search);
+        addPageLink(nb, LogoutPage.class, "menu.logout", GlyphIconType.edit);
 
-        return navbar;
+        return nb;
     }
 
     private <P extends BasePage<?>> void addPageLink(SipamatoNavbar navbar, Class<P> pageClass, String labelResource, IconType iconType) {
