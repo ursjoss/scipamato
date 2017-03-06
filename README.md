@@ -10,7 +10,7 @@ TODO
 
 ## Preconditions
 
-Currently the project is depending on a snapshot version (0.10.12-SNAPSHOT) of [wicket-bootstrap](https://github.com/l0rdn1kk0n/wicket-bootstrap). So checkout that project first and build it using
+Currently the project is depending on a snapshot version (0.10.12-SNAPSHOT) of [wicket-bootstrap](https://github.com/l0rdn1kk0n/wicket-bootstrap). So checkout that project first, switch to branch `wicket-7.x` and build it using
 
 `mvn clean install`
 
