@@ -30,8 +30,8 @@ import ch.difty.sipamato.web.panel.search.SearchOrderSelectorPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
 
 /**
- * The PaperSearchPage manages {@link SearchOrders} by allowing the user to select, create or modify those
- * and see the result of the searches in the result panel.
+ * The PaperSearchPage manages {@link SearchOrder}s by allowing the user to select, create or modify them
+ * and see the result of the search in the result panel.
  *
  * The page forwards to the {@link PaperSearchCriteriaPage} in order to set up or amend the {@link SearchCriteria}
  * contained within a {@link SearchOrder}.
