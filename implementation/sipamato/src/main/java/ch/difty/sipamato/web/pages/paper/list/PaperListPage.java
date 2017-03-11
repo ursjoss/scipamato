@@ -81,7 +81,7 @@ public class PaperListPage extends BasePage<Void> {
         queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(filter, PaperFilter.PUB_YEAR_FROM)), Optional.empty());
         queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(filter, PaperFilter.PUB_YEAR_UNTIL)), Optional.empty());
 
-        queueResponsePageButton("newPaper", new PaperEntryPage(getPageParameters()));
+        queueResponsePageButton("newPaper", () -> new PaperEntryPage(getPageParameters()));
         queueXmlPasteModalPanelAndLink("xmlPasteModal", "showXmlPasteModalLink");
     }
 

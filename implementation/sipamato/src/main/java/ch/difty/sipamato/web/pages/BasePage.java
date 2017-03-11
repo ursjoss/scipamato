@@ -26,6 +26,7 @@ import ch.difty.sipamato.config.ApplicationProperties;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.web.WicketUtils;
+import ch.difty.sipamato.web.component.SerializableSupplier;
 import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 import ch.difty.sipamato.web.pages.login.LogoutPage;
 import ch.difty.sipamato.web.pages.paper.list.PaperListPage;
@@ -169,14 +170,14 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         }
     }
 
-    protected void queueResponsePageButton(final String id, BasePage<?> responsePage) {
+    protected void queueResponsePageButton(final String id, SerializableSupplier<BasePage<?>> responsePage) {
         BootstrapAjaxButton newButton = new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null), Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                 super.onSubmit(target, form);
-                setResponsePage(responsePage);
+                setResponsePage(responsePage.get());
             }
         };
         queue(newButton);
