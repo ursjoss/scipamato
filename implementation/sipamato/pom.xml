@@ -382,19 +382,6 @@
                             <pluginExecutions>
                                 <pluginExecution>
                                     <pluginExecutionFilter>
-                                        <groupId>org.codehaus.mojo</groupId>
-                                        <artifactId>sql-maven-plugin</artifactId>
-                                        <versionRange>[1.5,)</versionRange>
-                                        <goals>
-                                            <goal>execute</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore />
-                                    </action>
-                                </pluginExecution>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
                                         <groupId>org.jooq</groupId>
                                         <artifactId>jooq-codegen-maven</artifactId>
                                         <versionRange>${org.jooq.version}</versionRange>
@@ -410,7 +397,7 @@
                                     <pluginExecutionFilter>
                                         <groupId>org.flywaydb</groupId>
                                         <artifactId>flyway-maven-plugin</artifactId>
-                                        <versionRange>[4.1.2,)</versionRange>
+                                        <version>${flyway.version}</version>
                                         <goals>
                                             <goal>migrate</goal>
                                         </goals>
