@@ -49,6 +49,7 @@
         <wicket.version>7.6.0</wicket.version>
         <org.jooq.version>3.9.1</org.jooq.version>
         <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
+        <flyway.version>4.1.2</flyway.version>
 
         <jasperreports.version>6.4.0</jasperreports.version>
 
@@ -78,6 +79,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+
         <!-- XML processing -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -100,14 +102,16 @@
             <version>${org.jooq.version}</version><!--$NO-MVN-MAN-VER$ -->
         </dependency>
         <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jool</artifactId>
-            <version>0.9.12</version>
-        </dependency>
-        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version><!--$NO-MVN-MAN-VER$ -->
+        </dependency>
+
+        <!-- TODO get rid of Spring Data -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
@@ -184,6 +188,13 @@
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-bean-validation</artifactId>
             <version>${wicket.version}</version>
+        </dependency>
+
+        <!-- Lambda utilities -->
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jool</artifactId>
+            <version>0.9.12</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-feign -->
@@ -395,6 +406,19 @@
                                         <ignore />
                                     </action>
                                 </pluginExecution>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.flywaydb</groupId>
+                                        <artifactId>flyway-maven-plugin</artifactId>
+                                        <versionRange>[4.1.2,)</versionRange>
+                                        <goals>
+                                            <goal>migrate</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
+                                </pluginExecution>
                             </pluginExecutions>
                         </lifecycleMappingMetadata>
                     </configuration>
@@ -432,47 +456,31 @@
                 </executions>
             </plugin>
 
-            <!-- The H2 test schema is loaded here -->
+            <!-- Flyway Database Migration -->
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>sql-maven-plugin</artifactId>
-                <version>1.5</version>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
 
-                <configuration>
-                    <skip>${skip.db.creation}</skip>
-                    <skip>${maven.test.skip}</skip>
-                    <forkMode>always</forkMode>
-                </configuration>
-
+                <!-- Execution of the Flyway plugin in the "generate-sources" phase to allow the jOOQ code generator to take over -->
                 <executions>
                     <execution>
-                        <id>create-database-h2</id>
                         <phase>generate-sources</phase>
                         <goals>
-                            <goal>execute</goal>
+                            <goal>migrate</goal>
                         </goals>
-                        <configuration>
-                            <driver>${spring.datasource.driverClassName}</driver>
-                            <url>${spring.datasource.url}</url>
-                            <username>${spring.datasource.username}</username>
-                            <password>${spring.datasource.password}</password>
-
-                            <autocommit>true</autocommit>
-                            <srcFiles>
-                                <srcFile>src/main/resources/schema-h2.sql</srcFile>
-                                <srcFile>src/main/resources/data-h2.sql</srcFile>
-                            </srcFiles>
-                        </configuration>
                     </execution>
                 </executions>
 
-                <dependencies>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>${h2.version}</version>
-                    </dependency>
-                </dependencies>
+                <!-- Note that we need to prefix the db/migration path with filesystem: to prevent Flyway from looking for our migration scripts only on the classpath -->
+                <configuration>
+                    <url>${spring.datasource.url}</url>
+                    <user>${spring.datasource.username}</user>
+                    <password>${spring.datasource.password}</password>
+                    <locations>
+                        <location>filesystem:src/main/resources/db/migration/h2</location>
+                    </locations>
+                </configuration>
             </plugin>
 
             <!-- The jOOQ code generator plugin -->
@@ -500,7 +508,7 @@
                                     <name>org.jooq.util.h2.H2Database</name>
                                     <includes>.*</includes>
                                     <excludes></excludes>
-                                    <inputSchema>PUBLIC</inputSchema>
+                                    <inputSchema>PUBLIC</inputSchema><!-- TODO Schema SIPAMATO -->
                                 </database>
                                 <generate>
                                     <deprecated>false</deprecated>
