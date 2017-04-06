@@ -35,7 +35,7 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
     public void creatingWhereCondition_withAuthorMask_searchesFirstAuthorAndAuthors() {
         String pattern = "am";
         filter.setAuthorMask(pattern);
-        assertThat(mapper.map(filter).toString()).isEqualTo(makeWhereClause(pattern, "FIRST_AUTHOR", "AUTHORS"));
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(makeWhereClause(pattern, "FIRST_AUTHOR", "AUTHORS"));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
         String pattern = "m";
         filter.setMethodsMask(pattern);
         // @formatter:off
-        assertThat(mapper.map(filter).toString()).isEqualTo(makeWhereClause(pattern
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(makeWhereClause(pattern
                 , "EXPOSURE_POLLUTANT"
                 , "EXPOSURE_ASSESSMENT"
                 , "METHODS"
@@ -60,7 +60,7 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
         String pattern = "foo";
         filter.setSearchMask(pattern);
         // @formatter:off
-        assertThat(mapper.map(filter).toString()).isEqualTo(makeWhereClause(pattern
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(makeWhereClause(pattern
                 , "DOI"
                 , "LOCATION"
                 , "TITLE"
@@ -83,13 +83,13 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
     @Test
     public void creatingWhereCondition_withPublicationYearFrom_searchesPublicationYear() {
         filter.setPublicationYearFrom(2016);
-        assertThat(mapper.map(filter).toString()).isEqualTo("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" >= 2016");
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" >= 2016");
     }
 
     @Test
     public void creatingWhereCondition_withPublicationYearUntil_searchesPublicationYear() {
         filter.setPublicationYearUntil(2016);
-        assertThat(mapper.map(filter).toString()).isEqualTo("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" <= 2016");
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" <= 2016");
     }
 
 }

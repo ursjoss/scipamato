@@ -677,12 +677,11 @@ public class SearchConditionTest {
     public void equalsAndHash2_withEmptySearchConditions() {
         SearchCondition f1 = new SearchCondition();
         SearchCondition f2 = new SearchCondition();
-        assertEquality(f1, f2, 888458017);
+        assertEquality(f1, f2);
     }
 
-    private void assertEquality(SearchCondition f1, SearchCondition f2, int hashCode) {
+    private void assertEquality(SearchCondition f1, SearchCondition f2) {
         assertThat(f1.hashCode()).isEqualTo(f2.hashCode());
-        assertThat(f2.hashCode()).isEqualTo(hashCode);
         assertThat(f1.equals(f2)).isTrue();
         assertThat(f2.equals(f1)).isTrue();
     }
@@ -693,7 +692,7 @@ public class SearchConditionTest {
         f1.setAuthors("foo");
         SearchCondition f2 = new SearchCondition();
         f2.setAuthors("foo");
-        assertEquality(f1, f2, -2079105538);
+        assertEquality(f1, f2);
     }
 
     @Test
@@ -712,7 +711,7 @@ public class SearchConditionTest {
         f2.setFirstAuthor("baz");
         f2.setFirstAuthorOverridden(true);
         f2.setMethodOutcome("blup");
-        assertEquality(f1, f2, 996451851);
+        assertEquality(f1, f2);
 
         f2.setMethodOutcome("blup2");
         assertThat(f1.equals(f2)).isFalse();
@@ -730,7 +729,7 @@ public class SearchConditionTest {
         f1.setAuthors("foo");
         SearchCondition f2 = new SearchCondition();
         f2.setAuthors("foo");
-        assertEquality(f1, f2, -2079105538);
+        assertEquality(f1, f2);
 
         f1.setSearchConditionId(3l);
         assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode());
@@ -743,7 +742,7 @@ public class SearchConditionTest {
         assertThat(f2.equals(f1)).isFalse();
 
         f2.setSearchConditionId(3l);
-        assertEquality(f1, f2, -1993218085);
+        assertEquality(f1, f2);
     }
 
     @Test
@@ -754,7 +753,7 @@ public class SearchConditionTest {
         assertThat(f1.equals(f2)).isFalse();
 
         f2.setCreatedDisplayValue("foo");
-        assertEquality(f1, f2, -1754170281);
+        assertEquality(f1, f2);
 
         f2.setCreatedDisplayValue("bar");
         assertThat(f1.equals(f2)).isFalse();
@@ -771,7 +770,7 @@ public class SearchConditionTest {
         assertThat(f1.equals(f2)).isFalse();
 
         f2.setModifiedDisplayValue("foo");
-        assertEquality(f1, f2, -781192085);
+        assertEquality(f1, f2);
 
         f2.setModifiedDisplayValue("bar");
         assertThat(f1.equals(f2)).isFalse();

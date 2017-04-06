@@ -1,7 +1,7 @@
 package ch.difty.sipamato.persistance.jooq.paper.searchorder;
 
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
-import static ch.difty.sipamato.db.tables.User.USER;
+import static ch.difty.sipamato.db.tables.SipamatoUser.SIPAMATO_USER;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -53,7 +53,7 @@ class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearchTerm> {
         }
         final Field<Object> field = DSL.field(fieldName);
         final String userName = "%" + token.getUserSqlData().toLowerCase() + "%";
-        final SelectConditionStep<Record1<Long>> step = DSL.select(PAPER.ID).from(PAPER).innerJoin(USER).on(field.eq(USER.ID)).where(USER.USER_NAME.lower().like(userName));
+        final SelectConditionStep<Record1<Long>> step = DSL.select(PAPER.ID).from(PAPER).innerJoin(SIPAMATO_USER).on(field.eq(SIPAMATO_USER.ID)).where(SIPAMATO_USER.USER_NAME.lower().like(userName));
         conditions.add(() -> PAPER.ID.in(step));
     }
 

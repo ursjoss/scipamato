@@ -90,18 +90,18 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
     public void getConditions_withSearchOrderWithAuditSearchTermForCreatedUser() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1l);
-        sc1.addSearchTerm(SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "PAPER.CREATED_BY", "mkj"));
+        sc1.addSearchTerm(SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "paper.created_by", "mkj"));
         searchOrder.add(sc1);
 
         Condition cond = finder.getConditionsFrom(searchOrder);
         assertThat(cond.toString()).isEqualTo(
             // @formatter:off
-            "\"PUBLIC\".\"PAPER\".\"ID\" in (\n" +
-            "  select \"PUBLIC\".\"PAPER\".\"ID\"\n" +
-            "  from \"PUBLIC\".\"PAPER\"\n" +
-            "    join \"PUBLIC\".\"USER\"\n" +
-            "    on PAPER.CREATED_BY = \"PUBLIC\".\"USER\".\"ID\"\n" +
-            "  where lower(\"PUBLIC\".\"USER\".\"USER_NAME\") like '%mkj%'\n" +
+            "\"public\".\"paper\".\"id\" in (\n" +
+            "  select \"public\".\"paper\".\"id\"\n" +
+            "  from \"public\".\"paper\"\n" +
+            "    join \"public\".\"sipamato_user\"\n" +
+            "    on paper.created_by = \"public\".\"sipamato_user\".\"id\"\n" +
+            "  where lower(\"public\".\"sipamato_user\".\"user_name\") like '%mkj%'\n" +
             ")");
             // @formatter:on
     }
@@ -110,24 +110,24 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
     public void getConditions_withSearchOrderWithAuditSearchTermForCreationTimeStamp() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1l);
-        SearchTerm st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "PAPER.CREATED", ">=\"2017-02-01 23:55:12\"");
+        SearchTerm st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "paper.created", ">=\"2017-02-01 23:55:12\"");
         sc1.addSearchTerm(st);
         searchOrder.add(sc1);
 
         Condition cond = finder.getConditionsFrom(searchOrder);
-        assertThat(cond.toString()).isEqualTo("PAPER.CREATED >= timestamp '2017-02-01 23:55:12.0'");
+        assertThat(cond.toString()).isEqualTo("paper.created >= timestamp '2017-02-01 23:55:12.0'");
     }
 
     @Test
     public void getConditions_withSearchOrderWithAuditSearchTermForLastModTimeStamp() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1l);
-        SearchTerm st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "PAPER.LAST_MODIFIED", "<2017-02-01 23:55:12");
+        SearchTerm st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "paper.last_modified", "<2017-02-01 23:55:12");
         sc1.addSearchTerm(st);
         searchOrder.add(sc1);
 
         Condition cond = finder.getConditionsFrom(searchOrder);
-        assertThat(cond.toString()).isEqualTo("PAPER.LAST_MODIFIED < timestamp '2017-02-01 23:55:12.0'");
+        assertThat(cond.toString()).isEqualTo("paper.last_modified < timestamp '2017-02-01 23:55:12.0'");
     }
 
     @Test
@@ -158,18 +158,18 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
             "    firstAuthorOverridden = false\n" +
             "    and exists (\n" +
             "      select 1 \"one\"\n" +
-            "      from \"PUBLIC\".\"PAPER_CODE\"\n" +
+            "      from \"public\".\"paper_code\"\n" +
             "      where (\n" +
-            "        \"PUBLIC\".\"PAPER_CODE\".\"PAPER_ID\" = \"PUBLIC\".\"PAPER\".\"ID\"\n" +
-            "        and lower(\"PUBLIC\".\"PAPER_CODE\".\"CODE\") = '1f'\n" +
+            "        \"public\".\"paper_code\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+            "        and lower(\"public\".\"paper_code\".\"code\") = '1f'\n" +
             "      )\n" +
             "    )\n" +
             "    and exists (\n" +
             "      select 1 \"one\"\n" +
-            "      from \"PUBLIC\".\"PAPER_CODE\"\n" +
+            "      from \"public\".\"paper_code\"\n" +
             "      where (\n" +
-            "        \"PUBLIC\".\"PAPER_CODE\".\"PAPER_ID\" = \"PUBLIC\".\"PAPER\".\"ID\"\n" +
-            "        and lower(\"PUBLIC\".\"PAPER_CODE\".\"CODE\") = '5s'\n" +
+            "        \"public\".\"paper_code\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+            "        and lower(\"public\".\"paper_code\".\"code\") = '5s'\n" +
             "      )\n" +
             "    )\n" +
             "  )\n" +
@@ -209,23 +209,23 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
             "      firstAuthorOverridden = false\n" +
             "      and exists (\n" +
             "        select 1 \"one\"\n" +
-            "        from \"PUBLIC\".\"PAPER_CODE\"\n" +
+            "        from \"public\".\"paper_code\"\n" +
             "        where (\n" +
-            "          \"PUBLIC\".\"PAPER_CODE\".\"PAPER_ID\" = \"PUBLIC\".\"PAPER\".\"ID\"\n" +
-            "          and lower(\"PUBLIC\".\"PAPER_CODE\".\"CODE\") = '1f'\n" +
+            "          \"public\".\"paper_code\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+            "          and lower(\"public\".\"paper_code\".\"code\") = '1f'\n" +
             "        )\n" +
             "      )\n" +
             "      and exists (\n" +
             "        select 1 \"one\"\n" +
-            "        from \"PUBLIC\".\"PAPER_CODE\"\n" +
+            "        from \"public\".\"paper_code\"\n" +
             "        where (\n" +
-            "          \"PUBLIC\".\"PAPER_CODE\".\"PAPER_ID\" = \"PUBLIC\".\"PAPER\".\"ID\"\n" +
-            "          and lower(\"PUBLIC\".\"PAPER_CODE\".\"CODE\") = '5s'\n" +
+            "          \"public\".\"paper_code\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+            "          and lower(\"public\".\"paper_code\".\"code\") = '5s'\n" +
             "        )\n" +
             "      )\n" +
             "    )\n" +
             "  )\n" +
-            "  and \"PUBLIC\".\"PAPER\".\"ID\" not in (3)\n" +
+            "  and \"public\".\"paper\".\"id\" not in (3)\n" +
             ")"
             // @formatter:on
         );
@@ -238,7 +238,7 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
         searchOrder.addExclusionOfPaperWithId(3);
 
         Condition cond = finder.getConditionsFrom(searchOrder);
-        assertThat(cond.toString()).isEqualTo("\"PUBLIC\".\"PAPER\".\"ID\" in (3)");
+        assertThat(cond.toString()).isEqualTo("\"public\".\"paper\".\"id\" in (3)");
     }
 
     @Test
@@ -273,23 +273,23 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
             "      firstAuthorOverridden = false\n" +
             "      and exists (\n" +
             "        select 1 \"one\"\n" +
-            "        from \"PUBLIC\".\"PAPER_CODE\"\n" +
+            "        from \"public\".\"paper_code\"\n" +
             "        where (\n" +
-            "          \"PUBLIC\".\"PAPER_CODE\".\"PAPER_ID\" = \"PUBLIC\".\"PAPER\".\"ID\"\n" +
-            "          and lower(\"PUBLIC\".\"PAPER_CODE\".\"CODE\") = '1f'\n" +
+            "          \"public\".\"paper_code\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+            "          and lower(\"public\".\"paper_code\".\"code\") = '1f'\n" +
             "        )\n" +
             "      )\n" +
             "      and exists (\n" +
             "        select 1 \"one\"\n" +
-            "        from \"PUBLIC\".\"PAPER_CODE\"\n" +
+            "        from \"public\".\"paper_code\"\n" +
             "        where (\n" +
-            "          \"PUBLIC\".\"PAPER_CODE\".\"PAPER_ID\" = \"PUBLIC\".\"PAPER\".\"ID\"\n" +
-            "          and lower(\"PUBLIC\".\"PAPER_CODE\".\"CODE\") = '5s'\n" +
+            "          \"public\".\"paper_code\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+            "          and lower(\"public\".\"paper_code\".\"code\") = '5s'\n" +
             "        )\n" +
             "      )\n" +
             "    )\n" +
             "  )\n" +
-            "  and \"PUBLIC\".\"PAPER\".\"ID\" not in (\n" +
+            "  and \"public\".\"paper\".\"id\" not in (\n" +
             "    5, 17\n" +
             "  )\n" +
             ")"

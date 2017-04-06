@@ -8,11 +8,11 @@ import java.util.List;
 
 import org.jooq.RecordMapper;
 
-import ch.difty.sipamato.db.tables.records.UserRecord;
+import ch.difty.sipamato.db.tables.records.SipamatoUserRecord;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.persistance.jooq.RecordMapperTest;
 
-public class UserRecordMapperTest extends RecordMapperTest<UserRecord, User> {
+public class UserRecordMapperTest extends RecordMapperTest<SipamatoUserRecord, User> {
 
     public static final int ID = 3;
     public static final String USER_NAME = "userName";
@@ -36,17 +36,17 @@ public class UserRecordMapperTest extends RecordMapperTest<UserRecord, User> {
     }
 
     @Override
-    protected RecordMapper<UserRecord, User> getMapper() {
+    protected RecordMapper<SipamatoUserRecord, User> getMapper() {
         return new UserRecordMapper();
     }
 
     @Override
-    protected UserRecord makeRecord() {
-        return new UserRecord(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, VERSION, CREATED, CREATED_BY, LAST_MOD, LAST_MOD_BY);
+    protected SipamatoUserRecord makeRecord() {
+        return new SipamatoUserRecord(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, VERSION, CREATED, CREATED_BY, LAST_MOD, LAST_MOD_BY);
     }
 
     @Override
-    protected void setAuditFieldsIn(UserRecord record) {
+    protected void setAuditFieldsIn(SipamatoUserRecord record) {
         // no-op
     }
 

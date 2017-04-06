@@ -60,6 +60,8 @@ public class JooqPaperRepoIntegrationTest {
     @Test
     public void findingAll() {
         List<Paper> papers = repo.findAll();
+        papers.sort((p1, p2) -> p1.getId().compareTo(p2.getId()));
+
         assertThat(papers).hasSize(RECORD_COUNT_PREPOPULATED);
         assertThat(papers.get(0).getId()).isEqualTo(1);
         assertThat(papers.get(1).getId()).isEqualTo(2);

@@ -1,6 +1,6 @@
 package ch.difty.sipamato.persistance.jooq.user;
 
-import static ch.difty.sipamato.db.Tables.USER;
+import static ch.difty.sipamato.db.Tables.SIPAMATO_USER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 
@@ -41,8 +41,8 @@ public class JooqUserRepoIntegrationTest {
 
     @After
     public void teardown() {
-        // Delete all books that were created in any test
-        dsl.delete(USER).where(USER.ID.gt(MAX_ID_PREPOPULATED)).execute();
+        // Delete all users that were created in any test
+        dsl.delete(SIPAMATO_USER).where(SIPAMATO_USER.ID.gt(MAX_ID_PREPOPULATED)).execute();
     }
 
     @Test

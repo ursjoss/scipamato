@@ -58,11 +58,11 @@ public class SortMapperTest {
 
         Iterator<SortField<Paper>> it = sortFields.iterator();
         SortField<Paper> sf = it.next();
-        assertThat(sf.getName()).isEqualTo("AUTHORS");
+        assertThat(sf.getName()).isEqualToIgnoringCase("authors");
         assertThat(sf.getOrder()).isEqualTo(SortOrder.DESC);
 
         sf = it.next();
-        assertThat(sf.getName()).isEqualTo("TITLE");
+        assertThat(sf.getName()).isEqualToIgnoringCase("title");
         assertThat(sf.getOrder()).isEqualTo(SortOrder.ASC);
     }
 

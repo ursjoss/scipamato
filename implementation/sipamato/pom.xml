@@ -43,16 +43,22 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <java.version>1.8</java.version>
-        <wicket-bootstrap.version>0.10.12</wicket-bootstrap.version>
-        <wicket-spring-boot-starter.version>1.0.6</wicket-spring-boot-starter.version>
-        <wicket.version>7.6.0</wicket.version>
+
+        <!-- persistence layer -->
+        <jdbc-postgres.version>42.0.0</jdbc-postgres.version>
         <org.jooq.version>3.9.1</org.jooq.version>
         <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
         <flyway.version>4.1.2</flyway.version>
 
+        <!-- presentation layer -->
+        <wicket-spring-boot-starter.version>1.0.6</wicket-spring-boot-starter.version>
+        <wicket.version>7.6.0</wicket.version>
+        <wicket-bootstrap.version>0.10.12</wicket-bootstrap.version>
         <jasperreports.version>6.4.0</jasperreports.version>
 
+        <!-- Sonar properties -->
         <sonar.projectKey>ch.difty.sipamato</sonar.projectKey>
         <sonar.language>java</sonar.language>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
@@ -62,6 +68,7 @@
     </properties>
 
     <dependencies>
+        <!-- spring-boot starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -95,23 +102,47 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
+            <exclusions>
+                <exclusion>
+                    <!-- Excluding tomcat-jdbc so we can use HikariCP -->
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>tomcat-jdbc</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
+        <!-- JDBC Drivers - PostgreSQL and H2 - select via connection properties and profile (postgres vs development) -->
         <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq</artifactId>
-            <version>${org.jooq.version}</version><!--$NO-MVN-MAN-VER$ -->
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${jdbc-postgres.version}</version><!--$NO-MVN-MAN-VER$ -->
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
+
+        <!-- HikariCP connection pool -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
+
+        <!-- jOOQ - building type safe SQL -->
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>${org.jooq.version}</version><!--$NO-MVN-MAN-VER$ -->
+        </dependency>
+
+        <!-- Flyway to manage database migrations -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
             <version>${flyway.version}</version><!--$NO-MVN-MAN-VER$ -->
         </dependency>
 
-        <!-- TODO get rid of Spring Data -->
+        <!-- spring data - TODO get rid of it -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
@@ -197,7 +228,7 @@
             <version>0.9.12</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-feign -->
+        <!-- Feign for accessing PubMed - https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-feign -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-feign</artifactId>
@@ -209,18 +240,7 @@
             <version>9.4.0</version>
         </dependency>
 
-        <!-- JasperReport -->
-        <dependency>
-            <groupId>org.wicketstuff</groupId>
-            <artifactId>wicketstuff-jasperreports</artifactId>
-            <version>${wicket.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>net.sf.jasperreports</groupId>
-                    <artifactId>jasperreports</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!-- JasperReport for PDF generation -->
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
@@ -229,6 +249,17 @@
                 <exclusion>
                     <groupId>commons-lang</groupId>
                     <artifactId>commons-lang</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.wicketstuff</groupId>
+            <artifactId>wicketstuff-jasperreports</artifactId>
+            <version>${wicket.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.sf.jasperreports</groupId>
+                    <artifactId>jasperreports</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -258,11 +289,93 @@
         </dependency>
     </dependencies>
 
+    <!-- SpringBoot-1.5 provides a template '{vendor}' that can be used in the application.properties to dynamically determine the migration scripts depending on the database specified in the spring.datasource.* 
+        properties. However, using jOOQ requires the Flyway migration to take place in the generate-sources phase beforehand. During that time we don't have the {vendor} template resolved yet and therefore need 
+        to hardcode it here in the pom. (At least I haven't found a more graceful approach yet). Therefore I'm managing the different RDBMS (currently PostgreSQL and H2) using profiles. The PostgreSQL profile 
+        is active by default. -->
     <profiles>
+        <profile>
+            <id>postgres</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- Flyway Database Migration with HARDCODED path to the postgresql script location -->
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>${flyway.version}</version>
+
+                        <!-- Execution of the Flyway plugin in the "generate-sources" phase to allow the jOOQ code generator to take over -->
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>migrate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+
+                        <!-- Note that we need to prefix the db/migration path with filesystem: to prevent Flyway from looking for our migration scripts only on the classpath -->
+                        <configuration>
+                            <url>${flyway.url}</url>
+                            <user>${flyway.user}</user>
+                            <password>${flyway.password}</password>
+                            <locations>
+                                <location>filesystem:db/migration/postgresql/</location>
+                            </locations>
+                        </configuration>
+                    </plugin>
+                    <!-- The jOOQ code generator plugin -->
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${org.jooq.version}</version><!--$NO-MVN-MAN-VER$ -->
+
+                        <executions>
+                            <execution>
+                                <id>generate-postgres</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${spring.datasource.hikari.driver-class-name}</driver>
+                                        <url>${spring.datasource.hikari.jdbc-url}</url>
+                                        <user>${spring.datasource.hikari.username}</user>
+                                        <password>${spring.datasource.hikari.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <database>
+                                            <name>org.jooq.util.postgres.PostgresDatabase</name>
+                                            <includes>.*</includes>
+                                            <excludes></excludes>
+                                            <inputSchema>public</inputSchema>
+                                        </database>
+                                        <generate>
+                                            <deprecated>false</deprecated>
+                                            <instanceFields>true</instanceFields>
+                                            <pojos>false</pojos>
+                                        </generate>
+                                        <target>
+                                            <packageName>ch.difty.sipamato.db</packageName>
+                                            <directory>${org.jooq.target.dir}</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <profile>
             <id>development</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
                 <spring.profiles.include>development</spring.profiles.include>
@@ -273,7 +386,79 @@
                     <artifactId>spring-boot-devtools</artifactId>
                 </dependency>
             </dependencies>
+            <build>
+                <plugins>
+                    <!-- Flyway Database Migration with HARDCODED path to the h2 script location -->
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>${flyway.version}</version>
+
+                        <!-- Execution of the Flyway plugin in the "generate-sources" phase to allow the jOOQ code generator to take over -->
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>migrate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+
+                        <!-- Note that we need to prefix the db/migration path with filesystem: to prevent Flyway from looking for our migration scripts only on the classpath -->
+                        <configuration>
+                            <url>${flyway.url}</url>
+                            <user>${flyway.user}</user>
+                            <password>${flyway.password}</password>
+                            <locations>
+                                <location>filesystem:src/main/resources/db/migration/h2</location>
+                            </locations>
+                        </configuration>
+                    </plugin>
+                    <!-- The jOOQ code generator plugin -->
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${org.jooq.version}</version><!--$NO-MVN-MAN-VER$ -->
+
+                        <executions>
+                            <execution>
+                                <id>generate-h2</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${spring.datasource.driverClassName}</driver>
+                                        <url>${spring.datasource.url}</url>
+                                        <user>${spring.datasource.username}</user>
+                                        <password>${spring.datasource.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <database>
+                                            <name>org.jooq.util.h2.H2Database</name>
+                                            <includes>.*</includes>
+                                            <excludes></excludes>
+                                            <inputSchema>PUBLIC</inputSchema>
+                                        </database>
+                                        <generate>
+                                            <deprecated>false</deprecated>
+                                            <instanceFields>true</instanceFields>
+                                            <pojos>false</pojos>
+                                        </generate>
+                                        <target>
+                                            <packageName>ch.difty.sipamato.db</packageName>
+                                            <directory>${org.jooq.target.dir}</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
+
         <profile>
             <id>sonar-coverage</id>
             <activation>
@@ -424,6 +609,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
+            <!-- Provide properties from property files (application.properties) as project propertie witin pom -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
@@ -443,83 +629,7 @@
                 </executions>
             </plugin>
 
-            <!-- Flyway Database Migration -->
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>${flyway.version}</version>
-
-                <!-- Execution of the Flyway plugin in the "generate-sources" phase to allow the jOOQ code generator to take over -->
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>migrate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-
-                <!-- Note that we need to prefix the db/migration path with filesystem: to prevent Flyway from looking for our migration scripts only on the classpath -->
-                <configuration>
-                    <url>${spring.datasource.url}</url>
-                    <user>${spring.datasource.username}</user>
-                    <password>${spring.datasource.password}</password>
-                    <locations>
-                        <location>filesystem:src/main/resources/db/migration/h2</location>
-                    </locations>
-                </configuration>
-            </plugin>
-
-            <!-- The jOOQ code generator plugin -->
-            <plugin>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-codegen-maven</artifactId>
-                <version>${org.jooq.version}</version><!--$NO-MVN-MAN-VER$ -->
-
-                <executions>
-                    <execution>
-                        <id>generate-h2</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <jdbc>
-                                <driver>${spring.datasource.driverClassName}</driver>
-                                <url>${spring.datasource.url}</url>
-                                <user>${spring.datasource.username}</user>
-                                <password>${spring.datasource.password}</password>
-                            </jdbc>
-                            <generator>
-                                <database>
-                                    <name>org.jooq.util.h2.H2Database</name>
-                                    <includes>.*</includes>
-                                    <excludes></excludes>
-                                    <inputSchema>PUBLIC</inputSchema><!-- TODO Schema SIPAMATO -->
-                                </database>
-                                <generate>
-                                    <deprecated>false</deprecated>
-                                    <instanceFields>true</instanceFields>
-                                    <pojos>false</pojos>
-                                </generate>
-                                <target>
-                                    <packageName>ch.difty.sipamato.db</packageName>
-                                    <directory>${org.jooq.target.dir}</directory>
-                                </target>
-                            </generator>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>${h2.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-            <!-- jaxb2 maven plugin to generage the java classes from the dtd -->
+            <!-- jaxb2 maven plugin to generate the java classes from the dtd -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxb2-maven-plugin</artifactId>
@@ -541,6 +651,7 @@
                 </configuration>
             </plugin>
 
+            <!-- Assist eclipse in recognizing the generates sources (from jOOQ and jaxb) as source files -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>

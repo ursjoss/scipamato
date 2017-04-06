@@ -15,7 +15,7 @@ public abstract class FilterConditionMapperTest<R extends Record, TI extends Tab
         final StringBuilder sb = new StringBuilder();
         sb.append("(").append("\n  ");
         for (final String fieldName : fieldNames) {
-            sb.append("lower(\"PUBLIC\".\"").append(getTable().getName()).append("\".\"").append(fieldName).append("\") like lower('%").append(pattern).append("%')").append("\n");
+            sb.append("lower(\"public\".\"").append(getTable().getName()).append("\".\"").append(fieldName).append("\") like lower('%").append(pattern).append("%')").append("\n");
             if (fields-- > 1)
                 sb.append("  or ");
         }

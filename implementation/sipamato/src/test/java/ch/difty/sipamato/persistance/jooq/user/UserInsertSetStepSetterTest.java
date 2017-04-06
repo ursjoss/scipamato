@@ -1,6 +1,6 @@
 package ch.difty.sipamato.persistance.jooq.user;
 
-import static ch.difty.sipamato.db.tables.User.USER;
+import static ch.difty.sipamato.db.tables.SipamatoUser.SIPAMATO_USER;
 import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.CREATED_BY;
 import static ch.difty.sipamato.persistance.jooq.RecordMapperTest.LAST_MOD_BY;
 import static ch.difty.sipamato.persistance.jooq.user.UserRecordMapperTest.EMAIL;
@@ -19,23 +19,23 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import ch.difty.sipamato.db.tables.records.UserRecord;
+import ch.difty.sipamato.db.tables.records.SipamatoUserRecord;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetterTest;
 
-public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<UserRecord, User> {
+public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<SipamatoUserRecord, User> {
 
-    private final InsertSetStepSetter<UserRecord, User> setter = new UserInsertSetStepSetter();
+    private final InsertSetStepSetter<SipamatoUserRecord, User> setter = new UserInsertSetStepSetter();
 
     @Mock
     private User entityMock;
 
     @Mock
-    private UserRecord recordMock;
+    private SipamatoUserRecord recordMock;
 
     @Override
-    protected InsertSetStepSetter<UserRecord, User> getSetter() {
+    protected InsertSetStepSetter<SipamatoUserRecord, User> getSetter() {
         return setter;
     }
 
@@ -56,19 +56,19 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<UserRec
 
     @Override
     protected void stepSetFixtureExceptAudit() {
-        when(getStep().set(USER.USER_NAME, USER_NAME)).thenReturn(getMoreStep());
+        when(getStep().set(SIPAMATO_USER.USER_NAME, USER_NAME)).thenReturn(getMoreStep());
 
-        when(getMoreStep().set(USER.FIRST_NAME, FIRST_NAME)).thenReturn(getMoreStep());
-        when(getMoreStep().set(USER.LAST_NAME, LAST_NAME)).thenReturn(getMoreStep());
-        when(getMoreStep().set(USER.EMAIL, EMAIL)).thenReturn(getMoreStep());
-        when(getMoreStep().set(USER.PASSWORD, PASSWORD)).thenReturn(getMoreStep());
-        when(getMoreStep().set(USER.ENABLED, ENABLED)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SIPAMATO_USER.FIRST_NAME, FIRST_NAME)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SIPAMATO_USER.LAST_NAME, LAST_NAME)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SIPAMATO_USER.EMAIL, EMAIL)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SIPAMATO_USER.PASSWORD, PASSWORD)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SIPAMATO_USER.ENABLED, ENABLED)).thenReturn(getMoreStep());
     }
 
     @Override
     protected void setStepFixtureAudit() {
-        when(getMoreStep().set(USER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(USER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SIPAMATO_USER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SIPAMATO_USER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
     }
 
     @Override
@@ -83,19 +83,19 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<UserRec
 
     @Override
     protected void verifySettingFieldsExceptKeyAndAudit() {
-        verify(getStep()).set(USER.USER_NAME, USER_NAME);
+        verify(getStep()).set(SIPAMATO_USER.USER_NAME, USER_NAME);
 
-        verify(getMoreStep()).set(USER.FIRST_NAME, FIRST_NAME);
-        verify(getMoreStep()).set(USER.LAST_NAME, LAST_NAME);
-        verify(getMoreStep()).set(USER.EMAIL, EMAIL);
-        verify(getMoreStep()).set(USER.PASSWORD, PASSWORD);
-        verify(getMoreStep()).set(USER.ENABLED, ENABLED);
+        verify(getMoreStep()).set(SIPAMATO_USER.FIRST_NAME, FIRST_NAME);
+        verify(getMoreStep()).set(SIPAMATO_USER.LAST_NAME, LAST_NAME);
+        verify(getMoreStep()).set(SIPAMATO_USER.EMAIL, EMAIL);
+        verify(getMoreStep()).set(SIPAMATO_USER.PASSWORD, PASSWORD);
+        verify(getMoreStep()).set(SIPAMATO_USER.ENABLED, ENABLED);
     }
 
     @Override
     protected void verifySettingAuditFields() {
-        verify(getMoreStep()).set(USER.CREATED_BY, CREATED_BY);
-        verify(getMoreStep()).set(USER.LAST_MODIFIED_BY, LAST_MOD_BY);
+        verify(getMoreStep()).set(SIPAMATO_USER.CREATED_BY, CREATED_BY);
+        verify(getMoreStep()).set(SIPAMATO_USER.LAST_MODIFIED_BY, LAST_MOD_BY);
     }
 
     @Test
@@ -112,7 +112,7 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<UserRec
         getSetter().considerSettingKeyOf(getMoreStep(), getEntity());
 
         verify(getEntity()).getId();
-        verify(getMoreStep()).set(USER.ID, ID);
+        verify(getMoreStep()).set(SIPAMATO_USER.ID, ID);
     }
 
     @Test

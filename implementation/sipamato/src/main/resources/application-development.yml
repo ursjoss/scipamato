@@ -35,3 +35,14 @@ wicket:
           enabled: true
       wicketsource:
         enabled: true
+#jooq:
+#  sql:
+#    dialect=H2
+#spring:
+#  profiles:
+#    active: DB_JOOQ
+#  datasource:
+#    driverClassName: org.h2.Driver
+#    url: jdbc:h2:./sipamato;MODE=PostgreSQL
+#    username: sa
+#    password:

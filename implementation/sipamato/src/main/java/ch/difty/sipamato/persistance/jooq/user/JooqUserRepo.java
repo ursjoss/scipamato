@@ -1,6 +1,6 @@
 package ch.difty.sipamato.persistance.jooq.user;
 
-import static ch.difty.sipamato.db.tables.User.USER;
+import static ch.difty.sipamato.db.tables.SipamatoUser.SIPAMATO_USER;
 import static ch.difty.sipamato.db.tables.UserRole.USER_ROLE;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.sipamato.auth.Role;
-import ch.difty.sipamato.db.tables.records.UserRecord;
+import ch.difty.sipamato.db.tables.records.SipamatoUserRecord;
 import ch.difty.sipamato.db.tables.records.UserRoleRecord;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.lib.DateTimeService;
@@ -35,16 +35,16 @@ import ch.difty.sipamato.service.Localization;
  * @author u.joss
  */
 @Repository
-public class JooqUserRepo extends JooqEntityRepo<UserRecord, User, Integer, ch.difty.sipamato.db.tables.User, UserRecordMapper, UserFilter> implements UserRepository {
+public class JooqUserRepo extends JooqEntityRepo<SipamatoUserRecord, User, Integer, ch.difty.sipamato.db.tables.SipamatoUser, UserRecordMapper, UserFilter> implements UserRepository {
 
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JooqUserRepo.class);
 
     @Autowired
-    public JooqUserRepo(DSLContext dsl, UserRecordMapper mapper, JooqSortMapper<UserRecord, User, ch.difty.sipamato.db.tables.User> sortMapper,
-            GenericFilterConditionMapper<UserFilter> filterConditionMapper, DateTimeService dateTimeService, Localization localization, InsertSetStepSetter<UserRecord, User> insertSetStepSetter,
-            UpdateSetStepSetter<UserRecord, User> updateSetStepSetter, Configuration jooqConfig) {
+    public JooqUserRepo(DSLContext dsl, UserRecordMapper mapper, JooqSortMapper<SipamatoUserRecord, User, ch.difty.sipamato.db.tables.SipamatoUser> sortMapper,
+            GenericFilterConditionMapper<UserFilter> filterConditionMapper, DateTimeService dateTimeService, Localization localization,
+            InsertSetStepSetter<SipamatoUserRecord, User> insertSetStepSetter, UpdateSetStepSetter<SipamatoUserRecord, User> updateSetStepSetter, Configuration jooqConfig) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, localization, insertSetStepSetter, updateSetStepSetter, jooqConfig);
     }
 
@@ -59,22 +59,22 @@ public class JooqUserRepo extends JooqEntityRepo<UserRecord, User, Integer, ch.d
     }
 
     @Override
-    protected Class<? extends UserRecord> getRecordClass() {
-        return UserRecord.class;
+    protected Class<? extends SipamatoUserRecord> getRecordClass() {
+        return SipamatoUserRecord.class;
     }
 
     @Override
-    protected ch.difty.sipamato.db.tables.User getTable() {
-        return USER;
+    protected ch.difty.sipamato.db.tables.SipamatoUser getTable() {
+        return SIPAMATO_USER;
     }
 
     @Override
-    protected TableField<UserRecord, Integer> getTableId() {
-        return USER.ID;
+    protected TableField<SipamatoUserRecord, Integer> getTableId() {
+        return SIPAMATO_USER.ID;
     }
 
     @Override
-    protected Integer getIdFrom(UserRecord record) {
+    protected Integer getIdFrom(SipamatoUserRecord record) {
         return record.getId();
     }
 
@@ -121,7 +121,7 @@ public class JooqUserRepo extends JooqEntityRepo<UserRecord, User, Integer, ch.d
     /** {@inheritDoc} */
     @Override
     public User findByUserName(String userName) {
-        final List<User> users = getDsl().selectFrom(USER).where(USER.USER_NAME.eq(userName)).fetchInto(User.class);
+        final List<User> users = getDsl().selectFrom(SIPAMATO_USER).where(SIPAMATO_USER.USER_NAME.eq(userName)).fetchInto(User.class);
         if (users.isEmpty()) {
             return null;
         } else {

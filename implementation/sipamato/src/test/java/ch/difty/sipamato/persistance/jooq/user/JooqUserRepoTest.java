@@ -1,6 +1,6 @@
 package ch.difty.sipamato.persistance.jooq.user;
 
-import static ch.difty.sipamato.db.tables.User.USER;
+import static ch.difty.sipamato.db.tables.SipamatoUser.SIPAMATO_USER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.verify;
@@ -10,13 +10,13 @@ import org.jooq.TableField;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ch.difty.sipamato.db.tables.records.UserRecord;
+import ch.difty.sipamato.db.tables.records.SipamatoUserRecord;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.persistance.jooq.EntityRepository;
 import ch.difty.sipamato.persistance.jooq.JooqEntityRepoTest;
 
-public class JooqUserRepoTest extends JooqEntityRepoTest<UserRecord, User, Integer, ch.difty.sipamato.db.tables.User, UserRecordMapper, UserFilter> {
+public class JooqUserRepoTest extends JooqEntityRepoTest<SipamatoUserRecord, User, Integer, ch.difty.sipamato.db.tables.SipamatoUser, UserRecordMapper, UserFilter> {
 
     private static final Integer SAMPLE_ID = 3;
 
@@ -63,10 +63,10 @@ public class JooqUserRepoTest extends JooqEntityRepoTest<UserRecord, User, Integ
     }
 
     @Mock
-    private UserRecord persistedRecord;
+    private SipamatoUserRecord persistedRecord;
 
     @Override
-    protected UserRecord getPersistedRecord() {
+    protected SipamatoUserRecord getPersistedRecord() {
         return persistedRecord;
     }
 
@@ -84,18 +84,18 @@ public class JooqUserRepoTest extends JooqEntityRepoTest<UserRecord, User, Integ
     }
 
     @Override
-    protected Class<UserRecord> getRecordClass() {
-        return UserRecord.class;
+    protected Class<SipamatoUserRecord> getRecordClass() {
+        return SipamatoUserRecord.class;
     }
 
     @Override
-    protected ch.difty.sipamato.db.tables.User getTable() {
-        return USER;
+    protected ch.difty.sipamato.db.tables.SipamatoUser getTable() {
+        return SIPAMATO_USER;
     }
 
     @Override
-    protected TableField<UserRecord, Integer> getTableId() {
-        return USER.ID;
+    protected TableField<SipamatoUserRecord, Integer> getTableId() {
+        return SIPAMATO_USER.ID;
     }
 
     @Mock
