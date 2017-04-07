@@ -21,7 +21,7 @@ Eventually, the production server will most probably run PostgreSQL - most proba
 
 ## Consequence of using [jOOQ](https://www.jooq.org/)
 
-The jOOQ code generator plugin needs to run in the maven goal _generate_. Even more, it needs to have any Flyway database migrations completed before it starts. Both need to know database specific properties (url, driver, dialect, Flyway migration scripts etc.). This DB specific setup partially happens in the `pom.xml` itself and partially in db-specific application properties files. The mechanism to specify database type and therefore the relevant property file is through spring and maven profiles. Depending how you run maven and or start the application, there's different ways of making sure all relevant components get the right properties:
+The jOOQ code generator plugin needs to run in the maven goal _generate_. Even more, it needs to have any Flyway database migrations already completed before the code generator starts. Both need to know database specific properties (url, driver, dialect, Flyway migration scripts etc.). This DB specific setup partially takes place in the `pom.xml` itself and partially in db-specific application properties files. The mechanism to specify database type and therefore the relevant property file is through spring and maven profiles. As the tests that usually run with maven also need to know the spring profile, you need to specify the spring profile on the maven command line. The maven profile is activated based on the spring profile. The relevant properties files are:
 
 * application.properties (for database independent settings)
 * application-h2.properties (sourced if the spring profile `h2` is active)
