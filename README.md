@@ -6,7 +6,25 @@ SiPaMaTo (Scientific Paper Management Tool)
 
 TODO
 
+# Technology Stack
 
+* Java 1.8
+* [Spring Boot](https://projects.spring.io/spring-boot/) with [Spring Security](https://projects.spring.io/spring-security/)
+* Presentation Layer
+  * [Apache Wicket](https://wicket.apache.org/) with [Bootstrap](http://getbootstrap.com/)
+    * [wicket-spring-boot-starter](https://github.com/MarcGiffing/wicket-spring-boot)
+    * [wicket-bootstrap](https://github.com/l0rdn1kk0n/wicket-bootstrap)
+  * [JasperReport](http://community.jaspersoft.com/) for PDF generation
+  * [Feign](https://github.com/OpenFeign/feign) as HHTP client to PubMed
+  * jaxb for XML parsing
+* Persistence Layer
+  * [jOOQ](https://www.jooq.org/)
+  * [HikariCP](https://github.com/brettwooldridge/HikariCP)
+  * Supported Databases
+    * PostgreSQL
+    * H2
+  * [Flyway](https://flywaydb.org/) for database migrations
+  
 # Developer Information
 
 See [Wiki](https://github.com/ursjoss/sipamato/wiki/Developer-Information)
