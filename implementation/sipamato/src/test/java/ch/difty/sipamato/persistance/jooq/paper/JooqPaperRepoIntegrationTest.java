@@ -11,14 +11,10 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.junit.After;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
 
 /**
  * Note: The test will insert some records into the DB. It will try to wipe those records after the test suite terminates.
@@ -27,10 +23,7 @@ import ch.difty.sipamato.entity.Paper;
  * additional records in the db would be wiped out by the tearDown method. So please make sure the number of records (plus
  * the highest id) match the declarations further down.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = SipamatoApplication.class)
-@ActiveProfiles({ "DB_JOOQ" })
-public class JooqPaperRepoIntegrationTest {
+public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     private static final String ID_PART = ",id=1,created=2016-12-14T14:47:29.431,createdBy=1,lastModified=2016-12-14T14:47:29.431,lastModifiedBy=1,version=1";
     // @formatter:off

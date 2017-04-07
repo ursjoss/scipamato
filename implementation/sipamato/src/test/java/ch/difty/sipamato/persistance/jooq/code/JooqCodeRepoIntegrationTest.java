@@ -5,22 +5,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.CodeClassId;
+import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = SipamatoApplication.class)
-@ActiveProfiles({ "DB_JOOQ" })
-public class JooqCodeRepoIntegrationTest {
+public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JooqCodeRepoIntegrationTest.class);
 

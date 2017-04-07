@@ -7,21 +7,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = SipamatoApplication.class)
-@ActiveProfiles({ "DB_JOOQ" })
-public class JooqPaperSlimRepoIntegrationTest {
+public class JooqPaperSlimRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     private JooqPaperSlimRepo repo;

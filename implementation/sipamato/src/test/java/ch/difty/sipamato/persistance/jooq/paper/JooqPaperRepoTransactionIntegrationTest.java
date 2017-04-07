@@ -12,33 +12,27 @@ import org.jooq.DSLContext;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import ch.difty.sipamato.SipamatoApplication;
+import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = SipamatoApplication.class)
-@ActiveProfiles({ "DB_JOOQ" })
-public class JooqPaperRepoTransactionIntegrationTest {
+public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
     DSLContext dsl;
+
     @Autowired
     DataSourceTransactionManager txMgr;
+
     @Autowired
     JooqPaperRepo books;
 
     @After
     public void teardown() {
-
         // Delete all books that were created in any test
         dsl.delete(PAPER).where(PAPER.ID.gt(MAX_ID_PREPOPULATED)).execute();
     }

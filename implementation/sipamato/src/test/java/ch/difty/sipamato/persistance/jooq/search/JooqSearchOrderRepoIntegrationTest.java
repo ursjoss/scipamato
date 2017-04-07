@@ -8,15 +8,11 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.junit.After;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
 
 /**
  * Note: The test will insert some records into the DB. It will try to wipe those records after the test suite terminates.
@@ -25,10 +21,7 @@ import ch.difty.sipamato.entity.filter.SearchCondition;
  * additional records in the db would be wiped out by the tearDown method. So please make sure the number of records (plus
  * the highest id) match the declarations further down.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = SipamatoApplication.class)
-@ActiveProfiles({ "DB_JOOQ" })
-public class JooqSearchOrderRepoIntegrationTest {
+public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     private static final Integer RECORD_COUNT_PREPOPULATED = 4;
     private static final Long MAX_ID_PREPOPULATED = 4l;
