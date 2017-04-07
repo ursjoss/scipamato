@@ -45,7 +45,7 @@ This starts the application with the spring profile `h2` (datasource etc.)
 
 ## Using PostgreSQL as database
 
-### Preparing the database
+### Preparing the database (required once)
 
 * Install PostgreSQL and configure (I use 9.6)
 * Create the database `sipamato` and the administrative user `sipamadmin` for the Flyway migrations.
