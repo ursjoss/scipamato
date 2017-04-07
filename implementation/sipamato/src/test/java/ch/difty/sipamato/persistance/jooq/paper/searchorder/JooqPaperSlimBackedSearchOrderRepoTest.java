@@ -94,7 +94,7 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
         searchOrder.add(sc1);
 
         Condition cond = finder.getConditionsFrom(searchOrder);
-        assertThat(cond.toString()).isEqualTo(
+        assertThat(cond.toString()).isEqualToIgnoringCase(
             // @formatter:off
             "\"public\".\"paper\".\"id\" in (\n" +
             "  select \"public\".\"paper\".\"id\"\n" +
@@ -135,7 +135,7 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
         SearchOrder searchOrder = makeSearchOrderWithConditions();
 
         Condition cond = finder.getConditionsFrom(searchOrder);
-        assertThat(cond.toString()).isEqualTo(
+        assertThat(cond.toString()).isEqualToIgnoringCase(
         // @formatter:off
             "(\n" +
             "  (\n" +
@@ -185,7 +185,7 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
         searchOrder.addExclusionOfPaperWithId(3);
 
         Condition cond = finder.getConditionsFrom(searchOrder);
-        assertThat(cond.toString()).isEqualTo(
+        assertThat(cond.toString()).isEqualToIgnoringCase(
             // @formatter:off
             "(\n" +
             "  (\n" +
@@ -238,7 +238,7 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
         searchOrder.addExclusionOfPaperWithId(3);
 
         Condition cond = finder.getConditionsFrom(searchOrder);
-        assertThat(cond.toString()).isEqualTo("\"public\".\"paper\".\"id\" in (3)");
+        assertThat(cond.toString()).isEqualToIgnoringCase("\"public\".\"paper\".\"id\" in (3)");
     }
 
     @Test
@@ -249,7 +249,7 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
         searchOrder.addExclusionOfPaperWithId(17);
 
         Condition cond = finder.getConditionsFrom(searchOrder);
-        assertThat(cond.toString()).isEqualTo(
+        assertThat(cond.toString()).isEqualToIgnoringCase(
         // @formatter:off
             "(\n" +
             "  (\n" +

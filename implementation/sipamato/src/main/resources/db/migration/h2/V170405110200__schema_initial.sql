@@ -233,9 +233,9 @@ ALTER TABLE search_condition_code ADD FOREIGN KEY (code) REFERENCES code(code) o
 
 
 
-DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS sipamato_user;
 
-CREATE TABLE user (
+CREATE TABLE sipamato_user (
   id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   user_name VARCHAR(30) NOT NULL,
   first_name VARCHAR NOT NULL,
@@ -251,8 +251,8 @@ CREATE TABLE user (
   last_modified_by INT DEFAULT 1,
 );
 
-DROP INDEX IF EXISTS idx_user_username;
-CREATE UNIQUE INDEX idx_user_username ON user (user_name);
+DROP INDEX IF EXISTS idx_sipamato_user_username;
+CREATE UNIQUE INDEX idx_sipamato_user_username ON sipamato_user (user_name);
 
 
 DROP TABLE IF EXISTS user_role;
@@ -269,4 +269,4 @@ CREATE TABLE user_role (
   last_modified_by INT DEFAULT 1,
 );
 
-ALTER TABLE user_role ADD FOREIGN KEY (user_id) REFERENCES user(id) on delete cascade on update cascade;
+ALTER TABLE user_role ADD FOREIGN KEY (user_id) REFERENCES sipamato_user(id) on delete cascade on update cascade;

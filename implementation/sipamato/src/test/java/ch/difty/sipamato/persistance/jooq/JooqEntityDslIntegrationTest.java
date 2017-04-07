@@ -18,6 +18,10 @@ import ch.difty.sipamato.db.tables.records.PaperRecord;
  * @author Lukas Eder
  * @author Thomas Darimont
  * @author Urs Joss
+ *
+ * Note: Running this test from maven should work out of the box if the proper db profile is activated.
+ *       However, if you run it in Eclipse, you need to temporarily add the active db profile (h2, postgres)
+ *       to the @ActiveProfiles annotation
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
