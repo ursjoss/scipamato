@@ -58,6 +58,10 @@
         <wicket-bootstrap.version>0.10.12</wicket-bootstrap.version>
         <jasperreports.version>6.4.0</jasperreports.version>
 
+        <!-- test (surefire) test class definitions -->
+        <surefire.testclass.pt>**/*PageTest.java, **/*PanelTest.java</surefire.testclass.pt>
+        <surefire.testclass.it>**/*IntegrationTest.java</surefire.testclass.it>
+
         <!-- Sonar properties -->
         <sonar.projectKey>ch.difty.sipamato</sonar.projectKey>
         <sonar.language>java</sonar.language>
@@ -515,8 +519,31 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
-            <id>integrationTests</id>
+            <!-- run page tests only -->
+            <id>pageTests</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <includes>
+                                <include>${surefire.testclass.pt}</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!-- run all test classes -->
+            <id>allTests</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
@@ -534,7 +561,6 @@
                 </plugins>
             </build>
         </profile>
-
     </profiles>
 
     <build>
@@ -679,6 +705,18 @@
                 <configuration>
                     <dotGitDirectory>${project.basedir}../../.git</dotGitDirectory>
                     <verbose>true</verbose>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- By default do not run page tests and integration tests -->
+                    <excludes>
+                        <exclude>${surefire.testclass.pt}</exclude>
+                        <exclude>${surefire.testclass.it}</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
