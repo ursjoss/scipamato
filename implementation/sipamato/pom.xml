@@ -322,6 +322,12 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
+            <properties>
+                <spring.profile.include>postgres,DB_JOOQ</spring.profile.include>
+                <!-- db specific property file (containing url, username etc.) published to maven plugins (Flyway, jOOQ) by the properties-maven-plugin -->
+                <profile-specific-property-file>src/main/resources/application-postgres.properties</profile-specific-property-file>
+                <jooq-db-generator>org.jooq.util.postgres.PostgresDatabase</jooq-db-generator>
+            </properties>
             <build>
                 <pluginManagement>
                     <plugins>
@@ -369,6 +375,23 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>properties-maven-plugin</artifactId>
+                    </plugin>
+
+                    <!-- Flyway database migration -->
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>${flyway.version}</version>
+                    </plugin>
+
+                    <!-- The jOOQ code generator plugin -->
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
                     </plugin>
                 </plugins>
             </build>
