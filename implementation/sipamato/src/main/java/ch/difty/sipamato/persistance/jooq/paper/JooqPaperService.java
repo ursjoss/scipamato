@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.persistance.jooq.JooqEntityService;
+import ch.difty.sipamato.persistance.jooq.Page;
+import ch.difty.sipamato.persistance.jooq.Pageable;
 import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
 import ch.difty.sipamato.service.DefaultServiceResult;
 import ch.difty.sipamato.service.PaperService;

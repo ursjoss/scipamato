@@ -3,9 +3,8 @@ package ch.difty.sipamato.persistance.jooq;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
+
+import ch.difty.sipamato.persistance.jooq.Sort.Direction;
 
 public class SipamatoPageRequestTest {
 

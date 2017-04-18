@@ -10,7 +10,6 @@ import org.jooq.SortField;
 import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.entity.SipamatoEntity;

@@ -12,9 +12,6 @@ import org.jooq.SortField;
 import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.SipamatoEntity;

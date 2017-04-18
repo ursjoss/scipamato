@@ -18,10 +18,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.User;
+import ch.difty.sipamato.persistance.jooq.Page;
+import ch.difty.sipamato.persistance.jooq.Pageable;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JooqUserServiceTest {

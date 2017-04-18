@@ -2,11 +2,10 @@ package ch.difty.sipamato.persistance.jooq.paper.searchorder;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import ch.difty.sipamato.entity.IdSipamatoEntity;
 import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.persistance.jooq.Page;
+import ch.difty.sipamato.persistance.jooq.Pageable;
 
 /**
  * Repository to find papers or paperSlims based on SearchOrder specifications.

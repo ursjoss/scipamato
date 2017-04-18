@@ -11,13 +11,13 @@ import java.util.List;
 import org.jooq.TableField;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.persistance.jooq.JooqReadOnlyRepoTest;
+import ch.difty.sipamato.persistance.jooq.Page;
+import ch.difty.sipamato.persistance.jooq.Pageable;
 import ch.difty.sipamato.persistance.jooq.ReadOnlyRepository;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.persistance.jooq.paper.searchorder.PaperSlimBackedSearchOrderRepository;

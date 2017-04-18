@@ -13,9 +13,6 @@ import org.jooq.Record1;
 import org.jooq.SelectConditionStep;
 import org.jooq.SortField;
 import org.jooq.impl.DSL;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.db.Tables;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
@@ -31,6 +28,9 @@ import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.persistance.jooq.ConditionalSupplier;
 import ch.difty.sipamato.persistance.jooq.EntityRecordMapper;
 import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
+import ch.difty.sipamato.persistance.jooq.Page;
+import ch.difty.sipamato.persistance.jooq.PageImpl;
+import ch.difty.sipamato.persistance.jooq.Pageable;
 
 /**
  * Common abstract base class for the paper or paperSlim specific repository implementations.

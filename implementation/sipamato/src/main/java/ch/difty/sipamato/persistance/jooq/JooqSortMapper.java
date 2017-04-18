@@ -5,7 +5,6 @@ import java.util.Collection;
 import org.jooq.Record;
 import org.jooq.SortField;
 import org.jooq.impl.TableImpl;
-import org.springframework.data.domain.Sort;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
 

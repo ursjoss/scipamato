@@ -5,12 +5,12 @@ import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.injection.Injector;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.persistance.jooq.Pageable;
 import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
+import ch.difty.sipamato.persistance.jooq.Sort.Direction;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
 /**

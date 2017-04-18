@@ -17,15 +17,15 @@ import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.persistance.jooq.Page;
+import ch.difty.sipamato.persistance.jooq.PageImpl;
+import ch.difty.sipamato.persistance.jooq.Pageable;
 import ch.difty.sipamato.persistance.jooq.paper.JooqPaperService;
 import ch.difty.sipamato.persistance.jooq.paper.slim.JooqPaperSlimService;
 
@@ -60,7 +60,7 @@ public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P
         provider.setService(serviceMock);
         provider.setPaperService(paperServiceMock);
 
-        pageOfSlimPapers = new PageImpl<>(Arrays.asList(entityMock, entityMock, entityMock));
+        pageOfSlimPapers = new PageImpl<PaperSlim>(Arrays.asList(entityMock, entityMock, entityMock));
         pageOfPapers = new PageImpl<>(Arrays.asList(paperMock, paperMock, paperMock, paperMock, paperMock));
 
         localFixture();
