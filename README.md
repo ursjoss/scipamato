@@ -25,6 +25,10 @@ TODO
     * H2
   * [Flyway](https://flywaydb.org/) for database migrations
   
-# Developer Information
+# Information for Developers
 
-See [Wiki](https://github.com/ursjoss/sipamato/wiki/Developer-Information)
+See [Developer Wiki](https://github.com/ursjoss/sipamato/wiki/Developer-Information)
+
+# Information for Operations
+
+See [Operations Wiki](https://github.com/ursjoss/sipamato/wiki/Operations)
