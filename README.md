@@ -25,6 +25,12 @@ TODO
     * H2
   * [Flyway](https://flywaydb.org/) for database migrations
   
+# User Documentation
+
+* [Entering Papers](https://github.com/ursjoss/sipamato/wiki/Entering-Papers)
+* [Filtering Papers](https://github.com/ursjoss/sipamato/wiki/Filtering-Papers)
+
+
 # Information for Developers
 
 See [Developer Wiki](https://github.com/ursjoss/sipamato/wiki/Developer-Information)
