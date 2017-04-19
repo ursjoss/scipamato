@@ -159,12 +159,6 @@
             <version>${flyway.version}</version><!--$NO-MVN-MAN-VER$ -->
         </dependency>
 
-        <!-- spring data - TODO get rid of it -->
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-commons</artifactId>
-        </dependency>
-
         <!-- Apache Wicket + bootstrap -->
         <dependency>
             <groupId>com.giffing.wicket.spring.boot.starter</groupId>
@@ -246,6 +240,7 @@
         </dependency>
 
         <!-- Feign for accessing PubMed - https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-feign -->
+        <!-- TODO currently pulls in (and requires commons-lang, have to live with it for now, excluding it does not work -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-feign</artifactId>
