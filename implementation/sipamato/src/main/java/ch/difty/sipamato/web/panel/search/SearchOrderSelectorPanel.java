@@ -47,6 +47,9 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
 
     private static final String CHANGE = "change";
 
+    // HARDCODED static number of search orders to be visible in the select box. Might need to become more dynamic
+    private static final int SEARCH_ORDER_MAX = 20;
+
     @SpringBean
     private SearchOrderService searchOrderService;
 
@@ -79,7 +82,7 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     }
 
     private void makeAndQueueSearchOrderSelectBox(final String id) {
-        final SearchOrderModel choices = new SearchOrderModel(getActiveUser().getId());
+        final SearchOrderModel choices = new SearchOrderModel(getActiveUser().getId(), SEARCH_ORDER_MAX);
         final IChoiceRenderer<SearchOrder> choiceRenderer = new ChoiceRenderer<>(SearchOrder.DISPLAY_VALUE, SearchOrder.ID);
         final StringResourceModel noneSelectedModel = new StringResourceModel(id + ".noneSelected", this, null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig().withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);

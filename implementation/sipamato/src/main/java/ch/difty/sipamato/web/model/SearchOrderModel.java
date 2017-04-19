@@ -14,9 +14,7 @@ import ch.difty.sipamato.persistance.jooq.search.SearchOrderFilter;
 import ch.difty.sipamato.service.SearchOrderService;
 
 /**
- * Model that offers a wicket page to load {@link SearchOrder}s.
- *
- * <b>Note:</b> Currently limited to the first 20 search orders (globals first, then natural sort order) HARDCODED TODO
+ * Model that offers a wicket page to load a certain amount of {@link SearchOrder}s visible to user with provided id.
  *
  * @author u.joss
  */
@@ -28,17 +26,19 @@ public class SearchOrderModel extends LoadableDetachableModel<List<SearchOrder>>
     private SearchOrderService service;
 
     private final int owner;
+    private final int maxRows;
 
-    public SearchOrderModel(int userId) {
+    public SearchOrderModel(int userId, int maxRows) {
         Injector.get().inject(this);
         this.owner = userId;
+        this.maxRows = maxRows;
     }
 
     @Override
     protected List<SearchOrder> load() {
         final SearchOrderFilter filter = new SearchOrderFilter();
         filter.setOwnerIncludingGlobal(owner);
-        final PaginationContext pc = new PaginationRequest(0, 20, Direction.ASC, "global");
+        final PaginationContext pc = new PaginationRequest(0, maxRows, Direction.ASC, "global");
         return service.findPageByFilter(filter, pc);
     }
 
