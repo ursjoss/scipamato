@@ -30,13 +30,6 @@ public class Sort implements Iterable<ch.difty.sipamato.paging.Sort.Order>, Seri
         this.orders.addAll(orders);
     }
 
-    private void checkPreconditionsFor(final List<Order> orders) {
-        AssertAs.notNull(orders, "orders");
-        if (orders.isEmpty()) {
-            throw new IllegalArgumentException("orders can't be empty.");
-        }
-    }
-
     /**
      * Instantiate {@link Sort} with various sort properties all of the same {@link Direction}
      * @param direction
@@ -48,6 +41,13 @@ public class Sort implements Iterable<ch.difty.sipamato.paging.Sort.Order>, Seri
         this.orders = new ArrayList<>(properties.length);
         for (final String prop : properties) {
             orders.add(new Order(direction, prop));
+        }
+    }
+
+    private void checkPreconditionsFor(final List<Order> orders) {
+        AssertAs.notNull(orders, "orders");
+        if (orders.isEmpty()) {
+            throw new IllegalArgumentException("orders can't be empty.");
         }
     }
 
