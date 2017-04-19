@@ -17,7 +17,6 @@ import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.lib.NullArgumentException;
-import ch.difty.sipamato.paging.Page;
 import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.EntityRepository;
 import ch.difty.sipamato.persistance.jooq.JooqEntityRepoTest;
@@ -47,8 +46,6 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     private Paper paperMock;
     @Mock
     private Pageable pageableMock;
-    @Mock
-    private Page<Paper> pageMock;
 
     private final List<Paper> papers = new ArrayList<>();
 
@@ -286,17 +283,11 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     }
 
     @Test
-    public void findingBySearchOrder_withPageable_delegatesToSearchOrderFinder() {
-        when(searchOrderRepositoryMock.findPagedBySearchOrder(searchOrderMock, pageableMock)).thenReturn(pageMock);
-        when(searchOrderRepositoryMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
-        when(pageMock.getContent()).thenReturn(papers);
-
-        assertThat(makeRepoStubbingEnriching().findBySearchOrder(searchOrderMock, pageableMock).getContent()).containsExactly(paperMock, paperMock);
+    public void findingPageBySearchOrder_delegatesToSearchOrderFinder() {
+        when(searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, pageableMock)).thenReturn(papers);
+        assertThat(makeRepoStubbingEnriching().findPageBySearchOrder(searchOrderMock, pageableMock)).containsExactly(paperMock, paperMock);
         assertThat(enrichtedEntities).containsExactly(paperMock, paperMock);
-
-        verify(searchOrderRepositoryMock).findPagedBySearchOrder(searchOrderMock, pageableMock);
-        verify(searchOrderRepositoryMock).countBySearchOrder(searchOrderMock);
-        verify(pageMock).getContent();
+        verify(searchOrderRepositoryMock).findPageBySearchOrder(searchOrderMock, pageableMock);
     }
 
     @Test

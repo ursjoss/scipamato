@@ -17,8 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.AssertAs;
-import ch.difty.sipamato.paging.Page;
-import ch.difty.sipamato.paging.PageImpl;
 import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.service.Localization;
 
@@ -137,7 +135,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntit
 
     /** {@inheritDoc} */
     @Override
-    public Page<T> findByFilter(final F filter, final Pageable pageable) {
+    public List<T> findPageByFilter(final F filter, final Pageable pageable) {
         final Condition conditions = filterConditionMapper.map(filter);
         final Collection<SortField<T>> sortCriteria = getSortMapper().map(pageable.getSort(), getTable());
         final List<R> queryResults = getDsl().selectFrom(getTable()).where(conditions).orderBy(sortCriteria).limit(pageable.getPageSize()).offset(pageable.getOffset()).fetchInto(getRecordClass());
@@ -146,7 +144,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntit
 
         enrichAssociatedEntitiesOfAll(entities);
 
-        return new PageImpl<>(entities, pageable, (long) countByFilter(filter));
+        return entities;
     }
 
 }

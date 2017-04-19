@@ -25,7 +25,7 @@ public class SearchOrderBasedSortablePaperSlimProviderTest extends SortablePaper
 
     @Override
     protected void localFixture() {
-        when(serviceMock.findBySearchOrder(eq(searchOrder), isA(Pageable.class))).thenReturn(pageOfSlimPapers);
+        when(serviceMock.findPageBySearchOrder(eq(searchOrder), isA(Pageable.class))).thenReturn(pageOfSlimPapers);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class SearchOrderBasedSortablePaperSlimProviderTest extends SortablePaper
 
     @Override
     protected void verifyFilterMock(PageableMatcher matcher) {
-        verify(serviceMock).findBySearchOrder(eq(searchOrder), argThat(matcher));
+        verify(serviceMock).findPageBySearchOrder(eq(searchOrder), argThat(matcher));
     }
 
     @Test
@@ -62,11 +62,11 @@ public class SearchOrderBasedSortablePaperSlimProviderTest extends SortablePaper
     @Test
     public void gettingAllPapersByFilter() {
         provider.setSort("authors", SortOrder.ASCENDING);
-        when(paperServiceMock.findBySearchOrder(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "authors: ASC")))).thenReturn(pageOfPapers);
+        when(paperServiceMock.findPageBySearchOrder(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "authors: ASC")))).thenReturn(pageOfPapers);
         List<Paper> papers = provider.findAllPapersByFilter();
         assertThat(papers).hasSize(5);
         assertThat(papers).containsOnly(paperMock);
-        verify(paperServiceMock).findBySearchOrder(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "authors: ASC")));
+        verify(paperServiceMock).findPageBySearchOrder(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "authors: ASC")));
     }
 
 }

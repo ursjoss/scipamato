@@ -13,8 +13,6 @@ import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.AssertAs;
-import ch.difty.sipamato.paging.Page;
-import ch.difty.sipamato.paging.PageImpl;
 import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
 import ch.difty.sipamato.persistance.jooq.JooqReadOnlyRepo;
@@ -67,11 +65,10 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
 
     /** {@inheritDoc} */
     @Override
-    public Page<PaperSlim> findBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
-        final Page<PaperSlim> page = searchOrderRepository.findPagedBySearchOrder(searchOrder, pageable);
-        final List<PaperSlim> entities = page.getContent();
+    public List<PaperSlim> findPageBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
+        final List<PaperSlim> entities = searchOrderRepository.findPageBySearchOrder(searchOrder, pageable);
         enrichAssociatedEntitiesOfAll(entities);
-        return new PageImpl<>(entities, pageable, (long) countBySearchOrder(searchOrder));
+        return entities;
     }
 
     /** {@inheritDoc} */

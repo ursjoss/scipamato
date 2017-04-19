@@ -30,8 +30,6 @@ import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.lib.TranslationUtils;
-import ch.difty.sipamato.paging.Page;
-import ch.difty.sipamato.paging.PageImpl;
 import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
@@ -184,11 +182,10 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
 
     /** {@inheritDoc} */
     @Override
-    public Page<Paper> findBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
-        final Page<Paper> page = searchOrderRepository.findPagedBySearchOrder(searchOrder, pageable);
-        final List<Paper> entities = page.getContent();
+    public List<Paper> findPageBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
+        final List<Paper> entities = searchOrderRepository.findPageBySearchOrder(searchOrder, pageable);
         enrichAssociatedEntitiesOfAll(entities);
-        return new PageImpl<>(entities, pageable, (long) countBySearchOrder(searchOrder));
+        return entities;
     }
 
     /** {@inheritDoc} */

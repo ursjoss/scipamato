@@ -4,7 +4,6 @@ import java.util.List;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.paging.Page;
 import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.ReadOnlyRepository;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
@@ -18,9 +17,9 @@ public interface PaperSlimRepository extends ReadOnlyRepository<PaperSlim, Long,
     List<PaperSlim> findBySearchOrder(SearchOrder searchOrder);
 
     /**
-     * {@link SearchOrderRepository#findPagedBySearchOrder(SearchOrder, Pageable)}
+     * {@link SearchOrderRepository#findPageBySearchOrder(SearchOrder, Pageable)}
      */
-    Page<PaperSlim> findBySearchOrder(SearchOrder searchOrder, Pageable pageable);
+    List<PaperSlim> findPageBySearchOrder(SearchOrder searchOrder, Pageable pageable);
 
     /**
      * {@link SearchOrderRepository#countBySearchOrder(SearchOrder)}

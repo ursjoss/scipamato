@@ -36,8 +36,8 @@ public class FilterBasedSortablePaperSlimProvider extends SortablePaperSlimProvi
 
     /** {@inheritDoc} */
     @Override
-    protected Iterator<PaperSlim> findByFilter(final Pageable pageable) {
-        return getService().findByFilter(getFilterState(), pageable).iterator();
+    protected Iterator<PaperSlim> findPage(final Pageable pageable) {
+        return getService().findPageByFilter(getFilterState(), pageable).iterator();
     }
 
     /** {@inheritDoc} */
@@ -48,8 +48,8 @@ public class FilterBasedSortablePaperSlimProvider extends SortablePaperSlimProvi
 
     /** {@inheritDoc} */
     @Override
-    protected List<Paper> findAllPapersByFilter(final Direction dir, final String sortProp) {
-        return getPaperService().findByFilter(getFilterState(), new SipamatoPageRequest(dir, sortProp)).getContent();
+    protected List<Paper> findAll(final Direction dir, final String sortProp) {
+        return getPaperService().findPageByFilter(getFilterState(), new SipamatoPageRequest(dir, sortProp));
     }
 
 }

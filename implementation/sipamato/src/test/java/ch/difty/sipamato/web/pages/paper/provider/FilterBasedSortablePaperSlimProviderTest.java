@@ -25,7 +25,7 @@ public class FilterBasedSortablePaperSlimProviderTest extends SortablePaperSlimP
 
     @Override
     protected void localFixture() {
-        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(pageOfSlimPapers);
+        when(serviceMock.findPageByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(pageOfSlimPapers);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class FilterBasedSortablePaperSlimProviderTest extends SortablePaperSlimP
 
     @Override
     protected void verifyFilterMock(PageableMatcher matcher) {
-        verify(serviceMock).findByFilter(eq(filterMock), argThat(matcher));
+        verify(serviceMock).findPageByFilter(eq(filterMock), argThat(matcher));
     }
 
     @Test
@@ -62,11 +62,11 @@ public class FilterBasedSortablePaperSlimProviderTest extends SortablePaperSlimP
     @Test
     public void gettingAllPapersByFilter() {
         provider.setSort("title", SortOrder.DESCENDING);
-        when(paperServiceMock.findByFilter(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(pageOfPapers);
+        when(paperServiceMock.findPageByFilter(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(pageOfPapers);
         List<Paper> papers = provider.findAllPapersByFilter();
         assertThat(papers).hasSize(5);
         assertThat(papers).containsOnly(paperMock);
-        verify(paperServiceMock).findByFilter(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "title: DESC")));
+        verify(paperServiceMock).findPageByFilter(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "title: DESC")));
     }
 
 }

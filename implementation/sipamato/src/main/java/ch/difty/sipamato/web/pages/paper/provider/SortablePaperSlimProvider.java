@@ -68,10 +68,10 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
     public Iterator<PaperSlim> iterator(final long first, final long count) {
         final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         final String sortProp = getSort().getProperty();
-        return findByFilter(new SipamatoPageRequest((int) first, maxRowsPerPage, (int) count, dir, sortProp));
+        return findPage(new SipamatoPageRequest((int) first, maxRowsPerPage, (int) count, dir, sortProp));
     }
 
-    protected abstract Iterator<PaperSlim> findByFilter(Pageable pageable);
+    protected abstract Iterator<PaperSlim> findPage(Pageable pageable);
 
     /**
      * Applies the normal filter and the sort aspect of the pageable to return all records as {@link Paper}s.
@@ -80,10 +80,10 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
     public List<Paper> findAllPapersByFilter() {
         final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         final String sortProp = getSort().getProperty();
-        return findAllPapersByFilter(dir, sortProp);
+        return findAll(dir, sortProp);
     }
 
-    protected abstract List<Paper> findAllPapersByFilter(Direction dir, String sortProp);
+    protected abstract List<Paper> findAll(Direction dir, String sortProp);
 
     @Override
     public long size() {

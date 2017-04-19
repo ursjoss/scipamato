@@ -6,7 +6,6 @@ import java.util.List;
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
-import ch.difty.sipamato.paging.Page;
 import ch.difty.sipamato.paging.Pageable;
 
 /**
@@ -37,13 +36,13 @@ public interface ReadOnlyRepository<T extends SipamatoEntity, ID, F extends Sipa
     T findById(ID id);
 
     /**
-     * Finds all persisted entities matching the provided filter, returned in pages.
+     * Finds the persisted entities matching the provided filter and pagination specification.
      *
      * @param filter of type <code>F</code>
-     * @param pageable {@link Pageable}
+     * @param pagination specification {@link Pageable}
      * @return list of all matching entities <code>T</code>
      */
-    Page<T> findByFilter(F filter, Pageable pageable);
+    List<T> findPageByFilter(F filter, Pageable pageable);
 
     /**
      * Counts all persisted entities matching the provided filter. 

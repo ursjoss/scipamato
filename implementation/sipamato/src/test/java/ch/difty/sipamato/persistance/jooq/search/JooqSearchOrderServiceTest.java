@@ -1,7 +1,6 @@
 package ch.difty.sipamato.persistance.jooq.search;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -11,7 +10,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +19,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
-import ch.difty.sipamato.paging.Page;
 import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.AbstractServiceTest;
 
@@ -36,8 +33,6 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
     private SearchOrderFilter filterMock;
     @Mock
     private Pageable pageableMock;
-    @Mock
-    private Page<SearchOrder> searchOrderPageMock;
     @Mock
     private SearchOrder searchOrderMock;
     @Mock
@@ -66,7 +61,7 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
 
     @Override
     public void specificTearDown() {
-        verifyNoMoreInteractions(repoMock, filterMock, pageableMock, searchOrderPageMock, searchOrderMock, searchConditionMock);
+        verifyNoMoreInteractions(repoMock, filterMock, pageableMock, searchOrderMock, searchConditionMock);
     }
 
     @Test
@@ -92,22 +87,12 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
         verify(repoMock).findById(id);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void findingByFilter_delegatesToRepo() {
-        when(repoMock.findByFilter(filterMock, pageableMock)).thenReturn(searchOrderPageMock);
-        when(searchOrderPageMock.getContent()).thenReturn(searchorders);
-
-        Page<SearchOrder> pageOfPapers = service.findByFilter(filterMock, pageableMock);
-
-        assertThat(pageOfPapers).isEqualTo(searchOrderPageMock);
-        assertThat(pageOfPapers.getContent()).isEqualTo(searchorders);
-
-        verify(repoMock).findByFilter(filterMock, pageableMock);
-        verify(searchOrderPageMock).getContent();
-
-        verify(searchOrderPageMock).forEach(isA(Consumer.class));
-        //        verifyAudit(2);
+        when(repoMock.findPageByFilter(filterMock, pageableMock)).thenReturn(searchorders);
+        assertThat(service.findPageByFilter(filterMock, pageableMock)).isEqualTo(searchorders);
+        verify(repoMock).findPageByFilter(filterMock, pageableMock);
+        verifyAudit(2);
     }
 
     @Test

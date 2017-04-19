@@ -4,7 +4,6 @@ import java.util.List;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.paging.Page;
 import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
@@ -24,14 +23,14 @@ public interface PaperSlimService extends ReadOnlyService<Long, PaperSlim, Paper
     List<PaperSlim> findBySearchOrder(SearchOrder searchOrder);
 
     /**
-     * Finds a page of {@link PaperSlim}s matching the provided {@link SearchOrder},
-     * returned in pages.
+     * Finds a page full of {@link PaperSlim}s matching the provided {@link SearchOrder},
+     * and pagination specification
      *
      * @param searchOrder the filter
      * @param pageable defining paging and sorting
-     * @return a list of papers
+     * @return paged list of papers
      */
-    Page<PaperSlim> findBySearchOrder(SearchOrder searchOrder, Pageable pageable);
+    List<PaperSlim> findPageBySearchOrder(SearchOrder searchOrder, Pageable pageable);
 
     /**
      * Counts the number of entities matching the specified {@link SearchOrder}.

@@ -56,7 +56,7 @@ public class SortablePaperProvider extends SortableDataProvider<Paper, String> i
         Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         String sortProp = getSort().getProperty();
         Pageable pageable = new SipamatoPageRequest((int) offset, (int) size, (int) size, dir, sortProp);
-        return service.findByFilter(filter, pageable).iterator();
+        return service.findPageByFilter(filter, pageable).iterator();
     }
 
     @Override

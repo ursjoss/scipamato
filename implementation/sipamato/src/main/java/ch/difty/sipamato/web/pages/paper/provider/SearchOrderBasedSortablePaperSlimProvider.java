@@ -36,8 +36,8 @@ public class SearchOrderBasedSortablePaperSlimProvider extends SortablePaperSlim
 
     /** {@inheritDoc} */
     @Override
-    protected Iterator<PaperSlim> findByFilter(final Pageable pageable) {
-        return getService().findBySearchOrder(getFilterState(), pageable).iterator();
+    protected Iterator<PaperSlim> findPage(final Pageable pageable) {
+        return getService().findPageBySearchOrder(getFilterState(), pageable).iterator();
     }
 
     /** {@inheritDoc} */
@@ -48,8 +48,8 @@ public class SearchOrderBasedSortablePaperSlimProvider extends SortablePaperSlim
 
     /** {@inheritDoc} */
     @Override
-    protected List<Paper> findAllPapersByFilter(final Direction dir, final String sortProp) {
-        return getPaperService().findBySearchOrder(getFilterState(), new SipamatoPageRequest(dir, sortProp)).getContent();
+    protected List<Paper> findAll(final Direction dir, final String sortProp) {
+        return getPaperService().findPageBySearchOrder(getFilterState(), new SipamatoPageRequest(dir, sortProp));
     }
 
 }

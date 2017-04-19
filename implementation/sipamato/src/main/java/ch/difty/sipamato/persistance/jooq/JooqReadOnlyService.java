@@ -9,7 +9,6 @@ import ch.difty.sipamato.entity.IdSipamatoEntity;
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
-import ch.difty.sipamato.paging.Page;
 import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.user.UserRepository;
 import ch.difty.sipamato.service.ReadOnlyService;
@@ -85,10 +84,10 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdSipamat
 
     /** {@inheritDoc} */
     @Override
-    public Page<T> findByFilter(F filter, Pageable pageable) {
-        final Page<T> page = repo.findByFilter(filter, pageable);
-        page.forEach(this::enrichAuditNamesOf);
-        return page;
+    public List<T> findPageByFilter(F filter, Pageable pageable) {
+        final List<T> entities = repo.findPageByFilter(filter, pageable);
+        entities.forEach(this::enrichAuditNamesOf);
+        return entities;
     }
 
     protected void enrichAuditNamesOfAll(final List<T> entities) {

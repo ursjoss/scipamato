@@ -20,7 +20,6 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.sipamato.entity.User;
-import ch.difty.sipamato.paging.Page;
 import ch.difty.sipamato.paging.Pageable;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -34,8 +33,6 @@ public class JooqUserServiceTest {
     private UserFilter filterMock;
     @Mock
     private Pageable pageableMock;
-    @Mock
-    private Page<User> userPageMock;
     @Mock
     private User userMock;
 
@@ -51,7 +48,7 @@ public class JooqUserServiceTest {
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(repoMock, filterMock, pageableMock, userPageMock, userMock);
+        verifyNoMoreInteractions(repoMock, filterMock, pageableMock, userMock);
     }
 
     @Test
@@ -78,9 +75,9 @@ public class JooqUserServiceTest {
 
     @Test
     public void findingByFilter_delegatesToRepo() {
-        when(repoMock.findByFilter(filterMock, pageableMock)).thenReturn(userPageMock);
-        assertThat(service.findByFilter(filterMock, pageableMock)).isEqualTo(userPageMock);
-        verify(repoMock).findByFilter(filterMock, pageableMock);
+        when(repoMock.findPageByFilter(filterMock, pageableMock)).thenReturn(users);
+        assertThat(service.findPageByFilter(filterMock, pageableMock)).isEqualTo(users);
+        verify(repoMock).findPageByFilter(filterMock, pageableMock);
     }
 
     @Test

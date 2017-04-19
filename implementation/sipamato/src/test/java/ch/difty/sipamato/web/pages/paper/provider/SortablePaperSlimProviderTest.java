@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.model.IModel;
@@ -23,8 +24,6 @@ import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.paging.Page;
-import ch.difty.sipamato.paging.PageImpl;
 import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.paper.JooqPaperService;
 import ch.difty.sipamato.persistance.jooq.paper.slim.JooqPaperSlimService;
@@ -48,8 +47,8 @@ public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P
     protected Paper paperMock;
 
     protected P provider;
-    protected Page<PaperSlim> pageOfSlimPapers;
-    protected Page<Paper> pageOfPapers;
+    protected List<PaperSlim> pageOfSlimPapers;
+    protected List<Paper> pageOfPapers;
 
     protected abstract F getFilter();
 
@@ -60,8 +59,8 @@ public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P
         provider.setService(serviceMock);
         provider.setPaperService(paperServiceMock);
 
-        pageOfSlimPapers = new PageImpl<PaperSlim>(Arrays.asList(entityMock, entityMock, entityMock));
-        pageOfPapers = new PageImpl<>(Arrays.asList(paperMock, paperMock, paperMock, paperMock, paperMock));
+        pageOfSlimPapers = Arrays.asList(entityMock, entityMock, entityMock);
+        pageOfPapers = Arrays.asList(paperMock, paperMock, paperMock, paperMock, paperMock);
 
         localFixture();
     }
@@ -111,7 +110,7 @@ public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P
     @Test
     public void iterating_withNoRecords_returnsNoRecords() {
         // reset the service mock
-        pageOfSlimPapers = new PageImpl<>(Arrays.asList());
+        pageOfSlimPapers = Arrays.asList();
         localFixture();
 
         Iterator<PaperSlim> it = provider.iterator(0, 3);

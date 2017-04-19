@@ -24,8 +24,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
-import ch.difty.sipamato.paging.Page;
-import ch.difty.sipamato.paging.PageImpl;
 import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.search.SearchOrderFilter;
 import ch.difty.sipamato.service.SearchOrderService;
@@ -47,7 +45,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     @Mock
     private SearchOrder searchOrderMock2;
 
-    private Page<SearchOrder> pageOfSearchOrders;
+    private List<SearchOrder> searchOrders;
     private final List<SearchCondition> searchConditions = new ArrayList<>();
 
     @Override
@@ -59,8 +57,8 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     protected void setUpHook() {
         super.setUpHook();
 
-        pageOfSearchOrders = new PageImpl<>(Arrays.asList(searchOrderMock, new SearchOrder(20l, "soName", OWNER_ID, true, searchConditions, null)));
-        when(searchOrderServiceMock.findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class))).thenReturn(pageOfSearchOrders);
+        searchOrders = Arrays.asList(searchOrderMock, new SearchOrder(20l, "soName", OWNER_ID, true, searchConditions, null));
+        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(Pageable.class))).thenReturn(searchOrders);
         when(searchOrderMock.getId()).thenReturn(ID);
     }
 
@@ -182,7 +180,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS + "Label");
 
         verify(searchOrderMock, times(10)).getId();
-        verify(searchOrderServiceMock, times(2)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
+        verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
         verify(searchOrderServiceMock, never()).saveOrUpdate(searchOrderMock);
     }
 
@@ -200,7 +198,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponentOnAjaxResponse(b);
 
         verify(searchOrderMock, times(13)).getId();
-        verify(searchOrderServiceMock, times(3)).findByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
+        verify(searchOrderServiceMock, times(3)).findPageByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
         verify(searchOrderServiceMock).remove(searchOrderMock);
     }
 
