@@ -23,7 +23,7 @@ import ch.difty.sipamato.service.PubmedArticleService;
 import ch.difty.sipamato.service.ServiceResult;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
-import ch.difty.sipamato.web.pages.paper.provider.FilterBasedSortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.provider.PaperSlimByPaperFilterProvider;
 import ch.difty.sipamato.web.panel.pastemodal.XmlPasteModalPanel;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
@@ -52,7 +52,7 @@ public class PaperListPage extends BasePage<Void> {
     private PaperService paperService;
 
     private PaperFilter filter;
-    private FilterBasedSortablePaperSlimProvider dataProvider;
+    private PaperSlimByPaperFilterProvider dataProvider;
 
     public PaperListPage(PageParameters parameters) {
         super(parameters);
@@ -61,7 +61,7 @@ public class PaperListPage extends BasePage<Void> {
 
     private void initFilterAndProvider() {
         filter = new PaperFilter();
-        dataProvider = new FilterBasedSortablePaperSlimProvider(filter, RESULT_PAGE_SIZE);
+        dataProvider = new PaperSlimByPaperFilterProvider(filter, RESULT_PAGE_SIZE);
     }
 
     @Override

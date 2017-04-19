@@ -18,7 +18,7 @@ import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
  *
  * @author u.joss
  */
-public class FilterBasedSortablePaperSlimProvider extends AbstractPaperSlimProvider<PaperFilter> {
+public class PaperSlimByPaperFilterProvider extends AbstractPaperSlimProvider<PaperFilter> {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public class FilterBasedSortablePaperSlimProvider extends AbstractPaperSlimProvi
      *     the paper filter search specification
      * @param rowsPerPage
      */
-    public FilterBasedSortablePaperSlimProvider(final PaperFilter filter, final int rowsPerPage) {
+    public PaperSlimByPaperFilterProvider(final PaperFilter filter, final int rowsPerPage) {
         super(filter, rowsPerPage);
         Injector.get().inject(this);
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
