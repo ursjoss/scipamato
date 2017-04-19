@@ -144,7 +144,7 @@ public class Sort implements Iterable<ch.difty.sipamato.paging.Sort.Order>, Seri
 
     }
 
-    public static enum Direction {
+    public enum Direction {
         ASC,
         DESC;
 
