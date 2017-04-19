@@ -11,8 +11,8 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.paging.Pageable;
-import ch.difty.sipamato.paging.SipamatoPageRequest;
+import ch.difty.sipamato.paging.PaginationContext;
+import ch.difty.sipamato.paging.PaginationRequest;
 import ch.difty.sipamato.paging.Sort.Direction;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.service.PaperService;
@@ -55,8 +55,8 @@ public class SortablePaperProvider extends SortableDataProvider<Paper, String> i
     public Iterator<Paper> iterator(long offset, long size) {
         Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         String sortProp = getSort().getProperty();
-        Pageable pageable = new SipamatoPageRequest((int) offset, (int) size, (int) size, dir, sortProp);
-        return service.findPageByFilter(filter, pageable).iterator();
+        PaginationContext pc = new PaginationRequest((int) offset, (int) size, dir, sortProp);
+        return service.findPageByFilter(filter, pc).iterator();
     }
 
     @Override

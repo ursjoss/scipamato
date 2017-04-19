@@ -15,7 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
 public class FilterBasedSortablePaperSlimProviderTest extends SortablePaperSlimProviderTest<PaperFilter, FilterBasedSortablePaperSlimProvider> {
@@ -25,7 +25,7 @@ public class FilterBasedSortablePaperSlimProviderTest extends SortablePaperSlimP
 
     @Override
     protected void localFixture() {
-        when(serviceMock.findPageByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(pageOfSlimPapers);
+        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(pageOfSlimPapers);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class FilterBasedSortablePaperSlimProviderTest extends SortablePaperSlimP
     }
 
     @Override
-    protected void verifyFilterMock(PageableMatcher matcher) {
+    protected void verifyFilterMock(PaginationContextMatcher matcher) {
         verify(serviceMock).findPageByFilter(eq(filterMock), argThat(matcher));
     }
 
@@ -62,11 +62,11 @@ public class FilterBasedSortablePaperSlimProviderTest extends SortablePaperSlimP
     @Test
     public void gettingAllPapersByFilter() {
         provider.setSort("title", SortOrder.DESCENDING);
-        when(paperServiceMock.findPageByFilter(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(pageOfPapers);
+        when(paperServiceMock.findPageByFilter(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(pageOfPapers);
         List<Paper> papers = provider.findAllPapersByFilter();
         assertThat(papers).hasSize(5);
         assertThat(papers).containsOnly(paperMock);
-        verify(paperServiceMock).findPageByFilter(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "title: DESC")));
+        verify(paperServiceMock).findPageByFilter(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")));
     }
 
 }

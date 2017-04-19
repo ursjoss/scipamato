@@ -22,7 +22,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.search.SearchOrderFilter;
 import ch.difty.sipamato.service.CodeClassService;
 import ch.difty.sipamato.service.CodeService;
@@ -58,7 +58,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     @Override
     protected void setUpHook() {
         when(searchOrderServiceMock.findById(SEARCH_ORDER_ID)).thenReturn(Optional.of(searchOrder));
-        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(Pageable.class))).thenReturn(Arrays.asList(searchOrder));
+        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class))).thenReturn(Arrays.asList(searchOrder));
     }
 
     @Override
@@ -143,7 +143,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         when(searchOrderMock.getId()).thenReturn(SEARCH_ORDER_ID);
 
         when(paperSlimServiceMock.countBySearchOrder(Mockito.eq(searchOrderMock))).thenReturn(1);
-        when(paperSlimServiceMock.findPageBySearchOrder(Mockito.eq(searchOrderMock), Mockito.isA(Pageable.class))).thenReturn(Arrays.asList(paperSlimMock));
+        when(paperSlimServiceMock.findPageBySearchOrder(Mockito.eq(searchOrderMock), Mockito.isA(PaginationContext.class))).thenReturn(Arrays.asList(paperSlimMock));
 
         PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock));
 
@@ -159,7 +159,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().assertContainsNot(someTextInPage);
 
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(Mockito.eq(searchOrderMock));
-        verify(paperSlimServiceMock, times(2)).findPageBySearchOrder(Mockito.eq(searchOrderMock), Mockito.isA(Pageable.class));
+        verify(paperSlimServiceMock, times(2)).findPageBySearchOrder(Mockito.eq(searchOrderMock), Mockito.isA(PaginationContext.class));
     }
 
     @Test

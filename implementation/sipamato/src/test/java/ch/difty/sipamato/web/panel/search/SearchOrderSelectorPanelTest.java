@@ -24,7 +24,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.search.SearchOrderFilter;
 import ch.difty.sipamato.service.SearchOrderService;
 import ch.difty.sipamato.web.panel.PanelTest;
@@ -58,7 +58,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         super.setUpHook();
 
         searchOrders = Arrays.asList(searchOrderMock, new SearchOrder(20l, "soName", OWNER_ID, true, searchConditions, null));
-        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(Pageable.class))).thenReturn(searchOrders);
+        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class))).thenReturn(searchOrders);
         when(searchOrderMock.getId()).thenReturn(ID);
     }
 
@@ -180,7 +180,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS + "Label");
 
         verify(searchOrderMock, times(10)).getId();
-        verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
+        verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
         verify(searchOrderServiceMock, never()).saveOrUpdate(searchOrderMock);
     }
 
@@ -198,7 +198,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponentOnAjaxResponse(b);
 
         verify(searchOrderMock, times(13)).getId();
-        verify(searchOrderServiceMock, times(3)).findPageByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
+        verify(searchOrderServiceMock, times(3)).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
         verify(searchOrderServiceMock).remove(searchOrderMock);
     }
 

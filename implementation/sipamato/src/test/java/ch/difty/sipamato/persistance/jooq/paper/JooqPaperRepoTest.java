@@ -17,7 +17,7 @@ import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.lib.NullArgumentException;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.EntityRepository;
 import ch.difty.sipamato.persistance.jooq.JooqEntityRepoTest;
 import ch.difty.sipamato.persistance.jooq.paper.searchorder.PaperBackedSearchOrderRepository;
@@ -45,7 +45,7 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     @Mock
     private Paper paperMock;
     @Mock
-    private Pageable pageableMock;
+    private PaginationContext paginationContextMock;
 
     private final List<Paper> papers = new ArrayList<>();
 
@@ -284,10 +284,10 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
 
     @Test
     public void findingPageBySearchOrder_delegatesToSearchOrderFinder() {
-        when(searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, pageableMock)).thenReturn(papers);
-        assertThat(makeRepoStubbingEnriching().findPageBySearchOrder(searchOrderMock, pageableMock)).containsExactly(paperMock, paperMock);
+        when(searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(papers);
+        assertThat(makeRepoStubbingEnriching().findPageBySearchOrder(searchOrderMock, paginationContextMock)).containsExactly(paperMock, paperMock);
         assertThat(enrichtedEntities).containsExactly(paperMock, paperMock);
-        verify(searchOrderRepositoryMock).findPageBySearchOrder(searchOrderMock, pageableMock);
+        verify(searchOrderRepositoryMock).findPageBySearchOrder(searchOrderMock, paginationContextMock);
     }
 
     @Test

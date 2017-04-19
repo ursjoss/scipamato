@@ -16,7 +16,7 @@ import org.mockito.Mockito;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 
 public class SearchOrderBasedSortablePaperSlimProviderTest extends SortablePaperSlimProviderTest<SearchOrder, SearchOrderBasedSortablePaperSlimProvider> {
 
@@ -25,7 +25,7 @@ public class SearchOrderBasedSortablePaperSlimProviderTest extends SortablePaper
 
     @Override
     protected void localFixture() {
-        when(serviceMock.findPageBySearchOrder(eq(searchOrder), isA(Pageable.class))).thenReturn(pageOfSlimPapers);
+        when(serviceMock.findPageBySearchOrder(eq(searchOrder), isA(PaginationContext.class))).thenReturn(pageOfSlimPapers);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class SearchOrderBasedSortablePaperSlimProviderTest extends SortablePaper
     }
 
     @Override
-    protected void verifyFilterMock(PageableMatcher matcher) {
+    protected void verifyFilterMock(PaginationContextMatcher matcher) {
         verify(serviceMock).findPageBySearchOrder(eq(searchOrder), argThat(matcher));
     }
 
@@ -62,11 +62,11 @@ public class SearchOrderBasedSortablePaperSlimProviderTest extends SortablePaper
     @Test
     public void gettingAllPapersByFilter() {
         provider.setSort("authors", SortOrder.ASCENDING);
-        when(paperServiceMock.findPageBySearchOrder(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "authors: ASC")))).thenReturn(pageOfPapers);
+        when(paperServiceMock.findPageBySearchOrder(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")))).thenReturn(pageOfPapers);
         List<Paper> papers = provider.findAllPapersByFilter();
         assertThat(papers).hasSize(5);
         assertThat(papers).containsOnly(paperMock);
-        verify(paperServiceMock).findPageBySearchOrder(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "authors: ASC")));
+        verify(paperServiceMock).findPageBySearchOrder(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")));
     }
 
 }

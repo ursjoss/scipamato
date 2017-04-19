@@ -33,7 +33,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ch.difty.sipamato.entity.IdSipamatoEntity;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.paging.Sort;
 import ch.difty.sipamato.service.Localization;
 
@@ -69,7 +69,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdSipamat
     private SelectConditionStep<Record1<Integer>> selectConditionStepMock2;
 
     @Mock
-    private Pageable pageableMock;
+    private PaginationContext paginationContextMock;
     @Mock
     private Sort sortMock;
     @Mock
@@ -180,7 +180,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdSipamat
         verifyNoMoreInteractions(getUnpersistedEntity(), getPersistedEntity(), unpersistedRecord, getPersistedRecord(), localizationMock);
         verifyNoMoreInteractions(selectWhereStepMock, selectConditionStepMock);
         verifyNoMoreInteractions(selectSelectStepMock, selectJoinStepMock);
-        verifyNoMoreInteractions(pageableMock, sortMock, sortFieldsMock, selectSeekStepNMock);
+        verifyNoMoreInteractions(paginationContextMock, sortMock, sortFieldsMock, selectSeekStepNMock);
         verifyNoMoreInteractions(getFilter(), conditionMock);
     }
 

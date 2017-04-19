@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.difty.sipamato.entity.User;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.service.UserService;
 
 /**
@@ -35,8 +35,8 @@ public class JooqUserService implements UserService {
 
     /** {@inheritDoc} */
     @Override
-    public List<User> findPageByFilter(UserFilter filter, Pageable pageable) {
-        return repo.findPageByFilter(filter, pageable);
+    public List<User> findPageByFilter(UserFilter filter, PaginationContext paginationContext) {
+        return repo.findPageByFilter(filter, paginationContext);
     }
 
     /** {@inheritDoc} */

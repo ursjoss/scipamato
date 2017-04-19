@@ -24,12 +24,15 @@ import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.paper.JooqPaperService;
 import ch.difty.sipamato.persistance.jooq.paper.slim.JooqPaperSlimService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+//uncomment the profile with which the jooq db was compiled for - but don't commit it as it may fail in maven, where the respective profile is present
+//@ActiveProfiles({ "DB_JOOQ", "test", "postgres" })
+//@ActiveProfiles({ "DB_JOOQ", "test", "h2" })
 public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P extends SortablePaperSlimProvider<F>> {
 
     protected static final int PAGE_SIZE = 3;
@@ -85,13 +88,13 @@ public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P
         assertThat(provider.getFilterState()).isEqualTo(getFilter());
     }
 
-    class PageableMatcher extends ArgumentMatcher<Pageable> {
+    class PaginationContextMatcher extends ArgumentMatcher<PaginationContext> {
 
         private final int offset;
         private final int pageSize;
         private final String sort;
 
-        PageableMatcher(int offset, int pageSize, String sort) {
+        PaginationContextMatcher(int offset, int pageSize, String sort) {
             this.offset = offset;
             this.pageSize = pageSize;
             this.sort = sort;
@@ -99,8 +102,8 @@ public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P
 
         @Override
         public boolean matches(Object argument) {
-            if (argument != null && argument instanceof Pageable) {
-                Pageable p = (Pageable) argument;
+            if (argument != null && argument instanceof PaginationContext) {
+                PaginationContext p = (PaginationContext) argument;
                 return p.getOffset() == offset && p.getPageSize() == pageSize && sort.equals(p.getSort().toString());
             }
             return false;
@@ -115,16 +118,16 @@ public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P
 
         Iterator<PaperSlim> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
-        verifyFilterMock(new PageableMatcher(0, 3, "authors: ASC"));
+        verifyFilterMock(new PaginationContextMatcher(0, 3, "authors: ASC"));
     }
 
-    protected abstract void verifyFilterMock(PageableMatcher matcher);
+    protected abstract void verifyFilterMock(PaginationContextMatcher matcher);
 
     @Test
     public void iterating_throughFirstFullPage() {
         Iterator<PaperSlim> it = provider.iterator(0, 3);
         assertRecordsIn(it);
-        verifyFilterMock(new PageableMatcher(0, 3, "authors: ASC"));
+        verifyFilterMock(new PaginationContextMatcher(0, 3, "authors: ASC"));
     }
 
     private void assertRecordsIn(Iterator<PaperSlim> it) {
@@ -140,7 +143,7 @@ public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P
     public void iterating_throughSecondFullPage() {
         Iterator<PaperSlim> it = provider.iterator(3, 3);
         assertRecordsIn(it);
-        verifyFilterMock(new PageableMatcher(3, 3, "authors: ASC"));
+        verifyFilterMock(new PaginationContextMatcher(3, 3, "authors: ASC"));
     }
 
     @Test
@@ -148,7 +151,7 @@ public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P
         provider.setSort("title", SortOrder.DESCENDING);
         Iterator<PaperSlim> it = provider.iterator(6, 3);
         assertRecordsIn(it);
-        verifyFilterMock(new PageableMatcher(6, 3, "title: DESC"));
+        verifyFilterMock(new PaginationContextMatcher(6, 3, "title: DESC"));
     }
 
     @Test
@@ -163,7 +166,7 @@ public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P
 
         Iterator<PaperSlim> it = provider.iterator(0, actualSize);
         assertRecordsIn(it);
-        verifyFilterMock(new PageableMatcher(0, PAGE_SIZE, "authors: ASC"));
+        verifyFilterMock(new PaginationContextMatcher(0, actualSize, "authors: ASC"));
     }
 
     @Test
@@ -175,7 +178,7 @@ public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P
 
         Iterator<PaperSlim> it = provider.iterator(6, actualSize);
         assertRecordsIn(it);
-        verifyFilterMock(new PageableMatcher(6, PAGE_SIZE, "title: DESC"));
+        verifyFilterMock(new PaginationContextMatcher(6, actualSize, "title: DESC"));
     }
 
 }

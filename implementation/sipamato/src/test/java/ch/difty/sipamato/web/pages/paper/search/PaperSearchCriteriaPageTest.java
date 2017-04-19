@@ -17,7 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.search.SearchOrderFilter;
 import ch.difty.sipamato.service.CodeClassService;
 import ch.difty.sipamato.service.CodeService;
@@ -50,7 +50,7 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
     @Override
     protected void setUpHook() {
         when(searchOrderServiceMock.findById(SEARCH_ORDER_ID)).thenReturn(Optional.of(searchOrder));
-        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(Pageable.class))).thenReturn(Arrays.asList(searchOrder));
+        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class))).thenReturn(Arrays.asList(searchOrder));
     }
 
     @Override
@@ -85,7 +85,7 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
         getTester().assertRenderedPage(PaperSearchPage.class);
 
         verify(searchOrderServiceMock).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID);
-        verify(searchOrderServiceMock).findPageByFilter(isA(SearchOrderFilter.class), isA(Pageable.class));
+        verify(searchOrderServiceMock).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
     }
 
 }

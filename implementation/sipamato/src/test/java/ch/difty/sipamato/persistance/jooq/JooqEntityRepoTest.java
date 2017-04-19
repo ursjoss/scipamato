@@ -35,7 +35,7 @@ import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.lib.FrozenDateTimeService;
 import ch.difty.sipamato.lib.NullArgumentException;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 
 /**
  * TODO find a more feasible approach to test the actual jOOQ part via unit tests. The current approach is too cumbersome.
@@ -76,7 +76,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdSipamatoE
     @Mock
     private UpdateResultStep<R> updateResultStepMock;
     @Mock
-    private Pageable pageableMock;
+    private PaginationContext paginationContextMock;
 
     private final List<T> entities = new ArrayList<>();
     private final List<R> records = new ArrayList<>();

@@ -25,7 +25,7 @@ import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.entity.filter.StringSearchTerm;
 import ch.difty.sipamato.lib.AssertAs;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.ConditionalSupplier;
 import ch.difty.sipamato.persistance.jooq.EntityRecordMapper;
 import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
@@ -145,16 +145,11 @@ public abstract class JooqSearchOrderRepo<T extends IdSipamatoEntity<Long>, M ex
 
     /** {@inheritDoc} */
     @Override
-    public List<T> findPageBySearchOrder(final SearchOrder searchOrder, final Pageable pageable) {
+    public List<T> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext pc) {
         final Condition paperMatches = getConditionsFrom(searchOrder);
-        final Collection<SortField<T>> sortCriteria = getSortMapper().map(pageable.getSort(), PAPER);
-        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER)
-                .where(paperMatches)
-                .orderBy(sortCriteria)
-                .limit(pageable.getPageSize())
-                .offset(pageable.getOffset())
-                .fetchInto(getRecordClass());
-        return queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
+        final Collection<SortField<T>> sortCriteria = getSortMapper().map(pc.getSort(), PAPER);
+        final List<PaperRecord> tuples = getDsl().selectFrom(Tables.PAPER).where(paperMatches).orderBy(sortCriteria).limit(pc.getPageSize()).offset(pc.getOffset()).fetchInto(getRecordClass());
+        return tuples.stream().map(getMapper()::map).collect(Collectors.toList());
     }
 
     /** {@inheritDoc} */

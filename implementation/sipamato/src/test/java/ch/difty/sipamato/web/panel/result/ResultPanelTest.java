@@ -24,7 +24,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.paging.SipamatoPageRequest;
+import ch.difty.sipamato.paging.PaginationRequest;
 import ch.difty.sipamato.service.CodeClassService;
 import ch.difty.sipamato.service.CodeService;
 import ch.difty.sipamato.service.PaperService;
@@ -60,9 +60,9 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     @Override
     protected void setUpHook() {
         when(paperSlimServiceMock.countBySearchOrder(searchOrderMock)).thenReturn(1);
-        when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class))).thenReturn(Arrays.asList(paperSlim));
+        when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class))).thenReturn(Arrays.asList(paperSlim));
 
-        when(paperServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class))).thenReturn(Arrays.asList(paperMock));
+        when(paperServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class))).thenReturn(Arrays.asList(paperMock));
     }
 
     @After
@@ -93,7 +93,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         getTester().assertComponent(bb, ResourceLink.class);
 
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
-        verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));
+        verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
     }
 
     private void assertTableRow(String bb) {
@@ -116,7 +116,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         getTester().assertRenderedPage(PaperEntryPage.class);
 
         verify(paperSlimServiceMock).countBySearchOrder(searchOrderMock);
-        verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));
+        verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
         verify(paperServiceMock).findById(ID);
         verify(codeClassServiceMock).find(anyString());
         verify(codeServiceMock, times(8)).findCodesOfClass(isA(CodeClassId.class), anyString());
@@ -131,7 +131,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         // TODO how to verify the response was sent with the id to be excluded
 
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
-        verify(paperSlimServiceMock, times(2)).findPageBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));
+        verify(paperSlimServiceMock, times(2)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
     }
 
     /**
@@ -142,8 +142,8 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
      */
     private void verifyPdfExport() {
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
-        verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));
-        verify(paperServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(SipamatoPageRequest.class));
+        verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
+        verify(paperServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
     }
 
     @Test

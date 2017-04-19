@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.AssertAs;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.service.Localization;
 
 /**
@@ -135,12 +135,12 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntit
 
     /** {@inheritDoc} */
     @Override
-    public List<T> findPageByFilter(final F filter, final Pageable pageable) {
+    public List<T> findPageByFilter(final F filter, final PaginationContext pc) {
         final Condition conditions = filterConditionMapper.map(filter);
-        final Collection<SortField<T>> sortCriteria = getSortMapper().map(pageable.getSort(), getTable());
-        final List<R> queryResults = getDsl().selectFrom(getTable()).where(conditions).orderBy(sortCriteria).limit(pageable.getPageSize()).offset(pageable.getOffset()).fetchInto(getRecordClass());
+        final Collection<SortField<T>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
+        final List<R> tuples = getDsl().selectFrom(getTable()).where(conditions).orderBy(sortCriteria).limit(pc.getPageSize()).offset(pc.getOffset()).fetchInto(getRecordClass());
 
-        final List<T> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
+        final List<T> entities = tuples.stream().map(getMapper()::map).collect(Collectors.toList());
 
         enrichAssociatedEntitiesOfAll(entities);
 

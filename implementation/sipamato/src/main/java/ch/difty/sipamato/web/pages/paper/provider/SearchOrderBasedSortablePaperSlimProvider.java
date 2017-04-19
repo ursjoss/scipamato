@@ -9,8 +9,8 @@ import org.apache.wicket.injection.Injector;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.paging.Pageable;
-import ch.difty.sipamato.paging.SipamatoPageRequest;
+import ch.difty.sipamato.paging.PaginationContext;
+import ch.difty.sipamato.paging.PaginationRequest;
 import ch.difty.sipamato.paging.Sort.Direction;
 
 /**
@@ -36,8 +36,8 @@ public class SearchOrderBasedSortablePaperSlimProvider extends SortablePaperSlim
 
     /** {@inheritDoc} */
     @Override
-    protected Iterator<PaperSlim> findPage(final Pageable pageable) {
-        return getService().findPageBySearchOrder(getFilterState(), pageable).iterator();
+    protected Iterator<PaperSlim> findPage(final PaginationContext pc) {
+        return getService().findPageBySearchOrder(getFilterState(), pc).iterator();
     }
 
     /** {@inheritDoc} */
@@ -49,7 +49,7 @@ public class SearchOrderBasedSortablePaperSlimProvider extends SortablePaperSlim
     /** {@inheritDoc} */
     @Override
     protected List<Paper> findAll(final Direction dir, final String sortProp) {
-        return getPaperService().findPageBySearchOrder(getFilterState(), new SipamatoPageRequest(dir, sortProp));
+        return getPaperService().findPageBySearchOrder(getFilterState(), new PaginationRequest(dir, sortProp));
     }
 
 }

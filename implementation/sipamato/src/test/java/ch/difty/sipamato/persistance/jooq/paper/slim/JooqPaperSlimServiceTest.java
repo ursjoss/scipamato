@@ -17,7 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.AbstractServiceTest;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
@@ -33,7 +33,7 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
     @Mock
     private SearchOrder searchOrderMock;
     @Mock
-    private Pageable pageableMock;
+    private PaginationContext paginationContextMock;
     @Mock
     private PaperSlim paperSlimMock;
     @Mock
@@ -62,7 +62,7 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
 
     @Override
     public void specificTearDown() {
-        verifyNoMoreInteractions(repoMock, filterMock, searchOrderMock, pageableMock, paperSlimMock, paperMock);
+        verifyNoMoreInteractions(repoMock, filterMock, searchOrderMock, paginationContextMock, paperSlimMock, paperMock);
     }
 
     @Test
@@ -91,9 +91,9 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
 
     @Test
     public void findingPageByFilter_delegatesToRepo() {
-        when(repoMock.findPageByFilter(filterMock, pageableMock)).thenReturn(papers);
-        List<PaperSlim> papers = service.findPageByFilter(filterMock, pageableMock);
-        verify(repoMock).findPageByFilter(filterMock, pageableMock);
+        when(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(papers);
+        assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(papers);
+        verify(repoMock).findPageByFilter(filterMock, paginationContextMock);
         verifyAudit(2);
     }
 
@@ -113,9 +113,9 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
 
     @Test
     public void findingPagedBySearchOrder_delegatesToRepo() {
-        when(repoMock.findPageBySearchOrder(searchOrderMock, pageableMock)).thenReturn(papers);
-        assertThat(service.findPageBySearchOrder(searchOrderMock, pageableMock)).isEqualTo(papers);
-        verify(repoMock).findPageBySearchOrder(searchOrderMock, pageableMock);
+        when(repoMock.findPageBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(papers);
+        assertThat(service.findPageBySearchOrder(searchOrderMock, paginationContextMock)).isEqualTo(papers);
+        verify(repoMock).findPageBySearchOrder(searchOrderMock, paginationContextMock);
     }
 
     @Test

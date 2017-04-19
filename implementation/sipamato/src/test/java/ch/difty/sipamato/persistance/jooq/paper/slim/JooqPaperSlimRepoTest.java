@@ -15,7 +15,7 @@ import org.mockito.Mock;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.JooqReadOnlyRepoTest;
 import ch.difty.sipamato.persistance.jooq.ReadOnlyRepository;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
@@ -44,7 +44,7 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
     @Mock
     private PaperSlim paperSlimMock;
     @Mock
-    private Pageable pageableMock;
+    private PaginationContext pageableMock;
 
     private final List<PaperSlim> paperSlims = new ArrayList<>();
 

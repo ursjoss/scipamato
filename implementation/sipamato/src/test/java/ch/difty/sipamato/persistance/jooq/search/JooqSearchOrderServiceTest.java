@@ -19,7 +19,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.AbstractServiceTest;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -32,7 +32,7 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
     @Mock
     private SearchOrderFilter filterMock;
     @Mock
-    private Pageable pageableMock;
+    private PaginationContext paginationContextMock;
     @Mock
     private SearchOrder searchOrderMock;
     @Mock
@@ -61,7 +61,7 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
 
     @Override
     public void specificTearDown() {
-        verifyNoMoreInteractions(repoMock, filterMock, pageableMock, searchOrderMock, searchConditionMock);
+        verifyNoMoreInteractions(repoMock, filterMock, paginationContextMock, searchOrderMock, searchConditionMock);
     }
 
     @Test
@@ -89,9 +89,9 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
 
     @Test
     public void findingByFilter_delegatesToRepo() {
-        when(repoMock.findPageByFilter(filterMock, pageableMock)).thenReturn(searchorders);
-        assertThat(service.findPageByFilter(filterMock, pageableMock)).isEqualTo(searchorders);
-        verify(repoMock).findPageByFilter(filterMock, pageableMock);
+        when(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(searchorders);
+        assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(searchorders);
+        verify(repoMock).findPageByFilter(filterMock, paginationContextMock);
         verifyAudit(2);
     }
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import ch.difty.sipamato.entity.IdSipamatoEntity;
 import ch.difty.sipamato.entity.SearchOrder;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 
 /**
  * Repository to find papers or paperSlims based on SearchOrder specifications.
@@ -25,13 +25,13 @@ public interface SearchOrderRepository<T extends IdSipamatoEntity<Long>> {
     List<T> findBySearchOrder(SearchOrder searchOrder);
 
     /**
-     * Finds a single page of entities of type <code>T</code> matching the provided {@link SearchOrder} and {@link Pageable} specification.
+     * Finds a single page of entities of type <code>T</code> matching the provided {@link SearchOrder} and {@link PaginationContext}.
      *
      * @see #findBySearchOrder(SearchOrder)
      *
      * @return paged list of entities 
      */
-    List<T> findPageBySearchOrder(SearchOrder searchOrder, Pageable pageable);
+    List<T> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
 
     /**
      * Counts all persisted entities of type <code>T</code> matching the provided {@link SearchOrder} specification.

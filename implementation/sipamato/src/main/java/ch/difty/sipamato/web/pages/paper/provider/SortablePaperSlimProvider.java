@@ -12,14 +12,14 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.paging.Pageable;
-import ch.difty.sipamato.paging.SipamatoPageRequest;
+import ch.difty.sipamato.paging.PaginationContext;
+import ch.difty.sipamato.paging.PaginationRequest;
 import ch.difty.sipamato.paging.Sort.Direction;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.service.PaperSlimService;
 
 /**
- * Abstract baseclass for dataproviders providing the wicket components access to the persisted paper data in the slim format.
+ * Abstract base class for dataproviders providing the wicket components access to the persisted paper data in the slim format.
  *
  * @author u.joss
  */
@@ -61,17 +61,16 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
     }
 
     /**
-     * provides an iterator going through the records, starting with the {@literal first} (offset) and providing {@literal count}
-     * number of records.
+     * provides an iterator going through the records, starting with the {@literal first} (offset) and providing {@literal count} number of records.
      */
     @Override
     public Iterator<PaperSlim> iterator(final long first, final long count) {
         final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         final String sortProp = getSort().getProperty();
-        return findPage(new SipamatoPageRequest((int) first, maxRowsPerPage, (int) count, dir, sortProp));
+        return findPage(new PaginationRequest((int) first, (int) count, dir, sortProp));
     }
 
-    protected abstract Iterator<PaperSlim> findPage(Pageable pageable);
+    protected abstract Iterator<PaperSlim> findPage(PaginationContext pc);
 
     /**
      * Applies the normal filter and the sort aspect of the pageable to return all records as {@link Paper}s.

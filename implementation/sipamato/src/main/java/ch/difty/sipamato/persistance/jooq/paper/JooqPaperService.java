@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
-import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.JooqEntityService;
 import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
 import ch.difty.sipamato.service.DefaultServiceResult;
@@ -33,8 +33,8 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     /** {@inheritDocs} */
     @Override
-    public List<Paper> findPageBySearchOrder(final SearchOrder searchOrder, final Pageable pageable) {
-        return getRepository().findPageBySearchOrder(searchOrder, pageable);
+    public List<Paper> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext paginationContext) {
+        return getRepository().findPageBySearchOrder(searchOrder, paginationContext);
     }
 
     /** {@inheritDocs} */
