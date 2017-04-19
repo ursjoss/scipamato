@@ -22,7 +22,7 @@ import ch.difty.sipamato.service.PaperService;
  *
  * @author u.joss
  */
-public class SortablePaperProvider extends SortableDataProvider<Paper, String> implements IFilterStateLocator<PaperFilter> {
+public class PaperProvider extends SortableDataProvider<Paper, String> implements IFilterStateLocator<PaperFilter> {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,11 +31,11 @@ public class SortablePaperProvider extends SortableDataProvider<Paper, String> i
 
     private PaperFilter filter;
 
-    public SortablePaperProvider() {
+    public PaperProvider() {
         this(new PaperFilter());
     }
 
-    public SortablePaperProvider(PaperFilter filter) {
+    public PaperProvider(PaperFilter filter) {
         Injector.get().inject(this);
         this.filter = filter;
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
