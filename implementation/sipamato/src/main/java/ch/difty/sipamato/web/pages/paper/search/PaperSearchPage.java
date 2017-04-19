@@ -22,7 +22,7 @@ import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.service.SearchOrderService;
 import ch.difty.sipamato.web.PageParameterNames;
 import ch.difty.sipamato.web.pages.BasePage;
-import ch.difty.sipamato.web.pages.paper.provider.SearchOrderBasedSortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.provider.PaperSlimBySearchOrderProvider;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
 import ch.difty.sipamato.web.panel.search.SearchOrderChangeEvent;
 import ch.difty.sipamato.web.panel.search.SearchOrderPanel;
@@ -49,7 +49,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private static final int RESULT_PAGE_SIZE = 12;
 
-    private SearchOrderBasedSortablePaperSlimProvider dataProvider;
+    private PaperSlimBySearchOrderProvider dataProvider;
 
     private SearchOrderSelectorPanel searchOrderSelectorPanel;
     private SearchOrderPanel searchOrderPanel;
@@ -123,7 +123,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     protected void onInitialize() {
         super.onInitialize();
 
-        dataProvider = new SearchOrderBasedSortablePaperSlimProvider(getModelObject(), RESULT_PAGE_SIZE);
+        dataProvider = new PaperSlimBySearchOrderProvider(getModelObject(), RESULT_PAGE_SIZE);
 
         makeSearchOrderSelectorPanel("searchOrderSelectorPanel");
         makeSearchOrderPanel("searchOrderPanel");

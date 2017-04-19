@@ -18,7 +18,7 @@ import ch.difty.sipamato.paging.Sort.Direction;
  *
  * @author u.joss
  */
-public class SearchOrderBasedSortablePaperSlimProvider extends AbstractPaperSlimProvider<SearchOrder> {
+public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public class SearchOrderBasedSortablePaperSlimProvider extends AbstractPaperSlim
      *          the search specification 
      * @param rowsPerPage
      */
-    public SearchOrderBasedSortablePaperSlimProvider(final SearchOrder searchOrder, final int rowsPerPage) {
+    public PaperSlimBySearchOrderProvider(final SearchOrder searchOrder, final int rowsPerPage) {
         super(searchOrder, rowsPerPage);
         Injector.get().inject(this);
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
