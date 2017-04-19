@@ -6,7 +6,7 @@ import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.jasper.JasperPaperDataSource;
 import ch.difty.sipamato.web.jasper.SipamatoPdfResourceHandler;
-import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.sipamato.web.resources.jasper.PaperLiteratureReviewReportResourceReference;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.export.PdfExporterConfiguration;
@@ -31,7 +31,7 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
      * Using the dataProvider for the Result Panel as record source. Needs the {@link PaperService} to retrieve the papers
      * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
      * @param dataProvider
-     *      the {@link SortablePaperSlimProvider} - must not be null
+     *      the {@link AbstractPaperSlimProvider} - must not be null
      * @param caption
      *      localized caption
      * @param brand
@@ -39,7 +39,7 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
      * @param config
      *      PdfExporterConfiguration
      */
-    public PaperLiteratureReviewDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String caption, String brand, PdfExporterConfiguration config) {
+    public PaperLiteratureReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String caption, String brand, PdfExporterConfiguration config) {
         super(new SipamatoPdfResourceHandler(config), FILE_NAME, dataProvider);
         this.caption = caption;
         this.brand = brand;

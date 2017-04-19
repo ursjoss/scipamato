@@ -8,22 +8,22 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvid
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
+import ch.difty.sipamato.paging.PaginationContext;
+import ch.difty.sipamato.paging.PaginationRequest;
+import ch.difty.sipamato.paging.Sort.Direction;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.service.PaperSlimService;
 
 /**
- * Abstract baseclass for dataproviders providing the wicket components access to the persisted paper data in the slim format.
+ * Abstract base class for data providers providing the wicket components access to the persisted paper data in the slim format.
  *
  * @author u.joss
  */
-public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<F> {
+public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<F> {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,7 +37,7 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
     @SpringBean
     private PaperService paperService;
 
-    SortablePaperSlimProvider(final F filterState, final Integer rowsPerPage) {
+    AbstractPaperSlimProvider(final F filterState, final Integer rowsPerPage) {
         this.filterState = filterState;
         this.maxRowsPerPage = rowsPerPage;
     }
@@ -61,17 +61,16 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
     }
 
     /**
-     * provides an iterator going through the records, starting with the {@literal first} (offset) and providing {@literal count}
-     * number of records.
+     * provides an iterator going through the records, starting with the {@literal first} (offset) and providing {@literal count} number of records.
      */
     @Override
     public Iterator<PaperSlim> iterator(final long first, final long count) {
         final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         final String sortProp = getSort().getProperty();
-        return findByFilter(new SipamatoPageRequest((int) first, maxRowsPerPage, (int) count, dir, sortProp));
+        return findPage(new PaginationRequest((int) first, (int) count, dir, sortProp));
     }
 
-    protected abstract Iterator<PaperSlim> findByFilter(Pageable pageable);
+    protected abstract Iterator<PaperSlim> findPage(PaginationContext pc);
 
     /**
      * Applies the normal filter and the sort aspect of the pageable to return all records as {@link Paper}s.
@@ -80,10 +79,10 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
     public List<Paper> findAllPapersByFilter() {
         final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         final String sortProp = getSort().getProperty();
-        return findAllPapersByFilter(dir, sortProp);
+        return findAll(dir, sortProp);
     }
 
-    protected abstract List<Paper> findAllPapersByFilter(Direction dir, String sortProp);
+    protected abstract List<Paper> findAll(Direction dir, String sortProp);
 
     @Override
     public long size() {

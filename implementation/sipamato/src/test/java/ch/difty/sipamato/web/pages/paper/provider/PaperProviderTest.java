@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.model.IModel;
@@ -22,21 +23,19 @@ import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.paper.JooqPaperService;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SortablePaperProviderTest {
+public class PaperProviderTest {
 
-    private SortablePaperProvider provider;
+    private PaperProvider provider;
 
     @Mock
     private JooqPaperService serviceMock;
@@ -50,15 +49,15 @@ public class SortablePaperProviderTest {
     @Autowired
     private SipamatoApplication application;
 
-    private Page<Paper> pageOfPapers;
+    private List<Paper> papers;
 
     @Before
     public void setUp() {
         new WicketTester(application);
-        provider = new SortablePaperProvider(filterMock);
+        provider = new PaperProvider(filterMock);
         provider.setService(serviceMock);
 
-        pageOfPapers = new PageImpl<Paper>(Arrays.asList(entityMock, entityMock, entityMock));
+        papers = Arrays.asList(entityMock, entityMock, entityMock);
     }
 
     @After
@@ -68,8 +67,14 @@ public class SortablePaperProviderTest {
 
     @Test
     public void defaultFilterIsNewPaperFilter() {
-        provider = new SortablePaperProvider();
+        provider = new PaperProvider();
         assertThat(provider.getFilter()).isEqualToComparingFieldByField(new PaperFilter());
+    }
+
+    @Test
+    public void nullFilterResultsInNewPaperFilter() {
+        PaperSlimByPaperFilterProvider p = new PaperSlimByPaperFilterProvider(null, 10);
+        assertThat(p.getFilterState()).isEqualToComparingFieldByField(new PaperFilter());
     }
 
     @Test
@@ -93,28 +98,27 @@ public class SortablePaperProviderTest {
 
     @Test
     public void settingFilterState() {
-        provider = new SortablePaperProvider();
+        provider = new PaperProvider();
         assertThat(provider.getFilterState()).isNotEqualTo(filterMock);
         provider.setFilterState(filterMock);
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
     }
 
-    private class PageableMatcher extends ArgumentMatcher<Pageable> {
+    private class PaginationContextMatcher extends ArgumentMatcher<PaginationContext> {
 
-        private final int pageNumber, pageSize;
+        private final int pageSize;
         private final String sort;
 
-        PageableMatcher(int pageNumber, int pageSize, String sort) {
-            this.pageNumber = pageNumber;
+        PaginationContextMatcher(int pageSize, String sort) {
             this.pageSize = pageSize;
             this.sort = sort;
         }
 
         @Override
         public boolean matches(Object argument) {
-            if (argument != null && argument instanceof Pageable) {
-                Pageable p = (Pageable) argument;
-                return p.getPageNumber() == pageNumber && p.getPageSize() == pageSize && sort.equals(p.getSort().toString());
+            if (argument != null && argument instanceof PaginationContext) {
+                PaginationContext p = (PaginationContext) argument;
+                return p.getPageSize() == pageSize && sort.equals(p.getSort().toString());
             }
             return false;
         }
@@ -122,19 +126,19 @@ public class SortablePaperProviderTest {
 
     @Test
     public void iterating_withNoRecords_returnsNoRecords() {
-        pageOfPapers = new PageImpl<Paper>(Arrays.asList());
-        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(pageOfPapers);
+        papers = Arrays.asList();
+        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Paper> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
-        verify(serviceMock).findByFilter(eq(filterMock), argThat(new PageableMatcher(0, 3, "authors: ASC")));
+        verify(serviceMock).findPageByFilter(eq(filterMock), argThat(new PaginationContextMatcher(3, "authors: ASC")));
     }
 
     @Test
     public void iterating_throughFirst() {
-        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(pageOfPapers);
+        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Paper> it = provider.iterator(0, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findByFilter(eq(filterMock), argThat(new PageableMatcher(0, 3, "authors: ASC")));
+        verify(serviceMock).findPageByFilter(eq(filterMock), argThat(new PaginationContextMatcher(3, "authors: ASC")));
     }
 
     private void assertRecordsIn(Iterator<Paper> it) {
@@ -147,19 +151,19 @@ public class SortablePaperProviderTest {
     }
 
     @Test
-    public void iterating_throughSeconPage() {
-        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(pageOfPapers);
+    public void iterating_throughSecondPage() {
+        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Paper> it = provider.iterator(3, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findByFilter(eq(filterMock), argThat(new PageableMatcher(1, 3, "authors: ASC")));
+        verify(serviceMock).findPageByFilter(eq(filterMock), argThat(new PaginationContextMatcher(3, "authors: ASC")));
     }
 
     @Test
     public void iterating_throughThirdPage() {
         provider.setSort("title", SortOrder.DESCENDING);
-        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(pageOfPapers);
+        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Paper> it = provider.iterator(6, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findByFilter(eq(filterMock), argThat(new PageableMatcher(2, 3, "title: DESC")));
+        verify(serviceMock).findPageByFilter(eq(filterMock), argThat(new PaginationContextMatcher(3, "title: DESC")));
     }
 }

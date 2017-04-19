@@ -4,7 +4,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.web.jasper.JasperPaperDataSource;
 import ch.difty.sipamato.web.jasper.SipamatoPdfResourceHandler;
-import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.sipamato.web.resources.jasper.PaperSummaryTableReportResourceReference;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.export.PdfExporterConfiguration;
@@ -29,7 +29,7 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
     /**
      * Using the dataProvider for the Result Panel as record source.
      * @param dataProvider
-     *      the {@link SortablePaperSlimProvider} - must not be null
+     *      the {@link AbstractPaperSlimProvider} - must not be null
      * @param caption
      *      localized caption
      * @param includeResults
@@ -39,7 +39,7 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
      * @param config
      *      PdfExporterConfiguration
      */
-    public PaperSummaryTableDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, boolean includeResults, final String caption, String brand,
+    public PaperSummaryTableDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, boolean includeResults, final String caption, String brand,
             PdfExporterConfiguration config) {
         super(new SipamatoPdfResourceHandler(config), FILE_NAME, dataProvider);
         this.caption = caption;

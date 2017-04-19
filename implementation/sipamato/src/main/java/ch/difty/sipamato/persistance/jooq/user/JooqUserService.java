@@ -1,13 +1,13 @@
 package ch.difty.sipamato.persistance.jooq.user;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ch.difty.sipamato.entity.User;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.service.UserService;
 
 /**
@@ -35,8 +35,8 @@ public class JooqUserService implements UserService {
 
     /** {@inheritDoc} */
     @Override
-    public Page<User> findByFilter(UserFilter filter, Pageable pageable) {
-        return repo.findByFilter(filter, pageable);
+    public List<User> findPageByFilter(UserFilter filter, PaginationContext paginationContext) {
+        return repo.findPageByFilter(filter, paginationContext);
     }
 
     /** {@inheritDoc} */

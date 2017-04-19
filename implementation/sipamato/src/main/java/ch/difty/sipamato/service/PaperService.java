@@ -2,11 +2,9 @@ package ch.difty.sipamato.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
 
@@ -26,13 +24,13 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
     List<Paper> findBySearchOrder(SearchOrder searchOrder);
 
     /**
-     * Finds a page of papers matching the provided {@link SearchOrder}, returned in pages.
+     * Finds a page full of papers as list matching the provided {@link SearchOrder} and {@link PaginationContext}.
      *
      * @param searchOrder the filter
-     * @param pageable defining paging and sorting
-     * @return a list of papers
+     * @param pagination context defining paging and sorting
+     * @return paged list of papers
      */
-    Page<Paper> findBySearchOrder(SearchOrder searchOrder, Pageable pageable);
+    List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
 
     /**
      * Counts the number of entities matching the specified {@link SearchOrder}.

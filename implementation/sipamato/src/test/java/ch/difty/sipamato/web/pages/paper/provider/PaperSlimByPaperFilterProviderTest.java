@@ -13,19 +13,19 @@ import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
-public class FilterBasedSortablePaperSlimProviderTest extends SortablePaperSlimProviderTest<PaperFilter, FilterBasedSortablePaperSlimProvider> {
+public class PaperSlimByPaperFilterProviderTest extends AbstractPaperSlimProviderTest<PaperFilter, PaperSlimByPaperFilterProvider> {
 
     @Mock
     private PaperFilter filterMock;
 
     @Override
     protected void localFixture() {
-        when(serviceMock.findByFilter(eq(filterMock), isA(Pageable.class))).thenReturn(pageOfSlimPapers);
+        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(pageOfSlimPapers);
     }
 
     @Override
@@ -34,13 +34,19 @@ public class FilterBasedSortablePaperSlimProviderTest extends SortablePaperSlimP
     }
 
     @Override
-    protected FilterBasedSortablePaperSlimProvider newProvider() {
-        return new FilterBasedSortablePaperSlimProvider(getFilter(), PAGE_SIZE);
+    protected PaperSlimByPaperFilterProvider newProvider() {
+        return new PaperSlimByPaperFilterProvider(getFilter(), PAGE_SIZE);
     }
 
     @Override
-    protected void verifyFilterMock(PageableMatcher matcher) {
-        verify(serviceMock).findByFilter(eq(filterMock), argThat(matcher));
+    protected void verifyFilterMock(PaginationContextMatcher matcher) {
+        verify(serviceMock).findPageByFilter(eq(filterMock), argThat(matcher));
+    }
+
+    @Test
+    public void constructingWithNewFilter_usesEmptyFilter() {
+        PaperSlimByPaperFilterProvider p = new PaperSlimByPaperFilterProvider(null, 10);
+        assertThat(p.getFilterState()).isEqualToComparingFieldByField(new PaperFilter());
     }
 
     @Test
@@ -62,11 +68,11 @@ public class FilterBasedSortablePaperSlimProviderTest extends SortablePaperSlimP
     @Test
     public void gettingAllPapersByFilter() {
         provider.setSort("title", SortOrder.DESCENDING);
-        when(paperServiceMock.findByFilter(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(pageOfPapers);
+        when(paperServiceMock.findPageByFilter(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(pageOfPapers);
         List<Paper> papers = provider.findAllPapersByFilter();
         assertThat(papers).hasSize(5);
         assertThat(papers).containsOnly(paperMock);
-        verify(paperServiceMock).findByFilter(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "title: DESC")));
+        verify(paperServiceMock).findPageByFilter(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")));
     }
 
 }

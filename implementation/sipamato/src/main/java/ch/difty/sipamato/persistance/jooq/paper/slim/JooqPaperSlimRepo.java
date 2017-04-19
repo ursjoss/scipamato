@@ -7,15 +7,13 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.GenericFilterConditionMapper;
 import ch.difty.sipamato.persistance.jooq.JooqReadOnlyRepo;
 import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
@@ -67,11 +65,10 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
 
     /** {@inheritDoc} */
     @Override
-    public Page<PaperSlim> findBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
-        final Page<PaperSlim> page = searchOrderRepository.findPagedBySearchOrder(searchOrder, pageable);
-        final List<PaperSlim> entities = page.getContent();
+    public List<PaperSlim> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext) {
+        final List<PaperSlim> entities = searchOrderRepository.findPageBySearchOrder(searchOrder, paginationContext);
         enrichAssociatedEntitiesOfAll(entities);
-        return new PageImpl<>(entities, pageable, (long) countBySearchOrder(searchOrder));
+        return entities;
     }
 
     /** {@inheritDoc} */

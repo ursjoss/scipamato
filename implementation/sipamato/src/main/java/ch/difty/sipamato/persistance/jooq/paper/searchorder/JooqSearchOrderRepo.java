@@ -13,9 +13,6 @@ import org.jooq.Record1;
 import org.jooq.SelectConditionStep;
 import org.jooq.SortField;
 import org.jooq.impl.DSL;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.db.Tables;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
@@ -28,6 +25,7 @@ import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.entity.filter.StringSearchTerm;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.ConditionalSupplier;
 import ch.difty.sipamato.persistance.jooq.EntityRecordMapper;
 import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
@@ -147,17 +145,11 @@ public abstract class JooqSearchOrderRepo<T extends IdSipamatoEntity<Long>, M ex
 
     /** {@inheritDoc} */
     @Override
-    public Page<T> findPagedBySearchOrder(final SearchOrder searchOrder, final Pageable pageable) {
+    public List<T> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext pc) {
         final Condition paperMatches = getConditionsFrom(searchOrder);
-        final Collection<SortField<T>> sortCriteria = getSortMapper().map(pageable.getSort(), PAPER);
-        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER)
-                .where(paperMatches)
-                .orderBy(sortCriteria)
-                .limit(pageable.getPageSize())
-                .offset(pageable.getOffset())
-                .fetchInto(getRecordClass());
-        final List<T> entities = queryResults.stream().map(getMapper()::map).collect(Collectors.toList());
-        return new PageImpl<>(entities, pageable, (long) countBySearchOrder(searchOrder));
+        final Collection<SortField<T>> sortCriteria = getSortMapper().map(pc.getSort(), PAPER);
+        final List<PaperRecord> tuples = getDsl().selectFrom(Tables.PAPER).where(paperMatches).orderBy(sortCriteria).limit(pc.getPageSize()).offset(pc.getOffset()).fetchInto(getRecordClass());
+        return tuples.stream().map(getMapper()::map).collect(Collectors.toList());
     }
 
     /** {@inheritDoc} */

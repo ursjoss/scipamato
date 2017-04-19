@@ -18,13 +18,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.domain.Sort.Order;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.NullArgumentException;
+import ch.difty.sipamato.paging.Sort;
+import ch.difty.sipamato.paging.Sort.Direction;
+import ch.difty.sipamato.paging.Sort.Order;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SortMapperTest {

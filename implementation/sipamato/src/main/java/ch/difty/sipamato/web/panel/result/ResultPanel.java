@@ -29,7 +29,7 @@ import ch.difty.sipamato.web.jasper.review.PaperReviewDataSource;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.jasper.summarytable.PaperSummaryTableDataSource;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
-import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.sipamato.web.panel.AbstractPanel;
 import ch.difty.sipamato.web.panel.search.SearchOrderChangeEvent;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
@@ -51,7 +51,7 @@ public class ResultPanel extends AbstractPanel<Void> {
     @SpringBean
     private PaperService paperService;
 
-    private final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider;
+    private final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider;
 
     private DataTable<PaperSlim, String> results;
 
@@ -59,9 +59,9 @@ public class ResultPanel extends AbstractPanel<Void> {
      * Instantiate the panel.
      *
      * @param id the id of the panel
-     * @param dataProvider the data provider extending {@link SortablePaperSlimProvider} holding the filter specs
+     * @param dataProvider the data provider extending {@link AbstractPaperSlimProvider} holding the filter specs
      */
-    public ResultPanel(String id, SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
+    public ResultPanel(String id, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
         super(id);
         this.dataProvider = dataProvider;
     }

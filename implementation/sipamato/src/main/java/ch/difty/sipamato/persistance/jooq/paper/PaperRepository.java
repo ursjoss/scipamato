@@ -2,11 +2,9 @@ package ch.difty.sipamato.persistance.jooq.paper;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.EntityRepository;
 import ch.difty.sipamato.persistance.jooq.paper.searchorder.SearchOrderRepository;
 
@@ -32,9 +30,9 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     List<Paper> findBySearchOrder(SearchOrder searchOrder);
 
     /**
-     * {@link SearchOrderRepository#findPagedBySearchOrder(SearchOrder, Pageable)}
+     * {@link SearchOrderRepository#findPageBySearchOrder(SearchOrder, paginationContext)}
      */
-    Page<Paper> findBySearchOrder(SearchOrder searchOrder, Pageable pageable);
+    List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
 
     /**
      * {@link SearchOrderRepository#countBySearchOrder(SearchOrder)}

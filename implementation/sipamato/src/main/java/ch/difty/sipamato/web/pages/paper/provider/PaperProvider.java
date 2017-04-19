@@ -9,20 +9,20 @@ import org.apache.wicket.injection.Injector;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
+import ch.difty.sipamato.paging.PaginationContext;
+import ch.difty.sipamato.paging.PaginationRequest;
+import ch.difty.sipamato.paging.Sort.Direction;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.service.PaperService;
 
 /**
- * The dataprovider providing the wicket components access to the persisted paper data
+ * The data provider providing the wicket components access to the persisted paper data
  *
  * @author u.joss
  */
-public class SortablePaperProvider extends SortableDataProvider<Paper, String> implements IFilterStateLocator<PaperFilter> {
+public class PaperProvider extends SortableDataProvider<Paper, String> implements IFilterStateLocator<PaperFilter> {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,13 +31,13 @@ public class SortablePaperProvider extends SortableDataProvider<Paper, String> i
 
     private PaperFilter filter;
 
-    public SortablePaperProvider() {
-        this(new PaperFilter());
+    public PaperProvider() {
+        this(null);
     }
 
-    public SortablePaperProvider(PaperFilter filter) {
+    public PaperProvider(PaperFilter filter) {
         Injector.get().inject(this);
-        this.filter = filter;
+        this.filter = filter != null ? filter : new PaperFilter();
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
     }
 
@@ -55,8 +55,8 @@ public class SortablePaperProvider extends SortableDataProvider<Paper, String> i
     public Iterator<Paper> iterator(long offset, long size) {
         Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         String sortProp = getSort().getProperty();
-        Pageable pageable = new SipamatoPageRequest((int) offset, (int) size, (int) size, dir, sortProp);
-        return service.findByFilter(filter, pageable).iterator();
+        PaginationContext pc = new PaginationRequest((int) offset, (int) size, dir, sortProp);
+        return service.findPageByFilter(filter, pc).iterator();
     }
 
     @Override

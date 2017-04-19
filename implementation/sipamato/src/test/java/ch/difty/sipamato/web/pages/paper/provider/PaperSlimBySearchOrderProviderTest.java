@@ -13,19 +13,19 @@ import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.paging.PaginationContext;
 
-public class SearchOrderBasedSortablePaperSlimProviderTest extends SortablePaperSlimProviderTest<SearchOrder, SearchOrderBasedSortablePaperSlimProvider> {
+public class PaperSlimBySearchOrderProviderTest extends AbstractPaperSlimProviderTest<SearchOrder, PaperSlimBySearchOrderProvider> {
 
     @Mock
     private SearchOrder searchOrder;
 
     @Override
     protected void localFixture() {
-        when(serviceMock.findBySearchOrder(eq(searchOrder), isA(Pageable.class))).thenReturn(pageOfSlimPapers);
+        when(serviceMock.findPageBySearchOrder(eq(searchOrder), isA(PaginationContext.class))).thenReturn(pageOfSlimPapers);
     }
 
     @Override
@@ -34,13 +34,19 @@ public class SearchOrderBasedSortablePaperSlimProviderTest extends SortablePaper
     }
 
     @Override
-    protected SearchOrderBasedSortablePaperSlimProvider newProvider() {
-        return new SearchOrderBasedSortablePaperSlimProvider(getFilter(), PAGE_SIZE);
+    protected PaperSlimBySearchOrderProvider newProvider() {
+        return new PaperSlimBySearchOrderProvider(getFilter(), PAGE_SIZE);
     }
 
     @Override
-    protected void verifyFilterMock(PageableMatcher matcher) {
-        verify(serviceMock).findBySearchOrder(eq(searchOrder), argThat(matcher));
+    protected void verifyFilterMock(PaginationContextMatcher matcher) {
+        verify(serviceMock).findPageBySearchOrder(eq(searchOrder), argThat(matcher));
+    }
+
+    @Test
+    public void constructingWithNewFilter_usesEmptyFilter() {
+        PaperSlimBySearchOrderProvider p = new PaperSlimBySearchOrderProvider(null, 10);
+        assertThat(p.getFilterState()).isEqualToComparingFieldByField(new SearchOrder());
     }
 
     @Test
@@ -62,11 +68,11 @@ public class SearchOrderBasedSortablePaperSlimProviderTest extends SortablePaper
     @Test
     public void gettingAllPapersByFilter() {
         provider.setSort("authors", SortOrder.ASCENDING);
-        when(paperServiceMock.findBySearchOrder(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "authors: ASC")))).thenReturn(pageOfPapers);
+        when(paperServiceMock.findPageBySearchOrder(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")))).thenReturn(pageOfPapers);
         List<Paper> papers = provider.findAllPapersByFilter();
         assertThat(papers).hasSize(5);
         assertThat(papers).containsOnly(paperMock);
-        verify(paperServiceMock).findBySearchOrder(eq(getFilter()), argThat(new PageableMatcher(0, Integer.MAX_VALUE, "authors: ASC")));
+        verify(paperServiceMock).findPageBySearchOrder(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")));
     }
 
 }

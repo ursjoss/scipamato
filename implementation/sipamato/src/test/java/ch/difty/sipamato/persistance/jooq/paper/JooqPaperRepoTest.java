@@ -12,13 +12,12 @@ import java.util.List;
 import org.jooq.TableField;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.lib.NullArgumentException;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.EntityRepository;
 import ch.difty.sipamato.persistance.jooq.JooqEntityRepoTest;
 import ch.difty.sipamato.persistance.jooq.paper.searchorder.PaperBackedSearchOrderRepository;
@@ -46,9 +45,7 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     @Mock
     private Paper paperMock;
     @Mock
-    private Pageable pageableMock;
-    @Mock
-    private Page<Paper> pageMock;
+    private PaginationContext paginationContextMock;
 
     private final List<Paper> papers = new ArrayList<>();
 
@@ -286,17 +283,11 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     }
 
     @Test
-    public void findingBySearchOrder_withPageable_delegatesToSearchOrderFinder() {
-        when(searchOrderRepositoryMock.findPagedBySearchOrder(searchOrderMock, pageableMock)).thenReturn(pageMock);
-        when(searchOrderRepositoryMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
-        when(pageMock.getContent()).thenReturn(papers);
-
-        assertThat(makeRepoStubbingEnriching().findBySearchOrder(searchOrderMock, pageableMock).getContent()).containsExactly(paperMock, paperMock);
+    public void findingPageBySearchOrder_delegatesToSearchOrderFinder() {
+        when(searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(papers);
+        assertThat(makeRepoStubbingEnriching().findPageBySearchOrder(searchOrderMock, paginationContextMock)).containsExactly(paperMock, paperMock);
         assertThat(enrichtedEntities).containsExactly(paperMock, paperMock);
-
-        verify(searchOrderRepositoryMock).findPagedBySearchOrder(searchOrderMock, pageableMock);
-        verify(searchOrderRepositoryMock).countBySearchOrder(searchOrderMock);
-        verify(pageMock).getContent();
+        verify(searchOrderRepositoryMock).findPageBySearchOrder(searchOrderMock, paginationContextMock);
     }
 
     @Test

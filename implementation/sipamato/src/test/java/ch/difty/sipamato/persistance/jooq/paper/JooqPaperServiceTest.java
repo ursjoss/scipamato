@@ -1,7 +1,6 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -11,16 +10,14 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.AbstractServiceTest;
 
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
@@ -34,9 +31,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     @Mock
     private SearchOrder searchOrderMock;
     @Mock
-    private Pageable pageableMock;
-    @Mock
-    private Page<Paper> paperPageMock;
+    private PaginationContext paginationContextMock;
     @Mock
     protected Paper paperMock;
 
@@ -65,7 +60,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Override
     public void specificTearDown() {
-        verifyNoMoreInteractions(repoMock, filterMock, searchOrderMock, pageableMock, paperPageMock, paperMock);
+        verifyNoMoreInteractions(repoMock, filterMock, searchOrderMock, paginationContextMock, paperMock);
     }
 
     @Test
@@ -92,23 +87,12 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         verify(repoMock).findById(id);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void findingByFilter_delegatesToRepo() {
-        when(repoMock.findByFilter(filterMock, pageableMock)).thenReturn(paperPageMock);
-        when(paperPageMock.getContent()).thenReturn(papers);
-
-        Page<Paper> pageOfPapers = service.findByFilter(filterMock, pageableMock);
-
-        assertThat(pageOfPapers).isEqualTo(paperPageMock);
-        assertThat(pageOfPapers.getContent()).isEqualTo(papers);
-
-        verify(repoMock).findByFilter(filterMock, pageableMock);
-        verify(paperPageMock).getContent();
-
-        // TODO how to stub this and verify the audit??? Same in JooqPaperSlimServiceTest and JooqSearchOrderServiceTest
-        verify(paperPageMock).forEach(isA(Consumer.class));
-        //        verifyAudit(2);
+        when(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(papers);
+        assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(papers);
+        verify(repoMock).findPageByFilter(filterMock, paginationContextMock);
+        verifyAudit(2);
     }
 
     @Test
@@ -173,9 +157,9 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Test
     public void findingPagedBySearchOrder_delegatesToRepo() {
-        when(repoMock.findBySearchOrder(searchOrderMock, pageableMock)).thenReturn(paperPageMock);
-        assertThat(service.findBySearchOrder(searchOrderMock, pageableMock)).isEqualTo(paperPageMock);
-        verify(repoMock).findBySearchOrder(searchOrderMock, pageableMock);
+        when(repoMock.findPageBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(papers);
+        assertThat(service.findPageBySearchOrder(searchOrderMock, paginationContextMock)).isEqualTo(papers);
+        verify(repoMock).findPageBySearchOrder(searchOrderMock, paginationContextMock);
     }
 
     @Test

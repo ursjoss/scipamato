@@ -16,7 +16,7 @@ import ch.difty.sipamato.entity.filter.StringSearchTerm.Token;
 import ch.difty.sipamato.entity.filter.StringSearchTerm.TokenType;
 
 @RunWith(MockitoJUnitRunner.class)
-public class StringSearchTermEvaluatorTest  extends SearchTermEvaluatorTest<StringSearchTerm> {
+public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearchTerm> {
 
     private final StringSearchTermEvaluator e = new StringSearchTermEvaluator();
 

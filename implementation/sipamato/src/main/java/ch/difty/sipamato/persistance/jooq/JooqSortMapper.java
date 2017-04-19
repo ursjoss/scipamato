@@ -5,9 +5,9 @@ import java.util.Collection;
 import org.jooq.Record;
 import org.jooq.SortField;
 import org.jooq.impl.TableImpl;
-import org.springframework.data.domain.Sort;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
+import ch.difty.sipamato.paging.Sort;
 
 /**
  * Implementations of this interface map sorting specifications into the jOOQ specific {@link SortField}s.

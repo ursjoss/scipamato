@@ -12,7 +12,7 @@ import org.junit.Test;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.web.jasper.PaperDataSourceTest;
-import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
@@ -154,7 +154,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
     @Test
     public void instantiatingWithProvider_withNullProvider_throws() throws JRException {
-        SortablePaperSlimProvider<? extends PaperSlimFilter> provider = null;
+        AbstractPaperSlimProvider<? extends PaperSlimFilter> provider = null;
         try {
             new PaperSummaryDataSource(provider, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
         } catch (Exception ex) {

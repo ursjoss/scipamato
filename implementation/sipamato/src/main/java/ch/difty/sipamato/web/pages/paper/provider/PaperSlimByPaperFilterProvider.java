@@ -5,20 +5,20 @@ import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.injection.Injector;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
+import ch.difty.sipamato.paging.PaginationContext;
+import ch.difty.sipamato.paging.PaginationRequest;
+import ch.difty.sipamato.paging.Sort.Direction;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
 /**
- * Extension of {@link SortablePaperSlimProvider} using the {@link PaperFilter} as filter class.
+ * Extension of {@link AbstractPaperSlimProvider} using the {@link PaperFilter} as filter class.
  *
  * @author u.joss
  */
-public class FilterBasedSortablePaperSlimProvider extends SortablePaperSlimProvider<PaperFilter> {
+public class PaperSlimByPaperFilterProvider extends AbstractPaperSlimProvider<PaperFilter> {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,16 +28,16 @@ public class FilterBasedSortablePaperSlimProvider extends SortablePaperSlimProvi
      *     the paper filter search specification
      * @param rowsPerPage
      */
-    public FilterBasedSortablePaperSlimProvider(final PaperFilter filter, final int rowsPerPage) {
-        super(filter, rowsPerPage);
+    public PaperSlimByPaperFilterProvider(final PaperFilter filter, final int rowsPerPage) {
+        super(filter != null ? filter : new PaperFilter(), rowsPerPage);
         Injector.get().inject(this);
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
     }
 
     /** {@inheritDoc} */
     @Override
-    protected Iterator<PaperSlim> findByFilter(final Pageable pageable) {
-        return getService().findByFilter(getFilterState(), pageable).iterator();
+    protected Iterator<PaperSlim> findPage(final PaginationContext pc) {
+        return getService().findPageByFilter(getFilterState(), pc).iterator();
     }
 
     /** {@inheritDoc} */
@@ -48,8 +48,8 @@ public class FilterBasedSortablePaperSlimProvider extends SortablePaperSlimProvi
 
     /** {@inheritDoc} */
     @Override
-    protected List<Paper> findAllPapersByFilter(final Direction dir, final String sortProp) {
-        return getPaperService().findByFilter(getFilterState(), new SipamatoPageRequest(dir, sortProp)).getContent();
+    protected List<Paper> findAll(final Direction dir, final String sortProp) {
+        return getPaperService().findPageByFilter(getFilterState(), new PaginationRequest(dir, sortProp));
     }
 
 }

@@ -10,7 +10,7 @@ import org.wicketstuff.jasperreports.JRConcreteResource;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.lib.AssertAs;
-import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -25,7 +25,7 @@ public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRCo
     private static final long serialVersionUID = 1L;
 
     private final Collection<E> jasperEntities = new ArrayList<>();
-    private final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider;
+    private final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider;
     private final String baseName;
 
     public JasperPaperDataSource(SipamatoPdfResourceHandler handler, String baseName, Collection<E> jasperEntities) {
@@ -37,7 +37,7 @@ public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRCo
         init();
     }
 
-    public JasperPaperDataSource(SipamatoPdfResourceHandler handler, String baseName, SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
+    public JasperPaperDataSource(SipamatoPdfResourceHandler handler, String baseName, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
         super(handler);
         this.baseName = AssertAs.notNull(baseName, "baseName");
         this.jasperEntities.clear();

@@ -2,12 +2,11 @@ package ch.difty.sipamato.persistance.jooq.paper.slim;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
+import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.JooqReadOnlyService;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.service.PaperSlimService;
@@ -30,8 +29,8 @@ public class JooqPaperSlimService extends JooqReadOnlyService<Long, PaperSlim, P
 
     /** {@inhericDoc} */
     @Override
-    public Page<PaperSlim> findBySearchOrder(SearchOrder searchOrder, Pageable pageable) {
-        return getRepository().findBySearchOrder(searchOrder, pageable);
+    public List<PaperSlim> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext) {
+        return getRepository().findPageBySearchOrder(searchOrder, paginationContext);
     }
 
     /** {@inhericDoc} */
