@@ -14,11 +14,11 @@ import ch.difty.sipamato.paging.Sort.Direction;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
 /**
- * Extension of {@link SortablePaperSlimProvider} using the {@link PaperFilter} as filter class.
+ * Extension of {@link AbstractPaperSlimProvider} using the {@link PaperFilter} as filter class.
  *
  * @author u.joss
  */
-public class FilterBasedSortablePaperSlimProvider extends SortablePaperSlimProvider<PaperFilter> {
+public class FilterBasedSortablePaperSlimProvider extends AbstractPaperSlimProvider<PaperFilter> {
 
     private static final long serialVersionUID = 1L;
 

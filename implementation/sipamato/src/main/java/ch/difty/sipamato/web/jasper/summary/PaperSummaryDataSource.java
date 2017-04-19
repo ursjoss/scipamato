@@ -10,7 +10,7 @@ import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.jasper.JasperPaperDataSource;
 import ch.difty.sipamato.web.jasper.SipamatoPdfResourceHandler;
-import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.sipamato.web.resources.jasper.PaperSummaryReportResourceReference;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.export.PdfExporterConfiguration;
@@ -24,7 +24,7 @@ import net.sf.jasperreports.export.PdfExporterConfiguration;
  * <li> a single {@link Paper} + meta fields</li>
  * <li> a single {@link PaperSummary}</li>
  * <li> a collection of {@link PaperSummary} entities or</li>
- * <li> an instance of a {@link SortablePaperSlimProvider} + meta fields</li>
+ * <li> an instance of a {@link AbstractPaperSlimProvider} + meta fields</li>
  * </ul>
  *
  * The meta fields are not contained within a paper instance and make up e.g. localized labels, the brand or part of the header.
@@ -96,7 +96,7 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      * Using the dataProvider for the Result Panel as record source. Needs the {@link PaperService} to retrieve the papers
      * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
      * @param dataProvider
-     *      the {@link SortablePaperSlimProvider} - must not be null
+     *      the {@link AbstractPaperSlimProvider} - must not be null
      * @param populationLabel
      *      localized label for the population field
      * @param methodsLabel
@@ -112,7 +112,7 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      * @param config
      *      PdfExporterConfiguration
      */
-    public PaperSummaryDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String populationLabel, final String methodsLabel, final String resultLabel,
+    public PaperSummaryDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String populationLabel, final String methodsLabel, final String resultLabel,
             final String commentLabel, final String headerPart, final String brand, PdfExporterConfiguration config) {
         super(new SipamatoPdfResourceHandler(config), BASE_NAME_MULTIPLE, dataProvider);
         this.populationLabel = populationLabel;

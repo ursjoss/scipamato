@@ -4,7 +4,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.web.jasper.JasperPaperDataSource;
 import ch.difty.sipamato.web.jasper.SipamatoPdfResourceHandler;
-import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.sipamato.web.resources.jasper.PaperReviewReportResourceReference;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.export.PdfExporterConfiguration;
@@ -39,7 +39,7 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
     /**
      * Using the dataProvider for the Result Panel as record source.
      */
-    public PaperReviewDataSource(final SortablePaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String idLabel, final String authorYearLabel, final String populationPlaceLabel,
+    public PaperReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String idLabel, final String authorYearLabel, final String populationPlaceLabel,
             final String methodOutcomeLabel, final String exposurePollutantLabel, final String methodStudyDesignLabel, final String populationDurationLabel, final String populationParticipantsLabel,
             final String exposureAssessmentLabel, final String resultExposureRangeLabel, final String methodConfoundersLabel, final String resultEffectEstimateLabel, final String brand,
             final String createdBy, PdfExporterConfiguration config) {

@@ -33,7 +33,7 @@ import ch.difty.sipamato.persistance.jooq.paper.slim.JooqPaperSlimService;
 //uncomment the profile with which the jooq db was compiled for - but don't commit it as it may fail in maven, where the respective profile is present
 //@ActiveProfiles({ "DB_JOOQ", "test", "postgres" })
 //@ActiveProfiles({ "DB_JOOQ", "test", "h2" })
-public abstract class SortablePaperSlimProviderTest<F extends PaperSlimFilter, P extends SortablePaperSlimProvider<F>> {
+public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P extends AbstractPaperSlimProvider<F>> {
 
     protected static final int PAGE_SIZE = 3;
 

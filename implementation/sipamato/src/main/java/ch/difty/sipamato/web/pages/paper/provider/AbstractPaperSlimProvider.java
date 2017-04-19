@@ -19,11 +19,11 @@ import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.service.PaperSlimService;
 
 /**
- * Abstract base class for dataproviders providing the wicket components access to the persisted paper data in the slim format.
+ * Abstract base class for data providers providing the wicket components access to the persisted paper data in the slim format.
  *
  * @author u.joss
  */
-public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<F> {
+public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<F> {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,7 +37,7 @@ public abstract class SortablePaperSlimProvider<F extends PaperSlimFilter> exten
     @SpringBean
     private PaperService paperService;
 
-    SortablePaperSlimProvider(final F filterState, final Integer rowsPerPage) {
+    AbstractPaperSlimProvider(final F filterState, final Integer rowsPerPage) {
         this.filterState = filterState;
         this.maxRowsPerPage = rowsPerPage;
     }

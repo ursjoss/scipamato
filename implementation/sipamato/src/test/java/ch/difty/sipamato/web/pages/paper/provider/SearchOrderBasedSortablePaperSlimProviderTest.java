@@ -18,7 +18,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.paging.PaginationContext;
 
-public class SearchOrderBasedSortablePaperSlimProviderTest extends SortablePaperSlimProviderTest<SearchOrder, SearchOrderBasedSortablePaperSlimProvider> {
+public class SearchOrderBasedSortablePaperSlimProviderTest extends AbstractPaperSlimProviderTest<SearchOrder, SearchOrderBasedSortablePaperSlimProvider> {
 
     @Mock
     private SearchOrder searchOrder;

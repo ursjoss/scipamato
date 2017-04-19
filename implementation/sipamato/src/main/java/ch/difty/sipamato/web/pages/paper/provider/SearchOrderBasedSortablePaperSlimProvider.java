@@ -14,11 +14,11 @@ import ch.difty.sipamato.paging.PaginationRequest;
 import ch.difty.sipamato.paging.Sort.Direction;
 
 /**
- * Extension of the {@link SortablePaperSlimProvider} using the {@link SearchOrder} as filter class.
+ * Extension of the {@link AbstractPaperSlimProvider} using the {@link SearchOrder} as filter class.
  *
  * @author u.joss
  */
-public class SearchOrderBasedSortablePaperSlimProvider extends SortablePaperSlimProvider<SearchOrder> {
+public class SearchOrderBasedSortablePaperSlimProvider extends AbstractPaperSlimProvider<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 

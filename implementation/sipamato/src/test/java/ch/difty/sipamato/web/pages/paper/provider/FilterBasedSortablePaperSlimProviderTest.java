@@ -18,7 +18,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
-public class FilterBasedSortablePaperSlimProviderTest extends SortablePaperSlimProviderTest<PaperFilter, FilterBasedSortablePaperSlimProvider> {
+public class FilterBasedSortablePaperSlimProviderTest extends AbstractPaperSlimProviderTest<PaperFilter, FilterBasedSortablePaperSlimProvider> {
 
     @Mock
     private PaperFilter filterMock;

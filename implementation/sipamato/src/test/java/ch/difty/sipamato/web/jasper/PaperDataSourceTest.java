@@ -10,7 +10,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.web.WicketTest;
-import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.design.JRDesignField;
@@ -19,7 +19,7 @@ import net.sf.jasperreports.export.PdfExporterConfiguration;
 public abstract class PaperDataSourceTest extends WicketTest {
 
     @Mock
-    protected SortablePaperSlimProvider<PaperFilter> dataProviderMock;
+    protected AbstractPaperSlimProvider<PaperFilter> dataProviderMock;
     @Mock
     protected PaperFilter paperFilterMock;
     @Mock

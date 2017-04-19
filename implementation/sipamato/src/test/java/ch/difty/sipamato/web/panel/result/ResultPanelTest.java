@@ -31,7 +31,7 @@ import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.service.PaperSlimService;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.pages.paper.provider.SearchOrderBasedSortablePaperSlimProvider;
-import ch.difty.sipamato.web.pages.paper.provider.SortablePaperSlimProvider;
+import ch.difty.sipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.sipamato.web.panel.PanelTest;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
@@ -72,7 +72,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
     @Override
     protected ResultPanel makePanel() {
-        return new ResultPanel(PANEL_ID, (SortablePaperSlimProvider<? extends PaperSlimFilter>) new SearchOrderBasedSortablePaperSlimProvider(searchOrderMock, ROWS_PER_PAGE));
+        return new ResultPanel(PANEL_ID, (AbstractPaperSlimProvider<? extends PaperSlimFilter>) new SearchOrderBasedSortablePaperSlimProvider(searchOrderMock, ROWS_PER_PAGE));
     }
 
     @Override
