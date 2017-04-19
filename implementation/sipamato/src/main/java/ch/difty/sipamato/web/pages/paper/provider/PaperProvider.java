@@ -18,7 +18,7 @@ import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.service.PaperService;
 
 /**
- * The dataprovider providing the wicket components access to the persisted paper data
+ * The data provider providing the wicket components access to the persisted paper data
  *
  * @author u.joss
  */
@@ -32,12 +32,12 @@ public class PaperProvider extends SortableDataProvider<Paper, String> implement
     private PaperFilter filter;
 
     public PaperProvider() {
-        this(new PaperFilter());
+        this(null);
     }
 
     public PaperProvider(PaperFilter filter) {
         Injector.get().inject(this);
-        this.filter = filter;
+        this.filter = filter != null ? filter : new PaperFilter();
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
     }
 

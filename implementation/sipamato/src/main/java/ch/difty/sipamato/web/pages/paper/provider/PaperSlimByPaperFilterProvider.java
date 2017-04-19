@@ -29,7 +29,7 @@ public class PaperSlimByPaperFilterProvider extends AbstractPaperSlimProvider<Pa
      * @param rowsPerPage
      */
     public PaperSlimByPaperFilterProvider(final PaperFilter filter, final int rowsPerPage) {
-        super(filter, rowsPerPage);
+        super(filter != null ? filter : new PaperFilter(), rowsPerPage);
         Injector.get().inject(this);
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
     }

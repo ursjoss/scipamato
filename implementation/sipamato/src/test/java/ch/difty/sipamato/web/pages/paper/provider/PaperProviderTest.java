@@ -72,6 +72,12 @@ public class PaperProviderTest {
     }
 
     @Test
+    public void nullFilterResultsInNewPaperFilter() {
+        PaperSlimByPaperFilterProvider p = new PaperSlimByPaperFilterProvider(null, 10);
+        assertThat(p.getFilterState()).isEqualToComparingFieldByField(new PaperFilter());
+    }
+
+    @Test
     public void size() {
         int size = 5;
         when(serviceMock.countByFilter(filterMock)).thenReturn(size);

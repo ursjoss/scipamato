@@ -44,6 +44,12 @@ public class PaperSlimBySearchOrderProviderTest extends AbstractPaperSlimProvide
     }
 
     @Test
+    public void constructingWithNewFilter_usesEmptyFilter() {
+        PaperSlimBySearchOrderProvider p = new PaperSlimBySearchOrderProvider(null, 10);
+        assertThat(p.getFilterState()).isEqualToComparingFieldByField(new SearchOrder());
+    }
+
+    @Test
     public void size() {
         int size = 5;
         when(serviceMock.countBySearchOrder(getFilter())).thenReturn(size);

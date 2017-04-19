@@ -29,7 +29,7 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
      * @param rowsPerPage
      */
     public PaperSlimBySearchOrderProvider(final SearchOrder searchOrder, final int rowsPerPage) {
-        super(searchOrder, rowsPerPage);
+        super(searchOrder != null ? searchOrder : new SearchOrder(), rowsPerPage);
         Injector.get().inject(this);
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
     }
