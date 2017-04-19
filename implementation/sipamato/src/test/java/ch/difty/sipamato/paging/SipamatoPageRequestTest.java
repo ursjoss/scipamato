@@ -1,10 +1,10 @@
-package ch.difty.sipamato.persistance.jooq;
+package ch.difty.sipamato.paging;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import ch.difty.sipamato.persistance.jooq.Sort.Direction;
+import ch.difty.sipamato.paging.Sort.Direction;
 
 public class SipamatoPageRequestTest {
 

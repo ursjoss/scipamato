@@ -7,10 +7,10 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.sipamato.entity.SearchOrder;
-import ch.difty.sipamato.persistance.jooq.Page;
-import ch.difty.sipamato.persistance.jooq.Pageable;
-import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
-import ch.difty.sipamato.persistance.jooq.Sort.Direction;
+import ch.difty.sipamato.paging.Page;
+import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.SipamatoPageRequest;
+import ch.difty.sipamato.paging.Sort.Direction;
 import ch.difty.sipamato.persistance.jooq.search.SearchOrderFilter;
 import ch.difty.sipamato.service.SearchOrderService;
 

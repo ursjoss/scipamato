@@ -446,8 +446,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         fixPubmedRetrievalButtonClicked("_a", "_fa", "_t", "_l", "2016", "_doi", "_oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed Authors: _a", "PubMed First Author: _fa", "PubMed Title: _t",
-                "PubMed Pub. Year: 2016", "PubMed Location: _l", "PubMed DOI: _doi");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed Authors: _a", "PubMed First Author: _fa", "PubMed Title: _t", "PubMed Pub. Year: 2016",
+                "PubMed Location: _l", "PubMed DOI: _doi");
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 

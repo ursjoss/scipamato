@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.paging.Sort;
 
 /**
  * Default implementation of the {@link JooqSortMapper} interface.

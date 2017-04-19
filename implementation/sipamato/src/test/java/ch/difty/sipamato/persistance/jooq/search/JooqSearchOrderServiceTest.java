@@ -21,9 +21,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.paging.Page;
+import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.AbstractServiceTest;
-import ch.difty.sipamato.persistance.jooq.Page;
-import ch.difty.sipamato.persistance.jooq.Pageable;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, SearchOrder, SearchOrderRepository> {

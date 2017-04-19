@@ -9,6 +9,8 @@ import ch.difty.sipamato.entity.IdSipamatoEntity;
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
+import ch.difty.sipamato.paging.Page;
+import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.user.UserRepository;
 import ch.difty.sipamato.service.ReadOnlyService;
 

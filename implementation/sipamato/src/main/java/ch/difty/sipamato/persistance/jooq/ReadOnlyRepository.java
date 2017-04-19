@@ -6,6 +6,8 @@ import java.util.List;
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
+import ch.difty.sipamato.paging.Page;
+import ch.difty.sipamato.paging.Pageable;
 
 /**
  * The generic repository interface for reading-only entity repository methods.

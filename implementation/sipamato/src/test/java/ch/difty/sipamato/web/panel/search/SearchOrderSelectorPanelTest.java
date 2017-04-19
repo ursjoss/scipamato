@@ -24,9 +24,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
-import ch.difty.sipamato.persistance.jooq.Page;
-import ch.difty.sipamato.persistance.jooq.PageImpl;
-import ch.difty.sipamato.persistance.jooq.Pageable;
+import ch.difty.sipamato.paging.Page;
+import ch.difty.sipamato.paging.PageImpl;
+import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.search.SearchOrderFilter;
 import ch.difty.sipamato.service.SearchOrderService;
 import ch.difty.sipamato.web.panel.PanelTest;

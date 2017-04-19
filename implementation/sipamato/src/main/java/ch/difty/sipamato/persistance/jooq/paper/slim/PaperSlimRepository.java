@@ -4,8 +4,8 @@ import java.util.List;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.persistance.jooq.Page;
-import ch.difty.sipamato.persistance.jooq.Pageable;
+import ch.difty.sipamato.paging.Page;
+import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.ReadOnlyRepository;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.persistance.jooq.paper.searchorder.SearchOrderRepository;

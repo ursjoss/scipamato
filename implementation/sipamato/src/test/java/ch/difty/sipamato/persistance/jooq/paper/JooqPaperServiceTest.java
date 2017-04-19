@@ -19,9 +19,9 @@ import org.mockito.Mockito;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.paging.Page;
+import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.AbstractServiceTest;
-import ch.difty.sipamato.persistance.jooq.Page;
-import ch.difty.sipamato.persistance.jooq.Pageable;
 
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
 

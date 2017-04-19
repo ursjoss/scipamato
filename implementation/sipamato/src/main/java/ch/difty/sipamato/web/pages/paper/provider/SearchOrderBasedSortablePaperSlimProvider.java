@@ -9,9 +9,9 @@ import org.apache.wicket.injection.Injector;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.persistance.jooq.Pageable;
-import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
-import ch.difty.sipamato.persistance.jooq.Sort.Direction;
+import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.SipamatoPageRequest;
+import ch.difty.sipamato.paging.Sort.Direction;
 
 /**
  * Extension of the {@link SortablePaperSlimProvider} using the {@link SearchOrder} as filter class.

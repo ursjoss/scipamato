@@ -33,6 +33,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ch.difty.sipamato.entity.IdSipamatoEntity;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.NullArgumentException;
+import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.Sort;
 import ch.difty.sipamato.service.Localization;
 
 @RunWith(MockitoJUnitRunner.class)

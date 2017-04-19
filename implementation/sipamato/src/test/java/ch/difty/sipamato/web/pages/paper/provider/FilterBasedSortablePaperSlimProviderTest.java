@@ -15,7 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.persistance.jooq.Pageable;
+import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 
 public class FilterBasedSortablePaperSlimProviderTest extends SortablePaperSlimProviderTest<PaperFilter, FilterBasedSortablePaperSlimProvider> {

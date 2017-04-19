@@ -17,6 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.paging.Page;
+import ch.difty.sipamato.paging.PageImpl;
+import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.service.Localization;
 
 /**

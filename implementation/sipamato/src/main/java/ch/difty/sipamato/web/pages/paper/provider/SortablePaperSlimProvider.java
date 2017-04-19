@@ -12,9 +12,9 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.persistance.jooq.Pageable;
-import ch.difty.sipamato.persistance.jooq.SipamatoPageRequest;
-import ch.difty.sipamato.persistance.jooq.Sort.Direction;
+import ch.difty.sipamato.paging.Pageable;
+import ch.difty.sipamato.paging.SipamatoPageRequest;
+import ch.difty.sipamato.paging.Sort.Direction;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.service.PaperSlimService;
 

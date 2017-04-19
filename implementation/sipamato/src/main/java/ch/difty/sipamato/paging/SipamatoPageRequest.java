@@ -1,9 +1,10 @@
-package ch.difty.sipamato.persistance.jooq;
+package ch.difty.sipamato.paging;
 
 import java.io.Serializable;
 
-import ch.difty.sipamato.persistance.jooq.Sort.Direction;
+import org.springframework.data.domain.PageRequest;
 
+import ch.difty.sipamato.paging.Sort.Direction;
 
 /**
  * PageRequest implementing {@link Pageable} that accepts the record offset instead of the page index

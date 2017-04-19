@@ -25,12 +25,12 @@ import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.entity.filter.StringSearchTerm;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.paging.Page;
+import ch.difty.sipamato.paging.PageImpl;
+import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.ConditionalSupplier;
 import ch.difty.sipamato.persistance.jooq.EntityRecordMapper;
 import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
-import ch.difty.sipamato.persistance.jooq.Page;
-import ch.difty.sipamato.persistance.jooq.PageImpl;
-import ch.difty.sipamato.persistance.jooq.Pageable;
 
 /**
  * Common abstract base class for the paper or paperSlim specific repository implementations.

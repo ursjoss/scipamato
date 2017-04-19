@@ -1,15 +1,16 @@
-package ch.difty.sipamato.persistance.jooq;
+package ch.difty.sipamato.paging;
 
 import java.util.Iterator;
 import java.util.List;
 
+@Deprecated
 public class PageImpl<T> implements Page<T> {
-
-    public PageImpl(List<T> content, Pageable pageable, long total) {
-    }
 
     public PageImpl(List<T> asList) {
         // TODO Auto-generated constructor stub
+    }
+
+    public PageImpl(List<T> content, Pageable pageable, long total) {
     }
 
     @Override

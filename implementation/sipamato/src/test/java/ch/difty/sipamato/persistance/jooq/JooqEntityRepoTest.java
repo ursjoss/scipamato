@@ -35,6 +35,7 @@ import ch.difty.sipamato.entity.filter.SipamatoFilter;
 import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.lib.FrozenDateTimeService;
 import ch.difty.sipamato.lib.NullArgumentException;
+import ch.difty.sipamato.paging.Pageable;
 
 /**
  * TODO find a more feasible approach to test the actual jOOQ part via unit tests. The current approach is too cumbersome.

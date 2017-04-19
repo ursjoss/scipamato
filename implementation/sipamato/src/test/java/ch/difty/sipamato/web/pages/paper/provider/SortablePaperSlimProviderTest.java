@@ -23,9 +23,9 @@ import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.persistance.jooq.Page;
-import ch.difty.sipamato.persistance.jooq.PageImpl;
-import ch.difty.sipamato.persistance.jooq.Pageable;
+import ch.difty.sipamato.paging.Page;
+import ch.difty.sipamato.paging.PageImpl;
+import ch.difty.sipamato.paging.Pageable;
 import ch.difty.sipamato.persistance.jooq.paper.JooqPaperService;
 import ch.difty.sipamato.persistance.jooq.paper.slim.JooqPaperSlimService;
 
