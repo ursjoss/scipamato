@@ -47,10 +47,16 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     @Override
     public ServiceResult dumpPubmedArticlesToDb(final List<PubmedArticleFacade> articles) {
         final ServiceResult sr = new DefaultServiceResult();
-        final List<Integer> pmIds = articles.stream().map(PubmedArticleFacade::getPmId).filter(Objects::nonNull).map(Integer::valueOf).collect(Collectors.toList());
-        final List<String> existingPmIds = getRepository().findByPmIds(pmIds).stream().map(Paper::getPmId).map(String::valueOf).collect(Collectors.toList());
-        final List<Paper> newPapers = articles.stream().filter(a -> a.getPmId() != null && !existingPmIds.contains(a.getPmId())).map(this::savePubmedArticle).collect(Collectors.toList());
-        fillServiceResultFrom(existingPmIds, newPapers, sr);
+        final List<Integer> pmIdCandidates = articles.stream().map(PubmedArticleFacade::getPmId).filter(Objects::nonNull).map(Integer::valueOf).collect(Collectors.toList());
+        if (!pmIdCandidates.isEmpty()) {
+            final List<String> existingPmIds = getRepository().findByPmIds(pmIdCandidates).stream().map(Paper::getPmId).map(String::valueOf).collect(Collectors.toList());
+            final List<Paper> savedPapers = articles.stream()
+                    .filter(a -> a.getPmId() != null && !existingPmIds.contains(a.getPmId()))
+                    .map(this::savePubmedArticle)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+            fillServiceResultFrom(savedPapers, existingPmIds, sr);
+        }
         return sr;
     }
 
@@ -67,7 +73,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         return getRepository().add(p);
     }
 
-    private void fillServiceResultFrom(final List<String> existingPmIds, final List<Paper> newPapers, final ServiceResult sr) {
+    private void fillServiceResultFrom(final List<Paper> newPapers, final List<String> existingPmIds, final ServiceResult sr) {
         existingPmIds.stream().map(pmId -> "PMID " + pmId).forEach(sr::addWarnMessage);
         newPapers.stream().map(p -> "PMID " + p.getPmId() + " (id " + p.getId() + ")").forEach(sr::addInfoMessage);
     }

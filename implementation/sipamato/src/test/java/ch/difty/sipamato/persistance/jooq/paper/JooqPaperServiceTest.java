@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,18 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.AbstractServiceTest;
+import ch.difty.sipamato.pubmed.Article;
+import ch.difty.sipamato.pubmed.ArticleTitle;
+import ch.difty.sipamato.pubmed.Journal;
+import ch.difty.sipamato.pubmed.JournalIssue;
+import ch.difty.sipamato.pubmed.MedlineCitation;
+import ch.difty.sipamato.pubmed.MedlineJournalInfo;
+import ch.difty.sipamato.pubmed.PMID;
+import ch.difty.sipamato.pubmed.PubDate;
+import ch.difty.sipamato.pubmed.PubmedArticle;
+import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
+import ch.difty.sipamato.pubmed.entity.SipamatoPubmedArticle;
+import ch.difty.sipamato.service.ServiceResult;
 
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
 
@@ -33,7 +46,9 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     @Mock
     private PaginationContext paginationContextMock;
     @Mock
-    protected Paper paperMock;
+    protected Paper paperMock, paperMock2;
+
+    private final List<PubmedArticleFacade> articles = new ArrayList<>();
 
     @Override
     protected Paper getEntity() {
@@ -60,7 +75,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Override
     public void specificTearDown() {
-        verifyNoMoreInteractions(repoMock, filterMock, searchOrderMock, paginationContextMock, paperMock);
+        verifyNoMoreInteractions(repoMock, filterMock, searchOrderMock, paginationContextMock, paperMock, paperMock2);
     }
 
     @Test
@@ -167,5 +182,80 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         when(repoMock.countBySearchOrder(searchOrderMock)).thenReturn(2);
         assertThat(service.countBySearchOrder(searchOrderMock)).isEqualTo(2);
         verify(repoMock).countBySearchOrder(searchOrderMock);
+    }
+
+    @Test
+    public void dumpingEmptyListOfArticles_logsWarnMessage() {
+        ServiceResult sr = service.dumpPubmedArticlesToDb(articles);
+        assertThat(sr).isNotNull();
+        assertThat(sr.getInfoMessages()).isEmpty();
+        assertThat(sr.getWarnMessages()).isEmpty();
+        assertThat(sr.getErrorMessages()).isEmpty();
+    }
+
+    @Test
+    public void dumpingSingleArticle_whichAlreadyExists_doesNotSave() {
+        Integer pmIdValue = 23193287;
+        PubmedArticle pa = newPubmedArticle(pmIdValue);
+        articles.add(SipamatoPubmedArticle.of(pa));
+
+        // existing papers
+        when(repoMock.findByPmIds(Arrays.asList(pmIdValue))).thenReturn(Arrays.asList(paperMock));
+        when(paperMock.getPmId()).thenReturn(pmIdValue);
+
+        ServiceResult sr = service.dumpPubmedArticlesToDb(articles);
+        assertThat(sr).isNotNull();
+        assertThat(sr.getInfoMessages()).isEmpty();
+        assertThat(sr.getWarnMessages()).hasSize(1).contains("PMID " + pmIdValue);
+        assertThat(sr.getErrorMessages()).isEmpty();
+
+        verify(repoMock).findByPmIds(Arrays.asList(pmIdValue));
+        verify(paperMock).getPmId();
+    }
+
+    @Test
+    public void dumpingSingleNewArticle_saves() {
+        Integer pmIdValue = 23193287;
+        PubmedArticle pa = newPubmedArticle(pmIdValue);
+        articles.add(SipamatoPubmedArticle.of(pa));
+
+        when(repoMock.findByPmIds(Arrays.asList(pmIdValue))).thenReturn(Arrays.asList());
+
+        when(repoMock.add(Mockito.isA(Paper.class))).thenReturn(paperMock2);
+        when(paperMock2.getId()).thenReturn(27l);
+        when(paperMock2.getPmId()).thenReturn(pmIdValue);
+
+        ServiceResult sr = service.dumpPubmedArticlesToDb(articles);
+        assertThat(sr).isNotNull();
+        assertThat(sr.getInfoMessages()).hasSize(1).contains("PMID " + pmIdValue + " (id 27)");
+        assertThat(sr.getWarnMessages()).isEmpty();
+        assertThat(sr.getErrorMessages()).isEmpty();
+
+        verify(repoMock).findByPmIds(Arrays.asList(pmIdValue));
+        verify(repoMock).add(Mockito.isA(Paper.class));
+        verify(paperMock2).getId();
+        verify(paperMock2).getPmId();
+    }
+
+    private PubmedArticle newPubmedArticle(Integer pmIdValue) {
+        PubmedArticle pa = new PubmedArticle();
+        MedlineCitation mc = new MedlineCitation();
+        MedlineJournalInfo mji = new MedlineJournalInfo();
+        mc.setMedlineJournalInfo(mji);
+        PMID pmId = new PMID();
+        pmId.setvalue(String.valueOf(pmIdValue));
+        mc.setPMID(pmId);
+        Article a = new Article();
+        ArticleTitle at = new ArticleTitle();
+        a.setArticleTitle(at);
+        Journal j = new Journal();
+        JournalIssue ji = new JournalIssue();
+        PubDate pd = new PubDate();
+        ji.setPubDate(pd);
+        j.setJournalIssue(ji);
+        a.setJournal(j);
+        mc.setArticle(a);
+        pa.setMedlineCitation(mc);
+        return pa;
     }
 }
