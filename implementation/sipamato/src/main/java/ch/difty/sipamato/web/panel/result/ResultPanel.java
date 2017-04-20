@@ -87,21 +87,20 @@ public class ResultPanel extends AbstractPanel<Void> {
 
     private List<IColumn<PaperSlim, String>> makeTableColumns() {
         final List<IColumn<PaperSlim, String>> columns = new ArrayList<>();
-        columns.add(makePropertyColumn(Paper.ID, Paper.FLD_ID));
-        columns.add(makePropertyColumn(Paper.FIRST_AUTHOR, Paper.FLD_FIRST_AUTHOR));
-        columns.add(makePropertyColumn(Paper.PUBL_YEAR, Paper.FLD_PUBL_YEAR));
-        columns.add(makeClickableColumn(Paper.TITLE, Paper.FLD_TITLE,
-                (IModel<PaperSlim> m) -> setResponsePage(new PaperEntryPage(Model.of(paperService.findById(m.getObject().getId()).orElse(new Paper()))))));
+        columns.add(makePropertyColumn(Paper.ID));
+        columns.add(makePropertyColumn(Paper.FIRST_AUTHOR));
+        columns.add(makePropertyColumn(Paper.PUBL_YEAR));
+        columns.add(makeClickableColumn(Paper.TITLE, (IModel<PaperSlim> m) -> setResponsePage(new PaperEntryPage(Model.of(paperService.findById(m.getObject().getId()).orElse(new Paper()))))));
         columns.add(makeLinkIconColumn("exclude"));
         return columns;
     }
 
-    private PropertyColumn<PaperSlim, String> makePropertyColumn(String propExpression, String sortProperty) {
-        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), sortProperty, propExpression);
+    private PropertyColumn<PaperSlim, String> makePropertyColumn(String propExpression) {
+        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression);
     }
 
-    private ClickablePropertyColumn<PaperSlim, String> makeClickableColumn(String propExpression, String sortProperty, SerializableConsumer<IModel<PaperSlim>> consumer) {
-        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), sortProperty, propExpression, consumer);
+    private ClickablePropertyColumn<PaperSlim, String> makeClickableColumn(String propExpression, SerializableConsumer<IModel<PaperSlim>> consumer) {
+        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression, consumer);
     }
 
     private IColumn<PaperSlim, String> makeLinkIconColumn(String id) {
