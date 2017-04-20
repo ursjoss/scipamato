@@ -106,6 +106,11 @@ public class JooqUserServiceTest {
     }
 
     @Test
+    public void findingByUserName_withNullName_returnsEmptyOptional() {
+        assertThat(service.findByUserName(null).isPresent()).isFalse();
+    }
+
+    @Test
     public void findingByUserName_whenFindingUser_delegatesToRepoAndReturnsOptionalOfFoundUser() {
         when(repoMock.findByUserName("foo")).thenReturn(userMock);
         assertThat(service.findByUserName("foo")).isEqualTo(Optional.ofNullable(userMock));

@@ -58,6 +58,8 @@ public class JooqUserService implements UserService {
     /** {@inhericDoc} */
     @Override
     public Optional<User> findByUserName(String userName) {
+        if (userName == null)
+            return Optional.empty();
         return Optional.ofNullable(repo.findByUserName(userName));
     }
 

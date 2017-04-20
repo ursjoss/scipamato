@@ -46,7 +46,7 @@ public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @After
     public void teardown() {
-        // Delete all books that were created in any test
+        // Delete all papers that were created in any test
         dsl.delete(PAPER).where(PAPER.ID.gt(MAX_ID_PREPOPULATED)).execute();
     }
 
