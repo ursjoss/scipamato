@@ -106,4 +106,22 @@ public class SortMapperTest {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("table must not be null.");
         }
     }
+
+    @Test
+    public void convertsSortPropertyInCamelCase_toUnderscores() {
+        orders.add(new Order(Direction.DESC, "publicationYear"));
+        orders.add(new Order(Direction.ASC, "populationParticipants"));
+
+        Collection<SortField<Paper>> sortFields = mapper.map(new Sort(orders), ch.difty.sipamato.db.tables.Paper.PAPER);
+        assertThat(sortFields).hasSize(2);
+
+        Iterator<SortField<Paper>> it = sortFields.iterator();
+        SortField<Paper> sf = it.next();
+        assertThat(sf.getName()).isEqualToIgnoringCase("publication_year");
+        assertThat(sf.getOrder()).isEqualTo(SortOrder.DESC);
+
+        sf = it.next();
+        assertThat(sf.getName()).isEqualToIgnoringCase("population_participants");
+        assertThat(sf.getOrder()).isEqualTo(SortOrder.ASC);
+    }
 }
