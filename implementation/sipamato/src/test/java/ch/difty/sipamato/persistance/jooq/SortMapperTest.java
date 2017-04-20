@@ -69,7 +69,7 @@ public class SortMapperTest {
     @Test
     public void gettingTableField_withExistingField_returnsTableField() {
         String existingFieldName = ch.difty.sipamato.db.tables.Paper.PAPER.AUTHORS.getName();
-        TableField<PaperRecord, Paper> field = mapper.getTableField(existingFieldName, ch.difty.sipamato.db.tables.Paper.PAPER);
+        TableField<PaperRecord, Paper> field = mapper.getTableField(existingFieldName.toLowerCase(), ch.difty.sipamato.db.tables.Paper.PAPER);
         assertThat(field).isNotNull();
         assertThat(field.getName()).isEqualTo(existingFieldName);
     }
