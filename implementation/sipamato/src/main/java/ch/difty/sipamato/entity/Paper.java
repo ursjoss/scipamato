@@ -57,49 +57,11 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
 
     public static final String CODES = "codes";
 
-    // TODO Leaky abstraction!!! Should not use the table fields in the entity layer:
-    // Would need some mapper component in {@link SortMapper} converting the entity field names into table field names
-    public static final String FLD_DOI = "doi";
-    public static final String FLD_PMID = "pm_id";
-    public static final String FLD_AUTHORS = "authors";
-    public static final String FLD_FIRST_AUTHOR = "first_author";
-    public static final String FLD_FIRST_AUTHOR_OVERRIDDEN = "first_author_overridden";
-    public static final String FLD_TITLE = "title";
-    public static final String FLD_LOCATION = "location";
-    public static final String FLD_PUBL_YEAR = "publication_year";
-
-    public static final String FLD_GOALS = "goals";
-    public static final String FLD_POPULATION = "population";
-    public static final String FLD_METHODS = "methods";
-
-    public static final String FLD_POPULATION_PLACE = "population_place";
-    public static final String FLD_POPULATION_PARTICIPANTS = "population_participants";
-    public static final String FLD_POPULATION_DURATION = "population_duration";
-    public static final String FLD_EXPOSURE_POLLUTANT = "exposure_pollutant";
-    public static final String FLD_EXPOSURE_ASSESSMENT = "exposure_assessment";
-    public static final String FLD_METHOD_STUDY_DESIGN = "method_study_design";
-    public static final String FLD_METHOD_OUTCOME = "method_outcome";
-    public static final String FLD_METHOD_STATISTICS = "method_statistics";
-    public static final String FLD_METHOD_CONFOUNDERS = "method_confounders";
-
-    public static final String FLD_RESULT = "result";
-    public static final String FLD_COMMENT = "comment";
-    public static final String FLD_INTERN = "intern";
-
-    public static final String FLD_RESULT_EXPOSURE_RANGE = "result_exposure_range";
-    public static final String FLD_RESULT_EFFECT_ESTIMATE = "result_effect_estimate";
-    public static final String FLD_RESULT_MEASURED_OUTCOME = "result_measured_outcome";
-
-    public static final String FLD_ORIGINAL_ABSTRACT = "original_abstract";
-
-    public static final String FLD_MAIN_CODE_OF_CODECLASS1 = "main_code_of_codeclass1";
-
-    public static final String FLD_CODES = "codes";
-
-    public static final String FLD_CREATED = "paper.created";
-    public static final String FLD_CREATED_BY = "paper.created_by";
-    public static final String FLD_LAST_MOD = "paper.last_modified";
-    public static final String FLD_LAST_MOD_BY = "paper.last_modified_by";
+    // Override to get unique names
+    public static final String CREATED = "paper.created";
+    public static final String CREATED_BY = "paper.created_by";
+    public static final String LAST_MOD = "paper.last_modified";
+    public static final String LAST_MOD_BY = "paper.last_modified_by";
 
     /*
      * Digital Object Identifier (see http://www.doi.org)

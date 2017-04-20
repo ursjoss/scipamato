@@ -83,7 +83,7 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
         searchOrder.add(sc1);
 
         Condition cond = finder.getConditionsFrom(searchOrder);
-        assertThat(cond.toString()).isEqualTo("publicationYear > 2014");
+        assertThat(cond.toString()).isEqualTo("publication_year > 2014");
     }
 
     @Test
@@ -139,7 +139,7 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
         // @formatter:off
             "(\n" +
             "  (\n" +
-            "    publicationYear between 2014 and 2015\n" +
+            "    publication_year between 2014 and 2015\n" +
             "    and lower(cast(authors as varchar)) like ('%' || replace(\n" +
             "      replace(\n" +
             "        replace(\n" +
@@ -155,7 +155,7 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
             "    ) || '%') escape '!'\n" +
             "  )\n" +
             "  or (\n" +
-            "    firstAuthorOverridden = false\n" +
+            "    first_author_overridden = false\n" +
             "    and exists (\n" +
             "      select 1 \"one\"\n" +
             "      from \"public\".\"paper_code\"\n" +
@@ -190,7 +190,7 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
             "(\n" +
             "  (\n" +
             "    (\n" +
-            "      publicationYear between 2014 and 2015\n" +
+            "      publication_year between 2014 and 2015\n" +
             "      and lower(cast(authors as varchar)) like ('%' || replace(\n" +
             "        replace(\n" +
             "          replace(\n" +
@@ -206,7 +206,7 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
             "      ) || '%') escape '!'\n" +
             "    )\n" +
             "    or (\n" +
-            "      firstAuthorOverridden = false\n" +
+            "      first_author_overridden = false\n" +
             "      and exists (\n" +
             "        select 1 \"one\"\n" +
             "        from \"public\".\"paper_code\"\n" +
@@ -254,7 +254,7 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
             "(\n" +
             "  (\n" +
             "    (\n" +
-            "      publicationYear between 2014 and 2015\n" +
+            "      publication_year between 2014 and 2015\n" +
             "      and lower(cast(authors as varchar)) like ('%' || replace(\n" +
             "        replace(\n" +
             "          replace(\n" +
@@ -270,7 +270,7 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
             "      ) || '%') escape '!'\n" +
             "    )\n" +
             "    or (\n" +
-            "      firstAuthorOverridden = false\n" +
+            "      first_author_overridden = false\n" +
             "      and exists (\n" +
             "        select 1 \"one\"\n" +
             "        from \"public\".\"paper_code\"\n" +

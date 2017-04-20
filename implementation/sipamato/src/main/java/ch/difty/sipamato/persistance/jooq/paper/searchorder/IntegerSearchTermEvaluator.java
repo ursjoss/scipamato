@@ -7,6 +7,7 @@ import org.jooq.impl.DSL;
 
 import ch.difty.sipamato.entity.filter.IntegerSearchTerm;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.lib.TranslationUtils;
 
 /**
  * {@link SearchTermEvaluator} implementation evaluating integer searchTerms.
@@ -20,7 +21,8 @@ class IntegerSearchTermEvaluator implements SearchTermEvaluator<IntegerSearchTer
     public Condition evaluate(final IntegerSearchTerm searchTerm) {
         AssertAs.notNull(searchTerm, "searchTerm");
 
-        final Field<Object> field = DSL.field(searchTerm.getFieldName());
+        final String fieldName = TranslationUtils.deCamelCase(searchTerm.getFieldName());
+        final Field<Object> field = DSL.field(fieldName);
         final Param<Integer> value = DSL.val(searchTerm.getValue());
 
         switch (searchTerm.getType()) {

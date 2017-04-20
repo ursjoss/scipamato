@@ -7,6 +7,7 @@ import org.jooq.impl.DSL;
 import ch.difty.sipamato.entity.filter.StringSearchTerm;
 import ch.difty.sipamato.entity.filter.StringSearchTerm.Token;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.lib.TranslationUtils;
 import ch.difty.sipamato.persistance.jooq.ConditionalSupplier;
 
 /**
@@ -23,7 +24,8 @@ class StringSearchTermEvaluator implements SearchTermEvaluator<StringSearchTerm>
 
         final ConditionalSupplier conditions = new ConditionalSupplier();
         for (final Token token : searchTerm.getTokens()) {
-            addToConditions(conditions, token, DSL.field(searchTerm.getFieldName()), DSL.val(token.sqlData));
+            final String fieldName = TranslationUtils.deCamelCase(searchTerm.getFieldName());
+            addToConditions(conditions, token, DSL.field(fieldName), DSL.val(token.sqlData));
         }
         return conditions.combineWithAnd();
     }

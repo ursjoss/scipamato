@@ -13,8 +13,6 @@ public abstract class IdSipamatoEntity<ID extends Number> extends SipamatoEntity
 
     public static final String ID = "id";
 
-    public static final String FLD_ID = "id";
-
     private ID id;
 
     public IdSipamatoEntity() {

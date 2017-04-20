@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.lib.TranslationUtils;
 import ch.difty.sipamato.paging.Sort;
 
 /**
@@ -76,7 +77,7 @@ public class SortMapper<R extends Record, T extends SipamatoEntity, TI extends T
     }
 
     private String deCamelCase(String sortFieldName) {
-        return sortFieldName.replaceAll("(.)(\\p{Upper})", "$1_$2").toUpperCase();
+        return TranslationUtils.deCamelCase(sortFieldName).toUpperCase();
     }
 
     private SortField<T> convertTableFieldToSortField(TableField<R, T> tableField, Sort.Direction sortDirection) {
