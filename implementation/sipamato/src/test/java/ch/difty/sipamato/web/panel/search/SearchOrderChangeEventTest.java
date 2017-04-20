@@ -14,7 +14,7 @@ public class SearchOrderChangeEventTest {
     private SearchOrderChangeEvent e;
 
     @Mock
-    private AjaxRequestTarget targetMock;
+    private AjaxRequestTarget targetMock, targetMock2;
 
     @Test
     public void canRetrieveTarget() {
@@ -60,6 +60,14 @@ public class SearchOrderChangeEventTest {
         e = new SearchOrderChangeEvent(targetMock).requestingNewSearchOrder().withExcludedPaperId(5l);
         assertThat(e.getExcludedId()).isEqualTo(5l);
         assertThat(e.isNewSearchOrderRequested()).isFalse();
+    }
+
+    @Test
+    public void canOverrideTarget() {
+        e = new SearchOrderChangeEvent(targetMock);
+        assertThat(e.getTarget()).isEqualTo(targetMock);
+        e.setTarget(targetMock2);
+        assertThat(e.getTarget()).isEqualTo(targetMock2);
     }
 
 }
