@@ -162,8 +162,10 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
         R updated = updateSetStepSetter.setFieldsFor(getDsl().update(getTable()), entity).where(getTableId().equal(id)).returning().fetchOne();
         updateAssociatedEntities(entity);
         if (updated != null) {
+            T savedEntity = findById(id);
+            enrichAssociatedEntitiesOf(savedEntity);
             getLogger().info("Updated 1 record: {} with id {}.", getTable().getName(), id);
-            return getMapper().map(updated);
+            return savedEntity;
         } else {
             // Ugly, need to work around the problem that update...returning().fetchOne() is not supported for H2
             if (SQLDialect.H2.equals(jooqConfig.dialect())) {

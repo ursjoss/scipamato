@@ -1,6 +1,7 @@
 package ch.difty.sipamato.entity;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -137,6 +138,17 @@ public class User extends IdSipamatoEntity<Integer> {
 
     public void addRole(final Role role) {
         this.roles.add(role);
+    }
+
+    public void removeRole(final Role role) {
+        final Iterator<Role> it = this.roles.iterator();
+        while (it.hasNext()) {
+            final Role r = it.next();
+            if (r.equals(role)) {
+                it.remove();
+                return;
+            }
+        }
     }
 
     @Override

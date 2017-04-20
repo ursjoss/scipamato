@@ -11,6 +11,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ch.difty.sipamato.auth.Role;
 import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
 
@@ -113,6 +114,76 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
         assertThat(deleted.getId()).isEqualTo(id);
 
         assertThat(repo.findById(id)).isNull();
+    }
+
+    @Test
+    public void findingUserByName_withNonExistingUserName_returnsNull() {
+        assertThat(repo.findByUserName("lkajdsklj")).isNull();
+    }
+
+    @Test
+    public void findingUserByName_withExistingUserName_returnsUserIncludingRoles() {
+        String name = "admin";
+        final User admin = repo.findByUserName(name);
+        assertThat(admin.getUserName()).isEqualTo(name);
+        assertThat(admin.getRoles()).isNotEmpty();
+    }
+
+    @Test
+    public void updatingAssociatedEntities_addsAndRemovesRoles() {
+        Integer id = newUserAndSave();
+
+        addRoleViewerAndUserToUserWith(id);
+        addRoleAdminAndRemoveRoleViewerFrom(id);
+        removeRoleAdminFrom(id);
+
+        User deletedUser = repo.delete(id);
+        assertThat(deletedUser).isNotNull();
+        assertThat(repo.findById(id)).isNull();
+    }
+
+    private Integer newUserAndSave() {
+        User u = new User();
+        u.setUserName("test");
+        u.setFirstName("fn");
+        u.setLastName("ln");
+        u.setEnabled(false);
+        u.setEmail("u@foo.bar");
+        u.setPassword("xyz");
+
+        assertThat(u.getId()).isNull();
+
+        User savedUser = repo.add(u);
+
+        assertThat(savedUser).isNotNull();
+        assertThat(savedUser.getId()).isNotNull();
+        assertThat(savedUser.getUserName()).isEqualTo("test");
+        assertThat(savedUser.getRoles()).isEmpty();
+
+        return savedUser.getId();
+    }
+
+    private void addRoleViewerAndUserToUserWith(Integer id) {
+        User user = repo.findById(id);
+        user.addRole(Role.VIEWER);
+        user.addRole(Role.USER);
+        User viewer = repo.update(user);
+        assertThat(viewer.getRoles()).containsOnly(Role.VIEWER, Role.USER);
+    }
+
+    private void addRoleAdminAndRemoveRoleViewerFrom(Integer id) {
+        User user = repo.findById(id);
+        user.addRole(Role.ADMIN);
+        user.removeRole(Role.VIEWER);
+        User u = repo.update(user);
+        assertThat(u.getRoles()).containsOnly(Role.USER, Role.ADMIN);
+    }
+
+    private void removeRoleAdminFrom(Integer id) {
+        User user = repo.findById(id);
+        user.removeRole(Role.ADMIN);
+        User u = repo.update(user);
+        assertThat(u.getRoles()).containsOnly(Role.USER);
     }
 
 }

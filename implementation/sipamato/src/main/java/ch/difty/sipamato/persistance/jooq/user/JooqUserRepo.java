@@ -95,16 +95,16 @@ public class JooqUserRepo extends JooqEntityRepo<SipamatoUserRecord, User, Integ
 
     @Override
     protected void saveAssociatedEntitiesOf(User user) {
-        storeNewUsersOf(user);
+        storeNewRolesOf(user);
     }
 
     @Override
     protected void updateAssociatedEntities(User user) {
-        storeNewUsersOf(user);
-        deleteObsoleteUsersFrom(user);
+        storeNewRolesOf(user);
+        deleteObsoleteRolesFrom(user);
     }
 
-    private void storeNewUsersOf(User user) {
+    private void storeNewRolesOf(User user) {
         InsertValuesStep2<UserRoleRecord, Integer, Integer> step = getDsl().insertInto(USER_ROLE, USER_ROLE.USER_ID, USER_ROLE.ROLE_ID);
         final Integer userId = user.getId();
         for (final Role r : user.getRoles()) {
@@ -113,7 +113,7 @@ public class JooqUserRepo extends JooqEntityRepo<SipamatoUserRecord, User, Integ
         step.onDuplicateKeyIgnore().execute();
     }
 
-    private void deleteObsoleteUsersFrom(User user) {
+    private void deleteObsoleteRolesFrom(User user) {
         final List<Integer> roleIds = user.getRoles().stream().map(Role::getId).collect(Collectors.toList());
         getDsl().deleteFrom(USER_ROLE).where(USER_ROLE.USER_ID.equal(user.getId()).and(USER_ROLE.ROLE_ID.notIn(roleIds))).execute();
     }
