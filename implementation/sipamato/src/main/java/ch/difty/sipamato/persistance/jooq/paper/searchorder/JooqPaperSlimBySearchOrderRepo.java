@@ -9,14 +9,14 @@ import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.sipamato.persistance.jooq.paper.slim.PaperSlimRecordMapper;
 
 /**
- * {@link PaperSlim} specific repository returning those entities based on searchOrders.
+ * {@link PaperSlim} specific repository returning those entities by SearchOrders.
  *
  * @author u.joss
  */
 @Repository
-public class JooqPaperSlimBackedSearchOrderRepo extends JooqSearchOrderRepo<PaperSlim, PaperSlimRecordMapper> implements PaperSlimBackedSearchOrderRepository {
+public class JooqPaperSlimBySearchOrderRepo extends JooqBySearchOrderRepo<PaperSlim, PaperSlimRecordMapper> implements PaperSlimBackedSearchOrderRepository {
 
-    public JooqPaperSlimBackedSearchOrderRepo(DSLContext dsl, PaperSlimRecordMapper mapper, JooqSortMapper<PaperRecord, PaperSlim, ch.difty.sipamato.db.tables.Paper> sortMapper) {
+    public JooqPaperSlimBySearchOrderRepo(DSLContext dsl, PaperSlimRecordMapper mapper, JooqSortMapper<PaperRecord, PaperSlim, ch.difty.sipamato.db.tables.Paper> sortMapper) {
         super(dsl, mapper, sortMapper);
     }
 

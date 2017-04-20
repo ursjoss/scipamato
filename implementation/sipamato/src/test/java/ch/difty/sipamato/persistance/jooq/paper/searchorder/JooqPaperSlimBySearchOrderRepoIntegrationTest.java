@@ -13,10 +13,10 @@ import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.paging.PaginationRequest;
 import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
 
-public class JooqPaperSlimBackedSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest {
+public class JooqPaperSlimBySearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
-    private JooqPaperSlimBackedSearchOrderRepo repo;
+    private JooqPaperSlimBySearchOrderRepo repo;
 
     @Test
     public void finding() {

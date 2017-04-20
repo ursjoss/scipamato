@@ -4,6 +4,11 @@ import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.persistance.jooq.EntityRepository;
 
+/**
+ * Repository to manage SearchOrders and the related sub-entities.
+ *
+ * @author u.joss
+ */
 public interface SearchOrderRepository extends EntityRepository<SearchOrder, Long, SearchOrderFilter> {
 
     /**

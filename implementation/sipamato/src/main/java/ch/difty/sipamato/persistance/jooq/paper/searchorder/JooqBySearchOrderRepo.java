@@ -31,7 +31,7 @@ import ch.difty.sipamato.persistance.jooq.EntityRecordMapper;
 import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
 
 /**
- * Common abstract base class for the paper or paperSlim specific repository implementations.
+ * Common abstract base class for the paper or paperSlim specific repository implementations to find those by {@link SearchOrder}.
  *
  * @author u.joss
  *
@@ -40,7 +40,7 @@ import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
  * @param <M>
  *      derivatives of {@link EntityRecordMapper} specific to Papers or PaperSlims
  */
-public abstract class JooqSearchOrderRepo<T extends IdSipamatoEntity<Long>, M extends EntityRecordMapper<PaperRecord, T>> implements SearchOrderRepository<T> {
+public abstract class JooqBySearchOrderRepo<T extends IdSipamatoEntity<Long>, M extends EntityRecordMapper<PaperRecord, T>> implements BySearchOrderRepository<T> {
 
     private final IntegerSearchTermEvaluator integerSearchTermEvaluator = new IntegerSearchTermEvaluator();
     private final StringSearchTermEvaluator stringSearchTermEvaluator = new StringSearchTermEvaluator();
@@ -59,7 +59,7 @@ public abstract class JooqSearchOrderRepo<T extends IdSipamatoEntity<Long>, M ex
      * @param sortMapper
      *      paper or paperSlim specific {@link JooqSortMapper}
      */
-    public JooqSearchOrderRepo(final DSLContext dsl, final M mapper, final JooqSortMapper<PaperRecord, T, ch.difty.sipamato.db.tables.Paper> sortMapper) {
+    public JooqBySearchOrderRepo(final DSLContext dsl, final M mapper, final JooqSortMapper<PaperRecord, T, ch.difty.sipamato.db.tables.Paper> sortMapper) {
         this.dsl = dsl;
         this.mapper = mapper;
         this.sortMapper = sortMapper;

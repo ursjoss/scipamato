@@ -7,14 +7,14 @@ import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.paging.PaginationContext;
 
 /**
- * Repository to find papers or paperSlims based on SearchOrder specifications.
+ * Repository to find Papers or PaperSlims by {@link SearchOrder} specifications.
  *
  * @author u.joss
  *
  * @param <T>
  *      derivatives of {@link IdSipamatoEntity<Long>}, should actually be Paper or PaperSlim
  */
-public interface SearchOrderRepository<T extends IdSipamatoEntity<Long>> {
+public interface BySearchOrderRepository<T extends IdSipamatoEntity<Long>> {
 
     /**
      * Finds all entities of type <code>T</code> matching the provided {@link SearchOrder} specification.

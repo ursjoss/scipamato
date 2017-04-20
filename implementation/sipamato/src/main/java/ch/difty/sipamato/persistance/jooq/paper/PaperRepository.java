@@ -6,8 +6,13 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.EntityRepository;
-import ch.difty.sipamato.persistance.jooq.paper.searchorder.SearchOrderRepository;
+import ch.difty.sipamato.persistance.jooq.paper.searchorder.BySearchOrderRepository;
 
+/**
+ * Repository to manage {@link Paper}s
+ * @author u.joss
+ *
+ */
 public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilter> {
 
     /**
@@ -25,17 +30,17 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     List<Paper> findWithCodesByIds(List<Long> ids);
 
     /**
-     * {@link SearchOrderRepository#findBySearchOrder(SearchOrder)}
+     * {@link BySearchOrderRepository#findBySearchOrder(SearchOrder)}
      */
     List<Paper> findBySearchOrder(SearchOrder searchOrder);
 
     /**
-     * {@link SearchOrderRepository#findPageBySearchOrder(SearchOrder, paginationContext)}
+     * {@link BySearchOrderRepository#findPageBySearchOrder(SearchOrder, paginationContext)}
      */
     List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
 
     /**
-     * {@link SearchOrderRepository#countBySearchOrder(SearchOrder)}
+     * {@link BySearchOrderRepository#countBySearchOrder(SearchOrder)}
      */
     int countBySearchOrder(SearchOrder searchOrder);
 

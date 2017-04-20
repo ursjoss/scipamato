@@ -7,6 +7,6 @@ import ch.difty.sipamato.entity.projection.PaperSlim;
  *
  * @author u.joss
  */
-public interface PaperSlimBackedSearchOrderRepository extends SearchOrderRepository<PaperSlim> {
+public interface PaperSlimBackedSearchOrderRepository extends BySearchOrderRepository<PaperSlim> {
 
 }

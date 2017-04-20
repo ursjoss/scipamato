@@ -20,9 +20,9 @@ import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.sipamato.persistance.jooq.paper.slim.PaperSlimRecordMapper;
 
-public class JooqPaperSlimBackedSearchOrderRepoTest {
+public class JooqPaperSlimBySearchOrderRepoTest {
 
-    private JooqSearchOrderRepo<PaperSlim, PaperSlimRecordMapper> finder;
+    private JooqBySearchOrderRepo<PaperSlim, PaperSlimRecordMapper> finder;
 
     @Mock
     private DSLContext dslMock;
@@ -37,7 +37,7 @@ public class JooqPaperSlimBackedSearchOrderRepoTest {
 
     @Before
     public void setUp() {
-        finder = new JooqPaperSlimBackedSearchOrderRepo(dslMock, mapperMock, sortMapperMock);
+        finder = new JooqPaperSlimBySearchOrderRepo(dslMock, mapperMock, sortMapperMock);
     }
 
     @Test

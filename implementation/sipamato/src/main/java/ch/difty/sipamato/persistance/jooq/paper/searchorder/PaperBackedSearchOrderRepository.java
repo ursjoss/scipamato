@@ -7,6 +7,6 @@ import ch.difty.sipamato.entity.Paper;
  *
  * @author u.joss
  */
-public interface PaperBackedSearchOrderRepository extends SearchOrderRepository<Paper> {
+public interface PaperBackedSearchOrderRepository extends BySearchOrderRepository<Paper> {
 
 }
