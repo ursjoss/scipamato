@@ -48,8 +48,8 @@ class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearchTerm> {
 
     private void handleUserField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions, final Token token) {
         final String fieldName = searchTerm.getFieldName();
-        if (!(Paper.FLD_CREATED_BY.equals(fieldName) || Paper.FLD_LAST_MOD_BY.equals(fieldName))) {
-            checkFields(fieldName, "user", Paper.FLD_CREATED_BY, Paper.FLD_LAST_MOD_BY, "CONTAINS");
+        if (!(Paper.CREATED_BY.equals(fieldName) || Paper.LAST_MOD_BY.equals(fieldName))) {
+            checkFields(fieldName, "user", Paper.CREATED_BY, Paper.LAST_MOD_BY, "CONTAINS");
         }
         final Field<Object> field = DSL.field(fieldName);
         final String userName = "%" + token.getUserSqlData().toLowerCase() + "%";
@@ -64,8 +64,8 @@ class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearchTerm> {
 
     private void handleDateField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions, final Token token) {
         final String fieldName = searchTerm.getFieldName();
-        if (!(Paper.FLD_CREATED.equals(fieldName) || Paper.FLD_LAST_MOD.equals(fieldName))) {
-            checkFields(fieldName, "date", Paper.FLD_CREATED, Paper.FLD_LAST_MOD, token.getType().matchType.name());
+        if (!(Paper.CREATED.equals(fieldName) || Paper.LAST_MOD.equals(fieldName))) {
+            checkFields(fieldName, "date", Paper.CREATED, Paper.LAST_MOD, token.getType().matchType.name());
         }
         final LocalDateTime ldt = LocalDateTime.parse(token.getDateSqlData(), DateTimeFormatter.ofPattern(DATE_FORMAT));
         addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt)), conditions);

@@ -99,7 +99,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     @Override
     protected PaperSummaryDataSource getSummaryDataSource() {
         final String populationLabel = new StringResourceModel(Paper.POPULATION + LABEL_RECOURCE_TAG, this, null).getString();
-        final String methodsLabel = new StringResourceModel(Paper.FLD_METHODS + LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodsLabel = new StringResourceModel(Paper.METHODS + LABEL_RECOURCE_TAG, this, null).getString();
         final String resultLabel = new StringResourceModel(Paper.RESULT + LABEL_RECOURCE_TAG, this, null).getString();
         final String commentLabel = new StringResourceModel(Paper.COMMENT + LABEL_RECOURCE_TAG, this, null).getString();
         final String brand = getProperties().getBrand();

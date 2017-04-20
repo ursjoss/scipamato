@@ -30,13 +30,13 @@ public class BooleanSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Bool
     public void buildingCondition_whenTrue() {
         expectSearchTerm(true);
         Condition c = e.evaluate(stMock);
-        assertThat(c.toString()).isEqualTo("fieldX = true");
+        assertThat(c.toString()).isEqualTo("field_x = true");
     }
 
     @Test
     public void buildingCondition_whenFalse() {
         expectSearchTerm(false);
         Condition c = e.evaluate(stMock);
-        assertThat(c.toString()).isEqualTo("fieldX = false");
+        assertThat(c.toString()).isEqualTo("field_x = false");
     }
 }

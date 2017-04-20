@@ -1,38 +1,38 @@
 package ch.difty.sipamato.entity.filter;
 
-import static ch.difty.sipamato.entity.IdSipamatoEntity.FLD_ID;
-import static ch.difty.sipamato.entity.Paper.FLD_AUTHORS;
-import static ch.difty.sipamato.entity.Paper.FLD_COMMENT;
-import static ch.difty.sipamato.entity.Paper.FLD_CREATED;
-import static ch.difty.sipamato.entity.Paper.FLD_CREATED_BY;
-import static ch.difty.sipamato.entity.Paper.FLD_DOI;
-import static ch.difty.sipamato.entity.Paper.FLD_EXPOSURE_ASSESSMENT;
-import static ch.difty.sipamato.entity.Paper.FLD_EXPOSURE_POLLUTANT;
-import static ch.difty.sipamato.entity.Paper.FLD_FIRST_AUTHOR;
-import static ch.difty.sipamato.entity.Paper.FLD_FIRST_AUTHOR_OVERRIDDEN;
-import static ch.difty.sipamato.entity.Paper.FLD_GOALS;
-import static ch.difty.sipamato.entity.Paper.FLD_INTERN;
-import static ch.difty.sipamato.entity.Paper.FLD_LAST_MOD;
-import static ch.difty.sipamato.entity.Paper.FLD_LAST_MOD_BY;
-import static ch.difty.sipamato.entity.Paper.FLD_LOCATION;
-import static ch.difty.sipamato.entity.Paper.FLD_MAIN_CODE_OF_CODECLASS1;
-import static ch.difty.sipamato.entity.Paper.FLD_METHODS;
-import static ch.difty.sipamato.entity.Paper.FLD_METHOD_CONFOUNDERS;
-import static ch.difty.sipamato.entity.Paper.FLD_METHOD_OUTCOME;
-import static ch.difty.sipamato.entity.Paper.FLD_METHOD_STATISTICS;
-import static ch.difty.sipamato.entity.Paper.FLD_METHOD_STUDY_DESIGN;
-import static ch.difty.sipamato.entity.Paper.FLD_ORIGINAL_ABSTRACT;
-import static ch.difty.sipamato.entity.Paper.FLD_PMID;
-import static ch.difty.sipamato.entity.Paper.FLD_POPULATION;
-import static ch.difty.sipamato.entity.Paper.FLD_POPULATION_DURATION;
-import static ch.difty.sipamato.entity.Paper.FLD_POPULATION_PARTICIPANTS;
-import static ch.difty.sipamato.entity.Paper.FLD_POPULATION_PLACE;
-import static ch.difty.sipamato.entity.Paper.FLD_PUBL_YEAR;
-import static ch.difty.sipamato.entity.Paper.FLD_RESULT;
-import static ch.difty.sipamato.entity.Paper.FLD_RESULT_EFFECT_ESTIMATE;
-import static ch.difty.sipamato.entity.Paper.FLD_RESULT_EXPOSURE_RANGE;
-import static ch.difty.sipamato.entity.Paper.FLD_RESULT_MEASURED_OUTCOME;
-import static ch.difty.sipamato.entity.Paper.FLD_TITLE;
+import static ch.difty.sipamato.entity.IdSipamatoEntity.ID;
+import static ch.difty.sipamato.entity.Paper.AUTHORS;
+import static ch.difty.sipamato.entity.Paper.COMMENT;
+import static ch.difty.sipamato.entity.Paper.CREATED;
+import static ch.difty.sipamato.entity.Paper.CREATED_BY;
+import static ch.difty.sipamato.entity.Paper.DOI;
+import static ch.difty.sipamato.entity.Paper.EXPOSURE_ASSESSMENT;
+import static ch.difty.sipamato.entity.Paper.EXPOSURE_POLLUTANT;
+import static ch.difty.sipamato.entity.Paper.FIRST_AUTHOR;
+import static ch.difty.sipamato.entity.Paper.FIRST_AUTHOR_OVERRIDDEN;
+import static ch.difty.sipamato.entity.Paper.GOALS;
+import static ch.difty.sipamato.entity.Paper.INTERN;
+import static ch.difty.sipamato.entity.Paper.LAST_MOD;
+import static ch.difty.sipamato.entity.Paper.LAST_MOD_BY;
+import static ch.difty.sipamato.entity.Paper.LOCATION;
+import static ch.difty.sipamato.entity.Paper.MAIN_CODE_OF_CODECLASS1;
+import static ch.difty.sipamato.entity.Paper.METHODS;
+import static ch.difty.sipamato.entity.Paper.METHOD_CONFOUNDERS;
+import static ch.difty.sipamato.entity.Paper.METHOD_OUTCOME;
+import static ch.difty.sipamato.entity.Paper.METHOD_STATISTICS;
+import static ch.difty.sipamato.entity.Paper.METHOD_STUDY_DESIGN;
+import static ch.difty.sipamato.entity.Paper.ORIGINAL_ABSTRACT;
+import static ch.difty.sipamato.entity.Paper.PMID;
+import static ch.difty.sipamato.entity.Paper.POPULATION;
+import static ch.difty.sipamato.entity.Paper.POPULATION_DURATION;
+import static ch.difty.sipamato.entity.Paper.POPULATION_PARTICIPANTS;
+import static ch.difty.sipamato.entity.Paper.POPULATION_PLACE;
+import static ch.difty.sipamato.entity.Paper.PUBL_YEAR;
+import static ch.difty.sipamato.entity.Paper.RESULT;
+import static ch.difty.sipamato.entity.Paper.RESULT_EFFECT_ESTIMATE;
+import static ch.difty.sipamato.entity.Paper.RESULT_EXPOSURE_RANGE;
+import static ch.difty.sipamato.entity.Paper.RESULT_MEASURED_OUTCOME;
+import static ch.difty.sipamato.entity.Paper.TITLE;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -148,267 +148,267 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
     /** {@link Paper} specific accessors */
 
     public String getId() {
-        return getIntegerValue(FLD_ID);
+        return getIntegerValue(ID);
     }
 
     public void setId(String value) {
-        setIntegerValue(value, FLD_ID);
+        setIntegerValue(value, ID);
     }
 
     public String getDoi() {
-        return getStringValue(FLD_DOI);
+        return getStringValue(DOI);
     }
 
     public void setDoi(String value) {
-        setStringValue(value, FLD_DOI);
+        setStringValue(value, DOI);
     }
 
     public String getPmId() {
-        return getStringValue(FLD_PMID);
+        return getStringValue(PMID);
     }
 
     public void setPmId(String value) {
-        setStringValue(value, FLD_PMID);
+        setStringValue(value, PMID);
     }
 
     public String getAuthors() {
-        return getStringValue(FLD_AUTHORS);
+        return getStringValue(AUTHORS);
     }
 
     public void setAuthors(String value) {
-        setStringValue(value, FLD_AUTHORS);
+        setStringValue(value, AUTHORS);
     }
 
     public String getFirstAuthor() {
-        return getStringValue(FLD_FIRST_AUTHOR);
+        return getStringValue(FIRST_AUTHOR);
     }
 
     public void setFirstAuthor(String value) {
-        setStringValue(value, FLD_FIRST_AUTHOR);
+        setStringValue(value, FIRST_AUTHOR);
     }
 
     public Boolean isFirstAuthorOverridden() {
-        return getBooleanValue(FLD_FIRST_AUTHOR_OVERRIDDEN);
+        return getBooleanValue(FIRST_AUTHOR_OVERRIDDEN);
     }
 
     public void setFirstAuthorOverridden(Boolean value) {
-        setBooleanValue(FLD_FIRST_AUTHOR_OVERRIDDEN, value);
+        setBooleanValue(FIRST_AUTHOR_OVERRIDDEN, value);
     }
 
     public String getTitle() {
-        return getStringValue(FLD_TITLE);
+        return getStringValue(TITLE);
     }
 
     public void setTitle(String value) {
-        setStringValue(value, FLD_TITLE);
+        setStringValue(value, TITLE);
     }
 
     public String getLocation() {
-        return getStringValue(FLD_LOCATION);
+        return getStringValue(LOCATION);
     }
 
     public void setLocation(String value) {
-        setStringValue(value, FLD_LOCATION);
+        setStringValue(value, LOCATION);
     }
 
     public String getPublicationYear() {
-        return getIntegerValue(FLD_PUBL_YEAR);
+        return getIntegerValue(PUBL_YEAR);
     }
 
     public void setPublicationYear(String value) {
-        setIntegerValue(value, FLD_PUBL_YEAR);
+        setIntegerValue(value, PUBL_YEAR);
     }
 
     public String getGoals() {
-        return getStringValue(FLD_GOALS);
+        return getStringValue(GOALS);
     }
 
     public void setGoals(String value) {
-        setStringValue(value, FLD_GOALS);
+        setStringValue(value, GOALS);
     }
 
     public String getPopulation() {
-        return getStringValue(FLD_POPULATION);
+        return getStringValue(POPULATION);
     }
 
     public void setPopulation(String value) {
-        setStringValue(value, FLD_POPULATION);
+        setStringValue(value, POPULATION);
     }
 
     public String getMethods() {
-        return getStringValue(FLD_METHODS);
+        return getStringValue(METHODS);
     }
 
     public void setMethods(String value) {
-        setStringValue(value, FLD_METHODS);
+        setStringValue(value, METHODS);
     }
 
     public String getResult() {
-        return getStringValue(FLD_RESULT);
+        return getStringValue(RESULT);
     }
 
     public void setResult(String value) {
-        setStringValue(value, FLD_RESULT);
+        setStringValue(value, RESULT);
     }
 
     public String getComment() {
-        return getStringValue(FLD_COMMENT);
+        return getStringValue(COMMENT);
     }
 
     public void setComment(String value) {
-        setStringValue(value, FLD_COMMENT);
+        setStringValue(value, COMMENT);
     }
 
     public String getIntern() {
-        return getStringValue(FLD_INTERN);
+        return getStringValue(INTERN);
     }
 
     public void setIntern(String value) {
-        setStringValue(value, FLD_INTERN);
+        setStringValue(value, INTERN);
     }
 
     public String getOriginalAbstract() {
-        return getStringValue(FLD_ORIGINAL_ABSTRACT);
+        return getStringValue(ORIGINAL_ABSTRACT);
     }
 
     public void setOriginalAbstract(String value) {
-        setStringValue(value, FLD_ORIGINAL_ABSTRACT);
+        setStringValue(value, ORIGINAL_ABSTRACT);
     }
 
     public String getPopulationPlace() {
-        return getStringValue(FLD_POPULATION_PLACE);
+        return getStringValue(POPULATION_PLACE);
     }
 
     public void setPopulationPlace(String value) {
-        setStringValue(value, FLD_POPULATION_PLACE);
+        setStringValue(value, POPULATION_PLACE);
     }
 
     public String getPopulationParticipants() {
-        return getStringValue(FLD_POPULATION_PARTICIPANTS);
+        return getStringValue(POPULATION_PARTICIPANTS);
     }
 
     public void setPopulationParticipants(String value) {
-        setStringValue(value, FLD_POPULATION_PARTICIPANTS);
+        setStringValue(value, POPULATION_PARTICIPANTS);
     }
 
     public String getPopulationDuration() {
-        return getStringValue(FLD_POPULATION_DURATION);
+        return getStringValue(POPULATION_DURATION);
     }
 
     public void setPopulationDuration(String value) {
-        setStringValue(value, FLD_POPULATION_DURATION);
+        setStringValue(value, POPULATION_DURATION);
     }
 
     public String getExposurePollutant() {
-        return getStringValue(FLD_EXPOSURE_POLLUTANT);
+        return getStringValue(EXPOSURE_POLLUTANT);
     }
 
     public void setExposurePollutant(String value) {
-        setStringValue(value, FLD_EXPOSURE_POLLUTANT);
+        setStringValue(value, EXPOSURE_POLLUTANT);
     }
 
     public String getExposureAssessment() {
-        return getStringValue(FLD_EXPOSURE_ASSESSMENT);
+        return getStringValue(EXPOSURE_ASSESSMENT);
     }
 
     public void setExposureAssessment(String value) {
-        setStringValue(value, FLD_EXPOSURE_ASSESSMENT);
+        setStringValue(value, EXPOSURE_ASSESSMENT);
     }
 
     public String getMethodStudyDesign() {
-        return getStringValue(FLD_METHOD_STUDY_DESIGN);
+        return getStringValue(METHOD_STUDY_DESIGN);
     }
 
     public void setMethodStudyDesign(String value) {
-        setStringValue(value, FLD_METHOD_STUDY_DESIGN);
+        setStringValue(value, METHOD_STUDY_DESIGN);
     }
 
     public String getMethodOutcome() {
-        return getStringValue(FLD_METHOD_OUTCOME);
+        return getStringValue(METHOD_OUTCOME);
     }
 
     public void setMethodOutcome(String value) {
-        setStringValue(value, FLD_METHOD_OUTCOME);
+        setStringValue(value, METHOD_OUTCOME);
     }
 
     public String getMethodStatistics() {
-        return getStringValue(FLD_METHOD_STATISTICS);
+        return getStringValue(METHOD_STATISTICS);
     }
 
     public void setMethodStatistics(String value) {
-        setStringValue(value, FLD_METHOD_STATISTICS);
+        setStringValue(value, METHOD_STATISTICS);
     }
 
     public String getMethodConfounders() {
-        return getStringValue(FLD_METHOD_CONFOUNDERS);
+        return getStringValue(METHOD_CONFOUNDERS);
     }
 
     public void setMethodConfounders(String value) {
-        setStringValue(value, FLD_METHOD_CONFOUNDERS);
+        setStringValue(value, METHOD_CONFOUNDERS);
     }
 
     public String getResultExposureRange() {
-        return getStringValue(FLD_RESULT_EXPOSURE_RANGE);
+        return getStringValue(RESULT_EXPOSURE_RANGE);
     }
 
     public void setResultExposureRange(String value) {
-        setStringValue(value, FLD_RESULT_EXPOSURE_RANGE);
+        setStringValue(value, RESULT_EXPOSURE_RANGE);
     }
 
     public String getResultEffectEstimate() {
-        return getStringValue(FLD_RESULT_EFFECT_ESTIMATE);
+        return getStringValue(RESULT_EFFECT_ESTIMATE);
     }
 
     public void setResultEffectEstimate(String value) {
-        setStringValue(value, FLD_RESULT_EFFECT_ESTIMATE);
+        setStringValue(value, RESULT_EFFECT_ESTIMATE);
     }
 
     public String getResultMeasuredOutcome() {
-        return getStringValue(FLD_RESULT_MEASURED_OUTCOME);
+        return getStringValue(RESULT_MEASURED_OUTCOME);
     }
 
     public void setResultMeasuredOutcome(String value) {
-        setStringValue(value, FLD_RESULT_MEASURED_OUTCOME);
+        setStringValue(value, RESULT_MEASURED_OUTCOME);
     }
 
     public String getMainCodeOfCodeclass1() {
-        return getStringValue(FLD_MAIN_CODE_OF_CODECLASS1);
+        return getStringValue(MAIN_CODE_OF_CODECLASS1);
     }
 
     public void setMainCodeOfCodeclass1(String value) {
-        setStringValue(value, FLD_MAIN_CODE_OF_CODECLASS1);
+        setStringValue(value, MAIN_CODE_OF_CODECLASS1);
     }
 
     public String getCreatedDisplayValue() {
-        return getAuditValue(FLD_CREATED_BY);
+        return getAuditValue(CREATED_BY);
     }
 
     public void setCreatedDisplayValue(String value) {
-        setAuditValue(value, FLD_CREATED_BY, FLD_CREATED);
+        setAuditValue(value, CREATED_BY, CREATED);
     }
 
     public String getModifiedDisplayValue() {
-        return getAuditValue(FLD_LAST_MOD_BY);
+        return getAuditValue(LAST_MOD_BY);
     }
 
     public void setModifiedDisplayValue(String value) {
-        setAuditValue(value, FLD_LAST_MOD_BY, FLD_LAST_MOD);
+        setAuditValue(value, LAST_MOD_BY, LAST_MOD);
     }
 
     public String getCreated() {
-        return getAuditValue(FLD_CREATED);
+        return getAuditValue(CREATED);
     }
 
     public String getCreatedBy() {
-        return getAuditValue(FLD_CREATED_BY);
+        return getAuditValue(CREATED_BY);
     }
 
     public String getLastModified() {
-        return getAuditValue(FLD_LAST_MOD);
+        return getAuditValue(LAST_MOD);
     }
 
     public String getLastModifiedBy() {
-        return getAuditValue(FLD_LAST_MOD_BY);
+        return getAuditValue(LAST_MOD_BY);
     }
 
     /** {@link CodeBoxAware} methods */

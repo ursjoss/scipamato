@@ -36,4 +36,29 @@ public class TranslationUtilsTest extends FinalClassTest<TranslationUtils> {
         assertThat(TranslationUtils.trimLanguageCode("en_US")).isEqualTo("en");
     }
 
+    @Test
+    public void deCamelCasing_null_returnsNull() {
+        assertThat(TranslationUtils.deCamelCase(null)).isNull();
+    }
+
+    @Test
+    public void deCamelCasing_blank_returnsBlank() {
+        assertThat(TranslationUtils.deCamelCase("")).isEqualTo("");
+    }
+
+    @Test
+    public void deCamelCasing_withCase_converts() {
+        assertThat(TranslationUtils.deCamelCase("fooBar")).isEqualTo("foo_bar");
+    }
+
+    @Test
+    public void deCamelCasing_withoutCase_returnsOriginal() {
+        assertThat(TranslationUtils.deCamelCase("foobar")).isEqualTo("foobar");
+    }
+
+    @Test
+    public void deCamelCasing_withoutCaseAndUnderscore_returnsOriginal() {
+        assertThat(TranslationUtils.deCamelCase("foo_bar")).isEqualTo("foo_bar");
+    }
+
 }

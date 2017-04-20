@@ -14,10 +14,14 @@ import org.springframework.stereotype.Component;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.lib.TranslationUtils;
 import ch.difty.sipamato.paging.Sort;
 
 /**
  * Default implementation of the {@link JooqSortMapper} interface.
+ *
+ * Sort properties are de-camel-cased; java property namees are therefore converted to table column names, e.g.
+ * <literal>publicationYear</literatl> will be used as <literal>publication_year</literal>
  *
  * @author u.joss
  *
@@ -61,7 +65,8 @@ public class SortMapper<R extends Record, T extends SipamatoEntity, TI extends T
 
         TableField<R, T> sortField = null;
         try {
-            Field tableField = table.getClass().getField(sortFieldName.toUpperCase());
+            final String columnName = deCamelCase(sortFieldName);
+            final Field tableField = table.getClass().getField(columnName);
             sortField = (TableField<R, T>) tableField.get(table);
         } catch (NoSuchFieldException | IllegalAccessException ex) {
             String errorMessage = String.format("Could not find table field: %s", sortFieldName);
@@ -69,6 +74,10 @@ public class SortMapper<R extends Record, T extends SipamatoEntity, TI extends T
         }
 
         return sortField;
+    }
+
+    private String deCamelCase(String sortFieldName) {
+        return TranslationUtils.deCamelCase(sortFieldName).toUpperCase();
     }
 
     private SortField<T> convertTableFieldToSortField(TableField<R, T> tableField, Sort.Direction sortDirection) {

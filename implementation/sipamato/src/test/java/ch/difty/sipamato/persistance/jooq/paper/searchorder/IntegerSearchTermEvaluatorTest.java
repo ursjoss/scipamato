@@ -40,42 +40,42 @@ public class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Inte
     public void buildingCondition_withGreaterThanComparison() {
         expectSearchTerm(MatchType.GREATER_THAN, 10);
         Condition c = e.evaluate(stMock);
-        assertThat(c.toString()).isEqualTo("fieldX > 10");
+        assertThat(c.toString()).isEqualTo("field_x > 10");
     }
 
     @Test
     public void buildingCondition_withGreaterThanOrEqualComparison() {
         expectSearchTerm(MatchType.GREATER_OR_EQUAL, 10);
         Condition c = e.evaluate(stMock);
-        assertThat(c.toString()).isEqualTo("fieldX >= 10");
+        assertThat(c.toString()).isEqualTo("field_x >= 10");
     }
 
     @Test
     public void buildingCondition_withExactValue() {
         expectSearchTerm(MatchType.EXACT, 10);
         Condition c = e.evaluate(stMock);
-        assertThat(c.toString()).isEqualTo("fieldX = 10");
+        assertThat(c.toString()).isEqualTo("field_x = 10");
     }
 
     @Test
     public void buildingCondition_withLessThanOrEqualComparison() {
         expectSearchTerm(MatchType.LESS_OR_EQUAL, 10);
         Condition c = e.evaluate(stMock);
-        assertThat(c.toString()).isEqualTo("fieldX <= 10");
+        assertThat(c.toString()).isEqualTo("field_x <= 10");
     }
 
     @Test
     public void buildingCondition_withLessThanComparison() {
         expectSearchTerm(MatchType.LESS_THAN, 10);
         Condition c = e.evaluate(stMock);
-        assertThat(c.toString()).isEqualTo("fieldX < 10");
+        assertThat(c.toString()).isEqualTo("field_x < 10");
     }
 
     @Test
     public void buildingCondition_withRangeomparison() {
         expectSearchTerm(MatchType.RANGE, 10, 15);
         Condition c = e.evaluate(stMock);
-        assertThat(c.toString()).isEqualTo("fieldX between 10 and 15");
+        assertThat(c.toString()).isEqualTo("field_x between 10 and 15");
     }
 
     @Test
@@ -83,7 +83,7 @@ public class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Inte
         int any = 0;
         expectSearchTerm(MatchType.MISSING, any, any);
         Condition c = e.evaluate(stMock);
-        assertThat(c.toString()).isEqualTo("fieldX is null");
+        assertThat(c.toString()).isEqualTo("field_x is null");
     }
 
     @Test
@@ -91,7 +91,7 @@ public class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Inte
         int any = 0;
         expectSearchTerm(MatchType.PRESENT, any, any);
         Condition c = e.evaluate(stMock);
-        assertThat(c.toString()).isEqualTo("fieldX is not null");
+        assertThat(c.toString()).isEqualTo("field_x is not null");
     }
 
 }

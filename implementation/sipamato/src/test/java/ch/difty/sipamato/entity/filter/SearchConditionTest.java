@@ -1,8 +1,8 @@
 package ch.difty.sipamato.entity.filter;
 
-import static ch.difty.sipamato.entity.IdSipamatoEntity.FLD_ID;
-import static ch.difty.sipamato.entity.Paper.FLD_DOI;
-import static ch.difty.sipamato.entity.Paper.FLD_FIRST_AUTHOR_OVERRIDDEN;
+import static ch.difty.sipamato.entity.IdSipamatoEntity.ID;
+import static ch.difty.sipamato.entity.Paper.DOI;
+import static ch.difty.sipamato.entity.Paper.FIRST_AUTHOR_OVERRIDDEN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
@@ -110,7 +110,7 @@ public class SearchConditionTest {
         assertThat(sc1.getIntegerSearchTerms()).hasSize(1);
         assertThat(sc1.getBooleanSearchTerms()).isEmpty();
         IntegerSearchTerm st = sc1.getIntegerSearchTerms().iterator().next();
-        assertThat(st.getFieldName()).isEqualTo(FLD_ID);
+        assertThat(st.getFieldName()).isEqualTo(ID);
         assertThat(st.getRawSearchTerm()).isEqualTo("5");
 
         sc1.setId("10");
@@ -119,7 +119,7 @@ public class SearchConditionTest {
         assertThat(sc1.getIntegerSearchTerms()).hasSize(1);
         assertThat(sc1.getBooleanSearchTerms()).isEmpty();
         st = sc1.getIntegerSearchTerms().iterator().next();
-        assertThat(st.getFieldName()).isEqualTo(FLD_ID);
+        assertThat(st.getFieldName()).isEqualTo(ID);
         assertThat(st.getRawSearchTerm()).isEqualTo("10");
 
         sc1.setId(null);
@@ -142,7 +142,7 @@ public class SearchConditionTest {
         assertThat(sc1.getIntegerSearchTerms()).isEmpty();
         assertThat(sc1.getBooleanSearchTerms()).isEmpty();
         StringSearchTerm st = sc1.getStringSearchTerms().iterator().next();
-        assertThat(st.getFieldName()).isEqualTo(FLD_DOI);
+        assertThat(st.getFieldName()).isEqualTo(DOI);
         assertThat(st.getRawSearchTerm()).isEqualTo("101111");
 
         sc1.setDoi("102222");
@@ -151,7 +151,7 @@ public class SearchConditionTest {
         assertThat(sc1.getIntegerSearchTerms()).isEmpty();
         assertThat(sc1.getBooleanSearchTerms()).isEmpty();
         st = sc1.getStringSearchTerms().iterator().next();
-        assertThat(st.getFieldName()).isEqualTo(FLD_DOI);
+        assertThat(st.getFieldName()).isEqualTo(DOI);
         assertThat(st.getRawSearchTerm()).isEqualTo("102222");
 
         sc1.setDoi(null);
@@ -218,7 +218,7 @@ public class SearchConditionTest {
         assertThat(sc1.getIntegerSearchTerms()).isEmpty();
         assertThat(sc1.getBooleanSearchTerms()).hasSize(1);
         BooleanSearchTerm st = sc1.getBooleanSearchTerms().iterator().next();
-        assertThat(st.getFieldName()).isEqualTo(FLD_FIRST_AUTHOR_OVERRIDDEN);
+        assertThat(st.getFieldName()).isEqualTo(FIRST_AUTHOR_OVERRIDDEN);
         assertThat(st.getRawSearchTerm()).isEqualTo("true");
         assertThat(st.getValue()).isTrue();
 
@@ -228,7 +228,7 @@ public class SearchConditionTest {
         assertThat(sc1.getIntegerSearchTerms()).isEmpty();
         assertThat(sc1.getBooleanSearchTerms()).hasSize(1);
         st = sc1.getBooleanSearchTerms().iterator().next();
-        assertThat(st.getFieldName()).isEqualTo(FLD_FIRST_AUTHOR_OVERRIDDEN);
+        assertThat(st.getFieldName()).isEqualTo(FIRST_AUTHOR_OVERRIDDEN);
         assertThat(st.getRawSearchTerm()).isEqualTo("false");
         assertThat(st.getValue()).isFalse();
 
@@ -613,7 +613,7 @@ public class SearchConditionTest {
     @Test
     public void testDisplayValue_forBooleanSearchTermsBeginFalse() {
         sc1.setFirstAuthorOverridden(false);
-        assertThat(sc1.getDisplayValue()).isEqualTo("-first_author_overridden");
+        assertThat(sc1.getDisplayValue()).isEqualTo("-firstAuthorOverridden");
     }
 
     @Test
@@ -647,7 +647,7 @@ public class SearchConditionTest {
         sc1.setDoi("baz");
         sc1.setPublicationYear("2016");
         sc1.setFirstAuthorOverridden(true);
-        assertThat(sc1.getDisplayValue()).isEqualTo("fooAuth AND bar AND baz AND 2016 AND first_author_overridden");
+        assertThat(sc1.getDisplayValue()).isEqualTo("fooAuth AND bar AND baz AND 2016 AND firstAuthorOverridden");
     }
 
     @Test
@@ -850,7 +850,7 @@ public class SearchConditionTest {
         sc2.setGoals("bar");
 
         sc2.setPublicationYear(null);
-        assertThat(sc2.getRemovedKeys()).hasSize(1).containsOnly("publication_year");
+        assertThat(sc2.getRemovedKeys()).hasSize(1).containsOnly("publicationYear");
     }
 
     @Test
