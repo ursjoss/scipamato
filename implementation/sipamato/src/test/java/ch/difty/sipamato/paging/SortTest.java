@@ -144,4 +144,41 @@ public class SortTest {
     public void orderWithNullDirection_isAscending() {
         assertThat(new Order(null, "foo").getDirection()).isEqualTo(Direction.ASC);
     }
+
+    @Test
+    public void testingToString() {
+        assertThat(sort.toString()).isEqualTo("a: ASC,b: DESC,c: DESC,d: ASC");
+    }
+
+    @Test
+    public void sortEqualityTests() {
+        assertThat(sort.equals(null)).isFalse();
+        assertThat(sort.equals(new String())).isFalse();
+        assertThat(sort.equals(sort)).isTrue();
+        assertThat(sort.equals(new Sort(orders))).isTrue();
+
+        List<Order> orders2 = new ArrayList<>();
+        orders2.add(new Order(Direction.ASC, "a"));
+        orders2.add(new Order(Direction.DESC, "b"));
+        orders2.add(new Order(Direction.DESC, "c"));
+        assertThat(sort.equals(new Sort(orders2))).isFalse();
+        assertThat(sort.hashCode()).isNotEqualTo(new Sort(orders2).hashCode());
+
+        orders2.add(new Order(Direction.ASC, "d"));
+        assertThat(sort.equals(new Sort(orders2))).isTrue();
+        assertThat(sort.hashCode()).isEqualTo(new Sort(orders2).hashCode());
+    }
+
+    @Test
+    public void orerEqualityTests() {
+        Order o1 = new Order(Direction.DESC, "foo");
+
+        assertThat(o1.equals(null)).isFalse();
+        assertThat(o1.equals(new String())).isFalse();
+        assertThat(o1.equals(o1)).isTrue();
+        assertThat(o1.equals(new Order(Direction.DESC, "foo"))).isTrue();
+        assertThat(o1.equals(new Order(Direction.ASC, "foo"))).isFalse();
+        assertThat(o1.equals(new Order(Direction.DESC, "bar"))).isFalse();
+
+    }
 }
