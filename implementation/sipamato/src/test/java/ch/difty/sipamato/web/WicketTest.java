@@ -32,9 +32,6 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-// Activate one of the two next lines when running the tests from ecplise - but don't commit as it might break the maven build
-//@ActiveProfiles( {"DB_JOOQ", "test", "postgres"})
-//@ActiveProfiles( {"DB_JOOQ", "test", "h2"})
 public abstract class WicketTest {
 
     private static final String USERNAME = "testuser";
