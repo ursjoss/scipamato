@@ -14,7 +14,6 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -140,11 +139,10 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     }
 
     @Test
-    @Ignore // TODO this works in production, but not anymore in the test FIXME
     public void clickingRemoveButtonOnResults_removesResult() {
         when(searchOrderMock.getId()).thenReturn(SEARCH_ORDER_ID);
 
-        when(paperSlimServiceMock.countBySearchOrder(Mockito.eq(searchOrderMock))).thenReturn(1);
+        when(paperSlimServiceMock.countBySearchOrder(Mockito.eq(searchOrderMock))).thenReturn(1, 0);
         when(paperSlimServiceMock.findPageBySearchOrder(Mockito.eq(searchOrderMock), Mockito.isA(PaginationContext.class))).thenReturn(Arrays.asList(paperSlimMock));
 
         PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock));
@@ -154,16 +152,14 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
         String someTextInRow = "fa fa-fw fa-ban";
         getTester().assertContains(someTextInRow);
-        getTester().debugComponentTrees();
 
         final String linkPath = "resultPanel:table:body:rows:1:cells:5:cell:link";
         getTester().assertComponent(linkPath, AjaxLink.class);
         getTester().clickLink(linkPath);
-        getTester().debugComponentTrees();
         getTester().assertContainsNot(someTextInRow);
 
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(Mockito.eq(searchOrderMock));
-        verify(paperSlimServiceMock, times(2)).findPageBySearchOrder(Mockito.eq(searchOrderMock), Mockito.isA(PaginationContext.class));
+        verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(Mockito.eq(searchOrderMock), Mockito.isA(PaginationContext.class));
     }
 
     @Test
