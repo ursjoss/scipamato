@@ -37,3 +37,10 @@ wicket:
         enabled: true
 flyway:
   enabled: false
+logging:
+  level:
+    root: INFO
+    ch:
+      difty: DEBUG
+    org:
+      jooq: DEBUG
