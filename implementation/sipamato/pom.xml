@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.2.RELEASE</version>
+        <version>1.5.3.RELEASE</version>
         <relativePath />
     </parent>
 
@@ -61,7 +61,7 @@
         <flyway.version>4.1.2</flyway.version>
 
         <!-- presentation layer -->
-        <wicket-spring-boot-starter.version>1.0.6</wicket-spring-boot-starter.version>
+        <wicket-spring-boot-starter.version>1.0.7</wicket-spring-boot-starter.version>
         <wicket.version>7.6.0</wicket.version>
         <wicket-bootstrap.version>0.10.12</wicket-bootstrap.version>
         <jasperreports.version>6.4.0</jasperreports.version>
