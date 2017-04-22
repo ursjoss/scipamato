@@ -484,6 +484,7 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
+                            <executable>true</executable>
                             <profiles>
                                 <profile>postgres</profile>
                                 <profile>DB_JOOQ</profile>
