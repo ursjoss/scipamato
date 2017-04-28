@@ -3,11 +3,13 @@ package ch.difty.sipamato.persistance.jooq;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.SipamatoApplication;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SipamatoApplication.class)
+@Transactional
 // Running the test from maven requires the profile -Dspring.profiles.active=h2|postgres
 // Running the test from Eclipse requres to active the appropriate annotation, matching the profile 
 // h2|postgres that was used to compile the project with maven

@@ -9,7 +9,6 @@ import org.jooq.DSLContext;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
@@ -22,7 +21,6 @@ import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
  * additional records in the db would be wiped out by the tearDown method. So please make sure the number of records (plus
  * the highest id) match the declarations further down.
  */
-@Transactional
 public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     private static final Integer RECORD_COUNT_PREPOPULATED = 4;
