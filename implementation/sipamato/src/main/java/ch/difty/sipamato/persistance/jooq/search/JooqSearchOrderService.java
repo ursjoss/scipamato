@@ -1,6 +1,7 @@
 package ch.difty.sipamato.persistance.jooq.search;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
@@ -19,6 +20,7 @@ public class JooqSearchOrderService extends JooqEntityService<Long, SearchOrder,
 
     /** {@inheritDoc} */
     @Override
+    @Transactional(readOnly = false)
     public SearchCondition saveOrUpdateSearchCondition(SearchCondition searchCondition, long searchOrderId) {
         if (searchCondition.getSearchConditionId() == null) {
             return getRepository().addSearchCondition(searchCondition, searchOrderId);
@@ -29,6 +31,7 @@ public class JooqSearchOrderService extends JooqEntityService<Long, SearchOrder,
 
     /** {@inheritDoc} */
     @Override
+    @Transactional(readOnly = false)
     public void removeSearchConditionWithId(Long searchConditionId) {
         if (searchConditionId != null) {
             getRepository().deleteSearchConditionWithId(searchConditionId);

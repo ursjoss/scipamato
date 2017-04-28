@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
@@ -45,6 +46,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     /** {@inheritDocs} */
     @Override
+    @Transactional(readOnly = false)
     public ServiceResult dumpPubmedArticlesToDb(final List<PubmedArticleFacade> articles) {
         final ServiceResult sr = new DefaultServiceResult();
         final List<Integer> pmIdCandidates = articles.stream().map(PubmedArticleFacade::getPmId).filter(Objects::nonNull).map(Integer::valueOf).collect(Collectors.toList());
