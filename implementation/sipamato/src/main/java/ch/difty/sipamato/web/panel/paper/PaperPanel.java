@@ -320,7 +320,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
          */
         private TextArea<String> makeField(String id, boolean newField) {
             if (!newField) {
-                return new TextArea<String>(id);
+                return new TextArea<>(id);
             } else {
                 return new TextArea<String>(id) {
 
@@ -373,9 +373,9 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> form = new Form<>("tab1Form");
+            Form<T> tab1Form = new Form<>("tab1Form");
 
-            queue(form);
+            queue(tab1Form);
 
             queueTo(Paper.GOALS, new PropertyValidator<String>());
             queueTo(Paper.POPULATION);
@@ -406,8 +406,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> form = new Form<>("tab2Form");
-            queue(form);
+            Form<T> tab2Form = new Form<>("tab2Form");
+            queue(tab2Form);
 
             queueNewFieldTo(Paper.METHOD_STUDY_DESIGN);
             queueNewFieldTo(Paper.METHOD_OUTCOME);
@@ -438,8 +438,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> form = new Form<>("tab3Form");
-            queue(form);
+            Form<T> tab3Form = new Form<>("tab3Form");
+            queue(tab3Form);
 
             queueTo(Paper.RESULT);
             queueTo(Paper.COMMENT);
@@ -464,13 +464,13 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> form = new Form<>("tab4Form");
-            queue(form);
+            Form<T> tab4Form = new Form<>("tab4Form");
+            queue(tab4Form);
 
             CodeClassModel codeClassModel = new CodeClassModel(getLocalization().getLocalization());
             List<CodeClass> codeClasses = codeClassModel.getObject();
 
-            makeCodeClass1Complex(codeClasses, form);
+            makeCodeClass1Complex(codeClasses, tab4Form);
             makeCodeClassComplex(CodeClassId.CC2, codeClasses);
             makeCodeClassComplex(CodeClassId.CC3, codeClasses);
             makeCodeClassComplex(CodeClassId.CC4, codeClasses);
@@ -544,8 +544,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> form = new Form<>("tab5Form");
-            queue(form);
+            Form<T> tab5Form = new Form<>("tab5Form");
+            queue(tab5Form);
 
             originalAbstract = queueTo(Paper.ORIGINAL_ABSTRACT);
         }
