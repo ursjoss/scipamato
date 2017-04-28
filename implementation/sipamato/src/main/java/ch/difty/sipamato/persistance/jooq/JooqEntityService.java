@@ -1,5 +1,7 @@
 package ch.difty.sipamato.persistance.jooq;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import ch.difty.sipamato.entity.IdSipamatoEntity;
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
@@ -21,6 +23,7 @@ public abstract class JooqEntityService<ID extends Number, T extends IdSipamatoE
     private static final long serialVersionUID = 1L;
 
     /** {@inhericDoc} */
+    @Transactional(readOnly = false)
     @Override
     public T saveOrUpdate(T entity) {
         if (entity.getId() == null) {
@@ -36,6 +39,7 @@ public abstract class JooqEntityService<ID extends Number, T extends IdSipamatoE
 
     /** {@inheritDoc} */
     @Override
+    @Transactional(readOnly = false)
     public void remove(T entity) {
         if (entity != null && entity.getId() != null) {
             getRepository().delete(entity.getId());

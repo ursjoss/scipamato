@@ -12,7 +12,6 @@ import org.jooq.SortField;
 import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
 import org.springframework.context.annotation.Profile;
-import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.filter.SipamatoFilter;
@@ -33,7 +32,6 @@ import ch.difty.sipamato.service.Localization;
  * @param <F> the type of the filter, extending {@link SipamatoFilter}
  */
 @Profile("DB_JOOQ")
-@Transactional(readOnly = true)
 public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends SipamatoFilter>
         implements ReadOnlyRepository<T, ID, F> {
 

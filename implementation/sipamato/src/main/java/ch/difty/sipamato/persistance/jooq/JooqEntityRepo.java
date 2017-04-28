@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.SipamatoEntity;
 import ch.difty.sipamato.entity.User;
@@ -38,7 +37,6 @@ import ch.difty.sipamato.service.Localization;
  * @param <F> the type of the filter, extending {@link SipamatoFilter}
  */
 @Profile("DB_JOOQ")
-@Transactional(readOnly = true)
 public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends SipamatoFilter>
         extends JooqReadOnlyRepo<R, T, ID, TI, M, F> implements EntityRepository<T, ID, F> {
 
@@ -92,7 +90,6 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
 
     /** {@inheritDoc} */
     @Override
-    @Transactional(readOnly = false)
     public T add(final T entity) {
         AssertAs.notNull(entity, "entity");
 
@@ -125,7 +122,6 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
 
     /** {@inheritDoc} */
     @Override
-    @Transactional(readOnly = false)
     public T delete(final ID id) {
         AssertAs.notNull(id, "id");
 
@@ -151,7 +147,6 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
 
     /** {@inheritDoc} */
     @Override
-    @Transactional(readOnly = false)
     public T update(final T entity) {
         AssertAs.notNull(entity, "entity");
         ID id = AssertAs.notNull(getIdFrom(entity), "entity.id");

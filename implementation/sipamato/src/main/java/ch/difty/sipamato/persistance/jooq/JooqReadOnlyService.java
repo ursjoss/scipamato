@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.IdSipamatoEntity;
 import ch.difty.sipamato.entity.SipamatoEntity;
@@ -23,6 +24,7 @@ import ch.difty.sipamato.service.ReadOnlyService;
  * @param <F> the filter, extending {@link SipamatoFilter}
  * @param <REPO> the entity repository (extending {@link EntityRepository}
  */
+@Transactional(readOnly = true)
 public abstract class JooqReadOnlyService<ID extends Number, T extends IdSipamatoEntity<ID>, F extends SipamatoFilter, REPO extends ReadOnlyRepository<T, ID, F>> implements ReadOnlyService<ID, T, F> {
 
     private static final long serialVersionUID = 1L;
