@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.sipamato.entity.Paper;
-import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
+import ch.difty.sipamato.persistance.jooq.JooqTransactionalIntegrationTest;
 
 /**
  * Note: The test will insert some records into the DB. It will try to wipe those records after the test suite terminates.
@@ -23,7 +23,7 @@ import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
  * additional records in the db would be wiped out by the tearDown method. So please make sure the number of records (plus
  * the highest id) match the declarations further down.
  */
-public class JooqPaperRepoIntegrationTest extends JooqBaseIntegrationTest {
+public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     private static final String ID_PART = ",id=1,created=2016-12-14T14:47:29.431,createdBy=1,lastModified=2016-12-14T14:47:29.431,lastModifiedBy=1,version=1";
     // @formatter:off

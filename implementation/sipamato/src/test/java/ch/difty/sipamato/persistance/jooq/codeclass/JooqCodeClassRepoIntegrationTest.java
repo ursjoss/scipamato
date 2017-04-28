@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.sipamato.entity.CodeClass;
-import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
+import ch.difty.sipamato.persistance.jooq.JooqTransactionalIntegrationTest;
 
-public class JooqCodeClassRepoIntegrationTest extends JooqBaseIntegrationTest {
+public class JooqCodeClassRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JooqCodeClassRepoIntegrationTest.class);
 

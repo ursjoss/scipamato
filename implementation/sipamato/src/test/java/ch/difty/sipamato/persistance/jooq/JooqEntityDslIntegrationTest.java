@@ -15,7 +15,7 @@ import ch.difty.sipamato.db.tables.records.PaperRecord;
  * @author Thomas Darimont
  * @author Urs Joss
  */
-public class JooqEntityDslIntegrationTest extends JooqBaseIntegrationTest {
+public class JooqEntityDslIntegrationTest extends JooqTransactionalIntegrationTest {
 
     @Autowired
     private DSLContext create;

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
-import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
+import ch.difty.sipamato.persistance.jooq.JooqTransactionalIntegrationTest;
 
 /**
  * Note: The test will insert some records into the DB. It will try to wipe those records after the test suite terminates.
@@ -21,7 +21,7 @@ import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
  * additional records in the db would be wiped out by the tearDown method. So please make sure the number of records (plus
  * the highest id) match the declarations further down.
  */
-public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest {
+public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     private static final Integer RECORD_COUNT_PREPOPULATED = 4;
     private static final Long MAX_ID_PREPOPULATED = 4l;

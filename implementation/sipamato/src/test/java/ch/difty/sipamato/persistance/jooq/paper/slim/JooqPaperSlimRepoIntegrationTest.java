@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.entity.projection.PaperSlim;
-import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
+import ch.difty.sipamato.persistance.jooq.JooqTransactionalIntegrationTest;
 
-public class JooqPaperSlimRepoIntegrationTest extends JooqBaseIntegrationTest {
+public class JooqPaperSlimRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     @Autowired
     private JooqPaperSlimRepo repo;

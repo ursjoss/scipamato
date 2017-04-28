@@ -11,9 +11,9 @@ import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.paging.PaginationRequest;
-import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
+import ch.difty.sipamato.persistance.jooq.JooqTransactionalIntegrationTest;
 
-public class JooqPaperSlimBySearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest {
+public class JooqPaperSlimBySearchOrderRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     @Autowired
     private JooqPaperSlimBySearchOrderRepo repo;

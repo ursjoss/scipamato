@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.CodeClassId;
-import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
+import ch.difty.sipamato.persistance.jooq.JooqTransactionalIntegrationTest;
 
-public class JooqCodeRepoIntegrationTest extends JooqBaseIntegrationTest {
+public class JooqCodeRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JooqCodeRepoIntegrationTest.class);
 
