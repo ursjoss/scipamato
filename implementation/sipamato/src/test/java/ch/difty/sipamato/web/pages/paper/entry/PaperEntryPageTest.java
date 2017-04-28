@@ -72,8 +72,11 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         b += ":panelsContainer:panels";
         assertTabPanelFields(1, 1, b, Paper.GOALS, Paper.POPULATION, Paper.METHODS, Paper.POPULATION_PLACE, Paper.POPULATION_PARTICIPANTS, Paper.POPULATION_DURATION, Paper.EXPOSURE_POLLUTANT,
                 Paper.EXPOSURE_ASSESSMENT, Paper.METHOD_STUDY_DESIGN, Paper.METHOD_OUTCOME, Paper.METHOD_STATISTICS, Paper.METHOD_CONFOUNDERS);
-        assertTabPanelFields(2, 3, b, Paper.RESULT, Paper.COMMENT, Paper.INTERN, Paper.RESULT_EXPOSURE_RANGE, Paper.RESULT_EFFECT_ESTIMATE, Paper.RESULT_MEASURED_OUTCOME);
-        assertTabPanelFieldsOfTab3(5, b, Paper.MAIN_CODE_OF_CODECLASS1, "codesClass1", "codesClass2", "codesClass3", "codesClass4", "codesClass5", "codesClass6", "codesClass7", "codesClass8");
+        assertTabPanelFields(2, 3, b, Paper.POPULATION_PLACE, Paper.POPULATION_PARTICIPANTS, Paper.POPULATION_DURATION, Paper.EXPOSURE_POLLUTANT, Paper.EXPOSURE_ASSESSMENT, Paper.METHOD_STUDY_DESIGN,
+                Paper.METHOD_OUTCOME, Paper.METHOD_STATISTICS, Paper.METHOD_CONFOUNDERS, Paper.RESULT_EXPOSURE_RANGE, Paper.RESULT_EFFECT_ESTIMATE, Paper.RESULT_MEASURED_OUTCOME);
+        assertTabPanelFields(3, 5, b, Paper.RESULT, Paper.COMMENT, Paper.INTERN, Paper.RESULT_EXPOSURE_RANGE, Paper.RESULT_EFFECT_ESTIMATE, Paper.RESULT_MEASURED_OUTCOME);
+        assertTabPanelFieldsOfTab4(7, b, Paper.MAIN_CODE_OF_CODECLASS1, "codesClass1", "codesClass2", "codesClass3", "codesClass4", "codesClass5", "codesClass6", "codesClass7", "codesClass8");
+        assertTabPanelFields(5, 9, b, Paper.ORIGINAL_ABSTRACT);
     }
 
     private void assertTabPanelFields(int tabId, int panelId, String b, String... fields) {
@@ -85,9 +88,9 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         }
     }
 
-    private void assertTabPanelFieldsOfTab3(int panelId, String b, String... fields) {
+    private void assertTabPanelFieldsOfTab4(int panelId, String b, String... fields) {
         assertTabPanel(panelId, b);
-        final String bb = b + ":" + panelId + ":tab3Form";
+        final String bb = b + ":" + panelId + ":tab4Form";
         getTester().assertComponent(bb, Form.class);
         int fieldCount = 0;
         for (String f : fields) {
