@@ -409,17 +409,21 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             Form<T> form = new Form<>("tab2Form");
             queue(form);
 
+            queueNewFieldTo(Paper.METHOD_STUDY_DESIGN);
+            queueNewFieldTo(Paper.METHOD_OUTCOME);
+
             queueNewFieldTo(Paper.POPULATION_PLACE);
             queueNewFieldTo(Paper.POPULATION_PARTICIPANTS);
             queueNewFieldTo(Paper.POPULATION_DURATION);
 
             queueNewFieldTo(Paper.EXPOSURE_POLLUTANT);
             queueNewFieldTo(Paper.EXPOSURE_ASSESSMENT);
-
-            queueNewFieldTo(Paper.METHOD_STUDY_DESIGN);
-            queueNewFieldTo(Paper.METHOD_OUTCOME);
             queueNewFieldTo(Paper.METHOD_STATISTICS);
             queueNewFieldTo(Paper.METHOD_CONFOUNDERS);
+
+            queueNewFieldTo(Paper.RESULT_MEASURED_OUTCOME);
+            queueNewFieldTo(Paper.RESULT_EXPOSURE_RANGE);
+            queueNewFieldTo(Paper.RESULT_EFFECT_ESTIMATE);
         }
     }
 

@@ -183,6 +183,9 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
         assertTextAreaWithLabel(bbb + ":methodOutcome", "mo", "Outcome");
         assertTextAreaWithLabel(bbb + ":methodStatistics", "ms", "Statistical Method");
         assertTextAreaWithLabel(bbb + ":methodConfounders", "mc", "Confounders");
+        assertTextAreaWithLabel(bbb + ":resultMeasuredOutcome", "rmo", "Measured Outcome");
+        assertTextAreaWithLabel(bbb + ":resultExposureRange", "rer", "Exposure (Range)");
+        assertTextAreaWithLabel(bbb + ":resultEffectEstimate", "ree", "Effect Estimate/Results");
 
         bbb = bb + ":5:tab3Form";
         getTester().assertComponent(bbb, Form.class);
