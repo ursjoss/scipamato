@@ -9,6 +9,7 @@ import org.jooq.DSLContext;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
@@ -21,6 +22,7 @@ import ch.difty.sipamato.persistance.jooq.JooqBaseIntegrationTest;
  * additional records in the db would be wiped out by the tearDown method. So please make sure the number of records (plus
  * the highest id) match the declarations further down.
  */
+@Transactional
 public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     private static final Integer RECORD_COUNT_PREPOPULATED = 4;
@@ -152,6 +154,55 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqBaseIntegrationTest 
         repo.enrichAssociatedEntitiesOf(so);
 
         assertThat(so.getExcludedPaperIds()).hasSize(1).containsExactly(1l);
+    }
+
+    @Test
+    public void addAndModifiyAndDeleteSearchConditions() {
+        // make search order with single condition (string search term)
+        SearchOrder initialSearchOrder = makeMinimalSearchOrder();
+        initialSearchOrder.add(newConditionWithAuthors("foo"));
+        assertThat(initialSearchOrder.getId()).isNull();
+
+        SearchOrder savedSearchOrder = repo.add(initialSearchOrder);
+        // saved search order now has a db-generated id, still has single condition. 
+        long searchOrderId = savedSearchOrder.getId();
+        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(1);
+
+        // add additional title condition to existing search order
+        SearchCondition titleCondition = newConditionWithTitle("PM2.5");
+        SearchCondition savedCondition = repo.addSearchCondition(titleCondition, searchOrderId);
+        assertSearchTermCount(1, 0, 0, savedCondition);
+        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(2);
+
+        // modify the currently savedCondition to also have a publicationYear integer search term
+        savedCondition.setPublicationYear("2000");
+        SearchCondition modifiedCondition = repo.updateSearchCondition(savedCondition, searchOrderId);
+        assertSearchTermCount(1, 1, 0, modifiedCondition);
+        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(3);
+
+        // remove the new search condition
+        repo.deleteSearchConditionWithId(savedCondition.getSearchConditionId());
+        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(1);
+    }
+
+    private SearchCondition newConditionWithAuthors(String authors) {
+        SearchCondition sc = new SearchCondition();
+        sc.setAuthors(authors);
+        assertSearchTermCount(1, 0, 0, sc);
+        return sc;
+    }
+
+    private void assertSearchTermCount(int sst, int ist, int bst, SearchCondition sc) {
+        assertThat(sc.getStringSearchTerms()).hasSize(sst);
+        assertThat(sc.getIntegerSearchTerms()).hasSize(ist);
+        assertThat(sc.getBooleanSearchTerms()).hasSize(bst);
+    }
+
+    private SearchCondition newConditionWithTitle(String title) {
+        SearchCondition sc = new SearchCondition();
+        sc.setTitle(title);
+        assertSearchTermCount(1, 0, 0, sc);
+        return sc;
     }
 
 }
