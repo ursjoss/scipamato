@@ -171,6 +171,14 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 return new TabPanel1(panelId, form.getModel());
             }
         });
+        tabs.add(new AbstractTab(new StringResourceModel("tab2" + LABEL_RECOURCE_TAG, this, null)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Panel getPanel(String panelId) {
+                return new TabPanel2(panelId, form.getModel());
+            }
+        });
         tabs.add(new AbstractTab(new StringResourceModel("tab3" + LABEL_RECOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
 
@@ -331,6 +339,34 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             queueNewFieldTo(Paper.METHOD_OUTCOME);
             queueNewFieldTo(Paper.METHOD_STATISTICS);
             queueNewFieldTo(Paper.METHOD_CONFOUNDERS);
+        }
+    }
+
+    private class TabPanel2 extends AbstractTabPanel {
+        private static final long serialVersionUID = 1L;
+
+        public TabPanel2(String id, IModel<T> model) {
+            super(id, model);
+        }
+
+        @Override
+        protected void onInitialize() {
+            super.onInitialize();
+
+            Form<T> form = new Form<>("tab2Form");
+            queue(form);
+
+            queueTo(Paper.POPULATION_PLACE);
+            queueTo(Paper.POPULATION_PARTICIPANTS);
+            queueTo(Paper.POPULATION_DURATION);
+
+            queueTo(Paper.EXPOSURE_POLLUTANT);
+            queueTo(Paper.EXPOSURE_ASSESSMENT);
+
+            queueTo(Paper.METHOD_STUDY_DESIGN);
+            queueTo(Paper.METHOD_OUTCOME);
+            queueTo(Paper.METHOD_STATISTICS);
+            queueTo(Paper.METHOD_CONFOUNDERS);
         }
     }
 
