@@ -8,8 +8,11 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.event.Broadcast;
+import org.apache.wicket.event.IEvent;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
@@ -53,6 +56,8 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T> {
 
     private static final long serialVersionUID = 1L;
+
+    private static final String CHANGE = "change";
 
     private ResourceLink<Void> summaryLink;
     private String pubmedXml;
@@ -170,6 +175,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             public Panel getPanel(String panelId) {
                 return new TabPanel1(panelId, form.getModel());
             }
+
         });
         tabs.add(new AbstractTab(new StringResourceModel("tab2" + LABEL_RECOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
@@ -294,13 +300,13 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         }
 
         TextArea<String> queueTo(String id, boolean newField, Optional<PropertyValidator<?>> pv) {
-            TextArea<String> field = new TextArea<>(id);
+            TextArea<String> field = makeField(id, newField);
             field.setOutputMarkupId(true);
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
             queue(new Label(id + LABEL_TAG, labelModel));
             field.setLabel(labelModel);
             if (newField) {
-                field.add(new AttributeAppender("class", " newField"));
+                addNewFieldSpecificAttributes(id, field);
             }
             if (pv.isPresent() && isEditMode()) {
                 field.add(pv.get());
@@ -308,6 +314,52 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             queue(field);
             return field;
         }
+
+        /**
+         * The new fields are present on the page more than once, they need to be able to handle the {@link NewFieldChangeEvent}.
+         */
+        private TextArea<String> makeField(String id, boolean newField) {
+            if (!newField) {
+                return new TextArea<String>(id);
+            } else {
+                return new TextArea<String>(id) {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onEvent(IEvent<?> event) {
+                        if (event.getPayload().getClass() == NewFieldChangeEvent.class)
+                            handleNewFieldChangeEvent(event);
+                    }
+
+                    private void handleNewFieldChangeEvent(final IEvent<?> event) {
+                        final NewFieldChangeEvent e = (NewFieldChangeEvent) event.getPayload();
+                        if (e.getId() == null || e.getId().equals(id)) {
+                            e.getTarget().add(this);
+                        }
+                        event.dontBroadcastDeeper();
+                    }
+                };
+            }
+        }
+
+        /**
+         * New fields need to broadcast the {@link NewFieldChangeEvent} and have a special indication
+         * that they are a new field.
+         */
+        private void addNewFieldSpecificAttributes(String id, TextArea<String> field) {
+            field.add(new AttributeAppender("class", " newField"));
+            field.add(new AjaxFormComponentUpdatingBehavior(CHANGE) {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected void onUpdate(AjaxRequestTarget target) {
+                    send(getPage(), Broadcast.BREADTH, new NewFieldChangeEvent(target).withId(id));
+                }
+
+            });
+        }
+
     }
 
     private class TabPanel1 extends AbstractTabPanel {
@@ -322,6 +374,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             super.onInitialize();
 
             Form<T> form = new Form<>("tab1Form");
+
             queue(form);
 
             queueTo(Paper.GOALS, new PropertyValidator<String>());
@@ -356,17 +409,17 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             Form<T> form = new Form<>("tab2Form");
             queue(form);
 
-            queueTo(Paper.POPULATION_PLACE);
-            queueTo(Paper.POPULATION_PARTICIPANTS);
-            queueTo(Paper.POPULATION_DURATION);
+            queueNewFieldTo(Paper.POPULATION_PLACE);
+            queueNewFieldTo(Paper.POPULATION_PARTICIPANTS);
+            queueNewFieldTo(Paper.POPULATION_DURATION);
 
-            queueTo(Paper.EXPOSURE_POLLUTANT);
-            queueTo(Paper.EXPOSURE_ASSESSMENT);
+            queueNewFieldTo(Paper.EXPOSURE_POLLUTANT);
+            queueNewFieldTo(Paper.EXPOSURE_ASSESSMENT);
 
-            queueTo(Paper.METHOD_STUDY_DESIGN);
-            queueTo(Paper.METHOD_OUTCOME);
-            queueTo(Paper.METHOD_STATISTICS);
-            queueTo(Paper.METHOD_CONFOUNDERS);
+            queueNewFieldTo(Paper.METHOD_STUDY_DESIGN);
+            queueNewFieldTo(Paper.METHOD_OUTCOME);
+            queueNewFieldTo(Paper.METHOD_STATISTICS);
+            queueNewFieldTo(Paper.METHOD_CONFOUNDERS);
         }
     }
 
