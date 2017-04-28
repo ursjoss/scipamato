@@ -174,6 +174,21 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
 
         bbb = bb + ":3:tab2Form";
         getTester().assertComponent(bbb, Form.class);
+        assertTextAreaWithLabel(bbb + ":populationPlace", "ppl", "Place/Country (study name)");
+        assertTextAreaWithLabel(bbb + ":populationParticipants", "ppa", "Participants");
+        assertTextAreaWithLabel(bbb + ":populationDuration", "pd", "Study Duration");
+        assertTextAreaWithLabel(bbb + ":exposurePollutant", "ep", "Pollutant");
+        assertTextAreaWithLabel(bbb + ":exposureAssessment", "ea", "Exposure Assessment");
+        assertTextAreaWithLabel(bbb + ":methodStudyDesign", "msd", "Study Design");
+        assertTextAreaWithLabel(bbb + ":methodOutcome", "mo", "Outcome");
+        assertTextAreaWithLabel(bbb + ":methodStatistics", "ms", "Statistical Method");
+        assertTextAreaWithLabel(bbb + ":methodConfounders", "mc", "Confounders");
+        assertTextAreaWithLabel(bbb + ":resultMeasuredOutcome", "rmo", "Measured Outcome");
+        assertTextAreaWithLabel(bbb + ":resultExposureRange", "rer", "Exposure (Range)");
+        assertTextAreaWithLabel(bbb + ":resultEffectEstimate", "ree", "Effect Estimate/Results");
+
+        bbb = bb + ":5:tab3Form";
+        getTester().assertComponent(bbb, Form.class);
         assertTextAreaWithLabel(bbb + ":result", "r", "Results");
         assertTextAreaWithLabel(bbb + ":comment", "c", "Comment");
         assertTextAreaWithLabel(bbb + ":intern", "i", "Internal");
@@ -181,7 +196,7 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
         assertTextAreaWithLabel(bbb + ":resultExposureRange", "rer", "Exposure (Range)");
         assertTextAreaWithLabel(bbb + ":resultEffectEstimate", "ree", "Effect Estimate/Results");
 
-        bbb = bb + ":5:tab3Form";
+        bbb = bb + ":7:tab4Form";
         getTester().assertComponent(bbb, Form.class);
         assertMultiselectWithLabel(bbb + ":codesClass1", newC(1, "F"), "cc1");
         assertTextFieldWithLabel(bbb + ":mainCodeOfCodeclass1", "mcocc1", "Main Exposure Agent");
@@ -193,15 +208,16 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
         assertMultiselectWithLabel(bbb + ":codesClass7", newC(7, "A"), "cc7");
         assertMultiselectWithLabel(bbb + ":codesClass8", newC(8, "A"), "cc8");
 
-        bbb = bb + ":7:tab4Form";
+        bbb = bb + ":9:tab5Form";
         assertTextAreaWithLabel(bbb + ":originalAbstract", "oa", "Original Abstract");
         getTester().assertComponent(bbb, Form.class);
 
         bb = b + ":tabsContainer:tabs:";
         getTester().assertLabel(bb + "2:link:title", "Population, Goals, and Methods");
-        getTester().assertLabel(bb + "4:link:title", "Results and Comments");
-        getTester().assertLabel(bb + "6:link:title", "Codes and new Studies");
-        getTester().assertLabel(bb + "8:link:title", "Original Abstract");
+        getTester().assertLabel(bb + "4:link:title", "New Field Entry");
+        getTester().assertLabel(bb + "6:link:title", "Results and Comments");
+        getTester().assertLabel(bb + "8:link:title", "Codes and new Studies");
+        getTester().assertLabel(bb + "10:link:title", "Original Abstract");
 
         verifyCodeAndCodeClassCalls(1);
     }

@@ -8,8 +8,11 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.event.Broadcast;
+import org.apache.wicket.event.IEvent;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
@@ -53,6 +56,8 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T> {
 
     private static final long serialVersionUID = 1L;
+
+    private static final String CHANGE = "change";
 
     private ResourceLink<Void> summaryLink;
     private String pubmedXml;
@@ -170,6 +175,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             public Panel getPanel(String panelId) {
                 return new TabPanel1(panelId, form.getModel());
             }
+
         });
         tabs.add(new AbstractTab(new StringResourceModel("tab2" + LABEL_RECOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
@@ -193,6 +199,14 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             @Override
             public Panel getPanel(String panelId) {
                 return new TabPanel4(panelId, form.getModel());
+            }
+        });
+        tabs.add(new AbstractTab(new StringResourceModel("tab5" + LABEL_RECOURCE_TAG, this, null)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Panel getPanel(String panelId) {
+                return new TabPanel5(panelId, form.getModel());
             }
         });
         queue(new ClientSideBootstrapTabbedPanel<ITab>(tabId, tabs));
@@ -286,13 +300,13 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         }
 
         TextArea<String> queueTo(String id, boolean newField, Optional<PropertyValidator<?>> pv) {
-            TextArea<String> field = new TextArea<>(id);
+            TextArea<String> field = makeField(id, newField);
             field.setOutputMarkupId(true);
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
             queue(new Label(id + LABEL_TAG, labelModel));
             field.setLabel(labelModel);
             if (newField) {
-                field.add(new AttributeAppender("class", " newField"));
+                addNewFieldSpecificAttributes(id, field);
             }
             if (pv.isPresent() && isEditMode()) {
                 field.add(pv.get());
@@ -300,6 +314,52 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             queue(field);
             return field;
         }
+
+        /**
+         * The new fields are present on the page more than once, they need to be able to handle the {@link NewFieldChangeEvent}.
+         */
+        private TextArea<String> makeField(String id, boolean newField) {
+            if (!newField) {
+                return new TextArea<String>(id);
+            } else {
+                return new TextArea<String>(id) {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onEvent(IEvent<?> event) {
+                        if (event.getPayload().getClass() == NewFieldChangeEvent.class)
+                            handleNewFieldChangeEvent(event);
+                    }
+
+                    private void handleNewFieldChangeEvent(final IEvent<?> event) {
+                        final NewFieldChangeEvent e = (NewFieldChangeEvent) event.getPayload();
+                        if (e.getId() == null || e.getId().equals(id)) {
+                            e.getTarget().add(this);
+                        }
+                        event.dontBroadcastDeeper();
+                    }
+                };
+            }
+        }
+
+        /**
+         * New fields need to broadcast the {@link NewFieldChangeEvent} and have a special indication
+         * that they are a new field.
+         */
+        private void addNewFieldSpecificAttributes(String id, TextArea<String> field) {
+            field.add(new AttributeAppender("class", " newField"));
+            field.add(new AjaxFormComponentUpdatingBehavior(CHANGE) {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected void onUpdate(AjaxRequestTarget target) {
+                    send(getPage(), Broadcast.BREADTH, new NewFieldChangeEvent(target).withId(id));
+                }
+
+            });
+        }
+
     }
 
     private class TabPanel1 extends AbstractTabPanel {
@@ -313,8 +373,9 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> tab1Form = new Form<>("tab1Form");
-            queue(tab1Form);
+            Form<T> form = new Form<>("tab1Form");
+
+            queue(form);
 
             queueTo(Paper.GOALS, new PropertyValidator<String>());
             queueTo(Paper.POPULATION);
@@ -345,8 +406,40 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> tab2Form = new Form<>("tab2Form");
-            queue(tab2Form);
+            Form<T> form = new Form<>("tab2Form");
+            queue(form);
+
+            queueNewFieldTo(Paper.METHOD_STUDY_DESIGN);
+            queueNewFieldTo(Paper.METHOD_OUTCOME);
+
+            queueNewFieldTo(Paper.POPULATION_PLACE);
+            queueNewFieldTo(Paper.POPULATION_PARTICIPANTS);
+            queueNewFieldTo(Paper.POPULATION_DURATION);
+
+            queueNewFieldTo(Paper.EXPOSURE_POLLUTANT);
+            queueNewFieldTo(Paper.EXPOSURE_ASSESSMENT);
+            queueNewFieldTo(Paper.METHOD_STATISTICS);
+            queueNewFieldTo(Paper.METHOD_CONFOUNDERS);
+
+            queueNewFieldTo(Paper.RESULT_MEASURED_OUTCOME);
+            queueNewFieldTo(Paper.RESULT_EXPOSURE_RANGE);
+            queueNewFieldTo(Paper.RESULT_EFFECT_ESTIMATE);
+        }
+    }
+
+    private class TabPanel3 extends AbstractTabPanel {
+        private static final long serialVersionUID = 1L;
+
+        public TabPanel3(String id, IModel<T> model) {
+            super(id, model);
+        }
+
+        @Override
+        protected void onInitialize() {
+            super.onInitialize();
+
+            Form<T> form = new Form<>("tab3Form");
+            queue(form);
 
             queueTo(Paper.RESULT);
             queueTo(Paper.COMMENT);
@@ -358,12 +451,12 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         }
     }
 
-    private class TabPanel3 extends AbstractTabPanel {
+    private class TabPanel4 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
         private static final String CODES_CLASS_BASE_NAME = "codesClass";
 
-        public TabPanel3(String id, IModel<T> model) {
+        public TabPanel4(String id, IModel<T> model) {
             super(id, model);
         }
 
@@ -371,13 +464,13 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> tab3Form = new Form<>("tab3Form");
-            queue(tab3Form);
+            Form<T> form = new Form<>("tab4Form");
+            queue(form);
 
             CodeClassModel codeClassModel = new CodeClassModel(getLocalization().getLocalization());
             List<CodeClass> codeClasses = codeClassModel.getObject();
 
-            makeCodeClass1Complex(codeClasses, tab3Form);
+            makeCodeClass1Complex(codeClasses, form);
             makeCodeClassComplex(CodeClassId.CC2, codeClasses);
             makeCodeClassComplex(CodeClassId.CC3, codeClasses);
             makeCodeClassComplex(CodeClassId.CC4, codeClasses);
@@ -440,10 +533,10 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         }
     }
 
-    private class TabPanel4 extends AbstractTabPanel {
+    private class TabPanel5 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        public TabPanel4(String id, IModel<T> model) {
+        public TabPanel5(String id, IModel<T> model) {
             super(id, model);
         }
 
@@ -451,8 +544,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> tab4Form = new Form<>("tab4Form");
-            queue(tab4Form);
+            Form<T> form = new Form<>("tab5Form");
+            queue(form);
 
             originalAbstract = queueTo(Paper.ORIGINAL_ABSTRACT);
         }

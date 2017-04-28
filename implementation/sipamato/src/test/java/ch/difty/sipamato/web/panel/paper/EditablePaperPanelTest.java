@@ -176,7 +176,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     }
 
     @Test
-    public void firstAuthorChangeBehavior_withoutUpdatedAuthor_hasFirstAuthoerOverriddenFalseAndFirstAuthorDisabled() {
+    public void firstAuthorChangeBehavior_withoutUpdatedAuthor_hasFirstAuthorOverriddenFalseAndFirstAuthorDisabled() {
         getTester().startComponentInPage(makePanel());
 
         String formId = "panel:form:";
@@ -200,7 +200,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     public void mainCodeOfCodeClass1ChangeBehavior_whenChangingCodesClass1_reflectsInMainCodeOfCodeClass() {
         getTester().startComponentInPage(makePanel());
 
-        String formId = "panel:form:tabs:panelsContainer:panels:5:tab3Form:";
+        String formId = "panel:form:tabs:panelsContainer:panels:7:tab4Form:";
         getTester().assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1");
         getTester().assertModelValue(formId + "codesClass1", Arrays.asList(newC(1, "F")));
 
@@ -218,7 +218,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     public void mainCodeOfCodeClass1ChangeBehavior_whenRemovingCodeOfClass1_clearsMainCodeOfCodeClass() {
         getTester().startComponentInPage(makePanel());
 
-        String formId = "panel:form:tabs:panelsContainer:panels:5:tab3Form:";
+        String formId = "panel:form:tabs:panelsContainer:panels:7:tab4Form:";
         getTester().assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1");
         getTester().assertModelValue(formId + "codesClass1", Arrays.asList(newC(1, "F")));
 
@@ -239,7 +239,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     public void mainCodeOfCodeClass1ChangeBehavior_walkThroughStateChanges() {
         getTester().startComponentInPage(makePanel());
 
-        String formId = "panel:form:tabs:panelsContainer:panels:5:tab3Form:";
+        String formId = "panel:form:tabs:panelsContainer:panels:7:tab4Form:";
         getTester().assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1");
         getTester().assertModelValue(formId + "codesClass1", Arrays.asList(newC(1, "F")));
 
