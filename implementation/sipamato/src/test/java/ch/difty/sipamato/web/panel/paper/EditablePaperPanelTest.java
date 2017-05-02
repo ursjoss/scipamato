@@ -473,22 +473,21 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertInfoMessages("Authors: a", "First Author: fa", "Title: t", "Pub. Year: 2017", "Location: l", "DOI: doi", "Original Abstract: oa",
-                "Above fields have changed. Click save if you want to keep the changes.");
+        getTester().assertInfoMessages("Some fields have changed (Authors, First Author, Title, Pub. Year, Location, DOI, Original Abstract). Click save if you want to keep the changes.");
         getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
         getTester().assertNoErrorMessage();
 
         verifyPubmedRetrievalButtonClicked();
     }
 
-    private void testAndVerifySingleFieldSet(EditablePaperPanel panel, String msg) {
+    private void testAndVerifySingleFieldSet(EditablePaperPanel panel, String field) {
         getTester().startComponentInPage(panel);
         getTester().debugComponentTrees();
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertInfoMessages(msg, "Above fields have changed. Click save if you want to keep the changes.");
+        getTester().assertInfoMessages("Some fields have changed (" + field + "). Click save if you want to keep the changes.");
         getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
         getTester().assertNoErrorMessage();
 
@@ -499,49 +498,49 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptAuthor_setsAuthor() {
         EditablePaperPanel panel = makePanel();
         panel.getModelObject().setAuthors(null);
-        testAndVerifySingleFieldSet(panel, "Authors: a");
+        testAndVerifySingleFieldSet(panel, "Authors");
     }
 
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptFirstAuthor_setsFirstAuthor() {
         EditablePaperPanel panel = makePanel();
         panel.getModelObject().setFirstAuthor(null);
-        testAndVerifySingleFieldSet(panel, "First Author: fa");
+        testAndVerifySingleFieldSet(panel, "First Author");
     }
 
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptTitle_setsTitle() {
         EditablePaperPanel panel = makePanel();
         panel.getModelObject().setTitle(null);
-        testAndVerifySingleFieldSet(panel, "Title: t");
+        testAndVerifySingleFieldSet(panel, "Title");
     }
 
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptLocation_setsLocation() {
         EditablePaperPanel panel = makePanel();
         panel.getModelObject().setLocation(null);
-        testAndVerifySingleFieldSet(panel, "Location: l");
+        testAndVerifySingleFieldSet(panel, "Location");
     }
 
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptYear_setsYear() {
         EditablePaperPanel panel = makePanel();
         panel.getModelObject().setPublicationYear(null);
-        testAndVerifySingleFieldSet(panel, "Pub. Year: 2017");
+        testAndVerifySingleFieldSet(panel, "Pub. Year");
     }
 
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptDoi_setsDoi() {
         EditablePaperPanel panel = makePanel();
         panel.getModelObject().setDoi(null);
-        testAndVerifySingleFieldSet(panel, "DOI: doi");
+        testAndVerifySingleFieldSet(panel, "DOI");
     }
 
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptOriginalAbstract_setsOriginalAbstract() {
         EditablePaperPanel panel = makePanel();
         panel.getModelObject().setOriginalAbstract(null);
-        testAndVerifySingleFieldSet(panel, "Original Abstract: oa");
+        testAndVerifySingleFieldSet(panel, "Original Abstract");
     }
 
     @Test
@@ -552,8 +551,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "invalid", "doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertInfoMessages("Authors: a", "First Author: fa", "Title: t", "Location: l", "DOI: doi", "Original Abstract: oa",
-                "Above fields have changed. Click save if you want to keep the changes.");
+        getTester().assertInfoMessages("Some fields have changed (Authors, First Author, Title, Location, DOI, Original Abstract). Click save if you want to keep the changes.");
         getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
         getTester().assertErrorMessages("Unable to parse the year 'invalid'");
 

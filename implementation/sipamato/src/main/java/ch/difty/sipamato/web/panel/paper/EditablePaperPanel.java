@@ -333,7 +333,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      */
     private void warnNonmatchingFields(String fieldName, String pmField, String paperField, ProcessingRecord pr) {
         if (pmField != null && !pmField.equals(paperField)) {
-            warn("PubMed " + fieldName + "has differing value '" + pmField + "'");
+            warn("PubMed " + fieldName + ": " + pmField);
             pr.addDifferingField(fieldName);
         }
     }
