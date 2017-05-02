@@ -1,9 +1,12 @@
 package ch.difty.sipamato.web.panel.paper;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
@@ -176,7 +179,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             if (pao.isPresent()) {
                 PubmedArticleFacade pa = pao.get();
                 if (String.valueOf(pmId).equals(pa.getPmId())) {
-                    setFieldsIfBlankCompareOtherwise(paper, pa, target);
+                    setFieldsIfNotSetCompareOtherwise(paper, pa, target);
                 }
             } else {
                 error(new StringResourceModel("pubmedRetrieval.pmid.error", this, getModel()).getString());
@@ -190,23 +193,37 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     private class ProcessingRecord {
-        boolean dirty = false;
-        boolean allMatching = true;
+        private List<String> modifiedFields = new ArrayList<>();
+        private List<String> differingFields = new ArrayList<>();
 
-        public void setDirty() {
-            dirty = true;
+        void addChangedField(String name) {
+            modifiedFields.add(name);
         }
 
-        public void setNonMatching() {
-            allMatching = false;
+        void addDifferingField(String name) {
+            differingFields.add(name);
         }
+
+        boolean isDirty() {
+            return !modifiedFields.isEmpty();
+        }
+
+        boolean allMatching() {
+            return differingFields.isEmpty();
+        }
+
+        String getModifiedFieldString() {
+            return modifiedFields.stream().collect(Collectors.joining(", "));
+        }
+
     }
 
     /**
-     * If a field in the sipamato paper is null, the value from the respective pubmed paper is inserted.
-     * Otherwise the two values are compared and differences are alerted (except for the abstract).
+     * If a field in the sipamato paper is null or filled with a default value indicating 'not set',
+     * the value from the pubmed paper is inserted. Otherwise the two values are compared and differences
+     * are alerted (except for the abstract, which may have subtle differences difficult to control).
      */
-    private void setFieldsIfBlankCompareOtherwise(Paper p, PubmedArticleFacade a, AjaxRequestTarget target) {
+    private void setFieldsIfNotSetCompareOtherwise(Paper p, PubmedArticleFacade a, AjaxRequestTarget target) {
         final ProcessingRecord pr = new ProcessingRecord();
 
         processStringField(Paper.AUTHORS, a.getAuthors(), Paper::getAuthors, Paper::setAuthors, p, pr, target, authors, firstAuthor);
@@ -237,7 +254,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             final ProcessingRecord pr, final AjaxRequestTarget target, final FormComponent<?>... fcs) {
         final String localizedFieldName = getLocalizedFieldName(fieldName);
         final String paperValue = getter.apply(p);
-        if (paperValue == null) {
+        if (paperValue == null || Paper.NA_AUTHORS.equals(paperValue) || Paper.NA_STRING.equals(paperValue)) {
             setPaperFieldFromArticleAndInform(localizedFieldName, articleValue, setter, p, pr, target, fcs);
         } else {
             if (!Paper.ORIGINAL_ABSTRACT.equals(fieldName))
@@ -248,8 +265,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     private void setPaperFieldFromArticleAndInform(final String fieldName, final String articleValue, final BiConsumer<Paper, String> setter, final Paper p, final ProcessingRecord pr,
             final AjaxRequestTarget target, final FormComponent<?>... fcs) {
         setter.accept(p, articleValue);
-        pr.setDirty();
-        informChangedValue(fieldName, articleValue, target, fcs);
+        pr.addChangedField(fieldName);
+        addTargets(target, fcs);
     }
 
     /**
@@ -270,7 +287,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             final String conversionResourceString, final Paper p, final ProcessingRecord pr, final AjaxRequestTarget target, final FormComponent<?>... fcs) {
         final String localizedFieldName = getLocalizedFieldName(fieldName);
         final Integer paperValue = getter.apply(p);
-        if (paperValue == null) {
+        if (paperValue == null || Paper.NA_PUBL_YEAR == paperValue.intValue()) {
             try {
                 final int articleValue = Integer.parseInt(rawArticleValue);
                 setPaperFieldFromArticleAndInform(localizedFieldName, articleValue, setter, p, pr, target, fcs);
@@ -285,14 +302,14 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     private void setPaperFieldFromArticleAndInform(final String fieldName, final int articleValue, final BiConsumer<Paper, Integer> setter, final Paper p, final ProcessingRecord pr,
             final AjaxRequestTarget target, final FormComponent<?>... fcs) {
         setter.accept(p, articleValue);
-        pr.setDirty();
-        informChangedValue(fieldName, String.valueOf(articleValue), target, fcs);
+        pr.addChangedField(fieldName);
+        addTargets(target, fcs);
     }
 
     private void provideUserInfo(final ProcessingRecord pr) {
-        if (pr.dirty) {
-            info(new StringResourceModel("pubmedRetrieval.dirty.info", this, null).getString());
-        } else if (pr.allMatching) {
+        if (pr.isDirty()) {
+            info(new StringResourceModel("pubmedRetrieval.dirty.info", this, null).setParameters(pr.getModifiedFieldString()).getString());
+        } else if (pr.allMatching()) {
             info(new StringResourceModel("pubmedRetrieval.no-difference.info", this, null).getString());
         }
     }
@@ -301,11 +318,10 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return new StringResourceModel(fieldName + LABEL_RECOURCE_TAG, this, null).getString();
     }
 
-    private void informChangedValue(String fieldName, String value, AjaxRequestTarget target, FormComponent<?>... fcs) {
-        info(fieldName + ": " + value);
-        if (fcs.length > 0) {
-            target.add(fcs);
-        }
+    private void addTargets(AjaxRequestTarget target, FormComponent<?>... fcs) {
+        if (fcs.length > 0)
+            for (FormComponent<?> fc : fcs)
+                target.add(fc);
     }
 
     /**
@@ -317,8 +333,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      */
     private void warnNonmatchingFields(String fieldName, String pmField, String paperField, ProcessingRecord pr) {
         if (pmField != null && !pmField.equals(paperField)) {
-            warn("PubMed " + fieldName + ": " + pmField);
-            pr.setNonMatching();
+            warn("PubMed " + fieldName + "has differing value '" + pmField + "'");
+            pr.addDifferingField(fieldName);
         }
     }
 

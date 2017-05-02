@@ -35,6 +35,10 @@ import ch.difty.sipamato.web.panel.paper.EditablePaperPanel;
  * to one message at a time. If the paper has been persisted, several feedback messages would be displayed to
  * the user if the come up.
  *
+ * In order to fetch fields from PubMed, the default model now contains specific 'n.a.' values for the fields
+ * that can't be null. In case PubMed import is enabled, those will be replaced with real values (except for the
+ * goals field, which is not available in the PubMed export).
+ *
  * @author u.joss
  */
 @MountPath("entry")
@@ -57,8 +61,17 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         super(paperModel);
     }
 
+    /**
+     * Sets the n.a. values so the paper could be saved or filled with PubMed information
+     */
     private void initDefaultModel() {
-        setDefaultModel(Model.of(new Paper()));
+        Paper paper = new Paper();
+        paper.setAuthors(Paper.NA_AUTHORS);
+        paper.setTitle(Paper.NA_STRING);
+        paper.setLocation(Paper.NA_STRING);
+        paper.setPublicationYear(Paper.NA_PUBL_YEAR);
+        paper.setGoals(Paper.NA_STRING);
+        setDefaultModel(Model.of(paper));
     }
 
     @Override
@@ -87,7 +100,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
                 setModelObject(persisted);
                 resetFeedbackMessages();
             } else {
-                error(new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId()).getString());
+                error(new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId(), "").getString());
             }
         } catch (Exception ex) {
             error(new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId(), ex.getMessage()).getString());
