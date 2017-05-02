@@ -12,6 +12,10 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
 
     private static final long serialVersionUID = 1L;
 
+    public static final String NA_AUTHORS = "N A.";
+    public static final String NA_STRING = "n.a.";
+    public static final int NA_PUBL_YEAR = 1500;
+
     /**
      * One or more of the extended word characters including - and '
      */

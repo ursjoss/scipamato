@@ -1,5 +1,6 @@
 package ch.difty.sipamato.web.pages.paper.entry;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -7,6 +8,7 @@ import static org.mockito.Mockito.when;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -149,4 +151,41 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         formTester.setValue("tabs:panelsContainer:panels:1:tab1Form:goals", "goals");
         return formTester;
     }
+
+    @Test
+    public void serviceReturningNullPaperAfterSave_hasErrorMessage() {
+        when(serviceMock.saveOrUpdate(isA(Paper.class))).thenReturn(null);
+
+        getTester().startPage(makePage());
+        FormTester formTester = makeSaveablePaperTester();
+        formTester.submit();
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("An unexpected error occurred when trying to save Paper [id 0]: ");
+
+        verify(serviceMock).saveOrUpdate(isA(Paper.class));
+    }
+
+    @Test
+    public void defaultModel_containsNaValuesAndCanSubmitWithoutErrors() {
+        when(serviceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
+
+        getTester().startPage(new PaperEntryPage(new PageParameters()));
+
+        FormTester formTester = getTester().newFormTester("contentPanel:form");
+
+        assertThat(formTester.getTextComponentValue(Paper.AUTHORS)).isNotNull();
+        assertThat(formTester.getTextComponentValue(Paper.FIRST_AUTHOR)).isNotNull();
+        assertThat(formTester.getTextComponentValue(Paper.TITLE)).isNotNull();
+        assertThat(formTester.getTextComponentValue(Paper.LOCATION)).isNotNull();
+        assertThat(formTester.getTextComponentValue(Paper.PUBL_YEAR)).isNotNull();
+        assertThat(formTester.getTextComponentValue("tabs:panelsContainer:panels:1:tab1Form:goals")).isNotNull();
+
+        formTester.submit();
+
+        getTester().assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
+        verify(serviceMock).saveOrUpdate(isA(Paper.class));
+    }
+
 }

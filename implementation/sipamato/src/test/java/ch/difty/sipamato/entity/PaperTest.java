@@ -303,4 +303,19 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void modifiedDisplayValue() {
         assertThat(p.getModifiedDisplayValue()).isEqualTo("modifier (2017-01-10 22:15:13)");
     }
+
+    @Test
+    public void assertNotAvailableValueForAuthors() {
+        assertThat(Paper.NA_AUTHORS).isEqualTo("N A.");
+    }
+
+    @Test
+    public void assertNotAvailableValueForOtherStringFields() {
+        assertThat(Paper.NA_STRING).isEqualTo("n.a.");
+    }
+
+    @Test
+    public void assertNotAvailableValueForPublicationYear() {
+        assertThat(Paper.NA_PUBL_YEAR).isEqualTo(1500);
+    }
 }
