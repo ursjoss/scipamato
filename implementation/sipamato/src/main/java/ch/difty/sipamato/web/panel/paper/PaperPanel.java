@@ -9,6 +9,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.event.Broadcast;
@@ -123,7 +124,18 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
         publicationYear = new TextField<>(Paper.PUBL_YEAR);
         queueFieldAndLabel(publicationYear, new PropertyValidator<Integer>());
-        queueFieldAndLabel(new TextField<>(Paper.PMID));
+        TextField<Object> pmId = new TextField<>(Paper.PMID);
+        pmId.add(new OnChangeAjaxBehavior() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onUpdate(final AjaxRequestTarget target) {
+                @SuppressWarnings("unchecked")
+                final Integer valueAsInt = ((TextField<Integer>) getComponent()).getModelObject();
+                System.out.println("pmId :" + valueAsInt);
+            }
+        });
+        queueFieldAndLabel(pmId);
         doi = new TextField<>(Paper.DOI);
         queueFieldAndLabel(doi, new PropertyValidator<String>());
 
