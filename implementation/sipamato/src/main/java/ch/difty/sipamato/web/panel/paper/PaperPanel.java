@@ -125,16 +125,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         publicationYear = new TextField<>(Paper.PUBL_YEAR);
         queueFieldAndLabel(publicationYear, new PropertyValidator<Integer>());
         TextField<Object> pmId = new TextField<>(Paper.PMID);
-        pmId.add(new OnChangeAjaxBehavior() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onUpdate(final AjaxRequestTarget target) {
-                @SuppressWarnings("unchecked")
-                final Integer valueAsInt = ((TextField<Integer>) getComponent()).getModelObject();
-                System.out.println("pmId :" + valueAsInt);
-            }
-        });
+        pmId.add(newNoOpOnChangeBehavior());
         queueFieldAndLabel(pmId);
         doi = new TextField<>(Paper.DOI);
         queueFieldAndLabel(doi, new PropertyValidator<String>());
@@ -157,6 +148,20 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
         // make sure attributes updated during persisting are reflected
         reflectPersistedChangesViaTimer(id, created, modified);
+    }
+
+    /**
+     * The OnChangeAjaxBehavior forces the value into the model despite potentially failing validations. 
+     */
+    private OnChangeAjaxBehavior newNoOpOnChangeBehavior() {
+        return new OnChangeAjaxBehavior() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onUpdate(final AjaxRequestTarget target) {
+                // no-op
+            }
+        };
     }
 
     /**
