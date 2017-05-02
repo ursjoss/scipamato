@@ -17,6 +17,9 @@ import ch.difty.sipamato.service.Localization;
  * if validations prevent saving a new entity <code>T</code> which does not yet have all
  * required fields or does not pass validation until more data has been entered. See
  * {{@link #tuneDownFeedbackMessages()/@link #resetFeedbackMessages()}}.
+ * <p>
+ * Requires the concrete page or it's panel to add a derivative of {@link AbstractAjaxTimerBehavior}
+ * to trigger the auto-functionality.
  *
  * @author u.joss
  *
@@ -64,7 +67,7 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
     }
 
     /**
-     * This method must be called in onInitialize() after all fields have been added to the page (e.g. last)
+     * This method must be called in onInitialize() after all fields have been added to the page (in other words: last)
      * 
      * @param form
      */
