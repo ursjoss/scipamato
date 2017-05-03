@@ -126,7 +126,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     public void paperFailingValidation_showsAllValidationMessages() {
         getTester().startPage(makePage());
         getTester().submitForm("contentPanel:form");
-        getTester().assertErrorMessages("'Authors' is required.", "'Title' is required.", "'Location' is required.", "'Pub. Year' is required.", "'Goals' is required.");
+        getTester().assertErrorMessages("'Authors' is required.", "'Title' is required.", "'Location' is required.", "'Pub. Year' is required.", "'No.' is required.", "'Goals' is required.");
     }
 
     @Test
@@ -144,6 +144,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
     private FormTester makeSaveablePaperTester() {
         FormTester formTester = getTester().newFormTester("contentPanel:form");
+        formTester.setValue("number", "100");
         formTester.setValue("authors", "Poe EA.");
         formTester.setValue("title", "Title");
         formTester.setValue("location", "loc");
@@ -174,6 +175,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
         FormTester formTester = getTester().newFormTester("contentPanel:form");
 
+        assertThat(formTester.getTextComponentValue(Paper.NUMBER)).isNotNull();
         assertThat(formTester.getTextComponentValue(Paper.AUTHORS)).isNotNull();
         assertThat(formTester.getTextComponentValue(Paper.FIRST_AUTHOR)).isNotNull();
         assertThat(formTester.getTextComponentValue(Paper.TITLE)).isNotNull();

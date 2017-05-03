@@ -66,12 +66,19 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      */
     private void initDefaultModel() {
         Paper paper = new Paper();
+        paper.setNumber(findEmptyNumber());
         paper.setAuthors(Paper.NA_AUTHORS);
         paper.setTitle(Paper.NA_STRING);
         paper.setLocation(Paper.NA_STRING);
         paper.setPublicationYear(Paper.NA_PUBL_YEAR);
         paper.setGoals(Paper.NA_STRING);
         setDefaultModel(Model.of(paper));
+    }
+
+    private Long findEmptyNumber() {
+        // TODO use service to find a number which is not used yet
+//        service.findEmptyNumber();
+        return 1000l;
     }
 
     @Override
