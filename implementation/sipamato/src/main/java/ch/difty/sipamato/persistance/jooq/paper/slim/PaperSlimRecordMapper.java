@@ -28,6 +28,7 @@ public class PaperSlimRecordMapper extends EntityRecordMapper<PaperRecord, Paper
     @Override
     protected void mapFields(PaperRecord from, PaperSlim to) {
         to.setId(from.getId());
+        to.setNumber(from.getNumber());
         to.setFirstAuthor(from.getFirstAuthor());
         to.setTitle(from.getTitle());
         to.setPublicationYear(from.getPublicationYear());

@@ -31,6 +31,7 @@ public class PaperRecordMapper extends EntityRecordMapper<PaperRecord, Paper> {
     @Override
     protected void mapFields(PaperRecord from, Paper to) {
         to.setId(from.getId());
+        to.setNumber(from.getNumber());
         to.setPmId(from.getPmId());
         to.setDoi(from.getDoi());
         to.setAuthors(from.getAuthors());

@@ -12,6 +12,7 @@ import ch.difty.sipamato.persistance.jooq.RecordMapperTest;
 public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> {
 
     public static final Long ID = 1l;
+    public static final Long NUMBER = 10l;
     public static final int PM_ID = 2;
     public static final String DOI = "101000/1234";
     public static final String AUTHORS = "authors";
@@ -42,6 +43,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
     public static final String MAIN_CODE_OF_CODECLASS1 = "1F";
 
     public static void entityFixtureWithoutIdFields(Paper entityMock) {
+        when(entityMock.getNumber()).thenReturn(NUMBER);
         when(entityMock.getPmId()).thenReturn(PM_ID);
         when(entityMock.getDoi()).thenReturn(DOI);
         when(entityMock.getAuthors()).thenReturn(AUTHORS);
@@ -89,6 +91,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
     protected PaperRecord makeRecord() {
         PaperRecord record = new PaperRecord();
         record.setId(ID);
+        record.setNumber(NUMBER);
         record.setPmId(PM_ID);
         record.setDoi(DOI);
         record.setAuthors(AUTHORS);
@@ -138,7 +141,8 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
 
     @Override
     protected void assertEntity(Paper e) {
-        assertThat(e.getId()).isEqualTo(ID.intValue());
+        assertThat(e.getId()).isEqualTo(ID.longValue());
+        assertThat(e.getNumber()).isEqualTo(NUMBER.longValue());
         assertThat(e.getPmId()).isEqualTo(PM_ID);
         assertThat(e.getDoi()).isEqualTo(DOI);
         assertThat(e.getAuthors()).isEqualTo(AUTHORS);
