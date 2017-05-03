@@ -75,10 +75,8 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         setDefaultModel(Model.of(paper));
     }
 
-    private Long findEmptyNumber() {
-        // TODO use service to find a number which is not used yet
-//        service.findEmptyNumber();
-        return 1000l;
+    private long findEmptyNumber() {
+        return service.findLowestFreeNumberStartingFrom(getApplicationProperties().getMinimumPaperNumberToBeRecycled());
     }
 
     @Override

@@ -60,4 +60,10 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      */
     Optional<Paper> findByNumber(Long number);
 
+    /**
+     * Finds the lowest free number starting from the supplied value.
+     * @param minimumPaperNumberToBeRecycled any gaps lower than this value will not be recycled
+     */
+    long findLowestFreeNumberStartingFrom(long minimumPaperNumberToBeRecycled);
+
 }

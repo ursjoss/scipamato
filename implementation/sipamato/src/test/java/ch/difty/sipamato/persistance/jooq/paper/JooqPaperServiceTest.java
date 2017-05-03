@@ -296,4 +296,12 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         when(repoMock.findByNumbers(Arrays.asList(1l))).thenReturn(Arrays.asList(paperMock, paperMock2));
         testFindingByNumbers();
     }
+
+    @Test
+    public void findingLowestFreeNumberStartingFrom_delegatesToRepo() {
+        long minimum = 4l;
+        when(repoMock.findLowestFreeNumberStartingFrom(minimum)).thenReturn(17l);
+        assertThat(service.findLowestFreeNumberStartingFrom(minimum)).isEqualTo(17l);
+        verify(repoMock).findLowestFreeNumberStartingFrom(minimum);
+    }
 }

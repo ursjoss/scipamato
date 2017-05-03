@@ -212,4 +212,20 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
             return getDsl().selectFrom(PAPER).where(PAPER.NUMBER.in(numbers)).fetchInto(Paper.class);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public long findLowestFreeNumberStartingFrom(long minimumPaperNumberToBeRecycled) {
+        ch.difty.sipamato.db.tables.Paper p = PAPER.as("p");
+        ch.difty.sipamato.db.tables.Paper pn = PAPER.as("pn");
+
+        final Long freeNumber = getDsl().select(p.NUMBER.plus(1l))
+                .from(p)
+                .leftOuterJoin(pn)
+                .on(pn.NUMBER.eq(p.NUMBER.plus(1l)))
+                .where(pn.NUMBER.isNull().and(p.NUMBER.ge(minimumPaperNumberToBeRecycled)))
+                .limit(1)
+                .fetchOneInto(Long.class);
+        return freeNumber != null ? freeNumber.longValue() : 0;
+    }
+
 }

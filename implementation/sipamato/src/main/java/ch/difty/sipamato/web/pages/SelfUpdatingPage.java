@@ -1,5 +1,6 @@
 package ch.difty.sipamato.web.pages;
 
+import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
@@ -44,6 +45,10 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
 
     protected Localization getLocalization() {
         return localization;
+    }
+
+    protected ApplicationProperties getApplicationProperties() {
+        return applicationProperties;
     }
 
     /**

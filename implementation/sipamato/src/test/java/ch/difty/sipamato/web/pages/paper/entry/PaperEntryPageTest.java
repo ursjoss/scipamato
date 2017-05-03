@@ -170,6 +170,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     @Test
     public void defaultModel_containsNaValuesAndCanSubmitWithoutErrors() {
         when(serviceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
+        when(serviceMock.findLowestFreeNumberStartingFrom(7l)).thenReturn(19l);
 
         getTester().startPage(new PaperEntryPage(new PageParameters()));
 
@@ -188,6 +189,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
         verify(serviceMock).saveOrUpdate(isA(Paper.class));
+        verify(serviceMock).findLowestFreeNumberStartingFrom(7l);
     }
 
 }

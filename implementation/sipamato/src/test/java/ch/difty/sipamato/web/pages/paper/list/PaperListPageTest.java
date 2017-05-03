@@ -4,6 +4,7 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.form.Form;
@@ -13,11 +14,13 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import ch.difty.sipamato.config.ApplicationProperties;
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.persistance.jooq.paper.slim.PaperSlimRepository;
 import ch.difty.sipamato.service.CodeClassService;
 import ch.difty.sipamato.service.CodeService;
+import ch.difty.sipamato.service.Localization;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.service.PubmedArticleService;
 import ch.difty.sipamato.web.pages.BasePageTest;
@@ -41,6 +44,10 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
     private CodeService codeServiceMock;
     @MockBean
     private CodeClassService codeClassServiceMock;
+    @MockBean
+    private ApplicationProperties applicationPropertiesMock;
+    @MockBean
+    private Localization localizationMock;
 
     @After
     public void tearDown() {
@@ -92,6 +99,12 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
     @Test
     public void clickingNewPaper_forwardsToPaperEntryPage() {
+        final long minimumNumber = 7;
+        final long freeNumber = 21;
+        when(applicationPropertiesMock.getMinimumPaperNumberToBeRecycled()).thenReturn(minimumNumber);
+        when(paperServiceMock.findLowestFreeNumberStartingFrom(minimumNumber)).thenReturn(freeNumber);
+        when(localizationMock.getLocalization()).thenReturn("de");
+
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
 
@@ -101,11 +114,13 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         getTester().assertRenderedPage(PaperEntryPage.class);
 
         verify(paperSlimRepoMock).countByFilter(isA(PaperFilter.class));
-
+        verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
+        verify(paperServiceMock).findLowestFreeNumberStartingFrom(minimumNumber);
         // from PaperEntryPage
         verify(codeClassServiceMock).find("de");
         for (CodeClassId ccid : CodeClassId.values())
             verify(codeServiceMock).findCodesOfClass(ccid, "de");
+        verify(localizationMock, times(9)).getLocalization();
     }
 
     @Test
