@@ -87,10 +87,10 @@ public class ResultPanel extends AbstractPanel<Void> {
 
     private List<IColumn<PaperSlim, String>> makeTableColumns() {
         final List<IColumn<PaperSlim, String>> columns = new ArrayList<>();
-        columns.add(makePropertyColumn(Paper.ID));
+        columns.add(makePropertyColumn(Paper.NUMBER));
         columns.add(makePropertyColumn(Paper.FIRST_AUTHOR));
         columns.add(makePropertyColumn(Paper.PUBL_YEAR));
-        columns.add(makeClickableColumn(Paper.TITLE, (IModel<PaperSlim> m) -> setResponsePage(new PaperEntryPage(Model.of(paperService.findById(m.getObject().getId()).orElse(new Paper()))))));
+        columns.add(makeClickableColumn(Paper.TITLE, (IModel<PaperSlim> m) -> setResponsePage(new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject().getNumber()).orElse(new Paper()))))));
         columns.add(makeLinkIconColumn("exclude"));
         return columns;
     }

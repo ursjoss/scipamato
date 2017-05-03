@@ -37,7 +37,6 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 
 public class ResultPanelTest extends PanelTest<ResultPanel> {
 
-    private static final long ID = 1l;
     private static final long NUMBER = 2l;
     private static final int ROWS_PER_PAGE = 12;
 
@@ -53,7 +52,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     @Mock
     private SearchOrder searchOrderMock;
 
-    private final PaperSlim paperSlim = new PaperSlim(ID, NUMBER, "firstAuthor", 2016, "title");
+    private final PaperSlim paperSlim = new PaperSlim(1l, NUMBER, "firstAuthor", 2016, "title");
 
     @Mock
     private Paper paperMock;
@@ -98,7 +97,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     }
 
     private void assertTableRow(String bb) {
-        getTester().assertLabel(bb + ":1:cell", String.valueOf(ID));
+        getTester().assertLabel(bb + ":1:cell", String.valueOf(NUMBER));
         getTester().assertLabel(bb + ":2:cell", "firstAuthor");
         getTester().assertLabel(bb + ":3:cell", "2016");
         getTester().assertLabel(bb + ":4:cell:link:label", "title");
@@ -109,8 +108,8 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     @Test
     public void clickingLink_opensPaperEntryPage() {
         Paper paper = new Paper();
-        paper.setId(ID);
-        when(paperServiceMock.findById(ID)).thenReturn(Optional.of(paper));
+        paper.setNumber(NUMBER);
+        when(paperServiceMock.findByNumber(NUMBER)).thenReturn(Optional.of(paper));
 
         getTester().startComponentInPage(makePanel());
         getTester().clickLink(PANEL_ID + ":table:body:rows:1:cells:4:cell:link");
@@ -118,7 +117,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
         verify(paperSlimServiceMock).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
-        verify(paperServiceMock).findById(ID);
+        verify(paperServiceMock).findByNumber(NUMBER);
         verify(codeClassServiceMock).find(anyString());
         verify(codeServiceMock, times(8)).findCodesOfClass(isA(CodeClassId.class), anyString());
     }
