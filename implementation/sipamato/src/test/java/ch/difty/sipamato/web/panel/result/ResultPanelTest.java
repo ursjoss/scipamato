@@ -38,6 +38,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 public class ResultPanelTest extends PanelTest<ResultPanel> {
 
     private static final long ID = 1l;
+    private static final long NUMBER = 2l;
     private static final int ROWS_PER_PAGE = 12;
 
     @MockBean
@@ -52,7 +53,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     @Mock
     private SearchOrder searchOrderMock;
 
-    private final PaperSlim paperSlim = new PaperSlim(ID, "firstAuthor", 2016, "title");
+    private final PaperSlim paperSlim = new PaperSlim(ID, NUMBER, "firstAuthor", 2016, "title");
 
     @Mock
     private Paper paperMock;
