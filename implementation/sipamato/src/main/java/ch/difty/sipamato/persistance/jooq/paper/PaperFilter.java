@@ -7,17 +7,27 @@ public class PaperFilter extends SipamatoFilter implements PaperSlimFilter {
 
     private static final long serialVersionUID = 1L;
 
+    public static final String NUMBER = "number";
     public static final String AUTHOR_MASK = "authorMask";
     public static final String METHODS_MASK = "methodsMask";
     public static final String SEARCH_MASK = "searchMask";
     public static final String PUB_YEAR_FROM = "publicationYearFrom";
     public static final String PUB_YEAR_UNTIL = "publicationYearUntil";
 
+    private Long number;
     private String authorMask;
     private String methodsMask;
     private String searchMask;
     private Integer publicationYearFrom;
     private Integer publicationYearUntil;
+
+    public Long getNumber() {
+        return number;
+    }
+
+    public void setNumber(Long number) {
+        this.number = number;
+    }
 
     public String getAuthorMask() {
         return authorMask;

@@ -69,6 +69,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
     private void assertSearchForm(String b) {
         getTester().assertComponent(b, Form.class);
 
+        assertLabeledTextField(b, "number");
         assertLabeledTextField(b, "authorsSearch");
         assertLabeledTextField(b, "methodsSearch");
         assertLabeledTextField(b, "fieldSearch");

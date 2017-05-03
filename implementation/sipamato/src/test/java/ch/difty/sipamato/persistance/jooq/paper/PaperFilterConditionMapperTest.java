@@ -32,6 +32,13 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
     }
 
     @Test
+    public void creatingWhereCondition_withNumber_searchesNumber() {
+        Long number = 17l;
+        filter.setNumber(number);
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"NUMBER\" = 17");
+    }
+
+    @Test
     public void creatingWhereCondition_withAuthorMask_searchesFirstAuthorAndAuthors() {
         String pattern = "am";
         filter.setAuthorMask(pattern);

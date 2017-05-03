@@ -75,6 +75,7 @@ public class PaperListPage extends BasePage<Void> {
     private void makeAndQueueFilterForm(final String id) {
         queue(new FilterForm<PaperFilter>(id, dataProvider));
 
+        queueFieldAndLabel(new TextField<String>("number", PropertyModel.of(filter, PaperFilter.NUMBER)), Optional.empty());
         queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(filter, PaperFilter.AUTHOR_MASK)), Optional.empty());
         queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(filter, PaperFilter.METHODS_MASK)), Optional.empty());
         queueFieldAndLabel(new TextField<String>("fieldSearch", PropertyModel.of(filter, PaperFilter.SEARCH_MASK)), Optional.empty());
