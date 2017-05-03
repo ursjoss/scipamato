@@ -16,7 +16,7 @@ public class PaperLiteratureReview extends JasperEntity {
 
     private static final long serialVersionUID = 1L;
 
-    private final String id;
+    private final String number;
     private final String authors;
     private final String publicationYear;
     private final String title;
@@ -25,6 +25,7 @@ public class PaperLiteratureReview extends JasperEntity {
 
     private final String caption;
     private final String brand;
+    private final String numberLabel;
 
     /**
      * Instantiation with a {@link Paper} and additional fields
@@ -36,16 +37,16 @@ public class PaperLiteratureReview extends JasperEntity {
      * @param brand
      *      the application brand name
      */
-    public PaperLiteratureReview(final Paper p, final String caption, final String brand) {
-        this(AssertAs.notNull(p, "paper").getId(), p.getAuthors(), p.getPublicationYear(), p.getTitle(), p.getLocation(), p.getPmId(), caption, brand);
+    public PaperLiteratureReview(final Paper p, final String caption, final String brand, final String numberLabel) {
+        this(AssertAs.notNull(p, "paper").getNumber(), p.getAuthors(), p.getPublicationYear(), p.getTitle(), p.getLocation(), p.getPmId(), caption, brand, numberLabel);
     }
 
     /**
      * Instantiation with all individual fields (those that are part of a {@link Paper} and all other from the other constructor.
      */
-    public PaperLiteratureReview(final Long id, final String authors, final Integer publicationYear, final String title, final String location, final Integer pmId, final String caption,
-            final String brand) {
-        this.id = id != null ? String.valueOf(id) : "";
+    public PaperLiteratureReview(final Long number, final String authors, final Integer publicationYear, final String title, final String location, final Integer pmId, final String caption,
+            final String brand, final String numberLabel) {
+        this.number = number != null ? String.valueOf(number) : "";
         this.authors = na(authors);
         this.publicationYear = publicationYear != null ? String.valueOf(publicationYear) : "";
         this.title = na(title);
@@ -54,6 +55,7 @@ public class PaperLiteratureReview extends JasperEntity {
 
         this.caption = na(caption);
         this.brand = na(brand);
+        this.numberLabel = na(numberLabel);
     }
 
     private String makePubmedLink(final Integer pmId) {
@@ -63,8 +65,8 @@ public class PaperLiteratureReview extends JasperEntity {
             return "";
     }
 
-    public String getId() {
-        return id;
+    public String getNumber() {
+        return number;
     }
 
     public String getAuthors() {
@@ -93,6 +95,10 @@ public class PaperLiteratureReview extends JasperEntity {
 
     public String getBrand() {
         return brand;
+    }
+
+    public String getNumberLabel() {
+        return numberLabel;
     }
 
 }

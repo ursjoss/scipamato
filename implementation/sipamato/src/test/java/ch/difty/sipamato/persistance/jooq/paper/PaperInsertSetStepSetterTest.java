@@ -20,6 +20,7 @@ import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.MET
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.METHOD_OUTCOME;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.METHOD_STATISTICS;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.METHOD_STUDY_DESIGN;
+import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.NUMBER;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.ORIGINAL_ABSTRACT;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.PM_ID;
 import static ch.difty.sipamato.persistance.jooq.paper.PaperRecordMapperTest.POPULATION;
@@ -78,7 +79,8 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
 
     @Override
     protected void stepSetFixtureExceptAudit() {
-        when(getStep().set(PAPER.PM_ID, PM_ID)).thenReturn(getMoreStep());
+        when(getStep().set(PAPER.NUMBER, NUMBER)).thenReturn(getMoreStep());
+        when(getMoreStep().set(PAPER.PM_ID, PM_ID)).thenReturn(getMoreStep());
 
         when(getMoreStep().set(PAPER.DOI, DOI)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.AUTHORS, AUTHORS)).thenReturn(getMoreStep());
@@ -123,6 +125,7 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
 
     @Override
     protected void verifyCallToFieldsExceptKeyAndAudit() {
+        verify(entityMock).getNumber();
         verify(entityMock).getPmId();
         verify(entityMock).getDoi();
         verify(entityMock).getAuthors();
@@ -161,7 +164,8 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
 
     @Override
     protected void verifySettingFieldsExceptKeyAndAudit() {
-        verify(getStep()).set(PAPER.PM_ID, PM_ID);
+        verify(getStep()).set(PAPER.NUMBER, NUMBER);
+        verify(getMoreStep()).set(PAPER.PM_ID, PM_ID);
 
         verify(getMoreStep()).set(PAPER.DOI, DOI);
         verify(getMoreStep()).set(PAPER.AUTHORS, AUTHORS);

@@ -258,4 +258,50 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         pa.setMedlineCitation(mc);
         return pa;
     }
+
+    @Test
+    public void findingByNumber_withNoResult_returnsOptionalEmpty() {
+        when(repoMock.findByNumbers(Arrays.asList(1l))).thenReturn(new ArrayList<>());
+        Optional<Paper> opt = service.findByNumber(1l);
+        assertThat(opt.isPresent()).isFalse();
+        verify(repoMock).findByNumbers(Arrays.asList(1l));
+    }
+
+    @Test
+    public void findingByNumber_withSingleResultFromRepo_returnsThatAsOptional() {
+        when(repoMock.findByNumbers(Arrays.asList(1l))).thenReturn(Arrays.asList(paperMock));
+        testFindingByNumbers();
+    }
+
+    private void testFindingByNumbers() {
+        when(userRepoMock.findById(CREATOR_ID)).thenReturn(creatorMock);
+        when(userRepoMock.findById(MODIFIER_ID)).thenReturn(modifierMock);
+
+        Optional<Paper> opt = service.findByNumber(1l);
+        assertThat(opt.isPresent()).isTrue();
+        assertThat(opt.get()).isEqualTo(paperMock);
+
+        verify(repoMock).findByNumbers(Arrays.asList(1l));
+        verify(userRepoMock).findById(CREATOR_ID);
+        verify(userRepoMock).findById(MODIFIER_ID);
+        verify(paperMock).getCreatedBy();
+        verify(paperMock).getLastModifiedBy();
+        verify(paperMock).setCreatedByName("creatingUser");
+        verify(paperMock).setCreatedByFullName("creatingUserFullName");
+        verify(paperMock).setLastModifiedByName("modifyingUser");
+    }
+
+    @Test
+    public void findingByNumber_withMultipleRecordsFromRepo_returnsFirstAsOptional() {
+        when(repoMock.findByNumbers(Arrays.asList(1l))).thenReturn(Arrays.asList(paperMock, paperMock2));
+        testFindingByNumbers();
+    }
+
+    @Test
+    public void findingLowestFreeNumberStartingFrom_delegatesToRepo() {
+        long minimum = 4l;
+        when(repoMock.findLowestFreeNumberStartingFrom(minimum)).thenReturn(17l);
+        assertThat(service.findLowestFreeNumberStartingFrom(minimum)).isEqualTo(17l);
+        verify(repoMock).findLowestFreeNumberStartingFrom(minimum);
+    }
 }

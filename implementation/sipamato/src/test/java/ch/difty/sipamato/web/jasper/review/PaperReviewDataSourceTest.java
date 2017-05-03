@@ -19,13 +19,13 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
 
     private static final String FILE_NAME = "paper_review.pdf";
 
-    private static final Long ID = 5l;
+    private static final Long NUMBER = 15l;
 
     private PaperReviewDataSource ds;
 
     @Override
     public void setUpHook() {
-        when(paperMock.getId()).thenReturn(ID);
+        when(paperMock.getNumber()).thenReturn(NUMBER);
         when(paperMock.getFirstAuthor()).thenReturn("fa");
         when(paperMock.getPublicationYear()).thenReturn(2017);
         when(paperMock.getPopulationPlace()).thenReturn("pp");
@@ -54,7 +54,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         JRDesignField f = new JRDesignField();
 
         assertThat(jsds.next()).isTrue();
-        assertFieldValue("id", String.valueOf(ID), f, jsds);
+        assertFieldValue("number", String.valueOf(NUMBER), f, jsds);
         assertFieldValue("authorYear", "fa 2017", f, jsds);
         assertFieldValue("populationPlace", "pp", f, jsds);
         assertFieldValue("methodOutcome", "mo", f, jsds);
@@ -67,7 +67,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         assertFieldValue("methodConfounders", "mc", f, jsds);
         assertFieldValue("resultEffectEstimate", "ree", f, jsds);
 
-        assertFieldValue("idLabel", "idl", f, jsds);
+        assertFieldValue("numberLabel", "nl", f, jsds);
         assertFieldValue("authorYearLabel", "ayl", f, jsds);
         assertFieldValue("populationPlaceLabel", "ppl", f, jsds);
         assertFieldValue("methodOutcomeLabel", "mol", f, jsds);
@@ -91,13 +91,13 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         when(dataProviderMock.size()).thenReturn(1l);
         when(dataProviderMock.findAllPapersByFilter()).thenReturn(Arrays.asList(paperMock));
 
-        ds = new PaperReviewDataSource(dataProviderMock, "idl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb", pdfExporterConfigMock);
+        ds = new PaperReviewDataSource(dataProviderMock, "nl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb", pdfExporterConfigMock);
         assertDataSource(FILE_NAME);
 
         verify(dataProviderMock).size();
         verify(dataProviderMock).findAllPapersByFilter();
 
-        verify(paperMock, times(2)).getId();
+        verify(paperMock, times(2)).getNumber();
         verify(paperMock).getFirstAuthor();
         verify(paperMock).getPublicationYear();
         verify(paperMock).getPopulationPlace();

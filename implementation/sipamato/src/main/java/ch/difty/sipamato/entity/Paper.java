@@ -2,6 +2,7 @@ package ch.difty.sipamato.entity;
 
 import java.util.List;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Pattern.Flag;
@@ -24,6 +25,7 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
     private static final String AUTHOR_REGEX = "^" + RE_WW + "(" + RE_S_WW + "){0,}(," + RE_S_WW + "(" + RE_S_WW + "){0,}){0,}\\.$";
     private static final String DOI_REGEX = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$";
 
+    public static final String NUMBER = "number";
     public static final String DOI = "doi";
     public static final String PMID = "pmId";
     public static final String AUTHORS = "authors";
@@ -66,6 +68,10 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
     public static final String CREATED_BY = "paper.created_by";
     public static final String LAST_MOD = "paper.last_modified";
     public static final String LAST_MOD_BY = "paper.last_modified_by";
+
+    @NotNull
+    @Min(0)
+    private Long number;
 
     /*
      * Digital Object Identifier (see http://www.doi.org)
@@ -123,6 +129,14 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
     private String mainCodeOfCodeclass1;
 
     private final CodeBox codes = new PaperCodeBox();
+
+    public Long getNumber() {
+        return number;
+    }
+
+    public void setNumber(Long number) {
+        this.number = number;
+    }
 
     public String getDoi() {
         return doi;

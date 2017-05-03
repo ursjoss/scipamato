@@ -1,6 +1,4 @@
-DROP TABLE IF EXISTS paper;
-
-CREATE TABLE paper (
+CREATE TABLE IF NOT EXISTS paper (
   id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   doi VARCHAR,
   pm_id INT,
@@ -43,10 +41,7 @@ CREATE TABLE paper (
 );
 
 
-
-DROP TABLE IF EXISTS code_class;
-
-CREATE TABLE code_class (
+CREATE TABLE IF NOT EXISTS code_class (
   id INT NOT NULL PRIMARY KEY,
 
   version INT DEFAULT 1,
@@ -56,9 +51,7 @@ CREATE TABLE code_class (
   last_modified_by INT DEFAULT 1,
 );
 
-DROP TABLE IF EXISTS code_class_tr;
-
-CREATE TABLE code_class_tr (
+CREATE TABLE IF NOT EXISTS code_class_tr (
   id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   code_class_id INT NOT NULL,
   lang_code VARCHAR NOT NULL,
@@ -70,18 +63,15 @@ CREATE TABLE code_class_tr (
   created_by INT DEFAULT 1,
   last_modified TIMESTAMP DEFAULT current_timestamp(),
   last_modified_by INT DEFAULT 1,
-);
 
-ALTER TABLE code_class_tr ADD FOREIGN KEY (code_class_id) REFERENCES code_class(id) on delete cascade on update cascade;
+  FOREIGN KEY (code_class_id) REFERENCES code_class(id) on delete cascade on update cascade
+);
 
 DROP INDEX IF EXISTS idx_code_class_tr_unique;
 CREATE UNIQUE INDEX idx_code_class_tr_unique ON code_class_tr (code_class_id, lang_code);
 
 
-
-DROP TABLE IF EXISTS code;
-
-CREATE TABLE code (
+CREATE TABLE IF NOT EXISTS code (
   code CHAR(2) NOT NULL PRIMARY KEY,
   code_class_id INT NOT NULL,
   sort INT NOT NULL,
@@ -97,9 +87,8 @@ CREATE TABLE code (
 DROP INDEX IF EXISTS idx_code_unique;
 CREATE UNIQUE INDEX idx_code_unique ON code (code_class_id, sort);
 
-DROP TABLE IF EXISTS code_tr;
 
-CREATE TABLE code_tr (
+CREATE TABLE IF NOT EXISTS code_tr (
   id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   code CHAR(2) NOT NULL,
   lang_code VARCHAR NOT NULL,
@@ -112,18 +101,15 @@ CREATE TABLE code_tr (
   created_by INT DEFAULT 1,
   last_modified TIMESTAMP DEFAULT current_timestamp(),
   last_modified_by INT DEFAULT 1,
-);
 
-ALTER TABLE code_tr ADD FOREIGN KEY (code) REFERENCES code(code) on delete cascade on update cascade;
+  FOREIGN KEY (code) REFERENCES code(code) on delete cascade on update cascade
+);
 
 DROP INDEX IF EXISTS idx_code_tr_unique;
 CREATE UNIQUE INDEX idx_code_tr_unique ON code_tr (code, lang_code);
 
 
-
-DROP TABLE IF EXISTS paper_code;
-
-CREATE TABLE paper_code (
+CREATE TABLE IF NOT EXISTS paper_code (
   paper_id BIGINT NOT NULL,
   code CHAR(2) NOT NULL,
 
@@ -132,20 +118,18 @@ CREATE TABLE paper_code (
   created_by INT DEFAULT 1,
   last_modified TIMESTAMP DEFAULT current_timestamp(),
   last_modified_by INT DEFAULT 1,
-);
 
-ALTER TABLE paper_code ADD PRIMARY KEY (paper_id, code);
-ALTER TABLE paper_code ADD FOREIGN KEY (paper_id) REFERENCES paper(id) on delete cascade on update cascade;
-ALTER TABLE paper_code ADD FOREIGN KEY (code) REFERENCES code(code) on update cascade;
+  FOREIGN KEY (paper_id) REFERENCES paper(id) on delete cascade on update cascade,
+  FOREIGN KEY (code) REFERENCES code(code) on update cascade,
+
+  PRIMARY KEY (paper_id, code)
+);
 
 DROP INDEX IF EXISTS idx_paper_code;
 CREATE UNIQUE INDEX idx_paper_code ON paper_code (paper_id, code);
 
 
-
-DROP TABLE IF EXISTS search_order;
-
-CREATE TABLE search_order (
+CREATE TABLE IF NOT EXISTS search_order (
   id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   name VARCHAR NULL,
   owner INT DEFAULT 1,
@@ -158,9 +142,7 @@ CREATE TABLE search_order (
   last_modified_by INT DEFAULT 1,
 );
 
-DROP TABLE IF EXISTS search_exclusion;
-
-CREATE TABLE search_exclusion (
+CREATE TABLE IF NOT EXISTS search_exclusion (
   id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   search_order_id BIGINT NOT NULL,
   paper_id BIGINT NOT NULL,
@@ -171,15 +153,13 @@ CREATE TABLE search_exclusion (
   created_by INT DEFAULT 1,
   last_modified TIMESTAMP DEFAULT current_timestamp(),
   last_modified_by INT DEFAULT 1,
+
+  FOREIGN KEY (search_order_id) REFERENCES search_order(id) on delete cascade on update cascade,
+  FOREIGN KEY (paper_id) REFERENCES paper(id) on delete cascade on update cascade
 );
 
-ALTER TABLE search_exclusion ADD FOREIGN KEY (search_order_id) REFERENCES search_order(id) on delete cascade on update cascade;
-ALTER TABLE search_exclusion ADD FOREIGN KEY (paper_id) REFERENCES paper(id) on delete cascade on update cascade;
 
-
-DROP TABLE IF EXISTS search_condition;
-
-CREATE TABLE search_condition (
+CREATE TABLE IF NOT EXISTS search_condition (
   search_condition_id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   search_order_id BIGINT NOT NULL,
   created_term VARCHAR NULL,
@@ -190,14 +170,12 @@ CREATE TABLE search_condition (
   created_by INT DEFAULT 1,
   last_modified TIMESTAMP DEFAULT current_timestamp(),
   last_modified_by INT DEFAULT 1,
+
+  FOREIGN KEY (search_order_id) REFERENCES search_order(id) on delete cascade on update cascade
 );
 
-ALTER TABLE search_condition ADD FOREIGN KEY (search_order_id) REFERENCES search_order(id) on delete cascade on update cascade;
 
-
-DROP TABLE IF EXISTS search_term;
-
-CREATE TABLE search_term (
+CREATE TABLE IF NOT EXISTS search_term (
   id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   search_condition_id BIGINT NOT NULL,
   search_term_type INT NOT NULL,
@@ -209,14 +187,12 @@ CREATE TABLE search_term (
   created_by INT DEFAULT 1,
   last_modified TIMESTAMP DEFAULT current_timestamp(),
   last_modified_by INT DEFAULT 1,
+
+  FOREIGN KEY (search_condition_id) REFERENCES search_condition(search_condition_id) on delete cascade on update cascade
 );
 
-ALTER TABLE search_term ADD FOREIGN KEY (search_condition_id) REFERENCES search_condition(search_condition_id) on delete cascade on update cascade;
 
-
-DROP TABLE IF EXISTS search_condition_code;
-
-CREATE TABLE search_condition_code (
+CREATE TABLE IF NOT EXISTS search_condition_code (
   search_condition_id BIGINT NOT NULL,
   code CHAR(2) NOT NULL,
 
@@ -225,17 +201,15 @@ CREATE TABLE search_condition_code (
   created_by INT DEFAULT 1,
   last_modified TIMESTAMP DEFAULT current_timestamp(),
   last_modified_by INT DEFAULT 1,
+
+  FOREIGN KEY (search_condition_id) REFERENCES search_condition(search_condition_id) on delete cascade on update cascade,
+  FOREIGN KEY (code) REFERENCES code(code) on update cascade,
+
+  PRIMARY KEY (search_condition_id, code)
 );
 
-ALTER TABLE search_condition_code ADD PRIMARY KEY (search_condition_id, code);
-ALTER TABLE search_condition_code ADD FOREIGN KEY (search_condition_id) REFERENCES search_condition(search_condition_id) on delete cascade on update cascade;
-ALTER TABLE search_condition_code ADD FOREIGN KEY (code) REFERENCES code(code) on update cascade;
 
-
-
-DROP TABLE IF EXISTS sipamato_user;
-
-CREATE TABLE sipamato_user (
+CREATE TABLE IF NOT EXISTS sipamato_user (
   id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   user_name VARCHAR(30) NOT NULL,
   first_name VARCHAR NOT NULL,
@@ -255,9 +229,7 @@ DROP INDEX IF EXISTS idx_sipamato_user_username;
 CREATE UNIQUE INDEX idx_sipamato_user_username ON sipamato_user (user_name);
 
 
-DROP TABLE IF EXISTS user_role;
-
-CREATE TABLE user_role (
+CREATE TABLE IF NOT EXISTS user_role (
   id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   user_id INT NOT NULL,
   role_id INT NOT NULL,
@@ -267,6 +239,6 @@ CREATE TABLE user_role (
   created_by INT DEFAULT 1,
   last_modified TIMESTAMP DEFAULT current_timestamp(),
   last_modified_by INT DEFAULT 1,
-);
 
-ALTER TABLE user_role ADD FOREIGN KEY (user_id) REFERENCES sipamato_user(id) on delete cascade on update cascade;
+  FOREIGN KEY (user_id) REFERENCES sipamato_user(id) on delete cascade on update cascade
+);

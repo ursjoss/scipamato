@@ -26,23 +26,28 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
 
     private final String caption;
     private final String brand;
+    private final String numberLabel;
 
     /**
      * Using the dataProvider for the Result Panel as record source. Needs the {@link PaperService} to retrieve the papers
-     * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
+     * based on the numbers of the {@link PaperSlim}s that are used in the dataProvider.
      * @param dataProvider
      *      the {@link AbstractPaperSlimProvider} - must not be null
      * @param caption
      *      localized caption
      * @param brand
      *      localized brand
+     * @param numberLabel
+     *      localized number
      * @param config
      *      PdfExporterConfiguration
      */
-    public PaperLiteratureReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String caption, String brand, PdfExporterConfiguration config) {
+    public PaperLiteratureReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String caption, String brand, String numberLabel,
+            PdfExporterConfiguration config) {
         super(new SipamatoPdfResourceHandler(config), FILE_NAME, dataProvider);
         this.caption = caption;
         this.brand = brand;
+        this.numberLabel = numberLabel;
     }
 
     @Override
@@ -52,7 +57,7 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
 
     @Override
     protected PaperLiteratureReview makeEntity(Paper p) {
-        return new PaperLiteratureReview(p, caption, brand);
+        return new PaperLiteratureReview(p, caption, brand, numberLabel);
     }
 
 }

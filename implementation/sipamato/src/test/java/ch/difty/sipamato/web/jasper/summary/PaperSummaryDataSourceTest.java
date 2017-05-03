@@ -20,7 +20,7 @@ import net.sf.jasperreports.engine.design.JRDesignField;
 
 public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
-    private static final Long ID = 10l;
+    private static final Long NUMBER = 100l;
     private static final String AUTHORS = "authors";
     private static final String TITLE = "title";
     private static final String LOCATION = "location";
@@ -36,17 +36,17 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     private static final String RESULT_LABEL = "Resultat";
     private static final String COMMENT_LABEL = "Bemerkungen";
     private static final String HEADER_PART = "LUDOK-Zusammenfassung Nr.";
-    private static final String HEADER = HEADER_PART + " " + ID;
+    private static final String HEADER = HEADER_PART + " " + NUMBER;
     private static final String BRAND = "LUDOK";
 
-    private static final String FILE_NAME_SINGLE = "paper_summary_id_" + ID + ".pdf";
+    private static final String FILE_NAME_SINGLE = "paper_summary_no_" + NUMBER + ".pdf";
     private static final String FILE_NAME_MULTIPLE = "paper_summaries.pdf";
 
     private PaperSummaryDataSource ds;
 
     @Override
     public void setUpHook() {
-        when(paperMock.getId()).thenReturn(ID);
+        when(paperMock.getNumber()).thenReturn(NUMBER);
         when(paperMock.getAuthors()).thenReturn(AUTHORS);
         when(paperMock.getTitle()).thenReturn(TITLE);
         when(paperMock.getLocation()).thenReturn(LOCATION);
@@ -64,7 +64,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
         assertDataSource(FILE_NAME_SINGLE);
 
-        verify(paperMock, times(3)).getId();
+        verify(paperMock, times(3)).getNumber();
         verify(paperMock).getAuthors();
         verify(paperMock).getTitle();
         verify(paperMock).getLocation();
@@ -90,7 +90,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
         JRDesignField f = new JRDesignField();
 
         assertThat(jsds.next()).isTrue();
-        assertFieldValue("id", String.valueOf(ID), f, jsds);
+        assertFieldValue("number", String.valueOf(NUMBER), f, jsds);
         assertFieldValue("authors", AUTHORS, f, jsds);
         assertFieldValue("title", TITLE, f, jsds);
         assertFieldValue("location", LOCATION, f, jsds);
@@ -114,8 +114,8 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
     @Test
     public void instantiatingWithPaperSummary_returnsPdfDataSourceWithOneRecord() throws JRException {
-        PaperSummary ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, COMMENT, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND,
-                CREATED_BY);
+        PaperSummary ps = new PaperSummary(NUMBER, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, COMMENT, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART,
+                BRAND, CREATED_BY);
         ds = new PaperSummaryDataSource(ps, pdfExporterConfigMock);
 
         assertDataSource(FILE_NAME_SINGLE);
@@ -132,7 +132,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
         verify(dataProviderMock).size();
         verify(dataProviderMock).findAllPapersByFilter();
 
-        verify(paperMock).getId();
+        verify(paperMock).getNumber();
         verify(paperMock).getAuthors();
         verify(paperMock).getTitle();
         verify(paperMock).getLocation();

@@ -21,7 +21,7 @@ import net.sf.jasperreports.engine.design.JRDesignField;
 
 public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
 
-    private static final Long ID = 10l;
+    private static final Long NUMBER = 100l;
     private static final String FIRST_AUTHOR = "firstAuthor";
     private static final int PUBLICATION_YEAR = 2017;
     private static final String GOALS = "goals";
@@ -32,6 +32,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     private static final String CODES_OF_CC7 = "7B";
     private static final String CAPTION = "caption";
     private static final String BRAND = "brand";
+    private static final String NUMBER_LABEL = "nl";
 
     private static final String FILE_NAME = "paper_summary_table.pdf";
 
@@ -48,7 +49,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
         codesOfCodeClass4.add(new Code("4C", "Code4C", "", false, CodeClassId.CC4.getId(), "CC4", "CC4D", 3));
         codesOfCodeClass7.add(new Code("7B", "Code7B", "", false, CodeClassId.CC7.getId(), "CC7", "CC7D", 2));
 
-        when(paperMock.getId()).thenReturn(ID);
+        when(paperMock.getNumber()).thenReturn(NUMBER);
         when(paperMock.getFirstAuthor()).thenReturn(FIRST_AUTHOR);
         when(paperMock.getPublicationYear()).thenReturn(PUBLICATION_YEAR);
         when(paperMock.getGoals()).thenReturn(GOALS);
@@ -74,7 +75,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
         JRDesignField f = new JRDesignField();
 
         assertThat(jsds.next()).isTrue();
-        assertFieldValue("id", String.valueOf(ID), f, jsds);
+        assertFieldValue("number", String.valueOf(NUMBER), f, jsds);
         assertFieldValue("firstAuthor", FIRST_AUTHOR, f, jsds);
         assertFieldValue("publicationYear", String.valueOf(PUBLICATION_YEAR), f, jsds);
         assertFieldValue("goals", GOALS, f, jsds);
@@ -95,13 +96,13 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
         when(dataProviderMock.size()).thenReturn(1l);
         when(dataProviderMock.findAllPapersByFilter()).thenReturn(Arrays.asList(paperMock));
 
-        ds = new PaperSummaryTableDataSource(dataProviderMock, true, CAPTION, BRAND, pdfExporterConfigMock);
+        ds = new PaperSummaryTableDataSource(dataProviderMock, true, CAPTION, BRAND, NUMBER_LABEL, pdfExporterConfigMock);
         assertDataSource(FILE_NAME);
 
         verify(dataProviderMock).size();
         verify(dataProviderMock).findAllPapersByFilter();
 
-        verify(paperMock).getId();
+        verify(paperMock).getNumber();
         verify(paperMock).getFirstAuthor();
         verify(paperMock).getPublicationYear();
         verify(paperMock).getGoals();
@@ -115,7 +116,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0l);
-        ds = new PaperSummaryTableDataSource(dataProviderMock, true, CAPTION, BRAND, pdfExporterConfigMock);
+        ds = new PaperSummaryTableDataSource(dataProviderMock, true, CAPTION, BRAND, NUMBER_LABEL, pdfExporterConfigMock);
         assertThat(ds.getReportDataSource().next()).isFalse();
         verify(dataProviderMock).size();
     }
@@ -123,7 +124,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_withNullProivder_throws() throws JRException {
         try {
-            new PaperSummaryTableDataSource(null, true, CAPTION, BRAND, pdfExporterConfigMock);
+            new PaperSummaryTableDataSource(null, true, CAPTION, BRAND, NUMBER_LABEL, pdfExporterConfigMock);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dataProvider must not be null.");
         }

@@ -16,14 +16,16 @@ public class SipamatoProperties implements ApplicationProperties {
     private final String defaultLocalization;
     private final AuthorParserStrategy authorParserStrategy;
     private final String brand;
+    private final long minimumPaperNumberToBeRecycled;
 
     private static final String S = "${", E = ":n.a.}";
 
     public SipamatoProperties(@Value(S + LOCALIZATION_DEFAULT + ":en}") String defaultLocalization, @Value(S + AUTHOR_PARSER_FACTORY + E) String authorParserStrategy,
-            @Value(S + BRAND + E) String brand) {
+            @Value(S + BRAND + E) String brand, @Value(S + PAPER_NUMBER_MIN_TO_RECYCLE + E) Long minimumPaperNumberToBeRecycled) {
         this.defaultLocalization = defaultLocalization;
         this.authorParserStrategy = AuthorParserStrategy.fromProperty(authorParserStrategy);
         this.brand = brand;
+        this.minimumPaperNumberToBeRecycled = minimumPaperNumberToBeRecycled != null ? minimumPaperNumberToBeRecycled.longValue() : 0;
     }
 
     /** {@inheritDoc} */
@@ -38,9 +40,16 @@ public class SipamatoProperties implements ApplicationProperties {
         return authorParserStrategy;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getBrand() {
         return brand;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public long getMinimumPaperNumberToBeRecycled() {
+        return minimumPaperNumberToBeRecycled;
     }
 
 }

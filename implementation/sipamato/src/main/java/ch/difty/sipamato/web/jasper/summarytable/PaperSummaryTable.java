@@ -20,7 +20,7 @@ public class PaperSummaryTable extends JasperEntity {
 
     private static final long serialVersionUID = 1L;
 
-    private final String id;
+    private final String number;
     private final String firstAuthor;
     private final String publicationYear;
     private final String codesOfClass1;
@@ -32,6 +32,7 @@ public class PaperSummaryTable extends JasperEntity {
 
     private final String caption;
     private final String brand;
+    private final String numberLabel;
 
     /**
      * Instantiation with a {@link Paper} and additional fields
@@ -44,18 +45,20 @@ public class PaperSummaryTable extends JasperEntity {
      *      localized caption
      * @param brand
      *      the application brand name
+     * @param numberLabel
+     *      the localized label for the number field
      */
-    public PaperSummaryTable(final Paper p, final boolean includeResults, final String caption, final String brand) {
-        this(AssertAs.notNull(p, "paper").getId(), p.getFirstAuthor(), String.valueOf(p.getPublicationYear()), p.getCodesOf(CodeClassId.CC1), p.getCodesOf(CodeClassId.CC4),
-                p.getCodesOf(CodeClassId.CC7), p.getGoals(), p.getTitle(), (includeResults ? p.getResult() : ""), caption, brand);
+    public PaperSummaryTable(final Paper p, final boolean includeResults, final String caption, final String brand, final String numberLabel) {
+        this(AssertAs.notNull(p, "paper").getNumber(), p.getFirstAuthor(), String.valueOf(p.getPublicationYear()), p.getCodesOf(CodeClassId.CC1), p.getCodesOf(CodeClassId.CC4),
+                p.getCodesOf(CodeClassId.CC7), p.getGoals(), p.getTitle(), (includeResults ? p.getResult() : ""), caption, brand, numberLabel);
     }
 
     /**
      * Instantiation with all individual fields (those that are part of a {@link Paper} and all other from the other constructor.
      */
-    public PaperSummaryTable(final Long id, final String firstAuthor, final String publicationYear, final List<Code> codesOfClass1, final List<Code> codesOfClass4, final List<Code> codesOfClass7,
-            final String goals, final String title, final String result, final String caption, final String brand) {
-        this.id = id != null ? String.valueOf(id) : "";
+    public PaperSummaryTable(final Long number, final String firstAuthor, final String publicationYear, final List<Code> codesOfClass1, final List<Code> codesOfClass4, final List<Code> codesOfClass7,
+            final String goals, final String title, final String result, final String caption, final String brand, final String numberLabel) {
+        this.number = number != null ? String.valueOf(number) : "";
         this.firstAuthor = na(firstAuthor);
         this.publicationYear = na(publicationYear);
         this.codesOfClass1 = codesOfClass1.stream().map(Code::getCode).collect(Collectors.joining(CODE_DELIMITER));
@@ -67,10 +70,11 @@ public class PaperSummaryTable extends JasperEntity {
 
         this.caption = na(caption);
         this.brand = na(brand);
+        this.numberLabel = na(numberLabel);
     }
 
-    public String getId() {
-        return id;
+    public String getNumber() {
+        return number;
     }
 
     public String getFirstAuthor() {
@@ -111,6 +115,10 @@ public class PaperSummaryTable extends JasperEntity {
 
     public String getBrand() {
         return brand;
+    }
+
+    public String getNumberLabel() {
+        return numberLabel;
     }
 
 }

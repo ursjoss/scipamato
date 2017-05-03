@@ -131,7 +131,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         so.setId(1l);
         repo.enrichAssociatedEntitiesOf(so);
 
-        assertThat(so.getSearchConditions()).hasSize(2);
+        assertThat(so.getSearchConditions().size()).isGreaterThanOrEqualTo(2);
 
         SearchCondition so1 = so.getSearchConditions().get(0);
         assertThat(so1).isNotNull();

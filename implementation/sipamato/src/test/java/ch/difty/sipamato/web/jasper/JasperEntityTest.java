@@ -8,7 +8,8 @@ import ch.difty.sipamato.entity.Paper;
 
 public abstract class JasperEntityTest {
 
-    protected static final long ID = 1l;
+    private static final long ID = 1l;
+    protected static final long NUMBER = 100l;
     protected static final String AUTHORS = "authors";
     protected static final String TITLE = "title";
     protected static final String LOCATION = "location";
@@ -47,6 +48,7 @@ public abstract class JasperEntityTest {
     @Before
     public void setUp() {
         p.setId(ID);
+        p.setNumber(NUMBER);
         p.setAuthors(AUTHORS);
         p.setFirstAuthor(FIRST_AUTHOR);
         p.setPublicationYear(PUBLICATION_YEAR);

@@ -50,6 +50,7 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
                 // @formatter:off
                 dsl.insertInto(PAPER)
                     .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
+                    .set(PAPER.NUMBER, 1000l)
                     .set(PAPER.AUTHORS, "authors")
                     .set(PAPER.FIRST_AUTHOR, "firstAuthor")
                     .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
@@ -121,6 +122,7 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
                 // @formatter:off
                 dsl.insertInto(PAPER)
                     .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
+                    .set(PAPER.NUMBER, 1000l)
                     .set(PAPER.AUTHORS, "authors")
                     .set(PAPER.FIRST_AUTHOR, "firstAuthor")
                     .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
@@ -143,6 +145,7 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
                             // @formatter:off
                             dsl.insertInto(PAPER)
                                 .set(PAPER.ID, 3l)
+                                .set(PAPER.NUMBER, 1001l)
                                 .set(PAPER.AUTHORS, "authors")
                                 .set(PAPER.FIRST_AUTHOR, "firstAuthor")
                                 .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)

@@ -18,15 +18,15 @@ import ch.difty.sipamato.persistance.jooq.user.UserRepository;
 @RunWith(MockitoJUnitRunner.class)
 public abstract class AbstractServiceTest<ID extends Number, T extends IdSipamatoEntity<ID>, R extends ReadOnlyRepository<T, ID, ?>> {
 
-    private static final int CREATOR_ID = 10;
-    private static final int MODIFIER_ID = 20;
+    protected static final int CREATOR_ID = 10;
+    protected static final int MODIFIER_ID = 20;
 
     @Mock
     protected UserRepository userRepoMock;
     @Mock
-    private User creatorMock;
+    protected User creatorMock;
     @Mock
-    private User modifierMock;
+    protected User modifierMock;
 
     /**
      * @return the service specific repo mock

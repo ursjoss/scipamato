@@ -18,13 +18,13 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
 
     private static final String FILE_NAME = "paper_literature_review.pdf";
 
-    private static final Long ID = 5l;
+    private static final Long NUMBER = 5l;
 
     private PaperLiteratureReviewDataSource ds;
 
     @Override
     public void setUpHook() {
-        when(paperMock.getId()).thenReturn(ID);
+        when(paperMock.getNumber()).thenReturn(NUMBER);
         when(paperMock.getAuthors()).thenReturn("a");
         when(paperMock.getPublicationYear()).thenReturn(2017);
         when(paperMock.getTitle()).thenReturn("t");
@@ -46,7 +46,7 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
         JRDesignField f = new JRDesignField();
 
         assertThat(jsds.next()).isTrue();
-        assertFieldValue("id", String.valueOf(ID), f, jsds);
+        assertFieldValue("number", String.valueOf(NUMBER), f, jsds);
         assertFieldValue("authors", "a", f, jsds);
         assertFieldValue("publicationYear", "2017", f, jsds);
         assertFieldValue("title", "t", f, jsds);
@@ -55,6 +55,7 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
 
         assertFieldValue("caption", "c", f, jsds);
         assertFieldValue("brand", "b", f, jsds);
+        assertFieldValue("numberLabel", "nl", f, jsds);
 
         assertThat(jsds.next()).isFalse();
     }
@@ -64,13 +65,13 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
         when(dataProviderMock.size()).thenReturn(1l);
         when(dataProviderMock.findAllPapersByFilter()).thenReturn(Arrays.asList(paperMock));
 
-        ds = new PaperLiteratureReviewDataSource(dataProviderMock, "c", "b", pdfExporterConfigMock);
+        ds = new PaperLiteratureReviewDataSource(dataProviderMock, "c", "b", "nl", pdfExporterConfigMock);
         assertDataSource(FILE_NAME);
 
         verify(dataProviderMock).size();
         verify(dataProviderMock).findAllPapersByFilter();
 
-        verify(paperMock).getId();
+        verify(paperMock).getNumber();
         verify(paperMock).getAuthors();
         verify(paperMock).getPublicationYear();
         verify(paperMock).getTitle();

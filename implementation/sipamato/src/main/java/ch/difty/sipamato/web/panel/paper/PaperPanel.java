@@ -130,6 +130,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         doi = new TextField<>(Paper.DOI);
         queueFieldAndLabel(doi, new PropertyValidator<String>());
 
+        TextField<Integer> number = new TextField<>(Paper.NUMBER);
+        queueFieldAndLabel(number, new PropertyValidator<Integer>());
         TextField<Integer> id = new TextField<>(Paper.ID);
         id.setEnabled(isSearchMode());
         queueFieldAndLabel(id);

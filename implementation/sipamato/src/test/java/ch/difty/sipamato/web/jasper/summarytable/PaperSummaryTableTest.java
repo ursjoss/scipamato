@@ -11,13 +11,14 @@ public class PaperSummaryTableTest extends JasperEntityTest {
 
     private static final String BRAND = "brand";
     private static final String CAPTION = "caption";
+    private static final String NUMBER_LABEL = "nl";
 
     private PaperSummaryTable pst;
 
     @Test
     public void degenerateConstruction_withNullPaper_throws() {
         try {
-            new PaperSummaryTable(null, true, "foo", "bar");
+            new PaperSummaryTable(null, true, "foo", "bar", "baz");
         } catch (Exception e) {
             assertThat(e).isInstanceOf(NullArgumentException.class).hasMessage("paper must not be null.");
         }
@@ -25,7 +26,7 @@ public class PaperSummaryTableTest extends JasperEntityTest {
 
     @Test
     public void constructionWithPaper_includingResults() {
-        pst = new PaperSummaryTable(p, true, CAPTION, BRAND);
+        pst = new PaperSummaryTable(p, true, CAPTION, BRAND, NUMBER_LABEL);
         assertPst();
         assertThat(pst.getResult()).isEqualTo(RESULT);
     }
@@ -33,8 +34,9 @@ public class PaperSummaryTableTest extends JasperEntityTest {
     private void assertPst() {
         assertThat(pst.getCaption()).isEqualTo(CAPTION);
         assertThat(pst.getBrand()).isEqualTo(BRAND);
+        assertThat(pst.getNumberLabel()).isEqualTo(NUMBER_LABEL);
 
-        assertThat(pst.getId()).isEqualTo(String.valueOf(ID));
+        assertThat(pst.getNumber()).isEqualTo(String.valueOf(NUMBER));
         assertThat(pst.getFirstAuthor()).isEqualTo(FIRST_AUTHOR);
         assertThat(pst.getPublicationYear()).isEqualTo(String.valueOf(PUBLICATION_YEAR));
         assertThat(pst.getGoals()).isEqualTo(GOALS);
@@ -47,7 +49,7 @@ public class PaperSummaryTableTest extends JasperEntityTest {
 
     @Test
     public void constructionWithPaper_notIncludingResults() {
-        pst = new PaperSummaryTable(p, false, CAPTION, BRAND);
+        pst = new PaperSummaryTable(p, false, CAPTION, BRAND, NUMBER_LABEL);
         assertPst();
         assertThat(pst.getResult()).isEmpty();
     }
@@ -55,7 +57,7 @@ public class PaperSummaryTableTest extends JasperEntityTest {
     @Test
     public void constructionWithPaperWithNoCodeOfClass7_returnsBlank() {
         p.clearCodes();
-        pst = new PaperSummaryTable(p, true, CAPTION, BRAND);
+        pst = new PaperSummaryTable(p, true, CAPTION, BRAND, NUMBER_LABEL);
         assertThat(pst.getCodesOfClass4()).isEqualTo("");
     }
 }

@@ -24,6 +24,7 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
 
     private final String caption;
     private final String brand;
+    private final String numberLabel;
     private final boolean includeResults;
 
     /**
@@ -36,14 +37,17 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
      *      whether or not to include the results field
      * @param brand
      *      localized brand
+     * @param numberLabel
+     *      localized number label
      * @param config
      *      PdfExporterConfiguration
      */
-    public PaperSummaryTableDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, boolean includeResults, final String caption, String brand,
+    public PaperSummaryTableDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, boolean includeResults, final String caption, String brand, String numberLabel,
             PdfExporterConfiguration config) {
         super(new SipamatoPdfResourceHandler(config), FILE_NAME, dataProvider);
         this.caption = caption;
         this.brand = brand;
+        this.numberLabel = numberLabel;
         this.includeResults = includeResults;
     }
 
@@ -54,7 +58,7 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
 
     @Override
     protected PaperSummaryTable makeEntity(Paper p) {
-        return new PaperSummaryTable(p, includeResults, caption, brand);
+        return new PaperSummaryTable(p, includeResults, caption, brand, numberLabel);
     }
 
 }

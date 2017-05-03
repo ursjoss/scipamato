@@ -19,6 +19,10 @@ public class PaperFilterConditionMapper extends AbstractFilterConditionMapper<Pa
 
     @Override
     public void map(final PaperFilter filter, final List<Condition> conditions) {
+        if (filter.getNumber() != null) {
+            conditions.add(PAPER.NUMBER.eq(filter.getNumber()));
+        }
+
         if (filter.getAuthorMask() != null) {
             final String likeExpression = "%" + filter.getAuthorMask() + "%";
             conditions.add(PAPER.FIRST_AUTHOR.likeIgnoreCase(likeExpression).or(PAPER.AUTHORS.likeIgnoreCase(likeExpression)));

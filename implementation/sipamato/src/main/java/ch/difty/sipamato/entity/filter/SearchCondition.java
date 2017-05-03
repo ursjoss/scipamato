@@ -21,6 +21,7 @@ import static ch.difty.sipamato.entity.Paper.METHOD_CONFOUNDERS;
 import static ch.difty.sipamato.entity.Paper.METHOD_OUTCOME;
 import static ch.difty.sipamato.entity.Paper.METHOD_STATISTICS;
 import static ch.difty.sipamato.entity.Paper.METHOD_STUDY_DESIGN;
+import static ch.difty.sipamato.entity.Paper.NUMBER;
 import static ch.difty.sipamato.entity.Paper.ORIGINAL_ABSTRACT;
 import static ch.difty.sipamato.entity.Paper.PMID;
 import static ch.difty.sipamato.entity.Paper.POPULATION;
@@ -153,6 +154,14 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
 
     public void setId(String value) {
         setIntegerValue(value, ID);
+    }
+
+    public String getNumber() {
+        return getIntegerValue(NUMBER);
+    }
+
+    public void setNumber(String value) {
+        setIntegerValue(value, NUMBER);
     }
 
     public String getDoi() {

@@ -31,6 +31,7 @@ public abstract class SelfUpdatingPageTest<T extends BasePage<?>> extends BasePa
         when(applicationProperties.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.DEFAULT);
         when(applicationProperties.getDefaultLocalization()).thenReturn("de");
         when(applicationProperties.getBrand()).thenReturn("SiPaMaTo");
+        when(applicationProperties.getMinimumPaperNumberToBeRecycled()).thenReturn(7l);
         when(localization.getLocalization()).thenReturn("de");
     }
 

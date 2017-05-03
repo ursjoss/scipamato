@@ -12,6 +12,7 @@ public class PaperSlimTest {
     @Before
     public void setUp() {
         ps.setId(1l);
+        ps.setNumber(10l);
         ps.setFirstAuthor("firstAuthor");
         ps.setTitle("title");
         ps.setPublicationYear(2016);
@@ -20,6 +21,7 @@ public class PaperSlimTest {
     @Test
     public void getting() {
         assertThat(ps.getId()).isEqualTo(1l);
+        assertThat(ps.getNumber()).isEqualTo(10l);
         assertThat(ps.getPublicationYear()).isEqualTo(2016);
         assertThat(ps.getTitle()).isEqualTo("title");
         assertThat(ps.getFirstAuthor()).isEqualTo("firstAuthor");

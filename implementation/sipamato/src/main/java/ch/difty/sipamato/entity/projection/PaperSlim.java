@@ -9,6 +9,8 @@ public class PaperSlim extends IdSipamatoEntity<Long> {
     private static final long serialVersionUID = 1L;
 
     @NotNull
+    private Long number;
+    @NotNull
     private String firstAuthor;
     @NotNull
     private Integer publicationYear;
@@ -19,11 +21,20 @@ public class PaperSlim extends IdSipamatoEntity<Long> {
         // default constructor
     }
 
-    public PaperSlim(Long id, String firstAuthor, Integer publicationYear, String title) {
+    public PaperSlim(Long id, Long number, String firstAuthor, Integer publicationYear, String title) {
         setId(id);
+        setNumber(number);
         setFirstAuthor(firstAuthor);
         setPublicationYear(publicationYear);
         setTitle(title);
+    }
+
+    public Long getNumber() {
+        return number;
+    }
+
+    public void setNumber(Long number) {
+        this.number = number;
     }
 
     public String getFirstAuthor() {

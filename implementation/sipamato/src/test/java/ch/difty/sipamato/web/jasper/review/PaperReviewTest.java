@@ -15,7 +15,7 @@ public class PaperReviewTest extends JasperEntityTest {
     @Test
     public void degenerateConstruction_withNullPaper_throws() {
         try {
-            new PaperReview(null, "idl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb");
+            new PaperReview(null, "nol", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("paper must not be null.");
         }
@@ -25,7 +25,7 @@ public class PaperReviewTest extends JasperEntityTest {
     public void instantiatingWithAllNullFields_returnsBlankValues() {
         pr = new PaperReview(new Paper(), null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
-        assertThat(pr.getId()).isEmpty();
+        assertThat(pr.getNumber()).isEmpty();
         assertThat(pr.getAuthorYear()).isEmpty();
         assertThat(pr.getPopulationPlace()).isEmpty();
         assertThat(pr.getMethodOutcome()).isEmpty();
@@ -42,7 +42,7 @@ public class PaperReviewTest extends JasperEntityTest {
     }
 
     private void assertBlankLabels() {
-        assertThat(pr.getIdLabel()).isEmpty();
+        assertThat(pr.getNumberLabel()).isEmpty();
         assertThat(pr.getAuthorYearLabel()).isEmpty();
         assertThat(pr.getPopulationPlaceLabel()).isEmpty();
         assertThat(pr.getMethodOutcomeLabel()).isEmpty();
@@ -67,7 +67,7 @@ public class PaperReviewTest extends JasperEntityTest {
     }
 
     private void assertFieldValues() {
-        assertThat(pr.getId()).isEqualTo(String.valueOf(ID));
+        assertThat(pr.getNumber()).isEqualTo(String.valueOf(NUMBER));
         assertThat(pr.getAuthorYear()).isEqualTo(FIRST_AUTHOR + " " + String.valueOf(PUBLICATION_YEAR));
         assertThat(pr.getPopulationPlace()).isEqualTo(POPULATION_PLACE);
         assertThat(pr.getMethodOutcome()).isEqualTo(METHOD_OUTCOME);
@@ -83,11 +83,11 @@ public class PaperReviewTest extends JasperEntityTest {
 
     @Test
     public void instantiatingWithValidFieldsAndvalidLabels() {
-        pr = new PaperReview(p, "idl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb");
+        pr = new PaperReview(p, "nol", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb");
 
         assertFieldValues();
 
-        assertThat(pr.getIdLabel()).isEqualTo("idl");
+        assertThat(pr.getNumberLabel()).isEqualTo("nol");
         assertThat(pr.getAuthorYearLabel()).isEqualTo("ayl");
         assertThat(pr.getPopulationPlaceLabel()).isEqualTo("ppl");
         assertThat(pr.getMethodOutcomeLabel()).isEqualTo("mol");

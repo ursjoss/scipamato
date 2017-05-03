@@ -21,6 +21,11 @@ public class ApplicationPropertiesTest implements ApplicationProperties {
         return "brand";
     }
 
+    @Override
+    public long getMinimumPaperNumberToBeRecycled() {
+        return 10l;
+    }
+
     @Test
     public void assertDefaultLocalizationProperty() {
         assertThat(LOCALIZATION_DEFAULT).isEqualTo("sipamato.localization.default");
@@ -35,4 +40,10 @@ public class ApplicationPropertiesTest implements ApplicationProperties {
     public void assertBrandProperty() {
         assertThat(BRAND).isEqualTo("sipamato.brand");
     }
+
+    @Test
+    public void assertMinimumPaperNumberToBeRecycled() {
+        assertThat(PAPER_NUMBER_MIN_TO_RECYCLE).isEqualTo("sipamato.paper.number.minimum-to-be-recycled");
+    }
+
 }

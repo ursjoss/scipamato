@@ -28,7 +28,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     private static final String ID_PART = ",id=1,created=2016-12-14T14:47:29.431,createdBy=1,lastModified=2016-12-14T14:47:29.431,lastModifiedBy=1,version=1";
     // @formatter:off
     private static final String PAPER1_WO_CODE_CLASSES =
-            "Paper[doi=10.1093/aje/kwu275,pmId=25395026"
+            "Paper[number=1,doi=10.1093/aje/kwu275,pmId=25395026"
             + ",authors=Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.,firstAuthor=Turner,firstAuthorOverridden=false"
             + ",title=Interactions Between Cigarette Smoking and Fine Particulate Matter in the Risk of Lung Cancer Mortality in Cancer Prevention Study II."
             + ",location=Am J Epidemiol. 2014; 180 (12): 1145-1149."
@@ -91,6 +91,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
 
     private Paper makeMinimalPaper() {
         Paper p = new Paper();
+        p.setNumber(100l);
         p.setAuthors("a");
         p.setFirstAuthor("b");
         p.setFirstAuthorOverridden(true);

@@ -42,6 +42,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     protected EditablePaperPanel makePanel() {
         Paper p = new Paper();
         p.setId(1l);
+        p.setNumber(100l);
         p.setAuthors("a");
         p.setFirstAuthor("fa");
         p.setFirstAuthorOverridden(false);
@@ -110,6 +111,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
         b += ":form";
         assertTextFieldWithLabel(b + ":id", 1l, "ID");
+        assertTextFieldWithLabel(b + ":number", 100l, "No.");
         assertTextFieldWithLabel(b + ":publicationYear", 2017, "Pub. Year");
         assertTextFieldWithLabel(b + ":pmId", 1234, "PMID");
         getTester().assertLabel(b + ":submit:label", "Save");
@@ -149,6 +151,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         String b = "panel:form:";
         getTester().startComponentInPage(makePanel());
 
+        getTester().assertRequired(b + "number");
         getTester().assertRequired(b + "authors");
         getTester().assertRequired(b + "firstAuthor");
         getTester().assertRequired(b + "title");

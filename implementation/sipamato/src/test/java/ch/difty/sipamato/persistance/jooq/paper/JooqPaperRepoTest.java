@@ -300,4 +300,14 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
         assertThat(repo.findByPmIds(null)).isEmpty();
     }
 
+    @Test
+    public void gettingPapersByPmNumbers_withNoNumbers_returnsEmptyList() {
+        assertThat(repo.findByNumbers(new ArrayList<Long>())).isEmpty();
+    }
+
+    @Test
+    public void gettingPapersByPmNumbers_withNullNumbers_returnsEmptyList() {
+        assertThat(repo.findByNumbers(null)).isEmpty();
+    }
+
 }

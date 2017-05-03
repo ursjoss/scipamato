@@ -1,9 +1,11 @@
 package ch.difty.sipamato.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
@@ -48,5 +50,20 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * @return {@link ServiceResult}
      */
     ServiceResult dumpPubmedArticlesToDb(List<PubmedArticleFacade> articles);
+
+    /**
+     * Finds an individual paper by number. Returns it as an optional of type <literal>T</literal>
+     *
+     * @param number - must not be null
+     * @return Optional
+     * @throws NullArgumentException if number is null
+     */
+    Optional<Paper> findByNumber(Long number);
+
+    /**
+     * Finds the lowest free number starting from the supplied value.
+     * @param minimumPaperNumberToBeRecycled any gaps lower than this value will not be recycled
+     */
+    long findLowestFreeNumberStartingFrom(long minimumPaperNumberToBeRecycled);
 
 }

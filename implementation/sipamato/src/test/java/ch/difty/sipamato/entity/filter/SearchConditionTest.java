@@ -3,6 +3,7 @@ package ch.difty.sipamato.entity.filter;
 import static ch.difty.sipamato.entity.IdSipamatoEntity.ID;
 import static ch.difty.sipamato.entity.Paper.DOI;
 import static ch.difty.sipamato.entity.Paper.FIRST_AUTHOR_OVERRIDDEN;
+import static ch.difty.sipamato.entity.Paper.NUMBER;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
@@ -61,15 +62,17 @@ public class SearchConditionTest {
     @Test
     public void allIntegerSearchTerms() {
         sc1.setId("3");
+        sc1.setNumber("30");
         sc1.setPublicationYear("2017");
         assertThat(sc1.getStringSearchTerms()).isEmpty();
-        assertThat(sc1.getIntegerSearchTerms()).hasSize(2);
+        assertThat(sc1.getIntegerSearchTerms()).hasSize(3);
         assertThat(sc1.getBooleanSearchTerms()).isEmpty();
         assertThat(sc1.getAuditSearchTerms()).isEmpty();
         assertThat(sc1.getCreatedDisplayValue()).isNull();
         assertThat(sc1.getModifiedDisplayValue()).isNull();
 
         assertThat(sc1.getSearchConditionId()).isEqualTo(SEARCH_CONDITION_ID);
+        assertThat(sc1.getNumber()).isEqualTo("30");
     }
 
     @Test
@@ -124,6 +127,38 @@ public class SearchConditionTest {
 
         sc1.setId(null);
         assertThat(sc1.getId()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
+    }
+
+    @Test
+    public void number_extensiveTest() {
+        assertThat(sc1.getNumber()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).isEmpty();
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
+
+        sc1.setNumber("50");
+        assertThat(sc1.getNumber()).isEqualTo("50");
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).hasSize(1);
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
+        IntegerSearchTerm st = sc1.getIntegerSearchTerms().iterator().next();
+        assertThat(st.getFieldName()).isEqualTo(NUMBER);
+        assertThat(st.getRawSearchTerm()).isEqualTo("50");
+
+        sc1.setNumber("100");
+        assertThat(sc1.getNumber()).isEqualTo("100");
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+        assertThat(sc1.getIntegerSearchTerms()).hasSize(1);
+        assertThat(sc1.getBooleanSearchTerms()).isEmpty();
+        st = sc1.getIntegerSearchTerms().iterator().next();
+        assertThat(st.getFieldName()).isEqualTo(NUMBER);
+        assertThat(st.getRawSearchTerm()).isEqualTo("100");
+
+        sc1.setNumber(null);
+        assertThat(sc1.getNumber()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
         assertThat(sc1.getIntegerSearchTerms()).isEmpty();
         assertThat(sc1.getBooleanSearchTerms()).isEmpty();

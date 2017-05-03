@@ -26,6 +26,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         super.setUp();
 
         p.setId(1l);
+        p.setNumber(2l);
         p.setDoi(VALID_DOI);
         p.setPmId(1000);
         p.setAuthors(VALID_AUTHORS);
@@ -53,6 +54,18 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Test
     public void validatingPaper_withMultipleAuthorsWithFirstname_withPeriod_succeeds() {
         verifySuccessfulValidation();
+    }
+
+    @Test
+    public void validatingPaper_withNullNumber_fails() {
+        p.setNumber(null);
+        validateAndAssertFailure(Paper.NUMBER, null, "{javax.validation.constraints.NotNull.message}");
+    }
+
+    @Test
+    public void validatingPaper_withNegativeNumber_fails() {
+        p.setNumber(-1l);
+        validateAndAssertFailure(Paper.NUMBER, -1L, "{javax.validation.constraints.Min.message}");
     }
 
     @Test
@@ -205,7 +218,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void testingToString_withoutCodeClasses() {
      // @formatter:off
         assertThat(p.toString()).isEqualTo(
-            "Paper[doi=10.1093/aje/kwu275,pmId=1000"
+            "Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000"
             + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=Turner MC,firstAuthorOverridden=false"
             + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
             + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
@@ -222,7 +235,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         p.setMainCodeOfCodeclass1("1D");
         // @formatter:off
         assertThat(p.toString()).isEqualTo(
-            "Paper[doi=10.1093/aje/kwu275,pmId=1000"
+            "Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000"
             + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=Turner MC,firstAuthorOverridden=false"
             + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
             + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"

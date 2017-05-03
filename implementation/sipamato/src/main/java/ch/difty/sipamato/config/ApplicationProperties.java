@@ -16,6 +16,7 @@ public interface ApplicationProperties {
     String LOCALIZATION_DEFAULT = "sipamato.localization.default";
     String AUTHOR_PARSER_FACTORY = "sipamato.author.parser";
     String BRAND = "sipamato.brand";
+    String PAPER_NUMBER_MIN_TO_RECYCLE = "sipamato.paper.number.minimum-to-be-recycled";
 
     /**
      * Defines the localization the application starts with.
@@ -35,4 +36,9 @@ public interface ApplicationProperties {
      * @return the brand name
      */
     String getBrand();
+
+    /**
+     * @return the lowest paper.number that can be recycled in case of gaps
+     */
+    long getMinimumPaperNumberToBeRecycled();
 }

@@ -36,4 +36,9 @@ public class SipamatoPropertiesIntegrationTest {
     public void assertBrand() {
         assertThat(appProperties.getBrand()).isEqualTo("SiPaMaTo");
     }
+
+    @Test
+    public void assertMinimumPaperNumberToBeRecycled() {
+        assertThat(appProperties.getMinimumPaperNumberToBeRecycled()).isEqualTo(8);
+    }
 }
