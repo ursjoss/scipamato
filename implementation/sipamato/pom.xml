@@ -626,7 +626,7 @@
                     <version>3.3.0.603</version>
                 </plugin>
 
-                <!-- Pusblish properties from external property files for other maven plugins to be accessible -->
+                <!-- Publish properties from external property files for other maven plugins to be accessible -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>properties-maven-plugin</artifactId>
