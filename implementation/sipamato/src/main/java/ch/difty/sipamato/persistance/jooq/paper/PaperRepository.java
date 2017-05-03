@@ -51,4 +51,11 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      */
     List<Paper> findByPmIds(List<Integer> pmIds);
 
+    /**
+     * Find Papers by a list of numbers
+     * @param numbers
+     * @return list of {@Paper}s
+     */
+    List<Paper> findByNumbers(List<Long> numbers);
+
 }

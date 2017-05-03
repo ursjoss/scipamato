@@ -23,10 +23,6 @@ public class JooqPaperSlimRepoIntegrationTest extends JooqTransactionalIntegrati
     public void findingAll() {
         List<PaperSlim> papers = repo.findAll();
         assertThat(papers).hasSize(RECORD_COUNT_PREPOPULATED);
-        assertThat(papers.get(0).getId()).isEqualTo(1);
-        assertThat(papers.get(1).getId()).isEqualTo(2);
-        assertThat(papers.get(2).getId()).isEqualTo(3);
-        assertThat(papers.get(3).getId()).isEqualTo(4);
     }
 
     @Test

@@ -1,7 +1,9 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -78,6 +80,19 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     private void fillServiceResultFrom(final List<Paper> newPapers, final List<String> existingPmIds, final ServiceResult sr) {
         existingPmIds.stream().map(pmId -> "PMID " + pmId).forEach(sr::addWarnMessage);
         newPapers.stream().map(p -> "PMID " + p.getPmId() + " (id " + p.getId() + ")").forEach(sr::addInfoMessage);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Optional<Paper> findByNumber(Long number) {
+        List<Paper> papers = getRepository().findByNumbers(Arrays.asList(number));
+        if (!papers.isEmpty()) {
+            Paper paper = papers.get(0);
+            enrichAuditNamesOf(paper);
+            return Optional.ofNullable(paper);
+        } else {
+            return Optional.empty();
+        }
     }
 
 }
