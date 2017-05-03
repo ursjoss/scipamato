@@ -12,7 +12,8 @@ public class PaperSummaryTest extends JasperEntityTest {
 
     @Test
     public void instantiatingUsingIndividualFields() {
-        ps = new PaperSummary(ID, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, COMMENT, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, CREATED_BY);
+        ps = new PaperSummary(NUMBER, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, COMMENT, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND,
+                CREATED_BY);
 
         assertPaperSummary();
     }
@@ -25,7 +26,7 @@ public class PaperSummaryTest extends JasperEntityTest {
     }
 
     private void assertPaperSummary() {
-        assertThat(ps.getId()).isEqualTo(String.valueOf(ID));
+        assertThat(ps.getNumber()).isEqualTo(String.valueOf(NUMBER));
         assertThat(ps.getAuthors()).isEqualTo(AUTHORS);
         assertThat(ps.getTitle()).isEqualTo(TITLE);
         assertThat(ps.getLocation()).isEqualTo(LOCATION);
@@ -40,7 +41,7 @@ public class PaperSummaryTest extends JasperEntityTest {
         assertThat(ps.getResultLabel()).isEqualTo(RESULT_LABEL);
         assertThat(ps.getCommentLabel()).isEqualTo(COMMENT_LABEL);
 
-        assertThat(ps.getHeader()).isEqualTo(HEADER_PART + " " + ID);
+        assertThat(ps.getHeader()).isEqualTo(HEADER_PART + " " + NUMBER);
         assertThat(ps.getBrand()).isEqualTo(BRAND);
         assertThat(ps.getCreatedBy()).isEqualTo(CREATED_BY);
     }
@@ -49,7 +50,7 @@ public class PaperSummaryTest extends JasperEntityTest {
     public void withNullFieldsWherePossible_providesEmptyStrings() {
         ps = new PaperSummary(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
-        assertThat(ps.getId()).isEmpty();
+        assertThat(ps.getNumber()).isEmpty();
         assertThat(ps.getAuthors()).isEmpty();
         assertThat(ps.getTitle()).isEmpty();
         assertThat(ps.getLocation()).isEmpty();
@@ -71,17 +72,17 @@ public class PaperSummaryTest extends JasperEntityTest {
 
     @Test
     public void withNullFieldsExceptId_providesHeaderWithIdOnly() {
-        ps = new PaperSummary(ID, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        ps = new PaperSummary(NUMBER, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
-        assertThat(ps.getId()).isEqualTo(String.valueOf(ID));
-        assertThat(ps.getHeader()).isEqualTo(String.valueOf(ID));
+        assertThat(ps.getNumber()).isEqualTo(String.valueOf(NUMBER));
+        assertThat(ps.getHeader()).isEqualTo(String.valueOf(NUMBER));
     }
 
     @Test
     public void withNullFieldsExceptHeaderPart_providesHeaderPartOnly() {
         ps = new PaperSummary(null, null, null, null, null, null, null, null, null, null, null, null, null, HEADER_PART, null, null);
 
-        assertThat(ps.getId()).isEmpty();
+        assertThat(ps.getNumber()).isEmpty();
         assertThat(ps.getHeader()).isEqualTo(HEADER_PART);
     }
 

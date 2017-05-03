@@ -20,7 +20,8 @@
 	</style>
 	<field name="caption" class="java.lang.String"/>
 	<field name="brand" class="java.lang.String"/>
-	<field name="id" class="java.lang.String"/>
+	<field name="numberLabel" class="java.lang.String"/>
+	<field name="number" class="java.lang.String"/>
 	<field name="firstAuthor" class="java.lang.String"/>
 	<field name="publicationYear" class="java.lang.String"/>
 	<field name="codesOfClass1" class="java.lang.String"/>
@@ -29,8 +30,8 @@
 	<field name="goals" class="java.lang.String"/>
 	<field name="title" class="java.lang.String"/>
 	<field name="result" class="java.lang.String"/>
-	<group name="id" minHeightToStartNewPage="5">
-		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+	<group name="number" minHeightToStartNewPage="5">
+		<groupExpression><![CDATA[$F{number}]]></groupExpression>
 		<groupHeader>
 			<band height="69" splitType="Prevent">
 				<property name="local_mesure_unitheight" value="pixel"/>
@@ -56,7 +57,7 @@
 						<font isBold="false" isItalic="false" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{brand} + "-ID: " + $F{id}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{brand} + "-" + $F{numberLabel} + ": " + $F{number}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement style="Zebra" positionType="Float" x="104" y="0" width="70" height="15" isPrintWhenDetailOverflows="true" uuid="67605cb5-be8a-471a-b3d7-5e8da899b44f">

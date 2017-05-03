@@ -7,7 +7,7 @@
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="mm"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
 	<style name="Style1" isDefault="true" fontName="DejaVu Sans" fontSize="8" isBold="false" pdfFontName="DejaVu Sans" isPdfEmbedded="true"/>
-	<field name="id" class="java.lang.String"/>
+	<field name="number" class="java.lang.String"/>
 	<field name="authorYear" class="java.lang.String"/>
 	<field name="populationPlace" class="java.lang.String"/>
 	<field name="methodOutcome" class="java.lang.String"/>
@@ -19,7 +19,7 @@
 	<field name="resultExposureRange" class="java.lang.String"/>
 	<field name="methodConfounders" class="java.lang.String"/>
 	<field name="resultEffectEstimate" class="java.lang.String"/>
-	<field name="idLabel" class="java.lang.String"/>
+	<field name="numberLabel" class="java.lang.String"/>
 	<field name="authorYearLabel" class="java.lang.String"/>
 	<field name="populationPlaceLabel" class="java.lang.String"/>
 	<field name="methodOutcomeLabel" class="java.lang.String"/>
@@ -56,7 +56,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{idLabel}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{numberLabel}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="53" y="0" width="67" height="15" isPrintWhenDetailOverflows="true" uuid="a3fc231a-ac6b-4334-ba04-73fcdeea4ca6">
@@ -188,7 +188,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{number}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="53" y="0" width="67" height="15" isPrintWhenDetailOverflows="true" uuid="f109c53f-dfed-4291-bb9a-8af1494ba689">

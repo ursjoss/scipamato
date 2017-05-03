@@ -18,7 +18,7 @@
 			<style backcolor="#FBFBFB"/>
 		</conditionalStyle>
 	</style>
-	<field name="id" class="java.lang.String"/>
+	<field name="number" class="java.lang.String"/>
 	<field name="authors" class="java.lang.String"/>
 	<field name="publicationYear" class="java.lang.String"/>
 	<field name="title" class="java.lang.String"/>
@@ -26,8 +26,9 @@
 	<field name="pubmedLink" class="java.lang.String"/>
 	<field name="caption" class="java.lang.String"/>
 	<field name="brand" class="java.lang.String"/>
-	<group name="id" minHeightToStartNewPage="5">
-		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+	<field name="numberLabel" class="java.lang.String"/>
+	<group name="number" minHeightToStartNewPage="5">
+		<groupExpression><![CDATA[$F{number}]]></groupExpression>
 		<groupHeader>
 			<band height="80" splitType="Prevent">
 				<property name="local_mesure_unitheight" value="pixel"/>
@@ -95,7 +96,7 @@
 						<font isBold="false" isItalic="false" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{brand} + "-ID: " + $F{id}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{brand} + "-" + $F{numberLabel} + ": " + $F{number}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement positionType="Float" x="0" y="60" width="555" height="15" isPrintWhenDetailOverflows="true" uuid="59f613eb-6edc-4fc8-b937-b4ae280894a4">

@@ -35,7 +35,7 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
 
     private static final long serialVersionUID = 1L;
 
-    private static final String BASE_NAME_SINGLE = "paper_summary_id_";
+    private static final String BASE_NAME_SINGLE = "paper_summary_no_";
     private static final String BASE_NAME_MULTIPLE = "paper_summaries";
 
     private String populationLabel;
@@ -134,16 +134,16 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
     }
 
     private static String makeSinglePaperBaseName(final Paper paper) {
-        if (paper != null && paper.getId() != null) {
-            return BASE_NAME_SINGLE + paper.getId();
+        if (paper != null && paper.getNumber() != null) {
+            return BASE_NAME_SINGLE + paper.getNumber();
         } else {
             return BASE_NAME_MULTIPLE;
         }
     }
 
     private static String makeSinglePaperBaseName(final PaperSummary paperSummary) {
-        if (paperSummary != null && paperSummary.getId() != null) {
-            return BASE_NAME_SINGLE + paperSummary.getId();
+        if (paperSummary != null && paperSummary.getNumber() != null) {
+            return BASE_NAME_SINGLE + paperSummary.getNumber();
         } else {
             return BASE_NAME_MULTIPLE;
         }

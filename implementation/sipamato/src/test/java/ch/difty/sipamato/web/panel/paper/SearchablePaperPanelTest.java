@@ -11,6 +11,7 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
     protected SearchablePaperPanel makePanel() {
         SearchCondition sc = new SearchCondition();
         sc.setId("1");
+        sc.setNumber("100");
         sc.setAuthors("a");
         sc.setFirstAuthor("fa");
         sc.setFirstAuthorOverridden(false);
@@ -76,6 +77,7 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
 
         b += ":form";
         assertTextFieldWithLabel(b + ":id", "1", "ID");
+        assertTextFieldWithLabel(b + ":number", "100", "No.");
         assertTextFieldWithLabel(b + ":publicationYear", "2017", "Pub. Year");
         assertTextFieldWithLabel(b + ":pmId", "pmid", "PMID");
         getTester().assertLabel(b + ":submit:label", "Search");
@@ -89,6 +91,7 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
     public void specificFields_areEnabled() {
         getTester().startComponentInPage(makePanel());
         getTester().isEnabled("panel:form:id");
+        getTester().isEnabled("panel:form:number");
         getTester().isEnabled("panel:form:firstAuthorOverridden");
         getTester().isEnabled("panel:form:createdDisplayValue");
         getTester().isEnabled("panel:form:modifiedDisplayValue");

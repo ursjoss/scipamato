@@ -12,7 +12,7 @@ import ch.difty.sipamato.web.jasper.JasperEntity;
 public class PaperReview extends JasperEntity {
     private static final long serialVersionUID = 1L;
 
-    private final String id;
+    private final String number;
     private final String authorYear;
     private final String populationPlace;
     private final String methodOutcome;
@@ -25,7 +25,7 @@ public class PaperReview extends JasperEntity {
     private final String methodConfounders;
     private final String resultEffectEstimate;
 
-    private final String idLabel;
+    private final String numberLabel;
     private final String authorYearLabel;
     private final String populationPlaceLabel;
     private final String methodOutcomeLabel;
@@ -44,7 +44,7 @@ public class PaperReview extends JasperEntity {
     /**
      * Instantiation with a {@link Paper} and additional fields
      * @param p paper
-     * @param idLabel
+     * @param numberLabel
      * @param authorYearLabel
      * @param populationPlaceLabel
      * @param methodOutcomeLabel
@@ -59,12 +59,12 @@ public class PaperReview extends JasperEntity {
      * @param brand
      * @param createdBy
      */
-    public PaperReview(final Paper p, final String idLabel, final String authorYearLabel, final String populationPlaceLabel, final String methodOutcomeLabel, final String exposurePollutantLabel,
+    public PaperReview(final Paper p, final String numberLabel, final String authorYearLabel, final String populationPlaceLabel, final String methodOutcomeLabel, final String exposurePollutantLabel,
             final String methodStudyDesignLabel, final String populationDurationLabel, final String populationParticipantsLabel, final String exposureAssessmentLabel,
             final String resultExposureRangeLabel, final String methodConfoundersLabel, final String resultEffectEstimateLabel, final String brand, final String createdBy) {
         super();
         AssertAs.notNull(p, "paper");
-        this.id = p.getId() != null ? String.valueOf(p.getId()) : "";
+        this.number = p.getNumber() != null ? String.valueOf(p.getNumber()) : "";
         this.authorYear = makeAuthorYearFrom(p);
         this.populationPlace = na(p.getPopulationPlace());
         this.methodOutcome = na(p.getMethodOutcome());
@@ -76,7 +76,7 @@ public class PaperReview extends JasperEntity {
         this.resultExposureRange = na(p.getResultExposureRange());
         this.methodConfounders = na(p.getMethodConfounders());
         this.resultEffectEstimate = na(p.getResultEffectEstimate());
-        this.idLabel = na(idLabel, id);
+        this.numberLabel = na(numberLabel, number);
         this.authorYearLabel = na(authorYearLabel);
         this.populationPlaceLabel = na(populationPlaceLabel);
         this.methodOutcomeLabel = na(methodOutcomeLabel);
@@ -111,12 +111,12 @@ public class PaperReview extends JasperEntity {
         }
     }
 
-    public String getId() {
-        return id;
+    public String getNumber() {
+        return number;
     }
 
-    public String getIdLabel() {
-        return idLabel;
+    public String getNumberLabel() {
+        return numberLabel;
     }
 
     public String getAuthorYear() {

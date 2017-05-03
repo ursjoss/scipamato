@@ -21,7 +21,7 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
 
     private static final long serialVersionUID = 1L;
 
-    private String idLabel;
+    private String numberLabel;
     private String authorYearLabel;
     private String populationPlaceLabel;
     private String methodOutcomeLabel;
@@ -39,13 +39,13 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
     /**
      * Using the dataProvider for the Result Panel as record source.
      */
-    public PaperReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String idLabel, final String authorYearLabel, final String populationPlaceLabel,
+    public PaperReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String numberLabel, final String authorYearLabel, final String populationPlaceLabel,
             final String methodOutcomeLabel, final String exposurePollutantLabel, final String methodStudyDesignLabel, final String populationDurationLabel, final String populationParticipantsLabel,
             final String exposureAssessmentLabel, final String resultExposureRangeLabel, final String methodConfoundersLabel, final String resultEffectEstimateLabel, final String brand,
             final String createdBy, PdfExporterConfiguration config) {
         super(new SipamatoPdfResourceHandler(config), FILE_BASE_NAME, dataProvider);
 
-        this.idLabel = idLabel;
+        this.numberLabel = numberLabel;
         this.authorYearLabel = authorYearLabel;
         this.populationPlaceLabel = populationPlaceLabel;
         this.methodOutcomeLabel = methodOutcomeLabel;
@@ -68,7 +68,7 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
 
     @Override
     protected PaperReview makeEntity(final Paper p) {
-        return new PaperReview(p, idLabel, authorYearLabel, populationPlaceLabel, methodOutcomeLabel, exposurePollutantLabel, methodStudyDesignLabel, populationDurationLabel,
+        return new PaperReview(p, numberLabel, authorYearLabel, populationPlaceLabel, methodOutcomeLabel, exposurePollutantLabel, methodStudyDesignLabel, populationDurationLabel,
                 populationParticipantsLabel, exposureAssessmentLabel, resultExposureRangeLabel, methodConfoundersLabel, resultEffectEstimateLabel, brand, createdBy);
     }
 

@@ -145,7 +145,7 @@ public class ResultPanel extends AbstractPanel<Void> {
     }
 
     private void makeAndQueuePdfReviewLink(String id) {
-        final String idLabel = new StringResourceModel("id" + LABEL_RECOURCE_TAG, this, null).getString();
+        final String numberLabel = new StringResourceModel("number" + LABEL_RECOURCE_TAG, this, null).getString();
         final String authorYearLabel = new StringResourceModel("authorYear" + LABEL_RECOURCE_TAG, this, null).getString();
         final String populationPlaceLabel = new StringResourceModel("populationPlace" + SHORT_LABEL_RECOURCE_TAG, this, null).getString();
         final String methodOutcomeLabel = new StringResourceModel("methodOutcome" + SHORT_LABEL_RECOURCE_TAG, this, null).getString();
@@ -164,7 +164,7 @@ public class ResultPanel extends AbstractPanel<Void> {
         final SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(pdfTitle).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
 
         ResourceLink<Void> reviewLink = new ResourceLink<>(id,
-                new PaperReviewDataSource(dataProvider, idLabel, authorYearLabel, populationPlaceLabel, methodOutcomeLabel, exposurePollutantLabel, methodStudyDesignLabel, populationDurationLabel,
+                new PaperReviewDataSource(dataProvider, numberLabel, authorYearLabel, populationPlaceLabel, methodOutcomeLabel, exposurePollutantLabel, methodStudyDesignLabel, populationDurationLabel,
                         populationParticipantsLabel, exposureAssessmentLabel, resultExposureRangeLabel, methodConfoundersLabel, resultEffectEstimateLabel, brand, createdBy, config));
         reviewLink.setOutputMarkupId(true);
         reviewLink.setBody(new StringResourceModel("link.review.label"));
@@ -174,10 +174,11 @@ public class ResultPanel extends AbstractPanel<Void> {
 
     private void makeAndQueuePdfLiteratureReviewLink(String id) {
         final String brand = getProperties().getBrand();
+        final String numberLabel = new StringResourceModel("number" + LABEL_RECOURCE_TAG, this, null).getString();
         final String pdfCaption = new StringResourceModel("paper_literature_review.caption", this, null).setParameters(brand).getString();
         final SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(pdfCaption).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
 
-        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperLiteratureReviewDataSource(dataProvider, pdfCaption, brand, config));
+        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperLiteratureReviewDataSource(dataProvider, pdfCaption, brand, numberLabel, config));
         reviewLink.setOutputMarkupId(true);
         reviewLink.setBody(new StringResourceModel("link.literature_review.label"));
         reviewLink.add(new AttributeModifier(TITLE, new StringResourceModel("link.literature_review.title", this, null).getString()));
@@ -187,9 +188,10 @@ public class ResultPanel extends AbstractPanel<Void> {
     private void makeAndQueuePdfSummaryTableLink(String id) {
         final String pdfCaption = new StringResourceModel("paper_summary_table.titlePart", this, null).getString();
         final String brand = getProperties().getBrand();
+        final String numberLabel = new StringResourceModel("number" + LABEL_RECOURCE_TAG, this, null).getString();
         final SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(pdfCaption).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
 
-        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperSummaryTableDataSource(dataProvider, true, pdfCaption, brand, config));
+        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperSummaryTableDataSource(dataProvider, true, pdfCaption, brand, numberLabel, config));
         reviewLink.setOutputMarkupId(true);
         reviewLink.setBody(new StringResourceModel("link.summary_table.label"));
         reviewLink.add(new AttributeModifier(TITLE, new StringResourceModel("link.summary_table.title", this, null).getString()));
@@ -199,9 +201,10 @@ public class ResultPanel extends AbstractPanel<Void> {
     private void makeAndQueuePdfSummaryTableWithoutResultsLink(String id) {
         final String pdfCaption = new StringResourceModel("paper_summary_table.titlePart", this, null).getString();
         final String brand = getProperties().getBrand();
+        final String numberLabel = new StringResourceModel("number" + LABEL_RECOURCE_TAG, this, null).getString();
         final SipamatoPdfExporterConfiguration config = new SipamatoPdfExporterConfiguration.Builder(pdfCaption).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
 
-        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperSummaryTableDataSource(dataProvider, false, pdfCaption, brand, config));
+        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperSummaryTableDataSource(dataProvider, false, pdfCaption, brand, numberLabel, config));
         reviewLink.setOutputMarkupId(true);
         reviewLink.setBody(new StringResourceModel("link.summary_table_wo_results.label"));
         reviewLink.add(new AttributeModifier(TITLE, new StringResourceModel("link.summary_table_wo_results.title", this, null).getString()));
