@@ -208,4 +208,28 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(repo.findByPmIds(Arrays.asList(-20335815))).isEmpty();
     }
 
+    @Test
+    public void findingLowestFreeNumberStartingFrom_findsFirstGapStartingAboveMinimumValue() {
+        long number = repo.findLowestFreeNumberStartingFrom(0l);
+        assertThat(number).isEqualTo(5l);
+    }
+
+    @Test
+    public void findingLowestFreeNumberStartingFrom_withMinimumInMultiNumberGap_ignoresRemainingNumbersOfSameGap() {
+        long number = repo.findLowestFreeNumberStartingFrom(5l);
+        assertThat(number).isGreaterThanOrEqualTo(42l);
+    }
+
+    @Test
+    public void findingLowestFreeNumberStartingFrom_withMinimumBeyondLastGap_findsNextFreeNumber() {
+        long number = repo.findLowestFreeNumberStartingFrom(30);
+        assertThat(number).isGreaterThanOrEqualTo(42l);
+    }
+
+    @Test
+    public void findingLowestFreeNumberStartingFrom_withMinimumBeyondNextFreeNumber_findsMiniumLeavingGap() {
+        long number = repo.findLowestFreeNumberStartingFrom(100l);
+        assertThat(number).isGreaterThanOrEqualTo(100l);
+    }
+
 }

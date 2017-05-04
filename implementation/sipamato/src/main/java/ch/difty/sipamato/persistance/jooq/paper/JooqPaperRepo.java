@@ -212,7 +212,21 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
             return getDsl().selectFrom(PAPER).where(PAPER.NUMBER.in(numbers)).fetchInto(Paper.class);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Note: If <literal>minimumPaperNumberToBeRecycled</literal> is itself part of a gap range, the current
+     * implementation will not return any numbers of the same gap range.<p>
+     * <p>
+     * Example:
+     * <ul>
+     * <li> assume the first gap to be in the range [5,9], the second gap is <literal>17</literal>.</li>
+     * <li> the last used value is <literal>36</literal>
+     * <li> assume <literal>minimumPaperNumberToBeRecycled=6</literal></li>
+     * <li> calling the method twice will return the following values: <literal>17</literal>, <literal>37</literal></li>
+     * <li> it will ignore the values <literal>6</literal> to <literal>9</literal> which are in the same gap as the minimum value</li>
+     * </ul>
+     **/
     @Override
     public long findLowestFreeNumberStartingFrom(long minimumPaperNumberToBeRecycled) {
         ch.difty.sipamato.db.tables.Paper p = PAPER.as("p");
@@ -225,7 +239,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
                 .where(pn.NUMBER.isNull().and(p.NUMBER.ge(minimumPaperNumberToBeRecycled)))
                 .limit(1)
                 .fetchOneInto(Long.class);
-        return freeNumber != null ? freeNumber.longValue() : 0;
+        return freeNumber != null ? freeNumber.longValue() : minimumPaperNumberToBeRecycled;
     }
 
 }
