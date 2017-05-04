@@ -29,6 +29,7 @@ TODO
 
 * [Entering Papers](https://github.com/ursjoss/sipamato/wiki/Entering-Papers)
 * [Filtering Papers](https://github.com/ursjoss/sipamato/wiki/Filtering-Papers)
+* [Complex Searches on Papers](https://github.com/ursjoss/sipamato/wiki/Searches)
 
 
 # Information for Developers
