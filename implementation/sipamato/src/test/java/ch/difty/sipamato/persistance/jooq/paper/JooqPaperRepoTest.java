@@ -7,17 +7,27 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.jooq.SelectConditionStep;
+import org.jooq.SelectForUpdateStep;
+import org.jooq.SelectOffsetStep;
+import org.jooq.SelectSeekStepN;
+import org.jooq.SelectWhereStep;
+import org.jooq.SortField;
 import org.jooq.TableField;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.paging.PaginationContext;
+import ch.difty.sipamato.paging.Sort;
+import ch.difty.sipamato.paging.Sort.Direction;
 import ch.difty.sipamato.persistance.jooq.EntityRepository;
 import ch.difty.sipamato.persistance.jooq.JooqEntityRepoTest;
 import ch.difty.sipamato.persistance.jooq.paper.searchorder.PaperBackedSearchOrderRepository;
@@ -308,6 +318,49 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     @Test
     public void gettingPapersByPmNumbers_withNullNumbers_returnsEmptyList() {
         assertThat(repo.findByNumbers(null)).isEmpty();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void findingByFilter() {
+        // TODO actually return records, test mapping and enrichment also
+        List<PaperRecord> paperRecords = new ArrayList<>();
+        Collection<SortField<Paper>> sortFields = new ArrayList<>();
+        Sort sort = new Sort(Direction.DESC, "id");
+        when(paginationContextMock.getSort()).thenReturn(sort);
+        when(paginationContextMock.getPageSize()).thenReturn(20);
+        when(paginationContextMock.getOffset()).thenReturn(0);
+        when(getFilterConditionMapper().map(filterMock)).thenReturn(getConditionMock());
+        when(getSortMapper().map(sort, getTable())).thenReturn(sortFields);
+
+        SelectWhereStep<PaperRecord> selectWhereStepMock = Mockito.mock(SelectWhereStep.class);
+        when(getDsl().selectFrom(getTable())).thenReturn(selectWhereStepMock);
+        SelectConditionStep<PaperRecord> selectConditionStepMock = Mockito.mock(SelectConditionStep.class);
+        when(selectWhereStepMock.where(getConditionMock())).thenReturn(selectConditionStepMock);
+        SelectSeekStepN<PaperRecord> selectSeekStepNMock = Mockito.mock(SelectSeekStepN.class);
+        when(selectConditionStepMock.orderBy(sortFields)).thenReturn(selectSeekStepNMock);
+        SelectOffsetStep<PaperRecord> selectOffsetStepMock = Mockito.mock(SelectOffsetStep.class);
+        when(selectSeekStepNMock.limit(20)).thenReturn(selectOffsetStepMock);
+        SelectForUpdateStep<PaperRecord> selectForUpdateStepMock = Mockito.mock(SelectForUpdateStep.class);
+        when(selectOffsetStepMock.offset(0)).thenReturn(selectForUpdateStepMock);
+        when(selectForUpdateStepMock.fetchInto(getRecordClass())).thenReturn(paperRecords);
+
+        when(getMapper().map(persistedRecord)).thenReturn(paperMock);
+
+        final List<Paper> papers = repo.findPageByFilter(filterMock, paginationContextMock);
+
+        verify(getFilterConditionMapper()).map(filterMock);
+        verify(paginationContextMock).getSort();
+        verify(paginationContextMock).getPageSize();
+        verify(paginationContextMock).getOffset();
+        verify(getSortMapper()).map(sort, getTable());
+
+        verify(getDsl()).selectFrom(getTable());
+        verify(selectWhereStepMock).where(getConditionMock());
+        verify(selectConditionStepMock).orderBy(sortFields);
+        verify(selectSeekStepNMock).limit(20);
+        verify(selectOffsetStepMock).offset(0);
+        verify(selectForUpdateStepMock).fetchInto(getRecordClass());
     }
 
 }

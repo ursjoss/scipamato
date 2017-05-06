@@ -106,6 +106,10 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdSipamat
         return selectConditionStepMock;
     }
 
+    protected Condition getConditionMock() {
+        return conditionMock;
+    }
+
     protected abstract ID getSampleId();
 
     /**
