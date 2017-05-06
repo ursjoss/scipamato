@@ -153,7 +153,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         String someTextInRow = "fa fa-fw fa-ban";
         getTester().assertContains(someTextInRow);
 
-        final String linkPath = "resultPanel:table:body:rows:1:cells:5:cell:link";
+        final String linkPath = "resultPanel:table:body:rows:1:cells:6:cell:link";
         getTester().assertComponent(linkPath, AjaxLink.class);
         getTester().clickLink(linkPath);
         getTester().assertContainsNot(someTextInRow);

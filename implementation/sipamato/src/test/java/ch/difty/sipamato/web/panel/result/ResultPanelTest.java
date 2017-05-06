@@ -101,12 +101,13 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     }
 
     private void assertTableRow(String bb) {
-        getTester().assertLabel(bb + ":1:cell", String.valueOf(NUMBER));
-        getTester().assertLabel(bb + ":2:cell", "firstAuthor");
-        getTester().assertLabel(bb + ":3:cell", "2016");
-        getTester().assertLabel(bb + ":4:cell:link:label", "title");
-        getTester().assertComponent(bb + ":5:cell:link", AjaxLink.class);
-        getTester().assertLabel(bb + ":5:cell:link:image", "");
+        getTester().assertLabel(bb + ":1:cell", "1");
+        getTester().assertLabel(bb + ":2:cell", String.valueOf(NUMBER));
+        getTester().assertLabel(bb + ":3:cell", "firstAuthor");
+        getTester().assertLabel(bb + ":4:cell", "2016");
+        getTester().assertLabel(bb + ":5:cell:link:label", "title");
+        getTester().assertComponent(bb + ":6:cell:link", AjaxLink.class);
+        getTester().assertLabel(bb + ":6:cell:link:image", "");
     }
 
     @Test
@@ -116,7 +117,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         when(paperServiceMock.findByNumber(NUMBER)).thenReturn(Optional.of(paper));
 
         getTester().startComponentInPage(makePanel());
-        getTester().clickLink(PANEL_ID + ":table:body:rows:1:cells:4:cell:link");
+        getTester().clickLink(PANEL_ID + ":table:body:rows:1:cells:5:cell:link");
         getTester().assertRenderedPage(PaperEntryPage.class);
 
         verify(paperSlimServiceMock).countBySearchOrder(searchOrderMock);
@@ -129,7 +130,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     @Test
     public void clickingDeleteIconLink_() {
         getTester().startComponentInPage(makePanel());
-        getTester().clickLink(PANEL_ID + ":table:body:rows:1:cells:5:cell:link");
+        getTester().clickLink(PANEL_ID + ":table:body:rows:1:cells:6:cell:link");
         getTester().assertInfoMessages("Excluded firstAuthor (2016): title.");
         getTester().assertComponentOnAjaxResponse(PANEL_ID + ":table");
         // TODO how to verify the response was sent with the id to be excluded

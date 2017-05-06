@@ -87,6 +87,7 @@ public class ResultPanel extends AbstractPanel<Void> {
 
     private List<IColumn<PaperSlim, String>> makeTableColumns() {
         final List<IColumn<PaperSlim, String>> columns = new ArrayList<>();
+        columns.add(makePropertyColumn(Paper.ID));
         columns.add(makePropertyColumn(Paper.NUMBER));
         columns.add(makePropertyColumn(Paper.FIRST_AUTHOR));
         columns.add(makePropertyColumn(Paper.PUBL_YEAR));
