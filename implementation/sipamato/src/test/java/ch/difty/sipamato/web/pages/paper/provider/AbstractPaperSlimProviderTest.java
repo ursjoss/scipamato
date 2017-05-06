@@ -115,7 +115,7 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
 
         Iterator<PaperSlim> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
-        verifyFilterMock(new PaginationContextMatcher(0, 3, "authors: ASC"));
+        verifyFilterMock(new PaginationContextMatcher(0, 3, "id: DESC"));
     }
 
     protected abstract void verifyFilterMock(PaginationContextMatcher matcher);
@@ -124,7 +124,7 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     public void iterating_throughFirstFullPage() {
         Iterator<PaperSlim> it = provider.iterator(0, 3);
         assertRecordsIn(it);
-        verifyFilterMock(new PaginationContextMatcher(0, 3, "authors: ASC"));
+        verifyFilterMock(new PaginationContextMatcher(0, 3, "id: DESC"));
     }
 
     private void assertRecordsIn(Iterator<PaperSlim> it) {
@@ -140,7 +140,7 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     public void iterating_throughSecondFullPage() {
         Iterator<PaperSlim> it = provider.iterator(3, 3);
         assertRecordsIn(it);
-        verifyFilterMock(new PaginationContextMatcher(3, 3, "authors: ASC"));
+        verifyFilterMock(new PaginationContextMatcher(3, 3, "id: DESC"));
     }
 
     @Test
@@ -163,7 +163,7 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
 
         Iterator<PaperSlim> it = provider.iterator(0, actualSize);
         assertRecordsIn(it);
-        verifyFilterMock(new PaginationContextMatcher(0, actualSize, "authors: ASC"));
+        verifyFilterMock(new PaginationContextMatcher(0, actualSize, "id: DESC"));
     }
 
     @Test

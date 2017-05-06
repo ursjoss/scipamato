@@ -31,7 +31,7 @@ public class PaperSlimByPaperFilterProvider extends AbstractPaperSlimProvider<Pa
     public PaperSlimByPaperFilterProvider(final PaperFilter filter, final int rowsPerPage) {
         super(filter != null ? filter : new PaperFilter(), rowsPerPage);
         Injector.get().inject(this);
-        setSort(Paper.AUTHORS, SortOrder.ASCENDING);
+        setSort(Paper.ID, SortOrder.DESCENDING);
     }
 
     /** {@inheritDoc} */
