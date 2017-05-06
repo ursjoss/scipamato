@@ -17,6 +17,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.junit.After;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.sipamato.entity.CodeClassId;
@@ -25,6 +26,7 @@ import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
 import ch.difty.sipamato.paging.PaginationRequest;
+import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.service.CodeClassService;
 import ch.difty.sipamato.service.CodeService;
 import ch.difty.sipamato.service.PaperService;
@@ -67,6 +69,8 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
     @After
     public void tearDown() {
+        // after the login
+        verify(paperSlimServiceMock).countByFilter(Mockito.isA(PaperFilter.class));
         verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeClassServiceMock, codeServiceMock, searchOrderMock);
     }
 

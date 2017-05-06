@@ -14,7 +14,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 import com.giffing.wicket.spring.boot.context.scan.WicketSignInPage;
 
 import ch.difty.sipamato.web.pages.BasePage;
-import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
+import ch.difty.sipamato.web.pages.paper.list.PaperListPage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 
@@ -49,7 +49,7 @@ public class LoginPage extends BasePage<Void> {
             @Override
             protected void onSubmit() {
                 if (signIn(username, password)) {
-                    setResponsePage(SipamatoHomePage.class);
+                    setResponsePage(PaperListPage.class);
                 } else {
                     error(getString("msg.login.failure"));
                 }

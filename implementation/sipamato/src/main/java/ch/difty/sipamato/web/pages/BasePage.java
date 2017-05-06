@@ -27,7 +27,6 @@ import ch.difty.sipamato.entity.User;
 import ch.difty.sipamato.lib.DateTimeService;
 import ch.difty.sipamato.web.WicketUtils;
 import ch.difty.sipamato.web.component.SerializableSupplier;
-import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
 import ch.difty.sipamato.web.pages.login.LogoutPage;
 import ch.difty.sipamato.web.pages.paper.list.PaperListPage;
 import ch.difty.sipamato.web.pages.paper.search.PaperSearchPage;
@@ -129,7 +128,6 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         nb.setBrandName(new ResourceModel("brandname", getProperties().getBrand()));
         nb.setInverted(true);
 
-        addPageLink(nb, SipamatoHomePage.class, "menu.home", GlyphIconType.home);
         addPageLink(nb, PaperListPage.class, "menu.papers", GlyphIconType.list);
         addPageLink(nb, PaperSearchPage.class, "menu.search", GlyphIconType.search);
         addPageLink(nb, LogoutPage.class, "menu.logout", GlyphIconType.edit);

@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,8 +26,9 @@ import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.
 
 import ch.difty.sipamato.SipamatoApplication;
 import ch.difty.sipamato.lib.DateTimeService;
-import ch.difty.sipamato.web.pages.home.SipamatoHomePage;
+import ch.difty.sipamato.persistance.jooq.paper.slim.PaperSlimRepository;
 import ch.difty.sipamato.web.pages.login.LoginPage;
+import ch.difty.sipamato.web.pages.paper.list.PaperListPage;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 
@@ -48,6 +50,10 @@ public abstract class WicketTest {
 
     @SpyBean
     private CustomAuthenticationManager customAuthenticationManager;
+
+    // The paper slim repo ist used in the current home page PaperListPage
+    @MockBean
+    protected PaperSlimRepository paperSlimRepoMock;
 
     private WicketTester tester;
 
@@ -95,7 +101,7 @@ public abstract class WicketTest {
         formTester.setValue("password", password);
         formTester.submit();
         tester.assertNoErrorMessage();
-        tester.assertRenderedPage(SipamatoHomePage.class);
+        tester.assertRenderedPage(PaperListPage.class);
     }
 
     protected void assertLabeledTextArea(String b, String id) {

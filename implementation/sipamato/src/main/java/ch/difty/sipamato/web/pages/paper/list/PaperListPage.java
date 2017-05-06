@@ -15,6 +15,8 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
+
 import ch.difty.sipamato.auth.Roles;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
@@ -37,7 +39,8 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
  *
  * @author u.joss
  */
-@MountPath("list")
+@MountPath("/")
+@WicketHomePage
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 public class PaperListPage extends BasePage<Void> {
 

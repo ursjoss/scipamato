@@ -17,7 +17,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import ch.difty.sipamato.config.ApplicationProperties;
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
-import ch.difty.sipamato.persistance.jooq.paper.slim.PaperSlimRepository;
 import ch.difty.sipamato.service.CodeClassService;
 import ch.difty.sipamato.service.CodeService;
 import ch.difty.sipamato.service.Localization;
@@ -33,8 +32,6 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 
 public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
-    @MockBean
-    private PaperSlimRepository paperSlimRepoMock;
     @MockBean
     private PubmedArticleService pubmedArticleServiceMock;
     @MockBean
@@ -70,7 +67,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         assertPateModal("xmlPasteModal");
         assertResultPanel("resultPanel");
 
-        verify(paperSlimRepoMock, times(2)).countByFilter(isA(PaperFilter.class));
+        verify(paperSlimRepoMock, times(3)).countByFilter(isA(PaperFilter.class));
     }
 
     private void assertSearchForm(String b) {
@@ -113,7 +110,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
         getTester().assertRenderedPage(PaperEntryPage.class);
 
-        verify(paperSlimRepoMock).countByFilter(isA(PaperFilter.class));
+        verify(paperSlimRepoMock, times(2)).countByFilter(isA(PaperFilter.class));
         verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
         verify(paperServiceMock).findLowestFreeNumberStartingFrom(minimumNumber);
         // from PaperEntryPage
@@ -141,6 +138,6 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         getTester().assertComponent(b + ":content", TextArea.class);
         getTester().assertComponent(b + ":submit", BootstrapAjaxButton.class);
 
-        verify(paperSlimRepoMock, times(2)).countByFilter(isA(PaperFilter.class));
+        verify(paperSlimRepoMock, times(3)).countByFilter(isA(PaperFilter.class));
     }
 }
