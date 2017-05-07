@@ -169,14 +169,42 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         // add additional title condition to existing search order
         SearchCondition titleCondition = newConditionWithTitle("PM2.5");
         SearchCondition savedCondition = repo.addSearchCondition(titleCondition, searchOrderId);
-        assertSearchTermCount(1, 0, 0, savedCondition);
+        assertSearchTermCount(1, 0, 0, 0, savedCondition);
         assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(2);
 
         // modify the currently savedCondition to also have a publicationYear integer search term
         savedCondition.setPublicationYear("2000");
         SearchCondition modifiedCondition = repo.updateSearchCondition(savedCondition, searchOrderId);
-        assertSearchTermCount(1, 1, 0, modifiedCondition);
+        assertSearchTermCount(1, 1, 0, 0, modifiedCondition);
         assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(3);
+
+        // modify the integer condition
+        savedCondition.setPublicationYear("2001");
+        SearchCondition modifiedCondition2 = repo.updateSearchCondition(savedCondition, searchOrderId);
+        assertSearchTermCount(1, 1, 0, 0, modifiedCondition2);
+        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(3);
+
+        // Add boolean condition
+        savedCondition.setFirstAuthorOverridden(Boolean.TRUE);
+        SearchCondition modifiedCondition3 = repo.updateSearchCondition(savedCondition, searchOrderId);
+        assertSearchTermCount(1, 1, 1, 0, modifiedCondition3);
+        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(4);
+
+        // Change the bolean condition
+        savedCondition.setFirstAuthorOverridden(Boolean.FALSE);
+        SearchCondition modifiedCondition4 = repo.updateSearchCondition(savedCondition, searchOrderId);
+        assertSearchTermCount(1, 1, 1, 0, modifiedCondition4);
+        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(4);
+
+        savedCondition.setModifiedDisplayValue("foo");
+        SearchCondition modifiedCondition5 = repo.updateSearchCondition(savedCondition, searchOrderId);
+        assertSearchTermCount(1, 1, 1, 2, modifiedCondition5);
+        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(6);
+
+        savedCondition.setModifiedDisplayValue("bar");
+        SearchCondition modifiedCondition6 = repo.updateSearchCondition(savedCondition, searchOrderId);
+        assertSearchTermCount(1, 1, 1, 2, modifiedCondition6);
+        assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(6);
 
         // remove the new search condition
         repo.deleteSearchConditionWithId(savedCondition.getSearchConditionId());
@@ -186,20 +214,21 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
     private SearchCondition newConditionWithAuthors(String authors) {
         SearchCondition sc = new SearchCondition();
         sc.setAuthors(authors);
-        assertSearchTermCount(1, 0, 0, sc);
+        assertSearchTermCount(1, 0, 0, 0, sc);
         return sc;
     }
 
-    private void assertSearchTermCount(int sst, int ist, int bst, SearchCondition sc) {
+    private void assertSearchTermCount(int sst, int ist, int bst, int ast, SearchCondition sc) {
         assertThat(sc.getStringSearchTerms()).hasSize(sst);
         assertThat(sc.getIntegerSearchTerms()).hasSize(ist);
         assertThat(sc.getBooleanSearchTerms()).hasSize(bst);
+        assertThat(sc.getAuditSearchTerms()).hasSize(ast);
     }
 
     private SearchCondition newConditionWithTitle(String title) {
         SearchCondition sc = new SearchCondition();
         sc.setTitle(title);
-        assertSearchTermCount(1, 0, 0, sc);
+        assertSearchTermCount(1, 0, 0, 0, sc);
         return sc;
     }
 
