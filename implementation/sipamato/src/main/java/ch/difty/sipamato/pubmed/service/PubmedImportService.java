@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.config.ApplicationProperties;
 import ch.difty.sipamato.lib.AssertAs;
@@ -29,6 +30,7 @@ public class PubmedImportService implements PubmedImporter {
     }
 
     /** {@inheritDoc} */
+    @Transactional
     @Override
     public ServiceResult persistPubmedArticlesFromXml(final String xml) {
         if (xml != null) {

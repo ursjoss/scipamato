@@ -102,4 +102,13 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         return getRepository().findLowestFreeNumberStartingFrom(minimumPaperNumberToBeRecycled);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    @Transactional(readOnly = false)
+    public void deleteByIds(List<Long> ids) {
+        if (ids != null && !ids.isEmpty()) {
+            ids.forEach((id) -> getRepository().delete(id));
+        }
+    }
+
 }

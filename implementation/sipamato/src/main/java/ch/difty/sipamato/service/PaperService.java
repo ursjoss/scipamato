@@ -67,4 +67,10 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      */
     long findLowestFreeNumberStartingFrom(long minimumPaperNumberToBeRecycled);
 
+    /**
+     * Deletes the papers with the given ids
+     * @param ids list of ids
+     */
+    void deleteByIds(List<Long> ids);
+
 }

@@ -24,14 +24,18 @@ public abstract class PubmedIntegrationTest {
     private PubmedXmlService service;
 
     protected PubmedArticleSet getPubmedArticleSet(String fileName) throws IOException {
-        String xml = IOUtils.toString(ClassLoader.getSystemResourceAsStream(fileName), StandardCharsets.UTF_8);
+        String xml = readXmlFile(fileName);
         assertThat(xml).isNotNull();
         return service.unmarshal(xml);
     }
 
     protected List<PubmedArticleFacade> getPubmedArticles(String fileName) throws IOException {
-        String xml = IOUtils.toString(ClassLoader.getSystemResourceAsStream(fileName), StandardCharsets.UTF_8);
+        String xml = readXmlFile(fileName);
         assertThat(xml).isNotNull();
         return service.extractArticlesFrom(xml);
+    }
+
+    public static String readXmlFile(String fileName) throws IOException {
+        return IOUtils.toString(ClassLoader.getSystemResourceAsStream(fileName), StandardCharsets.UTF_8);
     }
 }

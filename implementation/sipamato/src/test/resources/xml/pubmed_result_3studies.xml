@@ -1,0 +1,539 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2017//EN" "https://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_170101.dtd">
+<PubmedArticleSet>
+
+<PubmedArticle>
+    <MedlineCitation Status="Publisher" Owner="NLM">
+        <PMID Version="1">28454017</PMID>
+        <DateCreated>
+            <Year>2017</Year>
+            <Month>04</Month>
+            <Day>28</Day>
+        </DateCreated>
+        <DateRevised>
+            <Year>2017</Year>
+            <Month>04</Month>
+            <Day>28</Day>
+        </DateRevised>
+        <Article PubModel="Print-Electronic">
+            <Journal>
+                <ISSN IssnType="Electronic">1873-6424</ISSN>
+                <JournalIssue CitedMedium="Internet">
+                    <Volume>227</Volume>
+                    <PubDate>
+                        <Year>2017</Year>
+                        <Month>Apr</Month>
+                        <Day>25</Day>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Environmental pollution (Barking, Essex : 1987)</Title>
+                <ISOAbbreviation>Environ. Pollut.</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>The nexus between urbanization and PM2.5 related mortality in China.</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>15-23</MedlinePgn>
+            </Pagination>
+            <ELocationID EIdType="pii" ValidYN="Y">S0269-7491(16)31869-3</ELocationID>
+            <ELocationID EIdType="doi" ValidYN="Y">10.1016/j.envpol.2017.04.049</ELocationID>
+            <Abstract>
+                <AbstractText>The launch of China's new national urbanization plan, coupled with increasing concerns about air pollution, calls for better understandings of the nexus between urbanization and the air pollution-related health. Based on refined estimates of PM2.5 related mortality in China, we developed an Urbanization-Excess Deaths Elasticity (U-EDE) indicator to measure the marginal PM2.5 related mortality caused by urbanization. We then applied statistical models to estimate U-EDE and examined the modification effects of income on U-EDE. Urbanization in China between 2004 and 2012 led to increased PM2.5 related mortality. A 1% increase in urbanization was associated with a 0.32%, 0.14%, and 0.50% increase in PM2.5 related mortality of lung cancer, stroke, and ischemic heart disease. U-EDEs were modified by income with an inverted U curve, i.e., lower marginal impacts at the lowest and highest income levels. In addition, we projected the future U-EDE trend of China as a whole and found that China had experienced the peak of U-EDE and entered the second half of the inverted U-shaped curve. In the near future, national average U-EDE in China will decline along with the improvement of income level if no dramatic changes happen. However, the decreased U-EDE only implies that marginal PM2.5-related mortality brought by urbanization would decrease in China. Total health damage of urbanization will keep going up in the predictable future because the U-EDE is always positive.</AbstractText>
+                <CopyrightInformation>Copyright © 2017 Elsevier Ltd. All rights reserved.</CopyrightInformation>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Liu</LastName>
+                    <ForeName>Miaomiao</ForeName>
+                    <Initials>M</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>State Key Laboratory of Pollution Control and Resource Reuse, School of the Environment, Nanjing University, Nanjing, Jiangsu, China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Huang</LastName>
+                    <ForeName>Yining</ForeName>
+                    <Initials>Y</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>State Key Laboratory of Pollution Control and Resource Reuse, School of the Environment, Nanjing University, Nanjing, Jiangsu, China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Jin</LastName>
+                    <ForeName>Zhou</ForeName>
+                    <Initials>Z</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>State Key Laboratory of Pollution Control and Resource Reuse, School of the Environment, Nanjing University, Nanjing, Jiangsu, China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Ma</LastName>
+                    <ForeName>Zongwei</ForeName>
+                    <Initials>Z</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>State Key Laboratory of Pollution Control and Resource Reuse, School of the Environment, Nanjing University, Nanjing, Jiangsu, China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Liu</LastName>
+                    <ForeName>Xingyu</ForeName>
+                    <Initials>X</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>State Key Laboratory of Pollution Control and Resource Reuse, School of the Environment, Nanjing University, Nanjing, Jiangsu, China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Zhang</LastName>
+                    <ForeName>Bing</ForeName>
+                    <Initials>B</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>State Key Laboratory of Pollution Control and Resource Reuse, School of the Environment, Nanjing University, Nanjing, Jiangsu, China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Liu</LastName>
+                    <ForeName>Yang</ForeName>
+                    <Initials>Y</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Department of Environmental Health, Rollins School of Public Health, Emory University, Atlanta, GA, USA.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Yu</LastName>
+                    <ForeName>Yang</ForeName>
+                    <Initials>Y</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Department of Civil and Environmental Engineering, Stanford University, Stanford, CA, USA.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Wang</LastName>
+                    <ForeName>Jinnan</ForeName>
+                    <Initials>J</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Chinese Academy for Environmental Planning, Beijing, China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Bi</LastName>
+                    <ForeName>Jun</ForeName>
+                    <Initials>J</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>State Key Laboratory of Pollution Control and Resource Reuse, School of the Environment, Nanjing University, Nanjing, Jiangsu, China. Electronic address: jbi@nju.edu.cn.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Kinney</LastName>
+                    <ForeName>Patrick L</ForeName>
+                    <Initials>PL</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>School of Public Health, Boston University, Boston, USA. Electronic address: pkinney@bu.edu.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType UI="D016428">Journal Article</PublicationType>
+            </PublicationTypeList>
+            <ArticleDate DateType="Electronic">
+                <Year>2017</Year>
+                <Month>04</Month>
+                <Day>25</Day>
+            </ArticleDate>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>England</Country>
+            <MedlineTA>Environ Pollut</MedlineTA>
+            <NlmUniqueID>8804476</NlmUniqueID>
+            <ISSNLinking>0269-7491</ISSNLinking>
+        </MedlineJournalInfo>
+        <KeywordList Owner="NOTNLM">
+            <Keyword MajorTopicYN="N">China</Keyword>
+            <Keyword MajorTopicYN="N">Mortality</Keyword>
+            <Keyword MajorTopicYN="N">PM(2.5)</Keyword>
+            <Keyword MajorTopicYN="N">Urbanization</Keyword>
+        </KeywordList>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="received">
+                <Year>2016</Year>
+                <Month>10</Month>
+                <Day>20</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="revised">
+                <Year>2017</Year>
+                <Month>03</Month>
+                <Day>04</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="accepted">
+                <Year>2017</Year>
+                <Month>04</Month>
+                <Day>19</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>2017</Year>
+                <Month>4</Month>
+                <Day>29</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2017</Year>
+                <Month>4</Month>
+                <Day>30</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2017</Year>
+                <Month>4</Month>
+                <Day>30</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>aheadofprint</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pubmed">28454017</ArticleId>
+            <ArticleId IdType="pii">S0269-7491(16)31869-3</ArticleId>
+            <ArticleId IdType="doi">10.1016/j.envpol.2017.04.049</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+
+<PubmedArticle>
+    <MedlineCitation Status="Publisher" Owner="NLM">
+        <PMID Version="1">28447797</PMID>
+        <DateCreated>
+            <Year>2017</Year>
+            <Month>04</Month>
+            <Day>27</Day>
+        </DateCreated>
+        <DateRevised>
+            <Year>2017</Year>
+            <Month>05</Month>
+            <Day>03</Day>
+        </DateRevised>
+        <Article PubModel="Print-Electronic">
+            <Journal>
+                <ISSN IssnType="Electronic">1520-6882</ISSN>
+                <JournalIssue CitedMedium="Internet">
+                    <PubDate>
+                        <Year>2017</Year>
+                        <Month>May</Month>
+                        <Day>03</Day>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Analytical chemistry</Title>
+                <ISOAbbreviation>Anal. Chem.</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>Signal Transductions of BEAS-2B Cells in Response to Carcinogenic PM2.5 Exposure Based on a Microfluidic System.</ArticleTitle>
+            <ELocationID EIdType="doi" ValidYN="Y">10.1021/acs.analchem.7b00218</ELocationID>
+            <Abstract>
+                <AbstractText>PM2.5 (particulate matter less than 2.5 μm in diameter) is considered as a harmful carcinogen. Determining the precise relationship between the chemical constituents of PM2.5 in the air and cancer progression could aid the treatment of environment related disease and establishing risk reduction strategies. Herein, we used transcriptomics (RNA-seq) and an integrated microfluidic system to identify the global gene expression and differential target proteins expression induced by ambient fine particles collected from the heavy haze in China. The results clearly indicated that cancer related pathways exhibited the strongest dysregulation. The ambient fine particles could be uptaken into the cells by pinocytosis, mainly promoting the PI3K-Akt pathway, FGF/FGFR/MAPK/VEGF signaling, and the JAK-STAT pathway, leading to evading apoptosis, sustained angiogenesis, and cell proliferation, which are the most important hallmarks of cancer. And fine particles also have been demonstrated to create intracellular reactive oxygen species (ROS) and mitochondrial ROS, change intracellular free Ca(2+), and induce apoptosis, which are all key players in mediating cancer progression. It was observed by transmission electron microscopy (TEM) that the particles from the haze could enter the mitochondria, resulting in disturbance of the mitochondrial membrane and disruption of the mitochondria, and these particles can even enter inside the nucleus. It was also found in our study of organics (OC, PAHs) and metals (Zn, As, V) that compounds of fine particles were more closely associated with the exacerbation of cancer and secondary aerosols generated by traffic had the largest impact on cancer related signal transductions.</AbstractText>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Zheng</LastName>
+                    <ForeName>Lulu</ForeName>
+                    <Initials>L</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Shanghai Key laboratory of Atmospheric Particle Pollution Prevention (LAP3), Department of Environmental Science &amp; Engineering, Fudan University , 220 Handan Road, Shanghai 200433, P.R. China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Liu</LastName>
+                    <ForeName>Sixiu</ForeName>
+                    <Initials>S</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Shanghai Key laboratory of Atmospheric Particle Pollution Prevention (LAP3), Department of Environmental Science &amp; Engineering, Fudan University , 220 Handan Road, Shanghai 200433, P.R. China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Zhuang</LastName>
+                    <ForeName>Guoshun</ForeName>
+                    <Initials>G</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Shanghai Key laboratory of Atmospheric Particle Pollution Prevention (LAP3), Department of Environmental Science &amp; Engineering, Fudan University , 220 Handan Road, Shanghai 200433, P.R. China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Xu</LastName>
+                    <ForeName>Jian</ForeName>
+                    <Initials>J</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Shanghai Key laboratory of Atmospheric Particle Pollution Prevention (LAP3), Department of Environmental Science &amp; Engineering, Fudan University , 220 Handan Road, Shanghai 200433, P.R. China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Liu</LastName>
+                    <ForeName>Qi</ForeName>
+                    <Initials>Q</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Shanghai Key laboratory of Atmospheric Particle Pollution Prevention (LAP3), Department of Environmental Science &amp; Engineering, Fudan University , 220 Handan Road, Shanghai 200433, P.R. China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Zhang</LastName>
+                    <ForeName>Xinlian</ForeName>
+                    <Initials>X</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Shanghai Key laboratory of Atmospheric Particle Pollution Prevention (LAP3), Department of Environmental Science &amp; Engineering, Fudan University , 220 Handan Road, Shanghai 200433, P.R. China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Deng</LastName>
+                    <ForeName>Congrui</ForeName>
+                    <Initials>C</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Shanghai Key laboratory of Atmospheric Particle Pollution Prevention (LAP3), Department of Environmental Science &amp; Engineering, Fudan University , 220 Handan Road, Shanghai 200433, P.R. China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Guo</LastName>
+                    <ForeName>Zhigang</ForeName>
+                    <Initials>Z</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Shanghai Key laboratory of Atmospheric Particle Pollution Prevention (LAP3), Department of Environmental Science &amp; Engineering, Fudan University , 220 Handan Road, Shanghai 200433, P.R. China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Zhao</LastName>
+                    <ForeName>Wang</ForeName>
+                    <Initials>W</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Shanghai Key laboratory of Atmospheric Particle Pollution Prevention (LAP3), Department of Environmental Science &amp; Engineering, Fudan University , 220 Handan Road, Shanghai 200433, P.R. China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Liu</LastName>
+                    <ForeName>Tingna</ForeName>
+                    <Initials>T</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Shanghai Key laboratory of Atmospheric Particle Pollution Prevention (LAP3), Department of Environmental Science &amp; Engineering, Fudan University , 220 Handan Road, Shanghai 200433, P.R. China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Wang</LastName>
+                    <ForeName>Yiqi</ForeName>
+                    <Initials>Y</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Shanghai Key laboratory of Atmospheric Particle Pollution Prevention (LAP3), Department of Environmental Science &amp; Engineering, Fudan University , 220 Handan Road, Shanghai 200433, P.R. China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Zhang</LastName>
+                    <ForeName>Yuxiao</ForeName>
+                    <Initials>Y</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Shanghai Key laboratory of Atmospheric Particle Pollution Prevention (LAP3), Department of Environmental Science &amp; Engineering, Fudan University , 220 Handan Road, Shanghai 200433, P.R. China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Lin</LastName>
+                    <ForeName>Jing</ForeName>
+                    <Initials>J</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Shanghai Key laboratory of Atmospheric Particle Pollution Prevention (LAP3), Department of Environmental Science &amp; Engineering, Fudan University , 220 Handan Road, Shanghai 200433, P.R. China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Wang</LastName>
+                    <ForeName>Qiongzhen</ForeName>
+                    <Initials>Q</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Shanghai Key laboratory of Atmospheric Particle Pollution Prevention (LAP3), Department of Environmental Science &amp; Engineering, Fudan University , 220 Handan Road, Shanghai 200433, P.R. China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Sui</LastName>
+                    <ForeName>Guodong</ForeName>
+                    <Initials>G</Initials>
+                    <Identifier Source="ORCID">http://orcid.org/0000-0002-6751-0852</Identifier>
+                    <AffiliationInfo>
+                        <Affiliation>Shanghai Key laboratory of Atmospheric Particle Pollution Prevention (LAP3), Department of Environmental Science &amp; Engineering, Fudan University , 220 Handan Road, Shanghai 200433, P.R. China.</Affiliation>
+                    </AffiliationInfo>
+                    <AffiliationInfo>
+                        <Affiliation>Institute of Biomedical Science, Fudan University , Shanghai 200433, P.R.China.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType UI="D016428">Journal Article</PublicationType>
+            </PublicationTypeList>
+            <ArticleDate DateType="Electronic">
+                <Year>2017</Year>
+                <Month>05</Month>
+                <Day>03</Day>
+            </ArticleDate>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>United States</Country>
+            <MedlineTA>Anal Chem</MedlineTA>
+            <NlmUniqueID>0370536</NlmUniqueID>
+            <ISSNLinking>0003-2700</ISSNLinking>
+        </MedlineJournalInfo>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2017</Year>
+                <Month>4</Month>
+                <Day>28</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2017</Year>
+                <Month>4</Month>
+                <Day>28</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>2017</Year>
+                <Month>4</Month>
+                <Day>28</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>aheadofprint</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pubmed">28447797</ArticleId>
+            <ArticleId IdType="doi">10.1021/acs.analchem.7b00218</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+
+<PubmedArticle>
+    <MedlineCitation Status="Publisher" Owner="NLM">
+        <PMID Version="1">28431317</PMID>
+        <DateCreated>
+            <Year>2017</Year>
+            <Month>04</Month>
+            <Day>21</Day>
+        </DateCreated>
+        <DateRevised>
+            <Year>2017</Year>
+            <Month>04</Month>
+            <Day>21</Day>
+        </DateRevised>
+        <Article PubModel="Print-Electronic">
+            <Journal>
+                <ISSN IssnType="Electronic">1873-6424</ISSN>
+                <JournalIssue CitedMedium="Internet">
+                    <Volume>226</Volume>
+                    <PubDate>
+                        <Year>2017</Year>
+                        <Month>Apr</Month>
+                        <Day>18</Day>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Environmental pollution (Barking, Essex : 1987)</Title>
+                <ISOAbbreviation>Environ. Pollut.</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>Ambient PM2.5 exposure and premature mortality burden in the holy city Varanasi, India.</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>182-189</MedlinePgn>
+            </Pagination>
+            <ELocationID EIdType="pii" ValidYN="Y">S0269-7491(17)30163-X</ELocationID>
+            <ELocationID EIdType="doi" ValidYN="Y">10.1016/j.envpol.2017.04.028</ELocationID>
+            <Abstract>
+                <AbstractText>More than 3 million population residing in the holy city Varanasi and sub-urban areas is exposed to very high level of fine particulate matter (PM2.5) from various sources. Continuous monitoring by Central Pollution Control Board started only in 2015; therefore what was the pollution level in the past and how it has changed over the years are not known. We use MODIS aerosol products to infer PM2.5 and examine 15-year climatology. Data shows a rapid (1.5-3% per year) increase in PM2.5 in the last 15 years and high (87% days in a year) persistence of PM2.5 above the national air quality standard. It translates to a burden of 5700 (2800-7500) annual premature deaths (0.16% of the population), of which 29%, 18%, 33%, 19% and remaining 1% are attributed to ischemic heart disease, stroke, chronic obstructive pulmonary disease, acute lower respiratory infection and lung cancer respectively. If the region achieves the Indian (WHO) air quality standard, 1900 (3800) premature deaths can be avoided every year.</AbstractText>
+                <CopyrightInformation>Copyright © 2017. Published by Elsevier Ltd.</CopyrightInformation>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Jain</LastName>
+                    <ForeName>Vaishali</ForeName>
+                    <Initials>V</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Institute of Environment and Sustainable Development, Banaras Hindu University, Varanasi, Uttar Pradesh 221 005, India.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Dey</LastName>
+                    <ForeName>Sagnik</ForeName>
+                    <Initials>S</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Centre for Atmospheric Sciences, Indian Institute of Technology Delhi, Hauz Khas, New Delhi 110 016, India. Electronic address: sagnik@cas.iitd.ac.in.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Chowdhury</LastName>
+                    <ForeName>Sourangsu</ForeName>
+                    <Initials>S</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Centre for Atmospheric Sciences, Indian Institute of Technology Delhi, Hauz Khas, New Delhi 110 016, India.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType UI="D016428">Journal Article</PublicationType>
+            </PublicationTypeList>
+            <ArticleDate DateType="Electronic">
+                <Year>2017</Year>
+                <Month>04</Month>
+                <Day>18</Day>
+            </ArticleDate>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>England</Country>
+            <MedlineTA>Environ Pollut</MedlineTA>
+            <NlmUniqueID>8804476</NlmUniqueID>
+            <ISSNLinking>0269-7491</ISSNLinking>
+        </MedlineJournalInfo>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="received">
+                <Year>2017</Year>
+                <Month>01</Month>
+                <Day>13</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="revised">
+                <Year>2017</Year>
+                <Month>04</Month>
+                <Day>11</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="accepted">
+                <Year>2017</Year>
+                <Month>04</Month>
+                <Day>12</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>2017</Year>
+                <Month>4</Month>
+                <Day>22</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2017</Year>
+                <Month>4</Month>
+                <Day>22</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2017</Year>
+                <Month>4</Month>
+                <Day>22</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>aheadofprint</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pubmed">28431317</ArticleId>
+            <ArticleId IdType="pii">S0269-7491(17)30163-X</ArticleId>
+            <ArticleId IdType="doi">10.1016/j.envpol.2017.04.028</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+</PubmedArticleSet>

@@ -308,4 +308,23 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         assertThat(service.findLowestFreeNumberStartingFrom(minimum)).isEqualTo(17l);
         verify(repoMock).findLowestFreeNumberStartingFrom(minimum);
     }
+
+    @Test
+    public void deletingWithNullIds_doesNothing() {
+        service.deleteByIds(null);
+    }
+
+    @Test
+    public void deletingWithEmptyIds_doesNothing() {
+        service.deleteByIds(new ArrayList<Long>());
+    }
+
+    @Test
+    public void deletingWithIds() {
+        final List<Long> ids = Arrays.asList(-1l, -2l, -3l);
+        service.deleteByIds(ids);
+        verify(repoMock).delete(-1l);
+        verify(repoMock).delete(-2l);
+        verify(repoMock).delete(-3l);
+    }
 }
