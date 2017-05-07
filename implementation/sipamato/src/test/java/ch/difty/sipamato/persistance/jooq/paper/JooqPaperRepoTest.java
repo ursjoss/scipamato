@@ -348,6 +348,7 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
         when(getMapper().map(persistedRecord)).thenReturn(paperMock);
 
         final List<Paper> papers = repo.findPageByFilter(filterMock, paginationContextMock);
+        assertThat(papers).isEmpty();
 
         verify(getFilterConditionMapper()).map(filterMock);
         verify(paginationContextMock).getSort();
