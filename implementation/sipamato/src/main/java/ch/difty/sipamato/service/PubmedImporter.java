@@ -1,6 +1,4 @@
-package ch.difty.sipamato.web.service;
-
-import ch.difty.sipamato.service.ServiceResult;
+package ch.difty.sipamato.service;
 
 public interface PubmedImporter {
 

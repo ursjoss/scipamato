@@ -18,13 +18,13 @@ import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 
 import ch.difty.sipamato.auth.Roles;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
+import ch.difty.sipamato.service.PubmedImporter;
 import ch.difty.sipamato.service.ServiceResult;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.pages.paper.provider.PaperSlimByPaperFilterProvider;
 import ch.difty.sipamato.web.panel.pastemodal.XmlPasteModalPanel;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
-import ch.difty.sipamato.web.service.PubmedImporter;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 

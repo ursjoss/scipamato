@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.service;
+package ch.difty.sipamato.pubmed.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -21,6 +21,7 @@ import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.service.PubmedArticleService;
+import ch.difty.sipamato.service.PubmedImporter;
 import ch.difty.sipamato.service.ServiceResult;
 
 @RunWith(MockitoJUnitRunner.class)

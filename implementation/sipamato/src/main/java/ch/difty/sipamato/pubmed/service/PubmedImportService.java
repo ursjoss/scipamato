@@ -1,4 +1,4 @@
-package ch.difty.sipamato.web.service;
+package ch.difty.sipamato.pubmed.service;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
 import ch.difty.sipamato.service.DefaultServiceResult;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.service.PubmedArticleService;
+import ch.difty.sipamato.service.PubmedImporter;
 import ch.difty.sipamato.service.ServiceResult;
 
 @Service
