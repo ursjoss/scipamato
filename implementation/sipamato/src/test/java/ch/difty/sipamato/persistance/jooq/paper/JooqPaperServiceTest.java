@@ -37,6 +37,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     private final JooqPaperService service = new JooqPaperService();
 
+    private static final long MINIMUM_NUMBER = 7l;
+
     @Mock
     private PaperRepository repoMock;
     @Mock
@@ -186,7 +188,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Test
     public void dumpingEmptyListOfArticles_logsWarnMessage() {
-        ServiceResult sr = service.dumpPubmedArticlesToDb(articles);
+        ServiceResult sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER);
         assertThat(sr).isNotNull();
         assertThat(sr.getInfoMessages()).isEmpty();
         assertThat(sr.getWarnMessages()).isEmpty();
@@ -203,7 +205,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         when(repoMock.findByPmIds(Arrays.asList(pmIdValue))).thenReturn(Arrays.asList(paperMock));
         when(paperMock.getPmId()).thenReturn(pmIdValue);
 
-        ServiceResult sr = service.dumpPubmedArticlesToDb(articles);
+        ServiceResult sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER);
         assertThat(sr).isNotNull();
         assertThat(sr.getInfoMessages()).isEmpty();
         assertThat(sr.getWarnMessages()).hasSize(1).contains("PMID " + pmIdValue);
@@ -220,18 +222,20 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         articles.add(SipamatoPubmedArticle.of(pa));
 
         when(repoMock.findByPmIds(Arrays.asList(pmIdValue))).thenReturn(Arrays.asList());
+        when(repoMock.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)).thenReturn(17l);
 
         when(repoMock.add(Mockito.isA(Paper.class))).thenReturn(paperMock2);
         when(paperMock2.getId()).thenReturn(27l);
         when(paperMock2.getPmId()).thenReturn(pmIdValue);
 
-        ServiceResult sr = service.dumpPubmedArticlesToDb(articles);
+        ServiceResult sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER);
         assertThat(sr).isNotNull();
         assertThat(sr.getInfoMessages()).hasSize(1).contains("PMID " + pmIdValue + " (id 27)");
         assertThat(sr.getWarnMessages()).isEmpty();
         assertThat(sr.getErrorMessages()).isEmpty();
 
         verify(repoMock).findByPmIds(Arrays.asList(pmIdValue));
+        verify(repoMock).findLowestFreeNumberStartingFrom(MINIMUM_NUMBER);
         verify(repoMock).add(Mockito.isA(Paper.class));
         verify(paperMock2).getId();
         verify(paperMock2).getPmId();

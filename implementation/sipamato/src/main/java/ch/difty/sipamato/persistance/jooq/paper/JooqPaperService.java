@@ -49,14 +49,14 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     /** {@inheritDocs} */
     @Override
     @Transactional(readOnly = false)
-    public ServiceResult dumpPubmedArticlesToDb(final List<PubmedArticleFacade> articles) {
+    public ServiceResult dumpPubmedArticlesToDb(final List<PubmedArticleFacade> articles, final long minimumNumber) {
         final ServiceResult sr = new DefaultServiceResult();
         final List<Integer> pmIdCandidates = articles.stream().map(PubmedArticleFacade::getPmId).filter(Objects::nonNull).map(Integer::valueOf).collect(Collectors.toList());
         if (!pmIdCandidates.isEmpty()) {
             final List<String> existingPmIds = getRepository().findByPmIds(pmIdCandidates).stream().map(Paper::getPmId).map(String::valueOf).collect(Collectors.toList());
             final List<Paper> savedPapers = articles.stream()
                     .filter(a -> a.getPmId() != null && !existingPmIds.contains(a.getPmId()))
-                    .map(this::savePubmedArticle)
+                    .map((PubmedArticleFacade a) -> this.savePubmedArticle(a, minimumNumber))
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
             fillServiceResultFrom(savedPapers, existingPmIds, sr);
@@ -64,7 +64,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         return sr;
     }
 
-    private Paper savePubmedArticle(final PubmedArticleFacade article) {
+    private Paper savePubmedArticle(final PubmedArticleFacade article, final long minimumNumber) {
         final Paper p = new Paper();
         p.setPmId(Integer.valueOf(article.getPmId()));
         p.setAuthors(article.getAuthors());
@@ -74,6 +74,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         p.setLocation(article.getLocation());
         p.setDoi(article.getDoi());
         p.setOriginalAbstract(article.getOriginalAbstract());
+        p.setNumber(findLowestFreeNumberStartingFrom(minimumNumber));
         return getRepository().add(p);
     }
 

@@ -1,11 +1,13 @@
 package ch.difty.sipamato.web.pages.paper.list;
 
 import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -19,13 +21,15 @@ import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.service.CodeClassService;
 import ch.difty.sipamato.service.CodeService;
+import ch.difty.sipamato.service.DefaultServiceResult;
 import ch.difty.sipamato.service.Localization;
 import ch.difty.sipamato.service.PaperService;
-import ch.difty.sipamato.service.PubmedArticleService;
+import ch.difty.sipamato.service.ServiceResult;
 import ch.difty.sipamato.web.pages.BasePageTest;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.panel.pastemodal.XmlPasteModalPanel;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
+import ch.difty.sipamato.web.service.PubmedImporter;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
@@ -33,9 +37,9 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
     @MockBean
-    private PubmedArticleService pubmedArticleServiceMock;
-    @MockBean
     private PaperService paperServiceMock;
+    @MockBean
+    private PubmedImporter pubmedImportService;
 
     @MockBean
     private CodeService codeServiceMock;
@@ -48,7 +52,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(paperSlimRepoMock, codeServiceMock, codeClassServiceMock, pubmedArticleServiceMock, paperServiceMock);
+        verifyNoMoreInteractions(paperSlimRepoMock, codeServiceMock, codeClassServiceMock, paperServiceMock, pubmedImportService);
     }
 
     @Override
@@ -139,5 +143,20 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         getTester().assertComponent(b + ":submit", BootstrapAjaxButton.class);
 
         verify(paperSlimRepoMock, times(3)).countByFilter(isA(PaperFilter.class));
+    }
+
+    @Test
+    public void onXmlPasteModalPanelClose() {
+        AjaxRequestTarget targetMock = mock(AjaxRequestTarget.class);
+        ServiceResult serviceResult = new DefaultServiceResult();
+        serviceResult.addInfoMessage("info");
+        serviceResult.addWarnMessage("warn");
+        serviceResult.addErrorMessage("error");
+        when(pubmedImportService.persistPubmedArticlesFromXml("content")).thenReturn(serviceResult);
+
+        makePage().onXmlPasteModalPanelClose("content", targetMock);
+
+        verify(pubmedImportService).persistPubmedArticlesFromXml("content");
+        verify(paperSlimRepoMock).countByFilter(isA(PaperFilter.class));
     }
 }

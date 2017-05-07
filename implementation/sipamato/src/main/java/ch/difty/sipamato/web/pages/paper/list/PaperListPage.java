@@ -1,6 +1,5 @@
 package ch.difty.sipamato.web.pages.paper.list;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.apache.wicket.AttributeModifier;
@@ -19,15 +18,13 @@ import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 
 import ch.difty.sipamato.auth.Roles;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
-import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
-import ch.difty.sipamato.service.PaperService;
-import ch.difty.sipamato.service.PubmedArticleService;
 import ch.difty.sipamato.service.ServiceResult;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.pages.paper.provider.PaperSlimByPaperFilterProvider;
 import ch.difty.sipamato.web.panel.pastemodal.XmlPasteModalPanel;
 import ch.difty.sipamato.web.panel.result.ResultPanel;
+import ch.difty.sipamato.web.service.PubmedImporter;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 
@@ -49,10 +46,7 @@ public class PaperListPage extends BasePage<Void> {
     private static final int RESULT_PAGE_SIZE = 12;
 
     @SpringBean
-    private PubmedArticleService pubmedArticleService;
-
-    @SpringBean
-    private PaperService paperService;
+    private PubmedImporter pubmedImportService;
 
     private PaperFilter filter;
     private PaperSlimByPaperFilterProvider dataProvider;
@@ -136,19 +130,18 @@ public class PaperListPage extends BasePage<Void> {
     }
 
     /**
-     * Converts the XML string to articles and dump the new papers into the db. Present the service result messages.
+     * Converts the XML string to articles and dump the new papers into the db. Present the service result messages. Protected for test
      *
      * @param xmlPastePanel
      * @param target
      */
-    private void onXmlPasteModalPanelClose(final String pubmedContent, final AjaxRequestTarget target) {
-        final List<PubmedArticleFacade> articles = pubmedArticleService.extractArticlesFrom(pubmedContent);
-        final ServiceResult result = paperService.dumpPubmedArticlesToDb(articles);
-        provideUserFeedback(result, target);
+    protected void onXmlPasteModalPanelClose(final String pubmedContent, final AjaxRequestTarget target) {
+        final ServiceResult result = pubmedImportService.persistPubmedArticlesFromXml(pubmedContent);
+        translateServiceResultMessagesToLocalizedUserMessages(result, target);
     }
 
-    private void provideUserFeedback(final ServiceResult result, final AjaxRequestTarget target) {
-        result.getErrorMessages().forEach(this::error);
+    private void translateServiceResultMessagesToLocalizedUserMessages(final ServiceResult result, final AjaxRequestTarget target) {
+        result.getErrorMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.xml.invalid", this, null).getString()).forEach(this::error);
         result.getWarnMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.exists", this, null).setParameters(msg).getString()).forEach(this::warn);
         result.getInfoMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.saved", this, null).setParameters(msg).getString()).forEach(this::info);
         target.add(getFeedbackPanel());

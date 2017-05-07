@@ -47,9 +47,10 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * from PubMed via the {@link PubmedArticleFacade} entities.
      * 
      * @param articles list of {@link PubmedArticleFacade}
+     * @param minimumNumber. The lowest number that could be recycled
      * @return {@link ServiceResult}
      */
-    ServiceResult dumpPubmedArticlesToDb(List<PubmedArticleFacade> articles);
+    ServiceResult dumpPubmedArticlesToDb(List<PubmedArticleFacade> articles, long minimumNumber);
 
     /**
      * Finds an individual paper by number. Returns it as an optional of type <literal>T</literal>
