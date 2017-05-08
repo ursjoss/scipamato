@@ -428,17 +428,9 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             Form<T> tab2Form = new Form<>("tab2Form");
             queue(tab2Form);
 
-            queueNewFieldTo(Paper.METHOD_STUDY_DESIGN);
-            queueNewFieldTo(Paper.METHOD_OUTCOME);
-
-            queueNewFieldTo(Paper.POPULATION_PLACE);
-            queueNewFieldTo(Paper.POPULATION_PARTICIPANTS);
-            queueNewFieldTo(Paper.POPULATION_DURATION);
-
-            queueNewFieldTo(Paper.EXPOSURE_POLLUTANT);
-            queueNewFieldTo(Paper.EXPOSURE_ASSESSMENT);
-            queueNewFieldTo(Paper.METHOD_STATISTICS);
-            queueNewFieldTo(Paper.METHOD_CONFOUNDERS);
+            queueTo(Paper.RESULT);
+            queueTo(Paper.COMMENT);
+            queueTo(Paper.INTERN);
 
             queueNewFieldTo(Paper.RESULT_MEASURED_OUTCOME);
             queueNewFieldTo(Paper.RESULT_EXPOSURE_RANGE);
@@ -448,6 +440,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
     private class TabPanel3 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
+
+        private static final String CODES_CLASS_BASE_NAME = "codesClass";
 
         public TabPanel3(String id, IModel<T> model) {
             super(id, model);
@@ -460,36 +454,10 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             Form<T> tab3Form = new Form<>("tab3Form");
             queue(tab3Form);
 
-            queueTo(Paper.RESULT);
-            queueTo(Paper.COMMENT);
-            queueTo(Paper.INTERN);
-
-            queueNewFieldTo(Paper.RESULT_MEASURED_OUTCOME);
-            queueNewFieldTo(Paper.RESULT_EXPOSURE_RANGE);
-            queueNewFieldTo(Paper.RESULT_EFFECT_ESTIMATE);
-        }
-    }
-
-    private class TabPanel4 extends AbstractTabPanel {
-        private static final long serialVersionUID = 1L;
-
-        private static final String CODES_CLASS_BASE_NAME = "codesClass";
-
-        public TabPanel4(String id, IModel<T> model) {
-            super(id, model);
-        }
-
-        @Override
-        protected void onInitialize() {
-            super.onInitialize();
-
-            Form<T> tab4Form = new Form<>("tab4Form");
-            queue(tab4Form);
-
             CodeClassModel codeClassModel = new CodeClassModel(getLocalization().getLocalization());
             List<CodeClass> codeClasses = codeClassModel.getObject();
 
-            makeCodeClass1Complex(codeClasses, tab4Form);
+            makeCodeClass1Complex(codeClasses, tab3Form);
             makeCodeClassComplex(CodeClassId.CC2, codeClasses);
             makeCodeClassComplex(CodeClassId.CC3, codeClasses);
             makeCodeClassComplex(CodeClassId.CC4, codeClasses);
@@ -549,6 +517,38 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             multiSelect.add(new AttributeModifier("data-width", "fit"));
             queue(multiSelect);
             return multiSelect;
+        }
+    }
+
+    private class TabPanel4 extends AbstractTabPanel {
+        private static final long serialVersionUID = 1L;
+
+        public TabPanel4(String id, IModel<T> model) {
+            super(id, model);
+        }
+
+        @Override
+        protected void onInitialize() {
+            super.onInitialize();
+
+            Form<T> tab4Form = new Form<>("tab4Form");
+            queue(tab4Form);
+
+            queueNewFieldTo(Paper.METHOD_STUDY_DESIGN);
+            queueNewFieldTo(Paper.METHOD_OUTCOME);
+
+            queueNewFieldTo(Paper.POPULATION_PLACE);
+            queueNewFieldTo(Paper.POPULATION_PARTICIPANTS);
+            queueNewFieldTo(Paper.POPULATION_DURATION);
+
+            queueNewFieldTo(Paper.EXPOSURE_POLLUTANT);
+            queueNewFieldTo(Paper.EXPOSURE_ASSESSMENT);
+            queueNewFieldTo(Paper.METHOD_STATISTICS);
+            queueNewFieldTo(Paper.METHOD_CONFOUNDERS);
+
+            queueNewFieldTo(Paper.RESULT_MEASURED_OUTCOME);
+            queueNewFieldTo(Paper.RESULT_EXPOSURE_RANGE);
+            queueNewFieldTo(Paper.RESULT_EFFECT_ESTIMATE);
         }
     }
 
