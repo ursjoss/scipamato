@@ -1,6 +1,8 @@
 wicket:
   core:
     settings:
+      general:
+        configuration-type: development
       markup:
         stripWicketTags: true
   stuff:
