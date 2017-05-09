@@ -506,7 +506,7 @@
                 </property>
             </activation>
             <properties>
-                <spring.profile.include>postgres,h2</spring.profile.include>
+                <spring.profile.include>h2,DB_JOOQ</spring.profile.include>
                 <!-- db specific property file (containing url, username etc.) published to maven plugins (Flyway, jOOQ) by the properties-maven-plugin -->
                 <profile-specific-property-file>src/main/resources/application-h2.properties</profile-specific-property-file>
                 <jooq-db-generator>org.jooq.util.h2.H2Database</jooq-db-generator>
