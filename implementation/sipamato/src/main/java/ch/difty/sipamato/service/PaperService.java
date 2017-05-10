@@ -53,7 +53,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
     ServiceResult dumpPubmedArticlesToDb(List<PubmedArticleFacade> articles, long minimumNumber);
 
     /**
-     * Finds an individual paper by number. Returns it as an optional of type <literal>T</literal>
+     * Finds an individual paper by number. Returns it as an optional of type {@code T}
      *
      * @param number - must not be null
      * @return Optional

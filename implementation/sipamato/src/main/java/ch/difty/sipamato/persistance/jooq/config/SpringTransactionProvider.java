@@ -53,7 +53,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import ch.difty.sipamato.lib.AssertAs;
 
 /**
- * An example <code>TransactionProvider</code> implementing the {@link TransactionProvider} contract for use with Spring.
+ * An example {@code TransactionProvider} implementing the {@link TransactionProvider} contract for use with Spring.
  *
  * @author Lukas Eder
  * @author Urs Joss

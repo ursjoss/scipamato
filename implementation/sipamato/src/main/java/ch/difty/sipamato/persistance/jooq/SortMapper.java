@@ -21,13 +21,13 @@ import ch.difty.sipamato.paging.Sort;
  * Default implementation of the {@link JooqSortMapper} interface.
  *
  * Sort properties are de-camel-cased; java property namees are therefore converted to table column names, e.g.
- * <literal>publicationYear</literatl> will be used as <literal>publication_year</literal>
+ * {@code publicationYear} will be used as {@code publication_year}
  *
  * @author u.joss
  *
  * @param <R> the type of the record, extending {@link Record}
  * @param <T> the type of the entity, extending {@link SipamatoEntity}
- * @param <TI> the type of the table implementation of record <literal>R</literal>
+ * @param <TI> the type of the table implementation of record {@code R}
  */
 @Component
 public class SortMapper<R extends Record, T extends SipamatoEntity, TI extends TableImpl<R>> implements JooqSortMapper<R, T, TI> {

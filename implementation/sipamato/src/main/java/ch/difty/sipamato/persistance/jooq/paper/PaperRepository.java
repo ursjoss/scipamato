@@ -60,9 +60,9 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
 
     /**
      * Finds the lowest free number starting from the supplied minimum  parameter. Will find gaps if those numbers
-     * are equal to or larger than <literal>minimumPaperNumberToBeRecycled</literal>.
+     * are equal to or larger than {@code minimumPaperNumberToBeRecycled}.
      * @param minimumPaperNumberToBeRecycled any gaps lower than this value will not be recycled
-     * @return lowest free number ignoring any gaps below <literal>minimumPaperNumberToBeRecycled</literal>
+     * @return lowest free number ignoring any gaps below {@code minimumPaperNumberToBeRecycled}
      */
     long findLowestFreeNumberStartingFrom(long minimumPaperNumberToBeRecycled);
 

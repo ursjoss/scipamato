@@ -22,20 +22,20 @@ import java.util.regex.Pattern;
  * safely ignore the different types and simply distinguish the {@link MatchType} to apply the concrete
  * search logic to the database.
  * <p>
- * Each token returned by the class offers the lexed <code>rawData</code>, an sql-ized form of it already
+ * Each token returned by the class offers the lexed {@code rawData}, an sql-ized form of it already
  * containing the wild-card indicator (%) for appropriate.
  * <p>
  * The tokens targeted for the user fields, could be of match type: 
  * <ul>
- * <li> <b>CONTAINS:</b> searchterm contained within field, e.g. <code>createdBy like '%foo%'</code> </code> </li>
+ * <li> <b>CONTAINS:</b> searchterm contained within field, e.g. {@code createdBy like '%foo%'} </code> </li>
  * <li> <b>NONE:</b> dummy category which will be ignored.</li>
  * </ul>
  * <p>
- * The date fields may either contain a complete time stamp in the format <code>yyyy-MM-dd hh:mm:ss</code> or only
- * the date part <code>yyyy-MM-dd</code>. In the latter case, the date will be completed with a time part, depending
+ * The date fields may either contain a complete time stamp in the format {@code yyyy-MM-dd hh:mm:ss} or only
+ * the date part {@code yyyy-MM-dd}. In the latter case, the date will be completed with a time part, depending
  * on the match type with ' 23:59:59' or with ' 00:00:00'.
  * <ul>
- * <li> <b>EQUALS:</b> exact search, e.g. <code>field = 'foo'</code> (dates are completed with ' 00:00:00') </li>
+ * <li> <b>EQUALS:</b> exact search, e.g. {@code field = 'foo'} (dates are completed with ' 00:00:00') </li>
  * <li> <b>GREATER_THAN:</b> date is after the specified date (dates are completed with ' 23:59:59') </li>
  * <li> <b>GREATER_OR_EQUAL:</b> the date is at or after the specified date (dates are completed with ' 00:00:00')</li>
  * <li> <b>LESS_THAN:</b> the date is before the specified date (dates are completed with ' 00:00:00')</li>

@@ -2,7 +2,7 @@ package ch.difty.sipamato.logic.parsing;
 
 /**
  * The implementation of the {@link AuthorParserFactory} provides a configured {@link AuthorParser} able parse the provided
- * property String <literal>authorString</literal>.
+ * property String {@code authorString}.
  *
  * @author u.joss
  */
@@ -10,8 +10,8 @@ package ch.difty.sipamato.logic.parsing;
 public interface AuthorParserFactory {
 
     /**
-     * Creates an implementation of an {@link AuthorParser} depending on the provided <literal>author string</literal>.
-     * Returns a <literal>DEFAULT</literal> {@link AuthorParser} if the <literal>authorString</literal> is null or undefined.
+     * Creates an implementation of an {@link AuthorParser} depending on the provided {@code author string}.
+     * Returns a {@code DEFAULT} {@link AuthorParser} if the {@code authorString} is null or undefined.
      *
      * @param authorString - valid, invalid or null
      * @return {@link AuthorParser}

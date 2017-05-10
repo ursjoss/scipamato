@@ -15,14 +15,14 @@ import ch.difty.sipamato.paging.PaginationContext;
  *
  * @author u.joss
  *
- * @param <ID> the type of the ID of entity <literal>T</literal>
+ * @param <ID> the type of the ID of entity {@code T}
  * @param <T> the entity type, extending {@link SipamatoEntity}
  * @param <F> the filter, extending {@link SipamatoFilter}
  */
 public interface ReadOnlyService<ID extends Number, T extends IdSipamatoEntity<ID>, F extends SipamatoFilter> extends Serializable {
 
     /**
-     * Finds an individual entity by ID. Returns it as an optional of type <literal>T</literal>
+     * Finds an individual entity by ID. Returns it as an optional of type {@code T}
      *
      * @param id - must not be null
      * @return Optional
@@ -31,11 +31,11 @@ public interface ReadOnlyService<ID extends Number, T extends IdSipamatoEntity<I
     Optional<T> findById(ID id);
 
     /**
-     * Finds a page full of records of type <literal>T</literal> matching the provided filter and pagination context.
+     * Finds a page full of records of type {@code T} matching the provided filter and pagination context.
      *
      * @param filter the filter
      * @param pagination context defining paging and sorting
-     * @return a page of entities of type <literal>T</literal> as list
+     * @return a page of entities of type {@code T} as list
      */
     List<T> findPageByFilter(F filter, PaginationContext paginationContext);
 

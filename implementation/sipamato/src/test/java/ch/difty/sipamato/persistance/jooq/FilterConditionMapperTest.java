@@ -23,7 +23,7 @@ public abstract class FilterConditionMapperTest<R extends Record, TI extends Tab
     }
 
     /**
-     * @return the jOOQ generated table of type <code>T</code>
+     * @return the jOOQ generated table of type {@code T}
      */
     protected abstract TI getTable();
 

@@ -118,7 +118,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdSipamat
     protected abstract ReadOnlyRepository<T, ID, F> getRepo();
 
     /**
-     * Hand-rolled spy that returns the provided entity in the method <code>findById(ID id)</code>
+     * Hand-rolled spy that returns the provided entity in the method {@code findById(ID id)}
      *
      * @param entity the entity to be found.
      * @return the entity

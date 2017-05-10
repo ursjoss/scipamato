@@ -55,7 +55,7 @@ public abstract class JooqBySearchOrderRepo<T extends IdSipamatoEntity<Long>, M 
      * @param dsl
      *      the {@link DSLContext}
      * @param mapper
-     *      derivatives of {@link EntityRecordMapper} specific to type <code>Paper</code>s or <code>PaperSlim</code>s
+     *      derivatives of {@link EntityRecordMapper} specific to type {@code Paper}s or {@code PaperSlim}s
      * @param sortMapper
      *      paper or paperSlim specific {@link JooqSortMapper}
      */

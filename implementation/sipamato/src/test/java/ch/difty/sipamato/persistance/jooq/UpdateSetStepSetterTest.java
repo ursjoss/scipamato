@@ -51,7 +51,7 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends Sipama
     protected abstract void entityFixture();
 
     /**
-     * fixture for stepSet, starting with <code>getStep()</code>, following up with <code>getMoreStep()</code>, e.g.
+     * fixture for stepSet, starting with {@code getStep()}, following up with {@code getMoreStep()}, e.g.
      *
      * <code><pre>
      * when(getStep().set(PAPER.PM_ID, PM_ID)).thenReturn(getMoreStep());

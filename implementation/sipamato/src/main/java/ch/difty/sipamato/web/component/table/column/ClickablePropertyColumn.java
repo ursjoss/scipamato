@@ -13,7 +13,7 @@ import ch.difty.sipamato.web.component.SerializableConsumer;
 
 /**
  * ClickablePropertyColumn, a lambdified version of the one provided in
- * <literal>Apache Wicket Cookbook</literal> - thanks to Igor Vaynberg.
+ * {@code Apache Wicket Cookbook} - thanks to Igor Vaynberg.
  *
  * @author u.joss
  *

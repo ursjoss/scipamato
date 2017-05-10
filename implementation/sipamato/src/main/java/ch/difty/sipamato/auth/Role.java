@@ -5,7 +5,7 @@ package ch.difty.sipamato.auth;
  *
  * The keys are defined in an external interface, so they can be used for authorization in pages, e.g.:<p/>
  *
- * <code>@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })</code
+ * {@literal @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })}
  *
  * @author u.joss
  */

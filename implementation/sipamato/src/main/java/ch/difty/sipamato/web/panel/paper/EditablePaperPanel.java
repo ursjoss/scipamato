@@ -238,7 +238,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     /**
-     * Sets the paper's <literal>fieldName</literal> value if it has been null - and informs about the change.
+     * Sets the paper's {@code fieldName} value if it has been null - and informs about the change.
      * If the value is not null, it compares the paper's value with the article's value and informs about mismatches - unless it's the original abstract,
      * which is not compared, as the differences can be subtle but not really that important.
      * @param fieldName the name of the field (as defined in the entity)
@@ -270,7 +270,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     /**
-     * Sets the paper's integer <literal>fieldName</literal> value if it has been null - and informs about the change.
+     * Sets the paper's integer {@code fieldName} value if it has been null - and informs about the change.
      * If the value is not null, it compares the paper's value with the article's value and informs about mismatches.
      * If the paper's value cannot be converted to integer, an error message is issued.
      * @param fieldName the name of the field (as defined in the entity)

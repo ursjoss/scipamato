@@ -31,7 +31,7 @@ public abstract class EntityRecordMapper<R extends Record, T extends SipamatoEnt
     }
 
     /**
-     * @return an empty instance of entity <code>T</code>
+     * @return an empty instance of entity {@code T}
      */
     protected abstract T makeEntity();
 
@@ -39,7 +39,7 @@ public abstract class EntityRecordMapper<R extends Record, T extends SipamatoEnt
      * @param record the record to provide the audit fields for
      * @return an instance of the {@link AuditFields} dto
      *
-     * <code>return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion())</code>
+     * {@code return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion())}
      */
     protected abstract AuditFields getAuditFieldsOf(R record);
 

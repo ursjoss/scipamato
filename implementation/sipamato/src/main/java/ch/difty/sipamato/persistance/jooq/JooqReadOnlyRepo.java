@@ -26,9 +26,9 @@ import ch.difty.sipamato.service.Localization;
  *
  * @param <R> the type of the record, extending {@link Record}
  * @param <T> the type of the entity, extending {@link SipamatoEntity}
- * @param <ID> the type of the ID of the entity <literal>T</literal>
- * @param <TI> the type of the table implementation of record <literal>R</literal>
- * @param <M> the type of the record mapper, mapping record <literal>R</literal> into the entity <literal>T</literal>
+ * @param <ID> the type of the ID of the entity {@code T}
+ * @param <TI> the type of the table implementation of record {@code R}
+ * @param <M> the type of the record mapper, mapping record {@code R} into the entity {@code T}
  * @param <F> the type of the filter, extending {@link SipamatoFilter}
  */
 @Profile("DB_JOOQ")
@@ -45,7 +45,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntit
 
     /**
      * @param dsl the {@link DSLContext}
-     * @param mapper record mapper mapping record <literal>R</literal> into entity <literal>T</literal>
+     * @param mapper record mapper mapping record {@code R} into entity {@code T}
      * @param sortMapper {@link JooqSortMapper} mapping spring data sort specifications into jOOQ specific sort specs
      * @param filterConditionMapper the {@link GenericFilterConditionMapper} mapping a derivative of {@link SipamatoFilter} into jOOC {@link Condition}s
      * @param localization {@link Localization} bean providing the information about the requested localization code.
@@ -75,22 +75,22 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntit
     }
 
     /**
-     * @return the entity class <code>T.class</code>
+     * @return the entity class {@code T.class}
      */
     protected abstract Class<? extends T> getEntityClass();
 
     /**
-     * @return the Record Class <code>R.class</code>
+     * @return the Record Class {@code R.class}
      */
     protected abstract Class<? extends R> getRecordClass();
 
     /**
-     * @return the jOOQ generated table of type <code>T</code>
+     * @return the jOOQ generated table of type {@code T}
      */
     protected abstract TI getTable();
 
     /**
-     * @return the jOOQ generated {@link TableField} representing the <code>ID</code>
+     * @return the jOOQ generated {@link TableField} representing the {@code ID}
      */
     protected abstract TableField<R, ID> getTableId();
 
@@ -119,7 +119,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntit
 
     /**
      * Implement if associated entities need separate saving.
-     * @param entity entity of type <code>T</code> with sub entities to be enriched.
+     * @param entity entity of type {@code T} with sub entities to be enriched.
      */
     protected void enrichAssociatedEntitiesOf(final T entity) {
     }

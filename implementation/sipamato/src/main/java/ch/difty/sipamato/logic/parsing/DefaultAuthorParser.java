@@ -17,7 +17,7 @@ import ch.difty.sipamato.lib.AssertAs;
  *
  * An example of a typical author string is:<p/>
  *
- * <literal>Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.</literal><p/>
+ * {@code Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.}<p/>
  *
  * <ul>
  * <li> An author can have one or more names + initials.

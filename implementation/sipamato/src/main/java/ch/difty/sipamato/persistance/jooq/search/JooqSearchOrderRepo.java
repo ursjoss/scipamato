@@ -341,7 +341,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
 
     /**
      * Tries to load an already persisted instance of {@link SearchCondition} for the given search order (identified by the 
-     * <code>searchOrderId</code>) semantically covering the same searchConditions.
+     * {@code searchOrderId}) semantically covering the same searchConditions.
      * @param searchCondition the search condition we're trying to find the semantically identical persisted version for.
      * @param searchOrderId identifying the search order
      * @return optional of the persisted version (if found - empty othewise)

@@ -4,7 +4,7 @@ package ch.difty.sipamato.entity.filter;
  * Implementation of {@link SearchTerm} working with Boolean fields.
  *
  * There is no meta-specification possible in boolean {@link SearchTerm}s.
- * The value can either be <code>true</code> or <code>false</code>.
+ * The value can either be {@code true} or {@code false}.
  *
  * @author u.joss
  */
@@ -32,8 +32,8 @@ public class BooleanSearchTerm extends SearchTerm {
     }
 
     /**
-     * If true: <code>fieldName</code>
-     * If false: <code>-fieldName</code>
+     * If true: {@code fieldName}
+     * If false: {@code -fieldName}
      */
     @Override
     public String getDisplayValue() {

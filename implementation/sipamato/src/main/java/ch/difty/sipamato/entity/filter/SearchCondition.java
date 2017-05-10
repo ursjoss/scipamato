@@ -59,7 +59,7 @@ import ch.difty.sipamato.entity.SearchConditionCodeBox;
  * Internally it stores any of the fields that were explicitly set in Maps that can be accessed
  * to be evaluated by the query engine.<p/>
  *
- * <b>Note:</b> the actual ID of the {@link SearchCondition} is called <code>searchConditionId</code>
+ * <b>Note:</b> the actual ID of the {@link SearchCondition} is called {@code searchConditionId}
  * due to the name clash with its search condition id, which holds the search term for the paper id.<p/>
  *
  * @author u.joss

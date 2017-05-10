@@ -39,7 +39,7 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
      * @param name
      *           the name of the report (without the extension .jrxml
      * @param cacheReport
-     *           if <code>true</code> the report is only compiled from xml when the report is requested for the first time. 
+     *           if {@code true} the report is only compiled from xml when the report is requested for the first time. 
      */
     public JasperReportResourceReference(final Class<?> scope, final String name, final boolean cacheReport) {
         super(scope, name + ".jrxml");

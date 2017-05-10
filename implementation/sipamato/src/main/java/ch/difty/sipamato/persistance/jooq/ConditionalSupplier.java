@@ -14,7 +14,7 @@ import org.jooq.lambda.tuple.Tuple;
 import org.jooq.lambda.tuple.Tuple2;
 
 /**
- * Conditional Supplier allowing to add {@link Condition}s and combine them with <code>OR</code> or <code>AND</code>.<p/>
+ * Conditional Supplier allowing to add {@link Condition}s and combine them with {@code OR} or {@code AND}.<p/>
  *
  * Original version by Lukas Saldanha. Optimized using jOOλ with some hints by Lukas Eder.<p/>
  * 

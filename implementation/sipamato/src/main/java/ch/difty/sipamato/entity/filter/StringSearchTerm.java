@@ -19,17 +19,17 @@ import java.util.regex.Pattern;
  * safely ignore the different types and simply distinguish the {@link MatchType} to apply the concrete
  * search logic to the database.
  * <p> 
- * Each token returned by the class offers the lexed <code>rawData</code>, an sql-ized form of it already
+ * Each token returned by the class offers the lexed {@code rawData}, an sql-ized form of it already
  * containing the wild-card indicator (%) as well as an indication of whether the search applies positively
- * (e.g. <code>like 'foo%'</code>) or negatively (<code>not like 'foo%'<code>).
+ * (e.g. {@code like 'foo%'}) or negatively (<code>not like 'foo%'<code>).
  * <p>
  * The following {@link MatchType}s are implemented (using pseudo-code examples):
  * <ul>
- * <li> <b>EQUALS:</b> exact search, e.g. <code>field = 'foo'</code> or <code>field != 'foo'</code> </li>
- * <li> <b>CONTAINS:</b> searchterm contained within field, e.g. <code>field like '%foo%'</code> or <code>field not like '%foo%'</code> </li>
- * <li> <b>LIKE:</b> positive match with wildcards, e.g. <code>field like '%foo%'</code> or <code>field not like '%foo%'</code></li>
- * <li> <b>REGEX:</b> full regex search, e.g. <code>field regexp_like 's/fo{1,2}/'</code> or <code>field ! regexp_like 's/fo{1,2}/'</code></li>
- * <li> <b>LENGTH:</b> field has content, e.g. <code>length(field) > 0</code> or field is empty <code>length(field = 0</code></li>
+ * <li> <b>EQUALS:</b> exact search, e.g. {@code field = 'foo'} or {@code field != 'foo'} </li>
+ * <li> <b>CONTAINS:</b> searchterm contained within field, e.g. {@code field like '%foo%'} or {@code field not like '%foo%'} </li>
+ * <li> <b>LIKE:</b> positive match with wildcards, e.g. {@code field like '%foo%'} or {@code field not like '%foo%'}</li>
+ * <li> <b>REGEX:</b> full regex search, e.g. {@code field regexp_like 's/fo{1,2}/'} or {@code field ! regexp_like 's/fo{1,2}/'}</li>
+ * <li> <b>LENGTH:</b> field has content, e.g. {@code length(field) > 0} or field is empty {@code length(field = 0}</li>
  * <li> <b>NONE:</b> dummy category which will be ignored.</li>
  * </ul>
  * <p>
@@ -132,7 +132,7 @@ public class StringSearchTerm extends SearchTerm {
 
     /**
      * The token holds the raw and the sql-ized form of the search string.
-     * It also indicates whether the search should be inverted (<code>not</code>)
+     * It also indicates whether the search should be inverted ({@code not})
      */
     public static class Token implements Serializable {
         private static final long serialVersionUID = 1L;

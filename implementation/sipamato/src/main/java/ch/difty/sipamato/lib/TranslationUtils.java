@@ -20,7 +20,7 @@ public final class TranslationUtils {
     }
 
     /**
-     * Converts a camel cased string into an underscored one, e.g. <literal>fooBar</literal> -> <literal>foo_bar</literal>
+     * Converts a camel cased string into an underscored one, e.g. {@code fooBar} {@literal ->} {@code foo_bar}
      * @param original
      * @return de-camel-cased string (or null if original is null)
      */

@@ -109,7 +109,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdSipamatoE
     protected abstract EntityRepository<T, ID, F> getRepo();
 
     /**
-     * Hand-rolled spy that returns the provided entity in the method <code>findById(ID id)</code>
+     * Hand-rolled spy that returns the provided entity in the method {@code findById(ID id)}
      *
      * @param entity the entity to be found.
      * @return the entity

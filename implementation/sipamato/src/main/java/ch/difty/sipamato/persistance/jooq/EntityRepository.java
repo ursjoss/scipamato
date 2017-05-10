@@ -16,10 +16,10 @@ import ch.difty.sipamato.lib.NullArgumentException;
 public interface EntityRepository<T extends SipamatoEntity, ID, F extends SipamatoFilter> extends ReadOnlyRepository<T, ID, F> {
 
     /**
-     * Add an entity <code>T</code> to the database.
+     * Add an entity {@code T} to the database.
      *
      * @param entity - must not be null
-     * @return the added entity, including the generated default values - or <literal>null</literal> if it can't be added.
+     * @return the added entity, including the generated default values - or {@code null} if it can't be added.
      * @throws NullArgumentException if the entity is null.
      */
     T add(T entity);
@@ -34,7 +34,7 @@ public interface EntityRepository<T extends SipamatoEntity, ID, F extends Sipama
     T delete(ID id);
 
     /**
-     * Searches the persistent entity <code>T</code> and modifies it according to the values of the provided entity.
+     * Searches the persistent entity {@code T} and modifies it according to the values of the provided entity.
      *
      * @param entity the entity with some changed values - must not be null.
      * @return the modified persisted entity

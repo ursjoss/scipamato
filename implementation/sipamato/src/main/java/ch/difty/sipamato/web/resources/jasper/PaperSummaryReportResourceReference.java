@@ -23,10 +23,10 @@ public class PaperSummaryReportResourceReference extends JasperReportResourceRef
     }
 
     /**
-     * Use this constructor with parameter <code>false</code> while developing the report.
+     * Use this constructor with parameter {@code false} while developing the report.
      *
-     * @param cacheReport if <code>true</code> the compiled report is cached. 
-     *                    If <code>false</code> it will be recompiled every time the report is retrieved.
+     * @param cacheReport if {@code true} the compiled report is cached. 
+     *                    If {@code false} it will be recompiled every time the report is retrieved.
      */
     private PaperSummaryReportResourceReference(final boolean cacheReport) {
         super(PaperSummaryReportResourceReference.class, NAME, cacheReport);

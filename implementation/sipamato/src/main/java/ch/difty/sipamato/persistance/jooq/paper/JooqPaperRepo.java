@@ -215,16 +215,16 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     /**
      * {@inheritDoc}
      * <p>
-     * Note: If <literal>minimumPaperNumberToBeRecycled</literal> is itself part of a gap range, the current
+     * Note: If {@code minimumPaperNumberToBeRecycled} is itself part of a gap range, the current
      * implementation will not return any numbers of the same gap range.<p>
      * <p>
      * Example:
      * <ul>
-     * <li> assume the first gap to be in the range [5,9], the second gap is <literal>17</literal>.</li>
-     * <li> the last used value is <literal>36</literal>
-     * <li> assume <literal>minimumPaperNumberToBeRecycled=6</literal></li>
-     * <li> calling the method twice will return the following values: <literal>17</literal>, <literal>37</literal></li>
-     * <li> it will ignore the values <literal>6</literal> to <literal>9</literal> which are in the same gap as the minimum value</li>
+     * <li> assume the first gap to be in the range [5,9], the second gap is {@code 17}.</li>
+     * <li> the last used value is {@code 36}
+     * <li> assume {@code minimumPaperNumberToBeRecycled=6}</li>
+     * <li> calling the method twice will return the following values: {@code 17}, {@code 37}</li>
+     * <li> it will ignore the values {@code 6} to {@code 9} which are in the same gap as the minimum value</li>
      * </ul>
      **/
     @Override

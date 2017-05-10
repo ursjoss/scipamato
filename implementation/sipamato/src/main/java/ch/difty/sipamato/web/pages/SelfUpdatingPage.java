@@ -15,7 +15,7 @@ import ch.difty.sipamato.service.Localization;
  * <p>
  * Offers the implementing pages to limit feedback messages to one message only or set
  * it back to showing all feedback messages without filtering. This can be helpful
- * if validations prevent saving a new entity <code>T</code> which does not yet have all
+ * if validations prevent saving a new entity {@code T} which does not yet have all
  * required fields or does not pass validation until more data has been entered. See
  * {{@link #tuneDownFeedbackMessages()/@link #resetFeedbackMessages()}}.
  * <p>
@@ -89,7 +89,7 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
     protected abstract Form<T> getForm();
 
     /**
-     * Indicates the entity <code>T</code> has not been persisted. Turns down the number of feedback messages
+     * Indicates the entity {@code T} has not been persisted. Turns down the number of feedback messages
      * (one message only) in order not to flood the user with too much information.
      */
     protected void tuneDownFeedbackMessages() {
@@ -97,7 +97,7 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
     }
 
     /**
-     * Indicates the entity <code>T</code> has successfully been persisted. Turns back on feedback messages
+     * Indicates the entity {@code T} has successfully been persisted. Turns back on feedback messages
      * to the max value, so further validation issues can be indicated to the user in full detail.
      */
     protected void resetFeedbackMessages() {

@@ -31,9 +31,9 @@ import ch.difty.sipamato.service.Localization;
  *
  * @param <R> the type of the record, extending {@link Record}
  * @param <T> the type of the entity, extending {@link SipamatoEntity}
- * @param <ID> the type of the ID of the entity <literal>T</literal>
- * @param <TI> the type of the table implementation of record <literal>R</literal>
- * @param <M> the type of the record mapper, mapping record <literal>R</literal> into entity <literal>T</literal>
+ * @param <ID> the type of the ID of the entity {@code T}
+ * @param <TI> the type of the table implementation of record {@code R}
+ * @param <M> the type of the record mapper, mapping record {@code R} into entity {@code T}
  * @param <F> the type of the filter, extending {@link SipamatoFilter}
  */
 @Profile("DB_JOOQ")
@@ -49,7 +49,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
 
     /**
      * @param dsl the {@link DSLContext}
-     * @param mapper record mapper mapping record <literal>R</literal> into entity <literal>T</literal>
+     * @param mapper record mapper mapping record {@code R} into entity {@code T}
      * @param sortMapper {@link JooqSortMapper} mapping spring data sort specifications into jOOQ specific sort specs
      * @param filterConditionMapper the {@link GenericFilterConditionMapper} mapping a derivative of {@link SipamatoFilter} into jOOC Condition
      * @param dateTimeService the {@link DateTimeService} providing access to the system time
@@ -78,13 +78,13 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
 
     /**
      * @param record persisted record that now holds the ID from the database.
-     * @return the id of type <code>ID</code>
+     * @return the id of type {@code ID}
      */
     protected abstract ID getIdFrom(R record);
 
     /**
      * @param entity persisted entity that now holds the ID from the database.
-     * @return the id of type <code>ID</code>
+     * @return the id of type {@code ID}
      */
     protected abstract ID getIdFrom(T entity);
 

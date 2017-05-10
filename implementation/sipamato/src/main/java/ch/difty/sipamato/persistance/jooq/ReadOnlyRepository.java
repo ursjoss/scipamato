@@ -22,15 +22,15 @@ public interface ReadOnlyRepository<T extends SipamatoEntity, ID, F extends Sipa
     /**
      * Finds all persisted entities.
      *
-     * @return list of all entities <code>T</code>
+     * @return list of all entities {@code T}
      */
     List<T> findAll();
 
     /**
-     * Finds the persistent entities <code>T</code> with the provided id.
+     * Finds the persistent entities {@code T} with the provided id.
      *
      * @param id - must not be null
-     * @return the persisted entity <code>T</code> or null if it can't be found.
+     * @return the persisted entity {@code T} or null if it can't be found.
      * @throws NullArgumentException if the id is null.
      */
     T findById(ID id);
@@ -38,17 +38,17 @@ public interface ReadOnlyRepository<T extends SipamatoEntity, ID, F extends Sipa
     /**
      * Finds the persisted entities matching the provided filter and pagination context.
      *
-     * @param filter of type <code>F</code>
+     * @param filter of type {@code F}
      * @param paginationContext {@link PaginationContext}
-     * @return list of all matching entities <code>T</code>
+     * @return list of all matching entities {@code T}
      */
     List<T> findPageByFilter(F filter, PaginationContext paginationContext);
 
     /**
      * Counts all persisted entities matching the provided filter. 
      *
-     * @param filter of type <code>F</code>
-     * @return list of all matching entities <code>T</code>
+     * @param filter of type {@code F}
+     * @return list of all matching entities {@code T}
      */
     int countByFilter(F filter);
 }

@@ -36,7 +36,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCD
  * The page forwards to the {@link PaperSearchCriteriaPage} in order to set up or amend the {@link SearchCriteria}
  * contained within a {@link SearchOrder}.
  *
- * You can either pass a model of a {@link SearchOrder} to the page constructor or provide the <code>searchOrderId</code>
+ * You can either pass a model of a {@link SearchOrder} to the page constructor or provide the {@code searchOrderId}
  * through the {@link PageParameters}. If it is valid, the page will load the search order from DB.
  *
  * @author u.joss
@@ -63,7 +63,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
      * Instantiates page by either:
      *
      * <ol>
-     * <li>loading the {@link SearchOrder} from DB if the <code>searchOrderId</code> is provided in the {@link PageParameters}</li>
+     * <li>loading the {@link SearchOrder} from DB if the {@code searchOrderId} is provided in the {@link PageParameters}</li>
      * <li>applying a new empty {@link SearchOrder} to the page otherwise</li>
      * </ol>
      *

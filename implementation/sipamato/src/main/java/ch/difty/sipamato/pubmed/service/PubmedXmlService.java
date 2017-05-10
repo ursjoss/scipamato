@@ -70,8 +70,8 @@ public class PubmedXmlService implements PubmedArticleService {
      *
      * <p>The XML string could be derived e.g. from
      * <ul>
-     * <li> via API, e.g. <code>https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=25395026&retmode=xml</code></li>
-     * <li> through the Web UI (e.g. https://www.ncbi.nlm.nih.gov/pubmed/25395026) when sending to <literal>file</literal> in format <literal>XML</literal></li>
+     * <li> via API, e.g. {@code https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=25395026&retmode=xml}</li>
+     * <li> through the Web UI (e.g. https://www.ncbi.nlm.nih.gov/pubmed/25395026) when sending to {@code file} in format {@code XML}</li>
      * </ul>
      *
      * @param content pubmed content in XML format, as String. Must not be null.
