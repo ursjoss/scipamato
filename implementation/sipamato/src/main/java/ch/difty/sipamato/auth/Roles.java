@@ -10,9 +10,9 @@ package ch.difty.sipamato.auth;
  * <li> for authorization on page level (where the enum can't be used) </li>
  * </ol>
  *
- * An example of how to authorize on page level:<p/>
+ * An example of how to authorize on page level:<p>
  *
- * <code>@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })</code
+ * {@literal @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })}
  *
  * @author u.joss
  */

@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  * <p> 
  * Each token returned by the class offers the lexed {@code rawData}, an sql-ized form of it already
  * containing the wild-card indicator (%) as well as an indication of whether the search applies positively
- * (e.g. {@code like 'foo%'}) or negatively (<code>not like 'foo%'<code>).
+ * (e.g. {@code like 'foo%'}) or negatively ({@code}not like 'foo%'}).
  * <p>
  * The following {@link MatchType}s are implemented (using pseudo-code examples):
  * <ul>
@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
  * <p>
  * @author u.joss
  *
- * @see http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html
+ * @see <a href="http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html">http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html</a>
  */
 public class StringSearchTerm extends SearchTerm {
     private static final long serialVersionUID = 1L;

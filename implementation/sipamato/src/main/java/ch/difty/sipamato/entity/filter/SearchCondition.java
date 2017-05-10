@@ -51,16 +51,16 @@ import ch.difty.sipamato.entity.SearchConditionCodeBox;
 
 /**
  * The {@link SearchCondition} is an instance of {@link SipamatoFilter} that provides
- * accessors for all fields present in the entity {@link Paper}, but all in String form.<p/>
+ * accessors for all fields present in the entity {@link Paper}, but all in String form.<p>
  *
  * The provided String values may contain query specific meta information that can be interpreted
- * by the query infrastructure to specify e.g. ranges or wildcards.<p/>
+ * by the query infrastructure to specify e.g. ranges or wildcards.<p>
  *
  * Internally it stores any of the fields that were explicitly set in Maps that can be accessed
- * to be evaluated by the query engine.<p/>
+ * to be evaluated by the query engine.<p>
  *
  * <b>Note:</b> the actual ID of the {@link SearchCondition} is called {@code searchConditionId}
- * due to the name clash with its search condition id, which holds the search term for the paper id.<p/>
+ * due to the name clash with its search condition id, which holds the search term for the paper id.<p>
  *
  * @author u.joss
  */
@@ -148,6 +148,9 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
 
     /** {@link Paper} specific accessors */
 
+    /**
+     * @return id
+     */
     public String getId() {
         return getIntegerValue(ID);
     }

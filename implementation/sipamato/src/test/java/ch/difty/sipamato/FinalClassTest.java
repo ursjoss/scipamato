@@ -16,8 +16,8 @@ import org.springframework.core.GenericTypeResolver;
  *
  * @param <C> the class to be tested
  *
- * @see http://stackoverflow.com/questions/4520216/how-to-add-test-coverage-to-a-private-constructor
- * @see http://stackoverflow.com/questions/3437897/how-to-get-a-class-instance-of-generics-type-t
+ * @see <a href="http://stackoverflow.com/questions/4520216/how-to-add-test-coverage-to-a-private-constructor">http://stackoverflow.com/questions/4520216/how-to-add-test-coverage-to-a-private-constructor</a>
+ * @see <a href="http://stackoverflow.com/questions/3437897/how-to-get-a-class-instance-of-generics-type-t">http://stackoverflow.com/questions/3437897/how-to-get-a-class-instance-of-generics-type-t</a>
  */
 public abstract class FinalClassTest<C> {
 

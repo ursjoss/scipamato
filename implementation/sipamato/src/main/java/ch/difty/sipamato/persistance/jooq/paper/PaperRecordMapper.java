@@ -9,7 +9,7 @@ import ch.difty.sipamato.persistance.jooq.AuditFields;
 import ch.difty.sipamato.persistance.jooq.EntityRecordMapper;
 
 /**
- * Mapper mapping {@link PaperRecord}s into entity {@link Paper}.<p/>
+ * Mapper mapping {@link PaperRecord}s into entity {@link Paper}.<p>
  *
  * <b>Note:</b> the mapper leaves the {@link Code}s empty.
  *

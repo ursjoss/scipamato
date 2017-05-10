@@ -9,7 +9,7 @@ import ch.difty.sipamato.persistance.jooq.AuditFields;
 import ch.difty.sipamato.persistance.jooq.EntityRecordMapper;
 
 /**
- * Mapper mapping {@link SearchOrderRecord}s into entity {@link SearchOrder}.<p/>
+ * Mapper mapping {@link SearchOrderRecord}s into entity {@link SearchOrder}.<p>
  *
  * <b>Note:</b> the mapper leaves the nested list of {@link SearchCondition}s empty.
  *

@@ -57,7 +57,7 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends Sipama
      *  when(getMoreStep().set(PAPER.DOI, DOI)).thenReturn(getMoreStep());
      *  when(getMoreStep().set(PAPER.AUTHORS, AUTHORS)).thenReturn(getMoreStep());
      *  ...
-     * </pre></code
+     * </pre></code>
      *
      * <b>Note:</b> No need to set the audit fields - those are managed later
      */

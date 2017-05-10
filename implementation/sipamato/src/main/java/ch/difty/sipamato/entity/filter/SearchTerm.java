@@ -6,7 +6,7 @@ import ch.difty.sipamato.lib.AssertAs;
 /**
  * Implementations of {@link SearchTerm} accept a {@code fieldName} as key and a {@code rawSearchTerm} as value.
  * The rawSearchTerm holds a comparison specification holding a value and some meta information on how to compare the field
- * with the provided value.<p/>
+ * with the provided value.<p>
  *
  * <b>Note:</b>Identity is based on {@code fieldName} and {@code rawSearchTerm} only, thus ignoring {@code id}
  *             or {@code searchConditionId}. This might be an issue in some use cases in the future!

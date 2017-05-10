@@ -18,7 +18,7 @@ public interface CodeBox extends Serializable {
 
     /**
      * returns all codes of the code class with the given id.
-     * @param codeClassId
+     * @param codeClassId the id of the code class to clear all codes for
      * @return a list of codes
      */
     List<Code> getCodesBy(CodeClassId codeClassId);

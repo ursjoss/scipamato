@@ -14,7 +14,7 @@ import ch.difty.sipamato.lib.DateUtils;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 
 /**
- * The update step setter used for updating {@link Paper}s.<p/>
+ * The update step setter used for updating {@link Paper}s.<p>
  *
  * <b>Note:</b> the {@link Code}s are not updated here.
  *

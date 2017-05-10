@@ -47,7 +47,7 @@ import java.util.regex.Pattern;
  * <p>
  * @author u.joss
  *
- * @see http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html
+ * @see <a href="http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html">http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html</a>
  */
 public class AuditSearchTerm extends SearchTerm {
 

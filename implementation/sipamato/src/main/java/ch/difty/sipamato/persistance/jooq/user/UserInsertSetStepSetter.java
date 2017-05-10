@@ -13,7 +13,7 @@ import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
 
 /**
- * The insert step setter used for inserting new {@link User}s.<p/>
+ * The insert step setter used for inserting new {@link User}s.<p>
  *
  * <b>Note:</b> the {@link Role}s are not inserted here.
  *

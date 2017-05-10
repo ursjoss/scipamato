@@ -14,7 +14,7 @@ import ch.difty.sipamato.lib.DateUtils;
 import ch.difty.sipamato.persistance.jooq.UpdateSetStepSetter;
 
 /**
- * The update step setter used for updating {@link User}s.<p/>
+ * The update step setter used for updating {@link User}s.<p>
  *
  * <b>Note:</b> the {@link Role}s are not updated here.
  *

@@ -14,11 +14,11 @@ public abstract class SipamatoEntity implements Serializable {
     public static final String DISPLAY_VALUE = "displayValue";
 
     /**
-     * Regex extending the classical \w with non-ASCII characters. To be used within a character class,<p/>
+     * Regex extending the classical \w with non-ASCII characters. To be used within a character class,<p>
      *
-     * e.g. {@literal [\\w\\u00C0-\\u024f]}<p/>
+     * e.g. {@literal [\\w\\u00C0-\\u024f]}<p>
      *
-     * Thanks to hqx5 @see http://stackoverflow.com/questions/4043307/why-this-regex-is-not-working-for-german-words
+     * Thanks to hqx5 @see <a href="http://stackoverflow.com/questions/4043307/why-this-regex-is-not-working-for-german-words">stackoverflow</a>
      */
     protected static final String RE_W = "\\w\\u00C0-\\u024f";
     protected static final String RE_WW = "[" + RE_W + "-']+";

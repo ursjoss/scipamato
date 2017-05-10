@@ -15,6 +15,7 @@ public interface CodeBoxAware {
     List<Code> getCodes();
 
     /**
+     * @param ccId the code class id
      * @return all {@link Code}s of a specific {@link CodeClassId} assigned
      */
     List<Code> getCodesOf(CodeClassId ccId);
@@ -26,6 +27,7 @@ public interface CodeBoxAware {
 
     /**
      * Clear all assigned codes of the specified {@link CodeClassId}
+     * @param ccId the code class id
      */
     void clearCodesOf(CodeClassId ccId);
 

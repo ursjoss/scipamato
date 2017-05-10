@@ -3,7 +3,7 @@ package ch.difty.sipamato.auth;
 /**
  * The different {@link Role}s users can be assigned to in SiPaMaTo.
  *
- * The keys are defined in an external interface, so they can be used for authorization in pages, e.g.:<p/>
+ * The keys are defined in an external interface, so they can be used for authorization in pages, e.g.:<p>
  *
  * {@literal @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })}
  *

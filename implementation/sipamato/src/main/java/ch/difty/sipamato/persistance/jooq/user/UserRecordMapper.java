@@ -9,7 +9,7 @@ import ch.difty.sipamato.persistance.jooq.AuditFields;
 import ch.difty.sipamato.persistance.jooq.EntityRecordMapper;
 
 /**
- * Record mapper mapping {@link SipamatoUserRecord} into entity {@link User}.<p/>
+ * Record mapper mapping {@link SipamatoUserRecord} into entity {@link User}.<p>
  *
  * <b>Note:</b> The mapper leaves the nested list of {@link Role}s empty.
  *

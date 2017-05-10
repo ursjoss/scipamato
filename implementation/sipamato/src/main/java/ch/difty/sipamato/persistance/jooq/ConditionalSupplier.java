@@ -14,16 +14,16 @@ import org.jooq.lambda.tuple.Tuple;
 import org.jooq.lambda.tuple.Tuple2;
 
 /**
- * Conditional Supplier allowing to add {@link Condition}s and combine them with {@code OR} or {@code AND}.<p/>
+ * Conditional Supplier allowing to add {@link Condition}s and combine them with {@code OR} or {@code AND}.<p>
  *
- * Original version by Lukas Saldanha. Optimized using jOOλ with some hints by Lukas Eder.<p/>
+ * Original version by Lukas Saldanha. Optimized using jOOλ with some hints by Lukas Eder.<p>
  * 
- * Example of usage:<p/>
+ * Example of usage:<p>
  * 
- * @see https://gist.github.com/ggalmazor/93bdcf8b124304a19266#file-gistfile1-java
+ * @see <a href="https://gist.github.com/ggalmazor/93bdcf8b124304a19266#file-gistfile1-java">https://gist.github.com/ggalmazor/93bdcf8b124304a19266#file-gistfile1-java</a>
  *
- * @see http://www.programania.net/diseno-de-software/functional-trick-to-compose-conditions-in-jooq/
- * @see http://stackoverflow.com/questions/19803058/java-8-stream-getting-head-and-tail
+ * @see <a href="http://www.programania.net/diseno-de-software/functional-trick-to-compose-conditions-in-jooq/">http://www.programania.net/diseno-de-software/functional-trick-to-compose-conditions-in-jooq/</a>
+ * @see <a href="http://stackoverflow.com/questions/19803058/java-8-stream-getting-head-and-tail">http://stackoverflow.com/questions/19803058/java-8-stream-getting-head-and-tail</a>
  */
 public class ConditionalSupplier {
     final List<Supplier<Condition>> conditionSuppliers = new ArrayList<>();

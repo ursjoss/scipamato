@@ -13,7 +13,7 @@ import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.persistance.jooq.InsertSetStepSetter;
 
 /**
- * The insert step setter used for inserting new {@link Paper}s.<p/>
+ * The insert step setter used for inserting new {@link Paper}s.<p>
  *
  * <b>Note:</b> the {@link Code}s are not inserted here.
  *

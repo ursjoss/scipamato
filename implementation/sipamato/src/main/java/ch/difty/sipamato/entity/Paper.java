@@ -80,7 +80,7 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
      * The uncaught ones seem to be old and hopefully don't turn up within Sipamato. Otherwise additional
      * regex patterns catching more of the remaining ones can be found here:
      *
-     * http://blog.crossref.org/2015/08/doi-regular-expressions.html (thx to Andrew Gilmartin)
+     * <a href="http://blog.crossref.org/2015/08/doi-regular-expressions.html">http://blog.crossref.org/2015/08/doi-regular-expressions.html (thx to Andrew Gilmartin)</a>
      *
      * /^10.\d{4,9}/[-._;()/:A-Z0-9]+$/i
      */

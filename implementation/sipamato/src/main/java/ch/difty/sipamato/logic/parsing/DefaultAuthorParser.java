@@ -13,11 +13,11 @@ import org.apache.wicket.util.string.Strings;
 import ch.difty.sipamato.lib.AssertAs;
 
 /**
- * Utility class to lex and parse Author strings. From the list of parsed authors it can return the first author.<p/>
+ * Utility class to lex and parse Author strings. From the list of parsed authors it can return the first author.<p>
  *
- * An example of a typical author string is:<p/>
+ * An example of a typical author string is:<p>
  *
- * {@code Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.}<p/>
+ * {@code Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.}<p>
  *
  * <ul>
  * <li> An author can have one or more names + initials.

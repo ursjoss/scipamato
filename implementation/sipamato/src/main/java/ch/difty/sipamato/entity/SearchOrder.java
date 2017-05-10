@@ -121,7 +121,7 @@ public class SearchOrder extends IdSipamatoEntity<Long> implements PaperSlimFilt
     /**
      * Add a new paper id for exclusion.
      *
-     * @param id paper id to be added to exclusions
+     * @param paperId paper id to be added to exclusions
      */
     public void addExclusionOfPaperWithId(final long paperId) {
         if (!excludedPaperIds.contains(paperId))
