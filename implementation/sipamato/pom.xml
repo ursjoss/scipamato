@@ -39,7 +39,7 @@
 
     <scm>
         <connection>scm:git:https://github.com/ursjoss/sipamato/</connection>
-        <developerConnection>scm:git:git@github.com:/ursjoss/sipamato/</developerConnection>
+        <developerConnection>scm:git:git@github.com:ursjoss/sipamato.git</developerConnection>
         <url>https://github.com/ursjoss/sipamato/</url>
         <tag>HEAD</tag>
     </scm>
