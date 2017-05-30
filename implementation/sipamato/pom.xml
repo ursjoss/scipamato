@@ -58,7 +58,7 @@
         <jdbc-postgres.version>42.1.1</jdbc-postgres.version>
         <org.jooq.version>3.9.3</org.jooq.version>
         <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
-        <flyway.version>4.1.2</flyway.version>
+        <flyway.version>4.2.0</flyway.version>
 
         <!-- presentation layer -->
         <wicket-spring-boot-starter.version>1.0.7</wicket-spring-boot-starter.version>
