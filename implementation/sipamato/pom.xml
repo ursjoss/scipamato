@@ -240,7 +240,7 @@
         </dependency>
 
         <!-- Feign for accessing PubMed - https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-feign -->
-        <!-- TODO currently pulls in (and requires commons-lang, have to live with it for now, excluding it does not work -->
+        <!-- TODO currently pulls in (and requires) commons-lang, have to live with it for now, excluding it does not work -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-feign</artifactId>
@@ -249,7 +249,7 @@
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-jaxb</artifactId>
-            <version>9.4.0</version>
+            <version>9.5.0</version>
         </dependency>
 
         <!-- JasperReport for PDF generation -->
