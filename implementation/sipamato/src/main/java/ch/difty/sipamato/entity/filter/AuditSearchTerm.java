@@ -27,19 +27,19 @@ import java.util.regex.Pattern;
  * <p>
  * The tokens targeted for the user fields, could be of match type: 
  * <ul>
- * <li> <b>CONTAINS:</b> searchterm contained within field, e.g. {@code createdBy like '%foo%'} </code> </li>
+ * <li> <b>CONTAINS:</b> search term contained within field, e.g. {@code createdBy like '%foo%'} </code> </li>
  * <li> <b>NONE:</b> dummy category which will be ignored.</li>
  * </ul>
  * <p>
  * The date fields may either contain a complete time stamp in the format {@code yyyy-MM-dd hh:mm:ss} or only
- * the date part {@code yyyy-MM-dd}. In the latter case, the date will be completed with a time part, depending
+ * the date part {@code yyyy-MM-dd}. In the latter case, the date will be complemented with a time part, depending
  * on the match type with ' 23:59:59' or with ' 00:00:00'.
  * <ul>
- * <li> <b>EQUALS:</b> exact search, e.g. {@code field = 'foo'} (dates are completed with ' 00:00:00') </li>
- * <li> <b>GREATER_THAN:</b> date is after the specified date (dates are completed with ' 23:59:59') </li>
- * <li> <b>GREATER_OR_EQUAL:</b> the date is at or after the specified date (dates are completed with ' 00:00:00')</li>
- * <li> <b>LESS_THAN:</b> the date is before the specified date (dates are completed with ' 00:00:00')</li>
- * <li> <b>LESS_OR_EQUAL:</b> the date is at or before the specified date(dates are completed with ' 23:59:59')</li>
+ * <li> <b>EQUALS:</b> exact search, e.g. {@code field = 'foo'} (dates are complemented with ' 00:00:00') </li>
+ * <li> <b>GREATER_THAN:</b> date is after the specified date (dates are complemented with ' 23:59:59') </li>
+ * <li> <b>GREATER_OR_EQUAL:</b> the date is at or after the specified date (dates are complemented with ' 00:00:00')</li>
+ * <li> <b>LESS_THAN:</b> the date is before the specified date (dates are complemented with ' 00:00:00')</li>
+ * <li> <b>LESS_OR_EQUAL:</b> the date is at or before the specified date(dates are complemented with ' 23:59:59')</li>
  * <li> <b>NONE:</b> dummy category which will be ignored.</li>
  * </ul>
  * <p>

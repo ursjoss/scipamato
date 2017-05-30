@@ -26,10 +26,10 @@ import java.util.regex.Pattern;
  * The following {@link MatchType}s are implemented (using pseudo-code examples):
  * <ul>
  * <li> <b>EQUALS:</b> exact search, e.g. {@code field = 'foo'} or {@code field != 'foo'} </li>
- * <li> <b>CONTAINS:</b> searchterm contained within field, e.g. {@code field like '%foo%'} or {@code field not like '%foo%'} </li>
+ * <li> <b>CONTAINS:</b> search term contained within field, e.g. {@code field like '%foo%'} or {@code field not like '%foo%'} </li>
  * <li> <b>LIKE:</b> positive match with wildcards, e.g. {@code field like '%foo%'} or {@code field not like '%foo%'}</li>
  * <li> <b>REGEX:</b> full regex search, e.g. {@code field regexp_like 's/fo{1,2}/'} or {@code field ! regexp_like 's/fo{1,2}/'}</li>
- * <li> <b>LENGTH:</b> field has content, e.g. {@code length(field) > 0} or field is empty {@code length(field = 0}</li>
+ * <li> <b>LENGTH:</b> field has content, e.g. {@code length(field) > 0} or field is empty {@code length(field) = 0}</li>
  * <li> <b>NONE:</b> dummy category which will be ignored.</li>
  * </ul>
  * <p>
