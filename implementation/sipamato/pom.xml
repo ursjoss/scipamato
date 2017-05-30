@@ -56,9 +56,9 @@
 
         <!-- persistence layer -->
         <jdbc-postgres.version>42.1.1</jdbc-postgres.version>
-        <org.jooq.version>3.9.2</org.jooq.version>
+        <org.jooq.version>3.9.3</org.jooq.version>
         <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
-        <flyway.version>4.1.2</flyway.version>
+        <flyway.version>4.2.0</flyway.version>
 
         <!-- presentation layer -->
         <wicket-spring-boot-starter.version>1.0.7</wicket-spring-boot-starter.version>
@@ -240,7 +240,7 @@
         </dependency>
 
         <!-- Feign for accessing PubMed - https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-feign -->
-        <!-- TODO currently pulls in (and requires commons-lang, have to live with it for now, excluding it does not work -->
+        <!-- TODO currently pulls in (and requires) commons-lang, have to live with it for now, excluding it does not work -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-feign</artifactId>
@@ -249,7 +249,7 @@
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-jaxb</artifactId>
-            <version>9.4.0</version>
+            <version>9.5.0</version>
         </dependency>
 
         <!-- JasperReport for PDF generation -->
@@ -297,7 +297,7 @@
         <dependency>
             <groupId>pl.pragmatists</groupId>
             <artifactId>JUnitParams</artifactId>
-            <version>1.0.5</version>
+            <version>1.1.0</version>
         </dependency>
     </dependencies>
 
@@ -725,7 +725,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxb2-maven-plugin</artifactId>
-                <version>2.2</version>
+                <version>2.3.1</version>
                 <executions>
                     <execution>
                         <id>xjc</id>
