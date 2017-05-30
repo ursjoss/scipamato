@@ -129,9 +129,7 @@ public class PaperCodeBox implements CodeBox {
         final PaperCodeBox other = (PaperCodeBox) obj;
         final List<Code> otherSorted = new ArrayList<>(other.codes);
         otherSorted.sort((c1, c2) -> c1.getCode().compareTo(c2.getCode()));
-        if (!thisSorted.equals(otherSorted))
-            return false;
-        return true;
+        return thisSorted.equals(otherSorted);
     }
 
 }

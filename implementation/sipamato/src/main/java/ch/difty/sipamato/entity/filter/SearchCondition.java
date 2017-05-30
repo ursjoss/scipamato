@@ -580,9 +580,7 @@ public class SearchCondition extends SipamatoFilter implements CodeBoxAware {
             return false;
         if (!auditSearchTerms.equals(other.auditSearchTerms))
             return false;
-        if (!codes.equals(other.codes))
-            return false;
-        return true;
+        return codes.equals(other.codes);
     }
 
 }

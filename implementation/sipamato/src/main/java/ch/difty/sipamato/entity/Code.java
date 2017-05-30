@@ -153,9 +153,7 @@ public class Code extends SipamatoEntity {
                 return false;
         } else if (!name.equals(other.name))
             return false;
-        if (sort != other.sort)
-            return false;
-        return true;
+        return sort == other.sort;
     }
 
 }

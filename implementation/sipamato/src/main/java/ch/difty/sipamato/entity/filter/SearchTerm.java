@@ -91,9 +91,7 @@ public abstract class SearchTerm extends IdSipamatoEntity<Long> {
         final SearchTerm other = (SearchTerm) obj;
         if (fieldName.hashCode() != other.getFieldName().hashCode())
             return false;
-        if (!rawSearchTerm.equals(other.getRawSearchTerm()))
-            return false;
-        return true;
+        return rawSearchTerm.equals(other.getRawSearchTerm());
     }
 
 }
