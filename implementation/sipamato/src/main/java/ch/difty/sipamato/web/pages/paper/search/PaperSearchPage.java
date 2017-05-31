@@ -171,23 +171,23 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     @Override
     public void onEvent(final IEvent<?> event) {
-        if (event.getPayload().getClass() == SearchOrderChangeEvent.class)
-            handleSearchOrderEvent(event);
+        if (event.getPayload().getClass() == SearchOrderChangeEvent.class) {
+            handleSearchOrderEvent((SearchOrderChangeEvent) event.getPayload());
+            event.dontBroadcastDeeper();
+        }
     }
 
-    private void handleSearchOrderEvent(final IEvent<?> event) {
-        final SearchOrderChangeEvent soce = (SearchOrderChangeEvent) event.getPayload();
+    private void handleSearchOrderEvent(final SearchOrderChangeEvent soce) {
         setExclusionIntoModel(soce);
         if (soce.getDroppedConditionId() != null) {
             searchOrderService.removeSearchConditionWithId(soce.getDroppedConditionId());
         }
         resetProviderModel(soce);
         addSubPanelsAsTarget(soce);
-        event.dontBroadcastDeeper();
     }
 
     /* Adds or removes an excluded id - depending on whether the invertExclusion flag is set in the model */
-    private void setExclusionIntoModel(SearchOrderChangeEvent soce) {
+    private void setExclusionIntoModel(final SearchOrderChangeEvent soce) {
         if (soce.getExcludedId() != null) {
             if (!getModelObject().isInvertExclusions()) {
                 getModelObject().addExclusionOfPaperWithId(soce.getExcludedId());
@@ -197,13 +197,13 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         }
     }
 
-    private void resetProviderModel(SearchOrderChangeEvent soce) {
+    private void resetProviderModel(final SearchOrderChangeEvent soce) {
         if (getModelObject() != null && !soce.isNewSearchOrderRequested()) {
             dataProvider.setFilterState(getModelObject());
         } else {
-            SearchOrder newSearchOrder = makeNewModelObject();
-            SearchOrder persistedNewSearchOrder = searchOrderService.saveOrUpdate(newSearchOrder);
-            PageParameters pp = new PageParameters();
+            final SearchOrder newSearchOrder = makeNewModelObject();
+            final SearchOrder persistedNewSearchOrder = searchOrderService.saveOrUpdate(newSearchOrder);
+            final PageParameters pp = new PageParameters();
             pp.add(PageParameterNames.SEARCH_ORDER_ID, persistedNewSearchOrder.getId());
             setResponsePage(new PaperSearchPage(pp));
         }
