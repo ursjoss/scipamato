@@ -45,4 +45,4 @@ logging:
     ch:
       difty: DEBUG
     org:
-      jooq: DEBUG
+      jooq: INFO
