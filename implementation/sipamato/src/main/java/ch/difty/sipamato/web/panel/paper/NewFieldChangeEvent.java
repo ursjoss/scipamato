@@ -1,6 +1,7 @@
 package ch.difty.sipamato.web.panel.paper;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.form.TextArea;
 
 import ch.difty.sipamato.web.event.WicketEvent;
 
@@ -8,16 +9,23 @@ import ch.difty.sipamato.web.event.WicketEvent;
  * The event indicates that one of the new fields has changed that are present multiple times on the PaperPanel
  * and therefore need synchronization.
  *
- * If an id was passed into the event, the receiver may filter out it's need to add itself to the ajax target request.
- *
  * @author u.joss
  */
 public class NewFieldChangeEvent extends WicketEvent {
 
     private String id;
+    private String markupId;
 
     public NewFieldChangeEvent(AjaxRequestTarget target) {
         super(target);
+    }
+
+    protected String getId() {
+        return id;
+    }
+
+    protected String getMarkupId() {
+        return markupId;
     }
 
     public NewFieldChangeEvent withId(String id) {
@@ -25,8 +33,28 @@ public class NewFieldChangeEvent extends WicketEvent {
         return this;
     }
 
-    public String getId() {
-        return id;
+    public NewFieldChangeEvent withMarkupId(String markupId) {
+        this.markupId = markupId;
+        return this;
+    }
+
+    /**
+     * A component is added to the target if it
+     * <ul>
+     * <li>has the same id but a different markupId than the event source</li>
+     * <li>has the same id as the event source but the latter did not specify a markupId</li>
+     * <li>the event source has not specified an id</li>
+     * </ul>
+     * @param component the candidate to be added to the target
+     */
+    public void considerAddingToTarget(final TextArea<?> component) {
+        if (isValidTarget(component.getId(), component.getMarkupId())) {
+            getTarget().add(component);
+        }
+    }
+
+    private boolean isValidTarget(final String id, final String markupId) {
+        return this.id == null || (this.id.equals(id) && (this.markupId == null || !this.markupId.equals(markupId)));
     }
 
 }

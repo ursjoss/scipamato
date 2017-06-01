@@ -325,7 +325,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             queue(new Label(id + LABEL_TAG, labelModel));
             field.setLabel(labelModel);
             if (newField) {
-                addNewFieldSpecificAttributes(id, field);
+                addNewFieldSpecificAttributes(field);
             }
             if (pv.isPresent() && isEditMode()) {
                 field.add(pv.get());
@@ -342,40 +342,34 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 return new TextArea<>(id);
             } else {
                 return new TextArea<String>(id) {
-
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public void onEvent(IEvent<?> event) {
-                        if (event.getPayload().getClass() == NewFieldChangeEvent.class)
-                            handleNewFieldChangeEvent(event);
-                    }
-
-                    private void handleNewFieldChangeEvent(final IEvent<?> event) {
-                        final NewFieldChangeEvent e = (NewFieldChangeEvent) event.getPayload();
-                        if (e.getId() == null || e.getId().equals(id)) {
-                            e.getTarget().add(this);
+                        if (event.getPayload().getClass() == NewFieldChangeEvent.class) {
+                            ((NewFieldChangeEvent) event.getPayload()).considerAddingToTarget(this);
+                            event.dontBroadcastDeeper();
                         }
-                        event.dontBroadcastDeeper();
                     }
                 };
             }
         }
 
         /**
-         * New fields need to broadcast the {@link NewFieldChangeEvent} and have a special indication
+         * New fields need to broadcast the {@link NewFieldChangeEvent} and have a special visual indication
          * that they are a new field.
          */
-        private void addNewFieldSpecificAttributes(String id, TextArea<String> field) {
+        private void addNewFieldSpecificAttributes(final TextArea<String> field) {
             field.add(new AttributeAppender("class", " newField"));
             field.add(new AjaxFormComponentUpdatingBehavior(CHANGE) {
                 private static final long serialVersionUID = 1L;
 
                 @Override
                 protected void onUpdate(AjaxRequestTarget target) {
-                    send(getPage(), Broadcast.BREADTH, new NewFieldChangeEvent(target).withId(id));
+                    final String id = field.getId();
+                    final String markupId = field.getMarkupId();
+                    send(getPage(), Broadcast.BREADTH, new NewFieldChangeEvent(target).withId(id).withMarkupId(markupId));
                 }
-
             });
         }
 

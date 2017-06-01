@@ -61,26 +61,17 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
 
         implSpecificOnInitialize();
 
-        // this must come after having initialized the form components
-        addFieldBehavior();
+        activateSelfUpdatingBehavior();
+    }
+
+    private void activateSelfUpdatingBehavior() {
+        getForm().add(new AjaxFormValidatingBehavior("change"));
     }
 
     /**
      * pages extending {@link SelfUpdatingPage} can override this method to do what they usually did in onInitialize. 
      */
     protected void implSpecificOnInitialize() {
-    }
-
-    /**
-     * This method must be called in onInitialize() after all fields have been added to the page (in other words: last)
-     * 
-     * @param form
-     */
-    protected void addFieldBehavior() {
-        getForm().visitFormComponents((fc, visit) -> {
-            fc.setOutputMarkupId(true);
-            fc.add(new AjaxFormValidatingBehavior("change"));
-        });
     }
 
     /**
