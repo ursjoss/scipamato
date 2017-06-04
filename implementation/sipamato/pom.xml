@@ -63,7 +63,7 @@
         <!-- presentation layer -->
         <wicket-spring-boot-starter.version>1.0.8</wicket-spring-boot-starter.version>
         <wicket.version>7.7.0</wicket.version>
-        <wicket-bootstrap.version>0.10.15-SNAPSHOT</wicket-bootstrap.version>
+        <wicket-bootstrap.version>0.10.15</wicket-bootstrap.version>
         <jasperreports.version>6.4.0</jasperreports.version>
 
         <!-- Plugin versions -->
