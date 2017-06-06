@@ -159,6 +159,13 @@
             <version>${flyway.version}</version><!--$NO-MVN-MAN-VER$ -->
         </dependency>
 
+	<!-- Spring boot admin starter client - Lacking configuration -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+
         <!-- Apache Wicket + bootstrap -->
         <dependency>
             <groupId>com.giffing.wicket.spring.boot.starter</groupId>
