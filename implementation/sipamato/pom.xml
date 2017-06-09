@@ -58,6 +58,7 @@
         <jdbc-postgres.version>42.1.1</jdbc-postgres.version>
         <org.jooq.version>3.9.3</org.jooq.version>
         <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
+        <org.jooq.db-generator>org.jooq.util.postgres.PostgresDatabase</org.jooq.db-generator>
         <flyway.version>4.2.0</flyway.version>
 
         <!-- presentation layer -->
@@ -68,12 +69,12 @@
 
         <!-- Plugin versions -->
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
+        <property-file>src/main/resources/application.properties</property-file>
 
         <!-- test (surefire) test class definitions -->
         <surefire.testclass.pt>**/*PageTest.java, **/*PanelTest.java</surefire.testclass.pt>
         <surefire.testclass.it>**/*IntegrationTest.java</surefire.testclass.it>
 
-        <generic-property-file>src/main/resources/application.properties</generic-property-file>
 
         <!-- Sonar properties -->
         <sonar.projectKey>ch.difty.sipamato</sonar.projectKey>
@@ -128,15 +129,11 @@
             </exclusions>
         </dependency>
 
-        <!-- JDBC Drivers - PostgreSQL and H2 - select via connection properties and profile (postgres vs development) -->
+        <!-- JDBC Drivers - PostgreSQL -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${jdbc-postgres.version}</version><!--$NO-MVN-MAN-VER$ -->
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
         </dependency>
 
         <!-- HikariCP connection pool -->
@@ -159,7 +156,7 @@
             <version>${flyway.version}</version><!--$NO-MVN-MAN-VER$ -->
         </dependency>
 
-	<!-- Spring boot admin starter client - Lacking configuration -->
+        <!-- Spring boot admin starter client - Lacking configuration -->
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
@@ -333,10 +330,8 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <spring.profile.include>postgres,DB_JOOQ</spring.profile.include>
-                <!-- db specific property file (containing url, username etc.) published to maven plugins (Flyway, jOOQ) by the properties-maven-plugin -->
-                <profile-specific-property-file>src/main/resources/application-postgres.properties</profile-specific-property-file>
-                <jooq-db-generator>org.jooq.util.postgres.PostgresDatabase</jooq-db-generator>
+                <spring.profile.include>DB_JOOQ</spring.profile.include>
+
             </properties>
             <build>
                 <pluginManagement>
@@ -390,19 +385,6 @@
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>properties-maven-plugin</artifactId>
                     </plugin>
-
-                    <!-- Flyway database migration -->
-                    <plugin>
-                        <groupId>org.flywaydb</groupId>
-                        <artifactId>flyway-maven-plugin</artifactId>
-                        <version>${flyway.version}</version>
-                    </plugin>
-
-                    <!-- The jOOQ code generator plugin -->
-                    <plugin>
-                        <groupId>org.jooq</groupId>
-                        <artifactId>jooq-codegen-maven</artifactId>
-                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -443,111 +425,6 @@
                             <excludes>
                                 <exclude>none</exclude>
                             </excludes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <!-- PostgreSQL specific profile, activated with mvn option -Dspring.profiles.active=postgres - as opposed to -Prdbms_postgres, which would not activate the spring profile in the tests -->
-        <profile>
-            <id>rdbms_postgres</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-                <property>
-                    <name>spring.profiles.active</name>
-                    <value>postgres</value>
-                </property>
-            </activation>
-            <properties>
-                <spring.profile.include>postgres,DB_JOOQ</spring.profile.include>
-                <!-- db specific property file (containing url, username etc.) published to maven plugins (Flyway, jOOQ) by the properties-maven-plugin -->
-                <profile-specific-property-file>src/main/resources/application-postgres.properties</profile-specific-property-file>
-                <jooq-db-generator>org.jooq.util.postgres.PostgresDatabase</jooq-db-generator>
-            </properties>
-            <build>
-                <plugins>
-                    <!-- publish db specific properties from property files for the Flyway and jOOQ plugins -->
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>properties-maven-plugin</artifactId>
-                    </plugin>
-
-                    <!-- Flyway database migration -->
-                    <plugin>
-                        <groupId>org.flywaydb</groupId>
-                        <artifactId>flyway-maven-plugin</artifactId>
-                        <version>${flyway.version}</version>
-                    </plugin>
-
-                    <!-- The jOOQ code generator plugin -->
-                    <plugin>
-                        <groupId>org.jooq</groupId>
-                        <artifactId>jooq-codegen-maven</artifactId>
-                    </plugin>
-
-                    <!-- spring-boot-maven-plugin - in case you're running mvn spring-boot:run -->
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <configuration>
-                            <executable>true</executable>
-                            <profiles>
-                                <profile>postgres</profile>
-                                <profile>DB_JOOQ</profile>
-                            </profiles>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <!-- H2 specific profile, activated with mvn option -Dspring.profiles.active=h2 - as opposed to -Prdbms_h2, which would not activate the spring profile in the tests -->
-        <profile>
-            <id>rdbms_h2</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-                <property>
-                    <name>spring.profiles.active</name>
-                    <value>h2</value>
-                </property>
-            </activation>
-            <properties>
-                <spring.profile.include>h2,DB_JOOQ</spring.profile.include>
-                <!-- db specific property file (containing url, username etc.) published to maven plugins (Flyway, jOOQ) by the properties-maven-plugin -->
-                <profile-specific-property-file>src/main/resources/application-h2.properties</profile-specific-property-file>
-                <jooq-db-generator>org.jooq.util.h2.H2Database</jooq-db-generator>
-            </properties>
-            <build>
-                <plugins>
-                    <!-- publish db specific properties from property files for the Flyway and jOOQ plugins -->
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>properties-maven-plugin</artifactId>
-                    </plugin>
-
-                    <!-- Flyway database migration -->
-                    <plugin>
-                        <groupId>org.flywaydb</groupId>
-                        <artifactId>flyway-maven-plugin</artifactId>
-                        <version>${flyway.version}</version>
-                    </plugin>
-
-                    <!-- The jOOQ code generator plugin -->
-                    <plugin>
-                        <groupId>org.jooq</groupId>
-                        <artifactId>jooq-codegen-maven</artifactId>
-                    </plugin>
-
-                    <!-- spring-boot-maven-plugin - in case you're running mvn spring-boot:run -->
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <configuration>
-                            <profiles>
-                                <profile>h2</profile>
-                                <profile>DB_JOOQ</profile>
-                            </profiles>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -646,9 +523,7 @@
                             </goals>
                             <configuration>
                                 <files>
-                                    <file>${generic-property-file}</file>
-                                    <!-- defined in the db profiles {postgres,h2} -->
-                                    <file>${profile-specific-property-file}</file>
+                                    <file>${property-file}</file>
                                 </files>
                             </configuration>
                         </execution>
@@ -700,7 +575,7 @@
                                 </jdbc>
                                 <generator>
                                     <database>
-                                        <name>${jooq-db-generator}</name>
+                                        <name>${org.jooq.db-generator}</name>
                                         <includes>.*</includes>
                                         <excludes />
                                         <inputSchema>${db.schema}</inputSchema>
@@ -807,6 +682,36 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!-- publish db specific properties from property files for the Flyway and jOOQ plugins -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- Flyway database migration -->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- The jOOQ code generator plugin -->
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+            </plugin>
+
+            <!-- spring-boot-maven-plugin - in case you're running mvn spring-boot:run -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                    <profiles>
+                        <profile>DB_JOOQ</profile>
+                    </profiles>
+                </configuration>
             </plugin>
         </plugins>
     </build>

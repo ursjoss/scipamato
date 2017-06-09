@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.InsertValuesStep4;
 import org.jooq.InsertValuesStep6;
@@ -68,8 +67,8 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     @Autowired
     public JooqSearchOrderRepo(DSLContext dsl, SearchOrderRecordMapper mapper, JooqSortMapper<SearchOrderRecord, SearchOrder, ch.difty.sipamato.db.tables.SearchOrder> sortMapper,
             GenericFilterConditionMapper<SearchOrderFilter> filterConditionMapper, DateTimeService dateTimeService, Localization localization,
-            InsertSetStepSetter<SearchOrderRecord, SearchOrder> insertSetStepSetter, UpdateSetStepSetter<SearchOrderRecord, SearchOrder> updateSetStepSetter, Configuration jooqConfig) {
-        super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, localization, insertSetStepSetter, updateSetStepSetter, jooqConfig);
+            InsertSetStepSetter<SearchOrderRecord, SearchOrder> insertSetStepSetter, UpdateSetStepSetter<SearchOrderRecord, SearchOrder> updateSetStepSetter) {
+        super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, localization, insertSetStepSetter, updateSetStepSetter);
     }
 
     @Override
