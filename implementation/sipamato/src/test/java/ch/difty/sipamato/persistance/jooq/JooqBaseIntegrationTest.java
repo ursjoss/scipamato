@@ -9,7 +9,7 @@ import ch.difty.sipamato.SipamatoApplication;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SipamatoApplication.class)
-@ActiveProfiles({ "DB_JOOQ", "test", "postgres" })
+@ActiveProfiles({ "DB_JOOQ", "test" })
 public abstract class JooqBaseIntegrationTest {
 
 }
