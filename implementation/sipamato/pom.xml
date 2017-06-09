@@ -73,7 +73,7 @@
         <surefire.testclass.pt>**/*PageTest.java, **/*PanelTest.java</surefire.testclass.pt>
         <surefire.testclass.it>**/*IntegrationTest.java</surefire.testclass.it>
 
-        <generic-property-file>src/main/resources/application-postgres.properties</generic-property-file>
+        <generic-property-file>src/main/resources/application.properties</generic-property-file>
 
         <!-- Sonar properties -->
         <sonar.projectKey>ch.difty.sipamato</sonar.projectKey>
