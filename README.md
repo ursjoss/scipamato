@@ -20,7 +20,7 @@ TODO
 * Persistence Layer
   * [jOOQ](https://www.jooq.org/)
   * [HikariCP](https://github.com/brettwooldridge/HikariCP)
-  * PostgreSQL
+  * [PostgreSQL](https://www.postgresql.org/)
   * [Flyway](https://flywaydb.org/) for database migrations
   
 # User Documentation
