@@ -20,9 +20,7 @@ TODO
 * Persistence Layer
   * [jOOQ](https://www.jooq.org/)
   * [HikariCP](https://github.com/brettwooldridge/HikariCP)
-  * Supported Databases
-    * PostgreSQL
-    * H2
+  * PostgreSQL
   * [Flyway](https://flywaydb.org/) for database migrations
   
 # User Documentation
