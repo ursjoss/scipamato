@@ -453,7 +453,7 @@
         <profile>
             <id>rdbms_postgres</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <activeByDefault>true</activeByDefault>
                 <property>
                     <name>spring.profiles.active</name>
                     <value>postgres</value>
