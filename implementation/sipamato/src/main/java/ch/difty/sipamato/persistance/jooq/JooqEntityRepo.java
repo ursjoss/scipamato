@@ -45,7 +45,6 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
     private final DateTimeService dateTimeService;
     private final InsertSetStepSetter<R, T> insertSetStepSetter;
     private final UpdateSetStepSetter<R, T> updateSetStepSetter;
-    private final Configuration jooqConfig;
 
     /**
      * @param dsl the {@link DSLContext}
@@ -56,15 +55,13 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
      * @param localization {@link Localization} been providing the information about the requested localization code.
      * @param insertSetStepSetter {@link InsertSetStepSetter} mapping the entity fields into the jOOQ {@link InsertSetStep}.
      * @param updateSetStepSetter{ @link UpdateSetStepSetter} mapping the entity fields into the jOOQ {@link UpdateSetStep}.
-     * @param jooqConfig the {@link Configuration} needed to detect and manage db implementation specific aspects.
      */
     protected JooqEntityRepo(DSLContext dsl, M mapper, JooqSortMapper<R, T, TI> sortMapper, GenericFilterConditionMapper<F> filterConditionMapper, DateTimeService dateTimeService,
-            Localization localization, InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter, Configuration jooqConfig) {
+            Localization localization, InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter) {
         super(dsl, mapper, sortMapper, filterConditionMapper, localization);
         this.insertSetStepSetter = AssertAs.notNull(insertSetStepSetter, "insertSetStepSetter");
         this.updateSetStepSetter = AssertAs.notNull(updateSetStepSetter, "updateSetStepSetter");
         this.dateTimeService = AssertAs.notNull(dateTimeService, "dateTimeService");
-        this.jooqConfig = AssertAs.notNull(jooqConfig, "jooqConfig");
     }
 
     protected DateTimeService getDateTimeService() {
@@ -162,15 +159,8 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
             getLogger().info("Updated 1 record: {} with id {}.", getTable().getName(), id);
             return savedEntity;
         } else {
-            // Ugly, need to work around the problem that update...returning().fetchOne() is not supported for H2
-            if (SQLDialect.H2.equals(jooqConfig.dialect())) {
-                T savedEntity = findById(id);
-                enrichAssociatedEntitiesOf(savedEntity);
-                return savedEntity;
-            } else {
-                getLogger().warn("Unable to persist {} with id {}.", getTable().getName(), id);
-                return null;
-            }
+            getLogger().warn("Unable to persist {} with id {}.", getTable().getName(), id);
+            return null;
         }
     }
 

@@ -11,7 +11,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.Configuration;
 import org.jooq.DeleteConditionStep;
 import org.jooq.DeleteWhereStep;
 import org.jooq.InsertResultStep;
@@ -56,8 +55,6 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdSipamatoE
     @Mock
     private UpdateSetStepSetter<R, T> updateSetStepSetterMock;
     @Mock
-    private Configuration jooqConfig;
-    @Mock
     private InsertSetStep<R> insertSetStepMock;
     @Mock
     private InsertSetMoreStep<R> insertSetMoreStepMock;
@@ -95,10 +92,6 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdSipamatoE
 
     protected UpdateSetStepSetter<R, T> getUpdateSetStepSetter() {
         return updateSetStepSetterMock;
-    }
-
-    protected Configuration getJooqConfig() {
-        return jooqConfig;
     }
 
     protected abstract ID getSampleId();
@@ -190,7 +183,6 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdSipamatoE
     protected final void specificNullCheck() {
         assertThat(getInsertSetStepSetter()).isNotNull();
         assertThat(getUpdateSetStepSetter()).isNotNull();
-        assertThat(getJooqConfig()).isNotNull();
 
         testSpecificNullCheck();
     }

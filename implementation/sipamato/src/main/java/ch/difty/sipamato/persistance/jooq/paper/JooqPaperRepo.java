@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.InsertValuesStep4;
 import org.jooq.TableField;
@@ -56,8 +55,8 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     @Autowired
     public JooqPaperRepo(DSLContext dsl, PaperRecordMapper mapper, JooqSortMapper<PaperRecord, Paper, ch.difty.sipamato.db.tables.Paper> sortMapper,
             GenericFilterConditionMapper<PaperFilter> filterConditionMapper, DateTimeService dateTimeService, Localization localization, InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter,
-            UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter, Configuration jooqConfig, PaperBackedSearchOrderRepository searchOrderRepository) {
-        super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, localization, insertSetStepSetter, updateSetStepSetter, jooqConfig);
+            UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter, PaperBackedSearchOrderRepository searchOrderRepository) {
+        super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, localization, insertSetStepSetter, updateSetStepSetter);
         this.searchOrderRepository = AssertAs.notNull(searchOrderRepository, "searchOrderRepository");
     }
 

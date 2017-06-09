@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
-import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.InsertValuesStep2;
 import org.jooq.TableField;
@@ -44,8 +43,8 @@ public class JooqUserRepo extends JooqEntityRepo<SipamatoUserRecord, User, Integ
     @Autowired
     public JooqUserRepo(DSLContext dsl, UserRecordMapper mapper, JooqSortMapper<SipamatoUserRecord, User, ch.difty.sipamato.db.tables.SipamatoUser> sortMapper,
             GenericFilterConditionMapper<UserFilter> filterConditionMapper, DateTimeService dateTimeService, Localization localization,
-            InsertSetStepSetter<SipamatoUserRecord, User> insertSetStepSetter, UpdateSetStepSetter<SipamatoUserRecord, User> updateSetStepSetter, Configuration jooqConfig) {
-        super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, localization, insertSetStepSetter, updateSetStepSetter, jooqConfig);
+            InsertSetStepSetter<SipamatoUserRecord, User> insertSetStepSetter, UpdateSetStepSetter<SipamatoUserRecord, User> updateSetStepSetter) {
+        super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, localization, insertSetStepSetter, updateSetStepSetter);
     }
 
     @Override
