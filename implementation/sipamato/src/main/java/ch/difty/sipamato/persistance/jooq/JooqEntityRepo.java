@@ -3,13 +3,11 @@ package ch.difty.sipamato.persistance.jooq;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
-import org.jooq.SQLDialect;
 import org.jooq.UpdateSetStep;
 import org.jooq.impl.TableImpl;
 import org.slf4j.Logger;
