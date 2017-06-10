@@ -18,7 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.paging.PaginationRequest;
-import ch.difty.sipamato.paging.Sort.Order;
+import ch.difty.sipamato.paging.Sort.SortProperty;
 import ch.difty.sipamato.persistance.jooq.search.SearchOrderFilter;
 import ch.difty.sipamato.service.SearchOrderService;
 
@@ -64,6 +64,8 @@ public class SearchOrderModelTest extends ModelTest {
     }
 
     protected class PaginationRequestWithMaxRows extends ArgumentMatcher<PaginationRequest> {
+        private static final String GLOBAL = "global";
+
         private int maxRows;
 
         public PaginationRequestWithMaxRows(int maxRows) {
@@ -75,10 +77,10 @@ public class SearchOrderModelTest extends ModelTest {
             if (arg != null && arg instanceof PaginationRequest) {
                 PaginationRequest pr = (PaginationRequest) arg;
                 if (pr.getOffset() == 0 && pr.getPageSize() == maxRows) {
-                    Iterator<Order> it = pr.getSort().iterator();
+                    Iterator<SortProperty> it = pr.getSort().iterator();
                     if (it.hasNext()) {
-                        Order o = it.next();
-                        return "global".equals(o.getProperty()) && o.getDirection().isAscending();
+                        SortProperty sp = it.next();
+                        return GLOBAL.equals(sp.getName()) && sp.getDirection().isAscending();
                     }
                 }
             }

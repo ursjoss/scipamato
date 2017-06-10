@@ -13,121 +13,120 @@ import org.junit.Test;
 
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.paging.Sort.Direction;
-import ch.difty.sipamato.paging.Sort.Order;
+import ch.difty.sipamato.paging.Sort.SortProperty;
 
 public class SortTest {
 
-    private final List<Order> orders = new ArrayList<>(4);
+    private final List<SortProperty> sortProperties = new ArrayList<>(4);
 
     private Sort sort;
 
     @Before
     public void setUp() {
-        orders.add(new Order(Direction.ASC, "a"));
-        orders.add(new Order(Direction.DESC, "b"));
-        orders.add(new Order(Direction.DESC, "c"));
-        orders.add(new Order(Direction.ASC, "d"));
+        sortProperties.add(new SortProperty("a", Direction.ASC));
+        sortProperties.add(new SortProperty("b", Direction.DESC));
+        sortProperties.add(new SortProperty("c", Direction.DESC));
+        sortProperties.add(new SortProperty("d", Direction.ASC));
 
-        sort = new Sort(orders);
+        sort = new Sort(sortProperties);
     }
 
     @Test
-    public void degenerateConstruction_withNullOrders_throws() {
+    public void degenerateConstruction_withNullSortProperties_throws() {
         try {
             new Sort(null);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("orders must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("sortProperties must not be null.");
         }
     }
 
     @Test
-    public void degenerateConstruction_withEmptyOrders_throws() {
+    public void degenerateConstruction_withNoSortProperties_throws() {
         try {
             new Sort(Collections.emptyList());
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class).hasMessage("orders can't be empty.");
+            assertThat(ex).isInstanceOf(IllegalArgumentException.class).hasMessage("sortProperties can't be empty.");
         }
     }
 
     @Test
-    public void degenerateConstruction_withNullProperties_throws() {
+    public void degenerateConstruction_withNullPropertyNames_throws() {
         try {
             new Sort(Direction.ASC, (String[]) null);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("properties must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("propertyNames must not be null.");
         }
     }
 
     @Test
-    public void degenerateConstruction_withEmptyProperties_throws() {
+    public void degenerateConstruction_withEmptyPropertyNames_throws() {
         try {
             new Sort(Direction.ASC, new String[] {});
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class).hasMessage("properties can't be empty.");
+            assertThat(ex).isInstanceOf(IllegalArgumentException.class).hasMessage("propertyNames can't be empty.");
         }
     }
 
-    private void assertProperties(Direction dir, String[] props) {
-        final Sort sort = new Sort(dir, props);
+    private void assertSortProperty(Direction dir, String[] propertyNames) {
+        final Sort sort = new Sort(dir, propertyNames);
 
-        assertThat(sort.iterator()).hasSize(props.length);
+        assertThat(sort.iterator()).hasSize(propertyNames.length);
 
-        final Iterator<Order> it = sort.iterator();
+        final Iterator<SortProperty> it = sort.iterator();
 
         while (it.hasNext()) {
-            final Order o = it.next();
-            assertThat(o.getDirection()).isEqualTo(dir);
+            final SortProperty sp = it.next();
+            assertThat(sp.getDirection()).isEqualTo(dir);
         }
     }
 
     @Test
-    public void creatingSortForThreeAscendingProperties_returnsIteratorForAllThreeElementsWithAscendingOrder() {
-        assertProperties(Direction.ASC, new String[] { "a", "b", "c" });
+    public void creatingSortForThreeAscendingProperties_returnsIteratorForAllThreePropertiesInAscendingOrder() {
+        assertSortProperty(Direction.ASC, new String[] { "a", "b", "c" });
     }
 
     @Test
     public void cratingSortForFiveDescendingProperties_returnsIteratorForAllFiveElementsWithDescendingOrder() {
-        assertProperties(Direction.DESC, new String[] { "a", "b", "c", "d", "e" });
+        assertSortProperty(Direction.DESC, new String[] { "a", "b", "c", "d", "e" });
     }
 
     @Test
-    public void creatingSortForFourOrdersWithDifferentSortDirections() {
-
-        final Iterator<Order> it = sort.iterator();
-        assertOrder(it, Direction.ASC, "a");
-        assertOrder(it, Direction.DESC, "b");
-        assertOrder(it, Direction.DESC, "c");
-        assertOrder(it, Direction.ASC, "d");
+    public void creatingSortForFourSortPropertiesWithDifferentSortDirections() {
+        final Iterator<SortProperty> it = sort.iterator();
+        assertSortProperty(it, Direction.ASC, "a");
+        assertSortProperty(it, Direction.DESC, "b");
+        assertSortProperty(it, Direction.DESC, "c");
+        assertSortProperty(it, Direction.ASC, "d");
         assertThat(it.hasNext()).isFalse();
     }
 
-    private void assertOrder(Iterator<Order> it, Direction dir, String p) {
-        Order o = it.next();
-        assertThat(o.getDirection()).isEqualTo(dir);
-        assertThat(o.getProperty()).isEqualTo(p);
+    private void assertSortProperty(Iterator<SortProperty> it, Direction dir, String p) {
+        SortProperty sp = it.next();
+        assertThat(sp.getDirection()).isEqualTo(dir);
+        assertThat(sp.getName()).isEqualTo(p);
     }
 
     @Test
-    public void gettingOrderFor_withNullProperty_returnsNull() {
-        assertThat(sort.getOrderFor(null)).isNull();
+    public void gettingSortPropertyFor_withNullName_returnsNull() {
+        assertThat(sort.getSortPropertyFor(null)).isNull();
     }
 
     @Test
-    public void gettingOrderFor_nonExistingProperty_returnsNull() {
+    public void gettingSortPropertyFor_nonExistingName_returnsNull() {
         String p = "x";
-        assertThat(orders).extracting("property").doesNotContain(p);
-        assertThat(sort.getOrderFor(p)).isNull();
+        assertThat(sortProperties).extracting("name").doesNotContain(p);
+        assertThat(sort.getSortPropertyFor(p)).isNull();
     }
 
     @Test
-    public void gettingOrderFor_existingProperty_returnsRespectiveOrder() {
+    public void gettingSortPropertyFor_existingName_returnsRespectiveSortProperty() {
         String p = "c";
-        assertThat(orders).extracting("property").contains(p);
-        assertThat(sort.getOrderFor(p).getProperty()).isEqualTo(p);
+        assertThat(sortProperties).extracting("name").contains(p);
+        assertThat(sort.getSortPropertyFor(p).getName()).isEqualTo(p);
     }
 
     @Test
@@ -141,8 +140,8 @@ public class SortTest {
     }
 
     @Test
-    public void orderWithNullDirection_isAscending() {
-        assertThat(new Order(null, "foo").getDirection()).isEqualTo(Direction.ASC);
+    public void SortPropertyWithNullDirection_isAscending() {
+        assertThat(new SortProperty("foo", null).getDirection()).isEqualTo(Direction.ASC);
     }
 
     @Test
@@ -155,30 +154,30 @@ public class SortTest {
         assertThat(sort.equals(null)).isFalse();
         assertThat(sort.equals(new String())).isFalse();
         assertThat(sort.equals(sort)).isTrue();
-        assertThat(sort.equals(new Sort(orders))).isTrue();
+        assertThat(sort.equals(new Sort(sortProperties))).isTrue();
 
-        List<Order> orders2 = new ArrayList<>();
-        orders2.add(new Order(Direction.ASC, "a"));
-        orders2.add(new Order(Direction.DESC, "b"));
-        orders2.add(new Order(Direction.DESC, "c"));
-        assertThat(sort.equals(new Sort(orders2))).isFalse();
-        assertThat(sort.hashCode()).isNotEqualTo(new Sort(orders2).hashCode());
+        List<SortProperty> sortPropertys2 = new ArrayList<>();
+        sortPropertys2.add(new SortProperty("a", Direction.ASC));
+        sortPropertys2.add(new SortProperty("b", Direction.DESC));
+        sortPropertys2.add(new SortProperty("c", Direction.DESC));
+        assertThat(sort.equals(new Sort(sortPropertys2))).isFalse();
+        assertThat(sort.hashCode()).isNotEqualTo(new Sort(sortPropertys2).hashCode());
 
-        orders2.add(new Order(Direction.ASC, "d"));
-        assertThat(sort.equals(new Sort(orders2))).isTrue();
-        assertThat(sort.hashCode()).isEqualTo(new Sort(orders2).hashCode());
+        sortPropertys2.add(new SortProperty("d", Direction.ASC));
+        assertThat(sort.equals(new Sort(sortPropertys2))).isTrue();
+        assertThat(sort.hashCode()).isEqualTo(new Sort(sortPropertys2).hashCode());
     }
 
     @Test
-    public void orerEqualityTests() {
-        Order o1 = new Order(Direction.DESC, "foo");
+    public void sortPropertyEqualityTests() {
+        SortProperty sf1 = new SortProperty("foo", Direction.DESC);
 
-        assertThat(o1.equals(null)).isFalse();
-        assertThat(o1.equals(new String())).isFalse();
-        assertThat(o1.equals(o1)).isTrue();
-        assertThat(o1.equals(new Order(Direction.DESC, "foo"))).isTrue();
-        assertThat(o1.equals(new Order(Direction.ASC, "foo"))).isFalse();
-        assertThat(o1.equals(new Order(Direction.DESC, "bar"))).isFalse();
+        assertThat(sf1.equals(null)).isFalse();
+        assertThat(sf1.equals(new String())).isFalse();
+        assertThat(sf1.equals(sf1)).isTrue();
+        assertThat(sf1.equals(new SortProperty("foo", Direction.DESC))).isTrue();
+        assertThat(sf1.equals(new SortProperty("foo", Direction.ASC))).isFalse();
+        assertThat(sf1.equals(new SortProperty("bar", Direction.DESC))).isFalse();
 
     }
 }

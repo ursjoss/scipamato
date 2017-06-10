@@ -24,7 +24,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.paging.Sort;
 import ch.difty.sipamato.paging.Sort.Direction;
-import ch.difty.sipamato.paging.Sort.Order;
+import ch.difty.sipamato.paging.Sort.SortProperty;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SortMapperTest {
@@ -34,13 +34,13 @@ public class SortMapperTest {
     private final SortMapper<PaperRecord, Paper, ch.difty.sipamato.db.tables.Paper> mapper = new SortMapper<>();
 
     @Mock
-    private Order orderMock;
+    private SortProperty sortPropertyMock;
 
-    private final List<Order> orders = new ArrayList<>();
+    private final List<SortProperty> sortProperties = new ArrayList<>();
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(orderMock);
+        verifyNoMoreInteractions(sortPropertyMock);
     }
 
     @Test
@@ -50,10 +50,10 @@ public class SortMapperTest {
 
     @Test
     public void mapping_twoSorts_returnsSortFields() {
-        orders.add(new Order(Direction.DESC, "authors"));
-        orders.add(new Order(Direction.ASC, "title"));
+        sortProperties.add(new SortProperty("authors", Direction.DESC));
+        sortProperties.add(new SortProperty("title", Direction.ASC));
 
-        Collection<SortField<Paper>> sortFields = mapper.map(new Sort(orders), ch.difty.sipamato.db.tables.Paper.PAPER);
+        Collection<SortField<Paper>> sortFields = mapper.map(new Sort(sortProperties), ch.difty.sipamato.db.tables.Paper.PAPER);
         assertThat(sortFields).hasSize(2);
 
         Iterator<SortField<Paper>> it = sortFields.iterator();
@@ -109,10 +109,10 @@ public class SortMapperTest {
 
     @Test
     public void convertsSortPropertyInCamelCase_toUnderscores() {
-        orders.add(new Order(Direction.DESC, "publicationYear"));
-        orders.add(new Order(Direction.ASC, "populationParticipants"));
+        sortProperties.add(new SortProperty("publicationYear", Direction.DESC));
+        sortProperties.add(new SortProperty("populationParticipants", Direction.ASC));
 
-        Collection<SortField<Paper>> sortFields = mapper.map(new Sort(orders), ch.difty.sipamato.db.tables.Paper.PAPER);
+        Collection<SortField<Paper>> sortFields = mapper.map(new Sort(sortProperties), ch.difty.sipamato.db.tables.Paper.PAPER);
         assertThat(sortFields).hasSize(2);
 
         Iterator<SortField<Paper>> it = sortFields.iterator();

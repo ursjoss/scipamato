@@ -20,8 +20,8 @@ import ch.difty.sipamato.paging.Sort;
 /**
  * Default implementation of the {@link JooqSortMapper} interface.
  *
- * Sort properties are de-camel-cased; java property namees are therefore converted to table column names, e.g.
- * {@code publicationYear} will be used as {@code publication_year}
+ * Sort properties are de-camel-cased; java property names are therefore converted to table column names,
+ * e.g. {@code publicationYear} will be translated to {@code publication_year}
  *
  * @author u.joss
  *
@@ -41,15 +41,15 @@ public class SortMapper<R extends Record, T extends SipamatoEntity, TI extends T
             return querySortFields;
         }
 
-        Iterator<Sort.Order> specifiedFields = sortSpecification.iterator();
+        Iterator<Sort.SortProperty> sortProperties = sortSpecification.iterator();
 
-        while (specifiedFields.hasNext()) {
-            Sort.Order specifiedField = specifiedFields.next();
+        while (sortProperties.hasNext()) {
+            Sort.SortProperty sortProperty = sortProperties.next();
 
-            String sortFieldName = specifiedField.getProperty();
-            Sort.Direction sortDirection = specifiedField.getDirection();
+            String propName = sortProperty.getName();
+            Sort.Direction sortDirection = sortProperty.getDirection();
 
-            TableField<R, T> tableField = getTableField(sortFieldName, table);
+            TableField<R, T> tableField = getTableField(propName, table);
             SortField<T> querySortField = convertTableFieldToSortField(tableField, sortDirection);
             querySortFields.add(querySortField);
         }
