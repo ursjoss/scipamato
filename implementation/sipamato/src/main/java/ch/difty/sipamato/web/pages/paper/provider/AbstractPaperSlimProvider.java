@@ -22,6 +22,8 @@ import ch.difty.sipamato.service.PaperSlimService;
  * Abstract base class for data providers providing the wicket components access to the persisted paper data in the slim format.
  *
  * @author u.joss
+ *
+ * @param <F> the type of the filter state
  */
 public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<F> {
 
@@ -37,6 +39,11 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> exten
     @SpringBean
     private PaperService paperService;
 
+    /**
+     * Instantiate the provider with the filter and the number of rows per page.
+     * @param filterState
+     * @param rowsPerPage
+     */
     AbstractPaperSlimProvider(final F filterState, final Integer rowsPerPage) {
         this.filterState = filterState;
         this.maxRowsPerPage = rowsPerPage;

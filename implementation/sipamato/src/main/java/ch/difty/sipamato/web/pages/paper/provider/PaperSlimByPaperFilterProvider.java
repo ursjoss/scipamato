@@ -23,10 +23,11 @@ public class PaperSlimByPaperFilterProvider extends AbstractPaperSlimProvider<Pa
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiate the provider with a {@link PaperFilter} and a specific number of rews per page (pageSize)
+     * Instantiate the provider with a {@link PaperFilter} and a specific number of rows per page (pageSize)
      * @param filter
      *     the paper filter search specification
      * @param rowsPerPage
+     *     the max numbers of rows per page
      */
     public PaperSlimByPaperFilterProvider(final PaperFilter filter, final int rowsPerPage) {
         super(filter != null ? filter : new PaperFilter(), rowsPerPage);
