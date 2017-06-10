@@ -1,5 +1,7 @@
 package ch.difty.sipamato.paging;
 
+import java.io.Serializable;
+
 /**
  * The {@link PaginationContext} serves as interface for pagination specifications.
  *
@@ -7,7 +9,7 @@ package ch.difty.sipamato.paging;
  *
  * @author u.joss
  */
-public interface PaginationContext {
+public interface PaginationContext extends Serializable {
 
     /**
      * @return zero based record offset relative to the index of the record in the entire unpaged recordset. 

@@ -1,7 +1,5 @@
 package ch.difty.sipamato.paging;
 
-import java.io.Serializable;
-
 import ch.difty.sipamato.paging.Sort.Direction;
 
 /**
@@ -16,7 +14,7 @@ import ch.difty.sipamato.paging.Sort.Direction;
  *
  * @author u.joss
  */
-public class PaginationRequest implements PaginationContext, Serializable {
+public class PaginationRequest implements PaginationContext {
 
     private static final long serialVersionUID = 1L;
 
