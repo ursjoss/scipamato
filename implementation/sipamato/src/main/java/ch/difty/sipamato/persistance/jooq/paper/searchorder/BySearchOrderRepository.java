@@ -29,7 +29,7 @@ public interface BySearchOrderRepository<T extends IdSipamatoEntity<Long>> {
      *
      * @see #findBySearchOrder(SearchOrder)
      *
-     * @return paged list of entities 
+     * @return paged list of entities
      */
     List<T> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
 
@@ -40,5 +40,14 @@ public interface BySearchOrderRepository<T extends IdSipamatoEntity<Long>> {
      * @return T entity count
      */
     int countBySearchOrder(SearchOrder searchOrder);
+
+    /**
+     * Finds a single page of entity ids matching the provided {@link SearchOrder} and {@link PaginationContext}.
+     *
+     * @see #findBySearchOrder(SearchOrder)
+     *
+     * @return paged list of entity ids
+     */
+    List<Long> findPageOfIdsBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
 
 }

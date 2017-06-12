@@ -47,4 +47,13 @@ public interface ReadOnlyService<ID extends Number, T extends IdSipamatoEntity<I
      */
     int countByFilter(F filter);
 
+    /**
+     * Finds the ids of the persisted entities matching the provided filter and pagination context.
+     *
+     * @param filter of type {@code F}
+     * @param paginationContext {@link PaginationContext}
+     * @return list of the ids of type {@code ID} of matching entities {@code T}
+     */
+    List<ID> findPageOfIdsByFilter(F filter, PaginationContext paginationContext);
+
 }

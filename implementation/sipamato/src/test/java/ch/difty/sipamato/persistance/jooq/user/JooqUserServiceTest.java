@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -148,6 +149,13 @@ public class JooqUserServiceTest {
 
         verify(userMock, times(2)).getId();
         verify(repoMock, times(1)).delete(3);
+    }
+
+    @Test
+    public void findingPageOfIdsByFilter_delegatesToRepo() {
+        when(repoMock.findPageOfIdsByFilter(filterMock, paginationContextMock)).thenReturn(Arrays.asList(3, 8, 5));
+        assertThat(service.findPageOfIdsByFilter(filterMock, paginationContextMock)).containsExactly(3, 8, 5);
+        verify(repoMock).findPageOfIdsByFilter(filterMock, paginationContextMock);
     }
 
 }

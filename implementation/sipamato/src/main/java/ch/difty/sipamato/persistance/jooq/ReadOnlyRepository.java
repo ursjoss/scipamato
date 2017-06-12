@@ -51,4 +51,14 @@ public interface ReadOnlyRepository<T extends SipamatoEntity, ID, F extends Sipa
      * @return list of all matching entities {@code T}
      */
     int countByFilter(F filter);
+
+    /**
+     * Finds the ids of the persisted entities matching the provided filter and pagination context.
+     *
+     * @param filter of type {@code F}
+     * @param paginationContext {@link PaginationContext}
+     * @return list of the ids of type {@code ID} of matching entities {@code T}
+     */
+    List<ID> findPageOfIdsByFilter(F filter, PaginationContext paginationContext);
+
 }

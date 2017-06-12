@@ -104,4 +104,9 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdSipamat
         return repo.countByFilter(filter);
     }
 
+    @Override
+    public List<ID> findPageOfIdsByFilter(F filter, PaginationContext paginationContext) {
+        return repo.findPageOfIdsByFilter(filter, paginationContext);
+    }
+
 }

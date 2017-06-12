@@ -14,10 +14,12 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.sipamato.config.ApplicationProperties;
 import ch.difty.sipamato.entity.CodeClassId;
+import ch.difty.sipamato.paging.PaginationRequest;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.service.CodeClassService;
 import ch.difty.sipamato.service.CodeService;
@@ -72,6 +74,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         assertResultPanel("resultPanel");
 
         verify(paperSlimRepoMock, times(3)).countByFilter(isA(PaperFilter.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(Mockito.isA(PaperFilter.class), Mockito.isA(PaginationRequest.class));
     }
 
     private void assertSearchForm(String b) {
@@ -122,6 +125,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         for (CodeClassId ccid : CodeClassId.values())
             verify(codeServiceMock).findCodesOfClass(ccid, "de");
         verify(localizationMock, times(9)).getLocalization();
+        verify(paperServiceMock, times(3)).findPageOfIdsByFilter(Mockito.isA(PaperFilter.class), Mockito.isA(PaginationRequest.class));
     }
 
     @Test
@@ -143,6 +147,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         getTester().assertComponent(b + ":submit", BootstrapAjaxButton.class);
 
         verify(paperSlimRepoMock, times(3)).countByFilter(isA(PaperFilter.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(Mockito.isA(PaperFilter.class), Mockito.isA(PaginationRequest.class));
     }
 
     @Test
@@ -158,5 +163,6 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
         verify(pubmedImportService).persistPubmedArticlesFromXml("content");
         verify(paperSlimRepoMock).countByFilter(isA(PaperFilter.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(Mockito.isA(PaperFilter.class), Mockito.isA(PaginationRequest.class));
     }
 }

@@ -145,4 +145,11 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends SipamatoEntit
         return entities;
     }
 
+    @Override
+    public List<ID> findPageOfIdsByFilter(final F filter, final PaginationContext pc) {
+        final Condition conditions = filterConditionMapper.map(filter);
+        final Collection<SortField<T>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
+        return getDsl().select().from(getTable()).where(conditions).orderBy(sortCriteria).limit(pc.getPageSize()).offset(pc.getOffset()).fetch(getTableId());
+    }
+
 }

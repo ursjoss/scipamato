@@ -7,6 +7,7 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
@@ -73,6 +74,16 @@ public class PaperSlimBySearchOrderProviderTest extends AbstractPaperSlimProvide
         assertThat(papers).hasSize(5);
         assertThat(papers).containsOnly(paperMock);
         verify(paperServiceMock).findPageBySearchOrder(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")));
+    }
+
+    @Test
+    public void findingAllPaperIds() {
+        final List<Long> ids = Arrays.asList(3l, 18l, 6l);
+        provider.setSort("authors", SortOrder.ASCENDING);
+        when(paperServiceMock.findPageOfIdsBySearchOrder(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")))).thenReturn(ids);
+        List<Long> papers = provider.findAllPaperIdsByFilter();
+        assertThat(papers).isEqualTo(ids);
+        verify(paperServiceMock).findPageOfIdsBySearchOrder(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")));
     }
 
 }

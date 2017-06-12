@@ -16,6 +16,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import ch.difty.sipamato.SipamatoSession;
 import ch.difty.sipamato.auth.Roles;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.lib.AssertAs;
@@ -128,6 +129,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         makeSearchOrderSelectorPanel("searchOrderSelectorPanel");
         makeSearchOrderPanel("searchOrderPanel");
         makeResultPanel("resultPanel");
+        updateNavigateable();
     }
 
     private void makeSearchOrderSelectorPanel(String id) {
@@ -173,6 +175,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     public void onEvent(final IEvent<?> event) {
         if (event.getPayload().getClass() == SearchOrderChangeEvent.class) {
             handleSearchOrderEvent((SearchOrderChangeEvent) event.getPayload());
+            updateNavigateable();
             event.dontBroadcastDeeper();
         }
     }
@@ -217,6 +220,14 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             target.add(resultPanelLabel);
             target.add(resultPanel);
         }
+    }
+
+    /**
+     * Have the provider provide a list of all paper ids matching the current filter.
+     * Construct a navigateable with this list and set it into the 
+     */
+    private void updateNavigateable() {
+        SipamatoSession.get().setPaperIdsToNavigate(dataProvider.findAllPaperIdsByFilter());
     }
 
 }

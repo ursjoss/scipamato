@@ -33,18 +33,23 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
 
+import ch.difty.sipamato.Navigateable;
+import ch.difty.sipamato.SipamatoSession;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.CodeBoxAware;
 import ch.difty.sipamato.entity.CodeClass;
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.model.CodeClassModel;
 import ch.difty.sipamato.web.model.CodeModel;
 import ch.difty.sipamato.web.pages.Mode;
+import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
@@ -59,6 +64,9 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     private static final long serialVersionUID = 1L;
 
     private static final String CHANGE = "change";
+
+    @SpringBean
+    private PaperService paperService;
 
     private ResourceLink<Void> summaryLink;
     private String pubmedXml;
@@ -118,6 +126,10 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     private void queueHeaderFields() {
         queueAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
         title = new TextArea<>(Paper.TITLE);
+
+        makeAndQueueRetreatButton("retreat");
+        makeAndQueueAdvanceButton("advance");
+
         queueFieldAndLabel(title, new PropertyValidator<String>());
         location = new TextField<>(Paper.LOCATION);
         queueFieldAndLabel(location, new PropertyValidator<String>());
@@ -259,6 +271,48 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
     /** override if special behavior is required */
     protected void addAuthorBehavior(TextArea<String> authors, CheckBox firstAuthorOverridden, TextField<String> firstAuthor) {
+    }
+
+    private void makeAndQueueRetreatButton(String id) {
+        BootstrapButton retreat = new BootstrapButton(id, Model.of("retreat"), Buttons.Type.Default) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onSubmit() {
+                Navigateable<Long> navigator = SipamatoSession.get().getNavigateable();
+                if (navigator != null) {
+                    navigator.retreat();
+                    Long previous = navigator.getCurrentItem();
+                    Optional<Paper> p = paperService.findById(previous);
+                    if (p.isPresent()) {
+                        setResponsePage(new PaperEntryPage(Model.of(p.get())));
+                    }
+                }
+            }
+        };
+        retreat.setDefaultFormProcessing(false);
+        queue(retreat);
+    }
+
+    private void makeAndQueueAdvanceButton(String id) {
+        BootstrapButton retreat = new BootstrapButton(id, Model.of("advance"), Buttons.Type.Default) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onSubmit() {
+                Navigateable<Long> navigator = SipamatoSession.get().getNavigateable();
+                if (navigator != null) {
+                    navigator.advance();
+                    Long next = navigator.getCurrentItem();
+                    Optional<Paper> p = paperService.findById(next);
+                    if (p.isPresent()) {
+                        setResponsePage(new PaperEntryPage(Model.of(p.get())));
+                    }
+                }
+            }
+        };
+        retreat.setDefaultFormProcessing(false);
+        queue(retreat);
     }
 
     private void queueFieldAndLabel(FormComponent<?> field) {

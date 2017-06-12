@@ -16,6 +16,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import ch.difty.sipamato.SipamatoSession;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.filter.PaperSlimFilter;
 import ch.difty.sipamato.entity.projection.PaperSlim;
@@ -91,9 +92,14 @@ public class ResultPanel extends AbstractPanel<Void> {
         columns.add(makePropertyColumn(Paper.NUMBER));
         columns.add(makePropertyColumn(Paper.FIRST_AUTHOR));
         columns.add(makePropertyColumn(Paper.PUBL_YEAR));
-        columns.add(makeClickableColumn(Paper.TITLE, (IModel<PaperSlim> m) -> setResponsePage(new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject().getNumber()).orElse(new Paper()))))));
+        columns.add(makeClickableColumn(Paper.TITLE, (IModel<PaperSlim> m) -> onTitleClick(m)));
         columns.add(makeLinkIconColumn("exclude"));
         return columns;
+    }
+
+    private void onTitleClick(IModel<PaperSlim> m) {
+        SipamatoSession.get().setCurrentIdToNavigateable(m.getObject().getId());
+        setResponsePage(new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject().getNumber()).orElse(new Paper()))));
     }
 
     private PropertyColumn<PaperSlim, String> makePropertyColumn(String propExpression) {
