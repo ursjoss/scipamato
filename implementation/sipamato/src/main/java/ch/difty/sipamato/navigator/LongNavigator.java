@@ -17,9 +17,8 @@ public class LongNavigator implements ItemNavigator<Long> {
 
     @Override
     public void initialize(final List<Long> items) {
-        if (items != null && !items.isEmpty()) {
+        if (items != null && !items.isEmpty())
             this.items = new NavigatedList<>(items);
-        }
     }
 
     @Override
