@@ -290,6 +290,12 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                     }
                 }
             }
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setEnabled(SipamatoSession.get().getPaperIdManager().hasPrevious());
+            }
         };
         previous.setDefaultFormProcessing(false);
         previous.setIconType(GlyphIconType.stepbackward);
@@ -311,6 +317,12 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                         setResponsePage(new PaperEntryPage(Model.of(p.get())));
                     }
                 }
+            }
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setEnabled(SipamatoSession.get().getPaperIdManager().hasNext());
             }
         };
         next.setDefaultFormProcessing(false);
