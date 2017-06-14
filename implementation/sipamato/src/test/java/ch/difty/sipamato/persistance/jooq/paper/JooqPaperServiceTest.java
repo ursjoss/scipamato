@@ -327,4 +327,21 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         verify(repoMock).delete(-2l);
         verify(repoMock).delete(-3l);
     }
+
+    @Test
+    public void findingPageOfIdsByFilter() {
+        final List<Long> ids = Arrays.asList(3l, 17l, 5l);
+        when(repoMock.findPageOfIdsByFilter(filterMock, paginationContextMock)).thenReturn(ids);
+        assertThat(service.findPageOfIdsByFilter(filterMock, paginationContextMock)).isEqualTo(ids);
+        verify(repoMock).findPageOfIdsByFilter(filterMock, paginationContextMock);
+    }
+
+    @Test
+    public void findingPageOfIdsBySearchOrder() {
+        final List<Long> ids = Arrays.asList(3l, 17l, 5l);
+        when(repoMock.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(ids);
+        assertThat(service.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).isEqualTo(ids);
+        verify(repoMock).findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock);
+    }
+
 }

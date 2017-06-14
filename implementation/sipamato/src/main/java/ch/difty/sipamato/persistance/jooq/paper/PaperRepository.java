@@ -66,4 +66,9 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      */
     long findLowestFreeNumberStartingFrom(long minimumPaperNumberToBeRecycled);
 
+    /**
+     * {@link BySearchOrderRepository#findPageOfIdsBySearchOrder(SearchOrder, paginationContext)}
+     */
+    List<Long> findPageOfIdsBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
+
 }

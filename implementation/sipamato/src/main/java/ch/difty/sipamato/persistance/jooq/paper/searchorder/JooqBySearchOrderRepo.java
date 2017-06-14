@@ -160,4 +160,11 @@ public abstract class JooqBySearchOrderRepo<T extends IdSipamatoEntity<Long>, M 
         final Condition paperMatches = getConditionsFrom(searchOrder);
         return getDsl().fetchCount(getDsl().selectOne().from(PAPER).where(paperMatches));
     }
+
+    @Override
+    public List<Long> findPageOfIdsBySearchOrder(final SearchOrder searchOrder, final PaginationContext pc) {
+        final Condition conditions = getConditionsFrom(searchOrder);
+        final Collection<SortField<T>> sortCriteria = getSortMapper().map(pc.getSort(), PAPER);
+        return getDsl().select().from(Tables.PAPER).where(conditions).orderBy(sortCriteria).limit(pc.getPageSize()).offset(pc.getOffset()).fetch(PAPER.ID);
+    }
 }

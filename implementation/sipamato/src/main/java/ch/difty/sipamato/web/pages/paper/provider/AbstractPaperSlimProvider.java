@@ -91,6 +91,18 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> exten
 
     protected abstract List<Paper> findAll(Direction dir, String sortProp);
 
+    /**
+     * Applies the normal filter and the sort aspect of the pageable to return only the ids of all papers (unpaged).
+     * @return list of all paper ids
+     */
+    public List<Long> findAllPaperIdsByFilter() {
+        final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
+        final String sortProp = getSort().getProperty();
+        return findAllIds(dir, sortProp);
+    }
+
+    protected abstract List<Long> findAllIds(Direction dir, String sortProp);
+
     @Override
     public long size() {
         return getSize();

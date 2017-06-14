@@ -53,4 +53,9 @@ public class PaperSlimByPaperFilterProvider extends AbstractPaperSlimProvider<Pa
         return getPaperService().findPageByFilter(getFilterState(), new PaginationRequest(dir, sortProp));
     }
 
+    @Override
+    protected List<Long> findAllIds(Direction dir, String sortProp) {
+        return getPaperService().findPageOfIdsByFilter(getFilterState(), new PaginationRequest(dir, sortProp));
+    }
+
 }

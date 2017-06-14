@@ -13,6 +13,8 @@ import ch.difty.sipamato.service.UserService;
 /**
  * jOOQ specific implementation of the {@link UserService} interface.
  *
+ * Note: This service is deliberately not extending  JooqEntityService as that depending on on this service itself. 
+ *
  * @author u.joss
  */
 @Service
@@ -69,6 +71,11 @@ public class JooqUserService implements UserService {
         if (entity != null && entity.getId() != null) {
             repo.delete(entity.getId());
         }
+    }
+
+    @Override
+    public List<Integer> findPageOfIdsByFilter(final UserFilter filter, final PaginationContext paginationContext) {
+        return repo.findPageOfIdsByFilter(filter, paginationContext);
     }
 
 }

@@ -33,22 +33,29 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
 
+import ch.difty.sipamato.SipamatoSession;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.CodeBoxAware;
 import ch.difty.sipamato.entity.CodeClass;
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.navigator.ItemNavigator;
+import ch.difty.sipamato.service.PaperService;
+import ch.difty.sipamato.web.component.SerializableSupplier;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.model.CodeClassModel;
 import ch.difty.sipamato.web.model.CodeModel;
 import ch.difty.sipamato.web.pages.Mode;
+import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
@@ -59,6 +66,9 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     private static final long serialVersionUID = 1L;
 
     private static final String CHANGE = "change";
+
+    @SpringBean
+    private PaperService paperService;
 
     private ResourceLink<Void> summaryLink;
     private String pubmedXml;
@@ -118,6 +128,17 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     private void queueHeaderFields() {
         queueAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
         title = new TextArea<>(Paper.TITLE);
+
+        final ItemNavigator<Long> pm = SipamatoSession.get().getPaperIdManager();
+        makeAndQueueNavigationButton("previous", GlyphIconType.stepbackward, () -> pm.hasPrevious(), () -> {
+            pm.previous();
+            return pm.getItemWithFocus();
+        });
+        makeAndQueueNavigationButton("next", GlyphIconType.stepforward, () -> pm.hasNext(), () -> {
+            pm.next();
+            return pm.getItemWithFocus();
+        });
+
         queueFieldAndLabel(title, new PropertyValidator<String>());
         location = new TextField<>(Paper.LOCATION);
         queueFieldAndLabel(location, new PropertyValidator<String>());
@@ -259,6 +280,31 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
     /** override if special behavior is required */
     protected void addAuthorBehavior(TextArea<String> authors, CheckBox firstAuthorOverridden, TextField<String> firstAuthor) {
+    }
+
+    private void makeAndQueueNavigationButton(String id, GlyphIconType icon, SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
+        final BootstrapButton btn = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onSubmit() {
+                final Long id = idSupplier.get();
+                if (id != null) {
+                    final Optional<Paper> p = paperService.findById(id);
+                    if (p.isPresent())
+                        setResponsePage(new PaperEntryPage(Model.of(p.get())));
+                }
+            }
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setEnabled(isEnabled.get());
+            }
+        };
+        btn.setDefaultFormProcessing(false);
+        btn.setIconType(icon);
+        queue(btn);
     }
 
     private void queueFieldAndLabel(FormComponent<?> field) {

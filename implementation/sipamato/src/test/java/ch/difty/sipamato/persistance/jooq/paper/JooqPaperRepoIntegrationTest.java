@@ -14,6 +14,10 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.SearchOrder;
+import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.paging.PaginationRequest;
+import ch.difty.sipamato.paging.Sort.Direction;
 import ch.difty.sipamato.persistance.jooq.JooqTransactionalIntegrationTest;
 
 /**
@@ -230,6 +234,22 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     public void findingLowestFreeNumberStartingFrom_withMinimumBeyondNextFreeNumber_findsMiniumLeavingGap() {
         long number = repo.findLowestFreeNumberStartingFrom(100l);
         assertThat(number).isGreaterThanOrEqualTo(100l);
+    }
+
+    @Test
+    public void findingPageOfIdsByFilter() {
+        PaperFilter filter = new PaperFilter();
+        filter.setAuthorMask("Kutlar");
+        assertThat(repo.findPageOfIdsByFilter(filter, new PaginationRequest(Direction.ASC, "authors"))).isNotEmpty().containsExactly(4l);
+    }
+
+    @Test
+    public void findingPageOfIdsBySearchOrder() {
+        SearchOrder searchOrder = new SearchOrder();
+        SearchCondition sc = new SearchCondition();
+        sc.setAuthors("kutlar");
+        searchOrder.add(sc);
+        assertThat(repo.findPageOfIdsBySearchOrder(searchOrder, new PaginationRequest(Direction.ASC, "authors"))).isNotEmpty().containsExactly(4l);
     }
 
 }

@@ -16,6 +16,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 
+import ch.difty.sipamato.SipamatoSession;
 import ch.difty.sipamato.auth.Roles;
 import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.sipamato.service.PubmedImporter;
@@ -59,6 +60,7 @@ public class PaperListPage extends BasePage<Void> {
     private void initFilterAndProvider() {
         filter = new PaperFilter();
         dataProvider = new PaperSlimByPaperFilterProvider(filter, RESULT_PAGE_SIZE);
+        updateNavigateable();
     }
 
     @Override
@@ -70,7 +72,15 @@ public class PaperListPage extends BasePage<Void> {
     }
 
     private void makeAndQueueFilterForm(final String id) {
-        queue(new FilterForm<PaperFilter>(id, dataProvider));
+        queue(new FilterForm<PaperFilter>(id, dataProvider) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit() {
+                super.onSubmit();
+                updateNavigateable();
+            }
+        });
 
         queueFieldAndLabel(new TextField<String>("number", PropertyModel.of(filter, PaperFilter.NUMBER)), Optional.empty());
         queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(filter, PaperFilter.AUTHOR_MASK)), Optional.empty());
@@ -81,6 +91,14 @@ public class PaperListPage extends BasePage<Void> {
 
         queueResponsePageButton("newPaper", () -> new PaperEntryPage(getPageParameters()));
         queueXmlPasteModalPanelAndLink("xmlPasteModal", "showXmlPasteModalLink");
+    }
+
+    /**
+     * Have the provider provide a list of all paper ids matching the current filter.
+     * Construct a navigateable with this list and set it into the 
+     */
+    private void updateNavigateable() {
+        SipamatoSession.get().getPaperIdManager().initialize(dataProvider.findAllPaperIdsByFilter());
     }
 
     private void makeAndQueueResultPanel(String id) {

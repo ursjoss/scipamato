@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -351,6 +352,13 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
         verify(selectSeekStepNMock).limit(20);
         verify(selectOffsetStepMock).offset(0);
         verify(selectForUpdateStepMock).fetchInto(getRecordClass());
+    }
+
+    @Test
+    public void findingPageOfIdsBySearchOrder() {
+        when(searchOrderRepositoryMock.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(Arrays.asList(17l, 3l, 5l));
+        assertThat(repo.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).containsExactly(17l, 3l, 5l);
+        verify(searchOrderRepositoryMock).findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock);
     }
 
 }

@@ -241,4 +241,9 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
         return freeNumber != null ? freeNumber.longValue() : minimumPaperNumberToBeRecycled;
     }
 
+    @Override
+    public List<Long> findPageOfIdsBySearchOrder(final SearchOrder searchOrder, final PaginationContext paginationContext) {
+        return searchOrderRepository.findPageOfIdsBySearchOrder(searchOrder, paginationContext);
+    }
+
 }

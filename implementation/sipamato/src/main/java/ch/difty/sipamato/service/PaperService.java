@@ -35,6 +35,15 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
     List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
 
     /**
+     * Finds a page full of ids of papers as list matching the provided {@link SearchOrder} and {@link PaginationContext}.
+     *
+     * @param searchOrder the filter
+     * @param pagination context defining paging and sorting
+     * @return paged list of paper ids
+     */
+    List<Long> findPageOfIdsBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
+
+    /**
      * Counts the number of entities matching the specified {@link SearchOrder}.
      *
      * @param searchOrder {@link SearchOrder}

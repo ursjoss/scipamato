@@ -71,6 +71,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     public void tearDown() {
         // after the login
         verify(paperSlimServiceMock).countByFilter(Mockito.isA(PaperFilter.class));
+        verify(paperServiceMock).findPageOfIdsByFilter(Mockito.isA(PaperFilter.class), Mockito.isA(PaginationRequest.class));
         verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeClassServiceMock, codeServiceMock, searchOrderMock);
     }
 

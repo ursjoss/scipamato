@@ -1,7 +1,10 @@
 package ch.difty.sipamato;
 
+import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.IPackageResourceGuard;
 import org.apache.wicket.markup.html.SecurePackageResourceGuard;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
@@ -30,6 +33,11 @@ public class SipamatoApplication extends WicketBootSecuredWebApplication {
             final SecurePackageResourceGuard guard = (SecurePackageResourceGuard) packageResourceGuard;
             guard.addPattern("+*.jrxml");
         }
+    }
+
+    @Override
+    public Session newSession(Request request, Response response) {
+        return new SipamatoSession(request);
     }
 
 }

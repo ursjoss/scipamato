@@ -5,15 +5,25 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-10">
                         <div wicket:id="authorsLabel"></div>
                         <textarea wicket:id="authors" rows="2" cols="80" class="form-control"></textarea>
                     </div>
+                    <div class="col-md-2">
+                        <div wicket:id="firstAuthorLabel"></div>
+                        <input wicket:id="firstAuthor" class="form-control"></input> <input
+                            wicket:id="firstAuthorOverridden" type="checkbox"></input> <span
+                            wicket:id="firstAuthorOverriddenLabel"></span>
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-10">
                         <div wicket:id="locationLabel"></div>
                         <input wicket:id="location" class="form-control"></input>
+                    </div>
+                    <div class="col-md-2">
+                        <div wicket:id="publicationYearLabel"></div>
+                        <input wicket:id="publicationYear" class="form-control"></input>
                     </div>
                 </div>
                 <div class="row">
@@ -23,66 +33,55 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div wicket:id="firstAuthorLabel"></div>
-                        <input wicket:id="firstAuthor" class="form-control"></input> <input
-                            wicket:id="firstAuthorOverridden" type="checkbox"></input> <span
-                            wicket:id="firstAuthorOverriddenLabel"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div wicket:id="publicationYearLabel"></div>
-                        <input wicket:id="publicationYear" class="form-control"></input>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10" style="float: none; display: table-cell; vertical-align: bottom">
-                        <div wicket:id="pmIdLabel"></div>
-                        <input wicket:id="pmId" class="form-control"></input>
-                    </div>
-                    <div class="col-md-2" style="float: none; display: table-cell; vertical-align: bottom">
-                        <a wicket:id="pubmedRetrieval">PubMed Retrieval</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div wicket:id="doiLabel"></div>
-                        <input wicket:id="doi" class="form-control"></input>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="row form-group">
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="float: none; display: table-cell; vertical-align: bottom">
                         <div wicket:id="numberLabel"></div>
                         <input wicket:id="number" class="form-control"></input>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3" style="float: none; display: table-cell; vertical-align: bottom">
                         <div wicket:id="idLabel"></div>
                         <input wicket:id="id" class="form-control"></input>
                     </div>
+                    <div class="col-md-3 text-right" style="float: none; display: table-cell; vertical-align: bottom">
+                        <button type="submit" wicket:id="previous" tabindex="-1">
+                            <i wicket:id="icon"></i>
+                        </button>
+                        <button type="submit" wicket:id="next" tabindex="-1">
+                            <i wicket:id="icon"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
-                        <div wicket:id="createdDisplayValueLabel"></div>
-                        <input wicket:id="createdDisplayValue" class="form-control"></input>
+                    <div class="col-md-6" style="float: none; display: table-cell; vertical-align: bottom">
+                        <div wicket:id="doiLabel"></div>
+                        <input wicket:id="doi" class="form-control"></input>
+                    </div>
+                    <div class="col-md-3" style="float: none; display: table-cell; vertical-align: bottom">
+                        <div wicket:id="pmIdLabel"></div>
+                        <input wicket:id="pmId" class="form-control"></input>
+                    </div>
+                    <div class="col-md-3 text-right" style="float: none; display: table-cell; vertical-align: bottom">
+                        <a wicket:id="pubmedRetrieval" class="btn btn-md btn-info" tabindex="-1">PubMed Retrieval</a>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div wicket:id="createdDisplayValueLabel"></div>
+                        <input wicket:id="createdDisplayValue" class="form-control"></input>
+                    </div>
+                    <div class="col-md-6">
                         <div wicket:id="modifiedDisplayValueLabel"></div>
                         <input wicket:id="modifiedDisplayValue" class="form-control"></input>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-7">
-                        <button type="submit" wicket:id="submit" class="btn btn-lg btn-primary btn-block"></button>
+                <div class="row form-group">
+                    <div class="col-md-2">
+                        <a href="#" wicket:id="summaryLink" class="btn btn-lg btn-info" tabindex="-1">PDF</a>
                     </div>
-                    <div class="col-md-5">
-                        <a href="#" wicket:id="summaryLink" class="btn btn-lg btn-info btn-block">PDF</a>
+                    <div class="col-md-7"></div>
+                    <div class="col-md-3 text-right">
+                        <button type="submit" wicket:id="submit" class="btn btn-lg btn-primary"></button>
                     </div>
                 </div>
             </div>
