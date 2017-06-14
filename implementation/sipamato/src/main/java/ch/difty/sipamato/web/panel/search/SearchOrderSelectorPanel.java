@@ -71,7 +71,7 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     }
 
     private void queueForm(String id) {
-        form = new Form<SearchOrder>(id, new CompoundPropertyModel<>(getModel()));
+        form = new Form<>(id, new CompoundPropertyModel<>(getModel()));
         queue(form);
         makeAndQueueSearchOrderSelectBox("searchOrder");
         makeAndQueueName(SearchOrder.NAME);
