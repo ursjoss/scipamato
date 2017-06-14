@@ -130,11 +130,11 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         title = new TextArea<>(Paper.TITLE);
 
         final ItemNavigator<Long> pm = SipamatoSession.get().getPaperIdManager();
-        makeAndQueueNavigationButton("previous", GlyphIconType.stepbackward, () -> pm.hasPrevious(), () -> {
+        makeAndQueueNavigationButton("previous", GlyphIconType.stepbackward, pm::hasPrevious, () -> {
             pm.previous();
             return pm.getItemWithFocus();
         });
-        makeAndQueueNavigationButton("next", GlyphIconType.stepforward, () -> pm.hasNext(), () -> {
+        makeAndQueueNavigationButton("next", GlyphIconType.stepforward, pm::hasNext, () -> {
             pm.next();
             return pm.getItemWithFocus();
         });

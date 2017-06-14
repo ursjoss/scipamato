@@ -92,7 +92,7 @@ public class ResultPanel extends AbstractPanel<Void> {
         columns.add(makePropertyColumn(Paper.NUMBER));
         columns.add(makePropertyColumn(Paper.FIRST_AUTHOR));
         columns.add(makePropertyColumn(Paper.PUBL_YEAR));
-        columns.add(makeClickableColumn(Paper.TITLE, (IModel<PaperSlim> m) -> onTitleClick(m)));
+        columns.add(makeClickableColumn(Paper.TITLE, this::onTitleClick));
         columns.add(makeLinkIconColumn("exclude"));
         return columns;
     }

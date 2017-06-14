@@ -3,6 +3,7 @@ package ch.difty.sipamato.navigator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import ch.difty.sipamato.lib.NullArgumentException;
@@ -30,7 +31,7 @@ class NavigatedList<T> implements NavigatedItems<T> {
             throw new NullArgumentException("items");
         if (items.isEmpty())
             throw new IllegalArgumentException("items must not be empty");
-        this.items.addAll(items.stream().distinct().filter(i -> i != null).collect(Collectors.toList()));
+        this.items.addAll(items.stream().distinct().filter(Objects::nonNull).collect(Collectors.toList()));
     }
 
     @Override
@@ -40,7 +41,7 @@ class NavigatedList<T> implements NavigatedItems<T> {
 
     @Override
     public List<T> getItems() {
-        return new ArrayList<T>(items);
+        return new ArrayList<>(items);
     }
 
     @Override
