@@ -36,7 +36,6 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
 
-import ch.difty.sipamato.Navigateable;
 import ch.difty.sipamato.SipamatoSession;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.CodeBoxAware;
@@ -44,6 +43,7 @@ import ch.difty.sipamato.entity.CodeClass;
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;
+import ch.difty.sipamato.navigator.ItemNavigator;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.model.CodeClassModel;
@@ -54,6 +54,7 @@ import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
@@ -127,8 +128,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         queueAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
         title = new TextArea<>(Paper.TITLE);
 
-        makeAndQueueRetreatButton("retreat");
-        makeAndQueueAdvanceButton("advance");
+        makeAndQueuePreviousButton("previous");
+        makeAndQueueNextButton("next");
 
         queueFieldAndLabel(title, new PropertyValidator<String>());
         location = new TextField<>(Paper.LOCATION);
@@ -273,46 +274,48 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     protected void addAuthorBehavior(TextArea<String> authors, CheckBox firstAuthorOverridden, TextField<String> firstAuthor) {
     }
 
-    private void makeAndQueueRetreatButton(String id) {
-        BootstrapButton retreat = new BootstrapButton(id, Model.of("retreat"), Buttons.Type.Default) {
+    private void makeAndQueuePreviousButton(String id) {
+        BootstrapButton previous = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onSubmit() {
-                Navigateable<Long> navigator = SipamatoSession.get().getNavigateable();
-                if (navigator != null) {
-                    navigator.retreat();
-                    Long previous = navigator.getCurrentItem();
-                    Optional<Paper> p = paperService.findById(previous);
+                final ItemNavigator<Long> navigator = SipamatoSession.get().getPaperIdManager();
+                navigator.previous();
+                final Long prev = navigator.getItemWithFocus();
+                if (prev != null) {
+                    final Optional<Paper> p = paperService.findById(prev);
                     if (p.isPresent()) {
                         setResponsePage(new PaperEntryPage(Model.of(p.get())));
                     }
                 }
             }
         };
-        retreat.setDefaultFormProcessing(false);
-        queue(retreat);
+        previous.setDefaultFormProcessing(false);
+        previous.setIconType(GlyphIconType.stepbackward);
+        queue(previous);
     }
 
-    private void makeAndQueueAdvanceButton(String id) {
-        BootstrapButton retreat = new BootstrapButton(id, Model.of("advance"), Buttons.Type.Default) {
+    private void makeAndQueueNextButton(String id) {
+        BootstrapButton next = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onSubmit() {
-                Navigateable<Long> navigator = SipamatoSession.get().getNavigateable();
-                if (navigator != null) {
-                    navigator.advance();
-                    Long next = navigator.getCurrentItem();
-                    Optional<Paper> p = paperService.findById(next);
+                final ItemNavigator<Long> navigator = SipamatoSession.get().getPaperIdManager();
+                navigator.next();
+                final Long next = navigator.getItemWithFocus();
+                if (next != null) {
+                    final Optional<Paper> p = paperService.findById(next);
                     if (p.isPresent()) {
                         setResponsePage(new PaperEntryPage(Model.of(p.get())));
                     }
                 }
             }
         };
-        retreat.setDefaultFormProcessing(false);
-        queue(retreat);
+        next.setDefaultFormProcessing(false);
+        next.setIconType(GlyphIconType.stepforward);
+        queue(next);
     }
 
     private void queueFieldAndLabel(FormComponent<?> field) {

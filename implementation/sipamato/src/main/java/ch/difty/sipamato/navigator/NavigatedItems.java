@@ -1,4 +1,4 @@
-package ch.difty.sipamato;
+package ch.difty.sipamato.navigator;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @param <T> the type of the managed items
  */
-public interface Navigateable<T> extends Serializable {
+interface NavigatedItems<T> extends Serializable {
 
     /**
      * @return the number of items managed
@@ -30,22 +30,32 @@ public interface Navigateable<T> extends Serializable {
     /**
      * @return the current item
      */
-    T getCurrentItem();
+    T getItemWithFocus();
 
     /**
      * Sets the current item
      * @param item
      */
-    void setCurrentItem(T item);
+    void setFocusToItem(T item);
 
     /**
-     * Advances the current item by one position (unless the current item is the last item)
+     * @return true if can retreat, false otherwise (we're on the first record or don't even have some data)
      */
-    void advance();
+    boolean hasPrevious();
 
     /**
      * Retreats the current item by one position (unless the current item is the first item)
      */
-    void retreat();
+    void previous();
+
+    /**
+     * @return true if can advance, false otherwise (we're on the last record or don't even have some data)
+     */
+    boolean hasNext();
+
+    /**
+     * Advances the current item by one position (unless the current item is the last item)
+     */
+    void next();
 
 }

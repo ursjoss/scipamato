@@ -227,7 +227,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
      * Construct a navigateable with this list and set it into the 
      */
     private void updateNavigateable() {
-        SipamatoSession.get().setPaperIdsToNavigate(dataProvider.findAllPaperIdsByFilter());
+        SipamatoSession.get().getPaperIdManager().initialize(dataProvider.findAllPaperIdsByFilter());
     }
 
 }

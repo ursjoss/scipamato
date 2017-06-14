@@ -1,4 +1,4 @@
-package ch.difty.sipamato;
+package ch.difty.sipamato.navigator;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,7 +7,14 @@ import java.util.stream.Collectors;
 
 import ch.difty.sipamato.lib.NullArgumentException;
 
-public class Navigator<T> implements Navigateable<T> {
+/**
+ * List based implementation of the {@link NavigatedItems} interface.
+ *
+ * @author u.joss
+ *
+ * @param <T>
+ */
+class NavigatedList<T> implements NavigatedItems<T> {
     private static final long serialVersionUID = 1L;
 
     private final List<T> items = new ArrayList<>();
@@ -15,10 +22,10 @@ public class Navigator<T> implements Navigateable<T> {
     private volatile int index = 0;
 
     /**
-     * Instantiate the {@link Navigator} with the provided collection of items.
+     * Instantiate the {@link NavigatedList} with the provided collection of items.
      * @param items collection of items, must not be null or empty.
      */
-    public Navigator(final Collection<T> items) {
+    public NavigatedList(final Collection<T> items) {
         if (items == null)
             throw new NullArgumentException("items");
         if (items.isEmpty())
@@ -37,30 +44,40 @@ public class Navigator<T> implements Navigateable<T> {
     }
 
     @Override
-    public T getCurrentItem() {
+    public T getItemWithFocus() {
         return items.get(index);
     }
 
     @Override
-    public void setCurrentItem(final T item) {
+    public void setFocusToItem(final T item) {
         if (item == null)
             throw new NullArgumentException("item");
         final int idx = items.indexOf(item);
         if (idx == -1)
-            throw new IllegalArgumentException("item " + item + " is not part of the managed items");
+            throw new IllegalArgumentException("Cannot set focus to item that is not part of the managed list (item " + item + ").");
         this.index = idx;
     }
 
     @Override
-    public void advance() {
-        if (index < items.size() - 1)
+    public void next() {
+        if (hasNext())
             index++;
     }
 
     @Override
-    public void retreat() {
-        if (index > 0)
+    public void previous() {
+        if (hasPrevious())
             index--;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return index < items.size() - 1;
+    }
+
+    @Override
+    public boolean hasPrevious() {
+        return index > 0;
     }
 
 }

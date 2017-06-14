@@ -98,7 +98,7 @@ public class PaperListPage extends BasePage<Void> {
      * Construct a navigateable with this list and set it into the 
      */
     private void updateNavigateable() {
-        SipamatoSession.get().setPaperIdsToNavigate(dataProvider.findAllPaperIdsByFilter());
+        SipamatoSession.get().getPaperIdManager().initialize(dataProvider.findAllPaperIdsByFilter());
     }
 
     private void makeAndQueueResultPanel(String id) {

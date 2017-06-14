@@ -98,7 +98,7 @@ public class ResultPanel extends AbstractPanel<Void> {
     }
 
     private void onTitleClick(IModel<PaperSlim> m) {
-        SipamatoSession.get().setCurrentIdToNavigateable(m.getObject().getId());
+        SipamatoSession.get().getPaperIdManager().setFocusToItem(m.getObject().getId());
         setResponsePage(new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject().getNumber()).orElse(new Paper()))));
     }
 
