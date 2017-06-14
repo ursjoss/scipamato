@@ -458,13 +458,9 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withNullPmId_warnsAboutNotBeingAbleToRetrieveArticle() {
+    public void withNoPmId_PubmedRetrievalLinkIsNotEnabled() {
         getTester().startComponentInPage(makePanelWithEmptyPaper(null));
-        getTester().debugComponentTrees();
-
-        getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertErrorMessages("Cannot retrieve the PubMed article without first specifying the PMID.");
-
+        getTester().assertDisabled(PANEL_ID + ":form:pubmedRetrieval");
         verifyCodeAndCodeClassCalls(1);
     }
 

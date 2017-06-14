@@ -31,4 +31,8 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
         // don't add the behavior
     }
 
+    protected boolean hasPubMedId() {
+        return false;
+    }
+
 }

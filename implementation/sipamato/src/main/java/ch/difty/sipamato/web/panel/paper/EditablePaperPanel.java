@@ -338,4 +338,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         }
     }
 
+    protected boolean hasPubMedId() {
+        return getModelObject().getPmId() != null;
+    }
 }

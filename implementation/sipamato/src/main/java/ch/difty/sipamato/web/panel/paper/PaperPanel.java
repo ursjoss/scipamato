@@ -80,6 +80,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     protected TextField<Object> publicationYear;
     protected TextField<Object> doi;
     protected TextArea<String> originalAbstract;
+    private BootstrapAjaxLink<Void> pubmedRetrieval;
 
     private Form<T> form;
 
@@ -146,7 +147,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         publicationYear = new TextField<>(Paper.PUBL_YEAR);
         queueFieldAndLabel(publicationYear, new PropertyValidator<Integer>());
         TextField<Object> pmId = new TextField<>(Paper.PMID);
-        pmId.add(newNoOpOnChangeBehavior());
+        pmId.add(newPmIdChangeBehavior());
         queueFieldAndLabel(pmId);
         doi = new TextField<>(Paper.DOI);
         queueFieldAndLabel(doi, new PropertyValidator<String>());
@@ -173,16 +174,13 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         reflectPersistedChangesViaTimer(id, created, modified);
     }
 
-    /**
-     * The OnChangeAjaxBehavior forces the value into the model despite potentially failing validations. 
-     */
-    private OnChangeAjaxBehavior newNoOpOnChangeBehavior() {
+    private OnChangeAjaxBehavior newPmIdChangeBehavior() {
         return new OnChangeAjaxBehavior() {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onUpdate(final AjaxRequestTarget target) {
-                // no-op
+                target.add(pubmedRetrieval);
             }
         };
     }
@@ -645,7 +643,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     }
 
     private void queuePubmedRetrievalLink(String linkId) {
-        BootstrapAjaxLink<Void> pubmedRetrieval = new BootstrapAjaxLink<Void>(linkId, Buttons.Type.Primary) {
+        pubmedRetrieval = new BootstrapAjaxLink<Void>(linkId, Buttons.Type.Primary) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -657,6 +655,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             protected void onConfigure() {
                 super.onConfigure();
                 setVisible(isEditMode());
+                setEnabled(hasPubMedId());
             }
         };
         pubmedRetrieval.setOutputMarkupPlaceholderTag(true);
@@ -664,6 +663,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         pubmedRetrieval.add(new AttributeModifier("title", new StringResourceModel("pubmedRetrieval.title", this, null).getString()));
         queue(pubmedRetrieval);
     }
+
+    protected abstract boolean hasPubMedId();
 
     /** override to do something with the pasted content */
     protected void getPubmedArticleAndCompare(AjaxRequestTarget target) {
