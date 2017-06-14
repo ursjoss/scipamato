@@ -153,7 +153,6 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     public void loadingPage_withSearchOrderWithCurrentOwner_rendersGlobalCheckBoxDisabled() {
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
-        getTester().debugComponentTrees();
         getTester().assertEnabled(PANEL_ID + ":form:global");
     }
 

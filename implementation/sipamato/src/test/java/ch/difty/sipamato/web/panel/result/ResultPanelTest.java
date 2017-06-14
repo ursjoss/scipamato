@@ -97,7 +97,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         bb = b + ":summaryTableLink";
         getTester().assertComponent(bb, ResourceLink.class);
 
-        verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
+        verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
     }
 

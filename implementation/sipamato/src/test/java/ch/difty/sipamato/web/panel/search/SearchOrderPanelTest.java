@@ -88,7 +88,7 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
     }
 
     @Test
-    public void clickingNewButton_forwardsTopaperSearchCriteriaPage() {
+    public void clickingNewButton_forwardsToPaperSearchCriteriaPage() {
         getTester().startComponentInPage(makePanel());
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form", false);
         formTester.submit("addSearchCondition");

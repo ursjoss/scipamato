@@ -283,7 +283,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withNoPmIdInSipamatoPaper_warns() {
         getTester().startComponentInPage(makePanel());
-        getTester().debugComponentTrees();
 
         when(pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID)).thenReturn(Optional.empty());
 
@@ -298,7 +297,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetAndEqual_informsAboutPerfectMatch() {
         getTester().startComponentInPage(makePanel());
-        getTester().debugComponentTrees();
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa");
 
@@ -339,7 +337,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptArticle_warnsAboutDifferingArticle() {
         getTester().startComponentInPage(makePanel());
-        getTester().debugComponentTrees();
 
         fixPubmedRetrievalButtonClicked("_a", "fa", "t", "l", "2017", "doi", "oa");
 
@@ -354,7 +351,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptFirstAuthor_warnsAboutDifferingFirstAuthor() {
         getTester().startComponentInPage(makePanel());
-        getTester().debugComponentTrees();
 
         fixPubmedRetrievalButtonClicked("a", "_fa", "t", "l", "2017", "doi", "oa");
 
@@ -369,7 +365,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptTitle_warnsAboutDifferingTitle() {
         getTester().startComponentInPage(makePanel());
-        getTester().debugComponentTrees();
 
         fixPubmedRetrievalButtonClicked("a", "fa", "_t", "l", "2017", "doi", "oa");
 
@@ -384,7 +379,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptLocation_warnsAboutDifferingLocation() {
         getTester().startComponentInPage(makePanel());
-        getTester().debugComponentTrees();
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "_l", "2017", "doi", "oa");
 
@@ -399,7 +393,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptYear_warnsAboutDifferingYear() {
         getTester().startComponentInPage(makePanel());
-        getTester().debugComponentTrees();
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2016", "doi", "oa");
 
@@ -414,7 +407,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptDoi_warnsAboutDifferingDoi() {
         getTester().startComponentInPage(makePanel());
-        getTester().debugComponentTrees();
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "_doi", "oa");
 
@@ -429,7 +421,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptAbstract_doesNotWarnAboutAbstract() {
         getTester().startComponentInPage(makePanel());
-        getTester().debugComponentTrees();
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "_oa");
 
@@ -444,7 +435,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetAndAllDifferent_warnsAboutAllComparedFields() {
         getTester().startComponentInPage(makePanel());
-        getTester().debugComponentTrees();
 
         fixPubmedRetrievalButtonClicked("_a", "_fa", "_t", "_l", "2016", "_doi", "_oa");
 
@@ -467,7 +457,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithNoOtherValuesSet_setsThemFromPubmedIncludingOriginalAbstract() {
         getTester().startComponentInPage(makePanelWithEmptyPaper(PMID));
-        getTester().debugComponentTrees();
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa");
 
@@ -481,7 +470,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
     private void testAndVerifySingleFieldSet(EditablePaperPanel panel, String field) {
         getTester().startComponentInPage(panel);
-        getTester().debugComponentTrees();
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa");
 
@@ -545,7 +533,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithNoOtherValuesSet_butWithInvalidYear_warnsAboutYearButSetsOtherFields() {
         getTester().startComponentInPage(makePanelWithEmptyPaper(PMID));
-        getTester().debugComponentTrees();
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "invalid", "doi", "oa");
 

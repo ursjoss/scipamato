@@ -168,8 +168,6 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().startPage(getPageClass(), pp);
         getTester().assertRenderedPage(getPageClass());
 
-        getTester().debugComponentTrees();
-
         getTester().assertModelValue("searchOrderSelectorPanel:form:searchOrder", searchOrder);
 
         verify(searchOrderServiceMock).findById(SEARCH_ORDER_ID);
@@ -179,8 +177,6 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     public void constructingPage_withPageParametersLackingSearchOrderId_setsFreshSearchOrder() {
         getTester().startPage(getPageClass(), new PageParameters());
         getTester().assertRenderedPage(getPageClass());
-
-        getTester().debugComponentTrees();
 
         verify(searchOrderServiceMock, never()).findById(SEARCH_ORDER_ID);
     }

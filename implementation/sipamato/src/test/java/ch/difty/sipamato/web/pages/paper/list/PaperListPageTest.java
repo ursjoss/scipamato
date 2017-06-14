@@ -73,7 +73,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         assertPateModal("xmlPasteModal");
         assertResultPanel("resultPanel");
 
-        verify(paperSlimRepoMock, times(3)).countByFilter(isA(PaperFilter.class));
+        verify(paperSlimRepoMock, times(2)).countByFilter(isA(PaperFilter.class));
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(Mockito.isA(PaperFilter.class), Mockito.isA(PaginationRequest.class));
     }
 
@@ -131,7 +131,6 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
     @Test
     public void clickingOnShowXmlPastePanelButton_opensModalWindow() {
         getTester().startPage(getPageClass());
-        getTester().debugComponentTrees();
 
         String b = "searchForm:";
         getTester().executeAjaxEvent("searchForm:showXmlPasteModalLink", "click");
@@ -146,7 +145,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         getTester().assertComponent(b + ":content", TextArea.class);
         getTester().assertComponent(b + ":submit", BootstrapAjaxButton.class);
 
-        verify(paperSlimRepoMock, times(3)).countByFilter(isA(PaperFilter.class));
+        verify(paperSlimRepoMock, times(2)).countByFilter(isA(PaperFilter.class));
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(Mockito.isA(PaperFilter.class), Mockito.isA(PaginationRequest.class));
     }
 

@@ -13,7 +13,6 @@ public abstract class PanelTest<T extends Panel> extends WicketTest {
     public void assertPanel() {
         getTester().startComponentInPage(makePanel());
 
-        getTester().debugComponentTrees();
         assertSpecificComponents();
 
         getTester().assertNoErrorMessage();

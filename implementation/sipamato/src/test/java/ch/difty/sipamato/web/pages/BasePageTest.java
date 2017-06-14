@@ -11,7 +11,6 @@ public abstract class BasePageTest<T extends BasePage<?>> extends WicketTest {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
-        getTester().debugComponentTrees();
         assertSpecificComponents();
 
         getTester().assertNoErrorMessage();
