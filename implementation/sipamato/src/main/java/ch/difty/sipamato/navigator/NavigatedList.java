@@ -41,7 +41,7 @@ class NavigatedList<T> implements NavigatedItems<T> {
 
     @Override
     public List<T> getItems() {
-        return new ArrayList<T>(items);
+        return new ArrayList<>(items);
     }
 
     @Override
