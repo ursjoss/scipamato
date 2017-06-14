@@ -45,6 +45,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.navigator.ItemNavigator;
 import ch.difty.sipamato.service.PaperService;
+import ch.difty.sipamato.web.component.SerializableSupplier;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.model.CodeClassModel;
 import ch.difty.sipamato.web.model.CodeModel;
@@ -128,8 +129,15 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         queueAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
         title = new TextArea<>(Paper.TITLE);
 
-        makeAndQueuePreviousButton("previous");
-        makeAndQueueNextButton("next");
+        final ItemNavigator<Long> pm = SipamatoSession.get().getPaperIdManager();
+        makeAndQueueNavigationButton("previous", GlyphIconType.stepbackward, () -> pm.hasPrevious(), () -> {
+            pm.previous();
+            return pm.getItemWithFocus();
+        });
+        makeAndQueueNavigationButton("next", GlyphIconType.stepforward, () -> pm.hasNext(), () -> {
+            pm.next();
+            return pm.getItemWithFocus();
+        });
 
         queueFieldAndLabel(title, new PropertyValidator<String>());
         location = new TextField<>(Paper.LOCATION);
@@ -274,60 +282,29 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     protected void addAuthorBehavior(TextArea<String> authors, CheckBox firstAuthorOverridden, TextField<String> firstAuthor) {
     }
 
-    private void makeAndQueuePreviousButton(String id) {
-        BootstrapButton previous = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
+    private void makeAndQueueNavigationButton(String id, GlyphIconType icon, SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
+        final BootstrapButton btn = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onSubmit() {
-                final ItemNavigator<Long> navigator = SipamatoSession.get().getPaperIdManager();
-                navigator.previous();
-                final Long prev = navigator.getItemWithFocus();
-                if (prev != null) {
-                    final Optional<Paper> p = paperService.findById(prev);
-                    if (p.isPresent()) {
+                final Long id = idSupplier.get();
+                if (id != null) {
+                    final Optional<Paper> p = paperService.findById(id);
+                    if (p.isPresent())
                         setResponsePage(new PaperEntryPage(Model.of(p.get())));
-                    }
                 }
             }
 
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                setEnabled(SipamatoSession.get().getPaperIdManager().hasPrevious());
+                setEnabled(isEnabled.get());
             }
         };
-        previous.setDefaultFormProcessing(false);
-        previous.setIconType(GlyphIconType.stepbackward);
-        queue(previous);
-    }
-
-    private void makeAndQueueNextButton(String id) {
-        BootstrapButton next = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onSubmit() {
-                final ItemNavigator<Long> navigator = SipamatoSession.get().getPaperIdManager();
-                navigator.next();
-                final Long next = navigator.getItemWithFocus();
-                if (next != null) {
-                    final Optional<Paper> p = paperService.findById(next);
-                    if (p.isPresent()) {
-                        setResponsePage(new PaperEntryPage(Model.of(p.get())));
-                    }
-                }
-            }
-
-            @Override
-            protected void onConfigure() {
-                super.onConfigure();
-                setEnabled(SipamatoSession.get().getPaperIdManager().hasNext());
-            }
-        };
-        next.setDefaultFormProcessing(false);
-        next.setIconType(GlyphIconType.stepforward);
-        queue(next);
+        btn.setDefaultFormProcessing(false);
+        btn.setIconType(icon);
+        queue(btn);
     }
 
     private void queueFieldAndLabel(FormComponent<?> field) {
