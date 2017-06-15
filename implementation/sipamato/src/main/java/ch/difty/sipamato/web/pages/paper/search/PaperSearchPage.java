@@ -185,7 +185,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         if (soce.getDroppedConditionId() != null) {
             searchOrderService.removeSearchConditionWithId(soce.getDroppedConditionId());
         }
-        resetProviderModel(soce);
+        resetAndSaveProviderModel(soce);
         addSubPanelsAsTarget(soce);
     }
 
@@ -200,9 +200,11 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         }
     }
 
-    private void resetProviderModel(final SearchOrderChangeEvent soce) {
+    private void resetAndSaveProviderModel(final SearchOrderChangeEvent soce) {
         if (getModelObject() != null && !soce.isNewSearchOrderRequested()) {
             dataProvider.setFilterState(getModelObject());
+            if (soce.getExcludedId() != null)
+                searchOrderService.saveOrUpdate(getModelObject());
         } else {
             final SearchOrder newSearchOrder = makeNewModelObject();
             final SearchOrder persistedNewSearchOrder = searchOrderService.saveOrUpdate(newSearchOrder);

@@ -1,9 +1,11 @@
 package ch.difty.sipamato.web.pages.paper.search;
 
+import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -14,9 +16,9 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
+import org.junit.After;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.sipamato.entity.SearchOrder;
@@ -26,6 +28,7 @@ import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.search.SearchOrderFilter;
 import ch.difty.sipamato.service.CodeClassService;
 import ch.difty.sipamato.service.CodeService;
+import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.service.PaperSlimService;
 import ch.difty.sipamato.service.SearchOrderService;
 import ch.difty.sipamato.web.PageParameterNames;
@@ -45,6 +48,8 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     @MockBean
     private PaperSlimService paperSlimServiceMock;
     @MockBean
+    private PaperService paperServiceMock;
+    @MockBean
     private CodeClassService codeClassServiceMock;
     @MockBean
     private CodeService codeServiceMock;
@@ -59,6 +64,13 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     protected void setUpHook() {
         when(searchOrderServiceMock.findById(SEARCH_ORDER_ID)).thenReturn(Optional.of(searchOrder));
         when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class))).thenReturn(Arrays.asList(searchOrder));
+        when(paperSlimMock.getId()).thenReturn(41l);
+        when(paperSlimMock.getDisplayValue()).thenReturn("ps");
+    }
+
+    @After
+    public void tearDown() {
+        verifyNoMoreInteractions(searchOrderServiceMock);
     }
 
     @Override
@@ -79,6 +91,10 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         assertSearchOrderSelectorPanel("searchOrderSelectorPanel");
         assertSearchOrderPanel("searchOrderPanel");
         assertResultPanel("resultPanel");
+
+        verify(searchOrderServiceMock).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
+        verify(paperSlimServiceMock).countBySearchOrder(isA(SearchOrder.class));
+        verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationContext.class));
     }
 
     private void assertSearchOrderSelectorPanel(String b) {
@@ -108,6 +124,10 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().assertRenderedPage(PaperSearchCriteriaPage.class);
 
         verify(searchOrderServiceMock).findById(SEARCH_ORDER_ID);
+
+        verify(searchOrderServiceMock).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
+        verify(paperSlimServiceMock).countBySearchOrder(isA(SearchOrder.class));
+        verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -136,14 +156,18 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
         // TODO test that the event is sent, and also that receiving the event adds the filter panel to the target. See also next test
         verify(searchOrderServiceMock, never()).findById(SEARCH_ORDER_ID);
+
+        verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
+        verify(paperSlimServiceMock, times(2)).countBySearchOrder(isA(SearchOrder.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationContext.class));
     }
 
     @Test
-    public void clickingRemoveButtonOnResults_removesResult() {
+    public void clickingRemoveButtonOnResults_removesResultAndSavesSearchOrder() {
         when(searchOrderMock.getId()).thenReturn(SEARCH_ORDER_ID);
 
-        when(paperSlimServiceMock.countBySearchOrder(Mockito.eq(searchOrderMock))).thenReturn(1, 0);
-        when(paperSlimServiceMock.findPageBySearchOrder(Mockito.eq(searchOrderMock), Mockito.isA(PaginationContext.class))).thenReturn(Arrays.asList(paperSlimMock));
+        when(paperSlimServiceMock.countBySearchOrder(eq(searchOrderMock))).thenReturn(1, 0);
+        when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class))).thenReturn(Arrays.asList(paperSlimMock));
 
         PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock));
 
@@ -158,8 +182,16 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().clickLink(linkPath);
         getTester().assertContainsNot(someTextInRow);
 
-        verify(paperSlimServiceMock, times(2)).countBySearchOrder(Mockito.eq(searchOrderMock));
-        verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(Mockito.eq(searchOrderMock), Mockito.isA(PaginationContext.class));
+        verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
+        verify(paperSlimServiceMock, times(2)).countBySearchOrder(eq(searchOrderMock));
+        verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class));
+        verify(paperSlimMock, times(2)).getId();
+        verify(paperSlimMock).getDisplayValue();
+        verify(searchOrderMock, times(5)).getExcludedPaperIds();
+        verify(searchOrderServiceMock).saveOrUpdate(isA(SearchOrder.class));
+
+        verify(paperSlimServiceMock, times(2)).countBySearchOrder(isA(SearchOrder.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -171,6 +203,10 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().assertModelValue("searchOrderSelectorPanel:form:searchOrder", searchOrder);
 
         verify(searchOrderServiceMock).findById(SEARCH_ORDER_ID);
+
+        verify(searchOrderServiceMock).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
+        verify(paperSlimServiceMock).countBySearchOrder(isA(SearchOrder.class));
+        verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -179,6 +215,10 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().assertRenderedPage(getPageClass());
 
         verify(searchOrderServiceMock, never()).findById(SEARCH_ORDER_ID);
+
+        verify(searchOrderServiceMock).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
+        verify(paperSlimServiceMock).countBySearchOrder(isA(SearchOrder.class));
+        verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationContext.class));
     }
 
 }
