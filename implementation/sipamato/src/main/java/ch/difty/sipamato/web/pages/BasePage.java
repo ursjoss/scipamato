@@ -102,7 +102,7 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
     }
 
     /**
-     * Override if you need to extend the {@link SipamatoNavbar}
+     * Override if you need to extend the {@link Navbar}
      */
     protected void extendNavBar() {
     }

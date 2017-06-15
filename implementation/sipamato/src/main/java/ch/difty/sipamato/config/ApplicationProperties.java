@@ -19,16 +19,12 @@ public interface ApplicationProperties {
     String PAPER_NUMBER_MIN_TO_RECYCLE = "sipamato.paper.number.minimum-to-be-recycled";
 
     /**
-     * Defines the localization the application starts with.
-     *
-     * @return
+     * @return the localization the application starts with.
      */
     String getDefaultLocalization();
 
     /**
-     * Defines the strategy how to interpret the author string.
-     *
-     * @return
+     * @return the strategy how to interpret the author string.
      */
     AuthorParserStrategy getAuthorParserStrategy();
 

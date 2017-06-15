@@ -26,7 +26,7 @@ public interface PaperSlimService extends ReadOnlyService<Long, PaperSlim, Paper
      * Finds a page full of {@link PaperSlim}s matching the provided {@link SearchOrder} and {@link PaginationContext}
      *
      * @param searchOrder the filter
-     * @param pagination context defining paging and sorting
+     * @param paginationContext context defining paging and sorting
      * @return paged list of papers
      */
     List<PaperSlim> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);

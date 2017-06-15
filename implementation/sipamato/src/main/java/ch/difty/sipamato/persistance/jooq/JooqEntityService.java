@@ -22,7 +22,7 @@ public abstract class JooqEntityService<ID extends Number, T extends IdSipamatoE
 
     private static final long serialVersionUID = 1L;
 
-    /** {@inhericDoc} */
+    /** {@inheritDoc} */
     @Transactional(readOnly = false)
     @Override
     public T saveOrUpdate(T entity) {

@@ -28,25 +28,25 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     private static final long serialVersionUID = 1L;
 
-    /** {@inheritDocs} */
+    /** {@inheritDoc} */
     @Override
     public List<Paper> findBySearchOrder(final SearchOrder searchOrder) {
         return getRepository().findBySearchOrder(searchOrder);
     }
 
-    /** {@inheritDocs} */
+    /** {@inheritDoc} */
     @Override
     public List<Paper> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext paginationContext) {
         return getRepository().findPageBySearchOrder(searchOrder, paginationContext);
     }
 
-    /** {@inheritDocs} */
+    /** {@inheritDoc} */
     @Override
     public int countBySearchOrder(final SearchOrder searchOrder) {
         return getRepository().countBySearchOrder(searchOrder);
     }
 
-    /** {@inheritDocs} */
+    /** {@inheritDoc} */
     @Override
     @Transactional(readOnly = false)
     public ServiceResult dumpPubmedArticlesToDb(final List<PubmedArticleFacade> articles, final long minimumNumber) {

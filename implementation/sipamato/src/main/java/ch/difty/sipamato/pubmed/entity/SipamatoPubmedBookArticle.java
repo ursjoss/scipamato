@@ -13,7 +13,7 @@ import ch.difty.sipamato.pubmed.PubmedBookArticle;
  * Derives from {@link PubmedArticleFacade} wrapping an instance of {@link PubmedBookArticle}.
  * <p>
  * <b>Note:</b> The extraction of the fields implemented so far is purely based upon inspection of the DTD.
- * I'm not sure if the {@linkPubmedBookArticle} is relevant for sipamato at all. If it is, we'll need a real
+ * I'm not sure if the {@link PubmedBookArticle} is relevant for sipamato at all. If it is, we'll need a real
  * example from pubmed and will need to build an integration test to validate the extraction is correct.
  *
  * @author u.joss

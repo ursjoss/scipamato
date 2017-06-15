@@ -36,7 +36,7 @@ import ch.difty.sipamato.persistance.jooq.JooqSortMapper;
  * @author u.joss
  *
  * @param <T>
- *      derivatives of {@link IdSipamatoEntity<Long>}, should actually be Paper or PaperSlims
+ *      derivatives of {@link IdSipamatoEntity}, should actually be Paper or PaperSlims
  * @param <M>
  *      derivatives of {@link EntityRecordMapper} specific to Papers or PaperSlims
  */

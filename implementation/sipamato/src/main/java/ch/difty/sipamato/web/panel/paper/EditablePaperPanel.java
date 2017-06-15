@@ -97,7 +97,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     /**
-     * Prepares the {@link PaperSummaryDatasource} for exporting the current entity into the pdf.
+     * Prepares the {@link PaperSummaryDataSource} for exporting the current entity into the pdf.
      */
     @Override
     protected PaperSummaryDataSource getSummaryDataSource() {

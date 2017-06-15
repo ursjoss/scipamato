@@ -15,7 +15,7 @@ import ch.difty.sipamato.paging.PaginationContext;
  *
  * @param <T> the type of the entity, extending {@link SipamatoEntity}
  * @param <ID> the type of the ID of the entity
- * @param <F> the type of the filter extending {@link SipamatorFilter}
+ * @param <F> the type of the filter extending {@link SipamatoFilter}
  */
 public interface ReadOnlyRepository<T extends SipamatoEntity, ID, F extends SipamatoFilter> extends Serializable {
 

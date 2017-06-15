@@ -11,7 +11,7 @@ import ch.difty.sipamato.logic.parsing.AuthorParser;
 public enum AuthorParserStrategy {
 
     /**
-     * The only {@link AuthorParserStrategies}
+     * The only {@link AuthorParserStrategy}
      */
     DEFAULT;
 

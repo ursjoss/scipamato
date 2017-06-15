@@ -53,7 +53,7 @@ public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRCo
 
     protected abstract JasperReport getReport();
 
-    /** {@iheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public JRDataSource getReportDataSource() {
         fetchEntitiesFromDataProvider();

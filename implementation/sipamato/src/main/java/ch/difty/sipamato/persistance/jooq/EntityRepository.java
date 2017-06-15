@@ -11,7 +11,7 @@ import ch.difty.sipamato.lib.NullArgumentException;
  *
  * @param <T> the type of the entity, extending {@link SipamatoEntity}
  * @param <ID> the type of the ID of the entity
- * @param <F> the type of the filter extending {@link SipamatorFilter}
+ * @param <F> the type of the filter extending {@link SipamatoFilter}
  */
 public interface EntityRepository<T extends SipamatoEntity, ID, F extends SipamatoFilter> extends ReadOnlyRepository<T, ID, F> {
 

@@ -12,7 +12,7 @@ import ch.difty.sipamato.paging.PaginationContext;
  * @author u.joss
  *
  * @param <T>
- *      derivatives of {@link IdSipamatoEntity<Long>}, should actually be Paper or PaperSlim
+ *      derivatives of {@link IdSipamatoEntity}, should actually be Paper or PaperSlim
  */
 public interface BySearchOrderRepository<T extends IdSipamatoEntity<Long>> {
 

@@ -35,7 +35,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     List<Paper> findBySearchOrder(SearchOrder searchOrder);
 
     /**
-     * {@link BySearchOrderRepository#findPageBySearchOrder(SearchOrder, paginationContext)}
+     * {@link BySearchOrderRepository#findPageBySearchOrder(SearchOrder, PaginationContext)}
      */
     List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
 
@@ -47,14 +47,14 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     /**
      * Find Papers by a number of PmIds
      * @param pmIds
-     * @return list of {@Paper}s
+     * @return list of {@link Paper}s
      */
     List<Paper> findByPmIds(List<Integer> pmIds);
 
     /**
      * Find Papers by a list of numbers
      * @param numbers
-     * @return list of {@Paper}s
+     * @return list of {@link Paper}s
      */
     List<Paper> findByNumbers(List<Long> numbers);
 
@@ -67,7 +67,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     long findLowestFreeNumberStartingFrom(long minimumPaperNumberToBeRecycled);
 
     /**
-     * {@link BySearchOrderRepository#findPageOfIdsBySearchOrder(SearchOrder, paginationContext)}
+     * {@link BySearchOrderRepository#findPageOfIdsBySearchOrder(SearchOrder, PaginationContext)}
      */
     List<Long> findPageOfIdsBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
 

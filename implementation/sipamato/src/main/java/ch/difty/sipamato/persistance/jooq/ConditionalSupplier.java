@@ -41,8 +41,8 @@ public class ConditionalSupplier {
      * whether to add or not from within the stream.
      *
      * @param isPresent filter allowing to add or not add 
-     * @param conditionSupplier
-     * @return
+     * @param conditionSupplier the supplier to add
+     * @return the resulting conditional supplier
      */
     public ConditionalSupplier add(boolean isPresent, Supplier<Condition> conditionSupplier) {
         if (isPresent)

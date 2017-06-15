@@ -40,13 +40,6 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
         setDefaultModel(Model.of(new SearchCondition()));
     }
 
-    /**
-     * Instantiates the page with a default model (empty {@link SearchCondition}), accepting and merging in
-     * the {@link SearchOrder} of all previous specification steps.
-     *
-     * @param searchOrderModel the model of the {@link SearchOrder} defining the criteria of the previously defined search steps.
-     * @param searchConditionModel the model of the {@link SearchCondition capturing the search terms from this form
-     */
     public PaperSearchCriteriaPage(final IModel<SearchCondition> searchConditionModel, final long searchOrderId) {
         super(searchConditionModel);
         getPageParameters().add(PageParameterNames.SEARCH_ORDER_ID, searchOrderId);

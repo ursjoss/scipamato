@@ -24,8 +24,7 @@ public interface AuthorParser {
     String getAuthorsString();
 
     /**
-     * A stream of {@link Author}s.
-     * @return
+     * @return a stream of {@link Author}s.
      */
     Stream<Author> getAuthors();
 

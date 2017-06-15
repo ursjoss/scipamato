@@ -11,11 +11,11 @@ public abstract class JasperEntity implements Serializable {
     }
 
     /**
-     * Sets the label with the real value if present or a default value if null.
+     * Returns the label with the real value if present or a default value if null.
      * However, if the associated value is blank or null, the label is blank as well.
      * @param label
      * @param value
-     * @return
+     * @return non-null label
      */
     protected String na(final String label, String value) {
         if (!value.isEmpty())

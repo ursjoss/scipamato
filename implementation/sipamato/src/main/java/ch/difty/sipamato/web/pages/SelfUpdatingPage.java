@@ -17,7 +17,7 @@ import ch.difty.sipamato.service.Localization;
  * it back to showing all feedback messages without filtering. This can be helpful
  * if validations prevent saving a new entity {@code T} which does not yet have all
  * required fields or does not pass validation until more data has been entered. See
- * {{@link #tuneDownFeedbackMessages()/@link #resetFeedbackMessages()}}.
+ * {@link #tuneDownFeedbackMessages()}/{@link #resetFeedbackMessages()}.
  * <p>
  * Requires the concrete page or it's panel to add a derivative of {@link AbstractAjaxTimerBehavior}
  * to trigger the auto-functionality.

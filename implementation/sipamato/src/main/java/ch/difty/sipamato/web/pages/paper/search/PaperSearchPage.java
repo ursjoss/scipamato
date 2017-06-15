@@ -34,7 +34,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCD
  * The PaperSearchPage manages {@link SearchOrder}s by allowing the user to select, create or modify them
  * and see the result of the search in the result panel.
  *
- * The page forwards to the {@link PaperSearchCriteriaPage} in order to set up or amend the {@link SearchCriteria}
+ * The page forwards to the {@link PaperSearchCriteriaPage} in order to set up or amend the SearchCondition
  * contained within a {@link SearchOrder}.
  *
  * You can either pass a model of a {@link SearchOrder} to the page constructor or provide the {@code searchOrderId}

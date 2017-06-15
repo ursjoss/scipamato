@@ -26,7 +26,6 @@ public final class PropertyUtils {
      *          the default enum value that shall be returned if the property value does not explicitly match an enum value.
      * @param propertyKey
      *          the property key, used only for logging purposes
-     * @param T type of the enum
      * @return enum of type {@code T}
      */
     public static <T extends Enum<T>> T fromProperty(String propertyValue, T[] values, T defaultValue, String propertyKey) {

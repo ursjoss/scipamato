@@ -18,7 +18,7 @@ public interface EntityService<ID extends Number, T extends IdSipamatoEntity<ID>
     /**
      * Update the provided entity.
      *
-     * @param the entity to persist
+     * @param entity the entity to persist
      * @return the persisted entity
      */
     T saveOrUpdate(T entity);

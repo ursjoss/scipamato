@@ -150,7 +150,7 @@ public class PaperListPage extends BasePage<Void> {
     /**
      * Converts the XML string to articles and dump the new papers into the db. Present the service result messages. Protected for test
      *
-     * @param xmlPastePanel
+     * @param pubmedContent the xml content as string
      * @param target
      */
     protected void onXmlPasteModalPanelClose(final String pubmedContent, final AjaxRequestTarget target) {

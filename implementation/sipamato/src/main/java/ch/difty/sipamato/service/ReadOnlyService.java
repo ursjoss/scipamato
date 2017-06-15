@@ -34,7 +34,7 @@ public interface ReadOnlyService<ID extends Number, T extends IdSipamatoEntity<I
      * Finds a page full of records of type {@code T} matching the provided filter and pagination context.
      *
      * @param filter the filter
-     * @param pagination context defining paging and sorting
+     * @param paginationContext context defining paging and sorting
      * @return a page of entities of type {@code T} as list
      */
     List<T> findPageByFilter(F filter, PaginationContext paginationContext);

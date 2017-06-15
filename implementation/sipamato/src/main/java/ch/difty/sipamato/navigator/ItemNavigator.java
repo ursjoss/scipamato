@@ -9,7 +9,7 @@ import java.util.List;
  * setting it to any other existing item or by advancing ({@link #next()}) or retreating ({@link #previous()})
  * item by item.
  *
- * If no items have been set initially, {@link #getCurrent} returns null, all other commands return false or are ignored.
+ * If no items have been set initially, {@link #getItemWithFocus} returns null, all other commands return false or are ignored.
  *
  * @author u.joss
  *

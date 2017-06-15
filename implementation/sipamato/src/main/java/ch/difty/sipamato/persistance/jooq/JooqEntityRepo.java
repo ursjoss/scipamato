@@ -52,7 +52,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends SipamatoEntity,
      * @param dateTimeService the {@link DateTimeService} providing access to the system time
      * @param localization {@link Localization} been providing the information about the requested localization code.
      * @param insertSetStepSetter {@link InsertSetStepSetter} mapping the entity fields into the jOOQ {@link InsertSetStep}.
-     * @param updateSetStepSetter{ @link UpdateSetStepSetter} mapping the entity fields into the jOOQ {@link UpdateSetStep}.
+     * @param updateSetStepSetter {@link UpdateSetStepSetter} mapping the entity fields into the jOOQ {@link UpdateSetStep}.
      */
     protected JooqEntityRepo(DSLContext dsl, M mapper, JooqSortMapper<R, T, TI> sortMapper, GenericFilterConditionMapper<F> filterConditionMapper, DateTimeService dateTimeService,
             Localization localization, InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter) {

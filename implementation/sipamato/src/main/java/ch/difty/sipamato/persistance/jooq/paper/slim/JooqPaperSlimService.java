@@ -21,19 +21,19 @@ public class JooqPaperSlimService extends JooqReadOnlyService<Long, PaperSlim, P
 
     private static final long serialVersionUID = 1L;
 
-    /** {@inhericDoc} */
+    /** {@inheritDoc} */
     @Override
     public List<PaperSlim> findBySearchOrder(SearchOrder searchOrder) {
         return getRepository().findBySearchOrder(searchOrder);
     }
 
-    /** {@inhericDoc} */
+    /** {@inheritDoc} */
     @Override
     public List<PaperSlim> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext) {
         return getRepository().findPageBySearchOrder(searchOrder, paginationContext);
     }
 
-    /** {@inhericDoc} */
+    /** {@inheritDoc} */
     @Override
     public int countBySearchOrder(SearchOrder searchOrder) {
         return getRepository().countBySearchOrder(searchOrder);

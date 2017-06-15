@@ -12,7 +12,7 @@ import ch.difty.sipamato.entity.SipamatoEntity;
  * @author u.joss
  *
  * @param <R> Record extending {@link Record}
- * @param <T> Entity extending {@link SipamtoEntity}
+ * @param <T> Entity extending {@link SipamatoEntity}
  */
 public interface InsertSetStepSetter<R extends Record, T extends SipamatoEntity> {
 

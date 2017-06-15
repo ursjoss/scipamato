@@ -36,7 +36,7 @@ public class SearchConditionProvider extends SortableDataProvider<SearchConditio
      *          skipping records
      * @param size
      *          page size
-     * @return
+     * @return iterator
      */
     @Override
     public Iterator<SearchCondition> iterator(final long offset, final long size) {

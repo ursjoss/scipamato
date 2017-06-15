@@ -47,7 +47,7 @@ public class JooqUserService implements UserService {
         return repo.countByFilter(filter);
     }
 
-    /** {@inhericDoc} */
+    /** {@inheritDoc} */
     @Override
     public User saveOrUpdate(User user) {
         if (user.getId() == null) {
@@ -57,7 +57,7 @@ public class JooqUserService implements UserService {
         }
     }
 
-    /** {@inhericDoc} */
+    /** {@inheritDoc} */
     @Override
     public Optional<User> findByUserName(String userName) {
         if (userName == null)
@@ -65,7 +65,7 @@ public class JooqUserService implements UserService {
         return Optional.ofNullable(repo.findByUserName(userName));
     }
 
-    /** {@inhericDoc} */
+    /** {@inheritDoc} */
     @Override
     public void remove(User entity) {
         if (entity != null && entity.getId() != null) {

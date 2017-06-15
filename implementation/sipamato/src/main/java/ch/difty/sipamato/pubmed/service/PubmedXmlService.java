@@ -74,7 +74,7 @@ public class PubmedXmlService implements PubmedArticleService {
      * <li> through the Web UI (e.g. https://www.ncbi.nlm.nih.gov/pubmed/25395026) when sending to {@code file} in format {@code XML}</li>
      * </ul>
      *
-     * @param content pubmed content in XML format, as String. Must not be null.
+     * @param xmlString pubmed content in XML format, as String. Must not be null.
      * @return List of {@link PubmedArticleFacade} entries. Never null. Will be empty if there are issues with the XML.
      * @throws NullArgumentException in case of null xmlString.
      */

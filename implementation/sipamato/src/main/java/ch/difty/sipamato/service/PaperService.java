@@ -29,7 +29,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * Finds a page full of papers as list matching the provided {@link SearchOrder} and {@link PaginationContext}.
      *
      * @param searchOrder the filter
-     * @param pagination context defining paging and sorting
+     * @param paginationContext context defining paging and sorting
      * @return paged list of papers
      */
     List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
@@ -38,7 +38,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * Finds a page full of ids of papers as list matching the provided {@link SearchOrder} and {@link PaginationContext}.
      *
      * @param searchOrder the filter
-     * @param pagination context defining paging and sorting
+     * @param paginationContext context defining paging and sorting
      * @return paged list of paper ids
      */
     List<Long> findPageOfIdsBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
@@ -56,7 +56,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * from PubMed via the {@link PubmedArticleFacade} entities.
      * 
      * @param articles list of {@link PubmedArticleFacade}
-     * @param minimumNumber. The lowest number that could be recycled
+     * @param minimumNumber The lowest number that could be recycled
      * @return {@link ServiceResult}
      */
     ServiceResult dumpPubmedArticlesToDb(List<PubmedArticleFacade> articles, long minimumNumber);
