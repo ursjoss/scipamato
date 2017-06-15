@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,6 @@ import ch.difty.sipamato.service.PubmedArticleService;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@Ignore
-// TODO reactivate after 502 is fixed by pubmed
 public class PubmedXmlServiceIntegrationTest {
 
     @Autowired
