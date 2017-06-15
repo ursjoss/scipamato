@@ -256,6 +256,14 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 return new TabPanel5(panelId, form.getModel());
             }
         });
+        tabs.add(new AbstractTab(new StringResourceModel("tab6" + LABEL_RECOURCE_TAG, this, null)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Panel getPanel(String panelId) {
+                return new TabPanel6(panelId, form.getModel());
+            }
+        });
         queue(new ClientSideBootstrapTabbedPanel<ITab>(tabId, tabs));
     }
 
@@ -615,6 +623,24 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             queue(tab5Form);
 
             originalAbstract = queueTo(Paper.ORIGINAL_ABSTRACT);
+        }
+    }
+
+    private class TabPanel6 extends AbstractTabPanel {
+        private static final long serialVersionUID = 1L;
+
+        public TabPanel6(String id, IModel<T> model) {
+            super(id, model);
+        }
+
+        @Override
+        protected void onInitialize() {
+            super.onInitialize();
+
+            Form<T> tab6Form = new Form<>("tab6Form");
+            queue(tab6Form);
+
+            // TODO add table for attachments
         }
     }
 

@@ -79,6 +79,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         assertTabPanelFields(4, 7, b, Paper.POPULATION_PLACE, Paper.POPULATION_PARTICIPANTS, Paper.POPULATION_DURATION, Paper.EXPOSURE_POLLUTANT, Paper.EXPOSURE_ASSESSMENT, Paper.METHOD_STUDY_DESIGN,
                 Paper.METHOD_OUTCOME, Paper.METHOD_STATISTICS, Paper.METHOD_CONFOUNDERS, Paper.RESULT_EXPOSURE_RANGE, Paper.RESULT_EFFECT_ESTIMATE, Paper.RESULT_MEASURED_OUTCOME);
         assertTabPanelFields(5, 9, b, Paper.ORIGINAL_ABSTRACT);
+        assertTabPanelFields(6, 11, b);
     }
 
     private void assertTabPanelFields(int tabId, int panelId, String b, String... fields) {
