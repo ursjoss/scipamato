@@ -344,4 +344,12 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         verify(repoMock).findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock);
     }
 
+    @Test
+    public void excludingFromSearchOrder_delegatesToRepo() {
+        long searchOrderId = 4l;
+        long paperId = 5l;
+        service.excludeFromSearchOrder(searchOrderId, paperId);
+        verify(repoMock).excludePaperFromSearchOrderResults(searchOrderId, paperId);
+    }
+
 }

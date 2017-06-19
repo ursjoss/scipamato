@@ -116,4 +116,10 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         return getRepository().findPageOfIdsBySearchOrder(searchOrder, paginationContext);
     }
 
+    @Transactional(readOnly = false)
+    @Override
+    public void excludeFromSearchOrder(long searchOrderId, long paperId) {
+        getRepository().excludePaperFromSearchOrderResults(searchOrderId, paperId);
+    }
+
 }
