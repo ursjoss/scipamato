@@ -99,7 +99,7 @@ public class ResultPanel extends AbstractPanel<Void> {
 
     private void onTitleClick(IModel<PaperSlim> m) {
         SipamatoSession.get().getPaperIdManager().setFocusToItem(m.getObject().getId());
-        setResponsePage(new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject().getNumber()).orElse(new Paper()))));
+        setResponsePage(new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject().getNumber()).orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId()));
     }
 
     private PropertyColumn<PaperSlim, String> makePropertyColumn(String propExpression) {
@@ -127,7 +127,6 @@ public class ResultPanel extends AbstractPanel<Void> {
             @Override
             protected void onClickPerformed(AjaxRequestTarget target, IModel<PaperSlim> rowModel, AjaxLink<Void> link) {
                 final Long excludedId = rowModel.getObject().getId();
-                info("Excluded " + rowModel.getObject().getDisplayValue());
                 target.add(results);
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).withExcludedPaperId(excludedId));
             }

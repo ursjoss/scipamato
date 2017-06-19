@@ -35,7 +35,7 @@
             </div>
             <div class="col-md-4">
                 <div class="row">
-                    <div class="col-md-6" style="float: none; display: table-cell; vertical-align: bottom">
+                    <div class="col-md-3" style="float: none; display: table-cell; vertical-align: bottom">
                         <div wicket:id="numberLabel"></div>
                         <input wicket:id="number" class="form-control"></input>
                     </div>
@@ -43,7 +43,9 @@
                         <div wicket:id="idLabel"></div>
                         <input wicket:id="id" class="form-control"></input>
                     </div>
-                    <div class="col-md-3 text-right" style="float: none; display: table-cell; vertical-align: bottom">
+                    <div class="col-md-6 text-right" style="float: none; display: table-cell; vertical-align: bottom">
+                        <button type="submit" wicket:id="exclude" class="btn btn-md"></button>
+                        <button type="submit" wicket:id="back" class="btn btn-md"></button>
                         <button type="submit" wicket:id="previous" tabindex="-1">
                             <i wicket:id="icon"></i>
                         </button>

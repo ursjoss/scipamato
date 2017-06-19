@@ -8,6 +8,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.bean.validation.PropertyValidator;
@@ -16,7 +18,9 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.sipamato.entity.Code;
@@ -24,11 +28,19 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
+import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.service.PubmedArticleService;
+import ch.difty.sipamato.web.PageParameterNames;
+import ch.difty.sipamato.web.component.SerializableSupplier;
 import ch.difty.sipamato.web.jasper.SipamatoPdfExporterConfiguration;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.Mode;
+import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
+import ch.difty.sipamato.web.pages.paper.search.PaperSearchPage;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 
 /**
@@ -41,14 +53,20 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     private static final long serialVersionUID = 1L;
 
+    private final Long searchOrderId;
+
+    @SpringBean
+    private PaperService paperService;
+
     @SpringBean
     private AuthorParserFactory authorParserFactory;
 
     @SpringBean
     private PubmedArticleService pubmedArticleService;
 
-    public EditablePaperPanel(String id, IModel<Paper> model) {
-        super(id, model, Mode.EDIT);
+    public EditablePaperPanel(String id, IModel<Paper> model, PageReference previousPage, Long searchOrderId) {
+        super(id, model, Mode.EDIT, previousPage);
+        this.searchOrderId = searchOrderId;
     }
 
     /**
@@ -341,4 +359,58 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     protected boolean hasPubMedId() {
         return getModelObject().getPmId() != null;
     }
+
+    protected BootstrapButton newNavigationButton(String id, GlyphIconType icon, SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
+        final BootstrapButton btn = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onSubmit() {
+                final Long id = idSupplier.get();
+                if (id != null) {
+                    final Optional<Paper> p = paperService.findById(id);
+                    if (p.isPresent())
+                        setResponsePage(new PaperEntryPage(Model.of(p.get()), getCallingPage(), searchOrderId));
+                }
+            }
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setEnabled(isEnabled.get());
+            }
+        };
+        btn.setDefaultFormProcessing(false);
+        btn.setIconType(icon);
+        btn.add(new AttributeModifier("title", new StringResourceModel("button." + id + ".title", this, null).getString()));
+        return btn;
+    }
+
+    protected BootstrapButton newExcludeButton(String id) {
+        BootstrapButton exclude = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onSubmit() {
+                Long paperId = EditablePaperPanel.this.getModelObject().getId();
+                if (paperId != null) {
+                    paperService.excludeFromSearchOrder(searchOrderId, paperId);
+                    PageParameters pp = new PageParameters();
+                    pp.add(PageParameterNames.SEARCH_ORDER_ID, searchOrderId);
+                    setResponsePage(new PaperSearchPage(pp));
+                }
+            }
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setVisible(searchOrderId != null);
+            }
+        };
+        exclude.setIconType(GlyphIconType.bancircle);
+        exclude.add(new AttributeModifier("title", new StringResourceModel("button.exclude.title", this, null).getString()));
+        exclude.setDefaultFormProcessing(false);
+        return exclude;
+    }
+
 }

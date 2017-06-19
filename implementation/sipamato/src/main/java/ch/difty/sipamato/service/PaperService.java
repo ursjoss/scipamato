@@ -82,4 +82,10 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      */
     void deleteByIds(List<Long> ids);
 
+    /**
+     * Exclude the paper from the result list of the specified search order id.
+     * @param searchOrderId the id of the search order from which the paper is to be excluded
+     * @param paperId the id of the paper that shall be excluded
+     */
+    void excludeFromSearchOrder(long searchOrderId, long paperId);
 }

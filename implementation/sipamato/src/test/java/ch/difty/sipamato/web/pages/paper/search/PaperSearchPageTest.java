@@ -186,7 +186,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(eq(searchOrderMock));
         verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class));
         verify(paperSlimMock, times(2)).getId();
-        verify(paperSlimMock).getDisplayValue();
+        verify(paperSlimMock, times(2)).getId();
         verify(searchOrderMock, times(5)).getExcludedPaperIds();
         verify(searchOrderServiceMock).saveOrUpdate(isA(SearchOrder.class));
 

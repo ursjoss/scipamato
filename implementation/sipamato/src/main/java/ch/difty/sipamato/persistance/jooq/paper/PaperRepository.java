@@ -71,4 +71,11 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      */
     List<Long> findPageOfIdsBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
 
+    /**
+     * Excludes the given paperId from the results of the searchOrder with given searchOrderid.
+     * @param searchOrderId the id of the search order
+     * @param paperId the id of the paper
+     */
+    void excludePaperFromSearchOrderResults(long searchOrderId, long paperId);
+
 }

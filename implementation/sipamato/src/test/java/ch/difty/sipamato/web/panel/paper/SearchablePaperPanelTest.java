@@ -1,11 +1,23 @@
 package ch.difty.sipamato.web.panel.paper;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+
 import org.apache.wicket.model.Model;
 import org.junit.Test;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.paging.PaginationContext;
+import ch.difty.sipamato.persistance.jooq.paper.PaperFilter;
+import ch.difty.sipamato.service.PaperService;
 
 public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, SearchablePaperPanel> {
+
+    @MockBean
+    private PaperService paperServiceMock;
 
     @Override
     protected SearchablePaperPanel makePanel() {
@@ -69,6 +81,12 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
     }
 
     @Override
+    protected void tearDownLocalHook() {
+        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verifyNoMoreInteractions(paperServiceMock);
+    }
+
+    @Override
     protected void assertSpecificComponents() {
         String b = "panel";
         getTester().assertComponent(b, SearchablePaperPanel.class);
@@ -83,8 +101,6 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
         getTester().assertLabel(b + ":submit:label", "Search");
         assertTextFieldWithLabel(b + ":createdDisplayValue", "cdv", "Created");
         assertTextFieldWithLabel(b + ":modifiedDisplayValue", "lmdv", "Last Modified");
-
-        getTester().assertInvisible(b + ":pubmedRetrieval");
     }
 
     @Test
@@ -106,10 +122,31 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
     }
 
     @Test
+    public void navigationButtons_andPubmedRetrieval_andBackButton_areInvisible() {
+        getTester().startComponentInPage(makePanel());
+
+        getTester().assertInvisible("panel:form:previous");
+        getTester().assertInvisible("panel:form:next");
+
+        getTester().assertInvisible("panel:form:pubmedRetrieval");
+
+        getTester().assertInvisible("panel:form:back");
+
+        verifyCodeAndCodeClassCalls(1);
+    }
+
+    @Test
     public void assertSubmit() {
         getTester().startComponentInPage(makePanel());
         getTester().submitForm("panel:form");
         verifyCodeAndCodeClassCalls(2);
+    }
+
+    @Test
+    public void gettingCallingPage_isNull() {
+        SearchablePaperPanel panel = getTester().startComponentInPage(makePanel());
+        assertThat(panel.getCallingPage()).isNull();
+        verifyCodeAndCodeClassCalls(1);
     }
 
 }

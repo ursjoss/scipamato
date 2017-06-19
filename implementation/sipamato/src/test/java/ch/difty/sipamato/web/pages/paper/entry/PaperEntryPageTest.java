@@ -42,7 +42,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
     @Override
     protected PaperEntryPage makePage() {
-        return new PaperEntryPage(Model.of(new Paper()));
+        return new PaperEntryPage(Model.of(new Paper()), null);
     }
 
     @Override
@@ -172,7 +172,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         when(serviceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
         when(serviceMock.findLowestFreeNumberStartingFrom(7l)).thenReturn(19l);
 
-        getTester().startPage(new PaperEntryPage(new PageParameters()));
+        getTester().startPage(new PaperEntryPage(new PageParameters(), null));
 
         FormTester formTester = getTester().newFormTester("contentPanel:form");
 

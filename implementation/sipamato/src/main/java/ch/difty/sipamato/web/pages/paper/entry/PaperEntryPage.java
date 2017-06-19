@@ -1,5 +1,6 @@
 package ch.difty.sipamato.web.pages.paper.entry;
 
+import org.apache.wicket.PageReference;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
@@ -19,7 +20,7 @@ import ch.difty.sipamato.web.panel.paper.EditablePaperPanel;
  * Page to add new papers or modify existing papers. The page implements the {@link SelfUpdatingPage},
  * implying that changes in individual fields will be validated and persisted immediately.
  * <p>
- * There is a number of validations in place (backed by JSR 303 validations on the {@link Paper} entity,
+ * There is a number of validations in place (backed by JSR 303 validations on the {@link Paper} entity),
  * that might prevent a save. This is useful if an existing paper is modified in a way that fails validation.
  * The feedback panel on the BasePage immediately indicates the problem that prevents the save.
  * <p>
@@ -39,6 +40,10 @@ import ch.difty.sipamato.web.panel.paper.EditablePaperPanel;
  * that can't be null. In case PubMed import is enabled, those will be replaced with real values (except for the
  * goals field, which is not available in the PubMed export).
  *
+ * In order to be able to jump back to the calling page (search or paper list page), the page accepts the calling
+ * page as PageReference and passes it down to the respective panels. Even more, if called from the search page,
+ * the page may need to offer a button to exclude a paper from a search, hence the optional searchOrderId.
+ *
  * @author u.joss
  */
 @MountPath("entry")
@@ -52,13 +57,43 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
     private EditablePaperPanel contentPanel;
 
-    public PaperEntryPage(PageParameters parameters) {
+    private final PageReference callingPage;
+    private final Long searchOrderId;
+
+    /**
+     * Instantiates the page with a new paper with a free number and n.a. values on all non-nullable fields.
+     * Allows the page to jump back to the calling page and also exclude the page from a search order.
+     * @param parameters page parameters
+     * @param callingPage page reference to the page that called this page. Can be null.
+     * @param searchOrderId id of the search order that found this paper. Offers a button to exclude paper from search order.
+     */
+    public PaperEntryPage(PageParameters parameters, PageReference callingPage) {
         super(parameters);
         initDefaultModel();
+        this.callingPage = callingPage;
+        this.searchOrderId = null;
     }
 
-    public PaperEntryPage(IModel<Paper> paperModel) {
+    /**
+     * Instantiates the page with the paper passed in as model. Allows the page to jump back to the calling page.
+     * @param paperModel model of the paper that shall be displayed.
+     * @param callingPage page reference to the page that called this page. Can be null.
+     */
+    public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage) {
+        this(paperModel, callingPage, null);
+    }
+
+    /**
+     * Instantiates the page with the paper passed in as model. Allows the page to jump back to the calling page.
+     * Allows to exclude the paper from the search order where it was found.
+     * @param paperModel model of the paper that shall be displayed.
+     * @param callingPage page reference to the page that called this page. Can be null.
+     * @param searchOrderId the id of the search order that found this paper. Offers a button to exclude the paper from the search order.
+     */
+    public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage, Long searchOrderId) {
         super(paperModel);
+        this.callingPage = callingPage;
+        this.searchOrderId = searchOrderId;
     }
 
     /**
@@ -81,7 +116,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
     @Override
     protected void implSpecificOnInitialize() {
-        contentPanel = new EditablePaperPanel("contentPanel", getModel()) {
+        contentPanel = new EditablePaperPanel("contentPanel", getModel(), callingPage, searchOrderId) {
             private static final long serialVersionUID = 1L;
 
             @Override
