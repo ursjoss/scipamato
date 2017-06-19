@@ -1,6 +1,7 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
 import static ch.difty.sipamato.db.Tables.PAPER;
+import static ch.difty.sipamato.db.tables.SearchExclusion.SEARCH_EXCLUSION;
 import static ch.difty.sipamato.persistance.jooq.TestDbConstants.MAX_ID_PREPOPULATED;
 import static ch.difty.sipamato.persistance.jooq.TestDbConstants.RECORD_COUNT_PREPOPULATED;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,6 +14,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ch.difty.sipamato.db.tables.SearchExclusion;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
@@ -250,6 +252,52 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         sc.setAuthors("kutlar");
         searchOrder.add(sc);
         assertThat(repo.findPageOfIdsBySearchOrder(searchOrder, new PaginationRequest(Direction.ASC, "authors"))).isNotEmpty().containsExactly(4l);
+    }
+
+    @Test
+    public void exludingPaperFromSearch_addsOneRecord() {
+        final long searchOrderId = 1;
+        final long paperId = 1;
+        ensureRecordNotPresent(searchOrderId, paperId);
+
+        repo.excludePaperFromSearchOrderResults(searchOrderId, paperId);
+        assertExclusionCount(searchOrderId, paperId, 1);
+
+        deleteRecord(searchOrderId, paperId);
+    }
+
+    private void ensureRecordNotPresent(final long searchOrderId, final long paperId) {
+        try {
+            assertExclusionCount(searchOrderId, paperId, 0);
+        } catch (Exception ex) {
+            deleteRecord(searchOrderId, paperId);
+        }
+    }
+
+    private void assertExclusionCount(final long searchOrderId, final long paperId, final int count) {
+        assertThat(dsl.selectCount()
+                .from(SearchExclusion.SEARCH_EXCLUSION)
+                .where(SearchExclusion.SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId))
+                .and(SearchExclusion.SEARCH_EXCLUSION.PAPER_ID.eq(paperId))
+                .fetchOne(0, int.class)).isEqualTo(count);
+    }
+
+    private void deleteRecord(long searchOrderId, long paperId) {
+        dsl.deleteFrom(SEARCH_EXCLUSION).where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId)).and(SEARCH_EXCLUSION.PAPER_ID.eq(paperId)).execute();
+    }
+
+    @Test
+    public void exludingPaperFromSearch_whenAddingMultipleTimes_ignoresAllButFirst() {
+        final long searchOrderId = 1;
+        final long paperId = 1;
+        ensureRecordNotPresent(searchOrderId, paperId);
+
+        repo.excludePaperFromSearchOrderResults(searchOrderId, paperId);
+        repo.excludePaperFromSearchOrderResults(searchOrderId, paperId);
+        repo.excludePaperFromSearchOrderResults(searchOrderId, paperId);
+        assertExclusionCount(searchOrderId, paperId, 1);
+
+        deleteRecord(searchOrderId, paperId);
     }
 
 }

@@ -6,6 +6,7 @@ import static ch.difty.sipamato.db.tables.CodeClassTr.CODE_CLASS_TR;
 import static ch.difty.sipamato.db.tables.CodeTr.CODE_TR;
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
 import static ch.difty.sipamato.db.tables.PaperCode.PAPER_CODE;
+import static ch.difty.sipamato.db.tables.SearchExclusion.SEARCH_EXCLUSION;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -244,6 +245,11 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     @Override
     public List<Long> findPageOfIdsBySearchOrder(final SearchOrder searchOrder, final PaginationContext paginationContext) {
         return searchOrderRepository.findPageOfIdsBySearchOrder(searchOrder, paginationContext);
+    }
+
+    @Override
+    public void excludePaperFromSearchOrderResults(long searchOrderId, long paperId) {
+        getDsl().insertInto(SEARCH_EXCLUSION).columns(SEARCH_EXCLUSION.SEARCH_ORDER_ID, SEARCH_EXCLUSION.PAPER_ID).values(searchOrderId, paperId).onConflictDoNothing().execute();
     }
 
 }
