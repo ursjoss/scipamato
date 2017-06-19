@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
@@ -33,7 +34,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
 
 import ch.difty.sipamato.SipamatoSession;
@@ -44,13 +44,11 @@ import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.navigator.ItemNavigator;
-import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.component.SerializableSupplier;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.model.CodeClassModel;
 import ch.difty.sipamato.web.model.CodeModel;
 import ch.difty.sipamato.web.pages.Mode;
-import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
@@ -67,9 +65,6 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
     private static final String CHANGE = "change";
 
-    @SpringBean
-    private PaperService paperService;
-
     private ResourceLink<Void> summaryLink;
     private String pubmedXml;
 
@@ -82,18 +77,29 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     protected TextArea<String> originalAbstract;
     private BootstrapAjaxLink<Void> pubmedRetrieval;
 
+    private final PageReference callingPage;
+
     private Form<T> form;
 
     public PaperPanel(String id) {
-        super(id);
+        this(id, null);
     }
 
     public PaperPanel(String id, IModel<T> model) {
-        super(id, model);
+        this(id, model, null);
     }
 
     public PaperPanel(String id, IModel<T> model, Mode mode) {
+        this(id, model, mode, null);
+    }
+
+    public PaperPanel(String id, IModel<T> model, Mode mode, PageReference previousPage) {
         super(id, model, mode);
+        this.callingPage = previousPage;
+    }
+
+    protected PageReference getCallingPage() {
+        return callingPage;
     }
 
     @Override
@@ -131,14 +137,14 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         title = new TextArea<>(Paper.TITLE);
 
         final ItemNavigator<Long> pm = SipamatoSession.get().getPaperIdManager();
-        makeAndQueueNavigationButton("previous", GlyphIconType.stepbackward, pm::hasPrevious, () -> {
+        queue(newNavigationButton("previous", GlyphIconType.stepbackward, pm::hasPrevious, () -> {
             pm.previous();
             return pm.getItemWithFocus();
-        });
-        makeAndQueueNavigationButton("next", GlyphIconType.stepforward, pm::hasNext, () -> {
+        }));
+        queue(newNavigationButton("next", GlyphIconType.stepforward, pm::hasNext, () -> {
             pm.next();
             return pm.getItemWithFocus();
-        });
+        }));
 
         queueFieldAndLabel(title, new PropertyValidator<String>());
         location = new TextField<>(Paper.LOCATION);
@@ -166,6 +172,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         modified.setEnabled(isSearchMode());
         queueFieldAndLabel(modified);
 
+        makeAndQueueBackButton("back");
+        queue(newExcludeButton("exclude"));
         makeAndQueueSubmitButton("submit");
 
         queue(makeSummaryLink("summaryLink"));
@@ -280,34 +288,34 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     protected void addAuthorBehavior(TextArea<String> authors, CheckBox firstAuthorOverridden, TextField<String> firstAuthor) {
     }
 
-    private void makeAndQueueNavigationButton(String id, GlyphIconType icon, SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
-        final BootstrapButton btn = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
+    protected abstract BootstrapButton newNavigationButton(String id, GlyphIconType icon, SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier);
+
+    private void queueFieldAndLabel(FormComponent<?> field) {
+        queueFieldAndLabel(field, Optional.empty());
+    }
+
+    private void makeAndQueueBackButton(String id) {
+        BootstrapButton back = new BootstrapButton(id, new StringResourceModel("button.back.label"), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onSubmit() {
-                final Long id = idSupplier.get();
-                if (id != null) {
-                    final Optional<Paper> p = paperService.findById(id);
-                    if (p.isPresent())
-                        setResponsePage(new PaperEntryPage(Model.of(p.get())));
-                }
+                if (callingPage != null)
+                    setResponsePage(callingPage.getPage());
             }
 
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                setEnabled(isEnabled.get());
+                setVisible(callingPage != null);
             }
         };
-        btn.setDefaultFormProcessing(false);
-        btn.setIconType(icon);
-        queue(btn);
+        back.setDefaultFormProcessing(false);
+        back.add(new AttributeModifier("title", new StringResourceModel("button.back.title", this, null).getString()));
+        queue(back);
     }
 
-    private void queueFieldAndLabel(FormComponent<?> field) {
-        queueFieldAndLabel(field, Optional.empty());
-    }
+    protected abstract BootstrapButton newExcludeButton(String id);
 
     private void makeAndQueueSubmitButton(String id) {
         BootstrapButton submit = new BootstrapButton(id, new StringResourceModel(getSubmitLinkResourceLabel()), Buttons.Type.Default) {
@@ -332,6 +340,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         summaryLink.setVisible(!isSearchMode());
         summaryLink.setOutputMarkupId(true);
         summaryLink.setBody(new StringResourceModel("link.summary.label"));
+        summaryLink.add(new AttributeModifier("title", new StringResourceModel("button." + id + ".title", this, null).getString()));
         return summaryLink;
     }
 

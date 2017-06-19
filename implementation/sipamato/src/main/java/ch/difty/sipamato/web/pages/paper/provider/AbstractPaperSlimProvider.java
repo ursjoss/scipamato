@@ -133,4 +133,6 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> exten
         return maxRowsPerPage;
     }
 
+    public abstract Long getSearchOrderId();
+
 }

@@ -126,15 +126,14 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(paperServiceMock).findByNumber(NUMBER);
         verify(codeClassServiceMock).find(anyString());
         verify(codeServiceMock, times(8)).findCodesOfClass(isA(CodeClassId.class), anyString());
+        verify(searchOrderMock).getId();
     }
 
     @Test
     public void clickingDeleteIconLink_() {
         getTester().startComponentInPage(makePanel());
         getTester().clickLink(PANEL_ID + ":table:body:rows:1:cells:6:cell:link");
-        getTester().assertInfoMessages("Excluded firstAuthor (2016): title.");
         getTester().assertComponentOnAjaxResponse(PANEL_ID + ":table");
-        // TODO how to verify the response was sent with the id to be excluded
 
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock, times(2)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));

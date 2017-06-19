@@ -86,4 +86,10 @@ public class PaperSlimBySearchOrderProviderTest extends AbstractPaperSlimProvide
         verify(paperServiceMock).findPageOfIdsBySearchOrder(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")));
     }
 
+    @Test
+    public void gettingSearchOrderId_passesModelId() {
+        when(searchOrder.getId()).thenReturn(55l);
+        assertThat(provider.getSearchOrderId()).isEqualTo(55l);
+        verify(searchOrder).getId();
+    }
 }

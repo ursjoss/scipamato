@@ -85,4 +85,9 @@ public class PaperSlimByPaperFilterProviderTest extends AbstractPaperSlimProvide
         verify(paperServiceMock).findPageOfIdsByFilter(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")));
     }
 
+    // I know: The Liskov Substitution Principle ... :-(
+    @Test
+    public void gettingSearchOrderId_alwaysReturnsNull() {
+        assertThat(provider.getSearchOrderId()).isNull();
+    }
 }
