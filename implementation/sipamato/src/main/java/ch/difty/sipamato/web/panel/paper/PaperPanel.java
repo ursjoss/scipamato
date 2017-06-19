@@ -64,6 +64,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     private static final long serialVersionUID = 1L;
 
     private static final String CHANGE = "change";
+    private static final String TITLE = "title";
 
     private ResourceLink<Void> summaryLink;
     private String pubmedXml;
@@ -311,7 +312,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             }
         };
         back.setDefaultFormProcessing(false);
-        back.add(new AttributeModifier("title", new StringResourceModel("button.back.title", this, null).getString()));
+        back.add(new AttributeModifier(TITLE, new StringResourceModel("button.back.title", this, null).getString()));
         queue(back);
     }
 
@@ -340,7 +341,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         summaryLink.setVisible(!isSearchMode());
         summaryLink.setOutputMarkupId(true);
         summaryLink.setBody(new StringResourceModel("link.summary.label"));
-        summaryLink.add(new AttributeModifier("title", new StringResourceModel("button." + id + ".title", this, null).getString()));
+        summaryLink.add(new AttributeModifier(TITLE, new StringResourceModel("button." + id + ".title", this, null).getString()));
         return summaryLink;
     }
 
@@ -669,7 +670,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         };
         pubmedRetrieval.setOutputMarkupPlaceholderTag(true);
         pubmedRetrieval.setLabel(new StringResourceModel("pubmedRetrieval.label", this, null));
-        pubmedRetrieval.add(new AttributeModifier("title", new StringResourceModel("pubmedRetrieval.title", this, null).getString()));
+        pubmedRetrieval.add(new AttributeModifier(TITLE, new StringResourceModel("pubmedRetrieval.title", this, null).getString()));
         queue(pubmedRetrieval);
     }
 
