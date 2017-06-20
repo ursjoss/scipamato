@@ -13,6 +13,7 @@ import java.util.Optional;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.feedback.ExactLevelFeedbackMessageFilter;
 import org.apache.wicket.feedback.FeedbackMessage;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
@@ -31,6 +32,7 @@ import ch.difty.sipamato.service.SearchOrderService;
 import ch.difty.sipamato.web.pages.paper.search.PaperSearchPage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.fileinput.BootstrapFileInput;
 
 public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperPanel> {
 
@@ -154,6 +156,11 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertComponent(b + ":pubmedRetrieval", BootstrapAjaxLink.class);
         getTester().assertVisible(b + ":pubmedRetrieval");
 
+        String bb = b + ":tabs:panelsContainer:panels:11:tab6Form";
+        getTester().assertComponent(bb + ":bootstrapFileinput", BootstrapFileInput.class);
+        getTester().assertVisible(bb + ":bootstrapFileinput");
+        getTester().assertComponent(bb, Form.class);
+
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
@@ -179,6 +186,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void assertSubmit() {
         getTester().startComponentInPage(makePanel());
+        applyTestHackWithNstedMultiPartForms();
         getTester().submitForm("panel:form");
         verifyCodeAndCodeClassCalls(2);
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));

@@ -25,6 +25,7 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -34,6 +35,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.util.time.Duration;
 
 import ch.difty.sipamato.SipamatoSession;
@@ -48,6 +50,7 @@ import ch.difty.sipamato.web.component.SerializableSupplier;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.model.CodeClassModel;
 import ch.difty.sipamato.web.model.CodeModel;
+import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.Mode;
 import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
@@ -56,6 +59,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.fileinput.BootstrapFileInput;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 
@@ -115,6 +119,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 onFormSubmit();
             }
         };
+        form.setMultiPart(true);
         queue(form);
 
         queueHeaderFields();
@@ -636,11 +641,38 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         @Override
         protected void onInitialize() {
             super.onInitialize();
-
-            Form<T> tab6Form = new Form<>("tab6Form");
+            final IModel<List<FileUpload>> model = new ListModel<FileUpload>();
+            Form<Void> tab6Form = new Form<Void>("tab6Form");
+            tab6Form.setOutputMarkupId(true);
+            tab6Form.setMultiPart(true);
             queue(tab6Form);
 
-            // TODO add table for attachments
+            BootstrapFileInput bootstrapFileInput = new BootstrapFileInput("bootstrapFileinput", model) {
+                private static final long serialVersionUID = 1L;
+
+                @SuppressWarnings("unchecked")
+                @Override
+                protected void onSubmit(AjaxRequestTarget target) {
+                    super.onSubmit(target);
+
+                    List<FileUpload> fileUploads = model.getObject();
+                    if (fileUploads != null) {
+                        for (FileUpload upload : fileUploads) {
+                            success("Uploaded: " + upload.getClientFileName());
+                        }
+                    }
+
+                    target.add(((BasePage<Paper>) getPage()).getFeedbackPanel());
+                }
+
+                @Override
+                protected void onConfigure() {
+                    super.onConfigure();
+                    setVisible(isEditMode());
+                }
+            };
+            bootstrapFileInput.getConfig().maxFileCount(4);
+            queue(bootstrapFileInput);
         }
     }
 

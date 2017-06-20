@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
@@ -126,8 +127,15 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     @Test
     public void paperFailingValidation_showsAllValidationMessages() {
         getTester().startPage(makePage());
+        applyTestHackWithNstedMultiPartForms();
         getTester().submitForm("contentPanel:form");
         getTester().assertErrorMessages("'Authors' is required.", "'Title' is required.", "'Location' is required.", "'Pub. Year' is required.", "'No.' is required.", "'Goals' is required.");
+    }
+
+    // See https://issues.apache.org/jira/browse/WICKET-2790
+    private void applyTestHackWithNstedMultiPartForms() {
+        MockHttpServletRequest servletRequest = getTester().getRequest();
+        servletRequest.setUseMultiPartContentType(true);
     }
 
     @Test

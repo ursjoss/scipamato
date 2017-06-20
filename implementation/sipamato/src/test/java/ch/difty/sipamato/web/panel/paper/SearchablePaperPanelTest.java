@@ -5,6 +5,7 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -101,6 +102,10 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
         getTester().assertLabel(b + ":submit:label", "Search");
         assertTextFieldWithLabel(b + ":createdDisplayValue", "cdv", "Created");
         assertTextFieldWithLabel(b + ":modifiedDisplayValue", "lmdv", "Last Modified");
+
+        String bb = b + ":tabs:panelsContainer:panels:11:tab6Form";
+        getTester().assertInvisible(bb + ":bootstrapFileinput");
+        getTester().assertComponent(bb, Form.class);
     }
 
     @Test
@@ -138,6 +143,7 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
     @Test
     public void assertSubmit() {
         getTester().startComponentInPage(makePanel());
+        applyTestHackWithNstedMultiPartForms();
         getTester().submitForm("panel:form");
         verifyCodeAndCodeClassCalls(2);
     }
