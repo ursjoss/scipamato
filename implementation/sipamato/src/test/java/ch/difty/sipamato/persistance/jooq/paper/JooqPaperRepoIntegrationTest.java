@@ -203,15 +203,58 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     }
 
     @Test
-    public void gettingPapersByPmIds_withThreeValidPmIds_returnsThreePapers() {
+    public void findingPapersByPmIds_withThreeValidPmIds_returnsThreePapers() {
         List<Paper> papers = repo.findByPmIds(Arrays.asList(20335815, 27128166, 25104428));
         assertThat(papers).hasSize(3);
-        assertThat(papers).extracting("pmId").containsOnly(20335815, 27128166, 25104428);
+        assertThat(papers).extracting(Paper.PMID).containsOnly(20335815, 27128166, 25104428);
     }
 
     @Test
-    public void gettingPapersByPmIds_withInvalidPmIds_returnsEmptyList() {
+    public void findingPapersByPmIds_withInvalidPmIds_returnsEmptyList() {
         assertThat(repo.findByPmIds(Arrays.asList(-20335815))).isEmpty();
+    }
+
+    @Test
+    public void findingPapersByPmIds_hasCodesEnriched() {
+        List<Paper> papers = repo.findByPmIds(Arrays.asList(20335815));
+        assertThat(papers.get(0).getCodes()).isNotEmpty();
+    }
+
+    @Test
+    public void findingPapersByNumbers_withThreeValidNumbers_returnsThreePapers() {
+        List<Paper> papers = repo.findByNumbers(Arrays.asList(1l, 2l, 3l));
+        assertThat(papers).hasSize(3);
+        assertThat(papers).extracting(Paper.NUMBER).containsOnly(1l, 2l, 3l);
+    }
+
+    @Test
+    public void findingPapersByNumbers_withInvalidNumbers_returnsEmptyList() {
+        assertThat(repo.findByNumbers(Arrays.asList(-1l))).isEmpty();
+    }
+
+    @Test
+    public void findingPapersByNumber_hasCodesEnriched() {
+        List<Paper> papers = repo.findByNumbers(Arrays.asList(1l));
+        assertThat(papers.get(0).getCodes()).isNotEmpty();
+    }
+
+    @Test
+    public void findingBySearchOrder() {
+        SearchOrder searchOrder = new SearchOrder();
+        SearchCondition sc = new SearchCondition();
+        sc.setAuthors("kutlar");
+        searchOrder.add(sc);
+        List<Paper> papers = repo.findBySearchOrder(searchOrder);
+        assertThat(papers).isNotEmpty();
+    }
+
+    @Test
+    public void findingPageBySearchOrder() {
+        SearchOrder searchOrder = new SearchOrder();
+        SearchCondition sc = new SearchCondition();
+        sc.setAuthors("kutlar");
+        searchOrder.add(sc);
+        assertThat(repo.findPageBySearchOrder(searchOrder, new PaginationRequest(Direction.ASC, "authors"))).isNotEmpty();
     }
 
     @Test

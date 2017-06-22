@@ -202,8 +202,11 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     public List<Paper> findByPmIds(final List<Integer> pmIds) {
         if (pmIds == null || pmIds.isEmpty())
             return new ArrayList<>();
-        else
-            return getDsl().selectFrom(PAPER).where(PAPER.PM_ID.in(pmIds)).fetchInto(Paper.class);
+        else {
+            List<Paper> papers = getDsl().selectFrom(PAPER).where(PAPER.PM_ID.in(pmIds)).fetchInto(Paper.class);
+            enrichAssociatedEntitiesOfAll(papers);
+            return papers;
+        }
     }
 
     /** {@inheritDoc} */
@@ -211,8 +214,11 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     public List<Paper> findByNumbers(final List<Long> numbers) {
         if (numbers == null || numbers.isEmpty())
             return new ArrayList<>();
-        else
-            return getDsl().selectFrom(PAPER).where(PAPER.NUMBER.in(numbers)).fetchInto(Paper.class);
+        else {
+            List<Paper> papers = getDsl().selectFrom(PAPER).where(PAPER.NUMBER.in(numbers)).fetchInto(Paper.class);
+            enrichAssociatedEntitiesOfAll(papers);
+            return papers;
+        }
     }
 
     /**
