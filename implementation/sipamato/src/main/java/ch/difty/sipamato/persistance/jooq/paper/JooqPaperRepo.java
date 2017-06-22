@@ -5,6 +5,7 @@ import static ch.difty.sipamato.db.tables.CodeClass.CODE_CLASS;
 import static ch.difty.sipamato.db.tables.CodeClassTr.CODE_CLASS_TR;
 import static ch.difty.sipamato.db.tables.CodeTr.CODE_TR;
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
+import static ch.difty.sipamato.db.tables.PaperAttachment.PAPER_ATTACHMENT;
 import static ch.difty.sipamato.db.tables.PaperCode.PAPER_CODE;
 import static ch.difty.sipamato.db.tables.SearchExclusion.SEARCH_EXCLUSION;
 
@@ -26,6 +27,7 @@ import ch.difty.sipamato.db.tables.records.PaperCodeRecord;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.PaperAttachment;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.lib.DateTimeService;
@@ -100,6 +102,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     protected void enrichAssociatedEntitiesOf(Paper entity) {
         if (entity != null) {
             enrichCodesOf(entity);
+            enrichAttachmentsOf(entity);
         }
     }
 
@@ -131,6 +134,20 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
         // @formatter:on
         if (CollectionUtils.isNotEmpty(codes))
             entity.addCodes(codes);
+    }
+
+    private void enrichAttachmentsOf(Paper entity) {
+        if (entity != null && entity.getId() != null)
+            entity.setAttachments(loadSlimAttachment(entity.getId()));
+    }
+
+    List<ch.difty.sipamato.entity.PaperAttachment> loadSlimAttachment(long paperId) {
+        return getDsl()
+                .select(PAPER_ATTACHMENT.ID, PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE, PAPER_ATTACHMENT.CREATED_BY,
+                        PAPER_ATTACHMENT.CREATED, PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.VERSION)
+                .from(PAPER_ATTACHMENT)
+                .where(PAPER_ATTACHMENT.PAPER_ID.eq(paperId))
+                .fetchInto(ch.difty.sipamato.entity.PaperAttachment.class);
     }
 
     @Override
