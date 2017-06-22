@@ -60,6 +60,8 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
 
     public static final String ORIGINAL_ABSTRACT = "originalAbstract";
 
+    public static final String ATTACHMENTS = "attachments";
+
     public static final String MAIN_CODE_OF_CODECLASS1 = "mainCodeOfCodeclass1";
 
     public static final String CODES = "codes";

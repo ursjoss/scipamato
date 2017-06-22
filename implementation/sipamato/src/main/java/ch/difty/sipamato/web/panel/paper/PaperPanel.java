@@ -15,6 +15,7 @@ import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.event.IEvent;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
@@ -25,7 +26,6 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -35,7 +35,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.util.time.Duration;
 
 import ch.difty.sipamato.SipamatoSession;
@@ -44,13 +43,13 @@ import ch.difty.sipamato.entity.CodeBoxAware;
 import ch.difty.sipamato.entity.CodeClass;
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.PaperAttachment;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.navigator.ItemNavigator;
 import ch.difty.sipamato.web.component.SerializableSupplier;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.model.CodeClassModel;
 import ch.difty.sipamato.web.model.CodeModel;
-import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.Mode;
 import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
@@ -67,8 +66,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
     private static final long serialVersionUID = 1L;
 
-    private static final String CHANGE = "change";
     private static final String TITLE = "title";
+    private static final String CHANGE = "change";
 
     private ResourceLink<Void> summaryLink;
     private String pubmedXml;
@@ -81,6 +80,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     protected TextField<Object> doi;
     protected TextArea<String> originalAbstract;
     private BootstrapAjaxLink<Void> pubmedRetrieval;
+    private DataTable<PaperAttachment, String> attachments;
 
     private final PageReference callingPage;
 
@@ -641,40 +641,24 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         @Override
         protected void onInitialize() {
             super.onInitialize();
-            final IModel<List<FileUpload>> model = new ListModel<FileUpload>();
-            Form<Void> tab6Form = new Form<Void>("tab6Form");
+            // TODO consider DropZoneFileUpload
+            queue(newTab6Frm("tab6Form"));
+            queue(newBootstrapFileInput());
+            attachments = newAttachmentTable("attachments");
+            queue(attachments);
+        }
+
+        private Form<Void> newTab6Frm(String id) {
+            Form<Void> tab6Form = new Form<Void>(id);
             tab6Form.setOutputMarkupId(true);
             tab6Form.setMultiPart(true);
-            queue(tab6Form);
-
-            BootstrapFileInput bootstrapFileInput = new BootstrapFileInput("bootstrapFileinput", model) {
-                private static final long serialVersionUID = 1L;
-
-                @SuppressWarnings("unchecked")
-                @Override
-                protected void onSubmit(AjaxRequestTarget target) {
-                    super.onSubmit(target);
-
-                    List<FileUpload> fileUploads = model.getObject();
-                    if (fileUploads != null) {
-                        for (FileUpload upload : fileUploads) {
-                            success("Uploaded: " + upload.getClientFileName());
-                        }
-                    }
-
-                    target.add(((BasePage<Paper>) getPage()).getFeedbackPanel());
-                }
-
-                @Override
-                protected void onConfigure() {
-                    super.onConfigure();
-                    setVisible(isEditMode());
-                }
-            };
-            bootstrapFileInput.getConfig().maxFileCount(4);
-            queue(bootstrapFileInput);
+            return tab6Form;
         }
     }
+
+    protected abstract DataTable<PaperAttachment, String> newAttachmentTable(String id);
+
+    protected abstract BootstrapFileInput newBootstrapFileInput();
 
     /** override if needed */
     protected void addCodeClass1ChangeBehavior(final TextField<String> mainCodeOfCodeClass1, final BootstrapMultiSelect<Code> codeClass1) {

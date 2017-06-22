@@ -9,7 +9,6 @@ import java.util.List;
 import org.junit.Test;
 
 import ch.difty.sipamato.lib.NullArgumentException;
-import ch.difty.sipamato.navigator.NavigatedList;
 
 public class NavigatedListTest {
 
