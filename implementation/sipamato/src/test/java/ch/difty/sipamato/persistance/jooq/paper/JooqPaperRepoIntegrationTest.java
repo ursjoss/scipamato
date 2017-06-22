@@ -60,6 +60,8 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     public void teardown() {
         // Delete all papers that were created in any test
         dsl.delete(PAPER).where(PAPER.ID.gt(MAX_ID_PREPOPULATED)).execute();
+        // Delete test attachment
+        dsl.delete(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.NAME.in(TEST_FILE_1, TEST_FILE_2)).and(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).execute();
     }
 
     @Test
@@ -368,14 +370,59 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(saved.getContent()).isNull();
         assertThat(saved.getSize()).isEqualTo(content1.length());
         assertThat(saved.getContentType()).isEqualTo("application/pdf");
-        assertThat(saved.getCreatedBy()).isEqualTo(-1);
         assertThat(saved.getCreated().toString()).isEqualTo("2016-12-09T06:02:13");
-        assertThat(saved.getLastModifiedBy()).isEqualTo(-1);
         assertThat(saved.getLastModified().toString()).isEqualTo("2016-12-09T06:02:13");
     }
 
     private PaperAttachment newPaperAttachment(String name, final String content) {
         return new PaperAttachment(null, TEST_PAPER_ID, name, content.getBytes(), "application/pdf", (long) content.length());
+    }
+
+    @Test
+    public void savingAttachment_whenNotExisting_insertsIntoDb() {
+        final String content = "foo";
+        PaperAttachment pa = newPaperAttachment(TEST_FILE_1, content);
+
+        repo.saveAttachment(pa);
+
+        PaperAttachment saved = dsl.select().from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetchOneInto(PaperAttachment.class);
+
+        assertThat(saved.getName()).isEqualTo(pa.getName());
+        assertThat(new String(saved.getContent())).isEqualTo(content);
+        assertThat(saved.getSize()).isEqualTo(content.length());
+        assertThat(saved.getContentType()).isEqualTo("application/pdf");
+        assertThat(saved.getCreated().toString()).isEqualTo("2016-12-09T06:02:13");
+        assertThat(saved.getLastModified().toString()).isEqualTo("2016-12-09T06:02:13");
+    }
+
+    @Test
+    public void savingAttachment_whenExisted_performsUpdate() {
+        final String content2 = "bar";
+        PaperAttachment pa1 = newPaperAttachment(TEST_FILE_1, "foo");
+        PaperAttachment pa2 = newPaperAttachment(TEST_FILE_1, content2);
+        assertThat(pa1.getPaperId()).isEqualTo(pa2.getPaperId());
+        assertThat(pa1.getName()).isEqualTo(pa2.getName());
+
+        repo.saveAttachment(pa1);
+        repo.saveAttachment(pa2);
+
+        PaperAttachment saved2 = dsl.select().from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetchOneInto(PaperAttachment.class);
+
+        assertThat(saved2.getName()).isEqualTo(pa1.getName());
+        assertThat(saved2.getVersion()).isEqualTo(2);
+        assertThat(new String(saved2.getContent())).isEqualTo(content2);
+    }
+
+    @Test
+    public void loadingAttachmentWithContentById() {
+        final String content1 = "baz";
+        PaperAttachment pa1 = newPaperAttachment(TEST_FILE_1, content1);
+        repo.saveAttachment(pa1);
+
+        Integer id = dsl.select(PAPER_ATTACHMENT.ID).from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetchOneInto(Integer.class);
+        PaperAttachment attachment = repo.loadAttachmentWithContentBy(id);
+        assertThat(attachment.getContent()).isNotNull();
+        assertThat(new String(attachment.getContent())).isEqualTo(content1);
     }
 
 }

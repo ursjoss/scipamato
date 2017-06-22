@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.PaperAttachment;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.lib.NullArgumentException;
 import ch.difty.sipamato.paging.PaginationContext;
@@ -65,7 +66,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * Finds an individual paper by number. Returns it as an optional of type {@code T}
      *
      * @param number - must not be null
-     * @return Optional
+     * @return Optional paper. Codes are enriched and attachments present (but without content)
      * @throws NullArgumentException if number is null
      */
     Optional<Paper> findByNumber(Long number);
@@ -88,4 +89,17 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * @param paperId the id of the paper that shall be excluded
      */
     void excludeFromSearchOrder(long searchOrderId, long paperId);
+
+    /**
+     * Saves the attachment including its content.
+     * @param paperAttachment
+     */
+    void saveAttachment(PaperAttachment paperAttachment);
+
+    /**
+     * Loads the {@link PaperAttachment} matching the provided id including its content
+     * @param id the id of the paper attachment
+     * @return paper attachment
+     */
+    PaperAttachment loadAttachmentWithContentBy(Integer id);
 }

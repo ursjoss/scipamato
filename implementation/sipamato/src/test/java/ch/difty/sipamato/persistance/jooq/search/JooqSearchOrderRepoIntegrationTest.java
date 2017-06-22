@@ -42,10 +42,6 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
     public void findingAll() {
         List<SearchOrder> searchOrders = repo.findAll();
         assertThat(searchOrders).hasSize(RECORD_COUNT_PREPOPULATED);
-        assertThat(searchOrders.get(0).getId()).isEqualTo(1);
-        assertThat(searchOrders.get(1).getId()).isEqualTo(2);
-        assertThat(searchOrders.get(2).getId()).isEqualTo(3);
-        assertThat(searchOrders.get(3).getId()).isEqualTo(4);
     }
 
     @Test

@@ -278,4 +278,32 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
         getDsl().insertInto(SEARCH_EXCLUSION).columns(SEARCH_EXCLUSION.SEARCH_ORDER_ID, SEARCH_EXCLUSION.PAPER_ID).values(searchOrderId, paperId).onConflictDoNothing().execute();
     }
 
+    @Override
+    public void saveAttachment(ch.difty.sipamato.entity.PaperAttachment pa) {
+        getDsl().insertInto(PAPER_ATTACHMENT)
+                .columns(PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT, PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE, PAPER_ATTACHMENT.CREATED,
+                        PAPER_ATTACHMENT.CREATED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.VERSION)
+                .values(pa.getPaperId(), pa.getName(), pa.getContent(), pa.getContentType(), pa.getSize(), getDateTimeService().getCurrentTimestamp(), getUserId(),
+                        getDateTimeService().getCurrentTimestamp(), getUserId(), 1)
+                .onConflict(PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME)
+                .doUpdate()
+                .set(PAPER_ATTACHMENT.CONTENT, pa.getContent())
+                .set(PAPER_ATTACHMENT.CONTENT_TYPE, pa.getContentType())
+                .set(PAPER_ATTACHMENT.SIZE, pa.getSize())
+                .set(PAPER_ATTACHMENT.LAST_MODIFIED, getDateTimeService().getCurrentTimestamp())
+                .set(PAPER_ATTACHMENT.LAST_MODIFIED_BY, getUserId())
+                .set(PAPER_ATTACHMENT.VERSION, PAPER_ATTACHMENT.VERSION.plus(1))
+                .execute();
+    }
+
+    @Override
+    public PaperAttachment loadAttachmentWithContentBy(Integer id) {
+        return getDsl()
+                .select(PAPER_ATTACHMENT.ID, PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT, PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE,
+                        PAPER_ATTACHMENT.CREATED_BY, PAPER_ATTACHMENT.CREATED, PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.VERSION)
+                .from(PAPER_ATTACHMENT)
+                .where(PAPER_ATTACHMENT.ID.eq(id))
+                .fetchOneInto(ch.difty.sipamato.entity.PaperAttachment.class);
+    }
+
 }
