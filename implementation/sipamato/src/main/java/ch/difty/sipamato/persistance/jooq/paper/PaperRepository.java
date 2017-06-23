@@ -93,8 +93,9 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     /**
      * Saves the provided {@link PaperAttachment} including it's content.
      * @param paperAttachment
+     * @return the paper for which the attachment has been added
      */
-    void saveAttachment(PaperAttachment paperAttachment);
+    Paper saveAttachment(PaperAttachment paperAttachment);
 
     /**
      * Loads the {@link PaperAttachment} with provided id including it's content
@@ -106,7 +107,8 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     /**
      * Deletes the attachment with given id
      * @param id the id of the paper attachment to be deleted
+     * @return the paper for which the attachment has been deleted
      */
-    void deleteAttachment(Integer id);
+    Paper deleteAttachment(Integer id);
 
 }

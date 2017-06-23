@@ -279,7 +279,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     }
 
     @Override
-    public void saveAttachment(ch.difty.sipamato.entity.PaperAttachment pa) {
+    public Paper saveAttachment(ch.difty.sipamato.entity.PaperAttachment pa) {
         getDsl().insertInto(PAPER_ATTACHMENT)
                 .columns(PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT, PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE, PAPER_ATTACHMENT.CREATED,
                         PAPER_ATTACHMENT.CREATED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.VERSION)
@@ -294,6 +294,8 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
                 .set(PAPER_ATTACHMENT.LAST_MODIFIED_BY, getUserId())
                 .set(PAPER_ATTACHMENT.VERSION, PAPER_ATTACHMENT.VERSION.plus(1))
                 .execute();
+        getLogger().info("Saved attachment '{}' for paper with id {}.", pa.getName(), pa.getPaperId());
+        return findById(pa.getPaperId());
     }
 
     @Override
@@ -307,9 +309,14 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     }
 
     @Override
-    public void deleteAttachment(Integer id) {
-        if (id != null)
+    public Paper deleteAttachment(Integer id) {
+        if (id != null) {
+            final Long paperId = getDsl().select(PAPER_ATTACHMENT.PAPER_ID).from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.ID.eq(id)).fetchOneInto(Long.class);
             getDsl().deleteFrom(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.ID.eq(id)).execute();
+            getLogger().info("Deleted attachment with id {}.", id);
+            return findById(paperId);
+        }
+        return null;
     }
 
 }

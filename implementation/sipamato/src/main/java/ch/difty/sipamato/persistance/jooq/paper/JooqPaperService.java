@@ -126,8 +126,8 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     @Transactional(readOnly = false)
     @Override
-    public void saveAttachment(PaperAttachment paperAttachment) {
-        getRepository().saveAttachment(paperAttachment);
+    public Paper saveAttachment(PaperAttachment paperAttachment) {
+        return getRepository().saveAttachment(paperAttachment);
     }
 
     @Override
@@ -137,8 +137,8 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     @Transactional(readOnly = false)
     @Override
-    public void deleteAttachment(Integer id) {
-        getRepository().deleteAttachment(id);
+    public Paper deleteAttachment(Integer id) {
+        return getRepository().deleteAttachment(id);
     }
 
 }

@@ -441,11 +441,15 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 super.onSubmit(target);
 
                 final List<FileUpload> fileUploads = model.getObject();
+                Paper p = null;
                 if (fileUploads != null)
                     for (final FileUpload upload : fileUploads)
-                        paperService.saveAttachment(convertToPaperAttachment(upload));
+                        p = paperService.saveAttachment(convertToPaperAttachment(upload));
 
+                if (p != null)
+                    EditablePaperPanel.this.setModelObject(p);
                 target.add(((BasePage<Paper>) getPage()).getFeedbackPanel());
+                target.add(getAttachments());
             }
 
             private PaperAttachment convertToPaperAttachment(final FileUpload upload) {
@@ -474,7 +478,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     protected DataTable<PaperAttachment, String> newAttachmentTable(String id) {
         PropertyModel<List<PaperAttachment>> attachmentsModel = new PropertyModel<>(getModel(), Paper.ATTACHMENTS);
-        return new BootstrapDefaultDataTable<>(id, makeTableColumns(), new PaperAttachmentProvider(attachmentsModel), 10);
+        BootstrapDefaultDataTable<PaperAttachment, String> table = new BootstrapDefaultDataTable<>(id, makeTableColumns(), new PaperAttachmentProvider(attachmentsModel), 10);
+        table.setOutputMarkupId(true);
+        return table;
     }
 
     private List<IColumn<PaperAttachment, String>> makeTableColumns() {
@@ -518,9 +524,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             @Override
             protected void onClickPerformed(AjaxRequestTarget target, IModel<PaperAttachment> rowModel, AjaxLink<Void> link) {
                 final Integer id = rowModel.getObject().getId();
-                paperService.deleteAttachment(id);
+                setModelObject(paperService.deleteAttachment(id));
+                target.add(getAttachments());
             }
         };
     }
-
 }

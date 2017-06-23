@@ -93,8 +93,9 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
     /**
      * Saves the attachment including its content.
      * @param paperAttachment
+     * @return the paper for which the attachment was added
      */
-    void saveAttachment(PaperAttachment paperAttachment);
+    Paper saveAttachment(PaperAttachment paperAttachment);
 
     /**
      * Loads the {@link PaperAttachment} matching the provided id including its content
@@ -106,6 +107,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
     /**
      * Deletes the attachment with given id
      * @param id the id of the paper attachment to be deleted
+     * @return the paper for which the attachment was deleted
      */
-    void deleteAttachment(Integer id);
+    Paper deleteAttachment(Integer id);
 }

@@ -107,6 +107,10 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         return callingPage;
     }
 
+    protected DataTable<PaperAttachment, String> getAttachments() {
+        return attachments;
+    }
+
     @Override
     public void onInitialize() {
         super.onInitialize();

@@ -383,9 +383,10 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         final String content = "foo";
         PaperAttachment pa = newPaperAttachment(TEST_FILE_1, content);
 
-        repo.saveAttachment(pa);
-
+        Paper p = repo.saveAttachment(pa);
         PaperAttachment saved = dsl.select().from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetchOneInto(PaperAttachment.class);
+
+        assertThat(p.getAttachments()).extracting("id").contains(saved.getId());
 
         assertThat(saved.getName()).isEqualTo(pa.getName());
         assertThat(new String(saved.getContent())).isEqualTo(content);
@@ -430,7 +431,8 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         repo.saveAttachment(newPaperAttachment(TEST_FILE_1, "foo"));
         Integer id = dsl.select(PAPER_ATTACHMENT.ID).from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetchOneInto(Integer.class);
         assertThat(id).isNotNull();
-        repo.deleteAttachment(id);
+        Paper p = repo.deleteAttachment(id);
+        assertThat(p.getAttachments()).extracting("id").doesNotContain(id);
         assertThat(dsl.select(PAPER_ATTACHMENT.ID).from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetchOneInto(Integer.class)).isNull();
     }
 }
