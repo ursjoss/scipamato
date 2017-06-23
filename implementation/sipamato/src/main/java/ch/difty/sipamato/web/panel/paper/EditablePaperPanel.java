@@ -12,6 +12,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
@@ -42,6 +43,7 @@ import ch.difty.sipamato.service.PubmedArticleService;
 import ch.difty.sipamato.web.PageParameterNames;
 import ch.difty.sipamato.web.component.SerializableConsumer;
 import ch.difty.sipamato.web.component.SerializableSupplier;
+import ch.difty.sipamato.web.component.data.LinkIconColumn;
 import ch.difty.sipamato.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.sipamato.web.jasper.SipamatoPdfExporterConfiguration;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
@@ -480,6 +482,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         columns.add(makeClickableColumn(PaperAttachment.NAME, this::onTitleClick));
         columns.add(makePropertyColumn(PaperAttachment.CONTENT_TYPE));
         columns.add(makePropertyColumn(PaperAttachment.SIZE));
+        columns.add(makeLinkIconColumn("removeAttachment"));
         return columns;
     }
 
@@ -490,11 +493,34 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         getRequestCycle().scheduleRequestHandlerAfterCurrent(new ResourceRequestHandler(r, new PageParameters()));
     }
 
+    private ClickablePropertyColumn<PaperAttachment, String> makeClickableColumn(String propExpression, SerializableConsumer<IModel<PaperAttachment>> consumer) {
+        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression, consumer);
+    }
+
     private PropertyColumn<PaperAttachment, String> makePropertyColumn(String propExpression) {
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression);
     }
 
-    private ClickablePropertyColumn<PaperAttachment, String> makeClickableColumn(String propExpression, SerializableConsumer<IModel<PaperAttachment>> consumer) {
-        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression, consumer);
+    private IColumn<PaperAttachment, String> makeLinkIconColumn(String id) {
+        return new LinkIconColumn<PaperAttachment>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected IModel<String> createIconModel(IModel<PaperAttachment> rowModel) {
+                return Model.of("fa fa-fw fa-trash-o text-danger");
+            }
+
+            @Override
+            protected IModel<String> createTitleModel(IModel<PaperAttachment> rowModel) {
+                return new StringResourceModel("column.title.removeAttachment", EditablePaperPanel.this, null).setParameters(rowModel.getObject().getName());
+            }
+
+            @Override
+            protected void onClickPerformed(AjaxRequestTarget target, IModel<PaperAttachment> rowModel, AjaxLink<Void> link) {
+                final Integer id = rowModel.getObject().getId();
+                paperService.deleteAttachment(id);
+            }
+        };
     }
+
 }
