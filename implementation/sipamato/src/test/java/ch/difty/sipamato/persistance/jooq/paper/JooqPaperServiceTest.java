@@ -370,4 +370,10 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         verify(repoMock).loadAttachmentWithContentBy(id);
     }
 
+    @Test
+    public void deletingAttachment_delegatesToRepo() {
+        Integer id = 5;
+        service.deleteAttachment(id);
+        verify(repoMock).deleteAttachment(id);
+    }
 }

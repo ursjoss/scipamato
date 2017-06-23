@@ -425,4 +425,12 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(new String(attachment.getContent())).isEqualTo(content1);
     }
 
+    @Test
+    public void deletingAttachment_deletes() {
+        repo.saveAttachment(newPaperAttachment(TEST_FILE_1, "foo"));
+        Integer id = dsl.select(PAPER_ATTACHMENT.ID).from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetchOneInto(Integer.class);
+        assertThat(id).isNotNull();
+        repo.deleteAttachment(id);
+        assertThat(dsl.select(PAPER_ATTACHMENT.ID).from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetchOneInto(Integer.class)).isNull();
+    }
 }

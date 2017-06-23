@@ -306,4 +306,10 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
                 .fetchOneInto(ch.difty.sipamato.entity.PaperAttachment.class);
     }
 
+    @Override
+    public void deleteAttachment(Integer id) {
+        if (id != null)
+            getDsl().deleteFrom(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.ID.eq(id)).execute();
+    }
+
 }

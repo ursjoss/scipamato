@@ -103,4 +103,10 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      */
     PaperAttachment loadAttachmentWithContentBy(Integer id);
 
+    /**
+     * Deletes the attachment with given id
+     * @param id the id of the paper attachment to be deleted
+     */
+    void deleteAttachment(Integer id);
+
 }
