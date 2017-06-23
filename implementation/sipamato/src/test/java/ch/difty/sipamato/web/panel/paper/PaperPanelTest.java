@@ -15,6 +15,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
 import org.junit.After;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -49,6 +50,12 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
     private final List<Code> codesOfClass6 = new ArrayList<>();
     private final List<Code> codesOfClass7 = new ArrayList<>();
     private final List<Code> codesOfClass8 = new ArrayList<>();
+
+    // See https://issues.apache.org/jira/browse/WICKET-2790
+    protected void applyTestHackWithNstedMultiPartForms() {
+        MockHttpServletRequest servletRequest = getTester().getRequest();
+        servletRequest.setUseMultiPartContentType(true);
+    }
 
     @Override
     protected final void setUpHook() {
@@ -210,6 +217,9 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
 
         bbb = bb + ":9:tab5Form";
         assertTextAreaWithLabel(bbb + ":originalAbstract", "oa", "Original Abstract");
+        getTester().assertComponent(bbb, Form.class);
+
+        bbb = bb + ":11:tab6Form";
         getTester().assertComponent(bbb, Form.class);
 
         bb = b + ":tabsContainer:tabs:";

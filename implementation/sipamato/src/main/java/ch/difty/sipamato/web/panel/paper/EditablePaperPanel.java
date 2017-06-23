@@ -3,45 +3,61 @@ package ch.difty.sipamato.web.panel.paper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.apache.commons.fileupload.FileItem;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.bean.validation.PropertyValidator;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.request.handler.resource.ResourceRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.ByteArrayResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.PaperAttachment;
 import ch.difty.sipamato.logic.parsing.AuthorParser;
 import ch.difty.sipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.sipamato.pubmed.entity.PubmedArticleFacade;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.service.PubmedArticleService;
 import ch.difty.sipamato.web.PageParameterNames;
+import ch.difty.sipamato.web.component.SerializableConsumer;
 import ch.difty.sipamato.web.component.SerializableSupplier;
+import ch.difty.sipamato.web.component.data.LinkIconColumn;
+import ch.difty.sipamato.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.sipamato.web.jasper.SipamatoPdfExporterConfiguration;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.BasePage;
 import ch.difty.sipamato.web.pages.Mode;
 import ch.difty.sipamato.web.pages.paper.entry.PaperEntryPage;
+import ch.difty.sipamato.web.pages.paper.provider.PaperAttachmentProvider;
 import ch.difty.sipamato.web.pages.paper.search.PaperSearchPage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 /**
  * The {@link EditablePaperPanel} is backed by the {@link Paper} entity. The purpose is to create new papers
@@ -53,6 +69,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     private static final long serialVersionUID = 1L;
 
+    private static final String COLUMN_HEADER = "column.header.";
     private final Long searchOrderId;
 
     @SpringBean
@@ -413,4 +430,107 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return exclude;
     }
 
+    protected DropZoneFileUpload newDropZoneFileUpload() {
+        DropZoneFileUpload dropZoneFileUpload = new DropZoneFileUpload("dropzone") {
+            private static final long serialVersionUID = 1L;
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void onUpload(AjaxRequestTarget target, Map<String, List<FileItem>> fileMap) {
+                Paper p = null;
+                if (fileMap != null && fileMap.containsKey("file")) {
+                    for (FileItem file : fileMap.get("file")) {
+                        p = paperService.saveAttachment(convertToPaperAttachment(file));
+                    }
+                    if (p != null)
+                        EditablePaperPanel.this.setModelObject(p);
+
+                    target.add(((BasePage<Paper>) getPage()).getFeedbackPanel());
+                    target.add(getAttachments());
+                }
+            }
+
+            private PaperAttachment convertToPaperAttachment(final FileItem file) {
+                final PaperAttachment pa = new PaperAttachment();
+                pa.setPaperId(EditablePaperPanel.this.getModelObject().getId());
+                pa.setContent(file.get());
+                pa.setContentType(file.getContentType());
+                pa.setSize(file.getSize());
+                pa.setName(sanitize(file.getName()));
+                return pa;
+            }
+
+            private String sanitize(final String originalFileName) {
+                return originalFileName.replace(" ", "_");
+            }
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setVisible(isEditMode());
+            }
+
+        };
+        dropZoneFileUpload.getConfig().withMaxFileSize(4).withThumbnailHeight(80).withThumbnailWidth(80).withPreviewsContainer(".dropzone-previews").withParallelUploads(4).withAutoQueue(true);
+        return dropZoneFileUpload;
+    }
+
+    protected DataTable<PaperAttachment, String> newAttachmentTable(String id) {
+        PropertyModel<List<PaperAttachment>> model = new PropertyModel<>(getModel(), Paper.ATTACHMENTS);
+        PaperAttachmentProvider provider = new PaperAttachmentProvider(model);
+        BootstrapDefaultDataTable<PaperAttachment, String> table = new BootstrapDefaultDataTable<PaperAttachment, String>(id, makeTableColumns(), provider, 10) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected Item<PaperAttachment> newRowItem(String id, int index, IModel<PaperAttachment> model) {
+                final PaperAttachment pa = model.getObject();
+                final Item<PaperAttachment> item = super.newRowItem(id, index, model);
+                item.add(AttributeModifier.replace("title", pa.getSizeKiloBytes() + " kB - " + pa.getContentType()));
+                return item;
+            }
+        };
+        table.setOutputMarkupId(true);
+        return table;
+    }
+
+    private List<IColumn<PaperAttachment, String>> makeTableColumns() {
+        final List<IColumn<PaperAttachment, String>> columns = new ArrayList<>();
+        columns.add(makeClickableColumn(PaperAttachment.NAME, this::onTitleClick));
+        columns.add(makeLinkIconColumn("removeAttachment"));
+        return columns;
+    }
+
+    private void onTitleClick(IModel<PaperAttachment> m) {
+        Integer id = m.getObject().getId();
+        PaperAttachment pa = paperService.loadAttachmentWithContentBy(id);
+        ByteArrayResource r = new ByteArrayResource(pa.getContentType(), pa.getContent(), pa.getName());
+        getRequestCycle().scheduleRequestHandlerAfterCurrent(new ResourceRequestHandler(r, new PageParameters()));
+    }
+
+    private ClickablePropertyColumn<PaperAttachment, String> makeClickableColumn(String propExpression, SerializableConsumer<IModel<PaperAttachment>> consumer) {
+        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), null, propExpression, consumer);
+    }
+
+    private IColumn<PaperAttachment, String> makeLinkIconColumn(String id) {
+        return new LinkIconColumn<PaperAttachment>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected IModel<String> createIconModel(IModel<PaperAttachment> rowModel) {
+                return Model.of("fa fa-fw fa-trash-o text-danger");
+            }
+
+            @Override
+            protected IModel<String> createTitleModel(IModel<PaperAttachment> rowModel) {
+                return new StringResourceModel("column.title.removeAttachment", EditablePaperPanel.this, null).setParameters(rowModel.getObject().getName());
+            }
+
+            @Override
+            protected void onClickPerformed(AjaxRequestTarget target, IModel<PaperAttachment> rowModel, AjaxLink<Void> link) {
+                final Integer id = rowModel.getObject().getId();
+                setModelObject(paperService.deleteAttachment(id));
+                target.add(getAttachments());
+            }
+        };
+    }
 }

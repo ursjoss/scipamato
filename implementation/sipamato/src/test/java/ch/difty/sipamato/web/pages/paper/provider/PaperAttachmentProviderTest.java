@@ -15,71 +15,70 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ch.difty.sipamato.entity.filter.SearchCondition;
+import ch.difty.sipamato.entity.PaperAttachment;
 import ch.difty.sipamato.lib.NullArgumentException;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SearchConditionProviderTest {
+public class PaperAttachmentProviderTest {
 
-    private SearchConditionProvider provider;
+    private PaperAttachmentProvider provider;
 
     @Mock
-    private SearchCondition mockCondition1, mockCondition2, mockCondition3, mockCondition4;
+    private PaperAttachment mockAttachment1, mockAttachment2, mockAttachment3, mockAttachment4;
 
-    private final List<SearchCondition> conditions = new ArrayList<>();
+    private final List<PaperAttachment> attachments = new ArrayList<>();
 
     @Before
     public void setUp() {
-        conditions.addAll(Arrays.asList(mockCondition1, mockCondition2, mockCondition3, mockCondition4));
-
-        provider = new SearchConditionProvider(Model.ofList(conditions));
+        attachments.addAll(Arrays.asList(mockAttachment1, mockAttachment2, mockAttachment3, mockAttachment4));
+        provider = new PaperAttachmentProvider(Model.ofList(attachments));
     }
 
     @Test
     public void degenerateConstruction_withNullSearchOrderModel() {
         try {
-            new SearchConditionProvider(null);
+            new PaperAttachmentProvider(null);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchConditionsModel must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("attachmentsModel must not be null.");
         }
     }
 
     @Test
     public void degenerateConstruction_withNullSearchOrderModel1() {
-        List<SearchCondition> conditions = null;
         try {
-            new SearchConditionProvider(Model.ofList(conditions));
+            List<PaperAttachment> nullList = null;
+            new PaperAttachmentProvider(Model.ofList(nullList));
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchConditions must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("attachments must not be null.");
         }
     }
 
     @Test
     public void providerSize_equals_conditionSize() {
-        assertThat(provider.size()).isEqualTo(conditions.size());
+        assertThat(provider.size()).isEqualTo(attachments.size());
     }
 
     @Test
     public void iterator_fromStartWithPageSizeLargerThanActualSize_returnsAll() {
-        assertThat(provider.iterator(0, 100)).containsExactly(mockCondition1, mockCondition2, mockCondition3, mockCondition4);
+        assertThat(provider.iterator(0, 100)).containsExactly(mockAttachment1, mockAttachment2, mockAttachment3, mockAttachment4);
     }
 
     @Test
     public void iterator_fromStartWithLimitingPageSize_returnsPageFullFromStart() {
-        assertThat(provider.iterator(0, 2)).containsExactly(mockCondition1, mockCondition2);
+        assertThat(provider.iterator(0, 2)).containsExactly(mockAttachment1, mockAttachment2);
     }
 
     @Test
     public void iterator_fromIndex1WithLimitingPageSize_returnsPageFullFromIndex() {
-        assertThat(provider.iterator(1, 2)).containsExactly(mockCondition2, mockCondition3);
+        assertThat(provider.iterator(1, 2)).containsExactly(mockAttachment2, mockAttachment3);
     }
 
     @Test
     public void gettingModel() {
-        IModel<SearchCondition> model = provider.model(mockCondition1);
-        assertThat(model.getObject()).isEqualTo(mockCondition1);
+        IModel<PaperAttachment> model = provider.model(mockAttachment1);
+        assertThat(model.getObject()).isEqualTo(mockAttachment1);
     }
 
 }

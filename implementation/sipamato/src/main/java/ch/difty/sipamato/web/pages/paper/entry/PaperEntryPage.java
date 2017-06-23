@@ -2,6 +2,8 @@ package ch.difty.sipamato.web.pages.paper.entry;
 
 import org.apache.wicket.PageReference;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -15,6 +17,7 @@ import ch.difty.sipamato.entity.Paper;
 import ch.difty.sipamato.service.PaperService;
 import ch.difty.sipamato.web.pages.SelfUpdatingPage;
 import ch.difty.sipamato.web.panel.paper.EditablePaperPanel;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
 
 /**
  * Page to add new papers or modify existing papers. The page implements the {@link SelfUpdatingPage},
@@ -94,6 +97,12 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         super(paperModel);
         this.callingPage = callingPage;
         this.searchOrderId = searchOrderId;
+    }
+
+    @Override
+    public void renderHead(final IHeaderResponse response) {
+        super.renderHead(response);
+        response.render(CssHeaderItem.forReference(FontAwesomeCDNCSSReference.instance()));
     }
 
     /**

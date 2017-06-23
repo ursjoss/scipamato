@@ -64,7 +64,7 @@ public abstract class LinkIconPanel extends Panel {
     }
 
     private Label makeImage(String id) {
-        Label image = new Label(id);
+        Label image = new Label(id, "");
         image.add(AttributeModifier.replace("class", getDefaultModel()));
         if (titleModel != null) {
             image.add(AttributeModifier.replace("title", titleModel));

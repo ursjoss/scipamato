@@ -5,6 +5,7 @@ import static ch.difty.sipamato.db.tables.CodeClass.CODE_CLASS;
 import static ch.difty.sipamato.db.tables.CodeClassTr.CODE_CLASS_TR;
 import static ch.difty.sipamato.db.tables.CodeTr.CODE_TR;
 import static ch.difty.sipamato.db.tables.Paper.PAPER;
+import static ch.difty.sipamato.db.tables.PaperAttachment.PAPER_ATTACHMENT;
 import static ch.difty.sipamato.db.tables.PaperCode.PAPER_CODE;
 import static ch.difty.sipamato.db.tables.SearchExclusion.SEARCH_EXCLUSION;
 
@@ -26,6 +27,7 @@ import ch.difty.sipamato.db.tables.records.PaperCodeRecord;
 import ch.difty.sipamato.db.tables.records.PaperRecord;
 import ch.difty.sipamato.entity.Code;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.PaperAttachment;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.lib.DateTimeService;
@@ -99,35 +101,53 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     @Override
     protected void enrichAssociatedEntitiesOf(Paper entity) {
         if (entity != null) {
-            final String localizationCode = getLocalization().getLocalization();
-            // @formatter:off
-            final List<Code> codes = getDsl()
-                .select(CODE.CODE_.as("C_ID")
-                        , DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL).as("C_NAME")
-                        , CODE_TR.COMMENT.as("C_COMMENT")
-                        , CODE.INTERNAL.as("C_INTERNAL")
-                        , CODE_CLASS.ID.as("CC_ID")
-                        , DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL).as("CC_NAME")
-                        , DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL).as("CC_DESCRIPTION")
-                        , CODE.SORT
-                        , CODE.CREATED
-                        , CODE.CREATED_BY
-                        , CODE.LAST_MODIFIED
-                        , CODE.LAST_MODIFIED_BY
-                        , CODE.VERSION)
-                .from(PAPER_CODE)
-                .join(PAPER).on(PAPER_CODE.PAPER_ID.equal(PAPER.ID))
-                .join(CODE).on(PAPER_CODE.CODE.equal(CODE.CODE_))
-                .join(CODE_CLASS).on(CODE.CODE_CLASS_ID.equal(CODE_CLASS.ID))
-                .leftOuterJoin(CODE_TR).on(CODE.CODE_.equal(CODE_TR.CODE).and(CODE_TR.LANG_CODE.equal(localizationCode)))
-                .leftOuterJoin(CODE_CLASS_TR).on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID).and(CODE_CLASS_TR.LANG_CODE.equal(localizationCode)))
-                .where(PAPER_CODE.PAPER_ID.equal(entity.getId()))
-                .fetchInto(Code.class);
-            // @formatter:on
-            if (CollectionUtils.isNotEmpty(codes)) {
-                entity.addCodes(codes);
-            }
+            enrichCodesOf(entity);
+            enrichAttachmentsOf(entity);
         }
+    }
+
+    private void enrichCodesOf(Paper entity) {
+        final String localizationCode = getLocalization().getLocalization();
+        // @formatter:off
+        final List<Code> codes = getDsl()
+            .select(CODE.CODE_.as("C_ID")
+                    , DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL).as("C_NAME")
+                    , CODE_TR.COMMENT.as("C_COMMENT")
+                    , CODE.INTERNAL.as("C_INTERNAL")
+                    , CODE_CLASS.ID.as("CC_ID")
+                    , DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL).as("CC_NAME")
+                    , DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL).as("CC_DESCRIPTION")
+                    , CODE.SORT
+                    , CODE.CREATED
+                    , CODE.CREATED_BY
+                    , CODE.LAST_MODIFIED
+                    , CODE.LAST_MODIFIED_BY
+                    , CODE.VERSION)
+            .from(PAPER_CODE)
+            .join(PAPER).on(PAPER_CODE.PAPER_ID.equal(PAPER.ID))
+            .join(CODE).on(PAPER_CODE.CODE.equal(CODE.CODE_))
+            .join(CODE_CLASS).on(CODE.CODE_CLASS_ID.equal(CODE_CLASS.ID))
+            .leftOuterJoin(CODE_TR).on(CODE.CODE_.equal(CODE_TR.CODE).and(CODE_TR.LANG_CODE.equal(localizationCode)))
+            .leftOuterJoin(CODE_CLASS_TR).on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID).and(CODE_CLASS_TR.LANG_CODE.equal(localizationCode)))
+            .where(PAPER_CODE.PAPER_ID.equal(entity.getId()))
+            .fetchInto(Code.class);
+        // @formatter:on
+        if (CollectionUtils.isNotEmpty(codes))
+            entity.addCodes(codes);
+    }
+
+    private void enrichAttachmentsOf(Paper entity) {
+        if (entity != null && entity.getId() != null)
+            entity.setAttachments(loadSlimAttachment(entity.getId()));
+    }
+
+    List<ch.difty.sipamato.entity.PaperAttachment> loadSlimAttachment(long paperId) {
+        return getDsl()
+                .select(PAPER_ATTACHMENT.ID, PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE, PAPER_ATTACHMENT.CREATED_BY,
+                        PAPER_ATTACHMENT.CREATED, PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.VERSION)
+                .from(PAPER_ATTACHMENT)
+                .where(PAPER_ATTACHMENT.PAPER_ID.eq(paperId))
+                .fetchInto(ch.difty.sipamato.entity.PaperAttachment.class);
     }
 
     @Override
@@ -199,8 +219,11 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     public List<Paper> findByPmIds(final List<Integer> pmIds) {
         if (pmIds == null || pmIds.isEmpty())
             return new ArrayList<>();
-        else
-            return getDsl().selectFrom(PAPER).where(PAPER.PM_ID.in(pmIds)).fetchInto(Paper.class);
+        else {
+            List<Paper> papers = getDsl().selectFrom(PAPER).where(PAPER.PM_ID.in(pmIds)).fetchInto(Paper.class);
+            enrichAssociatedEntitiesOfAll(papers);
+            return papers;
+        }
     }
 
     /** {@inheritDoc} */
@@ -208,8 +231,11 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     public List<Paper> findByNumbers(final List<Long> numbers) {
         if (numbers == null || numbers.isEmpty())
             return new ArrayList<>();
-        else
-            return getDsl().selectFrom(PAPER).where(PAPER.NUMBER.in(numbers)).fetchInto(Paper.class);
+        else {
+            List<Paper> papers = getDsl().selectFrom(PAPER).where(PAPER.NUMBER.in(numbers)).fetchInto(Paper.class);
+            enrichAssociatedEntitiesOfAll(papers);
+            return papers;
+        }
     }
 
     /**
@@ -250,6 +276,47 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     @Override
     public void excludePaperFromSearchOrderResults(long searchOrderId, long paperId) {
         getDsl().insertInto(SEARCH_EXCLUSION).columns(SEARCH_EXCLUSION.SEARCH_ORDER_ID, SEARCH_EXCLUSION.PAPER_ID).values(searchOrderId, paperId).onConflictDoNothing().execute();
+    }
+
+    @Override
+    public Paper saveAttachment(ch.difty.sipamato.entity.PaperAttachment pa) {
+        getDsl().insertInto(PAPER_ATTACHMENT)
+                .columns(PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT, PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE, PAPER_ATTACHMENT.CREATED,
+                        PAPER_ATTACHMENT.CREATED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.VERSION)
+                .values(pa.getPaperId(), pa.getName(), pa.getContent(), pa.getContentType(), pa.getSize(), getDateTimeService().getCurrentTimestamp(), getUserId(),
+                        getDateTimeService().getCurrentTimestamp(), getUserId(), 1)
+                .onConflict(PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME)
+                .doUpdate()
+                .set(PAPER_ATTACHMENT.CONTENT, pa.getContent())
+                .set(PAPER_ATTACHMENT.CONTENT_TYPE, pa.getContentType())
+                .set(PAPER_ATTACHMENT.SIZE, pa.getSize())
+                .set(PAPER_ATTACHMENT.LAST_MODIFIED, getDateTimeService().getCurrentTimestamp())
+                .set(PAPER_ATTACHMENT.LAST_MODIFIED_BY, getUserId())
+                .set(PAPER_ATTACHMENT.VERSION, PAPER_ATTACHMENT.VERSION.plus(1))
+                .execute();
+        getLogger().info("Saved attachment '{}' for paper with id {}.", pa.getName(), pa.getPaperId());
+        return findById(pa.getPaperId());
+    }
+
+    @Override
+    public PaperAttachment loadAttachmentWithContentBy(Integer id) {
+        return getDsl()
+                .select(PAPER_ATTACHMENT.ID, PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT, PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE,
+                        PAPER_ATTACHMENT.CREATED_BY, PAPER_ATTACHMENT.CREATED, PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.VERSION)
+                .from(PAPER_ATTACHMENT)
+                .where(PAPER_ATTACHMENT.ID.eq(id))
+                .fetchOneInto(ch.difty.sipamato.entity.PaperAttachment.class);
+    }
+
+    @Override
+    public Paper deleteAttachment(Integer id) {
+        if (id != null) {
+            final Long paperId = getDsl().select(PAPER_ATTACHMENT.PAPER_ID).from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.ID.eq(id)).fetchOneInto(Long.class);
+            getDsl().deleteFrom(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.ID.eq(id)).execute();
+            getLogger().info("Deleted attachment with id {}.", id);
+            return findById(paperId);
+        }
+        return null;
     }
 
 }

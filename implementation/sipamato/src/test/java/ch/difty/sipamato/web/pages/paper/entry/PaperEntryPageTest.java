@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
@@ -79,6 +80,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         assertTabPanelFields(4, 7, b, Paper.POPULATION_PLACE, Paper.POPULATION_PARTICIPANTS, Paper.POPULATION_DURATION, Paper.EXPOSURE_POLLUTANT, Paper.EXPOSURE_ASSESSMENT, Paper.METHOD_STUDY_DESIGN,
                 Paper.METHOD_OUTCOME, Paper.METHOD_STATISTICS, Paper.METHOD_CONFOUNDERS, Paper.RESULT_EXPOSURE_RANGE, Paper.RESULT_EFFECT_ESTIMATE, Paper.RESULT_MEASURED_OUTCOME);
         assertTabPanelFields(5, 9, b, Paper.ORIGINAL_ABSTRACT);
+        assertTabPanelFields(6, 11, b);
     }
 
     private void assertTabPanelFields(int tabId, int panelId, String b, String... fields) {
@@ -125,8 +127,15 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     @Test
     public void paperFailingValidation_showsAllValidationMessages() {
         getTester().startPage(makePage());
+        applyTestHackWithNstedMultiPartForms();
         getTester().submitForm("contentPanel:form");
         getTester().assertErrorMessages("'Authors' is required.", "'Title' is required.", "'Location' is required.", "'Pub. Year' is required.", "'No.' is required.", "'Goals' is required.");
+    }
+
+    // See https://issues.apache.org/jira/browse/WICKET-2790
+    private void applyTestHackWithNstedMultiPartForms() {
+        MockHttpServletRequest servletRequest = getTester().getRequest();
+        servletRequest.setUseMultiPartContentType(true);
     }
 
     @Test

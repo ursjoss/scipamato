@@ -15,6 +15,7 @@ import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.event.IEvent;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
@@ -42,6 +43,7 @@ import ch.difty.sipamato.entity.CodeBoxAware;
 import ch.difty.sipamato.entity.CodeClass;
 import ch.difty.sipamato.entity.CodeClassId;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.PaperAttachment;
 import ch.difty.sipamato.lib.AssertAs;
 import ch.difty.sipamato.navigator.ItemNavigator;
 import ch.difty.sipamato.web.component.SerializableSupplier;
@@ -55,6 +57,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
@@ -63,8 +66,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
     private static final long serialVersionUID = 1L;
 
-    private static final String CHANGE = "change";
     private static final String TITLE = "title";
+    private static final String CHANGE = "change";
 
     private ResourceLink<Void> summaryLink;
     private String pubmedXml;
@@ -77,6 +80,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     protected TextField<Object> doi;
     protected TextArea<String> originalAbstract;
     private BootstrapAjaxLink<Void> pubmedRetrieval;
+    private DataTable<PaperAttachment, String> attachments;
 
     private final PageReference callingPage;
 
@@ -103,6 +107,10 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         return callingPage;
     }
 
+    protected DataTable<PaperAttachment, String> getAttachments() {
+        return attachments;
+    }
+
     @Override
     public void onInitialize() {
         super.onInitialize();
@@ -115,6 +123,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 onFormSubmit();
             }
         };
+        form.setMultiPart(true);
         queue(form);
 
         queueHeaderFields();
@@ -254,6 +263,14 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             @Override
             public Panel getPanel(String panelId) {
                 return new TabPanel5(panelId, form.getModel());
+            }
+        });
+        tabs.add(new AbstractTab(new StringResourceModel("tab6" + LABEL_RECOURCE_TAG, this, null)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Panel getPanel(String panelId) {
+                return new TabPanel6(panelId, form.getModel());
             }
         });
         queue(new ClientSideBootstrapTabbedPanel<ITab>(tabId, tabs));
@@ -617,6 +634,34 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             originalAbstract = queueTo(Paper.ORIGINAL_ABSTRACT);
         }
     }
+
+    private class TabPanel6 extends AbstractTabPanel {
+        private static final long serialVersionUID = 1L;
+
+        public TabPanel6(String id, IModel<T> model) {
+            super(id, model);
+        }
+
+        @Override
+        protected void onInitialize() {
+            super.onInitialize();
+            queue(newTab6Frm("tab6Form"));
+            queue(newDropZoneFileUpload());
+            attachments = newAttachmentTable("attachments");
+            queue(attachments);
+        }
+
+        private Form<Void> newTab6Frm(String id) {
+            Form<Void> tab6Form = new Form<Void>(id);
+            tab6Form.setOutputMarkupId(true);
+            tab6Form.setMultiPart(true);
+            return tab6Form;
+        }
+    }
+
+    protected abstract DataTable<PaperAttachment, String> newAttachmentTable(String id);
+
+    protected abstract DropZoneFileUpload newDropZoneFileUpload();
 
     /** override if needed */
     protected void addCodeClass1ChangeBehavior(final TextField<String> mainCodeOfCodeClass1, final BootstrapMultiSelect<Code> codeClass1) {

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.PaperAttachment;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.JooqEntityService;
@@ -89,6 +90,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         List<Paper> papers = getRepository().findByNumbers(Arrays.asList(number));
         if (!papers.isEmpty()) {
             Paper paper = papers.get(0);
+
             enrichAuditNamesOf(paper);
             return Optional.ofNullable(paper);
         } else {
@@ -120,6 +122,23 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     @Override
     public void excludeFromSearchOrder(long searchOrderId, long paperId) {
         getRepository().excludePaperFromSearchOrderResults(searchOrderId, paperId);
+    }
+
+    @Transactional(readOnly = false)
+    @Override
+    public Paper saveAttachment(PaperAttachment paperAttachment) {
+        return getRepository().saveAttachment(paperAttachment);
+    }
+
+    @Override
+    public PaperAttachment loadAttachmentWithContentBy(Integer id) {
+        return getRepository().loadAttachmentWithContentBy(id);
+    }
+
+    @Transactional(readOnly = false)
+    @Override
+    public Paper deleteAttachment(Integer id) {
+        return getRepository().deleteAttachment(id);
     }
 
 }

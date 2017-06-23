@@ -3,6 +3,7 @@ package ch.difty.sipamato.persistance.jooq.paper;
 import java.util.List;
 
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.PaperAttachment;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.EntityRepository;
@@ -18,24 +19,31 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     /**
      * Find Papers with the provided ids.  The codes are not enriched.
      * @param ids
-     * @return list of papers (codes not available)
+     * @return list of papers (codes not available, attachments without content)
      */
     List<Paper> findByIds(List<Long> ids);
 
     /**
      * Find Papers (including codes) with the provided ids
      * @param ids
-     * @return list of papers
+     * @return list of papers (attachments without content)
      */
     List<Paper> findWithCodesByIds(List<Long> ids);
 
     /**
-     * {@link BySearchOrderRepository#findBySearchOrder(SearchOrder)}
+     * Finds all entities of type {@code T} matching the provided {@link SearchOrder} specification.
+     * The codes are enriched. The attachments are present but without the actual content.
+     *
+     * @param searchOrder {@link SearchOrder} the search specification
+     * @return list of entities (attachments without content)
      */
     List<Paper> findBySearchOrder(SearchOrder searchOrder);
 
     /**
-     * {@link BySearchOrderRepository#findPageBySearchOrder(SearchOrder, PaginationContext)}
+     * Finds a single page of entities of type {@code T} matching the provided {@link SearchOrder} and {@link PaginationContext}.
+     * The codes are enriched. The attachments are present but without the actual content.
+     *
+     * @return paged list of entities (attachments without content)
      */
     List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
 
@@ -45,16 +53,20 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     int countBySearchOrder(SearchOrder searchOrder);
 
     /**
-     * Find Papers by a number of PmIds
-     * @param pmIds
-     * @return list of {@link Paper}s
+     * Finds all entities of type {@code T} matching any of the provided {@code pmIds}.
+     * The codes are enriched. The attachments are present but without the actual content.
+     *
+     * @param pmIds list of pubmed ids
+     * @return list of entities (codes enriched, attachments without content)
      */
     List<Paper> findByPmIds(List<Integer> pmIds);
 
     /**
-     * Find Papers by a list of numbers
-     * @param numbers
-     * @return list of {@link Paper}s
+     * Finds all entities of type {@code T} matching any of the provided {@code numbers}.
+     * The codes are enriched. The attachments are present but without the actual content.
+     *
+     * @param numbers list of numbers
+     * @return list of entities (codes enriched, attachments without content)
      */
     List<Paper> findByNumbers(List<Long> numbers);
 
@@ -77,5 +89,26 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * @param paperId the id of the paper
      */
     void excludePaperFromSearchOrderResults(long searchOrderId, long paperId);
+
+    /**
+     * Saves the provided {@link PaperAttachment} including it's content.
+     * @param paperAttachment
+     * @return the paper for which the attachment has been added
+     */
+    Paper saveAttachment(PaperAttachment paperAttachment);
+
+    /**
+     * Loads the {@link PaperAttachment} with provided id including it's content
+     * @param id the id of the paper attachment
+     * @return the full attachment including the content.
+     */
+    PaperAttachment loadAttachmentWithContentBy(Integer id);
+
+    /**
+     * Deletes the attachment with given id
+     * @param id the id of the paper attachment to be deleted
+     * @return the paper for which the attachment has been deleted
+     */
+    Paper deleteAttachment(Integer id);
 
 }

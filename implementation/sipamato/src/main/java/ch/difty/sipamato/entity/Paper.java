@@ -1,5 +1,6 @@
 package ch.difty.sipamato.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.Min;
@@ -58,6 +59,8 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
     public static final String RESULT_MEASURED_OUTCOME = "resultMeasuredOutcome";
 
     public static final String ORIGINAL_ABSTRACT = "originalAbstract";
+
+    public static final String ATTACHMENTS = "attachments";
 
     public static final String MAIN_CODE_OF_CODECLASS1 = "mainCodeOfCodeclass1";
 
@@ -127,6 +130,9 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
     private String intern;
     private String originalAbstract;
     private String mainCodeOfCodeclass1;
+
+    // Note: Attachments are not persisted with the Paper in the repo
+    private final List<PaperAttachment> attachments = new ArrayList<>();
 
     private final CodeBox codes = new PaperCodeBox();
 
@@ -352,6 +358,16 @@ public class Paper extends IdSipamatoEntity<Long> implements CodeBoxAware {
 
     public void setOriginalAbstract(String originalAbstract) {
         this.originalAbstract = originalAbstract;
+    }
+
+    public List<PaperAttachment> getAttachments() {
+        return new ArrayList<>(attachments);
+    }
+
+    public void setAttachments(final List<PaperAttachment> attachments) {
+        this.attachments.clear();
+        if (attachments != null)
+            this.attachments.addAll(attachments);
     }
 
     public String getMainCodeOfCodeclass1() {

@@ -17,6 +17,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.PaperAttachment;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.paging.PaginationContext;
 import ch.difty.sipamato.persistance.jooq.AbstractServiceTest;
@@ -48,7 +49,9 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     @Mock
     private PaginationContext paginationContextMock;
     @Mock
-    protected Paper paperMock, paperMock2;
+    private Paper paperMock, paperMock2;
+    @Mock
+    private PaperAttachment attachmentMock;
 
     private final List<PubmedArticleFacade> articles = new ArrayList<>();
 
@@ -352,4 +355,26 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         verify(repoMock).excludePaperFromSearchOrderResults(searchOrderId, paperId);
     }
 
+    @Test
+    public void savingAttachment_delegatesToRepo() {
+        PaperAttachment paMock = Mockito.mock(PaperAttachment.class);
+        service.saveAttachment(paMock);
+        verify(repoMock).saveAttachment(paMock);
+    }
+
+    @Test
+    public void loadingAttachmentWithContentById_delegatesToRepo() {
+        final Integer id = 7;
+        when(repoMock.loadAttachmentWithContentBy(id)).thenReturn(attachmentMock);
+        assertThat(service.loadAttachmentWithContentBy(id)).isEqualTo(attachmentMock);
+        verify(repoMock).loadAttachmentWithContentBy(id);
+    }
+
+    @Test
+    public void deletingAttachment_delegatesToRepo() {
+        Integer id = 5;
+        when(repoMock.deleteAttachment(id)).thenReturn(paperMock);
+        assertThat(service.deleteAttachment(id)).isEqualTo(paperMock);
+        verify(repoMock).deleteAttachment(id);
+    }
 }

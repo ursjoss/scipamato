@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.validation.ConstraintViolation;
 
@@ -31,6 +33,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         p.setPmId(1000);
         p.setAuthors(VALID_AUTHORS);
         p.setFirstAuthor(FIRST_AUTHOR);
+        p.setFirstAuthorOverridden(false);
         p.setTitle(TITLE);
         p.setLocation(NON_NULL_STRING);
         p.setPublicationYear(2016);
@@ -223,7 +226,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
             + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
             + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
             + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,comment=<null>,intern=<null>,originalAbstract=<null>"
-            + ",mainCodeOfCodeclass1=<null>,codes=[],id=1,created=2017-01-01T22:15:13.111,createdBy=10,lastModified=2017-01-10T22:15:13.111,lastModifiedBy=20,version=10]");
+            + ",mainCodeOfCodeclass1=<null>,attachments=[],codes=[],id=1,created=2017-01-01T22:15:13.111,createdBy=10,lastModified=2017-01-10T22:15:13.111,lastModifiedBy=20,version=10]");
      // @formatter:on
     }
 
@@ -240,7 +243,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
             + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
             + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
             + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,comment=<null>,intern=<null>,originalAbstract=<null>"
-            + ",mainCodeOfCodeclass1=1D,codes=[codesOfClass1=[Code[code=1D,name=code 1D,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]]"
+            + ",mainCodeOfCodeclass1=1D,attachments=[],codes=[codesOfClass1=[Code[code=1D,name=code 1D,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]]"
             + ",codesOfClass1=[Code[code=1E,name=code 1E,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]]"
             + ",codesOfClass5=[Code[code=5A,name=code 5A,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=1,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]]]"
             + ",id=1,created=2017-01-01T22:15:13.111,createdBy=10,lastModified=2017-01-10T22:15:13.111,lastModifiedBy=20,version=10]");
@@ -250,6 +253,35 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     private Code makeCode(int codeClassId, String codePart) {
         String code = codeClassId + codePart;
         return new Code(code, "code " + code, null, false, codeClassId, "cc" + code, "code class " + code, 1);
+    }
+
+    @Test
+    public void testingToString_withAttachments() {
+        List<PaperAttachment> attachments = new ArrayList<>();
+        attachments.add(newAttachment(1, 1, "p1"));
+        attachments.add(newAttachment(2, 1, "p2"));
+        p.setAttachments(attachments);
+     // @formatter:off
+        assertThat(p.toString()).isEqualTo(
+            "Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000"
+            + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=Turner MC,firstAuthorOverridden=false"
+            + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
+            + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
+            + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,comment=<null>,intern=<null>,originalAbstract=<null>"
+            + ",mainCodeOfCodeclass1=<null>,attachments=[PaperAttachment[paperId=1,name=p1,id=1], PaperAttachment[paperId=1,name=p2,id=2]"
+            + "],codes=[],id=1,created=2017-01-01T22:15:13.111,createdBy=10,lastModified=2017-01-10T22:15:13.111,lastModifiedBy=20,version=10]");
+     // @formatter:on
+    }
+
+    private PaperAttachment newAttachment(int id, long paperId, String name) {
+        PaperAttachment pa = new PaperAttachment();
+        pa.setId(id);
+        pa.setPaperId(paperId);
+        pa.setName(name);
+        pa.setContent(name.getBytes());
+        pa.setContentType("ct");
+        pa.setSize((long) name.length());
+        return pa;
     }
 
     @Test
@@ -330,5 +362,48 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Test
     public void assertNotAvailableValueForPublicationYear() {
         assertThat(Paper.NA_PUBL_YEAR).isEqualTo(1500);
+    }
+
+    @Test
+    public void newPaper_hasNonNullButEmptyAttachments() {
+        assertThat(p.getAttachments()).isNotNull().isEmpty();
+    }
+
+    @Test
+    public void cannotAddAttachment_viaGetter() {
+        p.getAttachments().add(new PaperAttachment());
+        assertThat(p.getAttachments()).isEmpty();
+    }
+
+    @Test
+    public void canSetAttachments() {
+        p.setAttachments(Arrays.asList(new PaperAttachment(), new PaperAttachment()));
+        assertThat(p.getAttachments()).hasSize(2);
+    }
+
+    @Test
+    public void cannotModifyAttachmentsAfterSettig() {
+        List<PaperAttachment> attachments = new ArrayList<>(Arrays.asList(new PaperAttachment(), new PaperAttachment()));
+        p.setAttachments(attachments);
+        attachments.add(new PaperAttachment());
+        assertThat(p.getAttachments().size()).isLessThan(attachments.size());
+    }
+
+    @Test
+    public void canUnsetAttachments_withNullParameter() {
+        List<PaperAttachment> attachments = new ArrayList<>(Arrays.asList(new PaperAttachment(), new PaperAttachment()));
+        p.setAttachments(attachments);
+        assertThat(p.getAttachments()).hasSize(2);
+        p.setAttachments(null);
+        assertThat(p.getAttachments()).isEmpty();
+    }
+
+    @Test
+    public void canUnsetAttachments_withEmptyListParameter() {
+        List<PaperAttachment> attachments = new ArrayList<>(Arrays.asList(new PaperAttachment(), new PaperAttachment()));
+        p.setAttachments(attachments);
+        assertThat(p.getAttachments()).hasSize(2);
+        p.setAttachments(new ArrayList<PaperAttachment>());
+        assertThat(p.getAttachments()).isEmpty();
     }
 }

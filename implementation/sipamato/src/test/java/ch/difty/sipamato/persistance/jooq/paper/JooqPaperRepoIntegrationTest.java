@@ -1,6 +1,7 @@
 package ch.difty.sipamato.persistance.jooq.paper;
 
 import static ch.difty.sipamato.db.Tables.PAPER;
+import static ch.difty.sipamato.db.Tables.PAPER_ATTACHMENT;
 import static ch.difty.sipamato.db.tables.SearchExclusion.SEARCH_EXCLUSION;
 import static ch.difty.sipamato.persistance.jooq.TestDbConstants.MAX_ID_PREPOPULATED;
 import static ch.difty.sipamato.persistance.jooq.TestDbConstants.RECORD_COUNT_PREPOPULATED;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.sipamato.db.tables.SearchExclusion;
 import ch.difty.sipamato.entity.Paper;
+import ch.difty.sipamato.entity.PaperAttachment;
 import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.paging.PaginationRequest;
@@ -31,6 +33,10 @@ import ch.difty.sipamato.persistance.jooq.JooqTransactionalIntegrationTest;
  */
 public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
+    private static final long TEST_PAPER_ID = 1l;
+    private static final String TEST_FILE_1 = "test file";
+    private static final String TEST_FILE_2 = "test file 2";
+
     private static final String ID_PART = ",id=1,created=2016-12-14T14:47:29.431,createdBy=1,lastModified=2016-12-14T14:47:29.431,lastModifiedBy=1,version=1";
     // @formatter:off
     private static final String PAPER1_WO_CODE_CLASSES =
@@ -41,7 +47,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
             + ",publicationYear=2014,goals=Neue Analyse der Daten der amerikanischen Krebspräventions-Kohertenstudie zur Untersuchung, wie gross das kombinierte Krebsrisiko durch Feinstaub ist."
             + ",population=429'406 Teilnehmer, Frauen und Männer aus 50 Staaten der USA, welche in den Jahren 1982/1983 im Alter von mindestens 30 Jahren für die Krebsvorsorgestudie der amerikanischen Kriegsgesellschaft (ACS) rekrutiert worden waren, in den Jahren 1984, 1986 und 1988 wieder kontaktiert worden waren, und seit 1989 mit dem nationalen Sterberegister auf ihr Überleben kontaktiert wurden. Nicht in diese Analyse einbezogen wurden Exrauchende und Pfeifen- oder Zigarrenraucher. USA.,populationPlace=,populationParticipants=,populationDuration=,exposurePollutant=,exposureAssessment=,methods=Da nur bis 1998 individuelle Informationen über das Rauchverhalten vorlagen, wurden nur die ersten 6 Studienjahre in diese Analyse einbzeogen. Die Abschätzung der Belastung mit Feinstaub wurde mit Landnutzungsmodellen für die geocodierten Adressen bei Studieneintritt vorgenommen, welche sich auf Monatsmittelwerte von PM2.5 der Jahre 1999-2004 von 1464 Messstationen abstützten, unter der Annahme, dass die Feinstaubbelastungen über die Jahre eng korreliert seien. Mit proportionalen Hazard-Modellen nach Cox, stratifiziert für Alter, Geschlecht und Rasse wurde das Überleben bzw. die Sterblichkeit an Lungenkrebs in den ersten 6 Jahren in Abhängigkeit der PM2.5-Belastung in verschiedenen Kategorien (über/unter der 50 Perzentile, über der 66. vs. unter der 33. Perzentile, sowie über der 75. vs. unter der 25. Perzentile) und in Abhängigkeit von Rauchen/nicht Rauchen modelliert. Einbezogen wurden folgende invidivuellen Faktoren: Schulbildung, Zivilstand, BMI, Passivrauchen, Ernährung, Alkoholkonsum und berufliche Belastung. Die Effektmodifikation bezüglich Lungenkrebsterblichkeit wurde mit drei Grössen untersucht: das relative zusätzliche Risiko durch die Interatkion (RERI), der der Interaktion anrechenbare Teil des Risikos (AP) und der Synergie-Index (SI). Lungenkrebs, Kohortenstudie, Statistik, epidemiologische Methoden. ACS-Studie. USA.,methodStudyDesign=,methodOutcome=,methodStatistics=,methodConfounders=,result=In 2'509'717 Personen-Jahren der Nachkontrolle ereigneten sich 1921 Todesfälle an Lungenkrebs. Die geschätzte Feinstaubbelastung lag im Durchschnitt bei 12.6 SD 2.85 µg PM2.5/m3, mit der 25. und 75. Perzentile bei 10.59 und 14.44 µg PM2.5/m3. Raucher hatten im Vergleich zu Nichtrauchern ein 13.5 fach erhöhtes Risiko (95%CI 10.2-17.9), an Lungenkrebs zu sterben, wenn ihre PM2.5-Belastung gering war, d.h. unter der 25. Perzentile lag. Nichtraucher hatten ein 1.28 faches Risiko (0.92-1.78), wenn ihre Belastung über der 75. Perzentile der PM2.5-Belastung lag, im Vergleich zu Nichtrauchern mit geringer Belastung. Raucher hatten ein 16 faches Risiko (12.1-21.1), an Lungenkrebs zu sterben, wenn ihre Feinstaubbelastung über der 75. Perzentile lag. Das zusätzliche relative Risiko durch die Interaktion (RERI) für die Kombination von Rauchen und schlechter Luft betrug 2.19 (-0.10;+4.83). Der Risikoanteil, der dem Kombinationseffekt angerechnet werden kann, betrug 14%, der Synergie-Index 1.17. Die Autoren schliessen daraus, dass die Folgen von Rauchen und Luftverschmutzung stärker zusammenwiren als nur additiv. Auch wenn die Lungenkrebfälle am stärksten durch einen Rückgang des Rauchens abnehmen, kann ein solcher Rückgang mit einer Verbesserung der Luftqualität stärker ausfallen als mit einer der beiden Massnahmen allein."
             + ",resultExposureRange=,resultEffectEstimate=,resultMeasuredOutcome=,comment=Kommentar von Panagiotou AO, Wacholder S: How Big Is That Interaction (in My Community)-and I. Which Direction? Am. J. Epidemiol. 2014 180: 1150-1158."
-            + ",intern=,originalAbstract=<null>,mainCodeOfCodeclass1=1F";
+            + ",intern=,originalAbstract=<null>,mainCodeOfCodeclass1=1F,attachments=[]";
     // @formatter:on
 
     @Autowired
@@ -54,6 +60,8 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     public void teardown() {
         // Delete all papers that were created in any test
         dsl.delete(PAPER).where(PAPER.ID.gt(MAX_ID_PREPOPULATED)).execute();
+        // Delete test attachment
+        dsl.delete(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.NAME.in(TEST_FILE_1, TEST_FILE_2)).and(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).execute();
     }
 
     @Test
@@ -181,7 +189,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     public void gettingByIds_returnsRecordForEveryIdExisting() {
         List<Paper> papers = repo.findByIds(Arrays.asList(1l, 2l, 3l, 10l, -17l));
         assertThat(papers).hasSize(4);
-        assertThat(papers).extracting("id").containsExactly(1l, 2l, 3l, 10l);
+        assertThat(papers).extracting(Paper.ID).containsExactly(1l, 2l, 3l, 10l);
 
         // codes not enriched
         assertThat(papers.get(0).getCodes()).isEmpty();
@@ -196,22 +204,65 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     public void gettingWithCodesByIds_returnsRecordForEveryIdExisting() {
         List<Paper> papers = repo.findWithCodesByIds(Arrays.asList(1l, 2l, 3l, 10l, -17l));
         assertThat(papers).hasSize(4);
-        assertThat(papers).extracting("id").containsExactly(1l, 2l, 3l, 10l);
+        assertThat(papers).extracting(Paper.ID).containsExactly(1l, 2l, 3l, 10l);
 
         // codes are present
         assertThat(papers.get(0).getCodes()).isNotEmpty();
     }
 
     @Test
-    public void gettingPapersByPmIds_withThreeValidPmIds_returnsThreePapers() {
+    public void findingPapersByPmIds_withThreeValidPmIds_returnsThreePapers() {
         List<Paper> papers = repo.findByPmIds(Arrays.asList(20335815, 27128166, 25104428));
         assertThat(papers).hasSize(3);
-        assertThat(papers).extracting("pmId").containsOnly(20335815, 27128166, 25104428);
+        assertThat(papers).extracting(Paper.PMID).containsOnly(20335815, 27128166, 25104428);
     }
 
     @Test
-    public void gettingPapersByPmIds_withInvalidPmIds_returnsEmptyList() {
+    public void findingPapersByPmIds_withInvalidPmIds_returnsEmptyList() {
         assertThat(repo.findByPmIds(Arrays.asList(-20335815))).isEmpty();
+    }
+
+    @Test
+    public void findingPapersByPmIds_hasCodesEnriched() {
+        List<Paper> papers = repo.findByPmIds(Arrays.asList(20335815));
+        assertThat(papers.get(0).getCodes()).isNotEmpty();
+    }
+
+    @Test
+    public void findingPapersByNumbers_withThreeValidNumbers_returnsThreePapers() {
+        List<Paper> papers = repo.findByNumbers(Arrays.asList(1l, 2l, 3l));
+        assertThat(papers).hasSize(3);
+        assertThat(papers).extracting(Paper.NUMBER).containsOnly(1l, 2l, 3l);
+    }
+
+    @Test
+    public void findingPapersByNumbers_withInvalidNumbers_returnsEmptyList() {
+        assertThat(repo.findByNumbers(Arrays.asList(-1l))).isEmpty();
+    }
+
+    @Test
+    public void findingPapersByNumber_hasCodesEnriched() {
+        List<Paper> papers = repo.findByNumbers(Arrays.asList(1l));
+        assertThat(papers.get(0).getCodes()).isNotEmpty();
+    }
+
+    @Test
+    public void findingBySearchOrder() {
+        SearchOrder searchOrder = new SearchOrder();
+        SearchCondition sc = new SearchCondition();
+        sc.setAuthors("kutlar");
+        searchOrder.add(sc);
+        List<Paper> papers = repo.findBySearchOrder(searchOrder);
+        assertThat(papers).isNotEmpty();
+    }
+
+    @Test
+    public void findingPageBySearchOrder() {
+        SearchOrder searchOrder = new SearchOrder();
+        SearchCondition sc = new SearchCondition();
+        sc.setAuthors("kutlar");
+        searchOrder.add(sc);
+        assertThat(repo.findPageBySearchOrder(searchOrder, new PaginationRequest(Direction.ASC, "authors"))).isNotEmpty();
     }
 
     @Test
@@ -300,4 +351,88 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         deleteRecord(searchOrderId, paperId);
     }
 
+    @Test
+    public void loadingSlimAttachment_loadsEverythingExceptContent() {
+        final String content1 = "baz";
+        PaperAttachment pa1 = newPaperAttachment(TEST_FILE_1, content1);
+        repo.saveAttachment(pa1);
+
+        final String content2 = "blup";
+        PaperAttachment pa2 = newPaperAttachment(TEST_FILE_2, content2);
+        repo.saveAttachment(pa2);
+
+        List<PaperAttachment> results = repo.loadSlimAttachment(TEST_PAPER_ID);
+
+        assertThat(results).hasSize(2);
+        PaperAttachment saved = results.get(0);
+
+        assertThat(saved.getName()).isEqualTo(pa1.getName());
+        assertThat(saved.getContent()).isNull();
+        assertThat(saved.getSize()).isEqualTo(content1.length());
+        assertThat(saved.getContentType()).isEqualTo("application/pdf");
+        assertThat(saved.getCreated().toString()).isEqualTo("2016-12-09T06:02:13");
+        assertThat(saved.getLastModified().toString()).isEqualTo("2016-12-09T06:02:13");
+    }
+
+    private PaperAttachment newPaperAttachment(String name, final String content) {
+        return new PaperAttachment(null, TEST_PAPER_ID, name, content.getBytes(), "application/pdf", (long) content.length());
+    }
+
+    @Test
+    public void savingAttachment_whenNotExisting_insertsIntoDb() {
+        final String content = "foo";
+        PaperAttachment pa = newPaperAttachment(TEST_FILE_1, content);
+
+        Paper p = repo.saveAttachment(pa);
+        PaperAttachment saved = dsl.select().from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetchOneInto(PaperAttachment.class);
+
+        assertThat(p.getAttachments()).extracting("id").contains(saved.getId());
+
+        assertThat(saved.getName()).isEqualTo(pa.getName());
+        assertThat(new String(saved.getContent())).isEqualTo(content);
+        assertThat(saved.getSize()).isEqualTo(content.length());
+        assertThat(saved.getContentType()).isEqualTo("application/pdf");
+        assertThat(saved.getCreated().toString()).isEqualTo("2016-12-09T06:02:13");
+        assertThat(saved.getLastModified().toString()).isEqualTo("2016-12-09T06:02:13");
+    }
+
+    @Test
+    public void savingAttachment_whenExisted_performsUpdate() {
+        final String content2 = "bar";
+        PaperAttachment pa1 = newPaperAttachment(TEST_FILE_1, "foo");
+        PaperAttachment pa2 = newPaperAttachment(TEST_FILE_1, content2);
+        assertThat(pa1.getPaperId()).isEqualTo(pa2.getPaperId());
+        assertThat(pa1.getName()).isEqualTo(pa2.getName());
+
+        repo.saveAttachment(pa1);
+        repo.saveAttachment(pa2);
+
+        PaperAttachment saved2 = dsl.select().from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetchOneInto(PaperAttachment.class);
+
+        assertThat(saved2.getName()).isEqualTo(pa1.getName());
+        assertThat(saved2.getVersion()).isEqualTo(2);
+        assertThat(new String(saved2.getContent())).isEqualTo(content2);
+    }
+
+    @Test
+    public void loadingAttachmentWithContentById() {
+        final String content1 = "baz";
+        PaperAttachment pa1 = newPaperAttachment(TEST_FILE_1, content1);
+        repo.saveAttachment(pa1);
+
+        Integer id = dsl.select(PAPER_ATTACHMENT.ID).from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetchOneInto(Integer.class);
+        PaperAttachment attachment = repo.loadAttachmentWithContentBy(id);
+        assertThat(attachment.getContent()).isNotNull();
+        assertThat(new String(attachment.getContent())).isEqualTo(content1);
+    }
+
+    @Test
+    public void deletingAttachment_deletes() {
+        repo.saveAttachment(newPaperAttachment(TEST_FILE_1, "foo"));
+        Integer id = dsl.select(PAPER_ATTACHMENT.ID).from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetchOneInto(Integer.class);
+        assertThat(id).isNotNull();
+        Paper p = repo.deleteAttachment(id);
+        assertThat(p.getAttachments()).extracting("id").doesNotContain(id);
+        assertThat(dsl.select(PAPER_ATTACHMENT.ID).from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetchOneInto(Integer.class)).isNull();
+    }
 }

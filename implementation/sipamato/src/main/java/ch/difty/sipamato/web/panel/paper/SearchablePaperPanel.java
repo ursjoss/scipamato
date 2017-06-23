@@ -1,17 +1,28 @@
 package ch.difty.sipamato.web.panel.paper;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 
+import ch.difty.sipamato.entity.PaperAttachment;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.web.component.SerializableSupplier;
 import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.pages.Mode;
+import ch.difty.sipamato.web.pages.paper.provider.PaperAttachmentProvider;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 /**
  * The {@link SearchablePaperPanel} offers a look-alike panel to the paper entry panel,
@@ -50,9 +61,28 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
     }
 
     protected BootstrapButton newExcludeButton(String id) {
-        BootstrapButton exclude = new BootstrapButton(id, new StringResourceModel("button.exclude.label"), Buttons.Type.Default);
+        final BootstrapButton exclude = new BootstrapButton(id, new StringResourceModel("button.exclude.label"), Buttons.Type.Default);
         exclude.setVisible(false);
         return exclude;
+    }
+
+    protected DropZoneFileUpload newDropZoneFileUpload() {
+        DropZoneFileUpload dropZoneFileUpload = new DropZoneFileUpload("dropzone") {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onUpload(AjaxRequestTarget target, Map<String, List<FileItem>> fileMap) {
+            }
+        };
+        dropZoneFileUpload.setVisible(false);
+        return dropZoneFileUpload;
+    }
+
+    protected DataTable<PaperAttachment, String> newAttachmentTable(String id) {
+        PaperAttachmentProvider provider = new PaperAttachmentProvider(Model.ofList(new ArrayList<PaperAttachment>()));
+        DataTable<PaperAttachment, String> attachments = new BootstrapDefaultDataTable<PaperAttachment, String>(id, new ArrayList<>(), provider, 10);
+        attachments.setVisible(false);
+        return attachments;
     }
 
 }
