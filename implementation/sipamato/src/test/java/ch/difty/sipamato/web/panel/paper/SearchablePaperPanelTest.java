@@ -104,7 +104,7 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
         assertTextFieldWithLabel(b + ":modifiedDisplayValue", "lmdv", "Last Modified");
 
         String bb = b + ":tabs:panelsContainer:panels:11:tab6Form";
-        getTester().assertInvisible(bb + ":bootstrapFileinput");
+        getTester().assertInvisible(bb + ":dropzone");
         getTester().assertComponent(bb, Form.class);
     }
 

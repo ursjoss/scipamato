@@ -57,8 +57,8 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.fileinput.BootstrapFileInput;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 
@@ -645,9 +645,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         @Override
         protected void onInitialize() {
             super.onInitialize();
-            // TODO consider DropZoneFileUpload
             queue(newTab6Frm("tab6Form"));
-            queue(newBootstrapFileInput());
+            queue(newDropZoneFileUpload());
             attachments = newAttachmentTable("attachments");
             queue(attachments);
         }
@@ -662,7 +661,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
     protected abstract DataTable<PaperAttachment, String> newAttachmentTable(String id);
 
-    protected abstract BootstrapFileInput newBootstrapFileInput();
+    protected abstract DropZoneFileUpload newDropZoneFileUpload();
 
     /** override if needed */
     protected void addCodeClass1ChangeBehavior(final TextField<String> mainCodeOfCodeClass1, final BootstrapMultiSelect<Code> codeClass1) {

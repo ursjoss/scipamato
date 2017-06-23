@@ -21,7 +21,7 @@ public class PaperAttachment extends IdSipamatoEntity<Integer> {
     public static final String CONTENT = "content";
     public static final String CONTENT_TYPE = "contentType";
     public static final String SIZE = "size";
-    public static final String SIZE_KB = "sizeKb";
+    public static final String SIZE_KB = "sizeKiloBytes";
 
     private Long paperId;
     private String name;

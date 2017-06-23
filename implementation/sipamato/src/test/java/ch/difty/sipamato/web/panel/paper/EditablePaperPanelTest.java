@@ -32,7 +32,8 @@ import ch.difty.sipamato.service.SearchOrderService;
 import ch.difty.sipamato.web.pages.paper.search.PaperSearchPage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.fileinput.BootstrapFileInput;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperPanel> {
 
@@ -157,8 +158,9 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertVisible(b + ":pubmedRetrieval");
 
         String bb = b + ":tabs:panelsContainer:panels:11:tab6Form";
-        getTester().assertComponent(bb + ":bootstrapFileinput", BootstrapFileInput.class);
-        getTester().assertVisible(bb + ":bootstrapFileinput");
+        getTester().assertComponent(bb + ":dropzone", DropZoneFileUpload.class);
+        getTester().assertVisible(bb + ":dropzone");
+        getTester().assertComponent(bb + ":attachments", BootstrapDefaultDataTable.class);
         getTester().assertComponent(bb, Form.class);
 
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));

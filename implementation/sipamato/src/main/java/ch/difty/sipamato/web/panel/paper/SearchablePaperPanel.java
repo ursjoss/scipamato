@@ -2,14 +2,15 @@ package ch.difty.sipamato.web.panel.paper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.model.util.ListModel;
 
 import ch.difty.sipamato.entity.PaperAttachment;
 import ch.difty.sipamato.entity.filter.SearchCondition;
@@ -20,7 +21,7 @@ import ch.difty.sipamato.web.pages.paper.provider.PaperAttachmentProvider;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.fileinput.BootstrapFileInput;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 /**
@@ -65,11 +66,16 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
         return exclude;
     }
 
-    protected BootstrapFileInput newBootstrapFileInput() {
-        final IModel<List<FileUpload>> model = new ListModel<FileUpload>();
-        final BootstrapFileInput bfi = new BootstrapFileInput("bootstrapFileinput", model);
-        bfi.setVisible(false);
-        return bfi;
+    protected DropZoneFileUpload newDropZoneFileUpload() {
+        DropZoneFileUpload dropZoneFileUpload = new DropZoneFileUpload("dropzone") {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onUpload(AjaxRequestTarget target, Map<String, List<FileItem>> fileMap) {
+            }
+        };
+        dropZoneFileUpload.setVisible(false);
+        return dropZoneFileUpload;
     }
 
     protected DataTable<PaperAttachment, String> newAttachmentTable(String id) {
