@@ -66,7 +66,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
     private static final long serialVersionUID = 1L;
 
-    private static final String TITLE = "title";
+    protected static final String TITLE = "title";
     private static final String CHANGE = "change";
 
     private ResourceLink<Void> summaryLink;
@@ -652,7 +652,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         }
 
         private Form<Void> newTab6Frm(String id) {
-            Form<Void> tab6Form = new Form<Void>(id);
+            Form<Void> tab6Form = new Form<>(id);
             tab6Form.setOutputMarkupId(true);
             tab6Form.setMultiPart(true);
             return tab6Form;

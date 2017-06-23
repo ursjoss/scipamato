@@ -70,6 +70,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     private static final long serialVersionUID = 1L;
 
     private static final String COLUMN_HEADER = "column.header.";
+
     private final Long searchOrderId;
 
     @SpringBean
@@ -399,7 +400,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         };
         btn.setDefaultFormProcessing(false);
         btn.setIconType(icon);
-        btn.add(new AttributeModifier("title", new StringResourceModel("button." + id + ".title", this, null).getString()));
+        btn.add(new AttributeModifier(TITLE, new StringResourceModel("button." + id + ".title", this, null).getString()));
         return btn;
     }
 
@@ -425,43 +426,26 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             }
         };
         exclude.setIconType(GlyphIconType.bancircle);
-        exclude.add(new AttributeModifier("title", new StringResourceModel("button.exclude.title", this, null).getString()));
+        exclude.add(new AttributeModifier(TITLE, new StringResourceModel("button.exclude.title", this, null).getString()));
         exclude.setDefaultFormProcessing(false);
         return exclude;
     }
 
     protected DropZoneFileUpload newDropZoneFileUpload() {
-        DropZoneFileUpload dropZoneFileUpload = new DropZoneFileUpload("dropzone") {
+        DropZoneFileUpload upload = new DropZoneFileUpload("dropzone") {
             private static final long serialVersionUID = 1L;
 
-            @SuppressWarnings("unchecked")
             @Override
             protected void onUpload(AjaxRequestTarget target, Map<String, List<FileItem>> fileMap) {
-                Paper p = null;
                 if (fileMap != null && fileMap.containsKey("file")) {
-                    for (FileItem file : fileMap.get("file")) {
+                    Paper p = null;
+                    for (final FileItem file : fileMap.get("file"))
                         p = paperService.saveAttachment(convertToPaperAttachment(file));
-                    }
-                    if (p != null)
+                    if (p != null) {
                         EditablePaperPanel.this.setModelObject(p);
-
-                    target.add(((BasePage<Paper>) getPage()).getFeedbackPanel());
-                    target.add(getAttachments());
+                        target.add(getAttachments());
+                    }
                 }
-            }
-
-            private PaperAttachment convertToPaperAttachment(final FileItem file) {
-                final PaperAttachment pa = new PaperAttachment();
-                pa.setPaperId(EditablePaperPanel.this.getModelObject().getId());
-                pa.setContent(file.get());
-                pa.setContentType(file.getContentType());
-                pa.setSize(file.getSize());
-                pa.setName(sanitize(file.getName()));
-                return pa;
-            }
-
-            private String sanitize(final String originalFileName) {
-                return originalFileName.replace(" ", "_");
             }
 
             @Override
@@ -471,8 +455,22 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             }
 
         };
-        dropZoneFileUpload.getConfig().withMaxFileSize(4).withThumbnailHeight(80).withThumbnailWidth(80).withPreviewsContainer(".dropzone-previews").withParallelUploads(4).withAutoQueue(true);
-        return dropZoneFileUpload;
+        upload.getConfig().withMaxFileSize(4).withThumbnailHeight(80).withThumbnailWidth(80).withPreviewsContainer(".dropzone-previews").withParallelUploads(4).withAutoQueue(true);
+        return upload;
+    }
+
+    private PaperAttachment convertToPaperAttachment(final FileItem file) {
+        final PaperAttachment pa = new PaperAttachment();
+        pa.setPaperId(EditablePaperPanel.this.getModelObject().getId());
+        pa.setContent(file.get());
+        pa.setContentType(file.getContentType());
+        pa.setSize(file.getSize());
+        pa.setName(sanitize(file.getName()));
+        return pa;
+    }
+
+    private String sanitize(final String originalFileName) {
+        return originalFileName.replace(" ", "_");
     }
 
     protected DataTable<PaperAttachment, String> newAttachmentTable(String id) {
@@ -485,7 +483,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             protected Item<PaperAttachment> newRowItem(String id, int index, IModel<PaperAttachment> model) {
                 final PaperAttachment pa = model.getObject();
                 final Item<PaperAttachment> item = super.newRowItem(id, index, model);
-                item.add(AttributeModifier.replace("title", pa.getSizeKiloBytes() + " kB - " + pa.getContentType()));
+                item.add(AttributeModifier.replace(TITLE, pa.getSizeKiloBytes() + " kB - " + pa.getContentType()));
                 return item;
             }
         };

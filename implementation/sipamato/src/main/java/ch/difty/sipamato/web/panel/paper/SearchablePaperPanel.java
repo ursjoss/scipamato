@@ -72,6 +72,7 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
 
             @Override
             protected void onUpload(AjaxRequestTarget target, Map<String, List<FileItem>> fileMap) {
+                // no-op, as it's not visible anyway
             }
         };
         dropZoneFileUpload.setVisible(false);
@@ -80,7 +81,7 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
 
     protected DataTable<PaperAttachment, String> newAttachmentTable(String id) {
         PaperAttachmentProvider provider = new PaperAttachmentProvider(Model.ofList(new ArrayList<PaperAttachment>()));
-        DataTable<PaperAttachment, String> attachments = new BootstrapDefaultDataTable<PaperAttachment, String>(id, new ArrayList<>(), provider, 10);
+        DataTable<PaperAttachment, String> attachments = new BootstrapDefaultDataTable<>(id, new ArrayList<>(), provider, 10);
         attachments.setVisible(false);
         return attachments;
     }
