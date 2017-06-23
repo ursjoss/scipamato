@@ -11,6 +11,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 
 import ch.difty.sipamato.entity.SearchOrder;
@@ -51,7 +52,7 @@ public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
         queue(new Form<>(id));
         queueNewButton("addSearchCondition", PaperSearchCriteriaPage::new, () -> Model.of(new SearchCondition()));
 
-        SearchConditionProvider p = new SearchConditionProvider(getModel());
+        SearchConditionProvider p = new SearchConditionProvider(new PropertyModel<List<SearchCondition>>(getModel(), SearchOrder.CONDITIONS));
         searchConditions = new BootstrapDefaultDataTable<>("searchConditions", makeTableColumns(), p, 10);
         searchConditions.setOutputMarkupId(true);
         searchConditions.add(new TableBehavior().striped().hover());

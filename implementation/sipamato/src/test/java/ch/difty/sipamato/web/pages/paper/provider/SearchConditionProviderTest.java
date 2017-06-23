@@ -2,7 +2,6 @@ package ch.difty.sipamato.web.pages.paper.provider;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +15,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ch.difty.sipamato.entity.SearchOrder;
 import ch.difty.sipamato.entity.filter.SearchCondition;
 import ch.difty.sipamato.lib.NullArgumentException;
 
@@ -26,8 +24,6 @@ public class SearchConditionProviderTest {
     private SearchConditionProvider provider;
 
     @Mock
-    private SearchOrder mockSearchOrder;
-    @Mock
     private SearchCondition mockCondition1, mockCondition2, mockCondition3, mockCondition4;
 
     private final List<SearchCondition> conditions = new ArrayList<>();
@@ -35,9 +31,8 @@ public class SearchConditionProviderTest {
     @Before
     public void setUp() {
         conditions.addAll(Arrays.asList(mockCondition1, mockCondition2, mockCondition3, mockCondition4));
-        when(mockSearchOrder.getSearchConditions()).thenReturn(conditions);
 
-        provider = new SearchConditionProvider(Model.of(mockSearchOrder));
+        provider = new SearchConditionProvider(Model.ofList(conditions));
     }
 
     @Test
@@ -46,17 +41,18 @@ public class SearchConditionProviderTest {
             new SearchConditionProvider(null);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchOrderModel must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchConditionsModel must not be null.");
         }
     }
 
     @Test
     public void degenerateConstruction_withNullSearchOrderModel1() {
+        List<SearchCondition> conditions = null;
         try {
-            new SearchConditionProvider(Model.of((SearchOrder) null));
+            new SearchConditionProvider(Model.ofList(conditions));
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchOrder must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchConditions must not be null.");
         }
     }
 
@@ -86,15 +82,4 @@ public class SearchConditionProviderTest {
         assertThat(model.getObject()).isEqualTo(mockCondition1);
     }
 
-    @Test
-    public void settingModelObjectToNullAfterInstantiation_doesNotThrow() {
-        Model<SearchOrder> searchOrderModel = Model.of(mockSearchOrder);
-        assertThat(searchOrderModel.getObject()).isNotNull();
-        SearchConditionProvider p = new SearchConditionProvider(searchOrderModel);
-        assertThat(p.size()).isEqualTo(4l);
-
-        searchOrderModel.setObject(null);
-
-        assertThat(p.size()).isEqualTo(0l);
-    }
 }
