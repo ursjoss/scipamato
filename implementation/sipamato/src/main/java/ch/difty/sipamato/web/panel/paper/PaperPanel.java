@@ -379,6 +379,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     }
 
     private ResourceLink<Void> makeSummaryLink(String id) {
+        final String button = "button.";
         summaryLink = new ResourceLink<Void>(id, getSummaryDataSource()) {
             private static final long serialVersionUID = 1L;
 
@@ -393,7 +394,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 super.onEvent(event);
                 if (event.getPayload().getClass() == SelfUpdateEvent.class) {
                     setEnabled(false);
-                    summaryLink.add(new AttributeModifier(TITLE, new StringResourceModel("button." + id + ".title.disabled", this, null).getString()));
+                    summaryLink.add(new AttributeModifier(TITLE, new StringResourceModel(button + id + ".title.disabled", this, null).getString()));
                     ((SelfUpdateEvent) event.getPayload()).getTarget().add(this);
                     event.dontBroadcastDeeper();
                 }
@@ -401,8 +402,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         };
         summaryLink.setOutputMarkupId(true);
         summaryLink.setOutputMarkupPlaceholderTag(true);
-        summaryLink.setBody(new StringResourceModel("button." + id + ".label"));
-        summaryLink.add(new AttributeModifier(TITLE, new StringResourceModel("button." + id + ".title", this, null).getString()));
+        summaryLink.setBody(new StringResourceModel(button + id + ".label"));
+        summaryLink.add(new AttributeModifier(TITLE, new StringResourceModel(button + id + ".title", this, null).getString()));
         return summaryLink;
     }
 
