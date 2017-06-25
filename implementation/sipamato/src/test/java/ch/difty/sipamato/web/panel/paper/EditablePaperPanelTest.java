@@ -180,7 +180,10 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void assertSummaryLink() {
         getTester().startComponentInPage(makePanel());
-        getTester().assertComponent("panel:form:summaryLink", ResourceLink.class);
+        String path = "panel:form:summary";
+        getTester().assertComponent(path, ResourceLink.class);
+        getTester().assertVisible(path);
+        getTester().assertEnabled(path);
         verifyCodeAndCodeClassCalls(1);
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }

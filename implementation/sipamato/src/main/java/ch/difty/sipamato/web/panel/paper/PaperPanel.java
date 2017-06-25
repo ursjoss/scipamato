@@ -51,10 +51,13 @@ import ch.difty.sipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.sipamato.web.model.CodeClassModel;
 import ch.difty.sipamato.web.model.CodeModel;
 import ch.difty.sipamato.web.pages.Mode;
+import ch.difty.sipamato.web.pages.SelfUpdateEvent;
 import ch.difty.sipamato.web.panel.AbstractPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Size;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
@@ -174,11 +177,33 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         id.setEnabled(isSearchMode());
         queueFieldAndLabel(id);
 
-        TextField<String> created = new TextField<>(Paper.CREATED_DV);
+        TextField<String> created = new TextField<String>(Paper.CREATED_DV) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onEvent(IEvent<?> event) {
+                super.onEvent(event);
+                if (event.getPayload().getClass() == SelfUpdateEvent.class) {
+                    ((SelfUpdateEvent) event.getPayload()).getTarget().add(this);
+                    event.dontBroadcastDeeper();
+                }
+            }
+        };
         created.setEnabled(isSearchMode());
         queueFieldAndLabel(created);
 
-        TextField<String> modified = new TextField<>(Paper.MODIFIED_DV);
+        TextField<String> modified = new TextField<String>(Paper.MODIFIED_DV) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onEvent(IEvent<?> event) {
+                super.onEvent(event);
+                if (event.getPayload().getClass() == SelfUpdateEvent.class) {
+                    ((SelfUpdateEvent) event.getPayload()).getTarget().add(this);
+                    event.dontBroadcastDeeper();
+                }
+            }
+        };
         modified.setEnabled(isSearchMode());
         queueFieldAndLabel(modified);
 
@@ -186,7 +211,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         queue(newExcludeButton("exclude"));
         makeAndQueueSubmitButton("submit");
 
-        queue(makeSummaryLink("summaryLink"));
+        queue(makeSummaryLink("summary"));
 
         // make sure attributes updated during persisting are reflected
         reflectPersistedChangesViaTimer(id, created, modified);
@@ -345,7 +370,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             @Override
             public void onAfterSubmit() {
                 super.onAfterSubmit();
-                summaryLink.replaceWith(makeSummaryLink("summaryLink"));
+                summaryLink.replaceWith(makeSummaryLink("summary"));
             }
         };
         submit.setDefaultFormProcessing(true);
@@ -354,10 +379,29 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     }
 
     private ResourceLink<Void> makeSummaryLink(String id) {
-        summaryLink = new ResourceLink<>(id, getSummaryDataSource());
-        summaryLink.setVisible(!isSearchMode());
+        summaryLink = new ResourceLink<Void>(id, getSummaryDataSource()) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onInitialize() {
+                super.onInitialize();
+                add(new ButtonBehavior().setType(Buttons.Type.Info).setBlock(true).setSize(Size.Large));
+            }
+
+            @Override
+            public void onEvent(IEvent<?> event) {
+                super.onEvent(event);
+                if (event.getPayload().getClass() == SelfUpdateEvent.class) {
+                    setEnabled(false);
+                    summaryLink.add(new AttributeModifier(TITLE, new StringResourceModel("button." + id + ".title.disabled", this, null).getString()));
+                    ((SelfUpdateEvent) event.getPayload()).getTarget().add(this);
+                    event.dontBroadcastDeeper();
+                }
+            }
+        };
         summaryLink.setOutputMarkupId(true);
-        summaryLink.setBody(new StringResourceModel("link.summary.label"));
+        summaryLink.setOutputMarkupPlaceholderTag(true);
+        summaryLink.setBody(new StringResourceModel("button." + id + ".label"));
         summaryLink.add(new AttributeModifier(TITLE, new StringResourceModel("button." + id + ".title", this, null).getString()));
         return summaryLink;
     }
@@ -702,6 +746,12 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             private static final long serialVersionUID = 1L;
 
             @Override
+            protected void onInitialize() {
+                super.onInitialize();
+                add(new ButtonBehavior().setType(Buttons.Type.Info).setSize(Size.Medium));
+            }
+
+            @Override
             public void onClick(AjaxRequestTarget target) {
                 getPubmedArticleAndCompare(target);
             }
@@ -710,12 +760,17 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             protected void onConfigure() {
                 super.onConfigure();
                 setVisible(isEditMode());
-                setEnabled(hasPubMedId());
+                if (hasPubMedId()) {
+                    setEnabled(true);
+                    add(new AttributeModifier(TITLE, new StringResourceModel("pubmedRetrieval.title", this, null).getString()));
+                } else {
+                    setEnabled(false);
+                    add(new AttributeModifier(TITLE, new StringResourceModel("pubmedRetrieval.title.disabled", this, null).getString()));
+                }
             }
         };
         pubmedRetrieval.setOutputMarkupPlaceholderTag(true);
         pubmedRetrieval.setLabel(new StringResourceModel("pubmedRetrieval.label", this, null));
-        pubmedRetrieval.add(new AttributeModifier(TITLE, new StringResourceModel("pubmedRetrieval.title", this, null).getString()));
         queue(pubmedRetrieval);
     }
 

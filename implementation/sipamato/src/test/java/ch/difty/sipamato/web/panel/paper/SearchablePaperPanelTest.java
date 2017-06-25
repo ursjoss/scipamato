@@ -120,9 +120,9 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
     }
 
     @Test
-    public void summaryLink_doesNotExist() {
+    public void summary_doesNotExist() {
         getTester().startComponentInPage(makePanel());
-        getTester().assertContainsNot("panel:form:summaryLink");
+        getTester().assertContainsNot("panel:form:summary");
         verifyCodeAndCodeClassCalls(1);
     }
 
