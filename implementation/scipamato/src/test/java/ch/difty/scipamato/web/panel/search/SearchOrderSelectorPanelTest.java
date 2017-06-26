@@ -107,20 +107,6 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     }
 
     @Test
-    public void loadingPage_withSearchOrderWithOverridesAndInvertFlag_showsInvertExclusionStuffWithChangedLabel() {
-        when(searchOrderMock.getExcludedPaperIds()).thenReturn(Arrays.asList(3l));
-        when(searchOrderMock.isInvertExclusions()).thenReturn(true);
-
-        getTester().startComponentInPage(makePanel());
-
-        String b = "panel:form:invertExclusions";
-        getTester().assertComponent(b, AjaxCheckBox.class);
-        getTester().assertLabel(b + "Label", "Show Results");
-
-        verify(searchOrderMock, times(3)).getExcludedPaperIds();
-    }
-
-    @Test
     public void changingSearchOrderSelection_addsTargetsAndSendsEvent() {
         getTester().startComponentInPage(makePanel());
 
