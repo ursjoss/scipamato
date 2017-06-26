@@ -240,24 +240,14 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
         invertExclusions.setOutputMarkupPlaceholderTag(true);
         queue(invertExclusions);
 
-        invertExclusionsLabel = new Label(id + LABEL_TAG) {
+        invertExclusionsLabel = new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onConfigure() {
                 super.onConfigure();
                 setVisible(SearchOrderSelectorPanel.this.hasExclusions());
-                setDefaultModel(toggleExclusionLabelModel());
             }
-
-            private StringResourceModel toggleExclusionLabelModel() {
-                if (getModelObject() != null && getModelObject().isInvertExclusions()) {
-                    return new StringResourceModel(getId() + ".showresults", this, null);
-                } else {
-                    return new StringResourceModel(getId() + ".showexclusions", this, null);
-                }
-            }
-
         };
         invertExclusionsLabel.setOutputMarkupPlaceholderTag(true);
         queue(invertExclusionsLabel);
