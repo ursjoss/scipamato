@@ -1,6 +1,6 @@
-# sipamato
+# scipamato
 
-SiPaMaTo (Scientific Paper Management Tool)
+SciPaMaTo (Scientific Paper Management Tool)
 
 # Elevator Pitch
 
@@ -25,16 +25,16 @@ TODO
   
 # User Documentation
 
-* [Entering Papers](https://github.com/ursjoss/sipamato/wiki/Entering-Papers)
-* [Filtering Papers](https://github.com/ursjoss/sipamato/wiki/Filtering-Papers)
-* [Complex Searches on Papers](https://github.com/ursjoss/sipamato/wiki/Searches)
+* [Entering Papers](https://github.com/ursjoss/scipamato/wiki/Entering-Papers)
+* [Filtering Papers](https://github.com/ursjoss/scipamato/wiki/Filtering-Papers)
+* [Complex Searches on Papers](https://github.com/ursjoss/scipamato/wiki/Searches)
 
 
 # Information for Developers
 
-See [Developer Wiki](https://github.com/ursjoss/sipamato/wiki/Developer-Information)
+See [Developer Wiki](https://github.com/ursjoss/scipamato/wiki/Developer-Information)
 
 # Information for Operations
 
-See [Operations Wiki](https://github.com/ursjoss/sipamato/wiki/Operations)
+See [Operations Wiki](https://github.com/ursjoss/scipamato/wiki/Operations)
 

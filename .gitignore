@@ -4,7 +4,7 @@
 .settings/
 target/
 bin/
-implementation/sipamato/.factorypath
+implementation/scipamato/.factorypath
 rebel.xml
-implementation/sipamato/log/sipamato.log
-implementation/sipamato/sipamato.*.db
+implementation/scipamato/log/scipamato.log
+implementation/scipamato/scipamato.*.db
