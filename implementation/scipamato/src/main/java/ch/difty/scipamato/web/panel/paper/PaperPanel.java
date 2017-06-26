@@ -582,7 +582,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             final BootstrapMultiSelect<Code> codeClass1 = makeCodeClassComplex(CodeClassId.CC1, codeClasses);
             addCodeClass1ChangeBehavior(mainCodeOfCodeClass1, codeClass1);
             addMainCodeOfClass1(mainCodeOfCodeClass1);
-            form.add(new CodeClass1ConsistencyValidator(codeClass1, mainCodeOfCodeClass1));
+            if (isEditMode())
+                form.add(new CodeClass1ConsistencyValidator(codeClass1, mainCodeOfCodeClass1));
         }
 
         private void addMainCodeOfClass1(TextField<String> field) {
