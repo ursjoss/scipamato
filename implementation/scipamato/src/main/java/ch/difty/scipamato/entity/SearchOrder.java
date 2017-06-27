@@ -31,7 +31,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
 
     private final List<Long> excludedPaperIds = new ArrayList<>();
 
-    // this will not get not persisted
+    // this will not get persisted
     private boolean invertExclusions = false;
 
     public SearchOrder() {
