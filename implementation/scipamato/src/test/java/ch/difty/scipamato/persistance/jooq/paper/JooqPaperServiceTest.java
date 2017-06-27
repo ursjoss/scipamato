@@ -356,6 +356,14 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
+    public void reincludingFromSearchOrder_delegatesToRepo() {
+        long searchOrderId = 4l;
+        long paperId = 5l;
+        service.reincludeIntoSearchOrder(searchOrderId, paperId);
+        verify(repoMock).reincludePaperIntoSearchOrderResults(searchOrderId, paperId);
+    }
+
+    @Test
     public void savingAttachment_delegatesToRepo() {
         PaperAttachment paMock = Mockito.mock(PaperAttachment.class);
         service.saveAttachment(paMock);

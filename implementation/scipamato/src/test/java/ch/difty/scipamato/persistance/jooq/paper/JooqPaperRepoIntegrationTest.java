@@ -306,7 +306,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     }
 
     @Test
-    public void exludingPaperFromSearch_addsOneRecord() {
+    public void exludingPaperFromSearch_addsOneRecord_reincluding_removesItAgain() {
         final long searchOrderId = 1;
         final long paperId = 1;
         ensureRecordNotPresent(searchOrderId, paperId);
@@ -314,7 +314,8 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         repo.excludePaperFromSearchOrderResults(searchOrderId, paperId);
         assertExclusionCount(searchOrderId, paperId, 1);
 
-        deleteRecord(searchOrderId, paperId);
+        repo.reincludePaperIntoSearchOrderResults(searchOrderId, paperId);
+        ensureRecordNotPresent(searchOrderId, paperId);
     }
 
     private void ensureRecordNotPresent(final long searchOrderId, final long paperId) {

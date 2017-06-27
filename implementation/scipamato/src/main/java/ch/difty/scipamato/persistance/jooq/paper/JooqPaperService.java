@@ -126,6 +126,12 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     @Transactional(readOnly = false)
     @Override
+    public void reincludeIntoSearchOrder(long searchOrderId, long paperId) {
+        getRepository().reincludePaperIntoSearchOrderResults(searchOrderId, paperId);
+    }
+
+    @Transactional(readOnly = false)
+    @Override
     public Paper saveAttachment(PaperAttachment paperAttachment) {
         return getRepository().saveAttachment(paperAttachment);
     }

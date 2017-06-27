@@ -279,6 +279,11 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     }
 
     @Override
+    public void reincludePaperIntoSearchOrderResults(long searchOrderId, long paperId) {
+        getDsl().deleteFrom(SEARCH_EXCLUSION).where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId).and(SEARCH_EXCLUSION.PAPER_ID.eq(paperId))).execute();
+    }
+
+    @Override
     public Paper saveAttachment(ch.difty.scipamato.entity.PaperAttachment pa) {
         getDsl().insertInto(PAPER_ATTACHMENT)
                 .columns(PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT, PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE, PAPER_ATTACHMENT.CREATED,
