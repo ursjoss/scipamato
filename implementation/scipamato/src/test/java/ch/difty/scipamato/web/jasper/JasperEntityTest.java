@@ -53,6 +53,7 @@ public abstract class JasperEntityTest {
     protected static final String RESULT_EFFECT_ESTIMATE_LABEL = "resultEffectEstimateLabel";
     protected static final String NUMBER_LABEL = "numberLabel";
     protected static final String CAPTION = "caption";
+    protected static final String AUTHOR_YEAR_LABEL = "authorYearLabel";
 
     protected static final int PM_ID = 1234;
 

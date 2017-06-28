@@ -3,9 +3,10 @@ package ch.difty.scipamato.web.jasper.review;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.web.jasper.JasperEntity;
+import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 
 /**
- * DTO to feed the PaperSummaryDataSource
+ * DTO to feed the PaperReviewDataSource
  *
  * @author u.joss
  */
@@ -42,29 +43,20 @@ public class PaperReview extends JasperEntity {
     private final String createdBy;
 
     /**
-     * Instantiation with a {@link Paper} and additional fields
-     * @param p paper
-     * @param numberLabel
-     * @param authorYearLabel
-     * @param populationPlaceLabel
-     * @param methodOutcomeLabel
-     * @param exposurePollutantLabel
-     * @param methodStudyDesignLabel
-     * @param populationDurationLabel
-     * @param populationParticipantsLabel
-     * @param exposureAssessmentLabel
-     * @param resultExposureRangeLabel
-     * @param methodConfoundersLabel
-     * @param resultEffectEstimateLabel
-     * @param brand
-     * @param createdBy
+     * Instantiation with a {@link Paper} and the {@link ReportHeaderFields}
+     *
+     * @param p
+     *      the paper with the relevant fields
+     * @param rhf
+     *      the reportHeaderFields with the localized field headers
      */
-    public PaperReview(final Paper p, final String numberLabel, final String authorYearLabel, final String populationPlaceLabel, final String methodOutcomeLabel, final String exposurePollutantLabel,
-            final String methodStudyDesignLabel, final String populationDurationLabel, final String populationParticipantsLabel, final String exposureAssessmentLabel,
-            final String resultExposureRangeLabel, final String methodConfoundersLabel, final String resultEffectEstimateLabel, final String brand, final String createdBy) {
-        super();
+    public PaperReview(final Paper p, final ReportHeaderFields rhf) {
+        AssertAs.notNull(p, "p");
+        AssertAs.notNull(rhf, "rhf");
+
+        final Long no = p.getNumber();
+        this.number = no != null ? String.valueOf(no) : "";
         AssertAs.notNull(p, "paper");
-        this.number = p.getNumber() != null ? String.valueOf(p.getNumber()) : "";
         this.authorYear = makeAuthorYearFrom(p);
         this.populationPlace = na(p.getPopulationPlace());
         this.methodOutcome = na(p.getMethodOutcome());
@@ -76,21 +68,21 @@ public class PaperReview extends JasperEntity {
         this.resultExposureRange = na(p.getResultExposureRange());
         this.methodConfounders = na(p.getMethodConfounders());
         this.resultEffectEstimate = na(p.getResultEffectEstimate());
-        this.numberLabel = na(numberLabel, number);
-        this.authorYearLabel = na(authorYearLabel);
-        this.populationPlaceLabel = na(populationPlaceLabel);
-        this.methodOutcomeLabel = na(methodOutcomeLabel);
-        this.exposurePollutantLabel = na(exposurePollutantLabel);
-        this.methodStudyDesignLabel = na(methodStudyDesignLabel);
-        this.populationDurationLabel = na(populationDurationLabel);
-        this.populationParticipantsLabel = na(populationParticipantsLabel);
-        this.exposureAssessmentLabel = na(exposureAssessmentLabel);
-        this.resultExposureRangeLabel = na(resultExposureRangeLabel);
-        this.methodConfoundersLabel = na(methodConfoundersLabel);
-        this.resultEffectEstimateLabel = na(resultEffectEstimateLabel);
+        this.numberLabel = na2(rhf.getNumberLabel(), String.valueOf(p.getNumber()));
+        this.authorYearLabel = na(rhf.getAuthorYearLabel());
+        this.populationPlaceLabel = na(rhf.getPopulationPlaceLabel());
+        this.methodOutcomeLabel = na(rhf.getMethodOutcomeLabel());
+        this.exposurePollutantLabel = na(rhf.getExposurePollutantLabel());
+        this.methodStudyDesignLabel = na(rhf.getMethodStudyDesignLabel());
+        this.populationDurationLabel = na(rhf.getPopulationDurationLabel());
+        this.populationParticipantsLabel = na(rhf.getPopulationParticipantsLabel());
+        this.exposureAssessmentLabel = na(rhf.getExposureAssessmentLabel());
+        this.resultExposureRangeLabel = na(rhf.getResultExposureRangeLabel());
+        this.methodConfoundersLabel = na(rhf.getMethodConfoundersLabel());
+        this.resultEffectEstimateLabel = na(rhf.getResultEffectEstimateLabel());
 
-        this.brand = na(brand);
-        this.createdBy = na(createdBy);
+        this.brand = na(rhf.getBrand());
+        this.createdBy = na(p.getCreatedByName());
     }
 
     private String makeAuthorYearFrom(Paper p) {

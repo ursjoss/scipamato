@@ -168,14 +168,25 @@ public class ResultPanel extends AbstractPanel<Void> {
         final String methodConfoundersLabel = new StringResourceModel("methodConfounders" + LABEL_RECOURCE_TAG, this, null).getString();
         final String resultEffectEstimateLabel = new StringResourceModel("resultEffectEstimate" + SHORT_LABEL_RECOURCE_TAG, this, null).getString();
         final String brand = getProperties().getBrand();
-        final String createdBy = getActiveUser().getFullName();
 
         final String pdfTitle = brand + "- " + new StringResourceModel("paper_review.titlePart", this, null).getString();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfTitle).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
 
-        ResourceLink<Void> reviewLink = new ResourceLink<>(id,
-                new PaperReviewDataSource(dataProvider, numberLabel, authorYearLabel, populationPlaceLabel, methodOutcomeLabel, exposurePollutantLabel, methodStudyDesignLabel, populationDurationLabel,
-                        populationParticipantsLabel, exposureAssessmentLabel, resultExposureRangeLabel, methodConfoundersLabel, resultEffectEstimateLabel, brand, createdBy, config));
+        ReportHeaderFields rhf = new ReportHeaderFields.Builder("", brand).withNumber(numberLabel)
+                .withAuthorYear(authorYearLabel)
+                .withPopulationPlace(populationPlaceLabel)
+                .withMethodOutcome(methodOutcomeLabel)
+                .withExposurePollutant(exposurePollutantLabel)
+                .withMethodStudyDesign(methodStudyDesignLabel)
+                .withPopulationDuration(populationDurationLabel)
+                .withPopulationPariticpants(populationParticipantsLabel)
+                .withExposureAssessment(exposureAssessmentLabel)
+                .withResultExposureRange(resultExposureRangeLabel)
+                .withMethodConfounders(methodConfoundersLabel)
+                .withResultEffectEstimate(resultEffectEstimateLabel)
+                .build();
+
+        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperReviewDataSource(dataProvider, rhf, config));
         reviewLink.setOutputMarkupId(true);
         reviewLink.setBody(new StringResourceModel("link.review.label"));
         reviewLink.add(new AttributeModifier(TITLE, new StringResourceModel("link.review.title", this, null).getString()));
