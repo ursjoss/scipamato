@@ -25,7 +25,6 @@ import ch.difty.scipamato.service.CodeClassService;
 import ch.difty.scipamato.service.CodeService;
 import ch.difty.scipamato.service.DefaultServiceResult;
 import ch.difty.scipamato.service.Localization;
-import ch.difty.scipamato.service.PaperService;
 import ch.difty.scipamato.service.PubmedImporter;
 import ch.difty.scipamato.service.ServiceResult;
 import ch.difty.scipamato.web.pages.BasePageTest;
@@ -38,8 +37,6 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 
 public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
-    @MockBean
-    private PaperService paperServiceMock;
     @MockBean
     private PubmedImporter pubmedImportService;
 
@@ -54,7 +51,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(paperSlimRepoMock, codeServiceMock, codeClassServiceMock, paperServiceMock, pubmedImportService);
+        verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeServiceMock, codeClassServiceMock, paperServiceMock, pubmedImportService);
     }
 
     @Override
@@ -73,7 +70,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         assertPateModal("xmlPasteModal");
         assertResultPanel("resultPanel");
 
-        verify(paperSlimRepoMock, times(2)).countByFilter(isA(PaperFilter.class));
+        verify(paperSlimServiceMock, times(2)).countByFilter(isA(PaperFilter.class));
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(Mockito.isA(PaperFilter.class), Mockito.isA(PaginationRequest.class));
     }
 
@@ -117,7 +114,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
         getTester().assertRenderedPage(PaperEntryPage.class);
 
-        verify(paperSlimRepoMock, times(2)).countByFilter(isA(PaperFilter.class));
+        verify(paperSlimServiceMock, times(2)).countByFilter(isA(PaperFilter.class));
         verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
         verify(paperServiceMock).findLowestFreeNumberStartingFrom(minimumNumber);
         // from PaperEntryPage
@@ -145,7 +142,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         getTester().assertComponent(b + ":content", TextArea.class);
         getTester().assertComponent(b + ":submit", BootstrapAjaxButton.class);
 
-        verify(paperSlimRepoMock, times(2)).countByFilter(isA(PaperFilter.class));
+        verify(paperSlimServiceMock, times(2)).countByFilter(isA(PaperFilter.class));
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(Mockito.isA(PaperFilter.class), Mockito.isA(PaginationRequest.class));
     }
 
@@ -161,7 +158,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         makePage().onXmlPasteModalPanelClose("content", targetMock);
 
         verify(pubmedImportService).persistPubmedArticlesFromXml("content");
-        verify(paperSlimRepoMock).countByFilter(isA(PaperFilter.class));
+        verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(Mockito.isA(PaperFilter.class), Mockito.isA(PaginationRequest.class));
     }
 }

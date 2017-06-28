@@ -62,4 +62,13 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
         return getFilterState().getId();
     }
 
+    @Override
+    public boolean isShowExcluded() {
+        return getFilterState().isShowExcluded();
+    }
+
+    @Override
+    public void setShowExcluded(boolean showExcluded) {
+        getFilterState().setShowExcluded(showExcluded);
+    }
 }

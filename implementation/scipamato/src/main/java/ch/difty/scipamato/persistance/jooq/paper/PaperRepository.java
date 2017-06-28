@@ -91,6 +91,13 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     void excludePaperFromSearchOrderResults(long searchOrderId, long paperId);
 
     /**
+     * Re-includes the previously excluded  paperId into the results of the searchOrder with given searchOrderid.
+     * @param searchOrderId the id of the search order
+     * @param paperId the id of the paper
+     */
+    void reincludePaperIntoSearchOrderResults(long searchOrderId, long paperId);
+
+    /**
      * Saves the provided {@link PaperAttachment} including it's content.
      * @param paperAttachment
      * @return the paper for which the attachment has been added

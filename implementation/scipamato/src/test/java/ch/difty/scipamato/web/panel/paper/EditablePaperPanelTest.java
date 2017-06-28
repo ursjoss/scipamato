@@ -17,6 +17,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
+import org.apache.wicket.util.tester.TagTester;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,8 +26,6 @@ import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.scipamato.pubmed.entity.PubmedArticleFacade;
-import ch.difty.scipamato.service.PaperService;
-import ch.difty.scipamato.service.PaperSlimService;
 import ch.difty.scipamato.service.PubmedArticleService;
 import ch.difty.scipamato.service.SearchOrderService;
 import ch.difty.scipamato.web.pages.paper.search.PaperSearchPage;
@@ -39,22 +38,19 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
     private static final int PMID = 1234;
     private static final long SEARCH_ORDER_ID = 5678l;
+    private static final boolean SHOW_EXCLUDED = false;
 
     @MockBean
     private PubmedArticleService pubmedArticleServiceMock;
-    @MockBean
-    private PaperService paperServiceMock;
 
     @Mock
     private PubmedArticleFacade pubmedArticleMock;
     @Mock
     private PageReference callingPageMock;
 
-    // used for referring to PaperSearchPage - not verifying, neither verifying paperServiceMock completely due to same reason
+    // used for referring to PaperSearchPage - not verifying
     @MockBean
     private SearchOrderService searchOrderServiceMock;
-    @MockBean
-    private PaperSlimService paperSlimServiceMock;
 
     @Override
     protected void setUpLocalHook() {
@@ -120,7 +116,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
         p.setOriginalAbstract("oa");
 
-        return new EditablePaperPanel(PANEL_ID, Model.of(p), callingPageMock, SEARCH_ORDER_ID) {
+        return new EditablePaperPanel(PANEL_ID, Model.of(p), callingPageMock, SEARCH_ORDER_ID, SHOW_EXCLUDED) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -624,7 +620,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     protected EditablePaperPanel makePanelWithEmptyPaper(Integer pmId) {
         Paper p = new Paper();
         p.setPmId(pmId);
-        return new EditablePaperPanel(PANEL_ID, Model.of(p), null, null) {
+        return new EditablePaperPanel(PANEL_ID, Model.of(p), null, null, SHOW_EXCLUDED) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -634,10 +630,11 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         };
     }
 
-    protected EditablePaperPanel makePanelWith(Integer pmId, PageReference callingPage, Long searchOrderId) {
+    protected EditablePaperPanel makePanelWith(Integer pmId, PageReference callingPage, Long searchOrderId, boolean showExcluded) {
         Paper p = new Paper();
+        p.setId(1l);
         p.setPmId(pmId);
-        return new EditablePaperPanel(PANEL_ID, Model.of(p), callingPage, searchOrderId) {
+        return new EditablePaperPanel(PANEL_ID, Model.of(p), callingPage, searchOrderId, showExcluded) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -649,7 +646,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
     @Test
     public void withNoCallingPage_hasInvisibleBackButton() {
-        getTester().startComponentInPage(makePanelWith(PMID, null, SEARCH_ORDER_ID));
+        getTester().startComponentInPage(makePanelWith(PMID, null, SEARCH_ORDER_ID, SHOW_EXCLUDED));
 
         getTester().assertInvisible(PANEL_ID + ":form:back");
 
@@ -659,7 +656,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
     @Test
     public void withNoSearchOrderId_hasInvisibleExcludeButton() {
-        getTester().startComponentInPage(makePanelWith(PMID, callingPageMock, null));
+        getTester().startComponentInPage(makePanelWith(PMID, callingPageMock, null, SHOW_EXCLUDED));
 
         getTester().assertInvisible(PANEL_ID + ":form:exclude");
 
@@ -669,7 +666,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
     @Test
     public void clickingExclude_withBothSearchOrderIdAndPaperId_excludesPaperFromSearchOrder_andForwardsToPaperSearchPage() {
-        getTester().startComponentInPage(makePanel());
+        getTester().startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, false));
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
 
         formTester.submit("exclude");
@@ -678,4 +675,38 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         verify(paperServiceMock).excludeFromSearchOrder(SEARCH_ORDER_ID, 1l);
         verifyCodeAndCodeClassCalls(2);
     }
+
+    @Test
+    public void clickingExclude_showingExcluded_reincludesPaperIntoSearchOrder_andForwardsToPaperSearchPage() {
+        getTester().startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, true));
+        FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
+
+        formTester.submit("exclude");
+        getTester().assertRenderedPage(PaperSearchPage.class); // TODO consider not forwarding
+
+        verify(paperServiceMock).reincludeIntoSearchOrder(SEARCH_ORDER_ID, 1l);
+        verifyCodeAndCodeClassCalls(2);
+    }
+
+    @Test
+    public void startingPage_notShowingExclusions_adjustsIconAndTitleOfToggleInclusionsButton() {
+        assertExcluded(false, "Exclude paper from current search", "glyphicon-ban-circle");
+    }
+
+    private void assertExcluded(boolean showingExclusion, String titleValue, String iconValue) {
+        getTester().startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, showingExclusion));
+
+        String responseTxt = getTester().getLastResponse().getDocument();
+        TagTester tagTester = TagTester.createTagByAttribute(responseTxt, "title", titleValue);
+        assertThat(tagTester).isNotNull();
+        assertThat(tagTester.getName()).isEqualTo("button");
+        assertThat(tagTester.getValue()).contains("<i class=\"glyphicon " + iconValue + "\"></i>");
+        verifyCodeAndCodeClassCalls(1);
+    }
+
+    @Test
+    public void startingPageShowingExclusions_adjustsIconAndTitleOfToggleInclusionsButton() {
+        assertExcluded(true, "Re-include paper into current search", "glyphicon-ok-circle");
+    }
+
 }

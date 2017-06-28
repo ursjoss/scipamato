@@ -34,7 +34,7 @@ public class SearchOrderTest {
         assertThat(so.getId()).isEqualTo(10);
         assertThat(so.getOwner()).isEqualTo(1);
         assertThat(so.isGlobal()).isEqualTo(false);
-        assertThat(so.isInvertExclusions()).isEqualTo(false);
+        assertThat(so.isShowExcluded()).isEqualTo(false);
     }
 
     @Test
@@ -43,13 +43,13 @@ public class SearchOrderTest {
         so.setOwner(2);
         so.setName(SO_NAME);
         so.setGlobal(true);
-        so.setInvertExclusions(true);
+        so.setShowExcluded(true);
 
         assertThat(so.getId()).isEqualTo(11);
         assertThat(so.getName()).isEqualTo(SO_NAME);
         assertThat(so.getOwner()).isEqualTo(2);
         assertThat(so.isGlobal()).isEqualTo(true);
-        assertThat(so.isInvertExclusions()).isEqualTo(true);
+        assertThat(so.isShowExcluded()).isEqualTo(true);
     }
 
     @Test
@@ -166,7 +166,7 @@ public class SearchOrderTest {
         assertThat(so.getSearchConditions()).hasSize(0);
         assertThat(so.getExcludedPaperIds()).hasSize(0);
         assertThat(so.toString()).isEqualTo(
-                "SearchOrder[name=soName,owner=1,global=false,searchConditions=[],excludedPaperIds=[],invertExclusions=false,id=10,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]");
+                "SearchOrder[name=soName,owner=1,global=false,searchConditions=[],excludedPaperIds=[],showExcluded=false,id=10,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]");
     }
 
     @Test
@@ -176,7 +176,7 @@ public class SearchOrderTest {
         so.addExclusionOfPaperWithId(3l);
         so.addExclusionOfPaperWithId(5l);
         assertThat(so.toString()).isEqualTo(
-                "SearchOrder[name=soName,owner=1,global=false,searchConditions=[mockCondition1, mockCondition2],excludedPaperIds=[3, 5],invertExclusions=false,id=10,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]");
+                "SearchOrder[name=soName,owner=1,global=false,searchConditions=[mockCondition1, mockCondition2],excludedPaperIds=[3, 5],showExcluded=false,id=10,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]");
     }
 
     @Test

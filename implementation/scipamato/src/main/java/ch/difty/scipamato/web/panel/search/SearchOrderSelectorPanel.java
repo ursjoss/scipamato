@@ -57,8 +57,8 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
     private BootstrapSelect<SearchOrder> searchOrder;
     private TextField<String> name;
     private CheckBoxX global;
-    private AjaxCheckBox invertExclusions;
-    private Label invertExclusionsLabel;
+    private AjaxCheckBox showExcluded;
+    private Label showExcludedLabel;
 
     public SearchOrderSelectorPanel(String id, IModel<SearchOrder> model) {
         super(id, model, Mode.EDIT);
@@ -78,7 +78,7 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
         makeAndQueueGlobalCheckBox(SearchOrder.GLOBAL);
         makeAndQueueNewButton("new");
         makeAndQueueDeleteButton("delete");
-        makeAndQueueInvertExclusionsCheckBox(SearchOrder.INVERT_EXCLUSIONS);
+        makeAndQueueShowExcludedCheckBox(SearchOrder.SHOW_EXCLUDED);
     }
 
     private void makeAndQueueSearchOrderSelectBox(final String id) {
@@ -95,8 +95,8 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
                 modelChanged();
                 target.add(global);
                 target.add(name);
-                target.add(invertExclusions);
-                target.add(invertExclusionsLabel);
+                target.add(showExcluded);
+                target.add(showExcludedLabel);
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
                 info("Sent SearchOrderChangeEvent");
             }
@@ -120,8 +120,8 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
                 saveOrUpdate();
                 target.add(name);
                 target.add(global);
-                target.add(invertExclusions);
-                target.add(invertExclusionsLabel);
+                target.add(showExcluded);
+                target.add(showExcludedLabel);
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
             }
         });
@@ -159,8 +159,8 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
                 super.onSubmit(target, form);
                 target.add(name);
                 target.add(global);
-                target.add(invertExclusions);
-                target.add(invertExclusionsLabel);
+                target.add(showExcluded);
+                target.add(showExcludedLabel);
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).requestingNewSearchOrder());
             }
         };
@@ -217,30 +217,29 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
         queue(deleteLink);
     }
 
-    private void makeAndQueueInvertExclusionsCheckBox(String id) {
-        invertExclusions = new AjaxCheckBox(id) {
+    private void makeAndQueueShowExcludedCheckBox(String id) {
+        showExcluded = new AjaxCheckBox(id) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                if (isVisible() && !SearchOrderSelectorPanel.this.hasExclusions()) {
+                if (isVisible() && !SearchOrderSelectorPanel.this.hasExclusions())
                     setModelObject(false);
-                }
                 setVisible(SearchOrderSelectorPanel.this.hasExclusions());
             }
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                target.add(invertExclusions);
-                target.add(invertExclusionsLabel);
-                send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
+                target.add(showExcluded);
+                target.add(showExcludedLabel);
+                send(getPage(), Broadcast.BREADTH, new ToggleExclusionsEvent(target));
             }
         };
-        invertExclusions.setOutputMarkupPlaceholderTag(true);
-        queue(invertExclusions);
+        showExcluded.setOutputMarkupPlaceholderTag(true);
+        queue(showExcluded);
 
-        invertExclusionsLabel = new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null)) {
+        showExcludedLabel = new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -249,8 +248,8 @@ public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
                 setVisible(SearchOrderSelectorPanel.this.hasExclusions());
             }
         };
-        invertExclusionsLabel.setOutputMarkupPlaceholderTag(true);
-        queue(invertExclusionsLabel);
+        showExcludedLabel.setOutputMarkupPlaceholderTag(true);
+        queue(showExcludedLabel);
     }
 
 }

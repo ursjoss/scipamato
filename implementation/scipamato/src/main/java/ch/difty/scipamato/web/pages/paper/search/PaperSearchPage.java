@@ -28,6 +28,7 @@ import ch.difty.scipamato.web.panel.result.ResultPanel;
 import ch.difty.scipamato.web.panel.search.SearchOrderChangeEvent;
 import ch.difty.scipamato.web.panel.search.SearchOrderPanel;
 import ch.difty.scipamato.web.panel.search.SearchOrderSelectorPanel;
+import ch.difty.scipamato.web.panel.search.ToggleExclusionsEvent;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
 
 /**
@@ -67,6 +68,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
      * <li>loading the {@link SearchOrder} from DB if the {@code searchOrderId} is provided in the {@link PageParameters}</li>
      * <li>applying a new empty {@link SearchOrder} to the page otherwise</li>
      * </ol>
+     * Applies the showExcluded flag from the page parameters if present
      *
      * @param parameters
      */
@@ -77,6 +79,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     /**
      * Instantiate the page with the provided model of the {@link SearchOrder}. It must have a valid id.
+     * Supplements the page parameters from the model
      *
      * @param searchOrderModel
      */
@@ -85,23 +88,37 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         AssertAs.notNull(searchOrderModel, "searchOrderModel");
         AssertAs.notNull(searchOrderModel.getObject(), "searchOrderModel.object");
         AssertAs.notNull(searchOrderModel.getObject().getId(), "searchOrderModel.object.id");
+        getPageParameters().clearNamed();
         getPageParameters().add(PageParameterNames.SEARCH_ORDER_ID, searchOrderModel.getObject().getId());
+        getPageParameters().add(PageParameterNames.SHOW_EXCLUDED, searchOrderModel.getObject().isShowExcluded());
     }
 
     private void trySettingSearchOrderModelFromDb() {
-        final Long searchOrderId = getSearchOrderId();
+        final Long searchOrderId = searchOrderIdFromPageParameters();
         final Optional<SearchOrder> so = searchOrderId != null ? searchOrderService.findById(searchOrderId) : Optional.empty();
+        so.ifPresent(this::setShowExcluded);
         setDefaultModel(Model.of(so.orElse(makeEmptyModelObject())));
     }
 
-    private Long getSearchOrderId() {
+    private Long searchOrderIdFromPageParameters() {
         final StringValue sv = getPageParameters().get(PageParameterNames.SEARCH_ORDER_ID);
         return sv.isNull() ? null : sv.toLong();
     }
 
+    private void setShowExcluded(SearchOrder so) {
+        so.setShowExcluded(showExcludedFromPageParameters());
+    }
+
+    private boolean showExcludedFromPageParameters() {
+        final StringValue ieString = getPageParameters().get(PageParameterNames.SHOW_EXCLUDED);
+        final Boolean ie = ieString.isNull() ? null : ieString.toBoolean();
+        return ie != null ? ie.booleanValue() : false;
+    }
+
     private SearchOrder makeEmptyModelObject() {
         final SearchOrder so = new SearchOrder(null);
-        so.setId(getSearchOrderId());
+        so.setId(searchOrderIdFromPageParameters());
+        so.setShowExcluded(showExcludedFromPageParameters());
         so.setName(null);
         so.setOwner(getActiveUser().getId());
         return so;
@@ -126,10 +143,18 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
         dataProvider = new PaperSlimBySearchOrderProvider(getModelObject(), RESULT_PAGE_SIZE);
 
+        fixShowExcluded_ifNoExclusionsPresent();
+
         makeSearchOrderSelectorPanel("searchOrderSelectorPanel");
         makeSearchOrderPanel("searchOrderPanel");
         makeResultPanel("resultPanel");
         updateNavigateable();
+    }
+
+    private void fixShowExcluded_ifNoExclusionsPresent() {
+        if (getModelObject().isShowExcluded() && getModelObject().getExcludedPaperIds().isEmpty()) {
+            getModelObject().setShowExcluded(false);
+        }
     }
 
     private void makeSearchOrderSelectorPanel(String id) {
@@ -155,7 +180,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                if (PaperSearchPage.this.getModelObject() != null && PaperSearchPage.this.getModelObject().isInvertExclusions()) {
+                if (PaperSearchPage.this.getModelObject() != null && PaperSearchPage.this.getModelObject().isShowExcluded()) {
                     setDefaultModel(new StringResourceModel(id + "-excluded" + PANEL_HEADER_RESOURCE_TAG, this, null));
                 } else {
                     setDefaultModel(new StringResourceModel(id + PANEL_HEADER_RESOURCE_TAG, this, null));
@@ -174,10 +199,31 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     @Override
     public void onEvent(final IEvent<?> event) {
         if (event.getPayload().getClass() == SearchOrderChangeEvent.class) {
-            handleSearchOrderEvent((SearchOrderChangeEvent) event.getPayload());
+            final SearchOrderChangeEvent soce = (SearchOrderChangeEvent) event.getPayload();
+            handleSearchOrderEvent(soce);
             updateNavigateable();
             event.dontBroadcastDeeper();
+        } else if (event.getPayload().getClass() == ToggleExclusionsEvent.class) {
+            ToggleExclusionsEvent tee = (ToggleExclusionsEvent) event.getPayload();
+            setShowExcludedWhereRelevant();
+            updateNavigateable();
+            addingToTarget(tee.getTarget());
+            event.dontBroadcastDeeper();
         }
+    }
+
+    private void addingToTarget(final AjaxRequestTarget target) {
+        if (target != null) {
+            target.add(resultPanelLabel);
+            target.add(resultPanel);
+        }
+    }
+
+    private void setShowExcludedWhereRelevant() {
+        final boolean oldValue = showExcludedFromPageParameters();
+        getPageParameters().set(PageParameterNames.SHOW_EXCLUDED, !oldValue);
+        dataProvider.setShowExcluded(!oldValue);
+        getModelObject().setShowExcluded(!oldValue);
     }
 
     private void handleSearchOrderEvent(final SearchOrderChangeEvent soce) {
@@ -189,10 +235,10 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         addSubPanelsAsTarget(soce);
     }
 
-    /* Adds or removes an excluded id - depending on whether the invertExclusion flag is set in the model */
+    /* Adds or removes an excluded id - depending on whether the showEcluded flag is set in the model */
     private void setExclusionIntoModel(final SearchOrderChangeEvent soce) {
         if (soce.getExcludedId() != null) {
-            if (!getModelObject().isInvertExclusions()) {
+            if (!getModelObject().isShowExcluded()) {
                 getModelObject().addExclusionOfPaperWithId(soce.getExcludedId());
             } else {
                 getModelObject().removeExlusionOfPaperWithId(soce.getExcludedId());
@@ -205,11 +251,15 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             dataProvider.setFilterState(getModelObject());
             if (soce.getExcludedId() != null)
                 searchOrderService.saveOrUpdate(getModelObject());
+            if (getModelObject().getExcludedPaperIds().isEmpty())
+                updateNavigateable();
+
         } else {
             final SearchOrder newSearchOrder = makeNewModelObject();
             final SearchOrder persistedNewSearchOrder = searchOrderService.saveOrUpdate(newSearchOrder);
             final PageParameters pp = new PageParameters();
             pp.add(PageParameterNames.SEARCH_ORDER_ID, persistedNewSearchOrder.getId());
+            pp.add(PageParameterNames.SHOW_EXCLUDED, false);
             setResponsePage(new PaperSearchPage(pp));
         }
     }
@@ -226,9 +276,10 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     /**
      * Have the provider provide a list of all paper ids matching the current filter.
-     * Construct a navigateable with this list and set it into the 
+     * Construct a navigateable with this list and set it. set focus to null.
      */
     private void updateNavigateable() {
+        ScipamatoSession.get().getPaperIdManager().setFocusToItem(null);
         ScipamatoSession.get().getPaperIdManager().initialize(dataProvider.findAllPaperIdsByFilter());
     }
 

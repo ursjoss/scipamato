@@ -82,24 +82,24 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     }
 
     @Test
-    public void loadingPage_withSearchOrderWithoutOverrides_hidesInvertExclusionStuff() {
+    public void loadingPage_withSearchOrderWithoutOverrides_hidesShowExclusionStuff() {
         assertThat(searchOrderMock.getExcludedPaperIds()).isEmpty();
 
         getTester().startComponentInPage(makePanel());
 
-        String b = "panel:form:invertExclusions";
+        String b = "panel:form:showExcluded";
         getTester().assertInvisible(b);
         getTester().assertInvisible(b + "Label");
     }
 
     @Test
-    public void loadingPage_withSearchOrderWithOverrides_showsInvertExclusionStuff() {
+    public void loadingPage_withSearchOrderWithOverrides_showsShowExcludedStuff() {
         when(searchOrderMock.getExcludedPaperIds()).thenReturn(Arrays.asList(3l));
-        when(searchOrderMock.isInvertExclusions()).thenReturn(false);
+        when(searchOrderMock.isShowExcluded()).thenReturn(false);
 
         getTester().startComponentInPage(makePanel());
 
-        String b = "panel:form:invertExclusions";
+        String b = "panel:form:showExcluded";
         getTester().assertComponent(b, AjaxCheckBox.class);
         getTester().assertLabel(b + "Label", "Show Exclusions");
 
@@ -115,8 +115,8 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         String b = PANEL_ID + ":form:";
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.GLOBAL);
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.NAME);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS + "Label");
+        getTester().assertComponentOnAjaxResponse(b + SearchOrder.SHOW_EXCLUDED);
+        getTester().assertComponentOnAjaxResponse(b + SearchOrder.SHOW_EXCLUDED + "Label");
 
         // TODO how to assert the event was actually broadcast without issuing the test info message
         getTester().assertInfoMessages("Sent SearchOrderChangeEvent");
@@ -131,8 +131,8 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         String b = PANEL_ID + ":form:";
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.GLOBAL);
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.NAME);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS + "Label");
+        getTester().assertComponentOnAjaxResponse(b + SearchOrder.SHOW_EXCLUDED);
+        getTester().assertComponentOnAjaxResponse(b + SearchOrder.SHOW_EXCLUDED + "Label");
     }
 
     @Test
@@ -161,8 +161,8 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         String b = PANEL_ID + ":form:";
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.GLOBAL);
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.NAME);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.INVERT_EXCLUSIONS + "Label");
+        getTester().assertComponentOnAjaxResponse(b + SearchOrder.SHOW_EXCLUDED);
+        getTester().assertComponentOnAjaxResponse(b + SearchOrder.SHOW_EXCLUDED + "Label");
 
         verify(searchOrderMock, times(10)).getId();
         verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));

@@ -101,7 +101,7 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
      */
     protected Condition getConditionsFrom(final SearchOrder searchOrder) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
-        if (searchOrder.isInvertExclusions()) {
+        if (searchOrder.isShowExcluded()) {
             return PAPER.ID.in(searchOrder.getExcludedPaperIds());
         } else {
             for (final SearchCondition sc : searchOrder.getSearchConditions())

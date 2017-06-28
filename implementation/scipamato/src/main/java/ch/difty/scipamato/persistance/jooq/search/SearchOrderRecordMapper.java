@@ -34,7 +34,7 @@ public class SearchOrderRecordMapper extends EntityRecordMapper<SearchOrderRecor
         to.setName(from.getName());
         to.setOwner(from.getOwner());
         to.setGlobal(from.getGlobal());
-        // invertExclusions is not persisted and therefore always false after mapping
+        // showExcluded is not persisted and therefore always false after mapping
     }
 
 }

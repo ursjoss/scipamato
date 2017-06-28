@@ -234,7 +234,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     @Test
     public void getConditions_withSearchOrderWithConditionsAndInvertedExclusions_onlySelectsTheExclusions() {
         SearchOrder searchOrder = makeSearchOrderWithConditions();
-        searchOrder.setInvertExclusions(true);
+        searchOrder.setShowExcluded(true);
         searchOrder.addExclusionOfPaperWithId(3);
 
         Condition cond = finder.getConditionsFrom(searchOrder);

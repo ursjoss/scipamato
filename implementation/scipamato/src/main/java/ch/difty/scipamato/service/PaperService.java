@@ -91,6 +91,13 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
     void excludeFromSearchOrder(long searchOrderId, long paperId);
 
     /**
+     * Re-include the paper into the result list of the specified search order id.
+     * @param searchOrderId the id of the search order from which the paper is to be re-included
+     * @param paperId the id of the paper that shall be re-included
+     */
+    void reincludeIntoSearchOrder(long searchOrderId, long paperId);
+
+    /**
      * Saves the attachment including its content.
      * @param paperAttachment
      * @return the paper for which the attachment was added
