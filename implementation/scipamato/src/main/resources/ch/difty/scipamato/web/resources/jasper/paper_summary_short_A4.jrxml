@@ -11,8 +11,8 @@
 	<field name="title" class="java.lang.String"/>
 	<field name="location" class="java.lang.String"/>
 	<field name="goals" class="java.lang.String"/>
-	<field name="populationLabel" class="java.lang.String"/>
-	<field name="population" class="java.lang.String"/>
+	<field name="populationPlaceLabel" class="java.lang.String"/>
+	<field name="populationPlace" class="java.lang.String"/>
 	<field name="methodsLabel" class="java.lang.String"/>
 	<field name="methods" class="java.lang.String"/>
 	<field name="resultLabel" class="java.lang.String"/>
@@ -114,8 +114,8 @@
 			</band>
 		</groupHeader>
 	</group>
-	<group name="population">
-		<groupExpression><![CDATA[$F{population}]]></groupExpression>
+	<group name="populationPlace">
+		<groupExpression><![CDATA[$F{populationPlace}]]></groupExpression>
 		<groupHeader>
 			<band height="45" splitType="Stretch">
 				<property name="local_mesure_unitheight" value="pixel"/>
@@ -132,7 +132,7 @@
 						<font size="10" isBold="true" isItalic="true" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{populationLabel}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{populationPlaceLabel}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement positionType="Float" x="0" y="20" width="555" height="15" isPrintWhenDetailOverflows="true" uuid="2aeff11b-8316-4b04-8858-0647a3661881">
@@ -145,7 +145,7 @@
 						<font size="10" isBold="false" isItalic="false" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{population}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{populationPlace}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>

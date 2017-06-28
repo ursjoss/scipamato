@@ -12,7 +12,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
 
     @Test
     public void instantiatingUsingIndividualFields() {
-        ps = new PaperSummaryShort(NUMBER, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, COMMENT, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND,
+        ps = new PaperSummaryShort(NUMBER, AUTHORS, TITLE, LOCATION, GOALS, POPULATION_PLACE, METHODS, RESULT, COMMENT, POPULATION_PLACE_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND,
                 CREATED_BY);
 
         assertPaperSummaryShort();
@@ -20,7 +20,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
 
     @Test
     public void instantiatingUsingPaper() {
-        ps = new PaperSummaryShort(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
+        ps = new PaperSummaryShort(p, POPULATION_PLACE_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
 
         assertPaperSummaryShort();
     }
@@ -31,12 +31,12 @@ public class PaperSummaryShortTest extends JasperEntityTest {
         assertThat(ps.getTitle()).isEqualTo(TITLE);
         assertThat(ps.getLocation()).isEqualTo(LOCATION);
         assertThat(ps.getGoals()).isEqualTo(GOALS);
-        assertThat(ps.getPopulation()).isEqualTo(POPULATION);
+        assertThat(ps.getPopulationPlace()).isEqualTo(POPULATION_PLACE);
         assertThat(ps.getMethods()).isEqualTo(METHODS);
         assertThat(ps.getResult()).isEqualTo(RESULT);
         assertThat(ps.getComment()).isEqualTo(COMMENT);
 
-        assertThat(ps.getPopulationLabel()).isEqualTo(POPULATION_LABEL);
+        assertThat(ps.getPopulationPlaceLabel()).isEqualTo(POPULATION_PLACE_LABEL);
         assertThat(ps.getMethodsLabel()).isEqualTo(METHODS_LABEL);
         assertThat(ps.getResultLabel()).isEqualTo(RESULT_LABEL);
         assertThat(ps.getCommentLabel()).isEqualTo(COMMENT_LABEL);
@@ -55,12 +55,12 @@ public class PaperSummaryShortTest extends JasperEntityTest {
         assertThat(ps.getTitle()).isEmpty();
         assertThat(ps.getLocation()).isEmpty();
         assertThat(ps.getGoals()).isEmpty();
-        assertThat(ps.getPopulation()).isEmpty();
+        assertThat(ps.getPopulationPlace()).isEmpty();
         assertThat(ps.getMethods()).isEmpty();
         assertThat(ps.getComment()).isEmpty();
         assertThat(ps.getResult()).isEmpty();
 
-        assertThat(ps.getPopulationLabel()).isEmpty();
+        assertThat(ps.getPopulationPlaceLabel()).isEmpty();
         assertThat(ps.getMethodsLabel()).isEmpty();
         assertThat(ps.getResultLabel()).isEmpty();
         assertThat(ps.getCommentLabel()).isEmpty();
@@ -87,18 +87,18 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void populationLabelIsBlankIfPopulationIsBlank() {
-        p.setPopulation("");
-        ps = new PaperSummaryShort(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
+    public void populationPlaceLabelIsBlankIfPopulationPlaceIsBlank() {
+        p.setPopulationPlace("");
+        ps = new PaperSummaryShort(p, POPULATION_PLACE_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
 
-        assertThat(ps.getPopulation()).isEqualTo("");
-        assertThat(ps.getPopulationLabel()).isEqualTo("");
+        assertThat(ps.getPopulationPlace()).isEqualTo("");
+        assertThat(ps.getPopulationPlaceLabel()).isEqualTo("");
     }
 
     @Test
     public void methodsLabelIsBlankIfMethodsIsBlank() {
         p.setMethods("");
-        ps = new PaperSummaryShort(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
+        ps = new PaperSummaryShort(p, POPULATION_PLACE_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
 
         assertThat(ps.getMethods()).isEqualTo("");
         assertThat(ps.getMethodsLabel()).isEqualTo("");
@@ -107,7 +107,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     @Test
     public void resultLabelIsBlankIfResultIsBlank() {
         p.setResult("");
-        ps = new PaperSummaryShort(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
+        ps = new PaperSummaryShort(p, POPULATION_PLACE_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
 
         assertThat(ps.getResult()).isEqualTo("");
         assertThat(ps.getResultLabel()).isEqualTo("");
@@ -116,7 +116,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     @Test
     public void commentLabelIsBlankIfCommentIsBlank() {
         p.setComment("");
-        ps = new PaperSummaryShort(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
+        ps = new PaperSummaryShort(p, POPULATION_PLACE_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
 
         assertThat(ps.getComment()).isEqualTo("");
         assertThat(ps.getCommentLabel()).isEqualTo("");

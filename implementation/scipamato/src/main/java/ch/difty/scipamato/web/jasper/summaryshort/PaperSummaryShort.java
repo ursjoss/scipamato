@@ -16,8 +16,8 @@ public class PaperSummaryShort extends JasperEntity {
     private final String title;
     private final String location;
     private final String goals;
-    private final String populationLabel;
-    private final String population;
+    private final String populationPlaceLabel;
+    private final String populationPlace;
     private final String methodsLabel;
     private final String methods;
     private final String resultLabel;
@@ -34,8 +34,8 @@ public class PaperSummaryShort extends JasperEntity {
      *
      * @param p
      *      the paper
-     * @param populationLabel
-     *      localized label for the population field
+     * @param populationPlaceLabel
+     *      localized label for the populationPlace field
      * @param methodsLabel
      *      localized label for the methods field
      * @param resultLabel
@@ -47,28 +47,28 @@ public class PaperSummaryShort extends JasperEntity {
      * @param brand
      *      Brand of the application
      */
-    public PaperSummaryShort(final Paper p, final String populationLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart, final String brand) {
-        this(p.getNumber(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulation(), p.getMethods(), p.getResult(), p.getComment(), populationLabel, methodsLabel, resultLabel,
+    public PaperSummaryShort(final Paper p, final String populationPlaceLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart, final String brand) {
+        this(p.getNumber(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulationPlace(), p.getMethods(), p.getResult(), p.getComment(), populationPlaceLabel, methodsLabel, resultLabel,
                 commentLabel, headerPart, brand, p.getCreatedByName());
     }
 
     /**
      * Instantiation with all individual fields (those that are part of a {@link Paper} and all other from the other constructor.
      */
-    public PaperSummaryShort(final Long number, final String authors, final String title, final String location, final String goals, final String population, final String methods, final String result,
-            final String comment, final String populationLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart, final String brand,
+    public PaperSummaryShort(final Long number, final String authors, final String title, final String location, final String goals, final String populationPlace, final String methods, final String result,
+            final String comment, final String populationPlaceLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart, final String brand,
             final String createdBy) {
         this.number = number != null ? String.valueOf(number) : "";
         this.authors = na(authors);
         this.title = na(title);
         this.location = na(location);
         this.goals = na(goals);
-        this.population = na(population);
+        this.populationPlace = na(populationPlace);
         this.methods = na(methods);
         this.result = na(result);
         this.comment = na(comment);
 
-        this.populationLabel = na(populationLabel, this.population);
+        this.populationPlaceLabel = na(populationPlaceLabel, this.populationPlace);
         this.methodsLabel = na(methodsLabel, this.methods);
         this.resultLabel = na(resultLabel, this.result);
         this.commentLabel = na(commentLabel, this.comment);
@@ -111,12 +111,12 @@ public class PaperSummaryShort extends JasperEntity {
         return goals;
     }
 
-    public String getPopulationLabel() {
-        return populationLabel;
+    public String getPopulationPlaceLabel() {
+        return populationPlaceLabel;
     }
 
-    public String getPopulation() {
-        return population;
+    public String getPopulationPlace() {
+        return populationPlace;
     }
 
     public String getMethodsLabel() {

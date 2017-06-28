@@ -38,7 +38,7 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
     private static final String BASE_NAME_SINGLE = "paper_summary_short_no_";
     private static final String BASE_NAME_MULTIPLE = "paper_summaries_short";
 
-    private String populationLabel;
+    private String populationPlaceLabel;
     private String methodsLabel;
     private String resultLabel;
     private String commentLabel;
@@ -49,8 +49,8 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      * Build up the paper summary from a {@link Paper} and any additional information not contained within the paper
      * @param paper
      *      an instance of {@link Paper} - must not be null.
-     * @param populationLabel
-     *      localized label for the population field
+     * @param populationPlaceLabel
+     *      localized label for the populationPlace field
      * @param methodsLabel
      *      localized label for the methods field
      * @param resultLabel
@@ -63,9 +63,10 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      *      Brand of the application
      * @param config {@link PdfExporterConfiguration}
      */
-    public PaperSummaryShortDataSource(final Paper paper, final String populationLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart,
+    public PaperSummaryShortDataSource(final Paper paper, final String populationPlaceLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart,
             final String brand, PdfExporterConfiguration config) {
-        this(Arrays.asList(new PaperSummaryShort(AssertAs.notNull(paper, "paper"), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand)), config, makeSinglePaperBaseName(paper));
+        this(Arrays.asList(new PaperSummaryShort(AssertAs.notNull(paper, "paper"), populationPlaceLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand)), config,
+                makeSinglePaperBaseName(paper));
     }
 
     /**
@@ -73,7 +74,7 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      * @param paperSummaryShort an instance of {@link PaperSummaryShort} - must not be null
      */
     public PaperSummaryShortDataSource(final PaperSummaryShort paperSummaryShort, PdfExporterConfiguration config) {
-        this(Arrays.asList(AssertAs.notNull(paperSummaryShort, "paperSummary")), config, makeSinglePaperBaseName(paperSummaryShort));
+        this(Arrays.asList(AssertAs.notNull(paperSummaryShort, "paperSummaryShort")), config, makeSinglePaperBaseName(paperSummaryShort));
     }
 
     /**
@@ -97,8 +98,8 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
      * @param dataProvider
      *      the {@link AbstractPaperSlimProvider} - must not be null
-     * @param populationLabel
-     *      localized label for the population field
+     * @param populationPlaceLabel
+     *      localized label for the populationPlace field
      * @param methodsLabel
      *      localized label for the methods field
      * @param resultLabel
@@ -112,10 +113,10 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      * @param config
      *      PdfExporterConfiguration
      */
-    public PaperSummaryShortDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String populationLabel, final String methodsLabel, final String resultLabel,
+    public PaperSummaryShortDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String populationPlaceLabel, final String methodsLabel, final String resultLabel,
             final String commentLabel, final String headerPart, final String brand, PdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), BASE_NAME_MULTIPLE, dataProvider);
-        this.populationLabel = populationLabel;
+        this.populationPlaceLabel = populationPlaceLabel;
         this.methodsLabel = methodsLabel;
         this.resultLabel = resultLabel;
         this.commentLabel = commentLabel;
@@ -130,7 +131,7 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
 
     @Override
     protected PaperSummaryShort makeEntity(Paper p) {
-        return new PaperSummaryShort(p, populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand);
+        return new PaperSummaryShort(p, populationPlaceLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand);
     }
 
     private static String makeSinglePaperBaseName(final Paper paper) {
