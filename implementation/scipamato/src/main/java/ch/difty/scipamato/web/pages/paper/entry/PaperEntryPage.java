@@ -67,6 +67,31 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
     private final boolean showingExclusions;
 
     /**
+     * Instantiates the page with the paper passed in as model. Allows the page to jump back to the calling page.
+     * @param paperModel model of the paper that shall be displayed.
+     * @param callingPage page reference to the page that called this page. Can be null.
+     */
+    public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage) {
+        this(paperModel, callingPage, null, false);
+    }
+
+    /**
+     * Instantiates the page with the paper passed in as model. Allows the page to jump back to the calling page.
+     * Allows to exclude or re-include the paper from the search order where it was found.
+     * @param paperModel model of the paper that shall be displayed.
+     * @param callingPage page reference to the page that called this page. Can be null.
+     * @param searchOrderId the id of the search order that found this paper. Offers a button to exclude the paper from the search order.
+     * @param showingExclusions if false, the paper is part of the search result and can be excluded from it.
+     *        If true, the current paper has already been excluded from the search order. You can re-include it.
+     */
+    public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage, Long searchOrderId, boolean showingExclusions) {
+        super(paperModel);
+        this.callingPage = callingPage;
+        this.searchOrderId = searchOrderId;
+        this.showingExclusions = showingExclusions;
+    }
+
+    /**
      * Instantiates the page with a new paper with a free number and n.a. values on all non-nullable fields.
      * Allows the page to jump back to the calling page. Allows to exclude/re-include papers from search orders, but only if
      * the page parameters contain the respective information (searchOrderId, showingExclusions)
@@ -90,31 +115,6 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         final StringValue ieString = getPageParameters().get(PageParameterNames.SHOW_EXCLUDED);
         final Boolean ie = ieString.isNull() ? null : ieString.toBoolean();
         return ie != null ? ie.booleanValue() : false;
-    }
-
-    /**
-     * Instantiates the page with the paper passed in as model. Allows the page to jump back to the calling page.
-     * @param paperModel model of the paper that shall be displayed.
-     * @param callingPage page reference to the page that called this page. Can be null.
-     */
-    public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage) {
-        this(paperModel, callingPage, null, false);
-    }
-
-    /**
-     * Instantiates the page with the paper passed in as model. Allows the page to jump back to the calling page.
-     * Allows to exclude or re-include the paper from the search order where it was found.
-     * @param paperModel model of the paper that shall be displayed.
-     * @param callingPage page reference to the page that called this page. Can be null.
-     * @param searchOrderId the id of the search order that found this paper. Offers a button to exclude the paper from the search order.
-     * @param showingExclusions if false, the paper is part of the search result and can be excluded from it.
-     *        If true, the current paper has already been excluded from the search order. You can re-include it.
-     */
-    public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage, Long searchOrderId, boolean showingExclusions) {
-        super(paperModel);
-        this.callingPage = callingPage;
-        this.searchOrderId = searchOrderId;
-        this.showingExclusions = showingExclusions;
     }
 
     @Override

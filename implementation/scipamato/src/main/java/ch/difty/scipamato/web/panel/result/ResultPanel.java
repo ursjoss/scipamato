@@ -7,7 +7,6 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.event.Broadcast;
-import org.apache.wicket.event.IEvent;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
@@ -34,7 +33,6 @@ import ch.difty.scipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.scipamato.web.panel.AbstractPanel;
 import ch.difty.scipamato.web.panel.search.SearchOrderChangeEvent;
-import ch.difty.scipamato.web.panel.search.ToggleExclusionsEvent;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
@@ -67,17 +65,6 @@ public class ResultPanel extends AbstractPanel<Void> {
     public ResultPanel(String id, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
         super(id);
         this.dataProvider = dataProvider;
-    }
-
-    public void onEvent(final IEvent<?> event) {
-        if (event.getPayload().getClass() == ToggleExclusionsEvent.class) {
-            ToggleExclusionsEvent tee = (ToggleExclusionsEvent) event.getPayload();
-            final AjaxRequestTarget target = tee.getTarget();
-            if (target != null) {
-                target.add(results);
-            }
-            event.dontBroadcastDeeper();
-        }
     }
 
     @Override
