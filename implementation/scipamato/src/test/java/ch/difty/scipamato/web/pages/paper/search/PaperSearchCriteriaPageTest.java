@@ -34,9 +34,6 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
     private SearchOrderService searchOrderServiceMock;
 
     @MockBean
-    private PaperSlimService serviceMock;
-
-    @MockBean
     private CodeService codeServiceMock;
 
     @MockBean

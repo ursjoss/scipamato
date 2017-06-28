@@ -26,7 +26,8 @@ import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.
 
 import ch.difty.scipamato.ScipamatoApplication;
 import ch.difty.scipamato.lib.DateTimeService;
-import ch.difty.scipamato.persistance.jooq.paper.slim.PaperSlimRepository;
+import ch.difty.scipamato.service.PaperService;
+import ch.difty.scipamato.service.PaperSlimService;
 import ch.difty.scipamato.web.pages.login.LoginPage;
 import ch.difty.scipamato.web.pages.paper.list.PaperListPage;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
@@ -51,9 +52,11 @@ public abstract class WicketTest {
     @SpyBean
     private CustomAuthenticationManager customAuthenticationManager;
 
-    // The paper slim repo ist used in the current home page PaperListPage
+    // The paper slim service and paper service are used in the home page PaperListPage
     @MockBean
-    protected PaperSlimRepository paperSlimRepoMock;
+    protected PaperSlimService paperSlimServiceMock;
+    @MockBean
+    protected PaperService paperServiceMock;
 
     private WicketTester tester;
 

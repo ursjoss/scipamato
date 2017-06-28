@@ -19,15 +19,11 @@ import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.logic.parsing.AuthorParserFactory;
 import ch.difty.scipamato.service.CodeClassService;
 import ch.difty.scipamato.service.CodeService;
-import ch.difty.scipamato.service.PaperService;
 import ch.difty.scipamato.web.pages.SelfUpdatingPageTest;
 import ch.difty.scipamato.web.panel.paper.PaperPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
 public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
-
-    @MockBean
-    private PaperService serviceMock;
 
     @MockBean
     private AuthorParserFactory authorParserFactoryMock;
@@ -113,7 +109,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
     @Test
     public void submitting_shouldActuallyKickoffOnSubmitInTest() {
-        when(serviceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
+        when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
 
         getTester().startPage(makePage());
         FormTester formTester = makeSaveablePaperTester();
@@ -121,7 +117,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
-        verify(serviceMock).saveOrUpdate(isA(Paper.class));
+        verify(paperServiceMock).saveOrUpdate(isA(Paper.class));
     }
 
     @Test
@@ -140,7 +136,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
     @Test
     public void serviceThrowingError() {
-        when(serviceMock.saveOrUpdate(isA(Paper.class))).thenThrow(new RuntimeException("foo"));
+        when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenThrow(new RuntimeException("foo"));
 
         getTester().startPage(makePage());
 
@@ -148,7 +144,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         formTester.submit();
 
         getTester().assertErrorMessages("An unexpected error occurred when trying to save Paper [id 0]: foo");
-        verify(serviceMock).saveOrUpdate(isA(Paper.class));
+        verify(paperServiceMock).saveOrUpdate(isA(Paper.class));
     }
 
     private FormTester makeSaveablePaperTester() {
@@ -164,7 +160,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
     @Test
     public void serviceReturningNullPaperAfterSave_hasErrorMessage() {
-        when(serviceMock.saveOrUpdate(isA(Paper.class))).thenReturn(null);
+        when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenReturn(null);
 
         getTester().startPage(makePage());
         FormTester formTester = makeSaveablePaperTester();
@@ -173,13 +169,13 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         getTester().assertNoInfoMessage();
         getTester().assertErrorMessages("An unexpected error occurred when trying to save Paper [id 0]: ");
 
-        verify(serviceMock).saveOrUpdate(isA(Paper.class));
+        verify(paperServiceMock).saveOrUpdate(isA(Paper.class));
     }
 
     @Test
     public void defaultModel_containsNaValuesAndCanSubmitWithoutErrors() {
-        when(serviceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
-        when(serviceMock.findLowestFreeNumberStartingFrom(7l)).thenReturn(19l);
+        when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
+        when(paperServiceMock.findLowestFreeNumberStartingFrom(7l)).thenReturn(19l);
 
         getTester().startPage(new PaperEntryPage(new PageParameters(), null));
 
@@ -197,8 +193,8 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
-        verify(serviceMock).saveOrUpdate(isA(Paper.class));
-        verify(serviceMock).findLowestFreeNumberStartingFrom(7l);
+        verify(paperServiceMock).saveOrUpdate(isA(Paper.class));
+        verify(paperServiceMock).findLowestFreeNumberStartingFrom(7l);
     }
 
 }

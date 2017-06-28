@@ -28,8 +28,6 @@ import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.persistance.jooq.search.SearchOrderFilter;
 import ch.difty.scipamato.service.CodeClassService;
 import ch.difty.scipamato.service.CodeService;
-import ch.difty.scipamato.service.PaperService;
-import ch.difty.scipamato.service.PaperSlimService;
 import ch.difty.scipamato.service.SearchOrderService;
 import ch.difty.scipamato.web.PageParameterNames;
 import ch.difty.scipamato.web.pages.BasePageTest;
@@ -45,10 +43,6 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @MockBean
     private SearchOrderService searchOrderServiceMock;
-    @MockBean
-    private PaperSlimService paperSlimServiceMock;
-    @MockBean
-    private PaperService paperServiceMock;
     @MockBean
     private CodeClassService codeClassServiceMock;
     @MockBean

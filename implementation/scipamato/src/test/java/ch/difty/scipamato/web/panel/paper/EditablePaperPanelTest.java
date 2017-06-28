@@ -25,8 +25,6 @@ import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.scipamato.pubmed.entity.PubmedArticleFacade;
-import ch.difty.scipamato.service.PaperService;
-import ch.difty.scipamato.service.PaperSlimService;
 import ch.difty.scipamato.service.PubmedArticleService;
 import ch.difty.scipamato.service.SearchOrderService;
 import ch.difty.scipamato.web.pages.paper.search.PaperSearchPage;
@@ -42,19 +40,15 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
     @MockBean
     private PubmedArticleService pubmedArticleServiceMock;
-    @MockBean
-    private PaperService paperServiceMock;
 
     @Mock
     private PubmedArticleFacade pubmedArticleMock;
     @Mock
     private PageReference callingPageMock;
 
-    // used for referring to PaperSearchPage - not verifying, neither verifying paperServiceMock completely due to same reason
+    // used for referring to PaperSearchPage - not verifying
     @MockBean
     private SearchOrderService searchOrderServiceMock;
-    @MockBean
-    private PaperSlimService paperSlimServiceMock;
 
     @Override
     protected void setUpLocalHook() {

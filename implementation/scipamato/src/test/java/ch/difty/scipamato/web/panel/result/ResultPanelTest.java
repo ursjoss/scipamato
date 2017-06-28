@@ -29,8 +29,6 @@ import ch.difty.scipamato.paging.PaginationRequest;
 import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.scipamato.service.CodeClassService;
 import ch.difty.scipamato.service.CodeService;
-import ch.difty.scipamato.service.PaperService;
-import ch.difty.scipamato.service.PaperSlimService;
 import ch.difty.scipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.scipamato.web.pages.paper.provider.PaperSlimBySearchOrderProvider;
@@ -42,10 +40,6 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     private static final long NUMBER = 2l;
     private static final int ROWS_PER_PAGE = 12;
 
-    @MockBean
-    private PaperSlimService paperSlimServiceMock;
-    @MockBean
-    private PaperService paperServiceMock;
     @MockBean
     private CodeClassService codeClassServiceMock;
     @MockBean
