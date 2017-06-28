@@ -20,8 +20,8 @@ public class PaperSummaryShort extends JasperEntity {
     private final String populationPlace;
     private final String methodsLabel;
     private final String methods;
-    private final String resultLabel;
-    private final String result;
+    private final String resultEffectEstimateLabel;
+    private final String resultEffectEstimate;
     private final String comment;
     private final String commentLabel;
 
@@ -38,8 +38,8 @@ public class PaperSummaryShort extends JasperEntity {
      *      localized label for the populationPlace field
      * @param methodsLabel
      *      localized label for the methods field
-     * @param resultLabel
-     *      localized label for the result field
+     * @param resultEffectEstimateLabel
+     *      localized label for the resultEffectEstimate field
      * @param commentLabel
      *      localized label for the comment field
      * @param headerPart
@@ -47,17 +47,18 @@ public class PaperSummaryShort extends JasperEntity {
      * @param brand
      *      Brand of the application
      */
-    public PaperSummaryShort(final Paper p, final String populationPlaceLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart, final String brand) {
-        this(p.getNumber(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulationPlace(), p.getMethods(), p.getResult(), p.getComment(), populationPlaceLabel, methodsLabel, resultLabel,
-                commentLabel, headerPart, brand, p.getCreatedByName());
+    public PaperSummaryShort(final Paper p, final String populationPlaceLabel, final String methodsLabel, final String resultEffectEstimateLabel, final String commentLabel, final String headerPart,
+            final String brand) {
+        this(p.getNumber(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulationPlace(), p.getMethods(), p.getResultEffectEstimate(), p.getComment(), populationPlaceLabel,
+                methodsLabel, resultEffectEstimateLabel, commentLabel, headerPart, brand, p.getCreatedByName());
     }
 
     /**
      * Instantiation with all individual fields (those that are part of a {@link Paper} and all other from the other constructor.
      */
-    public PaperSummaryShort(final Long number, final String authors, final String title, final String location, final String goals, final String populationPlace, final String methods, final String result,
-            final String comment, final String populationPlaceLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart, final String brand,
-            final String createdBy) {
+    public PaperSummaryShort(final Long number, final String authors, final String title, final String location, final String goals, final String populationPlace, final String methods,
+            final String resultEffectEstimate, final String comment, final String populationPlaceLabel, final String methodsLabel, final String resultEffectEstimateLabel, final String commentLabel,
+            final String headerPart, final String brand, final String createdBy) {
         this.number = number != null ? String.valueOf(number) : "";
         this.authors = na(authors);
         this.title = na(title);
@@ -65,12 +66,12 @@ public class PaperSummaryShort extends JasperEntity {
         this.goals = na(goals);
         this.populationPlace = na(populationPlace);
         this.methods = na(methods);
-        this.result = na(result);
+        this.resultEffectEstimate = na(resultEffectEstimate);
         this.comment = na(comment);
 
         this.populationPlaceLabel = na(populationPlaceLabel, this.populationPlace);
         this.methodsLabel = na(methodsLabel, this.methods);
-        this.resultLabel = na(resultLabel, this.result);
+        this.resultEffectEstimateLabel = na(resultEffectEstimateLabel, this.resultEffectEstimate);
         this.commentLabel = na(commentLabel, this.comment);
 
         this.header = makeHeader(number, headerPart);
@@ -127,12 +128,12 @@ public class PaperSummaryShort extends JasperEntity {
         return methods;
     }
 
-    public String getResultLabel() {
-        return resultLabel;
+    public String getResultEffectEstimateLabel() {
+        return resultEffectEstimateLabel;
     }
 
-    public String getResult() {
-        return result;
+    public String getResultEffectEstimate() {
+        return resultEffectEstimate;
     }
 
     public String getComment() {

@@ -40,7 +40,7 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
 
     private String populationPlaceLabel;
     private String methodsLabel;
-    private String resultLabel;
+    private String resultEffectEstimateLabel;
     private String commentLabel;
     private String headerPart;
     private String brand;
@@ -53,8 +53,8 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      *      localized label for the populationPlace field
      * @param methodsLabel
      *      localized label for the methods field
-     * @param resultLabel
-     *      localized label for the result field
+     * @param resultEffectEstimateLabel
+     *      localized label for the resultEffectEstimateLabel field
      * @param commentLabel
      *      localized label for the comment field
      * @param headerPart
@@ -63,9 +63,9 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      *      Brand of the application
      * @param config {@link PdfExporterConfiguration}
      */
-    public PaperSummaryShortDataSource(final Paper paper, final String populationPlaceLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart,
+    public PaperSummaryShortDataSource(final Paper paper, final String populationPlaceLabel, final String methodsLabel, final String resultEffectEstimateLabel, final String commentLabel, final String headerPart,
             final String brand, PdfExporterConfiguration config) {
-        this(Arrays.asList(new PaperSummaryShort(AssertAs.notNull(paper, "paper"), populationPlaceLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand)), config,
+        this(Arrays.asList(new PaperSummaryShort(AssertAs.notNull(paper, "paper"), populationPlaceLabel, methodsLabel, resultEffectEstimateLabel, commentLabel, headerPart, brand)), config,
                 makeSinglePaperBaseName(paper));
     }
 
@@ -102,8 +102,8 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      *      localized label for the populationPlace field
      * @param methodsLabel
      *      localized label for the methods field
-     * @param resultLabel
-     *      localized label for the result field
+     * @param resultEffectEstimateLabel
+     *      localized label for the resultEffectEstimateLabel field
      * @param commentLabel
      *      localized label for the comment field
      * @param headerPart
@@ -113,12 +113,12 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      * @param config
      *      PdfExporterConfiguration
      */
-    public PaperSummaryShortDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String populationPlaceLabel, final String methodsLabel, final String resultLabel,
+    public PaperSummaryShortDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String populationPlaceLabel, final String methodsLabel, final String resultEffectEstimateLabel,
             final String commentLabel, final String headerPart, final String brand, PdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), BASE_NAME_MULTIPLE, dataProvider);
         this.populationPlaceLabel = populationPlaceLabel;
         this.methodsLabel = methodsLabel;
-        this.resultLabel = resultLabel;
+        this.resultEffectEstimateLabel = resultEffectEstimateLabel;
         this.commentLabel = commentLabel;
         this.headerPart = headerPart;
         this.brand = brand;
@@ -131,7 +131,7 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
 
     @Override
     protected PaperSummaryShort makeEntity(Paper p) {
-        return new PaperSummaryShort(p, populationPlaceLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand);
+        return new PaperSummaryShort(p, populationPlaceLabel, methodsLabel, resultEffectEstimateLabel, commentLabel, headerPart, brand);
     }
 
     private static String makeSinglePaperBaseName(final Paper paper) {

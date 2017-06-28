@@ -38,6 +38,7 @@ public abstract class JasperEntityTest {
     protected static final String RESULT_EXPOSURE_RANGE = "resultExposureRange";
     protected static final String RESULT_EFFECT_ESTIMATE = "resultEffectEstimate";
     protected static final String POPULATION_PLACE_LABEL = "populationPlaceLabel";
+    protected static final String RESULT_EFFECT_ESTIMATE_LABEL = "resultEffectEstimateLabel";
 
     protected static final int PM_ID = 1234;
 

@@ -165,7 +165,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     protected PaperSummaryShortDataSource getSummaryShortDataSource() {
         final String populationPlaceLabel = new StringResourceModel(Paper.POPULATION_PLACE + LABEL_RECOURCE_TAG, this, null).getString();
         final String methodsLabel = new StringResourceModel(Paper.METHODS + LABEL_RECOURCE_TAG, this, null).getString();
-        final String resultLabel = new StringResourceModel(Paper.RESULT + LABEL_RECOURCE_TAG, this, null).getString();
+        final String resultEffectEstimateLabel = new StringResourceModel(Paper.RESULT_EFFECT_ESTIMATE + LABEL_RECOURCE_TAG, this, null).getString();
         final String commentLabel = new StringResourceModel(Paper.COMMENT + LABEL_RECOURCE_TAG, this, null).getString();
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
@@ -178,7 +178,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 .withCodes(getModelObject().getCodes())
                 .withCompression()
                 .build();
-        return new PaperSummaryShortDataSource(getModelObject(), populationPlaceLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand, config);
+        return new PaperSummaryShortDataSource(getModelObject(), populationPlaceLabel, methodsLabel, resultEffectEstimateLabel, commentLabel, headerPart, brand, config);
     }
 
     /**
