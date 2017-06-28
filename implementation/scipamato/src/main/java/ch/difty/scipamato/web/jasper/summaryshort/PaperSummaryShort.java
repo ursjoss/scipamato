@@ -15,6 +15,7 @@ public class PaperSummaryShort extends JasperEntity {
     private final String authors;
     private final String title;
     private final String location;
+    private final String goalsLabel;
     private final String goals;
     private final String populationPlaceLabel;
     private final String populationPlace;
@@ -47,18 +48,18 @@ public class PaperSummaryShort extends JasperEntity {
      * @param brand
      *      Brand of the application
      */
-    public PaperSummaryShort(final Paper p, final String populationPlaceLabel, final String methodsLabel, final String resultEffectEstimateLabel, final String commentLabel, final String headerPart,
-            final String brand) {
-        this(p.getNumber(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulationPlace(), p.getMethods(), p.getResultEffectEstimate(), p.getComment(), populationPlaceLabel,
-                methodsLabel, resultEffectEstimateLabel, commentLabel, headerPart, brand, p.getCreatedByName());
+    public PaperSummaryShort(final Paper p, final String goalsLabel, final String populationPlaceLabel, final String methodsLabel, final String resultEffectEstimateLabel, final String commentLabel,
+            final String headerPart, final String brand) {
+        this(p.getNumber(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulationPlace(), p.getMethods(), p.getResultEffectEstimate(), p.getComment(), goalsLabel,
+                populationPlaceLabel, methodsLabel, resultEffectEstimateLabel, commentLabel, headerPart, brand, p.getCreatedByName());
     }
 
     /**
      * Instantiation with all individual fields (those that are part of a {@link Paper} and all other from the other constructor.
      */
     public PaperSummaryShort(final Long number, final String authors, final String title, final String location, final String goals, final String populationPlace, final String methods,
-            final String resultEffectEstimate, final String comment, final String populationPlaceLabel, final String methodsLabel, final String resultEffectEstimateLabel, final String commentLabel,
-            final String headerPart, final String brand, final String createdBy) {
+            final String resultEffectEstimate, final String comment, final String goalsLabel, final String populationPlaceLabel, final String methodsLabel, final String resultEffectEstimateLabel,
+            final String commentLabel, final String headerPart, final String brand, final String createdBy) {
         this.number = number != null ? String.valueOf(number) : "";
         this.authors = na(authors);
         this.title = na(title);
@@ -69,6 +70,7 @@ public class PaperSummaryShort extends JasperEntity {
         this.resultEffectEstimate = na(resultEffectEstimate);
         this.comment = na(comment);
 
+        this.goalsLabel = na(goalsLabel, this.goals);
         this.populationPlaceLabel = na(populationPlaceLabel, this.populationPlace);
         this.methodsLabel = na(methodsLabel, this.methods);
         this.resultEffectEstimateLabel = na(resultEffectEstimateLabel, this.resultEffectEstimate);
@@ -106,6 +108,10 @@ public class PaperSummaryShort extends JasperEntity {
 
     public String getLocation() {
         return location;
+    }
+
+    public String getGoalsLabel() {
+        return goalsLabel;
     }
 
     public String getGoals() {

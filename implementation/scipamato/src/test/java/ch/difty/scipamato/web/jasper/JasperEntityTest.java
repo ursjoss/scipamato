@@ -18,6 +18,7 @@ public abstract class JasperEntityTest {
     protected static final String METHODS = "methods";
     protected static final String RESULT = "results";
     protected static final String COMMENT = "comment";
+    protected static final String GOALS_LABEL = "goalsLabel";
     protected static final String POPULATION_LABEL = "populationLabel";
     protected static final String METHODS_LABEL = "methodsLabel";
     protected static final String RESULT_LABEL = "resultLabel";

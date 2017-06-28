@@ -31,6 +31,7 @@ public class PaperSummaryShortDataSourceTest extends PaperDataSourceTest {
     private static final String COMMENT = "comment";
     private static final String CREATED_BY = "creatingUser";
 
+    private static final String GOALS_LABEL = "Ziele";
     private static final String POPULATION_PLACE_LABEL = "Ort/Land";
     private static final String METHODS_LABEL = "Methoden";
     private static final String RESULT_EFFECT_ESTIMATE_LABEL = "Ergebnisse";
@@ -60,7 +61,7 @@ public class PaperSummaryShortDataSourceTest extends PaperDataSourceTest {
 
     @Test
     public void instantiatingWithPaper_returnsPdfDataSourceWithOneRecord() throws JRException {
-        ds = new PaperSummaryShortDataSource(paperMock, POPULATION_PLACE_LABEL, METHODS_LABEL, RESULT_EFFECT_ESTIMATE_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
+        ds = new PaperSummaryShortDataSource(paperMock, GOALS_LABEL, POPULATION_PLACE_LABEL, METHODS_LABEL, RESULT_EFFECT_ESTIMATE_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
 
         assertDataSource(FILE_NAME_SINGLE);
 
@@ -100,6 +101,7 @@ public class PaperSummaryShortDataSourceTest extends PaperDataSourceTest {
         assertFieldValue("resultEffectEstimate", RESULT_EFFECT_ESTIMATE, f, jsds);
         assertFieldValue("comment", COMMENT, f, jsds);
 
+        assertFieldValue("goalsLabel", GOALS_LABEL, f, jsds);
         assertFieldValue("populationPlaceLabel", POPULATION_PLACE_LABEL, f, jsds);
         assertFieldValue("methodsLabel", METHODS_LABEL, f, jsds);
         assertFieldValue("resultEffectEstimateLabel", RESULT_EFFECT_ESTIMATE_LABEL, f, jsds);
@@ -114,8 +116,8 @@ public class PaperSummaryShortDataSourceTest extends PaperDataSourceTest {
 
     @Test
     public void instantiatingWithPaperSummary_returnsPdfDataSourceWithOneRecord() throws JRException {
-        PaperSummaryShort ps = new PaperSummaryShort(NUMBER, AUTHORS, TITLE, LOCATION, GOALS, POPULATION_PLACE, METHODS, RESULT_EFFECT_ESTIMATE, COMMENT, POPULATION_PLACE_LABEL, METHODS_LABEL, RESULT_EFFECT_ESTIMATE_LABEL, COMMENT_LABEL,
-                HEADER_PART, BRAND, CREATED_BY);
+        PaperSummaryShort ps = new PaperSummaryShort(NUMBER, AUTHORS, TITLE, LOCATION, GOALS, POPULATION_PLACE, METHODS, RESULT_EFFECT_ESTIMATE, COMMENT, GOALS_LABEL, POPULATION_PLACE_LABEL,
+                METHODS_LABEL, RESULT_EFFECT_ESTIMATE_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, CREATED_BY);
         ds = new PaperSummaryShortDataSource(ps, pdfExporterConfigMock);
 
         assertDataSource(FILE_NAME_SINGLE);
@@ -126,7 +128,8 @@ public class PaperSummaryShortDataSourceTest extends PaperDataSourceTest {
         when(dataProviderMock.size()).thenReturn(1l);
         when(dataProviderMock.findAllPapersByFilter()).thenReturn(Arrays.asList(paperMock));
 
-        ds = new PaperSummaryShortDataSource(dataProviderMock, POPULATION_PLACE_LABEL, METHODS_LABEL, RESULT_EFFECT_ESTIMATE_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
+        ds = new PaperSummaryShortDataSource(dataProviderMock, GOALS_LABEL, POPULATION_PLACE_LABEL, METHODS_LABEL, RESULT_EFFECT_ESTIMATE_LABEL, COMMENT_LABEL, HEADER_PART, BRAND,
+                pdfExporterConfigMock);
         assertDataSource(FILE_NAME_MULTIPLE);
 
         verify(dataProviderMock).size();
@@ -147,7 +150,8 @@ public class PaperSummaryShortDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0l);
-        ds = new PaperSummaryShortDataSource(dataProviderMock, POPULATION_PLACE_LABEL, METHODS_LABEL, RESULT_EFFECT_ESTIMATE_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
+        ds = new PaperSummaryShortDataSource(dataProviderMock, GOALS_LABEL, POPULATION_PLACE_LABEL, METHODS_LABEL, RESULT_EFFECT_ESTIMATE_LABEL, COMMENT_LABEL, HEADER_PART, BRAND,
+                pdfExporterConfigMock);
         assertThat(ds.getReportDataSource().next()).isFalse();
         verify(dataProviderMock).size();
     }
@@ -156,7 +160,7 @@ public class PaperSummaryShortDataSourceTest extends PaperDataSourceTest {
     public void instantiatingWithProvider_withNullProvider_throws() throws JRException {
         AbstractPaperSlimProvider<? extends PaperSlimFilter> provider = null;
         try {
-            new PaperSummaryShortDataSource(provider, POPULATION_PLACE_LABEL, METHODS_LABEL, RESULT_EFFECT_ESTIMATE_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
+            new PaperSummaryShortDataSource(provider, GOALS_LABEL, POPULATION_PLACE_LABEL, METHODS_LABEL, RESULT_EFFECT_ESTIMATE_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dataProvider must not be null.");
         }
