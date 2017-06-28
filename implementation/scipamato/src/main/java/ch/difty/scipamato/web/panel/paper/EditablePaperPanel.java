@@ -403,6 +403,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         btn.setDefaultFormProcessing(false);
         btn.setIconType(icon);
         btn.add(new AttributeModifier(TITLE, new StringResourceModel("button." + id + ".title", this, null).getString()));
+        btn.setType(Buttons.Type.Primary);
         return btn;
     }
 
