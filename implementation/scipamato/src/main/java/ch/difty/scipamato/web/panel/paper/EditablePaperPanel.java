@@ -47,6 +47,7 @@ import ch.difty.scipamato.web.component.data.LinkIconColumn;
 import ch.difty.scipamato.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.scipamato.web.jasper.ScipamatoPdfExporterConfiguration;
 import ch.difty.scipamato.web.jasper.summary.PaperSummaryDataSource;
+import ch.difty.scipamato.web.jasper.summaryshort.PaperSummaryShortDataSource;
 import ch.difty.scipamato.web.pages.BasePage;
 import ch.difty.scipamato.web.pages.Mode;
 import ch.difty.scipamato.web.pages.paper.entry.PaperEntryPage;
@@ -155,6 +156,29 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 .withCompression()
                 .build();
         return new PaperSummaryDataSource(getModelObject(), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand, config);
+    }
+
+    /**
+     * Prepares the {@link PaperSummaryDataSource} for exporting the current entity into the pdf.
+     */
+    @Override
+    protected PaperSummaryShortDataSource getSummaryShortDataSource() {
+        final String populationLabel = new StringResourceModel(Paper.POPULATION + LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodsLabel = new StringResourceModel(Paper.METHODS + LABEL_RECOURCE_TAG, this, null).getString();
+        final String resultLabel = new StringResourceModel(Paper.RESULT + LABEL_RECOURCE_TAG, this, null).getString();
+        final String commentLabel = new StringResourceModel(Paper.COMMENT + LABEL_RECOURCE_TAG, this, null).getString();
+        final String brand = getProperties().getBrand();
+        final String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
+
+        ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getId()).withCreator(brand)
+                .withPaperTitle(getModelObject().getTitle())
+                .withPaperAuthor(getModelObject().getFirstAuthor())
+                .withSubject(getModelObject().getMethods())
+                .withAuthor(getModelObject().getCreatedByFullName())
+                .withCodes(getModelObject().getCodes())
+                .withCompression()
+                .build();
+        return new PaperSummaryShortDataSource(getModelObject(), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand, config);
     }
 
     /**

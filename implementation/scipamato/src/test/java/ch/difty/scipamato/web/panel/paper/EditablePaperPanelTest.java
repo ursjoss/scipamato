@@ -185,6 +185,17 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     }
 
     @Test
+    public void assertSummaryShortLink() {
+        getTester().startComponentInPage(makePanel());
+        String path = "panel:form:summaryShort";
+        getTester().assertComponent(path, ResourceLink.class);
+        getTester().assertVisible(path);
+        getTester().assertEnabled(path);
+        verifyCodeAndCodeClassCalls(1);
+        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+    }
+
+    @Test
     public void assertSubmit() {
         getTester().startComponentInPage(makePanel());
         applyTestHackWithNstedMultiPartForms();

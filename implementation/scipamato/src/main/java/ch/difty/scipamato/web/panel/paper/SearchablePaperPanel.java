@@ -16,6 +16,7 @@ import ch.difty.scipamato.entity.PaperAttachment;
 import ch.difty.scipamato.entity.filter.SearchCondition;
 import ch.difty.scipamato.web.component.SerializableSupplier;
 import ch.difty.scipamato.web.jasper.summary.PaperSummaryDataSource;
+import ch.difty.scipamato.web.jasper.summaryshort.PaperSummaryShortDataSource;
 import ch.difty.scipamato.web.pages.Mode;
 import ch.difty.scipamato.web.pages.paper.provider.PaperAttachmentProvider;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
@@ -42,6 +43,11 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
 
     @Override
     protected PaperSummaryDataSource getSummaryDataSource() {
+        return null;
+    }
+
+    @Override
+    protected PaperSummaryShortDataSource getSummaryShortDataSource() {
         return null;
     }
 
