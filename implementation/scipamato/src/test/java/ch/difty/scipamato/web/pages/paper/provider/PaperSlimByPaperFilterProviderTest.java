@@ -90,4 +90,12 @@ public class PaperSlimByPaperFilterProviderTest extends AbstractPaperSlimProvide
     public void gettingSearchOrderId_alwaysReturnsNull() {
         assertThat(provider.getSearchOrderId()).isNull();
     }
+
+    // I know: The Liskov Substitution Principle ... :-(
+    @Test
+    public void gettingInvertExclusionFlag_alwaysReturnsFalse() {
+        assertThat(provider.isShowExcluded()).isFalse();
+        provider.setShowExcluded(true);
+        assertThat(provider.isShowExcluded()).isFalse();
+    }
 }

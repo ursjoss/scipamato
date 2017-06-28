@@ -153,7 +153,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
         verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(isA(SearchOrder.class));
-        verify(paperServiceMock, times(2)).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(3)).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -181,11 +181,11 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class));
         verify(paperSlimMock, times(2)).getId();
         verify(paperSlimMock, times(2)).getId();
-        verify(searchOrderMock, times(5)).getExcludedPaperIds();
+        verify(searchOrderMock, times(6)).getExcludedPaperIds();
         verify(searchOrderServiceMock).saveOrUpdate(isA(SearchOrder.class));
 
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(isA(SearchOrder.class));
-        verify(paperServiceMock, times(2)).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(3)).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationContext.class));
     }
 
     @Test

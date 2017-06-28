@@ -20,7 +20,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
     public static final String OWNER = "owner";
     public static final String GLOBAL = "global";
     public static final String CONDITIONS = "searchConditions";
-    public static final String INVERT_EXCLUSIONS = "invertExclusions";
+    public static final String SHOW_EXCLUDED = "showExcluded";
 
     private static final String JOIN_DELIMITER = "; OR ";
 
@@ -32,7 +32,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
     private final List<Long> excludedPaperIds = new ArrayList<>();
 
     // this will not get persisted
-    private boolean invertExclusions = false;
+    private boolean showExcluded = false;
 
     public SearchOrder() {
         // default constructor
@@ -137,12 +137,12 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
         excludedPaperIds.remove(paperId);
     }
 
-    public boolean isInvertExclusions() {
-        return invertExclusions;
+    public boolean isShowExcluded() {
+        return showExcluded;
     }
 
-    public void setInvertExclusions(boolean invertExclusions) {
-        this.invertExclusions = invertExclusions;
+    public void setShowExcluded(boolean showExcluded) {
+        this.showExcluded = showExcluded;
     }
 
     @Override

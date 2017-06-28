@@ -133,6 +133,26 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> exten
         return maxRowsPerPage;
     }
 
-    public abstract Long getSearchOrderId();
+    /**
+     * Override if needed
+     * @return searchOrderId if it applies, null otherwise
+     */
+    public Long getSearchOrderId() {
+        return null;
+    }
 
+    /**
+     * @return showExcluded flag, indicating if the search results are to be shown (if false) or the excluded papers (true). False by default
+     * Override if needed
+     */
+    public boolean isShowExcluded() {
+        return false;
+    }
+
+    /**
+     * Sets the flag whether to show search results (false) or papers excluded from search (true)
+     * Override if needed
+     */
+    public void setShowExcluded(boolean showExcluded) {
+    }
 }

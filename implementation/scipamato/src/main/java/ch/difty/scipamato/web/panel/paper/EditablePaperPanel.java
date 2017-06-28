@@ -72,6 +72,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     private static final String COLUMN_HEADER = "column.header.";
 
     private final Long searchOrderId;
+    private final boolean showingExclusions;
 
     @SpringBean
     private PaperService paperService;
@@ -82,9 +83,10 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     @SpringBean
     private PubmedArticleService pubmedArticleService;
 
-    public EditablePaperPanel(String id, IModel<Paper> model, PageReference previousPage, Long searchOrderId) {
+    public EditablePaperPanel(String id, IModel<Paper> model, PageReference previousPage, Long searchOrderId, boolean showingExclusions) {
         super(id, model, Mode.EDIT, previousPage);
         this.searchOrderId = searchOrderId;
+        this.showingExclusions = showingExclusions;
     }
 
     /**
@@ -388,7 +390,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 if (id != null) {
                     final Optional<Paper> p = paperService.findById(id);
                     if (p.isPresent())
-                        setResponsePage(new PaperEntryPage(Model.of(p.get()), getCallingPage(), searchOrderId));
+                        setResponsePage(new PaperEntryPage(Model.of(p.get()), getCallingPage(), searchOrderId, showingExclusions));
                 }
             }
 
@@ -412,21 +414,31 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             public void onSubmit() {
                 Long paperId = EditablePaperPanel.this.getModelObject().getId();
                 if (paperId != null) {
-                    paperService.excludeFromSearchOrder(searchOrderId, paperId);
-                    PageParameters pp = new PageParameters();
-                    pp.add(PageParameterNames.SEARCH_ORDER_ID, searchOrderId);
-                    setResponsePage(new PaperSearchPage(pp));
+                    if (showingExclusions) {
+                        paperService.reincludeIntoSearchOrder(searchOrderId, paperId);
+                    } else {
+                        paperService.excludeFromSearchOrder(searchOrderId, paperId);
+                    }
                 }
+                PageParameters pp = new PageParameters();
+                pp.add(PageParameterNames.SEARCH_ORDER_ID, searchOrderId);
+                pp.add(PageParameterNames.SHOW_EXCLUDED, showingExclusions);
+                setResponsePage(new PaperSearchPage(pp));
             }
 
             @Override
             protected void onConfigure() {
                 super.onConfigure();
                 setVisible(searchOrderId != null);
+                if (showingExclusions) {
+                    setIconType(GlyphIconType.okcircle);
+                    add(new AttributeModifier(TITLE, new StringResourceModel("button.exclude.title.reinclude", this, null).getString()));
+                } else {
+                    setIconType(GlyphIconType.bancircle);
+                    add(new AttributeModifier(TITLE, new StringResourceModel("button.exclude.title.exclude", this, null).getString()));
+                }
             }
         };
-        exclude.setIconType(GlyphIconType.bancircle);
-        exclude.add(new AttributeModifier(TITLE, new StringResourceModel("button.exclude.title", this, null).getString()));
         exclude.setDefaultFormProcessing(false);
         return exclude;
     }

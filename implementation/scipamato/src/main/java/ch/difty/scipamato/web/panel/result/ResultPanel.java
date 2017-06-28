@@ -7,6 +7,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.event.Broadcast;
+import org.apache.wicket.event.IEvent;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
@@ -33,6 +34,7 @@ import ch.difty.scipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.scipamato.web.panel.AbstractPanel;
 import ch.difty.scipamato.web.panel.search.SearchOrderChangeEvent;
+import ch.difty.scipamato.web.panel.search.ToggleExclusionsEvent;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
@@ -67,6 +69,17 @@ public class ResultPanel extends AbstractPanel<Void> {
         this.dataProvider = dataProvider;
     }
 
+    public void onEvent(final IEvent<?> event) {
+        if (event.getPayload().getClass() == ToggleExclusionsEvent.class) {
+            ToggleExclusionsEvent tee = (ToggleExclusionsEvent) event.getPayload();
+            final AjaxRequestTarget target = tee.getTarget();
+            if (target != null) {
+                target.add(results);
+            }
+            event.dontBroadcastDeeper();
+        }
+    }
+
     @Override
     protected void onInitialize() {
         super.onInitialize();
@@ -99,7 +112,8 @@ public class ResultPanel extends AbstractPanel<Void> {
 
     private void onTitleClick(IModel<PaperSlim> m) {
         ScipamatoSession.get().getPaperIdManager().setFocusToItem(m.getObject().getId());
-        setResponsePage(new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject().getNumber()).orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId()));
+        setResponsePage(new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject().getNumber()).orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
+                dataProvider.isShowExcluded()));
     }
 
     private PropertyColumn<PaperSlim, String> makePropertyColumn(String propExpression) {
@@ -116,12 +130,12 @@ public class ResultPanel extends AbstractPanel<Void> {
 
             @Override
             protected IModel<String> createIconModel(IModel<PaperSlim> rowModel) {
-                return Model.of("fa fa-fw fa-ban");
+                return Model.of(dataProvider.isShowExcluded() ? "fa fa-fw fa-check-circle-o" : "fa fa-fw fa-ban");
             }
 
             @Override
             protected IModel<String> createTitleModel(IModel<PaperSlim> rowModel) {
-                return new StringResourceModel("column.title.exclude", ResultPanel.this, null);
+                return new StringResourceModel(dataProvider.isShowExcluded() ? "column.title.reinclude" : "column.title.exclude", ResultPanel.this, null);
             }
 
             @Override

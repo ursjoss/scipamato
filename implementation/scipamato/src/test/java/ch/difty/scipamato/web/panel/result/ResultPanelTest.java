@@ -1,5 +1,6 @@
 package ch.difty.scipamato.web.panel.result;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
@@ -14,6 +15,7 @@ import java.util.Optional;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.util.tester.TagTester;
 import org.junit.After;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -93,6 +95,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
         verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
+        verify(searchOrderMock, times(2)).isShowExcluded();
     }
 
     private void assertTableRow(String bb) {
@@ -121,6 +124,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(codeClassServiceMock).find(anyString());
         verify(codeServiceMock, times(8)).findCodesOfClass(isA(CodeClassId.class), anyString());
         verify(searchOrderMock).getId();
+        verify(searchOrderMock, times(3)).isShowExcluded();
     }
 
     @Test
@@ -131,6 +135,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock, times(2)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
+        verify(searchOrderMock, times(4)).isShowExcluded();
     }
 
     /**
@@ -143,6 +148,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
         verify(paperServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
+        verify(searchOrderMock, times(2)).isShowExcluded();
     }
 
     @Test
@@ -178,6 +184,36 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         getTester().startComponentInPage(makePanel());
         getTester().clickLink(PANEL_ID + ":summaryTableWithoutResultsLink");
         verifyPdfExport();
+    }
+
+    @Test
+    public void startingPage_showingResults() {
+        when(searchOrderMock.isShowExcluded()).thenReturn(false);
+        assertExcludeIcon("fa fa-fw fa-ban", "Exclude the paper from the search");
+    }
+
+    @Test
+    public void startingPage_showingExclusions() {
+        when(searchOrderMock.isShowExcluded()).thenReturn(true);
+        assertExcludeIcon("fa fa-fw fa-check-circle-o", "Re-include the paper into the search");
+    }
+
+    private void assertExcludeIcon(String iconClass, String titleValue) {
+        getTester().startComponentInPage(makePanel());
+
+        String responseTxt = getTester().getLastResponse().getDocument();
+
+        TagTester iconTagTester = TagTester.createTagByAttribute(responseTxt, "class", iconClass);
+        assertThat(iconTagTester).isNotNull();
+        assertThat(iconTagTester.getName()).isEqualTo("i");
+
+        TagTester titleTagTester = TagTester.createTagByAttribute(responseTxt, "title", titleValue);
+        assertThat(titleTagTester).isNotNull();
+        assertThat(titleTagTester.getName()).isEqualTo("i");
+
+        verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
+        verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
+        verify(searchOrderMock, times(2)).isShowExcluded();
     }
 
 }

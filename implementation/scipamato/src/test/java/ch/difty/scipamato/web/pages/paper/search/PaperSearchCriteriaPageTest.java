@@ -21,7 +21,6 @@ import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.persistance.jooq.search.SearchOrderFilter;
 import ch.difty.scipamato.service.CodeClassService;
 import ch.difty.scipamato.service.CodeService;
-import ch.difty.scipamato.service.PaperSlimService;
 import ch.difty.scipamato.service.SearchOrderService;
 import ch.difty.scipamato.web.pages.BasePageTest;
 import ch.difty.scipamato.web.panel.paper.SearchablePaperPanel;

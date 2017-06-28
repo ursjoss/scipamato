@@ -10,11 +10,13 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.StringValue;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.auth.Roles;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.service.PaperService;
+import ch.difty.scipamato.web.PageParameterNames;
 import ch.difty.scipamato.web.pages.SelfUpdatingPage;
 import ch.difty.scipamato.web.panel.paper.EditablePaperPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
@@ -62,19 +64,32 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
     private final PageReference callingPage;
     private final Long searchOrderId;
+    private final boolean showingExclusions;
 
     /**
      * Instantiates the page with a new paper with a free number and n.a. values on all non-nullable fields.
-     * Allows the page to jump back to the calling page and also exclude the page from a search order.
+     * Allows the page to jump back to the calling page. Allows to exclude/re-include papers from search orders, but only if
+     * the page parameters contain the respective information (searchOrderId, showingExclusions)
      * @param parameters page parameters
      * @param callingPage page reference to the page that called this page. Can be null.
-     * @param searchOrderId id of the search order that found this paper. Offers a button to exclude paper from search order.
      */
     public PaperEntryPage(PageParameters parameters, PageReference callingPage) {
         super(parameters);
         initDefaultModel();
         this.callingPage = callingPage;
-        this.searchOrderId = null;
+        this.searchOrderId = searchOrderIdFromPageParameters();
+        this.showingExclusions = showExcludedFromPageParameters();
+    }
+
+    private Long searchOrderIdFromPageParameters() {
+        final StringValue sv = getPageParameters().get(PageParameterNames.SEARCH_ORDER_ID);
+        return sv.isNull() ? null : sv.toLong();
+    }
+
+    private boolean showExcludedFromPageParameters() {
+        final StringValue ieString = getPageParameters().get(PageParameterNames.SHOW_EXCLUDED);
+        final Boolean ie = ieString.isNull() ? null : ieString.toBoolean();
+        return ie != null ? ie.booleanValue() : false;
     }
 
     /**
@@ -83,20 +98,23 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      * @param callingPage page reference to the page that called this page. Can be null.
      */
     public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage) {
-        this(paperModel, callingPage, null);
+        this(paperModel, callingPage, null, false);
     }
 
     /**
      * Instantiates the page with the paper passed in as model. Allows the page to jump back to the calling page.
-     * Allows to exclude the paper from the search order where it was found.
+     * Allows to exclude or re-include the paper from the search order where it was found.
      * @param paperModel model of the paper that shall be displayed.
      * @param callingPage page reference to the page that called this page. Can be null.
      * @param searchOrderId the id of the search order that found this paper. Offers a button to exclude the paper from the search order.
+     * @param showingExclusions if false, the paper is part of the search result and can be excluded from it.
+     *        If true, the current paper has already been excluded from the search order. You can re-include it.
      */
-    public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage, Long searchOrderId) {
+    public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage, Long searchOrderId, boolean showingExclusions) {
         super(paperModel);
         this.callingPage = callingPage;
         this.searchOrderId = searchOrderId;
+        this.showingExclusions = showingExclusions;
     }
 
     @Override
@@ -125,7 +143,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
     @Override
     protected void implSpecificOnInitialize() {
-        contentPanel = new EditablePaperPanel("contentPanel", getModel(), callingPage, searchOrderId) {
+        contentPanel = new EditablePaperPanel("contentPanel", getModel(), callingPage, searchOrderId, showingExclusions) {
             private static final long serialVersionUID = 1L;
 
             @Override

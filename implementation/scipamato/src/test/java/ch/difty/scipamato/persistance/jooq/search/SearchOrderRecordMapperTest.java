@@ -59,7 +59,7 @@ public class SearchOrderRecordMapperTest extends RecordMapperTest<SearchOrderRec
         assertThat(entity.getSearchConditions()).isEmpty();
 
         // not persisted and therefore always false
-        assertThat(entity.isInvertExclusions()).isFalse();
+        assertThat(entity.isShowExcluded()).isFalse();
     }
 
 }

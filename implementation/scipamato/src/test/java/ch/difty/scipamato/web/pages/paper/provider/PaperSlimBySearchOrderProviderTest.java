@@ -92,4 +92,20 @@ public class PaperSlimBySearchOrderProviderTest extends AbstractPaperSlimProvide
         assertThat(provider.getSearchOrderId()).isEqualTo(55l);
         verify(searchOrder).getId();
     }
+
+    @Test
+    public void isShowingExclusion_ifTrueInFilter_returnsTrue() {
+        assertShowExcluded(true);
+    }
+
+    @Test
+    public void isShowingExclusion_ifFalseInFilter_returnsFalse() {
+        assertShowExcluded(false);
+    }
+
+    private void assertShowExcluded(boolean result) {
+        when(searchOrder.isShowExcluded()).thenReturn(result);
+        assertThat(provider.isShowExcluded()).isEqualTo(result);
+        verify(searchOrder).isShowExcluded();
+    }
 }
