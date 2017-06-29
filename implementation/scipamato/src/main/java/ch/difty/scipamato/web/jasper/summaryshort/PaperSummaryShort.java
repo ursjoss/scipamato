@@ -1,7 +1,9 @@
 package ch.difty.scipamato.web.jasper.summaryshort;
 
 import ch.difty.scipamato.entity.Paper;
+import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.web.jasper.JasperEntity;
+import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 
 /**
  * DTO to feed the PaperSummaryShortDataSource
@@ -17,10 +19,30 @@ public class PaperSummaryShort extends JasperEntity {
     private final String location;
     private final String goalsLabel;
     private final String goals;
-    private final String populationPlaceLabel;
-    private final String populationPlace;
     private final String methodsLabel;
     private final String methods;
+    private final String methodOutcomeLabel;
+    private final String methodOutcome;
+    private final String resultMeasuredOutcomeLabel;
+    private final String resultMeasuredOutcome;
+    private final String methodStudyDesignLabel;
+    private final String methodStudyDesign;
+    private final String populationPlaceLabel;
+    private final String populationPlace;
+    private final String populationParticipantsLabel;
+    private final String populationParticipants;
+    private final String populationDurationLabel;
+    private final String populationDuration;
+    private final String exposurePollutantLabel;
+    private final String exposurePollutant;
+    private final String exposureAssessmentLabel;
+    private final String exposureAssessment;
+    private final String resultExposureRangeLabel;
+    private final String resultExposureRange;
+    private final String methodStatisticsLabel;
+    private final String methodStatistics;
+    private final String methodConfoundersLabel;
+    private final String methodConfounders;
     private final String resultEffectEstimateLabel;
     private final String resultEffectEstimate;
     private final String comment;
@@ -31,54 +53,57 @@ public class PaperSummaryShort extends JasperEntity {
     private final String createdBy;
 
     /**
-     * Instantiation with a {@link Paper} and additional fields
+     * Instantiation with a {@link Paper} and the {@link ReportHeaderFields}
      *
      * @param p
-     *      the paper
-     * @param populationPlaceLabel
-     *      localized label for the populationPlace field
-     * @param methodsLabel
-     *      localized label for the methods field
-     * @param resultEffectEstimateLabel
-     *      localized label for the resultEffectEstimate field
-     * @param commentLabel
-     *      localized label for the comment field
-     * @param headerPart
-     *      Static part of the header - will be supplemented with the id
-     * @param brand
-     *      Brand of the application
+     *      the paper with the relevant fields
+     * @param rhf
+     *      the reportHeaderFields with the localized field headers
      */
-    public PaperSummaryShort(final Paper p, final String goalsLabel, final String populationPlaceLabel, final String methodsLabel, final String resultEffectEstimateLabel, final String commentLabel,
-            final String headerPart, final String brand) {
-        this(p.getNumber(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulationPlace(), p.getMethods(), p.getResultEffectEstimate(), p.getComment(), goalsLabel,
-                populationPlaceLabel, methodsLabel, resultEffectEstimateLabel, commentLabel, headerPart, brand, p.getCreatedByName());
-    }
+    public PaperSummaryShort(final Paper p, final ReportHeaderFields rhf) {
+        AssertAs.notNull(p, "p");
+        AssertAs.notNull(rhf, "rhf");
 
-    /**
-     * Instantiation with all individual fields (those that are part of a {@link Paper} and all other from the other constructor.
-     */
-    public PaperSummaryShort(final Long number, final String authors, final String title, final String location, final String goals, final String populationPlace, final String methods,
-            final String resultEffectEstimate, final String comment, final String goalsLabel, final String populationPlaceLabel, final String methodsLabel, final String resultEffectEstimateLabel,
-            final String commentLabel, final String headerPart, final String brand, final String createdBy) {
-        this.number = number != null ? String.valueOf(number) : "";
-        this.authors = na(authors);
-        this.title = na(title);
-        this.location = na(location);
-        this.goals = na(goals);
-        this.populationPlace = na(populationPlace);
-        this.methods = na(methods);
-        this.resultEffectEstimate = na(resultEffectEstimate);
-        this.comment = na(comment);
+        final Long no = p.getNumber();
+        this.number = no != null ? String.valueOf(no) : "";
+        this.authors = na(p.getAuthors());
+        this.title = na(p.getTitle());
+        this.location = na(p.getLocation());
+        this.goals = na(p.getGoals());
+        this.methods = na(p.getMethods());
+        this.methodOutcome = na(p.getMethodOutcome());
+        this.resultMeasuredOutcome = na(p.getResultMeasuredOutcome());
+        this.methodStudyDesign = na(p.getMethodStudyDesign());
+        this.populationPlace = na(p.getPopulationPlace());
+        this.populationParticipants = na(p.getPopulationParticipants());
+        this.populationDuration = na(p.getPopulationDuration());
+        this.exposurePollutant = na(p.getExposurePollutant());
+        this.exposureAssessment = na(p.getExposureAssessment());
+        this.resultExposureRange = na(p.getResultExposureRange());
+        this.methodStatistics = na(p.getMethodStatistics());
+        this.methodConfounders = na(p.getMethodConfounders());
+        this.resultEffectEstimate = na(p.getResultEffectEstimate());
+        this.comment = na(p.getComment());
 
-        this.goalsLabel = na(goalsLabel, this.goals);
-        this.populationPlaceLabel = na(populationPlaceLabel, this.populationPlace);
-        this.methodsLabel = na(methodsLabel, this.methods);
-        this.resultEffectEstimateLabel = na(resultEffectEstimateLabel, this.resultEffectEstimate);
-        this.commentLabel = na(commentLabel, this.comment);
+        this.goalsLabel = na2(rhf.getGoalsLabel(), goals);
+        this.methodsLabel = na2(rhf.getMethodsLabel(), methods);
+        this.methodOutcomeLabel = na2(rhf.getMethodOutcomeLabel(), methodOutcome);
+        this.resultMeasuredOutcomeLabel = na2(rhf.getResultMeasuredOutcomeLabel(), resultMeasuredOutcome);
+        this.methodStudyDesignLabel = na2(rhf.getMethodStudyDesignLabel(), methodStudyDesign);
+        this.populationPlaceLabel = na2(rhf.getPopulationPlaceLabel(), populationPlace);
+        this.populationParticipantsLabel = na2(rhf.getPopulationParticipantsLabel(), populationParticipants);
+        this.populationDurationLabel = na2(rhf.getPopulationDurationLabel(), populationDuration);
+        this.exposurePollutantLabel = na2(rhf.getExposurePollutantLabel(), exposurePollutant);
+        this.exposureAssessmentLabel = na2(rhf.getExposureAssessmentLabel(), exposureAssessment);
+        this.resultExposureRangeLabel = na2(rhf.getResultExposureRangeLabel(), resultExposureRange);
+        this.methodStatisticsLabel = na2(rhf.getMethodStatisticsLabel(), methodStatistics);
+        this.methodConfoundersLabel = na2(rhf.getMethodConfoundersLabel(), methodConfounders);
+        this.resultEffectEstimateLabel = na2(rhf.getResultEffectEstimateLabel(), resultEffectEstimate);
+        this.commentLabel = na2(rhf.getCommentLabel(), comment);
 
-        this.header = makeHeader(number, headerPart);
-        this.brand = na(brand);
-        this.createdBy = na(createdBy);
+        this.header = makeHeader(no, rhf.getHeaderPart());
+        this.brand = na(rhf.getBrand());
+        this.createdBy = na(p.getCreatedByName());
     }
 
     private String makeHeader(final Long number, final String headerPart) {
@@ -118,6 +143,38 @@ public class PaperSummaryShort extends JasperEntity {
         return goals;
     }
 
+    public String getMethodsLabel() {
+        return methodsLabel;
+    }
+
+    public String getMethods() {
+        return methods;
+    }
+
+    public String getMethodOutcomeLabel() {
+        return methodOutcomeLabel;
+    }
+
+    public String getMethodOutcome() {
+        return methodOutcome;
+    }
+
+    public String getResultMeasuredOutcomeLabel() {
+        return resultMeasuredOutcomeLabel;
+    }
+
+    public String getResultMeasuredOutcome() {
+        return resultMeasuredOutcome;
+    }
+
+    public String getMethodStudyDesignLabel() {
+        return methodStudyDesignLabel;
+    }
+
+    public String getMethodStudyDesign() {
+        return methodStudyDesign;
+    }
+
     public String getPopulationPlaceLabel() {
         return populationPlaceLabel;
     }
@@ -126,12 +183,60 @@ public class PaperSummaryShort extends JasperEntity {
         return populationPlace;
     }
 
-    public String getMethodsLabel() {
-        return methodsLabel;
+    public String getPopulationParticipantsLabel() {
+        return populationParticipantsLabel;
     }
 
-    public String getMethods() {
-        return methods;
+    public String getPopulationParticipants() {
+        return populationParticipants;
+    }
+
+    public String getPopulationDurationLabel() {
+        return populationDurationLabel;
+    }
+
+    public String getPopulationDuration() {
+        return populationDuration;
+    }
+
+    public String getExposurePollutantLabel() {
+        return exposurePollutantLabel;
+    }
+
+    public String getExposurePollutant() {
+        return exposurePollutant;
+    }
+
+    public String getExposureAssessmentLabel() {
+        return exposureAssessmentLabel;
+    }
+
+    public String getExposureAssessment() {
+        return exposureAssessment;
+    }
+
+    public String getResultExposureRangeLabel() {
+        return resultExposureRangeLabel;
+    }
+
+    public String getResultExposureRange() {
+        return resultExposureRange;
+    }
+
+    public String getMethodStatisticsLabel() {
+        return methodStatisticsLabel;
+    }
+
+    public String getMethodStatistics() {
+        return methodStatistics;
+    }
+
+    public String getMethodConfoundersLabel() {
+        return methodConfoundersLabel;
+    }
+
+    public String getMethodConfounders() {
+        return methodConfounders;
     }
 
     public String getResultEffectEstimateLabel() {

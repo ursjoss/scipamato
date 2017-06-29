@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
+import ch.difty.scipamato.lib.NullArgumentException;
+
 public class JasperEntityCommonTest extends JasperEntity {
 
     private static final long serialVersionUID = 1L;
@@ -66,5 +68,50 @@ public class JasperEntityCommonTest extends JasperEntity {
     @Test
     public void na_withNonBlankParameterAndNonBlankValue_returnsLabel() {
         assertThat(na("foo", "bar")).isEqualTo("foo");
+    }
+
+    @Test(expected = NullArgumentException.class)
+    public void na2_withNullParameterAndNullValue_throws() {
+        na2(null, null);
+    }
+
+    @Test(expected = NullArgumentException.class)
+    public void na2_withNullParameterAndBlankValue_returnsBlank() {
+        na2(null, "");
+    }
+
+    @Test(expected = NullArgumentException.class)
+    public void na2_withNullParameterAndNonBlankValue_returnsBlank() {
+        na2(null, "foo");
+    }
+
+    @Test
+    public void na2_withBlankParameterAndNullValue_throws() {
+        assertThat(na2("", null)).isEqualTo("");
+    }
+
+    @Test
+    public void na2_withBlankParameterAndNonBlankValue_throws() {
+        assertThat(na2("foo", null)).isEqualTo("");
+    }
+
+    @Test
+    public void na2_withBlankParameterAndBlankValue_returnsBlank() {
+        assertThat(na2("", "")).isEqualTo("");
+    }
+
+    @Test
+    public void na2_withNonBlankParameterAndBlankValue_returnsBlank() {
+        assertThat(na2("foo", "")).isEqualTo("");
+    }
+
+    @Test
+    public void na2_withBlankParameterAndNonBlankValue_returnsBlank() {
+        assertThat(na2("", "foo")).isEqualTo("");
+    }
+
+    @Test
+    public void na2_withNonBlankParameterAndNonBlankValue_returnsLabel() {
+        assertThat(na2("foo", "bar")).isEqualTo("foo");
     }
 }

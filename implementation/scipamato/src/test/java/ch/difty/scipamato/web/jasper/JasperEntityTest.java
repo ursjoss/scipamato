@@ -36,9 +36,20 @@ public abstract class JasperEntityTest {
     protected static final String METHOD_CONFOUNDERS = "methodConfounders";
     protected static final String EXPOSURE_POLLUTANT = "exposurePolutant";
     protected static final String EXPOSURE_ASSESSMENT = "exposureAssessment";
+    protected static final String RESULT_MEASURED_OUTCOME = "resultMeasuredOutcome";
     protected static final String RESULT_EXPOSURE_RANGE = "resultExposureRange";
     protected static final String RESULT_EFFECT_ESTIMATE = "resultEffectEstimate";
+    protected static final String METHOD_OUTCOME_LABEL = "methodOutcomeLabel";
+    protected static final String RESULT_MEASURED_OUTCOME_LABEL = "resultMeasuredOutcomeLabel";
+    protected static final String METHOD_STUDY_DESIGN_LABEL = "methodStudyDesignLabel";
     protected static final String POPULATION_PLACE_LABEL = "populationPlaceLabel";
+    protected static final String POPULATION_PARTICIPANTS_LABEL = "populationParticipantsLabel";
+    protected static final String POPULATION_DURATION_LABEL = "populationDurationLabel";
+    protected static final String EXPOSURE_POLLUTANT_LABEL = "exposurePolutantLabel";
+    protected static final String EXPOSURE_ASSESSMENT_LABEL = "exposureAssessmentLabel";
+    protected static final String RESULT_EXPOSURE_RANGE_LABEL = "resultExposureRangeLabel";
+    protected static final String METHOD_STATISTICS_LABEL = "methodStatisticsLabel";
+    protected static final String METHOD_CONFOUNDERS_LABEL = "methodConfoundersLabel";
     protected static final String RESULT_EFFECT_ESTIMATE_LABEL = "resultEffectEstimateLabel";
 
     protected static final int PM_ID = 1234;
@@ -75,6 +86,7 @@ public abstract class JasperEntityTest {
         p.setExposureAssessment(EXPOSURE_ASSESSMENT);
         p.setResultExposureRange(RESULT_EXPOSURE_RANGE);
         p.setResultEffectEstimate(RESULT_EFFECT_ESTIMATE);
+        p.setResultMeasuredOutcome(RESULT_MEASURED_OUTCOME);
 
         p.setPmId(PM_ID);
 
