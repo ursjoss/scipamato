@@ -1,6 +1,7 @@
 package ch.difty.scipamato.web.jasper.summarytable;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -14,6 +15,7 @@ import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.CodeClassId;
 import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.web.jasper.PaperDataSourceTest;
+import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
@@ -41,6 +43,12 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     private final List<Code> codesOfCodeClass7 = new ArrayList<>();
 
     private PaperSummaryTableDataSource ds;
+    private ReportHeaderFields rhf = newReportHeaderFields();
+
+    private ReportHeaderFields newReportHeaderFields() {
+        ReportHeaderFields.Builder b = new ReportHeaderFields.Builder("", BRAND).withNumber(NUMBER_LABEL).withCaption(CAPTION);
+        return b.build();
+    }
 
     @Override
     public void setUpHook() {
@@ -96,7 +104,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
         when(dataProviderMock.size()).thenReturn(1l);
         when(dataProviderMock.findAllPapersByFilter()).thenReturn(Arrays.asList(paperMock));
 
-        ds = new PaperSummaryTableDataSource(dataProviderMock, true, CAPTION, BRAND, NUMBER_LABEL, pdfExporterConfigMock);
+        ds = new PaperSummaryTableDataSource(dataProviderMock, rhf, true, pdfExporterConfigMock);
         assertDataSource(FILE_NAME);
 
         verify(dataProviderMock).size();
@@ -104,7 +112,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
 
         verify(paperMock).getNumber();
         verify(paperMock).getFirstAuthor();
-        verify(paperMock).getPublicationYear();
+        verify(paperMock, times(2)).getPublicationYear();
         verify(paperMock).getGoals();
         verify(paperMock).getTitle();
         verify(paperMock).getResult();
@@ -116,7 +124,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0l);
-        ds = new PaperSummaryTableDataSource(dataProviderMock, true, CAPTION, BRAND, NUMBER_LABEL, pdfExporterConfigMock);
+        ds = new PaperSummaryTableDataSource(dataProviderMock, rhf, true, pdfExporterConfigMock);
         assertThat(ds.getReportDataSource().next()).isFalse();
         verify(dataProviderMock).size();
     }
@@ -124,7 +132,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     @Test
     public void instantiatingWithProvider_withNullProivder_throws() throws JRException {
         try {
-            new PaperSummaryTableDataSource(null, true, CAPTION, BRAND, NUMBER_LABEL, pdfExporterConfigMock);
+            new PaperSummaryTableDataSource(null, rhf, true, pdfExporterConfigMock);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dataProvider must not be null.");
         }

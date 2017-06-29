@@ -39,6 +39,9 @@ public class ReportHeaderFields implements IClusterable {
     private final String population;
     private final String result;
 
+    private final String caption;
+    private final String number;
+
     private ReportHeaderFields(final Builder b) {
         this.goals = b.goals;
         this.methods = b.methods;
@@ -59,6 +62,8 @@ public class ReportHeaderFields implements IClusterable {
         this.brand = b.brand;
         this.population = b.population;
         this.result = b.result;
+        this.caption = b.caption;
+        this.number = b.number;
     }
 
     public String getGoalsLabel() {
@@ -137,6 +142,14 @@ public class ReportHeaderFields implements IClusterable {
         return result;
     }
 
+    public String getCaptionLabel() {
+        return caption;
+    }
+
+    public String getNumberLabel() {
+        return number;
+    }
+
     /**
      * Local builder to provide named arguments for the various labels.
      * @author u.joss
@@ -162,6 +175,8 @@ public class ReportHeaderFields implements IClusterable {
         private String comment;
         private String population;
         private String result;
+        private String caption;
+        private String number;
 
         public Builder(final String headerPart, final String brand) {
             this.headerPart = headerPart;
@@ -250,6 +265,16 @@ public class ReportHeaderFields implements IClusterable {
 
         public Builder withResult(final String result) {
             this.result = result;
+            return this;
+        }
+
+        public Builder withCaption(final String caption) {
+            this.caption = caption;
+            return this;
+        }
+
+        public Builder withNumber(final String number) {
+            this.number = number;
             return this;
         }
 

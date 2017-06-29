@@ -199,9 +199,10 @@ public class ResultPanel extends AbstractPanel<Void> {
         final String pdfCaption = new StringResourceModel("paper_summary_table.titlePart", this, null).getString();
         final String brand = getProperties().getBrand();
         final String numberLabel = new StringResourceModel("number" + LABEL_RECOURCE_TAG, this, null).getString();
-        final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
 
-        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperSummaryTableDataSource(dataProvider, true, pdfCaption, brand, numberLabel, config));
+        final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
+        ReportHeaderFields rhf = new ReportHeaderFields.Builder("", brand).withNumber(numberLabel).withCaption(pdfCaption).build();
+        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperSummaryTableDataSource(dataProvider, rhf, true, config));
         reviewLink.setOutputMarkupId(true);
         reviewLink.setBody(new StringResourceModel("link.summary_table.label"));
         reviewLink.add(new AttributeModifier(TITLE, new StringResourceModel("link.summary_table.title", this, null).getString()));
@@ -214,7 +215,8 @@ public class ResultPanel extends AbstractPanel<Void> {
         final String numberLabel = new StringResourceModel("number" + LABEL_RECOURCE_TAG, this, null).getString();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
 
-        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperSummaryTableDataSource(dataProvider, false, pdfCaption, brand, numberLabel, config));
+        ReportHeaderFields rhf = new ReportHeaderFields.Builder("", brand).withNumber(numberLabel).withCaption(pdfCaption).build();
+        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperSummaryTableDataSource(dataProvider, rhf, false, config));
         reviewLink.setOutputMarkupId(true);
         reviewLink.setBody(new StringResourceModel("link.summary_table_wo_results.label"));
         reviewLink.add(new AttributeModifier(TITLE, new StringResourceModel("link.summary_table_wo_results.title", this, null).getString()));
