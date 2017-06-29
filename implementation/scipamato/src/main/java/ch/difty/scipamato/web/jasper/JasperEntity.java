@@ -13,6 +13,7 @@ public abstract class JasperEntity implements Serializable {
     /**
      * Returns the label with the real value if present or a default value if null.
      * However, if the associated value is blank or null, the label is blank as well.
+     * TODO fix null value -> should return blank
      * @param label
      * @param value
      * @return non-null label
