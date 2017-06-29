@@ -5,23 +5,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 
 import ch.difty.scipamato.web.jasper.JasperEntityTest;
+import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 
 public class PaperSummaryTest extends JasperEntityTest {
 
     private PaperSummary ps;
+    private ReportHeaderFields rhf = newReportHeaderFields();
 
-    @Test
-    public void instantiatingUsingIndividualFields() {
-        ps = new PaperSummary(NUMBER, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, COMMENT, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND,
-                CREATED_BY);
-
-        assertPaperSummary();
+    private ReportHeaderFields newReportHeaderFields() {
+        ReportHeaderFields.Builder b = new ReportHeaderFields.Builder(HEADER_PART, BRAND).withPopulation(POPULATION_LABEL)
+                .withMethods(METHODS_LABEL)
+                .withResult(RESULT_LABEL)
+                .withComment(COMMENT_LABEL);
+        return b.build();
     }
 
     @Test
-    public void instantiatingUsingPaper() {
-        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
-
+    public void instantiating() {
+        ps = new PaperSummary(p, rhf);
         assertPaperSummary();
     }
 
@@ -47,58 +48,22 @@ public class PaperSummaryTest extends JasperEntityTest {
     }
 
     @Test
-    public void withNullFieldsWherePossible_providesEmptyStrings() {
-        ps = new PaperSummary(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-
-        assertThat(ps.getNumber()).isEmpty();
-        assertThat(ps.getAuthors()).isEmpty();
-        assertThat(ps.getTitle()).isEmpty();
-        assertThat(ps.getLocation()).isEmpty();
-        assertThat(ps.getGoals()).isEmpty();
-        assertThat(ps.getPopulation()).isEmpty();
-        assertThat(ps.getMethods()).isEmpty();
-        assertThat(ps.getComment()).isEmpty();
-        assertThat(ps.getResult()).isEmpty();
-
-        assertThat(ps.getPopulationLabel()).isEmpty();
-        assertThat(ps.getMethodsLabel()).isEmpty();
-        assertThat(ps.getResultLabel()).isEmpty();
-        assertThat(ps.getCommentLabel()).isEmpty();
-
-        assertThat(ps.getHeader()).isEmpty();
-        assertThat(ps.getBrand()).isEmpty();
-        assertThat(ps.getCreatedBy()).isEmpty();
-    }
-
-    @Test
-    public void withNullFieldsExceptId_providesHeaderWithIdOnly() {
-        ps = new PaperSummary(NUMBER, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-
-        assertThat(ps.getNumber()).isEqualTo(String.valueOf(NUMBER));
-        assertThat(ps.getHeader()).isEqualTo(String.valueOf(NUMBER));
-    }
-
-    @Test
-    public void withNullFieldsExceptHeaderPart_providesHeaderPartOnly() {
-        ps = new PaperSummary(null, null, null, null, null, null, null, null, null, null, null, null, null, HEADER_PART, null, null);
-
-        assertThat(ps.getNumber()).isEmpty();
-        assertThat(ps.getHeader()).isEqualTo(HEADER_PART);
-    }
-
-    @Test
     public void populationLabelIsBlankIfPopulationIsBlank() {
         p.setPopulation("");
-        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
+        ps = newPaperSummary();
 
         assertThat(ps.getPopulation()).isEqualTo("");
         assertThat(ps.getPopulationLabel()).isEqualTo("");
     }
 
+    private PaperSummary newPaperSummary() {
+        return new PaperSummary(p, rhf);
+    }
+
     @Test
     public void methodsLabelIsBlankIfMethodsIsBlank() {
         p.setMethods("");
-        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
+        ps = newPaperSummary();
 
         assertThat(ps.getMethods()).isEqualTo("");
         assertThat(ps.getMethodsLabel()).isEqualTo("");
@@ -107,7 +72,7 @@ public class PaperSummaryTest extends JasperEntityTest {
     @Test
     public void resultLabelIsBlankIfResultIsBlank() {
         p.setResult("");
-        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
+        ps = newPaperSummary();
 
         assertThat(ps.getResult()).isEqualTo("");
         assertThat(ps.getResultLabel()).isEqualTo("");
@@ -116,7 +81,7 @@ public class PaperSummaryTest extends JasperEntityTest {
     @Test
     public void commentLabelIsBlankIfCommentIsBlank() {
         p.setComment("");
-        ps = new PaperSummary(p, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND);
+        ps = newPaperSummary();
 
         assertThat(ps.getComment()).isEqualTo("");
         assertThat(ps.getCommentLabel()).isEqualTo("");

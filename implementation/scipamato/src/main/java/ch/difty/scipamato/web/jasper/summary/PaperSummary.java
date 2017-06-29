@@ -1,7 +1,9 @@
 package ch.difty.scipamato.web.jasper.summary;
 
 import ch.difty.scipamato.entity.Paper;
+import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.web.jasper.JasperEntity;
+import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 
 /**
  * DTO to feed the PaperSummaryDataSource
@@ -30,52 +32,36 @@ public class PaperSummary extends JasperEntity {
     private final String createdBy;
 
     /**
-     * Instantiation with a {@link Paper} and additional fields
+     * Instantiation with a {@link Paper} and the {@link ReportHeaderFields}
      *
      * @param p
-     *      the paper
-     * @param populationLabel
-     *      localized label for the population field
-     * @param methodsLabel
-     *      localized label for the methods field
-     * @param resultLabel
-     *      localized label for the result field
-     * @param commentLabel
-     *      localized label for the comment field
-     * @param headerPart
-     *      Static part of the header - will be supplemented with the id
-     * @param brand
-     *      Brand of the application
+     *      the paper with the relevant fields
+     * @param rhf
+     *      the reportHeaderFields with the localized field headers
      */
-    public PaperSummary(final Paper p, final String populationLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart, final String brand) {
-        this(p.getNumber(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getPopulation(), p.getMethods(), p.getResult(), p.getComment(), populationLabel, methodsLabel, resultLabel,
-                commentLabel, headerPart, brand, p.getCreatedByName());
-    }
+    public PaperSummary(final Paper p, final ReportHeaderFields rhf) {
+        AssertAs.notNull(p, "p");
+        AssertAs.notNull(rhf, "rhf");
 
-    /**
-     * Instantiation with all individual fields (those that are part of a {@link Paper} and all other from the other constructor.
-     */
-    public PaperSummary(final Long number, final String authors, final String title, final String location, final String goals, final String population, final String methods, final String result,
-            final String comment, final String populationLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart, final String brand,
-            final String createdBy) {
-        this.number = number != null ? String.valueOf(number) : "";
-        this.authors = na(authors);
-        this.title = na(title);
-        this.location = na(location);
-        this.goals = na(goals);
-        this.population = na(population);
-        this.methods = na(methods);
-        this.result = na(result);
-        this.comment = na(comment);
+        final Long no = p.getNumber();
+        this.number = no != null ? String.valueOf(no) : "";
+        this.authors = na(p.getAuthors());
+        this.title = na(p.getTitle());
+        this.location = na(p.getLocation());
+        this.goals = na(p.getGoals());
+        this.population = na(p.getPopulation());
+        this.methods = na(p.getMethods());
+        this.result = na(p.getResult());
+        this.comment = na(p.getComment());
 
-        this.populationLabel = na(populationLabel, this.population);
-        this.methodsLabel = na(methodsLabel, this.methods);
-        this.resultLabel = na(resultLabel, this.result);
-        this.commentLabel = na(commentLabel, this.comment);
+        this.populationLabel = na2(rhf.getPopulationLabel(), population);
+        this.methodsLabel = na2(rhf.getMethodsLabel(), methods);
+        this.resultLabel = na2(rhf.getResultLabel(), result);
+        this.commentLabel = na2(rhf.getCommentLabel(), comment);
 
-        this.header = makeHeader(number, headerPart);
-        this.brand = na(brand);
-        this.createdBy = na(createdBy);
+        this.header = makeHeader(no, rhf.getHeaderPart());
+        this.brand = na(rhf.getBrand());
+        this.createdBy = na(p.getCreatedByName());
     }
 
     private String makeHeader(final Long number, final String headerPart) {

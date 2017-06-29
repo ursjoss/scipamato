@@ -1,7 +1,23 @@
 package ch.difty.scipamato.web.jasper;
 
-public class ReportHeaderFields {
+import org.apache.wicket.util.io.IClusterable;
 
+/**
+ * Context holder for localized jasper report captions. Uses builder pattern
+ * in order to avoid having constructor with numerous String arguments.
+ *
+ * This class can be used to serve various jasper reports with different needs
+ * for localized labels. Consequently hardly any validation occurs in this class.
+ * It is up to the DTOs that are passed into the reports to validate the required
+ * labels are non-null.
+ *
+ * @author u.joss
+ */
+public class ReportHeaderFields implements IClusterable {
+
+    private static final long serialVersionUID = 1L;
+
+    // Avoiding the Tag 'Label' in the variables for brevity
     private final String goals;
     private final String methods;
     private final String methodOutcome;
@@ -20,7 +36,10 @@ public class ReportHeaderFields {
     private final String headerPart;
     private final String brand;
 
-    private ReportHeaderFields(Builder b) {
+    private final String population;
+    private final String result;
+
+    private ReportHeaderFields(final Builder b) {
         this.goals = b.goals;
         this.methods = b.methods;
         this.methodOutcome = b.methodOutcome;
@@ -38,6 +57,8 @@ public class ReportHeaderFields {
         this.comment = b.comment;
         this.headerPart = b.headerPart;
         this.brand = b.brand;
+        this.population = b.population;
+        this.result = b.result;
     }
 
     public String getGoalsLabel() {
@@ -108,6 +129,18 @@ public class ReportHeaderFields {
         return brand;
     }
 
+    public String getPopulationLabel() {
+        return population;
+    }
+
+    public String getResultLabel() {
+        return result;
+    }
+
+    /**
+     * Local builder to provide named arguments for the various labels.
+     * @author u.joss
+     */
     public static class Builder {
         private final String headerPart;
         private final String brand;
@@ -127,84 +160,96 @@ public class ReportHeaderFields {
         private String methodConfounders;
         private String resultEffectEstimate;
         private String comment;
+        private String population;
+        private String result;
 
         public Builder(final String headerPart, final String brand) {
             this.headerPart = headerPart;
             this.brand = brand;
         }
 
-        public Builder withGoals(String goals) {
+        public Builder withGoals(final String goals) {
             this.goals = goals;
             return this;
         }
 
-        public Builder withMethods(String methods) {
+        public Builder withMethods(final String methods) {
             this.methods = methods;
             return this;
         }
 
-        public Builder withMethodOutcome(String methodOutcome) {
+        public Builder withMethodOutcome(final String methodOutcome) {
             this.methodOutcome = methodOutcome;
             return this;
         }
 
-        public Builder withResultMeasuredOutcome(String resultMeasuredOutcome) {
+        public Builder withResultMeasuredOutcome(final String resultMeasuredOutcome) {
             this.resultMeasuredOutcome = resultMeasuredOutcome;
             return this;
         }
 
-        public Builder withMethodStudyDesign(String methodStudyDesign) {
+        public Builder withMethodStudyDesign(final String methodStudyDesign) {
             this.methodStudyDesign = methodStudyDesign;
             return this;
         }
 
-        public Builder withPopulationPlace(String populationPlace) {
+        public Builder withPopulationPlace(final String populationPlace) {
             this.populationPlace = populationPlace;
             return this;
         }
 
-        public Builder withPopulationPariticpants(String populationPariticpants) {
+        public Builder withPopulationPariticpants(final String populationPariticpants) {
             this.populationPariticpants = populationPariticpants;
             return this;
         }
 
-        public Builder withPopulationDuration(String populationDuration) {
+        public Builder withPopulationDuration(final String populationDuration) {
             this.populationDuration = populationDuration;
             return this;
         }
 
-        public Builder withExposurePollutant(String exposurePollutant) {
+        public Builder withExposurePollutant(final String exposurePollutant) {
             this.exposurePollutant = exposurePollutant;
             return this;
         }
 
-        public Builder withExposureAssessment(String exposureAssessment) {
+        public Builder withExposureAssessment(final String exposureAssessment) {
             this.exposureAssessment = exposureAssessment;
             return this;
         }
 
-        public Builder withResultExposureRange(String resultExposureRange) {
+        public Builder withResultExposureRange(final String resultExposureRange) {
             this.resultExposureRange = resultExposureRange;
             return this;
         }
 
-        public Builder withMethodStatistics(String methodStatistics) {
+        public Builder withMethodStatistics(final String methodStatistics) {
             this.methodStatistics = methodStatistics;
             return this;
         }
 
-        public Builder withMethodConfounders(String methodConfounders) {
+        public Builder withMethodConfounders(final String methodConfounders) {
             this.methodConfounders = methodConfounders;
             return this;
         }
 
-        public Builder withResultEffectEstimate(String resultEffectEstimate) {
+        public Builder withResultEffectEstimate(final String resultEffectEstimate) {
             this.resultEffectEstimate = resultEffectEstimate;
             return this;
         }
 
-        public Builder withComment(String comment) {
+        public Builder withComment(final String comment) {
             this.comment = comment;
+            return this;
+        }
+
+        public Builder withPopulation(final String population) {
+            this.population = population;
+            return this;
+        }
+
+        public Builder withResult(final String result) {
+            this.result = result;
             return this;
         }
 

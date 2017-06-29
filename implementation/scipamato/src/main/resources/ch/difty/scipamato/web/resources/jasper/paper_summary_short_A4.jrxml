@@ -192,7 +192,7 @@
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="0" width="140" height="15" uuid="039aea88-89ac-40c8-9617-1acaa6996e93">
+					<reportElement positionType="Float" x="0" y="0" width="150" height="15" uuid="039aea88-89ac-40c8-9617-1acaa6996e93">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -206,7 +206,7 @@
 					<textFieldExpression><![CDATA[$F{methodOutcomeLabel}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="145" y="0" width="410" height="15" isPrintWhenDetailOverflows="true" uuid="2aeff11b-8316-4b04-8858-0647a3661881">
+					<reportElement positionType="Float" x="155" y="0" width="400" height="15" isPrintWhenDetailOverflows="true" uuid="2aeff11b-8316-4b04-8858-0647a3661881">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -222,7 +222,7 @@
 					<textFieldExpression><![CDATA[$F{methodOutcome}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="20" width="140" height="15" uuid="9ac1c7fd-8ac7-49da-b141-b59e4fff65a1">
+					<reportElement positionType="Float" x="0" y="20" width="150" height="15" uuid="9ac1c7fd-8ac7-49da-b141-b59e4fff65a1">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -232,13 +232,13 @@
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="10" isBold="true" isItalic="true" isUnderline="false"/>
+						<font size="10" isBold="false" isItalic="true" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{resultMeasuredOutcomeLabel}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="145" y="20" width="410" height="15" isPrintWhenDetailOverflows="true" uuid="435e8763-e63f-4fa4-b77f-203af21ab7c8">
+					<reportElement positionType="Float" x="155" y="20" width="400" height="15" isPrintWhenDetailOverflows="true" uuid="435e8763-e63f-4fa4-b77f-203af21ab7c8">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -254,7 +254,7 @@
 					<textFieldExpression><![CDATA[$F{resultMeasuredOutcome}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="40" width="140" height="15" uuid="fac391e8-6b98-402b-9e2a-c9174233ba38">
+					<reportElement positionType="Float" x="0" y="40" width="150" height="15" uuid="fac391e8-6b98-402b-9e2a-c9174233ba38">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -270,7 +270,7 @@
 					<textFieldExpression><![CDATA[$F{methodStudyDesignLabel}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="145" y="40" width="410" height="15" isPrintWhenDetailOverflows="true" uuid="7f007a9a-39ea-4c51-928d-3f2245b4988b">
+					<reportElement positionType="Float" x="155" y="40" width="400" height="15" isPrintWhenDetailOverflows="true" uuid="7f007a9a-39ea-4c51-928d-3f2245b4988b">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -286,7 +286,7 @@
 					<textFieldExpression><![CDATA[$F{methodStudyDesign}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="60" width="140" height="15" uuid="1087aa86-8ad5-4f73-b4e9-e6c230a08455">
+					<reportElement positionType="Float" x="0" y="60" width="150" height="15" uuid="1087aa86-8ad5-4f73-b4e9-e6c230a08455">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -302,7 +302,7 @@
 					<textFieldExpression><![CDATA[$F{populationPlaceLabel}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="145" y="60" width="410" height="15" isPrintWhenDetailOverflows="true" uuid="a6428350-4e54-4965-ad24-026a1be3dba9">
+					<reportElement positionType="Float" x="155" y="60" width="400" height="15" isPrintWhenDetailOverflows="true" uuid="a6428350-4e54-4965-ad24-026a1be3dba9">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -318,7 +318,7 @@
 					<textFieldExpression><![CDATA[$F{populationPlace}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="80" width="140" height="15" uuid="43b3bb9d-6466-4268-b3ad-51062c532788">
+					<reportElement positionType="Float" x="0" y="80" width="150" height="15" uuid="43b3bb9d-6466-4268-b3ad-51062c532788">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -334,7 +334,7 @@
 					<textFieldExpression><![CDATA[$F{populationParticipantsLabel}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="145" y="80" width="410" height="15" isPrintWhenDetailOverflows="true" uuid="0e1eff51-eb57-4af5-9782-5c65df4ae727">
+					<reportElement positionType="Float" x="155" y="80" width="400" height="15" isPrintWhenDetailOverflows="true" uuid="0e1eff51-eb57-4af5-9782-5c65df4ae727">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -350,7 +350,7 @@
 					<textFieldExpression><![CDATA[$F{populationParticipants}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="100" width="140" height="15" uuid="21535539-1f1c-41f8-9c2d-b60ac7234397">
+					<reportElement positionType="Float" x="0" y="100" width="150" height="15" uuid="21535539-1f1c-41f8-9c2d-b60ac7234397">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -366,7 +366,7 @@
 					<textFieldExpression><![CDATA[$F{populationDurationLabel}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="145" y="100" width="410" height="15" isPrintWhenDetailOverflows="true" uuid="a8288489-92ed-4e72-9ad4-505d2c8de435">
+					<reportElement positionType="Float" x="155" y="100" width="400" height="15" isPrintWhenDetailOverflows="true" uuid="a8288489-92ed-4e72-9ad4-505d2c8de435">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -391,7 +391,7 @@
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="0" width="140" height="15" uuid="4f7b1bbd-6d8c-484e-ad30-6e88dd3ad78d">
+					<reportElement positionType="Float" x="0" y="0" width="150" height="15" uuid="4f7b1bbd-6d8c-484e-ad30-6e88dd3ad78d">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -405,7 +405,7 @@
 					<textFieldExpression><![CDATA[$F{exposurePollutantLabel}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="145" y="0" width="410" height="15" isPrintWhenDetailOverflows="true" uuid="59f613eb-6edc-4fc8-b937-b4ae280894a4">
+					<reportElement positionType="Float" x="155" y="0" width="400" height="15" isPrintWhenDetailOverflows="true" uuid="59f613eb-6edc-4fc8-b937-b4ae280894a4">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -421,7 +421,7 @@
 					<textFieldExpression><![CDATA[$F{exposurePollutant}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="20" width="140" height="15" uuid="09ae32c0-de1f-4738-a11e-275d8fde1641">
+					<reportElement positionType="Float" x="0" y="20" width="150" height="15" uuid="09ae32c0-de1f-4738-a11e-275d8fde1641">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -437,7 +437,7 @@
 					<textFieldExpression><![CDATA[$F{exposureAssessmentLabel}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="145" y="20" width="410" height="15" isPrintWhenDetailOverflows="true" uuid="0ac855c2-c3d2-41f1-97a3-f5d883841563">
+					<reportElement positionType="Float" x="155" y="20" width="400" height="15" isPrintWhenDetailOverflows="true" uuid="0ac855c2-c3d2-41f1-97a3-f5d883841563">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -453,7 +453,7 @@
 					<textFieldExpression><![CDATA[$F{exposureAssessment}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="40" width="140" height="15" uuid="563928c2-3b59-4c20-866f-cd698c8e9396">
+					<reportElement positionType="Float" x="0" y="40" width="150" height="15" uuid="563928c2-3b59-4c20-866f-cd698c8e9396">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -468,7 +468,7 @@
 					<textFieldExpression><![CDATA[$F{resultExposureRangeLabel}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="145" y="40" width="410" height="15" isPrintWhenDetailOverflows="true" uuid="e42735f3-52ed-4fe4-978f-abacf79c1bb8">
+					<reportElement positionType="Float" x="155" y="40" width="400" height="15" isPrintWhenDetailOverflows="true" uuid="e42735f3-52ed-4fe4-978f-abacf79c1bb8">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -484,7 +484,7 @@
 					<textFieldExpression><![CDATA[$F{resultExposureRange}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="60" width="140" height="15" uuid="f5f068e9-1f3d-4c75-b20d-c5c22f0a6e26">
+					<reportElement positionType="Float" x="0" y="60" width="150" height="15" uuid="f5f068e9-1f3d-4c75-b20d-c5c22f0a6e26">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -499,7 +499,7 @@
 					<textFieldExpression><![CDATA[$F{methodStatisticsLabel}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="145" y="60" width="410" height="15" isPrintWhenDetailOverflows="true" uuid="edba8f5c-d2cd-4d5c-a84b-f57b678638bf">
+					<reportElement positionType="Float" x="155" y="60" width="400" height="15" isPrintWhenDetailOverflows="true" uuid="edba8f5c-d2cd-4d5c-a84b-f57b678638bf">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -515,7 +515,7 @@
 					<textFieldExpression><![CDATA[$F{methodStatistics}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="80" width="140" height="15" uuid="671fcf80-b18c-48cb-8982-151b305b7bfb">
+					<reportElement positionType="Float" x="0" y="80" width="150" height="15" uuid="671fcf80-b18c-48cb-8982-151b305b7bfb">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -530,7 +530,7 @@
 					<textFieldExpression><![CDATA[$F{methodConfoundersLabel}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="145" y="80" width="410" height="15" isPrintWhenDetailOverflows="true" uuid="27a9a3e3-dc6b-40cd-aff4-bb38816716ce">
+					<reportElement positionType="Float" x="155" y="80" width="400" height="15" isPrintWhenDetailOverflows="true" uuid="27a9a3e3-dc6b-40cd-aff4-bb38816716ce">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -546,7 +546,7 @@
 					<textFieldExpression><![CDATA[$F{methodConfounders}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="100" width="140" height="15" uuid="0cb11a0f-3630-40b7-9b36-44375dac56ea">
+					<reportElement positionType="Float" x="0" y="100" width="150" height="15" uuid="0cb11a0f-3630-40b7-9b36-44375dac56ea">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -561,7 +561,7 @@
 					<textFieldExpression><![CDATA[$F{resultEffectEstimateLabel}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="145" y="100" width="410" height="15" isPrintWhenDetailOverflows="true" uuid="34bd0647-962d-4647-85c7-e3587d4a12eb">
+					<reportElement positionType="Float" x="155" y="100" width="400" height="15" isPrintWhenDetailOverflows="true" uuid="34bd0647-962d-4647-85c7-e3587d4a12eb">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -577,7 +577,7 @@
 					<textFieldExpression><![CDATA[$F{resultEffectEstimate}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="145" y="120" width="410" height="15" isPrintWhenDetailOverflows="true" uuid="59f613eb-6edc-4fc8-b937-b4ae280894a4">
+					<reportElement positionType="Float" x="155" y="120" width="400" height="15" isPrintWhenDetailOverflows="true" uuid="59f613eb-6edc-4fc8-b937-b4ae280894a4">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -593,7 +593,7 @@
 					<textFieldExpression><![CDATA[$F{comment}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="120" width="140" height="15" uuid="4f7b1bbd-6d8c-484e-ad30-6e88dd3ad78d">
+					<reportElement positionType="Float" x="0" y="120" width="150" height="15" uuid="4f7b1bbd-6d8c-484e-ad30-6e88dd3ad78d">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>

@@ -20,6 +20,13 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
+/**
+ * Common bsae class for Jasper paper datasources.
+ *
+ * @author u.joss
+ *
+ * @param <E> the type of the {@link JasperEntity}
+ */
 public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRConcreteResource<ScipamatoPdfResourceHandler> {
 
     private static final long serialVersionUID = 1L;
@@ -28,6 +35,15 @@ public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRCo
     private final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider;
     private final String baseName;
 
+    /**
+     * Instantiation of the data source with a list of jasper entities.
+     * @param handler
+     *     the pdf resource handler used for exporting the pdf
+     * @param baseName
+     *     the file name without the extension (.pdf)
+     * @param jasperEntities
+     *     a collection of {@link JasperEntity} items that will be used for populating the report.
+     */
     public JasperPaperDataSource(ScipamatoPdfResourceHandler handler, String baseName, Collection<E> jasperEntities) {
         super(handler);
         this.baseName = AssertAs.notNull(baseName, "baseName");
@@ -37,6 +53,15 @@ public abstract class JasperPaperDataSource<E extends JasperEntity> extends JRCo
         init();
     }
 
+    /**
+     * Instantiation of the data source with a data provider (which is capable of fetching the records on its own).
+     * @param handler
+     *     the pdf resource handler used for exporting the pdf
+     * @param baseName
+     *     the file name without the extension (.pdf)
+     * @param dataProvider
+     *     a data provider deriving from {@link AbstractPaperSlimProvider}
+     */
     public JasperPaperDataSource(ScipamatoPdfResourceHandler handler, String baseName, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
         super(handler);
         this.baseName = AssertAs.notNull(baseName, "baseName");

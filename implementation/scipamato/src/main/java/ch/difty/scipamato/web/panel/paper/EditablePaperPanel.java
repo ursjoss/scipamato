@@ -148,6 +148,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
 
+        ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand).withPopulation(populationLabel).withMethods(methodsLabel).withResult(resultLabel).withComment(commentLabel).build();
         ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getId()).withCreator(brand)
                 .withPaperTitle(getModelObject().getTitle())
                 .withPaperAuthor(getModelObject().getFirstAuthor())
@@ -156,7 +157,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 .withCodes(getModelObject().getCodes())
                 .withCompression()
                 .build();
-        return new PaperSummaryDataSource(getModelObject(), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand, config);
+        return new PaperSummaryDataSource(getModelObject(), rhf, config);
     }
 
     /**

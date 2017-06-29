@@ -24,6 +24,7 @@ import ch.difty.scipamato.service.PaperService;
 import ch.difty.scipamato.web.component.SerializableConsumer;
 import ch.difty.scipamato.web.component.data.LinkIconColumn;
 import ch.difty.scipamato.web.component.table.column.ClickablePropertyColumn;
+import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 import ch.difty.scipamato.web.jasper.ScipamatoPdfExporterConfiguration;
 import ch.difty.scipamato.web.jasper.literaturereview.PaperLiteratureReviewDataSource;
 import ch.difty.scipamato.web.jasper.review.PaperReviewDataSource;
@@ -142,9 +143,11 @@ public class ResultPanel extends AbstractPanel<Void> {
         String brand = getProperties().getBrand();
         String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
 
+        ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand).withPopulation(populationLabel).withMethods(methodsLabel).withResult(resultLabel).withComment(commentLabel).build();
         String pdfTitle = brand + "- " + new StringResourceModel("paper_summary.titlePart", this, null).getString();
         ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfTitle).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
-        ResourceLink<Void> summaryLink = new ResourceLink<>(id, new PaperSummaryDataSource(dataProvider, populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand, config));
+
+        ResourceLink<Void> summaryLink = new ResourceLink<>(id, new PaperSummaryDataSource(dataProvider, rhf, config));
         summaryLink.setOutputMarkupId(true);
         summaryLink.setBody(new StringResourceModel("link.summary.label"));
         summaryLink.add(new AttributeModifier(TITLE, new StringResourceModel("link.summary.title", this, null).getString()));

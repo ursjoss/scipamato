@@ -12,6 +12,7 @@ import org.junit.Test;
 import ch.difty.scipamato.entity.filter.PaperSlimFilter;
 import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.web.jasper.PaperDataSourceTest;
+import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 import ch.difty.scipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -43,6 +44,15 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     private static final String FILE_NAME_MULTIPLE = "paper_summaries.pdf";
 
     private PaperSummaryDataSource ds;
+    private ReportHeaderFields rhf = newReportHeaderFields();
+
+    private ReportHeaderFields newReportHeaderFields() {
+        ReportHeaderFields.Builder b = new ReportHeaderFields.Builder(HEADER_PART, BRAND).withPopulation(POPULATION_LABEL)
+                .withMethods(METHODS_LABEL)
+                .withResult(RESULT_LABEL)
+                .withComment(COMMENT_LABEL);
+        return b.build();
+    }
 
     @Override
     public void setUpHook() {
@@ -60,11 +70,15 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
     @Test
     public void instantiatingWithPaper_returnsPdfDataSourceWithOneRecord() throws JRException {
-        ds = new PaperSummaryDataSource(paperMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
+        ds = new PaperSummaryDataSource(paperMock, rhf, pdfExporterConfigMock);
 
         assertDataSource(FILE_NAME_SINGLE);
 
-        verify(paperMock, times(3)).getNumber();
+        verifyPaperMock(3);
+    }
+
+    private void verifyPaperMock(int i) {
+        verify(paperMock, times(i)).getNumber();
         verify(paperMock).getAuthors();
         verify(paperMock).getTitle();
         verify(paperMock).getLocation();
@@ -114,11 +128,12 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
     @Test
     public void instantiatingWithPaperSummary_returnsPdfDataSourceWithOneRecord() throws JRException {
-        PaperSummary ps = new PaperSummary(NUMBER, AUTHORS, TITLE, LOCATION, GOALS, POPULATION, METHODS, RESULT, COMMENT, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART,
-                BRAND, CREATED_BY);
+        PaperSummary ps = new PaperSummary(paperMock, rhf);
         ds = new PaperSummaryDataSource(ps, pdfExporterConfigMock);
 
         assertDataSource(FILE_NAME_SINGLE);
+
+        verifyPaperMock(1);
     }
 
     @Test
@@ -126,28 +141,19 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
         when(dataProviderMock.size()).thenReturn(1l);
         when(dataProviderMock.findAllPapersByFilter()).thenReturn(Arrays.asList(paperMock));
 
-        ds = new PaperSummaryDataSource(dataProviderMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
+        ds = new PaperSummaryDataSource(dataProviderMock, rhf, pdfExporterConfigMock);
         assertDataSource(FILE_NAME_MULTIPLE);
 
         verify(dataProviderMock).size();
         verify(dataProviderMock).findAllPapersByFilter();
 
-        verify(paperMock).getNumber();
-        verify(paperMock).getAuthors();
-        verify(paperMock).getTitle();
-        verify(paperMock).getLocation();
-        verify(paperMock).getGoals();
-        verify(paperMock).getPopulation();
-        verify(paperMock).getMethods();
-        verify(paperMock).getResult();
-        verify(paperMock).getComment();
-        verify(paperMock).getCreatedByName();
+        verifyPaperMock(1);
     }
 
     @Test
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0l);
-        ds = new PaperSummaryDataSource(dataProviderMock, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
+        ds = new PaperSummaryDataSource(dataProviderMock, rhf, pdfExporterConfigMock);
         assertThat(ds.getReportDataSource().next()).isFalse();
         verify(dataProviderMock).size();
     }
@@ -156,7 +162,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     public void instantiatingWithProvider_withNullProvider_throws() throws JRException {
         AbstractPaperSlimProvider<? extends PaperSlimFilter> provider = null;
         try {
-            new PaperSummaryDataSource(provider, POPULATION_LABEL, METHODS_LABEL, RESULT_LABEL, COMMENT_LABEL, HEADER_PART, BRAND, pdfExporterConfigMock);
+            new PaperSummaryDataSource(provider, rhf, pdfExporterConfigMock);
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dataProvider must not be null.");
         }

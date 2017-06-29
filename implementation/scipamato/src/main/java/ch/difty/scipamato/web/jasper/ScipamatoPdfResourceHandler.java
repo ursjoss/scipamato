@@ -9,16 +9,27 @@ import net.sf.jasperreports.export.OutputStreamExporterOutput;
 import net.sf.jasperreports.export.PdfExporterConfiguration;
 import net.sf.jasperreports.export.PdfReportConfiguration;
 
+/**
+ * Export configuration aware resource handler for PDF documents
+ *
+ * @author u.joss
+ */
 public class ScipamatoPdfResourceHandler extends PdfResourceHandler {
 
     private static final long serialVersionUID = 1L;
 
     private final PdfExporterConfiguration config;
 
+    /**
+     * Default constructor creating its own default exporter configuration.
+     */
     public ScipamatoPdfResourceHandler() {
         this.config = makeDefaultExporterConfig();
     }
 
+    /**
+     * Constructor accepting a {@link PdfExporterConfiguration}
+     */
     public ScipamatoPdfResourceHandler(final PdfExporterConfiguration config) {
         if (config != null) {
             this.config = config;
