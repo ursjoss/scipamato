@@ -23,22 +23,19 @@ public class JasperEntityCommonTest extends JasperEntity {
         assertThat(na("foo")).isEqualTo("foo");
     }
 
-    // TODO should be blank
-    @Test(expected = NullPointerException.class)
+    @Test
     public void na_withNullParameterAndNullValue_throws() {
-        na(null, null);
+        assertThat(na(null, null)).isEqualTo("");
     }
 
-    // TODO should be blank
-    @Test(expected = NullPointerException.class)
+    @Test
     public void na_withBlankParameterAndNullValue_throws() {
-        na("", null);
+        assertThat(na("", null)).isEqualTo("");
     }
 
-    // TODO should be blank
-    @Test(expected = NullPointerException.class)
+    @Test
     public void na_withBlankParameterAndNonBlankValue_throws() {
-        na("foo", null);
+        assertThat(na("foo", null)).isEqualTo("");
     }
 
     @Test
