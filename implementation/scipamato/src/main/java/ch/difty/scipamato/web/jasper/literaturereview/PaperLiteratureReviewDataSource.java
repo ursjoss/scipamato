@@ -3,8 +3,10 @@ package ch.difty.scipamato.web.jasper.literaturereview;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.PaperSlimFilter;
 import ch.difty.scipamato.entity.projection.PaperSlim;
+import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.service.PaperService;
 import ch.difty.scipamato.web.jasper.JasperPaperDataSource;
+import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 import ch.difty.scipamato.web.jasper.ScipamatoPdfResourceHandler;
 import ch.difty.scipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.scipamato.web.resources.jasper.PaperLiteratureReviewReportResourceReference;
@@ -24,30 +26,21 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
 
     private static final String FILE_NAME = "paper_literature_review";
 
-    private final String caption;
-    private final String brand;
-    private final String numberLabel;
+    private final ReportHeaderFields reportHeaderFields;
 
     /**
      * Using the dataProvider for the Result Panel as record source. Needs the {@link PaperService} to retrieve the papers
-     * based on the numbers of the {@link PaperSlim}s that are used in the dataProvider.
+     * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
      * @param dataProvider
      *      the {@link AbstractPaperSlimProvider} - must not be null
-     * @param caption
-     *      localized caption
-     * @param brand
-     *      localized brand
-     * @param numberLabel
-     *      localized number
+     * @param reportHeaderFields
+     *      collection of localized labels for the report fields
      * @param config
-     *      PdfExporterConfiguration
+     *      {@link PdfExporterConfiguration}
      */
-    public PaperLiteratureReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String caption, String brand, String numberLabel,
-            PdfExporterConfiguration config) {
-        super(new ScipamatoPdfResourceHandler(config), FILE_NAME, dataProvider);
-        this.caption = caption;
-        this.brand = brand;
-        this.numberLabel = numberLabel;
+    public PaperLiteratureReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final ReportHeaderFields reportHeaderFields, PdfExporterConfiguration config) {
+        super(new ScipamatoPdfResourceHandler(config), FILE_NAME, AssertAs.notNull(dataProvider, "dataProvider"));
+        this.reportHeaderFields = AssertAs.notNull(reportHeaderFields, "reportHeaderFields");
     }
 
     @Override
@@ -57,7 +50,7 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
 
     @Override
     protected PaperLiteratureReview makeEntity(Paper p) {
-        return new PaperLiteratureReview(p, caption, brand, numberLabel);
+        return new PaperLiteratureReview(p, reportHeaderFields);
     }
 
 }

@@ -51,6 +51,8 @@ public abstract class JasperEntityTest {
     protected static final String METHOD_STATISTICS_LABEL = "methodStatisticsLabel";
     protected static final String METHOD_CONFOUNDERS_LABEL = "methodConfoundersLabel";
     protected static final String RESULT_EFFECT_ESTIMATE_LABEL = "resultEffectEstimateLabel";
+    protected static final String NUMBER_LABEL = "numberLabel";
+    protected static final String CAPTION = "caption";
 
     protected static final int PM_ID = 1234;
 

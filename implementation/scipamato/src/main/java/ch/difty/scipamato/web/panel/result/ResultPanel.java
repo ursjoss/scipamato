@@ -188,7 +188,8 @@ public class ResultPanel extends AbstractPanel<Void> {
         final String pdfCaption = new StringResourceModel("paper_literature_review.caption", this, null).setParameters(brand).getString();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
 
-        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperLiteratureReviewDataSource(dataProvider, pdfCaption, brand, numberLabel, config));
+        ReportHeaderFields rhf = new ReportHeaderFields.Builder("", brand).withNumber(numberLabel).withCaption(pdfCaption).build();
+        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperLiteratureReviewDataSource(dataProvider, rhf, config));
         reviewLink.setOutputMarkupId(true);
         reviewLink.setBody(new StringResourceModel("link.literature_review.label"));
         reviewLink.add(new AttributeModifier(TITLE, new StringResourceModel("link.literature_review.title", this, null).getString()));
