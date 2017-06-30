@@ -149,7 +149,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         final String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
 
         ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand).withPopulation(populationLabel).withMethods(methodsLabel).withResult(resultLabel).withComment(commentLabel).build();
-        ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getId()).withCreator(brand)
+        ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getNumber()).withCreator(brand)
                 .withPaperTitle(getModelObject().getTitle())
                 .withPaperAuthor(getModelObject().getFirstAuthor())
                 .withSubject(getModelObject().getMethods())
@@ -199,7 +199,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 .withResultEffectEstimate(resultEffectEstimateLabel)
                 .withComment(commentLabel)
                 .build();
-        ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getId()).withCreator(brand)
+        ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getNumber()).withCreator(brand)
                 .withPaperTitle(getModelObject().getTitle())
                 .withPaperAuthor(getModelObject().getFirstAuthor())
                 .withSubject(getModelObject().getMethods())
