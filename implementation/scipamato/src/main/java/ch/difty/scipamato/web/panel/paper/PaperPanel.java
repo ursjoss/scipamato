@@ -48,6 +48,7 @@ import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.navigator.ItemNavigator;
 import ch.difty.scipamato.web.component.SerializableSupplier;
 import ch.difty.scipamato.web.jasper.summary.PaperSummaryDataSource;
+import ch.difty.scipamato.web.jasper.summaryshort.PaperSummaryShortDataSource;
 import ch.difty.scipamato.web.model.CodeClassModel;
 import ch.difty.scipamato.web.model.CodeModel;
 import ch.difty.scipamato.web.pages.Mode;
@@ -73,6 +74,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     private static final String CHANGE = "change";
 
     private ResourceLink<Void> summaryLink;
+    private ResourceLink<Void> summaryShortLink;
     private String pubmedXml;
 
     protected TextArea<String> authors;
@@ -212,6 +214,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         makeAndQueueSubmitButton("submit");
 
         queue(makeSummaryLink("summary"));
+        queue(makeSummaryShortLink("summaryShort"));
 
         // make sure attributes updated during persisting are reflected
         reflectPersistedChangesViaTimer(id, created, modified);
@@ -234,6 +237,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
      * @param created
      * @param modified
      */
+    // TODO  could probably be removed
     protected void reflectPersistedChangesViaTimer(TextField<Integer> id, TextField<String> created, TextField<String> modified) {
         add(new AbstractAjaxTimerBehavior(Duration.seconds(1d)) {
             private static final long serialVersionUID = 1L;
@@ -371,6 +375,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             public void onAfterSubmit() {
                 super.onAfterSubmit();
                 summaryLink.replaceWith(makeSummaryLink("summary"));
+                summaryShortLink.replaceWith(makeSummaryShortLink("summaryShort"));
             }
         };
         submit.setDefaultFormProcessing(true);
@@ -386,16 +391,19 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             @Override
             protected void onInitialize() {
                 super.onInitialize();
-                add(new ButtonBehavior().setType(Buttons.Type.Info).setBlock(true).setSize(Size.Large));
+                if (isVisible())
+                    add(new ButtonBehavior().setType(Buttons.Type.Info).setBlock(true).setSize(Size.Large));
             }
 
             @Override
             public void onEvent(IEvent<?> event) {
                 super.onEvent(event);
                 if (event.getPayload().getClass() == SelfUpdateEvent.class) {
-                    setEnabled(false);
-                    summaryLink.add(new AttributeModifier(TITLE, new StringResourceModel(button + id + ".title.disabled", this, null).getString()));
-                    ((SelfUpdateEvent) event.getPayload()).getTarget().add(this);
+                    if (isVisible()) {
+                        setEnabled(false);
+                        summaryLink.add(new AttributeModifier(TITLE, new StringResourceModel(button + id + ".title.disabled", this, null).getString()));
+                        ((SelfUpdateEvent) event.getPayload()).getTarget().add(this);
+                    }
                     event.dontBroadcastDeeper();
                 }
             }
@@ -403,12 +411,49 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         summaryLink.setOutputMarkupId(true);
         summaryLink.setOutputMarkupPlaceholderTag(true);
         summaryLink.setBody(new StringResourceModel(button + id + ".label"));
+        summaryLink.setVisible(isEditMode());
         summaryLink.add(new AttributeModifier(TITLE, new StringResourceModel(button + id + ".title", this, null).getString()));
         return summaryLink;
     }
 
     /** implement to return PaperSummaryDataSource */
     protected abstract PaperSummaryDataSource getSummaryDataSource();
+
+    private ResourceLink<Void> makeSummaryShortLink(String id) {
+        final String button = "button.";
+        summaryShortLink = new ResourceLink<Void>(id, getSummaryShortDataSource()) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onInitialize() {
+                super.onInitialize();
+                if (isVisible())
+                    add(new ButtonBehavior().setType(Buttons.Type.Info).setBlock(true).setSize(Size.Large));
+            }
+
+            @Override
+            public void onEvent(IEvent<?> event) {
+                super.onEvent(event);
+                if (event.getPayload().getClass() == SelfUpdateEvent.class) {
+                    if (isVisible()) {
+                        setEnabled(false);
+                        summaryShortLink.add(new AttributeModifier(TITLE, new StringResourceModel(button + id + ".title.disabled", this, null).getString()));
+                        ((SelfUpdateEvent) event.getPayload()).getTarget().add(this);
+                    }
+                    event.dontBroadcastDeeper();
+                }
+            }
+        };
+        summaryShortLink.setOutputMarkupId(true);
+        summaryShortLink.setOutputMarkupPlaceholderTag(true);
+        summaryShortLink.setBody(new StringResourceModel(button + id + ".label"));
+        summaryShortLink.setVisible(isEditMode());
+        summaryShortLink.add(new AttributeModifier(TITLE, new StringResourceModel(button + id + ".title", this, null).getString()));
+        return summaryShortLink;
+    }
+
+    /** implement to return PaperSummaryShortDataSource */
+    protected abstract PaperSummaryShortDataSource getSummaryShortDataSource();
 
     private abstract class AbstractTabPanel extends Panel {
 

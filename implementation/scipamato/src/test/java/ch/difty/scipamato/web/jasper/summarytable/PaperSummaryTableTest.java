@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.web.jasper.JasperEntityTest;
+import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 
 public class PaperSummaryTableTest extends JasperEntityTest {
 
@@ -14,21 +15,27 @@ public class PaperSummaryTableTest extends JasperEntityTest {
     private static final String NUMBER_LABEL = "nl";
 
     private PaperSummaryTable pst;
+    private ReportHeaderFields rhf = newReportHeaderFields();
 
-    @Test
-    public void degenerateConstruction_withNullPaper_throws() {
-        try {
-            new PaperSummaryTable(null, true, "foo", "bar", "baz");
-        } catch (Exception e) {
-            assertThat(e).isInstanceOf(NullArgumentException.class).hasMessage("paper must not be null.");
-        }
+    @Test(expected = NullArgumentException.class)
+    public void degenerateConstruction_withNullPaper() {
+        new PaperSummaryTable(null, rhf, true);
+    }
+
+    @Test(expected = NullArgumentException.class)
+    public void degenerateConstruction_withNullReportHeaderFields() {
+        new PaperSummaryTable(p, null, true);
     }
 
     @Test
-    public void constructionWithPaper_includingResults() {
-        pst = new PaperSummaryTable(p, true, CAPTION, BRAND, NUMBER_LABEL);
+    public void instantiating() {
+        pst = new PaperSummaryTable(p, rhf, true);
         assertPst();
-        assertThat(pst.getResult()).isEqualTo(RESULT);
+    }
+
+    private ReportHeaderFields newReportHeaderFields() {
+        ReportHeaderFields.Builder b = new ReportHeaderFields.Builder(HEADER_PART, BRAND).withCaption(CAPTION).withMethods(METHODS_LABEL).withNumber(NUMBER_LABEL);
+        return b.build();
     }
 
     private void assertPst() {
@@ -49,7 +56,7 @@ public class PaperSummaryTableTest extends JasperEntityTest {
 
     @Test
     public void constructionWithPaper_notIncludingResults() {
-        pst = new PaperSummaryTable(p, false, CAPTION, BRAND, NUMBER_LABEL);
+        pst = new PaperSummaryTable(p, rhf, false);
         assertPst();
         assertThat(pst.getResult()).isEmpty();
     }
@@ -57,7 +64,7 @@ public class PaperSummaryTableTest extends JasperEntityTest {
     @Test
     public void constructionWithPaperWithNoCodeOfClass7_returnsBlank() {
         p.clearCodes();
-        pst = new PaperSummaryTable(p, true, CAPTION, BRAND, NUMBER_LABEL);
+        pst = new PaperSummaryTable(p, rhf, true);
         assertThat(pst.getCodesOfClass4()).isEqualTo("");
     }
 }

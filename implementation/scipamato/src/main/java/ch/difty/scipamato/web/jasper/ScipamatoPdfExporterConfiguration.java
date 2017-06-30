@@ -1,9 +1,9 @@
 package ch.difty.scipamato.web.jasper;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.wicket.util.io.IClusterable;
 
 import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.User;
@@ -13,13 +13,13 @@ import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
  * Custom implementation of the {@link SimplePdfExporterConfiguration} with is
  *
  * <ul>
- * <li>is serializable</li>
+ * <li>is clusterable</li>
  * <li>and uses the builder pattern to set the parameters relevant to scipamato reports</li>
  * </ul>
  *
  * @author u.joss
  */
-public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfiguration implements Serializable {
+public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfiguration implements IClusterable {
 
     private static final long serialVersionUID = 1L;
 
@@ -68,19 +68,20 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
         private boolean compression = false;
 
         /**
-         * Derive the metadata title from headerPart and id  (if you also set the paperTitle, it will be appended as well...)
+         * Derive the metadata title from headerPart and the paper number  (if you also set the paperTitle, it will be appended as well...)
          * @param headerPart
-         * @param id
+         * @param number
+         *      the unique number of the paper
          */
-        public Builder(final String headerPart, final Long id) {
+        public Builder(final String headerPart, final Long number) {
             final StringBuilder sb = new StringBuilder();
             if (headerPart != null) {
                 sb.append(headerPart);
             }
-            if (id != null) {
+            if (number != null) {
                 if (sb.length() > 0)
                     sb.append(" ");
-                sb.append(id);
+                sb.append(number);
             }
             if (sb.length() > 0)
                 this.title = sb.toString();

@@ -1,6 +1,5 @@
 package ch.difty.scipamato.web.jasper.summarytable;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 import ch.difty.scipamato.entity.Code;
@@ -8,6 +7,7 @@ import ch.difty.scipamato.entity.CodeClassId;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.web.jasper.JasperEntity;
+import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 
 /**
  * DTO to feed the PaperSummaryTableDataSource
@@ -15,10 +15,9 @@ import ch.difty.scipamato.web.jasper.JasperEntity;
  * @author u.joss
  */
 public class PaperSummaryTable extends JasperEntity {
+    private static final long serialVersionUID = 1L;
 
     private static final String CODE_DELIMITER = ",";
-
-    private static final long serialVersionUID = 1L;
 
     private final String number;
     private final String firstAuthor;
@@ -35,42 +34,31 @@ public class PaperSummaryTable extends JasperEntity {
     private final String numberLabel;
 
     /**
-     * Instantiation with a {@link Paper} and additional fields
+     * Instantiation with a {@link Paper} and the {@link ReportHeaderFields}
      *
      * @param p
-     *      the paper
-     * @param includeResults
-     *      true: the result field will be printed - false: it will not be printed
-     * @param caption
-     *      localized caption
-     * @param brand
-     *      the application brand name
-     * @param numberLabel
-     *      the localized label for the number field
+     *      the paper with the relevant fields
+     * @param rhf
+     *      the reportHeaderFields with the localized field headers
      */
-    public PaperSummaryTable(final Paper p, final boolean includeResults, final String caption, final String brand, final String numberLabel) {
-        this(AssertAs.notNull(p, "paper").getNumber(), p.getFirstAuthor(), String.valueOf(p.getPublicationYear()), p.getCodesOf(CodeClassId.CC1), p.getCodesOf(CodeClassId.CC4),
-                p.getCodesOf(CodeClassId.CC7), p.getGoals(), p.getTitle(), (includeResults ? p.getResult() : ""), caption, brand, numberLabel);
-    }
+    public PaperSummaryTable(final Paper p, final ReportHeaderFields rhf, final boolean includeResults) {
+        AssertAs.notNull(p, "p");
+        AssertAs.notNull(rhf, "rhf");
 
-    /**
-     * Instantiation with all individual fields (those that are part of a {@link Paper} and all other from the other constructor.
-     */
-    public PaperSummaryTable(final Long number, final String firstAuthor, final String publicationYear, final List<Code> codesOfClass1, final List<Code> codesOfClass4, final List<Code> codesOfClass7,
-            final String goals, final String title, final String result, final String caption, final String brand, final String numberLabel) {
-        this.number = number != null ? String.valueOf(number) : "";
-        this.firstAuthor = na(firstAuthor);
-        this.publicationYear = na(publicationYear);
-        this.codesOfClass1 = codesOfClass1.stream().map(Code::getCode).collect(Collectors.joining(CODE_DELIMITER));
-        this.codesOfClass4 = codesOfClass4.stream().map(Code::getCode).collect(Collectors.joining(CODE_DELIMITER));
-        this.codesOfClass7 = codesOfClass7.stream().map(Code::getCode).collect(Collectors.joining(CODE_DELIMITER));
-        this.goals = na(goals);
-        this.title = na(title);
-        this.result = na(result);
+        final Long no = p.getNumber();
+        this.number = no != null ? String.valueOf(no) : "";
+        this.firstAuthor = na(p.getFirstAuthor());
+        this.publicationYear = p.getPublicationYear() != null ? String.valueOf(p.getPublicationYear()) : "";
+        this.codesOfClass1 = p.getCodesOf(CodeClassId.CC1).stream().map(Code::getCode).collect(Collectors.joining(CODE_DELIMITER));
+        this.codesOfClass4 = p.getCodesOf(CodeClassId.CC4).stream().map(Code::getCode).collect(Collectors.joining(CODE_DELIMITER));
+        this.codesOfClass7 = p.getCodesOf(CodeClassId.CC7).stream().map(Code::getCode).collect(Collectors.joining(CODE_DELIMITER));
+        this.goals = na(p.getGoals());
+        this.title = na(p.getTitle());
+        this.result = includeResults ? na(p.getResult()) : "";
 
-        this.caption = na(caption);
-        this.brand = na(brand);
-        this.numberLabel = na(numberLabel);
+        this.caption = na(rhf.getCaptionLabel());
+        this.brand = na(rhf.getBrand());
+        this.numberLabel = na(rhf.getNumberLabel());
     }
 
     public String getNumber() {

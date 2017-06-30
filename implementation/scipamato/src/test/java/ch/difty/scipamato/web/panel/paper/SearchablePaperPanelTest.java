@@ -122,6 +122,13 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
     }
 
     @Test
+    public void summaryShort_doesNotExist() {
+        getTester().startComponentInPage(makePanel());
+        getTester().assertContainsNot("panel:form:summaryShort");
+        verifyCodeAndCodeClassCalls(1);
+    }
+
+    @Test
     public void navigationButtons_andPubmedRetrieval_andBackButton_areInvisible() {
         getTester().startComponentInPage(makePanel());
 

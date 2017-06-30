@@ -1,6 +1,7 @@
 package ch.difty.scipamato.web.jasper.literaturereview;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -9,6 +10,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import ch.difty.scipamato.web.jasper.PaperDataSourceTest;
+import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
@@ -20,7 +22,17 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
 
     private static final Long NUMBER = 5l;
 
+    private static final String BRAND = "brand";
+    private static final String CAPTION = "caption";
+    private static final String NUMBER_LABEL = "numberLabel";
+
     private PaperLiteratureReviewDataSource ds;
+    private ReportHeaderFields rhf = newReportHeaderFields();
+
+    private ReportHeaderFields newReportHeaderFields() {
+        ReportHeaderFields.Builder b = new ReportHeaderFields.Builder("", BRAND).withNumber(NUMBER_LABEL).withCaption(CAPTION);
+        return b.build();
+    }
 
     @Override
     public void setUpHook() {
@@ -53,9 +65,9 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
         assertFieldValue("location", "l", f, jsds);
         assertFieldValue("pubmedLink", "https://www.ncbi.nlm.nih.gov/pubmed/1234", f, jsds);
 
-        assertFieldValue("caption", "c", f, jsds);
-        assertFieldValue("brand", "b", f, jsds);
-        assertFieldValue("numberLabel", "nl", f, jsds);
+        assertFieldValue("caption", CAPTION, f, jsds);
+        assertFieldValue("brand", BRAND, f, jsds);
+        assertFieldValue("numberLabel", NUMBER_LABEL, f, jsds);
 
         assertThat(jsds.next()).isFalse();
     }
@@ -65,7 +77,7 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
         when(dataProviderMock.size()).thenReturn(1l);
         when(dataProviderMock.findAllPapersByFilter()).thenReturn(Arrays.asList(paperMock));
 
-        ds = new PaperLiteratureReviewDataSource(dataProviderMock, "c", "b", "nl", pdfExporterConfigMock);
+        ds = new PaperLiteratureReviewDataSource(dataProviderMock, rhf, pdfExporterConfigMock);
         assertDataSource(FILE_NAME);
 
         verify(dataProviderMock).size();
@@ -73,7 +85,7 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
 
         verify(paperMock).getNumber();
         verify(paperMock).getAuthors();
-        verify(paperMock).getPublicationYear();
+        verify(paperMock, times(2)).getPublicationYear();
         verify(paperMock).getTitle();
         verify(paperMock).getLocation();
         verify(paperMock).getPmId();

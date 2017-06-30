@@ -9,6 +9,7 @@ import ch.difty.scipamato.entity.projection.PaperSlim;
 import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.service.PaperService;
 import ch.difty.scipamato.web.jasper.JasperPaperDataSource;
+import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 import ch.difty.scipamato.web.jasper.ScipamatoPdfResourceHandler;
 import ch.difty.scipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.scipamato.web.resources.jasper.PaperSummaryReportResourceReference;
@@ -21,13 +22,13 @@ import net.sf.jasperreports.export.PdfExporterConfiguration;
  * Can be instantiated in different ways, either by passing in
  *
  * <ul>
- * <li> a single {@link Paper} + meta fields</li>
- * <li> a single {@link PaperSummary}</li>
- * <li> a collection of {@link PaperSummary} entities or</li>
- * <li> an instance of a {@link AbstractPaperSlimProvider} + meta fields</li>
+ * <li> a single {@link Paper} + report header fields + export config</li>
+ * <li> a single {@link PaperSummary} + export config</li>
+ * <li> a collection of {@link PaperSummary} entities + export config or</li>
+ * <li> an instance of a {@link AbstractPaperSlimProvider} + report header fields + export config</li>
  * </ul>
  *
- * The meta fields are not contained within a paper instance and make up e.g. localized labels, the brand or part of the header.
+ * The report header fields are not contained within a paper instance and make up e.g. localized labels, the brand or part of the header.
  *
  * @author u.joss
  */
@@ -38,56 +39,43 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
     private static final String BASE_NAME_SINGLE = "paper_summary_no_";
     private static final String BASE_NAME_MULTIPLE = "paper_summaries";
 
-    private String populationLabel;
-    private String methodsLabel;
-    private String resultLabel;
-    private String commentLabel;
-    private String headerPart;
-    private String brand;
+    private ReportHeaderFields reportHeaderFields;
 
     /**
      * Build up the paper summary from a {@link Paper} and any additional information not contained within the paper
      * @param paper
      *      an instance of {@link Paper} - must not be null.
-     * @param populationLabel
-     *      localized label for the population field
-     * @param methodsLabel
-     *      localized label for the methods field
-     * @param resultLabel
-     *      localized label for the result field
-     * @param commentLabel
-     *      localized label for the comment field
-     * @param headerPart
-     *      Static part of the header - will be supplemented with the id
-     * @param brand
-     *      Brand of the application
+     * @param reportHeaderFields
+     *      collection of localized labels for report fields
      * @param config {@link PdfExporterConfiguration}
      */
-    public PaperSummaryDataSource(final Paper paper, final String populationLabel, final String methodsLabel, final String resultLabel, final String commentLabel, final String headerPart,
-            final String brand, PdfExporterConfiguration config) {
-        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand)), config, makeSinglePaperBaseName(paper));
+    public PaperSummaryDataSource(final Paper paper, final ReportHeaderFields reportHeaderFields, PdfExporterConfiguration config) {
+        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), AssertAs.notNull(reportHeaderFields, "reportHeaderFields"))), config, makeSinglePaperBaseName(paper));
+        this.reportHeaderFields = reportHeaderFields;
     }
 
     /**
-     * Uses as single {@link PaperSummary} transparently as data source
-     * @param paperSummary an instance of {@link PaperSummary} - must not be null
+     * Populate the report from a single {@link PaperSummary}, using a specific file name including the id of the paper.
+     * @param paperSummary
+     *     collection of {@link PaperSummary} instances - must not be null
+     * @param config
+     *     the {@link PdfExporterConfiguration}
      */
     public PaperSummaryDataSource(final PaperSummary paperSummary, PdfExporterConfiguration config) {
         this(Arrays.asList(AssertAs.notNull(paperSummary, "paperSummary")), config, makeSinglePaperBaseName(paperSummary));
     }
 
     /**
-     * Using a collection of {@link PaperSummary} instances as data source
-     * @param paperSummaries collection of {@link PaperSummary} instances - must not be null
+     * Populate the report from a collection of {@link PaperSummary} items, using the default file name for a PDF with potentially multiple pages (one per item).
+     * @param paperSummaries
+     *     collection of {@link PaperSummary} instances - must not be null
+     * @param config
+     *     the {@link PdfExporterConfiguration}
      */
     public PaperSummaryDataSource(final Collection<PaperSummary> paperSummaries, PdfExporterConfiguration config) {
         this(paperSummaries, config, BASE_NAME_MULTIPLE);
     }
 
-    /**
-     * Using a collection of {@link PaperSummary} instances as data source
-     * @param paperSummaries collection of {@link PaperSummary} instances - must not be null
-     */
     private PaperSummaryDataSource(final Collection<PaperSummary> paperSummaries, PdfExporterConfiguration config, String baseName) {
         super(new ScipamatoPdfResourceHandler(config), baseName, paperSummaries);
     }
@@ -97,30 +85,14 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
      * @param dataProvider
      *      the {@link AbstractPaperSlimProvider} - must not be null
-     * @param populationLabel
-     *      localized label for the population field
-     * @param methodsLabel
-     *      localized label for the methods field
-     * @param resultLabel
-     *      localized label for the result field
-     * @param commentLabel
-     *      localized label for the comment field
-     * @param headerPart
-     *      Static part of the header - will be supplemented with the id
-     * @param brand
-     *      Brand of the application
+     * @param reportHeaderFields
+     *      collection of localized labels for the report fields
      * @param config
-     *      PdfExporterConfiguration
+     *      {@link PdfExporterConfiguration}
      */
-    public PaperSummaryDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final String populationLabel, final String methodsLabel, final String resultLabel,
-            final String commentLabel, final String headerPart, final String brand, PdfExporterConfiguration config) {
+    public PaperSummaryDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final ReportHeaderFields reportHeaderFields, PdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), BASE_NAME_MULTIPLE, dataProvider);
-        this.populationLabel = populationLabel;
-        this.methodsLabel = methodsLabel;
-        this.resultLabel = resultLabel;
-        this.commentLabel = commentLabel;
-        this.headerPart = headerPart;
-        this.brand = brand;
+        this.reportHeaderFields = reportHeaderFields;
     }
 
     @Override
@@ -130,7 +102,7 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
 
     @Override
     protected PaperSummary makeEntity(Paper p) {
-        return new PaperSummary(p, populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand);
+        return new PaperSummary(p, reportHeaderFields);
     }
 
     private static String makeSinglePaperBaseName(final Paper paper) {

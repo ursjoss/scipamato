@@ -17,25 +17,25 @@ public class ScipamatoPdfExporterConfigurationTest {
     private final List<Code> codes = new ArrayList<>();
 
     @Test
-    public void minimalInstantiation_buildingTitleFromHeaderPartAndId_intoMetadataTitle() {
+    public void minimalInstantiation_buildingTitleFromHeaderPartAndNumber_intoMetadataTitle() {
         config = new ScipamatoPdfExporterConfiguration.Builder("headerpart:", 5l).build();
         assertingMinimalConfigWithTitle("headerpart: 5");
     }
 
     @Test
-    public void minimalInstantiation_buildingTitleFromHeaderPartAndNullId_intoMetadataTitle() {
+    public void minimalInstantiation_buildingTitleFromHeaderPartAndNullNumber_intoMetadataTitle() {
         config = new ScipamatoPdfExporterConfiguration.Builder("headerpart:", null).build();
         assertingMinimalConfigWithTitle("headerpart:");
     }
 
     @Test
-    public void minimalInstantiation_buildingTitleFromNullHeaderPartAndNullId_intoMetadataTitle() {
+    public void minimalInstantiation_buildingTitleFromNullHeaderPartAndNullNumber_intoMetadataTitle() {
         config = new ScipamatoPdfExporterConfiguration.Builder(null, null).build();
         assertingMinimalConfigWithTitle(null);
     }
 
     @Test
-    public void minimalInstantiation_buildingTitleFromNullHeaderPartAndId_intoMetadataTitle() {
+    public void minimalInstantiation_buildingTitleFromNullHeaderPartAndNumber_intoMetadataTitle() {
         config = new ScipamatoPdfExporterConfiguration.Builder(null, 3l).build();
         assertingMinimalConfigWithTitle("3");
     }

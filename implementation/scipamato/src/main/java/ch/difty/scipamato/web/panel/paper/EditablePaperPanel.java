@@ -45,8 +45,10 @@ import ch.difty.scipamato.web.component.SerializableConsumer;
 import ch.difty.scipamato.web.component.SerializableSupplier;
 import ch.difty.scipamato.web.component.data.LinkIconColumn;
 import ch.difty.scipamato.web.component.table.column.ClickablePropertyColumn;
+import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 import ch.difty.scipamato.web.jasper.ScipamatoPdfExporterConfiguration;
 import ch.difty.scipamato.web.jasper.summary.PaperSummaryDataSource;
+import ch.difty.scipamato.web.jasper.summaryshort.PaperSummaryShortDataSource;
 import ch.difty.scipamato.web.pages.BasePage;
 import ch.difty.scipamato.web.pages.Mode;
 import ch.difty.scipamato.web.pages.paper.entry.PaperEntryPage;
@@ -146,7 +148,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
 
-        ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getId()).withCreator(brand)
+        ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand).withPopulation(populationLabel).withMethods(methodsLabel).withResult(resultLabel).withComment(commentLabel).build();
+        ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getNumber()).withCreator(brand)
                 .withPaperTitle(getModelObject().getTitle())
                 .withPaperAuthor(getModelObject().getFirstAuthor())
                 .withSubject(getModelObject().getMethods())
@@ -154,7 +157,57 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 .withCodes(getModelObject().getCodes())
                 .withCompression()
                 .build();
-        return new PaperSummaryDataSource(getModelObject(), populationLabel, methodsLabel, resultLabel, commentLabel, headerPart, brand, config);
+        return new PaperSummaryDataSource(getModelObject(), rhf, config);
+    }
+
+    /**
+     * Prepares the {@link PaperSummaryDataSource} for exporting the current entity into the pdf.
+     */
+    @Override
+    protected PaperSummaryShortDataSource getSummaryShortDataSource() {
+        final String goalsLabel = new StringResourceModel(Paper.GOALS + LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodsLabel = new StringResourceModel(Paper.METHODS + LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodOutcomeLabel = new StringResourceModel(Paper.METHOD_OUTCOME + LABEL_RECOURCE_TAG, this, null).getString();
+        final String resultMeasuredOutcomeLabel = new StringResourceModel(Paper.RESULT_MEASURED_OUTCOME + LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodStudyDesignLabel = new StringResourceModel(Paper.METHOD_STUDY_DESIGN + LABEL_RECOURCE_TAG, this, null).getString();
+        final String populationPlaceLabel = new StringResourceModel(Paper.POPULATION_PLACE + LABEL_RECOURCE_TAG, this, null).getString();
+        final String populationParticipantsLabel = new StringResourceModel(Paper.POPULATION_PARTICIPANTS + LABEL_RECOURCE_TAG, this, null).getString();
+        final String populationDurationLabel = new StringResourceModel(Paper.POPULATION_DURATION + LABEL_RECOURCE_TAG, this, null).getString();
+        final String esposurePollutantLabel = new StringResourceModel(Paper.EXPOSURE_POLLUTANT + LABEL_RECOURCE_TAG, this, null).getString();
+        final String esposureAssessmentLabel = new StringResourceModel(Paper.EXPOSURE_ASSESSMENT + LABEL_RECOURCE_TAG, this, null).getString();
+        final String resultExposureRangeLabel = new StringResourceModel(Paper.RESULT_EXPOSURE_RANGE + LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodStatisticsLabel = new StringResourceModel(Paper.METHOD_STATISTICS + LABEL_RECOURCE_TAG, this, null).getString();
+        final String methodConfoundersLabel = new StringResourceModel(Paper.METHOD_CONFOUNDERS + LABEL_RECOURCE_TAG, this, null).getString();
+        final String resultEffectEstimateLabel = new StringResourceModel(Paper.RESULT_EFFECT_ESTIMATE + LABEL_RECOURCE_TAG, this, null).getString();
+        final String commentLabel = new StringResourceModel(Paper.COMMENT + LABEL_RECOURCE_TAG, this, null).getString();
+        final String brand = getProperties().getBrand();
+        final String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
+
+        ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand).withGoals(goalsLabel)
+                .withMethods(methodsLabel)
+                .withMethodOutcome(methodOutcomeLabel)
+                .withResultMeasuredOutcome(resultMeasuredOutcomeLabel)
+                .withMethodStudyDesign(methodStudyDesignLabel)
+                .withPopulationPlace(populationPlaceLabel)
+                .withPopulationPariticpants(populationParticipantsLabel)
+                .withPopulationDuration(populationDurationLabel)
+                .withExposurePollutant(esposurePollutantLabel)
+                .withExposureAssessment(esposureAssessmentLabel)
+                .withResultExposureRange(resultExposureRangeLabel)
+                .withMethodStatistics(methodStatisticsLabel)
+                .withMethodConfounders(methodConfoundersLabel)
+                .withResultEffectEstimate(resultEffectEstimateLabel)
+                .withComment(commentLabel)
+                .build();
+        ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getNumber()).withCreator(brand)
+                .withPaperTitle(getModelObject().getTitle())
+                .withPaperAuthor(getModelObject().getFirstAuthor())
+                .withSubject(getModelObject().getMethods())
+                .withAuthor(getModelObject().getCreatedByFullName())
+                .withCodes(getModelObject().getCodes())
+                .withCompression()
+                .build();
+        return new PaperSummaryShortDataSource(getModelObject(), rhf, config);
     }
 
     /**

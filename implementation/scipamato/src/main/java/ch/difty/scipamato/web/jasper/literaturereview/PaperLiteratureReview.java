@@ -3,6 +3,7 @@ package ch.difty.scipamato.web.jasper.literaturereview;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.web.jasper.JasperEntity;
+import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 
 /**
  * DTO to feed the PaperLiteratureReviewDataSource
@@ -28,34 +29,28 @@ public class PaperLiteratureReview extends JasperEntity {
     private final String numberLabel;
 
     /**
-     * Instantiation with a {@link Paper} and additional fields
+     * Instantiation with a {@link Paper} and the {@link ReportHeaderFields}
      *
      * @param p
-     *      the paper
-     * @param caption
-     *      localized caption
-     * @param brand
-     *      the application brand name
+     *      the paper with the relevant fields
+     * @param rhf
+     *      the reportHeaderFields with the localized field headers
      */
-    public PaperLiteratureReview(final Paper p, final String caption, final String brand, final String numberLabel) {
-        this(AssertAs.notNull(p, "paper").getNumber(), p.getAuthors(), p.getPublicationYear(), p.getTitle(), p.getLocation(), p.getPmId(), caption, brand, numberLabel);
-    }
+    public PaperLiteratureReview(final Paper p, final ReportHeaderFields rhf) {
+        AssertAs.notNull(p, "p");
+        AssertAs.notNull(rhf, "rhf");
 
-    /**
-     * Instantiation with all individual fields (those that are part of a {@link Paper} and all other from the other constructor.
-     */
-    public PaperLiteratureReview(final Long number, final String authors, final Integer publicationYear, final String title, final String location, final Integer pmId, final String caption,
-            final String brand, final String numberLabel) {
-        this.number = number != null ? String.valueOf(number) : "";
-        this.authors = na(authors);
-        this.publicationYear = publicationYear != null ? String.valueOf(publicationYear) : "";
-        this.title = na(title);
-        this.location = na(location);
-        this.pubmedLink = makePubmedLink(pmId);
+        final Long no = p.getNumber();
+        this.number = no != null ? String.valueOf(no) : "";
+        this.authors = na(p.getAuthors());
+        this.publicationYear = p.getPublicationYear() != null ? String.valueOf(p.getPublicationYear()) : "";
+        this.title = na(p.getTitle());
+        this.location = na(p.getLocation());
+        this.pubmedLink = makePubmedLink(p.getPmId());
 
-        this.caption = na(caption);
-        this.brand = na(brand);
-        this.numberLabel = na(numberLabel);
+        this.caption = na(rhf.getCaptionLabel());
+        this.brand = na(rhf.getBrand());
+        this.numberLabel = na(rhf.getNumberLabel());
     }
 
     private String makePubmedLink(final Integer pmId) {

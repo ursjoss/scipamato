@@ -10,6 +10,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import ch.difty.scipamato.web.jasper.PaperDataSourceTest;
+import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
@@ -22,6 +23,23 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
     private static final Long NUMBER = 15l;
 
     private PaperReviewDataSource ds;
+    private ReportHeaderFields rhf = newReportHeaderFields();
+
+    private ReportHeaderFields newReportHeaderFields() {
+        ReportHeaderFields.Builder b = new ReportHeaderFields.Builder("", "b").withNumber("nl")
+                .withAuthorYear("ayl")
+                .withPopulationPlace("ppl")
+                .withMethodOutcome("mol")
+                .withExposurePollutant("epl")
+                .withMethodStudyDesign("msdl")
+                .withPopulationDuration("pdl")
+                .withPopulationPariticpants("ppal")
+                .withExposureAssessment("eal")
+                .withResultExposureRange("rerl")
+                .withMethodConfounders("mcl")
+                .withResultEffectEstimate("reel");
+        return b.build();
+    }
 
     @Override
     public void setUpHook() {
@@ -38,6 +56,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         when(paperMock.getResultExposureRange()).thenReturn("rer");
         when(paperMock.getMethodConfounders()).thenReturn("mc");
         when(paperMock.getResultEffectEstimate()).thenReturn("ree");
+        when(paperMock.getCreatedByName()).thenReturn("cb");
     }
 
     private void assertDataSource(String fileName) throws JRException {
@@ -74,7 +93,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         assertFieldValue("exposurePollutantLabel", "epl", f, jsds);
         assertFieldValue("methodStudyDesignLabel", "msdl", f, jsds);
         assertFieldValue("populationDurationLabel", "pdl", f, jsds);
-        assertFieldValue("populationParticipantsLabel", "ppl", f, jsds);
+        assertFieldValue("populationParticipantsLabel", "ppal", f, jsds);
         assertFieldValue("exposureAssessmentLabel", "eal", f, jsds);
         assertFieldValue("resultExposureRangeLabel", "rerl", f, jsds);
         assertFieldValue("methodConfoundersLabel", "mcl", f, jsds);
@@ -91,7 +110,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         when(dataProviderMock.size()).thenReturn(1l);
         when(dataProviderMock.findAllPapersByFilter()).thenReturn(Arrays.asList(paperMock));
 
-        ds = new PaperReviewDataSource(dataProviderMock, "nl", "ayl", "ppl", "mol", "epl", "msdl", "pdl", "ppl", "eal", "rerl", "mcl", "reel", "b", "cb", pdfExporterConfigMock);
+        ds = new PaperReviewDataSource(dataProviderMock, rhf, pdfExporterConfigMock);
         assertDataSource(FILE_NAME);
 
         verify(dataProviderMock).size();
@@ -110,6 +129,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         verify(paperMock).getResultExposureRange();
         verify(paperMock).getMethodConfounders();
         verify(paperMock).getResultEffectEstimate();
+        verify(paperMock).getCreatedByName();
     }
 
 }

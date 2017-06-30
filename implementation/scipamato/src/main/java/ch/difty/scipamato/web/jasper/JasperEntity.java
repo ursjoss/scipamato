@@ -2,6 +2,8 @@ package ch.difty.scipamato.web.jasper;
 
 import java.io.Serializable;
 
+import ch.difty.scipamato.lib.NullArgumentException;
+
 public abstract class JasperEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -11,17 +13,32 @@ public abstract class JasperEntity implements Serializable {
     }
 
     /**
-     * Returns the label with the real value if present or a default value if null.
-     * However, if the associated value is blank or null, the label is blank as well.
-     * @param label
-     * @param value
-     * @return non-null label
+     * Provides the (non-null) label, but only if the associated value is neither null nor blank.
+     * @param label the label to display (if it is non-null)
+     * @param value the value to test against if it is null or blank to not show the label
+     * @return label, never null
      */
     protected String na(final String label, String value) {
-        if (!value.isEmpty())
-            return label != null ? label : "";
-        else
+        if (value == null || value.isEmpty())
             return "";
+        else
+            return label != null ? label : "";
+    }
+
+    /**
+     * Provides the label, but only if the associated value is neither null nor blank.
+     * @param label the label to display
+     * @param value the value to test against if it is null or blank to not show the label
+     * @throws NullArgumentException in case of a null label
+     * @return label, never null
+     */
+    protected String na2(final String label, String value) {
+        if (label == null)
+            throw new NullArgumentException("label");
+        if (value == null || value.isEmpty())
+            return "";
+        else
+            return label;
     }
 
 }
