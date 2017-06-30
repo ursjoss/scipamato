@@ -86,6 +86,8 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
         bb = b + ":summaryLink";
         getTester().assertComponent(bb, ResourceLink.class);
+        bb = b + ":summaryShortLink";
+        getTester().assertComponent(bb, ResourceLink.class);
         bb = b + ":reviewLink";
         getTester().assertComponent(bb, ResourceLink.class);
         bb = b + ":literatureReviewLink";
@@ -158,6 +160,13 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         verifyPdfExport();
     }
 
+    @Test
+    public void clickingSummaryShortLink_succeeds() {
+        getTester().startComponentInPage(makePanel());
+        getTester().clickLink(PANEL_ID + ":summaryShortLink");
+        verifyPdfExport();
+    }
+    
     @Test
     public void clickingReviewLink_succeeds() {
         getTester().startComponentInPage(makePanel());
