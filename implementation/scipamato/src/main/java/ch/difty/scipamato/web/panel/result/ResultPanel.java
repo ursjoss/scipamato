@@ -138,15 +138,14 @@ public class ResultPanel extends AbstractPanel<Void> {
     }
 
     private void makeAndQueuePdfSummaryLink(String id) {
-        String populationLabel = new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString();
-        String methodsLabel = new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString();
-        String resultLabel = new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString();
-        String commentLabel = new StringResourceModel("comment" + LABEL_RECOURCE_TAG, this, null).getString();
-        String brand = getProperties().getBrand();
-        String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
-
-        ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand).withPopulation(populationLabel).withMethods(methodsLabel).withResult(resultLabel).withComment(commentLabel).build();
-        String pdfTitle = brand + "- " + new StringResourceModel("paper_summary.titlePart", this, null).getString();
+        final String brand = getProperties().getBrand();
+        final String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
+        ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand).withPopulation(new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString())
+                .withMethods(new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString())
+                .withResult(new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString())
+                .withComment(new StringResourceModel("comment" + LABEL_RECOURCE_TAG, this, null).getString())
+                .build();
+        final String pdfTitle = brand + "- " + new StringResourceModel("paper_summary.titlePart", this, null).getString();
         ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfTitle).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
 
         ResourceLink<Void> summaryLink = new ResourceLink<>(id, new PaperSummaryDataSource(dataProvider, rhf, config));
@@ -157,39 +156,23 @@ public class ResultPanel extends AbstractPanel<Void> {
     }
 
     private void makeAndQueuePdfSummaryShortLink(String id) {
-        final String goalsLabel = new StringResourceModel(Paper.GOALS + LABEL_RECOURCE_TAG, this, null).getString();
-        final String methodsLabel = new StringResourceModel(Paper.METHODS + LABEL_RECOURCE_TAG, this, null).getString();
-        final String methodOutcomeLabel = new StringResourceModel(Paper.METHOD_OUTCOME + LABEL_RECOURCE_TAG, this, null).getString();
-        final String resultMeasuredOutcomeLabel = new StringResourceModel(Paper.RESULT_MEASURED_OUTCOME + LABEL_RECOURCE_TAG, this, null).getString();
-        final String methodStudyDesignLabel = new StringResourceModel(Paper.METHOD_STUDY_DESIGN + LABEL_RECOURCE_TAG, this, null).getString();
-        final String populationPlaceLabel = new StringResourceModel(Paper.POPULATION_PLACE + LABEL_RECOURCE_TAG, this, null).getString();
-        final String populationParticipantsLabel = new StringResourceModel(Paper.POPULATION_PARTICIPANTS + LABEL_RECOURCE_TAG, this, null).getString();
-        final String populationDurationLabel = new StringResourceModel(Paper.POPULATION_DURATION + LABEL_RECOURCE_TAG, this, null).getString();
-        final String esposurePollutantLabel = new StringResourceModel(Paper.EXPOSURE_POLLUTANT + LABEL_RECOURCE_TAG, this, null).getString();
-        final String esposureAssessmentLabel = new StringResourceModel(Paper.EXPOSURE_ASSESSMENT + LABEL_RECOURCE_TAG, this, null).getString();
-        final String resultExposureRangeLabel = new StringResourceModel(Paper.RESULT_EXPOSURE_RANGE + LABEL_RECOURCE_TAG, this, null).getString();
-        final String methodStatisticsLabel = new StringResourceModel(Paper.METHOD_STATISTICS + LABEL_RECOURCE_TAG, this, null).getString();
-        final String methodConfoundersLabel = new StringResourceModel(Paper.METHOD_CONFOUNDERS + LABEL_RECOURCE_TAG, this, null).getString();
-        final String resultEffectEstimateLabel = new StringResourceModel(Paper.RESULT_EFFECT_ESTIMATE + LABEL_RECOURCE_TAG, this, null).getString();
-        final String commentLabel = new StringResourceModel(Paper.COMMENT + LABEL_RECOURCE_TAG, this, null).getString();
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
-
-        ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand).withGoals(goalsLabel)
-                .withMethods(methodsLabel)
-                .withMethodOutcome(methodOutcomeLabel)
-                .withResultMeasuredOutcome(resultMeasuredOutcomeLabel)
-                .withMethodStudyDesign(methodStudyDesignLabel)
-                .withPopulationPlace(populationPlaceLabel)
-                .withPopulationPariticpants(populationParticipantsLabel)
-                .withPopulationDuration(populationDurationLabel)
-                .withExposurePollutant(esposurePollutantLabel)
-                .withExposureAssessment(esposureAssessmentLabel)
-                .withResultExposureRange(resultExposureRangeLabel)
-                .withMethodStatistics(methodStatisticsLabel)
-                .withMethodConfounders(methodConfoundersLabel)
-                .withResultEffectEstimate(resultEffectEstimateLabel)
-                .withComment(commentLabel)
+        ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand).withGoals(new StringResourceModel(Paper.GOALS + LABEL_RECOURCE_TAG, this, null).getString())
+                .withMethods(new StringResourceModel(Paper.METHODS + LABEL_RECOURCE_TAG, this, null).getString())
+                .withMethodOutcome(new StringResourceModel(Paper.METHOD_OUTCOME + LABEL_RECOURCE_TAG, this, null).getString())
+                .withResultMeasuredOutcome(new StringResourceModel(Paper.RESULT_MEASURED_OUTCOME + LABEL_RECOURCE_TAG, this, null).getString())
+                .withMethodStudyDesign(new StringResourceModel(Paper.METHOD_STUDY_DESIGN + LABEL_RECOURCE_TAG, this, null).getString())
+                .withPopulationPlace(new StringResourceModel(Paper.POPULATION_PLACE + LABEL_RECOURCE_TAG, this, null).getString())
+                .withPopulationPariticpants(new StringResourceModel(Paper.POPULATION_PARTICIPANTS + LABEL_RECOURCE_TAG, this, null).getString())
+                .withPopulationDuration(new StringResourceModel(Paper.POPULATION_DURATION + LABEL_RECOURCE_TAG, this, null).getString())
+                .withExposurePollutant(new StringResourceModel(Paper.EXPOSURE_POLLUTANT + LABEL_RECOURCE_TAG, this, null).getString())
+                .withExposureAssessment(new StringResourceModel(Paper.EXPOSURE_ASSESSMENT + LABEL_RECOURCE_TAG, this, null).getString())
+                .withResultExposureRange(new StringResourceModel(Paper.RESULT_EXPOSURE_RANGE + LABEL_RECOURCE_TAG, this, null).getString())
+                .withMethodStatistics(new StringResourceModel(Paper.METHOD_STATISTICS + LABEL_RECOURCE_TAG, this, null).getString())
+                .withMethodConfounders(new StringResourceModel(Paper.METHOD_CONFOUNDERS + LABEL_RECOURCE_TAG, this, null).getString())
+                .withResultEffectEstimate(new StringResourceModel(Paper.RESULT_EFFECT_ESTIMATE + LABEL_RECOURCE_TAG, this, null).getString())
+                .withComment(new StringResourceModel(Paper.COMMENT + LABEL_RECOURCE_TAG, this, null).getString())
                 .build();
         String pdfTitle = brand + "- " + new StringResourceModel("paper_summary.titlePart", this, null).getString();
         ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfTitle).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
@@ -202,35 +185,21 @@ public class ResultPanel extends AbstractPanel<Void> {
     }
 
     private void makeAndQueuePdfReviewLink(String id) {
-        final String numberLabel = new StringResourceModel("number" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String authorYearLabel = new StringResourceModel("authorYear" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String populationPlaceLabel = new StringResourceModel("populationPlace" + SHORT_LABEL_RECOURCE_TAG, this, null).getString();
-        final String methodOutcomeLabel = new StringResourceModel("methodOutcome" + SHORT_LABEL_RECOURCE_TAG, this, null).getString();
-        final String exposurePollutantLabel = new StringResourceModel("exposurePollutant" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String methodStudyDesignLabel = new StringResourceModel("methodStudyDesign" + SHORT_LABEL_RECOURCE_TAG, this, null).getString();
-        final String populationDurationLabel = new StringResourceModel("populationDuration" + SHORT_LABEL_RECOURCE_TAG, this, null).getString();
-        final String populationParticipantsLabel = new StringResourceModel("populationParticipants" + SHORT_LABEL_RECOURCE_TAG, this, null).getString();
-        final String exposureAssessmentLabel = new StringResourceModel("exposureAssessment" + SHORT_LABEL_RECOURCE_TAG, this, null).getString();
-        final String resultExposureRangeLabel = new StringResourceModel("resultExposureRange" + SHORT_LABEL_RECOURCE_TAG, this, null).getString();
-        final String methodConfoundersLabel = new StringResourceModel("methodConfounders" + LABEL_RECOURCE_TAG, this, null).getString();
-        final String resultEffectEstimateLabel = new StringResourceModel("resultEffectEstimate" + SHORT_LABEL_RECOURCE_TAG, this, null).getString();
         final String brand = getProperties().getBrand();
-
         final String pdfTitle = brand + "- " + new StringResourceModel("paper_review.titlePart", this, null).getString();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfTitle).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
-
-        ReportHeaderFields rhf = new ReportHeaderFields.Builder("", brand).withNumber(numberLabel)
-                .withAuthorYear(authorYearLabel)
-                .withPopulationPlace(populationPlaceLabel)
-                .withMethodOutcome(methodOutcomeLabel)
-                .withExposurePollutant(exposurePollutantLabel)
-                .withMethodStudyDesign(methodStudyDesignLabel)
-                .withPopulationDuration(populationDurationLabel)
-                .withPopulationPariticpants(populationParticipantsLabel)
-                .withExposureAssessment(exposureAssessmentLabel)
-                .withResultExposureRange(resultExposureRangeLabel)
-                .withMethodConfounders(methodConfoundersLabel)
-                .withResultEffectEstimate(resultEffectEstimateLabel)
+        ReportHeaderFields rhf = new ReportHeaderFields.Builder("", brand).withNumber(new StringResourceModel("number" + LABEL_RECOURCE_TAG, this, null).getString())
+                .withAuthorYear(new StringResourceModel("authorYear" + LABEL_RECOURCE_TAG, this, null).getString())
+                .withPopulationPlace(new StringResourceModel("populationPlace" + SHORT_LABEL_RECOURCE_TAG, this, null).getString())
+                .withMethodOutcome(new StringResourceModel("methodOutcome" + SHORT_LABEL_RECOURCE_TAG, this, null).getString())
+                .withExposurePollutant(new StringResourceModel("exposurePollutant" + LABEL_RECOURCE_TAG, this, null).getString())
+                .withMethodStudyDesign(new StringResourceModel("methodStudyDesign" + SHORT_LABEL_RECOURCE_TAG, this, null).getString())
+                .withPopulationDuration(new StringResourceModel("populationDuration" + SHORT_LABEL_RECOURCE_TAG, this, null).getString())
+                .withPopulationPariticpants(new StringResourceModel("populationParticipants" + SHORT_LABEL_RECOURCE_TAG, this, null).getString())
+                .withExposureAssessment(new StringResourceModel("exposureAssessment" + SHORT_LABEL_RECOURCE_TAG, this, null).getString())
+                .withResultExposureRange(new StringResourceModel("resultExposureRange" + SHORT_LABEL_RECOURCE_TAG, this, null).getString())
+                .withMethodConfounders(new StringResourceModel("methodConfounders" + LABEL_RECOURCE_TAG, this, null).getString())
+                .withResultEffectEstimate(new StringResourceModel("resultEffectEstimate" + SHORT_LABEL_RECOURCE_TAG, this, null).getString())
                 .build();
 
         ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperReviewDataSource(dataProvider, rhf, config));
@@ -242,11 +211,9 @@ public class ResultPanel extends AbstractPanel<Void> {
 
     private void makeAndQueuePdfLiteratureReviewLink(String id) {
         final String brand = getProperties().getBrand();
-        final String numberLabel = new StringResourceModel("number" + LABEL_RECOURCE_TAG, this, null).getString();
         final String pdfCaption = new StringResourceModel("paper_literature_review.caption", this, null).setParameters(brand).getString();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
-
-        ReportHeaderFields rhf = new ReportHeaderFields.Builder("", brand).withNumber(numberLabel).withCaption(pdfCaption).build();
+        ReportHeaderFields rhf = new ReportHeaderFields.Builder("", brand).withNumber(new StringResourceModel("number" + LABEL_RECOURCE_TAG, this, null).getString()).withCaption(pdfCaption).build();
         ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperLiteratureReviewDataSource(dataProvider, rhf, config));
         reviewLink.setOutputMarkupId(true);
         reviewLink.setBody(new StringResourceModel("link.literature_review.label"));
@@ -255,31 +222,24 @@ public class ResultPanel extends AbstractPanel<Void> {
     }
 
     private void makeAndQueuePdfSummaryTableLink(String id) {
-        final String pdfCaption = new StringResourceModel("paper_summary_table.titlePart", this, null).getString();
-        final String brand = getProperties().getBrand();
-        final String numberLabel = new StringResourceModel("number" + LABEL_RECOURCE_TAG, this, null).getString();
-
-        final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
-        ReportHeaderFields rhf = new ReportHeaderFields.Builder("", brand).withNumber(numberLabel).withCaption(pdfCaption).build();
-        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperSummaryTableDataSource(dataProvider, rhf, true, config));
-        reviewLink.setOutputMarkupId(true);
-        reviewLink.setBody(new StringResourceModel("link.summary_table.label"));
-        reviewLink.add(new AttributeModifier(TITLE, new StringResourceModel("link.summary_table.title", this, null).getString()));
-        queue(reviewLink);
+        queue(newPdfSummaryTable(id, true, "link.summary_table.label", "link.summary_table.title"));
     }
 
     private void makeAndQueuePdfSummaryTableWithoutResultsLink(String id) {
+        queue(newPdfSummaryTable(id, false, "link.summary_table_wo_results.label", "link.summary_table_wo_results.title"));
+    }
+
+    private ResourceLink<Void> newPdfSummaryTable(String id, final boolean includeResults, final String bodyResourceKey, final String titleResourceKey) {
         final String pdfCaption = new StringResourceModel("paper_summary_table.titlePart", this, null).getString();
         final String brand = getProperties().getBrand();
-        final String numberLabel = new StringResourceModel("number" + LABEL_RECOURCE_TAG, this, null).getString();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
+        ReportHeaderFields rhf = new ReportHeaderFields.Builder("", brand).withNumber(new StringResourceModel("number" + LABEL_RECOURCE_TAG, this, null).getString()).withCaption(pdfCaption).build();
 
-        ReportHeaderFields rhf = new ReportHeaderFields.Builder("", brand).withNumber(numberLabel).withCaption(pdfCaption).build();
-        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperSummaryTableDataSource(dataProvider, rhf, false, config));
+        ResourceLink<Void> reviewLink = new ResourceLink<>(id, new PaperSummaryTableDataSource(dataProvider, rhf, includeResults, config));
         reviewLink.setOutputMarkupId(true);
-        reviewLink.setBody(new StringResourceModel("link.summary_table_wo_results.label"));
-        reviewLink.add(new AttributeModifier(TITLE, new StringResourceModel("link.summary_table_wo_results.title", this, null).getString()));
-        queue(reviewLink);
+        reviewLink.setBody(new StringResourceModel(bodyResourceKey));
+        reviewLink.add(new AttributeModifier(TITLE, new StringResourceModel(titleResourceKey, this, null).getString()));
+        return reviewLink;
     }
 
 }

@@ -291,12 +291,11 @@ public class ReportHeaderFields implements IClusterable {
             return this;
         }
 
+        /**
+         * Builder the {@link ReportHeaderFields}. Currenently no local validation implemented here
+         */
         public ReportHeaderFields build() {
-            validate();
             return new ReportHeaderFields(this);
-        }
-
-        private void validate() {
         }
 
     }
