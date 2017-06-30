@@ -142,7 +142,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     @Override
     protected PaperSummaryDataSource getSummaryDataSource() {
         final String brand = getProperties().getBrand();
-        final String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
+        final String headerPart = brand + "-" + new StringResourceModel("headerPart.summary", this, null).getString();
         ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand).withPopulation(new StringResourceModel(Paper.POPULATION + LABEL_RECOURCE_TAG, this, null).getString())
                 .withMethods(new StringResourceModel(Paper.METHODS + LABEL_RECOURCE_TAG, this, null).getString())
                 .withResult(new StringResourceModel(Paper.RESULT + LABEL_RECOURCE_TAG, this, null).getString())
@@ -165,7 +165,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     @Override
     protected PaperSummaryShortDataSource getSummaryShortDataSource() {
         final String brand = getProperties().getBrand();
-        final String headerPart = brand + "-" + new StringResourceModel("headerPart", this, null).getString();
+        final String headerPart = brand + "-" + new StringResourceModel("headerPart.summaryShort", this, null).getString();
         ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand).withGoals(new StringResourceModel(Paper.GOALS + LABEL_RECOURCE_TAG, this, null).getString())
                 .withMethods(new StringResourceModel(Paper.METHODS + LABEL_RECOURCE_TAG, this, null).getString())
                 .withMethodOutcome(new StringResourceModel(Paper.METHOD_OUTCOME + LABEL_RECOURCE_TAG, this, null).getString())
