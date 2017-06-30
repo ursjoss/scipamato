@@ -45,6 +45,7 @@ import ch.difty.scipamato.entity.PaperAttachment;
 import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.navigator.ItemNavigator;
 import ch.difty.scipamato.web.component.SerializableSupplier;
+import ch.difty.scipamato.web.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.web.jasper.summaryshort.PaperSummaryShortDataSource;
 import ch.difty.scipamato.web.model.CodeClassModel;
@@ -370,44 +371,22 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
     }
 
     private ResourceLink<Void> makeSummaryLink(String id) {
-        final String button = "button.";
-        summaryLink = new ResourceLink<Void>(id, getSummaryDataSource()) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onInitialize() {
-                super.onInitialize();
-                if (isVisible())
-                    add(new ButtonBehavior().setType(Buttons.Type.Info).setBlock(true).setSize(Size.Large));
-            }
-
-            @Override
-            public void onEvent(IEvent<?> event) {
-                super.onEvent(event);
-                if (event.getPayload().getClass() == SelfUpdateEvent.class) {
-                    if (isVisible()) {
-                        setEnabled(false);
-                        summaryLink.add(new AttributeModifier(TITLE, new StringResourceModel(button + id + ".title.disabled", this, null).getString()));
-                        ((SelfUpdateEvent) event.getPayload()).getTarget().add(this);
-                    }
-                    event.dontBroadcastDeeper();
-                }
-            }
-        };
-        summaryLink.setOutputMarkupId(true);
-        summaryLink.setOutputMarkupPlaceholderTag(true);
-        summaryLink.setBody(new StringResourceModel(button + id + ".label"));
-        summaryLink.setVisible(isEditMode());
-        summaryLink.add(new AttributeModifier(TITLE, new StringResourceModel(button + id + ".title", this, null).getString()));
-        return summaryLink;
+        return makePdfResourceLink(id, getSummaryDataSource());
     }
 
     /** implement to return PaperSummaryDataSource */
     protected abstract PaperSummaryDataSource getSummaryDataSource();
 
     private ResourceLink<Void> makeSummaryShortLink(String id) {
+        return makePdfResourceLink(id, getSummaryShortDataSource());
+    }
+
+    /** implement to return PaperSummaryShortDataSource */
+    protected abstract PaperSummaryShortDataSource getSummaryShortDataSource();
+
+    private ResourceLink<Void> makePdfResourceLink(String id, JasperPaperDataSource<?> dataSource) {
         final String button = "button.";
-        summaryShortLink = new ResourceLink<Void>(id, getSummaryShortDataSource()) {
+        ResourceLink<Void> link = new ResourceLink<Void>(id, dataSource) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -423,23 +402,20 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 if (event.getPayload().getClass() == SelfUpdateEvent.class) {
                     if (isVisible()) {
                         setEnabled(false);
-                        summaryShortLink.add(new AttributeModifier(TITLE, new StringResourceModel(button + id + ".title.disabled", this, null).getString()));
+                        add(new AttributeModifier(TITLE, new StringResourceModel(button + id + ".title.disabled", this, null).getString()));
                         ((SelfUpdateEvent) event.getPayload()).getTarget().add(this);
                     }
                     event.dontBroadcastDeeper();
                 }
             }
         };
-        summaryShortLink.setOutputMarkupId(true);
-        summaryShortLink.setOutputMarkupPlaceholderTag(true);
-        summaryShortLink.setBody(new StringResourceModel(button + id + ".label"));
-        summaryShortLink.setVisible(isEditMode());
-        summaryShortLink.add(new AttributeModifier(TITLE, new StringResourceModel(button + id + ".title", this, null).getString()));
-        return summaryShortLink;
+        link.setOutputMarkupId(true);
+        link.setOutputMarkupPlaceholderTag(true);
+        link.setBody(new StringResourceModel(button + id + ".label"));
+        link.setVisible(isEditMode());
+        link.add(new AttributeModifier(TITLE, new StringResourceModel(button + id + ".title", this, null).getString()));
+        return link;
     }
-
-    /** implement to return PaperSummaryShortDataSource */
-    protected abstract PaperSummaryShortDataSource getSummaryShortDataSource();
 
     private abstract class AbstractTabPanel extends Panel {
 
