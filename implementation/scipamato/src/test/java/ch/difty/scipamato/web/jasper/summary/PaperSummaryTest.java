@@ -14,6 +14,7 @@ public class PaperSummaryTest extends JasperEntityTest {
 
     private ReportHeaderFields newReportHeaderFields() {
         ReportHeaderFields.Builder b = new ReportHeaderFields.Builder(HEADER_PART, BRAND).withPopulation(POPULATION_LABEL)
+                .withGoals(GOALS_LABEL)
                 .withMethods(METHODS_LABEL)
                 .withResult(RESULT_LABEL)
                 .withComment(COMMENT_LABEL);

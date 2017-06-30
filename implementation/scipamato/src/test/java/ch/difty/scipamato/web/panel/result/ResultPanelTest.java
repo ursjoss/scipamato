@@ -166,7 +166,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         getTester().clickLink(PANEL_ID + ":summaryShortLink");
         verifyPdfExport();
     }
-    
+
     @Test
     public void clickingReviewLink_succeeds() {
         getTester().startComponentInPage(makePanel());

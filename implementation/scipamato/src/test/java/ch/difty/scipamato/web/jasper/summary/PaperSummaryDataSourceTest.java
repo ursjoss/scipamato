@@ -33,6 +33,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     private static final String CREATED_BY = "creatingUser";
 
     private static final String POPULATION_LABEL = "Kollektiv";
+    private static final String GOALS_LABEL = "Ziele";
     private static final String METHODS_LABEL = "Methoden";
     private static final String RESULT_LABEL = "Resultat";
     private static final String COMMENT_LABEL = "Bemerkungen";
@@ -48,6 +49,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
     private ReportHeaderFields newReportHeaderFields() {
         ReportHeaderFields.Builder b = new ReportHeaderFields.Builder(HEADER_PART, BRAND).withPopulation(POPULATION_LABEL)
+                .withGoals(GOALS_LABEL)
                 .withMethods(METHODS_LABEL)
                 .withResult(RESULT_LABEL)
                 .withComment(COMMENT_LABEL);

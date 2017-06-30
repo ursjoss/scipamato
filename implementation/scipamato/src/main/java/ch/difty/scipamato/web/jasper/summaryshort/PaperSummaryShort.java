@@ -2,7 +2,7 @@ package ch.difty.scipamato.web.jasper.summaryshort;
 
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.lib.AssertAs;
-import ch.difty.scipamato.web.jasper.JasperEntity;
+import ch.difty.scipamato.web.jasper.PaperSummaryCommon;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 
 /**
@@ -10,17 +10,9 @@ import ch.difty.scipamato.web.jasper.ReportHeaderFields;
  *
  * @author u.joss
  */
-public class PaperSummaryShort extends JasperEntity {
+public class PaperSummaryShort extends PaperSummaryCommon {
     private static final long serialVersionUID = 1L;
 
-    private final String number;
-    private final String authors;
-    private final String title;
-    private final String location;
-    private final String goalsLabel;
-    private final String goals;
-    private final String methodsLabel;
-    private final String methods;
     private final String methodOutcomeLabel;
     private final String methodOutcome;
     private final String resultMeasuredOutcomeLabel;
@@ -45,12 +37,6 @@ public class PaperSummaryShort extends JasperEntity {
     private final String methodConfounders;
     private final String resultEffectEstimateLabel;
     private final String resultEffectEstimate;
-    private final String comment;
-    private final String commentLabel;
-
-    private final String header;
-    private final String brand;
-    private final String createdBy;
 
     /**
      * Instantiation with a {@link Paper} and the {@link ReportHeaderFields}
@@ -61,16 +47,8 @@ public class PaperSummaryShort extends JasperEntity {
      *      the reportHeaderFields with the localized field headers
      */
     public PaperSummaryShort(final Paper p, final ReportHeaderFields rhf) {
-        AssertAs.notNull(p, "p");
-        AssertAs.notNull(rhf, "rhf");
+        super(AssertAs.notNull(p, "p"), AssertAs.notNull(rhf, "rhf"));
 
-        final Long no = p.getNumber();
-        this.number = no != null ? String.valueOf(no) : "";
-        this.authors = na(p.getAuthors());
-        this.title = na(p.getTitle());
-        this.location = na(p.getLocation());
-        this.goals = na(p.getGoals());
-        this.methods = na(p.getMethods());
         this.methodOutcome = na(p.getMethodOutcome());
         this.resultMeasuredOutcome = na(p.getResultMeasuredOutcome());
         this.methodStudyDesign = na(p.getMethodStudyDesign());
@@ -83,10 +61,7 @@ public class PaperSummaryShort extends JasperEntity {
         this.methodStatistics = na(p.getMethodStatistics());
         this.methodConfounders = na(p.getMethodConfounders());
         this.resultEffectEstimate = na(p.getResultEffectEstimate());
-        this.comment = na(p.getComment());
 
-        this.goalsLabel = na2(rhf.getGoalsLabel(), goals);
-        this.methodsLabel = na2(rhf.getMethodsLabel(), methods);
         this.methodOutcomeLabel = na2(rhf.getMethodOutcomeLabel(), methodOutcome);
         this.resultMeasuredOutcomeLabel = na2(rhf.getResultMeasuredOutcomeLabel(), resultMeasuredOutcome);
         this.methodStudyDesignLabel = na2(rhf.getMethodStudyDesignLabel(), methodStudyDesign);
@@ -99,56 +74,6 @@ public class PaperSummaryShort extends JasperEntity {
         this.methodStatisticsLabel = na2(rhf.getMethodStatisticsLabel(), methodStatistics);
         this.methodConfoundersLabel = na2(rhf.getMethodConfoundersLabel(), methodConfounders);
         this.resultEffectEstimateLabel = na2(rhf.getResultEffectEstimateLabel(), resultEffectEstimate);
-        this.commentLabel = na2(rhf.getCommentLabel(), comment);
-
-        this.header = makeHeader(no, rhf.getHeaderPart());
-        this.brand = na(rhf.getBrand());
-        this.createdBy = na(p.getCreatedByName());
-    }
-
-    private String makeHeader(final Long number, final String headerPart) {
-        final StringBuilder sb = new StringBuilder();
-        if (headerPart != null) {
-            sb.append(headerPart);
-        }
-        if (number != null) {
-            if (sb.length() > 0)
-                sb.append(" ");
-            sb.append(number);
-        }
-        return sb.toString();
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public String getAuthors() {
-        return authors;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getGoalsLabel() {
-        return goalsLabel;
-    }
-
-    public String getGoals() {
-        return goals;
-    }
-
-    public String getMethodsLabel() {
-        return methodsLabel;
-    }
-
-    public String getMethods() {
-        return methods;
     }
 
     public String getMethodOutcomeLabel() {
@@ -245,26 +170,6 @@ public class PaperSummaryShort extends JasperEntity {
 
     public String getResultEffectEstimate() {
         return resultEffectEstimate;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public String getCommentLabel() {
-        return commentLabel;
-    }
-
-    public String getHeader() {
-        return header;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
     }
 
 }

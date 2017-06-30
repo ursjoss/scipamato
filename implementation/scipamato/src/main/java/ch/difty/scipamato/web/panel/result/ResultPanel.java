@@ -141,6 +141,7 @@ public class ResultPanel extends AbstractPanel<Void> {
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summary", this, null).getString();
         ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand).withPopulation(new StringResourceModel("population" + LABEL_RECOURCE_TAG, this, null).getString())
+                .withGoals(new StringResourceModel("goals" + LABEL_RECOURCE_TAG, this, null).getString())
                 .withMethods(new StringResourceModel("methods" + LABEL_RECOURCE_TAG, this, null).getString())
                 .withResult(new StringResourceModel("result" + LABEL_RECOURCE_TAG, this, null).getString())
                 .withComment(new StringResourceModel("comment" + LABEL_RECOURCE_TAG, this, null).getString())
