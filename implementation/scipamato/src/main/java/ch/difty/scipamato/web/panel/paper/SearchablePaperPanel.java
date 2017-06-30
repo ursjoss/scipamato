@@ -7,7 +7,6 @@ import java.util.Map;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
@@ -49,11 +48,6 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
     @Override
     protected PaperSummaryShortDataSource getSummaryShortDataSource() {
         return null;
-    }
-
-    @Override
-    protected void reflectPersistedChangesViaTimer(TextField<Integer> id, TextField<String> created, TextField<String> modified) {
-        // don't add the behavior
     }
 
     protected boolean hasPubMedId() {

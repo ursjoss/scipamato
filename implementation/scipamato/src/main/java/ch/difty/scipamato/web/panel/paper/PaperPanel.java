@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.PageReference;
-import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
@@ -35,7 +34,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.util.time.Duration;
 
 import ch.difty.scipamato.ScipamatoSession;
 import ch.difty.scipamato.entity.Code;
@@ -175,7 +173,18 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
         TextField<Integer> number = new TextField<>(Paper.NUMBER);
         queueFieldAndLabel(number, new PropertyValidator<Integer>());
-        TextField<Integer> id = new TextField<>(Paper.ID);
+        TextField<Integer> id = new TextField<Integer>(Paper.ID) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onEvent(IEvent<?> event) {
+                super.onEvent(event);
+                if (event.getPayload().getClass() == SelfUpdateEvent.class) {
+                    ((SelfUpdateEvent) event.getPayload()).getTarget().add(this);
+                    event.dontBroadcastDeeper();
+                }
+            }
+        };
         id.setEnabled(isSearchMode());
         queueFieldAndLabel(id);
 
@@ -215,9 +224,6 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
         queue(makeSummaryLink("summary"));
         queue(makeSummaryShortLink("summaryShort"));
-
-        // make sure attributes updated during persisting are reflected
-        reflectPersistedChangesViaTimer(id, created, modified);
     }
 
     private OnChangeAjaxBehavior newPmIdChangeBehavior() {
@@ -229,26 +235,6 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                 target.add(pubmedRetrieval);
             }
         };
-    }
-
-    /**
-     * Override this if you don't want to add the timer behavior or implement it differently.
-     * @param id
-     * @param created
-     * @param modified
-     */
-    // TODO  could probably be removed
-    protected void reflectPersistedChangesViaTimer(TextField<Integer> id, TextField<String> created, TextField<String> modified) {
-        add(new AbstractAjaxTimerBehavior(Duration.seconds(1d)) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onTimer(AjaxRequestTarget target) {
-                target.add(id);
-                target.add(created);
-                target.add(modified);
-            }
-        });
     }
 
     private void queueTabPanel(String tabId) {
