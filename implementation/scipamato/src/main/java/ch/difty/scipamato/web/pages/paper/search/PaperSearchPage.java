@@ -248,15 +248,18 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private void resetAndSaveProviderModel(final SearchOrderChangeEvent soce) {
         if (getModelObject() != null && !soce.isNewSearchOrderRequested()) {
+            if (soce.getExcludedId() != null) {
+                SearchOrder p = searchOrderService.saveOrUpdate(getModelObject());
+                setModelObject(p);
+            }
             dataProvider.setFilterState(getModelObject());
-            if (soce.getExcludedId() != null)
-                searchOrderService.saveOrUpdate(getModelObject());
             if (getModelObject().getExcludedPaperIds().isEmpty())
                 updateNavigateable();
 
         } else {
             final SearchOrder newSearchOrder = makeNewModelObject();
             final SearchOrder persistedNewSearchOrder = searchOrderService.saveOrUpdate(newSearchOrder);
+            setModelObject(persistedNewSearchOrder);
             final PageParameters pp = new PageParameters();
             pp.add(PageParameterNames.SEARCH_ORDER_ID, persistedNewSearchOrder.getId());
             pp.add(PageParameterNames.SHOW_EXCLUDED, false);
