@@ -186,4 +186,44 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
         assertThat(u.getRoles()).containsOnly(Role.USER);
     }
 
+    // TODO should not be possible
+    @Test
+    public void canUpdateUser_thatHasBeenModifiedElswhereInTheMeanTime() {
+        User user = makeAndValidateNewUser();
+        User secondReloaded = loadSameUserIndependentlyAndModifyAndUpdate(user);
+
+        user.setLastName("yetanother");
+        User firstReloaded = repo.update(user);
+
+        // all wrong
+        assertThat(firstReloaded.getVersion()).isEqualTo(user.getVersion() + 1);
+        assertThat(firstReloaded.getVersion()).isEqualTo(secondReloaded.getVersion());
+        assertThat(firstReloaded.getFirstName()).isNotEqualTo("changed");
+    }
+
+    private User makeAndValidateNewUser() {
+        User user = repo.add(makeMinimalUser());
+        assertThat(user).isNotNull();
+        assertThat(user.getVersion()).isEqualTo(1);
+        assertThat(user.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED);
+        return user;
+    }
+
+    private User loadSameUserIndependentlyAndModifyAndUpdate(User user) {
+        User secondInstance = repo.findById(user.getId());
+        assertThat(user.getVersion()).isEqualTo(secondInstance.getVersion());
+        secondInstance.setFirstName("changed");
+        User secondReloaded = repo.update(secondInstance);
+        assertThat(secondReloaded.getVersion()).isEqualTo(2);
+        return secondReloaded;
+    }
+
+    // TODO should not be possible
+    @Test
+    public void canDeleteUser_thatHasbeenModifiedElsewhereInTheMeanTime() {
+        User user = makeAndValidateNewUser();
+        User secondReloaded = loadSameUserIndependentlyAndModifyAndUpdate(user);
+        User deletedEntity = repo.delete(user.getId());
+        assertThat(deletedEntity.getVersion()).isEqualTo(secondReloaded.getVersion());
+    }
 }
