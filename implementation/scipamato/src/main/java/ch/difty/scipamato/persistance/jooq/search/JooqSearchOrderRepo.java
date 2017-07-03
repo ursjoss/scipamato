@@ -120,7 +120,6 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
             fillSearchTermsInto(searchOrder, mapSearchTermsToSearchConditions(searchOrder));
             addSearchTermLessConditionsOf(searchOrder);
             fillExcludedPaperIdsInto(searchOrder);
-            fillCodesIntoSearchConditionsOf(searchOrder);
         }
     }
 
@@ -155,6 +154,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
             for (final SearchTerm st : entry.getValue()) {
                 sc.addSearchTerm(st);
             }
+            fillCodesInto(sc);
             searchOrder.add(sc);
         }
     }
@@ -202,6 +202,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
             final List<Long> conditionIdsWithSearchTerms = findConditionIdsWithSearchTerms(searchOrderId);
             final List<SearchCondition> termLessConditions = findTermLessConditions(searchOrderId, conditionIdsWithSearchTerms);
             for (final SearchCondition sc : termLessConditions) {
+                fillCodesInto(sc);
                 searchOrder.add(sc);
             }
         }
@@ -236,12 +237,6 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
                 .where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.equal(searchOrderId))
                 .fetch(r -> (Long) r.get(0));
         // @formatter:on
-    }
-
-    private void fillCodesIntoSearchConditionsOf(SearchOrder searchOrder) {
-        for (SearchCondition sc : searchOrder.getSearchConditions()) {
-            fillCodesInto(sc);
-        }
     }
 
     @Override

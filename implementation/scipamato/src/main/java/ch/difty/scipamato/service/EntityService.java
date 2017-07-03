@@ -3,6 +3,7 @@ package ch.difty.scipamato.service;
 import ch.difty.scipamato.entity.IdScipamatoEntity;
 import ch.difty.scipamato.entity.ScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
+import ch.difty.scipamato.persistance.OptimisticLockingException;
 
 /**
  * The generic {@link EntityService} interface, defining the common methods for manipulating entities which derive from {@link IdScipamatoEntity}.
@@ -20,6 +21,8 @@ public interface EntityService<ID extends Number, T extends IdScipamatoEntity<ID
      *
      * @param entity the entity to persist
      * @return the persisted entity
+     * @throws OptimisticLockingException
+     *     if the record version has increased in the mean time
      */
     T saveOrUpdate(T entity);
 
@@ -27,6 +30,8 @@ public interface EntityService<ID extends Number, T extends IdScipamatoEntity<ID
      * Removes the provided entity.
      *
      * @param entity
+     * @throws OptimisticLockingException
+     *     if the record version has increased in the mean time
      */
     void remove(T entity);
 

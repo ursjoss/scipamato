@@ -20,6 +20,7 @@ import ch.difty.scipamato.ScipamatoSession;
 import ch.difty.scipamato.auth.Roles;
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.lib.AssertAs;
+import ch.difty.scipamato.persistance.OptimisticLockingException;
 import ch.difty.scipamato.service.SearchOrderService;
 import ch.difty.scipamato.web.PageParameterNames;
 import ch.difty.scipamato.web.pages.BasePage;
@@ -249,21 +250,28 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     private void resetAndSaveProviderModel(final SearchOrderChangeEvent soce) {
         if (getModelObject() != null && !soce.isNewSearchOrderRequested()) {
             if (soce.getExcludedId() != null) {
-                SearchOrder p = searchOrderService.saveOrUpdate(getModelObject());
-                setModelObject(p);
+                try {
+                    SearchOrder p = searchOrderService.saveOrUpdate(getModelObject());
+                    setModelObject(p);
+                } catch (OptimisticLockingException ole) {
+                    error(new StringResourceModel("save.optimisticlockexception.hint", this, null).setParameters(ole.getTableName(), getModelObject().getId()).getString());
+                }
             }
             dataProvider.setFilterState(getModelObject());
-            if (getModelObject().getExcludedPaperIds().isEmpty())
+            if (getModelObject() != null && getModelObject().getExcludedPaperIds().isEmpty())
                 updateNavigateable();
-
         } else {
             final SearchOrder newSearchOrder = makeNewModelObject();
-            final SearchOrder persistedNewSearchOrder = searchOrderService.saveOrUpdate(newSearchOrder);
-            setModelObject(persistedNewSearchOrder);
-            final PageParameters pp = new PageParameters();
-            pp.add(PageParameterNames.SEARCH_ORDER_ID, persistedNewSearchOrder.getId());
-            pp.add(PageParameterNames.SHOW_EXCLUDED, false);
-            setResponsePage(new PaperSearchPage(pp));
+            try {
+                final SearchOrder persistedNewSearchOrder = searchOrderService.saveOrUpdate(newSearchOrder);
+                setModelObject(persistedNewSearchOrder);
+                final PageParameters pp = new PageParameters();
+                pp.add(PageParameterNames.SEARCH_ORDER_ID, persistedNewSearchOrder.getId());
+                pp.add(PageParameterNames.SHOW_EXCLUDED, false);
+                setResponsePage(new PaperSearchPage(pp));
+            } catch (OptimisticLockingException ole) {
+                error(new StringResourceModel("save.optimisticlockexception.hint", this, null).setParameters(ole.getTableName(), getModelObject().getId()).getString());
+            }
         }
     }
 

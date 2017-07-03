@@ -50,7 +50,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     @Mock
     private PaperSlim paperSlimMock;
     @Mock
-    private SearchOrder searchOrderMock;
+    private SearchOrder searchOrderMock, searchOrderMock2;
 
     private final SearchOrder searchOrder = new SearchOrder(SEARCH_ORDER_ID, "soName", 1, false, null, null);
 
@@ -162,6 +162,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
         when(paperSlimServiceMock.countBySearchOrder(eq(searchOrderMock))).thenReturn(1, 0);
         when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class))).thenReturn(Arrays.asList(paperSlimMock));
+        when(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock2);
 
         PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock));
 
@@ -177,15 +178,15 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().assertContainsNot(someTextInRow);
 
         verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
-        verify(paperSlimServiceMock, times(2)).countBySearchOrder(eq(searchOrderMock));
+        verify(paperSlimServiceMock, times(1)).countBySearchOrder(eq(searchOrderMock));
         verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class));
         verify(paperSlimMock, times(2)).getId();
         verify(paperSlimMock, times(2)).getId();
-        verify(searchOrderMock, times(6)).getExcludedPaperIds();
-        verify(searchOrderServiceMock).saveOrUpdate(isA(SearchOrder.class));
+        verify(searchOrderMock, times(3)).getExcludedPaperIds();
+        verify(searchOrderServiceMock).saveOrUpdate(searchOrderMock);
 
-        verify(paperSlimServiceMock, times(2)).countBySearchOrder(isA(SearchOrder.class));
-        verify(paperServiceMock, times(3)).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationContext.class));
+        verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock2);
+        verify(paperServiceMock, times(2)).findPageOfIdsBySearchOrder(eq(searchOrderMock2), isA(PaginationContext.class));
     }
 
     @Test
