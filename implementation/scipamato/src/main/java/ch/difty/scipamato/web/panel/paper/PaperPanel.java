@@ -223,8 +223,10 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         queue(newExcludeButton("exclude"));
         makeAndQueueSubmitButton("submit");
 
-        queue(makeSummaryLink("summary"));
-        queue(makeSummaryShortLink("summaryShort"));
+        summaryLink = makeSummaryLink("summary");
+        queue(summaryLink);
+        summaryShortLink = makeSummaryShortLink("summaryShort");
+        queue(summaryShortLink);
     }
 
     private OnChangeAjaxBehavior newPmIdChangeBehavior() {
