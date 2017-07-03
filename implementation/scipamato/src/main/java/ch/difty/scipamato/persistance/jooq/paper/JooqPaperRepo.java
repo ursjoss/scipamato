@@ -89,6 +89,11 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     }
 
     @Override
+    protected TableField<PaperRecord, Integer> getRecordVersion() {
+        return PAPER.VERSION;
+    }
+
+    @Override
     protected Long getIdFrom(PaperRecord record) {
         return record.getId();
     }

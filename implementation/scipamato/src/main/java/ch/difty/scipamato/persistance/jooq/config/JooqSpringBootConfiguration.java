@@ -7,6 +7,7 @@ import org.jooq.DSLContext;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.SQLDialect;
 import org.jooq.TransactionProvider;
+import org.jooq.conf.Settings;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;
@@ -67,7 +68,8 @@ public class JooqSpringBootConfiguration {
                 .derive(connectionProvider)
                 .derive(transactionProvider)
                 .derive(executeListenerProvider)
-                .derive(SQLDialect.valueOf(sqlDialect));
+                .derive(SQLDialect.valueOf(sqlDialect))
+                .derive(new Settings().withExecuteWithOptimisticLocking(true));
         // @formatter:on
     }
 }

@@ -36,6 +36,18 @@ public interface ReadOnlyRepository<T extends ScipamatoEntity, ID, F extends Sci
     T findById(ID id);
 
     /**
+     * Finds the persistent entities {@code T} with the provided id.
+     *
+     * @param id
+     *     the database id  - must not be null
+     * @param version
+     *     the record version - implementing optimistic locking
+     * @return the persisted entity {@code T} or null if it can't be found.
+     * @throws NullArgumentException if the id is null.
+     */
+    T findById(ID id, int version);
+
+    /**
      * Finds the persisted entities matching the provided filter and pagination context.
      *
      * @param filter of type {@code F}

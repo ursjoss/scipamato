@@ -69,7 +69,7 @@ public class JooqUserService implements UserService {
     @Override
     public void remove(User entity) {
         if (entity != null && entity.getId() != null) {
-            repo.delete(entity.getId());
+            repo.delete(entity.getId(), entity.getVersion());
         }
     }
 

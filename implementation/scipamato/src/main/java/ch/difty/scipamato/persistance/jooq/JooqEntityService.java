@@ -42,7 +42,7 @@ public abstract class JooqEntityService<ID extends Number, T extends IdScipamato
     @Transactional(readOnly = false)
     public void remove(T entity) {
         if (entity != null && entity.getId() != null) {
-            getRepository().delete(entity.getId());
+            getRepository().delete(entity.getId(), entity.getVersion());
         }
     }
 

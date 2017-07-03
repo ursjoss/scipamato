@@ -94,6 +94,8 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends ScipamatoEnti
      */
     protected abstract TableField<R, ID> getTableId();
 
+    protected abstract TableField<R, Integer> getRecordVersion();
+
     /** {@inheritDoc} */
     @Override
     public List<T> findAll() {
@@ -113,6 +115,15 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends ScipamatoEnti
     public T findById(final ID id) {
         AssertAs.notNull(id, "id");
         T entity = getDsl().selectFrom(getTable()).where(getTableId().equal(id)).fetchOneInto(getEntityClass());
+        enrichAssociatedEntitiesOf(entity);
+        return entity;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public T findById(final ID id, final int version) {
+        AssertAs.notNull(id, "id");
+        T entity = getDsl().selectFrom(getTable()).where(getTableId().equal(id)).and(getRecordVersion().equal(version)).fetchOneInto(getEntityClass());
         enrichAssociatedEntitiesOf(entity);
         return entity;
     }

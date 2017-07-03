@@ -20,6 +20,8 @@ import ch.difty.scipamato.entity.User;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.lib.DateTimeService;
+import ch.difty.scipamato.persistance.OptimisticLockingException;
+import ch.difty.scipamato.persistance.OptimisticLockingException.Type;
 import ch.difty.scipamato.service.Localization;
 
 /**
@@ -117,18 +119,20 @@ public abstract class JooqEntityRepo<R extends Record, T extends ScipamatoEntity
 
     /** {@inheritDoc} */
     @Override
-    public T delete(final ID id) {
+    public T delete(final ID id, int version) {
         AssertAs.notNull(id, "id");
 
-        final T toBeDeleted = findById(id);
+        final T toBeDeleted = findById(id, version);
         if (toBeDeleted != null) {
             deleteAssociatedEntitiesOf(toBeDeleted);
-            final int deleteCount = getDsl().delete(getTable()).where(getTableId().equal(id)).execute();
+            final int deleteCount = getDsl().delete(getTable()).where(getTableId().equal(id)).and(getRecordVersion().eq(version)).execute();
             if (deleteCount > 0) {
                 getLogger().info("Deleted {} record: {} with id {}.", deleteCount, getTable().getName(), id);
             } else {
-                getLogger().error("Unable to delete {} with id {}", getTable().getName(), id);
+                throw new OptimisticLockingException(getTable().getName(), toBeDeleted.toString(), Type.DELETE);
             }
+        } else {
+            throw new OptimisticLockingException(getTable().getName(), Type.DELETE);
         }
         return toBeDeleted;
     }
@@ -149,16 +153,15 @@ public abstract class JooqEntityRepo<R extends Record, T extends ScipamatoEntity
         entity.setLastModified(now());
         entity.setLastModifiedBy(getUserId());
 
-        R updated = updateSetStepSetter.setFieldsFor(getDsl().update(getTable()), entity).where(getTableId().equal(id)).returning().fetchOne();
-        updateAssociatedEntities(entity);
+        R updated = updateSetStepSetter.setFieldsFor(getDsl().update(getTable()), entity).where(getTableId().equal(id)).and(getRecordVersion().equal(entity.getVersion())).returning().fetchOne();
         if (updated != null) {
+            updateAssociatedEntities(entity);
             T savedEntity = findById(id);
             enrichAssociatedEntitiesOf(savedEntity);
             getLogger().info("Updated 1 record: {} with id {}.", getTable().getName(), id);
             return savedEntity;
         } else {
-            getLogger().warn("Unable to persist {} with id {}.", getTable().getName(), id);
-            return null;
+            throw new OptimisticLockingException(getTable().getName(), entity.toString(), Type.UPDATE);
         }
     }
 

@@ -63,7 +63,7 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
             private static final long serialVersionUID = 1L;
 
             @Override
-            public SearchOrder findById(Long id) {
+            public SearchOrder findById(Long id, int version) {
                 return searchOrder;
             }
         };
@@ -107,6 +107,11 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
     @Override
     protected TableField<SearchOrderRecord, Long> getTableId() {
         return SEARCH_ORDER.ID;
+    }
+
+    @Override
+    protected TableField<SearchOrderRecord, Integer> getRecordVersion() {
+        return SEARCH_ORDER.VERSION;
     }
 
     @Override

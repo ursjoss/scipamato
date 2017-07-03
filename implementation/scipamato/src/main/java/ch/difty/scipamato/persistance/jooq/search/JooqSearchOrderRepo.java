@@ -97,6 +97,11 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     }
 
     @Override
+    protected TableField<SearchOrderRecord, Integer> getRecordVersion() {
+        return SEARCH_ORDER.VERSION;
+    }
+
+    @Override
     protected Long getIdFrom(SearchOrderRecord record) {
         return record.getId();
     }

@@ -6,15 +6,16 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jooq.DSLContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import ch.difty.scipamato.db.tables.Paper;
 import ch.difty.scipamato.entity.xml.PubmedIntegrationTest;
 import ch.difty.scipamato.persistance.jooq.JooqBaseIntegrationTest;
-import ch.difty.scipamato.service.PaperService;
 import ch.difty.scipamato.service.PubmedImporter;
 import ch.difty.scipamato.service.ServiceResult;
 
@@ -32,7 +33,7 @@ public class PubmedImportServiceIntegrationTest extends JooqBaseIntegrationTest 
     private PubmedImporter importer;
 
     @Autowired
-    private PaperService paperService;
+    private DSLContext dsl;
 
     @Test
     public void canReadXmlFile_whichHas3Studies() throws IOException {
@@ -56,8 +57,8 @@ public class PubmedImportServiceIntegrationTest extends JooqBaseIntegrationTest 
         assertThat(messagesWithoutId).contains("PMID " + PMID1, "PMID " + PMID2, "PMID " + PMID3);
 
         // Delete created records
-        final List<Long> ids = result.getInfoMessages().stream().map((m) -> m.substring(m.indexOf("(") + 4, m.length() - 1)).map((id) -> Long.valueOf(id)).collect(Collectors.toList());
-        paperService.deleteByIds(ids);
+        List<Long> ids = result.getInfoMessages().stream().map((m) -> m.substring(m.indexOf("(") + 4, m.length() - 1)).map((id) -> Long.valueOf(id)).collect(Collectors.toList());
+        dsl.deleteFrom(Paper.PAPER).where(Paper.PAPER.ID.in(ids)).execute();
     }
 
 }

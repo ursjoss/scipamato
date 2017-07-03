@@ -145,7 +145,7 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
     @Test
     public void deleting_withNullEntity_doesNothing() {
         service.remove(null);
-        verify(repoMock, never()).delete(Mockito.anyLong());
+        verify(repoMock, never()).delete(Mockito.anyLong(), Mockito.anyInt());
     }
 
     @Test
@@ -155,17 +155,19 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
         service.remove(searchOrderMock);
 
         verify(searchOrderMock).getId();
-        verify(repoMock, never()).delete(Mockito.anyLong());
+        verify(repoMock, never()).delete(Mockito.anyLong(), Mockito.anyInt());
     }
 
     @Test
     public void deleting_withEntityWithNormalId_delegatesToRepo() {
         when(searchOrderMock.getId()).thenReturn(3l);
+        when(searchOrderMock.getVersion()).thenReturn(33);
 
         service.remove(searchOrderMock);
 
         verify(searchOrderMock, times(2)).getId();
-        verify(repoMock, times(1)).delete(3l);
+        verify(searchOrderMock, times(1)).getVersion();
+        verify(repoMock, times(1)).delete(3l, 33);
     }
 
     @Test

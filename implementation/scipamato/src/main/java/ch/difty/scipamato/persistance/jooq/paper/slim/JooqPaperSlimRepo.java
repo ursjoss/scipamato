@@ -55,6 +55,11 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
         return PAPER.ID;
     }
 
+    @Override
+    protected TableField<PaperRecord, Integer> getRecordVersion() {
+        return PAPER.VERSION;
+    }
+
     /** {@inheritDoc} */
     @Override
     public List<PaperSlim> findBySearchOrder(final SearchOrder searchOrder) {

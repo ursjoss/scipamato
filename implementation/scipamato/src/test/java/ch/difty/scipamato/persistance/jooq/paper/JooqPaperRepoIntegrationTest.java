@@ -141,7 +141,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         final long id = paper.getId();
         assertThat(paper.getAuthors()).isEqualTo("a");
 
-        Paper deleted = repo.delete(id);
+        Paper deleted = repo.delete(id, paper.getVersion());
         assertThat(deleted.getId()).isEqualTo(id);
 
         assertThat(repo.findById(id)).isNull();
