@@ -224,9 +224,9 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
         makeAndQueueSubmitButton("submit");
 
         summaryLink = makeSummaryLink("summary");
-        queue(summaryLink);
+        form.addOrReplace(summaryLink);
         summaryShortLink = makeSummaryShortLink("summaryShort");
-        queue(summaryShortLink);
+        form.addOrReplace(summaryShortLink);
     }
 
     private OnChangeAjaxBehavior newPmIdChangeBehavior() {
@@ -363,8 +363,10 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             @Override
             public void onAfterSubmit() {
                 super.onAfterSubmit();
-                summaryLink.replaceWith(makeSummaryLink("summary"));
-                summaryShortLink.replaceWith(makeSummaryShortLink("summaryShort"));
+                summaryLink = makeSummaryLink("summary");
+                form.addOrReplace(summaryLink);
+                summaryShortLink = makeSummaryShortLink("summaryShort");
+                form.addOrReplace(summaryShortLink);
             }
         };
         submit.setDefaultFormProcessing(true);
