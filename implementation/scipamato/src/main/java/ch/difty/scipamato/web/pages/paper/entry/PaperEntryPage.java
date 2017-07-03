@@ -11,6 +11,8 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.auth.Roles;
@@ -57,6 +59,8 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCD
 public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
     private static final long serialVersionUID = 1L;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PaperEntryPage.class);
 
     @SpringBean
     private PaperService service;
@@ -171,9 +175,13 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
                 error(new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId(), "").getString());
             }
         } catch (OptimisticLockingException ole) {
-            error(new StringResourceModel("save.optimisticlockexception.hint", this, null).setParameters(ole.getTableName(), getNullSafeId()).getString());
+            final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null).setParameters(ole.getTableName(), getNullSafeId()).getString();
+            LOGGER.error(msg);
+            error(msg);
         } catch (Exception ex) {
-            error(new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId(), ex.getMessage()).getString());
+            String msg = new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId(), ex.getMessage()).getString();
+            LOGGER.error(msg);
+            error(msg);
         }
     }
 

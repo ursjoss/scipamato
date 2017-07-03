@@ -14,6 +14,8 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.ScipamatoSession;
@@ -51,6 +53,8 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     private static final long serialVersionUID = 1L;
 
     private static final int RESULT_PAGE_SIZE = 12;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PaperSearchPage.class);
 
     private PaperSlimBySearchOrderProvider dataProvider;
 
@@ -254,7 +258,9 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
                     SearchOrder p = searchOrderService.saveOrUpdate(getModelObject());
                     setModelObject(p);
                 } catch (OptimisticLockingException ole) {
-                    error(new StringResourceModel("save.optimisticlockexception.hint", this, null).setParameters(ole.getTableName(), getModelObject().getId()).getString());
+                    final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null).setParameters(ole.getTableName(), getModelObject().getId()).getString();
+                    LOGGER.error(msg);
+                    error(msg);
                 }
             }
             dataProvider.setFilterState(getModelObject());
@@ -270,7 +276,9 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
                 pp.add(PageParameterNames.SHOW_EXCLUDED, false);
                 setResponsePage(new PaperSearchPage(pp));
             } catch (OptimisticLockingException ole) {
-                error(new StringResourceModel("save.optimisticlockexception.hint", this, null).setParameters(ole.getTableName(), getModelObject().getId()).getString());
+                final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null).setParameters(ole.getTableName(), getModelObject().getId()).getString();
+                LOGGER.error(msg);
+                error(msg);
             }
         }
     }
