@@ -115,7 +115,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         final long id = searchOrder.getId();
         assertThat(searchOrder.getOwner()).isEqualTo(10);
 
-        SearchOrder deleted = repo.delete(id);
+        SearchOrder deleted = repo.delete(id, searchOrder.getVersion());
         assertThat(deleted.getId()).isEqualTo(id);
 
         assertThat(repo.findById(id)).isNull();

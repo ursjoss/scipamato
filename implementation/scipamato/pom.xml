@@ -603,6 +603,7 @@
                                         <includes>.*</includes>
                                         <excludes />
                                         <inputSchema>${db.schema}</inputSchema>
+                                        <recordVersionFields>version</recordVersionFields>
                                     </database>
                                     <generate>
                                         <deprecated>false</deprecated>

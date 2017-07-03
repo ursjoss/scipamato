@@ -73,6 +73,11 @@ public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Inte
     }
 
     @Override
+    protected TableField<ScipamatoUserRecord, Integer> getRecordVersion() {
+        return SCIPAMATO_USER.VERSION;
+    }
+
+    @Override
     protected Integer getIdFrom(ScipamatoUserRecord record) {
         return record.getId();
     }

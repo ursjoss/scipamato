@@ -128,7 +128,7 @@ public class JooqUserServiceTest {
     @Test
     public void deleting_withNullEntity_doesNothing() {
         service.remove(null);
-        verify(repoMock, never()).delete(Mockito.anyInt());
+        verify(repoMock, never()).delete(Mockito.anyInt(), Mockito.anyInt());
     }
 
     @Test
@@ -138,17 +138,19 @@ public class JooqUserServiceTest {
         service.remove(userMock);
 
         verify(userMock).getId();
-        verify(repoMock, never()).delete(Mockito.anyInt());
+        verify(repoMock, never()).delete(Mockito.anyInt(), Mockito.anyInt());
     }
 
     @Test
     public void deleting_withEntityWithNormald_delegatesToRepo() {
         when(userMock.getId()).thenReturn(3);
+        when(userMock.getVersion()).thenReturn(2);
 
         service.remove(userMock);
 
         verify(userMock, times(2)).getId();
-        verify(repoMock, times(1)).delete(3);
+        verify(userMock, times(1)).getVersion();
+        verify(repoMock, times(1)).delete(3, 2);
     }
 
     @Test

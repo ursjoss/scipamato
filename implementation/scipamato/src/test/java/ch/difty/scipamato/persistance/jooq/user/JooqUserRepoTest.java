@@ -41,7 +41,7 @@ public class JooqUserRepoTest extends JooqEntityRepoTest<ScipamatoUserRecord, Us
             private static final long serialVersionUID = 1L;
 
             @Override
-            public User findById(Integer id) {
+            public User findById(Integer id, int version) {
                 return user;
             }
         };
@@ -94,6 +94,11 @@ public class JooqUserRepoTest extends JooqEntityRepoTest<ScipamatoUserRecord, Us
     @Override
     protected TableField<ScipamatoUserRecord, Integer> getTableId() {
         return SCIPAMATO_USER.ID;
+    }
+
+    @Override
+    protected TableField<ScipamatoUserRecord, Integer> getRecordVersion() {
+        return SCIPAMATO_USER.VERSION;
     }
 
     @Mock

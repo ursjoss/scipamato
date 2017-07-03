@@ -15,6 +15,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.auth.Roles;
 import ch.difty.scipamato.entity.Paper;
+import ch.difty.scipamato.persistance.OptimisticLockingException;
 import ch.difty.scipamato.service.PaperService;
 import ch.difty.scipamato.web.PageParameterNames;
 import ch.difty.scipamato.web.pages.SelfUpdatingPage;
@@ -169,6 +170,8 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
             } else {
                 error(new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId(), "").getString());
             }
+        } catch (OptimisticLockingException ole) {
+            error(new StringResourceModel("save.optimisticlockexception.hint", this, null).setParameters(ole.getTableName(), getNullSafeId()).getString());
         } catch (Exception ex) {
             error(new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId(), ex.getMessage()).getString());
         }

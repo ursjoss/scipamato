@@ -145,7 +145,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     @Test
     public void deleting_withNullEntity_doesNothing() {
         service.remove(null);
-        verify(repoMock, never()).delete(Mockito.anyLong());
+        verify(repoMock, never()).delete(Mockito.anyLong(), Mockito.anyInt());
     }
 
     @Test
@@ -155,17 +155,19 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         service.remove(paperMock);
 
         verify(paperMock).getId();
-        verify(repoMock, never()).delete(Mockito.anyLong());
+        verify(repoMock, never()).delete(Mockito.anyLong(), Mockito.anyInt());
     }
 
     @Test
     public void deleting_withEntityWithNormald_delegatesToRepo() {
         when(paperMock.getId()).thenReturn(3l);
+        when(paperMock.getVersion()).thenReturn(17);
 
         service.remove(paperMock);
 
         verify(paperMock, times(2)).getId();
-        verify(repoMock, times(1)).delete(3l);
+        verify(paperMock, times(1)).getVersion();
+        verify(repoMock, times(1)).delete(3l, 17);
     }
 
     @Test
@@ -310,25 +312,6 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         when(repoMock.findLowestFreeNumberStartingFrom(minimum)).thenReturn(17l);
         assertThat(service.findLowestFreeNumberStartingFrom(minimum)).isEqualTo(17l);
         verify(repoMock).findLowestFreeNumberStartingFrom(minimum);
-    }
-
-    @Test
-    public void deletingWithNullIds_doesNothing() {
-        service.deleteByIds(null);
-    }
-
-    @Test
-    public void deletingWithEmptyIds_doesNothing() {
-        service.deleteByIds(new ArrayList<Long>());
-    }
-
-    @Test
-    public void deletingWithIds() {
-        final List<Long> ids = Arrays.asList(-1l, -2l, -3l);
-        service.deleteByIds(ids);
-        verify(repoMock).delete(-1l);
-        verify(repoMock).delete(-2l);
-        verify(repoMock).delete(-3l);
     }
 
     @Test

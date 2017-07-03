@@ -66,6 +66,10 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     protected void testSpecificSetUp() {
         papers.add(paperMock);
         papers.add(paperMock);
+
+        when(unpersistedEntity.getVersion()).thenReturn(0);
+        when(persistedEntity.getVersion()).thenReturn(0);
+        when(persistedRecord.getVersion()).thenReturn(0);
     }
 
     @Override
@@ -89,7 +93,7 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
             private static final long serialVersionUID = 1L;
 
             @Override
-            public Paper findById(Long id) {
+            public Paper findById(Long id, int version) {
                 return paper;
             }
         };
@@ -148,6 +152,11 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     }
 
     @Override
+    protected TableField<PaperRecord, Integer> getRecordVersion() {
+        return PAPER.VERSION;
+    }
+
+    @Override
     protected PaperFilter getFilter() {
         return filterMock;
     }
@@ -155,12 +164,15 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     @Override
     protected void expectEntityIdsWithValues() {
         when(unpersistedEntity.getId()).thenReturn(SAMPLE_ID);
+        when(unpersistedEntity.getVersion()).thenReturn(0);
         when(persistedRecord.getId()).thenReturn(SAMPLE_ID);
+        when(persistedRecord.getVersion()).thenReturn(1);
     }
 
     @Override
     protected void expectUnpersistedEntityIdNull() {
         when(unpersistedEntity.getId()).thenReturn(null);
+        when(unpersistedEntity.getVersion()).thenReturn(0);
     }
 
     @Override

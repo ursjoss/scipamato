@@ -3,6 +3,7 @@ package ch.difty.scipamato.persistance.jooq.user;
 import static ch.difty.scipamato.db.Tables.SCIPAMATO_USER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.auth.Role;
 import ch.difty.scipamato.entity.User;
+import ch.difty.scipamato.persistance.OptimisticLockingException;
 import ch.difty.scipamato.persistance.jooq.JooqBaseIntegrationTest;
 
 /**
@@ -110,7 +112,7 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
         final int id = user.getId();
         assertThat(user.getUserName()).isEqualTo("a");
 
-        User deleted = repo.delete(id);
+        User deleted = repo.delete(id, user.getVersion());
         assertThat(deleted.getId()).isEqualTo(id);
 
         assertThat(repo.findById(id)).isNull();
@@ -136,10 +138,6 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
         addRoleViewerAndUserToUserWith(id);
         addRoleAdminAndRemoveRoleViewerFrom(id);
         removeRoleAdminFrom(id);
-
-        User deletedUser = repo.delete(id);
-        assertThat(deletedUser).isNotNull();
-        assertThat(repo.findById(id)).isNull();
     }
 
     private Integer newUserAndSave() {
@@ -159,6 +157,7 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
         assertThat(savedUser.getId()).isNotNull();
         assertThat(savedUser.getUserName()).isEqualTo("test");
         assertThat(savedUser.getRoles()).isEmpty();
+        assertThat(savedUser.getVersion()).isEqualTo(1);
 
         return savedUser.getId();
     }
@@ -186,4 +185,55 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
         assertThat(u.getRoles()).containsOnly(Role.USER);
     }
 
+    @Test
+    public void canUpdateUser_thatHasBeenModifiedElswhereInTheMeanTime() {
+        User user = makeAndValidateNewUser();
+        User secondReloaded = loadSameUserIndependentlyAndModifyAndUpdate(user);
+
+        user.setLastName("yetanother");
+
+        try {
+            repo.update(user);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(OptimisticLockingException.class);
+        }
+
+        User reloaded = repo.findById(user.getId());
+        assertThat(reloaded.getVersion()).isEqualTo(2);
+        assertThat(reloaded.getFirstName()).isEqualTo(secondReloaded.getFirstName());
+        assertThat(reloaded.getLastName()).isEqualTo(secondReloaded.getLastName());
+        assertThat(reloaded.getVersion()).isEqualTo(secondReloaded.getVersion());
+    }
+
+    private User makeAndValidateNewUser() {
+        User user = repo.add(makeMinimalUser());
+        assertThat(user).isNotNull();
+        assertThat(user.getVersion()).isEqualTo(1);
+        assertThat(user.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED);
+        return user;
+    }
+
+    private User loadSameUserIndependentlyAndModifyAndUpdate(User user) {
+        User secondInstance = repo.findById(user.getId());
+        assertThat(user.getVersion()).isEqualTo(secondInstance.getVersion());
+        secondInstance.setFirstName("changed");
+        User secondReloaded = repo.update(secondInstance);
+        assertThat(secondReloaded.getVersion()).isEqualTo(2);
+        return secondReloaded;
+    }
+
+    @Test
+    public void cannotDeleteUser_thatHasbeenModifiedElsewhereInTheMeanTime() {
+        User user = makeAndValidateNewUser();
+        User secondReloaded = loadSameUserIndependentlyAndModifyAndUpdate(user);
+        try {
+            repo.delete(user.getId(), user.getVersion());
+            fail("Should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(OptimisticLockingException.class);
+        }
+        User deletedEntity = repo.delete(user.getId(), secondReloaded.getVersion());
+        assertThat(deletedEntity.getVersion()).isEqualTo(secondReloaded.getVersion());
+    }
 }

@@ -27,6 +27,7 @@ import org.jooq.impl.TableImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.scipamato.entity.IdScipamatoEntity;
@@ -35,6 +36,7 @@ import ch.difty.scipamato.lib.DateTimeService;
 import ch.difty.scipamato.lib.FrozenDateTimeService;
 import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.paging.PaginationContext;
+import ch.difty.scipamato.persistance.OptimisticLockingException;
 
 /**
  * TODO find a more feasible approach to test the actual jOOQ part via unit tests. The current approach is too cumbersome.
@@ -63,7 +65,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     @Mock
     private DeleteWhereStep<R> deleteWhereStepMock;
     @Mock
-    private DeleteConditionStep<R> deleteConditionStepMock;
+    private DeleteConditionStep<R> deleteConditionStep1Mock, deleteConditionStep2Mock;
     @Mock
     private UpdateSetFirstStep<R> updateSetFirstStepMock;
     @Mock
@@ -125,6 +127,8 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
 
     protected abstract TableField<R, ID> getTableId();
 
+    protected abstract TableField<R, Integer> getRecordVersion();
+
     protected abstract void expectEntityIdsWithValues();
 
     protected abstract void expectUnpersistedEntityIdNull();
@@ -151,7 +155,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
         when(getMapper().map(getPersistedRecord())).thenReturn(getPersistedEntity());
 
         when(getDsl().delete(getTable())).thenReturn(deleteWhereStepMock);
-        when(deleteWhereStepMock.where(getTableId().equal(id))).thenReturn(deleteConditionStepMock);
+        when(deleteWhereStepMock.where(getTableId().equal(id))).thenReturn(deleteConditionStep1Mock);
 
         when(getDsl().update(getTable())).thenReturn(updateSetFirstStepMock);
         when(updateSetStepSetterMock.setFieldsFor(updateSetFirstStepMock, getUnpersistedEntity())).thenReturn(updateSetMoreStepMock);
@@ -170,7 +174,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
         testSpecificTearDown();
 
         verifyNoMoreInteractions(insertSetStepMock, insertSetMoreStepMock, insertResultStepMock, insertSetStepSetterMock);
-        verifyNoMoreInteractions(deleteWhereStepMock, deleteConditionStepMock);
+        verifyNoMoreInteractions(deleteWhereStepMock, deleteConditionStep1Mock, deleteConditionStep2Mock);
         verifyNoMoreInteractions(updateSetFirstStepMock, updateConditionStepMock, updateSetMoreStepMock, updateResultStepMock, updateSetStepSetterMock);
     }
 
@@ -200,38 +204,53 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
 
     @Test(expected = NullArgumentException.class)
     public void deleting_withIdNull_throws() {
-        repo.delete(null);
+        repo.delete(null, 1);
     }
 
     @Test
-    public void deleting_withIdNotFoundInDb_returnsNull() {
+    public void deleting_withIdNotFoundInDb_throwsOptimisticLockingException() {
         repo = makeRepoFindingEntityById(null);
-        assertThat(repo.delete(id)).isNull();
+        try {
+            repo.delete(id, 0);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(OptimisticLockingException.class);
+            assertThat(ex.getMessage()).isEqualTo("Record in table '" + getTable().getName() + "' has been modified prior to the delete attempt. Aborting....");
+        }
     }
 
     @Test
     public void deleting_validPersistentEntity_returnsDeletedEntity() {
         repo = makeRepoFindingEntityById(getPersistedEntity());
 
-        when(deleteConditionStepMock.execute()).thenReturn(1);
+        when(deleteConditionStep1Mock.and(getRecordVersion().equal(Mockito.anyInt()))).thenReturn(deleteConditionStep2Mock);
+        when(deleteConditionStep2Mock.execute()).thenReturn(1);
 
-        assertThat(repo.delete(id)).isEqualTo(getPersistedEntity());
+        assertThat(repo.delete(id, 0)).isEqualTo(getPersistedEntity());
 
         verify(getDsl()).delete(getTable());
         verify(deleteWhereStepMock).where(getTableId().equal(id));
-        verify(deleteConditionStepMock).execute();
+        verify(deleteConditionStep1Mock).and(getRecordVersion().equal(Mockito.anyInt()));
+        verify(deleteConditionStep2Mock).execute();
     }
 
     @Test
     public void deleting_validPersistentEntity_withFailingDelete_returnsDeletedEntity() {
         repo = makeRepoFindingEntityById(getPersistedEntity());
-        when(deleteConditionStepMock.execute()).thenReturn(0);
+        when(deleteConditionStep1Mock.and(getRecordVersion().equal(Mockito.anyInt()))).thenReturn(deleteConditionStep2Mock);
+        when(deleteConditionStep2Mock.execute()).thenReturn(0);
 
-        assertThat(repo.delete(id)).isEqualTo(getPersistedEntity());
+        try {
+            repo.delete(id, 0);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(OptimisticLockingException.class);
+        }
 
         verify(getDsl()).delete(getTable());
+        verify(deleteConditionStep1Mock).and(getRecordVersion().equal(Mockito.anyInt()));
         verify(deleteWhereStepMock).where(getTableId().equal(id));
-        verify(deleteConditionStepMock).execute();
+        verify(deleteConditionStep2Mock).execute();
     }
 
     @Test(expected = NullArgumentException.class)
