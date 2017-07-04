@@ -91,11 +91,12 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     public PaperSearchPage(final IModel<SearchOrder> searchOrderModel) {
         super(searchOrderModel);
         AssertAs.notNull(searchOrderModel, "searchOrderModel");
-        AssertAs.notNull(searchOrderModel.getObject(), "searchOrderModel.object");
-        AssertAs.notNull(searchOrderModel.getObject().getId(), "searchOrderModel.object.id");
+        final SearchOrder searchOrder = searchOrderModel.getObject();
+        AssertAs.notNull(searchOrder, "searchOrderModel.object");
+        AssertAs.notNull(searchOrder.getId(), "searchOrderModel.object.id");
         getPageParameters().clearNamed();
-        getPageParameters().add(PageParameterNames.SEARCH_ORDER_ID, searchOrderModel.getObject().getId());
-        getPageParameters().add(PageParameterNames.SHOW_EXCLUDED, searchOrderModel.getObject().isShowExcluded());
+        getPageParameters().add(PageParameterNames.SEARCH_ORDER_ID, searchOrder.getId());
+        getPageParameters().add(PageParameterNames.SHOW_EXCLUDED, searchOrder.isShowExcluded());
     }
 
     private void trySettingSearchOrderModelFromDb() {
@@ -203,35 +204,20 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     @Override
     public void onEvent(final IEvent<?> event) {
-        if (event.getPayload().getClass() == SearchOrderChangeEvent.class) {
-            final SearchOrderChangeEvent soce = (SearchOrderChangeEvent) event.getPayload();
-            handleSearchOrderEvent(soce);
-            updateNavigateable();
-            event.dontBroadcastDeeper();
-        } else if (event.getPayload().getClass() == ToggleExclusionsEvent.class) {
-            ToggleExclusionsEvent tee = (ToggleExclusionsEvent) event.getPayload();
-            setShowExcludedWhereRelevant();
-            updateNavigateable();
-            addingToTarget(tee.getTarget());
-            event.dontBroadcastDeeper();
-        }
+        if (event.getPayload().getClass() == SearchOrderChangeEvent.class)
+            manageSearchOrderChange(event);
+        else if (event.getPayload().getClass() == ToggleExclusionsEvent.class)
+            manageToggleExclusion(event);
     }
 
-    private void addingToTarget(final AjaxRequestTarget target) {
-        if (target != null) {
-            target.add(resultPanelLabel);
-            target.add(resultPanel);
-        }
+    private void manageSearchOrderChange(final IEvent<?> event) {
+        final SearchOrderChangeEvent soce = (SearchOrderChangeEvent) event.getPayload();
+        handleSearchOrderChangeEvent(soce);
+        updateNavigateable();
+        event.dontBroadcastDeeper();
     }
 
-    private void setShowExcludedWhereRelevant() {
-        final boolean oldValue = showExcludedFromPageParameters();
-        getPageParameters().set(PageParameterNames.SHOW_EXCLUDED, !oldValue);
-        dataProvider.setShowExcluded(!oldValue);
-        getModelObject().setShowExcluded(!oldValue);
-    }
-
-    private void handleSearchOrderEvent(final SearchOrderChangeEvent soce) {
+    private void handleSearchOrderChangeEvent(final SearchOrderChangeEvent soce) {
         setExclusionIntoModel(soce);
         if (soce.getDroppedConditionId() != null) {
             searchOrderService.removeSearchConditionWithId(soce.getDroppedConditionId());
@@ -253,33 +239,63 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private void resetAndSaveProviderModel(final SearchOrderChangeEvent soce) {
         if (getModelObject() != null && !soce.isNewSearchOrderRequested()) {
-            if (soce.getExcludedId() != null) {
-                try {
-                    SearchOrder p = searchOrderService.saveOrUpdate(getModelObject());
-                    setModelObject(p);
-                } catch (OptimisticLockingException ole) {
-                    final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null).setParameters(ole.getTableName(), getModelObject().getId()).getString();
-                    LOGGER.error(msg);
-                    error(msg);
-                }
-            }
-            dataProvider.setFilterState(getModelObject());
-            if (getModelObject() != null && getModelObject().getExcludedPaperIds().isEmpty())
-                updateNavigateable();
+            updateExistingSearchOrder(soce);
         } else {
-            final SearchOrder newSearchOrder = makeNewModelObject();
+            newSearchOrder();
+        }
+    }
+
+    private void updateExistingSearchOrder(final SearchOrderChangeEvent soce) {
+        if (soce.getExcludedId() != null) {
             try {
-                final SearchOrder persistedNewSearchOrder = searchOrderService.saveOrUpdate(newSearchOrder);
-                setModelObject(persistedNewSearchOrder);
-                final PageParameters pp = new PageParameters();
-                pp.add(PageParameterNames.SEARCH_ORDER_ID, persistedNewSearchOrder.getId());
-                pp.add(PageParameterNames.SHOW_EXCLUDED, false);
-                setResponsePage(new PaperSearchPage(pp));
+                SearchOrder p = searchOrderService.saveOrUpdate(getModelObject());
+                setModelObject(p);
             } catch (OptimisticLockingException ole) {
                 final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null).setParameters(ole.getTableName(), getModelObject().getId()).getString();
                 LOGGER.error(msg);
                 error(msg);
             }
+        }
+        dataProvider.setFilterState(getModelObject());
+        if (getModelObject() != null && getModelObject().getExcludedPaperIds().isEmpty())
+            updateNavigateable();
+    }
+
+    private void newSearchOrder() {
+        final SearchOrder newSearchOrder = makeNewModelObject();
+        try {
+            final SearchOrder persistedNewSearchOrder = searchOrderService.saveOrUpdate(newSearchOrder);
+            setModelObject(persistedNewSearchOrder);
+            final PageParameters pp = new PageParameters();
+            pp.add(PageParameterNames.SEARCH_ORDER_ID, persistedNewSearchOrder.getId());
+            pp.add(PageParameterNames.SHOW_EXCLUDED, false);
+            setResponsePage(new PaperSearchPage(pp));
+        } catch (OptimisticLockingException ole) {
+            final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null).setParameters(ole.getTableName(), getModelObject().getId()).getString();
+            LOGGER.error(msg);
+            error(msg);
+        }
+    }
+
+    private void manageToggleExclusion(final IEvent<?> event) {
+        ToggleExclusionsEvent tee = (ToggleExclusionsEvent) event.getPayload();
+        setShowExcludedWhereRelevant();
+        updateNavigateable();
+        addingToTarget(tee.getTarget());
+        event.dontBroadcastDeeper();
+    }
+
+    private void setShowExcludedWhereRelevant() {
+        final boolean oldValue = showExcludedFromPageParameters();
+        getPageParameters().set(PageParameterNames.SHOW_EXCLUDED, !oldValue);
+        dataProvider.setShowExcluded(!oldValue);
+        getModelObject().setShowExcluded(!oldValue);
+    }
+
+    private void addingToTarget(final AjaxRequestTarget target) {
+        if (target != null) {
+            target.add(resultPanelLabel);
+            target.add(resultPanel);
         }
     }
 

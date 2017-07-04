@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
+import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
@@ -27,6 +28,8 @@ import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.filter.SearchCondition;
 import ch.difty.scipamato.entity.projection.PaperSlim;
 import ch.difty.scipamato.paging.PaginationContext;
+import ch.difty.scipamato.persistance.OptimisticLockingException;
+import ch.difty.scipamato.persistance.OptimisticLockingException.Type;
 import ch.difty.scipamato.persistance.jooq.search.SearchOrderFilter;
 import ch.difty.scipamato.service.CodeClassService;
 import ch.difty.scipamato.service.CodeService;
@@ -66,7 +69,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(searchOrderServiceMock);
+        verifyNoMoreInteractions(searchOrderServiceMock); // TODO reactivate
     }
 
     @Override
@@ -161,6 +164,73 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(isA(SearchOrder.class));
         verify(paperServiceMock, times(3)).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationContext.class));
+    }
+
+    @Test
+    public void clickingNewSearchCondition_reloadsPage() {
+        when(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock);
+        when(searchOrderMock.getId()).thenReturn(27l);
+        when(searchOrderServiceMock.findById(27l)).thenReturn(Optional.of(searchOrderMock2));
+
+        final String labelDisplayValue = "searchConditionDisplayValue";
+        final SearchCondition sc = new SearchCondition() {
+            private static final long serialVersionUID = 1L;
+
+            public String getDisplayValue() {
+                return labelDisplayValue;
+            }
+        };
+        final List<SearchCondition> conditions = Arrays.asList(sc);
+        final SearchOrder so = new SearchOrder(conditions);
+        so.setId(6l);
+        PaperSearchPage page = new PaperSearchPage(Model.of(so));
+
+        getTester().startPage(page);
+        getTester().assertRenderedPage(getPageClass());
+
+        final String linkPath = "searchOrderSelectorPanel:form:new";
+        getTester().assertComponent(linkPath, AjaxSubmitLink.class);
+        getTester().clickLink(linkPath);
+
+        getTester().assertRenderedPage(PaperSearchPage.class);
+
+        verify(searchOrderServiceMock).saveOrUpdate(isA(SearchOrder.class));
+        verify(searchOrderMock).getId();
+        verify(searchOrderServiceMock).findById(27l);
+        verify(searchOrderMock2).setShowExcluded(false);
+        verify(searchOrderServiceMock, times(3)).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
+    }
+
+    @Test
+    public void clickingNewSearchCondition_withOptimisticLockingException_failsSaveAndWarns() {
+        when(searchOrderMock.getId()).thenReturn(27l);
+        when(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenThrow(new OptimisticLockingException("searchOrder", "record", Type.UPDATE));
+
+        final String labelDisplayValue = "searchConditionDisplayValue";
+        final SearchCondition sc = new SearchCondition() {
+            private static final long serialVersionUID = 1L;
+
+            public String getDisplayValue() {
+                return labelDisplayValue;
+            }
+        };
+        final List<SearchCondition> conditions = Arrays.asList(sc);
+        final SearchOrder so = new SearchOrder(conditions);
+        so.setId(6l);
+        PaperSearchPage page = new PaperSearchPage(Model.of(so));
+
+        getTester().startPage(page);
+        getTester().assertRenderedPage(getPageClass());
+
+        final String linkPath = "searchOrderSelectorPanel:form:new";
+        getTester().assertComponent(linkPath, AjaxSubmitLink.class);
+        getTester().clickLink(linkPath);
+
+        getTester().assertErrorMessages("The searchOrder with id 6 has been modified concurrently by another user. Please reload it and apply your changes once more.");
+        getTester().assertRenderedPage(PaperSearchPage.class);
+
+        verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
+        verify(searchOrderServiceMock).saveOrUpdate(isA(SearchOrder.class));
     }
 
     @Test
