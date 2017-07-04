@@ -67,4 +67,18 @@ public class PaperSummaryTableTest extends JasperEntityTest {
         pst = new PaperSummaryTable(p, rhf, true);
         assertThat(pst.getCodesOfClass4()).isEqualTo("");
     }
+
+    @Test
+    public void paperWithNullNumber_resultsInEmptyNumber() {
+        p.setNumber(null);
+        pst = new PaperSummaryTable(p, rhf, false);
+        assertThat(pst.getNumber()).isEmpty();
+    }
+
+    @Test
+    public void paperWithNullYear_resultsInEmptyYear() {
+        p.setPublicationYear(null);
+        pst = new PaperSummaryTable(p, rhf, false);
+        assertThat(pst.getPublicationYear()).isEmpty();
+    }
 }
