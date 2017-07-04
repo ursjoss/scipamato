@@ -37,6 +37,7 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
     private static final long serialVersionUID = 1L;
 
     private static final String BASE_NAME_SINGLE = "paper_summary_short_no_";
+    private static final String BASE_NAME_SINGLE_FALLBACK = "paper_summary_short";
     private static final String BASE_NAME_MULTIPLE = "paper_summaries_short";
 
     private ReportHeaderFields reportHeaderFields;
@@ -50,7 +51,8 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      * @param config {@link PdfExporterConfiguration}
      */
     public PaperSummaryShortDataSource(final Paper paper, final ReportHeaderFields reportHeaderFields, PdfExporterConfiguration config) {
-        this(Arrays.asList(new PaperSummaryShort(AssertAs.notNull(paper, "paper"), AssertAs.notNull(reportHeaderFields, "reportHeaderFields"))), config, makeSinglePaperBaseName(paper));
+        this(Arrays.asList(new PaperSummaryShort(AssertAs.notNull(paper, "paper"), AssertAs.notNull(reportHeaderFields, "reportHeaderFields"))), config,
+                makeSinglePaperBaseName(paper.getNumber() != null ? String.valueOf(paper.getNumber()) : null));
         this.reportHeaderFields = reportHeaderFields;
     }
 
@@ -62,18 +64,7 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      *     the {@link PdfExporterConfiguration}
      */
     public PaperSummaryShortDataSource(final PaperSummaryShort paperSummaryShort, PdfExporterConfiguration config) {
-        this(Arrays.asList(AssertAs.notNull(paperSummaryShort, "paperSummaryShort")), config, makeSinglePaperBaseName(paperSummaryShort));
-    }
-
-    /**
-     * Populate the report from a collection of {@link PaperSummaryShort} items, using the default file name for a PDF with potentially multiple pages (one per item).
-     * @param paperSummaryShorts
-     *     collection of {@link PaperSummaryShort} instances - must not be null
-     * @param config
-     *     the {@link PdfExporterConfiguration}
-     */
-    public PaperSummaryShortDataSource(final Collection<PaperSummaryShort> paperSummaryShorts, PdfExporterConfiguration config) {
-        this(paperSummaryShorts, config, BASE_NAME_MULTIPLE);
+        this(Arrays.asList(AssertAs.notNull(paperSummaryShort, "paperSummaryShort")), config, makeSinglePaperBaseName(paperSummaryShort.getNumber()));
     }
 
     private PaperSummaryShortDataSource(final Collection<PaperSummaryShort> paperSummaryShorts, PdfExporterConfiguration config, String baseName) {
@@ -105,19 +96,11 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
         return new PaperSummaryShort(p, reportHeaderFields);
     }
 
-    private static String makeSinglePaperBaseName(final Paper paper) {
-        if (paper != null && paper.getNumber() != null) {
-            return BASE_NAME_SINGLE + paper.getNumber();
+    private static String makeSinglePaperBaseName(String number) {
+        if (number != null && !number.isEmpty()) {
+            return BASE_NAME_SINGLE + number;
         } else {
-            return BASE_NAME_MULTIPLE;
-        }
-    }
-
-    private static String makeSinglePaperBaseName(final PaperSummaryShort paperSummaryShort) {
-        if (paperSummaryShort != null && paperSummaryShort.getNumber() != null) {
-            return BASE_NAME_SINGLE + paperSummaryShort.getNumber();
-        } else {
-            return BASE_NAME_MULTIPLE;
+            return BASE_NAME_SINGLE_FALLBACK;
         }
     }
 

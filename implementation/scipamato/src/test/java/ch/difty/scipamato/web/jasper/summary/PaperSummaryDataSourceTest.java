@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import ch.difty.scipamato.entity.filter.PaperSlimFilter;
 import ch.difty.scipamato.lib.NullArgumentException;
@@ -42,6 +43,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     private static final String BRAND = "LUDOK";
 
     private static final String FILE_NAME_SINGLE = "paper_summary_no_" + NUMBER + ".pdf";
+    private static final String FILE_NAME_SINGLE_FALLBACK = "paper_summary.pdf";
     private static final String FILE_NAME_MULTIPLE = "paper_summaries.pdf";
 
     private PaperSummaryDataSource ds;
@@ -136,6 +138,31 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
         assertDataSource(FILE_NAME_SINGLE);
 
         verifyPaperMock(1);
+    }
+
+    @Test
+    public void instantiatingWithPaperSummaryWithoutNumber_returnsPdfDataSourceWithOneRecordAndFallBackName() throws JRException {
+        Mockito.reset(paperMock);
+        when(paperMock.getNumber()).thenReturn(null);
+
+        PaperSummary ps = new PaperSummary(paperMock, rhf);
+        ds = new PaperSummaryDataSource(ps, pdfExporterConfigMock);
+
+        assertThat(ds.getFileName()).isEqualTo(FILE_NAME_SINGLE_FALLBACK);
+
+        verifyPaperMock(1);
+    }
+
+    @Test
+    public void instantiatingWithPaperWithoutNumber_returnsPdfDataSourceWithOneRecordAndFallBackName() throws JRException {
+        Mockito.reset(paperMock);
+        when(paperMock.getNumber()).thenReturn(null);
+
+        ds = new PaperSummaryDataSource(paperMock, rhf, pdfExporterConfigMock);
+
+        assertThat(ds.getFileName()).isEqualTo(FILE_NAME_SINGLE_FALLBACK);
+
+        verifyPaperMock(2);
     }
 
     @Test
