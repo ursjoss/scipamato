@@ -17,6 +17,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.logic.parsing.AuthorParserFactory;
+import ch.difty.scipamato.persistance.OptimisticLockingException;
+import ch.difty.scipamato.persistance.OptimisticLockingException.Type;
 import ch.difty.scipamato.service.CodeClassService;
 import ch.difty.scipamato.service.CodeService;
 import ch.difty.scipamato.web.pages.SelfUpdatingPageTest;
@@ -156,6 +158,19 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         formTester.setValue("publicationYear", "2017");
         formTester.setValue("tabs:panelsContainer:panels:1:tab1Form:goals", "goals");
         return formTester;
+    }
+
+    @Test
+    public void serviceThrowingOptimisticLockingException() {
+        when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenThrow(new OptimisticLockingException("paper", "rcd", Type.UPDATE));
+
+        getTester().startPage(makePage());
+
+        FormTester formTester = makeSaveablePaperTester();
+        formTester.submit();
+
+        getTester().assertErrorMessages("The paper with id 0 has been modified concurrently by another user. Please reload it and apply your changes once more.");
+        verify(paperServiceMock).saveOrUpdate(isA(Paper.class));
     }
 
     @Test
