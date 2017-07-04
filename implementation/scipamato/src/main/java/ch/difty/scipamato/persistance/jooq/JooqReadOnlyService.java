@@ -78,8 +78,8 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
     }
 
     private Optional<User> getUserWithId(final Integer id) {
-        if (id != null && userRepo != null) {
-            return Optional.ofNullable(userRepo.findById(id));
+        if (id != null && getUserRepository() != null) {
+            return Optional.ofNullable(getUserRepository().findById(id));
         }
         return Optional.empty();
 
@@ -91,12 +91,6 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
         final List<T> entities = repo.findPageByFilter(filter, paginationContext);
         entities.forEach(this::enrichAuditNamesOf);
         return entities;
-    }
-
-    protected void enrichAuditNamesOfAll(final List<T> entities) {
-        for (final T e : entities) {
-            enrichAuditNamesOf(e);
-        }
     }
 
     /** {@inheritDoc} */

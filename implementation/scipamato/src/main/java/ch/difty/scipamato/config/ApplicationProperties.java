@@ -8,7 +8,7 @@ package ch.difty.scipamato.config;
  * <li> the methods with which the rest of the application can access the type safe property values
  * </ol>
  * <p>
- * <b>Note:</b> Consiously applying the constant interface antipattern, I think it makes sense here....
+ * <b>Note:</b> Consciously applying the constant interface antipattern, I think it makes sense here....
  * @author u.joss
  */
 public interface ApplicationProperties {

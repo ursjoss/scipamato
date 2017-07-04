@@ -1,6 +1,7 @@
 package ch.difty.scipamato.persistance.jooq.paper.searchorder;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -91,6 +92,27 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     public void buildingConditionForRaw_appliesDummyTrue() {
         expectToken(TokenType.RAW, "foo", "paper.created");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("1 = 1");
+    }
+
+    @Test
+    public void buildingConditionForWrongField_withExactMatch_throws() {
+        expectToken(TokenType.EXACT, "foo", "bar");
+        validateDegenerateField("Field bar is not one of the expected date fields [paper.created, paper.last_modified] entitled to use MatchType.EQUALS");
+    }
+
+    @Test
+    public void buildingConditionForWrongField_withContainedMatch_throws() {
+        expectToken(TokenType.WORD, "foo", "baz");
+        validateDegenerateField("Field baz is not one of the expected user fields [paper.created_by, paper.last_modified_by] entitled to use MatchType.CONTAINS");
+    }
+
+    private void validateDegenerateField(String msg) {
+        try {
+            e.evaluate(stMock);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(IllegalArgumentException.class).hasMessage(msg);
+        }
     }
 
 }

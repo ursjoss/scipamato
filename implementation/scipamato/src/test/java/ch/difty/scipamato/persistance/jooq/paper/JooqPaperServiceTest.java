@@ -49,7 +49,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     @Mock
     private PaginationContext paginationContextMock;
     @Mock
-    private Paper paperMock, paperMock2;
+    private Paper paperMock, paperMock2, paperMock3;
     @Mock
     private PaperAttachment attachmentMock;
 
@@ -367,5 +367,21 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         when(repoMock.deleteAttachment(id)).thenReturn(paperMock);
         assertThat(service.deleteAttachment(id)).isEqualTo(paperMock);
         verify(repoMock).deleteAttachment(id);
+    }
+
+    @Test
+    public void findingByFilter_withPaperWithNullCreator() {
+        when(paperMock3.getId()).thenReturn(100l);
+        when(paperMock3.getCreatedBy()).thenReturn(null);
+        when(paperMock3.getLastModifiedBy()).thenReturn(null);
+        papers.clear();
+        papers.add(paperMock3);
+        when(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(papers);
+        assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(papers);
+        verify(repoMock).findPageByFilter(filterMock, paginationContextMock);
+        verify(paperMock3).getCreatedBy();
+        verify(paperMock3).setCreatedByName(null);
+        verify(paperMock3).setCreatedByFullName(null);
+        verify(paperMock3).setLastModifiedByName(null);
     }
 }

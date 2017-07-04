@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.filter.SearchCondition;
 import ch.difty.scipamato.persistance.jooq.JooqTransactionalIntegrationTest;
@@ -180,13 +181,16 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         assertSearchTermCount(1, 1, 0, 0, modifiedCondition2);
         assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(3);
 
-        // Add boolean condition
+        // Add boolean condition with Code
         savedCondition.setFirstAuthorOverridden(Boolean.TRUE);
+        savedCondition.addCode(new Code("1A", null, null, false, 1, "c1", "", 1));
         SearchCondition modifiedCondition3 = repo.updateSearchCondition(savedCondition, searchOrderId);
         assertSearchTermCount(1, 1, 1, 0, modifiedCondition3);
+        assertThat(modifiedCondition3.getCodes()).hasSize(1);
+        assertThat(modifiedCondition3.getCodes()).extracting(Code.CODE).containsExactly("1A");
         assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(4);
 
-        // Change the bolean condition
+        // Change the boolean condition
         savedCondition.setFirstAuthorOverridden(Boolean.FALSE);
         SearchCondition modifiedCondition4 = repo.updateSearchCondition(savedCondition, searchOrderId);
         assertSearchTermCount(1, 1, 1, 0, modifiedCondition4);
