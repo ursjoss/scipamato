@@ -8,11 +8,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
@@ -221,5 +223,56 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationContext.class));
     }
 
-    // TODO test that triggers the ToggleExclusionsEvent, similar to clickingRemoveButtonOnResults_removesResultAndSavesSearchOrder
+    @Test
+    public void searchOrderMock_withNoExclusions_hidesShowExcludedButton() {
+        when(searchOrderMock.getId()).thenReturn(SEARCH_ORDER_ID);
+        when(searchOrderMock.getExcludedPaperIds()).thenReturn(new ArrayList<Long>());
+
+        when(paperSlimServiceMock.countBySearchOrder(eq(searchOrderMock))).thenReturn(1, 0);
+        when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class))).thenReturn(Arrays.asList(paperSlimMock));
+        when(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock2);
+
+        PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock));
+
+        getTester().startPage(page);
+        getTester().assertRenderedPage(getPageClass());
+
+        final String linkPath = "searchOrderSelectorPanel:form:showExcluded";
+        getTester().assertInvisible(linkPath);
+
+        verify(searchOrderServiceMock, times(1)).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
+        verify(paperSlimServiceMock, times(1)).countBySearchOrder(eq(searchOrderMock));
+        verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class));
+        verify(paperSlimMock, times(1)).getId();
+        verify(searchOrderMock, times(3)).getExcludedPaperIds();
+    }
+
+    @Test
+    public void searchOrderMock_withExclusions_whenClicking_sendsEvent() {
+        when(searchOrderMock.getId()).thenReturn(SEARCH_ORDER_ID);
+        when(searchOrderMock.getExcludedPaperIds()).thenReturn(Arrays.asList(5l, 3l));
+
+        when(paperSlimServiceMock.countBySearchOrder(eq(searchOrderMock))).thenReturn(1, 0);
+        when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class))).thenReturn(Arrays.asList(paperSlimMock));
+        when(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock2);
+
+        PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock));
+
+        getTester().startPage(page);
+        getTester().assertRenderedPage(getPageClass());
+        getTester().debugComponentTrees();
+        final String linkPath = "searchOrderSelectorPanel:form:showExcluded";
+        getTester().assertComponent(linkPath, AjaxCheckBox.class);
+        getTester().executeAjaxEvent(linkPath, "click");
+
+        getTester().assertComponentOnAjaxResponse("resultPanelLabel");
+        getTester().assertComponentOnAjaxResponse("resultPanel");
+
+        verify(searchOrderServiceMock, times(1)).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
+        verify(paperSlimServiceMock, times(3)).countBySearchOrder(eq(searchOrderMock));
+        verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class));
+        verify(paperSlimMock, times(2)).getId();
+        verify(searchOrderMock, times(6)).getExcludedPaperIds();
+    }
+
 }
