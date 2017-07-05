@@ -136,7 +136,7 @@
         <!-- Database -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <artifactId>spring-boot-starter-jooq</artifactId>
             <exclusions>
                 <exclusion>
                     <!-- Excluding tomcat-jdbc so we can use HikariCP -->
