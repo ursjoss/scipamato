@@ -143,6 +143,69 @@ public class AuditSearchTermTest {
         assertSingleToken(fieldName, TokenType.EXACT, null, null, "2017-12-01 23:15:13", "2017-12-01 23:15:13");
     }
 
+    @Test
+    public void lexingDateRangeQuoted_withEquals_findsBothDates() {
+        String fieldName = CREATED;
+        st = new AuditSearchTerm(fieldName, "=\"2017-12-01 10:15:13\"-\"2017-12-02 23:12:11\"");
+        assertSingleToken(fieldName, TokenType.RANGEQUOTED, null, null, "2017-12-01 10:15:13-2017-12-02 23:12:11", "2017-12-01 10:15:13-2017-12-02 23:12:11");
+    }
+
+    @Test
+    public void lexingDateRangeUnquoted_withEquals_findsBothDates() {
+        String fieldName = CREATED;
+        st = new AuditSearchTerm(fieldName, "=2017-12-01 10:15:13-2017-12-02 23:12:11");
+        assertSingleToken(fieldName, TokenType.RANGE, null, null, "2017-12-01 10:15:13-2017-12-02 23:12:11", "2017-12-01 10:15:13-2017-12-02 23:12:11");
+    }
+
+    @Test
+    public void lexingDateRangeUnquoted_withoutEquals_findsBothDates() {
+        String fieldName = CREATED;
+        st = new AuditSearchTerm(fieldName, "2017-12-01 10:15:13-2017-12-02 23:12:11");
+        assertSingleToken(fieldName, TokenType.RANGE, null, null, "2017-12-01 10:15:13-2017-12-02 23:12:11", "2017-12-01 10:15:13-2017-12-02 23:12:11");
+    }
+
+    @Test
+    public void lexingDateRange_findsBothDates() {
+        String fieldName = CREATED;
+        st = new AuditSearchTerm(fieldName, "\"2017-12-01 10:15:13\"-\"2017-12-02 23:12:11\"");
+        assertSingleToken(fieldName, TokenType.RANGEQUOTED, null, null, "2017-12-01 10:15:13-2017-12-02 23:12:11", "2017-12-01 10:15:13-2017-12-02 23:12:11");
+    }
+
+    @Test
+    public void lexingDateRangeQuoted_withDatePartOnly_findsBothDatesExtended() {
+        String fieldName = CREATED;
+        st = new AuditSearchTerm(fieldName, "=\"2017-12-01\"-\"2017-12-02\"");
+        assertSingleToken(fieldName, TokenType.RANGEQUOTED, null, null, "2017-12-01 00:00:00-2017-12-02 23:59:59", "2017-12-01 00:00:00-2017-12-02 23:59:59");
+    }
+
+    @Test
+    public void lexingDateRangeUnquoted_withDatePartOnly_findsBothDatesExtended() {
+        String fieldName = CREATED;
+        st = new AuditSearchTerm(fieldName, "=2017-12-01-2017-12-02");
+        assertSingleToken(fieldName, TokenType.RANGE, null, null, "2017-12-01 00:00:00-2017-12-02 23:59:59", "2017-12-01 00:00:00-2017-12-02 23:59:59");
+    }
+
+    @Test
+    public void lexingDateRangeUnquoted_withDatePartOnly2_findsBothDatesExtended() {
+        String fieldName = CREATED;
+        st = new AuditSearchTerm(fieldName, "2017-12-01-2017-12-02");
+        assertSingleToken(fieldName, TokenType.RANGE, null, null, "2017-12-01 00:00:00-2017-12-02 23:59:59", "2017-12-01 00:00:00-2017-12-02 23:59:59");
+    }
+
+    @Test
+    public void lexingDateRange_withMixedDateParts_findsBothDatesExtended() {
+        String fieldName = CREATED;
+        st = new AuditSearchTerm(fieldName, "\"2017-12-01 12:13:14\"-\"2017-12-02\"");
+        assertSingleToken(fieldName, TokenType.RANGEQUOTED, null, null, "2017-12-01 12:13:14-2017-12-02 23:59:59", "2017-12-01 12:13:14-2017-12-02 23:59:59");
+    }
+
+    @Test
+    public void lexingDateRange_withMixedDateParts2_findsBothDatesExtended() {
+        String fieldName = CREATED;
+        st = new AuditSearchTerm(fieldName, "\"2017-12-01\"-\"2017-12-02 14:15:16\"");
+        assertSingleToken(fieldName, TokenType.RANGEQUOTED, null, null, "2017-12-01 00:00:00-2017-12-02 14:15:16", "2017-12-01 00:00:00-2017-12-02 14:15:16");
+    }
+
     /**
      * This might turn out questionable and might have to be rewritten to include the entire day. Let's see
      */

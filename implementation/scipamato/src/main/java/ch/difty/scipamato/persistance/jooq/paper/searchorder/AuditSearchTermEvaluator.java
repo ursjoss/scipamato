@@ -29,6 +29,9 @@ class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearchTerm> {
 
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
+    // Date range pattern, e.g. '2017-07-05 10:15:23-2017-07-05 17:12:33' -> 39 chars
+    private static final int DATE_RANGE_PATTERN_LENGTH = 39;
+
     /** {@inheritDoc} */
     @Override
     public Condition evaluate(final AuditSearchTerm searchTerm) {
@@ -71,26 +74,35 @@ class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearchTerm> {
         if (!(Paper.CREATED.equals(fieldName) || Paper.LAST_MOD.equals(fieldName))) {
             checkFields(fieldName, "date", Paper.CREATED, Paper.LAST_MOD, token.getType().matchType.name());
         }
-        final LocalDateTime ldt = LocalDateTime.parse(token.getDateSqlData(), DateTimeFormatter.ofPattern(DATE_FORMAT));
-        addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt)), conditions);
+        if (token.getDateSqlData().length() == DATE_RANGE_PATTERN_LENGTH) {
+            final LocalDateTime ldt1 = LocalDateTime.parse(token.getDateSqlData().substring(0, 19), DateTimeFormatter.ofPattern(DATE_FORMAT));
+            final LocalDateTime ldt2 = LocalDateTime.parse(token.getDateSqlData().substring(20), DateTimeFormatter.ofPattern(DATE_FORMAT));
+            addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt1)), DSL.val(Timestamp.valueOf(ldt2)), conditions);
+        } else {
+            final LocalDateTime ldt = LocalDateTime.parse(token.getDateSqlData(), DateTimeFormatter.ofPattern(DATE_FORMAT));
+            addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt)), DSL.val(Timestamp.valueOf(ldt)), conditions);
+        }
     }
 
-    private void addToConditions(final Token token, final Field<Object> field, final Field<Timestamp> value, final ConditionalSupplier conditions) {
+    private void addToConditions(final Token token, final Field<Object> field, final Field<Timestamp> value1, final Field<Timestamp> value2, final ConditionalSupplier conditions) {
         switch (token.getType().matchType) {
+        case RANGE:
+            conditions.add(() -> field.between(value1, value2));
+            break;
         case GREATER_THAN:
-            conditions.add(() -> field.greaterThan(value));
+            conditions.add(() -> field.greaterThan(value1));
             break;
         case GREATER_OR_EQUAL:
-            conditions.add(() -> field.greaterOrEqual(value));
+            conditions.add(() -> field.greaterOrEqual(value1));
             break;
         case EQUALS:
-            conditions.add(() -> field.equal(value));
+            conditions.add(() -> field.equal(value1));
             break;
         case LESS_OR_EQUAL:
-            conditions.add(() -> field.lessOrEqual(value));
+            conditions.add(() -> field.lessOrEqual(value1));
             break;
         case LESS_THAN:
-            conditions.add(() -> field.lessThan(value));
+            conditions.add(() -> field.lessThan(value1));
             break;
         case CONTAINS:
         case NONE:

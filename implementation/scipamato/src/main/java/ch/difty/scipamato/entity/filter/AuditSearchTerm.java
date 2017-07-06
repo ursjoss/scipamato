@@ -39,7 +39,9 @@ import java.util.regex.Pattern;
  * <li> <b>GREATER_THAN:</b> date is after the specified date (dates are complemented with ' 23:59:59') </li>
  * <li> <b>GREATER_OR_EQUAL:</b> the date is at or after the specified date (dates are complemented with ' 00:00:00')</li>
  * <li> <b>LESS_THAN:</b> the date is before the specified date (dates are complemented with ' 00:00:00')</li>
- * <li> <b>LESS_OR_EQUAL:</b> the date is at or before the specified date(dates are complemented with ' 23:59:59')</li>
+ * <li> <b>LESS_OR_EQUAL:</b> the date is at or before the specified date (dates are complemented with ' 23:59:59')</li>
+ * <li> <b>RANGE:</b> the date is between two specified dates (inclusive) (dates without time are complemented with
+ *      ' 00:00:00' (begin date) or ' 23:59:59' (end date))</li>
  * <li> <b>NONE:</b> dummy category which will be ignored.</li>
  * </ul>
  * <p>
@@ -57,6 +59,7 @@ public class AuditSearchTerm extends SearchTerm {
 
     private static final String RE_DATE = "\\d{4}-\\d{2}-\\d{2}(?: \\d{2}:\\d{2}:\\d{2})?";
     private static final String RE_QUOTE = "\"";
+    private static final String RE_RANGE_DIV = "-";
 
     private final List<Token> tokens;
 
@@ -97,6 +100,7 @@ public class AuditSearchTerm extends SearchTerm {
         CONTAINS,
         GREATER_THAN,
         GREATER_OR_EQUAL,
+        RANGE,
         LESS_THAN,
         LESS_OR_EQUAL,
         NONE;
@@ -106,20 +110,22 @@ public class AuditSearchTerm extends SearchTerm {
         // Token types must not have underscores. Otherwise the named capturing groups in the constructed regexes will break
         WHITESPACE(RE_S + "+", MatchType.NONE, FieldType.NONE, 1),
 
-        GREATEROREQUALQUOTED(">=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.GREATER_OR_EQUAL, FieldType.DATE, 3),
-        GREATEROREQUAL(">=" + "(" + RE_DATE + ")", MatchType.GREATER_OR_EQUAL, FieldType.DATE, 5),
-        GREATERTHANQUOTED(">" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.GREATER_THAN, FieldType.DATE, 7),
-        GREATERTHAN(">" + "(" + RE_DATE + ")", MatchType.GREATER_THAN, FieldType.DATE, 9),
-        LESSOREQUALQUOTED("<=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.LESS_OR_EQUAL, FieldType.DATE, 11),
-        LESSOREQUAL("<=" + "(" + RE_DATE + ")", MatchType.LESS_OR_EQUAL, FieldType.DATE, 13),
-        LESSTHANQUOTED("<" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.LESS_THAN, FieldType.DATE, 15),
-        LESSTHAN("<" + "(" + RE_DATE + ")", MatchType.LESS_THAN, FieldType.DATE, 17),
-        EXACTQUOTED("=?" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.EQUALS, FieldType.DATE, 19),
-        EXACT("=?" + "(" + RE_DATE + ")", MatchType.EQUALS, FieldType.DATE, 21),
+        RANGEQUOTED("=?" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE + RE_RANGE_DIV + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.RANGE, FieldType.DATE, 3),
+        RANGE("=?" + "(" + RE_DATE + ")" + RE_RANGE_DIV + "(" + RE_DATE + ")", MatchType.RANGE, FieldType.DATE, 6),
+        GREATEROREQUALQUOTED(">=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.GREATER_OR_EQUAL, FieldType.DATE, 9),
+        GREATEROREQUAL(">=" + "(" + RE_DATE + ")", MatchType.GREATER_OR_EQUAL, FieldType.DATE, 11),
+        GREATERTHANQUOTED(">" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.GREATER_THAN, FieldType.DATE, 13),
+        GREATERTHAN(">" + "(" + RE_DATE + ")", MatchType.GREATER_THAN, FieldType.DATE, 15),
+        LESSOREQUALQUOTED("<=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.LESS_OR_EQUAL, FieldType.DATE, 17),
+        LESSOREQUAL("<=" + "(" + RE_DATE + ")", MatchType.LESS_OR_EQUAL, FieldType.DATE, 19),
+        LESSTHANQUOTED("<" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.LESS_THAN, FieldType.DATE, 21),
+        LESSTHAN("<" + "(" + RE_DATE + ")", MatchType.LESS_THAN, FieldType.DATE, 23),
+        EXACTQUOTED("=?" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.EQUALS, FieldType.DATE, 25),
+        EXACT("=?" + "(" + RE_DATE + ")", MatchType.EQUALS, FieldType.DATE, 27),
 
-        WORD("\\b(" + RE_WW2 + ")\\b", MatchType.CONTAINS, FieldType.USER, 23),
+        WORD("\\b(" + RE_WW2 + ")\\b", MatchType.CONTAINS, FieldType.USER, 29),
 
-        RAW("", MatchType.NONE, FieldType.NONE, 24);
+        RAW("", MatchType.NONE, FieldType.NONE, 30);
 
         public final String pattern;
         public final MatchType matchType;
@@ -226,13 +232,43 @@ public class AuditSearchTerm extends SearchTerm {
                 if (tk == TokenType.RAW || matcher.group(TokenType.WHITESPACE.name()) != null)
                     continue;
                 else if (matcher.group(tk.name()) != null) {
-                    if (isAppropriate(tk, isUserType, isDateType))
-                        tokens.add(new Token(tk, matcher.group(tk.group)));
+                    if (isAppropriate(tk, isUserType, isDateType)) {
+                        tokens.add(new Token(tk, gatherData(matcher, tk)));
+                    }
                     continue tokenIteration;
                 }
             }
         }
         return tokens;
+    }
+
+    private static String gatherData(final Matcher matcher, final TokenType tk) {
+        if (tk == TokenType.RANGEQUOTED || tk == TokenType.RANGE)
+            return buildRange(matcher, tk);
+        else
+            return matcher.group(tk.group);
+    }
+
+    private static String buildRange(final Matcher matcher, final TokenType tk) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(completeDateTimeIfNecessary(matcher.group(tk.group), RangeElement.BEGIN));
+        sb.append("-");
+        sb.append(completeDateTimeIfNecessary(matcher.group(tk.group + 1), RangeElement.END));
+        return sb.toString();
+    }
+
+    private static String completeDateTimeIfNecessary(final String data, final RangeElement rangeElement) {
+        if (data.length() != 10) {
+            return data;
+        } else {
+            switch (rangeElement) {
+            case BEGIN:
+                return data + " 00:00:00";
+            case END:
+            default:
+                return data + " 23:59:59";
+            }
+        }
     }
 
     private static boolean isAppropriate(final TokenType tk, final boolean isUserType, final boolean isDateType) {
@@ -253,4 +289,8 @@ public class AuditSearchTerm extends SearchTerm {
         return tk.fieldType == FieldType.DATE && isDateType;
     }
 
+    private enum RangeElement {
+        BEGIN,
+        END;
+    }
 }

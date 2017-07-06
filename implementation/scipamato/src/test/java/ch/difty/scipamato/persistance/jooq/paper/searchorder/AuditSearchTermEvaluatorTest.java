@@ -67,6 +67,12 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
+    public void buildingConditionForDateRange_applies() {
+        expectToken(TokenType.RANGEQUOTED, "2017-01-11 10:00:00-2017-01-12 15:14:13", "paper.created");
+        assertThat(e.evaluate(stMock).toString()).isEqualTo("paper.created between timestamp '2017-01-11 10:00:00.0' and timestamp '2017-01-12 15:14:13.0'");
+    }
+
+    @Test
     public void buildingConditionForWhitespace_appliesTrueCondition() {
         expectToken(TokenType.WHITESPACE, "   ", "paper.created");
         assertThat(e.evaluate(stMock).toString()).isEqualTo("1 = 1");
