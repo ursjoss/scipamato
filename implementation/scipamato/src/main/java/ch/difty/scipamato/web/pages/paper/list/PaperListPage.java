@@ -51,6 +51,7 @@ public class PaperListPage extends BasePage<Void> {
 
     private PaperFilter filter;
     private PaperSlimByPaperFilterProvider dataProvider;
+    private ModalWindow xmlPasteModalWindow;
 
     public PaperListPage(PageParameters parameters) {
         super(parameters);
@@ -106,45 +107,36 @@ public class PaperListPage extends BasePage<Void> {
     }
 
     private void queueXmlPasteModalPanelAndLink(String modalId, String linkId) {
-        final ModalWindow xmlPasteModal = new ModalWindow(modalId);
-        XmlPasteModalPanel xmlPastePanel = new XmlPasteModalPanel(xmlPasteModal.getContentId());
-        xmlPasteModal.setContent(xmlPastePanel);
-        xmlPasteModal.setTitle(new StringResourceModel("xmlPasteModal.title", this, null).getString());
-        xmlPasteModal.setResizable(true);
-        xmlPasteModal.setAutoSize(true);
-        xmlPasteModal.setCookieName("xmlPasteModal-1");
-        xmlPasteModal.setCloseButtonCallback(new ModalWindow.CloseButtonCallback() {
-            private static final long serialVersionUID = 1L;
+        queue(newXmlPasteModalPanel(modalId));
+        queue(newXmlPateModealLink(linkId));
+    }
 
-            @Override
-            public boolean onCloseButtonClicked(AjaxRequestTarget target) {
-                return true;
-            }
-        });
+    private ModalWindow newXmlPasteModalPanel(String modalId) {
+        xmlPasteModalWindow = new ModalWindow(modalId);
+        XmlPasteModalPanel panel = new XmlPasteModalPanel(xmlPasteModalWindow.getContentId());
+        xmlPasteModalWindow.setContent(panel);
+        xmlPasteModalWindow.setTitle(new StringResourceModel("xmlPasteModal.title", this, null).getString());
+        xmlPasteModalWindow.setResizable(true);
+        xmlPasteModalWindow.setAutoSize(true);
+        xmlPasteModalWindow.setCookieName("xmlPasteModal-1");
+        xmlPasteModalWindow.setCloseButtonCallback((AjaxRequestTarget target) -> true);
+        xmlPasteModalWindow.setWindowClosedCallback(target -> onXmlPasteModalPanelClose(panel.getPastedContent(), target));
+        return xmlPasteModalWindow;
+    }
 
-        xmlPasteModal.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onClose(AjaxRequestTarget target) {
-                onXmlPasteModalPanelClose(xmlPastePanel.getPastedContent(), target);
-            }
-        });
-
-        queue(xmlPasteModal);
-
-        BootstrapAjaxLink<Void> showXmlPasteModal = new BootstrapAjaxLink<Void>(linkId, Buttons.Type.Default) {
+    private BootstrapAjaxLink<Void> newXmlPateModealLink(String linkId) {
+        BootstrapAjaxLink<Void> link = new BootstrapAjaxLink<Void>(linkId, Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onClick(AjaxRequestTarget target) {
-                xmlPasteModal.show(target);
+                xmlPasteModalWindow.show(target);
             }
         };
-        showXmlPasteModal.setOutputMarkupPlaceholderTag(true);
-        showXmlPasteModal.setLabel(new StringResourceModel("xmlPasteModalLink.label", this, null));
-        showXmlPasteModal.add(new AttributeModifier("title", new StringResourceModel("xmlPasteModalLink.title", this, null).getString()));
-        queue(showXmlPasteModal);
+        link.setOutputMarkupPlaceholderTag(true);
+        link.setLabel(new StringResourceModel("xmlPasteModalLink.label", this, null));
+        link.add(new AttributeModifier("title", new StringResourceModel("xmlPasteModalLink.title", this, null).getString()));
+        return link;
     }
 
     /**
