@@ -6,6 +6,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.MaskType;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
@@ -123,6 +124,8 @@ public class PaperListPage extends BasePage<Void> {
         xmlPasteModalWindow.setMinimalWidth(200);
         xmlPasteModalWindow.setInitialWidth(150);
         xmlPasteModalWindow.setInitialHeight(250);
+        xmlPasteModalWindow.setMaskType(MaskType.SEMI_TRANSPARENT);
+        xmlPasteModalWindow.setCssClassName(ModalWindow.CSS_CLASS_BLUE);
         xmlPasteModalWindow.setCookieName(Cookie.PAPER_LIST_PAGE_MODAL_WINDOW.getName());
         xmlPasteModalWindow.setCloseButtonCallback((AjaxRequestTarget target) -> true);
         xmlPasteModalWindow.setWindowClosedCallback(target -> onXmlPasteModalPanelClose(panel.getPastedContent(), target));
