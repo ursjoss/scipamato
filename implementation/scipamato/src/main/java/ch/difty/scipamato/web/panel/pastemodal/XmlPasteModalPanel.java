@@ -16,6 +16,8 @@ public class XmlPasteModalPanel extends Panel {
 
     private String pastedContent;
 
+    private Form<Void> form;
+
     public XmlPasteModalPanel(String id) {
         super(id);
     }
@@ -24,11 +26,22 @@ public class XmlPasteModalPanel extends Panel {
     protected void onInitialize() {
         super.onInitialize();
 
-        Form<Void> form = new Form<>("form");
-        queue(form);
-        queue(new TextArea<>("content", new PropertyModel<String>(this, "pastedContent")));
+        queue(newForm("form"));
+        queue(newTextArea("pastedContent"));
+        queue(newButton("submit"));
+    }
 
-        queue(new BootstrapAjaxButton("submit", new StringResourceModel("submit.label", this, null), form, Buttons.Type.Primary) {
+    private Form<Void> newForm(String id) {
+        form = new Form<>(id);
+        return form;
+    }
+
+    private TextArea<String> newTextArea(String id) {
+        return new TextArea<>("content", new PropertyModel<String>(this, id));
+    }
+
+    private BootstrapAjaxButton newButton(String id) {
+        return new BootstrapAjaxButton(id, new StringResourceModel(id + ".label", this, null), form, Buttons.Type.Primary) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -36,7 +49,7 @@ public class XmlPasteModalPanel extends Panel {
                 super.onAfterSubmit(target, form);
                 ModalWindow.closeCurrent(target);
             }
-        });
+        };
     }
 
     public String getPastedContent() {
