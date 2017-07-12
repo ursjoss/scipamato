@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 
 import ch.difty.scipamato.web.panel.PanelTest;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
 
 public class XmlPasteModalPanelTest extends PanelTest<XmlPasteModalPanel> {
 
@@ -24,7 +25,9 @@ public class XmlPasteModalPanelTest extends PanelTest<XmlPasteModalPanel> {
 
         b += ":";
         getTester().assertComponent(b + "content", TextArea.class);
+        getTester().assertComponent(b + "dropzone", DropZoneFileUpload.class);
         getTester().assertComponent(b + "submit", BootstrapAjaxButton.class);
+        getTester().assertComponent(b + "cancel", BootstrapAjaxButton.class);
     }
 
 }
