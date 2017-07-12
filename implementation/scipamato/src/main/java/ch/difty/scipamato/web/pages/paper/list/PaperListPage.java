@@ -117,7 +117,10 @@ public class PaperListPage extends BasePage<Void> {
         xmlPasteModalWindow.setContent(panel);
         xmlPasteModalWindow.setTitle(new StringResourceModel("xmlPasteModal.title", this, null).getString());
         xmlPasteModalWindow.setResizable(true);
-        xmlPasteModalWindow.setAutoSize(true);
+        xmlPasteModalWindow.setMinimalHeight(100);
+        xmlPasteModalWindow.setMinimalWidth(200);
+        xmlPasteModalWindow.setInitialWidth(150);
+        xmlPasteModalWindow.setInitialHeight(250);
         xmlPasteModalWindow.setCookieName("xmlPasteModal-1");
         xmlPasteModalWindow.setCloseButtonCallback((AjaxRequestTarget target) -> true);
         xmlPasteModalWindow.setWindowClosedCallback(target -> onXmlPasteModalPanelClose(panel.getPastedContent(), target));
