@@ -36,7 +36,7 @@ public class XmlPasteModalPanel extends Panel {
         super.onInitialize();
 
         queue(newForm("form"));
-        queue(newTextArea("pastedContent"));
+        queue(newTextArea("content"));
         queue(newDropZoneFileUpload("dropzone"));
         queue(newButton("submit"));
         queue(newCancelButton("cancel"));
@@ -48,7 +48,7 @@ public class XmlPasteModalPanel extends Panel {
     }
 
     private TextArea<String> newTextArea(String id) {
-        contentField = new TextArea<>("content");
+        contentField = new TextArea<>(id);
         contentField.setOutputMarkupId(true);
         return contentField;
     }
