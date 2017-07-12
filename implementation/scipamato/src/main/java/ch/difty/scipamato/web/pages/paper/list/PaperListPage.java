@@ -22,6 +22,7 @@ import ch.difty.scipamato.auth.Roles;
 import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.scipamato.service.PubmedImporter;
 import ch.difty.scipamato.service.ServiceResult;
+import ch.difty.scipamato.web.config.Cookie;
 import ch.difty.scipamato.web.pages.BasePage;
 import ch.difty.scipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.web.pages.paper.provider.PaperSlimByPaperFilterProvider;
@@ -122,7 +123,7 @@ public class PaperListPage extends BasePage<Void> {
         xmlPasteModalWindow.setMinimalWidth(200);
         xmlPasteModalWindow.setInitialWidth(150);
         xmlPasteModalWindow.setInitialHeight(250);
-        xmlPasteModalWindow.setCookieName("xmlPasteModal-1");
+        xmlPasteModalWindow.setCookieName(Cookie.PAPER_LIST_PAGE_MODAL_WINDOW.getName());
         xmlPasteModalWindow.setCloseButtonCallback((AjaxRequestTarget target) -> true);
         xmlPasteModalWindow.setWindowClosedCallback(target -> onXmlPasteModalPanelClose(panel.getPastedContent(), target));
         return xmlPasteModalWindow;
