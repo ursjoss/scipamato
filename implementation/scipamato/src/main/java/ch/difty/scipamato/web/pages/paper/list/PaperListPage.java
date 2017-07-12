@@ -15,6 +15,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
+import com.google.common.base.Strings;
 
 import ch.difty.scipamato.ScipamatoSession;
 import ch.difty.scipamato.auth.Roles;
@@ -149,8 +150,10 @@ public class PaperListPage extends BasePage<Void> {
      * @param target
      */
     protected void onXmlPasteModalPanelClose(final String pubmedContent, final AjaxRequestTarget target) {
-        final ServiceResult result = pubmedImportService.persistPubmedArticlesFromXml(pubmedContent);
-        translateServiceResultMessagesToLocalizedUserMessages(result, target);
+        if (!Strings.isNullOrEmpty(pubmedContent)) {
+            final ServiceResult result = pubmedImportService.persistPubmedArticlesFromXml(pubmedContent);
+            translateServiceResultMessagesToLocalizedUserMessages(result, target);
+        }
     }
 
     private void translateServiceResultMessagesToLocalizedUserMessages(final ServiceResult result, final AjaxRequestTarget target) {

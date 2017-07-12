@@ -2,7 +2,8 @@ package ch.difty.scipamato.web.pages.paper.list;
 
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -14,7 +15,6 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.config.ApplicationProperties;
@@ -71,7 +71,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         assertResultPanel("resultPanel");
 
         verify(paperSlimServiceMock, times(2)).countByFilter(isA(PaperFilter.class));
-        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(Mockito.isA(PaperFilter.class), Mockito.isA(PaginationRequest.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     private void assertSearchForm(String b) {
@@ -122,7 +122,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         for (CodeClassId ccid : CodeClassId.values())
             verify(codeServiceMock).findCodesOfClass(ccid, "de");
         verify(localizationMock, times(9)).getLocalization();
-        verify(paperServiceMock, times(3)).findPageOfIdsByFilter(Mockito.isA(PaperFilter.class), Mockito.isA(PaginationRequest.class));
+        verify(paperServiceMock, times(3)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -143,22 +143,46 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         getTester().assertComponent(b + ":submit", BootstrapAjaxButton.class);
 
         verify(paperSlimServiceMock, times(2)).countByFilter(isA(PaperFilter.class));
-        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(Mockito.isA(PaperFilter.class), Mockito.isA(PaginationRequest.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     @Test
-    public void onXmlPasteModalPanelClose() {
-        AjaxRequestTarget targetMock = mock(AjaxRequestTarget.class);
+    public void onXmlPasteModalPanelClose_withNullContent_doesNotPersists() {
+        String content = null;
+        makePage().onXmlPasteModalPanelClose(content, mock(AjaxRequestTarget.class));
+
+        verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
+        verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+    }
+
+    @Test
+    public void onXmlPasteModalPanelClose_withBlankContent_doesNotPersists() {
+        String content = "";
+        makePage().onXmlPasteModalPanelClose(content, mock(AjaxRequestTarget.class));
+
+        verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
+        verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+    }
+
+    @Test
+    public void onXmlPasteModalPanelClose_withContent_persistsArticles() {
+        String content = "content";
+        when(pubmedImportService.persistPubmedArticlesFromXml(content)).thenReturn(makeServiceResult());
+
+        makePage().onXmlPasteModalPanelClose("content", mock(AjaxRequestTarget.class));
+
+        verify(pubmedImportService).persistPubmedArticlesFromXml(content);
+        verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+    }
+
+    private ServiceResult makeServiceResult() {
         ServiceResult serviceResult = new DefaultServiceResult();
         serviceResult.addInfoMessage("info");
         serviceResult.addWarnMessage("warn");
         serviceResult.addErrorMessage("error");
-        when(pubmedImportService.persistPubmedArticlesFromXml("content")).thenReturn(serviceResult);
-
-        makePage().onXmlPasteModalPanelClose("content", targetMock);
-
-        verify(pubmedImportService).persistPubmedArticlesFromXml("content");
-        verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
-        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(Mockito.isA(PaperFilter.class), Mockito.isA(PaginationRequest.class));
+        return serviceResult;
     }
 }
