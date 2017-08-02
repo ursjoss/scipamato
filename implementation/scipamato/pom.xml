@@ -56,7 +56,7 @@
 
         <!-- persistence layer -->
         <jdbc-postgres.version>42.1.1</jdbc-postgres.version>
-        <org.jooq.version>3.9.4</org.jooq.version>
+        <org.jooq.version>3.9.5</org.jooq.version>
         <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
         <org.jooq.db-generator>org.jooq.util.postgres.PostgresDatabase</org.jooq.db-generator>
         <flyway.version>4.2.0</flyway.version>
