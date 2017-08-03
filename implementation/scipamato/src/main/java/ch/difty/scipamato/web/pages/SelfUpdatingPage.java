@@ -10,7 +10,6 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.config.ApplicationProperties;
-import ch.difty.scipamato.service.Localization;
 
 /**
  * Abstract page that enables the implementing concrete pages to auto-update the model.
@@ -34,19 +33,12 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
     @SpringBean
     private ApplicationProperties applicationProperties;
 
-    @SpringBean
-    private Localization localization;
-
     public SelfUpdatingPage(PageParameters parameters) {
         super(parameters);
     }
 
     public SelfUpdatingPage(IModel<T> model) {
         super(model);
-    }
-
-    protected Localization getLocalization() {
-        return localization;
     }
 
     protected ApplicationProperties getApplicationProperties() {

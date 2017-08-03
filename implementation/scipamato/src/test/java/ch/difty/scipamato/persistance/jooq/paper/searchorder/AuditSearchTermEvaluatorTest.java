@@ -82,7 +82,7 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     public void buildingConditionForWord_appliesContains() {
         expectToken(TokenType.WORD, "foo", "paper.created_by");
         assertThat(e.evaluate(stMock).toString()).isEqualToIgnoringCase(concat(
-            // @formatter:off
+        // @formatter:off
               "\"public\".\"paper\".\"id\" in (",
               "  select \"public\".\"paper\".\"id\"",
               "  from \"public\".\"paper\"",

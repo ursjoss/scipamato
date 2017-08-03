@@ -56,11 +56,8 @@ class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearchTerm> {
         }
         final Field<Object> field = DSL.field(fieldName);
         final String userName = "%" + token.getUserSqlData().toLowerCase() + "%";
-        final SelectConditionStep<Record1<Long>> step = DSL.select(PAPER.ID)
-                .from(PAPER)
-                .innerJoin(SCIPAMATO_USER)
-                .on(field.eq(SCIPAMATO_USER.ID))
-                .where(SCIPAMATO_USER.USER_NAME.lower().like(userName));
+        final SelectConditionStep<Record1<Long>> step = DSL.select(PAPER.ID).from(PAPER).innerJoin(SCIPAMATO_USER).on(field.eq(SCIPAMATO_USER.ID)).where(
+                SCIPAMATO_USER.USER_NAME.lower().like(userName));
         conditions.add(() -> PAPER.ID.in(step));
     }
 

@@ -41,6 +41,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
     private static final long NUMBER = 2l;
     private static final int ROWS_PER_PAGE = 12;
+    private static final String LC = "en_us";
 
     @MockBean
     private CodeClassService codeClassServiceMock;
@@ -60,7 +61,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         when(paperSlimServiceMock.countBySearchOrder(searchOrderMock)).thenReturn(1);
         when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class))).thenReturn(Arrays.asList(paperSlim));
 
-        when(paperServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class))).thenReturn(Arrays.asList(paperMock));
+        when(paperServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class), eq(LC))).thenReturn(Arrays.asList(paperMock));
     }
 
     @After
@@ -114,7 +115,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     public void clickingLink_opensPaperEntryPage() {
         Paper paper = new Paper();
         paper.setNumber(NUMBER);
-        when(paperServiceMock.findByNumber(NUMBER)).thenReturn(Optional.of(paper));
+        when(paperServiceMock.findByNumber(NUMBER, LC)).thenReturn(Optional.of(paper));
 
         getTester().startComponentInPage(makePanel());
         getTester().clickLink(PANEL_ID + ":table:body:rows:1:cells:5:cell:link");
@@ -122,7 +123,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
         verify(paperSlimServiceMock).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
-        verify(paperServiceMock).findByNumber(NUMBER);
+        verify(paperServiceMock).findByNumber(NUMBER, LC);
         verify(codeClassServiceMock).find(anyString());
         verify(codeServiceMock, times(8)).findCodesOfClass(isA(CodeClassId.class), anyString());
         verify(searchOrderMock).getId();
@@ -149,7 +150,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     private void verifyPdfExport() {
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
-        verify(paperServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
+        verify(paperServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class), eq(LC));
         verify(searchOrderMock, times(2)).isShowExcluded();
     }
 

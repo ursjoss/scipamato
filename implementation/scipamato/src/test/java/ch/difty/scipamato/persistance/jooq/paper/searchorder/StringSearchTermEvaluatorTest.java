@@ -60,7 +60,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     public void buildingConditionForSome_appliesNotEmpty() {
         expectToken(TokenType.SOME, "whatever");
         assertThat(e.evaluate(stMock).toString()).isEqualTo(
-            // @formatter:off
+        // @formatter:off
             "(\n" +
             "  field_x is not null\n" +
             "  and char_length(cast(field_x as varchar)) > 0\n" +
@@ -73,7 +73,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     public void buildingConditionForEmpty_appliesEmpty() {
         expectToken(TokenType.EMPTY, "whatever");
         assertThat(e.evaluate(stMock).toString()).isEqualTo(
-            // @formatter:off
+        // @formatter:off
             "(\n" +
             "  field_x is null\n" +
             "  or char_length(cast(field_x as varchar)) = 0\n" +
@@ -170,7 +170,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     public void buildingConditionForNotWord_appliesNotContains() {
         expectToken(TokenType.NOTWORD, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo(concat(
-            // @formatter:off
+        // @formatter:off
             "not(lower(cast(field_x as varchar)) like ('%' || replace(",
             "  replace(",
             "    replace(",
@@ -192,7 +192,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     public void buildingConditionForWord_appliesContains() {
         expectToken(TokenType.WORD, "foo");
         assertThat(e.evaluate(stMock).toString()).isEqualTo(concat(
-            // @formatter:off
+        // @formatter:off
             "lower(cast(field_x as varchar)) like ('%' || replace(",
             "  replace(",
             "    replace(",

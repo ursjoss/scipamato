@@ -26,26 +26,31 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     /**
      * Find Papers (including codes) with the provided ids
      * @param ids
+     * @param languageCode - must not be null
      * @return list of papers (attachments without content)
      */
-    List<Paper> findWithCodesByIds(List<Long> ids);
+    List<Paper> findWithCodesByIds(List<Long> ids, String languageCode);
 
     /**
      * Finds all entities of type {@code T} matching the provided {@link SearchOrder} specification.
      * The codes are enriched. The attachments are present but without the actual content.
      *
      * @param searchOrder {@link SearchOrder} the search specification
+     * @param languageCode - must not be null
      * @return list of entities (attachments without content)
      */
-    List<Paper> findBySearchOrder(SearchOrder searchOrder);
+    List<Paper> findBySearchOrder(SearchOrder searchOrder, String languageCode);
 
     /**
      * Finds a single page of entities of type {@code T} matching the provided {@link SearchOrder} and {@link PaginationContext}.
      * The codes are enriched. The attachments are present but without the actual content.
      *
+     * @param searchOrder
+     * @param paginationContext
+     * @param languageCode
      * @return paged list of entities (attachments without content)
      */
-    List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
+    List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext, String languageCode);
 
     /**
      * {@link BySearchOrderRepository#countBySearchOrder(SearchOrder)}
@@ -57,18 +62,28 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * The codes are enriched. The attachments are present but without the actual content.
      *
      * @param pmIds list of pubmed ids
+     * @param languageCode
      * @return list of entities (codes enriched, attachments without content)
      */
-    List<Paper> findByPmIds(List<Integer> pmIds);
+    List<Paper> findByPmIds(List<Integer> pmIds, String languageCode);
+
+    /**
+     * Returns the PMIDs out of the provided list that have actually been assigned in persisted papers.
+     *
+     * @param pmIds list of pubmed ids
+     * @return list of PMIDs
+     */
+    List<Integer> findExistingPmIdsOutOf(List<Integer> pmIds);
 
     /**
      * Finds all entities of type {@code T} matching any of the provided {@code numbers}.
      * The codes are enriched. The attachments are present but without the actual content.
      *
      * @param numbers list of numbers
+     * @param languageCode
      * @return list of entities (codes enriched, attachments without content)
      */
-    List<Paper> findByNumbers(List<Long> numbers);
+    List<Paper> findByNumbers(List<Long> numbers, String languageCode);
 
     /**
      * Finds the lowest free number starting from the supplied minimum  parameter. Will find gaps if those numbers

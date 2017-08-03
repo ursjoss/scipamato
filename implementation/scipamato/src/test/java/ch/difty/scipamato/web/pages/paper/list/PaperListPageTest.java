@@ -1,9 +1,10 @@
 package ch.difty.scipamato.web.pages.paper.list;
 
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -24,7 +25,6 @@ import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.scipamato.service.CodeClassService;
 import ch.difty.scipamato.service.CodeService;
 import ch.difty.scipamato.service.DefaultServiceResult;
-import ch.difty.scipamato.service.Localization;
 import ch.difty.scipamato.service.PubmedImporter;
 import ch.difty.scipamato.service.ServiceResult;
 import ch.difty.scipamato.web.pages.BasePageTest;
@@ -37,6 +37,8 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 
 public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
+    private static final String LC = "en_us";
+
     @MockBean
     private PubmedImporter pubmedImportService;
 
@@ -46,8 +48,6 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
     private CodeClassService codeClassServiceMock;
     @MockBean
     private ApplicationProperties applicationPropertiesMock;
-    @MockBean
-    private Localization localizationMock;
 
     @After
     public void tearDown() {
@@ -104,7 +104,6 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         final long freeNumber = 21;
         when(applicationPropertiesMock.getMinimumPaperNumberToBeRecycled()).thenReturn(minimumNumber);
         when(paperServiceMock.findLowestFreeNumberStartingFrom(minimumNumber)).thenReturn(freeNumber);
-        when(localizationMock.getLocalization()).thenReturn("de");
 
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
@@ -118,10 +117,9 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
         verify(paperServiceMock).findLowestFreeNumberStartingFrom(minimumNumber);
         // from PaperEntryPage
-        verify(codeClassServiceMock).find("de");
+        verify(codeClassServiceMock).find(LC);
         for (CodeClassId ccid : CodeClassId.values())
-            verify(codeServiceMock).findCodesOfClass(ccid, "de");
-        verify(localizationMock, times(9)).getLocalization();
+            verify(codeServiceMock).findCodesOfClass(ccid, LC);
         verify(paperServiceMock, times(3)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 

@@ -22,18 +22,20 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * Find any paper matching the provided {@link SearchOrder}.
      *
      * @param searchOrder {@link SearchOrder}
+     * @param languageCode
      * @return list of {@link Paper}s
      */
-    List<Paper> findBySearchOrder(SearchOrder searchOrder);
+    List<Paper> findBySearchOrder(SearchOrder searchOrder, String languageCode);
 
     /**
      * Finds a page full of papers as list matching the provided {@link SearchOrder} and {@link PaginationContext}.
      *
      * @param searchOrder the filter
      * @param paginationContext context defining paging and sorting
+     * @param languageCode
      * @return paged list of papers
      */
-    List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
+    List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext, String languageCode);
 
     /**
      * Finds a page full of ids of papers as list matching the provided {@link SearchOrder} and {@link PaginationContext}.
@@ -66,10 +68,11 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * Finds an individual paper by number. Returns it as an optional of type {@code T}
      *
      * @param number - must not be null
+     * @param languageCode
      * @return Optional paper. Codes are enriched and attachments present (but without content)
      * @throws NullArgumentException if number is null
      */
-    Optional<Paper> findByNumber(Long number);
+    Optional<Paper> findByNumber(Long number, String languageCode);
 
     /**
      * Finds the lowest free number starting from the supplied value.

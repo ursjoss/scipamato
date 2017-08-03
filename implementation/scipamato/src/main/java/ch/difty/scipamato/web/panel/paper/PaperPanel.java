@@ -575,7 +575,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
             Form<T> tab3Form = new Form<>("tab3Form");
             queue(tab3Form);
 
-            CodeClassModel codeClassModel = new CodeClassModel(getLocalization().getLocalization());
+            CodeClassModel codeClassModel = new CodeClassModel(getLocalization());
             List<CodeClass> codeClasses = codeClassModel.getObject();
 
             makeCodeClass1Complex(codeClasses, tab3Form);
@@ -631,7 +631,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
                     }
                 }
             };
-            final CodeModel choices = new CodeModel(codeClassId, getLocalization().getLocalization());
+            final CodeModel choices = new CodeModel(codeClassId, getLocalization());
             final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(Code.DISPLAY_VALUE, Code.CODE);
             final StringResourceModel noneSelectedModel = new StringResourceModel("codes.noneSelected", this, null);
             final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true).withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);

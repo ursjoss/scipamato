@@ -21,6 +21,8 @@ import ch.difty.scipamato.paging.PaginationContext;
 
 public class PaperSlimBySearchOrderProviderTest extends AbstractPaperSlimProviderTest<SearchOrder, PaperSlimBySearchOrderProvider> {
 
+    private static final String LC = "de";
+
     @Mock
     private SearchOrder searchOrder;
 
@@ -69,11 +71,11 @@ public class PaperSlimBySearchOrderProviderTest extends AbstractPaperSlimProvide
     @Test
     public void gettingAllPapersByFilter() {
         provider.setSort("authors", SortOrder.ASCENDING);
-        when(paperServiceMock.findPageBySearchOrder(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")))).thenReturn(pageOfPapers);
+        when(paperServiceMock.findPageBySearchOrder(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")), eq(LC))).thenReturn(pageOfPapers);
         List<Paper> papers = provider.findAllPapersByFilter();
         assertThat(papers).hasSize(5);
         assertThat(papers).containsOnly(paperMock);
-        verify(paperServiceMock).findPageBySearchOrder(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")));
+        verify(paperServiceMock).findPageBySearchOrder(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")), eq(LC));
     }
 
     @Test

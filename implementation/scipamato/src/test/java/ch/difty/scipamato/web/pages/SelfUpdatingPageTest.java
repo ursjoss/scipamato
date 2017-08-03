@@ -8,22 +8,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.config.ApplicationProperties;
 import ch.difty.scipamato.config.AuthorParserStrategy;
-import ch.difty.scipamato.service.Localization;
 
 public abstract class SelfUpdatingPageTest<T extends BasePage<?>> extends BasePageTest<T> {
 
     @MockBean
     private ApplicationProperties applicationProperties;
 
-    @MockBean
-    private Localization localization;
-
     protected ApplicationProperties getAppProps() {
         return applicationProperties;
-    }
-
-    protected Localization getLocalization() {
-        return localization;
     }
 
     @Override
@@ -32,7 +24,6 @@ public abstract class SelfUpdatingPageTest<T extends BasePage<?>> extends BasePa
         when(applicationProperties.getDefaultLocalization()).thenReturn("de");
         when(applicationProperties.getBrand()).thenReturn("SciPaMaTo");
         when(applicationProperties.getMinimumPaperNumberToBeRecycled()).thenReturn(7l);
-        when(localization.getLocalization()).thenReturn("de");
     }
 
     @Test

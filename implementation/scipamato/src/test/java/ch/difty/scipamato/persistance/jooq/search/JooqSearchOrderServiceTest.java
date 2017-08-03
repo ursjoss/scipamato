@@ -25,6 +25,8 @@ import ch.difty.scipamato.persistance.jooq.AbstractServiceTest;
 @RunWith(MockitoJUnitRunner.class)
 public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, SearchOrder, SearchOrderRepository> {
 
+    private static final String LC = "de";
+
     private final JooqSearchOrderService service = new JooqSearchOrderService();
 
     @Mock
@@ -126,9 +128,9 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
     public void savingOrUpdatingSearchCondition_withConditionWithNullId_delegatesAddingToRepo() {
         final long searchOrderId = 3;
         when(searchConditionMock.getSearchConditionId()).thenReturn(null);
-        when(repoMock.addSearchCondition(searchConditionMock, searchOrderId)).thenReturn(searchConditionMock);
-        assertThat(service.saveOrUpdateSearchCondition(searchConditionMock, searchOrderId)).isEqualTo(searchConditionMock);
-        verify(repoMock).addSearchCondition(searchConditionMock, searchOrderId);
+        when(repoMock.addSearchCondition(searchConditionMock, searchOrderId, LC)).thenReturn(searchConditionMock);
+        assertThat(service.saveOrUpdateSearchCondition(searchConditionMock, searchOrderId, LC)).isEqualTo(searchConditionMock);
+        verify(repoMock).addSearchCondition(searchConditionMock, searchOrderId, LC);
         verify(searchConditionMock).getSearchConditionId();
     }
 
@@ -136,9 +138,9 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
     public void savingOrUpdatingSearchCondition_withConditionWithId_delegatesUpdatingToRepo() {
         final long searchOrderId = 3;
         when(searchConditionMock.getSearchConditionId()).thenReturn(17l);
-        when(repoMock.updateSearchCondition(searchConditionMock, searchOrderId)).thenReturn(searchConditionMock);
-        assertThat(service.saveOrUpdateSearchCondition(searchConditionMock, searchOrderId)).isEqualTo(searchConditionMock);
-        verify(repoMock).updateSearchCondition(searchConditionMock, searchOrderId);
+        when(repoMock.updateSearchCondition(searchConditionMock, searchOrderId, LC)).thenReturn(searchConditionMock);
+        assertThat(service.saveOrUpdateSearchCondition(searchConditionMock, searchOrderId, LC)).isEqualTo(searchConditionMock);
+        verify(repoMock).updateSearchCondition(searchConditionMock, searchOrderId, LC);
         verify(searchConditionMock).getSearchConditionId();
     }
 

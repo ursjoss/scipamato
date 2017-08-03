@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import ch.difty.scipamato.config.ApplicationProperties;
 import ch.difty.scipamato.entity.ScipamatoEntity;
 import ch.difty.scipamato.entity.User;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
@@ -22,7 +23,6 @@ import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.lib.DateTimeService;
 import ch.difty.scipamato.persistance.OptimisticLockingException;
 import ch.difty.scipamato.persistance.OptimisticLockingException.Type;
-import ch.difty.scipamato.service.Localization;
 
 /**
  * The generic jOOQ entity repository for manipulation of entities.
@@ -52,13 +52,13 @@ public abstract class JooqEntityRepo<R extends Record, T extends ScipamatoEntity
      * @param sortMapper {@link JooqSortMapper} mapping spring data sort specifications into jOOQ specific sort specs
      * @param filterConditionMapper the {@link GenericFilterConditionMapper} mapping a derivative of {@link ScipamatoFilter} into jOOC Condition
      * @param dateTimeService the {@link DateTimeService} providing access to the system time
-     * @param localization {@link Localization} been providing the information about the requested localization code.
      * @param insertSetStepSetter {@link InsertSetStepSetter} mapping the entity fields into the jOOQ {@link InsertSetStep}.
      * @param updateSetStepSetter {@link UpdateSetStepSetter} mapping the entity fields into the jOOQ {@link UpdateSetStep}.
+     * @param applicationProperties {@link ApplicationProperties}
      */
     protected JooqEntityRepo(DSLContext dsl, M mapper, JooqSortMapper<R, T, TI> sortMapper, GenericFilterConditionMapper<F> filterConditionMapper, DateTimeService dateTimeService,
-            Localization localization, InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter) {
-        super(dsl, mapper, sortMapper, filterConditionMapper, localization);
+            InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter, ApplicationProperties applicationProperties) {
+        super(dsl, mapper, sortMapper, filterConditionMapper, applicationProperties);
         this.insertSetStepSetter = AssertAs.notNull(insertSetStepSetter, "insertSetStepSetter");
         this.updateSetStepSetter = AssertAs.notNull(updateSetStepSetter, "updateSetStepSetter");
         this.dateTimeService = AssertAs.notNull(dateTimeService, "dateTimeService");
@@ -88,7 +88,14 @@ public abstract class JooqEntityRepo<R extends Record, T extends ScipamatoEntity
     /** {@inheritDoc} */
     @Override
     public T add(final T entity) {
+        return add(entity, getApplicationProperties().getDefaultLocalization());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public T add(final T entity, final String languageCode) {
         AssertAs.notNull(entity, "entity");
+        AssertAs.notNull(languageCode, "languageCode");
 
         entity.setCreatedBy(getUserId());
         entity.setLastModifiedBy(getUserId());
@@ -98,11 +105,11 @@ public abstract class JooqEntityRepo<R extends Record, T extends ScipamatoEntity
 
         R saved = step.returning().fetchOne();
         insertSetStepSetter.resetIdToEntity(entity, saved);
-        saveAssociatedEntitiesOf(entity);
+        saveAssociatedEntitiesOf(entity, languageCode);
         if (saved != null) {
             getLogger().info("Inserted 1 record: {} with id {}.", getTable().getName(), getIdFrom(saved));
             T savedEntity = getMapper().map(saved);
-            enrichAssociatedEntitiesOf(savedEntity);
+            enrichAssociatedEntitiesOf(savedEntity, languageCode);
             return savedEntity;
         } else {
             getLogger().warn("Unable to insert {} record", getTable().getName());
@@ -113,8 +120,9 @@ public abstract class JooqEntityRepo<R extends Record, T extends ScipamatoEntity
     /**
      * Implement if associated entities need separate saving.
      * @param entity
+     * @param languageCode
      */
-    protected void saveAssociatedEntitiesOf(T entity) {
+    protected void saveAssociatedEntitiesOf(T entity, String languageCode) {
     }
 
     /** {@inheritDoc} */
@@ -147,7 +155,14 @@ public abstract class JooqEntityRepo<R extends Record, T extends ScipamatoEntity
     /** {@inheritDoc} */
     @Override
     public T update(final T entity) {
+        return update(entity, getApplicationProperties().getDefaultLocalization());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public T update(final T entity, final String languageCode) {
         AssertAs.notNull(entity, "entity");
+        AssertAs.notNull(languageCode, "languageCode");
         ID id = AssertAs.notNull(getIdFrom(entity), "entity.id");
 
         entity.setLastModified(now());
@@ -155,9 +170,9 @@ public abstract class JooqEntityRepo<R extends Record, T extends ScipamatoEntity
 
         R updated = updateSetStepSetter.setFieldsFor(getDsl().update(getTable()), entity).where(getTableId().equal(id)).and(getRecordVersion().equal(entity.getVersion())).returning().fetchOne();
         if (updated != null) {
-            updateAssociatedEntities(entity);
+            updateAssociatedEntities(entity, languageCode);
             T savedEntity = findById(id);
-            enrichAssociatedEntitiesOf(savedEntity);
+            enrichAssociatedEntitiesOf(savedEntity, languageCode);
             getLogger().info("Updated 1 record: {} with id {}.", getTable().getName(), id);
             return savedEntity;
         } else {
@@ -168,8 +183,9 @@ public abstract class JooqEntityRepo<R extends Record, T extends ScipamatoEntity
     /**
      * Implement updates associated entities need separate saving.
      * @param entity
+     * @param languageCode
      */
-    protected void updateAssociatedEntities(final T entity) {
+    protected void updateAssociatedEntities(final T entity, final String languageCode) {
     }
 
     /**

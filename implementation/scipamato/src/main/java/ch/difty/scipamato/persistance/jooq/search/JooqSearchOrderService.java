@@ -21,11 +21,11 @@ public class JooqSearchOrderService extends JooqEntityService<Long, SearchOrder,
     /** {@inheritDoc} */
     @Override
     @Transactional(readOnly = false)
-    public SearchCondition saveOrUpdateSearchCondition(SearchCondition searchCondition, long searchOrderId) {
+    public SearchCondition saveOrUpdateSearchCondition(final SearchCondition searchCondition, final long searchOrderId, final String languageCode) {
         if (searchCondition.getSearchConditionId() == null) {
-            return getRepository().addSearchCondition(searchCondition, searchOrderId);
+            return getRepository().addSearchCondition(searchCondition, searchOrderId, languageCode);
         } else {
-            return getRepository().updateSearchCondition(searchCondition, searchOrderId);
+            return getRepository().updateSearchCondition(searchCondition, searchOrderId, languageCode);
         }
     }
 

@@ -28,6 +28,7 @@ import ch.difty.scipamato.persistance.jooq.JooqEntityRepoTest;
 public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter> {
 
     private static final Long SAMPLE_ID = 3l;
+    private static final String LC = "de";
 
     private JooqSearchOrderRepo repo;
 
@@ -50,16 +51,16 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
     @Override
     protected JooqSearchOrderRepo getRepo() {
         if (repo == null) {
-            repo = new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(),
-                    getUpdateSetStepSetter());
+            repo = new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
+                    getApplicationProperties());
         }
         return repo;
     }
 
     @Override
     protected EntityRepository<SearchOrder, Long, SearchOrderFilter> makeRepoFindingEntityById(SearchOrder searchOrder) {
-        return new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(),
-                getUpdateSetStepSetter()) {
+        return new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
+                getApplicationProperties()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -143,58 +144,59 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
     @Test
     public void degenerateConstruction() {
         try {
-            new JooqSearchOrderRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter());
+            new JooqSearchOrderRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
+                    getApplicationProperties());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dsl must not be null.");
         }
         try {
-            new JooqSearchOrderRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter());
+            new JooqSearchOrderRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("mapper must not be null.");
         }
         try {
-            new JooqSearchOrderRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter());
+            new JooqSearchOrderRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("sortMapper must not be null.");
         }
         try {
-            new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), null, getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter());
+            new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), null, getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("filterConditionMapper must not be null.");
         }
         try {
-            new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null, getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter());
+            new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null, getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dateTimeService must not be null.");
         }
         try {
-            new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), null, getInsertSetStepSetter(), getUpdateSetStepSetter());
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("localization must not be null.");
-        }
-        try {
-            new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), null, getUpdateSetStepSetter());
+            new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), null, getUpdateSetStepSetter(), getApplicationProperties());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("insertSetStepSetter must not be null.");
         }
         try {
-            new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), null);
+            new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), null, getApplicationProperties());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("updateSetStepSetter must not be null.");
+        }
+        try {
+            new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("applicationProperties must not be null.");
         }
     }
 
     @Test
     public void enrichingAssociatedEntities_withNullEntity_doesNothing() {
-        repo.enrichAssociatedEntitiesOf(null);
+        repo.enrichAssociatedEntitiesOf(null, LC);
     }
 
     @Test
@@ -202,14 +204,14 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         SearchOrder so = new SearchOrder();
         assertThat(so.getId()).isNull();
 
-        repo.enrichAssociatedEntitiesOf(so);
+        repo.enrichAssociatedEntitiesOf(so, LC);
 
         assertThat(so.getSearchConditions()).isEmpty();
     }
 
     private JooqSearchOrderRepo makeRepoFindingNestedEntities() {
-        return new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(),
-                getUpdateSetStepSetter()) {
+        return new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
+                getApplicationProperties()) {
             private static final long serialVersionUID = 1L;
 
             SearchTerm st1 = SearchTerm.of(1, SearchTermType.STRING.getId(), 3, Paper.AUTHORS, "joss");
@@ -236,7 +238,7 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
             }
 
             @Override
-            protected List<Code> fetchCodesForSearchConditionWithId(SearchCondition searchCondition) {
+            protected List<Code> fetchCodesForSearchConditionWithId(SearchCondition searchCondition, String languageCode) {
                 return Arrays.asList(new Code("1F", "Code 1F", "", false, 1, "CC 1", "", 0));
             }
 
@@ -264,7 +266,7 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         so.setId(SAMPLE_ID);
         assertThat(so.getSearchConditions()).isEmpty();
 
-        repoSpy.enrichAssociatedEntitiesOf(so);
+        repoSpy.enrichAssociatedEntitiesOf(so, LC);
 
         assertThat(so.getSearchConditions()).hasSize(3);
 
@@ -292,7 +294,7 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         so.setId(SAMPLE_ID);
         assertThat(so.getExcludedPaperIds()).isEmpty();
 
-        repoSpy.enrichAssociatedEntitiesOf(so);
+        repoSpy.enrichAssociatedEntitiesOf(so, LC);
 
         assertThat(so.getExcludedPaperIds()).hasSize(3).containsExactly(17l, 33l, 42l);
     }

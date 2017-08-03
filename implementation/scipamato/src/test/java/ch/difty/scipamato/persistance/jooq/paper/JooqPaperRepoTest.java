@@ -36,6 +36,7 @@ import ch.difty.scipamato.persistance.jooq.paper.searchorder.PaperBackedSearchOr
 public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Long, ch.difty.scipamato.db.tables.Paper, PaperRecordMapper, PaperFilter> {
 
     private static final Long SAMPLE_ID = 3l;
+    private static final String LC = "de";
 
     private JooqPaperRepo repo;
 
@@ -80,16 +81,16 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     @Override
     protected JooqPaperRepo getRepo() {
         if (repo == null) {
-            repo = new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                    searchOrderRepositoryMock);
+            repo = new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
+                    searchOrderRepositoryMock, getApplicationProperties());
         }
         return repo;
     }
 
     @Override
     protected EntityRepository<Paper, Long, PaperFilter> makeRepoFindingEntityById(Paper paper) {
-        return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                searchOrderRepositoryMock) {
+        return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
+                searchOrderRepositoryMock, getApplicationProperties()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -100,12 +101,12 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     }
 
     protected PaperRepository makeRepoStubbingEnriching() {
-        return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                searchOrderRepositoryMock) {
+        return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
+                searchOrderRepositoryMock, getApplicationProperties()) {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void enrichAssociatedEntitiesOf(Paper entity) {
+            protected void enrichAssociatedEntitiesOf(Paper entity, String language) {
                 enrichtedEntities.add(entity);
             }
         };
@@ -188,60 +189,57 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     @Test
     public void degenerateConstruction() {
         try {
-            new JooqPaperRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                    searchOrderRepositoryMock);
+            new JooqPaperRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+                    getApplicationProperties());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dsl must not be null.");
         }
         try {
-            new JooqPaperRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                    searchOrderRepositoryMock);
+            new JooqPaperRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+                    getApplicationProperties());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("mapper must not be null.");
         }
         try {
-            new JooqPaperRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                    searchOrderRepositoryMock);
+            new JooqPaperRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+                    getApplicationProperties());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("sortMapper must not be null.");
         }
         try {
-            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), null, getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock);
+            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), null, getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+                    getApplicationProperties());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("filterConditionMapper must not be null.");
         }
         try {
-            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null, getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                    searchOrderRepositoryMock);
+            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null, getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+                    getApplicationProperties());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dateTimeService must not be null.");
         }
         try {
-            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), null, getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                    searchOrderRepositoryMock);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("localization must not be null.");
-        }
-        try {
-            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), null, getUpdateSetStepSetter(), searchOrderRepositoryMock);
+            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), null, getUpdateSetStepSetter(), searchOrderRepositoryMock,
+                    getApplicationProperties());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("insertSetStepSetter must not be null.");
         }
         try {
-            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), null, searchOrderRepositoryMock);
+            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), null, searchOrderRepositoryMock,
+                    getApplicationProperties());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("updateSetStepSetter must not be null.");
         }
         try {
-            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getLocalization(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null);
+            new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null,
+                    getApplicationProperties());
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchOrderRepository must not be null.");
@@ -282,7 +280,7 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     @Test
     public void findingBySearchOrder_delegatesToSearchOrderFinder() {
         when(searchOrderRepositoryMock.findBySearchOrder(searchOrderMock)).thenReturn(papers);
-        assertThat(makeRepoStubbingEnriching().findBySearchOrder(searchOrderMock)).containsExactly(paperMock, paperMock);
+        assertThat(makeRepoStubbingEnriching().findBySearchOrder(searchOrderMock, LC)).containsExactly(paperMock, paperMock);
         assertThat(enrichtedEntities).containsExactly(paperMock, paperMock);
         verify(searchOrderRepositoryMock).findBySearchOrder(searchOrderMock);
     }
@@ -297,29 +295,39 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     @Test
     public void findingPageBySearchOrder_delegatesToSearchOrderFinder() {
         when(searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(papers);
-        assertThat(makeRepoStubbingEnriching().findPageBySearchOrder(searchOrderMock, paginationContextMock)).containsExactly(paperMock, paperMock);
+        assertThat(makeRepoStubbingEnriching().findPageBySearchOrder(searchOrderMock, paginationContextMock, LC)).containsExactly(paperMock, paperMock);
         assertThat(enrichtedEntities).containsExactly(paperMock, paperMock);
         verify(searchOrderRepositoryMock).findPageBySearchOrder(searchOrderMock, paginationContextMock);
     }
 
     @Test
     public void gettingPapersByPmIds_withNoPmIds_returnsEmptyList() {
-        assertThat(repo.findByPmIds(new ArrayList<Integer>())).isEmpty();
+        assertThat(repo.findByPmIds(new ArrayList<Integer>(), LC)).isEmpty();
     }
 
     @Test
     public void gettingPapersByPmIds_withNullPmIds_returnsEmptyList() {
-        assertThat(repo.findByPmIds(null)).isEmpty();
+        assertThat(repo.findByPmIds(null, LC)).isEmpty();
     }
 
     @Test
     public void gettingPapersByPmNumbers_withNoNumbers_returnsEmptyList() {
-        assertThat(repo.findByNumbers(new ArrayList<Long>())).isEmpty();
+        assertThat(repo.findByNumbers(new ArrayList<Long>(), LC)).isEmpty();
     }
 
     @Test
     public void gettingPapersByPmNumbers_withNullNumbers_returnsEmptyList() {
-        assertThat(repo.findByNumbers(null)).isEmpty();
+        assertThat(repo.findByNumbers(null, LC)).isEmpty();
+    }
+
+    @Test
+    public void findingExistingPmIdsOutOf_withNoPmIds_returnsEmptyList() {
+        assertThat(repo.findExistingPmIdsOutOf(new ArrayList<Integer>())).isEmpty();
+    }
+
+    @Test
+    public void findingExistingPmIdsOutOf_withNullPmIds_returnsEmptyList() {
+        assertThat(repo.findExistingPmIdsOutOf(null)).isEmpty();
     }
 
     @SuppressWarnings("unchecked")
@@ -349,7 +357,7 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
 
         when(getMapper().map(persistedRecord)).thenReturn(paperMock);
 
-        final List<Paper> papers = repo.findPageByFilter(filterMock, paginationContextMock);
+        final List<Paper> papers = repo.findPageByFilter(filterMock, paginationContextMock, LC);
         assertThat(papers).isEmpty();
 
         verify(getFilterConditionMapper()).map(filterMock);

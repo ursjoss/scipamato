@@ -33,7 +33,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 
 public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPanel<T>> extends PanelTest<P> {
 
-    private static final String LOCALE = "de";
+    private static final String LOCALE = "en_us";
 
     @MockBean
     private CodeClassService codeClassServiceMock;

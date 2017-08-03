@@ -102,8 +102,9 @@ public class ResultPanel extends AbstractPanel<Void> {
 
     private void onTitleClick(IModel<PaperSlim> m) {
         ScipamatoSession.get().getPaperIdManager().setFocusToItem(m.getObject().getId());
-        setResponsePage(new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject().getNumber()).orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
-                dataProvider.isShowExcluded()));
+        String languageCode = ScipamatoSession.get().getLocale().getLanguage();
+        setResponsePage(new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject().getNumber(), languageCode).orElse(new Paper())), getPage().getPageReference(),
+                dataProvider.getSearchOrderId(), dataProvider.isShowExcluded()));
     }
 
     private PropertyColumn<PaperSlim, String> makePropertyColumn(String propExpression) {

@@ -197,9 +197,24 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     protected void testSpecificNullCheck() {
     }
 
-    @Test(expected = NullArgumentException.class)
-    public void addingNull_throws() {
-        repo.add(null);
+    @Test
+    public void addingNullEntity_throws() {
+        try {
+            repo.add(null, "de");
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("entity must not be null.");
+        }
+    }
+
+    @Test
+    public void addingNullLanguageCode_throws() {
+        try {
+            repo.add(getUnpersistedEntity(), null);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("languageCode must not be null.");
+        }
     }
 
     @Test(expected = NullArgumentException.class)
@@ -253,16 +268,31 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
         verify(deleteConditionStep2Mock).execute();
     }
 
-    @Test(expected = NullArgumentException.class)
+    @Test
     public void updating_withEntityNull_throws() {
-        repo.update(null);
+        try {
+            repo.update(null, "de");
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("entity must not be null.");
+        }
+    }
+
+    @Test
+    public void updating_withLanguageCodeNull_throws() {
+        try {
+            repo.update(getPersistedEntity(), null);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("languageCode must not be null.");
+        }
     }
 
     @Test
     public void updating_withEntityIdNull_throws() {
         expectUnpersistedEntityIdNull();
         try {
-            repo.update(getUnpersistedEntity());
+            repo.update(getUnpersistedEntity(), "de");
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("entity.id must not be null.");

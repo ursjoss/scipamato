@@ -22,6 +22,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import ch.difty.scipamato.ScipamatoSession;
 import ch.difty.scipamato.config.ApplicationProperties;
 import ch.difty.scipamato.entity.User;
 import ch.difty.scipamato.lib.DateTimeService;
@@ -189,4 +190,7 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         return (User) getAuthentication().getPrincipal();
     }
 
+    protected String getLanguageCode() {
+        return ScipamatoSession.get().getLocale().getLanguage();
+    }
 }

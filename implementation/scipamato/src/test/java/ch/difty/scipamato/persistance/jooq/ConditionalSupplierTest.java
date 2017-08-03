@@ -47,7 +47,7 @@ public class ConditionalSupplierTest {
         cs.add(() -> DSL.field("baz").eq(DSL.value("boo")));
         c = cs.combineWithAnd();
         assertThat(c.toString()).isEqualTo(
-            // @formatter:off
+        // @formatter:off
             "(\n" +
             "  foo = 'bar'\n" +
             "  and baz = 'boo'\n" +
@@ -81,7 +81,7 @@ public class ConditionalSupplierTest {
         cs.add(() -> DSL.field("baz").eq(DSL.value("boo")));
         c = cs.combineWithOr();
         assertThat(c.toString()).isEqualTo(
-            // @formatter:off
+        // @formatter:off
             "(\n" +
             "  foo = 'bar'\n" +
             "  or baz = 'boo'\n" +

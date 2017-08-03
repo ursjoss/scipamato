@@ -62,14 +62,14 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
     @Override
     protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> getRepo() {
         if (repo == null) {
-            repo = new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), searchOrderRepositoryMock);
+            repo = new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), searchOrderRepositoryMock, getApplicationProperties());
         }
         return repo;
     }
 
     @Override
     protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> makeRepoFindingEntityById(PaperSlim entity) {
-        return new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getLocalization(), searchOrderRepositoryMock) {
+        return new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), searchOrderRepositoryMock, getApplicationProperties()) {
             private static final long serialVersionUID = 1L;
 
             @Override

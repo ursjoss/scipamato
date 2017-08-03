@@ -80,7 +80,7 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
 
         getTester().assertRenderedPage(PaperSearchPage.class);
 
-        verify(searchOrderServiceMock).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID);
+        verify(searchOrderServiceMock).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID, "en_us");
         verify(searchOrderServiceMock).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
     }
 
