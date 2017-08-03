@@ -38,7 +38,14 @@ public class PaperSlimBySearchOrderProviderTest extends AbstractPaperSlimProvide
 
     @Override
     protected PaperSlimBySearchOrderProvider newProvider() {
-        return new PaperSlimBySearchOrderProvider(getFilter(), PAGE_SIZE);
+        return new PaperSlimBySearchOrderProvider(getFilter(), PAGE_SIZE) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected String getLanguageCode() {
+                return LC;
+            }
+        };
     }
 
     @Override
