@@ -9,6 +9,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import ch.difty.scipamato.ScipamatoSession;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.PaperSlimFilter;
 import ch.difty.scipamato.entity.projection.PaperSlim;
@@ -154,5 +155,9 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> exten
      * Override if needed
      */
     public void setShowExcluded(boolean showExcluded) {
+    }
+
+    protected String getLanguageCode() {
+        return ScipamatoSession.get().getLocale().getLanguage();
     }
 }

@@ -49,7 +49,7 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
     /** {@inheritDoc} */
     @Override
     protected List<Paper> findAll(final Direction dir, final String sortProp) {
-        return getPaperService().findPageBySearchOrder(getFilterState(), new PaginationRequest(dir, sortProp));
+        return getPaperService().findPageBySearchOrder(getFilterState(), new PaginationRequest(dir, sortProp), getLanguageCode());
     }
 
     @Override

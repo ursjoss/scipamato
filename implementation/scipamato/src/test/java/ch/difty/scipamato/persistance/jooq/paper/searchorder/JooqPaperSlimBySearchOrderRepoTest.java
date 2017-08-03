@@ -95,7 +95,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
 
         Condition cond = finder.getConditionsFrom(searchOrder);
         assertThat(cond.toString()).isEqualToIgnoringCase(
-            // @formatter:off
+        // @formatter:off
             "\"public\".\"paper\".\"id\" in (\n" +
             "  select \"public\".\"paper\".\"id\"\n" +
             "  from \"public\".\"paper\"\n" +
@@ -186,7 +186,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
 
         Condition cond = finder.getConditionsFrom(searchOrder);
         assertThat(cond.toString()).isEqualToIgnoringCase(
-            // @formatter:off
+        // @formatter:off
             "(\n" +
             "  (\n" +
             "    (\n" +

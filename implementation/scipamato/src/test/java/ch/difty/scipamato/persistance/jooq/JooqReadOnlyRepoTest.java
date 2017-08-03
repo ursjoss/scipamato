@@ -30,12 +30,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import ch.difty.scipamato.config.ApplicationProperties;
 import ch.difty.scipamato.entity.IdScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.paging.Sort;
-import ch.difty.scipamato.service.Localization;
 
 @RunWith(MockitoJUnitRunner.class)
 public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipamatoEntity<ID>, ID extends Number, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter> {
@@ -51,8 +51,6 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     private DSLContext dslMock;
     @Mock
     private GenericFilterConditionMapper<F> filterConditionMapperMock;
-    @Mock
-    private Localization localizationMock;
     @Mock
     private R unpersistedRecord;
     @Mock
@@ -80,6 +78,9 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     @Mock
     private Condition conditionMock;
 
+    @Mock
+    private ApplicationProperties applicationPropertiesMock;
+
     private F filterMock = getFilter();
 
     protected DSLContext getDsl() {
@@ -88,10 +89,6 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
 
     protected GenericFilterConditionMapper<F> getFilterConditionMapper() {
         return filterConditionMapperMock;
-    }
-
-    protected Localization getLocalization() {
-        return localizationMock;
     }
 
     protected JooqSortMapper<R, T, TI> getSortMapper() {
@@ -151,6 +148,10 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
 
     protected abstract F getFilter();
 
+    protected ApplicationProperties getApplicationProperties() {
+        return applicationPropertiesMock;
+    }
+
     @Before
     public final void setUp() {
         repo = getRepo();
@@ -163,7 +164,6 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
 
         when(dslMock.selectFrom(getTable())).thenReturn(selectWhereStepMock);
 
-        when(localizationMock.getLocalization()).thenReturn("de");
         when(selectWhereStepMock.fetchInto(getEntityClass())).thenReturn(entities);
         when(selectWhereStepMock.where(getTableId().equal(id))).thenReturn(selectConditionStepMock);
 
@@ -181,11 +181,12 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     public final void tearDown() {
         specificTearDown();
         verifyNoMoreInteractions(dslMock, getMapper(), sortMapperMock);
-        verifyNoMoreInteractions(getUnpersistedEntity(), getPersistedEntity(), unpersistedRecord, getPersistedRecord(), localizationMock);
+        verifyNoMoreInteractions(getUnpersistedEntity(), getPersistedEntity(), unpersistedRecord, getPersistedRecord());
         verifyNoMoreInteractions(selectWhereStepMock, selectConditionStepMock);
         verifyNoMoreInteractions(selectSelectStepMock, selectJoinStepMock);
         verifyNoMoreInteractions(paginationContextMock, sortMock, sortFieldsMock, selectSeekStepNMock);
         verifyNoMoreInteractions(getFilter(), conditionMock);
+        verifyNoMoreInteractions(getApplicationProperties());
     }
 
     protected void specificTearDown() {
@@ -197,7 +198,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
         assertThat(getDsl()).isNotNull();
         assertThat(getMapper()).isNotNull();
         assertThat(getSortMapper()).isNotNull();
-        assertThat(getLocalization()).isNotNull();
+        assertThat(getApplicationProperties()).isNotNull();
 
         specificNullCheck();
     }
@@ -207,7 +208,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
 
     @Test(expected = NullArgumentException.class)
     public void findingByIdNull_throws() {
-        repo.findById(null);
+        repo.findById(null, "en");
     }
 
     @Test

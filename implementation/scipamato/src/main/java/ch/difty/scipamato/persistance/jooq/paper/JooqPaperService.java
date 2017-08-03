@@ -31,14 +31,14 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     /** {@inheritDoc} */
     @Override
-    public List<Paper> findBySearchOrder(final SearchOrder searchOrder) {
-        return getRepository().findBySearchOrder(searchOrder);
+    public List<Paper> findBySearchOrder(final SearchOrder searchOrder, final String languageCode) {
+        return getRepository().findBySearchOrder(searchOrder, languageCode);
     }
 
     /** {@inheritDoc} */
     @Override
-    public List<Paper> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext paginationContext) {
-        return getRepository().findPageBySearchOrder(searchOrder, paginationContext);
+    public List<Paper> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext paginationContext, final String languageCode) {
+        return getRepository().findPageBySearchOrder(searchOrder, paginationContext, languageCode);
     }
 
     /** {@inheritDoc} */
@@ -54,7 +54,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         final ServiceResult sr = new DefaultServiceResult();
         final List<Integer> pmIdCandidates = articles.stream().map(PubmedArticleFacade::getPmId).filter(Objects::nonNull).map(Integer::valueOf).collect(Collectors.toList());
         if (!pmIdCandidates.isEmpty()) {
-            final List<String> existingPmIds = getRepository().findByPmIds(pmIdCandidates).stream().map(Paper::getPmId).map(String::valueOf).collect(Collectors.toList());
+            final List<String> existingPmIds = getRepository().findExistingPmIdsOutOf(pmIdCandidates).stream().map(String::valueOf).collect(Collectors.toList());
             final List<Paper> savedPapers = articles.stream()
                     .filter(a -> a.getPmId() != null && !existingPmIds.contains(a.getPmId()))
                     .map((PubmedArticleFacade a) -> this.savePubmedArticle(a, minimumNumber))
@@ -86,8 +86,8 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     /** {@inheritDoc} */
     @Override
-    public Optional<Paper> findByNumber(Long number) {
-        List<Paper> papers = getRepository().findByNumbers(Arrays.asList(number));
+    public Optional<Paper> findByNumber(Long number, final String languageCode) {
+        List<Paper> papers = getRepository().findByNumbers(Arrays.asList(number), languageCode);
         if (!papers.isEmpty()) {
             Paper paper = papers.get(0);
 

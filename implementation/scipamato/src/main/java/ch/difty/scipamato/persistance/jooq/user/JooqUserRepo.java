@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.auth.Role;
+import ch.difty.scipamato.config.ApplicationProperties;
 import ch.difty.scipamato.db.tables.records.ScipamatoUserRecord;
 import ch.difty.scipamato.db.tables.records.UserRoleRecord;
 import ch.difty.scipamato.entity.User;
@@ -26,7 +27,6 @@ import ch.difty.scipamato.persistance.jooq.InsertSetStepSetter;
 import ch.difty.scipamato.persistance.jooq.JooqEntityRepo;
 import ch.difty.scipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.scipamato.persistance.jooq.UpdateSetStepSetter;
-import ch.difty.scipamato.service.Localization;
 
 /**
  * The repository to manage {@link User}s - including the nested list of {@link Roles}s.
@@ -42,9 +42,9 @@ public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Inte
 
     @Autowired
     public JooqUserRepo(DSLContext dsl, UserRecordMapper mapper, JooqSortMapper<ScipamatoUserRecord, User, ch.difty.scipamato.db.tables.ScipamatoUser> sortMapper,
-            GenericFilterConditionMapper<UserFilter> filterConditionMapper, DateTimeService dateTimeService, Localization localization,
-            InsertSetStepSetter<ScipamatoUserRecord, User> insertSetStepSetter, UpdateSetStepSetter<ScipamatoUserRecord, User> updateSetStepSetter) {
-        super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, localization, insertSetStepSetter, updateSetStepSetter);
+            GenericFilterConditionMapper<UserFilter> filterConditionMapper, DateTimeService dateTimeService, InsertSetStepSetter<ScipamatoUserRecord, User> insertSetStepSetter,
+            UpdateSetStepSetter<ScipamatoUserRecord, User> updateSetStepSetter, ApplicationProperties applicationProperties) {
+        super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter, applicationProperties);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Inte
     }
 
     @Override
-    protected void enrichAssociatedEntitiesOf(User entity) {
+    protected void enrichAssociatedEntitiesOf(User entity, String languageCode) {
         if (entity != null) {
             final List<Role> roles = getDsl().select(USER_ROLE.ROLE_ID).from(USER_ROLE).where(USER_ROLE.USER_ID.eq(entity.getId())).fetch().map(rec -> Role.of((Integer) rec.getValue(0)));
             if (CollectionUtils.isNotEmpty(roles)) {
@@ -98,12 +98,12 @@ public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Inte
     }
 
     @Override
-    protected void saveAssociatedEntitiesOf(User user) {
+    protected void saveAssociatedEntitiesOf(User user, String languageCode) {
         storeNewRolesOf(user);
     }
 
     @Override
-    protected void updateAssociatedEntities(User user) {
+    protected void updateAssociatedEntities(User user, String languageCode) {
         storeNewRolesOf(user);
         deleteObsoleteRolesFrom(user);
     }
@@ -130,7 +130,7 @@ public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Inte
             return null;
         } else {
             User user = users.get(0);
-            enrichAssociatedEntitiesOf(user);
+            enrichAssociatedEntitiesOf(user, null);
             return user;
         }
     }

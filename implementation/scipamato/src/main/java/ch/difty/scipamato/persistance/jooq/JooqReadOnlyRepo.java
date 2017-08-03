@@ -13,11 +13,11 @@ import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
 import org.springframework.context.annotation.Profile;
 
+import ch.difty.scipamato.config.ApplicationProperties;
 import ch.difty.scipamato.entity.ScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.paging.PaginationContext;
-import ch.difty.scipamato.service.Localization;
 
 /**
  * The generic jOOQ entity repository for read-only data retrieval.
@@ -41,21 +41,23 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends ScipamatoEnti
     private final M mapper;
     private final JooqSortMapper<R, T, TI> sortMapper;
     private final GenericFilterConditionMapper<F> filterConditionMapper;
-    private final Localization localization;
+    private final ApplicationProperties applicationProperties;
 
     /**
      * @param dsl the {@link DSLContext}
      * @param mapper record mapper mapping record {@code R} into entity {@code T}
      * @param sortMapper {@link JooqSortMapper} mapping spring data sort specifications into jOOQ specific sort specs
      * @param filterConditionMapper the {@link GenericFilterConditionMapper} mapping a derivative of {@link ScipamatoFilter} into jOOC {@link Condition}s
-     * @param localization {@link Localization} bean providing the information about the requested localization code.
+     * @param applicationProperties.
      */
-    protected JooqReadOnlyRepo(final DSLContext dsl, final M mapper, final JooqSortMapper<R, T, TI> sortMapper, GenericFilterConditionMapper<F> filterConditionMapper, Localization localization) {
+    protected JooqReadOnlyRepo(final DSLContext dsl, final M mapper, final JooqSortMapper<R, T, TI> sortMapper, GenericFilterConditionMapper<F> filterConditionMapper,
+            ApplicationProperties applicationProperties) {
         this.dsl = AssertAs.notNull(dsl, "dsl");
         this.mapper = AssertAs.notNull(mapper, "mapper");
         this.sortMapper = AssertAs.notNull(sortMapper, "sortMapper");
         this.filterConditionMapper = AssertAs.notNull(filterConditionMapper, "filterConditionMapper");
-        this.localization = AssertAs.notNull(localization, "localization");
+        this.applicationProperties = AssertAs.notNull(applicationProperties, "applicationProperties");
+
     }
 
     protected DSLContext getDsl() {
@@ -70,8 +72,8 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends ScipamatoEnti
         return sortMapper;
     }
 
-    protected Localization getLocalization() {
-        return localization;
+    protected ApplicationProperties getApplicationProperties() {
+        return applicationProperties;
     }
 
     /**
@@ -99,40 +101,59 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends ScipamatoEnti
     /** {@inheritDoc} */
     @Override
     public List<T> findAll() {
+        return findAll(getApplicationProperties().getDefaultLocalization());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public List<T> findAll(String languageCode) {
         final List<T> entities = getDsl().selectFrom(getTable()).fetchInto(getEntityClass());
-        enrichAssociatedEntitiesOfAll(entities);
+        enrichAssociatedEntitiesOfAll(entities, languageCode);
         return entities;
     }
 
-    protected void enrichAssociatedEntitiesOfAll(final List<T> entities) {
+    protected void enrichAssociatedEntitiesOfAll(final List<T> entities, final String languageCode) {
         for (final T e : entities) {
-            enrichAssociatedEntitiesOf(e);
+            enrichAssociatedEntitiesOf(e, languageCode);
         }
     }
 
     /** {@inheritDoc} */
     @Override
     public T findById(final ID id) {
+        return findById(id, getApplicationProperties().getDefaultLocalization());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public T findById(final ID id, final String languageCode) {
         AssertAs.notNull(id, "id");
         T entity = getDsl().selectFrom(getTable()).where(getTableId().equal(id)).fetchOneInto(getEntityClass());
-        enrichAssociatedEntitiesOf(entity);
+        enrichAssociatedEntitiesOf(entity, languageCode);
         return entity;
     }
 
     /** {@inheritDoc} */
     @Override
     public T findById(final ID id, final int version) {
+        return findById(id, version, getApplicationProperties().getDefaultLocalization());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public T findById(final ID id, final int version, String languageCode) {
         AssertAs.notNull(id, "id");
         T entity = getDsl().selectFrom(getTable()).where(getTableId().equal(id)).and(getRecordVersion().equal(version)).fetchOneInto(getEntityClass());
-        enrichAssociatedEntitiesOf(entity);
+        enrichAssociatedEntitiesOf(entity, languageCode);
         return entity;
     }
 
     /**
      * Implement if associated entities need separate saving.
      * @param entity entity of type {@code T} with sub entities to be enriched.
+     * @param languageCode
      */
-    protected void enrichAssociatedEntitiesOf(final T entity) {
+    protected void enrichAssociatedEntitiesOf(final T entity, final String languageCode) {
     }
 
     /** {@inheritDoc} */
@@ -145,17 +166,24 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends ScipamatoEnti
     /** {@inheritDoc} */
     @Override
     public List<T> findPageByFilter(final F filter, final PaginationContext pc) {
+        return findPageByFilter(filter, pc, getApplicationProperties().getDefaultLocalization());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public List<T> findPageByFilter(final F filter, final PaginationContext pc, final String languageCode) {
         final Condition conditions = filterConditionMapper.map(filter);
         final Collection<SortField<T>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
         final List<R> tuples = getDsl().selectFrom(getTable()).where(conditions).orderBy(sortCriteria).limit(pc.getPageSize()).offset(pc.getOffset()).fetchInto(getRecordClass());
 
         final List<T> entities = tuples.stream().map(getMapper()::map).collect(Collectors.toList());
 
-        enrichAssociatedEntitiesOfAll(entities);
+        enrichAssociatedEntitiesOfAll(entities, languageCode);
 
         return entities;
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<ID> findPageOfIdsByFilter(final F filter, final PaginationContext pc) {
         final Condition conditions = filterConditionMapper.map(filter);

@@ -11,9 +11,9 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import ch.difty.scipamato.ScipamatoSession;
 import ch.difty.scipamato.config.ApplicationProperties;
 import ch.difty.scipamato.entity.User;
-import ch.difty.scipamato.service.Localization;
 import ch.difty.scipamato.web.WicketUtils;
 import ch.difty.scipamato.web.pages.Mode;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
@@ -28,9 +28,6 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
 
     private final Mode mode;
     private final String submitLinkResourceLabel;
-
-    @SpringBean
-    private Localization localization;
 
     @SpringBean
     private ApplicationProperties properties;
@@ -83,8 +80,8 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
         return mode == Mode.VIEW;
     }
 
-    protected Localization getLocalization() {
-        return localization;
+    protected String getLocalization() {
+        return ScipamatoSession.get().getLocale().getLanguage();
     }
 
     protected void queueFieldAndLabel(FormComponent<?> field, Optional<PropertyValidator<?>> pv) {

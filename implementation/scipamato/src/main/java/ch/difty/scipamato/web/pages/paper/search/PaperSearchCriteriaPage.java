@@ -51,7 +51,7 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
 
             @Override
             protected void onFormSubmit() {
-                searchOrderService.saveOrUpdateSearchCondition(getModelObject(), getSearchOrderId());
+                searchOrderService.saveOrUpdateSearchCondition(getModelObject(), getSearchOrderId(), getLanguageCode());
                 setResponsePage(new PaperSearchPage(getPageParameters()));
             }
         };
