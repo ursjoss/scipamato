@@ -30,7 +30,7 @@ public interface ReadOnlyRepository<T extends ScipamatoEntity, ID, F extends Sci
     /**
      * Finds all persisted entities.
      *
-     * @param languageCode, required for some repos only.
+     * @param languageCode required for some repos only.
      * @return list of all entities {@code T}
      */
     List<T> findAll(String languageCode);
@@ -49,7 +49,7 @@ public interface ReadOnlyRepository<T extends ScipamatoEntity, ID, F extends Sci
      * Finds the persistent entities {@code T} with the provided id.
      *
      * @param id - must not be null
-     * @param languageCode, required for some repos only.
+     * @param languageCode required for some repos only.
      * @return the persisted entity {@code T} or null if it can't be found.
      * @throws NullArgumentException if the id is null.
      */
@@ -75,7 +75,7 @@ public interface ReadOnlyRepository<T extends ScipamatoEntity, ID, F extends Sci
      *     the database id  - must not be null
      * @param version
      *     the record version - implementing optimistic locking
-     * @param languageCode, required for some repos only.
+     * @param languageCode required for some repos only.
      * @return the persisted entity {@code T} or null if it can't be found.
      * @throws NullArgumentException if the id is null.
      */
@@ -96,7 +96,7 @@ public interface ReadOnlyRepository<T extends ScipamatoEntity, ID, F extends Sci
      *
      * @param filter of type {@code F}
      * @param paginationContext {@link PaginationContext}
-     * @param languageCode, required for some repos only.
+     * @param languageCode required for some repos only.
      * @return list of all matching entities {@code T}
      */
     List<T> findPageByFilter(F filter, PaginationContext paginationContext, String languageCode);

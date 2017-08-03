@@ -48,7 +48,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends ScipamatoEnti
      * @param mapper record mapper mapping record {@code R} into entity {@code T}
      * @param sortMapper {@link JooqSortMapper} mapping spring data sort specifications into jOOQ specific sort specs
      * @param filterConditionMapper the {@link GenericFilterConditionMapper} mapping a derivative of {@link ScipamatoFilter} into jOOC {@link Condition}s
-     * @param applicationProperties.
+     * @param applicationProperties
      */
     protected JooqReadOnlyRepo(final DSLContext dsl, final M mapper, final JooqSortMapper<R, T, TI> sortMapper, GenericFilterConditionMapper<F> filterConditionMapper,
             ApplicationProperties applicationProperties) {
