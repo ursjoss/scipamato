@@ -49,6 +49,8 @@ import ch.difty.scipamato.persistance.jooq.paper.searchorder.PaperBackedSearchOr
 @Repository
 public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.difty.scipamato.db.tables.Paper, PaperRecordMapper, PaperFilter> implements PaperRepository {
 
+    private static final String LANGUAGE_CODE = "languageCode";
+
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JooqPaperRepo.class);
@@ -192,7 +194,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     /** {@inheritDoc} */
     @Override
     public List<Paper> findWithCodesByIds(final List<Long> ids, final String languageCode) {
-        AssertAs.notNull(languageCode, "languageCode");
+        AssertAs.notNull(languageCode, LANGUAGE_CODE);
         final List<Paper> papers = findByIds(ids);
         enrichAssociatedEntitiesOfAll(papers, languageCode);
         return papers;
@@ -201,7 +203,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     /** {@inheritDoc} */
     @Override
     public List<Paper> findBySearchOrder(final SearchOrder searchOrder, final String languageCode) {
-        AssertAs.notNull(languageCode, "languageCode");
+        AssertAs.notNull(languageCode, LANGUAGE_CODE);
         List<Paper> papers = searchOrderRepository.findBySearchOrder(searchOrder);
         enrichAssociatedEntitiesOfAll(papers, languageCode);
         return papers;
@@ -210,7 +212,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     /** {@inheritDoc} */
     @Override
     public List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext, final String languageCode) {
-        AssertAs.notNull(languageCode, "languageCode");
+        AssertAs.notNull(languageCode, LANGUAGE_CODE);
         final List<Paper> entities = searchOrderRepository.findPageBySearchOrder(searchOrder, paginationContext);
         enrichAssociatedEntitiesOfAll(entities, languageCode);
         return entities;
@@ -228,7 +230,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
         if (pmIds == null || pmIds.isEmpty())
             return new ArrayList<>();
         else {
-            AssertAs.notNull(languageCode, "languageCode");
+            AssertAs.notNull(languageCode, LANGUAGE_CODE);
             List<Paper> papers = getDsl().selectFrom(PAPER).where(PAPER.PM_ID.in(pmIds)).fetchInto(Paper.class);
             enrichAssociatedEntitiesOfAll(papers, languageCode);
             return papers;
@@ -251,7 +253,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
         if (numbers == null || numbers.isEmpty())
             return new ArrayList<>();
         else {
-            AssertAs.notNull(languageCode, "languageCode");
+            AssertAs.notNull(languageCode, LANGUAGE_CODE);
             List<Paper> papers = getDsl().selectFrom(PAPER).where(PAPER.NUMBER.in(numbers)).fetchInto(Paper.class);
             enrichAssociatedEntitiesOfAll(papers, languageCode);
             return papers;
