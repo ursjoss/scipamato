@@ -22,7 +22,7 @@
         <heap unit="entries">1000</heap>
     </cache>
 
-    <cache alias="usersByName">
+    <cache alias="userByName">
         <expiry>
             <ttl unit="hours">4</ttl>
         </expiry>

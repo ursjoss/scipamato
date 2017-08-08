@@ -3,6 +3,7 @@ package ch.difty.scipamato.persistance.jooq.user;
 import static ch.difty.scipamato.db.tables.ScipamatoUser.SCIPAMATO_USER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -22,6 +23,9 @@ public class JooqUserRepoTest extends JooqEntityRepoTest<ScipamatoUserRecord, Us
 
     private JooqUserRepo repo;
 
+    @Mock
+    private UserRoleRepository userRoleRepoMock;
+
     @Override
     protected Integer getSampleId() {
         return SAMPLE_ID;
@@ -31,7 +35,7 @@ public class JooqUserRepoTest extends JooqEntityRepoTest<ScipamatoUserRecord, Us
     protected JooqUserRepo getRepo() {
         if (repo == null) {
             repo = new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                    getApplicationProperties());
+                    getApplicationProperties(), userRoleRepoMock);
         }
         return repo;
     }
@@ -39,7 +43,7 @@ public class JooqUserRepoTest extends JooqEntityRepoTest<ScipamatoUserRecord, Us
     @Override
     protected EntityRepository<User, Integer, UserFilter> makeRepoFindingEntityById(User user) {
         return new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                getApplicationProperties()) {
+                getApplicationProperties(), userRoleRepoMock) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -135,53 +139,88 @@ public class JooqUserRepoTest extends JooqEntityRepoTest<ScipamatoUserRecord, Us
     @Test
     public void degenerateConstruction() {
         try {
-            new JooqUserRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties());
+            new JooqUserRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(),
+                    userRoleRepoMock);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dsl must not be null.");
         }
         try {
-            new JooqUserRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties());
+            new JooqUserRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(),
+                    userRoleRepoMock);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("mapper must not be null.");
         }
         try {
-            new JooqUserRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties());
+            new JooqUserRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(),
+                    userRoleRepoMock);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("sortMapper must not be null.");
         }
         try {
-            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), null, getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties());
+            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), null, getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(), userRoleRepoMock);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("filterConditionMapper must not be null.");
         }
         try {
-            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null, getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties());
+            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null, getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(),
+                    userRoleRepoMock);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dateTimeService must not be null.");
         }
         try {
-            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), null, getUpdateSetStepSetter(), getApplicationProperties());
+            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), null, getUpdateSetStepSetter(), getApplicationProperties(), userRoleRepoMock);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("insertSetStepSetter must not be null.");
         }
         try {
-            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), null, getApplicationProperties());
+            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), null, getApplicationProperties(), userRoleRepoMock);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("updateSetStepSetter must not be null.");
         }
         try {
-            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null);
+            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null, userRoleRepoMock);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("applicationProperties must not be null.");
         }
+        try {
+            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(),
+                    null);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("userRoleRepo must not be null.");
+        }
     }
 
+    @Test
+    @Override
+    public void updating_withLanguageCodeNull_throws() {
+        try {
+            getRepo().update(getPersistedEntity(), null);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("languageCode must not be null.");
+            verify(getPersistedEntity(), times(1)).getId();
+        }
+    }
+
+    @Test
+    @Override
+    public void updating_withEntityIdNull_throws() {
+        expectUnpersistedEntityIdNull();
+        try {
+            repo.update(getUnpersistedEntity(), "de");
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("entity.id must not be null.");
+        }
+        verify(getUnpersistedEntity(), times(2)).getId();
+    }
 }
