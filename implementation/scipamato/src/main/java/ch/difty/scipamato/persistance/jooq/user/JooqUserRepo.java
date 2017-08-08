@@ -6,6 +6,8 @@ import static ch.difty.scipamato.db.tables.UserRole.USER_ROLE;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.cache.annotation.CacheResult;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.jooq.DSLContext;
@@ -90,11 +92,17 @@ public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Inte
     @Override
     protected void enrichAssociatedEntitiesOf(User entity, String languageCode) {
         if (entity != null) {
-            final List<Role> roles = getDsl().select(USER_ROLE.ROLE_ID).from(USER_ROLE).where(USER_ROLE.USER_ID.eq(entity.getId())).fetch().map(rec -> Role.of((Integer) rec.getValue(0)));
+            final List<Role> roles = findRolesByName(entity);
             if (CollectionUtils.isNotEmpty(roles)) {
                 entity.setRoles(roles);
             }
         }
+    }
+
+    @Override
+    @CacheResult(cacheName = "userRolesByUserId")
+    public List<Role> findRolesByName(User entity) {
+        return getDsl().select(USER_ROLE.ROLE_ID).from(USER_ROLE).where(USER_ROLE.USER_ID.eq(entity.getId())).fetch().map(rec -> Role.of((Integer) rec.getValue(0)));
     }
 
     @Override
@@ -124,6 +132,7 @@ public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Inte
 
     /** {@inheritDoc} */
     @Override
+    @CacheResult(cacheName = "usersByName")
     public User findByUserName(String userName) {
         final List<User> users = getDsl().selectFrom(SCIPAMATO_USER).where(SCIPAMATO_USER.USER_NAME.eq(userName)).fetchInto(User.class);
         if (users.isEmpty()) {
