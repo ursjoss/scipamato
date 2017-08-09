@@ -173,8 +173,19 @@
             <version>${flyway.version}</version><!--$NO-MVN-MAN-VER$ -->
         </dependency>
 
-
-
+        <!-- Caching: JCache with ehcache as cache provider -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+        </dependency>
 
         <!-- Spring boot admin starter client - Lacking configuration -->
         <dependency>

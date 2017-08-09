@@ -7,12 +7,14 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication;
 
 @SpringBootApplication
 @EnableFeignClients
+@EnableCaching
 public class ScipamatoApplication extends WicketBootSecuredWebApplication {
 
     public static void main(String[] args) {
