@@ -22,6 +22,8 @@ TODO
   * [HikariCP](https://github.com/brettwooldridge/HikariCP)
   * [PostgreSQL](https://www.postgresql.org/)
   * [Flyway](https://flywaydb.org/) for database migrations
+* Caching
+  * JCache with EHCache3
   
 # User Documentation
 
