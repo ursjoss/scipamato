@@ -23,7 +23,7 @@ TODO
   * [PostgreSQL](https://www.postgresql.org/)
   * [Flyway](https://flywaydb.org/) for database migrations
 * Caching
-  * JCache with EHCache3
+  * JCache with [Ehcache3](http://www.ehcache.org/)
   
 # User Documentation
 
