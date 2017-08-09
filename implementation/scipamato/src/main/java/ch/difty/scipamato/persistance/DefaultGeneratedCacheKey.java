@@ -10,7 +10,7 @@ import ch.difty.scipamato.lib.AssertAs;
 public class DefaultGeneratedCacheKey implements GeneratedCacheKey {
     private static final long serialVersionUID = 1L;
 
-    private final Object values[];
+    private final Object[] values;
     private final int hashCode;
 
     public DefaultGeneratedCacheKey(final Object[] keyValues) {
@@ -38,9 +38,7 @@ public class DefaultGeneratedCacheKey implements GeneratedCacheKey {
             return false;
 
         final DefaultGeneratedCacheKey other = (DefaultGeneratedCacheKey) obj;
-        if (Arrays.deepEquals(this.values, other.values))
-            return true;
-        return false;
+        return Arrays.deepEquals(this.values, other.values);
     }
 
     @Override
