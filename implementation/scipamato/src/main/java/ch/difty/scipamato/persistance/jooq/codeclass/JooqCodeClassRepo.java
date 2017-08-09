@@ -5,19 +5,18 @@ import static ch.difty.scipamato.db.tables.CodeClassTr.CODE_CLASS_TR;
 
 import java.util.List;
 
-import javax.cache.annotation.CacheDefaults;
-import javax.cache.annotation.CacheResult;
-
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.entity.CodeClass;
 import ch.difty.scipamato.lib.TranslationUtils;
 
 @Repository
-@CacheDefaults(cacheName = "codeClasses")
+@CacheConfig(cacheNames = "codeClasses")
 public class JooqCodeClassRepo implements CodeClassRepository {
 
     private final DSLContext dslContext;
@@ -29,7 +28,7 @@ public class JooqCodeClassRepo implements CodeClassRepository {
 
     /** {@inheritDoc} */
     @Override
-    @CacheResult
+    @Cacheable
     public List<CodeClass> find(final String languageCode) {
         final String lang = TranslationUtils.trimLanguageCode(languageCode);
         // @formatter:off

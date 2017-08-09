@@ -38,17 +38,4 @@ public interface UserRoleRepository extends Serializable {
      */
     void deleteAllRolesExcept(Integer userId, List<Integer> roleIds);
 
-    /**
-     * Removes cache entries for user with provided user id
-     * Dirty workaround for not being able to remove from multiple caches with JSR107
-     * @param id of the user to remove the cache entry for
-     */
-    void removeFromUserRoleCache(Integer id);
-
-    /**
-     * Removes cache entries for user with provided id
-     * Dirty workaround for not being able to remove from multiple caches with JSR107
-     */
-    void removeAllFromUserRoleCache();
-
 }
