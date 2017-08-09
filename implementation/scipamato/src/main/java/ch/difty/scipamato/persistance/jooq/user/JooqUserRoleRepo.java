@@ -60,7 +60,7 @@ public class JooqUserRoleRepo implements UserRoleRepository {
 
     @Override
     @CacheRemove
-    public void removeFromUserRoleCache(final String name) {
+    public void removeFromUserRoleCache(final Integer id) {
         // no-op, removing from cache only
         // dirty workaround for not being able to delete from multiple caches declaratively
     }

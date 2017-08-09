@@ -142,16 +142,12 @@ public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Inte
     @Override
     @CacheRemove(cacheKeyGenerator = UserNameOfUserCacheKeyGenerator.class)
     public User add(final User user) {
-        if (user != null)
-            userRoleRepo.removeFromUserRoleCache(user.getUserName());
         return super.add(user);
     }
 
     @Override
     @CacheRemove(cacheKeyGenerator = UserNameOfUserCacheKeyGenerator.class)
     public User add(final User user, final String languageCode) {
-        if (user != null && languageCode != null)
-            userRoleRepo.removeFromUserRoleCache(user.getUserName());
         return super.add(user, languageCode);
     }
 
@@ -165,8 +161,8 @@ public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Inte
     @Override
     @CacheRemove(cacheKeyGenerator = UserNameOfUserCacheKeyGenerator.class)
     public User update(final User user) {
-        if (user != null)
-            userRoleRepo.removeFromUserRoleCache(user.getUserName());
+        if (user != null && user.getId() != null)
+            userRoleRepo.removeFromUserRoleCache(user.getId());
         return super.update(user);
     }
 
@@ -174,7 +170,7 @@ public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Inte
     @CacheRemove(cacheKeyGenerator = UserNameOfUserCacheKeyGenerator.class)
     public User update(final User user, final String languageCode) {
         if (user != null && user.getId() != null && languageCode != null)
-            userRoleRepo.removeFromUserRoleCache(user.getUserName());
+            userRoleRepo.removeFromUserRoleCache(user.getId());
         return super.update(user, languageCode);
     }
 
