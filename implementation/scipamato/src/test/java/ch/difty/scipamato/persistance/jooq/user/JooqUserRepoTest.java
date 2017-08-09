@@ -3,7 +3,6 @@ package ch.difty.scipamato.persistance.jooq.user;
 import static ch.difty.scipamato.db.tables.ScipamatoUser.SCIPAMATO_USER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -199,28 +198,4 @@ public class JooqUserRepoTest extends JooqEntityRepoTest<ScipamatoUserRecord, Us
         }
     }
 
-    @Test
-    @Override
-    public void updating_withLanguageCodeNull_throws() {
-        try {
-            getRepo().update(getPersistedEntity(), null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("languageCode must not be null.");
-            verify(getPersistedEntity(), times(1)).getId();
-        }
-    }
-
-    @Test
-    @Override
-    public void updating_withEntityIdNull_throws() {
-        expectUnpersistedEntityIdNull();
-        try {
-            repo.update(getUnpersistedEntity(), "de");
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("entity.id must not be null.");
-        }
-        verify(getUnpersistedEntity(), times(2)).getId();
-    }
 }

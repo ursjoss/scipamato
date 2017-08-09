@@ -5,11 +5,6 @@ import static ch.difty.scipamato.db.tables.ScipamatoUser.SCIPAMATO_USER;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.cache.annotation.CacheDefaults;
-import javax.cache.annotation.CacheRemove;
-import javax.cache.annotation.CacheRemoveAll;
-import javax.cache.annotation.CacheResult;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.jooq.DSLContext;
@@ -17,6 +12,11 @@ import org.jooq.TableField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.auth.Role;
@@ -37,7 +37,7 @@ import ch.difty.scipamato.persistance.jooq.UpdateSetStepSetter;
  * @author u.joss
  */
 @Repository
-@CacheDefaults(cacheName = "userByName")
+@CacheConfig(cacheNames = "userByName")
 public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Integer, ch.difty.scipamato.db.tables.ScipamatoUser, UserRecordMapper, UserFilter> implements UserRepository {
 
     private static final long serialVersionUID = 1L;
@@ -127,7 +127,7 @@ public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Inte
 
     /** {@inheritDoc} */
     @Override
-    @CacheResult
+    @Cacheable
     public User findByUserName(final String userName) {
         final List<User> users = getDsl().selectFrom(SCIPAMATO_USER).where(SCIPAMATO_USER.USER_NAME.eq(userName)).fetchInto(User.class);
         if (users.isEmpty()) {
@@ -140,37 +140,32 @@ public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Inte
     }
 
     @Override
-    @CacheRemove(cacheKeyGenerator = UserNameOfUserCacheKeyGenerator.class)
+    @CachePut(cacheNames = "userByName", key = "#user.userName")
     public User add(final User user) {
         return super.add(user);
     }
 
     @Override
-    @CacheRemove(cacheKeyGenerator = UserNameOfUserCacheKeyGenerator.class)
+    @CachePut(cacheNames = "userByName", key = "#user.userName")
     public User add(final User user, final String languageCode) {
         return super.add(user, languageCode);
     }
 
     @Override
-    @CacheRemoveAll
+    @Caching(evict = { @CacheEvict(cacheNames = "userByName", allEntries = true), @CacheEvict(cacheNames = "userRolesByUserId", allEntries = true) })
     public User delete(final Integer id, final int version) {
-        userRoleRepo.removeAllFromUserRoleCache();
         return super.delete(id, version);
     }
 
     @Override
-    @CacheRemove(cacheKeyGenerator = UserNameOfUserCacheKeyGenerator.class)
+    @Caching(put = { @CachePut(cacheNames = "userByName", key = "#user.userName") }, evict = { @CacheEvict(cacheNames = "userRolesByUserId", key = "#user.id", beforeInvocation = true) })
     public User update(final User user) {
-        if (user != null && user.getId() != null)
-            userRoleRepo.removeFromUserRoleCache(user.getId());
         return super.update(user);
     }
 
     @Override
-    @CacheRemove(cacheKeyGenerator = UserNameOfUserCacheKeyGenerator.class)
+    @Caching(put = { @CachePut(cacheNames = "userByName", key = "#user.userName") }, evict = { @CacheEvict(cacheNames = "userRolesByUserId", key = "#user.id", beforeInvocation = true) })
     public User update(final User user, final String languageCode) {
-        if (user != null && user.getId() != null && languageCode != null)
-            userRoleRepo.removeFromUserRoleCache(user.getId());
         return super.update(user, languageCode);
     }
 
