@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import ch.difty.scipamato.lib.AssertAs;
+
 public class Code extends ScipamatoEntity {
 
     private static final long serialVersionUID = 1L;
@@ -45,10 +47,7 @@ public class Code extends ScipamatoEntity {
         this.name = name;
         this.comment = comment;
         this.internal = internal;
-        if (codeClassId != null)
-            this.codeClass = new CodeClass(codeClassId, codeClassName, codeClassDescription);
-        else
-            this.codeClass = null;
+        this.codeClass = new CodeClass(AssertAs.notNull(codeClassId, "codeClassId"), codeClassName, codeClassDescription);
         this.sort = sort;
         setCreated(created);
         setCreatedBy(createdBy);
@@ -114,7 +113,7 @@ public class Code extends ScipamatoEntity {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((code == null) ? 0 : code.hashCode());
-        result = prime * result + ((codeClass == null) ? 0 : codeClass.hashCode());
+        result = prime * result + codeClass.hashCode();
         result = prime * result + ((comment == null) ? 0 : comment.hashCode());
         result = prime * result + (internal ? 1231 : 1237);
         result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -136,10 +135,7 @@ public class Code extends ScipamatoEntity {
                 return false;
         } else if (!code.equals(other.code))
             return false;
-        if (codeClass == null) {
-            if (other.codeClass != null)
-                return false;
-        } else if (!codeClass.equals(other.codeClass))
+        if (!codeClass.equals(other.codeClass))
             return false;
         if (comment == null) {
             if (other.comment != null)

@@ -1,12 +1,14 @@
 package ch.difty.scipamato.entity;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDateTime;
 
 import javax.validation.ConstraintViolation;
 
 import org.junit.Test;
+
+import ch.difty.scipamato.lib.NullArgumentException;
 
 public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
@@ -43,9 +45,12 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     }
 
     @Test
-    public void constructing_withNullCodeClassId_leaveCodeClassNull() {
-        Code c1 = new Code("C1", "c1", null, false, null, "cc10", CODECLASS10, 1);
-        assertThat(c1.getCodeClass()).isNull();
+    public void constructing_withNullCodeClassId_throws() {
+        try {
+            new Code("1A", CODE1, null, false, null, null, null, 1);
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("codeClassId must not be null.");
+        }
     }
 
     @Test
@@ -63,12 +68,6 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     public void validatingCode_withNullName_fails() {
         Code c1 = new Code("1A", null, null, false, 1, "c1", "", 1);
         validateAndAssertFailure(c1, Code.NAME, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
-    }
-
-    @Test
-    public void validatingCode_withNullCodeClass_fails() {
-        Code c1 = new Code("1A", CODE1, null, false, null, null, null, 1);
-        validateAndAssertFailure(c1, Code.CODE_CLASS, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
     }
 
     @Test
@@ -195,20 +194,6 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
         assertThat(c1.equals(c2)).isTrue();
         assertThat(c2.equals(c1)).isTrue();
         assertThat(c1.hashCode()).isEqualTo(c2.hashCode());
-    }
-
-    @Test
-    public void differingValues_withCodeClassNullOnOne() {
-        Code c1 = new Code("1A", CODE1, null, false, null, "c1", "", 1);
-        Code c2 = new Code("1A", CODE1, null, false, 1, "c1", "", 1);
-        assertInequality(c1, c2);
-    }
-
-    @Test
-    public void differingValues_withCodeClassNullOnBoth() {
-        Code c1 = new Code("1A", CODE1, null, false, null, "c1", "", 1);
-        Code c2 = new Code("1A", CODE1, null, false, null, "c1", "", 1);
-        assertEquality(c1, c2);
     }
 
     @Test
