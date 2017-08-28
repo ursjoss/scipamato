@@ -613,15 +613,6 @@
                     <version>${properties-maven-plugin.version}</version>
                 </plugin>
 
-                <!-- The jOOQ code generator plugin, creating the type safe java representation of the database -->
-                <!-- see https://www.jooq.org/doc/3.9/manual/code-generation/codegen-configuration/ -->
-                <!-- Some configuration properties are published from application.properties via properties-maven-plugin -->
-                <plugin>
-                    <groupId>org.jooq</groupId>
-                    <artifactId>jooq-codegen-maven</artifactId>
-                    <version>${org.jooq.version}</version><!--$NO-MVN-MAN-VER$ -->
-                </plugin>
-
                 <!-- Flyway Database migration Configuration -->
                 <!-- properties are published from application.properties via properties-maven-plugin -->
                 <plugin>
@@ -633,6 +624,15 @@
                         <user>${flyway.user}</user>
                         <password>${flyway.password}</password>
                     </configuration>
+                </plugin>
+
+                <!-- The jOOQ code generator plugin, creating the type safe java representation of the database -->
+                <!-- see https://www.jooq.org/doc/3.9/manual/code-generation/codegen-configuration/ -->
+                <!-- Some configuration properties are published from application.properties via properties-maven-plugin -->
+                <plugin>
+                    <groupId>org.jooq</groupId>
+                    <artifactId>jooq-codegen-maven</artifactId>
+                    <version>${org.jooq.version}</version><!--$NO-MVN-MAN-VER$ -->
                 </plugin>
 
                 <!-- jaxb2 maven plugin to generate the java classes from the Pubmed dtd -->
@@ -736,6 +736,21 @@
                 </executions>
             </plugin>
 
+            <!-- Flyway database migration -->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <!-- Execution of the Flyway plugin in the "generate-sources" phase to allow the jOOQ code generator to take over -->
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- The jOOQ code generator plugin -->
             <plugin>
                 <groupId>org.jooq</groupId>
@@ -773,21 +788,6 @@
                                 </target>
                             </generator>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Flyway database migration -->
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <!-- Execution of the Flyway plugin in the "generate-sources" phase to allow the jOOQ code generator to take over -->
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>migrate</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>
