@@ -197,4 +197,15 @@ public class PubmedXmlServiceTest {
         return pubmedArticleSet;
     }
 
+    @Test
+    public void gettingPubmedArticleWithPmid_withNoNetwork_returnsEmptyOptional() {
+        final int pmId = 25395026;
+        when(pubMedMock.articleWithId(String.valueOf(pmId))).thenThrow(new RuntimeException("The network is not reachable"));
+
+        Optional<PubmedArticleFacade> pa = service.getPubmedArticleWithPmid(pmId);
+        assertThat(pa.isPresent()).isFalse();
+
+        verify(pubMedMock).articleWithId(String.valueOf(pmId));
+    }
+
 }
