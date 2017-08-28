@@ -149,7 +149,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
         dataProvider = new PaperSlimBySearchOrderProvider(getModelObject(), RESULT_PAGE_SIZE);
 
-        fixShowExcluded_ifNoExclusionsPresent();
+        fixShowExcludedInCaseOfNoExclusionsPresent();
 
         makeSearchOrderSelectorPanel("searchOrderSelectorPanel");
         makeSearchOrderPanel("searchOrderPanel");
@@ -157,7 +157,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         updateNavigateable();
     }
 
-    private void fixShowExcluded_ifNoExclusionsPresent() {
+    private void fixShowExcludedInCaseOfNoExclusionsPresent() {
         if (getModelObject().isShowExcluded() && getModelObject().getExcludedPaperIds().isEmpty()) {
             getModelObject().setShowExcluded(false);
         }
