@@ -8,8 +8,10 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import ch.difty.scipamato.pubmed.PubMed;
 import feign.Feign;
+import feign.Logger;
 import feign.jaxb.JAXBContextFactory;
 import feign.jaxb.JAXBDecoder;
+import feign.okhttp.OkHttpClient;
 import feign.slf4j.Slf4jLogger;
 
 @Configuration
@@ -36,6 +38,6 @@ public class JaxbConfiguration {
 
     @Bean
     public PubMed pubMed() {
-        return Feign.builder().logger(new Slf4jLogger()).decoder(new JAXBDecoder(jaxbFactory)).target(PubMed.class, PubMed.URL);
+        return Feign.builder().client(new OkHttpClient()).logger(new Slf4jLogger()).logLevel(Logger.Level.FULL).decoder(new JAXBDecoder(jaxbFactory)).target(PubMed.class, PubMed.URL);
     }
 }
