@@ -45,9 +45,20 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     }
 
     @Test
+    public void constructing_withNullCode_throws() {
+        try {
+            new Code(null, CODE1, null, false, 1, "c1", "", 1);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("code must not be null.");
+        }
+    }
+
+    @Test
     public void constructing_withNullCodeClassId_throws() {
         try {
             new Code("1A", CODE1, null, false, null, null, null, 1);
+            fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("codeClassId must not be null.");
         }
@@ -56,12 +67,6 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     @Test
     public void validatingCode_beginValid_succeeds() {
         verifySuccessfulValidation(c);
-    }
-
-    @Test
-    public void validatingCode_withNullCode_fails() {
-        Code c1 = new Code(null, CODE1, null, false, 1, "c1", "", 1);
-        validateAndAssertFailure(c1, Code.CODE, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
     }
 
     @Test
@@ -170,24 +175,10 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
         assertThat(c.getDisplayValue()).isEqualTo("code1 (1A)");
     }
 
-    @Test
-    public void differingValues_withCodeNullOnOne() {
-        Code c1 = new Code(null, CODE1, null, false, 1, "c1", "", 1);
-        Code c2 = new Code("1A", CODE1, null, false, 1, "c1", "", 1);
-        assertInequality(c1, c2);
-    }
-
     private void assertInequality(Code c1, Code c2) {
         assertThat(c1.equals(c2)).isFalse();
         assertThat(c2.equals(c1)).isFalse();
         assertThat(c1.hashCode()).isNotEqualTo(c2.hashCode());
-    }
-
-    @Test
-    public void differingValues_withCodeNullOnBoth() {
-        Code c1 = new Code(null, CODE1, null, false, 1, "c1", "", 1);
-        Code c2 = new Code(null, CODE1, null, false, 1, "c1", "", 1);
-        assertEquality(c1, c2);
     }
 
     private void assertEquality(Code c1, Code c2) {

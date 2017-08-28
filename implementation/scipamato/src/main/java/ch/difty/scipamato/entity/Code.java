@@ -43,7 +43,7 @@ public class Code extends ScipamatoEntity {
 
     public Code(final String code, final String name, final String comment, final boolean internal, final Integer codeClassId, final String codeClassName, final String codeClassDescription,
             final int sort, final LocalDateTime created, final Integer createdBy, final LocalDateTime lastModified, final Integer lastModifiedBy, final Integer version) {
-        this.code = code;
+        this.code = AssertAs.notNull(code, "code");
         this.name = name;
         this.comment = comment;
         this.internal = internal;
@@ -63,11 +63,11 @@ public class Code extends ScipamatoEntity {
 
     private Code(final String code, final String name, final String comment, final boolean internal, final CodeClass codeClass, final int sort, final LocalDateTime created, final Integer createdBy,
             final LocalDateTime lastModified, final Integer lastModifiedBy, final Integer version) {
-        this.code = code;
+        this.code = AssertAs.notNull(code, "code");
         this.name = name;
         this.comment = comment;
         this.internal = internal;
-        this.codeClass = codeClass;
+        this.codeClass = AssertAs.notNull(codeClass, "codeClass");
         this.sort = sort;
         setCreated(created);
         setCreatedBy(createdBy);
@@ -112,7 +112,7 @@ public class Code extends ScipamatoEntity {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((code == null) ? 0 : code.hashCode());
+        result = prime * result + code.hashCode();
         result = prime * result + codeClass.hashCode();
         result = prime * result + ((comment == null) ? 0 : comment.hashCode());
         result = prime * result + (internal ? 1231 : 1237);
@@ -130,10 +130,7 @@ public class Code extends ScipamatoEntity {
         if (getClass() != obj.getClass())
             return false;
         Code other = (Code) obj;
-        if (code == null) {
-            if (other.code != null)
-                return false;
-        } else if (!code.equals(other.code))
+        if (!code.equals(other.code))
             return false;
         if (!codeClass.equals(other.codeClass))
             return false;
