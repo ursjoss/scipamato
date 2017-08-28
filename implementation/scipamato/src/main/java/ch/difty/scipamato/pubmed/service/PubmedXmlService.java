@@ -45,12 +45,14 @@ public class PubmedXmlService implements PubmedArticleService {
     /** {@inheritDoc} */
     @Override
     public Optional<PubmedArticleFacade> getPubmedArticleWithPmid(int pmId) {
-        final PubmedArticleSet set = pubMed.articleWithId(String.valueOf(pmId));
-        final List<Object> aoba = set.getPubmedArticleOrPubmedBookArticle();
-        if (aoba != null && !aoba.isEmpty()) {
-            return aoba.stream().map(PubmedArticleFacade::of).findFirst();
+        try {
+            final PubmedArticleSet set = pubMed.articleWithId(String.valueOf(pmId));
+            final List<Object> articles = set.getPubmedArticleOrPubmedBookArticle();
+            return articles.stream().map(PubmedArticleFacade::of).findFirst();
+        } catch (Exception ex) {
+            LOGGER.error("Unexpected error", ex);
+            return Optional.empty();
         }
-        return Optional.empty();
     }
 
     /**
