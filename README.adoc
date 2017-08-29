@@ -1,0 +1,60 @@
+[[scipamato]]
+scipamato
+---------
+
+SciPaMaTo (Scientific Paper Management Tool)
+
+[[elevator-pitch]]
+Elevator Pitch
+--------------
+
+TODO
+
+[[technology-stack]]
+Technology Stack
+----------------
+
+* Java 1.8
+* https://projects.spring.io/spring-boot/[Spring Boot] with
+https://projects.spring.io/spring-security/[Spring Security]
+* Presentation Layer
+* https://wicket.apache.org/[Apache Wicket] with
+http://getbootstrap.com/[Bootstrap]
+** https://github.com/MarcGiffing/wicket-spring-boot[wicket-spring-boot-starter]
+** https://github.com/l0rdn1kk0n/wicket-bootstrap[wicket-bootstrap]
+* http://community.jaspersoft.com/[JasperReport] for PDF generation
+* https://github.com/OpenFeign/feign[Feign] as HHTP client to PubMed
+* jaxb for XML parsing
+* Persistence Layer
+* https://www.jooq.org/[jOOQ]
+* https://github.com/brettwooldridge/HikariCP[HikariCP]
+* https://www.postgresql.org/[PostgreSQL]
+* https://flywaydb.org/[Flyway] for database migrations
+* Caching
+* JCache with http://www.ehcache.org/[Ehcache3]
+
+[[user-documentation]]
+User Documentation
+------------------
+
+* https://github.com/ursjoss/scipamato/wiki/Entering-Papers[Entering
+Papers]
+* https://github.com/ursjoss/scipamato/wiki/Filtering-Papers[Filtering
+Papers]
+* https://github.com/ursjoss/scipamato/wiki/Searches[Complex Searches on
+Papers]
+
+[[information-for-developers]]
+Information for Developers
+--------------------------
+
+See
+https://github.com/ursjoss/scipamato/wiki/Developer-Information[Developer
+Wiki]
+
+[[information-for-operations]]
+Information for Operations
+--------------------------
+
+See https://github.com/ursjoss/scipamato/wiki/Operations[Operations
+Wiki]
