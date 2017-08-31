@@ -520,7 +520,7 @@
                                             <pluginExecutionFilter>
                                                 <groupId>org.flywaydb</groupId>
                                                 <artifactId>flyway-maven-plugin</artifactId>
-                                                <version>${flyway.version}</version>
+                                                <versionRange>${flyway.version}</versionRange>
                                                 <goals>
                                                     <goal>migrate</goal>
                                                 </goals>
