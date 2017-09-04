@@ -322,3 +322,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Exclude papers found in searches
 
 
+[[v0.1.0]]
+== [0.1.0] -- 2016-11-05
+
+.Added
+- bootstrap the whole project
+- list, show and edit papers
