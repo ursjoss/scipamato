@@ -1,0 +1,343 @@
+= Changelog
+Urs Joss <urs.joss@gmx.ch>
+:icons: font
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+All notable changes to this project will be documented in this file.
+
+== Format and Versioning Scheme
+
+The format is based on http://keepachangelog.com/en/1.0.0/[Keep a Changelog].
+
+The versioning scheme in the pre-1.0.0 versions is _not_ adhering to http://semver.org/spec/v2.0.0.html[Semantic Versioning].
+
+Given a version number 0.ITERATION.RELEASE, we're incrementing
+
+. ITERATION version matching the project iteration
+. RELEASE version with every release within the given iteration.
+
+TIP: E.g. release 0.5.6 is the 6th release in iteration number 5.
+
+
+I will most probably switch to semantic versioning after having reached release 1.0.0.
+
+NOTE: References to user stories are in the form Iteration/Story-Number.
+
+////
+
+[[v0.0.0]]
+== [0.0.0] -- 2017-00-00
+
+.Added
+
+.Changed
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
+////
+
+[[unreleased]]
+== [Unreleased]
+
+.Added
+- 6/12: enable caching (ehcache3) for static reference data
+
+.Changed
+- switched from markdown to asciidoc for wiki pages
+- Created ChangeLog according to http://keepachangelog.com/en/1.0.0/[Keep a Changelog]
+- use OktHttp with feign
+- various improvements in wiki pages, javadoc, sonar suggested code changes
+- pom cleanup
+- dependency updates: spring-boot-starter, wicket, wicket-spring-boot-starter, jOOQ, postgres-jdbc-driver, spring-boot-admin
+
+.Fixed
+- 6/13: Fix behavior when accessing PubMed without network access
+- 6/11: Codes/CodeClasses were not translated according to browser locale
+- fix jooq-codegen-maven-plugin after having flyway populate an empty db
+
+
+[[v0.6.0]]
+== [0.6.0] -- 2017-07-17
+
+.Added
+- 6/7: Drag and drop import of PubmedXML (using DropZoneUpload)
+
+.Changed
+- improvements in wiki pages, raised test coverage
+- dependency updates (jasperreports)
+
+.Fixed
+- 6/6: fix upload for attachments > 1MB (now limited to 10MB)
+
+
+[[v0.5.6]]
+== [0.5.6] -- 2017-07-03
+
+.Added
+- 5/26: Optimstic locking
+
+.Fixed
+- 5/41: fix internal error when clicking save
+
+
+[[v0.5.5]]
+== [0.5.5] -- 2017-07-02
+
+.Added
+- 5/38: Short Summary PDF (Kurzerfassung)
+
+.Changed
+- using undertow instead of tomcat
+- Replace AjaxTimerBehavior with SelfUpdateEvent behavior for id, created, modified
+- Use the number instead of (DB) id in the names of the pdf files
+- several updates in wiki pages, javadoc, sonar code improvements
+
+
+[[v0.5.4]]
+== [0.5.4] -- 2017-06-28
+
+.Added
+- 5/36: Improved exclusion handling (exclud/re-include directly out of paper. Icon)
+
+.Changed
+- 5/37: do not switch the label when toggling searchExclusion checkbox
+- 5/30: Visual appearance of navigation buttons
+- wiki page updates
+- dependency update: spring-boot-admin
+
+.Fixed
+- 5/35: Validator for codeclass1 should not trigger in search mode
+
+
+
+[[v0.5.3]]
+== [0.5.3] -- 2017-06-25
+
+.Added
+- 5/9: Adding attachments to papers
+
+.Changed
+- wiki page updates, sonar code improvements
+
+.Fixed
+- Codes were not loaded properly when loading papers by number or pmid
+- LinkIconPanel fix
+
+
+[[v0.5.2]]
+== [0.5.2] -- 2017-06-19
+
+.Added
+- 5/30: Allow excluding papers from PaperEntryPage
+- 5/31: Jump back from PaperEntryPage to either PaperListPage or PaperSearchPage, depending from where we called the page
+
+.Changed
+- wiki page updates, javadoc fixes, German translation updates, sonar code improvements
+- dependency update: wicket-bootstrap
+
+.Fixed
+- 5/29: Search exclusions were not saved in searches
+- Layout fixes
+
+
+[[v0.5.1]]
+== [0.5.1] -- 2017-06-15
+
+.Added
+- 5/28: Navigation through the differnt papers in the search result
+
+.Changed
+- wiki page updates, javadoc fixes
+- dependency updates: spring-boot-starter, spring-boot-admin, spring-cloud-starter-feign
+
+.Fixed
+- NPE with Pubmed retrieval with null PMID
+
+
+[[v0.5.0]]
+== [0.5.0] -- 2017-06-09
+
+.Added
+- added spring-boot-admin-starter-client
+
+.Changed
+- dependency updates: wicket, wicket-bootstrap
+
+.Removed
+- 5/21: Dropped H2 support -> sticking with PostgreSQL only for now
+
+
+[[v0.4.5]]
+== [0.4.5] -- 2017-06-01
+
+.Changed
+- dependency updates: postgres-jdbc, jOOQ, flyway, feign-jaxb, JUnitParams, jaxb2-maven-plugin
+- wiki page updates, javadoc improvements
+- minor refactorings
+
+.Fixed
+- Fix keeping the different 'new field' instances synchronized in the web page
+
+
+[[v0.4.4]]
+== [0.4.4] -- 2017-05-11
+
+.Changed
+- Test release from jenkins
+
+
+[[v0.4.3]]
+== [0.4.3] -- 2017-05-11
+
+.Added
+- Releasing the project with the jenkins release job
+
+
+[[v0.4.2]]
+== [0.4.2] -- 2017-05-10
+
+.Added
+- new business id (Number), which is differnt from the sequence backed database id
+- Import data from pubmed with only the PmID entered
+- Paper Entry Page: Separate tab for 'new fields'
+- Make the PostgreSQL backend the first class member while currently still supporting the H2 backend (supporting the prototyping, not for support.)
+- Flyway for database migrations
+
+.Changed
+- dependency updates
+- wiki page updates
+
+.Deprecated
+- H2 support
+
+.Removed
+- Removed dummy home page
+- Removed spring-data
+
+
+[[v0.4.1]]
+== [0.4.1] -- 2017-03-11
+
+.Added
+- Addec License: GPLv3
+
+.Changed
+- refactorings and code cleanup
+- wiki page updates
+
+
+[[v0.4.0]]
+== [0.4.0] -- 2017-02-23
+
+.Added
+- First shot at parsing, importing from and comparing SiPaMaTo content with PubMed articles based on PMID. Working with Pubmed XML file exports. Direct API call to PubMed in order to compare common fields.
+
+.Changed
+- sonar code improvements
+- improved test coverage
+
+
+[[v0.3.5]]
+== [0.3.5] -- 2017-02-08
+
+.Added
+- Searching by created/last modified
+- Manage SciPaMaTo with Jenkins CI
+
+.Changed
+- Replace AutoSaveBehavior with direct ajax saves
+- wiki page updates
+
+.Fixed
+- small bug fixes
+
+
+[[v0.3.4]]
+== [0.3.4] -- 2017-02-01
+
+.Changed
+- Implemented various feed-back items from users
+- git commit-id-plugin to show repo information in actuator
+- wiki page updates, javadoc updates
+- dependency updates: spring-boot-starter-parent
+
+
+[[v0.3.3]]
+== [0.3.3] -- 2017-01-29
+
+.Added
+- additional PDF reports
+
+.Fixed
+- small fixes
+
+
+[[v0.3.2]]
+== [0.3.2] -- 2017-01-25
+
+.Added
+- PDF reports
+- additional test data
+
+.Changed
+- Do not set the publication year in new papers
+- maintain users in the datbase
+- wiki page updates, layout improvemnts
+- dependency updates: wicketstuff-annotation, wicket-spring-boot-starter,jOOQ
+
+.Fixed
+- fix paging the papers in the list view
+- Layout/translation fixes based on user feedback
+
+
+[[v0.3.1]]
+== [0.3.1] -- 2017-01-06
+
+.Added
+- new field for paper: 'original abstract'
+
+.Fixed
+- Fix search term evaluation
+
+
+[[v0.3.0]]
+== [0.3.0] -- 2017-01-06
+
+.Added
+- Show a papers creator/last modifying user
+
+.Changed
+- layout adjustments in paper entry page
+- wiki page updates
+- dependency updates: spring-boot-starter, jOOQ, wicket
+
+
+[[v0.2.0]]
+== [0.2.0] -- 2016-12-15
+
+.Added
+- Complex search capability
+- Exclude papers found in searches
+- refactor and cleanup
+- small bug fixes
+- dependency updates
+
+
+[[v0.1.0]]
+== [0.1.0] -- 2016-11-05
+
+.Added
+- bootstrap the whole project
+- list, show and edit papers
