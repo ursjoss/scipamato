@@ -255,10 +255,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 - Searching by created/last modified
 - Manage SciPaMaTo with Jenkins CI
-- wiki page updates
 
 .Changed
 - Replace AutoSaveBehavior with direct ajax saves
+- wiki page updates
 
 .Fixed
 - small bug fixes
@@ -269,6 +269,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Implemented various feed-back items from users
+- git commit-id-plugin to show repo information in actuator
+- wiki page updates, javadoc updates
+- dependency updates: spring-boot-starter-parent
 
 
 [[v0.3.3]]
@@ -289,7 +292,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - additional test data
 
 .Changed
+- Do not set the publication year in new papers
 - maintain users in the datbase
+- wiki page updates, layout improvemnts
+- dependency updates: wicketstuff-annotation, wicket-spring-boot-starter,jOOQ
 
 .Fixed
 - fix paging the papers in the list view
@@ -302,6 +308,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 - new field for paper: 'original abstract'
 
+.Fixed
+- Fix search term evaluation
+
 
 [[v0.3.0]]
 == [0.3.0] -- 2017-01-06
@@ -311,7 +320,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - layout adjustments in paper entry page
-- dependency updates
+- wiki page updates
+- dependency updates: spring-boot-starter, jOOQ, wicket
 
 
 [[v0.2.0]]
@@ -320,6 +330,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 - Complex search capability
 - Exclude papers found in searches
+- refactor and cleanup
+- small bug fixes
+- dependency updates
 
 
 [[v0.1.0]]
