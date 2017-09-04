@@ -80,3 +80,103 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Fixed
 - 6/6: fix upload for attachments > 1MB (now limited to 10MB)
+
+
+[[v0.5.6]]
+== [0.5.6] -- 2017-07-03
+
+.Added
+- 5/26: Optimstic locking
+
+.Fixed
+- 5/41: fix internal error when clicking save
+
+
+[[v0.5.5]]
+== [0.5.5] -- 2017-07-02
+
+.Added
+- 5/38: Short Summary PDF (Kurzerfassung)
+
+.Changed
+- using undertow instead of tomcat
+- Replace AjaxTimerBehavior with SelfUpdateEvent behavior for id, created, modified
+- Use the number instead of (DB) id in the names of the pdf files
+- several updates in wiki pages, javadoc, sonar code improvements
+
+
+[[v0.5.4]]
+== [0.5.4] -- 2017-06-28
+
+.Added
+- 5/36: Improved exclusion handling (exclud/re-include directly out of paper. Icon)
+
+.Changed
+- 5/37: do not switch the label when toggling searchExclusion checkbox
+- 5/30: Visual appearance of navigation buttons
+- wiki page updates
+- dependency update: spring-boot-admin
+
+.Fixed
+- 5/35: Validator for codeclass1 should not trigger in search mode
+
+
+
+[[v0.5.3]]
+== [0.5.3] -- 2017-06-25
+
+.Added
+- 5/9: Adding attachments to papers
+
+.Changed
+- wiki page updates, sonar code improvements
+
+.Fixed
+- Codes were not loaded properly when loading papers by number or pmid
+- LinkIconPanel fix
+
+
+[[v0.5.2]]
+== [0.5.2] -- 2017-06-19
+
+.Added
+- 5/30: Allow excluding papers from PaperEntryPage
+- 5/31: Jump back from PaperEntryPage to either PaperListPage or PaperSearchPage, depending from where we called the page
+
+.Changed
+- wiki page updates, javadoc fixes, German translation updates, sonar code improvements
+- dependency update: wicket-bootstrap
+
+.Fixed
+- 5/29: Search exclusions were not saved in searches
+- Layout fixes
+
+
+[[v0.5.1]]
+== [0.5.1] -- 2017-06-15
+
+.Added
+- 5/28: Navigation through the differnt papers in the search result
+
+.Changed
+- wiki page updates, javadoc fixes
+- dependency updates: spring-boot-starter, spring-boot-admin, spring-cloud-starter-feign
+
+.Fixed
+- NPE with Pubmed retrieval with null PMID
+
+
+[[v0.5.0]]
+== [0.5.0] -- 2017-06-09
+
+.Added
+- added spring-boot-admin-starter-client
+
+.Changed
+- dependency updates: wicket, wicket-bootstrap
+
+.Removed
+- 5/21: Dropped H2 support -> sticking with PostgreSQL only for now
+
+
+
