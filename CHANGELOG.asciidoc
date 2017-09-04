@@ -249,3 +249,68 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - improved test coverage
 
 
+[[v0.3.5]]
+== [0.3.5] -- 2017-02-08
+
+.Added
+- Searching by created/last modified
+- Manage SciPaMaTo with Jenkins CI
+- wiki page updates
+
+.Changed
+- Replace AutoSaveBehavior with direct ajax saves
+
+.Fixed
+- small bug fixes
+
+
+[[v0.3.4]]
+== [0.3.4] -- 2017-02-01
+
+.Changed
+- Implemented various feed-back items from users
+
+
+[[v0.3.3]]
+== [0.3.3] -- 2017-01-29
+
+.Added
+- additional PDF reports
+
+.Fixed
+- small fixes
+
+
+[[v0.3.2]]
+== [0.3.2] -- 2017-01-25
+
+.Added
+- PDF reports
+- additional test data
+
+.Changed
+- maintain users in the datbase
+
+.Fixed
+- fix paging the papers in the list view
+- Layout/translation fixes based on user feedback
+
+
+[[v0.3.1]]
+== [0.3.1] -- 2017-01-06
+
+.Added
+- new field for paper: 'original abstract'
+
+
+[[v0.3.0]]
+== [0.3.0] -- 2017-01-06
+
+.Added
+- Show a papers creator/last modifying user
+
+.Changed
+- layout adjustments in paper entry page
+- dependency updates
+
+
