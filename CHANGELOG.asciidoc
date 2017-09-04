@@ -314,3 +314,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - dependency updates
 
 
+[[v0.2.0]]
+== [0.2.0] -- 2016-12-15
+
+.Added
+- Complex search capability
+- Exclude papers found in searches
+
+
