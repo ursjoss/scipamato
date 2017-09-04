@@ -66,3 +66,17 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 6/13: Fix behavior when accessing PubMed without network access
 - 6/11: Codes/CodeClasses were not translated according to browser locale
 - fix jooq-codegen-maven-plugin after having flyway populate an empty db
+
+
+[[v0.6.0]]
+== [0.6.0] -- 2017-07-17
+
+.Added
+- 6/7: Drag and drop import of PubmedXML (using DropZoneUpload)
+
+.Changed
+- improvements in wiki pages, raised test coverage
+- dependency updates (jasperreports)
+
+.Fixed
+- 6/6: fix upload for attachments > 1MB (now limited to 10MB)
