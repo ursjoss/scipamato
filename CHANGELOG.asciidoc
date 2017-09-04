@@ -179,4 +179,73 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 5/21: Dropped H2 support -> sticking with PostgreSQL only for now
 
 
+[[v0.4.5]]
+== [0.4.5] -- 2017-06-01
+
+.Changed
+- dependency updates: postgres-jdbc, jOOQ, flyway, feign-jaxb, JUnitParams, jaxb2-maven-plugin
+- wiki page updates, javadoc improvements
+- minor refactorings
+
+.Fixed
+- Fix keeping the different 'new field' instances synchronized in the web page
+
+
+[[v0.4.4]]
+== [0.4.4] -- 2017-05-11
+
+.Changed
+- Test release from jenkins
+
+
+[[v0.4.3]]
+== [0.4.3] -- 2017-05-11
+
+.Added
+- Releasing the project with the jenkins release job
+
+
+[[v0.4.2]]
+== [0.4.2] -- 2017-05-10
+
+.Added
+- new business id (Number), which is differnt from the sequence backed database id
+- Import data from pubmed with only the PmID entered
+- Paper Entry Page: Separate tab for 'new fields'
+- Make the PostgreSQL backend the first class member while currently still supporting the H2 backend (supporting the prototyping, not for support.)
+- Flyway for database migrations
+
+.Changed
+- dependency updates
+- wiki page updates
+
+.Deprecated
+- H2 support
+
+.Removed
+- Removed dummy home page
+- Removed spring-data
+
+
+[[v0.4.1]]
+== [0.4.1] -- 2017-03-11
+
+.Added
+- Addec License: GPLv3
+
+.Changed
+- refactorings and code cleanup
+- wiki page updates
+
+
+[[v0.4.0]]
+== [0.4.0] -- 2017-02-23
+
+.Added
+- First shot at parsing, importing from and comparing SiPaMaTo content with PubMed articles based on PMID. Working with Pubmed XML file exports. Direct API call to PubMed in order to compare common fields.
+
+.Changed
+- sonar code improvements
+- improved test coverage
+
 
