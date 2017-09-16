@@ -1,28 +1,7 @@
 package ch.difty.scipamato.entity.filter;
 
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.EMPTY;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.NOTOPENLEFT;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.NOTOPENLEFTQUOTED;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.NOTOPENLEFTRIGHT;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.NOTOPENLEFTRIGHTQUOTED;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.NOTOPENRIGHT;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.NOTOPENRIGHTQUOTED;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.NOTQUOTED;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.NOTREGEX;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.NOTWORD;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.OPENLEFT;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.OPENLEFTQUOTED;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.OPENLEFTRIGHT;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.OPENLEFTRIGHTQUOTED;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.OPENRIGHT;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.OPENRIGHTQUOTED;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.QUOTED;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.RAW;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.REGEX;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.SOME;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.WHITESPACE;
-import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.WORD;
-import static org.assertj.core.api.Assertions.assertThat;
+import static ch.difty.scipamato.entity.filter.StringSearchTerm.TokenType.*;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
@@ -273,4 +252,15 @@ public class StringSearchTermTest {
         assertThat(st.getTokens()).hasSize(1);
         assertThat(st.getTokens().get(0).toString()).isEqualTo("(WORD pm2.5)");
     }
+
+    @Test
+    public void differentInterpretationOfQuotedAndWord() {
+        st = new StringSearchTerm(FIELD_NAME, "=\"foo\" \"foo\" foo =foo");
+        assertThat(st.getTokens()).hasSize(4);
+        assertThat(st.getTokens().get(0).toString()).isEqualTo("(QUOTED foo)");
+        assertThat(st.getTokens().get(1).toString()).isEqualTo("(QUOTED foo)");
+        assertThat(st.getTokens().get(2).toString()).isEqualTo("(WORD foo)");
+        assertThat(st.getTokens().get(3).toString()).isEqualTo("(WORD foo)");
+    }
+
 }
