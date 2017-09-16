@@ -27,7 +27,7 @@ import ch.difty.scipamato.lib.AssertAs;
  */
 public class DefaultAuthorParser implements AuthorParser {
 
-    private static final Pattern CARDINALITY_PATTERN = Pattern.compile("(?:1st|2nd|3rd)|(?:\\d+th)");
+    private static final Pattern CARDINALITY_PATTERN = Pattern.compile("(?:1st|2nd|3rd)|(?:\\d+th)|(?:Jr)");
 
     private final String authorsString;
     private final List<Author> authors;

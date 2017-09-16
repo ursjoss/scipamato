@@ -1,8 +1,7 @@
 package ch.difty.scipamato.logic.parsing;
 
-import static java.util.stream.Collectors.toList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static java.util.stream.Collectors.*;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
@@ -70,6 +69,22 @@ public class DefaultAuthorParserTest {
     @Test
     public void canReturnFirstAuthor_evenWhenCardinalityStandsAfterFirstName() {
         assertFirstAuthorOf("Pope CA 3rd, Lloyd Webber A.", "Pope");
+    }
+
+    @Test
+    public void canReturnFirstAuthor_evenWhenNameContainsJunior() {
+        assertFirstAuthorOf("Cox LA Jr.", "Cox");
+    }
+
+    @Test
+    public void canReturnFirstAuthor_letsNotBeFooledByInitialsLookingLikeJunior() {
+        assertFirstAuthorOf("Cox JR.", "Cox");
+    }
+
+    @Test
+    public void cannotProperlyReturnFirstAuthor_withInitialsAndCapitalJR() {
+        // this is probably not a valid case, but let's state it explicitly here
+        assertFirstAuthorOf("Cox LA JR.", "Cox LA");
     }
 
     @Test
