@@ -1,6 +1,6 @@
 package ch.difty.scipamato.entity.xml;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

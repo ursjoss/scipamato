@@ -1,7 +1,7 @@
 package ch.difty.scipamato.persistance.jooq.search;
 
-import static ch.difty.scipamato.db.Tables.SEARCH_ORDER;
-import static org.assertj.core.api.Assertions.assertThat;
+import static ch.difty.scipamato.db.Tables.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 

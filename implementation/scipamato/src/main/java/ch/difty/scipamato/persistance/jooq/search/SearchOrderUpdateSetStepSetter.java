@@ -1,6 +1,6 @@
 package ch.difty.scipamato.persistance.jooq.search;
 
-import static ch.difty.scipamato.db.tables.SearchOrder.SEARCH_ORDER;
+import static ch.difty.scipamato.db.tables.SearchOrder.*;
 
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;

@@ -1,9 +1,9 @@
 package ch.difty.scipamato.persistance.jooq.code;
 
-import static ch.difty.scipamato.db.tables.Code.CODE;
-import static ch.difty.scipamato.db.tables.CodeClass.CODE_CLASS;
-import static ch.difty.scipamato.db.tables.CodeClassTr.CODE_CLASS_TR;
-import static ch.difty.scipamato.db.tables.CodeTr.CODE_TR;
+import static ch.difty.scipamato.db.tables.Code.*;
+import static ch.difty.scipamato.db.tables.CodeClass.*;
+import static ch.difty.scipamato.db.tables.CodeClassTr.*;
+import static ch.difty.scipamato.db.tables.CodeTr.*;
 
 import java.util.List;
 

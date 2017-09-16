@@ -1,6 +1,6 @@
 package ch.difty.scipamato.web.security;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

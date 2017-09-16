@@ -1,6 +1,6 @@
 package ch.difty.scipamato.web.component.table.column;
 
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;

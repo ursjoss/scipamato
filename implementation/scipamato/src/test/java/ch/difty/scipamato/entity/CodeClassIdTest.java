@@ -1,14 +1,7 @@
 package ch.difty.scipamato.entity;
 
-import static ch.difty.scipamato.entity.CodeClassId.CC1;
-import static ch.difty.scipamato.entity.CodeClassId.CC2;
-import static ch.difty.scipamato.entity.CodeClassId.CC3;
-import static ch.difty.scipamato.entity.CodeClassId.CC4;
-import static ch.difty.scipamato.entity.CodeClassId.CC5;
-import static ch.difty.scipamato.entity.CodeClassId.CC6;
-import static ch.difty.scipamato.entity.CodeClassId.CC7;
-import static ch.difty.scipamato.entity.CodeClassId.CC8;
-import static org.assertj.core.api.Assertions.assertThat;
+import static ch.difty.scipamato.entity.CodeClassId.*;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 

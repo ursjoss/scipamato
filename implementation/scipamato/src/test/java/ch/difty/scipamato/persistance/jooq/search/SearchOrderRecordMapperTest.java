@@ -1,7 +1,7 @@
 package ch.difty.scipamato.persistance.jooq.search;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import org.jooq.RecordMapper;
 

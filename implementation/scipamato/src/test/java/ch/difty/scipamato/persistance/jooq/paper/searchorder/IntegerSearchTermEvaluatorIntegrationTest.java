@@ -1,12 +1,7 @@
 package ch.difty.scipamato.persistance.jooq.paper.searchorder;
 
-import static ch.difty.scipamato.entity.filter.IntegerSearchTerm.MatchType.EXACT;
-import static ch.difty.scipamato.entity.filter.IntegerSearchTerm.MatchType.GREATER_OR_EQUAL;
-import static ch.difty.scipamato.entity.filter.IntegerSearchTerm.MatchType.GREATER_THAN;
-import static ch.difty.scipamato.entity.filter.IntegerSearchTerm.MatchType.LESS_OR_EQUAL;
-import static ch.difty.scipamato.entity.filter.IntegerSearchTerm.MatchType.LESS_THAN;
-import static ch.difty.scipamato.entity.filter.IntegerSearchTerm.MatchType.RANGE;
-import static org.assertj.core.api.Assertions.assertThat;
+import static ch.difty.scipamato.entity.filter.IntegerSearchTerm.MatchType.*;
+import static org.assertj.core.api.Assertions.*;
 
 import org.jooq.Condition;
 import org.junit.Test;

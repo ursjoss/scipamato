@@ -1,10 +1,8 @@
 package ch.difty.scipamato.persistance.jooq.search;
 
-import static ch.difty.scipamato.db.tables.SearchOrder.SEARCH_ORDER;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static ch.difty.scipamato.db.tables.SearchOrder.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;

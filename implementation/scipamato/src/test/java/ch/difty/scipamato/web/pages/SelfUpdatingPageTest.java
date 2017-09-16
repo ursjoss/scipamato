@@ -1,7 +1,7 @@
 package ch.difty.scipamato.web.pages;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;

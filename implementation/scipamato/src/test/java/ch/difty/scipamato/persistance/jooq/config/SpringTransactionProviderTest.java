@@ -1,11 +1,8 @@
 package ch.difty.scipamato.persistance.jooq.config;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-import static org.springframework.transaction.TransactionDefinition.PROPAGATION_NESTED;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.transaction.TransactionDefinition.*;
 
 import org.jooq.TransactionContext;
 import org.junit.After;

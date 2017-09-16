@@ -1,6 +1,6 @@
 package ch.difty.scipamato.persistance.jooq.paper;
 
-import static ch.difty.scipamato.db.tables.Paper.PAPER;
+import static ch.difty.scipamato.db.tables.Paper.*;
 
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;

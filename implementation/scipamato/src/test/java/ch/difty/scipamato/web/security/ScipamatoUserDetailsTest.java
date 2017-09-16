@@ -1,7 +1,6 @@
 package ch.difty.scipamato.web.security;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.extractProperty;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
 

@@ -1,6 +1,6 @@
 package ch.difty.scipamato.persistance.jooq.paper;
 
-import static ch.difty.scipamato.db.tables.Paper.PAPER;
+import static ch.difty.scipamato.db.tables.Paper.*;
 
 import java.util.List;
 

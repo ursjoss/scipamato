@@ -1,15 +1,15 @@
 package ch.difty.scipamato.persistance.jooq.search;
 
-import static ch.difty.scipamato.db.tables.Code.CODE;
-import static ch.difty.scipamato.db.tables.CodeClass.CODE_CLASS;
-import static ch.difty.scipamato.db.tables.CodeClassTr.CODE_CLASS_TR;
-import static ch.difty.scipamato.db.tables.CodeTr.CODE_TR;
-import static ch.difty.scipamato.db.tables.SearchCondition.SEARCH_CONDITION;
-import static ch.difty.scipamato.db.tables.SearchConditionCode.SEARCH_CONDITION_CODE;
-import static ch.difty.scipamato.db.tables.SearchExclusion.SEARCH_EXCLUSION;
-import static ch.difty.scipamato.db.tables.SearchOrder.SEARCH_ORDER;
-import static ch.difty.scipamato.db.tables.SearchTerm.SEARCH_TERM;
-import static org.jooq.impl.DSL.row;
+import static ch.difty.scipamato.db.tables.Code.*;
+import static ch.difty.scipamato.db.tables.CodeClass.*;
+import static ch.difty.scipamato.db.tables.CodeClassTr.*;
+import static ch.difty.scipamato.db.tables.CodeTr.*;
+import static ch.difty.scipamato.db.tables.SearchCondition.*;
+import static ch.difty.scipamato.db.tables.SearchConditionCode.*;
+import static ch.difty.scipamato.db.tables.SearchExclusion.*;
+import static ch.difty.scipamato.db.tables.SearchOrder.*;
+import static ch.difty.scipamato.db.tables.SearchTerm.*;
+import static org.jooq.impl.DSL.*;
 
 import java.util.ArrayList;
 import java.util.List;

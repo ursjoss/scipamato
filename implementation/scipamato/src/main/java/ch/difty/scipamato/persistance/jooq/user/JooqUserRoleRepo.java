@@ -1,6 +1,6 @@
 package ch.difty.scipamato.persistance.jooq.user;
 
-import static ch.difty.scipamato.db.tables.UserRole.USER_ROLE;
+import static ch.difty.scipamato.db.tables.UserRole.*;
 
 import java.util.List;
 

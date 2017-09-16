@@ -40,7 +40,7 @@
  */
 package ch.difty.scipamato.persistance.jooq.config;
 
-import static org.springframework.transaction.TransactionDefinition.PROPAGATION_NESTED;
+import static org.springframework.transaction.TransactionDefinition.*;
 
 import org.jooq.TransactionContext;
 import org.jooq.TransactionProvider;

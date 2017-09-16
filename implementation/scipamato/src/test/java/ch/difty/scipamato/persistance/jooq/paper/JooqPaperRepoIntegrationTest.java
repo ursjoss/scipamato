@@ -1,11 +1,9 @@
 package ch.difty.scipamato.persistance.jooq.paper;
 
-import static ch.difty.scipamato.db.Tables.PAPER;
-import static ch.difty.scipamato.db.Tables.PAPER_ATTACHMENT;
+import static ch.difty.scipamato.db.Tables.*;
 import static ch.difty.scipamato.db.tables.SearchExclusion.SEARCH_EXCLUSION;
-import static ch.difty.scipamato.persistance.jooq.TestDbConstants.MAX_ID_PREPOPULATED;
-import static ch.difty.scipamato.persistance.jooq.TestDbConstants.RECORD_COUNT_PREPOPULATED;
-import static org.assertj.core.api.Assertions.assertThat;
+import static ch.difty.scipamato.persistance.jooq.TestDbConstants.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;

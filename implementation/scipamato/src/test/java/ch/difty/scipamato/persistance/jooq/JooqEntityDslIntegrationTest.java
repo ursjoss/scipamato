@@ -1,7 +1,7 @@
 package ch.difty.scipamato.persistance.jooq;
 
-import static ch.difty.scipamato.db.Tables.PAPER;
-import static org.assertj.core.api.Assertions.assertThat;
+import static ch.difty.scipamato.db.Tables.*;
+import static org.assertj.core.api.Assertions.*;
 
 import org.jooq.DSLContext;
 import org.jooq.Result;

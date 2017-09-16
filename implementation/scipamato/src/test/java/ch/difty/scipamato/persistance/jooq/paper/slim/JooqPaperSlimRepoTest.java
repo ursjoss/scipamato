@@ -1,9 +1,8 @@
 package ch.difty.scipamato.persistance.jooq.paper.slim;
 
-import static ch.difty.scipamato.db.tables.Paper.PAPER;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static ch.difty.scipamato.db.tables.Paper.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;

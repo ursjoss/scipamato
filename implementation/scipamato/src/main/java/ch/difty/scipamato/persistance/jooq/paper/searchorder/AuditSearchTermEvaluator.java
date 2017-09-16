@@ -1,7 +1,7 @@
 package ch.difty.scipamato.persistance.jooq.paper.searchorder;
 
-import static ch.difty.scipamato.db.tables.Paper.PAPER;
-import static ch.difty.scipamato.db.tables.ScipamatoUser.SCIPAMATO_USER;
+import static ch.difty.scipamato.db.tables.Paper.*;
+import static ch.difty.scipamato.db.tables.ScipamatoUser.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

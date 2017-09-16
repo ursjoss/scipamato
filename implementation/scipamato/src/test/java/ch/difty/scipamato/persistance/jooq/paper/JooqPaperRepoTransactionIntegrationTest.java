@@ -1,10 +1,8 @@
 package ch.difty.scipamato.persistance.jooq.paper;
 
-import static ch.difty.scipamato.db.Tables.PAPER;
-import static ch.difty.scipamato.persistance.jooq.TestDbConstants.MAX_ID_PREPOPULATED;
-import static ch.difty.scipamato.persistance.jooq.TestDbConstants.RECORD_COUNT_PREPOPULATED;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static ch.difty.scipamato.db.Tables.*;
+import static ch.difty.scipamato.persistance.jooq.TestDbConstants.*;
+import static org.junit.Assert.*;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

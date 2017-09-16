@@ -1,7 +1,7 @@
 package ch.difty.scipamato.persistance.jooq;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.sql.Timestamp;
 

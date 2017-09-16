@@ -1,7 +1,7 @@
 package ch.difty.scipamato.web.jasper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.After;
 import org.mockito.Mock;

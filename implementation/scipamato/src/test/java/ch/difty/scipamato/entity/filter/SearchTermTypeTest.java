@@ -1,12 +1,7 @@
 package ch.difty.scipamato.entity.filter;
 
-import static ch.difty.scipamato.entity.filter.SearchTermType.AUDIT;
-import static ch.difty.scipamato.entity.filter.SearchTermType.BOOLEAN;
-import static ch.difty.scipamato.entity.filter.SearchTermType.INTEGER;
-import static ch.difty.scipamato.entity.filter.SearchTermType.STRING;
-import static ch.difty.scipamato.entity.filter.SearchTermType.values;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static ch.difty.scipamato.entity.filter.SearchTermType.*;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 

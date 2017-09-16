@@ -1,6 +1,6 @@
 package ch.difty.scipamato.web.jasper.review;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 

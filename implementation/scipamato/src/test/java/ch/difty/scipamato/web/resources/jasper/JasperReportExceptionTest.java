@@ -1,6 +1,6 @@
 package ch.difty.scipamato.web.resources.jasper;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
 import org.junit.Test;

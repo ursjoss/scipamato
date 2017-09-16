@@ -1,9 +1,7 @@
 package ch.difty.scipamato.persistance.jooq.user;
 
-import static ch.difty.scipamato.db.Tables.SCIPAMATO_USER;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.extractProperty;
-import static org.assertj.core.api.Assertions.fail;
+import static ch.difty.scipamato.db.Tables.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 

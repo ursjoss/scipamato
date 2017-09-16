@@ -1,7 +1,7 @@
 package ch.difty.scipamato.persistance.jooq.paper.searchorder;
 
-import static ch.difty.scipamato.db.tables.Paper.PAPER;
-import static ch.difty.scipamato.db.tables.PaperCode.PAPER_CODE;
+import static ch.difty.scipamato.db.tables.Paper.*;
+import static ch.difty.scipamato.db.tables.PaperCode.*;
 
 import java.util.Collection;
 import java.util.List;

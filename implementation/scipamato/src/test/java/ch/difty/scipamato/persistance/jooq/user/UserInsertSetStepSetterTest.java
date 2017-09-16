@@ -1,19 +1,8 @@
 package ch.difty.scipamato.persistance.jooq.user;
 
-import static ch.difty.scipamato.db.tables.ScipamatoUser.SCIPAMATO_USER;
-import static ch.difty.scipamato.persistance.jooq.RecordMapperTest.CREATED_BY;
-import static ch.difty.scipamato.persistance.jooq.RecordMapperTest.LAST_MOD_BY;
-import static ch.difty.scipamato.persistance.jooq.user.UserRecordMapperTest.EMAIL;
-import static ch.difty.scipamato.persistance.jooq.user.UserRecordMapperTest.ENABLED;
-import static ch.difty.scipamato.persistance.jooq.user.UserRecordMapperTest.FIRST_NAME;
-import static ch.difty.scipamato.persistance.jooq.user.UserRecordMapperTest.ID;
-import static ch.difty.scipamato.persistance.jooq.user.UserRecordMapperTest.LAST_NAME;
-import static ch.difty.scipamato.persistance.jooq.user.UserRecordMapperTest.PASSWORD;
-import static ch.difty.scipamato.persistance.jooq.user.UserRecordMapperTest.USER_NAME;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static ch.difty.scipamato.db.tables.ScipamatoUser.*;
+import static ch.difty.scipamato.persistance.jooq.user.UserRecordMapperTest.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 import org.mockito.Mock;

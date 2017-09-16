@@ -1,10 +1,7 @@
 package ch.difty.scipamato.entity.filter;
 
-import static ch.difty.scipamato.entity.IdScipamatoEntity.ID;
-import static ch.difty.scipamato.entity.Paper.DOI;
-import static ch.difty.scipamato.entity.Paper.FIRST_AUTHOR_OVERRIDDEN;
-import static ch.difty.scipamato.entity.Paper.NUMBER;
-import static org.assertj.core.api.Assertions.assertThat;
+import static ch.difty.scipamato.entity.Paper.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
 

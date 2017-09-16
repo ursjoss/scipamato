@@ -1,11 +1,7 @@
 package ch.difty.scipamato.auth;
 
-import static ch.difty.scipamato.auth.Role.ADMIN;
-import static ch.difty.scipamato.auth.Role.USER;
-import static ch.difty.scipamato.auth.Role.VIEWER;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.extractProperty;
-import static org.assertj.core.api.Assertions.fail;
+import static ch.difty.scipamato.auth.Role.*;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 

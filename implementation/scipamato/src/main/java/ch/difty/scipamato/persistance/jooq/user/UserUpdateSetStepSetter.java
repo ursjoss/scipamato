@@ -1,6 +1,6 @@
 package ch.difty.scipamato.persistance.jooq.user;
 
-import static ch.difty.scipamato.db.tables.ScipamatoUser.SCIPAMATO_USER;
+import static ch.difty.scipamato.db.tables.ScipamatoUser.*;
 
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
