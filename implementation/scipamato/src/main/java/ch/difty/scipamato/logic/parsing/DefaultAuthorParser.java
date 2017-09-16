@@ -8,8 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import org.apache.wicket.util.string.Strings;
-
 import ch.difty.scipamato.lib.AssertAs;
 
 /**
@@ -69,8 +67,8 @@ public class DefaultAuthorParser implements AuthorParser {
         final List<String> tokens = Arrays.asList(authorString.split(" +"));
         if (tokens.size() > 1) {
             final int i = getIndexOfFirstName(tokens);
-            firstName = Strings.join(" ", tokens.subList(i, tokens.size())).trim();
-            lastName = Strings.join(" ", tokens.subList(0, i)).trim();
+            firstName = String.join(" ", tokens.subList(i, tokens.size())).trim();
+            lastName = String.join(" ", tokens.subList(0, i)).trim();
         }
         return new Author(authorString, lastName, firstName);
     }
