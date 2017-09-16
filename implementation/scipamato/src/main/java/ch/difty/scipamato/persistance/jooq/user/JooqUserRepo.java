@@ -1,12 +1,11 @@
 package ch.difty.scipamato.persistance.jooq.user;
 
-import static ch.difty.scipamato.db.tables.ScipamatoUser.SCIPAMATO_USER;
+import static ch.difty.scipamato.db.tables.ScipamatoUser.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.slf4j.Logger;
@@ -32,7 +31,7 @@ import ch.difty.scipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.scipamato.persistance.jooq.UpdateSetStepSetter;
 
 /**
- * The repository to manage {@link User}s - including the nested list of {@link Roles}s.
+ * The repository to manage {@link User}s - including the nested list of Roles.
  *
  * @author u.joss
  */
