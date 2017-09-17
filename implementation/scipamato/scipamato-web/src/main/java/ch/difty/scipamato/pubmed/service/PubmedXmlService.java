@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.stereotype.Service;
 
-import ch.difty.scipamato.lib.AssertAs;
-import ch.difty.scipamato.lib.NullArgumentException;
+import ch.difty.scipamato.AssertAs;
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.pubmed.PubMed;
 import ch.difty.scipamato.pubmed.PubmedArticleSet;
 import ch.difty.scipamato.pubmed.entity.PubmedArticleFacade;

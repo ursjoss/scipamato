@@ -2,7 +2,7 @@ package ch.difty.scipamato.pubmed.entity;
 
 import java.util.List;
 
-import ch.difty.scipamato.lib.AssertAs;
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.pubmed.Article;
 import ch.difty.scipamato.pubmed.AuthorList;
 import ch.difty.scipamato.pubmed.ELocationID;

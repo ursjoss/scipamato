@@ -2,10 +2,10 @@ package ch.difty.scipamato.web.jasper.summarytable;
 
 import java.util.stream.Collectors;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.CodeClassId;
 import ch.difty.scipamato.entity.Paper;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.web.jasper.JasperEntity;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 

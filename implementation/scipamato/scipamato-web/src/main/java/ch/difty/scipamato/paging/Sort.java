@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.springframework.util.StringUtils;
 
-import ch.difty.scipamato.lib.AssertAs;
+import ch.difty.scipamato.AssertAs;
 
 /**
  * Sort specification offering a list of {@link SortProperty} items, each providing a name of the

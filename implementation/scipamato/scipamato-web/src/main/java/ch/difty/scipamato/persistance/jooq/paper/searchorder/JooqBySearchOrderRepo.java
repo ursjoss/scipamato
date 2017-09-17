@@ -14,6 +14,7 @@ import org.jooq.SelectConditionStep;
 import org.jooq.SortField;
 import org.jooq.impl.DSL;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.db.Tables;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.Code;
@@ -24,7 +25,6 @@ import ch.difty.scipamato.entity.filter.BooleanSearchTerm;
 import ch.difty.scipamato.entity.filter.IntegerSearchTerm;
 import ch.difty.scipamato.entity.filter.SearchCondition;
 import ch.difty.scipamato.entity.filter.StringSearchTerm;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.persistance.jooq.ConditionalSupplier;
 import ch.difty.scipamato.persistance.jooq.EntityRecordMapper;

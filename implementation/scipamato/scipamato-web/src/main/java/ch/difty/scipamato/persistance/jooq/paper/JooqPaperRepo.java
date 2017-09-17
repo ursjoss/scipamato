@@ -23,14 +23,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import ch.difty.scipamato.config.ApplicationProperties;
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.db.tables.records.PaperCodeRecord;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.PaperAttachment;
 import ch.difty.scipamato.entity.SearchOrder;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.lib.DateTimeService;
 import ch.difty.scipamato.lib.TranslationUtils;
 import ch.difty.scipamato.paging.PaginationContext;
@@ -40,6 +39,7 @@ import ch.difty.scipamato.persistance.jooq.JooqEntityRepo;
 import ch.difty.scipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.scipamato.persistance.jooq.UpdateSetStepSetter;
 import ch.difty.scipamato.persistance.jooq.paper.searchorder.PaperBackedSearchOrderRepository;
+import ch.difty.scipamato.config.ApplicationProperties;
 
 /**
  * The repository to manage {@link Paper}s - including the nested list of {@link Code}s.

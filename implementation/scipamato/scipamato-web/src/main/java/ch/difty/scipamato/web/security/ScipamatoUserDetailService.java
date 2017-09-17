@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.User;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.service.UserService;
 
 /**

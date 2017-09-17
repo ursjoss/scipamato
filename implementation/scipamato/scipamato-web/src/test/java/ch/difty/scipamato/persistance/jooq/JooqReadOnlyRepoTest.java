@@ -28,12 +28,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ch.difty.scipamato.config.ApplicationProperties;
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.IdScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
-import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.paging.Sort;
+import ch.difty.scipamato.config.ApplicationProperties;
 
 @RunWith(MockitoJUnitRunner.class)
 public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipamatoEntity<ID>, ID extends Number, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter> {

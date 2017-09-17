@@ -2,7 +2,7 @@ package ch.difty.scipamato.web.jasper;
 
 import java.io.Serializable;
 
-import ch.difty.scipamato.lib.NullArgumentException;
+import ch.difty.scipamato.NullArgumentException;
 
 public abstract class JasperEntity implements Serializable {
 

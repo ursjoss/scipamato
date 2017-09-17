@@ -13,10 +13,10 @@ import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
 import org.springframework.context.annotation.Profile;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.config.ApplicationProperties;
 import ch.difty.scipamato.entity.ScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.paging.PaginationContext;
 
 /**

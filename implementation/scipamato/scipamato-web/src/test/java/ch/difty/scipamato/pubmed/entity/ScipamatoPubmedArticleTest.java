@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.lib.NullArgumentException;
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.pubmed.Article;
 import ch.difty.scipamato.pubmed.ArticleTitle;
 import ch.difty.scipamato.pubmed.Journal;

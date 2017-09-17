@@ -3,8 +3,8 @@ package ch.difty.scipamato.persistance.jooq;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.ScipamatoEntity;
-import ch.difty.scipamato.lib.AssertAs;
 
 /**
  * Abstract base class for entity to record mappers that have audit fields.

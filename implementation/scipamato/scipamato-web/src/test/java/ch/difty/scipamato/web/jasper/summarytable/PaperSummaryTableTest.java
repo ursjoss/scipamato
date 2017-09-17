@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.lib.NullArgumentException;
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.web.jasper.JasperEntityTest;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 

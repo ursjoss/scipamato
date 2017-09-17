@@ -1,8 +1,8 @@
 package ch.difty.scipamato.persistance.jooq;
 
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.ScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
-import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.persistance.OptimisticLockingException;
 
 /**

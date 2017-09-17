@@ -1,5 +1,7 @@
 package ch.difty.scipamato.lib;
 
+import ch.difty.scipamato.AssertAs;
+
 public final class TranslationUtils {
 
     public static final String NOT_TRANSL = "not translated";

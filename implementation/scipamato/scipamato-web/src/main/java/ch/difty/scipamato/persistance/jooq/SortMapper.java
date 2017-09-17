@@ -12,8 +12,8 @@ import org.jooq.impl.TableImpl;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Component;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.ScipamatoEntity;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.lib.TranslationUtils;
 import ch.difty.scipamato.paging.Sort;
 

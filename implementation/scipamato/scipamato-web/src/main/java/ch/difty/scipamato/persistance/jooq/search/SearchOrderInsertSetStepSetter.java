@@ -6,10 +6,10 @@ import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.springframework.stereotype.Component;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.db.tables.records.SearchOrderRecord;
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.filter.SearchCondition;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.persistance.jooq.InsertSetStepSetter;
 
 /**

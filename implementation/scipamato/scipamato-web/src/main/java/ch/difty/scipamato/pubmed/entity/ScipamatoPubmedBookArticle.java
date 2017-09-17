@@ -3,7 +3,7 @@ package ch.difty.scipamato.pubmed.entity;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ch.difty.scipamato.lib.AssertAs;
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.pubmed.AuthorList;
 import ch.difty.scipamato.pubmed.BookDocument;
 import ch.difty.scipamato.pubmed.LocationLabel;

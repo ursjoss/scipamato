@@ -50,7 +50,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import ch.difty.scipamato.lib.AssertAs;
+import ch.difty.scipamato.AssertAs;
 
 /**
  * An example {@code TransactionProvider} implementing the {@link TransactionProvider} contract for use with Spring.

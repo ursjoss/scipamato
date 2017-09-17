@@ -1,10 +1,7 @@
 package ch.difty.scipamato.config;
 
-import ch.difty.scipamato.logic.parsing.AuthorParser;
-
 /**
- * Parses a property value to define the {@link AuthorParserStrategy} to be used.
- * @see AuthorParser
+ * Parses a property value to define the AuthorParserStrategy to be used.
  *
  * @author u.joss
  */

@@ -6,10 +6,10 @@ import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.springframework.stereotype.Component;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.Paper;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.persistance.jooq.InsertSetStepSetter;
 
 /**

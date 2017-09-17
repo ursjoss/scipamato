@@ -3,10 +3,10 @@ package ch.difty.scipamato.service;
 import java.util.List;
 import java.util.Optional;
 
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.PaperAttachment;
 import ch.difty.scipamato.entity.SearchOrder;
-import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.scipamato.pubmed.entity.PubmedArticleFacade;

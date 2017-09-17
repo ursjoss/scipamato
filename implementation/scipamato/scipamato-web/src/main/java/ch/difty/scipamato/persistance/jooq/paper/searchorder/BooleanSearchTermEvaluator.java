@@ -3,8 +3,8 @@ package ch.difty.scipamato.persistance.jooq.paper.searchorder;
 import org.jooq.Condition;
 import org.jooq.impl.DSL;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.filter.BooleanSearchTerm;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.lib.TranslationUtils;
 
 /**

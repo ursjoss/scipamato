@@ -1,10 +1,8 @@
-package ch.difty.scipamato.lib;
+package ch.difty.scipamato;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
-
-import ch.difty.scipamato.FinalClassTest;
 
 public class AssertAsTest extends FinalClassTest<AssertAs> {
 

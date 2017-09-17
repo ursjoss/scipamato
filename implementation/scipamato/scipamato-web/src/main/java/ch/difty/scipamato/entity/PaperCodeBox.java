@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.collections4.list.UnmodifiableList;
 import org.springframework.util.CollectionUtils;
 
-import ch.difty.scipamato.lib.AssertAs;
+import ch.difty.scipamato.AssertAs;
 
 /**
  * The paper specific implementation of the {@link CodeBox} interface.

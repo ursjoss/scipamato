@@ -14,8 +14,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.User;
-import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.service.UserService;
 
 @RunWith(MockitoJUnitRunner.class)

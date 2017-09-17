@@ -1,7 +1,7 @@
 package ch.difty.scipamato.web.jasper.literaturereview;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.Paper;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.web.jasper.JasperEntity;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 

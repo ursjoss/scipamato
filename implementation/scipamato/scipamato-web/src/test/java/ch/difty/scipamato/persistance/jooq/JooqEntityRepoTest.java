@@ -26,11 +26,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.IdScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.lib.DateTimeService;
 import ch.difty.scipamato.lib.FrozenDateTimeService;
-import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.persistance.OptimisticLockingException;
 

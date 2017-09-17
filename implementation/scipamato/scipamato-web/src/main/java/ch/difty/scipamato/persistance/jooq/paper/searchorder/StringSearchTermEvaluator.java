@@ -4,9 +4,9 @@ import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.impl.DSL;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.filter.StringSearchTerm;
 import ch.difty.scipamato.entity.filter.StringSearchTerm.Token;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.lib.TranslationUtils;
 import ch.difty.scipamato.persistance.jooq.ConditionalSupplier;
 

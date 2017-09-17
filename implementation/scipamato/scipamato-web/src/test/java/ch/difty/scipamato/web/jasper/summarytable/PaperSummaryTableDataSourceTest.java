@@ -9,9 +9,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.CodeClassId;
-import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.web.jasper.PaperDataSourceTest;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 import net.sf.jasperreports.engine.JRDataSource;

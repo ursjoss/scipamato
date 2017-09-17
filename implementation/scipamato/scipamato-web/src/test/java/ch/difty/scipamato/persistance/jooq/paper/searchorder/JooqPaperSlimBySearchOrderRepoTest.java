@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.SearchOrder;
@@ -15,7 +16,6 @@ import ch.difty.scipamato.entity.filter.SearchCondition;
 import ch.difty.scipamato.entity.filter.SearchTerm;
 import ch.difty.scipamato.entity.filter.SearchTermType;
 import ch.difty.scipamato.entity.projection.PaperSlim;
-import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.scipamato.persistance.jooq.paper.slim.PaperSlimRecordMapper;
 

@@ -7,8 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.CodeClassId;
-import ch.difty.scipamato.lib.NullArgumentException;
 
 public class JooqCodeRepoTest {
 

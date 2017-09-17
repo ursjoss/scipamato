@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.difty.scipamato.lib.NullArgumentException;
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.paging.Sort.Direction;
 import ch.difty.scipamato.paging.Sort.SortProperty;
 

@@ -9,8 +9,8 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.CodeClass;
-import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.service.CodeClassService;
 
 public class CodeClassModelTest extends ModelTest {

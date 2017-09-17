@@ -8,8 +8,8 @@ import java.util.Arrays;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.filter.PaperSlimFilter;
-import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.web.jasper.PaperDataSourceTest;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 import ch.difty.scipamato.web.pages.paper.provider.AbstractPaperSlimProvider;

@@ -1,4 +1,4 @@
-package ch.difty.scipamato.lib;
+package ch.difty.scipamato;
 
 public final class AssertAs {
 

@@ -18,10 +18,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.ScipamatoSession;
 import ch.difty.scipamato.auth.Roles;
 import ch.difty.scipamato.entity.SearchOrder;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.persistance.OptimisticLockingException;
 import ch.difty.scipamato.service.SearchOrderService;
 import ch.difty.scipamato.web.PageParameterNames;

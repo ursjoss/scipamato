@@ -1,7 +1,7 @@
 package ch.difty.scipamato.entity.filter;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.IdScipamatoEntity;
-import ch.difty.scipamato.lib.AssertAs;
 
 /**
  * Implementations of {@link SearchTerm} accept a {@code fieldName} as key and a {@code rawSearchTerm} as value.

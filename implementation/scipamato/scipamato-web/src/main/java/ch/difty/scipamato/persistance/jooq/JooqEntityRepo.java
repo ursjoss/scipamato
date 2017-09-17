@@ -15,11 +15,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.config.ApplicationProperties;
 import ch.difty.scipamato.entity.ScipamatoEntity;
 import ch.difty.scipamato.entity.User;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.lib.DateTimeService;
 import ch.difty.scipamato.persistance.OptimisticLockingException;
 import ch.difty.scipamato.persistance.OptimisticLockingException.Type;

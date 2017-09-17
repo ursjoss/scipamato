@@ -7,8 +7,8 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvid
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.filter.SearchCondition;
-import ch.difty.scipamato.lib.AssertAs;
 
 /**
  * Builds up the {@link SearchCondition} provider based on the model passed into the constructor.

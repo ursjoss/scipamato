@@ -8,7 +8,7 @@ import javax.validation.ConstraintViolation;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.lib.NullArgumentException;
+import ch.difty.scipamato.NullArgumentException;
 
 public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 

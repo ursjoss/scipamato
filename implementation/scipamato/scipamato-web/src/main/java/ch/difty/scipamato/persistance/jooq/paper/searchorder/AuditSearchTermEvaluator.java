@@ -13,11 +13,11 @@ import org.jooq.Record1;
 import org.jooq.SelectConditionStep;
 import org.jooq.impl.DSL;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.AuditSearchTerm;
 import ch.difty.scipamato.entity.filter.AuditSearchTerm.MatchType;
 import ch.difty.scipamato.entity.filter.AuditSearchTerm.Token;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.persistance.jooq.ConditionalSupplier;
 
 /**

@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.IdScipamatoEntity;
 import ch.difty.scipamato.entity.ScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
-import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.paging.PaginationContext;
 
 /**

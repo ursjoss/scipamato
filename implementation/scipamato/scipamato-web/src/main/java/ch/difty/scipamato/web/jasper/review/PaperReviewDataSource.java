@@ -1,9 +1,9 @@
 package ch.difty.scipamato.web.jasper.review;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.PaperSlimFilter;
 import ch.difty.scipamato.entity.projection.PaperSlim;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.service.PaperService;
 import ch.difty.scipamato.web.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;

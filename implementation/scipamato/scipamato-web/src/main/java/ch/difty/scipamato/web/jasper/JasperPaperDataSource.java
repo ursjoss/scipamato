@@ -7,9 +7,9 @@ import java.util.HashMap;
 import org.apache.wicket.util.io.ByteArrayOutputStream;
 import org.wicketstuff.jasperreports.JRConcreteResource;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.PaperSlimFilter;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRDataSource;

@@ -9,8 +9,8 @@ import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.junit.Test;
 
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.ScipamatoEntity;
-import ch.difty.scipamato.lib.NullArgumentException;
 
 public abstract class RecordMapperTest<R extends Record, E extends ScipamatoEntity> {
 

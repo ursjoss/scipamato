@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.lib.NullArgumentException;
+import ch.difty.scipamato.NullArgumentException;
 
 public class PaperCodeBoxTest {
 

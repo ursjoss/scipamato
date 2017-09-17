@@ -35,6 +35,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.ScipamatoSession;
 import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.CodeBoxAware;
@@ -42,7 +43,6 @@ import ch.difty.scipamato.entity.CodeClass;
 import ch.difty.scipamato.entity.CodeClassId;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.PaperAttachment;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.navigator.ItemNavigator;
 import ch.difty.scipamato.web.component.SerializableSupplier;
 import ch.difty.scipamato.web.jasper.JasperPaperDataSource;

@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import ch.difty.scipamato.config.ApplicationProperties;
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.db.tables.records.SearchConditionCodeRecord;
 import ch.difty.scipamato.db.tables.records.SearchConditionRecord;
 import ch.difty.scipamato.db.tables.records.SearchOrderRecord;
@@ -43,7 +43,6 @@ import ch.difty.scipamato.entity.filter.IntegerSearchTerm;
 import ch.difty.scipamato.entity.filter.SearchCondition;
 import ch.difty.scipamato.entity.filter.SearchTerm;
 import ch.difty.scipamato.entity.filter.StringSearchTerm;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.lib.DateTimeService;
 import ch.difty.scipamato.lib.TranslationUtils;
 import ch.difty.scipamato.persistance.jooq.GenericFilterConditionMapper;
@@ -51,6 +50,7 @@ import ch.difty.scipamato.persistance.jooq.InsertSetStepSetter;
 import ch.difty.scipamato.persistance.jooq.JooqEntityRepo;
 import ch.difty.scipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.scipamato.persistance.jooq.UpdateSetStepSetter;
+import ch.difty.scipamato.config.ApplicationProperties;
 
 /**
  * The repository to manage {@link SearchOrder}s - including the nested list of {@link SearchCondition}s and excluded paper ids.

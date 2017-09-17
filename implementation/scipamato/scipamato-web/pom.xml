@@ -30,11 +30,23 @@
         <feign.version>9.5.0</feign.version>
 
         <!-- Plugin versions -->
-        <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <property-file>src/main/resources/application.properties</property-file>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-logic</artifactId>
+        </dependency>
+
         <!-- spring-boot starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -45,6 +57,10 @@
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -299,6 +315,7 @@
             <groupId>pl.pragmatists</groupId>
             <artifactId>JUnitParams</artifactId>
             <version>1.1.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -550,120 +567,6 @@
             </resource>
         </resources>
 
-        <pluginManagement>
-            <plugins>
-                <!-- Reads properties from the external application property file and makes them accessible to other maven plugins during the maven build, thus avoiding duplicate configurations. -->
-                <!-- * jooq-codegen-maven plugin using DB schema and login properties (spring.datasource.hikari.*, db.schema) -->
-                <!-- * flyway-maven-plugin using db and login properites (flyway.*) -->
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>properties-maven-plugin</artifactId>
-                    <version>${properties-maven-plugin.version}</version>
-                </plugin>
-
-                <!-- Flyway Database migration Configuration -->
-                <!-- properties are published from application.properties via properties-maven-plugin -->
-                <plugin>
-                    <groupId>org.flywaydb</groupId>
-                    <artifactId>flyway-maven-plugin</artifactId>
-                    <version>${flyway.version}</version>
-                    <configuration>
-                        <url>${flyway.url}</url>
-                        <user>${flyway.user}</user>
-                        <password>${flyway.password}</password>
-                    </configuration>
-                </plugin>
-
-                <!-- The jOOQ code generator plugin, creating the type safe java representation of the database -->
-                <!-- see https://www.jooq.org/doc/3.9/manual/code-generation/codegen-configuration/ -->
-                <!-- Some configuration properties are published from application.properties via properties-maven-plugin -->
-                <plugin>
-                    <groupId>org.jooq</groupId>
-                    <artifactId>jooq-codegen-maven</artifactId>
-                    <version>${org.jooq.version}</version><!--$NO-MVN-MAN-VER$ -->
-                </plugin>
-
-                <!-- jaxb2 maven plugin to generate the java classes from the Pubmed dtd -->
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>jaxb2-maven-plugin</artifactId>
-                    <version>2.3.1</version>
-                    <configuration>
-                        <packageName>ch.difty.scipamato.pubmed</packageName>
-                        <sourceType>dtd</sourceType>
-                        <sources>
-                            <source>src/main/dtd</source>
-                        </sources>
-                    </configuration>
-                </plugin>
-
-                <!-- have actuator report the git version the project was built with (http://localhost:8080/actuator/info) -->
-                <plugin>
-                    <groupId>pl.project13.maven</groupId>
-                    <artifactId>git-commit-id-plugin</artifactId>
-                    <configuration>
-                        <dotGitDirectory>${project.basedir}../../.git</dotGitDirectory>
-                        <verbose>true</verbose>
-                    </configuration>
-                </plugin>
-
-                <!-- spring-boot-maven-plugin - in case you're running mvn spring-boot:run -->
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <configuration>
-                        <executable>true</executable>
-                        <profiles>
-                            <profile>DB_JOOQ</profile>
-                        </profiles>
-                    </configuration>
-                </plugin>
-
-                <!-- Maven utility plugins for various purposes -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <!-- By default do not run page tests and integration tests -->
-                        <excludes>
-                            <exclude>${surefire.testclass.pt}</exclude>
-                            <exclude>${surefire.testclass.it}</exclude>
-                        </excludes>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.7.9</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.sonarsource.scanner.maven</groupId>
-                    <artifactId>sonar-maven-plugin</artifactId>
-                    <version>3.3.0.603</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>2.5.3</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                            <configuration> <!-- add this to disable checking -->
-                                <additionalparam>-Xdoclint:none</additionalparam>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-
         <plugins>
             <!-- publish db specific properties from property files for the Flyway and jOOQ plugins -->
             <plugin>
@@ -685,9 +588,16 @@
             </plugin>
 
             <!-- Flyway database migration -->
+            <!-- properties are published from application.properties via properties-maven-plugin -->
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
+                <configuration>
+                    <url>${flyway.url}</url>
+                    <user>${flyway.user}</user>
+                    <password>${flyway.password}</password>
+                </configuration>
                 <!-- Execution of the Flyway plugin in the "generate-sources" phase to allow the jOOQ code generator to take over -->
                 <executions>
                     <execution>
@@ -699,7 +609,9 @@
                 </executions>
             </plugin>
 
-            <!-- The jOOQ code generator plugin -->
+            <!-- The jOOQ code generator plugin, creating the type safe java representation of the database -->
+            <!-- see https://www.jooq.org/doc/3.9/manual/code-generation/codegen-configuration/ -->
+            <!-- Some configuration properties are published from application.properties via properties-maven-plugin -->
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
@@ -744,6 +656,14 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>2.3.1</version>
+                <configuration>
+                    <packageName>ch.difty.scipamato.pubmed</packageName>
+                    <sourceType>dtd</sourceType>
+                    <sources>
+                        <source>src/main/dtd</source>
+                    </sources>
+                </configuration>
                 <executions>
                     <execution>
                         <id>xjc</id>
@@ -758,12 +678,22 @@
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
+                <configuration>
+                    <dotGitDirectory>${project.basedir}../../.git</dotGitDirectory>
+                    <verbose>true</verbose>
+                </configuration>
             </plugin>
 
             <!-- spring-boot-maven-plugin - in case you're running mvn spring-boot:run -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                    <profiles>
+                        <profile>DB_JOOQ</profile>
+                    </profiles>
+                </configuration>
             </plugin>
 
             <!-- Assist eclipse in recognizing the generates sources (from jOOQ and jaxb) as source files -->
@@ -785,24 +715,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!-- Maven utility plugins for various purposes -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

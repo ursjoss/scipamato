@@ -3,7 +3,7 @@ package ch.difty.scipamato.service;
 import java.util.List;
 import java.util.Optional;
 
-import ch.difty.scipamato.lib.NullArgumentException;
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.pubmed.entity.PubmedArticleFacade;
 
 /**

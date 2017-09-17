@@ -12,6 +12,7 @@ import org.jooq.TableField;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.db.tables.records.SearchOrderRecord;
 import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.Paper;
@@ -19,7 +20,6 @@ import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.filter.SearchCondition;
 import ch.difty.scipamato.entity.filter.SearchTerm;
 import ch.difty.scipamato.entity.filter.SearchTermType;
-import ch.difty.scipamato.lib.NullArgumentException;
 import ch.difty.scipamato.persistance.jooq.EntityRepository;
 import ch.difty.scipamato.persistance.jooq.JooqEntityRepoTest;
 

@@ -5,8 +5,8 @@ import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.impl.DSL;
 
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.filter.IntegerSearchTerm;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.lib.TranslationUtils;
 
 /**

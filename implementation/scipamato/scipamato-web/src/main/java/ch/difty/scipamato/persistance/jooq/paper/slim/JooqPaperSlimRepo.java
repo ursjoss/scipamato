@@ -9,17 +9,17 @@ import org.jooq.TableField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import ch.difty.scipamato.config.ApplicationProperties;
+import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.projection.PaperSlim;
-import ch.difty.scipamato.lib.AssertAs;
 import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.persistance.jooq.GenericFilterConditionMapper;
 import ch.difty.scipamato.persistance.jooq.JooqReadOnlyRepo;
 import ch.difty.scipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.scipamato.persistance.jooq.paper.searchorder.PaperSlimBackedSearchOrderRepository;
+import ch.difty.scipamato.config.ApplicationProperties;
 
 @Repository
 public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, Long, ch.difty.scipamato.db.tables.Paper, PaperSlimRecordMapper, PaperFilter> implements PaperSlimRepository {
