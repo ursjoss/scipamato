@@ -31,8 +31,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.IdScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
-import ch.difty.scipamato.paging.PaginationContext;
-import ch.difty.scipamato.paging.Sort;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.Sort;
 import ch.difty.scipamato.config.ApplicationProperties;
 
 @RunWith(MockitoJUnitRunner.class)

@@ -7,7 +7,7 @@ import org.jooq.SortField;
 import org.jooq.impl.TableImpl;
 
 import ch.difty.scipamato.entity.ScipamatoEntity;
-import ch.difty.scipamato.paging.Sort;
+import ch.difty.scipamato.persistence.paging.Sort;
 
 /**
  * Implementations of this interface map sorting specifications into the jOOQ specific {@link SortField}s.

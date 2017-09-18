@@ -6,7 +6,7 @@ import java.util.List;
 import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.ScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
-import ch.difty.scipamato.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 /**
  * The generic repository interface for reading-only entity repository methods.

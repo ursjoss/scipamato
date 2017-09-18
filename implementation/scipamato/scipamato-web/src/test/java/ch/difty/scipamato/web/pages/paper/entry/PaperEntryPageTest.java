@@ -16,10 +16,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.logic.parsing.AuthorParserFactory;
-import ch.difty.scipamato.persistance.OptimisticLockingException;
-import ch.difty.scipamato.persistance.OptimisticLockingException.Type;
-import ch.difty.scipamato.service.CodeClassService;
-import ch.difty.scipamato.service.CodeService;
+import ch.difty.scipamato.persistence.CodeClassService;
+import ch.difty.scipamato.persistence.CodeService;
+import ch.difty.scipamato.persistence.OptimisticLockingException;
+import ch.difty.scipamato.persistence.OptimisticLockingException.Type;
 import ch.difty.scipamato.web.pages.SelfUpdatingPageTest;
 import ch.difty.scipamato.web.panel.paper.PaperPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;

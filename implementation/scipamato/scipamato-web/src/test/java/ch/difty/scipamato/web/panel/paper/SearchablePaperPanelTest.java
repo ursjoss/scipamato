@@ -8,9 +8,9 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.junit.Test;
 
+import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.entity.filter.SearchCondition;
-import ch.difty.scipamato.paging.PaginationContext;
-import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, SearchablePaperPanel> {
 

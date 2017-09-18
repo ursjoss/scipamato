@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.CodeClassId;
-import ch.difty.scipamato.service.CodeService;
+import ch.difty.scipamato.persistence.CodeService;
 
 /**
  * jOOQ specific implementation of the {@link CodeService} interface.

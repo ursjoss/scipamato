@@ -21,9 +21,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.filter.SearchCondition;
-import ch.difty.scipamato.paging.PaginationContext;
-import ch.difty.scipamato.persistance.jooq.search.SearchOrderFilter;
-import ch.difty.scipamato.service.SearchOrderService;
+import ch.difty.scipamato.entity.filter.SearchOrderFilter;
+import ch.difty.scipamato.persistence.SearchOrderService;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 import ch.difty.scipamato.web.panel.PanelTest;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;

@@ -30,15 +30,16 @@ import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.PaperAttachment;
 import ch.difty.scipamato.entity.SearchOrder;
+import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.lib.DateTimeService;
 import ch.difty.scipamato.lib.TranslationUtils;
-import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.persistance.jooq.GenericFilterConditionMapper;
 import ch.difty.scipamato.persistance.jooq.InsertSetStepSetter;
 import ch.difty.scipamato.persistance.jooq.JooqEntityRepo;
 import ch.difty.scipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.scipamato.persistance.jooq.UpdateSetStepSetter;
 import ch.difty.scipamato.persistance.jooq.paper.searchorder.PaperBackedSearchOrderRepository;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 import ch.difty.scipamato.config.ApplicationProperties;
 
 /**

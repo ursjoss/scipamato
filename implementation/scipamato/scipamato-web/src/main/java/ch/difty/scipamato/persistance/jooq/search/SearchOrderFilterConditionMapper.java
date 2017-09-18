@@ -7,6 +7,7 @@ import java.util.List;
 import org.jooq.Condition;
 import org.jooq.impl.DSL;
 
+import ch.difty.scipamato.entity.filter.SearchOrderFilter;
 import ch.difty.scipamato.persistance.jooq.AbstractFilterConditionMapper;
 import ch.difty.scipamato.persistance.jooq.FilterConditionMapper;
 

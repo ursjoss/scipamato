@@ -16,11 +16,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.filter.SearchCondition;
-import ch.difty.scipamato.paging.PaginationContext;
-import ch.difty.scipamato.persistance.jooq.search.SearchOrderFilter;
-import ch.difty.scipamato.service.CodeClassService;
-import ch.difty.scipamato.service.CodeService;
-import ch.difty.scipamato.service.SearchOrderService;
+import ch.difty.scipamato.entity.filter.SearchOrderFilter;
+import ch.difty.scipamato.persistence.CodeClassService;
+import ch.difty.scipamato.persistence.CodeService;
+import ch.difty.scipamato.persistence.SearchOrderService;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 import ch.difty.scipamato.web.pages.BasePageTest;
 import ch.difty.scipamato.web.panel.paper.SearchablePaperPanel;
 

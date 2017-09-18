@@ -24,12 +24,13 @@ import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.SearchOrder;
-import ch.difty.scipamato.paging.PaginationContext;
-import ch.difty.scipamato.paging.Sort;
-import ch.difty.scipamato.paging.Sort.Direction;
+import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.persistance.jooq.EntityRepository;
 import ch.difty.scipamato.persistance.jooq.JooqEntityRepoTest;
 import ch.difty.scipamato.persistance.jooq.paper.searchorder.PaperBackedSearchOrderRepository;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.Sort;
+import ch.difty.scipamato.persistence.paging.Sort.Direction;
 
 public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Long, ch.difty.scipamato.db.tables.Paper, PaperRecordMapper, PaperFilter> {
 

@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.auth.Role;
 import ch.difty.scipamato.entity.User;
-import ch.difty.scipamato.persistance.OptimisticLockingException;
 import ch.difty.scipamato.persistance.jooq.JooqBaseIntegrationTest;
+import ch.difty.scipamato.persistence.OptimisticLockingException;
 
 /**
  * Note: The test will insert some records into the DB. It will try to wipe those records after the test suite terminates.

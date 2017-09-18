@@ -20,9 +20,9 @@ import com.google.common.base.Strings;
 
 import ch.difty.scipamato.ScipamatoSession;
 import ch.difty.scipamato.auth.Roles;
-import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
-import ch.difty.scipamato.service.PubmedImporter;
-import ch.difty.scipamato.service.ServiceResult;
+import ch.difty.scipamato.entity.filter.PaperFilter;
+import ch.difty.scipamato.persistence.PubmedImporter;
+import ch.difty.scipamato.persistence.ServiceResult;
 import ch.difty.scipamato.web.config.Cookie;
 import ch.difty.scipamato.web.pages.BasePage;
 import ch.difty.scipamato.web.pages.paper.entry.PaperEntryPage;

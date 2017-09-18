@@ -26,8 +26,8 @@ import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.
 
 import ch.difty.scipamato.ScipamatoApplication;
 import ch.difty.scipamato.lib.DateTimeService;
-import ch.difty.scipamato.service.PaperService;
-import ch.difty.scipamato.service.PaperSlimService;
+import ch.difty.scipamato.persistence.PaperService;
+import ch.difty.scipamato.persistence.PaperSlimService;
 import ch.difty.scipamato.web.pages.login.LoginPage;
 import ch.difty.scipamato.web.pages.paper.list.PaperListPage;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;

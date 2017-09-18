@@ -21,9 +21,9 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.Paper;
-import ch.difty.scipamato.paging.Sort;
-import ch.difty.scipamato.paging.Sort.Direction;
-import ch.difty.scipamato.paging.Sort.SortProperty;
+import ch.difty.scipamato.persistence.paging.Sort;
+import ch.difty.scipamato.persistence.paging.Sort.Direction;
+import ch.difty.scipamato.persistence.paging.Sort.SortProperty;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SortMapperTest {

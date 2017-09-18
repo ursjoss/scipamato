@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import ch.difty.scipamato.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.pubmed.PubmedArticleSet;
-import ch.difty.scipamato.pubmed.entity.PubmedArticleFacade;
 import ch.difty.scipamato.pubmed.service.PubmedXmlService;
 
 @RunWith(SpringRunner.class)

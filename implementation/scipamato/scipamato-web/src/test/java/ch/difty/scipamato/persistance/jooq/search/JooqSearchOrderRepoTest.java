@@ -18,6 +18,7 @@ import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.filter.SearchCondition;
+import ch.difty.scipamato.entity.filter.SearchOrderFilter;
 import ch.difty.scipamato.entity.filter.SearchTerm;
 import ch.difty.scipamato.entity.filter.SearchTermType;
 import ch.difty.scipamato.persistance.jooq.EntityRepository;

@@ -27,9 +27,9 @@ import ch.difty.scipamato.pubmed.MeshHeadingList;
 import ch.difty.scipamato.pubmed.Month;
 import ch.difty.scipamato.pubmed.Pagination;
 import ch.difty.scipamato.pubmed.PubmedArticle;
+import ch.difty.scipamato.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.pubmed.PubmedArticleSet;
 import ch.difty.scipamato.pubmed.Year;
-import ch.difty.scipamato.pubmed.entity.PubmedArticleFacade;
 
 public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest {
 

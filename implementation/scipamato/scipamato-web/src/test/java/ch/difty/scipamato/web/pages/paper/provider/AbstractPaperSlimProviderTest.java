@@ -24,9 +24,9 @@ import ch.difty.scipamato.ScipamatoApplication;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.PaperSlimFilter;
 import ch.difty.scipamato.entity.projection.PaperSlim;
-import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.persistance.jooq.paper.JooqPaperService;
 import ch.difty.scipamato.persistance.jooq.paper.slim.JooqPaperSlimService;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -8,7 +8,7 @@ import org.apache.wicket.util.string.StringValue;
 import ch.difty.scipamato.auth.Roles;
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.filter.SearchCondition;
-import ch.difty.scipamato.service.SearchOrderService;
+import ch.difty.scipamato.persistence.SearchOrderService;
 import ch.difty.scipamato.web.PageParameterNames;
 import ch.difty.scipamato.web.pages.BasePage;
 import ch.difty.scipamato.web.panel.paper.SearchablePaperPanel;

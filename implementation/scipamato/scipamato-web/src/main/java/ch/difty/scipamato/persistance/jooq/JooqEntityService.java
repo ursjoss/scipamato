@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.difty.scipamato.entity.IdScipamatoEntity;
 import ch.difty.scipamato.entity.ScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
-import ch.difty.scipamato.service.EntityService;
+import ch.difty.scipamato.persistence.EntityService;
 
 /**
  * Abstract base repository class providing the fundamental functionality of a JooqService

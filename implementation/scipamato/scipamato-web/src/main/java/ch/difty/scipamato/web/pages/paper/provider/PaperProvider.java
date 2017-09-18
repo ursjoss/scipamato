@@ -11,11 +11,11 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.entity.Paper;
-import ch.difty.scipamato.paging.PaginationContext;
+import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.paging.PaginationRequest;
-import ch.difty.scipamato.paging.Sort.Direction;
-import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
-import ch.difty.scipamato.service.PaperService;
+import ch.difty.scipamato.persistence.PaperService;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.Sort.Direction;
 
 /**
  * The data provider providing the wicket components access to the persisted paper data

@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.db.tables.records.ScipamatoUserRecord;
 import ch.difty.scipamato.entity.User;
+import ch.difty.scipamato.entity.filter.UserFilter;
 import ch.difty.scipamato.persistance.jooq.EntityRepository;
 import ch.difty.scipamato.persistance.jooq.JooqEntityRepoTest;
 

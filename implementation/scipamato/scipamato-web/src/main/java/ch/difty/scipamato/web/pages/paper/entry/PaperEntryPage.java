@@ -17,8 +17,8 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.auth.Roles;
 import ch.difty.scipamato.entity.Paper;
-import ch.difty.scipamato.persistance.OptimisticLockingException;
-import ch.difty.scipamato.service.PaperService;
+import ch.difty.scipamato.persistence.OptimisticLockingException;
+import ch.difty.scipamato.persistence.PaperService;
 import ch.difty.scipamato.web.PageParameterNames;
 import ch.difty.scipamato.web.pages.SelfUpdatingPage;
 import ch.difty.scipamato.web.panel.paper.EditablePaperPanel;

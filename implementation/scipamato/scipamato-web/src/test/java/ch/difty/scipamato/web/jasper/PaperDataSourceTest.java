@@ -8,7 +8,7 @@ import org.mockito.Mock;
 
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.SearchOrder;
-import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
+import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.web.WicketTest;
 import ch.difty.scipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import net.sf.jasperreports.engine.JRDataSource;

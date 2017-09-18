@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.entity.User;
-import ch.difty.scipamato.paging.PaginationContext;
-import ch.difty.scipamato.service.UserService;
+import ch.difty.scipamato.entity.filter.UserFilter;
+import ch.difty.scipamato.persistence.UserService;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 /**
  * jOOQ specific implementation of the {@link UserService} interface.

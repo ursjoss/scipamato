@@ -25,10 +25,10 @@ import ch.difty.scipamato.entity.filter.BooleanSearchTerm;
 import ch.difty.scipamato.entity.filter.IntegerSearchTerm;
 import ch.difty.scipamato.entity.filter.SearchCondition;
 import ch.difty.scipamato.entity.filter.StringSearchTerm;
-import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.persistance.jooq.ConditionalSupplier;
 import ch.difty.scipamato.persistance.jooq.EntityRecordMapper;
 import ch.difty.scipamato.persistance.jooq.JooqSortMapper;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 /**
  * Common abstract base class for the paper or paperSlim specific repository implementations to find those by {@link SearchOrder}.

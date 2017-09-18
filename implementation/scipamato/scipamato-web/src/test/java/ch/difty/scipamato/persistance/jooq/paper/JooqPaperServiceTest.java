@@ -15,8 +15,10 @@ import org.mockito.Mockito;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.PaperAttachment;
 import ch.difty.scipamato.entity.SearchOrder;
-import ch.difty.scipamato.paging.PaginationContext;
+import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.persistance.jooq.AbstractServiceTest;
+import ch.difty.scipamato.persistence.ServiceResult;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 import ch.difty.scipamato.pubmed.Article;
 import ch.difty.scipamato.pubmed.ArticleTitle;
 import ch.difty.scipamato.pubmed.Journal;
@@ -26,9 +28,8 @@ import ch.difty.scipamato.pubmed.MedlineJournalInfo;
 import ch.difty.scipamato.pubmed.PMID;
 import ch.difty.scipamato.pubmed.PubDate;
 import ch.difty.scipamato.pubmed.PubmedArticle;
-import ch.difty.scipamato.pubmed.entity.PubmedArticleFacade;
-import ch.difty.scipamato.pubmed.entity.ScipamatoPubmedArticle;
-import ch.difty.scipamato.service.ServiceResult;
+import ch.difty.scipamato.pubmed.PubmedArticleFacade;
+import ch.difty.scipamato.pubmed.ScipamatoPubmedArticle;
 
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
 

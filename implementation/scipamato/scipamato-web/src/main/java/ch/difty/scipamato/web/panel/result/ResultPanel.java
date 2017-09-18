@@ -20,7 +20,7 @@ import ch.difty.scipamato.ScipamatoSession;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.PaperSlimFilter;
 import ch.difty.scipamato.entity.projection.PaperSlim;
-import ch.difty.scipamato.service.PaperService;
+import ch.difty.scipamato.persistence.PaperService;
 import ch.difty.scipamato.web.component.SerializableConsumer;
 import ch.difty.scipamato.web.component.data.LinkIconColumn;
 import ch.difty.scipamato.web.component.table.column.ClickablePropertyColumn;

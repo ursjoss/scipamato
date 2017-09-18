@@ -14,10 +14,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.SearchOrder;
+import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.entity.projection.PaperSlim;
-import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.persistance.jooq.AbstractServiceTest;
-import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSlim, PaperSlimRepository> {

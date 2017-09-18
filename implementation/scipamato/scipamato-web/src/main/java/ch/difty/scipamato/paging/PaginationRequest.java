@@ -1,6 +1,8 @@
 package ch.difty.scipamato.paging;
 
-import ch.difty.scipamato.paging.Sort.Direction;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.Sort;
+import ch.difty.scipamato.persistence.paging.Sort.Direction;
 
 /**
  * The {@link PaginationRequest} serves to define both pagination and sorting specifications and pass it

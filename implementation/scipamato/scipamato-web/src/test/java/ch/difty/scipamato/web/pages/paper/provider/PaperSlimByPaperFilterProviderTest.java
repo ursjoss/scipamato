@@ -13,8 +13,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import ch.difty.scipamato.entity.Paper;
-import ch.difty.scipamato.paging.PaginationContext;
-import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
+import ch.difty.scipamato.entity.filter.PaperFilter;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 public class PaperSlimByPaperFilterProviderTest extends AbstractPaperSlimProviderTest<PaperFilter, PaperSlimByPaperFilterProvider> {
 

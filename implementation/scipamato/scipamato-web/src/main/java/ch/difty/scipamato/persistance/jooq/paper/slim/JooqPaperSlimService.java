@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.entity.SearchOrder;
+import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.entity.projection.PaperSlim;
-import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.persistance.jooq.JooqReadOnlyService;
-import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
-import ch.difty.scipamato.service.PaperSlimService;
+import ch.difty.scipamato.persistence.PaperSlimService;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 /**
  * jOOQ specific implementation of the {@link PaperSlimService} interface.

@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.paging.Sort.Direction;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.Sort;
+import ch.difty.scipamato.persistence.paging.Sort.Direction;
 
 public class PaginationRequestTest {
 

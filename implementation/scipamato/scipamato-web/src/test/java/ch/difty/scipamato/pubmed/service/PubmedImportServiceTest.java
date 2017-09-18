@@ -14,12 +14,12 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.scipamato.NullArgumentException;
-import ch.difty.scipamato.pubmed.entity.PubmedArticleFacade;
-import ch.difty.scipamato.service.PaperService;
-import ch.difty.scipamato.service.PubmedArticleService;
-import ch.difty.scipamato.service.PubmedImporter;
-import ch.difty.scipamato.service.ServiceResult;
 import ch.difty.scipamato.config.ApplicationProperties;
+import ch.difty.scipamato.persistence.PaperService;
+import ch.difty.scipamato.persistence.PubmedArticleService;
+import ch.difty.scipamato.persistence.PubmedImporter;
+import ch.difty.scipamato.persistence.ServiceResult;
+import ch.difty.scipamato.pubmed.PubmedArticleFacade;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PubmedImportServiceTest {

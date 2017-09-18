@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.jooq.Condition;
 
+import ch.difty.scipamato.entity.filter.UserFilter;
 import ch.difty.scipamato.persistance.jooq.AbstractFilterConditionMapper;
 import ch.difty.scipamato.persistance.jooq.FilterConditionMapper;
 

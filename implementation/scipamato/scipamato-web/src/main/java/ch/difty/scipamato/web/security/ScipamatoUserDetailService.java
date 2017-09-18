@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.User;
-import ch.difty.scipamato.service.UserService;
+import ch.difty.scipamato.persistence.UserService;
 
 /**
  * The implementation of {@link UserDetailsService} loads the user from the {@link UserService} and

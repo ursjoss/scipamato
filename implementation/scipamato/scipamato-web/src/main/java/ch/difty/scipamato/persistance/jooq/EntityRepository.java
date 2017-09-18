@@ -3,7 +3,7 @@ package ch.difty.scipamato.persistance.jooq;
 import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.ScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
-import ch.difty.scipamato.persistance.OptimisticLockingException;
+import ch.difty.scipamato.persistence.OptimisticLockingException;
 
 /**
  * The generic repository interface for managing entities.

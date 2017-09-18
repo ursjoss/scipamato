@@ -11,8 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.scipamato.entity.xml.ScipamatoPubmedArticleIntegrationTest;
-import ch.difty.scipamato.pubmed.entity.PubmedArticleFacade;
-import ch.difty.scipamato.service.PubmedArticleService;
+import ch.difty.scipamato.persistence.PubmedArticleService;
+import ch.difty.scipamato.pubmed.PubmedArticleFacade;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)

@@ -41,6 +41,7 @@ import ch.difty.scipamato.entity.filter.AuditSearchTerm;
 import ch.difty.scipamato.entity.filter.BooleanSearchTerm;
 import ch.difty.scipamato.entity.filter.IntegerSearchTerm;
 import ch.difty.scipamato.entity.filter.SearchCondition;
+import ch.difty.scipamato.entity.filter.SearchOrderFilter;
 import ch.difty.scipamato.entity.filter.SearchTerm;
 import ch.difty.scipamato.entity.filter.StringSearchTerm;
 import ch.difty.scipamato.lib.DateTimeService;

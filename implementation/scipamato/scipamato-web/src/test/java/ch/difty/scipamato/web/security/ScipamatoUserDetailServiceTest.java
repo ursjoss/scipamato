@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.User;
-import ch.difty.scipamato.service.UserService;
+import ch.difty.scipamato.persistence.UserService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ScipamatoUserDetailServiceTest {

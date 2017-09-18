@@ -14,10 +14,10 @@ import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.entity.SearchOrder;
+import ch.difty.scipamato.entity.filter.SearchOrderFilter;
 import ch.difty.scipamato.paging.PaginationRequest;
-import ch.difty.scipamato.paging.Sort.SortProperty;
-import ch.difty.scipamato.persistance.jooq.search.SearchOrderFilter;
-import ch.difty.scipamato.service.SearchOrderService;
+import ch.difty.scipamato.persistence.SearchOrderService;
+import ch.difty.scipamato.persistence.paging.Sort.SortProperty;
 
 public class SearchOrderModelTest extends ModelTest {
 

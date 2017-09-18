@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.NullArgumentException;
+import ch.difty.scipamato.persistence.PubmedArticleService;
 import ch.difty.scipamato.pubmed.PubMed;
+import ch.difty.scipamato.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.pubmed.PubmedArticleSet;
-import ch.difty.scipamato.pubmed.entity.PubmedArticleFacade;
-import ch.difty.scipamato.service.PubmedArticleService;
 
 /**
  * Service handling pubmed content.

@@ -2,6 +2,7 @@ package ch.difty.scipamato.persistance.jooq.search;
 
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.filter.SearchCondition;
+import ch.difty.scipamato.entity.filter.SearchOrderFilter;
 import ch.difty.scipamato.persistance.jooq.EntityRepository;
 
 /**

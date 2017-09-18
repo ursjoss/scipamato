@@ -22,6 +22,7 @@ import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.auth.Role;
 import ch.difty.scipamato.db.tables.records.ScipamatoUserRecord;
 import ch.difty.scipamato.entity.User;
+import ch.difty.scipamato.entity.filter.UserFilter;
 import ch.difty.scipamato.lib.DateTimeService;
 import ch.difty.scipamato.persistance.jooq.GenericFilterConditionMapper;
 import ch.difty.scipamato.persistance.jooq.InsertSetStepSetter;

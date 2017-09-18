@@ -32,9 +32,9 @@ import ch.difty.scipamato.pubmed.PMID;
 import ch.difty.scipamato.pubmed.PubDate;
 import ch.difty.scipamato.pubmed.PubMed;
 import ch.difty.scipamato.pubmed.PubmedArticle;
+import ch.difty.scipamato.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.pubmed.PubmedArticleSet;
-import ch.difty.scipamato.pubmed.entity.PubmedArticleFacade;
-import ch.difty.scipamato.pubmed.entity.ScipamatoPubmedArticleTest;
+import ch.difty.scipamato.pubmed.ScipamatoPubmedArticleTest;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PubmedXmlServiceTest {

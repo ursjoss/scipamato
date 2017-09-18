@@ -8,12 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.config.ApplicationProperties;
-import ch.difty.scipamato.pubmed.entity.PubmedArticleFacade;
-import ch.difty.scipamato.service.DefaultServiceResult;
-import ch.difty.scipamato.service.PaperService;
-import ch.difty.scipamato.service.PubmedArticleService;
-import ch.difty.scipamato.service.PubmedImporter;
-import ch.difty.scipamato.service.ServiceResult;
+import ch.difty.scipamato.persistence.DefaultServiceResult;
+import ch.difty.scipamato.persistence.PaperService;
+import ch.difty.scipamato.persistence.PubmedArticleService;
+import ch.difty.scipamato.persistence.PubmedImporter;
+import ch.difty.scipamato.persistence.ServiceResult;
+import ch.difty.scipamato.pubmed.PubmedArticleFacade;
 
 @Service
 public class PubmedImportService implements PubmedImporter {

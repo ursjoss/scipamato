@@ -17,7 +17,8 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.scipamato.entity.User;
-import ch.difty.scipamato.paging.PaginationContext;
+import ch.difty.scipamato.entity.filter.UserFilter;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JooqUserServiceTest {

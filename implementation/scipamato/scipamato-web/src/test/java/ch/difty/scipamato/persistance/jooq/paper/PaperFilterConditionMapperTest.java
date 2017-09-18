@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import ch.difty.scipamato.db.tables.Paper;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
+import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.persistance.jooq.FilterConditionMapperTest;
 import ch.difty.scipamato.persistance.jooq.GenericFilterConditionMapper;
 

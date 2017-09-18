@@ -12,12 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.PaperAttachment;
 import ch.difty.scipamato.entity.SearchOrder;
-import ch.difty.scipamato.paging.PaginationContext;
+import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.persistance.jooq.JooqEntityService;
-import ch.difty.scipamato.pubmed.entity.PubmedArticleFacade;
-import ch.difty.scipamato.service.DefaultServiceResult;
-import ch.difty.scipamato.service.PaperService;
-import ch.difty.scipamato.service.ServiceResult;
+import ch.difty.scipamato.persistence.DefaultServiceResult;
+import ch.difty.scipamato.persistence.PaperService;
+import ch.difty.scipamato.persistence.ServiceResult;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.pubmed.PubmedArticleFacade;
 
 /**
  * jOOQ specific implementation of the {@link PaperService} interface.

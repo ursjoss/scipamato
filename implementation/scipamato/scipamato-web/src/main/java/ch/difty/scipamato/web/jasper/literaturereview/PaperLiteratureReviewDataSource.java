@@ -4,7 +4,7 @@ import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.PaperSlimFilter;
 import ch.difty.scipamato.entity.projection.PaperSlim;
-import ch.difty.scipamato.service.PaperService;
+import ch.difty.scipamato.persistence.PaperService;
 import ch.difty.scipamato.web.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;
 import ch.difty.scipamato.web.jasper.ScipamatoPdfResourceHandler;

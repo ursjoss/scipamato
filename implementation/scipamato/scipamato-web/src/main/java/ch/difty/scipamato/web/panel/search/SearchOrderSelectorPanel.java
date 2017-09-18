@@ -18,7 +18,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.entity.SearchOrder;
-import ch.difty.scipamato.service.SearchOrderService;
+import ch.difty.scipamato.persistence.SearchOrderService;
 import ch.difty.scipamato.web.model.SearchOrderModel;
 import ch.difty.scipamato.web.pages.Mode;
 import ch.difty.scipamato.web.panel.AbstractPanel;

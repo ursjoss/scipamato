@@ -17,7 +17,7 @@ import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.config.ApplicationProperties;
 import ch.difty.scipamato.entity.ScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
-import ch.difty.scipamato.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 /**
  * The generic jOOQ entity repository for read-only data retrieval.

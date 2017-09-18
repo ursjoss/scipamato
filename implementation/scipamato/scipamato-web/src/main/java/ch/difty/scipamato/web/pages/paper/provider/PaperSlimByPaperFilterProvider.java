@@ -7,11 +7,11 @@ import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.injection.Injector;
 
 import ch.difty.scipamato.entity.Paper;
+import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.entity.projection.PaperSlim;
-import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.paging.PaginationRequest;
-import ch.difty.scipamato.paging.Sort.Direction;
-import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.Sort.Direction;
 
 /**
  * Extension of {@link AbstractPaperSlimProvider} using the {@link PaperFilter} as filter class.

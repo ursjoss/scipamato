@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.entity.CodeClass;
-import ch.difty.scipamato.service.CodeClassService;
+import ch.difty.scipamato.persistence.CodeClassService;
 
 /**
  * jOOQ specific implementation of the {@link CodeClassService} interface.

@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.projection.PaperSlim;
-import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.paging.PaginationRequest;
 import ch.difty.scipamato.persistance.jooq.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 public class JooqPaperSlimBySearchOrderRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 

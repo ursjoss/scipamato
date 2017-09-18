@@ -10,9 +10,9 @@ import ch.difty.scipamato.entity.IdScipamatoEntity;
 import ch.difty.scipamato.entity.ScipamatoEntity;
 import ch.difty.scipamato.entity.User;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
-import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.persistance.jooq.user.UserRepository;
-import ch.difty.scipamato.service.ReadOnlyService;
+import ch.difty.scipamato.persistence.ReadOnlyService;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 /**
  * Abstract base repository class providing the fundamental functionality of a  jooq read-only Service

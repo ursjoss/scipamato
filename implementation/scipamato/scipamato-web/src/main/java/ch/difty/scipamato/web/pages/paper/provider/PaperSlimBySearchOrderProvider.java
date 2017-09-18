@@ -9,9 +9,9 @@ import org.apache.wicket.injection.Injector;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.projection.PaperSlim;
-import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.paging.PaginationRequest;
-import ch.difty.scipamato.paging.Sort.Direction;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.Sort.Direction;
 
 /**
  * Extension of the {@link AbstractPaperSlimProvider} using the {@link SearchOrder} as filter class.

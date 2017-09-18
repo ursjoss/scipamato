@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import ch.difty.scipamato.db.tables.SearchOrder;
 import ch.difty.scipamato.db.tables.records.SearchOrderRecord;
+import ch.difty.scipamato.entity.filter.SearchOrderFilter;
 import ch.difty.scipamato.persistance.jooq.FilterConditionMapperTest;
 import ch.difty.scipamato.persistance.jooq.GenericFilterConditionMapper;
 

@@ -13,12 +13,12 @@ import org.mockito.Mock;
 
 import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.SearchOrder;
+import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.entity.projection.PaperSlim;
-import ch.difty.scipamato.paging.PaginationContext;
 import ch.difty.scipamato.persistance.jooq.JooqReadOnlyRepoTest;
 import ch.difty.scipamato.persistance.jooq.ReadOnlyRepository;
-import ch.difty.scipamato.persistance.jooq.paper.PaperFilter;
 import ch.difty.scipamato.persistance.jooq.paper.searchorder.PaperSlimBackedSearchOrderRepository;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, PaperSlim, Long, ch.difty.scipamato.db.tables.Paper, PaperSlimRecordMapper, PaperFilter> {
 

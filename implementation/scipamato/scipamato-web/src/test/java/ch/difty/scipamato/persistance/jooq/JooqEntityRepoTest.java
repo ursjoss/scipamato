@@ -31,8 +31,8 @@ import ch.difty.scipamato.entity.IdScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.lib.DateTimeService;
 import ch.difty.scipamato.lib.FrozenDateTimeService;
-import ch.difty.scipamato.paging.PaginationContext;
-import ch.difty.scipamato.persistance.OptimisticLockingException;
+import ch.difty.scipamato.persistence.OptimisticLockingException;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 /**
  * TODO find a more feasible approach to test the actual jOOQ part via unit tests. The current approach is too cumbersome.

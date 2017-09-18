@@ -4,7 +4,7 @@ import java.util.List;
 
 import ch.difty.scipamato.entity.IdScipamatoEntity;
 import ch.difty.scipamato.entity.SearchOrder;
-import ch.difty.scipamato.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 /**
  * Repository to find Papers or PaperSlims by {@link SearchOrder} specifications.

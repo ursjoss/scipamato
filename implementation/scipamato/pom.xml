@@ -21,8 +21,12 @@
     <modules>
         <module>scipamato-utils</module>
         <module>scipamato-config</module>
-        <module>scipamato-web</module>
         <module>scipamato-logic</module>
+        <module>scipamato-entity</module>
+        <module>scipamato-pubmed</module>
+        <module>scipamato-persistence-api</module>
+        <module>scipamato-persistence-jooq</module>
+        <module>scipamato-web</module>
     </modules>
 
     <developers>
@@ -74,6 +78,8 @@
         <sonar.exclusions>*/target/generated-sources/**/*</sonar.exclusions>
         <sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath>
 
+        <commons-collections4.version>4.1</commons-collections4.version>
+
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
     </properties>
 
@@ -86,12 +92,13 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-config</artifactId>
+                <artifactId>scipamato-utils</artifactId>
+                <type>test-jar</type>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-web</artifactId>
+                <artifactId>scipamato-config</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -99,11 +106,48 @@
                 <artifactId>scipamato-logic</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>scipamato-entity</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>scipamato-pubmed</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>scipamato-pubmed</artifactId>
+                <type>test-jar</type>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>scipamato-persistence-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>scipamato-persistence-jooq</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>scipamato-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>3.6</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.bval</groupId>
+                <artifactId>bval-jsr</artifactId>
+                <version>1.1.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -113,11 +157,20 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
 
         <!-- Testing -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

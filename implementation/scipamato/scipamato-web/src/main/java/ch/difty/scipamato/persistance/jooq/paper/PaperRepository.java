@@ -5,9 +5,10 @@ import java.util.List;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.PaperAttachment;
 import ch.difty.scipamato.entity.SearchOrder;
-import ch.difty.scipamato.paging.PaginationContext;
+import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.persistance.jooq.EntityRepository;
 import ch.difty.scipamato.persistance.jooq.paper.searchorder.BySearchOrderRepository;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 /**
  * Repository to manage {@link Paper}s

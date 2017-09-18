@@ -7,11 +7,11 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.entity.SearchOrder;
-import ch.difty.scipamato.paging.PaginationContext;
+import ch.difty.scipamato.entity.filter.SearchOrderFilter;
 import ch.difty.scipamato.paging.PaginationRequest;
-import ch.difty.scipamato.paging.Sort.Direction;
-import ch.difty.scipamato.persistance.jooq.search.SearchOrderFilter;
-import ch.difty.scipamato.service.SearchOrderService;
+import ch.difty.scipamato.persistence.SearchOrderService;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.Sort.Direction;
 
 /**
  * Model that offers a wicket page to load a certain amount of {@link SearchOrder}s visible to user with provided id.

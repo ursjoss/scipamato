@@ -5,8 +5,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.filter.SearchCondition;
+import ch.difty.scipamato.entity.filter.SearchOrderFilter;
 import ch.difty.scipamato.persistance.jooq.JooqEntityService;
-import ch.difty.scipamato.service.SearchOrderService;
+import ch.difty.scipamato.persistence.SearchOrderService;
 
 /**
  * jOOQ specific implementation of the {@link SearchOrderService} interface.

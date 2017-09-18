@@ -8,7 +8,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.CodeClass;
-import ch.difty.scipamato.service.CodeClassService;
+import ch.difty.scipamato.persistence.CodeClassService;
 
 /**
  * Model that offers a wicket page to load {@link CodeClass}es.

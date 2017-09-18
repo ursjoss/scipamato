@@ -21,8 +21,8 @@ import ch.difty.scipamato.entity.ScipamatoEntity;
 import ch.difty.scipamato.entity.User;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.lib.DateTimeService;
-import ch.difty.scipamato.persistance.OptimisticLockingException;
-import ch.difty.scipamato.persistance.OptimisticLockingException.Type;
+import ch.difty.scipamato.persistence.OptimisticLockingException;
+import ch.difty.scipamato.persistence.OptimisticLockingException.Type;
 
 /**
  * The generic jOOQ entity repository for manipulation of entities.

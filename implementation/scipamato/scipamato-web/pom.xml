@@ -17,7 +17,6 @@
         <!-- persistence layer -->
         <jdbc-postgres.version>42.1.4</jdbc-postgres.version>
         <org.jooq.version>3.9.5</org.jooq.version>
-        <org.jaxb.target.dir>target/generated-sources/jaxb</org.jaxb.target.dir>
         <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
         <org.jooq.db-generator>org.jooq.util.postgres.PostgresDatabase</org.jooq.db-generator>
         <flyway.version>4.2.0</flyway.version>
@@ -46,6 +45,28 @@
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-logic</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-entity</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-pubmed</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-pubmed</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-persistence-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-persistence-jooq</artifactId>
+        </dependency>
 
         <!-- spring-boot starters -->
         <dependency>
@@ -55,6 +76,10 @@
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-validator</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -150,6 +175,12 @@
         <dependency>
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
+        </dependency>
+
+        <!-- JSR 303 bean validation provider implementation -->
+        <dependency>
+            <groupId>org.apache.bval</groupId>
+            <artifactId>bval-jsr</artifactId>
         </dependency>
 
         <!-- Spring boot admin starter client - Lacking configuration -->
@@ -652,28 +683,6 @@
                 </executions>
             </plugin>
 
-            <!-- jaxb2 maven plugin to generate the java classes from the Pubmed dtd -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jaxb2-maven-plugin</artifactId>
-                <version>2.3.1</version>
-                <configuration>
-                    <packageName>ch.difty.scipamato.pubmed</packageName>
-                    <sourceType>dtd</sourceType>
-                    <sources>
-                        <source>src/main/dtd</source>
-                    </sources>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>xjc</id>
-                        <goals>
-                            <goal>xjc</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- have actuator report the git version the project was built with (http://localhost:8080/actuator/info) -->
             <plugin>
                 <groupId>pl.project13.maven</groupId>
@@ -709,7 +718,6 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>${org.jaxb.target.dir}</source>
                                 <source>${org.jooq.target.dir}</source>
                             </sources>
                         </configuration>

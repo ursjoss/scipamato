@@ -17,10 +17,11 @@ import ch.difty.scipamato.db.tables.SearchExclusion;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.PaperAttachment;
 import ch.difty.scipamato.entity.SearchOrder;
+import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.entity.filter.SearchCondition;
 import ch.difty.scipamato.paging.PaginationRequest;
-import ch.difty.scipamato.paging.Sort.Direction;
 import ch.difty.scipamato.persistance.jooq.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.persistence.paging.Sort.Direction;
 
 /**
  * Note: The test will insert some records into the DB. It will try to wipe those records after the test suite terminates.
