@@ -3,19 +3,6 @@ package ch.difty.scipamato.pubmed;
 import java.util.List;
 
 import ch.difty.scipamato.AssertAs;
-import ch.difty.scipamato.pubmed.Article;
-import ch.difty.scipamato.pubmed.AuthorList;
-import ch.difty.scipamato.pubmed.ELocationID;
-import ch.difty.scipamato.pubmed.Journal;
-import ch.difty.scipamato.pubmed.JournalIssue;
-import ch.difty.scipamato.pubmed.MedlineCitation;
-import ch.difty.scipamato.pubmed.MedlineDate;
-import ch.difty.scipamato.pubmed.MedlineJournalInfo;
-import ch.difty.scipamato.pubmed.MedlinePgn;
-import ch.difty.scipamato.pubmed.Pagination;
-import ch.difty.scipamato.pubmed.PubDate;
-import ch.difty.scipamato.pubmed.PubmedArticle;
-import ch.difty.scipamato.pubmed.Year;
 
 /**
  * Derives from {@link PubmedArticleFacade} wrapping an instance of {@link PubmedArticle}.
@@ -70,20 +57,10 @@ public class ScipamatoPubmedArticle extends PubmedArticleFacade {
             sb.append(" (").append(issue).append(")");
         }
         if (paginationElocation != null && !paginationElocation.isEmpty()) {
-            final String pages = paginationElocation.stream()
-                    .filter(pe -> pe instanceof Pagination)
-                    .flatMap(p -> ((Pagination) p).getStartPageOrEndPageOrMedlinePgn().stream())
-                    .filter(mlp -> mlp instanceof MedlinePgn)
-                    .map(mlp -> complementPageRange(((MedlinePgn) mlp).getvalue()))
-                    .map(range -> ": " + range)
-                    .findFirst()
-                    .orElseGet(() -> paginationElocation.stream()
-                            .filter(pe -> pe instanceof ELocationID)
-                            .map(eli -> (ELocationID) eli)
-                            .filter(eli -> PII.equals(eli.getEIdType()))
-                            .map(eli -> ". " + eli.getEIdType() + ": " + eli.getvalue())
-                            .findFirst()
-                            .orElse(null));
+            final String pages = paginationElocation.stream().filter(pe -> pe instanceof Pagination).flatMap(p -> ((Pagination) p).getStartPageOrEndPageOrMedlinePgn().stream()).filter(
+                    mlp -> mlp instanceof MedlinePgn).map(mlp -> complementPageRange(((MedlinePgn) mlp).getvalue())).map(range -> ": " + range).findFirst().orElseGet(
+                            () -> paginationElocation.stream().filter(pe -> pe instanceof ELocationID).map(eli -> (ELocationID) eli).filter(eli -> PII.equals(eli.getEIdType())).map(
+                                    eli -> ". " + eli.getEIdType() + ": " + eli.getvalue()).findFirst().orElse(null));
             if (pages != null)
                 sb.append(pages).append(".");
         }

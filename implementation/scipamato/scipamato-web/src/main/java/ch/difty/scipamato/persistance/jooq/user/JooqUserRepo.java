@@ -20,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.auth.Role;
+import ch.difty.scipamato.config.ApplicationProperties;
 import ch.difty.scipamato.db.tables.records.ScipamatoUserRecord;
 import ch.difty.scipamato.entity.User;
 import ch.difty.scipamato.entity.filter.UserFilter;
@@ -29,7 +30,6 @@ import ch.difty.scipamato.persistance.jooq.InsertSetStepSetter;
 import ch.difty.scipamato.persistance.jooq.JooqEntityRepo;
 import ch.difty.scipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.scipamato.persistance.jooq.UpdateSetStepSetter;
-import ch.difty.scipamato.config.ApplicationProperties;
 
 /**
  * The repository to manage {@link User}s - including the nested list of Roles.

@@ -120,8 +120,8 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
         PubmedArticleFacade sa = articles.get(0);
 
         assertThat(sa.getPmId()).isEqualTo("27224452");
-        assertThat(sa.getAuthors())
-                .isEqualTo("Lanzinger S, Schneider A, Breitner S, Stafoggia M, Erzen I, Dostal M, Pastorkova A, Bastian S, Cyrys J, Zscheppang A, Kolodnitska T, Peters A, UFIREG study group.");
+        assertThat(sa.getAuthors()).isEqualTo(
+                "Lanzinger S, Schneider A, Breitner S, Stafoggia M, Erzen I, Dostal M, Pastorkova A, Bastian S, Cyrys J, Zscheppang A, Kolodnitska T, Peters A, UFIREG study group.");
         assertThat(sa.getFirstAuthor()).isEqualTo("Lanzinger");
         assertThat(sa.getPublicationYear()).isEqualTo("2016");
         assertThat(sa.getLocation()).isEqualTo("Am J Respir Crit Care Med. 2016; 194 (10): 1233-1241.");
@@ -144,8 +144,8 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
         assertThat(sa.getFirstAuthor()).isEqualTo("Aguilera");
         assertThat(sa.getPublicationYear()).isEqualTo("2016");
         assertThat(sa.getLocation()).isEqualTo("Environ Health Perspect. 2016; 124 (11): 1700-1706.");
-        assertThat(sa.getTitle())
-                .isEqualTo("Particulate Matter and Subclinical Atherosclerosis: Associations between Different Particle Sizes and Sources with Carotid Intima-Media Thickness in the SAPALDIA Study.");
+        assertThat(sa.getTitle()).isEqualTo(
+                "Particulate Matter and Subclinical Atherosclerosis: Associations between Different Particle Sizes and Sources with Carotid Intima-Media Thickness in the SAPALDIA Study.");
         assertThat(sa.getDoi()).isEqualTo("10.1289/EHP161");
         assertThat(sa.getOriginalAbstract()).startsWith("BACKGROUND: Subclinical atherosclerosis has been associated with long-term exposure to particulate matter (PM)");
         assertThat(sa.getOriginalAbstract()).endsWith("SAPALDIA study. Environ Health Perspect 124:1700-1706; http://dx.doi.org/10.1289/EHP161.");
@@ -179,8 +179,8 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
 
         assertThat(journal.getTitle()).isEqualTo("American journal of epidemiology");
         assertThat(journal.getISOAbbreviation()).isEqualTo("Am. J. Epidemiol.");
-        assertThat(article.getArticleTitle().getvalue())
-                .isEqualTo("Interactions between cigarette smoking and fine particulate matter in the Risk of Lung Cancer Mortality in Cancer Prevention Study II.");
+        assertThat(article.getArticleTitle().getvalue()).isEqualTo(
+                "Interactions between cigarette smoking and fine particulate matter in the Risk of Lung Cancer Mortality in Cancer Prevention Study II.");
 
         assertThat(article.getPaginationOrELocationID()).hasSize(2);
         assertThat(article.getPaginationOrELocationID().get(0)).isInstanceOf(Pagination.class);
@@ -206,13 +206,8 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
         assertThat(authorList.getAuthor()).hasSize(9);
         assertThat(authorList.getAuthor()).extracting("validYN").containsOnly("Y");
 
-        List<String> authorNames = authorList.getAuthor()
-                .stream()
-                .map(Author::getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName)
-                .flatMap(n -> n.stream())
-                .filter((o) -> o instanceof LastName)
-                .map(lm -> ((LastName) lm).getvalue())
-                .collect(Collectors.toList());
+        List<String> authorNames = authorList.getAuthor().stream().map(Author::getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName).flatMap(n -> n.stream()).filter(
+                (o) -> o instanceof LastName).map(lm -> ((LastName) lm).getvalue()).collect(Collectors.toList());
         assertThat(authorNames).contains("Turner", "Cohen", "Jerrett", "Gapstur", "Diver", "Pope", "Krewski", "Beckerman", "Samet");
 
         assertThat(article.getArticleDate()).hasSize(1);

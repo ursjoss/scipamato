@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.difty.scipamato.NullArgumentException;
-import ch.difty.scipamato.persistence.paging.Sort;
 import ch.difty.scipamato.persistence.paging.Sort.Direction;
 import ch.difty.scipamato.persistence.paging.Sort.SortProperty;
 

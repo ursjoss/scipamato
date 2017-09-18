@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.persistence.OptimisticLockingException;
 import ch.difty.scipamato.persistence.OptimisticLockingException.Type;
 
 public class OptimisticLockingExceptionTest {

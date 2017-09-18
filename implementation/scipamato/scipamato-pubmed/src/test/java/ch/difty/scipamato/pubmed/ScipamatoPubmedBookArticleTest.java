@@ -9,21 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.difty.scipamato.NullArgumentException;
-import ch.difty.scipamato.pubmed.Abstract;
-import ch.difty.scipamato.pubmed.AbstractText;
-import ch.difty.scipamato.pubmed.ArticleId;
-import ch.difty.scipamato.pubmed.ArticleIdList;
-import ch.difty.scipamato.pubmed.ArticleTitle;
-import ch.difty.scipamato.pubmed.Author;
-import ch.difty.scipamato.pubmed.AuthorList;
-import ch.difty.scipamato.pubmed.BookDocument;
-import ch.difty.scipamato.pubmed.ContributionDate;
-import ch.difty.scipamato.pubmed.Initials;
-import ch.difty.scipamato.pubmed.LastName;
-import ch.difty.scipamato.pubmed.LocationLabel;
-import ch.difty.scipamato.pubmed.PubmedBookArticle;
-import ch.difty.scipamato.pubmed.ScipamatoPubmedBookArticle;
-import ch.difty.scipamato.pubmed.Year;
 
 public class ScipamatoPubmedBookArticleTest {
 

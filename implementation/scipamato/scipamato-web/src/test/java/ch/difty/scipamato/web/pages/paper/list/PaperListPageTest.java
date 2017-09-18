@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import ch.difty.scipamato.config.ApplicationProperties;
 import ch.difty.scipamato.entity.CodeClassId;
 import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.paging.PaginationRequest;
@@ -24,7 +25,6 @@ import ch.difty.scipamato.web.pages.BasePageTest;
 import ch.difty.scipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.web.panel.pastemodal.XmlPasteModalPanel;
 import ch.difty.scipamato.web.panel.result.ResultPanel;
-import ch.difty.scipamato.config.ApplicationProperties;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;

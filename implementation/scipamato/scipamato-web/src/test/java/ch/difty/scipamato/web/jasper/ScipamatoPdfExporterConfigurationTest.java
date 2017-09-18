@@ -166,14 +166,8 @@ public class ScipamatoPdfExporterConfigurationTest {
     public void withAllAttributes() {
         codes.add(new Code("1A", "c1", null, false, 1, "c1", "", 1));
         codes.add(new Code("2B", "c2 with spaces", null, false, 2, "c2", "", 1));
-        config = new ScipamatoPdfExporterConfiguration.Builder("hp:", 10l).withAuthor("a")
-                .withPaperTitle("pt")
-                .withPaperAuthor("pa")
-                .withSubject("s")
-                .withCreator("c")
-                .withCodes(codes)
-                .withCompression()
-                .build();
+        config = new ScipamatoPdfExporterConfiguration.Builder("hp:", 10l).withAuthor("a").withPaperTitle("pt").withPaperAuthor("pa").withSubject("s").withCreator("c").withCodes(
+                codes).withCompression().build();
         assertThat(config.getMetadataCreator()).isEqualTo("c");
         assertThat(config.getMetadataAuthor()).isEqualTo("a");
         assertThat(config.getMetadataTitle()).isEqualTo("hp: 10 - pa et al.: pt");

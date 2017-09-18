@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.entity.filter.SearchOrderFilter;
-
 public class SearchOrderFilterTest {
 
     @Test

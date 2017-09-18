@@ -5,18 +5,6 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.Test;
 
 import ch.difty.scipamato.NullArgumentException;
-import ch.difty.scipamato.pubmed.Article;
-import ch.difty.scipamato.pubmed.ArticleTitle;
-import ch.difty.scipamato.pubmed.Journal;
-import ch.difty.scipamato.pubmed.JournalIssue;
-import ch.difty.scipamato.pubmed.MedlineCitation;
-import ch.difty.scipamato.pubmed.MedlineDate;
-import ch.difty.scipamato.pubmed.MedlineJournalInfo;
-import ch.difty.scipamato.pubmed.Month;
-import ch.difty.scipamato.pubmed.PMID;
-import ch.difty.scipamato.pubmed.PubDate;
-import ch.difty.scipamato.pubmed.ScipamatoPubmedArticle;
-import ch.difty.scipamato.pubmed.Year;
 
 public class ScipamatoPubmedArticleTest {
 

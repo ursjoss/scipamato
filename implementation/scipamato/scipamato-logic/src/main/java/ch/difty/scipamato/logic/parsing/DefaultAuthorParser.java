@@ -10,7 +10,6 @@ import java.util.stream.Stream;
 
 import ch.difty.scipamato.AssertAs;
 
-
 /**
  * Utility class to lex and parse Author strings. From the list of parsed authors it can return the first author.<p>
  *

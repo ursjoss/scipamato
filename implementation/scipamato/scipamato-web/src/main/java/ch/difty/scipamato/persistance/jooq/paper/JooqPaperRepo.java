@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.AssertAs;
+import ch.difty.scipamato.config.ApplicationProperties;
 import ch.difty.scipamato.db.tables.records.PaperCodeRecord;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.Code;
@@ -40,7 +41,6 @@ import ch.difty.scipamato.persistance.jooq.JooqSortMapper;
 import ch.difty.scipamato.persistance.jooq.UpdateSetStepSetter;
 import ch.difty.scipamato.persistance.jooq.paper.searchorder.PaperBackedSearchOrderRepository;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
-import ch.difty.scipamato.config.ApplicationProperties;
 
 /**
  * The repository to manage {@link Paper}s - including the nested list of {@link Code}s.
@@ -150,12 +150,9 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     }
 
     List<ch.difty.scipamato.entity.PaperAttachment> loadSlimAttachment(long paperId) {
-        return getDsl()
-                .select(PAPER_ATTACHMENT.ID, PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE, PAPER_ATTACHMENT.CREATED_BY,
-                        PAPER_ATTACHMENT.CREATED, PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.VERSION)
-                .from(PAPER_ATTACHMENT)
-                .where(PAPER_ATTACHMENT.PAPER_ID.eq(paperId))
-                .fetchInto(ch.difty.scipamato.entity.PaperAttachment.class);
+        return getDsl().select(PAPER_ATTACHMENT.ID, PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE, PAPER_ATTACHMENT.CREATED_BY,
+                PAPER_ATTACHMENT.CREATED, PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.VERSION).from(PAPER_ATTACHMENT).where(
+                        PAPER_ATTACHMENT.PAPER_ID.eq(paperId)).fetchInto(ch.difty.scipamato.entity.PaperAttachment.class);
     }
 
     @Override
@@ -281,13 +278,8 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
         ch.difty.scipamato.db.tables.Paper p = PAPER.as("p");
         ch.difty.scipamato.db.tables.Paper pn = PAPER.as("pn");
 
-        final Long freeNumber = getDsl().select(p.NUMBER.plus(1l))
-                .from(p)
-                .leftOuterJoin(pn)
-                .on(pn.NUMBER.eq(p.NUMBER.plus(1l)))
-                .where(pn.NUMBER.isNull().and(p.NUMBER.ge(minimumPaperNumberToBeRecycled)))
-                .limit(1)
-                .fetchOneInto(Long.class);
+        final Long freeNumber = getDsl().select(p.NUMBER.plus(1l)).from(p).leftOuterJoin(pn).on(pn.NUMBER.eq(p.NUMBER.plus(1l))).where(
+                pn.NUMBER.isNull().and(p.NUMBER.ge(minimumPaperNumberToBeRecycled))).limit(1).fetchOneInto(Long.class);
         return freeNumber != null ? freeNumber.longValue() : minimumPaperNumberToBeRecycled;
     }
 
@@ -308,32 +300,21 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
 
     @Override
     public Paper saveAttachment(ch.difty.scipamato.entity.PaperAttachment pa) {
-        getDsl().insertInto(PAPER_ATTACHMENT)
-                .columns(PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT, PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE, PAPER_ATTACHMENT.CREATED,
-                        PAPER_ATTACHMENT.CREATED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.VERSION)
-                .values(pa.getPaperId(), pa.getName(), pa.getContent(), pa.getContentType(), pa.getSize(), getDateTimeService().getCurrentTimestamp(), getUserId(),
-                        getDateTimeService().getCurrentTimestamp(), getUserId(), 1)
-                .onConflict(PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME)
-                .doUpdate()
-                .set(PAPER_ATTACHMENT.CONTENT, pa.getContent())
-                .set(PAPER_ATTACHMENT.CONTENT_TYPE, pa.getContentType())
-                .set(PAPER_ATTACHMENT.SIZE, pa.getSize())
-                .set(PAPER_ATTACHMENT.LAST_MODIFIED, getDateTimeService().getCurrentTimestamp())
-                .set(PAPER_ATTACHMENT.LAST_MODIFIED_BY, getUserId())
-                .set(PAPER_ATTACHMENT.VERSION, PAPER_ATTACHMENT.VERSION.plus(1))
-                .execute();
+        getDsl().insertInto(PAPER_ATTACHMENT).columns(PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT, PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE,
+                PAPER_ATTACHMENT.CREATED, PAPER_ATTACHMENT.CREATED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.VERSION).values(pa.getPaperId(),
+                        pa.getName(), pa.getContent(), pa.getContentType(), pa.getSize(), getDateTimeService().getCurrentTimestamp(), getUserId(), getDateTimeService().getCurrentTimestamp(),
+                        getUserId(), 1).onConflict(PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME).doUpdate().set(PAPER_ATTACHMENT.CONTENT, pa.getContent()).set(PAPER_ATTACHMENT.CONTENT_TYPE,
+                                pa.getContentType()).set(PAPER_ATTACHMENT.SIZE, pa.getSize()).set(PAPER_ATTACHMENT.LAST_MODIFIED, getDateTimeService().getCurrentTimestamp()).set(
+                                        PAPER_ATTACHMENT.LAST_MODIFIED_BY, getUserId()).set(PAPER_ATTACHMENT.VERSION, PAPER_ATTACHMENT.VERSION.plus(1)).execute();
         getLogger().info("Saved attachment '{}' for paper with id {}.", pa.getName(), pa.getPaperId());
         return findById(pa.getPaperId());
     }
 
     @Override
     public PaperAttachment loadAttachmentWithContentBy(Integer id) {
-        return getDsl()
-                .select(PAPER_ATTACHMENT.ID, PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT, PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE,
-                        PAPER_ATTACHMENT.CREATED_BY, PAPER_ATTACHMENT.CREATED, PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.VERSION)
-                .from(PAPER_ATTACHMENT)
-                .where(PAPER_ATTACHMENT.ID.eq(id))
-                .fetchOneInto(ch.difty.scipamato.entity.PaperAttachment.class);
+        return getDsl().select(PAPER_ATTACHMENT.ID, PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT, PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE,
+                PAPER_ATTACHMENT.CREATED_BY, PAPER_ATTACHMENT.CREATED, PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.VERSION).from(PAPER_ATTACHMENT).where(
+                        PAPER_ATTACHMENT.ID.eq(id)).fetchOneInto(ch.difty.scipamato.entity.PaperAttachment.class);
     }
 
     @Override
