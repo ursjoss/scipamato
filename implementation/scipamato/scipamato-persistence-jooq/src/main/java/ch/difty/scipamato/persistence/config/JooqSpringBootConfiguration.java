@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 
@@ -24,7 +23,6 @@ import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
  * @author Jacques Gonzalez
  */
 @Configuration
-@Profile("DB_JOOQ")
 public class JooqSpringBootConfiguration {
 
     @Value("${jooq.sql.dialect}")

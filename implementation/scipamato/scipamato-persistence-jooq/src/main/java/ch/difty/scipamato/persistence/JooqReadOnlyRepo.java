@@ -11,7 +11,6 @@ import org.jooq.RecordMapper;
 import org.jooq.SortField;
 import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
-import org.springframework.context.annotation.Profile;
 
 import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.config.ApplicationProperties;
@@ -31,7 +30,6 @@ import ch.difty.scipamato.persistence.paging.PaginationContext;
  * @param <M> the type of the record mapper, mapping record {@code R} into the entity {@code T}
  * @param <F> the type of the filter, extending {@link ScipamatoFilter}
  */
-@Profile("DB_JOOQ")
 public abstract class JooqReadOnlyRepo<R extends Record, T extends ScipamatoEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
         implements ReadOnlyRepository<T, ID, F> {
 

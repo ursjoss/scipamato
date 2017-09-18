@@ -9,7 +9,7 @@ import ch.difty.scipamato.ScipamatoApplication;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ScipamatoApplication.class)
-@ActiveProfiles({ "DB_JOOQ", "test" })
+@ActiveProfiles({ "test" })
 public abstract class JooqBaseIntegrationTest {
 
 }

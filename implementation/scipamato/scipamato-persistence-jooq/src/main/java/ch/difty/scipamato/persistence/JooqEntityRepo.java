@@ -11,7 +11,6 @@ import org.jooq.RecordMapper;
 import org.jooq.UpdateSetStep;
 import org.jooq.impl.TableImpl;
 import org.slf4j.Logger;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -35,7 +34,6 @@ import ch.difty.scipamato.persistence.OptimisticLockingException.Type;
  * @param <M> the type of the record mapper, mapping record {@code R} into entity {@code T}
  * @param <F> the type of the filter, extending {@link ScipamatoFilter}
  */
-@Profile("DB_JOOQ")
 public abstract class JooqEntityRepo<R extends Record, T extends ScipamatoEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
         extends JooqReadOnlyRepo<R, T, ID, TI, M, F> implements EntityRepository<T, ID, F> {
 
