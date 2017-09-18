@@ -24,8 +24,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 
+import ch.difty.scipamato.DateTimeService;
 import ch.difty.scipamato.ScipamatoApplication;
-import ch.difty.scipamato.lib.DateTimeService;
 import ch.difty.scipamato.persistence.PaperService;
 import ch.difty.scipamato.persistence.PaperSlimService;
 import ch.difty.scipamato.web.pages.login.LoginPage;

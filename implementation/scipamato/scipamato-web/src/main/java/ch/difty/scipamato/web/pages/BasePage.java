@@ -22,10 +22,10 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import ch.difty.scipamato.DateTimeService;
 import ch.difty.scipamato.ScipamatoSession;
 import ch.difty.scipamato.config.ApplicationProperties;
 import ch.difty.scipamato.entity.User;
-import ch.difty.scipamato.lib.DateTimeService;
 import ch.difty.scipamato.web.WicketUtils;
 import ch.difty.scipamato.web.component.SerializableSupplier;
 import ch.difty.scipamato.web.pages.login.LogoutPage;

@@ -24,8 +24,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ch.difty.scipamato.ScipamatoApplication;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.PaperFilter;
-import ch.difty.scipamato.persistance.jooq.paper.JooqPaperService;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paper.JooqPaperService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

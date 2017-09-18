@@ -14,13 +14,6 @@
     <name>SciPaMaTo :: Web GUI Project</name>
 
     <properties>
-        <!-- persistence layer -->
-        <jdbc-postgres.version>42.1.4</jdbc-postgres.version>
-        <org.jooq.version>3.9.5</org.jooq.version>
-        <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
-        <org.jooq.db-generator>org.jooq.util.postgres.PostgresDatabase</org.jooq.db-generator>
-        <flyway.version>4.2.0</flyway.version>
-
         <!-- presentation layer -->
         <wicket-spring-boot-starter.version>1.0.9</wicket-spring-boot-starter.version>
         <wicket.version>7.8.0</wicket.version>
@@ -30,12 +23,21 @@
 
         <!-- Plugin versions -->
         <property-file>src/main/resources/application.properties</property-file>
+
+        <!-- The main class to start by executing java -jar -->
+        <start-class>ch.difty.scipamato.ScipamatoApplication</start-class>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-utils</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
@@ -121,46 +123,6 @@
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>2.2.12</version>
-        </dependency>
-
-        <!-- Database -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jooq</artifactId>
-            <exclusions>
-                <exclusion>
-                    <!-- Excluding tomcat-jdbc so we can use HikariCP -->
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-jdbc</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- JDBC Drivers - PostgreSQL -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${jdbc-postgres.version}</version><!--$NO-MVN-MAN-VER$ -->
-        </dependency>
-
-        <!-- HikariCP connection pool -->
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-        </dependency>
-
-        <!-- jOOQ - building type safe SQL -->
-        <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq</artifactId>
-            <version>${org.jooq.version}</version><!--$NO-MVN-MAN-VER$ -->
-        </dependency>
-
-        <!-- Flyway to manage database migrations -->
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>${flyway.version}</version><!--$NO-MVN-MAN-VER$ -->
         </dependency>
 
         <!-- Caching: JCache with ehcache as cache provider -->
@@ -263,13 +225,6 @@
             <version>${wicket.version}</version>
         </dependency>
 
-        <!-- Lambda utilities -->
-        <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jool</artifactId>
-            <version>0.9.12</version>
-        </dependency>
-
         <!-- Feign for accessing PubMed - https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-feign -->
         <!-- TODO currently pulls in (and requires) commons-lang, have to live with it for now, excluding it does not work -->
         <dependency>
@@ -348,6 +303,11 @@
             <version>1.1.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-persistence-jooq</artifactId>
+            <type>test-jar</type>
+        </dependency>
     </dependencies>
 
     <profiles>
@@ -376,7 +336,6 @@
             </activation>
             <properties>
                 <spring.profile.include>DB_JOOQ</spring.profile.include>
-
             </properties>
             <build>
                 <plugins>
@@ -479,105 +438,6 @@
                 </plugins>
             </build>
         </profile>
-
-        <!-- Dummy profile for m2e - http://stackoverflow.com/questions/7905501/get-rid-of-pom-not-found-warning-for-org-eclipse-m2elifecycle-mapping -->
-        <profile>
-            <id>only-eclipse</id>
-            <activation>
-                <property>
-                    <name>m2e.version</name>
-                </property>
-            </activation>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
-                        <plugin>
-                            <groupId>org.eclipse.m2e</groupId>
-                            <artifactId>lifecycle-mapping</artifactId>
-                            <version>1.0.0</version>
-                            <configuration>
-                                <lifecycleMappingMetadata>
-                                    <pluginExecutions>
-                                        <pluginExecution>
-                                            <pluginExecutionFilter>
-                                                <groupId>org.jooq</groupId>
-                                                <artifactId>jooq-codegen-maven</artifactId>
-                                                <versionRange>${org.jooq.version}</versionRange>
-                                                <goals>
-                                                    <goal>generate</goal>
-                                                </goals>
-                                            </pluginExecutionFilter>
-                                            <action>
-                                                <ignore />
-                                            </action>
-                                        </pluginExecution>
-                                        <pluginExecution>
-                                            <pluginExecutionFilter>
-                                                <groupId>org.flywaydb</groupId>
-                                                <artifactId>flyway-maven-plugin</artifactId>
-                                                <versionRange>${flyway.version}</versionRange>
-                                                <goals>
-                                                    <goal>migrate</goal>
-                                                </goals>
-                                            </pluginExecutionFilter>
-                                            <action>
-                                                <ignore />
-                                            </action>
-                                        </pluginExecution>
-                                    </pluginExecutions>
-                                </lifecycleMappingMetadata>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-
-        <profile>
-            <!-- Maven profile cleanDatabase - drop all database objects -->
-            <id>cleanDatabase</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>properties-maven-plugin</artifactId>
-                        <!-- Trigger the property in the clean phase of the Clean Lifecycle -->
-                        <executions>
-                            <execution>
-                                <phase>clean</phase>
-                                <goals>
-                                    <goal>read-project-properties</goal>
-                                </goals>
-                                <configuration>
-                                    <files>
-                                        <file>${property-file}</file>
-                                    </files>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.flywaydb</groupId>
-                        <artifactId>flyway-maven-plugin</artifactId>
-                        <version>${flyway.version}</version>
-                        <executions>
-                            <execution>
-                                <id>drop-database</id>
-                                <!-- Need to guarantee order of execution -->
-                                <phase>clean</phase>
-                                <goals>
-                                    <goal>clean</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
     </profiles>
 
     <build>
@@ -599,90 +459,6 @@
         </resources>
 
         <plugins>
-            <!-- publish db specific properties from property files for the Flyway and jOOQ plugins -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>properties-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>read-project-properties</goal>
-                        </goals>
-                        <configuration>
-                            <files>
-                                <file>${property-file}</file>
-                            </files>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Flyway database migration -->
-            <!-- properties are published from application.properties via properties-maven-plugin -->
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>${flyway.version}</version>
-                <configuration>
-                    <url>${flyway.url}</url>
-                    <user>${flyway.user}</user>
-                    <password>${flyway.password}</password>
-                </configuration>
-                <!-- Execution of the Flyway plugin in the "generate-sources" phase to allow the jOOQ code generator to take over -->
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>migrate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- The jOOQ code generator plugin, creating the type safe java representation of the database -->
-            <!-- see https://www.jooq.org/doc/3.9/manual/code-generation/codegen-configuration/ -->
-            <!-- Some configuration properties are published from application.properties via properties-maven-plugin -->
-            <plugin>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-codegen-maven</artifactId>
-                <executions>
-                    <execution>
-                        <id>generate-postgres</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <jdbc>
-                                <driver>${spring.datasource.hikari.driver-class-name}</driver>
-                                <url>${spring.datasource.hikari.jdbc-url}</url>
-                                <user>${spring.datasource.hikari.username}</user>
-                                <password>${spring.datasource.hikari.password}</password>
-                            </jdbc>
-                            <generator>
-                                <database>
-                                    <name>${org.jooq.db-generator}</name>
-                                    <includes>.*</includes>
-                                    <excludes />
-                                    <inputSchema>${db.schema}</inputSchema>
-                                    <recordVersionFields>version</recordVersionFields>
-                                </database>
-                                <generate>
-                                    <deprecated>false</deprecated>
-                                    <instanceFields>true</instanceFields>
-                                    <pojos>false</pojos>
-                                </generate>
-                                <target>
-                                    <packageName>ch.difty.scipamato.db</packageName>
-                                    <directory>${org.jooq.target.dir}</directory>
-                                </target>
-                            </generator>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- have actuator report the git version the project was built with (http://localhost:8080/actuator/info) -->
             <plugin>
                 <groupId>pl.project13.maven</groupId>
@@ -703,26 +479,6 @@
                         <profile>DB_JOOQ</profile>
                     </profiles>
                 </configuration>
-            </plugin>
-
-            <!-- Assist eclipse in recognizing the generates sources (from jOOQ and jaxb) as source files -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>${org.jooq.target.dir}</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

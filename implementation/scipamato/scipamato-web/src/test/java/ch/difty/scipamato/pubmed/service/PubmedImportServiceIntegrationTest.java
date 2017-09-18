@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.scipamato.db.tables.Paper;
 import ch.difty.scipamato.entity.xml.PubmedIntegrationTest;
-import ch.difty.scipamato.persistance.jooq.JooqBaseIntegrationTest;
+import ch.difty.scipamato.persistance.JooqBaseIntegrationTest;
 import ch.difty.scipamato.persistence.PubmedImporter;
 import ch.difty.scipamato.persistence.ServiceResult;
 
