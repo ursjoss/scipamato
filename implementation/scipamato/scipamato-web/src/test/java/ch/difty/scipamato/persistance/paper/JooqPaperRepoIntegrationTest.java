@@ -340,8 +340,12 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     }
 
     private void assertExclusionCount(final long searchOrderId, final long paperId, final int count) {
-        assertThat(dsl.selectCount().from(SearchExclusion.SEARCH_EXCLUSION).where(SearchExclusion.SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId)).and(
-                SearchExclusion.SEARCH_EXCLUSION.PAPER_ID.eq(paperId)).fetchOne(0, int.class)).isEqualTo(count);
+        assertThat(dsl
+            .selectCount()
+            .from(SearchExclusion.SEARCH_EXCLUSION)
+            .where(SearchExclusion.SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId))
+            .and(SearchExclusion.SEARCH_EXCLUSION.PAPER_ID.eq(paperId))
+            .fetchOne(0, int.class)).isEqualTo(count);
     }
 
     private void deleteRecord(long searchOrderId, long paperId) {

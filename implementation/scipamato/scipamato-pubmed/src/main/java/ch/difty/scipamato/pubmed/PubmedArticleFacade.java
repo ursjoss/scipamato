@@ -63,8 +63,16 @@ public abstract class PubmedArticleFacade {
     }
 
     protected String getFirstAuthorFrom(final AuthorList authorList) {
-        return authorList.getAuthor().stream().map(Author::getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName).flatMap(List<java.lang.Object>::stream).filter(o -> o instanceof LastName).map(
-                lm -> ((LastName) lm).getvalue()).limit(1).findFirst().orElseGet(null);
+        return authorList
+            .getAuthor()
+            .stream()
+            .map(Author::getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName)
+            .flatMap(List<java.lang.Object>::stream)
+            .filter(o -> o instanceof LastName)
+            .map(lm -> ((LastName) lm).getvalue())
+            .limit(1)
+            .findFirst()
+            .orElseGet(null);
     }
 
     protected String getDoiFromArticleIdList(ArticleIdList articleIdList) {

@@ -211,8 +211,13 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     }
 
     public List<Long> findConditionIdsWithSearchTerms(final Long searchOrderId) {
-        return getDsl().select(SEARCH_TERM.SEARCH_CONDITION_ID).from(SEARCH_TERM).innerJoin(SEARCH_CONDITION).on(SEARCH_TERM.SEARCH_CONDITION_ID.eq(SEARCH_CONDITION.SEARCH_CONDITION_ID)).where(
-                SEARCH_CONDITION.SEARCH_ORDER_ID.eq(searchOrderId)).fetchInto(Long.class);
+        return getDsl()
+            .select(SEARCH_TERM.SEARCH_CONDITION_ID)
+            .from(SEARCH_TERM)
+            .innerJoin(SEARCH_CONDITION)
+            .on(SEARCH_TERM.SEARCH_CONDITION_ID.eq(SEARCH_CONDITION.SEARCH_CONDITION_ID))
+            .where(SEARCH_CONDITION.SEARCH_ORDER_ID.eq(searchOrderId))
+            .fetchInto(Long.class);
     }
 
     protected List<SearchCondition> findTermLessConditions(final Long searchOrderId, final List<Long> conditionIdsWithSearchTerms) {
@@ -266,11 +271,14 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
 
     private void updateSearchTerm(final SearchTerm st, final Long searchTermId, final Long searchConditionId) {
         final Condition idMatches = SEARCH_TERM.ID.eq(searchTermId);
-        getDsl().update(SEARCH_TERM).set(
-                row(SEARCH_TERM.SEARCH_CONDITION_ID, SEARCH_TERM.SEARCH_TERM_TYPE, SEARCH_TERM.FIELD_NAME, SEARCH_TERM.RAW_VALUE, SEARCH_TERM.LAST_MODIFIED, SEARCH_TERM.LAST_MODIFIED_BY,
-                        SEARCH_TERM.VERSION),
-                row(searchConditionId, st.getSearchTermType().getId(), st.getFieldName(), st.getRawSearchTerm(), getTs(), getUserId(),
-                        getDsl().select(SEARCH_TERM.VERSION).from(SEARCH_TERM).where(idMatches).fetchOneInto(Integer.class) + 1)).where(idMatches).execute();
+        getDsl()
+            .update(SEARCH_TERM)
+            .set(row(SEARCH_TERM.SEARCH_CONDITION_ID, SEARCH_TERM.SEARCH_TERM_TYPE, SEARCH_TERM.FIELD_NAME, SEARCH_TERM.RAW_VALUE, SEARCH_TERM.LAST_MODIFIED, SEARCH_TERM.LAST_MODIFIED_BY,
+                    SEARCH_TERM.VERSION),
+                    row(searchConditionId, st.getSearchTermType().getId(), st.getFieldName(), st.getRawSearchTerm(), getTs(), getUserId(),
+                            getDsl().select(SEARCH_TERM.VERSION).from(SEARCH_TERM).where(idMatches).fetchOneInto(Integer.class) + 1))
+            .where(idMatches)
+            .execute();
     }
 
     private void deleteObsoleteConditionsFrom(SearchOrder searchOrder) {
@@ -288,14 +296,20 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
 
     private void storeExistingExclusionsOf(SearchOrder searchOrder) {
         final long searchOrderId = searchOrder.getId();
-        final List<Long> saved = getDsl().select(SEARCH_EXCLUSION.PAPER_ID).from(SEARCH_EXCLUSION).where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId)).and(
-                SEARCH_EXCLUSION.PAPER_ID.in(searchOrder.getExcludedPaperIds())).fetchInto(Long.class);
+        final List<Long> saved = getDsl()
+            .select(SEARCH_EXCLUSION.PAPER_ID)
+            .from(SEARCH_EXCLUSION)
+            .where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId))
+            .and(SEARCH_EXCLUSION.PAPER_ID.in(searchOrder.getExcludedPaperIds()))
+            .fetchInto(Long.class);
         final List<Long> unsaved = new ArrayList<>(searchOrder.getExcludedPaperIds());
         unsaved.removeAll(saved);
         final Integer userId = getUserId();
         for (final Long excludedId : unsaved) {
-            getDsl().insertInto(SEARCH_EXCLUSION, SEARCH_EXCLUSION.SEARCH_ORDER_ID, SEARCH_EXCLUSION.PAPER_ID, SEARCH_EXCLUSION.CREATED_BY, SEARCH_EXCLUSION.LAST_MODIFIED_BY).values(searchOrderId,
-                    excludedId, userId, userId).execute();
+            getDsl()
+                .insertInto(SEARCH_EXCLUSION, SEARCH_EXCLUSION.SEARCH_ORDER_ID, SEARCH_EXCLUSION.PAPER_ID, SEARCH_EXCLUSION.CREATED_BY, SEARCH_EXCLUSION.LAST_MODIFIED_BY)
+                .values(searchOrderId, excludedId, userId, userId)
+                .execute();
         }
     }
 
@@ -312,13 +326,18 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
             return optionalPersisted.get();
         } else {
             final Integer userId = getUserId();
-            final SearchConditionRecord searchConditionRecord = getDsl().insertInto(SEARCH_CONDITION, SEARCH_CONDITION.SEARCH_ORDER_ID, SEARCH_CONDITION.CREATED_TERM, SEARCH_CONDITION.MODIFIED_TERM,
-                    SEARCH_CONDITION.CREATED_BY, SEARCH_CONDITION.LAST_MODIFIED_BY).values(searchOrderId, searchCondition.getCreatedDisplayValue(), searchCondition.getModifiedDisplayValue(), userId,
-                            userId).returning().fetchOne();
+            final SearchConditionRecord searchConditionRecord = getDsl()
+                .insertInto(SEARCH_CONDITION, SEARCH_CONDITION.SEARCH_ORDER_ID, SEARCH_CONDITION.CREATED_TERM, SEARCH_CONDITION.MODIFIED_TERM, SEARCH_CONDITION.CREATED_BY,
+                        SEARCH_CONDITION.LAST_MODIFIED_BY)
+                .values(searchOrderId, searchCondition.getCreatedDisplayValue(), searchCondition.getModifiedDisplayValue(), userId, userId)
+                .returning()
+                .fetchOne();
             persistSearchTerms(searchCondition, searchConditionRecord.getSearchConditionId());
             persistCodes(searchCondition, searchConditionRecord.getSearchConditionId());
-            final SearchCondition persistedSearchCondition = getDsl().selectFrom(SEARCH_CONDITION).where(
-                    SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchConditionRecord.getSearchConditionId())).fetchOneInto(SearchCondition.class);
+            final SearchCondition persistedSearchCondition = getDsl()
+                .selectFrom(SEARCH_CONDITION)
+                .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchConditionRecord.getSearchConditionId()))
+                .fetchOneInto(SearchCondition.class);
             fillSearchTermsInto(persistedSearchCondition, mapSearchTermsToSearchConditions(persistedSearchCondition));
             fillCodesInto(persistedSearchCondition, languageCode);
             return persistedSearchCondition;
@@ -435,8 +454,13 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     }
 
     private SearchTerm getPersistedTerm(final Long searchConditionId, final String fieldName, final Class<? extends SearchTerm> termClass, final int typeId) {
-        return getDsl().select(SEARCH_TERM.ID, SEARCH_TERM.SEARCH_CONDITION_ID, SEARCH_TERM.FIELD_NAME, SEARCH_TERM.RAW_VALUE).from(SEARCH_TERM).where(
-                SEARCH_TERM.SEARCH_CONDITION_ID.eq(searchConditionId)).and(SEARCH_TERM.SEARCH_TERM_TYPE.eq(typeId)).and(SEARCH_TERM.FIELD_NAME.eq(fieldName)).fetchOneInto(termClass);
+        return getDsl()
+            .select(SEARCH_TERM.ID, SEARCH_TERM.SEARCH_CONDITION_ID, SEARCH_TERM.FIELD_NAME, SEARCH_TERM.RAW_VALUE)
+            .from(SEARCH_TERM)
+            .where(SEARCH_TERM.SEARCH_CONDITION_ID.eq(searchConditionId))
+            .and(SEARCH_TERM.SEARCH_TERM_TYPE.eq(typeId))
+            .and(SEARCH_TERM.FIELD_NAME.eq(fieldName))
+            .fetchOneInto(termClass);
     }
 
     private void removeObsoleteSearchTerms(SearchCondition searchCondition, Long searchConditionId) {
@@ -473,11 +497,14 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
     public SearchCondition updateSearchCondition(SearchCondition searchCondition, long searchOrderId, final String languageCode) {
         AssertAs.notNull(languageCode, "languageCode");
         final Condition idMatches = SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchCondition.getSearchConditionId());
-        getDsl().update(SEARCH_CONDITION).set(
-                row(SEARCH_CONDITION.SEARCH_ORDER_ID, SEARCH_CONDITION.CREATED_TERM, SEARCH_CONDITION.MODIFIED_TERM, SEARCH_CONDITION.LAST_MODIFIED, SEARCH_CONDITION.LAST_MODIFIED_BY,
-                        SEARCH_CONDITION.VERSION),
-                row(searchOrderId, searchCondition.getCreatedDisplayValue(), searchCondition.getModifiedDisplayValue(), getTs(), getUserId(),
-                        getDsl().select(SEARCH_CONDITION.VERSION).from(SEARCH_CONDITION).where(idMatches).fetchOneInto(Integer.class) + 1)).where(idMatches).execute();
+        getDsl()
+            .update(SEARCH_CONDITION)
+            .set(row(SEARCH_CONDITION.SEARCH_ORDER_ID, SEARCH_CONDITION.CREATED_TERM, SEARCH_CONDITION.MODIFIED_TERM, SEARCH_CONDITION.LAST_MODIFIED, SEARCH_CONDITION.LAST_MODIFIED_BY,
+                    SEARCH_CONDITION.VERSION),
+                    row(searchOrderId, searchCondition.getCreatedDisplayValue(), searchCondition.getModifiedDisplayValue(), getTs(), getUserId(),
+                            getDsl().select(SEARCH_CONDITION.VERSION).from(SEARCH_CONDITION).where(idMatches).fetchOneInto(Integer.class) + 1))
+            .where(idMatches)
+            .execute();
         persistSearchTerms(searchCondition, searchCondition.getSearchConditionId());
         persistCodes(searchCondition, searchCondition.getSearchConditionId());
         SearchCondition persistedSearchCondition = fetchSearchConditionWithId(searchCondition.getSearchConditionId());

@@ -56,8 +56,12 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         final List<Integer> pmIdCandidates = articles.stream().map(PubmedArticleFacade::getPmId).filter(Objects::nonNull).map(Integer::valueOf).collect(Collectors.toList());
         if (!pmIdCandidates.isEmpty()) {
             final List<String> existingPmIds = getRepository().findExistingPmIdsOutOf(pmIdCandidates).stream().map(String::valueOf).collect(Collectors.toList());
-            final List<Paper> savedPapers = articles.stream().filter(a -> a.getPmId() != null && !existingPmIds.contains(a.getPmId())).map(
-                    (PubmedArticleFacade a) -> this.savePubmedArticle(a, minimumNumber)).filter(Objects::nonNull).collect(Collectors.toList());
+            final List<Paper> savedPapers = articles
+                .stream()
+                .filter(a -> a.getPmId() != null && !existingPmIds.contains(a.getPmId()))
+                .map((PubmedArticleFacade a) -> this.savePubmedArticle(a, minimumNumber))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
             fillServiceResultFrom(savedPapers, existingPmIds, sr);
         }
         return sr;

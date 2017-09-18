@@ -143,14 +143,22 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     protected PaperSummaryDataSource getSummaryDataSource() {
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summary", this, null).getString();
-        ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand).withPopulation(new StringResourceModel(Paper.POPULATION + LABEL_RECOURCE_TAG, this, null).getString()).withGoals(
-                new StringResourceModel(Paper.GOALS + LABEL_RECOURCE_TAG, this, null).getString()).withMethods(
-                        new StringResourceModel(Paper.METHODS + LABEL_RECOURCE_TAG, this, null).getString()).withResult(
-                                new StringResourceModel(Paper.RESULT + LABEL_RECOURCE_TAG, this, null).getString()).withComment(
-                                        new StringResourceModel(Paper.COMMENT + LABEL_RECOURCE_TAG, this, null).getString()).build();
-        ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getNumber()).withCreator(brand).withPaperTitle(
-                getModelObject().getTitle()).withPaperAuthor(getModelObject().getFirstAuthor()).withSubject(getModelObject().getMethods()).withAuthor(
-                        getModelObject().getCreatedByFullName()).withCodes(getModelObject().getCodes()).withCompression().build();
+        ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand)
+            .withPopulation(new StringResourceModel(Paper.POPULATION + LABEL_RECOURCE_TAG, this, null).getString())
+            .withGoals(new StringResourceModel(Paper.GOALS + LABEL_RECOURCE_TAG, this, null).getString())
+            .withMethods(new StringResourceModel(Paper.METHODS + LABEL_RECOURCE_TAG, this, null).getString())
+            .withResult(new StringResourceModel(Paper.RESULT + LABEL_RECOURCE_TAG, this, null).getString())
+            .withComment(new StringResourceModel(Paper.COMMENT + LABEL_RECOURCE_TAG, this, null).getString())
+            .build();
+        ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getNumber())
+            .withCreator(brand)
+            .withPaperTitle(getModelObject().getTitle())
+            .withPaperAuthor(getModelObject().getFirstAuthor())
+            .withSubject(getModelObject().getMethods())
+            .withAuthor(getModelObject().getCreatedByFullName())
+            .withCodes(getModelObject().getCodes())
+            .withCompression()
+            .build();
         return new PaperSummaryDataSource(getModelObject(), rhf, config);
     }
 
@@ -161,35 +169,32 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     protected PaperSummaryShortDataSource getSummaryShortDataSource() {
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summaryShort", this, null).getString();
-        ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand).withGoals(new StringResourceModel(Paper.GOALS + LABEL_RECOURCE_TAG, this, null).getString()).withMethods(
-                new StringResourceModel(Paper.METHODS + LABEL_RECOURCE_TAG, this, null).getString()).withMethodOutcome(
-                        new StringResourceModel(Paper.METHOD_OUTCOME + LABEL_RECOURCE_TAG, this, null).getString()).withResultMeasuredOutcome(
-                                new StringResourceModel(Paper.RESULT_MEASURED_OUTCOME + LABEL_RECOURCE_TAG, this, null).getString()).withMethodStudyDesign(
-                                        new StringResourceModel(Paper.METHOD_STUDY_DESIGN + LABEL_RECOURCE_TAG, this, null).getString()).withPopulationPlace(
-                                                new StringResourceModel(Paper.POPULATION_PLACE + LABEL_RECOURCE_TAG, this, null).getString()).withPopulationPariticpants(
-                                                        new StringResourceModel(Paper.POPULATION_PARTICIPANTS + LABEL_RECOURCE_TAG, this, null).getString()).withPopulationDuration(
-                                                                new StringResourceModel(Paper.POPULATION_DURATION + LABEL_RECOURCE_TAG, this, null).getString()).withExposurePollutant(
-                                                                        new StringResourceModel(Paper.EXPOSURE_POLLUTANT + LABEL_RECOURCE_TAG, this, null).getString()).withExposureAssessment(
-                                                                                new StringResourceModel(Paper.EXPOSURE_ASSESSMENT + LABEL_RECOURCE_TAG, this,
-                                                                                        null).getString()).withResultExposureRange(
-                                                                                                new StringResourceModel(Paper.RESULT_EXPOSURE_RANGE + LABEL_RECOURCE_TAG, this,
-                                                                                                        null).getString()).withMethodStatistics(
-                                                                                                                new StringResourceModel(Paper.METHOD_STATISTICS + LABEL_RECOURCE_TAG, this,
-                                                                                                                        null).getString()).withMethodConfounders(
-                                                                                                                                new StringResourceModel(Paper.METHOD_CONFOUNDERS + LABEL_RECOURCE_TAG,
-                                                                                                                                        this, null).getString()).withResultEffectEstimate(
-                                                                                                                                                new StringResourceModel(
-                                                                                                                                                        Paper.RESULT_EFFECT_ESTIMATE
-                                                                                                                                                                + LABEL_RECOURCE_TAG,
-                                                                                                                                                        this, null).getString()).withComment(
-                                                                                                                                                                new StringResourceModel(
-                                                                                                                                                                        Paper.COMMENT
-                                                                                                                                                                                + LABEL_RECOURCE_TAG,
-                                                                                                                                                                        this,
-                                                                                                                                                                        null).getString()).build();
-        ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getNumber()).withCreator(brand).withPaperTitle(
-                getModelObject().getTitle()).withPaperAuthor(getModelObject().getFirstAuthor()).withSubject(getModelObject().getMethods()).withAuthor(
-                        getModelObject().getCreatedByFullName()).withCodes(getModelObject().getCodes()).withCompression().build();
+        ReportHeaderFields rhf = new ReportHeaderFields.Builder(headerPart, brand)
+            .withGoals(new StringResourceModel(Paper.GOALS + LABEL_RECOURCE_TAG, this, null).getString())
+            .withMethods(new StringResourceModel(Paper.METHODS + LABEL_RECOURCE_TAG, this, null).getString())
+            .withMethodOutcome(new StringResourceModel(Paper.METHOD_OUTCOME + LABEL_RECOURCE_TAG, this, null).getString())
+            .withResultMeasuredOutcome(new StringResourceModel(Paper.RESULT_MEASURED_OUTCOME + LABEL_RECOURCE_TAG, this, null).getString())
+            .withMethodStudyDesign(new StringResourceModel(Paper.METHOD_STUDY_DESIGN + LABEL_RECOURCE_TAG, this, null).getString())
+            .withPopulationPlace(new StringResourceModel(Paper.POPULATION_PLACE + LABEL_RECOURCE_TAG, this, null).getString())
+            .withPopulationPariticpants(new StringResourceModel(Paper.POPULATION_PARTICIPANTS + LABEL_RECOURCE_TAG, this, null).getString())
+            .withPopulationDuration(new StringResourceModel(Paper.POPULATION_DURATION + LABEL_RECOURCE_TAG, this, null).getString())
+            .withExposurePollutant(new StringResourceModel(Paper.EXPOSURE_POLLUTANT + LABEL_RECOURCE_TAG, this, null).getString())
+            .withExposureAssessment(new StringResourceModel(Paper.EXPOSURE_ASSESSMENT + LABEL_RECOURCE_TAG, this, null).getString())
+            .withResultExposureRange(new StringResourceModel(Paper.RESULT_EXPOSURE_RANGE + LABEL_RECOURCE_TAG, this, null).getString())
+            .withMethodStatistics(new StringResourceModel(Paper.METHOD_STATISTICS + LABEL_RECOURCE_TAG, this, null).getString())
+            .withMethodConfounders(new StringResourceModel(Paper.METHOD_CONFOUNDERS + LABEL_RECOURCE_TAG, this, null).getString())
+            .withResultEffectEstimate(new StringResourceModel(Paper.RESULT_EFFECT_ESTIMATE + LABEL_RECOURCE_TAG, this, null).getString())
+            .withComment(new StringResourceModel(Paper.COMMENT + LABEL_RECOURCE_TAG, this, null).getString())
+            .build();
+        ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getNumber())
+            .withCreator(brand)
+            .withPaperTitle(getModelObject().getTitle())
+            .withPaperAuthor(getModelObject().getFirstAuthor())
+            .withSubject(getModelObject().getMethods())
+            .withAuthor(getModelObject().getCreatedByFullName())
+            .withCodes(getModelObject().getCodes())
+            .withCompression()
+            .build();
         return new PaperSummaryShortDataSource(getModelObject(), rhf, config);
     }
 
