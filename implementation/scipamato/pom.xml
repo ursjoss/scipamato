@@ -71,7 +71,6 @@
         <surefire.testclass.it>**/*IntegrationTest.java</surefire.testclass.it>
 
         <!-- Sonar properties -->
-        <sonar.projectKey>ch.difty.scipamato</sonar.projectKey>
         <sonar.language>java</sonar.language>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
