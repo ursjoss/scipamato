@@ -61,7 +61,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - use OktHttp with feign
 - various improvements in wiki pages, javadoc, sonar suggested code changes
 - pom cleanup
-- dependency updates: spring-boot-starter, wicket, wicket-spring-boot-starter, jOOQ, postgres-jdbc-driver, spring-boot-admin
+- dependency updates: spring-boot-starter, wicket, wicket-spring-boot-starter, jOOQ, postgres-jdbc-driver, spring-boot-admin, assertj
 
 .Fixed
 - 6/13: Fix behavior when accessing PubMed without network access
