@@ -55,6 +55,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 6/12: enable caching (ehcache3) for static reference data
 
 .Changed
+- 6/17: Transformed the project to a maven multi-module project, allowing to reuse author parsing in the data migration project
 - switched from markdown to asciidoc for wiki pages
 - Created ChangeLog according to http://keepachangelog.com/en/1.0.0/[Keep a Changelog]
 - use OktHttp with feign
@@ -66,6 +67,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 6/13: Fix behavior when accessing PubMed without network access
 - 6/11: Codes/CodeClasses were not translated according to browser locale
 - fix jooq-codegen-maven-plugin after having flyway populate an empty db
+- minor architectural improvements (remove dependencies across layers)
+- Wiki: Fix description of string searches
+- Fixed First Author Parsing from Author string in case of Junior (Jr) after initials
 
 
 [[v0.6.0]]

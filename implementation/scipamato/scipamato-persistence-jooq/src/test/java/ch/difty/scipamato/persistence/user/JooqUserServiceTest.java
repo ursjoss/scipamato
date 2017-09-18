@@ -1,0 +1,160 @@
+package ch.difty.scipamato.persistence.user;
+
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import ch.difty.scipamato.entity.User;
+import ch.difty.scipamato.entity.filter.UserFilter;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
+
+@RunWith(MockitoJUnitRunner.class)
+public class JooqUserServiceTest {
+
+    private final JooqUserService service = new JooqUserService();
+
+    @Mock
+    private UserRepository repoMock;
+    @Mock
+    private UserFilter filterMock;
+    @Mock
+    private PaginationContext paginationContextMock;
+    @Mock
+    private User userMock;
+
+    private final List<User> users = new ArrayList<>();
+
+    @Before
+    public void setUp() {
+        service.setRepository(repoMock);
+
+        users.add(userMock);
+        users.add(userMock);
+    }
+
+    @After
+    public void tearDown() {
+        verifyNoMoreInteractions(repoMock, filterMock, paginationContextMock, userMock);
+    }
+
+    @Test
+    public void findingById_withFoundEntity_returnsOptionalOfIt() {
+        Integer id = 7;
+        when(repoMock.findById(id)).thenReturn(userMock);
+
+        Optional<User> optUser = service.findById(id);
+        assertThat(optUser.isPresent()).isTrue();
+        assertThat(optUser.get()).isEqualTo(userMock);
+
+        verify(repoMock).findById(id);
+    }
+
+    @Test
+    public void findingById_withNotFoundEntity_returnsOptionalEmpty() {
+        Integer id = 7;
+        when(repoMock.findById(id)).thenReturn(null);
+
+        assertThat(service.findById(id).isPresent()).isFalse();
+
+        verify(repoMock).findById(id);
+    }
+
+    @Test
+    public void findingByFilter_delegatesToRepo() {
+        when(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(users);
+        assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(users);
+        verify(repoMock).findPageByFilter(filterMock, paginationContextMock);
+    }
+
+    @Test
+    public void countingByFilter_delegatesToRepo() {
+        when(repoMock.countByFilter(filterMock)).thenReturn(3);
+        assertThat(service.countByFilter(filterMock)).isEqualTo(3);
+        verify(repoMock).countByFilter(filterMock);
+    }
+
+    @Test
+    public void savingOrUpdating_withUserWithNullId_hasRepoAddTheUser() {
+        when(userMock.getId()).thenReturn(null);
+        when(repoMock.add(userMock)).thenReturn(userMock);
+        assertThat(service.saveOrUpdate(userMock)).isEqualTo(userMock);
+        verify(repoMock).add(userMock);
+        verify(userMock).getId();
+    }
+
+    @Test
+    public void savingOrUpdating_withUserWithNonNullId_hasRepoUpdateTheUser() {
+        when(userMock.getId()).thenReturn(17);
+        when(repoMock.update(userMock)).thenReturn(userMock);
+        assertThat(service.saveOrUpdate(userMock)).isEqualTo(userMock);
+        verify(repoMock).update(userMock);
+        verify(userMock).getId();
+    }
+
+    @Test
+    public void findingByUserName_withNullName_returnsEmptyOptional() {
+        assertThat(service.findByUserName(null).isPresent()).isFalse();
+    }
+
+    @Test
+    public void findingByUserName_whenFindingUser_delegatesToRepoAndReturnsOptionalOfFoundUser() {
+        when(repoMock.findByUserName("foo")).thenReturn(userMock);
+        assertThat(service.findByUserName("foo")).isEqualTo(Optional.ofNullable(userMock));
+        verify(repoMock).findByUserName("foo");
+    }
+
+    @Test
+    public void findingByUserName_whenNotFindingUser_delegatesToRepoAndReturnsOptionalEmpty() {
+        when(repoMock.findByUserName("foo")).thenReturn(null);
+        assertThat(service.findByUserName("foo")).isEqualTo(Optional.empty());
+        verify(repoMock).findByUserName("foo");
+    }
+
+    @Test
+    public void deleting_withNullEntity_doesNothing() {
+        service.remove(null);
+        verify(repoMock, never()).delete(Mockito.anyInt(), Mockito.anyInt());
+    }
+
+    @Test
+    public void deleting_withEntityWithNullId_doesNothing() {
+        when(userMock.getId()).thenReturn(null);
+
+        service.remove(userMock);
+
+        verify(userMock).getId();
+        verify(repoMock, never()).delete(Mockito.anyInt(), Mockito.anyInt());
+    }
+
+    @Test
+    public void deleting_withEntityWithNormald_delegatesToRepo() {
+        when(userMock.getId()).thenReturn(3);
+        when(userMock.getVersion()).thenReturn(2);
+
+        service.remove(userMock);
+
+        verify(userMock, times(2)).getId();
+        verify(userMock, times(1)).getVersion();
+        verify(repoMock, times(1)).delete(3, 2);
+    }
+
+    @Test
+    public void findingPageOfIdsByFilter_delegatesToRepo() {
+        when(repoMock.findPageOfIdsByFilter(filterMock, paginationContextMock)).thenReturn(Arrays.asList(3, 8, 5));
+        assertThat(service.findPageOfIdsByFilter(filterMock, paginationContextMock)).containsExactly(3, 8, 5);
+        verify(repoMock).findPageOfIdsByFilter(filterMock, paginationContextMock);
+    }
+
+}
