@@ -3,6 +3,8 @@ package ch.difty.scipamato.web.panel.search;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import ch.difty.scipamato.web.event.WicketEvent;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * The event indicates that there were changes in the search order deriving from the {@link SearchOrderPanel}
@@ -17,6 +19,8 @@ import ch.difty.scipamato.web.event.WicketEvent;
  *
  * @author u.joss
  */
+@Getter
+@EqualsAndHashCode(callSuper = true)
 public class SearchOrderChangeEvent extends WicketEvent {
 
     private Long excludedId;
@@ -46,18 +50,6 @@ public class SearchOrderChangeEvent extends WicketEvent {
         droppedConditionId = null;
         excludedId = null;
         return this;
-    }
-
-    public Long getExcludedId() {
-        return excludedId;
-    }
-
-    public Long getDroppedConditionId() {
-        return droppedConditionId;
-    }
-
-    public boolean isNewSearchOrderRequested() {
-        return newSearchOrderRequested;
     }
 
 }

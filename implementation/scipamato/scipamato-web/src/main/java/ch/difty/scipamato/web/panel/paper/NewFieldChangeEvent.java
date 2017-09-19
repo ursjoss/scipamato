@@ -4,6 +4,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.TextArea;
 
 import ch.difty.scipamato.web.event.WicketEvent;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * The event indicates that one of the new fields has changed that are present multiple times on the PaperPanel
@@ -11,6 +13,8 @@ import ch.difty.scipamato.web.event.WicketEvent;
  *
  * @author u.joss
  */
+@Getter
+@EqualsAndHashCode(callSuper = true)
 public class NewFieldChangeEvent extends WicketEvent {
 
     private String id;
@@ -18,14 +22,6 @@ public class NewFieldChangeEvent extends WicketEvent {
 
     public NewFieldChangeEvent(AjaxRequestTarget target) {
         super(target);
-    }
-
-    protected String getId() {
-        return id;
-    }
-
-    protected String getMarkupId() {
-        return markupId;
     }
 
     public NewFieldChangeEvent withId(String id) {

@@ -10,10 +10,12 @@ import org.springframework.util.StringUtils;
 
 import ch.difty.scipamato.auth.Role;
 import ch.difty.scipamato.entity.User;
+import lombok.EqualsAndHashCode;
 
 /**
  * Implementation of {@link UserDetails} working the the {@link User} entity. 
  */
+@EqualsAndHashCode(callSuper = true)
 public class ScipamatoUserDetails extends User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
