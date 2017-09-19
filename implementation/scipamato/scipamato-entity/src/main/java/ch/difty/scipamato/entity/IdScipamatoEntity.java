@@ -1,5 +1,10 @@
 package ch.difty.scipamato.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  * SciPaMaTo entity having a numeric id.
  *
@@ -7,6 +12,10 @@ package ch.difty.scipamato.entity;
  *
  * @param <ID> type of the numeric id
  */
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class IdScipamatoEntity<ID extends Number> extends ScipamatoEntity {
 
     private static final long serialVersionUID = 1L;
@@ -14,20 +23,5 @@ public abstract class IdScipamatoEntity<ID extends Number> extends ScipamatoEnti
     public static final String ID = "id";
 
     private ID id;
-
-    public IdScipamatoEntity() {
-    }
-
-    public IdScipamatoEntity(final ID id) {
-        this.id = id;
-    }
-
-    public ID getId() {
-        return id;
-    }
-
-    public void setId(ID id) {
-        this.id = id;
-    }
 
 }
