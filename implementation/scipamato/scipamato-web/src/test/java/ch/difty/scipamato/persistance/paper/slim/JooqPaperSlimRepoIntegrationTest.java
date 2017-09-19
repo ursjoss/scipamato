@@ -28,7 +28,10 @@ public class JooqPaperSlimRepoIntegrationTest extends JooqTransactionalIntegrati
     @Test
     public void findingById_withExistingId_returnsEntity() {
         PaperSlim paper = repo.findById((long) MAX_ID_PREPOPULATED);
-        assertThat(paper.getId()).isEqualTo(MAX_ID_PREPOPULATED);
+        if (MAX_ID_PREPOPULATED > 0)
+            assertThat(paper.getId()).isEqualTo(MAX_ID_PREPOPULATED);
+        else
+            assertThat(paper).isNull();
     }
 
     @Test

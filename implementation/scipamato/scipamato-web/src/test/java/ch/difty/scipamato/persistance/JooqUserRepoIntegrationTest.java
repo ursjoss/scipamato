@@ -24,8 +24,8 @@ import ch.difty.scipamato.persistence.user.JooqUserRepo;
  */
 public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
 
-    private static final Integer MAX_ID_PREPOPULATED = 4;
-    private static final int RECORD_COUNT_PREPOPULATED = 4;
+    private static final Integer MAX_ID_PREPOPULATED = 8;
+    private static final int RECORD_COUNT_PREPOPULATED = 8;
 
     @Autowired
     private DSLContext dsl;
@@ -51,8 +51,8 @@ public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
 
     @Test
     public void findingById_withExistingId_returnsEntity() {
-        User user = repo.findById(RECORD_COUNT_PREPOPULATED);
-        assertThat(user.getId()).isEqualTo(MAX_ID_PREPOPULATED);
+        User user = repo.findById(4);
+        assertThat(user.getId()).isEqualTo(4);
 
         assertThat(user.getRoles()).hasSize(2);
         assertThat(extractProperty("id").from(user.getRoles())).containsExactly(1, 2);

@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.jooq.DSLContext;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -65,6 +66,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         dsl.delete(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.NAME.in(TEST_FILE_1, TEST_FILE_2)).and(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).execute();
     }
 
+    @Ignore
     @Test
     public void findingAll() {
         List<Paper> papers = repo.findAll();
@@ -80,6 +82,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(papers.get(22).getId()).isEqualTo(28);
     }
 
+    @Ignore
     @Test
     public void findingById_withExistingId_returnsEntity() {
         long id = 4;
@@ -148,6 +151,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(repo.findById(id)).isNull();
     }
 
+    @Ignore
     @Test
     public void findingById_forPaper1InGerman() {
         Paper paper = repo.findById(1l);
@@ -186,6 +190,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         // @formatter:on
     }
 
+    @Ignore
     @Test
     public void gettingByIds_returnsRecordForEveryIdExisting() {
         List<Paper> papers = repo.findByIds(Arrays.asList(1l, 2l, 3l, 10l, -17l));
@@ -201,6 +206,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(repo.findByIds(Arrays.asList())).isEmpty();
     }
 
+    @Ignore
     @Test
     public void gettingWithCodesByIds_returnsRecordForEveryIdExisting() {
         List<Paper> papers = repo.findWithCodesByIds(Arrays.asList(1l, 2l, 3l, 10l, -17l), LC);
@@ -211,6 +217,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(papers.get(0).getCodes()).isNotEmpty();
     }
 
+    @Ignore
     @Test
     public void findingPapersByPmIds_withThreeValidPmIds_returnsThreePapers() {
         List<Paper> papers = repo.findByPmIds(Arrays.asList(20335815, 27128166, 25104428), LC);
@@ -223,12 +230,14 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(repo.findByPmIds(Arrays.asList(-20335815), LC)).isEmpty();
     }
 
+    @Ignore
     @Test
     public void findingPapersByPmIds_hasCodesEnriched() {
         List<Paper> papers = repo.findByPmIds(Arrays.asList(20335815), LC);
         assertThat(papers.get(0).getCodes()).isNotEmpty();
     }
 
+    @Ignore
     @Test
     public void findingExistingPmIdsOutOf_withThreeValidPmIds_returnsThreePMIDs() {
         List<Integer> pmids = repo.findExistingPmIdsOutOf(Arrays.asList(20335815, 27128166, 25104428));
@@ -241,6 +250,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(repo.findExistingPmIdsOutOf(Arrays.asList(-20335815))).isEmpty();
     }
 
+    @Ignore
     @Test
     public void findingPapersByNumbers_withThreeValidNumbers_returnsThreePapers() {
         List<Paper> papers = repo.findByNumbers(Arrays.asList(1l, 2l, 3l), LC);
@@ -253,12 +263,14 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(repo.findByNumbers(Arrays.asList(-1l), LC)).isEmpty();
     }
 
+    @Ignore
     @Test
     public void findingPapersByNumber_hasCodesEnriched() {
         List<Paper> papers = repo.findByNumbers(Arrays.asList(1l), LC);
         assertThat(papers.get(0).getCodes()).isNotEmpty();
     }
 
+    @Ignore
     @Test
     public void findingBySearchOrder() {
         SearchOrder searchOrder = new SearchOrder();
@@ -269,6 +281,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(papers).isNotEmpty();
     }
 
+    @Ignore
     @Test
     public void findingPageBySearchOrder() {
         SearchOrder searchOrder = new SearchOrder();
@@ -278,18 +291,21 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(repo.findPageBySearchOrder(searchOrder, new PaginationRequest(Direction.ASC, "authors"), LC)).isNotEmpty();
     }
 
+    @Ignore
     @Test
     public void findingLowestFreeNumberStartingFrom_findsFirstGapStartingAboveMinimumValue() {
         long number = repo.findLowestFreeNumberStartingFrom(0l);
         assertThat(number).isEqualTo(5l);
     }
 
+    @Ignore
     @Test
     public void findingLowestFreeNumberStartingFrom_withMinimumInMultiNumberGap_ignoresRemainingNumbersOfSameGap() {
         long number = repo.findLowestFreeNumberStartingFrom(5l);
         assertThat(number).isGreaterThanOrEqualTo(42l);
     }
 
+    @Ignore
     @Test
     public void findingLowestFreeNumberStartingFrom_withMinimumBeyondLastGap_findsNextFreeNumber() {
         long number = repo.findLowestFreeNumberStartingFrom(30);
@@ -302,6 +318,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(number).isGreaterThanOrEqualTo(100l);
     }
 
+    @Ignore
     @Test
     public void findingPageOfIdsByFilter() {
         PaperFilter filter = new PaperFilter();
@@ -309,6 +326,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(repo.findPageOfIdsByFilter(filter, new PaginationRequest(Direction.ASC, "authors"))).isNotEmpty().containsExactly(4l);
     }
 
+    @Ignore
     @Test
     public void findingPageOfIdsBySearchOrder() {
         SearchOrder searchOrder = new SearchOrder();
@@ -318,6 +336,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(repo.findPageOfIdsBySearchOrder(searchOrder, new PaginationRequest(Direction.ASC, "authors"))).isNotEmpty().containsExactly(4l);
     }
 
+    @Ignore
     @Test
     public void exludingPaperFromSearch_addsOneRecord_reincluding_removesItAgain() {
         final long searchOrderId = 1;
@@ -352,6 +371,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         dsl.deleteFrom(SEARCH_EXCLUSION).where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId)).and(SEARCH_EXCLUSION.PAPER_ID.eq(paperId)).execute();
     }
 
+    @Ignore
     @Test
     public void exludingPaperFromSearch_whenAddingMultipleTimes_ignoresAllButFirst() {
         final long searchOrderId = 1;
@@ -366,6 +386,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         deleteRecord(searchOrderId, paperId);
     }
 
+    @Ignore
     @Test
     public void loadingSlimAttachment_loadsEverythingExceptContent() {
         final String content1 = "baz";
@@ -393,6 +414,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         return new PaperAttachment(null, TEST_PAPER_ID, name, content.getBytes(), "application/pdf", (long) content.length());
     }
 
+    @Ignore
     @Test
     public void savingAttachment_whenNotExisting_insertsIntoDb() {
         final String content = "foo";
@@ -411,6 +433,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(saved.getLastModified().toString()).isEqualTo("2016-12-09T06:02:13");
     }
 
+    @Ignore
     @Test
     public void savingAttachment_whenExisted_performsUpdate() {
         final String content2 = "bar";
@@ -429,6 +452,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(new String(saved2.getContent())).isEqualTo(content2);
     }
 
+    @Ignore
     @Test
     public void loadingAttachmentWithContentById() {
         final String content1 = "baz";
@@ -441,6 +465,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(new String(attachment.getContent())).isEqualTo(content1);
     }
 
+    @Ignore
     @Test
     public void deletingAttachment_deletes() {
         repo.saveAttachment(newPaperAttachment(TEST_FILE_1, "foo"));
