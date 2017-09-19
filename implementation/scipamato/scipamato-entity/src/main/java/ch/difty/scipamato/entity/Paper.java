@@ -9,6 +9,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Pattern.Flag;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
 public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
 
     private static final long serialVersionUID = 1L;
@@ -136,230 +143,6 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
 
     private final CodeBox codes = new PaperCodeBox();
 
-    public Long getNumber() {
-        return number;
-    }
-
-    public void setNumber(Long number) {
-        this.number = number;
-    }
-
-    public String getDoi() {
-        return doi;
-    }
-
-    public void setDoi(String doi) {
-        this.doi = doi;
-    }
-
-    public Integer getPmId() {
-        return pmId;
-    }
-
-    public void setPmId(Integer pmId) {
-        this.pmId = pmId;
-    }
-
-    public String getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(String authors) {
-        this.authors = authors;
-    }
-
-    public String getFirstAuthor() {
-        return firstAuthor;
-    }
-
-    public void setFirstAuthor(String firstAuthor) {
-        this.firstAuthor = firstAuthor;
-    }
-
-    public boolean isFirstAuthorOverridden() {
-        return firstAuthorOverridden;
-    }
-
-    public void setFirstAuthorOverridden(boolean firstAuthorOverridden) {
-        this.firstAuthorOverridden = firstAuthorOverridden;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public Integer getPublicationYear() {
-        return publicationYear;
-    }
-
-    public void setPublicationYear(Integer publicationYear) {
-        this.publicationYear = publicationYear;
-    }
-
-    public String getGoals() {
-        return goals;
-    }
-
-    public void setGoals(String goals) {
-        this.goals = goals;
-    }
-
-    public String getPopulation() {
-        return population;
-    }
-
-    public void setPopulation(String population) {
-        this.population = population;
-    }
-
-    public String getMethods() {
-        return methods;
-    }
-
-    public void setMethods(String methods) {
-        this.methods = methods;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public String getIntern() {
-        return intern;
-    }
-
-    public void setIntern(String intern) {
-        this.intern = intern;
-    }
-
-    public String getPopulationPlace() {
-        return populationPlace;
-    }
-
-    public void setPopulationPlace(String populationPlace) {
-        this.populationPlace = populationPlace;
-    }
-
-    public String getPopulationParticipants() {
-        return populationParticipants;
-    }
-
-    public void setPopulationParticipants(String populationParticipants) {
-        this.populationParticipants = populationParticipants;
-    }
-
-    public String getPopulationDuration() {
-        return populationDuration;
-    }
-
-    public void setPopulationDuration(String populationDuration) {
-        this.populationDuration = populationDuration;
-    }
-
-    public String getExposurePollutant() {
-        return exposurePollutant;
-    }
-
-    public void setExposurePollutant(String exposurePollutant) {
-        this.exposurePollutant = exposurePollutant;
-    }
-
-    public String getExposureAssessment() {
-        return exposureAssessment;
-    }
-
-    public void setExposureAssessment(String exposureAssessment) {
-        this.exposureAssessment = exposureAssessment;
-    }
-
-    public String getMethodStudyDesign() {
-        return methodStudyDesign;
-    }
-
-    public void setMethodStudyDesign(String methodStudyDesign) {
-        this.methodStudyDesign = methodStudyDesign;
-    }
-
-    public String getMethodOutcome() {
-        return methodOutcome;
-    }
-
-    public void setMethodOutcome(String methodOutcome) {
-        this.methodOutcome = methodOutcome;
-    }
-
-    public String getMethodStatistics() {
-        return methodStatistics;
-    }
-
-    public void setMethodStatistics(String methodStatistics) {
-        this.methodStatistics = methodStatistics;
-    }
-
-    public String getMethodConfounders() {
-        return methodConfounders;
-    }
-
-    public void setMethodConfounders(String methodConfounders) {
-        this.methodConfounders = methodConfounders;
-    }
-
-    public String getResultExposureRange() {
-        return resultExposureRange;
-    }
-
-    public void setResultExposureRange(String resultExposureRange) {
-        this.resultExposureRange = resultExposureRange;
-    }
-
-    public String getResultEffectEstimate() {
-        return resultEffectEstimate;
-    }
-
-    public void setResultEffectEstimate(String resultEffectEstimate) {
-        this.resultEffectEstimate = resultEffectEstimate;
-    }
-
-    public String getResultMeasuredOutcome() {
-        return resultMeasuredOutcome;
-    }
-
-    public void setResultMeasuredOutcome(String resultMeasuredOutcome) {
-        this.resultMeasuredOutcome = resultMeasuredOutcome;
-    }
-
-    public String getOriginalAbstract() {
-        return originalAbstract;
-    }
-
-    public void setOriginalAbstract(String originalAbstract) {
-        this.originalAbstract = originalAbstract;
-    }
-
     public List<PaperAttachment> getAttachments() {
         return new ArrayList<>(attachments);
     }
@@ -368,14 +151,6 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
         this.attachments.clear();
         if (attachments != null)
             this.attachments.addAll(attachments);
-    }
-
-    public String getMainCodeOfCodeclass1() {
-        return mainCodeOfCodeclass1;
-    }
-
-    public void setMainCodeOfCodeclass1(String mainCodeOfCodeclass1) {
-        this.mainCodeOfCodeclass1 = mainCodeOfCodeclass1;
     }
 
     @Override
