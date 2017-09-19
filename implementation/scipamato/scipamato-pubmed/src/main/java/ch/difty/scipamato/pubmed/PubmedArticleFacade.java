@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.Data;
+
 /**
  * Facade encapsulating both {@link PubmedArticle}s and {@link PubmedBookArticle}s, making the
  * relevant information accessible through simple getters.
  *
  * @author u.joss
  */
+@Data
 public abstract class PubmedArticleFacade {
 
     protected static final String PAGE_SEPARATOR = "-";
@@ -93,70 +96,6 @@ public abstract class PubmedArticleFacade {
             return a.getLabel() + ": " + a.getvalue();
         else
             return a.getvalue();
-    }
-
-    public String getPmId() {
-        return pmId;
-    }
-
-    protected void setPmId(String pmId) {
-        this.pmId = pmId;
-    }
-
-    public String getAuthors() {
-        return authors;
-    }
-
-    protected void setAuthors(String authors) {
-        this.authors = authors;
-    }
-
-    public String getFirstAuthor() {
-        return firstAuthor;
-    }
-
-    protected void setFirstAuthor(String firstAuthor) {
-        this.firstAuthor = firstAuthor;
-    }
-
-    public String getPublicationYear() {
-        return publicationYear;
-    }
-
-    protected void setPublicationYear(String publicationYear) {
-        this.publicationYear = publicationYear;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    protected void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    protected void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDoi() {
-        return doi;
-    }
-
-    protected void setDoi(String doi) {
-        this.doi = doi;
-    }
-
-    public String getOriginalAbstract() {
-        return originalAbstract;
-    }
-
-    protected void setOriginalAbstract(String originalAbstract) {
-        this.originalAbstract = originalAbstract;
     }
 
 }
