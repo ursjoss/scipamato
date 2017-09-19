@@ -8,12 +8,20 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import ch.difty.scipamato.auth.Role;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * {@link User} entity. Holds a list of associated {@link Role}s
  *
  * @author u.joss
  */
+@Setter
+@Getter
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class User extends IdScipamatoEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
@@ -48,10 +56,6 @@ public class User extends IdScipamatoEntity<Integer> {
 
     private final List<Role> roles = new ArrayList<>();
 
-    public User() {
-        // default constructor
-    }
-
     public User(final int id, final String userName, final String firstName, final String lastName, final String email, final String password, final boolean enabled, final List<Role> roles) {
         setId(id);
         this.userName = userName;
@@ -76,58 +80,6 @@ public class User extends IdScipamatoEntity<Integer> {
         this.password = user.getPassword();
         this.enabled = user.isEnabled();
         setRoles(user.getRoles());
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
     }
 
     public void setRoles(final List<Role> roles) {
