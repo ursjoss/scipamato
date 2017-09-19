@@ -4,12 +4,16 @@ import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.web.jasper.PaperSummaryCommon;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * DTO to feed the PaperSummaryShortDataSource
  *
  * @author u.joss
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class PaperSummaryShort extends PaperSummaryCommon {
     private static final long serialVersionUID = 1L;
 
@@ -74,102 +78,6 @@ public class PaperSummaryShort extends PaperSummaryCommon {
         this.methodStatisticsLabel = na2(rhf.getMethodStatisticsLabel(), methodStatistics);
         this.methodConfoundersLabel = na2(rhf.getMethodConfoundersLabel(), methodConfounders);
         this.resultEffectEstimateLabel = na2(rhf.getResultEffectEstimateLabel(), resultEffectEstimate);
-    }
-
-    public String getMethodOutcomeLabel() {
-        return methodOutcomeLabel;
-    }
-
-    public String getMethodOutcome() {
-        return methodOutcome;
-    }
-
-    public String getResultMeasuredOutcomeLabel() {
-        return resultMeasuredOutcomeLabel;
-    }
-
-    public String getResultMeasuredOutcome() {
-        return resultMeasuredOutcome;
-    }
-
-    public String getMethodStudyDesignLabel() {
-        return methodStudyDesignLabel;
-    }
-
-    public String getMethodStudyDesign() {
-        return methodStudyDesign;
-    }
-
-    public String getPopulationPlaceLabel() {
-        return populationPlaceLabel;
-    }
-
-    public String getPopulationPlace() {
-        return populationPlace;
-    }
-
-    public String getPopulationParticipantsLabel() {
-        return populationParticipantsLabel;
-    }
-
-    public String getPopulationParticipants() {
-        return populationParticipants;
-    }
-
-    public String getPopulationDurationLabel() {
-        return populationDurationLabel;
-    }
-
-    public String getPopulationDuration() {
-        return populationDuration;
-    }
-
-    public String getExposurePollutantLabel() {
-        return exposurePollutantLabel;
-    }
-
-    public String getExposurePollutant() {
-        return exposurePollutant;
-    }
-
-    public String getExposureAssessmentLabel() {
-        return exposureAssessmentLabel;
-    }
-
-    public String getExposureAssessment() {
-        return exposureAssessment;
-    }
-
-    public String getResultExposureRangeLabel() {
-        return resultExposureRangeLabel;
-    }
-
-    public String getResultExposureRange() {
-        return resultExposureRange;
-    }
-
-    public String getMethodStatisticsLabel() {
-        return methodStatisticsLabel;
-    }
-
-    public String getMethodStatistics() {
-        return methodStatistics;
-    }
-
-    public String getMethodConfoundersLabel() {
-        return methodConfoundersLabel;
-    }
-
-    public String getMethodConfounders() {
-        return methodConfounders;
-    }
-
-    public String getResultEffectEstimateLabel() {
-        return resultEffectEstimateLabel;
-    }
-
-    public String getResultEffectEstimate() {
-        return resultEffectEstimate;
     }
 
 }
