@@ -1,6 +1,6 @@
 /*
  * Creates the user 'scipamato' and grants it the relevant privileges
- * while revoking public preveleges from PUBLIC.
+ * while revoking public privileges from PUBLIC.
  */
 
 DO

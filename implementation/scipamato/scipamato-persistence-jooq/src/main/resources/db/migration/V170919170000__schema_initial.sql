@@ -7,6 +7,7 @@
  */
 CREATE TABLE paper (
   id bigserial PRIMARY KEY,
+  number bigint NOT NULL,
   doi text,
   pm_id integer,
   authors text,
@@ -47,6 +48,7 @@ CREATE TABLE paper (
   last_modified_by integer DEFAULT 1
 );
 
+ALTER TABLE paper ADD CONSTRAINT idx_number UNIQUE (number);
 
 /* 
  * TABLE code_class with translation table code_class_tr
@@ -181,6 +183,7 @@ CREATE TABLE search_exclusion (
 ALTER TABLE search_exclusion ADD FOREIGN KEY (search_order_id) REFERENCES search_order(id) on delete cascade on update cascade;
 ALTER TABLE search_exclusion ADD FOREIGN KEY (paper_id) REFERENCES paper(id) on delete cascade on update cascade;
 
+CREATE UNIQUE INDEX idx_search_exclusion_unique ON search_exclusion (search_order_id, paper_id);
 
 CREATE TABLE search_condition (
   search_condition_id bigserial PRIMARY KEY,
@@ -234,6 +237,7 @@ ALTER TABLE search_condition_code ADD PRIMARY KEY (search_condition_id, code);
 ALTER TABLE search_condition_code ADD FOREIGN KEY (search_condition_id) REFERENCES search_condition(search_condition_id) on delete cascade on update cascade;
 ALTER TABLE search_condition_code ADD FOREIGN KEY (code) REFERENCES code(code) on update cascade;
 
+CREATE UNIQUE INDEX idx_search_condition_code_unique ON search_condition_code (search_condition_id, code);
 
 /*
  * TABLE scipamato_user
@@ -275,3 +279,27 @@ CREATE TABLE user_role (
 );
 
 ALTER TABLE user_role ADD FOREIGN KEY (user_id) REFERENCES scipamato_user(id) on delete cascade on update cascade;
+
+CREATE UNIQUE INDEX idx_user_role_unique ON user_role (user_id, role_id);
+
+/*
+ * TABLE attachment
+ */
+
+CREATE TABLE paper_attachment(
+  id serial PRIMARY KEY,
+  paper_id bigint NOT NULL,
+  name text NOT NULL,
+  content bytea NOT NULL,
+  content_type text NOT NULL,
+  size bigint NULL,
+  
+  version integer DEFAULT 1,
+  created TIMESTAMP DEFAULT current_timestamp,
+  created_by integer DEFAULT 1,
+  last_modified TIMESTAMP DEFAULT current_timestamp,
+  last_modified_by integer DEFAULT 1
+);
+
+ALTER TABLE paper_attachment ADD FOREIGN KEY (paper_id) REFERENCES paper(id) on delete cascade on update cascade;
+CREATE UNIQUE INDEX idx_paper_attachment_unique ON paper_attachment (paper_id, name);

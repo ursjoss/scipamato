@@ -1,1 +1,0 @@
-select setval('paper_id_seq', max(id)) FROM paper;
