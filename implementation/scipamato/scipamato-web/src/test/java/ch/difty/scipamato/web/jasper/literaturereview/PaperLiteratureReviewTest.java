@@ -15,8 +15,7 @@ public class PaperLiteratureReviewTest extends JasperEntityTest {
     private ReportHeaderFields rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        ReportHeaderFields.Builder b = new ReportHeaderFields.Builder(HEADER_PART, BRAND).withCaption(CAPTION).withNumber(NUMBER_LABEL);
-        return b.build();
+        return ReportHeaderFields.builder(HEADER_PART, BRAND).numberLabel(NUMBER_LABEL).captionLabel(CAPTION).build();
     }
 
     @Test

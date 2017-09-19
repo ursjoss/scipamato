@@ -43,6 +43,11 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
     @MockBean
     private ApplicationProperties applicationPropertiesMock;
 
+    @Override
+    protected void setUpHook() {
+        when(applicationPropertiesMock.getBrand()).thenReturn("scipamato");
+    }
+
     @After
     public void tearDown() {
         verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeServiceMock, codeClassServiceMock, paperServiceMock, pubmedImportService);

@@ -30,23 +30,24 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     private ReportHeaderFields newReportHeaderFields() {
-        ReportHeaderFields.Builder b = new ReportHeaderFields.Builder(HEADER_PART, BRAND)
-            .withGoals(GOALS_LABEL)
-            .withMethods(METHODS_LABEL)
-            .withMethodOutcome(METHOD_OUTCOME_LABEL)
-            .withResultMeasuredOutcome(RESULT_MEASURED_OUTCOME_LABEL)
-            .withMethodStudyDesign(METHOD_STUDY_DESIGN_LABEL)
-            .withPopulationPlace(POPULATION_PLACE_LABEL)
-            .withPopulationPariticpants(POPULATION_PARTICIPANTS_LABEL)
-            .withPopulationDuration(POPULATION_DURATION_LABEL)
-            .withExposurePollutant(EXPOSURE_POLLUTANT_LABEL)
-            .withExposureAssessment(EXPOSURE_ASSESSMENT_LABEL)
-            .withResultExposureRange(RESULT_EXPOSURE_RANGE_LABEL)
-            .withMethodStatistics(METHOD_STATISTICS_LABEL)
-            .withMethodConfounders(METHOD_CONFOUNDERS_LABEL)
-            .withResultEffectEstimate(RESULT_EFFECT_ESTIMATE_LABEL)
-            .withComment(COMMENT_LABEL);
-        return b.build();
+        return ReportHeaderFields
+            .builder(HEADER_PART, BRAND)
+            .goalsLabel(GOALS_LABEL)
+            .methodsLabel(METHODS_LABEL)
+            .methodOutcomeLabel(METHOD_OUTCOME_LABEL)
+            .resultMeasuredOutcomeLabel(RESULT_MEASURED_OUTCOME_LABEL)
+            .methodStudyDesignLabel(METHOD_STUDY_DESIGN_LABEL)
+            .populationPlaceLabel(POPULATION_PLACE_LABEL)
+            .populationParticipantsLabel(POPULATION_PARTICIPANTS_LABEL)
+            .populationDurationLabel(POPULATION_DURATION_LABEL)
+            .exposurePollutantLabel(EXPOSURE_POLLUTANT_LABEL)
+            .exposureAssessmentLabel(EXPOSURE_ASSESSMENT_LABEL)
+            .resultExposureRangeLabel(RESULT_EXPOSURE_RANGE_LABEL)
+            .methodStatisticsLabel(METHOD_STATISTICS_LABEL)
+            .methodConfoundersLabel(METHOD_CONFOUNDERS_LABEL)
+            .resultEffectEstimateLabel(RESULT_EFFECT_ESTIMATE_LABEL)
+            .commentLabel(COMMENT_LABEL)
+            .build();
     }
 
     private void assertPaperSummaryShort() {

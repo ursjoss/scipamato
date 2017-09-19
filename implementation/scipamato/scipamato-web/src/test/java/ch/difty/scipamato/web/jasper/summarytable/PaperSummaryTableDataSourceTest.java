@@ -44,8 +44,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     private ReportHeaderFields rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        ReportHeaderFields.Builder b = new ReportHeaderFields.Builder("", BRAND).withNumber(NUMBER_LABEL).withCaption(CAPTION);
-        return b.build();
+        return ReportHeaderFields.builder("", BRAND).numberLabel(NUMBER_LABEL).captionLabel(CAPTION).build();
     }
 
     @Override

@@ -34,8 +34,7 @@ public class PaperSummaryTableTest extends JasperEntityTest {
     }
 
     private ReportHeaderFields newReportHeaderFields() {
-        ReportHeaderFields.Builder b = new ReportHeaderFields.Builder(HEADER_PART, BRAND).withCaption(CAPTION).withMethods(METHODS_LABEL).withNumber(NUMBER_LABEL);
-        return b.build();
+        return ReportHeaderFields.builder(HEADER_PART, BRAND).captionLabel(CAPTION).methodsLabel(METHODS_LABEL).numberLabel(NUMBER_LABEL).build();
     }
 
     private void assertPst() {
