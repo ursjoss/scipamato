@@ -2,6 +2,8 @@ package ch.difty.scipamato.entity.filter;
 
 import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.IdScipamatoEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Implementations of {@link SearchTerm} accept a {@code fieldName} as key and a {@code rawSearchTerm} as value.
@@ -13,6 +15,8 @@ import ch.difty.scipamato.entity.IdScipamatoEntity;
  *
  * @author u.joss
  */
+@Data
+@EqualsAndHashCode(callSuper = false, exclude = { "searchConditionId", "searchTermType" })
 public abstract class SearchTerm extends IdScipamatoEntity<Long> {
 
     private static final long serialVersionUID = 1L;
@@ -50,48 +54,9 @@ public abstract class SearchTerm extends IdScipamatoEntity<Long> {
         }
     }
 
-    public SearchTermType getSearchTermType() {
-        return searchTermType;
-    }
-
-    public Long getSearchConditionId() {
-        return searchConditionId;
-    }
-
-    public String getFieldName() {
-        return fieldName;
-    }
-
-    public String getRawSearchTerm() {
-        return rawSearchTerm;
-    }
-
     @Override
     public String getDisplayValue() {
         return rawSearchTerm;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + fieldName.hashCode();
-        result = prime * result + rawSearchTerm.hashCode();
-        return result;
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        final SearchTerm other = (SearchTerm) obj;
-        if (fieldName.hashCode() != other.getFieldName().hashCode())
-            return false;
-        return rawSearchTerm.equals(other.getRawSearchTerm());
     }
 
 }
