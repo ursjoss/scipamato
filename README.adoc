@@ -17,6 +17,7 @@ Technology Stack
 * Java 1.8
 * https://projects.spring.io/spring-boot/[Spring Boot] with
 https://projects.spring.io/spring-security/[Spring Security]
+* https://projectlombok.org/[Lombok]
 * Presentation Layer
 * https://wicket.apache.org/[Apache Wicket] with
 http://getbootstrap.com/[Bootstrap]

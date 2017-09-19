@@ -56,6 +56,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - 6/17: Transformed the project to a maven multi-module project, allowing to reuse author parsing in the data migration project
+- Introduced ProjectLombok
+- Rebased the databse creation scripts. Now not adding papers or searches anymore, only reference data
 - switched from markdown to asciidoc for wiki pages
 - Created ChangeLog according to http://keepachangelog.com/en/1.0.0/[Keep a Changelog]
 - use OktHttp with feign
