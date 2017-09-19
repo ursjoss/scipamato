@@ -1,6 +1,7 @@
 package ch.difty.scipamato.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public abstract class IdScipamatoEntity<ID extends Number> extends ScipamatoEntity {
 
     private static final long serialVersionUID = 1L;
