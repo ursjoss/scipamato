@@ -8,12 +8,16 @@ import ch.difty.scipamato.entity.CodeClassId;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.web.jasper.JasperEntity;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * DTO to feed the PaperSummaryTableDataSource
  *
  * @author u.joss
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class PaperSummaryTable extends JasperEntity {
     private static final long serialVersionUID = 1L;
 
@@ -59,54 +63,6 @@ public class PaperSummaryTable extends JasperEntity {
         this.caption = na(rhf.getCaptionLabel());
         this.brand = na(rhf.getBrand());
         this.numberLabel = na(rhf.getNumberLabel());
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public String getFirstAuthor() {
-        return firstAuthor;
-    }
-
-    public String getPublicationYear() {
-        return publicationYear;
-    }
-
-    public String getCodesOfClass1() {
-        return codesOfClass1;
-    }
-
-    public String getCodesOfClass4() {
-        return codesOfClass4;
-    }
-
-    public String getCodesOfClass7() {
-        return codesOfClass7;
-    }
-
-    public String getGoals() {
-        return goals;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public String getCaption() {
-        return caption;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getNumberLabel() {
-        return numberLabel;
     }
 
 }

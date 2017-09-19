@@ -4,12 +4,16 @@ import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.web.jasper.JasperEntity;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * DTO to feed the PaperLiteratureReviewDataSource
  *
  * @author u.joss
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class PaperLiteratureReview extends JasperEntity {
 
     // HARDCODED - consider moving to settings
@@ -58,42 +62,6 @@ public class PaperLiteratureReview extends JasperEntity {
             return PUBMED_BASE + String.valueOf(pmId);
         else
             return "";
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public String getAuthors() {
-        return authors;
-    }
-
-    public String getPublicationYear() {
-        return publicationYear;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getPubmedLink() {
-        return pubmedLink;
-    }
-
-    public String getCaption() {
-        return caption;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getNumberLabel() {
-        return numberLabel;
     }
 
 }

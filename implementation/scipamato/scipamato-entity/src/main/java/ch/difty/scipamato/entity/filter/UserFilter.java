@@ -2,6 +2,11 @@ package ch.difty.scipamato.entity.filter;
 
 import java.io.Serializable;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class UserFilter extends ScipamatoFilter implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -13,29 +18,5 @@ public class UserFilter extends ScipamatoFilter implements Serializable {
     private String nameMask;
     private String emailMask;
     private Boolean enabled;
-
-    public String getNameMask() {
-        return nameMask;
-    }
-
-    public void setNameMask(String nameMask) {
-        this.nameMask = nameMask;
-    }
-
-    public String getEmailMask() {
-        return emailMask;
-    }
-
-    public void setEmailMask(String emailMask) {
-        this.emailMask = emailMask;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
 
 }

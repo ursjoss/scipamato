@@ -3,6 +3,7 @@ package ch.difty.scipamato.paging;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
 import ch.difty.scipamato.persistence.paging.Sort;
 import ch.difty.scipamato.persistence.paging.Sort.Direction;
+import lombok.Value;
 
 /**
  * The {@link PaginationRequest} serves to define both pagination and sorting specifications and pass it
@@ -16,6 +17,7 @@ import ch.difty.scipamato.persistence.paging.Sort.Direction;
  *
  * @author u.joss
  */
+@Value
 public class PaginationRequest implements PaginationContext {
 
     private static final long serialVersionUID = 1L;
@@ -74,52 +76,6 @@ public class PaginationRequest implements PaginationContext {
             throw new IllegalArgumentException("offset must not be less than zero!");
         if (pageSize < 1)
             throw new IllegalArgumentException("Page size must not be less than one!");
-    }
-
-    @Override
-    public Sort getSort() {
-        return sort;
-    }
-
-    @Override
-    public int getOffset() {
-        return offset;
-    }
-
-    @Override
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + offset;
-        result = prime * result + pageSize;
-        result = prime * result + ((sort == null) ? 0 : sort.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        PaginationRequest other = (PaginationRequest) obj;
-        if (offset != other.offset)
-            return false;
-        if (pageSize != other.pageSize)
-            return false;
-        if (sort == null) {
-            if (other.sort != null)
-                return false;
-        } else if (!sort.equals(other.sort))
-            return false;
-        return true;
     }
 
     @Override

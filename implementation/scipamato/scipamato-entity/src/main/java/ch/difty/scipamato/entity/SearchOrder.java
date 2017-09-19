@@ -6,12 +6,18 @@ import java.util.stream.Collectors;
 
 import ch.difty.scipamato.entity.filter.PaperSlimFilter;
 import ch.difty.scipamato.entity.filter.SearchCondition;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * The {@link SearchOrder} is the entry point for the entire (complex) search, containing one or combining several {@link SearchCondition}s
  *
  * @author u.joss
  */
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
 public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFilter {
 
     private static final long serialVersionUID = 1L;
@@ -49,34 +55,6 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
         setGlobal(global);
         setSearchConditions(searchConditions);
         setExcludedPaperIds(excludedPaperIds);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getOwner() {
-        return owner;
-    }
-
-    public void setOwner(int owner) {
-        this.owner = owner;
-    }
-
-    public boolean isGlobal() {
-        return global;
-    }
-
-    public void setGlobal(boolean global) {
-        this.global = global;
-    }
-
-    public List<SearchCondition> getSearchConditions() {
-        return searchConditions;
     }
 
     public void setSearchConditions(final List<SearchCondition> searchConditions) {
@@ -135,14 +113,6 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
      */
     public void removeExlusionOfPaperWithId(final long paperId) {
         excludedPaperIds.remove(paperId);
-    }
-
-    public boolean isShowExcluded() {
-        return showExcluded;
-    }
-
-    public void setShowExcluded(boolean showExcluded) {
-        this.showExcluded = showExcluded;
     }
 
     @Override

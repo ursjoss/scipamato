@@ -4,12 +4,16 @@ import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.web.jasper.PaperSummaryCommon;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * DTO to feed the PaperSummaryDataSource
  *
  * @author u.joss
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class PaperSummary extends PaperSummaryCommon {
     private static final long serialVersionUID = 1L;
 
@@ -34,22 +38,6 @@ public class PaperSummary extends PaperSummaryCommon {
 
         this.populationLabel = na2(rhf.getPopulationLabel(), population);
         this.resultLabel = na2(rhf.getResultLabel(), result);
-    }
-
-    public String getPopulationLabel() {
-        return populationLabel;
-    }
-
-    public String getPopulation() {
-        return population;
-    }
-
-    public String getResultLabel() {
-        return resultLabel;
-    }
-
-    public String getResult() {
-        return result;
     }
 
 }

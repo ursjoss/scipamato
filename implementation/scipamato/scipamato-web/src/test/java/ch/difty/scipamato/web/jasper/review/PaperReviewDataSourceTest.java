@@ -24,20 +24,21 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
     private ReportHeaderFields rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        ReportHeaderFields.Builder b = new ReportHeaderFields.Builder("", "b")
-            .withNumber("nl")
-            .withAuthorYear("ayl")
-            .withPopulationPlace("ppl")
-            .withMethodOutcome("mol")
-            .withExposurePollutant("epl")
-            .withMethodStudyDesign("msdl")
-            .withPopulationDuration("pdl")
-            .withPopulationPariticpants("ppal")
-            .withExposureAssessment("eal")
-            .withResultExposureRange("rerl")
-            .withMethodConfounders("mcl")
-            .withResultEffectEstimate("reel");
-        return b.build();
+        return ReportHeaderFields
+            .builder("", "b")
+            .numberLabel("nl")
+            .authorYearLabel("ayl")
+            .populationPlaceLabel("ppl")
+            .methodOutcomeLabel("mol")
+            .exposurePollutantLabel("epl")
+            .methodStudyDesignLabel("msdl")
+            .populationDurationLabel("pdl")
+            .populationParticipantsLabel("ppal")
+            .exposureAssessmentLabel("eal")
+            .resultExposureRangeLabel("rerl")
+            .methodConfoundersLabel("mcl")
+            .resultEffectEstimateLabel("reel")
+            .build();
     }
 
     @Override

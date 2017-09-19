@@ -7,6 +7,13 @@ import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@EqualsAndHashCode(of = {"version"})
 public abstract class ScipamatoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,70 +53,6 @@ public abstract class ScipamatoEntity implements Serializable {
     private transient String createdByName;
     private transient String createdByFullName;
     private transient String lastModifiedByName;
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public Integer getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public LocalDateTime getLastModified() {
-        return lastModified;
-    }
-
-    public void setLastModified(LocalDateTime lastModified) {
-        this.lastModified = lastModified;
-    }
-
-    public Integer getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(Integer lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    public String getCreatedByName() {
-        return createdByName;
-    }
-
-    public void setCreatedByName(String createdByName) {
-        this.createdByName = createdByName;
-    }
-
-    public String getCreatedByFullName() {
-        return createdByFullName;
-    }
-
-    public void setCreatedByFullName(String createdByFullName) {
-        this.createdByFullName = createdByFullName;
-    }
-
-    public String getLastModifiedByName() {
-        return lastModifiedByName;
-    }
-
-    public void setLastModifiedByName(String lastModifiedByName) {
-        this.lastModifiedByName = lastModifiedByName;
-    }
 
     @Override
     public String toString() {

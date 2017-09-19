@@ -1,5 +1,8 @@
 package ch.difty.scipamato.entity;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 /**
  * Attachment to a paper.<p>
  *
@@ -10,6 +13,8 @@ package ch.difty.scipamato.entity;
  *
  * @author u.joss
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class PaperAttachment extends IdScipamatoEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
@@ -43,30 +48,6 @@ public class PaperAttachment extends IdScipamatoEntity<Integer> {
         setSize(size);
     }
 
-    public Long getPaperId() {
-        return paperId;
-    }
-
-    public void setPaperId(Long paperId) {
-        this.paperId = paperId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
     /**
      * @return the size in bytes
      */
@@ -85,24 +66,9 @@ public class PaperAttachment extends IdScipamatoEntity<Integer> {
         return size / BYTES_PER_KB + 1;
     }
 
-    /**
-     * @param size the size in bytes
-     */
-    public void setSize(Long size) {
-        this.size = size;
-    }
-
     @Override
     public String getDisplayValue() {
         return name;
-    }
-
-    public byte[] getContent() {
-        return content;
-    }
-
-    public void setContent(byte[] content) {
-        this.content = content;
     }
 
     @Override

@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class PaperSlimTest {
 
-    private final PaperSlim ps = new PaperSlim();
+    private PaperSlim ps = new PaperSlim();
 
     @Before
     public void setUp() {
@@ -30,5 +30,11 @@ public class PaperSlimTest {
     @Test
     public void displayValue() {
         assertThat(ps.getDisplayValue()).isEqualTo("firstAuthor (2016): title.");
+    }
+
+    @Test
+    public void alternativeConstructor() {
+        ps = new PaperSlim(1l, 10l, "firstAuthor", 2016, "title");
+        getting();
     }
 }

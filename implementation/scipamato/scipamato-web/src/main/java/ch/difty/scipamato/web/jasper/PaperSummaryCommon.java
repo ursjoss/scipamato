@@ -1,11 +1,15 @@
 package ch.difty.scipamato.web.jasper;
 
 import ch.difty.scipamato.entity.Paper;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Common base class for PaperSummary entities. 
  * @author u.joss
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 public abstract class PaperSummaryCommon extends JasperEntity {
 
     private static final long serialVersionUID = 1L;
@@ -72,55 +76,4 @@ public abstract class PaperSummaryCommon extends JasperEntity {
         return sb.toString();
     }
 
-    public String getNumber() {
-        return number;
-    }
-
-    public String getAuthors() {
-        return authors;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getGoalsLabel() {
-        return goalsLabel;
-    }
-
-    public String getGoals() {
-        return goals;
-    }
-
-    public String getMethodsLabel() {
-        return methodsLabel;
-    }
-
-    public String getMethods() {
-        return methods;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public String getCommentLabel() {
-        return commentLabel;
-    }
-
-    public String getHeader() {
-        return header;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
 }
