@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
+import ch.difty.scipamato.entity.filter.AuditSearchTerm.MatchType;
 import ch.difty.scipamato.entity.filter.AuditSearchTerm.TokenType;
 
 public class AuditSearchTermTest {
@@ -273,5 +274,50 @@ public class AuditSearchTermTest {
         st = new AuditSearchTerm(fieldName, "foo =\"2017-12-01 23:15:13\"");
         assertThat(st.getTokens()).hasSize(1);
         assertThat(st.getTokens().get(0).toString()).isEqualTo("(USER WORD foo)");
+    }
+
+    @Test
+    public void byMatchType_withNullMatchType_isEmpty() {
+        assertThat(AuditSearchTerm.TokenType.byMatchType(null)).isEmpty();
+    }
+
+    @Test
+    public void byMatchType_withValidMatchTypeNONE() {
+        assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.NONE)).containsExactly(TokenType.WHITESPACE, TokenType.RAW);
+    }
+
+    @Test
+    public void byMatchType_withValidMatchTypeRANGE() {
+        assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.RANGE)).containsExactly(TokenType.RANGEQUOTED, TokenType.RANGE);
+    }
+
+    @Test
+    public void byMatchType_withValidMatchTypeGREATER_OR_EQUAL() {
+        assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.GREATER_OR_EQUAL)).containsExactly(TokenType.GREATEROREQUALQUOTED, TokenType.GREATEROREQUAL);
+    }
+
+    @Test
+    public void byMatchType_withValidMatchTypeGREATER_THAN() {
+        assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.GREATER_THAN)).containsExactly(TokenType.GREATERTHANQUOTED, TokenType.GREATERTHAN);
+    }
+
+    @Test
+    public void byMatchType_withValidMatchTypeLESS_OR_EQUAL() {
+        assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.LESS_OR_EQUAL)).containsExactly(TokenType.LESSOREQUALQUOTED, TokenType.LESSOREQUAL);
+    }
+
+    @Test
+    public void byMatchType_withValidMatchTypeLESS_THAN() {
+        assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.LESS_THAN)).containsExactly(TokenType.LESSTHANQUOTED, TokenType.LESSTHAN);
+    }
+
+    @Test
+    public void byMatchType_withValidMatchTypeEQUALS() {
+        assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.EQUALS)).containsExactly(TokenType.EXACTQUOTED, TokenType.EXACT);
+    }
+
+    @Test
+    public void byMatchType_withValidMatchTypeCONTAINS() {
+        assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.CONTAINS)).containsExactly(TokenType.WORD);
     }
 }
