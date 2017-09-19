@@ -58,7 +58,7 @@ public class PaperProviderTest {
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(serviceMock, filterMock, entityMock);
+        verifyNoMoreInteractions(serviceMock, entityMock);
     }
 
     @Test
