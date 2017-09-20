@@ -7,9 +7,6 @@ import java.time.LocalDateTime;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.CurrentDateTimeService;
-import ch.difty.scipamato.DateTimeService;
-
 public class CurrentDateTimeServiceTest {
 
     private final DateTimeService dts = new CurrentDateTimeService();

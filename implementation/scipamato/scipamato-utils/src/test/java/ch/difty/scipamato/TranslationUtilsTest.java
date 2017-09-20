@@ -4,9 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.NullArgumentException;
-import ch.difty.scipamato.TranslationUtils;
-
 public class TranslationUtilsTest extends FinalClassTest<TranslationUtils> {
 
     @Test

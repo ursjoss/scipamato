@@ -93,8 +93,8 @@ public class ExceptionTranslatorTest {
         verify(ctxMock).sql();
         verify(ctxMock).exception(argThat(new UncategorizedSQLExceptionMatcher()));
 
-        verify(sqlExceptionMock, times(4)).getSQLState();
-        verify(sqlExceptionMock, times(2)).getErrorCode();
+        verify(sqlExceptionMock, atLeast(3)).getSQLState();
+        verify(sqlExceptionMock, atLeast(1)).getErrorCode();
         verify(sqlExceptionMock).getMessage();
     }
 

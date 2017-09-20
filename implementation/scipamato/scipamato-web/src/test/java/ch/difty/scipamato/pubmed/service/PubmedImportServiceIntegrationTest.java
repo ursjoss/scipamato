@@ -6,22 +6,22 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.jooq.DSLContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.difty.scipamato.db.tables.Paper;
-import ch.difty.scipamato.entity.xml.PubmedIntegrationTest;
-import ch.difty.scipamato.persistance.JooqBaseIntegrationTest;
-import ch.difty.scipamato.persistence.PubmedImporter;
+import ch.difty.scipamato.persistence.PaperService;
 import ch.difty.scipamato.persistence.ServiceResult;
+import ch.difty.scipamato.pubmed.PubmedImporter;
+import ch.difty.scipamato.pubmed.PubmedIntegrationTest;
 
-@SpringBootTest
 @RunWith(SpringRunner.class)
-public class PubmedImportServiceIntegrationTest extends JooqBaseIntegrationTest {
+@SpringBootTest
+@ActiveProfiles({ "test" })
+public class PubmedImportServiceIntegrationTest {
 
     private static final String XML = "xml/pubmed_result_3studies.xml";
 
@@ -33,7 +33,7 @@ public class PubmedImportServiceIntegrationTest extends JooqBaseIntegrationTest 
     private PubmedImporter importer;
 
     @Autowired
-    private DSLContext dsl;
+    private PaperService paperService;
 
     @Test
     public void canReadXmlFile_whichHas3Studies() throws IOException {
@@ -58,7 +58,7 @@ public class PubmedImportServiceIntegrationTest extends JooqBaseIntegrationTest 
 
         // Delete created records
         List<Long> ids = result.getInfoMessages().stream().map((m) -> m.substring(m.indexOf("(") + 4, m.length() - 1)).map((id) -> Long.valueOf(id)).collect(Collectors.toList());
-        dsl.deleteFrom(Paper.PAPER).where(Paper.PAPER.ID.in(ids)).execute();
+        paperService.deletePapersWithIds(ids);
     }
 
 }

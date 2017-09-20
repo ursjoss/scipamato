@@ -349,4 +349,9 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
         return null;
     }
 
+    @Override
+    public void delete(final List<Long> ids) {
+        getDsl().deleteFrom(PAPER).where(PAPER.ID.in(ids)).execute();
+    }
+
 }

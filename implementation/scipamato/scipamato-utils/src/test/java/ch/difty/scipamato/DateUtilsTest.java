@@ -6,8 +6,6 @@ import java.sql.Timestamp;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.DateUtils;
-
 public class DateUtilsTest extends FinalClassTest<DateUtils> {
 
     @Test

@@ -9,8 +9,8 @@ import org.apache.wicket.injection.Injector;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.entity.projection.PaperSlim;
-import ch.difty.scipamato.paging.PaginationRequest;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.persistence.paging.Sort.Direction;
 
 /**

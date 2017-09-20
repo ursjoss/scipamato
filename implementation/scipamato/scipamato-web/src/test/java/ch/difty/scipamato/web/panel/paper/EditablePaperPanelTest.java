@@ -22,10 +22,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.PaperFilter;
-import ch.difty.scipamato.persistence.PubmedArticleService;
 import ch.difty.scipamato.persistence.SearchOrderService;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
 import ch.difty.scipamato.pubmed.PubmedArticleFacade;
+import ch.difty.scipamato.pubmed.PubmedArticleService;
 import ch.difty.scipamato.web.pages.paper.search.PaperSearchPage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;

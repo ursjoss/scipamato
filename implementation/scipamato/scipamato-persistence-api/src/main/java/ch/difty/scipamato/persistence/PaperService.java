@@ -114,4 +114,10 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * @return the paper for which the attachment was deleted
      */
     Paper deleteAttachment(Integer id);
+
+    /**
+     * Deletes the papers with the provided ids.
+     * @param ids ids of the papers to be deleted.
+     */
+    void deletePapersWithIds(List<Long> ids);
 }

@@ -23,7 +23,7 @@
         <module>scipamato-config</module>
         <module>scipamato-logic</module>
         <module>scipamato-entity</module>
-        <module>scipamato-pubmed</module>
+        <module>scipamato-pubmed-api</module>
         <module>scipamato-persistence-api</module>
         <module>scipamato-persistence-jooq</module>
         <module>scipamato-web</module>
@@ -115,7 +115,7 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-pubmed</artifactId>
+                <artifactId>scipamato-pubmed-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

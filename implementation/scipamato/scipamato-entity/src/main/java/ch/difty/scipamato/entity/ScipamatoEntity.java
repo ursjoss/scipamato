@@ -13,7 +13,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"version"})
+@EqualsAndHashCode(of = { "version" })
 public abstract class ScipamatoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.difty.scipamato.entity.xml.ScipamatoPubmedArticleIntegrationTest;
-import ch.difty.scipamato.persistence.PubmedArticleService;
 import ch.difty.scipamato.pubmed.PubmedArticleFacade;
+import ch.difty.scipamato.pubmed.PubmedArticleService;
+import ch.difty.scipamato.pubmed.ScipamatoPubmedArticleIntegrationTest;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)

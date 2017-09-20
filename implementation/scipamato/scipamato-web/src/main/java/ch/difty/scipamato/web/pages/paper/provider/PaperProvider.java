@@ -12,9 +12,9 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.PaperFilter;
-import ch.difty.scipamato.paging.PaginationRequest;
 import ch.difty.scipamato.persistence.PaperService;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.persistence.paging.Sort.Direction;
 
 /**

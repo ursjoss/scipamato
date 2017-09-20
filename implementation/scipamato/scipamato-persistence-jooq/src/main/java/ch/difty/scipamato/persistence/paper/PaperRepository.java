@@ -134,4 +134,10 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      */
     Paper deleteAttachment(Integer id);
 
+    /**
+     * Deletes all papers with the provided ids. No version check. More for internal usage!
+     * @param ids
+     */
+    void delete(List<Long> ids);
+
 }

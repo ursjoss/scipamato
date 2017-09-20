@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.DateTimeService;
-
 public class FrozenDateTimeServiceTest {
 
     private final DateTimeService service = new FrozenDateTimeService();

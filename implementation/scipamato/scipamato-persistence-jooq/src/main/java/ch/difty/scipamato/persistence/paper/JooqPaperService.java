@@ -140,4 +140,10 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         return getRepository().deleteAttachment(id);
     }
 
+    @Transactional(readOnly = false)
+    @Override
+    public void deletePapersWithIds(List<Long> ids) {
+        getRepository().delete(ids);
+    }
+
 }

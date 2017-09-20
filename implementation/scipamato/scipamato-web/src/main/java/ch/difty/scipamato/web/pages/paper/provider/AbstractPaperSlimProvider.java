@@ -13,10 +13,10 @@ import ch.difty.scipamato.ScipamatoSession;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.PaperSlimFilter;
 import ch.difty.scipamato.entity.projection.PaperSlim;
-import ch.difty.scipamato.paging.PaginationRequest;
 import ch.difty.scipamato.persistence.PaperService;
 import ch.difty.scipamato.persistence.PaperSlimService;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.persistence.paging.Sort.Direction;
 
 /**

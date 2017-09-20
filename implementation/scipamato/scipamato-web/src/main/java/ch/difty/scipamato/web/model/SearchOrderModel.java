@@ -8,9 +8,9 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.filter.SearchOrderFilter;
-import ch.difty.scipamato.paging.PaginationRequest;
 import ch.difty.scipamato.persistence.SearchOrderService;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.persistence.paging.Sort.Direction;
 
 /**

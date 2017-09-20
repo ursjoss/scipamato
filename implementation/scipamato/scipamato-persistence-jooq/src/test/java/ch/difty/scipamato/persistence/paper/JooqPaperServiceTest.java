@@ -366,6 +366,13 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
+    public void deletingByIds_delegatesToRepo() {
+        List<Long> ids = Arrays.asList(5l, 7l, 9l);
+        service.deletePapersWithIds(ids);
+        verify(repoMock).delete(ids);
+    }
+
+    @Test
     public void findingByFilter_withPaperWithNullCreator() {
         when(paperMock3.getId()).thenReturn(100l);
         when(paperMock3.getCreatedBy()).thenReturn(null);

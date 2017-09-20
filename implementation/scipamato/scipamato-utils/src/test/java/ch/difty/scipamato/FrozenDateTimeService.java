@@ -7,8 +7,6 @@ import java.time.LocalDateTime;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.DateTimeService;
-
 /**
  * Implementation of {@link DateTimeService} constantly returning a frozen moment.
  * This is the implementation to be used in test context.

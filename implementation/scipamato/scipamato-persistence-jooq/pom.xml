@@ -22,6 +22,7 @@
 
         <!-- Plugin versions -->
         <property-file>src/main/resources/db.properties</property-file>
+        <property-file-it>src/test/resources/db.properties</property-file-it>
     </properties>
 
     <dependencies>
@@ -33,11 +34,23 @@
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-config</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-utils</artifactId>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
 
         <!-- Database -->
         <dependency>
@@ -109,6 +122,19 @@
             <artifactId>scipamato-utils</artifactId>
             <type>test-jar</type>
         </dependency>
+        <dependency>
+            <groupId>pl.pragmatists</groupId>
+            <artifactId>JUnitParams</artifactId>
+            <version>1.1.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JSR 303 bean validation provider implementation -->
+        <dependency>
+            <groupId>org.apache.bval</groupId>
+            <artifactId>bval-jsr</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <profiles>
@@ -153,6 +179,136 @@
                             </execution>
                         </executions>
                     </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!-- Maven profile cleanDatabase - drop all database objects -->
+            <id>cleanTestDatabase</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>properties-maven-plugin</artifactId>
+                        <!-- Trigger the property in the clean phase of the Clean Lifecycle -->
+                        <executions>
+                            <execution>
+                                <phase>clean</phase>
+                                <goals>
+                                    <goal>read-project-properties</goal>
+                                </goals>
+                                <configuration>
+                                    <files>
+                                        <file>${property-file-it}</file>
+                                    </files>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>${flyway.version}</version>
+                        <executions>
+                            <execution>
+                                <id>drop-database</id>
+                                <!-- Need to guarantee order of execution -->
+                                <phase>clean</phase>
+                                <goals>
+                                    <goal>clean</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!-- Maven profile testDb - work with the database scipamato_it instead of scipamato -->
+            <id>testDb</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>properties-maven-plugin</artifactId>
+                        <!-- Trigger the property in the clean phase of the Clean Lifecycle -->
+                        <executions>
+                            <execution>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>read-project-properties</goal>
+                                </goals>
+                                <configuration>
+                                    <files>
+                                        <file>${property-file-it}</file>
+                                    </files>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>${flyway.version}</version>
+                        <executions>
+                            <execution>
+                                <id>drop-database</id>
+                                <!-- Need to guarantee order of execution -->
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>migrate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <executions>
+                            <execution>
+                                <id>generate-postgres</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${spring.datasource.hikari.driver-class-name}</driver>
+                                        <url>${spring.datasource.hikari.jdbc-url}</url>
+                                        <user>${spring.datasource.hikari.username}</user>
+                                        <password>${spring.datasource.hikari.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <database>
+                                            <name>${org.jooq.db-generator}</name>
+                                            <includes>.*</includes>
+                                            <excludes />
+                                            <inputSchema>${db.schema}</inputSchema>
+                                            <recordVersionFields>version</recordVersionFields>
+                                        </database>
+                                        <generate>
+                                            <deprecated>false</deprecated>
+                                            <instanceFields>true</instanceFields>
+                                            <pojos>false</pojos>
+                                        </generate>
+                                        <target>
+                                            <packageName>ch.difty.scipamato.db</packageName>
+                                            <directory>${org.jooq.target.dir}</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                 </plugins>
             </build>
         </profile>
