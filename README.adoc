@@ -19,20 +19,20 @@ Technology Stack
 https://projects.spring.io/spring-security/[Spring Security]
 * https://projectlombok.org/[Lombok]
 * Presentation Layer
-* https://wicket.apache.org/[Apache Wicket] with
+** https://wicket.apache.org/[Apache Wicket] with
 http://getbootstrap.com/[Bootstrap]
 ** https://github.com/MarcGiffing/wicket-spring-boot[wicket-spring-boot-starter]
 ** https://github.com/l0rdn1kk0n/wicket-bootstrap[wicket-bootstrap]
-* http://community.jaspersoft.com/[JasperReport] for PDF generation
-* https://github.com/OpenFeign/feign[Feign] as HHTP client to PubMed
-* jaxb for XML parsing
+** http://community.jaspersoft.com/[JasperReport] for PDF generation
+** https://github.com/OpenFeign/feign[Feign] as HHTP client to PubMed
+** jaxb for XML parsing
 * Persistence Layer
-* https://www.jooq.org/[jOOQ]
-* https://github.com/brettwooldridge/HikariCP[HikariCP]
-* https://www.postgresql.org/[PostgreSQL]
-* https://flywaydb.org/[Flyway] for database migrations
+** https://www.jooq.org/[jOOQ]
+** https://github.com/brettwooldridge/HikariCP[HikariCP]
+** https://www.postgresql.org/[PostgreSQL]
+** https://flywaydb.org/[Flyway] for database migrations
 * Caching
-* JCache with http://www.ehcache.org/[Ehcache3]
+** JCache with http://www.ehcache.org/[Ehcache3]
 
 [[user-documentation]]
 User Documentation
