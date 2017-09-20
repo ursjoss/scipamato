@@ -56,7 +56,7 @@
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-pubmed</artifactId>
+            <artifactId>scipamato-pubmed-api</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
