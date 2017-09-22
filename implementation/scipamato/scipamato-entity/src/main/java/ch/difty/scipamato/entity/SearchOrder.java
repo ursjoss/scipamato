@@ -17,7 +17,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = { "showExcluded" })
 public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFilter {
 
     private static final long serialVersionUID = 1L;
@@ -48,7 +48,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
         setSearchConditions(searchConditions);
     }
 
-    public SearchOrder(long id, String name, int owner, boolean global, List<SearchCondition> searchConditions, List<Long> excludedPaperIds) {
+    public SearchOrder(final long id, final String name, final int owner, final boolean global, final List<SearchCondition> searchConditions, final List<Long> excludedPaperIds) {
         setId(id);
         setName(name);
         setOwner(owner);
@@ -79,7 +79,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
      *
      * @param searchCondition the condition to remove
      */
-    public void remove(SearchCondition searchCondition) {
+    public void remove(final SearchCondition searchCondition) {
         if (searchCondition != null) {
             searchConditions.remove(searchCondition);
         }
@@ -117,7 +117,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
 
     @Override
     public String getDisplayValue() {
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         if (getName() != null) {
             sb.append(getName()).append(": ");
         }
