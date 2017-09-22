@@ -2,6 +2,9 @@ package ch.difty.scipamato.pubmed;
 
 import java.util.List;
 
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+
 import ch.difty.scipamato.AssertAs;
 
 /**
@@ -49,14 +52,14 @@ public class ScipamatoPubmedArticle extends PubmedArticleFacade {
         sb.append(medlineJournalInfo.getMedlineTA()).append(". ");
         sb.append(getPublicationYear()).append(";");
         final String volume = journalIssue.getVolume();
-        if (volume != null && !volume.isEmpty()) {
+        if (!StringUtils.isEmpty(volume)) {
             sb.append(" ").append(volume);
         }
         final String issue = journalIssue.getIssue();
-        if (issue != null && !issue.isEmpty()) {
+        if (!StringUtils.isEmpty(issue)) {
             sb.append(" (").append(issue).append(")");
         }
-        if (paginationElocation != null && !paginationElocation.isEmpty()) {
+        if (!CollectionUtils.isEmpty(paginationElocation)) {
             final String pages = paginationElocation
                 .stream()
                 .filter(pe -> pe instanceof Pagination)
