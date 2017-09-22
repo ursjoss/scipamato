@@ -320,6 +320,15 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     }
 
     @Test
+    public void clearingCode_delegatesClearingToCode() {
+        assertThat(p.getCodes()).isNotNull().isEmpty();
+        p.addCode(makeCode(CodeClassId.CC1.getId(), "C"));
+        assertThat(p.getCodes()).isNotEmpty();
+        p.clearCodesOf(CodeClassId.CC1);
+        assertThat(p.getCodes()).isNotNull().isEmpty();
+    }
+
+    @Test
     public void testingMainCodeOfCodeClass1() {
         Code c1D = makeCode(1, "D");
         Code c1E = makeCode(1, "E");
