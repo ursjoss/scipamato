@@ -1,5 +1,6 @@
 package ch.difty.scipamato.entity;
 
+import static ch.difty.scipamato.entity.ScipamatoEntity.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDateTime;
@@ -10,7 +11,11 @@ import java.util.List;
 import javax.validation.ConstraintViolation;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
@@ -413,5 +418,17 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(p.getAttachments()).hasSize(2);
         p.setAttachments(new ArrayList<PaperAttachment>());
         assertThat(p.getAttachments()).isEmpty();
+    }
+
+    // TODO find way around AbstractMethodError (with CodeBox)
+    @Ignore
+    @Test
+    public void equals() {
+        EqualsVerifier
+            .forClass(Paper.class)
+            .withRedefinedSuperclass()
+            .withIgnoredFields(CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 }
