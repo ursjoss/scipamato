@@ -1,5 +1,6 @@
 package ch.difty.scipamato.entity;
 
+import static ch.difty.scipamato.entity.ScipamatoEntity.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.difty.scipamato.auth.Role;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 public class UserTest {
 
@@ -131,4 +134,13 @@ public class UserTest {
         assertThat(user.getRoles()).containsExactly(role1);
     }
 
+    @Test
+    public void equals() {
+        EqualsVerifier
+            .forClass(User.class)
+            .withRedefinedSuperclass()
+            .withIgnoredFields(CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
+    }
 }
