@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import ch.difty.scipamato.auth.Role;
 
@@ -26,12 +25,13 @@ public class UserTest {
 
     private final List<Role> roles = new ArrayList<>();
 
-    @Mock
-    private Role roleMock1, roleMock2, roleMock3;
+    private final Role role1 = Role.ADMIN;
+    private final Role role2 = Role.USER;
+    private final Role role3 = Role.VIEWER;
 
     @Before
     public void setUp() {
-        roles.addAll(Arrays.asList(roleMock1, roleMock2));
+        roles.addAll(Arrays.asList(role1, role2));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class UserTest {
         assertThat(u.getEmail()).isEqualTo(EMAIL);
         assertThat(u.getPassword()).isEqualTo(PASSWORD);
         assertThat(u.isEnabled()).isEqualTo(ENABLED);
-        assertThat(u.getRoles()).containsExactly(roleMock1, roleMock2);
+        assertThat(u.getRoles()).containsExactly(role1, role2);
         assertThat(u.getFullName()).isEqualTo(FIRST_NAME + " " + LAST_NAME);
     }
 
@@ -90,11 +90,11 @@ public class UserTest {
     @Test
     public void settingRoles_reSetsRoles() {
         final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles);
-        assertThat(u.getRoles()).containsExactly(roleMock1, roleMock2);
+        assertThat(u.getRoles()).containsExactly(role1, role2);
 
-        u.setRoles(Arrays.asList(roleMock3, roleMock1));
+        u.setRoles(Arrays.asList(role3, role1));
 
-        assertThat(u.getRoles()).containsExactly(roleMock3, roleMock1);
+        assertThat(u.getRoles()).containsExactly(role3, role1);
     }
 
     @Test
@@ -112,9 +112,23 @@ public class UserTest {
     }
 
     @Test
+    public void removingAssignedRole_removesIt() {
+        final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles);
+        u.removeRole(role1);
+        assertThat(u.getRoles()).containsExactly(role2);
+    }
+
+    @Test
+    public void removingUnassignedRole_doesNothing() {
+        final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles);
+        u.removeRole(role3);
+        assertThat(u.getRoles()).containsExactly(role1, role2);
+    }
+
+    @Test
     public void addingNullRole_addsNothing() {
-        user.addRole(roleMock1);
-        assertThat(user.getRoles()).containsExactly(roleMock1);
+        user.addRole(role1);
+        assertThat(user.getRoles()).containsExactly(role1);
     }
 
 }
