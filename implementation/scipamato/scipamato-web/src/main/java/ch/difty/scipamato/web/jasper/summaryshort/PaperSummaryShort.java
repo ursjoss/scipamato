@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  * @author u.joss
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class PaperSummaryShort extends PaperSummaryCommon {
     private static final long serialVersionUID = 1L;
 
