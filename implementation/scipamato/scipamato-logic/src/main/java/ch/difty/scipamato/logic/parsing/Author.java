@@ -1,12 +1,12 @@
 package ch.difty.scipamato.logic.parsing;
 
-import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value
 public class Author {
 
-    private final String authorString;
-    private final String lastName;
-    private final String firstName;
+    private String authorString;
+    private String lastName;
+    private String firstName;
 
 }
