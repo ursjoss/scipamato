@@ -1,5 +1,6 @@
 package ch.difty.scipamato.entity;
 
+import static ch.difty.scipamato.entity.ScipamatoEntity.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,8 @@ import javax.validation.ConstraintViolation;
 import org.junit.Test;
 
 import ch.difty.scipamato.NullArgumentException;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
@@ -163,6 +166,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
         assertThat(c6.hashCode()).isNotEqualTo(c7.hashCode());
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void equalingToSpecialCases() {
         assertThat(c.equals(c)).isTrue();
@@ -220,5 +224,15 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
         Code c1 = new Code("1A", CODE1, "", false, 1, "c1", "", 1);
         Code c2 = new Code("1A", CODE1, "", false, 1, "c1", "", 2);
         assertInequality(c1, c2);
+    }
+
+    @Test
+    public void equals() {
+        EqualsVerifier
+            .forClass(Code.class)
+            .withRedefinedSuperclass()
+            .withIgnoredFields(Code.CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 }
