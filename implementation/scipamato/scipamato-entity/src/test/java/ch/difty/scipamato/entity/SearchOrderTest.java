@@ -1,5 +1,7 @@
 package ch.difty.scipamato.entity;
 
+import static ch.difty.scipamato.entity.ScipamatoEntity.*;
+import static ch.difty.scipamato.entity.SearchOrder.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDateTime;
@@ -13,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.scipamato.entity.filter.SearchCondition;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SearchOrderTest {
@@ -295,5 +299,21 @@ public class SearchOrderTest {
         so.setCreatedByName("foo");
         so.setCreated(LocalDateTime.parse("2017-01-01T10:11:12.345"));
         assertThat(so.getCreatedDisplayValue()).isEqualTo("foo (2017-01-01 10:11:12)");
+    }
+
+    @Test
+    public void defaultConstructor() {
+        assertThat(new SearchOrder()).isNotNull();
+    }
+
+    @Test
+    public void equals() {
+        EqualsVerifier
+            .forClass(SearchOrder.class)
+            .withRedefinedSuperclass()
+            .withIgnoredFields(SHOW_EXCLUDED, CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .withPrefabValues(SearchCondition.class, new SearchCondition(1l), new SearchCondition(2l))
+            .verify();
     }
 }

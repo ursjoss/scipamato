@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import ch.difty.scipamato.web.jasper.JasperEntityTest;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 public class PaperSummaryTest extends JasperEntityTest {
 
@@ -90,4 +92,8 @@ public class PaperSummaryTest extends JasperEntityTest {
         assertThat(ps.getCommentLabel()).isEqualTo("");
     }
 
+    @Test
+    public void equalsverify() {
+        EqualsVerifier.forClass(PaperSummary.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE).verify();
+    }
 }

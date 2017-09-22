@@ -71,7 +71,7 @@ public class User extends IdScipamatoEntity<Integer> {
         this(id, userName, firstName, lastName, email, password, false, null);
     }
 
-    public User(User user) {
+    public User(final User user) {
         setId(user.getId());
         this.userName = user.getUserName();
         this.firstName = user.getFirstName();
