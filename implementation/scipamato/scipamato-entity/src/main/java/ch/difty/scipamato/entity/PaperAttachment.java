@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  * @author u.joss
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = { "content" })
 public class PaperAttachment extends IdScipamatoEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
@@ -39,7 +39,7 @@ public class PaperAttachment extends IdScipamatoEntity<Integer> {
     public PaperAttachment() {
     }
 
-    public PaperAttachment(Integer id, Long paperId, String name, byte[] content, String contentType, Long size) {
+    public PaperAttachment(final Integer id, final Long paperId, final String name, final byte[] content, final String contentType, final Long size) {
         setId(id);
         setPaperId(paperId);
         setName(name);
@@ -73,7 +73,7 @@ public class PaperAttachment extends IdScipamatoEntity<Integer> {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append("PaperAttachment[paperId=");
         builder.append(paperId);
         builder.append(",name=");

@@ -1,8 +1,12 @@
 package ch.difty.scipamato.entity;
 
+import static ch.difty.scipamato.entity.PaperAttachment.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
+
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 public class PaperAttachmentTest {
 
@@ -40,5 +44,15 @@ public class PaperAttachmentTest {
     @Test
     public void toString_isMinimal() {
         assertThat(pa.toString()).isEqualTo("PaperAttachment[paperId=2,name=pdf1,id=1]");
+    }
+
+    @Test
+    public void equals() {
+        EqualsVerifier
+            .forClass(PaperAttachment.class)
+            .withRedefinedSuperclass()
+            .withIgnoredFields(CONTENT, CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 }
