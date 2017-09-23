@@ -58,7 +58,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     @Mock
     private InsertResultStep<R> insertResultStepMock;
     @Mock
-    private DeleteWhereStep<R> deleteWhereStepMock;
+    protected DeleteWhereStep<R> deleteWhereStepMock;
     @Mock
     private DeleteConditionStep<R> deleteConditionStep1Mock, deleteConditionStep2Mock;
     @Mock

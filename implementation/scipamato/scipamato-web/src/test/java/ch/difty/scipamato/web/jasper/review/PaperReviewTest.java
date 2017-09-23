@@ -8,6 +8,8 @@ import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.web.jasper.JasperEntityTest;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 public class PaperReviewTest extends JasperEntityTest {
 
@@ -116,6 +118,11 @@ public class PaperReviewTest extends JasperEntityTest {
         pr = new PaperReview(p, rhf);
 
         assertThat(pr.getAuthorYear()).isEqualTo(String.valueOf(PUBLICATION_YEAR));
+    }
+
+    @Test
+    public void equals() {
+        EqualsVerifier.forClass(PaperReview.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
     }
 
 }

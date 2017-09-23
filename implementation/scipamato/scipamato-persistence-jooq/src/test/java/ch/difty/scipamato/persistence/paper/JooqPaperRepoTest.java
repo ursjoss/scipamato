@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.jooq.DeleteConditionStep;
 import org.jooq.SelectConditionStep;
 import org.jooq.SelectForUpdateStep;
 import org.jooq.SelectOffsetStep;
@@ -57,6 +58,8 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     private Paper paperMock;
     @Mock
     private PaginationContext paginationContextMock;
+    @Mock
+    private DeleteConditionStep<PaperRecord> deleteConditionStepMock;
 
     private final List<Paper> papers = new ArrayList<>();
 
@@ -310,18 +313,28 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     }
 
     @Test
-    public void gettingPapersByPmIds_withNullPmIds_returnsEmptyList() {
+    public void findingByPmIds_withNullPmIds_returnsEmptyList() {
         assertThat(repo.findByPmIds(null, LC)).isEmpty();
     }
 
     @Test
-    public void gettingPapersByPmNumbers_withNoNumbers_returnsEmptyList() {
+    public void findingByNumbers_withNoNumbers_returnsEmptyList() {
         assertThat(repo.findByNumbers(new ArrayList<Long>(), LC)).isEmpty();
     }
 
     @Test
-    public void gettingPapersByPmNumbers_withNullNumbers_returnsEmptyList() {
+    public void findingByNumbers_withNullNumbers_returnsEmptyList() {
         assertThat(repo.findByNumbers(null, LC)).isEmpty();
+    }
+
+    @Test
+    public void findingByNumber_withNoLanguageCode_throws() {
+        try {
+            repo.findByNumbers(Arrays.asList(1l), null);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("languageCode must not be null.");
+        }
     }
 
     @Test
@@ -336,7 +349,7 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
 
     @SuppressWarnings("unchecked")
     @Test
-    public void findingByFilter() {
+    public void findingPageByFilter() {
         // TODO actually return records, test mapping and enrichment also
         List<PaperRecord> paperRecords = new ArrayList<>();
         Collection<SortField<Paper>> sortFields = new ArrayList<>();
@@ -378,11 +391,76 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
         verify(selectForUpdateStepMock).fetchInto(getRecordClass());
     }
 
+    @SuppressWarnings("unchecked")
+    @Test
+    public void findingPageByFilter_withNoExplicitLanguageCode() {
+        // TODO actually return records, test mapping and enrichment also
+        when(getApplicationProperties().getDefaultLocalization()).thenReturn(LC);
+
+        List<PaperRecord> paperRecords = new ArrayList<>();
+        Collection<SortField<Paper>> sortFields = new ArrayList<>();
+        Sort sort = new Sort(Direction.DESC, "id");
+        when(paginationContextMock.getSort()).thenReturn(sort);
+        when(paginationContextMock.getPageSize()).thenReturn(20);
+        when(paginationContextMock.getOffset()).thenReturn(0);
+        when(getFilterConditionMapper().map(filterMock)).thenReturn(getConditionMock());
+        when(getSortMapper().map(sort, getTable())).thenReturn(sortFields);
+
+        SelectWhereStep<PaperRecord> selectWhereStepMock = Mockito.mock(SelectWhereStep.class);
+        when(getDsl().selectFrom(getTable())).thenReturn(selectWhereStepMock);
+        SelectConditionStep<PaperRecord> selectConditionStepMock = Mockito.mock(SelectConditionStep.class);
+        when(selectWhereStepMock.where(getConditionMock())).thenReturn(selectConditionStepMock);
+        SelectSeekStepN<PaperRecord> selectSeekStepNMock = Mockito.mock(SelectSeekStepN.class);
+        when(selectConditionStepMock.orderBy(sortFields)).thenReturn(selectSeekStepNMock);
+        SelectOffsetStep<PaperRecord> selectOffsetStepMock = Mockito.mock(SelectOffsetStep.class);
+        when(selectSeekStepNMock.limit(20)).thenReturn(selectOffsetStepMock);
+        SelectForUpdateStep<PaperRecord> selectForUpdateStepMock = Mockito.mock(SelectForUpdateStep.class);
+        when(selectOffsetStepMock.offset(0)).thenReturn(selectForUpdateStepMock);
+        when(selectForUpdateStepMock.fetchInto(getRecordClass())).thenReturn(paperRecords);
+
+        when(getMapper().map(persistedRecord)).thenReturn(paperMock);
+
+        final List<Paper> papers = repo.findPageByFilter(filterMock, paginationContextMock);
+        assertThat(papers).isEmpty();
+
+        verify(getApplicationProperties()).getDefaultLocalization();
+        verify(getFilterConditionMapper()).map(filterMock);
+        verify(paginationContextMock).getSort();
+        verify(paginationContextMock).getPageSize();
+        verify(paginationContextMock).getOffset();
+        verify(getSortMapper()).map(sort, getTable());
+
+        verify(getDsl()).selectFrom(getTable());
+        verify(selectWhereStepMock).where(getConditionMock());
+        verify(selectConditionStepMock).orderBy(sortFields);
+        verify(selectSeekStepNMock).limit(20);
+        verify(selectOffsetStepMock).offset(0);
+        verify(selectForUpdateStepMock).fetchInto(getRecordClass());
+    }
+
     @Test
     public void findingPageOfIdsBySearchOrder() {
         when(searchOrderRepositoryMock.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(Arrays.asList(17l, 3l, 5l));
         assertThat(repo.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).containsExactly(17l, 3l, 5l);
         verify(searchOrderRepositoryMock).findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock);
+    }
+
+    @Test
+    public void deleteîngAttachment_withNullId_returnsNull() {
+        assertThat(getRepo().deleteAttachment(null)).isNull();
+    }
+
+    @Test
+    public void deletingIds() {
+        List<Long> ids = Arrays.asList(3l, 5l, 7l);
+        when(getDsl().deleteFrom(getTable())).thenReturn(deleteWhereStepMock);
+        when(deleteWhereStepMock.where(PAPER.ID.in(ids))).thenReturn(deleteConditionStepMock);
+
+        repo.delete(ids);
+
+        verify(getDsl()).deleteFrom(getTable());
+        verify(deleteWhereStepMock).where(PAPER.ID.in(ids));
+        verify(deleteConditionStepMock).execute();
     }
 
 }

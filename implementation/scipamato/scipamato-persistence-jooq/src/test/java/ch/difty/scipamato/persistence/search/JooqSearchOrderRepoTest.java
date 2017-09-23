@@ -298,4 +298,8 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
         assertThat(so.getExcludedPaperIds()).hasSize(3).containsExactly(17l, 33l, 42l);
     }
 
+    @Test
+    public void gettingRecordClass() {
+        assertThat(repo.getRecordClass()).isEqualTo(getRecordClass());
+    }
 }

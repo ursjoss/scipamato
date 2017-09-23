@@ -8,6 +8,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
+
 @RunWith(MockitoJUnitRunner.class)
 public class SearchOrderChangeEventTest {
 
@@ -68,6 +71,11 @@ public class SearchOrderChangeEventTest {
         assertThat(e.getTarget()).isEqualTo(targetMock);
         e.setTarget(targetMock2);
         assertThat(e.getTarget()).isEqualTo(targetMock2);
+    }
+
+    @Test
+    public void equals() {
+        EqualsVerifier.forClass(SearchOrderChangeEvent.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
     }
 
 }
