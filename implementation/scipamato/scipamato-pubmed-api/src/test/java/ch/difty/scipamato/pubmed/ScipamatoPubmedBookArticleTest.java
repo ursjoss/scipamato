@@ -150,4 +150,19 @@ public class ScipamatoPubmedBookArticleTest {
         assertThat(pa.getFirstAuthor()).isNull();
     }
 
+    @Test
+    public void validConstructionUsingOf() {
+        assertThat(ScipamatoPubmedArticle.of(pubmedBookArticle)).isNotNull();
+    }
+
+    @Test
+    public void invalidConstructionUsingOfWithForiegnObject() {
+        try {
+            ScipamatoPubmedArticle.of(Integer.valueOf(1));
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(IllegalArgumentException.class).hasMessage("Cannot instantiate ScipamatoArticle from provided object 1");
+        }
+    }
+
 }

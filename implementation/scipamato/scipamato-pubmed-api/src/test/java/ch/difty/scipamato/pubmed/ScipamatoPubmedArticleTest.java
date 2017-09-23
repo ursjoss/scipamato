@@ -73,7 +73,6 @@ public class ScipamatoPubmedArticleTest {
     @Test
     public void degenerateConstruction_withNullPmid() {
         pubmedArticle.getMedlineCitation().setPMID(null);
-        ;
         try {
             new ScipamatoPubmedArticle(pubmedArticle);
             fail("should have thrown exception");
@@ -118,6 +117,11 @@ public class ScipamatoPubmedArticleTest {
     @Test
     public void validConstruction() {
         assertThat(new ScipamatoPubmedArticle(pubmedArticle)).isNotNull();
+    }
+
+    @Test
+    public void validConstructionUsingOf() {
+        assertThat(ScipamatoPubmedArticle.of(pubmedArticle)).isNotNull();
     }
 
     @Test
