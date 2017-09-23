@@ -12,6 +12,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
+
 @RunWith(MockitoJUnitRunner.class)
 public class NewFieldChangeEventTest {
 
@@ -115,6 +118,11 @@ public class NewFieldChangeEventTest {
         e = new NewFieldChangeEvent(targetMock).withId("id").withMarkupId("mId");
         e.considerAddingToTarget(mockComponent);
         verify(targetMock, never()).add(mockComponent);
+    }
+
+    @Test
+    public void equals() {
+        EqualsVerifier.forClass(NewFieldChangeEvent.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
     }
 
 }
