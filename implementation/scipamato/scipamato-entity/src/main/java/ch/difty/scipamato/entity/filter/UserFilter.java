@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 public class UserFilter extends ScipamatoFilter implements Serializable {
 
     private static final long serialVersionUID = 1L;

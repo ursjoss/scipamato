@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
+
 public class UserFilterTest {
 
     @Test
@@ -16,5 +19,12 @@ public class UserFilterTest {
         assertThat(f.getNameMask()).isEqualTo("name");
         assertThat(f.getEmailMask()).isEqualTo("email");
         assertThat(f.getEnabled()).isEqualTo(true);
+
+        assertThat(f.toString()).isEqualTo("UserFilter(nameMask=name, emailMask=email, enabled=true)");
+    }
+
+    @Test
+    public void equals() {
+        EqualsVerifier.forClass(UserFilter.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
     }
 }
