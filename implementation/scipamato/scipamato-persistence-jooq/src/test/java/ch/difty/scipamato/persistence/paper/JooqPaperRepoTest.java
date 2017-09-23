@@ -261,6 +261,11 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
     }
 
     @Test
+    public void gettingRecordVersion() {
+        assertThat(repo.getRecordVersion()).isEqualTo(PAPER.VERSION);
+    }
+
+    @Test
     public void gettingIdFromPaper() {
         when(paperMock.getId()).thenReturn(17l);
         assertThat(repo.getIdFrom(paperMock)).isEqualTo(17l);
