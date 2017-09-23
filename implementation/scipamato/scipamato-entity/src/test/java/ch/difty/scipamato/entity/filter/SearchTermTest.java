@@ -147,6 +147,7 @@ public class SearchTermTest {
         assertThat(st1.hashCode()).isNotEqualTo(st2.hashCode());
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void equality_withSpecialCases() {
         SearchTerm st1 = SearchTerm.of(12, 2, 3l, "fn3", "foo*");

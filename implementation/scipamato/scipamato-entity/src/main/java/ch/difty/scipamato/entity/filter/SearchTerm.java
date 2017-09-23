@@ -26,10 +26,6 @@ public abstract class SearchTerm extends IdScipamatoEntity<Long> {
     private final String fieldName;
     private final String rawSearchTerm;
 
-    SearchTerm(final SearchTermType type, final String fieldName, final String rawSearchTerm) {
-        this(null, type, null, fieldName, rawSearchTerm);
-    }
-
     SearchTerm(final Long id, final SearchTermType type, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
         super(id);
         this.searchConditionId = searchConditionId;
