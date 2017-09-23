@@ -1,6 +1,5 @@
 package ch.difty.scipamato.entity;
 
-import static ch.difty.scipamato.entity.ScipamatoEntity.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDateTime;
@@ -11,11 +10,7 @@ import java.util.List;
 import javax.validation.ConstraintViolation;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
 
 public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
@@ -420,15 +415,27 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(p.getAttachments()).isEmpty();
     }
 
-    // TODO find way around AbstractMethodError (with CodeBox)
-    @Ignore
+    @SuppressWarnings("unlikely-arg-type")
     @Test
-    public void equals() {
-        EqualsVerifier
-            .forClass(Paper.class)
-            .withRedefinedSuperclass()
-            .withIgnoredFields(CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
-            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-            .verify();
+    // Note: Did not get this to run with equalsverifier due to 'Abstract delegation: Paper's hashCode method delegates to an abstract method' on codes
+    public void equalityAndHashCode() {
+        Paper p1 = new Paper();
+        p1.setId(1l);
+
+        assertThat(p1.equals(p1)).isTrue();
+        assertThat(p1.equals(null)).isFalse();
+        assertThat(p1.equals(Integer.valueOf(1))).isFalse();
+
+        Paper p2 = new Paper();
+        p2.setId(1l);
+        assertThat(p1.equals(p2)).isTrue();
+        assertThat(p1.hashCode()).isEqualTo(p2.hashCode());
+        p2.setId(2l);
+        assertThat(p1.equals(p2)).isFalse();
+        assertThat(p1.hashCode()).isNotEqualTo(p2.hashCode());
+        p2.setId(1l);
+        p2.setPublicationYear(2017);
+        assertThat(p1.equals(p2)).isFalse();
+        assertThat(p1.hashCode()).isNotEqualTo(p2.hashCode());
     }
 }
