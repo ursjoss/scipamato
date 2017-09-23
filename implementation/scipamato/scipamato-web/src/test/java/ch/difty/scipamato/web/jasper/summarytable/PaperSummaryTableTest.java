@@ -7,6 +7,8 @@ import org.junit.Test;
 import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.web.jasper.JasperEntityTest;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 public class PaperSummaryTableTest extends JasperEntityTest {
 
@@ -79,5 +81,17 @@ public class PaperSummaryTableTest extends JasperEntityTest {
         p.setPublicationYear(null);
         pst = new PaperSummaryTable(p, rhf, false);
         assertThat(pst.getPublicationYear()).isEmpty();
+    }
+
+    @Test
+    public void equals() {
+        EqualsVerifier.forClass(PaperSummaryTable.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+    }
+
+    @Test
+    public void testingToString() {
+        pst = new PaperSummaryTable(p, rhf, true);
+        assertThat(pst.toString()).isEqualTo(
+                "PaperSummaryTable(number=100, firstAuthor=firstAuthor, publicationYear=2017, codesOfClass1=1F, codesOfClass4=4A,4C, codesOfClass7=7B, goals=goals, title=title, result=results, caption=caption, brand=brand, numberLabel=nl)");
     }
 }
