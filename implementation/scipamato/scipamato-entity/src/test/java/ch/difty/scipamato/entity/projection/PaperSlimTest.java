@@ -1,9 +1,13 @@
 package ch.difty.scipamato.entity.projection;
 
+import static ch.difty.scipamato.entity.ScipamatoEntity.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 public class PaperSlimTest {
 
@@ -33,8 +37,23 @@ public class PaperSlimTest {
     }
 
     @Test
+    public void testingToString() {
+        assertThat(ps.toString()).isEqualTo("PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title)");
+    }
+
+    @Test
     public void alternativeConstructor() {
         ps = new PaperSlim(1l, 10l, "firstAuthor", 2016, "title");
         getting();
+    }
+
+    @Test
+    public void equals() {
+        EqualsVerifier
+            .forClass(PaperSlim.class)
+            .withRedefinedSuperclass()
+            .withIgnoredFields(CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 }
