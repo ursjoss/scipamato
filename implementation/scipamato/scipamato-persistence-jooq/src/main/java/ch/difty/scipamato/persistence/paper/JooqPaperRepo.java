@@ -228,9 +228,9 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     /** {@inheritDoc} */
     @Override
     public List<Paper> findByPmIds(final List<Integer> pmIds, final String languageCode) {
-        if (pmIds == null || pmIds.isEmpty())
+        if (CollectionUtils.isEmpty(pmIds)) {
             return new ArrayList<>();
-        else {
+        } else {
             AssertAs.notNull(languageCode, LANGUAGE_CODE);
             List<Paper> papers = getDsl().selectFrom(PAPER).where(PAPER.PM_ID.in(pmIds)).fetchInto(Paper.class);
             enrichAssociatedEntitiesOfAll(papers, languageCode);
@@ -241,9 +241,9 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     /** {@inheritDoc} */
     @Override
     public List<Integer> findExistingPmIdsOutOf(final List<Integer> pmIds) {
-        if (pmIds == null || pmIds.isEmpty())
+        if (CollectionUtils.isEmpty(pmIds)) {
             return new ArrayList<>();
-        else {
+        } else {
             return getDsl().select(PAPER.PM_ID).from(PAPER).where(PAPER.PM_ID.in(pmIds)).fetchInto(Integer.class);
         }
     }
@@ -251,9 +251,9 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
     /** {@inheritDoc} */
     @Override
     public List<Paper> findByNumbers(final List<Long> numbers, final String languageCode) {
-        if (numbers == null || numbers.isEmpty())
+        if (CollectionUtils.isEmpty(numbers)) {
             return new ArrayList<>();
-        else {
+        } else {
             AssertAs.notNull(languageCode, LANGUAGE_CODE);
             List<Paper> papers = getDsl().selectFrom(PAPER).where(PAPER.NUMBER.in(numbers)).fetchInto(Paper.class);
             enrichAssociatedEntitiesOfAll(papers, languageCode);

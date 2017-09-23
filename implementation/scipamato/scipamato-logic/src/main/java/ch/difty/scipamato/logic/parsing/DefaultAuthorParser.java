@@ -76,7 +76,7 @@ public class DefaultAuthorParser implements AuthorParser {
     private int getIndexOfFirstName(final List<String> tokens) {
         final int i = tokens.size() - 1;
         final Matcher m = CARDINALITY_PATTERN.matcher(tokens.get(i));
-        if (i > 0 && m.find())
+        if (m.find())
             return i - 1;
         else
             return i;

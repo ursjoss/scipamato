@@ -58,6 +58,7 @@ public class ScipamatoPubmedBookArticleTest {
 
         Abstract abstr = new Abstract();
         AbstractText abstrText = new AbstractText();
+        abstrText.setLabel("ABSTRACT");
         abstrText.setvalue("abstract");
         abstr.getAbstractText().add(abstrText);
         bookDocument.setAbstract(abstr);
@@ -130,10 +131,17 @@ public class ScipamatoPubmedBookArticleTest {
         assertThat(pa.getLocation()).isEqualTo("ll1 - ll2");
         assertThat(pa.getTitle()).isEqualTo("title");
         assertThat(pa.getDoi()).isEqualTo("DOI");
-        assertThat(pa.getOriginalAbstract()).startsWith("abstract");
+        assertThat(pa.getOriginalAbstract()).startsWith("ABSTRACT: abstract");
 
-        assertThat(pa.toString())
-            .isEqualTo("PubmedArticleFacade(pmId=pmid, authors=ln1 i1, ln2 i2, ln3 i3., firstAuthor=ln1, publicationYear=2017, location=ll1 - ll2, title=title, doi=DOI, originalAbstract=abstract)");
+        assertThat(pa.toString()).isEqualTo(
+                "PubmedArticleFacade(pmId=pmid, authors=ln1 i1, ln2 i2, ln3 i3., firstAuthor=ln1, publicationYear=2017, location=ll1 - ll2, title=title, doi=DOI, originalAbstract=ABSTRACT: abstract)");
+    }
+
+    @Test
+    public void canParseAbstractWithoutAbstractLAbel() {
+        pubmedBookArticle.getBookDocument().getAbstract().getAbstractText().get(0).setLabel(null);
+        PubmedArticleFacade pa = new ScipamatoPubmedBookArticle(pubmedBookArticle);
+        assertThat(pa.getOriginalAbstract()).startsWith("abstract");
     }
 
     @Test

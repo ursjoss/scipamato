@@ -197,4 +197,8 @@ public class JooqUserRepoTest extends JooqEntityRepoTest<ScipamatoUserRecord, Us
         }
     }
 
+    @Test
+    public void gettingRecordClass() {
+        assertThat(repo.getRecordClass()).isEqualTo(getRecordClass());
+    }
 }

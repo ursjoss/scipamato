@@ -58,7 +58,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     @Mock
     private InsertResultStep<R> insertResultStepMock;
     @Mock
-    private DeleteWhereStep<R> deleteWhereStepMock;
+    protected DeleteWhereStep<R> deleteWhereStepMock;
     @Mock
     private DeleteConditionStep<R> deleteConditionStep1Mock, deleteConditionStep2Mock;
     @Mock
@@ -106,31 +106,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
      */
     protected abstract EntityRepository<T, ID, F> makeRepoFindingEntityById(T entity);
 
-    protected abstract T getPersistedEntity();
-
-    protected abstract T getUnpersistedEntity();
-
-    protected abstract R getPersistedRecord();
-
-    protected abstract M getMapper();
-
-    protected abstract Class<T> getEntityClass();
-
-    protected abstract TI getTable();
-
-    protected abstract Class<R> getRecordClass();
-
-    protected abstract TableField<R, ID> getTableId();
-
     protected abstract TableField<R, Integer> getRecordVersion();
-
-    protected abstract void expectEntityIdsWithValues();
-
-    protected abstract void expectUnpersistedEntityIdNull();
-
-    protected abstract void verifyUnpersistedEntityId();
-
-    protected abstract void verifyPersistedRecordId();
 
     @SuppressWarnings("unchecked")
     protected final void specificSetUp() {
@@ -294,5 +270,4 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
         }
         verifyUnpersistedEntityId();
     }
-
 }

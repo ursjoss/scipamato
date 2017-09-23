@@ -180,4 +180,8 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
         verify(searchOrderRepositoryMock).findPageBySearchOrder(searchOrderMock, pageableMock);
     }
 
+    @Test
+    public void gettingVersion_returnsPapersVersion() {
+        assertThat(repo.getRecordVersion()).isEqualTo(PAPER.VERSION);
+    }
 }
