@@ -8,6 +8,8 @@ import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.web.jasper.JasperEntityTest;
 import ch.difty.scipamato.web.jasper.ReportHeaderFields;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 public class PaperLiteratureReviewTest extends JasperEntityTest {
 
@@ -37,7 +39,7 @@ public class PaperLiteratureReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void instantiatingWithValidFieldsAndvalidLabels() {
+    public void instantiatingWithValidFieldsAndValidLabels() {
         plr = new PaperLiteratureReview(p, rhf);
 
         validateFields();
@@ -54,6 +56,39 @@ public class PaperLiteratureReviewTest extends JasperEntityTest {
         assertThat(plr.getTitle()).isEqualTo(TITLE);
         assertThat(plr.getLocation()).isEqualTo(LOCATION);
         assertThat(plr.getPubmedLink()).isEqualTo("https://www.ncbi.nlm.nih.gov/pubmed/" + PM_ID);
+    }
+
+    @Test
+    public void pubmedLink_withPaperWithPmIdNull_isBlank() {
+        p.setPmId(null);
+        plr = new PaperLiteratureReview(p, rhf);
+        assertThat(plr.getPubmedLink()).isEqualTo("");
+    }
+
+    @Test
+    public void number_withPaperWithNumberNull_isBlank() {
+        p.setNumber(null);
+        plr = new PaperLiteratureReview(p, rhf);
+        assertThat(plr.getNumber()).isEqualTo("");
+    }
+
+    @Test
+    public void publicationYear_withPaperWithYearNull_isBlank() {
+        p.setPublicationYear(null);
+        plr = new PaperLiteratureReview(p, rhf);
+        assertThat(plr.getPublicationYear()).isEqualTo("");
+    }
+
+    @Test
+    public void equals() {
+        EqualsVerifier.forClass(PaperLiteratureReview.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+    }
+
+    @Test
+    public void testingToString() {
+        plr = new PaperLiteratureReview(p, rhf);
+        assertThat(plr.toString()).isEqualTo(
+                "PaperLiteratureReview(number=100, authors=authors, publicationYear=2017, title=title, location=location, pubmedLink=https://www.ncbi.nlm.nih.gov/pubmed/1234, caption=caption, brand=brand, numberLabel=numberLabel)");
     }
 
 }
