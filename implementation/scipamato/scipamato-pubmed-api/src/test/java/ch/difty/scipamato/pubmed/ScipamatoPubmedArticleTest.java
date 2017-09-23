@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.Test;
 
 import ch.difty.scipamato.NullArgumentException;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 public class ScipamatoPubmedArticleTest {
 
@@ -279,5 +281,16 @@ public class ScipamatoPubmedArticleTest {
         pubmedArticle.getMedlineCitation().getArticle().getPaginationOrELocationID().add(elocationId);
         ScipamatoPubmedArticle spa = new ScipamatoPubmedArticle(pubmedArticle);
         assertThat(spa.getDoi()).isEqualTo("eloc");
+    }
+
+    @Test
+    public void equals() {
+        EqualsVerifier.forClass(ScipamatoPubmedArticle.class).suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+    }
+
+    @Test
+    public void testingToString() {
+        ScipamatoPubmedArticle pa = new ScipamatoPubmedArticle(pubmedArticle);
+        assertThat(pa.toString()).isEqualTo("PubmedArticleFacade(pmId=null, authors=null, firstAuthor=null, publicationYear=0, location=null. 0;, title=null, doi=null, originalAbstract=null)");
     }
 }

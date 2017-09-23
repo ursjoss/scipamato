@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.difty.scipamato.NullArgumentException;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 public class ScipamatoPubmedBookArticleTest {
 
@@ -129,6 +131,9 @@ public class ScipamatoPubmedBookArticleTest {
         assertThat(pa.getTitle()).isEqualTo("title");
         assertThat(pa.getDoi()).isEqualTo("DOI");
         assertThat(pa.getOriginalAbstract()).startsWith("abstract");
+
+        assertThat(pa.toString())
+            .isEqualTo("PubmedArticleFacade(pmId=pmid, authors=ln1 i1, ln2 i2, ln3 i3., firstAuthor=ln1, publicationYear=2017, location=ll1 - ll2, title=title, doi=DOI, originalAbstract=abstract)");
     }
 
     @Test
@@ -163,6 +168,11 @@ public class ScipamatoPubmedBookArticleTest {
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(IllegalArgumentException.class).hasMessage("Cannot instantiate ScipamatoArticle from provided object 1");
         }
+    }
+
+    @Test
+    public void equals() {
+        EqualsVerifier.forClass(ScipamatoPubmedBookArticle.class).suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
     }
 
 }
