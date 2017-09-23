@@ -72,6 +72,17 @@ public class UserTest {
     }
 
     @Test
+    public void constructingByUser2() {
+        final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+        assertThat(u.isEnabled()).isFalse();
+        assertThat(u.getRoles()).isNotNull().isEmpty();
+
+        u.setEnabled(true);
+        u.setRoles(roles);
+        assertUser(u);
+    }
+
+    @Test
     public void displayValue_isEqualToName() {
         final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles);
         assertThat(u.getDisplayValue()).isEqualTo(USER_NAME);
@@ -142,5 +153,11 @@ public class UserTest {
             .withIgnoredFields(CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
+    }
+
+    @Test
+    public void testingToString() {
+        assertThat(user.toString()).isEqualTo(
+                "User[userName=username,firstName=firstname,lastName=lastname,email=email,password=password,enabled=false,roles=[],id=1,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]");
     }
 }
