@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 public class SearchOrderFilter extends ScipamatoFilter {
 
     private static final long serialVersionUID = 1L;

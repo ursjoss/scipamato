@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
+
 public class SearchOrderFilterTest {
 
     @Test
@@ -18,5 +21,12 @@ public class SearchOrderFilterTest {
         assertThat(f.getOwner()).isEqualTo(3);
         assertThat(f.getOwnerIncludingGlobal()).isEqualTo(4);
         assertThat(f.getGlobal()).isEqualTo(true);
+
+        assertThat(f.toString()).isEqualTo("SearchOrderFilter(nameMask=foo, owner=3, global=true, ownerIncludingGlobal=4)");
+    }
+
+    @Test
+    public void equals() {
+        EqualsVerifier.forClass(SearchOrderFilter.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
     }
 }
