@@ -14,8 +14,8 @@
     <name>SciPaMaTo :: Web GUI Project</name>
 
     <properties>
-        <wicket-spring-boot-starter.version>1.0.9</wicket-spring-boot-starter.version>
-        <wicket.version>7.8.0</wicket.version>
+        <wicket-spring-boot-starter.version>1.0.10</wicket-spring-boot-starter.version>
+        <wicket.version>7.9.0</wicket.version>
         <wicket-bootstrap.version>0.10.16</wicket-bootstrap.version>
         <jasperreports.version>6.4.1</jasperreports.version>
         <feign.version>9.5.0</feign.version>
