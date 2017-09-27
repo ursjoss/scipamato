@@ -54,6 +54,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
+- Improved documentation and code coverage
+- Updated to wicket-7.9.0, bumped wicket-spring-boot-starter, feign
 
 .Deprecated
 
