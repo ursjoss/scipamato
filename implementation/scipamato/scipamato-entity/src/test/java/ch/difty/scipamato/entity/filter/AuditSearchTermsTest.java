@@ -64,6 +64,7 @@ public class AuditSearchTermsTest {
         assertInequalityBetween(st1, st2, 118234894, -817550684);
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void compareWithNullSelfOrDifferentClass() {
         assertThat(st1.equals(null)).isFalse();

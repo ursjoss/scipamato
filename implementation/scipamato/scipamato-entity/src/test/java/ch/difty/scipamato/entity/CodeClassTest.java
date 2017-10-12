@@ -91,6 +91,7 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
         assertThat(cc3.hashCode()).isNotEqualTo(cc4.hashCode());
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void equalingToSpecialCases() {
         CodeClass cc1 = new CodeClass(1, "cc1", THIS_IS_CC1);

@@ -148,6 +148,7 @@ public class SortTest {
         assertThat(sort.toString()).isEqualTo("a: ASC,b: DESC,c: DESC,d: ASC");
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void sortEqualityTests() {
         assertThat(sort.equals(null)).isFalse();
@@ -167,6 +168,7 @@ public class SortTest {
         assertThat(sort.hashCode()).isEqualTo(new Sort(sortPropertys2).hashCode());
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void sortPropertyEqualityTests() {
         SortProperty sf1 = new SortProperty("foo", Direction.DESC);

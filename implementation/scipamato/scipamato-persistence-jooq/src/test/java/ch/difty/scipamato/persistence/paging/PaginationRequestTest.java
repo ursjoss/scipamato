@@ -141,6 +141,7 @@ public class PaginationRequestTest {
         assertEquality(pr, pr2);
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void inequality_ofPaginationRequestWithNonPaginationRequest() {
         pr = new PaginationRequest(5, 6);

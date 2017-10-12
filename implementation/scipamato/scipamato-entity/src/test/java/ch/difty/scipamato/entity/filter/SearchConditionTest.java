@@ -697,6 +697,7 @@ public class SearchConditionTest {
         assertThat(sc1.getDisplayValue()).isEqualTo("foobar AND 1F&5H");
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void equalsAndHash1_ofFieldSc() {
         assertThat(sc1.hashCode()).isEqualTo(917087168);
