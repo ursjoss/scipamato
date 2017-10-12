@@ -12,9 +12,9 @@ import java.util.List;
 import org.jooq.DeleteConditionStep;
 import org.jooq.SelectConditionStep;
 import org.jooq.SelectForUpdateStep;
-import org.jooq.SelectOffsetStep;
 import org.jooq.SelectSeekStepN;
 import org.jooq.SelectWhereStep;
+import org.jooq.SelectWithTiesStep;
 import org.jooq.SortField;
 import org.jooq.TableField;
 import org.junit.Test;
@@ -366,10 +366,10 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
         when(selectWhereStepMock.where(getConditionMock())).thenReturn(selectConditionStepMock);
         SelectSeekStepN<PaperRecord> selectSeekStepNMock = Mockito.mock(SelectSeekStepN.class);
         when(selectConditionStepMock.orderBy(sortFields)).thenReturn(selectSeekStepNMock);
-        SelectOffsetStep<PaperRecord> selectOffsetStepMock = Mockito.mock(SelectOffsetStep.class);
-        when(selectSeekStepNMock.limit(20)).thenReturn(selectOffsetStepMock);
+        SelectWithTiesStep<PaperRecord> selectWithTiesStepMock = mock(SelectWithTiesStep.class);
+        when(selectSeekStepNMock.limit(20)).thenReturn(selectWithTiesStepMock);
         SelectForUpdateStep<PaperRecord> selectForUpdateStepMock = Mockito.mock(SelectForUpdateStep.class);
-        when(selectOffsetStepMock.offset(0)).thenReturn(selectForUpdateStepMock);
+        when(selectWithTiesStepMock.offset(0)).thenReturn(selectForUpdateStepMock);
         when(selectForUpdateStepMock.fetchInto(getRecordClass())).thenReturn(paperRecords);
 
         when(getMapper().map(persistedRecord)).thenReturn(paperMock);
@@ -387,7 +387,7 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
         verify(selectWhereStepMock).where(getConditionMock());
         verify(selectConditionStepMock).orderBy(sortFields);
         verify(selectSeekStepNMock).limit(20);
-        verify(selectOffsetStepMock).offset(0);
+        verify(selectWithTiesStepMock).offset(0);
         verify(selectForUpdateStepMock).fetchInto(getRecordClass());
     }
 
@@ -412,10 +412,10 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
         when(selectWhereStepMock.where(getConditionMock())).thenReturn(selectConditionStepMock);
         SelectSeekStepN<PaperRecord> selectSeekStepNMock = Mockito.mock(SelectSeekStepN.class);
         when(selectConditionStepMock.orderBy(sortFields)).thenReturn(selectSeekStepNMock);
-        SelectOffsetStep<PaperRecord> selectOffsetStepMock = Mockito.mock(SelectOffsetStep.class);
-        when(selectSeekStepNMock.limit(20)).thenReturn(selectOffsetStepMock);
+        SelectWithTiesStep<PaperRecord> selectWithTiesStepMock = Mockito.mock(SelectWithTiesStep.class);
+        when(selectSeekStepNMock.limit(20)).thenReturn(selectWithTiesStepMock);
         SelectForUpdateStep<PaperRecord> selectForUpdateStepMock = Mockito.mock(SelectForUpdateStep.class);
-        when(selectOffsetStepMock.offset(0)).thenReturn(selectForUpdateStepMock);
+        when(selectWithTiesStepMock.offset(0)).thenReturn(selectForUpdateStepMock);
         when(selectForUpdateStepMock.fetchInto(getRecordClass())).thenReturn(paperRecords);
 
         when(getMapper().map(persistedRecord)).thenReturn(paperMock);
@@ -434,7 +434,7 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
         verify(selectWhereStepMock).where(getConditionMock());
         verify(selectConditionStepMock).orderBy(sortFields);
         verify(selectSeekStepNMock).limit(20);
-        verify(selectOffsetStepMock).offset(0);
+        verify(selectWithTiesStepMock).offset(0);
         verify(selectForUpdateStepMock).fetchInto(getRecordClass());
     }
 

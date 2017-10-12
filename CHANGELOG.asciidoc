@@ -56,6 +56,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Changed
 - Improved documentation and code coverage
 - Updated to wicket-7.9.0, bumped wicket-spring-boot-starter, jOOQ, feign
+- dependency updates: jooq-3.10.1
 
 .Deprecated
 
