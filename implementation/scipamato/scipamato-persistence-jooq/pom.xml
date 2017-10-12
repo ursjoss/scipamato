@@ -272,6 +272,7 @@
                     <plugin>
                         <groupId>org.jooq</groupId>
                         <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${org.jooq.version}</version>
                         <executions>
                             <execution>
                                 <id>generate-postgres</id>
@@ -500,6 +501,7 @@
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
+                <version>${org.jooq.version}</version><!--$NO-MVN-MAN-VER$ -->
                 <executions>
                     <execution>
                         <id>generate-postgres</id>

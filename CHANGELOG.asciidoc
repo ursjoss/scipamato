@@ -63,6 +63,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Fixed
 - Selective improvements with Eclipse Clean-up functionality
+- Fix version alignment of jooq-codegen-maven-plugin with jooq
 
 .Security
 
