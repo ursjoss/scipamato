@@ -68,11 +68,16 @@
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-persistence-jooq</artifactId>
         </dependency>
-        <!-- don't really like that I have to explicitly depend on jooq to get the correct version... -->
+        <!-- don't really like that I have to explicitly depend on jooq and the jdbc driver only to get the correct version... -->
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
             <version>${org.jooq.version}</version><!--$NO-MVN-MAN-VER$ -->
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${jdbc-postgres.version}</version><!--$NO-MVN-MAN-VER$ -->
         </dependency>
 
         <!-- spring-boot starters -->

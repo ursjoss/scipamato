@@ -14,8 +14,6 @@
     <name>SciPaMaTo :: Persistence jOOQ Project</name>
 
     <properties>
-        <!-- persistence layer -->
-        <jdbc-postgres.version>42.1.4</jdbc-postgres.version>
         <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
         <org.jooq.db-generator>org.jooq.util.postgres.PostgresDatabase</org.jooq.db-generator>
 
