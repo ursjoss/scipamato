@@ -2,11 +2,11 @@ package ch.difty.scipamato.persistence.user;
 
 import static ch.difty.scipamato.db.tables.ScipamatoUser.*;
 import static ch.difty.scipamato.persistence.user.UserRecordMapperTest.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import ch.difty.scipamato.db.tables.records.ScipamatoUserRecord;
 import ch.difty.scipamato.entity.User;
@@ -56,8 +56,8 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<Scipama
 
     @Override
     protected void setStepFixtureAudit() {
-        when(getMoreStep().set(SCIPAMATO_USER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SCIPAMATO_USER.CREATED_BY, UserRecordMapperTest.CREATED_BY)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SCIPAMATO_USER.LAST_MODIFIED_BY, UserRecordMapperTest.LAST_MOD_BY)).thenReturn(getMoreStep());
     }
 
     @Override
@@ -83,8 +83,8 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<Scipama
 
     @Override
     protected void verifySettingAuditFields() {
-        verify(getMoreStep()).set(SCIPAMATO_USER.CREATED_BY, CREATED_BY);
-        verify(getMoreStep()).set(SCIPAMATO_USER.LAST_MODIFIED_BY, LAST_MOD_BY);
+        verify(getMoreStep()).set(SCIPAMATO_USER.CREATED_BY, UserRecordMapperTest.CREATED_BY);
+        verify(getMoreStep()).set(SCIPAMATO_USER.LAST_MODIFIED_BY, UserRecordMapperTest.LAST_MOD_BY);
     }
 
     @Test
@@ -107,7 +107,7 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<Scipama
     @Test
     public void resettingIdToEntity_withNullRecord_doesNothing() {
         getSetter().resetIdToEntity(entityMock, null);
-        verify(entityMock, never()).setId(Mockito.anyInt());
+        verify(entityMock, never()).setId(anyInt());
     }
 
     @Test
@@ -115,7 +115,7 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<Scipama
         when(recordMock.getId()).thenReturn(3);
         getSetter().resetIdToEntity(entityMock, recordMock);
         verify(recordMock).getId();
-        verify(entityMock).setId(Mockito.anyInt());
+        verify(entityMock).setId(anyInt());
     }
 
 }

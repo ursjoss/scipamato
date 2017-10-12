@@ -14,20 +14,17 @@ import org.apache.wicket.util.tester.TagTester;
 import org.junit.After;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.entity.CodeClassId;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.filter.PaperFilter;
-import ch.difty.scipamato.entity.filter.PaperSlimFilter;
 import ch.difty.scipamato.entity.projection.PaperSlim;
 import ch.difty.scipamato.persistence.CodeClassService;
 import ch.difty.scipamato.persistence.CodeService;
 import ch.difty.scipamato.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.web.pages.paper.entry.PaperEntryPage;
-import ch.difty.scipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.scipamato.web.pages.paper.provider.PaperSlimBySearchOrderProvider;
 import ch.difty.scipamato.web.panel.PanelTest;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
@@ -62,14 +59,14 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     @After
     public void tearDown() {
         // after the login
-        verify(paperSlimServiceMock).countByFilter(Mockito.isA(PaperFilter.class));
-        verify(paperServiceMock).findPageOfIdsByFilter(Mockito.isA(PaperFilter.class), Mockito.isA(PaginationRequest.class));
+        verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
+        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
         verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeClassServiceMock, codeServiceMock, searchOrderMock);
     }
 
     @Override
     protected ResultPanel makePanel() {
-        return new ResultPanel(PANEL_ID, (AbstractPaperSlimProvider<? extends PaperSlimFilter>) new PaperSlimBySearchOrderProvider(searchOrderMock, ROWS_PER_PAGE));
+        return new ResultPanel(PANEL_ID, new PaperSlimBySearchOrderProvider(searchOrderMock, ROWS_PER_PAGE));
     }
 
     @Override

@@ -79,6 +79,7 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
         when(getMoreStep().set(PAPER.MAIN_CODE_OF_CODECLASS1, MAIN_CODE_OF_CODECLASS1)).thenReturn(getMoreStep());
     }
 
+    @Override
     protected void stepSetFixtureAudit() {
         when(getMoreStep().set(PAPER.CREATED, CREATED)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());

@@ -86,6 +86,7 @@ public class PaginationRequestTest {
         assertThat(pr.equals(null)).isFalse();
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void inequality_ofDifferentClass() {
         pr = new PaginationRequest(5, 5);

@@ -50,22 +50,26 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
         return null;
     }
 
+    @Override
     protected boolean hasPubMedId() {
         return false;
     }
 
+    @Override
     protected BootstrapButton newNavigationButton(String id, GlyphIconType icon, SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
         final BootstrapButton btn = new BootstrapButton(id, Model.of(""), Buttons.Type.Default);
         btn.setVisible(false);
         return btn;
     }
 
+    @Override
     protected BootstrapButton newExcludeButton(String id) {
         final BootstrapButton exclude = new BootstrapButton(id, new StringResourceModel("button.exclude.label"), Buttons.Type.Default);
         exclude.setVisible(false);
         return exclude;
     }
 
+    @Override
     protected DropZoneFileUpload newDropZoneFileUpload() {
         DropZoneFileUpload dropZoneFileUpload = new DropZoneFileUpload("dropzone") {
             private static final long serialVersionUID = 1L;
@@ -79,6 +83,7 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
         return dropZoneFileUpload;
     }
 
+    @Override
     protected DataTable<PaperAttachment, String> newAttachmentTable(String id) {
         PaperAttachmentProvider provider = new PaperAttachmentProvider(Model.ofList(new ArrayList<PaperAttachment>()));
         DataTable<PaperAttachment, String> attachments = new BootstrapDefaultDataTable<>(id, new ArrayList<>(), provider, 10);

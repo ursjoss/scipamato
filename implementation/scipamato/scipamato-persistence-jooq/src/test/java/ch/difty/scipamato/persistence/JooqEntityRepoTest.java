@@ -23,7 +23,6 @@ import org.jooq.impl.TableImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.scipamato.DateTimeService;
@@ -91,11 +90,13 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
         return updateSetStepSetterMock;
     }
 
+    @Override
     protected abstract ID getSampleId();
 
     /**
      * @return the specific repository instantiated 
      */
+    @Override
     protected abstract EntityRepository<T, ID, F> getRepo();
 
     /**
@@ -104,10 +105,12 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
      * @param entity the entity to be found.
      * @return the entity
      */
+    @Override
     protected abstract EntityRepository<T, ID, F> makeRepoFindingEntityById(T entity);
 
     protected abstract TableField<R, Integer> getRecordVersion();
 
+    @Override
     @SuppressWarnings("unchecked")
     protected final void specificSetUp() {
         repo = getRepo();
@@ -141,6 +144,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     protected void testSpecificSetUp() {
     }
 
+    @Override
     public final void specificTearDown() {
         testSpecificTearDown();
 
@@ -155,6 +159,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     protected void testSpecificTearDown() {
     }
 
+    @Override
     protected final void specificNullCheck() {
         assertThat(getInsertSetStepSetter()).isNotNull();
         assertThat(getUpdateSetStepSetter()).isNotNull();
@@ -209,21 +214,21 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     public void deleting_validPersistentEntity_returnsDeletedEntity() {
         repo = makeRepoFindingEntityById(getPersistedEntity());
 
-        when(deleteConditionStep1Mock.and(getRecordVersion().equal(Mockito.anyInt()))).thenReturn(deleteConditionStep2Mock);
+        when(deleteConditionStep1Mock.and(getRecordVersion().equal(anyInt()))).thenReturn(deleteConditionStep2Mock);
         when(deleteConditionStep2Mock.execute()).thenReturn(1);
 
         assertThat(repo.delete(id, 0)).isEqualTo(getPersistedEntity());
 
         verify(getDsl()).delete(getTable());
         verify(deleteWhereStepMock).where(getTableId().equal(id));
-        verify(deleteConditionStep1Mock).and(getRecordVersion().equal(Mockito.anyInt()));
+        verify(deleteConditionStep1Mock).and(getRecordVersion().equal(anyInt()));
         verify(deleteConditionStep2Mock).execute();
     }
 
     @Test
     public void deleting_validPersistentEntity_withFailingDelete_returnsDeletedEntity() {
         repo = makeRepoFindingEntityById(getPersistedEntity());
-        when(deleteConditionStep1Mock.and(getRecordVersion().equal(Mockito.anyInt()))).thenReturn(deleteConditionStep2Mock);
+        when(deleteConditionStep1Mock.and(getRecordVersion().equal(anyInt()))).thenReturn(deleteConditionStep2Mock);
         when(deleteConditionStep2Mock.execute()).thenReturn(0);
 
         try {
@@ -234,7 +239,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
         }
 
         verify(getDsl()).delete(getTable());
-        verify(deleteConditionStep1Mock).and(getRecordVersion().equal(Mockito.anyInt()));
+        verify(deleteConditionStep1Mock).and(getRecordVersion().equal(anyInt()));
         verify(deleteWhereStepMock).where(getTableId().equal(id));
         verify(deleteConditionStep2Mock).execute();
     }

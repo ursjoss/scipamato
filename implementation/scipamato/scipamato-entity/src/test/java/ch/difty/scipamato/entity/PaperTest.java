@@ -22,6 +22,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     private final Paper p = new Paper();
 
+    @Override
     @Before
     public void setUp() {
         super.setUp();

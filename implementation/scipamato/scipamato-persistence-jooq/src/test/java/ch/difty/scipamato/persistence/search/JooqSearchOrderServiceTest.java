@@ -1,6 +1,7 @@
 package ch.difty.scipamato.persistence.search;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.scipamato.entity.SearchOrder;
@@ -144,7 +144,7 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
     @Test
     public void deleting_withNullEntity_doesNothing() {
         service.remove(null);
-        verify(repoMock, never()).delete(Mockito.anyLong(), Mockito.anyInt());
+        verify(repoMock, never()).delete(anyLong(), anyInt());
     }
 
     @Test
@@ -154,7 +154,7 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
         service.remove(searchOrderMock);
 
         verify(searchOrderMock).getId();
-        verify(repoMock, never()).delete(Mockito.anyLong(), Mockito.anyInt());
+        verify(repoMock, never()).delete(anyLong(), anyInt());
     }
 
     @Test
@@ -172,7 +172,7 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
     @Test
     public void removingSearchConditionWithId_withNullId_doesNothing() {
         service.removeSearchConditionWithId(null);
-        verify(repoMock, never()).deleteSearchConditionWithId(Mockito.anyLong());
+        verify(repoMock, never()).deleteSearchConditionWithId(anyLong());
     }
 
     @Test

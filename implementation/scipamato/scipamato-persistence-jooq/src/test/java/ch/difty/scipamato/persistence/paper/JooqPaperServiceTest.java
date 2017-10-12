@@ -1,6 +1,7 @@
 package ch.difty.scipamato.persistence.paper;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -29,7 +30,6 @@ import ch.difty.scipamato.pubmed.PMID;
 import ch.difty.scipamato.pubmed.PubDate;
 import ch.difty.scipamato.pubmed.PubmedArticle;
 import ch.difty.scipamato.pubmed.PubmedArticleFacade;
-import ch.difty.scipamato.pubmed.ScipamatoPubmedArticle;
 
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
 
@@ -143,7 +143,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     @Test
     public void deleting_withNullEntity_doesNothing() {
         service.remove(null);
-        verify(repoMock, never()).delete(Mockito.anyLong(), Mockito.anyInt());
+        verify(repoMock, never()).delete(anyLong(), anyInt());
     }
 
     @Test
@@ -153,7 +153,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         service.remove(paperMock);
 
         verify(paperMock).getId();
-        verify(repoMock, never()).delete(Mockito.anyLong(), Mockito.anyInt());
+        verify(repoMock, never()).delete(anyLong(), anyInt());
     }
 
     @Test
@@ -202,7 +202,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void dumpingSingleArticle_whichAlreadyExists_doesNotSave() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
-        articles.add(ScipamatoPubmedArticle.of(pa));
+        articles.add(PubmedArticleFacade.of(pa));
 
         // existing papers
         when(repoMock.findExistingPmIdsOutOf(Arrays.asList(pmIdValue))).thenReturn(Arrays.asList(pmIdValue));
@@ -220,12 +220,12 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void dumpingSingleNewArticle_saves() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
-        articles.add(ScipamatoPubmedArticle.of(pa));
+        articles.add(PubmedArticleFacade.of(pa));
 
         when(repoMock.findExistingPmIdsOutOf(Arrays.asList(pmIdValue))).thenReturn(Arrays.asList());
         when(repoMock.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)).thenReturn(17l);
 
-        when(repoMock.add(Mockito.isA(Paper.class))).thenReturn(paperMock2);
+        when(repoMock.add(isA(Paper.class))).thenReturn(paperMock2);
         when(paperMock2.getId()).thenReturn(27l);
         when(paperMock2.getPmId()).thenReturn(pmIdValue);
 
@@ -237,7 +237,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
         verify(repoMock).findExistingPmIdsOutOf(Arrays.asList(pmIdValue));
         verify(repoMock).findLowestFreeNumberStartingFrom(MINIMUM_NUMBER);
-        verify(repoMock).add(Mockito.isA(Paper.class));
+        verify(repoMock).add(isA(Paper.class));
         verify(paperMock2).getId();
         verify(paperMock2).getPmId();
     }

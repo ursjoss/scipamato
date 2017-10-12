@@ -130,6 +130,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         final SearchCondition sc = new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
+            @Override
             public String getDisplayValue() {
                 return labelDisplayValue;
             }
@@ -171,6 +172,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         final SearchCondition sc = new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
+            @Override
             public String getDisplayValue() {
                 return labelDisplayValue;
             }
@@ -205,6 +207,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         final SearchCondition sc = new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
+            @Override
             public String getDisplayValue() {
                 return labelDisplayValue;
             }

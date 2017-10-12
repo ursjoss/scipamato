@@ -5,8 +5,8 @@ import static ch.difty.scipamato.persistence.search.SearchOrderRecordMapperTest.
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;
+import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import ch.difty.scipamato.db.tables.records.SearchOrderRecord;
 import ch.difty.scipamato.entity.SearchOrder;
@@ -52,8 +52,8 @@ public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<
 
     @Override
     protected void setStepFixtureAudit() {
-        when(getMoreStep().set(SEARCH_ORDER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SEARCH_ORDER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SEARCH_ORDER.CREATED_BY, SearchOrderRecordMapperTest.CREATED_BY)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SEARCH_ORDER.LAST_MODIFIED_BY, SearchOrderRecordMapperTest.LAST_MOD_BY)).thenReturn(getMoreStep());
     }
 
     @Override
@@ -72,8 +72,8 @@ public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<
 
     @Override
     protected void verifySettingAuditFields() {
-        verify(getMoreStep()).set(SEARCH_ORDER.CREATED_BY, CREATED_BY);
-        verify(getMoreStep()).set(SEARCH_ORDER.LAST_MODIFIED_BY, LAST_MOD_BY);
+        verify(getMoreStep()).set(SEARCH_ORDER.CREATED_BY, SearchOrderRecordMapperTest.CREATED_BY);
+        verify(getMoreStep()).set(SEARCH_ORDER.LAST_MODIFIED_BY, SearchOrderRecordMapperTest.LAST_MOD_BY);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<
     @Test
     public void resettingIdToEntity_withNullRecord_doesNothing() {
         getSetter().resetIdToEntity(entityMock, null);
-        verify(entityMock, never()).setId(Mockito.anyLong());
+        verify(entityMock, never()).setId(Matchers.anyLong());
     }
 
     @Test
@@ -104,7 +104,7 @@ public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<
         when(recordMock.getId()).thenReturn(3l);
         getSetter().resetIdToEntity(entityMock, recordMock);
         verify(recordMock).getId();
-        verify(entityMock).setId(Mockito.anyLong());
+        verify(entityMock).setId(Matchers.anyLong());
     }
 
 }

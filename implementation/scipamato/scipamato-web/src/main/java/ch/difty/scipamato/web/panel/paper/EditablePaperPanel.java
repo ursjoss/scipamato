@@ -419,10 +419,12 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         }
     }
 
+    @Override
     protected boolean hasPubMedId() {
         return getModelObject().getPmId() != null;
     }
 
+    @Override
     protected BootstrapButton newNavigationButton(String id, GlyphIconType icon, SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
         final BootstrapButton btn = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
@@ -450,6 +452,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return btn;
     }
 
+    @Override
     protected BootstrapButton newExcludeButton(String id) {
         BootstrapButton exclude = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
@@ -487,6 +490,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return exclude;
     }
 
+    @Override
     protected DropZoneFileUpload newDropZoneFileUpload() {
         DropZoneFileUpload upload = new DropZoneFileUpload("dropzone") {
             private static final long serialVersionUID = 1L;
@@ -529,6 +533,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return originalFileName.replace(" ", "_");
     }
 
+    @Override
     protected DataTable<PaperAttachment, String> newAttachmentTable(String id) {
         PropertyModel<List<PaperAttachment>> model = new PropertyModel<>(getModel(), Paper.ATTACHMENTS);
         PaperAttachmentProvider provider = new PaperAttachmentProvider(model);

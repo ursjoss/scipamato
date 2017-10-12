@@ -1,6 +1,7 @@
 package ch.difty.scipamato.persistence.user;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.scipamato.entity.User;
@@ -125,7 +125,7 @@ public class JooqUserServiceTest {
     @Test
     public void deleting_withNullEntity_doesNothing() {
         service.remove(null);
-        verify(repoMock, never()).delete(Mockito.anyInt(), Mockito.anyInt());
+        verify(repoMock, never()).delete(anyInt(), anyInt());
     }
 
     @Test
@@ -135,7 +135,7 @@ public class JooqUserServiceTest {
         service.remove(userMock);
 
         verify(userMock).getId();
-        verify(repoMock, never()).delete(Mockito.anyInt(), Mockito.anyInt());
+        verify(repoMock, never()).delete(anyInt(), anyInt());
     }
 
     @Test
