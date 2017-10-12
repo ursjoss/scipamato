@@ -11,7 +11,6 @@ import java.util.Optional;
 
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.PaperAttachment;
@@ -344,7 +343,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Test
     public void savingAttachment_delegatesToRepo() {
-        PaperAttachment paMock = Mockito.mock(PaperAttachment.class);
+        PaperAttachment paMock = mock(PaperAttachment.class);
         service.saveAttachment(paMock);
         verify(repoMock).saveAttachment(paMock);
     }

@@ -10,7 +10,6 @@ import java.util.List;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.SearchOrder;
@@ -66,7 +65,7 @@ public class PaperSlimBySearchOrderProviderTest extends AbstractPaperSlimProvide
 
     @Test
     public void settingFilterState() {
-        SearchOrder searchOrder2 = Mockito.mock(SearchOrder.class);
+        SearchOrder searchOrder2 = mock(SearchOrder.class);
         assertThat(provider.getFilterState()).isEqualTo(searchOrder);
         provider.setFilterState(searchOrder2);
         assertThat(provider.getFilterState()).isEqualTo(searchOrder2);

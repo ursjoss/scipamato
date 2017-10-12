@@ -10,7 +10,6 @@ import java.util.List;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.PaperFilter;
@@ -57,7 +56,7 @@ public class PaperSlimByPaperFilterProviderTest extends AbstractPaperSlimProvide
 
     @Test
     public void settingFilterState() {
-        PaperFilter filterMock2 = Mockito.mock(PaperFilter.class);
+        PaperFilter filterMock2 = mock(PaperFilter.class);
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
         provider.setFilterState(filterMock2);
         assertThat(provider.getFilterState()).isEqualTo(filterMock2);

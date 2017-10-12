@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.IllegalTransactionStateException;
@@ -99,7 +98,7 @@ public class SpringTransactionProviderTest {
 
     @Test
     public void committing() {
-        DefaultTransactionStatus dtxMock = Mockito.mock(DefaultTransactionStatus.class);
+        DefaultTransactionStatus dtxMock = mock(DefaultTransactionStatus.class);
         transaction = new SpringTransaction(dtxMock);
 
         when(ctxMock.transaction()).thenReturn(transaction);
@@ -136,7 +135,7 @@ public class SpringTransactionProviderTest {
 
     @Test
     public void rollingback() {
-        DefaultTransactionStatus dtxMock = Mockito.mock(DefaultTransactionStatus.class);
+        DefaultTransactionStatus dtxMock = mock(DefaultTransactionStatus.class);
         transaction = new SpringTransaction(dtxMock);
 
         when(ctxMock.transaction()).thenReturn(transaction);

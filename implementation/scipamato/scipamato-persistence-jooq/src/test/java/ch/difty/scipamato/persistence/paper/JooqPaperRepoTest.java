@@ -19,7 +19,6 @@ import org.jooq.SortField;
 import org.jooq.TableField;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
@@ -360,15 +359,15 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
         when(getFilterConditionMapper().map(filterMock)).thenReturn(getConditionMock());
         when(getSortMapper().map(sort, getTable())).thenReturn(sortFields);
 
-        SelectWhereStep<PaperRecord> selectWhereStepMock = Mockito.mock(SelectWhereStep.class);
+        SelectWhereStep<PaperRecord> selectWhereStepMock = mock(SelectWhereStep.class);
         when(getDsl().selectFrom(getTable())).thenReturn(selectWhereStepMock);
-        SelectConditionStep<PaperRecord> selectConditionStepMock = Mockito.mock(SelectConditionStep.class);
+        SelectConditionStep<PaperRecord> selectConditionStepMock = mock(SelectConditionStep.class);
         when(selectWhereStepMock.where(getConditionMock())).thenReturn(selectConditionStepMock);
-        SelectSeekStepN<PaperRecord> selectSeekStepNMock = Mockito.mock(SelectSeekStepN.class);
+        SelectSeekStepN<PaperRecord> selectSeekStepNMock = mock(SelectSeekStepN.class);
         when(selectConditionStepMock.orderBy(sortFields)).thenReturn(selectSeekStepNMock);
         SelectWithTiesStep<PaperRecord> selectWithTiesStepMock = mock(SelectWithTiesStep.class);
         when(selectSeekStepNMock.limit(20)).thenReturn(selectWithTiesStepMock);
-        SelectForUpdateStep<PaperRecord> selectForUpdateStepMock = Mockito.mock(SelectForUpdateStep.class);
+        SelectForUpdateStep<PaperRecord> selectForUpdateStepMock = mock(SelectForUpdateStep.class);
         when(selectWithTiesStepMock.offset(0)).thenReturn(selectForUpdateStepMock);
         when(selectForUpdateStepMock.fetchInto(getRecordClass())).thenReturn(paperRecords);
 
@@ -406,15 +405,15 @@ public class JooqPaperRepoTest extends JooqEntityRepoTest<PaperRecord, Paper, Lo
         when(getFilterConditionMapper().map(filterMock)).thenReturn(getConditionMock());
         when(getSortMapper().map(sort, getTable())).thenReturn(sortFields);
 
-        SelectWhereStep<PaperRecord> selectWhereStepMock = Mockito.mock(SelectWhereStep.class);
+        SelectWhereStep<PaperRecord> selectWhereStepMock = mock(SelectWhereStep.class);
         when(getDsl().selectFrom(getTable())).thenReturn(selectWhereStepMock);
-        SelectConditionStep<PaperRecord> selectConditionStepMock = Mockito.mock(SelectConditionStep.class);
+        SelectConditionStep<PaperRecord> selectConditionStepMock = mock(SelectConditionStep.class);
         when(selectWhereStepMock.where(getConditionMock())).thenReturn(selectConditionStepMock);
-        SelectSeekStepN<PaperRecord> selectSeekStepNMock = Mockito.mock(SelectSeekStepN.class);
+        SelectSeekStepN<PaperRecord> selectSeekStepNMock = mock(SelectSeekStepN.class);
         when(selectConditionStepMock.orderBy(sortFields)).thenReturn(selectSeekStepNMock);
-        SelectWithTiesStep<PaperRecord> selectWithTiesStepMock = Mockito.mock(SelectWithTiesStep.class);
+        SelectWithTiesStep<PaperRecord> selectWithTiesStepMock = mock(SelectWithTiesStep.class);
         when(selectSeekStepNMock.limit(20)).thenReturn(selectWithTiesStepMock);
-        SelectForUpdateStep<PaperRecord> selectForUpdateStepMock = Mockito.mock(SelectForUpdateStep.class);
+        SelectForUpdateStep<PaperRecord> selectForUpdateStepMock = mock(SelectForUpdateStep.class);
         when(selectWithTiesStepMock.offset(0)).thenReturn(selectForUpdateStepMock);
         when(selectForUpdateStepMock.fetchInto(getRecordClass())).thenReturn(paperRecords);
 

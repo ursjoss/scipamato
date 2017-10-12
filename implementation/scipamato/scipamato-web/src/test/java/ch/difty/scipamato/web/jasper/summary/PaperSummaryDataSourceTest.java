@@ -6,7 +6,6 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.filter.PaperSlimFilter;
@@ -142,7 +141,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
     @Test
     public void instantiatingWithPaperSummaryWithoutNumber_returnsPdfDataSourceWithOneRecordAndFallBackName() throws JRException {
-        Mockito.reset(paperMock);
+        reset(paperMock);
         when(paperMock.getNumber()).thenReturn(null);
 
         PaperSummary ps = new PaperSummary(paperMock, rhf);
@@ -155,7 +154,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
     @Test
     public void instantiatingWithPaperWithoutNumber_returnsPdfDataSourceWithOneRecordAndFallBackName() throws JRException {
-        Mockito.reset(paperMock);
+        reset(paperMock);
         when(paperMock.getNumber()).thenReturn(null);
 
         ds = new PaperSummaryDataSource(paperMock, rhf, pdfExporterConfigMock);
