@@ -55,16 +55,14 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Improved documentation and code coverage
-- Updated to wicket-7.9.0, bumped wicket-spring-boot-starter, jOOQ, feign
-- dependency updates: jooq-3.10.1
+- Updated to wicket-7.9.0, bumped wicket-spring-boot-starter, jOOQ-3.10.1, feign
 
 .Deprecated
 
 .Removed
 
 .Fixed
-- Fix version alignment of jooq-codegen-maven-plugin with jooq
-- Fix versions of jooq and the postgres jdbc driver in the main jar
+- Fix version alignment between different modules for jOOQ and the postgresql jdbc driver
 - Selective improvements with Eclipse Clean-up functionality
 
 .Security
