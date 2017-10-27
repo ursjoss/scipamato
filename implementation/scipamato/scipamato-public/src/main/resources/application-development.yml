@@ -1,0 +1,48 @@
+wicket:
+  core:
+    settings:
+      general:
+        configuration-type: development
+      markup:
+        stripWicketTags: true
+  stuff:
+    htmlcompressor:
+      enabled: false
+      features:
+        removeComments: false
+        removeMultiSpaces: false
+        removeIntertagSpaces: false
+        removeQuotes: false
+        compressJavaScript: false
+        compressCss: false
+        simpleDoctype: false
+        removeScriptAttributes: false
+        removeStyleAttributes: false
+        removeLinkAttributes: false
+        removeFormAttributes: false
+        removeInputAttributes: false
+        simpleBooleanAttributes: false
+        removeJavaScriptProtocol: false
+        removeHttpProtocol: false
+        removeHttpsProtocol: false
+        preserveLineBreaks: false
+  external:
+    development:
+      devutils:
+        statelesschecker:
+          enabled: true
+        interceptor:
+          enable-live-sessions-page: true
+        diskstorebrowser:
+          enabled: true
+      wicketsource:
+        enabled: true
+flyway:
+  enabled: false
+logging:
+  level:
+    root: INFO
+    ch:
+      difty: DEBUG
+    org:
+      jooq: INFO

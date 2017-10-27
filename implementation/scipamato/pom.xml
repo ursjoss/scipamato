@@ -27,6 +27,7 @@
         <module>scipamato-persistence-api</module>
         <module>scipamato-persistence-jooq</module>
         <module>scipamato-web</module>
+        <module>scipamato-public</module>
     </modules>
 
     <developers>
