@@ -52,7 +52,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [Unreleased]
 
 .Added
-- new maven module with simple stub for SciPaMaTo public
+- new maven modules scipamato-wicket and scipamato-public with minimal functionality
 
 .Changed
 - Improved documentation and code coverage
