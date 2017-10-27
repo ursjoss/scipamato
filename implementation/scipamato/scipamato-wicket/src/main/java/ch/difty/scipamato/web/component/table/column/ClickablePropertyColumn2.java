@@ -1,13 +1,6 @@
 package ch.difty.scipamato.web.component.table.column;
 
-import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.PropertyModel;
 
 import ch.difty.scipamato.web.component.SerializableBiConsumer;
 import ch.difty.scipamato.web.component.SerializableSupplier;
@@ -25,48 +18,26 @@ import ch.difty.scipamato.web.component.SerializableSupplier;
  * @param <S> the type of the sort property. It will be passed into the constructor of this class and will be final.
  * @param <U> the type of an additional argument passed as supplier to the (bi)consumer
  */
-public class ClickablePropertyColumn2<T, S, U> extends AbstractColumn<T, S> {
+public class ClickablePropertyColumn2<T, S, U> extends AbstractClickablePropertyColumn<T, S> {
     private static final long serialVersionUID = 1L;
 
-    private final String property;
     private final SerializableBiConsumer<IModel<T>, U> biConsumer;
     private final SerializableSupplier<U> supplier;
 
-    public ClickablePropertyColumn2(IModel<String> displayModel, String property, SerializableBiConsumer<IModel<T>, U> biConsumer, SerializableSupplier<U> supplier) {
+    public ClickablePropertyColumn2(final IModel<String> displayModel, final String property, final SerializableBiConsumer<IModel<T>, U> biConsumer, final SerializableSupplier<U> supplier) {
         this(displayModel, null, property, biConsumer, supplier);
     }
 
-    public ClickablePropertyColumn2(IModel<String> displayModel, S sort, String property, SerializableBiConsumer<IModel<T>, U> biConsumer, SerializableSupplier<U> supplier) {
-        super(displayModel, sort);
-        this.property = property;
+    public ClickablePropertyColumn2(final IModel<String> displayModel, final S sort, final String property, final SerializableBiConsumer<IModel<T>, U> biConsumer,
+            final SerializableSupplier<U> supplier) {
+        super(displayModel, sort, property);
         this.biConsumer = biConsumer;
         this.supplier = supplier;
     }
 
     @Override
-    public void populateItem(Item<ICellPopulator<T>> cellItem, String componentId, IModel<T> rowModel) {
-        cellItem.add(new LinkPanel(componentId, rowModel, new PropertyModel<Object>(rowModel, property)));
-    }
-
-    protected void onClick(IModel<T> clicked) {
+    protected void onClick(final IModel<T> clicked) {
         biConsumer.accept(clicked, supplier.get());
     }
 
-    private class LinkPanel extends Panel {
-        private static final long serialVersionUID = 1L;
-
-        public LinkPanel(String id, IModel<T> rowModel, IModel<?> labelModel) {
-            super(id);
-            Link<T> link = new Link<T>("link", rowModel) {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void onClick() {
-                    ClickablePropertyColumn2.this.onClick(getModel());
-                }
-            };
-            add(link);
-            link.add(new Label("label", labelModel));
-        }
-    }
 }
