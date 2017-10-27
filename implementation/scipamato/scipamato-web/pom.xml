@@ -14,20 +14,15 @@
     <name>SciPaMaTo :: Web GUI Project</name>
 
     <properties>
-        <wicket-spring-boot-starter.version>1.0.10</wicket-spring-boot-starter.version>
-        <wicket.version>7.9.0</wicket.version>
-        <wicket-bootstrap.version>0.10.16</wicket-bootstrap.version>
         <jasperreports.version>6.4.1</jasperreports.version>
         <feign.version>9.5.1</feign.version>
-
-        <!-- Plugin versions -->
-        <property-file>src/main/resources/application.properties</property-file>
 
         <!-- The main class to start by executing java -jar -->
         <start-class>ch.difty.scipamato.ScipamatoApplication</start-class>
     </properties>
 
     <dependencies>
+        <!-- TODO clean up -->
         <dependency>
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-utils</artifactId>
@@ -68,26 +63,17 @@
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-persistence-jooq</artifactId>
         </dependency>
-
-        <!-- spring-boot starters -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-validator</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-wicket</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
         </dependency>
+
+        <!-- spring-boot starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
@@ -127,7 +113,6 @@
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
-            <version>2.2.12</version>
         </dependency>
 
         <!-- Caching: JCache with ehcache as cache provider -->
@@ -154,80 +139,6 @@
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
-            <version>1.5.4</version>
-        </dependency>
-
-        <!-- Apache Wicket + bootstrap -->
-        <dependency>
-            <groupId>com.giffing.wicket.spring.boot.starter</groupId>
-            <artifactId>wicket-spring-boot-starter</artifactId>
-            <version>${wicket-spring-boot-starter.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-core</artifactId>
-            <version>${wicket.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-ioc</artifactId>
-            <version>${wicket.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-extensions</artifactId>
-            <version>${wicket.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-request</artifactId>
-            <version>${wicket.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-spring</artifactId>
-            <version>${wicket.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-auth-roles</artifactId>
-            <version>${wicket.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.wicketstuff</groupId>
-            <artifactId>wicketstuff-annotation</artifactId>
-            <version>${wicket.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.agilecoders.wicket</groupId>
-            <artifactId>wicket-bootstrap-core</artifactId>
-            <version>${wicket-bootstrap.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.agilecoders.wicket</groupId>
-            <artifactId>wicket-bootstrap-extensions</artifactId>
-            <version>${wicket-bootstrap.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.agilecoders.wicket</groupId>
-            <artifactId>wicket-bootstrap-less</artifactId>
-            <version>${wicket-bootstrap.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-collections</groupId>
-                    <artifactId>commons-collections</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>de.agilecoders.wicket</groupId>
-            <artifactId>wicket-bootstrap-themes</artifactId>
-            <version>${wicket-bootstrap.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-bean-validation</artifactId>
-            <version>${wicket.version}</version>
         </dependency>
 
         <!-- Feign for accessing PubMed - https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-feign -->
@@ -282,13 +193,6 @@
             <version>6.0.0</version>
         </dependency>
 
-        <!-- The debug bar is only rendered visible in development mode from within BasePage and is therefore added outside of profile development -->
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-devutils</artifactId>
-            <version>${wicket.version}</version>
-        </dependency>
-
         <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -305,7 +209,6 @@
         <dependency>
             <groupId>pl.pragmatists</groupId>
             <artifactId>JUnitParams</artifactId>
-            <version>1.1.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
