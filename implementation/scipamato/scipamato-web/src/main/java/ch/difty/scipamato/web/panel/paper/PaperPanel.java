@@ -44,15 +44,15 @@ import ch.difty.scipamato.entity.CodeClassId;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.PaperAttachment;
 import ch.difty.scipamato.navigator.ItemNavigator;
+import ch.difty.scipamato.web.Mode;
 import ch.difty.scipamato.web.component.SerializableSupplier;
 import ch.difty.scipamato.web.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.web.jasper.summaryshort.PaperSummaryShortDataSource;
 import ch.difty.scipamato.web.model.CodeClassModel;
 import ch.difty.scipamato.web.model.CodeModel;
-import ch.difty.scipamato.web.pages.Mode;
 import ch.difty.scipamato.web.pages.SelfUpdateEvent;
-import ch.difty.scipamato.web.panel.AbstractPanel;
+import ch.difty.scipamato.web.panel.BasePanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
@@ -65,7 +65,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.Che
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 
-public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T> {
+public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
     private static final long serialVersionUID = 1L;
 

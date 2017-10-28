@@ -96,6 +96,17 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-utils</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
         <!-- spring-boot starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -25,13 +25,13 @@ import ch.difty.scipamato.web.component.table.column.ClickablePropertyColumn2;
 import ch.difty.scipamato.web.pages.BasePage;
 import ch.difty.scipamato.web.pages.paper.provider.SearchConditionProvider;
 import ch.difty.scipamato.web.pages.paper.search.PaperSearchCriteriaPage;
-import ch.difty.scipamato.web.panel.AbstractPanel;
+import ch.difty.scipamato.web.panel.BasePanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
-public class SearchOrderPanel extends AbstractPanel<SearchOrder> {
+public class SearchOrderPanel extends BasePanel<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 

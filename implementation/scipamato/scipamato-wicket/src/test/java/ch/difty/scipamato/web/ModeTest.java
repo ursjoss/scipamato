@@ -1,4 +1,4 @@
-package ch.difty.scipamato.web.pages;
+package ch.difty.scipamato.web;
 
 import static org.assertj.core.api.Assertions.*;
 

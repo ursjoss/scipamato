@@ -33,7 +33,7 @@ import ch.difty.scipamato.web.jasper.summaryshort.PaperSummaryShortDataSource;
 import ch.difty.scipamato.web.jasper.summarytable.PaperSummaryTableDataSource;
 import ch.difty.scipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.web.pages.paper.provider.AbstractPaperSlimProvider;
-import ch.difty.scipamato.web.panel.AbstractPanel;
+import ch.difty.scipamato.web.panel.BasePanel;
 import ch.difty.scipamato.web.panel.search.SearchOrderChangeEvent;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
@@ -44,7 +44,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
  *
  * @author u.joss
  */
-public class ResultPanel extends AbstractPanel<Void> {
+public class ResultPanel extends BasePanel<Void> {
 
     private static final long serialVersionUID = 1L;
 

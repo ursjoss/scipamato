@@ -1,4 +1,4 @@
-package ch.difty.scipamato.web.panel;
+package ch.difty.scipamato.web;
 
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.markup.html.basic.Label;
@@ -7,9 +7,6 @@ import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 
-import ch.difty.scipamato.ScipamatoPublicSession;
-import ch.difty.scipamato.web.WicketUtils;
-import ch.difty.scipamato.web.pages.Mode;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 
 public abstract class AbstractPanel<T> extends GenericPanel<T> {
@@ -65,10 +62,6 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
 
     protected boolean isViewMode() {
         return mode == Mode.VIEW;
-    }
-
-    protected String getLocalization() {
-        return ScipamatoPublicSession.get().getLocale().getLanguage();
     }
 
     protected void queueFieldAndLabel(FormComponent<?> field) {

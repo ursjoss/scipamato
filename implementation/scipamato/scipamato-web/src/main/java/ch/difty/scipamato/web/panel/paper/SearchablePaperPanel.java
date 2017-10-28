@@ -13,10 +13,10 @@ import org.apache.wicket.model.StringResourceModel;
 
 import ch.difty.scipamato.entity.PaperAttachment;
 import ch.difty.scipamato.entity.filter.SearchCondition;
+import ch.difty.scipamato.web.Mode;
 import ch.difty.scipamato.web.component.SerializableSupplier;
 import ch.difty.scipamato.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.web.jasper.summaryshort.PaperSummaryShortDataSource;
-import ch.difty.scipamato.web.pages.Mode;
 import ch.difty.scipamato.web.pages.paper.provider.PaperAttachmentProvider;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;

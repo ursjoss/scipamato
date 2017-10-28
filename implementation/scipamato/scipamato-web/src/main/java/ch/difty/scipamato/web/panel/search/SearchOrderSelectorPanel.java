@@ -19,9 +19,9 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.persistence.SearchOrderService;
+import ch.difty.scipamato.web.Mode;
 import ch.difty.scipamato.web.model.SearchOrderModel;
-import ch.difty.scipamato.web.pages.Mode;
-import ch.difty.scipamato.web.panel.AbstractPanel;
+import ch.difty.scipamato.web.panel.BasePanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
@@ -42,7 +42,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
  *
  * @author u.joss
  */
-public class SearchOrderSelectorPanel extends AbstractPanel<SearchOrder> {
+public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
     private static final long serialVersionUID = 1L;
 
     private static final String CHANGE = "change";
