@@ -1,7 +1,5 @@
 package ch.difty.scipamato.web.pages;
 
-import java.util.Optional;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.bean.validation.PropertyValidator;
@@ -139,14 +137,14 @@ public abstract class BasePage<T> extends GenericWebPage<T> {
         AuthenticatedWebSession.get().invalidate();
     }
 
-    protected void queueFieldAndLabel(FormComponent<?> field, Optional<PropertyValidator<?>> pv) {
+    protected void queueFieldAndLabel(FormComponent<?> field, PropertyValidator<?> pv) {
         String id = field.getId();
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
         queue(field);
-        if (pv.isPresent()) {
-            field.add(pv.get());
+        if (pv != null) {
+            field.add(pv);
         }
     }
 

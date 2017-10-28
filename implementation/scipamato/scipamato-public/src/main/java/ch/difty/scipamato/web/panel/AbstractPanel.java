@@ -1,7 +1,5 @@
 package ch.difty.scipamato.web.panel;
 
-import java.util.Optional;
-
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -73,20 +71,20 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
         return ScipamatoPublicSession.get().getLocale().getLanguage();
     }
 
-    protected void queueFieldAndLabel(FormComponent<?> field, Optional<PropertyValidator<?>> pv) {
+    protected void queueFieldAndLabel(FormComponent<?> field) {
+        queueFieldAndLabel(field, null);
+    }
+
+    protected void queueFieldAndLabel(FormComponent<?> field, PropertyValidator<?> pv) {
         String id = field.getId();
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
         field.setOutputMarkupId(true);
         queue(field);
-        if (pv.isPresent() && isEditMode()) {
-            field.add(pv.get());
+        if (pv != null && isEditMode()) {
+            field.add(pv);
         }
-    }
-
-    protected void queueFieldAndLabel(FormComponent<?> field, PropertyValidator<?> pv) {
-        queueFieldAndLabel(field, Optional.ofNullable(pv));
     }
 
     protected void queueCheckBoxAndLabel(CheckBoxX field) {

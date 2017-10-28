@@ -326,10 +326,6 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends AbstractPanel<T
 
     protected abstract BootstrapButton newNavigationButton(String id, GlyphIconType icon, SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier);
 
-    private void queueFieldAndLabel(FormComponent<?> field) {
-        queueFieldAndLabel(field, Optional.empty());
-    }
-
     private void makeAndQueueBackButton(String id) {
         BootstrapButton back = new BootstrapButton(id, new StringResourceModel("button.back.label"), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;

@@ -1,7 +1,5 @@
 package ch.difty.scipamato.web.pages.login;
 
-import java.util.Optional;
-
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
@@ -59,8 +57,8 @@ public class LoginPage extends BasePage<Void> {
         form.setDefaultModel(new CompoundPropertyModel<>(this));
 
         queue(newHeader("header"));
-        queueFieldAndLabel(new RequiredTextField<String>("username"), Optional.empty());
-        queueFieldAndLabel(new PasswordTextField("password"), Optional.empty());
+        queueFieldAndLabel(new RequiredTextField<String>("username"));
+        queueFieldAndLabel(new PasswordTextField("password"));
         queue(newButton("signin"));
 
         return form;

@@ -1,7 +1,5 @@
 package ch.difty.scipamato.web.pages.paper.list;
 
-import java.util.Optional;
-
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -86,12 +84,12 @@ public class PaperListPage extends BasePage<Void> {
             }
         });
 
-        queueFieldAndLabel(new TextField<String>("number", PropertyModel.of(filter, PaperFilter.NUMBER)), Optional.empty());
-        queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(filter, PaperFilter.AUTHOR_MASK)), Optional.empty());
-        queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(filter, PaperFilter.METHODS_MASK)), Optional.empty());
-        queueFieldAndLabel(new TextField<String>("fieldSearch", PropertyModel.of(filter, PaperFilter.SEARCH_MASK)), Optional.empty());
-        queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(filter, PaperFilter.PUB_YEAR_FROM)), Optional.empty());
-        queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(filter, PaperFilter.PUB_YEAR_UNTIL)), Optional.empty());
+        queueFieldAndLabel(new TextField<String>("number", PropertyModel.of(filter, PaperFilter.NUMBER)));
+        queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(filter, PaperFilter.AUTHOR_MASK)));
+        queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(filter, PaperFilter.METHODS_MASK)));
+        queueFieldAndLabel(new TextField<String>("fieldSearch", PropertyModel.of(filter, PaperFilter.SEARCH_MASK)));
+        queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(filter, PaperFilter.PUB_YEAR_FROM)));
+        queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(filter, PaperFilter.PUB_YEAR_UNTIL)));
 
         queueResponsePageButton("newPaper", () -> new PaperEntryPage(getPageParameters(), getPage().getPageReference()));
         queueXmlPasteModalPanelAndLink("xmlPasteModal", "showXmlPasteModalLink");
