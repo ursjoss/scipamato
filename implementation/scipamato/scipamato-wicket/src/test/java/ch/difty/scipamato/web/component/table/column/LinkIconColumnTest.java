@@ -1,4 +1,4 @@
-package ch.difty.scipamato.web.component.data;
+package ch.difty.scipamato.web.component.table.column;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -20,8 +20,8 @@ public class LinkIconColumnTest extends WicketTest {
 
     private String clickPerformed = null;
 
-    private TestPanel newPanelWithTitle(String title) {
-        return new TestPanel(ID, title != null ? Model.of(title) : null) {
+    private LinkIconColumnTestPanel newPanelWithTitle(String title) {
+        return new LinkIconColumnTestPanel(ID, title != null ? Model.of(title) : null) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -40,7 +40,7 @@ public class LinkIconColumnTest extends WicketTest {
     }
 
     private void assertComponents() {
-        getTester().assertComponent("panel", TestPanel.class);
+        getTester().assertComponent("panel", LinkIconColumnTestPanel.class);
         getTester().assertComponent("panel:table", DefaultDataTable.class);
         getTester().assertComponent("panel:table:body:rows", DataGridView.class);
         getTester().assertLabel("panel:table:body:rows:1:cells:1:cell", "foo");

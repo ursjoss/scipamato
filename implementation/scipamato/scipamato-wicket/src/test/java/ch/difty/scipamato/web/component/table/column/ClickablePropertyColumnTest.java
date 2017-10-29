@@ -36,14 +36,14 @@ public class ClickablePropertyColumnTest extends WicketTest {
 
     @Test
     public void testPanel() {
-        getTester().startComponentInPage(new TestPanel("panel", this::setVariable));
+        getTester().startComponentInPage(new ClickablePropertyColumnTestPanel("panel", this::setVariable));
         assertComponents();
         assertThat(clickPerformed).isNull();
     }
 
     @Test
     public void clickLink() {
-        getTester().startComponentInPage(new TestPanel("panel", this::setVariable));
+        getTester().startComponentInPage(new ClickablePropertyColumnTestPanel("panel", this::setVariable));
         getTester().clickLink("panel:table:body:rows:1:cells:2:cell:link");
         assertThat(clickPerformed).isEqualTo("TestRecord(1, foo)");
     }
@@ -53,7 +53,7 @@ public class ClickablePropertyColumnTest extends WicketTest {
     }
 
     private void assertComponents() {
-        getTester().assertComponent("panel", TestPanel.class);
+        getTester().assertComponent("panel", ClickablePropertyColumnTestPanel.class);
         getTester().assertComponent("panel:table", DefaultDataTable.class);
         getTester().assertComponent("panel:table:body:rows", DataGridView.class);
         getTester().assertLabel("panel:table:body:rows:1:cells:1:cell", "foo");

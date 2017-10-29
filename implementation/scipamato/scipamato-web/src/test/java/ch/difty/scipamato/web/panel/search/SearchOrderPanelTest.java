@@ -23,7 +23,7 @@ import ch.difty.scipamato.entity.filter.SearchTerm;
 import ch.difty.scipamato.entity.filter.SearchTermType;
 import ch.difty.scipamato.persistence.CodeClassService;
 import ch.difty.scipamato.persistence.CodeService;
-import ch.difty.scipamato.web.component.data.LinkIconPanel;
+import ch.difty.scipamato.web.component.table.column.LinkIconPanel;
 import ch.difty.scipamato.web.pages.paper.search.PaperSearchCriteriaPage;
 import ch.difty.scipamato.web.panel.PanelTest;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;

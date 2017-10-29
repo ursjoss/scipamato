@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ch.difty.scipamato.web.component.data;
+package ch.difty.scipamato.web.component.table.column;
 
 import java.io.Serializable;
 

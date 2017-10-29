@@ -1,12 +1,10 @@
-package ch.difty.scipamato.web.component.data;
+package ch.difty.scipamato.web.component.table.column;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
@@ -15,16 +13,17 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import ch.difty.scipamato.web.component.SerializableConsumer;
 import ch.difty.scipamato.web.component.TestRecord;
 
-abstract class TestPanel extends Panel {
+class ClickablePropertyColumnTestPanel extends Panel {
     private static final long serialVersionUID = 1L;
 
-    private final IModel<String> titleModel;
+    private final SerializableConsumer<IModel<TestRecord>> consumer;
 
-    public TestPanel(String id, IModel<String> titleModel) {
+    public ClickablePropertyColumnTestPanel(String id, SerializableConsumer<IModel<TestRecord>> consumer) {
         super(id);
-        this.titleModel = titleModel;
+        this.consumer = consumer;
     }
 
     @Override
@@ -33,33 +32,16 @@ abstract class TestPanel extends Panel {
 
         final List<IColumn<TestRecord, String>> columns = new ArrayList<>();
         columns.add(new PropertyColumn<TestRecord, String>(Model.of("name"), "name", "name"));
-        columns.add(makeLinkIconColumn("test"));
+        columns.add(makeClickableColumn("test", consumer));
 
         add(new DefaultDataTable<TestRecord, String>("table", columns, new TestDataProvider(), 10));
     }
 
-    private IColumn<TestRecord, String> makeLinkIconColumn(String id) {
-        return new LinkIconColumn<TestRecord>(Model.of("linkIconColumnLabel")) {
+    private IColumn<TestRecord, String> makeClickableColumn(String id, SerializableConsumer<IModel<TestRecord>> consumer) {
+        return new ClickablePropertyColumn<TestRecord, String>(Model.of("linkIconColumnLabel"), "name", consumer) {
             private static final long serialVersionUID = 1L;
-
-            @Override
-            protected IModel<String> createIconModel(IModel<TestRecord> rowModel) {
-                return Model.of("fa fa-fw fa-filter");
-            }
-
-            @Override
-            protected IModel<String> createTitleModel(IModel<TestRecord> rowModel) {
-                return titleModel;
-            }
-
-            @Override
-            protected void onClickPerformed(AjaxRequestTarget target, IModel<TestRecord> rowModel, AjaxLink<Void> link) {
-                TestPanel.this.onClickPerformed(rowModel, link);
-            }
         };
     }
-
-    protected abstract void onClickPerformed(IModel<TestRecord> rowModel, AjaxLink<Void> link);
 
     static class TestDataProvider extends SortableDataProvider<TestRecord, String> {
 
@@ -79,6 +61,5 @@ abstract class TestPanel extends Panel {
         public IModel<TestRecord> model(TestRecord record) {
             return Model.of(record);
         }
-
     };
 }
