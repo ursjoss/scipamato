@@ -12,7 +12,7 @@ import org.apache.wicket.util.tester.TagTester;
 import org.junit.Test;
 
 import ch.difty.scipamato.web.WicketTest;
-import ch.difty.scipamato.web.component.TestRecord;
+import ch.difty.scipamato.web.TestRecord;
 
 public class LinkIconColumnTest extends WicketTest {
 

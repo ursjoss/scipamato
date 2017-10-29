@@ -1,4 +1,4 @@
-package ch.difty.scipamato.web.component;
+package ch.difty.scipamato.web;
 
 import java.io.Serializable;
 

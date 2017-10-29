@@ -12,9 +12,9 @@ import org.apache.wicket.model.Model;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import ch.difty.scipamato.web.TestRecord;
 import ch.difty.scipamato.web.WicketTest;
 import ch.difty.scipamato.web.component.SerializableConsumer;
-import ch.difty.scipamato.web.component.TestRecord;
 
 public class ClickablePropertyColumnTest extends WicketTest {
 
