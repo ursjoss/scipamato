@@ -26,6 +26,13 @@ public abstract class WicketTest {
     public void setUp() {
         ReflectionTestUtils.setField(wicketApplication, "applicationContext", applicationContextMock);
         tester = new WicketTester(wicketApplication);
+        setUpHook();
+    }
+
+    /**
+     * override if needed
+     */
+    protected void setUpHook() {
     }
 
     protected WicketTester getTester() {

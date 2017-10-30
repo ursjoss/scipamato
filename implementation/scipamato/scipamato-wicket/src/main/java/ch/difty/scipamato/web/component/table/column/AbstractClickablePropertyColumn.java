@@ -23,10 +23,6 @@ public abstract class AbstractClickablePropertyColumn<T, S> extends AbstractColu
 
     private final String property;
 
-    public AbstractClickablePropertyColumn(IModel<String> displayModel, String property) {
-        this(displayModel, null, property);
-    }
-
     public AbstractClickablePropertyColumn(IModel<String> displayModel, S sort, String property) {
         super(displayModel, sort);
         this.property = property;
