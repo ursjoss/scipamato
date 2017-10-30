@@ -1,9 +1,11 @@
-package ch.difty.scipamato.web;
+package ch.difty.scipamato.web.test;
 
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 
+import ch.difty.scipamato.web.AbstractPanel;
+import ch.difty.scipamato.web.Mode;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 
 public class TestAbstractPanel extends AbstractPanel<TestRecord> {

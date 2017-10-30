@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.junit.Test;
 
+import ch.difty.scipamato.web.test.TestAbstractPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 
 public class AbstractPanelTest extends WicketTest {

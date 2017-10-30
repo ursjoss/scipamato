@@ -1,4 +1,4 @@
-package ch.difty.scipamato.web;
+package ch.difty.scipamato.web.test;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -6,6 +6,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import ch.difty.scipamato.web.AbstractPage;
+import ch.difty.scipamato.web.TestRecord;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
