@@ -214,7 +214,7 @@
     <build>
         <resources>
             <resource>
-                <filtering>false</filtering>
+                <filtering>true</filtering>
                 <directory>src/main/resources</directory>
             </resource>
             <resource>

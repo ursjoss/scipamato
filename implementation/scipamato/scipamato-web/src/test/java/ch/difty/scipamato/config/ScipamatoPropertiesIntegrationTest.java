@@ -23,6 +23,11 @@ public class ScipamatoPropertiesIntegrationTest {
     public ApplicationProperties appProperties;
 
     @Test
+    public void gettingBuildVersion() {
+        assertThat(appProperties.getBuildVersion()).matches("\\d+\\.\\d+\\.\\d+.*");
+    }
+
+    @Test
     public void gettingDefaultStrategy() {
         assertThat(appProperties.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.DEFAULT);
     }
@@ -34,7 +39,7 @@ public class ScipamatoPropertiesIntegrationTest {
 
     @Test
     public void assertBrand() {
-        assertThat(appProperties.getBrand()).isEqualTo("SciPaMaTo");
+        assertThat(appProperties.getBrand()).isEqualTo("SciPaMaTo - Scientific Paper Management Tool");
     }
 
     @Test

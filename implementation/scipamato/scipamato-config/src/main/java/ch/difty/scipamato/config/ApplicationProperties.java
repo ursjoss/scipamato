@@ -13,10 +13,16 @@ package ch.difty.scipamato.config;
  */
 public interface ApplicationProperties {
 
+    String BUILD_VERSION = "build.version";
     String LOCALIZATION_DEFAULT = "scipamato.localization.default";
     String AUTHOR_PARSER_FACTORY = "scipamato.author.parser";
     String BRAND = "scipamato.brand";
     String PAPER_NUMBER_MIN_TO_RECYCLE = "scipamato.paper.number.minimum-to-be-recycled";
+
+    /**
+     * @return the build version of the application.
+     */
+    String getBuildVersion();
 
     /**
      * @return the localization the application starts with.

@@ -7,6 +7,11 @@ import org.junit.Test;
 public class ApplicationPropertiesTest {
 
     @Test
+    public void assertBuildVersionProperty() {
+        assertThat(ApplicationProperties.BUILD_VERSION).isEqualTo("build.version");
+    }
+
+    @Test
     public void assertDefaultLocalizationProperty() {
         assertThat(ApplicationProperties.LOCALIZATION_DEFAULT).isEqualTo("scipamato.localization.default");
     }

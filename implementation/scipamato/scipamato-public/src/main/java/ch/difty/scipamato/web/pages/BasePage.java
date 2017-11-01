@@ -40,7 +40,7 @@ public abstract class BasePage<T> extends AbstractPage<T> {
         nb.setBrandName(new ResourceModel("brandname", "LUDOK"));
         nb.setInverted(true);
 
-        addPageLink(nb, PublicPage.class, "menu.home", GlyphIconType.home);
+        addPageLink(nb, PublicPage.class, "menu.home", GlyphIconType.home, Navbar.ComponentPosition.LEFT);
 
         return nb;
     }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScipamatoProperties implements ApplicationProperties {
 
+    private final String buildVersion;
     private final String defaultLocalization;
     private final AuthorParserStrategy authorParserStrategy;
     private final String brand;
@@ -20,33 +21,35 @@ public class ScipamatoProperties implements ApplicationProperties {
 
     private static final String S = "${", E = ":n.a.}";
 
-    public ScipamatoProperties(@Value(S + LOCALIZATION_DEFAULT + ":en}") String defaultLocalization, @Value(S + AUTHOR_PARSER_FACTORY + E) String authorParserStrategy,
-            @Value(S + BRAND + E) String brand, @Value(S + PAPER_NUMBER_MIN_TO_RECYCLE + E) Long minimumPaperNumberToBeRecycled) {
+    public ScipamatoProperties(@Value(S + BUILD_VERSION + E) String buildVersion, @Value(S + LOCALIZATION_DEFAULT + ":en}") String defaultLocalization,
+            @Value(S + AUTHOR_PARSER_FACTORY + E) String authorParserStrategy, @Value(S + BRAND + E) String brand, @Value(S + PAPER_NUMBER_MIN_TO_RECYCLE + E) Long minimumPaperNumberToBeRecycled) {
+        this.buildVersion = buildVersion;
         this.defaultLocalization = defaultLocalization;
         this.authorParserStrategy = AuthorParserStrategy.fromProperty(authorParserStrategy);
         this.brand = brand;
         this.minimumPaperNumberToBeRecycled = minimumPaperNumberToBeRecycled != null ? minimumPaperNumberToBeRecycled.longValue() : 0;
     }
 
-    /** {@inheritDoc} */
+    @Override
+    public String getBuildVersion() {
+        return buildVersion;
+    }
+
     @Override
     public String getDefaultLocalization() {
         return defaultLocalization;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AuthorParserStrategy getAuthorParserStrategy() {
         return authorParserStrategy;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getBrand() {
         return brand;
     }
 
-    /** {@inheritDoc} */
     @Override
     public long getMinimumPaperNumberToBeRecycled() {
         return minimumPaperNumberToBeRecycled;
