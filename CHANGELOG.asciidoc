@@ -53,8 +53,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 - new maven modules scipamato-wicket and scipamato-public with minimal functionality
-- Feature 6/21: Add Menu Link to the github wiki page (Help)
-- Feature 6/24: Add Menu Link with build version number pointing to the CHANGELOG document on github 
+- Feature 06/21: Add Menu Link to the github wiki page (Help)
+- Feature 06/24: Add Menu Link with build version number pointing to the CHANGELOG document on github 
 
 .Changed
 - Improved documentation and code coverage
@@ -67,7 +67,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 - Fix version alignment between different modules for jOOQ and the postgresql jdbc driver
 - Selective improvements with Eclipse Clean-up functionality
-- Bug 6/22: Parsing Authors from PubmedXml: Delimiter between normal authors and authors with CollectiveName needs to be semicolon.
+- Bug 06/23: Parsing Authors from PubmedXml: Delimiter between normal authors and authors with CollectiveName needs to be semicolon.
+- Bug 06/22: PaperListPage: Refresh ResultPanel after having imported via XML from PubMed to immediately show the updated paper list.
 
 .Security
 
