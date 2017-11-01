@@ -64,8 +64,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 
-[[v0.6.2]] -- 2017-11-01
-
+[[v0.6.2]]
+== [0.6.2] -- 2017-11-01
 .Added
 - new maven modules scipamato-wicket and scipamato-public with minimal functionality
 - Feature 06/21: Add Menu Link to the github wiki page (Help)
