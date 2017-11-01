@@ -27,6 +27,11 @@ public class TestApplication {
         return new ApplicationProperties() {
 
             @Override
+            public String getBuildVersion() {
+                return "vxy";
+            }
+
+            @Override
             public String getDefaultLocalization() {
                 return "de";
             }
@@ -45,6 +50,7 @@ public class TestApplication {
             public long getMinimumPaperNumberToBeRecycled() {
                 return 10;
             }
+
         };
     }
 

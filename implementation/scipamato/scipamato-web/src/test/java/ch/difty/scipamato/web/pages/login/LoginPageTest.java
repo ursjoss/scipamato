@@ -33,6 +33,8 @@ public class LoginPageTest extends BasePageTest<LoginPage> {
         assertLabeledTextField(b, "username");
         assertLabeledTextField(b, "password");
         getTester().assertComponent(b + ":signin", BootstrapButton.class);
+
+        assertMenuEntries();
     }
 
     @Test
@@ -46,24 +48,29 @@ public class LoginPageTest extends BasePageTest<LoginPage> {
         formTester.submit();
         getTester().assertErrorMessages("The username and/or password were invalid.");
         getTester().assertRenderedPage(getPageClass());
-
-        assertMenuEntries();
     }
 
     private void assertMenuEntries() {
+        getTester().debugComponentTrees();
         getTester().assertComponent("_header_", HtmlHeaderContainer.class);
         getTester().assertComponent("navbar", Navbar.class);
-        assertPageLinkButton(0, NavbarButton.class, "Papers");
-        assertPageLinkButton(1, NavbarButton.class, "Search");
-        assertPageLinkButton(2, NavbarButton.class, "Logout");
+        assertPageLinkButton(0, "Left", NavbarButton.class, "Papers");
+        assertPageLinkButton(1, "Left", NavbarButton.class, "Search");
 
-        getTester().assertComponent("navbar:container:collapse:navRightListEnclosure:navRightList:0:component", NavbarExternalLink.class);
-        getTester().assertModelValue("navbar:container:collapse:navRightListEnclosure:navRightList:0:component", "https://github.com/ursjoss/scipamato/wiki/");
+        assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:0:component", "https://github.com/ursjoss/scipamato/wiki/");
+        assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:1:component", "https://github.com/ursjoss/scipamato/blob/master/CHANGELOG.asciidoc");
+        assertPageLinkButton(2, "Right", NavbarButton.class, "Logout");
     }
 
-    private void assertPageLinkButton(int index, Class<? extends Component> expectedComponentClass, String expectedLabelText) {
-        String path = "navbar:container:collapse:navLeftListEnclosure:navLeftList:" + index + ":component";
+    private void assertPageLinkButton(int index, String position, Class<? extends Component> expectedComponentClass, String expectedLabelText) {
+        String path = "navbar:container:collapse:nav" + position + "ListEnclosure:nav" + position + "List:" + index + ":component";
         getTester().assertComponent(path, NavbarButton.class);
         getTester().assertLabel(path + ":label", expectedLabelText);
     }
+
+    private void assertExternalLink(final String path, final String link) {
+        getTester().assertComponent(path, NavbarExternalLink.class);
+        getTester().assertModelValue(path, link);
+    }
+
 }

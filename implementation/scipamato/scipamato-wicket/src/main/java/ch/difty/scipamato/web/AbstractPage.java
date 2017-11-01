@@ -95,18 +95,19 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
     protected abstract Navbar newNavbar(String markupId);
 
-    protected <P extends AbstractPage<?>> void addPageLink(Navbar navbar, Class<P> pageClass, String labelResource, IconType iconType) {
+    protected <P extends AbstractPage<?>> void addPageLink(Navbar navbar, Class<P> pageClass, String labelResource, IconType iconType, Navbar.ComponentPosition position) {
         final String label = new StringResourceModel(labelResource, this, null).getString();
         NavbarButton<Void> button = new NavbarButton<Void>(pageClass, Model.of(label)).setIconType(iconType);
-        navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.LEFT, button));
+        navbar.addComponents(NavbarComponents.transform(position, button));
     }
 
-    protected void addExternalLink(final Navbar navbar, final String url, final String labelResource, final IconType iconType) {
-        final String label = new StringResourceModel(labelResource, this, null).getString();
+    protected void addExternalLink(final Navbar navbar, final String url, final String label, final IconType iconType, final Navbar.ComponentPosition position) {
         NavbarExternalLink link = new NavbarExternalLink(Model.of(url));
         link.setLabel(Model.of(label));
-        link.setIconType(iconType);
-        navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.RIGHT, link));
+        if (iconType != null)
+            link.setIconType(iconType);
+        navbar.addComponents(NavbarComponents.transform(position, link));
+
     }
 
     protected void queueFieldAndLabel(FormComponent<?> field) {

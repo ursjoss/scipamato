@@ -4,6 +4,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import ch.difty.scipamato.web.AbstractPage;
@@ -25,8 +26,8 @@ public class TestAbstractPage extends AbstractPage<TestRecord> {
         nb.setBrandName(new ResourceModel("brandname", "foobar"));
         nb.setInverted(true);
 
-        addPageLink(nb, TestHomePage.class, "menu.home", GlyphIconType.home);
-        addExternalLink(nb, "https://github.com/ursjoss/scipamato/wiki", "menu.help", GlyphIconType.questionsign);
+        addPageLink(nb, TestHomePage.class, "menu.home", GlyphIconType.home, Navbar.ComponentPosition.LEFT);
+        addExternalLink(nb, "https://github.com/ursjoss/scipamato/wiki", new StringResourceModel("menu.help", this, null).getString(), GlyphIconType.questionsign, Navbar.ComponentPosition.RIGHT);
         return nb;
     }
 

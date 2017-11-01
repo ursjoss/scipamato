@@ -53,7 +53,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 - new maven modules scipamato-wicket and scipamato-public with minimal functionality
-- Issue 6/21: Add Menu Link to the github wiki page (Help)
+- Feature 6/21: Add Menu Link to the github wiki page (Help)
+- Feature 6/24: Add Menu Link with build version number pointing to the CHANGELOG document on github 
 
 .Changed
 - Improved documentation and code coverage

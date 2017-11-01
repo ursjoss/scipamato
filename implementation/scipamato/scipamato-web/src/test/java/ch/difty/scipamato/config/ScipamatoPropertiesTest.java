@@ -6,7 +6,12 @@ import org.junit.Test;
 
 public class ScipamatoPropertiesTest {
 
-    private final ScipamatoProperties sp = new ScipamatoProperties("de", "DEFAULT", "SciPaMaTo", 4l);
+    private final ScipamatoProperties sp = new ScipamatoProperties("0.6.2-SNAPSHOT", "de", "DEFAULT", "SciPaMaTo", 4l);
+
+    @Test
+    public void canResolveBuildVersion() {
+        assertThat(sp.getBuildVersion()).isEqualTo("0.6.2-SNAPSHOT");
+    }
 
     @Test
     public void canResolveDefaultLocalization() {
@@ -30,7 +35,7 @@ public class ScipamatoPropertiesTest {
 
     @Test
     public void canResolveMinimumPaperNumberToBeRecycled_whenWasNotDefined() {
-        ScipamatoProperties sp = new ScipamatoProperties("de", "DEFAULT", "SciPaMaTo", null);
+        ScipamatoProperties sp = new ScipamatoProperties("xy", "de", "DEFAULT", "SciPaMaTo", null);
         assertThat(sp.getMinimumPaperNumberToBeRecycled()).isEqualTo(0l);
     }
 
