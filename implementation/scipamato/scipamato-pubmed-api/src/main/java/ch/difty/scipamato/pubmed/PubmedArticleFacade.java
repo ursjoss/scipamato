@@ -101,12 +101,11 @@ public abstract class PubmedArticleFacade {
     private String combine(final String individualAuthors, final String collectives) {
         final StringBuilder comb = new StringBuilder();
         comb.append(individualAuthors);
-        if (comb.length() > 0)
-            if (!StringUtils.isEmpty(collectives)) {
-                if (comb.length() > 0)
-                    comb.append("; ");
-                comb.append(collectives);
-            }
+        if (comb.length() > 0 && !StringUtils.isEmpty(collectives)) {
+            if (comb.length() > 0)
+                comb.append("; ");
+            comb.append(collectives);
+        }
         if (comb.length() > 0)
             comb.append(".");
         return comb.toString();
