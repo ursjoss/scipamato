@@ -26,6 +26,7 @@ public class TestAbstractPage extends AbstractPage<TestRecord> {
         nb.setInverted(true);
 
         addPageLink(nb, TestHomePage.class, "menu.home", GlyphIconType.home);
+        addExternalLink(nb, "https://github.com/ursjoss/scipamato/wiki", "menu.help", GlyphIconType.questionsign);
         return nb;
     }
 

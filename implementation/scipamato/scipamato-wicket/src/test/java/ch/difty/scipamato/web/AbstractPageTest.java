@@ -20,6 +20,7 @@ import ch.difty.scipamato.web.test.TestAbstractPage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink;
 
 public class AbstractPageTest extends WicketTest {
 
@@ -95,12 +96,19 @@ public class AbstractPageTest extends WicketTest {
     private void assertComponents() {
         getTester().assertComponent("_header_", HtmlHeaderContainer.class);
 
+        getTester().debugComponentTrees();
+
         getTester().assertComponent("navbar", Navbar.class);
         getTester().assertComponent("navbar:container:collapse:extraItems", RepeatingView.class);
         getTester().assertComponent("navbar:container:collapse:navLeftListEnclosure:navLeftList", ListView.class);
         getTester().assertComponent("navbar:container:collapse:navLeftListEnclosure:navLeftList:0:component", NavbarButton.class);
         getTester().assertLabel("navbar:container:collapse:navLeftListEnclosure:navLeftList:0:component:label", "Home");
-        getTester().assertInvisible("navbar:container:collapse:navRightListEnclosure:navRightList");
+
+        getTester().assertComponent("navbar:container:collapse:navRightListEnclosure:navRightList", ListView.class);
+        getTester().assertComponent("navbar:container:collapse:navRightListEnclosure:navRightList:0:component", NavbarExternalLink.class);
+        getTester().assertModelValue("navbar:container:collapse:navRightListEnclosure:navRightList:0:component", "https://github.com/ursjoss/scipamato/wiki");
+        getTester().assertLabel("navbar:container:collapse:navRightListEnclosure:navRightList:0:component:label", "Help");
+
         getTester().assertLabel("navbar:container:collapseButton:toggleNavigationLabel", "Toggle Navigation");
         getTester().assertLabel("navbar:container:brandName:brandLabel", "foobar");
 
@@ -111,5 +119,6 @@ public class AbstractPageTest extends WicketTest {
         getTester().assertComponent("form", Form.class);
         getTester().assertLabel("form:fooLabel", "Foo");
         getTester().assertComponent("form:foo", TextField.class);
+
     }
 }

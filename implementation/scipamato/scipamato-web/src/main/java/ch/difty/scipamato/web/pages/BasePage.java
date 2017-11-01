@@ -5,6 +5,7 @@ import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.core.Authentication;
@@ -57,6 +58,8 @@ public abstract class BasePage<T> extends AbstractPage<T> {
         addPageLink(nb, PaperListPage.class, "menu.papers", GlyphIconType.list);
         addPageLink(nb, PaperSearchPage.class, "menu.search", GlyphIconType.search);
         addPageLink(nb, LogoutPage.class, "menu.logout", GlyphIconType.edit);
+
+        addExternalLink(nb, new StringResourceModel("menu.help.url", this, null).getString(), "menu.help", GlyphIconType.questionsign);
 
         return nb;
     }

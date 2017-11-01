@@ -15,7 +15,6 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.DateTimeService;
-import ch.difty.scipamato.web.WicketUtils;
 import ch.difty.scipamato.web.component.SerializableSupplier;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
@@ -24,6 +23,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarComponents;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink;
 
 public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
@@ -99,6 +99,14 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
         final String label = new StringResourceModel(labelResource, this, null).getString();
         NavbarButton<Void> button = new NavbarButton<Void>(pageClass, Model.of(label)).setIconType(iconType);
         navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.LEFT, button));
+    }
+
+    protected void addExternalLink(final Navbar navbar, final String url, final String labelResource, final IconType iconType) {
+        final String label = new StringResourceModel(labelResource, this, null).getString();
+        NavbarExternalLink link = new NavbarExternalLink(Model.of(url));
+        link.setLabel(Model.of(label));
+        link.setIconType(iconType);
+        navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.RIGHT, link));
     }
 
     protected void queueFieldAndLabel(FormComponent<?> field) {
