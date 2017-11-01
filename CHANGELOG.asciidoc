@@ -52,6 +52,21 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [Unreleased]
 
 .Added
+
+.Changed
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
+
+[[v0.6.2]] -- 2017-11-01
+
+.Added
 - new maven modules scipamato-wicket and scipamato-public with minimal functionality
 - Feature 06/21: Add Menu Link to the github wiki page (Help)
 - Feature 06/24: Add Menu Link with build version number pointing to the CHANGELOG document on github 
@@ -71,7 +86,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Bug 06/22: PaperListPage: Refresh ResultPanel after having imported via XML from PubMed to immediately show the updated paper list.
 
 .Security
-
 
 
 [[v0.6.1]]
