@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.util.StringUtils;
+
 import lombok.Data;
 
 /**
@@ -43,26 +45,71 @@ public abstract class PubmedArticleFacade {
     }
 
     protected String getAuthorsFrom(final AuthorList authorList) {
+        final String individualAuthors = getIndividualAuthors(authorList);
+        final String collectives = getCollectives(authorList);
+        return combine(individualAuthors, collectives);
+    }
+
+    private String getIndividualAuthors(final AuthorList authorList) {
         final List<String> names = new ArrayList<>();
         for (final Author author : authorList.getAuthor()) {
-            final StringBuilder asb = new StringBuilder();
-            for (final java.lang.Object o : author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()) {
-                if (o instanceof ForeName)
-                    continue;
-                if (asb.length() > 0)
-                    asb.append(" ");
-                if (o instanceof LastName)
-                    asb.append(((LastName) o).getvalue());
-                else if (o instanceof Initials)
-                    asb.append(((Initials) o).getvalue());
-                else if (o instanceof Suffix)
-                    asb.append(((Suffix) o).getvalue());
-                else if (o instanceof CollectiveName)
-                    asb.append(((CollectiveName) o).getvalue());
-            }
-            names.add(asb.toString());
+            final StringBuilder auth = parseIndividualAuthor(author);
+            if (auth.length() > 0)
+                names.add(auth.toString());
         }
-        return names.stream().collect(Collectors.joining(", ", "", "."));
+        return names.stream().collect(Collectors.joining(", ", "", ""));
+    }
+
+    private StringBuilder parseIndividualAuthor(final Author author) {
+        final StringBuilder asb = new StringBuilder();
+        for (final java.lang.Object o : author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()) {
+            if (o instanceof ForeName || o instanceof CollectiveName)
+                continue;
+            if (asb.length() > 0)
+                asb.append(" ");
+            if (o instanceof LastName)
+                asb.append(((LastName) o).getvalue());
+            else if (o instanceof Initials)
+                asb.append(((Initials) o).getvalue());
+            else if (o instanceof Suffix)
+                asb.append(((Suffix) o).getvalue());
+        }
+        return asb;
+    }
+
+    private String getCollectives(final AuthorList authorList) {
+        final List<String> names = new ArrayList<>();
+        for (final Author author : authorList.getAuthor()) {
+            final StringBuilder asb = parseCollectiveAuthor(author);
+            if (asb.length() > 0)
+                names.add(asb.toString());
+        }
+        return names.stream().collect(Collectors.joining(", ", "", ""));
+    }
+
+    private StringBuilder parseCollectiveAuthor(final Author author) {
+        final StringBuilder asb = new StringBuilder();
+        for (final java.lang.Object o : author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()) {
+            if (o instanceof CollectiveName)
+                asb.append(((CollectiveName) o).getvalue());
+            else
+                continue;
+        }
+        return asb;
+    }
+
+    private String combine(final String individualAuthors, final String collectives) {
+        final StringBuilder comb = new StringBuilder();
+        comb.append(individualAuthors);
+        if (comb.length() > 0)
+            if (!StringUtils.isEmpty(collectives)) {
+                if (comb.length() > 0)
+                    comb.append("; ");
+                comb.append(collectives);
+            }
+        if (comb.length() > 0)
+            comb.append(".");
+        return comb.toString();
     }
 
     protected String getFirstAuthorFrom(final AuthorList authorList) {

@@ -66,6 +66,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 - Fix version alignment between different modules for jOOQ and the postgresql jdbc driver
 - Selective improvements with Eclipse Clean-up functionality
+- Parsing Authors from PubmedXml: Delimiter between normal authors and authors with CollectiveName needs to be semicolon.
 
 .Security
 

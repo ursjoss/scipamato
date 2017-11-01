@@ -46,7 +46,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
         PubmedArticleFacade sa = articles.get(0);
 
         assertThat(sa.getPmId()).isEqualTo("23454700");
-        assertThat(sa.getAuthors()).isEqualTo("Pascal M, Corso M, Chanel O, Declercq C, Badaloni C, Cesaroni G, Henschel S, Meister K, Haluza D, Martin-Olmedo P, Medina S, Aphekom group.");
+        assertThat(sa.getAuthors()).isEqualTo("Pascal M, Corso M, Chanel O, Declercq C, Badaloni C, Cesaroni G, Henschel S, Meister K, Haluza D, Martin-Olmedo P, Medina S; Aphekom group.");
         assertThat(sa.getFirstAuthor()).isEqualTo("Pascal");
         assertThat(sa.getPublicationYear()).isEqualTo("2013");
         assertThat(sa.getLocation()).isEqualTo("Sci Total Environ. 2013; 449: 390-400.");
@@ -99,7 +99,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
 
         assertThat(sa.getPmId()).isEqualTo("27224452");
         assertThat(sa.getAuthors())
-            .isEqualTo("Lanzinger S, Schneider A, Breitner S, Stafoggia M, Erzen I, Dostal M, Pastorkova A, Bastian S, Cyrys J, Zscheppang A, Kolodnitska T, Peters A, UFIREG study group.");
+            .isEqualTo("Lanzinger S, Schneider A, Breitner S, Stafoggia M, Erzen I, Dostal M, Pastorkova A, Bastian S, Cyrys J, Zscheppang A, Kolodnitska T, Peters A; UFIREG study group.");
         assertThat(sa.getFirstAuthor()).isEqualTo("Lanzinger");
         assertThat(sa.getPublicationYear()).isEqualTo("2016");
         assertThat(sa.getLocation()).isEqualTo("Am J Respir Crit Care Med. 2016; 194 (10): 1233-1241.");

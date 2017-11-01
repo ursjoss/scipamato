@@ -166,14 +166,26 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
-    public void authors() {
+    public void authors_withoutCollectiveAuthor() {
+        AuthorList authorList = new AuthorList();
+        authorList.getAuthor().add(makeAuthor("Bond", "James", "J", null, null));
+        authorList.getAuthor().add(makeAuthor("Kid", "Billy", "B", "Jr", null));
+        authorList.getAuthor().add(makeAuthor("Joice", "James", "J", null, null));
+        pubmedArticle.getMedlineCitation().getArticle().setAuthorList(authorList);
+        ScipamatoPubmedArticle spa = new ScipamatoPubmedArticle(pubmedArticle);
+        assertThat(spa.getAuthors()).isEqualTo("Bond J, Kid B Jr, Joice J.");
+        assertThat(spa.getFirstAuthor()).isEqualTo("Bond");
+    }
+
+    @Test
+    public void authors_withCollectiveAuthor() {
         AuthorList authorList = new AuthorList();
         authorList.getAuthor().add(makeAuthor("Bond", "James", "J", null, null));
         authorList.getAuthor().add(makeAuthor("Kid", "Billy", "B", "Jr", null));
         authorList.getAuthor().add(makeAuthor(null, null, null, null, "Joice J"));
         pubmedArticle.getMedlineCitation().getArticle().setAuthorList(authorList);
         ScipamatoPubmedArticle spa = new ScipamatoPubmedArticle(pubmedArticle);
-        assertThat(spa.getAuthors()).isEqualTo("Bond J, Kid B Jr, Joice J.");
+        assertThat(spa.getAuthors()).isEqualTo("Bond J, Kid B Jr; Joice J.");
         assertThat(spa.getFirstAuthor()).isEqualTo("Bond");
     }
 
