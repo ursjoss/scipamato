@@ -53,6 +53,7 @@ public class PaperListPage extends BasePage<Void> {
     private PaperFilter filter;
     private PaperSlimByPaperFilterProvider dataProvider;
     private ModalWindow xmlPasteModalWindow;
+    private ResultPanel resultPanel;
 
     public PaperListPage(PageParameters parameters) {
         super(parameters);
@@ -104,7 +105,9 @@ public class PaperListPage extends BasePage<Void> {
     }
 
     private void makeAndQueueResultPanel(String id) {
-        queue(new ResultPanel(id, dataProvider));
+        resultPanel = new ResultPanel(id, dataProvider);
+        resultPanel.setOutputMarkupId(true);
+        queue(resultPanel);
     }
 
     private void queueXmlPasteModalPanelAndLink(String modalId, String linkId) {
@@ -125,7 +128,7 @@ public class PaperListPage extends BasePage<Void> {
         xmlPasteModalWindow.setMaskType(MaskType.SEMI_TRANSPARENT);
         xmlPasteModalWindow.setCssClassName(ModalWindow.CSS_CLASS_BLUE);
         xmlPasteModalWindow.setCookieName(Cookie.PAPER_LIST_PAGE_MODAL_WINDOW.getName());
-        xmlPasteModalWindow.setCloseButtonCallback((AjaxRequestTarget target) -> true);
+        xmlPasteModalWindow.setCloseButtonCallback(target -> true);
         xmlPasteModalWindow.setWindowClosedCallback(target -> onXmlPasteModalPanelClose(panel.getPastedContent(), target));
         return xmlPasteModalWindow;
     }
@@ -155,6 +158,7 @@ public class PaperListPage extends BasePage<Void> {
         if (!Strings.isNullOrEmpty(pubmedContent)) {
             final ServiceResult result = pubmedImportService.persistPubmedArticlesFromXml(pubmedContent);
             translateServiceResultMessagesToLocalizedUserMessages(result, target);
+            target.add(resultPanel);
         }
     }
 
