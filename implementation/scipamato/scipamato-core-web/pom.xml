@@ -47,11 +47,11 @@
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-pubmed-api</artifactId>
+            <artifactId>scipamato-core-pubmed-api</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-pubmed-api</artifactId>
+            <artifactId>scipamato-core-pubmed-api</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>

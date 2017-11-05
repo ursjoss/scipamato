@@ -9,9 +9,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>scipamato-pubmed-api</artifactId>
+    <artifactId>scipamato-core-pubmed-api</artifactId>
     <packaging>jar</packaging>
-    <name>SciPaMaTo :: Pubmed API Project</name>
+    <name>SciPaMaTo-Core :: Pubmed API Project</name>
 
     <properties>
         <org.jaxb.target.dir>target/generated-sources/jaxb</org.jaxb.target.dir>

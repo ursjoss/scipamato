@@ -23,7 +23,7 @@
         <module>scipamato-common-config</module>
         <module>scipamato-core-logic</module>
         <module>scipamato-core-entity</module>
-        <module>scipamato-pubmed-api</module>
+        <module>scipamato-core-pubmed-api</module>
         <module>scipamato-core-persistence-api</module>
         <module>scipamato-core-persistence-jooq</module>
         <module>scipamato-core-web</module>
@@ -126,12 +126,12 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-pubmed-api</artifactId>
+                <artifactId>scipamato-core-pubmed-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-pubmed-api</artifactId>
+                <artifactId>scipamato-core-pubmed-api</artifactId>
                 <type>test-jar</type>
                 <version>${project.version}</version>
             </dependency>
