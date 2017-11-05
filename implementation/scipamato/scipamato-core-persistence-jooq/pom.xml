@@ -9,9 +9,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>scipamato-persistence-jooq</artifactId>
+    <artifactId>scipamato-core-persistence-jooq</artifactId>
     <packaging>jar</packaging>
-    <name>SciPaMaTo :: Persistence jOOQ Project</name>
+    <name>SciPaMaTo-Core :: Persistence jOOQ Project</name>
 
     <properties>
         <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>

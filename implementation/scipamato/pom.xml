@@ -25,7 +25,7 @@
         <module>scipamato-core-entity</module>
         <module>scipamato-pubmed-api</module>
         <module>scipamato-core-persistence-api</module>
-        <module>scipamato-persistence-jooq</module>
+        <module>scipamato-core-persistence-jooq</module>
         <module>scipamato-web</module>
         <module>scipamato-wicket</module>
         <module>scipamato-public</module>
@@ -142,12 +142,12 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-persistence-jooq</artifactId>
+                <artifactId>scipamato-core-persistence-jooq</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-persistence-jooq</artifactId>
+                <artifactId>scipamato-core-persistence-jooq</artifactId>
                 <type>test-jar</type>
                 <version>${project.version}</version>
             </dependency>

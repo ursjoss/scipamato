@@ -61,7 +61,7 @@
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-persistence-jooq</artifactId>
+            <artifactId>scipamato-core-persistence-jooq</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
