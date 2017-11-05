@@ -98,11 +98,11 @@
     <dependencies>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-utils</artifactId>
+            <artifactId>scipamato-common-utils</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-utils</artifactId>
+            <artifactId>scipamato-common-utils</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>

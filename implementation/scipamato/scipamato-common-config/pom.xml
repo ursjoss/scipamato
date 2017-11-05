@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>scipamato-utils</artifactId>
+            <artifactId>scipamato-common-utils</artifactId>
             <version>${project.version}</version>
             <type>test-jar</type>
         </dependency>

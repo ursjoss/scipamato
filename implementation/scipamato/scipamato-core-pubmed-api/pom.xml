@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-utils</artifactId>
+            <artifactId>scipamato-common-utils</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

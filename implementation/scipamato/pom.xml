@@ -19,7 +19,7 @@
     <url>https://github.com/ursjoss/scipamato</url>
 
     <modules>
-        <module>scipamato-utils</module>
+        <module>scipamato-common-utils</module>
         <module>scipamato-common-config</module>
         <module>scipamato-core-logic</module>
         <module>scipamato-core-entity</module>
@@ -100,12 +100,12 @@
         <dependencies>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-utils</artifactId>
+                <artifactId>scipamato-common-utils</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-utils</artifactId>
+                <artifactId>scipamato-common-utils</artifactId>
                 <type>test-jar</type>
                 <version>${project.version}</version>
             </dependency>

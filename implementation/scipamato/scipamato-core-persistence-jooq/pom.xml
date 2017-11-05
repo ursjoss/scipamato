@@ -31,11 +31,6 @@
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-common-config</artifactId>
         </dependency>
-        <dependency>
-            <groupId>ch.difty</groupId>
-            <artifactId>scipamato-utils</artifactId>
-            <scope>compile</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -113,7 +108,7 @@
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-utils</artifactId>
+            <artifactId>scipamato-common-utils</artifactId>
             <type>test-jar</type>
         </dependency>
         <dependency>

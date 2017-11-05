@@ -9,9 +9,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>scipamato-utils</artifactId>
+    <artifactId>scipamato-common-utils</artifactId>
     <packaging>jar</packaging>
-    <name>SciPaMaTo :: Utilities Project</name>
+    <name>SciPaMaTo-Common :: Utilities Project</name>
 
     <dependencies>
         <dependency>
