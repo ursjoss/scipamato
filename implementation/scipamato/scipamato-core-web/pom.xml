@@ -9,9 +9,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>scipamato-web</artifactId>
+    <artifactId>scipamato-core-web</artifactId>
     <packaging>jar</packaging>
-    <name>SciPaMaTo :: Web GUI Project</name>
+    <name>SciPaMaTo-Core :: Web GUI Project</name>
 
     <properties>
         <jasperreports.version>6.4.1</jasperreports.version>
