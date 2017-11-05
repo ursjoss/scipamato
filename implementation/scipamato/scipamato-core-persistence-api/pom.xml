@@ -9,9 +9,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>scipamato-persistence-api</artifactId>
+    <artifactId>scipamato-core-persistence-api</artifactId>
     <packaging>jar</packaging>
-    <name>SciPaMaTo :: Persistence API Project</name>
+    <name>SciPaMaTo-Core :: Persistence API Project</name>
 
     <dependencies>
         <dependency>

@@ -57,7 +57,7 @@
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-persistence-api</artifactId>
+            <artifactId>scipamato-core-persistence-api</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>

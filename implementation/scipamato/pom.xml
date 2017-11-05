@@ -24,7 +24,7 @@
         <module>scipamato-logic</module>
         <module>scipamato-core-entity</module>
         <module>scipamato-pubmed-api</module>
-        <module>scipamato-persistence-api</module>
+        <module>scipamato-core-persistence-api</module>
         <module>scipamato-persistence-jooq</module>
         <module>scipamato-web</module>
         <module>scipamato-wicket</module>
@@ -137,7 +137,7 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-persistence-api</artifactId>
+                <artifactId>scipamato-core-persistence-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
