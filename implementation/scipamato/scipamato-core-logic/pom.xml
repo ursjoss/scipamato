@@ -9,9 +9,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>scipamato-logic</artifactId>
+    <artifactId>scipamato-core-logic</artifactId>
     <packaging>jar</packaging>
-    <name>SciPaMaTo :: Business Logic Project</name>
+    <name>SciPaMaTo-Core :: Business Logic Project</name>
 
     <dependencies>
         <dependency>

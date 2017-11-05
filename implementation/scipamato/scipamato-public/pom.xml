@@ -42,10 +42,6 @@
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-logic</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.difty</groupId>
             <artifactId>scipamato-wicket</artifactId>
         </dependency>
 
