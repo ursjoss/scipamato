@@ -28,7 +28,7 @@
         <module>scipamato-core-persistence-api</module>
         <module>scipamato-core-persistence-jooq</module>
         <module>scipamato-core-web</module>
-        <module>scipamato-public</module>
+        <module>scipamato-public-web</module>
     </modules>
 
     <developers>
@@ -90,7 +90,7 @@
 
         <assertj.version>2.8.0</assertj.version>
 
-        <!-- Web Specific versions - kept here to not maintain them in scipamato-common-wicket, scipamato-core-web and scipamato-public redundantly -->
+        <!-- Web Specific versions - kept here to not maintain them in scipamato-common-wicket, scipamato-core-web and scipamato-public-web redundantly -->
         <wicket.version>7.9.0</wicket.version>
         <wicket-spring-boot-starter.version>1.0.10</wicket-spring-boot-starter.version>
         <wicket-bootstrap.version>0.10.16</wicket-bootstrap.version>
