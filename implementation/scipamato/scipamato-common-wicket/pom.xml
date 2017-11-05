@@ -9,9 +9,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>scipamato-wicket</artifactId>
+    <artifactId>scipamato-common-wicket</artifactId>
     <packaging>jar</packaging>
-    <name>SciPaMaTo :: Public Wicket Common</name>
+    <name>SciPaMaTo-Common :: Wicket Project</name>
 
     <dependencyManagement>
         <dependencies>
