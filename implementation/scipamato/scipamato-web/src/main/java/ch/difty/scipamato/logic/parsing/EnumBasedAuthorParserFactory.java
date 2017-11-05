@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.AssertAs;
-import ch.difty.scipamato.config.ApplicationProperties;
-import ch.difty.scipamato.config.AuthorParserStrategy;
+import ch.difty.scipamato.config.core.ApplicationProperties;
+import ch.difty.scipamato.config.core.AuthorParserStrategy;
 
 /**
  * Default implementation of the {@link AuthorParserFactory} which relies on the application config enum

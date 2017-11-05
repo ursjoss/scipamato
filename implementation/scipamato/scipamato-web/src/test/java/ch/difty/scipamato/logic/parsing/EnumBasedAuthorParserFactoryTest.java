@@ -11,8 +11,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.scipamato.NullArgumentException;
-import ch.difty.scipamato.config.ApplicationProperties;
-import ch.difty.scipamato.config.AuthorParserStrategy;
+import ch.difty.scipamato.config.core.ApplicationProperties;
+import ch.difty.scipamato.config.core.AuthorParserStrategy;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EnumBasedAuthorParserFactoryTest {

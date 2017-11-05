@@ -29,7 +29,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.scipamato.NullArgumentException;
-import ch.difty.scipamato.config.ApplicationProperties;
+import ch.difty.scipamato.config.core.ApplicationProperties;
 import ch.difty.scipamato.entity.IdScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.persistence.paging.PaginationContext;

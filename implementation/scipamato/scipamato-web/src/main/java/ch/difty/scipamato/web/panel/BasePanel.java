@@ -5,7 +5,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import ch.difty.scipamato.ScipamatoSession;
-import ch.difty.scipamato.config.ApplicationProperties;
+import ch.difty.scipamato.config.core.ApplicationProperties;
 import ch.difty.scipamato.entity.User;
 import ch.difty.scipamato.web.AbstractPanel;
 import ch.difty.scipamato.web.Mode;

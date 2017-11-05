@@ -3,6 +3,9 @@ package ch.difty.scipamato.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import ch.difty.scipamato.config.core.ApplicationProperties;
+import ch.difty.scipamato.config.core.AuthorParserStrategy;
+
 /**
  * This bean is used to evaluate all environment properties used in the application in one place and serve those as bean to wherever they are used.
  *

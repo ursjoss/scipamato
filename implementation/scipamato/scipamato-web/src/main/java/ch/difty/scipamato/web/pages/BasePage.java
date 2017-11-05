@@ -13,7 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import ch.difty.scipamato.ScipamatoSession;
-import ch.difty.scipamato.config.ApplicationProperties;
+import ch.difty.scipamato.config.core.ApplicationProperties;
 import ch.difty.scipamato.entity.User;
 import ch.difty.scipamato.web.AbstractPage;
 import ch.difty.scipamato.web.pages.login.LogoutPage;

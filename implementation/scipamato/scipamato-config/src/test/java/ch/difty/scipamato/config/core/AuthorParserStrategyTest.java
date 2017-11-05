@@ -1,6 +1,6 @@
-package ch.difty.scipamato.config;
+package ch.difty.scipamato.config.core;
 
-import static ch.difty.scipamato.config.AuthorParserStrategy.*;
+import static ch.difty.scipamato.config.core.AuthorParserStrategy.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;

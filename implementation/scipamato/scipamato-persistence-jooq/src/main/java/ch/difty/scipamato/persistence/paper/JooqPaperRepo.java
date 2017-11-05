@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
 import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.DateTimeService;
 import ch.difty.scipamato.TranslationUtils;
-import ch.difty.scipamato.config.ApplicationProperties;
+import ch.difty.scipamato.config.core.ApplicationProperties;
 import ch.difty.scipamato.db.tables.records.PaperCodeRecord;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.Code;

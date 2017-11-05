@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.AssertAs;
-import ch.difty.scipamato.config.ApplicationProperties;
+import ch.difty.scipamato.config.core.ApplicationProperties;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.filter.PaperFilter;

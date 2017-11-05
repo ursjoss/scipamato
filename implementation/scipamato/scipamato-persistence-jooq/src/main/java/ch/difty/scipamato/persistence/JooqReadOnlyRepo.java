@@ -13,7 +13,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
 
 import ch.difty.scipamato.AssertAs;
-import ch.difty.scipamato.config.ApplicationProperties;
+import ch.difty.scipamato.config.core.ApplicationProperties;
 import ch.difty.scipamato.entity.ScipamatoEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.persistence.paging.PaginationContext;

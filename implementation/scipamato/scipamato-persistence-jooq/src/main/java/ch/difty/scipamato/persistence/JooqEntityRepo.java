@@ -16,7 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.DateTimeService;
-import ch.difty.scipamato.config.ApplicationProperties;
+import ch.difty.scipamato.config.core.ApplicationProperties;
 import ch.difty.scipamato.entity.ScipamatoEntity;
 import ch.difty.scipamato.entity.User;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;

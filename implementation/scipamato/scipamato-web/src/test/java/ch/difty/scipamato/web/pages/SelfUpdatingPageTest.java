@@ -6,8 +6,8 @@ import static org.mockito.Mockito.*;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import ch.difty.scipamato.config.ApplicationProperties;
-import ch.difty.scipamato.config.AuthorParserStrategy;
+import ch.difty.scipamato.config.core.ApplicationProperties;
+import ch.difty.scipamato.config.core.AuthorParserStrategy;
 
 public abstract class SelfUpdatingPageTest<T extends BasePage<?>> extends BasePageTest<T> {
 

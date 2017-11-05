@@ -12,7 +12,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import ch.difty.scipamato.config.ApplicationProperties;
+import ch.difty.scipamato.config.core.ApplicationProperties;
 import ch.difty.scipamato.entity.CodeClassId;
 import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.persistence.CodeClassService;

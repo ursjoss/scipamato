@@ -9,8 +9,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import ch.difty.scipamato.config.ApplicationProperties;
-import ch.difty.scipamato.config.AuthorParserStrategy;
+import ch.difty.scipamato.config.core.ApplicationProperties;
+import ch.difty.scipamato.config.core.AuthorParserStrategy;
 import ch.difty.scipamato.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.pubmed.PubmedArticleService;
 

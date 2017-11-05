@@ -1,4 +1,4 @@
-package ch.difty.scipamato.config;
+package ch.difty.scipamato.config.core;
 
 /**
  * Manages property based configuration parameters.
