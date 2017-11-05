@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-config</artifactId>
+            <artifactId>scipamato-common-config</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>

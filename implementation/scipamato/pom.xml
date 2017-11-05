@@ -20,7 +20,7 @@
 
     <modules>
         <module>scipamato-utils</module>
-        <module>scipamato-config</module>
+        <module>scipamato-common-config</module>
         <module>scipamato-logic</module>
         <module>scipamato-core-entity</module>
         <module>scipamato-pubmed-api</module>
@@ -111,7 +111,7 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-config</artifactId>
+                <artifactId>scipamato-common-config</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
