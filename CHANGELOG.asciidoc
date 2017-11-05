@@ -54,6 +54,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
+- Updated jaxb-api, jasperrerports, spring-cloud-starter-feign, assertj, JUnitParams
+- pom refactoring
 
 .Deprecated
 
