@@ -43,7 +43,7 @@
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-entity</artifactId>
+            <artifactId>scipamato-core-entity</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>

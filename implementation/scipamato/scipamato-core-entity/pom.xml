@@ -9,9 +9,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>scipamato-entity</artifactId>
+    <artifactId>scipamato-core-entity</artifactId>
     <packaging>jar</packaging>
-    <name>SciPaMaTo :: Entity Project</name>
+    <name>SciPaMaTo-Core :: Entity Project</name>
 
     <dependencies>
         <dependency>
