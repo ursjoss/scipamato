@@ -42,6 +42,18 @@
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
+            <artifactId>scipamato-public-entity</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-public-persistence-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-public-persistence-jooq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
             <artifactId>scipamato-common-wicket</artifactId>
         </dependency>
 

@@ -28,6 +28,7 @@
         <module>scipamato-core-persistence-api</module>
         <module>scipamato-core-persistence-jooq</module>
         <module>scipamato-core-web</module>
+        <module>scipamato-public-entity</module>
         <module>scipamato-public-web</module>
     </modules>
 
@@ -99,6 +100,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- SciPaMaTo-Common modules -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>scipamato-common-utils</artifactId>
@@ -115,6 +117,13 @@
                 <artifactId>scipamato-common-config</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>scipamato-common-wicket</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- SciPaMaTo-Core modules -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>scipamato-core-logic</artifactId>
@@ -152,9 +161,20 @@
                 <type>test-jar</type>
                 <version>${project.version}</version>
             </dependency>
+            <!-- SciPaMaTo-Public Modules -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-common-wicket</artifactId>
+                <artifactId>scipamato-public-entity</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>scipamato-public-persistence-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>scipamato-public-persistence-jooq</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
