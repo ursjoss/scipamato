@@ -498,7 +498,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         sb.append(Arrays.asList(textString, intString, boolString, auditString).stream().filter((String s) -> !s.isEmpty()).collect(Collectors.joining(JOIN_DELIMITER)));
         if (!codes.isEmpty()) {
             if (sb.length() > 0)
-                sb.append(" AND ");
+                sb.append(JOIN_DELIMITER);
             sb.append(codes.toString());
         }
         return sb.toString();

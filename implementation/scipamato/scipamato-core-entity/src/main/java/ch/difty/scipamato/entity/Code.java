@@ -67,11 +67,11 @@ public class Code extends ScipamatoEntity {
 
     private Code(final String code, final String name, final String comment, final boolean internal, final CodeClass codeClass, final int sort, final LocalDateTime created, final Integer createdBy,
             final LocalDateTime lastModified, final Integer lastModifiedBy, final Integer version) {
-        this.code = AssertAs.notNull(code, "code");
+        this.code = AssertAs.notNull(code, CODE);
         this.name = name;
         this.comment = comment;
         this.internal = internal;
-        this.codeClass = AssertAs.notNull(codeClass, "codeClass");
+        this.codeClass = AssertAs.notNull(codeClass, CODE_CLASS);
         this.sort = sort;
         setCreated(created);
         setCreatedBy(createdBy);
