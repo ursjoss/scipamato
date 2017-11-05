@@ -29,6 +29,8 @@
         <module>scipamato-core-persistence-jooq</module>
         <module>scipamato-core-web</module>
         <module>scipamato-public-entity</module>
+        <module>scipamato-public-persistence-api</module>
+        <module>scipamato-public-persistence-jooq</module>
         <module>scipamato-public-web</module>
     </modules>
 
