@@ -111,7 +111,7 @@ public class PaperListPage extends BasePage<Void> {
 
     private void queueXmlPasteModalPanelAndLink(String modalId, String linkId) {
         queue(newXmlPasteModalPanel(modalId));
-        queue(newXmlPateModealLink(linkId));
+        queue(newXmlPasteModealLink(linkId));
     }
 
     private ModalWindow newXmlPasteModalPanel(String modalId) {
@@ -131,7 +131,7 @@ public class PaperListPage extends BasePage<Void> {
         return xmlPasteModalWindow;
     }
 
-    private BootstrapAjaxLink<Void> newXmlPateModealLink(String linkId) {
+    private BootstrapAjaxLink<Void> newXmlPasteModealLink(String linkId) {
         BootstrapAjaxLink<Void> link = new BootstrapAjaxLink<Void>(linkId, Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
