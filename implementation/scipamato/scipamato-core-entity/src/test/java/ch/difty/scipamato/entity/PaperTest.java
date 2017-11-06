@@ -15,6 +15,7 @@ import org.junit.Test;
 public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     private static final String VALID_AUTHORS = "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.";
+    private static final String VALID_AUTHORS_WITH_COLLECTIVE = "Mehta AJ, Thun GA, Imboden M, Ferrarotti I, Keidel D, Künzli N, Kromhout H, Miedinger D, Phuleria H, Rochat T, Russi EW, Schindler C, Schwartz J, Vermeulen R, Luisetti M, Probst-Hensch N; SAPALDIA team.";
     private static final String FIRST_AUTHOR = "Turner MC";
     private static final String TITLE = "Title";
     private static final String VALID_DOI = "10.1093/aje/kwu275";
@@ -109,6 +110,12 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void validatingPaper_withSingleAuthorWithoutFirstname_withPeriod_succeeds() {
         final String validValue = "Turner.";
         p.setAuthors(validValue);
+        verifySuccessfulValidation();
+    }
+
+    @Test
+    public void validatingPaper_withAuthorsPlusCollectiveAuthor_succeeds() {
+        p.setAuthors(VALID_AUTHORS_WITH_COLLECTIVE);
         verifySuccessfulValidation();
     }
 
@@ -439,4 +446,5 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(p1.equals(p2)).isFalse();
         assertThat(p1.hashCode()).isNotEqualTo(p2.hashCode());
     }
+
 }
