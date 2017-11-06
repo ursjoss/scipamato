@@ -25,11 +25,42 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
     public static final int NA_PUBL_YEAR = 1500;
 
     /**
-     * One or more of the extended word characters including - and '
+     * One or more of the extended word characters including {@literal -} and {@literal '}
      */
     private static final String RE_S_WW = "\\s" + RE_WW;
 
+    /**
+     * Regex verifying the correctness of an Author string. Comprises of:
+     * <ol>
+     * <li> a single author, made up of one or more "name words", each made up of
+     * <ul>
+     * <li> any ASCII character out of the word character class \w ([a-zA-Z_0-9]) </li>
+     * <li> additional unicode characters (\u00C0-\u024f) </li>
+     * <li> dashes ({@literal -})</li>
+     * <li> hyphens ({@literal '}) </li>
+     * </ul>
+     * <li> then optionally followed by one or more of such authors, separated by a comma ({@literal ,})</li>
+     * <li> then optionally followed by one collective author, made up of the same characters as normal authors, but separated by a semicolon ({@literal ;})</li>
+     * </ol>
+     *
+     * The resulting regex:<p>
+     * {@code ^[\w\u00C0-\u024f-']+(\s[\w\u00C0-\u024f-']+){0,}(,\s[\w\u00C0-\u024f-']+(\s[\w\u00C0-\u024f-']+){0,}){0,}(;\s[\w\u00C0-\u024f-']+(\s[\w\u00C0-\u024f-']+){0,}){0,1}\.$}
+     */
     private static final String AUTHOR_REGEX = "^" + RE_WW + "(" + RE_S_WW + "){0,}(," + RE_S_WW + "(" + RE_S_WW + "){0,}){0,}(;" + RE_S_WW + "(" + RE_S_WW + "){0,}){0,1}\\.$";
+
+    /**
+     * Regex to validate DOIs. Does not capture the full range of possible DOIs, but nearly all of the likely ones.
+     *
+     * <ol>
+     * <li> starting with {@literal 10} followed by a period</li>
+     * <li> continuing with 4 to 9 digits</li>
+     * <li> followed by a dash ({@literal /})</li>
+     * <li> followed by one or more ASCII characters, numbers or special characters ({@literal -._;()/:})</li>
+     * </ol>
+     *
+     * The resulting regex:<p>
+     * {@code ^10\.\d{4,9}/[-._;()/:A-Z0-9]+$}
+     */
     private static final String DOI_REGEX = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$";
 
     public static final String NUMBER = "number";
