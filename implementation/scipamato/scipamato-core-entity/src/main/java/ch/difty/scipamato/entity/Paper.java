@@ -29,7 +29,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
      */
     private static final String RE_S_WW = "\\s" + RE_WW;
 
-    private static final String AUTHOR_REGEX = "^" + RE_WW + "(" + RE_S_WW + "){0,}(," + RE_S_WW + "(" + RE_S_WW + "){0,}){0,}\\.$";
+    private static final String AUTHOR_REGEX = "^" + RE_WW + "(" + RE_S_WW + "){0,}(," + RE_S_WW + "(" + RE_S_WW + "){0,}){0,}(;" + RE_S_WW + "(" + RE_S_WW + "){0,}){0,1}\\.$";
     private static final String DOI_REGEX = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$";
 
     public static final String NUMBER = "number";
