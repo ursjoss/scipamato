@@ -21,7 +21,6 @@ import ch.difty.scipamato.auth.Roles;
 import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.persistence.ServiceResult;
 import ch.difty.scipamato.pubmed.PubmedImporter;
-import ch.difty.scipamato.web.config.Cookie;
 import ch.difty.scipamato.web.pages.BasePage;
 import ch.difty.scipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.web.pages.paper.provider.PaperSlimByPaperFilterProvider;
@@ -121,14 +120,13 @@ public class PaperListPage extends BasePage<Void> {
         xmlPasteModalWindow.setContent(panel);
         xmlPasteModalWindow.setTitle(new StringResourceModel("xmlPasteModal.title", this, null).getString());
         xmlPasteModalWindow.setResizable(true);
-        xmlPasteModalWindow.setMinimalHeight(100);
-        xmlPasteModalWindow.setMinimalWidth(200);
-        xmlPasteModalWindow.setInitialWidth(150);
-        xmlPasteModalWindow.setInitialHeight(250);
+        xmlPasteModalWindow.setAutoSize(true);
+        xmlPasteModalWindow.setInitialWidth(600);
+        xmlPasteModalWindow.setInitialHeight(500);
+        xmlPasteModalWindow.setMinimalWidth(600);
+        xmlPasteModalWindow.setMinimalHeight(500);
         xmlPasteModalWindow.setMaskType(MaskType.SEMI_TRANSPARENT);
         xmlPasteModalWindow.setCssClassName(ModalWindow.CSS_CLASS_BLUE);
-        xmlPasteModalWindow.setCookieName(Cookie.PAPER_LIST_PAGE_MODAL_WINDOW.getName());
-        xmlPasteModalWindow.setCloseButtonCallback(target -> true);
         xmlPasteModalWindow.setWindowClosedCallback(target -> onXmlPasteModalPanelClose(panel.getPastedContent(), target));
         return xmlPasteModalWindow;
     }
