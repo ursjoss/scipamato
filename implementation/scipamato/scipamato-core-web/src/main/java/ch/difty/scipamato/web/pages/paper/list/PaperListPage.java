@@ -21,7 +21,6 @@ import ch.difty.scipamato.auth.Roles;
 import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.persistence.ServiceResult;
 import ch.difty.scipamato.pubmed.PubmedImporter;
-import ch.difty.scipamato.web.config.Cookie;
 import ch.difty.scipamato.web.pages.BasePage;
 import ch.difty.scipamato.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.web.pages.paper.provider.PaperSlimByPaperFilterProvider;
@@ -58,6 +57,12 @@ public class PaperListPage extends BasePage<Void> {
     public PaperListPage(PageParameters parameters) {
         super(parameters);
         initFilterAndProvider();
+    }
+
+    public PaperListPage(PageParameters parameters, ServiceResult result) {
+        this(parameters);
+        if (result != null)
+            translateServiceResultMessagesToLocalizedUserMessages(result, null);
     }
 
     private void initFilterAndProvider() {
@@ -112,7 +117,7 @@ public class PaperListPage extends BasePage<Void> {
 
     private void queueXmlPasteModalPanelAndLink(String modalId, String linkId) {
         queue(newXmlPasteModalPanel(modalId));
-        queue(newXmlPateModealLink(linkId));
+        queue(newXmlPasteModealLink(linkId));
     }
 
     private ModalWindow newXmlPasteModalPanel(String modalId) {
@@ -121,19 +126,18 @@ public class PaperListPage extends BasePage<Void> {
         xmlPasteModalWindow.setContent(panel);
         xmlPasteModalWindow.setTitle(new StringResourceModel("xmlPasteModal.title", this, null).getString());
         xmlPasteModalWindow.setResizable(true);
-        xmlPasteModalWindow.setMinimalHeight(100);
-        xmlPasteModalWindow.setMinimalWidth(200);
-        xmlPasteModalWindow.setInitialWidth(150);
-        xmlPasteModalWindow.setInitialHeight(250);
+        xmlPasteModalWindow.setAutoSize(true);
+        xmlPasteModalWindow.setInitialWidth(600);
+        xmlPasteModalWindow.setInitialHeight(500);
+        xmlPasteModalWindow.setMinimalWidth(600);
+        xmlPasteModalWindow.setMinimalHeight(500);
         xmlPasteModalWindow.setMaskType(MaskType.SEMI_TRANSPARENT);
         xmlPasteModalWindow.setCssClassName(ModalWindow.CSS_CLASS_BLUE);
-        xmlPasteModalWindow.setCookieName(Cookie.PAPER_LIST_PAGE_MODAL_WINDOW.getName());
-        xmlPasteModalWindow.setCloseButtonCallback(target -> true);
         xmlPasteModalWindow.setWindowClosedCallback(target -> onXmlPasteModalPanelClose(panel.getPastedContent(), target));
         return xmlPasteModalWindow;
     }
 
-    private BootstrapAjaxLink<Void> newXmlPateModealLink(String linkId) {
+    private BootstrapAjaxLink<Void> newXmlPasteModealLink(String linkId) {
         BootstrapAjaxLink<Void> link = new BootstrapAjaxLink<Void>(linkId, Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
@@ -155,19 +159,22 @@ public class PaperListPage extends BasePage<Void> {
      * @param target
      */
     protected void onXmlPasteModalPanelClose(final String pubmedContent, final AjaxRequestTarget target) {
+        ServiceResult result = null;
         if (!Strings.isNullOrEmpty(pubmedContent)) {
-            final ServiceResult result = pubmedImportService.persistPubmedArticlesFromXml(pubmedContent);
+            result = pubmedImportService.persistPubmedArticlesFromXml(pubmedContent);
             translateServiceResultMessagesToLocalizedUserMessages(result, target);
             target.add(resultPanel);
             updateNavigateable();
         }
+        setResponsePage(new PaperListPage(getPageParameters(), result));
     }
 
     private void translateServiceResultMessagesToLocalizedUserMessages(final ServiceResult result, final AjaxRequestTarget target) {
         result.getErrorMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.xml.invalid", this, null).getString()).forEach(this::error);
         result.getWarnMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.exists", this, null).setParameters(msg).getString()).forEach(this::warn);
         result.getInfoMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.saved", this, null).setParameters(msg).getString()).forEach(this::info);
-        target.add(getFeedbackPanel());
+        if (target != null)
+            target.add(getFeedbackPanel());
     }
 
 }
