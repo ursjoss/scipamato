@@ -59,6 +59,12 @@ public class PaperListPage extends BasePage<Void> {
         initFilterAndProvider();
     }
 
+    public PaperListPage(PageParameters parameters, ServiceResult result) {
+        this(parameters);
+        if (result != null)
+            translateServiceResultMessagesToLocalizedUserMessages(result, null);
+    }
+
     private void initFilterAndProvider() {
         filter = new PaperFilter();
         dataProvider = new PaperSlimByPaperFilterProvider(filter, RESULT_PAGE_SIZE);
@@ -153,19 +159,22 @@ public class PaperListPage extends BasePage<Void> {
      * @param target
      */
     protected void onXmlPasteModalPanelClose(final String pubmedContent, final AjaxRequestTarget target) {
+        ServiceResult result = null;
         if (!Strings.isNullOrEmpty(pubmedContent)) {
-            final ServiceResult result = pubmedImportService.persistPubmedArticlesFromXml(pubmedContent);
+            result = pubmedImportService.persistPubmedArticlesFromXml(pubmedContent);
             translateServiceResultMessagesToLocalizedUserMessages(result, target);
             target.add(resultPanel);
             updateNavigateable();
         }
+        setResponsePage(new PaperListPage(getPageParameters(), result));
     }
 
     private void translateServiceResultMessagesToLocalizedUserMessages(final ServiceResult result, final AjaxRequestTarget target) {
         result.getErrorMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.xml.invalid", this, null).getString()).forEach(this::error);
         result.getWarnMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.exists", this, null).setParameters(msg).getString()).forEach(this::warn);
         result.getInfoMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.saved", this, null).setParameters(msg).getString()).forEach(this::info);
-        target.add(getFeedbackPanel());
+        if (target != null)
+            target.add(getFeedbackPanel());
     }
 
 }

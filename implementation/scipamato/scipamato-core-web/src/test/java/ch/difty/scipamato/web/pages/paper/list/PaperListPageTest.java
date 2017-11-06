@@ -150,7 +150,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
         verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
-        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(3)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -160,7 +160,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
         verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
-        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(3)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -172,8 +172,8 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
         verify(pubmedImportService).persistPubmedArticlesFromXml(content);
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
-        // The third call to findPageOfIds... is to update the Navigateable
-        verify(paperServiceMock, times(3)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        // The third call to findPageOfIds... is to update the Navigateable, the fourth one because of the page redirect
+        verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     private ServiceResult makeServiceResult() {
