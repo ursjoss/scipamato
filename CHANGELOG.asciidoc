@@ -62,6 +62,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- Feature 06/23: Include new format for collective authors in the author validation.
 
 .Security
 
