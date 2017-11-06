@@ -13,10 +13,10 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.web.TestRecord;
-import ch.difty.scipamato.web.WicketTest;
+import ch.difty.scipamato.web.WicketBaseTest;
 import ch.difty.scipamato.web.component.SerializableConsumer;
 
-public class ClickablePropertyColumnTest extends WicketTest {
+public class ClickablePropertyColumnTest extends WicketBaseTest {
 
     @Mock
     private SerializableConsumer<IModel<String>> consumerMock;

@@ -9,7 +9,7 @@ import org.junit.Test;
 import ch.difty.scipamato.web.test.TestAbstractPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 
-public class AbstractPanelTest extends WicketTest {
+public class AbstractPanelTest extends WicketBaseTest {
 
     @Test
     public void testViewMode_withOneArgConstructor() {

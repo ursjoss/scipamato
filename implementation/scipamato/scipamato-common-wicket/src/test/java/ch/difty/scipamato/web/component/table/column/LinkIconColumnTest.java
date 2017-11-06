@@ -11,10 +11,10 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.TagTester;
 import org.junit.Test;
 
-import ch.difty.scipamato.web.WicketTest;
 import ch.difty.scipamato.web.TestRecord;
+import ch.difty.scipamato.web.WicketBaseTest;
 
-public class LinkIconColumnTest extends WicketTest {
+public class LinkIconColumnTest extends WicketBaseTest {
 
     private static final String ID = "panel";
 

@@ -12,7 +12,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestApplication.class)
-public abstract class WicketTest {
+public abstract class WicketBaseTest {
 
     private WicketTester tester;
 

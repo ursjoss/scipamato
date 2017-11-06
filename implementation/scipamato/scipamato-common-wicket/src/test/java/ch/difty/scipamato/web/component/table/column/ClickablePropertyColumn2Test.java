@@ -50,7 +50,7 @@ public class ClickablePropertyColumn2Test {
         verify(supplierMock).get();
         verify(biConsumerMock).accept(clickModel, suppliedValue);
     }
-    
+
     @Test
     public void gettingProperty() {
         c = new ClickablePropertyColumn2<>(displayModel, property, biConsumerMock, supplierMock);

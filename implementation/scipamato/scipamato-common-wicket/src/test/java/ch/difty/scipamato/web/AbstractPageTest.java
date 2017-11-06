@@ -22,7 +22,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink;
 
-public class AbstractPageTest extends WicketTest {
+public class AbstractPageTest extends WicketBaseTest {
 
     private AbstractPage<TestRecord> page;
 
