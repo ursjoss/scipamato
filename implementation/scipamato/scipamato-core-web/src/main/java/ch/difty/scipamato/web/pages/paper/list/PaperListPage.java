@@ -159,6 +159,7 @@ public class PaperListPage extends BasePage<Void> {
             final ServiceResult result = pubmedImportService.persistPubmedArticlesFromXml(pubmedContent);
             translateServiceResultMessagesToLocalizedUserMessages(result, target);
             target.add(resultPanel);
+            updateNavigateable();
         }
     }
 

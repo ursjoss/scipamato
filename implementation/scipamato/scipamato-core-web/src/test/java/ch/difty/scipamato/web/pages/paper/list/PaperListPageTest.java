@@ -164,7 +164,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
     }
 
     @Test
-    public void onXmlPasteModalPanelClose_withContent_persistsArticles() {
+    public void onXmlPasteModalPanelClose_withContent_persistsArticlesAndUpdatesNavigateable() {
         String content = "content";
         when(pubmedImportService.persistPubmedArticlesFromXml(content)).thenReturn(makeServiceResult());
 
@@ -172,7 +172,8 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
         verify(pubmedImportService).persistPubmedArticlesFromXml(content);
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
-        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        // The third call to findPageOfIds... is to update the Navigateable
+        verify(paperServiceMock, times(3)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     private ServiceResult makeServiceResult() {

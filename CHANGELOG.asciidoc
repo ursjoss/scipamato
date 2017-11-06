@@ -63,6 +63,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Fixed
 - Feature 06/23: Include new format for collective authors in the author validation.
+- Feature 06/22: Fixes the exception we had after clicking on a freshly imported pubmed paper.
 
 .Security
 
