@@ -17,6 +17,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import ch.difty.scipamato.DateTimeService;
 import ch.difty.scipamato.web.component.SerializableSupplier;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink.Target;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
@@ -104,6 +105,7 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     protected void addExternalLink(final Navbar navbar, final String url, final String label, final IconType iconType, final Navbar.ComponentPosition position) {
         NavbarExternalLink link = new NavbarExternalLink(Model.of(url));
         link.setLabel(Model.of(label));
+        link.setTarget(Target.blank);
         if (iconType != null)
             link.setIconType(iconType);
         navbar.addComponents(NavbarComponents.transform(position, link));

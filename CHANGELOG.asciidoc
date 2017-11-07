@@ -54,6 +54,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
+- 06/21+24: Open external links in new browser tab
 
 .Deprecated
 
