@@ -52,9 +52,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [Unreleased]
 
 .Added
+- Public: 07/01: Add table paper and two sample records
 
 .Changed
-- 06/21+24: Open external links in new browser tab
+- Core: 06/21+24: Open external links in new browser tab
 
 .Deprecated
 
