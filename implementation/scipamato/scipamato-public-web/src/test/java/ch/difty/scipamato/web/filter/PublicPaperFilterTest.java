@@ -7,11 +7,11 @@ import org.junit.Test;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 
-public class PaperFilterTest {
+public class PublicPaperFilterTest {
 
     @Test
     public void construct() {
-        PaperFilter filter = new PaperFilter();
+        PublicPaperFilter filter = new PublicPaperFilter();
         filter.setNumber(1l);
         filter.setAuthorMask("am");
         filter.setMethodsMask("mm");
@@ -24,12 +24,12 @@ public class PaperFilterTest {
         assertThat(filter.getPublicationYearFrom()).isEqualTo(2000);
         assertThat(filter.getPublicationYearUntil()).isEqualTo(3000);
 
-        assertThat(filter.toString()).isEqualTo("PaperFilter(number=1, authorMask=am, methodsMask=mm, publicationYearFrom=2000, publicationYearUntil=3000)");
+        assertThat(filter.toString()).isEqualTo("PublicPaperFilter(number=1, authorMask=am, methodsMask=mm, publicationYearFrom=2000, publicationYearUntil=3000)");
     }
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(PaperFilter.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(PublicPaperFilter.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
     }
 
 }
