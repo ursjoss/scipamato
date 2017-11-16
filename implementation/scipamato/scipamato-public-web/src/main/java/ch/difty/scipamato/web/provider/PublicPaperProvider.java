@@ -1,8 +1,6 @@
 package ch.difty.scipamato.web.provider;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
@@ -11,10 +9,20 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvid
 import org.apache.wicket.injection.Injector;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.entity.PublicPaper;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
+import ch.difty.scipamato.persistence.PublicPaperService;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.PaginationRequest;
+import ch.difty.scipamato.persistence.paging.Sort.Direction;
 
+/**
+ * The data provider for {@link PublicPaper} entities providing the wicket components access to the persisted data
+ *
+ * @author u.joss
+ */
 public class PublicPaperProvider extends SortableDataProvider<PublicPaper, String> implements ISortableDataProvider<PublicPaper, String>, IFilterStateLocator<PublicPaperFilter> {
 
     private static final long serialVersionUID = 1L;
@@ -22,17 +30,19 @@ public class PublicPaperProvider extends SortableDataProvider<PublicPaper, Strin
     private PublicPaperFilter paperFilter;
     private final int maxRowsPerPage;
 
-    // TODO hardcoded stubbed result list. Need to replace with service calls to database
-    private List<PublicPaper> list = new ArrayList<>();
+    @SpringBean
+    private PublicPaperService service;
 
     public PublicPaperProvider(final PublicPaperFilter paperFilter, final int resultPageSize) {
         Injector.get().inject(this);
         this.paperFilter = paperFilter != null ? paperFilter : new PublicPaperFilter();
         this.maxRowsPerPage = resultPageSize;
         setSort(PublicPaper.NUMBER, SortOrder.DESCENDING);
+    }
 
-        list.add(new PublicPaper(1l, 1l, 1000, "authors1", "title1", "location1", 2016, "goals1", "methods1", "population1", "result1", "comment1"));
-        list.add(new PublicPaper(2l, 2l, 1002, "authors2", "title2", "location2", 2017, "goals2", "methods2", "population2", "result2", "comment2"));
+    /** protected for test purposes */
+    protected void setService(final PublicPaperService service) {
+        this.service = service;
     }
 
     /**
@@ -44,15 +54,16 @@ public class PublicPaperProvider extends SortableDataProvider<PublicPaper, Strin
     }
 
     @Override
-    public Iterator<? extends PublicPaper> iterator(long first, long count) {
-        // TODO implement properly
-        return list.iterator();
+    public Iterator<? extends PublicPaper> iterator(long offset, long count) {
+        Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
+        String sortProp = getSort().getProperty();
+        PaginationContext pc = new PaginationRequest((int) offset, (int) count, dir, sortProp);
+        return service.findPageByFilter(paperFilter, pc).iterator();
     }
 
     @Override
     public long size() {
-        // TODO implement properly
-        return list.size();
+        return service.countByFilter(paperFilter);
     }
 
     @Override

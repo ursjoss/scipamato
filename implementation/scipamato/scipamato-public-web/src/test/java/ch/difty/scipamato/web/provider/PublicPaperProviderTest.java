@@ -1,9 +1,15 @@
 package ch.difty.scipamato.web.provider;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +21,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ch.difty.scipamato.ScipamatoPublicApplication;
 import ch.difty.scipamato.entity.PublicPaper;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
+import ch.difty.scipamato.persistence.PublicPaperService;
+import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,15 +31,32 @@ public class PublicPaperProviderTest {
     private PublicPaperProvider provider;
 
     @Mock
+    private PublicPaperService serviceMock;
+
+    @Mock
     private PublicPaperFilter filterMock;
 
     @Autowired
     private ScipamatoPublicApplication application;
 
+    private List<PublicPaper> papers = new ArrayList<>();
+
     @Before
     public void setUp() {
         new WicketTester(application);
         provider = new PublicPaperProvider(filterMock, 20);
+        provider.setService(serviceMock);
+
+        papers.add(new PublicPaper(1l, 1l, 1000, "authors1", "title1", "location1", 2016, "goals1", "methods1", "population1", "result1", "comment1"));
+        papers.add(new PublicPaper(2l, 2l, 1002, "authors2", "title2", "location2", 2017, "goals2", "methods2", "population2", "result2", "comment2"));
+
+        when(serviceMock.countByFilter(filterMock)).thenReturn(2);
+        when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+    }
+
+    @After
+    public void tearDown() {
+        verifyNoMoreInteractions(serviceMock);
     }
 
     @Test
@@ -65,13 +90,13 @@ public class PublicPaperProviderTest {
 
     @Test
     public void gettingIterator() {
-        // TODO implement with service call
         assertThat(provider.iterator(0l, 10l)).hasSize(2);
+        verify(serviceMock).findPageByFilter(eq(filterMock), isA(PaginationContext.class));
     }
 
     @Test
     public void gettingSize() {
-        // TODO implement with service call
         assertThat(provider.size()).isEqualTo(2);
+        verify(serviceMock).countByFilter(filterMock);
     }
 }

@@ -52,7 +52,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [Unreleased]
 
 .Added
-- Public: 07/01: Add table paper and two sample records
+- Public: 07/01: Add table paper and two sample records. Simple filter in public GUI to retrieve and display the data from database.
 
 .Changed
 - Core: 06/21+24: Open external links in new browser tab
