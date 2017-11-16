@@ -337,9 +337,9 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().assertComponentOnAjaxResponse("resultPanel");
 
         verify(searchOrderServiceMock, times(1)).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
-        verify(paperSlimServiceMock, times(3)).countBySearchOrder(eq(searchOrderMock));
+        verify(paperSlimServiceMock, atLeast(1)).countBySearchOrder(eq(searchOrderMock));
         verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class));
-        verify(paperSlimMock, times(2)).getId();
+        verify(paperSlimMock, atLeast(1)).getId();
         verify(searchOrderMock, times(6)).getExcludedPaperIds();
     }
 
