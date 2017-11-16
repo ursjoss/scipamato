@@ -4,7 +4,7 @@ import org.jooq.Record;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
 
-import ch.difty.scipamato.entity.ScipamatoEntity;
+import ch.difty.scipamato.entity.CoreEntity;
 
 /**
  * Sets the various fields from the entity into the UpdateSetStep.
@@ -12,10 +12,10 @@ import ch.difty.scipamato.entity.ScipamatoEntity;
  * @author u.joss
  *
  * @param <R> Record extending {@link Record}
- * @param <T> Entity extending {@link ScipamatoEntity}
+ * @param <T> Entity extending {@link CoreEntity}
  */
 @FunctionalInterface
-public interface UpdateSetStepSetter<R extends Record, T extends ScipamatoEntity> {
+public interface UpdateSetStepSetter<R extends Record, T extends CoreEntity> {
 
     /**
      * Sets all fields except the primary key(s) from the entity into the step.

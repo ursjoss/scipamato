@@ -1,7 +1,7 @@
 package ch.difty.scipamato.persistence;
 
 import ch.difty.scipamato.NullArgumentException;
-import ch.difty.scipamato.entity.ScipamatoEntity;
+import ch.difty.scipamato.entity.CoreEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
 
 /**
@@ -9,11 +9,11 @@ import ch.difty.scipamato.entity.filter.ScipamatoFilter;
  *
  * @author u.joss
  *
- * @param <T> the type of the entity, extending {@link ScipamatoEntity}
+ * @param <T> the type of the entity, extending {@link CoreEntity}
  * @param <ID> the type of the ID of the entity
  * @param <F> the type of the filter extending {@link ScipamatoFilter}
  */
-public interface EntityRepository<T extends ScipamatoEntity, ID, F extends ScipamatoFilter> extends ReadOnlyRepository<T, ID, F> {
+public interface EntityRepository<T extends CoreEntity, ID, F extends ScipamatoFilter> extends ReadOnlyRepository<T, ID, F> {
 
     /**
      * Add an entity {@code T} to the database.

@@ -1,6 +1,6 @@
 package ch.difty.scipamato.web.security;
 
-import static ch.difty.scipamato.entity.ScipamatoEntity.*;
+import static ch.difty.scipamato.entity.CoreEntity.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
@@ -37,7 +37,7 @@ public class ScipamatoUserDetailsTest {
         assertThat(sud.isCredentialsNonExpired()).isTrue();
 
         assertThat(sud.toString()).isEqualTo(
-                "ScipamatoUserDetails[roles=[ROLE_ADMIN, ROLE_USER],userName=un,firstName=fn,lastName=ln,email=em,password=pw,enabled=true,roles=[ROLE_ADMIN, ROLE_USER],id=1,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]");
+                "ScipamatoUserDetails[roles=[ROLE_ADMIN, ROLE_USER],userName=un,firstName=fn,lastName=ln,email=em,password=pw,enabled=true,roles=[ROLE_ADMIN, ROLE_USER],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
     }
 
     @Test

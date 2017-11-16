@@ -16,12 +16,11 @@
     <dependencies>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-public-entity</artifactId>
+            <artifactId>scipamato-common-persistence-api</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-public-entity</artifactId>
         </dependency>
     </dependencies>
 </project>

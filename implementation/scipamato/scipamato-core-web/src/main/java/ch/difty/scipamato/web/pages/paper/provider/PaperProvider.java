@@ -46,11 +46,6 @@ public class PaperProvider extends SortableDataProvider<Paper, String> implement
         this.service = service;
     }
 
-    /** protected for test purposes */
-    protected PaperFilter getFilter() {
-        return filter;
-    }
-
     @Override
     public Iterator<Paper> iterator(long offset, long size) {
         Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;

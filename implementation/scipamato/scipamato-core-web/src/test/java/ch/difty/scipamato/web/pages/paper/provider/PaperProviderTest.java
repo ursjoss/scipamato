@@ -64,7 +64,7 @@ public class PaperProviderTest {
     @Test
     public void defaultFilterIsNewPaperFilter() {
         provider = new PaperProvider();
-        assertThat(provider.getFilter()).isEqualToComparingFieldByField(new PaperFilter());
+        assertThat(provider.getFilterState()).isEqualToComparingFieldByField(new PaperFilter());
     }
 
     @Test

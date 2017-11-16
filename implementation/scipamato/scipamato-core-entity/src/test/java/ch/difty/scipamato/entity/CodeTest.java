@@ -1,6 +1,6 @@
 package ch.difty.scipamato.entity;
 
-import static ch.difty.scipamato.entity.ScipamatoEntity.*;
+import static ch.difty.scipamato.entity.CoreEntity.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDateTime;
@@ -88,7 +88,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     public void testingToString() {
         final Code c1 = new Code("1A", CODE1, null, false, 1, "c1", "", 1, CREATED, 10, LAST_MOD, 20, 3);
         assertThat(c1.toString()).isEqualTo(
-                "Code[code=1A,name=code1,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,created=2017-01-01T08:01:33.821,createdBy=10,lastModified=2017-02-02T08:01:33.821,lastModifiedBy=20,version=3]");
+                "Code[code=1A,name=code1,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T08:01:33.821,lastModified=2017-02-02T08:01:33.821,version=3]");
     }
 
     @Test

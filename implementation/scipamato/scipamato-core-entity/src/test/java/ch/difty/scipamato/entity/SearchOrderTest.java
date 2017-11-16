@@ -170,7 +170,7 @@ public class SearchOrderTest {
         assertThat(so.getSearchConditions()).hasSize(0);
         assertThat(so.getExcludedPaperIds()).hasSize(0);
         assertThat(so.toString()).isEqualTo(
-                "SearchOrder[name=soName,owner=1,global=false,searchConditions=[],excludedPaperIds=[],showExcluded=false,id=10,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]");
+                "SearchOrder[name=soName,owner=1,global=false,searchConditions=[],excludedPaperIds=[],showExcluded=false,id=10,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
     }
 
     @Test
@@ -180,7 +180,7 @@ public class SearchOrderTest {
         so.addExclusionOfPaperWithId(3l);
         so.addExclusionOfPaperWithId(5l);
         assertThat(so.toString()).isEqualTo(
-                "SearchOrder[name=soName,owner=1,global=false,searchConditions=[mockCondition1, mockCondition2],excludedPaperIds=[3, 5],showExcluded=false,id=10,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]");
+                "SearchOrder[name=soName,owner=1,global=false,searchConditions=[mockCondition1, mockCondition2],excludedPaperIds=[3, 5],showExcluded=false,id=10,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
     }
 
     @Test

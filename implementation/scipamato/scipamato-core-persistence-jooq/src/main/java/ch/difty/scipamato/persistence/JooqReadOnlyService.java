@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.scipamato.entity.IdScipamatoEntity;
-import ch.difty.scipamato.entity.ScipamatoEntity;
+import ch.difty.scipamato.entity.CoreEntity;
 import ch.difty.scipamato.entity.User;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
@@ -18,8 +18,8 @@ import ch.difty.scipamato.persistence.user.UserRepository;
  *
  * @author u.joss
  *
- * @param <ID> the type of the id in the {@link ScipamatoEntity}
- * @param <T> the entity type, extending {@link ScipamatoEntity}
+ * @param <ID> the type of the id in the {@link CoreEntity}
+ * @param <T> the entity type, extending {@link CoreEntity}
  * @param <F> the filter, extending {@link ScipamatoFilter}
  * @param <REPO> the entity repository (extending {@link EntityRepository}
  */

@@ -14,7 +14,7 @@ import org.jooq.impl.TableImpl;
 
 import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.config.core.ApplicationProperties;
-import ch.difty.scipamato.entity.ScipamatoEntity;
+import ch.difty.scipamato.entity.CoreEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
 
@@ -24,13 +24,13 @@ import ch.difty.scipamato.persistence.paging.PaginationContext;
  * @author u.joss
  *
  * @param <R> the type of the record, extending {@link Record}
- * @param <T> the type of the entity, extending {@link ScipamatoEntity}
+ * @param <T> the type of the entity, extending {@link CoreEntity}
  * @param <ID> the type of the ID of the entity {@code T}
  * @param <TI> the type of the table implementation of record {@code R}
  * @param <M> the type of the record mapper, mapping record {@code R} into the entity {@code T}
  * @param <F> the type of the filter, extending {@link ScipamatoFilter}
  */
-public abstract class JooqReadOnlyRepo<R extends Record, T extends ScipamatoEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
+public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
         implements ReadOnlyRepository<T, ID, F> {
 
     private static final long serialVersionUID = 1L;

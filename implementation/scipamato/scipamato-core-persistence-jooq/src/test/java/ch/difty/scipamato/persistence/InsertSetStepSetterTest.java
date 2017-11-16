@@ -14,10 +14,10 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.scipamato.NullArgumentException;
-import ch.difty.scipamato.entity.ScipamatoEntity;
+import ch.difty.scipamato.entity.CoreEntity;
 
 @RunWith(MockitoJUnitRunner.class)
-public abstract class InsertSetStepSetterTest<R extends Record, E extends ScipamatoEntity> {
+public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEntity> {
 
     @Mock
     private InsertSetStep<R> stepMock;
