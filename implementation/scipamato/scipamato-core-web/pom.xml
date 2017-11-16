@@ -133,10 +133,10 @@
         </dependency>
 
         <!-- Spring boot admin starter client - Lacking configuration -->
-        <dependency>
+	<!--<dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
-        </dependency>
+	</dependency>-->
 
         <!-- Feign for accessing PubMed - https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-feign -->
         <!-- TODO currently pulls in (and requires) commons-lang, have to live with it for now, excluding it does not work -->

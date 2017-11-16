@@ -114,10 +114,10 @@
         </dependency>
 
         <!-- Spring boot admin starter client - Lacking configuration -->
-        <dependency>
+	<!--<dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- Apache Wicket + bootstrap -->
         <dependency>
