@@ -9,18 +9,23 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>scipamato-public-persistence-api</artifactId>
+    <artifactId>scipamato-common-persistence-api</artifactId>
     <packaging>jar</packaging>
-    <name>SciPaMaTo-Public :: Persistence API Project</name>
+    <name>SciPaMaTo-Common :: Persistence API Project</name>
 
     <dependencies>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-common-persistence-api</artifactId>
+            <artifactId>scipamato-common-utils</artifactId>
         </dependency>
         <dependency>
-            <groupId>ch.difty</groupId>
-            <artifactId>scipamato-public-entity</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>
