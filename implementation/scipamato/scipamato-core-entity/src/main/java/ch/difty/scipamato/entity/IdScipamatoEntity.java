@@ -18,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public abstract class IdScipamatoEntity<ID extends Number> extends ScipamatoEntity {
+public abstract class IdScipamatoEntity<ID extends Number> extends CoreEntity {
 
     private static final long serialVersionUID = 1L;
 

@@ -4,7 +4,7 @@ import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.jooq.Record;
 
-import ch.difty.scipamato.entity.ScipamatoEntity;
+import ch.difty.scipamato.entity.CoreEntity;
 
 /**
  * Sets the various fields from the entity into the InsertSetStep.
@@ -12,9 +12,9 @@ import ch.difty.scipamato.entity.ScipamatoEntity;
  * @author u.joss
  *
  * @param <R> Record extending {@link Record}
- * @param <T> Entity extending {@link ScipamatoEntity}
+ * @param <T> Entity extending {@link CoreEntity}
  */
-public interface InsertSetStepSetter<R extends Record, T extends ScipamatoEntity> {
+public interface InsertSetStepSetter<R extends Record, T extends CoreEntity> {
 
     /**
      * Sets all the non-key fields of the provided entity into the setter.

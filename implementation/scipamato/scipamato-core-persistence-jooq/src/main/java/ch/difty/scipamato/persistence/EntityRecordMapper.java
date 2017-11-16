@@ -4,7 +4,7 @@ import org.jooq.Record;
 import org.jooq.RecordMapper;
 
 import ch.difty.scipamato.AssertAs;
-import ch.difty.scipamato.entity.ScipamatoEntity;
+import ch.difty.scipamato.entity.CoreEntity;
 
 /**
  * Abstract base class for entity to record mappers that have audit fields.
@@ -16,9 +16,9 @@ import ch.difty.scipamato.entity.ScipamatoEntity;
  * @author u.joss
  *
  * @param <R> the type of the {@link Record}
- * @param <T> the type of the {@link ScipamatoEntity}
+ * @param <T> the type of the {@link CoreEntity}
  */
-public abstract class EntityRecordMapper<R extends Record, T extends ScipamatoEntity> implements RecordMapper<R, T> {
+public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity> implements RecordMapper<R, T> {
 
     /** {@inheritDoc} */
     @Override

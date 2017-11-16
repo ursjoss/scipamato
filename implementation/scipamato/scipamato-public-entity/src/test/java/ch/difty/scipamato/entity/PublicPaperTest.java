@@ -33,10 +33,10 @@ public class PublicPaperTest {
             .population("population")
             .result("result")
             .comment("comment")
-            .created(CREATED_DATE)
-            .lastModified(LASTMOD_DATE)
-            .version(10)
             .build();
+        p.setCreated(CREATED_DATE);
+        p.setLastModified(LASTMOD_DATE);
+        p.setVersion(10);
     }
 
     @Test
@@ -61,17 +61,19 @@ public class PublicPaperTest {
 
     @Test
     public void testingToString() {
-        PublicPaper p2 = new PublicPaper(100l, 200l, 100000, "authorsX", "titleX", "locationX", 3016, "goalsX", "methodsX", "populationX", "resultX", "commentX", CREATED_DATE, LASTMOD_DATE, 100);
         // @formatter:off
-        assertThat(p2.toString()).isEqualTo(
-                "PublicPaper(id=100, number=200, pmId=100000, authors=authorsX, title=titleX, location=locationX, " +
-                "publicationYear=3016, goals=goalsX, methods=methodsX, population=populationX, result=resultX, comment=commentX, " +
-                "created=2017-01-01T22:15:13.111, lastModified=2017-01-10T22:15:13.111, version=100)");
+        assertThat(p.toString()).isEqualTo(
+                "PublicPaper(id=1, number=2, pmId=1000, authors=authors, title=title, location=location, publicationYear=2016, goals=goals, methods=methods, population=population, result=result, comment=comment)");
         // @formatter:on
     }
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(PublicPaper.class).withIgnoredFields(PublicPaper.CREATED, PublicPaper.MODIFIED).suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier
+            .forClass(PublicPaper.class)
+            .withRedefinedSuperclass()
+            .withIgnoredFields(PublicPaper.CREATED, PublicPaper.MODIFIED)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 }

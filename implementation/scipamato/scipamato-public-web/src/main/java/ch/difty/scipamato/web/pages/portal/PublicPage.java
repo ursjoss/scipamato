@@ -16,7 +16,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 
 import ch.difty.scipamato.entity.PublicPaper;
-import ch.difty.scipamato.web.filter.PublicPaperFilter;
+import ch.difty.scipamato.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.web.pages.BasePage;
 import ch.difty.scipamato.web.provider.PublicPaperProvider;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;

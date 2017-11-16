@@ -1,6 +1,6 @@
 package ch.difty.scipamato.entity;
 
-import static ch.difty.scipamato.entity.ScipamatoEntity.*;
+import static ch.difty.scipamato.entity.CoreEntity.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -158,6 +158,6 @@ public class UserTest {
     @Test
     public void testingToString() {
         assertThat(user.toString()).isEqualTo(
-                "User[userName=username,firstName=firstname,lastName=lastname,email=email,password=password,enabled=false,roles=[],id=1,created=<null>,createdBy=<null>,lastModified=<null>,lastModifiedBy=<null>,version=0]");
+                "User[userName=username,firstName=firstname,lastName=lastname,email=email,password=password,enabled=false,roles=[],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
     }
 }

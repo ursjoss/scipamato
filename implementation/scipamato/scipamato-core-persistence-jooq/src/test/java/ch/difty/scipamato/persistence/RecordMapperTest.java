@@ -10,9 +10,9 @@ import org.jooq.RecordMapper;
 import org.junit.Test;
 
 import ch.difty.scipamato.NullArgumentException;
-import ch.difty.scipamato.entity.ScipamatoEntity;
+import ch.difty.scipamato.entity.CoreEntity;
 
-public abstract class RecordMapperTest<R extends Record, E extends ScipamatoEntity> {
+public abstract class RecordMapperTest<R extends Record, E extends CoreEntity> {
 
     public static final int VERSION = 1;
     public static final Timestamp CREATED = new Timestamp(1469999999999l);
@@ -29,7 +29,7 @@ public abstract class RecordMapperTest<R extends Record, E extends ScipamatoEnti
      *
      * @param entityMock
      */
-    protected static void auditFixtureFor(ScipamatoEntity entityMock) {
+    protected static void auditFixtureFor(CoreEntity entityMock) {
         when(entityMock.getCreated()).thenReturn(CREATED.toLocalDateTime());
         when(entityMock.getCreatedBy()).thenReturn(CREATED_BY);
         when(entityMock.getLastModified()).thenReturn(LAST_MOD.toLocalDateTime());

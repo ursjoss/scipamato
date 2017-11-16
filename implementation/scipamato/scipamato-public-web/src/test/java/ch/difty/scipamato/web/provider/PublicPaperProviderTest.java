@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.scipamato.ScipamatoPublicApplication;
 import ch.difty.scipamato.entity.PublicPaper;
-import ch.difty.scipamato.web.filter.PublicPaperFilter;
+import ch.difty.scipamato.entity.filter.PublicPaperFilter;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

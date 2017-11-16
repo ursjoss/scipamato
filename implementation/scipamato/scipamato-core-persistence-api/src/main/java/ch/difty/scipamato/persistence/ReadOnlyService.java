@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.IdScipamatoEntity;
-import ch.difty.scipamato.entity.ScipamatoEntity;
+import ch.difty.scipamato.entity.CoreEntity;
 import ch.difty.scipamato.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
 
@@ -16,7 +16,7 @@ import ch.difty.scipamato.persistence.paging.PaginationContext;
  * @author u.joss
  *
  * @param <ID> the type of the ID of entity {@code T}
- * @param <T> the entity type, extending {@link ScipamatoEntity}
+ * @param <T> the entity type, extending {@link CoreEntity}
  * @param <F> the filter, extending {@link ScipamatoFilter}
  */
 public interface ReadOnlyService<ID extends Number, T extends IdScipamatoEntity<ID>, F extends ScipamatoFilter> extends Serializable {

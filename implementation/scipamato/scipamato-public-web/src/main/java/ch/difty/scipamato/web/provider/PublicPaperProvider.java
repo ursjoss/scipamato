@@ -1,6 +1,5 @@
 package ch.difty.scipamato.web.provider;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,7 +13,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import ch.difty.scipamato.entity.PublicPaper;
-import ch.difty.scipamato.web.filter.PublicPaperFilter;
+import ch.difty.scipamato.entity.filter.PublicPaperFilter;
 
 public class PublicPaperProvider extends SortableDataProvider<PublicPaper, String> implements ISortableDataProvider<PublicPaper, String>, IFilterStateLocator<PublicPaperFilter> {
 
@@ -32,8 +31,8 @@ public class PublicPaperProvider extends SortableDataProvider<PublicPaper, Strin
         this.maxRowsPerPage = resultPageSize;
         setSort(PublicPaper.NUMBER, SortOrder.DESCENDING);
 
-        list.add(new PublicPaper(1l, 1l, 1000, "authors1", "title1", "location1", 2016, "goals1", "methods1", "population1", "result1", "comment1", LocalDateTime.now(), LocalDateTime.now(), 1));
-        list.add(new PublicPaper(2l, 2l, 1002, "authors2", "title2", "location2", 2017, "goals2", "methods2", "population2", "result2", "comment2", LocalDateTime.now(), LocalDateTime.now(), 2));
+        list.add(new PublicPaper(1l, 1l, 1000, "authors1", "title1", "location1", 2016, "goals1", "methods1", "population1", "result1", "comment1"));
+        list.add(new PublicPaper(2l, 2l, 1002, "authors2", "title2", "location2", 2017, "goals2", "methods2", "population2", "result2", "comment2"));
     }
 
     /**

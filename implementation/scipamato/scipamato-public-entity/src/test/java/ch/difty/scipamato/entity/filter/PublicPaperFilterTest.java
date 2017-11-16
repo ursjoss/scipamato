@@ -1,9 +1,10 @@
-package ch.difty.scipamato.web.filter;
+package ch.difty.scipamato.entity.filter;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
+import ch.difty.scipamato.entity.filter.PublicPaperFilter;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 

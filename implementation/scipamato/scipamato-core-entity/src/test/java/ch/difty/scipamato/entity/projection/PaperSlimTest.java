@@ -1,6 +1,6 @@
 package ch.difty.scipamato.entity.projection;
 
-import static ch.difty.scipamato.entity.ScipamatoEntity.*;
+import static ch.difty.scipamato.entity.CoreEntity.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Before;

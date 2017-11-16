@@ -37,7 +37,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     private static final String TEST_FILE_2 = "test file 2";
     private static final String LC = "en_us";
 
-    private static final String ID_PART = ",id=1,created=2016-12-14T14:47:29.431,createdBy=1,lastModified=2016-12-14T14:47:29.431,lastModifiedBy=1,version=1";
+    private static final String ID_PART = ",id=1,createdBy=1,lastModifiedBy=1,created=2016-12-14T14:47:29.431,lastModified=2016-12-14T14:47:29.431,version=1";
     // @formatter:off
     private static final String PAPER1_WO_CODE_CLASSES =
             "Paper[number=1,doi=10.1093/aje/kwu275,pmId=25395026"
@@ -155,29 +155,29 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
            PAPER1_WO_CODE_CLASSES
            +   ",codes=["
            +      "codesOfClass1=["
-           +         "Code[code=1F,name=Feinstaub, Partikel,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,created=2017-01-01T08:01:33.821,createdBy=1,lastModified=2017-01-01T08:01:33.821,lastModifiedBy=1,version=1]"
+           +         "Code[code=1F,name=Feinstaub, Partikel,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
            +      "],"
            +      "codesOfClass2=["
-           +         "Code[code=2N,name=Übrige Länder,comment=<null>,internal=false,codeClass=CodeClass[id=2],sort=2,created=2017-01-01T08:01:33.821,createdBy=1,lastModified=2017-01-01T08:01:33.821,lastModifiedBy=1,version=1]"
+           +         "Code[code=2N,name=Übrige Länder,comment=<null>,internal=false,codeClass=CodeClass[id=2],sort=2,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
            +      "],"
            +      "codesOfClass3=["
-           +         "Code[code=3C,name=Erwachsene (alle),comment=<null>,internal=false,codeClass=CodeClass[id=3],sort=3,created=2017-01-01T08:01:33.821,createdBy=1,lastModified=2017-01-01T08:01:33.821,lastModifiedBy=1,version=1]"
+           +         "Code[code=3C,name=Erwachsene (alle),comment=<null>,internal=false,codeClass=CodeClass[id=3],sort=3,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
            +      "],"
            +      "codesOfClass4=["
-           +         "Code[code=4G,name=Krebs,comment=<null>,internal=false,codeClass=CodeClass[id=4],sort=7,created=2017-01-01T08:01:33.821,createdBy=1,lastModified=2017-01-01T08:01:33.821,lastModifiedBy=1,version=1]"
+           +         "Code[code=4G,name=Krebs,comment=<null>,internal=false,codeClass=CodeClass[id=4],sort=7,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
            +      "],"
            +      "codesOfClass5=["
-           +         "Code[code=5H,name=Kohortenstudie,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=7,created=2017-01-01T08:01:33.821,createdBy=1,lastModified=2017-01-01T08:01:33.821,lastModifiedBy=1,version=1], "
-           +         "Code[code=5S,name=Statistik,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=10,created=2017-01-01T08:01:33.821,createdBy=1,lastModified=2017-01-01T08:01:33.821,lastModifiedBy=1,version=1]"
+           +         "Code[code=5H,name=Kohortenstudie,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=7,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1], "
+           +         "Code[code=5S,name=Statistik,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=10,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
            +      "],"
            +      "codesOfClass6=["
-           +         "Code[code=6M,name=Mensch,comment=<null>,internal=false,codeClass=CodeClass[id=6],sort=1,created=2017-01-01T08:01:33.821,createdBy=1,lastModified=2017-01-01T08:01:33.821,lastModifiedBy=1,version=1]"
+           +         "Code[code=6M,name=Mensch,comment=<null>,internal=false,codeClass=CodeClass[id=6],sort=1,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
            +      "],"
            +      "codesOfClass7="
-           +         "[Code[code=7L,name=Langfristig,comment=<null>,internal=false,codeClass=CodeClass[id=7],sort=2,created=2017-01-01T08:01:33.821,createdBy=1,lastModified=2017-01-01T08:01:33.821,lastModifiedBy=1,version=1]"
+           +         "[Code[code=7L,name=Langfristig,comment=<null>,internal=false,codeClass=CodeClass[id=7],sort=2,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
            +      "],"
            +      "codesOfClass8=["
-           +         "Code[code=8O,name=Aussenluft,comment=<null>,internal=false,codeClass=CodeClass[id=8],sort=2,created=2017-01-01T08:01:33.821,createdBy=1,lastModified=2017-01-01T08:01:33.821,lastModifiedBy=1,version=1]"
+           +         "Code[code=8O,name=Aussenluft,comment=<null>,internal=false,codeClass=CodeClass[id=8],sort=2,createdBy=1,lastModifiedBy=1,created=2017-01-01T08:01:33.821,lastModified=2017-01-01T08:01:33.821,version=1]"
            +      "]"
            +    "]"
            + ID_PART

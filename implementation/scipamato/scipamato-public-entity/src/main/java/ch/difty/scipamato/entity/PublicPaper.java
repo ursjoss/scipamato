@@ -1,8 +1,5 @@
 package ch.difty.scipamato.entity;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -11,8 +8,8 @@ import lombok.Value;
 @Value
 @Builder
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = { "created", "lastModified" })
-public class PublicPaper implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class PublicPaper extends PublicEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,10 +27,6 @@ public class PublicPaper implements Serializable {
     public static final String RESULT = "result";
     public static final String COMMENT = "comment";
 
-    public static final String CREATED = "created";
-    public static final String MODIFIED = "lastModified";
-    public static final String VERSION = "version";
-
     private Long id;
     private Long number;
     private Integer pmId;
@@ -47,9 +40,5 @@ public class PublicPaper implements Serializable {
     private String population;
     private String result;
     private String comment;
-
-    private LocalDateTime created;
-    private LocalDateTime lastModified;
-    private int version;
 
 }

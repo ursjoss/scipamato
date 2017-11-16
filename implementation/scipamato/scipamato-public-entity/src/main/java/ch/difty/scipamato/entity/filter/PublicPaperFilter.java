@@ -1,13 +1,11 @@
-package ch.difty.scipamato.web.filter;
-
-import java.io.Serializable;
+package ch.difty.scipamato.entity.filter;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class PublicPaperFilter implements Serializable {
+public class PublicPaperFilter extends ScipamatoFilter {
 
     private static final long serialVersionUID = 1L;
 
