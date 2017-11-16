@@ -155,6 +155,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
                     PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.VERSION)
             .from(PAPER_ATTACHMENT)
             .where(PAPER_ATTACHMENT.PAPER_ID.eq(paperId))
+            .orderBy(PAPER_ATTACHMENT.ID)
             .fetchInto(ch.difty.scipamato.entity.PaperAttachment.class);
     }
 
