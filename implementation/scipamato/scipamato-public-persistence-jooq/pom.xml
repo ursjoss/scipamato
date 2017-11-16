@@ -17,7 +17,6 @@
         <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
         <org.jooq.db-generator>org.jooq.util.postgres.PostgresDatabase</org.jooq.db-generator>
 
-        <!-- Plugin versions -->
         <property-file>${basedir}/src/main/resources/db.properties</property-file>
         <property-file-it>${basedir}/src/test/resources/db.properties</property-file-it>
     </properties>
@@ -29,7 +28,7 @@
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-common-config</artifactId>
+            <artifactId>scipamato-common-persistence-jooq</artifactId>
         </dependency>
 
         <dependency>
@@ -41,55 +40,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-
-
-        <!-- Database -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jooq</artifactId>
-            <exclusions>
-                <exclusion>
-                    <!-- Excluding tomcat-jdbc so we can use HikariCP -->
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-jdbc</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- jOOQ - building type safe SQL -->
-        <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq</artifactId>
-        </dependency>
-
-        <!-- HikariCP connection pool -->
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-        </dependency>
-
-        <!-- JDBC Drivers - PostgreSQL -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-        </dependency>
-
-        <!-- Flyway to manage database migrations -->
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
-        <!-- Lambda utilities -->
-        <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jool</artifactId>
         </dependency>
 
         <!-- Testing -->
@@ -109,17 +59,17 @@
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-common-utils</artifactId>
             <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-common-persistence-jooq</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>pl.pragmatists</groupId>
             <artifactId>JUnitParams</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- JSR 303 bean validation provider implementation -->
-        <dependency>
-            <groupId>org.apache.bval</groupId>
-            <artifactId>bval-jsr</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -216,7 +166,7 @@
         </profile>
 
         <profile>
-            <!-- Maven profile testDb - work with the database scipamato_public_it instead of scipamato -->
+            <!-- Maven profile testDb - work with the database scipamato_public_it instead of scipamato_public -->
             <id>testDb</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
@@ -422,23 +372,6 @@
     </profiles>
 
     <build>
-        <resources>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/resources</directory>
-            </resource>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**</include>
-                </includes>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </resource>
-        </resources>
-
         <plugins>
             <!-- publish db specific properties from property files for the Flyway and jOOQ plugins -->
             <plugin>
@@ -524,7 +457,7 @@
                 </executions>
             </plugin>
 
-            <!-- Assist eclipse in recognizing the generates sources (from jOOQ and jaxb) as source files -->
+            <!-- Assist eclipse in recognizing the generates sources (from jOOQ) as source files -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>

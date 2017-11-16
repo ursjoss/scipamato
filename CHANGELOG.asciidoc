@@ -56,7 +56,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Core: 06/21+24: Open external links in new browser tab
-- New maven modules scipamto-common-entity, scipamato-common-persistence-api
+- Story 07/01: New maven modules scipamto-common-entity, scipamato-common-persistence-api, scipamato-common-persistence-jooq
 
 .Deprecated
 

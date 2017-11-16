@@ -23,6 +23,7 @@
         <module>scipamato-common-config</module>
         <module>scipamato-common-entity</module>
         <module>scipamato-common-persistence-api</module>
+        <module>scipamato-common-persistence-jooq</module>
         <module>scipamato-common-wicket</module>
         <module>scipamato-core-logic</module>
         <module>scipamato-core-entity</module>
@@ -129,6 +130,17 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>scipamato-common-persistence-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>scipamato-common-persistence-jooq</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>scipamato-common-persistence-jooq</artifactId>
+                <type>test-jar</type>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
