@@ -72,7 +72,7 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
         final Condition conditions = filterConditionMapper.map(filter);
         final Collection<SortField<PublicPaper>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
         final List<PaperRecord> tuples = getDsl().selectFrom(getTable()).where(conditions).orderBy(sortCriteria).limit(pc.getPageSize()).offset(pc.getOffset()).fetchInto(getRecordClass());
-        return tuples.stream().map(r -> map(r)).collect(Collectors.toList());
+        return tuples.stream().map(this::map).collect(Collectors.toList());
     }
 
     private PublicPaper map(final PaperRecord r) {

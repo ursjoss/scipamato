@@ -34,7 +34,6 @@ public class PublicPage extends BasePage<Void> {
 
     private PublicPaperFilter filter;
     private PublicPaperProvider dataProvider;
-    private DataTable<PublicPaper, String> results;
 
     public PublicPage(PageParameters parameters) {
         super(parameters);
@@ -56,15 +55,7 @@ public class PublicPage extends BasePage<Void> {
     }
 
     private void makeAndQueueFilterForm(final String id) {
-        queue(new FilterForm<PublicPaperFilter>(id, dataProvider) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onSubmit() {
-                super.onSubmit();
-                System.out.println("whooo - submitted");
-            }
-        });
+        queue(new FilterForm<PublicPaperFilter>(id, dataProvider));
 
         queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(filter, PublicPaperFilter.METHODS_MASK)));
         queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(filter, PublicPaperFilter.AUTHOR_MASK)));
@@ -74,7 +65,7 @@ public class PublicPage extends BasePage<Void> {
     }
 
     private void makeAndQueueResultTable(String id) {
-        results = new BootstrapDefaultDataTable<PublicPaper, String>(id, makeTableColumns(), dataProvider, dataProvider.getRowsPerPage());
+        DataTable<PublicPaper, String> results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, dataProvider.getRowsPerPage());
         results.setOutputMarkupId(true);
         results.add(new TableBehavior().striped().hover());
         queue(results);
