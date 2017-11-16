@@ -96,8 +96,6 @@ public class AbstractPageTest extends WicketBaseTest {
     private void assertComponents() {
         getTester().assertComponent("_header_", HtmlHeaderContainer.class);
 
-        getTester().debugComponentTrees();
-
         getTester().assertComponent("navbar", Navbar.class);
         getTester().assertComponent("navbar:container:collapse:extraItems", RepeatingView.class);
         getTester().assertComponent("navbar:container:collapse:navLeftListEnclosure:navLeftList", ListView.class);
@@ -119,6 +117,5 @@ public class AbstractPageTest extends WicketBaseTest {
         getTester().assertComponent("form", Form.class);
         getTester().assertLabel("form:fooLabel", "Foo");
         getTester().assertComponent("form:foo", TextField.class);
-
     }
 }

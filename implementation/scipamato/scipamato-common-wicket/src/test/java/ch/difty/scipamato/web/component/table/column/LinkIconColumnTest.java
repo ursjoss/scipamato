@@ -74,7 +74,6 @@ public class LinkIconColumnTest extends WicketBaseTest {
     @Test
     public void clickingLink() {
         getTester().startComponentInPage(newPanelWithTitle("foo"));
-        getTester().debugComponentTrees();
         getTester().clickLink("panel:table:body:rows:1:cells:2:cell:link");
         assertThat(clickPerformed).isEqualTo("TestRecord(1, foo)");
     }

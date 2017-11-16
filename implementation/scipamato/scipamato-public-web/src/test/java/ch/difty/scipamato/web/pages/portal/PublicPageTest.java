@@ -62,7 +62,6 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     }
 
     private void assertResultsTable(String b) {
-        getTester().debugComponentTrees();
         getTester().assertComponent(b, BootstrapDefaultDataTable.class);
 
         assertTableRow(b + ":body:rows:1:cells", "authors1", "title1", "location1", "2016");

@@ -51,7 +51,6 @@ public class LoginPageTest extends BasePageTest<LoginPage> {
     }
 
     private void assertMenuEntries() {
-        getTester().debugComponentTrees();
         getTester().assertComponent("_header_", HtmlHeaderContainer.class);
         getTester().assertComponent("navbar", Navbar.class);
         assertPageLinkButton(0, "Left", NavbarButton.class, "Papers");

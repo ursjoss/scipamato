@@ -328,7 +328,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
         getTester().startPage(page);
         getTester().assertRenderedPage(getPageClass());
-        getTester().debugComponentTrees();
+
         final String linkPath = "searchOrderSelectorPanel:form:showExcluded";
         getTester().assertComponent(linkPath, AjaxCheckBox.class);
         getTester().executeAjaxEvent(linkPath, "click");
