@@ -18,25 +18,6 @@
 
     <url>https://github.com/ursjoss/scipamato</url>
 
-    <modules>
-        <module>scipamato-common-utils</module>
-        <module>scipamato-common-config</module>
-        <module>scipamato-common-entity</module>
-        <module>scipamato-common-persistence-api</module>
-        <module>scipamato-common-persistence-jooq</module>
-        <module>scipamato-common-wicket</module>
-        <module>scipamato-core-logic</module>
-        <module>scipamato-core-entity</module>
-        <module>scipamato-core-pubmed-api</module>
-        <module>scipamato-core-persistence-api</module>
-        <module>scipamato-core-persistence-jooq</module>
-        <module>scipamato-core-web</module>
-        <module>scipamato-public-entity</module>
-        <module>scipamato-public-persistence-api</module>
-        <module>scipamato-public-persistence-jooq</module>
-        <module>scipamato-public-web</module>
-    </modules>
-
     <developers>
         <developer>
             <name>Urs Joss</name>
@@ -406,6 +387,76 @@
     </dependencies>
 
     <profiles>
+        <!-- ============================================================== -->
+        <!-- === Profiles managing the build by including modules ==== -->
+        <!-- ============================================================== -->
+
+        <!-- Only build SciPaMaTo-Core -->
+        <profile>
+            <id>core</id>
+            <modules>
+                <module>scipamato-common-utils</module>
+                <module>scipamato-common-config</module>
+                <module>scipamato-common-entity</module>
+                <module>scipamato-common-persistence-api</module>
+                <module>scipamato-common-persistence-jooq</module>
+                <module>scipamato-common-wicket</module>
+                <module>scipamato-core-logic</module>
+                <module>scipamato-core-entity</module>
+                <module>scipamato-core-pubmed-api</module>
+                <module>scipamato-core-persistence-api</module>
+                <module>scipamato-core-persistence-jooq</module>
+                <module>scipamato-core-web</module>
+            </modules>
+        </profile>
+
+        <!-- Only build SciPaMaTo-Public -->
+        <profile>
+            <id>public</id>
+            <modules>
+                <module>scipamato-common-utils</module>
+                <module>scipamato-common-config</module>
+                <module>scipamato-common-entity</module>
+                <module>scipamato-common-persistence-api</module>
+                <module>scipamato-common-persistence-jooq</module>
+                <module>scipamato-common-wicket</module>
+                <module>scipamato-public-entity</module>
+                <module>scipamato-public-persistence-api</module>
+                <module>scipamato-public-persistence-jooq</module>
+                <module>scipamato-public-web</module>
+            </modules>
+        </profile>
+
+        <!-- Build SciPaMaTo-Core and SciPaMaTo-Public -->
+        <profile>
+            <id>all</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>scipamato-common-utils</module>
+                <module>scipamato-common-config</module>
+                <module>scipamato-common-entity</module>
+                <module>scipamato-common-persistence-api</module>
+                <module>scipamato-common-persistence-jooq</module>
+                <module>scipamato-common-wicket</module>
+                <module>scipamato-core-logic</module>
+                <module>scipamato-core-entity</module>
+                <module>scipamato-core-pubmed-api</module>
+                <module>scipamato-core-persistence-api</module>
+                <module>scipamato-core-persistence-jooq</module>
+                <module>scipamato-core-web</module>
+                <module>scipamato-public-entity</module>
+                <module>scipamato-public-persistence-api</module>
+                <module>scipamato-public-persistence-jooq</module>
+                <module>scipamato-public-web</module>
+            </modules>
+        </profile>
+
+        <!-- ============================================================== -->
+        <!-- === Profile for including the development tools ==== -->
+        <!-- ============================================================== -->
+
         <!-- Maven profile development - activating the spring-boot-devtools -->
         <profile>
             <id>development</id>
@@ -423,8 +474,13 @@
             </dependencies>
         </profile>
 
+
+        <!-- ============================================================== -->
+        <!-- === Profiles indicating what kind of tests to run ==== -->
+        <!-- ============================================================== -->
+
+        <!-- Maven profile pageTests - limits tests to page/panel tests only -->
         <profile>
-            <!-- Maven profile pageTests - limits tests to page/panel tests only -->
             <id>pageTests</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
@@ -444,8 +500,8 @@
             </build>
         </profile>
 
+        <!-- Maven profile allTests - runs all tests without restrictions -->
         <profile>
-            <!-- Maven profile allTests - runs all tests without restrictions -->
             <id>allTests</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
