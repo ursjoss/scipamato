@@ -19,38 +19,9 @@
     </properties>
 
     <dependencies>
-        <!-- TODO clean up -->
-        <dependency>
-            <groupId>ch.difty</groupId>
-            <artifactId>scipamato-common-utils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.difty</groupId>
-            <artifactId>scipamato-common-utils</artifactId>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.difty</groupId>
-            <artifactId>scipamato-common-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.difty</groupId>
-            <artifactId>scipamato-core-logic</artifactId>
-        </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-core-entity</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.difty</groupId>
-            <artifactId>scipamato-core-pubmed-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.difty</groupId>
-            <artifactId>scipamato-core-pubmed-api</artifactId>
-            <type>test-jar</type>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
@@ -64,21 +35,27 @@
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-common-wicket</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-core-logic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-core-pubmed-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-core-pubmed-api</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
 
-        <!-- spring-boot starters -->
+        <!-- JSR 303 bean validation provider implementation -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
+            <groupId>org.apache.bval</groupId>
+            <artifactId>bval-jsr</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
@@ -91,15 +68,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
         <!-- XML processing -->
@@ -125,18 +97,6 @@
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
         </dependency>
-
-        <!-- JSR 303 bean validation provider implementation -->
-        <dependency>
-            <groupId>org.apache.bval</groupId>
-            <artifactId>bval-jsr</artifactId>
-        </dependency>
-
-        <!-- Spring boot admin starter client - Lacking configuration -->
-	<!--<dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-client</artifactId>
-	</dependency>-->
 
         <!-- Feign for accessing PubMed - https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-feign -->
         <!-- TODO currently pulls in (and requires) commons-lang, have to live with it for now, excluding it does not work -->

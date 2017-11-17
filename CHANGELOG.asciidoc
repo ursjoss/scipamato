@@ -63,7 +63,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
-- Commented out dependency for spring-boot-admin, as it is not available on maven-central and thus breaks the build (unless you compile it yourself)
 
 .Security
 
