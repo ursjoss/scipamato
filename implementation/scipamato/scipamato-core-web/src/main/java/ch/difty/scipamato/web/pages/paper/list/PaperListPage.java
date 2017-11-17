@@ -169,6 +169,10 @@ public class PaperListPage extends BasePage<Void> {
         setResponsePage(new PaperListPage(getPageParameters(), result));
     }
 
+    /**
+     * @param result
+     * @param target, can be null if called from constructor
+     */
     private void translateServiceResultMessagesToLocalizedUserMessages(final ServiceResult result, final AjaxRequestTarget target) {
         result.getErrorMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.xml.invalid", this, null).getString()).forEach(this::error);
         result.getWarnMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.exists", this, null).setParameters(msg).getString()).forEach(this::warn);

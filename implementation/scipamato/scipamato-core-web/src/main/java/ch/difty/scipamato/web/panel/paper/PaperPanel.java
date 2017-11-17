@@ -2,7 +2,6 @@ package ch.difty.scipamato.web.panel.paper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
@@ -430,18 +429,18 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         }
 
         TextArea<String> queueTo(String id) {
-            return queueTo(id, false, Optional.empty());
+            return queueTo(id, false, null);
         }
 
         void queueTo(String id, PropertyValidator<?> pv) {
-            queueTo(id, false, Optional.ofNullable(pv));
+            queueTo(id, false, pv);
         }
 
         void queueNewFieldTo(String id) {
-            queueTo(id, true, Optional.empty());
+            queueTo(id, true, null);
         }
 
-        TextArea<String> queueTo(String id, boolean newField, Optional<PropertyValidator<?>> pv) {
+        TextArea<String> queueTo(String id, boolean newField, PropertyValidator<?> pv) {
             TextArea<String> field = makeField(id, newField);
             field.setOutputMarkupId(true);
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
@@ -450,8 +449,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             if (newField) {
                 addNewFieldSpecificAttributes(field);
             }
-            if (pv.isPresent() && isEditMode()) {
-                field.add(pv.get());
+            if (pv != null && isEditMode()) {
+                field.add(pv);
             }
             queue(field);
             return field;

@@ -34,11 +34,6 @@ public class ScipamatoUserDetails extends User implements UserDetails {
     }
 
     @Override
-    public String getPassword() {
-        return super.getPassword();
-    }
-
-    @Override
     public String getUsername() {
         return super.getUserName();
     }
@@ -56,11 +51,6 @@ public class ScipamatoUserDetails extends User implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return super.isEnabled();
     }
 
 }
