@@ -1,5 +1,6 @@
 package ch.difty.scipamato.persistence.search;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static ch.difty.scipamato.db.tables.SearchOrder.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -12,7 +13,6 @@ import org.jooq.TableField;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.db.tables.records.SearchOrderRecord;
 import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.Paper;
@@ -142,55 +142,27 @@ public class JooqSearchOrderRepoTest extends JooqEntityRepoTest<SearchOrderRecor
 
     @Test
     public void degenerateConstruction() {
-        try {
-            new JooqSearchOrderRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                    getApplicationProperties());
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dsl must not be null.");
-        }
-        try {
-            new JooqSearchOrderRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties());
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("mapper must not be null.");
-        }
-        try {
-            new JooqSearchOrderRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties());
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("sortMapper must not be null.");
-        }
-        try {
-            new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), null, getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties());
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("filterConditionMapper must not be null.");
-        }
-        try {
-            new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null, getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties());
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dateTimeService must not be null.");
-        }
-        try {
-            new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), null, getUpdateSetStepSetter(), getApplicationProperties());
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("insertSetStepSetter must not be null.");
-        }
-        try {
-            new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), null, getApplicationProperties());
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("updateSetStepSetter must not be null.");
-        }
-        try {
-            new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("applicationProperties must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new JooqSearchOrderRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(),
+                getUpdateSetStepSetter(), getApplicationProperties()), "dsl");
+        assertDegenerateSupplierParameter(() -> new JooqSearchOrderRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(),
+                getUpdateSetStepSetter(), getApplicationProperties()), "mapper");
+        assertDegenerateSupplierParameter(() -> new JooqSearchOrderRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(),
+                getUpdateSetStepSetter(), getApplicationProperties()), "sortMapper");
+        assertDegenerateSupplierParameter(
+                () -> new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), null, getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()),
+                "filterConditionMapper");
+        assertDegenerateSupplierParameter(
+                () -> new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null, getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()),
+                "dateTimeService");
+        assertDegenerateSupplierParameter(
+                () -> new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), null, getUpdateSetStepSetter(), getApplicationProperties()),
+                "insertSetStepSetter");
+        assertDegenerateSupplierParameter(
+                () -> new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), null, getApplicationProperties()),
+                "updateSetStepSetter");
+        assertDegenerateSupplierParameter(
+                () -> new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null),
+                "applicationProperties");
     }
 
     @Test

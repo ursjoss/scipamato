@@ -1,5 +1,6 @@
 package ch.difty.scipamato.persistence.user;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static ch.difty.scipamato.db.tables.ScipamatoUser.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -8,7 +9,6 @@ import org.jooq.TableField;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.db.tables.records.ScipamatoUserRecord;
 import ch.difty.scipamato.entity.User;
 import ch.difty.scipamato.entity.filter.UserFilter;
@@ -136,65 +136,24 @@ public class JooqUserRepoTest extends JooqEntityRepoTest<ScipamatoUserRecord, Us
 
     @Test
     public void degenerateConstruction() {
-        try {
-            new JooqUserRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(),
-                    userRoleRepoMock);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dsl must not be null.");
-        }
-        try {
-            new JooqUserRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(),
-                    userRoleRepoMock);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("mapper must not be null.");
-        }
-        try {
-            new JooqUserRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(),
-                    userRoleRepoMock);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("sortMapper must not be null.");
-        }
-        try {
-            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), null, getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(), userRoleRepoMock);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("filterConditionMapper must not be null.");
-        }
-        try {
-            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null, getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(),
-                    userRoleRepoMock);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dateTimeService must not be null.");
-        }
-        try {
-            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), null, getUpdateSetStepSetter(), getApplicationProperties(), userRoleRepoMock);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("insertSetStepSetter must not be null.");
-        }
-        try {
-            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), null, getApplicationProperties(), userRoleRepoMock);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("updateSetStepSetter must not be null.");
-        }
-        try {
-            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null, userRoleRepoMock);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("applicationProperties must not be null.");
-        }
-        try {
-            new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(),
-                    null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("userRoleRepo must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new JooqUserRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(),
+                getUpdateSetStepSetter(), getApplicationProperties(), userRoleRepoMock), "dsl");
+        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
+                getApplicationProperties(), userRoleRepoMock), "mapper");
+        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
+                getApplicationProperties(), userRoleRepoMock), "sortMapper");
+        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), null, getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
+                getApplicationProperties(), userRoleRepoMock), "filterConditionMapper");
+        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null, getInsertSetStepSetter(), getUpdateSetStepSetter(),
+                getApplicationProperties(), userRoleRepoMock), "dateTimeService");
+        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), null, getUpdateSetStepSetter(),
+                getApplicationProperties(), userRoleRepoMock), "insertSetStepSetter");
+        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), null,
+                getApplicationProperties(), userRoleRepoMock), "updateSetStepSetter");
+        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(),
+                getUpdateSetStepSetter(), null, userRoleRepoMock), "applicationProperties");
+        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(),
+                getUpdateSetStepSetter(), getApplicationProperties(), null), "userRoleRepo");
     }
 
     @Test

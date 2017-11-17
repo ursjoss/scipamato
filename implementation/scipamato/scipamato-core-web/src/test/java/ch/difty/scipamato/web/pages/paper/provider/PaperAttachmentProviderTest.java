@@ -1,5 +1,6 @@
 package ch.difty.scipamato.web.pages.paper.provider;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.PaperAttachment;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -35,23 +35,13 @@ public class PaperAttachmentProviderTest {
 
     @Test
     public void degenerateConstruction_withNullSearchOrderModel() {
-        try {
-            new PaperAttachmentProvider(null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("attachmentsModel must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new PaperAttachmentProvider(null), "attachmentsModel");
     }
 
     @Test
     public void degenerateConstruction_withNullSearchOrderModel1() {
-        try {
-            List<PaperAttachment> nullList = null;
-            new PaperAttachmentProvider(Model.ofList(nullList));
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("attachments must not be null.");
-        }
+        List<PaperAttachment> nullList = null;
+        assertDegenerateSupplierParameter(() -> new PaperAttachmentProvider(Model.ofList(nullList)), "attachments");
     }
 
     @Test

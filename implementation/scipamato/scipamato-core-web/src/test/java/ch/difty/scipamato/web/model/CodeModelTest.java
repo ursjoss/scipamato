@@ -1,5 +1,6 @@
 package ch.difty.scipamato.web.model;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -9,7 +10,6 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.CodeClassId;
 import ch.difty.scipamato.persistence.CodeService;
@@ -21,22 +21,12 @@ public class CodeModelTest extends ModelTest {
 
     @Test
     public void instantiating_withNullCodeClassId_throws() {
-        try {
-            new CodeModel(null, "de");
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("codeClassId must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new CodeModel(null, "de"), "codeClassId");
     }
 
     @Test
     public void instantiating_withNullLanguageCode_throws() {
-        try {
-            new CodeModel(CodeClassId.CC1, null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("languageCode must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new CodeModel(CodeClassId.CC1, null), "languageCode");
     }
 
     @Test

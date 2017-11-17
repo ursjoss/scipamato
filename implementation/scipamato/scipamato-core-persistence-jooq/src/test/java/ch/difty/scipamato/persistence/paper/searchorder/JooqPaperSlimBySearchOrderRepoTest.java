@@ -1,5 +1,6 @@
 package ch.difty.scipamato.persistence.paper.searchorder;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.jooq.Condition;
@@ -8,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.SearchOrder;
@@ -41,22 +41,12 @@ public class JooqPaperSlimBySearchOrderRepoTest {
 
     @Test
     public void findingBySearchOrder_withNullSearchOrder_throws() {
-        try {
-            finder.findBySearchOrder((SearchOrder) null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchOrder must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> finder.findBySearchOrder((SearchOrder) null), "searchOrder");
     }
 
     @Test
     public void countingBySearchOrder_withNullSearchOrder_throws() {
-        try {
-            finder.countBySearchOrder((SearchOrder) null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchOrder must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> finder.countBySearchOrder((SearchOrder) null), "searchOrder");
     }
 
     @Test

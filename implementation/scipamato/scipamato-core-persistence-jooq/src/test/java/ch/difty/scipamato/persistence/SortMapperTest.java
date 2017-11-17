@@ -1,5 +1,6 @@
 package ch.difty.scipamato.persistence;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -18,7 +19,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 
-import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.persistence.paging.Sort;
@@ -27,8 +27,6 @@ import ch.difty.scipamato.persistence.paging.Sort.SortProperty;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SortMapperTest {
-
-    private static final String SHOULD_HAVE_THROWN_EXCEPTION = "should have thrown exception";
 
     private final SortMapper<PaperRecord, Paper, ch.difty.scipamato.db.tables.Paper> mapper = new SortMapper<>();
 
@@ -78,7 +76,7 @@ public class SortMapperTest {
         String notExistingFieldName = "foo";
         try {
             mapper.getTableField(notExistingFieldName, ch.difty.scipamato.db.tables.Paper.PAPER);
-            fail(SHOULD_HAVE_THROWN_EXCEPTION);
+            fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(InvalidDataAccessApiUsageException.class).hasMessage("Could not find table field: foo; nested exception is java.lang.NoSuchFieldException: FOO");
         }
@@ -87,23 +85,13 @@ public class SortMapperTest {
     @Test
     public void gettingTableField_withNullField_throws() {
         String nullFieldName = null;
-        try {
-            mapper.getTableField(nullFieldName, ch.difty.scipamato.db.tables.Paper.PAPER);
-            fail(SHOULD_HAVE_THROWN_EXCEPTION);
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("sortFieldName must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> mapper.getTableField(nullFieldName, ch.difty.scipamato.db.tables.Paper.PAPER), "sortFieldName");
     }
 
     @Test
     public void gettingTableField_withNulTable_returnsTableField() {
         String existingFieldName = ch.difty.scipamato.db.tables.Paper.PAPER.AUTHORS.getName();
-        try {
-            mapper.getTableField(existingFieldName, null);
-            fail(SHOULD_HAVE_THROWN_EXCEPTION);
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("table must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> mapper.getTableField(existingFieldName, null), "table");
     }
 
     @Test

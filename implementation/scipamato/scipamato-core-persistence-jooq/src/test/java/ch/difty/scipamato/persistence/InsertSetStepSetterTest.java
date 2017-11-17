@@ -1,5 +1,6 @@
 package ch.difty.scipamato.persistence;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -89,22 +90,12 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
 
     @Test
     public void settingNonKeyFields_withNullSetter_throws() {
-        try {
-            getSetter().setNonKeyFieldsFor(null, getEntity());
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("step must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> getSetter().setNonKeyFieldsFor(null, getEntity()), "step");
     }
 
     @Test
     public void settingNonKeyFields_withNullEntity_throws() {
-        try {
-            getSetter().setNonKeyFieldsFor(getStep(), null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("entity must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> getSetter().setNonKeyFieldsFor(getStep(), null), "entity");
     }
 
     @Test

@@ -1,5 +1,6 @@
 package ch.difty.scipamato.pubmed;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -13,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.config.core.ApplicationProperties;
 import ch.difty.scipamato.persistence.PaperService;
 import ch.difty.scipamato.persistence.ServiceResult;
@@ -50,34 +50,19 @@ public class PubmedImportServiceTest {
 
     @Test
     public void degenerateConstruction_withNullPubmedArticleService_throws() {
-        try {
-            new PubmedImportService(null, paperServiceMock, applicationPropertiesMock);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("pubmedArticleService must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new PubmedImportService(null, paperServiceMock, applicationPropertiesMock), "pubmedArticleService");
         verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
     }
 
     @Test
     public void degenerateConstruction_withNullSaperService_throws() {
-        try {
-            new PubmedImportService(pubmedArticleServiceMock, null, applicationPropertiesMock);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("paperService must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new PubmedImportService(pubmedArticleServiceMock, null, applicationPropertiesMock), "paperService");
         verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
     }
 
     @Test
     public void degenerateConstruction_withNullApplicationProperties_throws() {
-        try {
-            new PubmedImportService(pubmedArticleServiceMock, paperServiceMock, null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("applicationProperties must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new PubmedImportService(pubmedArticleServiceMock, paperServiceMock, null), "applicationProperties");
         verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
     }
 

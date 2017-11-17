@@ -1,5 +1,6 @@
 package ch.difty.scipamato.web.security;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -14,7 +15,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.User;
 import ch.difty.scipamato.persistence.UserService;
 
@@ -39,12 +39,7 @@ public class ScipamatoUserDetailServiceTest {
 
     @Test
     public void degenerateCallWithNullUserName_throws() {
-        try {
-            service.loadUserByUsername(null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("username must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> service.loadUserByUsername(null), "username");
     }
 
     @Test

@@ -1,10 +1,10 @@
 package ch.difty.scipamato.pubmed;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.NullArgumentException;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 
@@ -31,89 +31,49 @@ public class ScipamatoPubmedArticleTest {
 
     @Test
     public void degenerateConstruction_withNullPubmedArticle() {
-        try {
-            new ScipamatoPubmedArticle(null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("pubmedArticle must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new ScipamatoPubmedArticle(null), "pubmedArticle");
     }
 
     @Test
     public void degenerateConstruction_withNullMedlineCitation() {
         pubmedArticle.setMedlineCitation(null);
-        try {
-            new ScipamatoPubmedArticle(pubmedArticle);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("pubmedArticle.medlineCitation must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new ScipamatoPubmedArticle(pubmedArticle), "pubmedArticle.medlineCitation");
     }
 
     @Test
     public void degenerateConstruction_withNullArticle() {
         pubmedArticle.getMedlineCitation().setArticle(null);
-        try {
-            new ScipamatoPubmedArticle(pubmedArticle);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("pubmedArticle.medlineCitation.article must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new ScipamatoPubmedArticle(pubmedArticle), "pubmedArticle.medlineCitation.article");
     }
 
     @Test
     public void degenerateConstruction_withNullJournal() {
         pubmedArticle.getMedlineCitation().getArticle().setJournal(null);
-        try {
-            new ScipamatoPubmedArticle(pubmedArticle);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("pubmedArticle.medlineCitation.article.journal must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new ScipamatoPubmedArticle(pubmedArticle), "pubmedArticle.medlineCitation.article.journal");
     }
 
     @Test
     public void degenerateConstruction_withNullPmid() {
         pubmedArticle.getMedlineCitation().setPMID(null);
-        try {
-            new ScipamatoPubmedArticle(pubmedArticle);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("pubmedArticle.medlineCitation.pmid must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new ScipamatoPubmedArticle(pubmedArticle), "pubmedArticle.medlineCitation.pmid");
     }
 
     @Test
     public void degenerateConstruction_withNullJournalIssue() {
         pubmedArticle.getMedlineCitation().getArticle().getJournal().setJournalIssue(null);
-        try {
-            new ScipamatoPubmedArticle(pubmedArticle);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("pubmedArticle.medlineCitation.article.journal.journalIssue must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new ScipamatoPubmedArticle(pubmedArticle), "pubmedArticle.medlineCitation.article.journal.journalIssue");
     }
 
     @Test
     public void degenerateConstruction_withNullPubDate() {
         pubmedArticle.getMedlineCitation().getArticle().getJournal().getJournalIssue().setPubDate(null);
-        try {
-            new ScipamatoPubmedArticle(pubmedArticle);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new ScipamatoPubmedArticle(pubmedArticle), "pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate");
     }
 
     @Test
     public void degenerateConstruction_withNullMedlineJournalInfo() {
         pubmedArticle.getMedlineCitation().setMedlineJournalInfo(null);
-        try {
-            new ScipamatoPubmedArticle(pubmedArticle);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("pubmedArticle.medlineCitation.medlineJournalInfo must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new ScipamatoPubmedArticle(pubmedArticle), "pubmedArticle.medlineCitation.medlineJournalInfo");
     }
 
     @Test

@@ -1,13 +1,12 @@
 package ch.difty.scipamato.persistence.code;
 
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.TestUtils.*;
 
 import org.jooq.DSLContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.CodeClassId;
 
 public class JooqCodeRepoTest {
@@ -24,21 +23,11 @@ public class JooqCodeRepoTest {
 
     @Test
     public void findingCodesOfClass_withNullCodeClassId_throws() {
-        try {
-            repo.findCodesOfClass(null, "de");
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("codeClassId must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> repo.findCodesOfClass(null, "de"), "codeClassId");
     }
 
     @Test
     public void findingCodesOfClass_withNullLanguageId_throws() {
-        try {
-            repo.findCodesOfClass(CodeClassId.CC1, null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("languageCode must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> repo.findCodesOfClass(CodeClassId.CC1, null), "languageCode");
     }
 }

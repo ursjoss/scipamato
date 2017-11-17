@@ -1,5 +1,6 @@
 package ch.difty.scipamato.persistence;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -13,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.CoreEntity;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -90,22 +90,12 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEn
 
     @Test
     public void settingFields_withNullSetter_throws() {
-        try {
-            getSetter().setFieldsFor(null, getEntity());
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("step must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> getSetter().setFieldsFor(null, getEntity()), "step");
     }
 
     @Test
     public void settingFields_withNullEntity_throws() {
-        try {
-            getSetter().setFieldsFor(stepMock, null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("entity must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> getSetter().setFieldsFor(stepMock, null), "entity");
     }
 
     @Test

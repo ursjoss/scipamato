@@ -1,5 +1,6 @@
 package ch.difty.scipamato.pubmed;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
@@ -74,22 +75,12 @@ public class PubmedXmlServiceTest {
 
     @Test
     public void degenerateConstruction_nullUnmarshaller_throws() {
-        try {
-            new PubmedXmlService(null, pubMedMock);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("unmarshaller must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new PubmedXmlService(null, pubMedMock), "unmarshaller");
     }
 
     @Test
     public void degenerateConstruction_nullPubMed_throws() {
-        try {
-            new PubmedXmlService(unmarshallerMock, null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("pubMed must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new PubmedXmlService(unmarshallerMock, null), "pubMed");
     }
 
     @Test

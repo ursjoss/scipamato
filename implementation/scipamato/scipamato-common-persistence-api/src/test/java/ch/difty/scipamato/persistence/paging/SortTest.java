@@ -1,5 +1,6 @@
 package ch.difty.scipamato.persistence.paging;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.persistence.paging.Sort.Direction;
 import ch.difty.scipamato.persistence.paging.Sort.SortProperty;
 
@@ -32,12 +32,7 @@ public class SortTest {
 
     @Test
     public void degenerateConstruction_withNullSortProperties_throws() {
-        try {
-            new Sort(null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("sortProperties must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new Sort(null), "sortProperties");
     }
 
     @Test
@@ -52,12 +47,7 @@ public class SortTest {
 
     @Test
     public void degenerateConstruction_withNullPropertyNames_throws() {
-        try {
-            new Sort(Direction.ASC, (String[]) null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("propertyNames must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new Sort(Direction.ASC, (String[]) null), "propertyNames");
     }
 
     @Test

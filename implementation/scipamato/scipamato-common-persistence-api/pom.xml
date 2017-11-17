@@ -19,6 +19,12 @@
             <artifactId>scipamato-common-utils</artifactId>
         </dependency>
         <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-common-utils</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>

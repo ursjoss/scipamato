@@ -1,5 +1,6 @@
 package ch.difty.scipamato.pubmed;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -8,7 +9,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.difty.scipamato.NullArgumentException;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 
@@ -84,24 +84,14 @@ public class ScipamatoPubmedBookArticleTest {
 
     @Test
     public void degenerateConstruction_withNullPubmedBookArticle_throws() {
-        try {
-            new ScipamatoPubmedBookArticle(null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("pubmedBookArticle must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new ScipamatoPubmedBookArticle(null), "pubmedBookArticle");
     }
 
     @Test
     public void degenerateConstruction_withNullBookDocument_throws() {
         PubmedBookArticle pubmedBookArticle = new PubmedBookArticle();
         assertThat(pubmedBookArticle.getBookDocument()).isNull();
-        try {
-            new ScipamatoPubmedBookArticle(pubmedBookArticle);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("pubmedBookArticle.bookDocument must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new ScipamatoPubmedBookArticle(pubmedBookArticle), "pubmedBookArticle.bookDocument");
     }
 
     @Test

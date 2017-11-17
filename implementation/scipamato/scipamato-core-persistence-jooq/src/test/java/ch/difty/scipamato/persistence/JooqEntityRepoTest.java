@@ -1,5 +1,6 @@
 package ch.difty.scipamato.persistence;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
@@ -175,22 +176,12 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
 
     @Test
     public void addingNullEntity_throws() {
-        try {
-            repo.add(null, "de");
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("entity must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> repo.add(null, "de"), "entity");
     }
 
     @Test
     public void addingNullLanguageCode_throws() {
-        try {
-            repo.add(getUnpersistedEntity(), null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("languageCode must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> repo.add(getUnpersistedEntity(), null), "languageCode");
     }
 
     @Test(expected = NullArgumentException.class)
@@ -246,33 +237,18 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
 
     @Test
     public void updating_withEntityNull_throws() {
-        try {
-            repo.update(null, "de");
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("entity must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> repo.update(null, "de"), "entity");
     }
 
     @Test
     public void updating_withLanguageCodeNull_throws() {
-        try {
-            repo.update(getPersistedEntity(), null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("languageCode must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> repo.update(getPersistedEntity(), null), "languageCode");
     }
 
     @Test
     public void updating_withEntityIdNull_throws() {
         expectUnpersistedEntityIdNull();
-        try {
-            repo.update(getUnpersistedEntity(), "de");
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("entity.id must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> repo.update(getUnpersistedEntity(), "de"), "entity.id");
         verifyUnpersistedEntityId();
     }
 }

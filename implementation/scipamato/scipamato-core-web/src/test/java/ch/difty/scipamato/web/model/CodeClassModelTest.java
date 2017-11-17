@@ -1,5 +1,6 @@
 package ch.difty.scipamato.web.model;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -9,7 +10,6 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.CodeClass;
 import ch.difty.scipamato.persistence.CodeClassService;
 
@@ -20,12 +20,7 @@ public class CodeClassModelTest extends ModelTest {
 
     @Test
     public void instantiating_withNullLanguageCode_throws() {
-        try {
-            new CodeClassModel(null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("languageCode must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new CodeClassModel(null), "languageCode");
     }
 
     @Test

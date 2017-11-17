@@ -1,5 +1,6 @@
 package ch.difty.scipamato.entity;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static ch.difty.scipamato.entity.CoreEntity.*;
 import static org.assertj.core.api.Assertions.*;
 
@@ -9,7 +10,6 @@ import javax.validation.ConstraintViolation;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.NullArgumentException;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 
@@ -49,22 +49,12 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void constructing_withNullCode_throws() {
-        try {
-            new Code(null, CODE1, null, false, 1, "c1", "", 1);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("code must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new Code(null, CODE1, null, false, 1, "c1", "", 1), "code");
     }
 
     @Test
     public void constructing_withNullCodeClassId_throws() {
-        try {
-            new Code("1A", CODE1, null, false, null, null, null, 1);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("codeClassId must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new Code("1A", CODE1, null, false, null, null, null, 1), "codeClassId");
     }
 
     @Test

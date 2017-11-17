@@ -1,5 +1,6 @@
 package ch.difty.scipamato.entity;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDateTime;
@@ -93,12 +94,7 @@ public class PaperCodeBoxTest {
 
     @Test
     public void gettingCodesByCodeClass_withNullCodeClassId_throws() {
-        try {
-            codeBox.getCodesBy(null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("codeClassId must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> codeBox.getCodesBy(null), "codeClassId");
     }
 
     @Test
@@ -133,12 +129,7 @@ public class PaperCodeBoxTest {
 
     @Test
     public void sizePerCodeClass_withNullCodeClass_throws() {
-        try {
-            codeBox.sizeOf(null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("codeClassId must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> codeBox.sizeOf(null), "codeClassId");
     }
 
     @Test

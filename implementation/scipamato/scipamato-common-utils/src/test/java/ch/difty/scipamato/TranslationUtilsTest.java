@@ -1,5 +1,6 @@
 package ch.difty.scipamato;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
@@ -13,12 +14,7 @@ public class TranslationUtilsTest extends FinalClassTest<TranslationUtils> {
 
     @Test
     public void trimmingLanguageCode_withNullCode_throws() {
-        try {
-            TranslationUtils.trimLanguageCode(null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("languageCode must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> TranslationUtils.trimLanguageCode(null), "languageCode");
     }
 
     @Test

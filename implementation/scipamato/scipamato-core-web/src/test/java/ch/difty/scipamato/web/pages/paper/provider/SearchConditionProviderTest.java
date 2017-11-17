@@ -1,5 +1,6 @@
 package ch.difty.scipamato.web.pages.paper.provider;
 
+import static ch.difty.scipamato.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.filter.SearchCondition;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -36,23 +36,13 @@ public class SearchConditionProviderTest {
 
     @Test
     public void degenerateConstruction_withNullSearchOrderModel() {
-        try {
-            new SearchConditionProvider(null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchConditionsModel must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new SearchConditionProvider(null), "searchConditionsModel");
     }
 
     @Test
     public void degenerateConstruction_withNullSearchOrderModel1() {
         List<SearchCondition> conditions = null;
-        try {
-            new SearchConditionProvider(Model.ofList(conditions));
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchConditions must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> new SearchConditionProvider(Model.ofList(conditions)), "searchConditions");
     }
 
     @Test

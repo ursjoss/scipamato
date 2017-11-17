@@ -1,12 +1,11 @@
 package ch.difty.scipamato.persistence.paper.searchorder;
 
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.TestUtils.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ch.difty.scipamato.NullArgumentException;
 import ch.difty.scipamato.entity.filter.SearchTerm;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -19,12 +18,7 @@ public abstract class SearchTermEvaluatorTest<T extends SearchTerm> {
 
     @Test
     public void evaluating_withNullParameter_throws() {
-        try {
-            getEvaluator().evaluate(null);
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("searchTerm must not be null.");
-        }
+        assertDegenerateSupplierParameter(() -> getEvaluator().evaluate(null), "searchTerm");
     }
 
     protected String concat(String... strings) {
