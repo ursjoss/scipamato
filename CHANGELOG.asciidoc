@@ -53,11 +53,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 - Public: 07/01: Add table paper and two sample records. Simple filter in public GUI to retrieve and display the data from database.
-- Public: 07/16: Add spring-security to SciPaMaTo-Public: Anonymous login for the page, required login for actuator endpoints
 
 .Changed
 - Core: 06/21+24: Open external links in new browser tab
 - Story 07/01: New maven modules scipamto-common-entity, scipamato-common-persistence-api, scipamato-common-persistence-jooq
+- Documentation updates
 
 .Deprecated
 
@@ -66,7 +66,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 
 .Security
-
+- Public: 07/16: Add spring-security to SciPaMaTo-Public: Anonymous login for the page, required login for actuator endpoints
 
 [[v0.6.3]]
 == [0.6.3] -- 2017-11-06
