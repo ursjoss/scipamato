@@ -1,6 +1,7 @@
 package ch.difty.scipamato.web;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.devutils.debugbar.DebugBar;
 import org.apache.wicket.markup.html.GenericWebPage;
@@ -13,8 +14,10 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.Strings;
 
 import ch.difty.scipamato.DateTimeService;
+import ch.difty.scipamato.config.core.ApplicationProperties;
 import ch.difty.scipamato.web.component.SerializableSupplier;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink.Target;
@@ -94,7 +97,29 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
         }
     }
 
-    protected abstract Navbar newNavbar(String markupId);
+    private Navbar newNavbar(String markupId) {
+        Navbar nb = new Navbar(markupId);
+
+        nb.setPosition(Navbar.Position.TOP);
+        nb.setBrandName(getBrandName());
+        nb.setInverted(true);
+
+        addLinksTo(nb);
+
+        return nb;
+    }
+
+    private IModel<String> getBrandName() {
+        String brand = getProperties().getBrand();
+        if (Strings.isEmpty(brand) || "n.a.".equals(brand))
+            brand = new StringResourceModel("brandname", this, null).getString();
+        return Model.of(brand);
+    }
+
+    protected abstract ApplicationProperties getProperties();
+
+    protected void addLinksTo(Navbar nb) {
+    }
 
     protected <P extends AbstractPage<?>> void addPageLink(Navbar navbar, Class<P> pageClass, String labelResource, IconType iconType, Navbar.ComponentPosition position) {
         final String label = new StringResourceModel(labelResource, this, null).getString();
@@ -142,6 +167,18 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
     protected void queuePanelHeadingFor(String id) {
         queue(new Label(id + LABEL_TAG, new StringResourceModel(id + PANEL_HEADER_RESOURCE_TAG, this, null)));
+    }
+
+    protected boolean isSignedIn() {
+        return AuthenticatedWebSession.get().isSignedIn();
+    }
+
+    protected boolean signIn(String username, String password) {
+        return AuthenticatedWebSession.get().signIn(username, password);
+    }
+
+    protected void signOutAndInvalidate() {
+        AuthenticatedWebSession.get().invalidate();
     }
 
 }

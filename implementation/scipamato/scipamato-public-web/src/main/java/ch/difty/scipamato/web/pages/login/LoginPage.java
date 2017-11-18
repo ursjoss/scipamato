@@ -1,23 +1,25 @@
 package ch.difty.scipamato.web.pages.login;
 
-import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
-import ch.difty.scipamato.config.core.ApplicationProperties;
-import ch.difty.scipamato.web.AbstractPage;
+import com.giffing.wicket.spring.boot.context.scan.WicketSignInPage;
 
-@MountPath("logout")
-@AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
-public class LogoutPage extends AbstractLogoutPage {
+import ch.difty.scipamato.config.core.ApplicationProperties;
+import ch.difty.scipamato.web.pages.BasePage;
+import ch.difty.scipamato.web.pages.portal.PublicPage;
+
+@MountPath("login")
+@WicketSignInPage
+public class LoginPage extends AbstractLoginPage {
 
     private static final long serialVersionUID = 1L;
 
     @SpringBean
     private ApplicationProperties scipapamtoProperties;
 
-    public LogoutPage(PageParameters parameters) {
+    public LoginPage(PageParameters parameters) {
         super(parameters);
     }
 
@@ -27,7 +29,8 @@ public class LogoutPage extends AbstractLogoutPage {
     }
 
     @Override
-    protected AbstractPage<?> getResponsePage() {
-        return new LoginPage(new PageParameters());
+    protected BasePage<Void> getResponsePage() {
+        return new PublicPage(getPageParameters());
     }
+
 }

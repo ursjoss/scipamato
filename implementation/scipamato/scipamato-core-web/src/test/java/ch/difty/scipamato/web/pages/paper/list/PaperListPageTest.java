@@ -3,10 +3,12 @@ package ch.difty.scipamato.web.pages.paper.list;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
@@ -27,6 +29,9 @@ import ch.difty.scipamato.web.panel.pastemodal.XmlPasteModalPanel;
 import ch.difty.scipamato.web.panel.result.ResultPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 public class PaperListPageTest extends BasePageTest<PaperListPage> {
@@ -69,6 +74,8 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         assertPateModal("xmlPasteModal");
         assertResultPanel("resultPanel");
 
+        assertMenuEntries();
+
         verify(paperSlimServiceMock, times(2)).countByFilter(isA(PaperFilter.class));
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
@@ -95,6 +102,28 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
     private void assertResultPanel(String b) {
         getTester().assertComponent(b, ResultPanel.class);
         getTester().assertComponent(b + ":table", BootstrapDefaultDataTable.class);
+    }
+
+    private void assertMenuEntries() {
+        getTester().assertComponent("_header_", HtmlHeaderContainer.class);
+        getTester().assertComponent("navbar", Navbar.class);
+        assertPageLinkButton(0, "Left", NavbarButton.class, "Papers");
+        assertPageLinkButton(1, "Left", NavbarButton.class, "Search");
+
+        assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:0:component", "https://github.com/ursjoss/scipamato/wiki/");
+        assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:1:component", "https://github.com/ursjoss/scipamato/blob/master/CHANGELOG.asciidoc");
+        assertPageLinkButton(2, "Right", NavbarButton.class, "Logout");
+    }
+
+    private void assertPageLinkButton(int index, String position, Class<? extends Component> expectedComponentClass, String expectedLabelText) {
+        String path = "navbar:container:collapse:nav" + position + "ListEnclosure:nav" + position + "List:" + index + ":component";
+        getTester().assertComponent(path, NavbarButton.class);
+        getTester().assertLabel(path + ":label", expectedLabelText);
+    }
+
+    private void assertExternalLink(final String path, final String link) {
+        getTester().assertComponent(path, NavbarExternalLink.class);
+        getTester().assertModelValue(path, link);
     }
 
     @Test

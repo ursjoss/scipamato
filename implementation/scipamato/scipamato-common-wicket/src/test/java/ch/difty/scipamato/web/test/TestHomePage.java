@@ -4,8 +4,8 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 
+import ch.difty.scipamato.config.core.ApplicationProperties;
 import ch.difty.scipamato.web.AbstractPage;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
 @WicketHomePage
 public class TestHomePage extends AbstractPage<Void> {
@@ -21,8 +21,8 @@ public class TestHomePage extends AbstractPage<Void> {
     }
 
     @Override
-    protected Navbar newNavbar(String markupId) {
-        return new Navbar(markupId);
+    protected ApplicationProperties getProperties() {
+        return new TestApplicationProperties();
     }
 
 }

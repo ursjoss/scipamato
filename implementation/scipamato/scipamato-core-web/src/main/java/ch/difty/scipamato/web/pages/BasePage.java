@@ -1,14 +1,11 @@
 package ch.difty.scipamato.web.pages;
 
-import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.string.Strings;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -49,13 +46,8 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     }
 
     @Override
-    protected Navbar newNavbar(String markupId) {
-        Navbar nb = new Navbar(markupId);
-
-        nb.setPosition(Navbar.Position.TOP);
-        nb.setBrandName(Model.of(makeBrand()));
-        nb.setInverted(true);
-
+    protected void addLinksTo(Navbar nb) {
+        super.addLinksTo(nb);
         addPageLink(nb, PaperListPage.class, "menu.papers", GlyphIconType.list, Navbar.ComponentPosition.LEFT);
         addPageLink(nb, PaperSearchPage.class, "menu.search", GlyphIconType.search, Navbar.ComponentPosition.LEFT);
 
@@ -63,31 +55,10 @@ public abstract class BasePage<T> extends AbstractPage<T> {
                 Navbar.ComponentPosition.RIGHT);
         addExternalLink(nb, new StringResourceModel("menu.changelog.url", this, null).getString(), getVersionLink(), GlyphIconType.briefcase, Navbar.ComponentPosition.RIGHT);
         addPageLink(nb, LogoutPage.class, "menu.logout", GlyphIconType.edit, Navbar.ComponentPosition.RIGHT);
-
-        return nb;
-    }
-
-    private String makeBrand() {
-        String brand = getProperties().getBrand();
-        if (Strings.isEmpty(brand) || "n.a.".equals(brand))
-            brand = new StringResourceModel("brandname", this, null).getString();
-        return brand;
     }
 
     private String getVersionLink() {
         return "version " + getProperties().getBuildVersion();
-    }
-
-    protected boolean isSignedIn() {
-        return AuthenticatedWebSession.get().isSignedIn();
-    }
-
-    protected boolean signIn(String username, String password) {
-        return AuthenticatedWebSession.get().signIn(username, password);
-    }
-
-    protected void signOutAndInvalidate() {
-        AuthenticatedWebSession.get().invalidate();
     }
 
     protected Authentication getAuthentication() {
@@ -101,4 +72,5 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     protected String getLanguageCode() {
         return ScipamatoSession.get().getLocale().getLanguage();
     }
+
 }
