@@ -50,7 +50,6 @@ public class PublicPage extends BasePage<Void> {
         super.onInitialize();
 
         makeAndQueueFilterForm("searchForm");
-
         makeAndQueueResultTable("results");
     }
 

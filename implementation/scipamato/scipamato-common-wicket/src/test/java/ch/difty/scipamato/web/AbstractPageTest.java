@@ -9,14 +9,15 @@ import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.DateTimeService;
+import ch.difty.scipamato.config.core.ApplicationProperties;
 import ch.difty.scipamato.web.test.TestAbstractPage;
+import ch.difty.scipamato.web.test.TestApplicationProperties;
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
@@ -35,18 +36,10 @@ public class AbstractPageTest extends WicketBaseTest {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected Navbar newNavbar(String markupId) {
-                return AbstractPageTest.this.newNavbar(markupId);
+            protected ApplicationProperties getProperties() {
+                return new TestApplicationProperties();
             }
         };
-    }
-
-    private Navbar newNavbar(String markupId) {
-        Navbar nb = new Navbar(markupId);
-        nb.setPosition(Navbar.Position.TOP);
-        nb.setBrandName(new ResourceModel("brandname", "foobar"));
-        nb.setInverted(true);
-        return nb;
     }
 
     @After
@@ -77,8 +70,8 @@ public class AbstractPageTest extends WicketBaseTest {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected Navbar newNavbar(String markupId) {
-                return AbstractPageTest.this.newNavbar(markupId);
+            protected ApplicationProperties getProperties() {
+                return new TestApplicationProperties();
             }
         };
 
@@ -108,7 +101,7 @@ public class AbstractPageTest extends WicketBaseTest {
         getTester().assertLabel("navbar:container:collapse:navRightListEnclosure:navRightList:0:component:label", "Help");
 
         getTester().assertLabel("navbar:container:collapseButton:toggleNavigationLabel", "Toggle Navigation");
-        getTester().assertLabel("navbar:container:brandName:brandLabel", "foobar");
+        getTester().assertLabel("navbar:container:brandName:brandLabel", "SciPaMaTo");
 
         getTester().assertComponent("feedback", NotificationPanel.class);
 

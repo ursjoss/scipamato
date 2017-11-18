@@ -1,13 +1,15 @@
 package ch.difty.scipamato.web.pages;
 
-import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import ch.difty.scipamato.ScipamatoPublicSession;
+import ch.difty.scipamato.config.core.ApplicationProperties;
 import ch.difty.scipamato.web.AbstractPage;
 import ch.difty.scipamato.web.pages.portal.PublicPage;
 import ch.difty.scipamato.web.resources.MainCssResourceReference;
@@ -18,6 +20,9 @@ public abstract class BasePage<T> extends AbstractPage<T> {
 
     private static final long serialVersionUID = 1L;
 
+    @SpringBean
+    private ApplicationProperties applicationProperties;
+
     public BasePage(final PageParameters parameters) {
         super(parameters);
     }
@@ -27,37 +32,28 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     }
 
     @Override
+    protected ApplicationProperties getProperties() {
+        return applicationProperties;
+    }
+
+    @Override
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
         response.render(CssHeaderItem.forReference(MainCssResourceReference.get()));
     }
 
     @Override
-    protected Navbar newNavbar(String markupId) {
-        Navbar nb = new Navbar(markupId);
-
-        nb.setPosition(Navbar.Position.TOP);
-        nb.setBrandName(new ResourceModel("brandname", "LUDOK"));
-        nb.setInverted(true);
-
+    protected void addLinksTo(Navbar nb) {
+        super.addLinksTo(nb);
         addPageLink(nb, PublicPage.class, "menu.home", GlyphIconType.home, Navbar.ComponentPosition.LEFT);
-
-        return nb;
     }
 
-    protected boolean isSignedIn() {
-        return AuthenticatedWebSession.get().isSignedIn();
-    }
-
-    protected boolean signIn(String username, String password) {
-        return AuthenticatedWebSession.get().signIn(username, password);
-    }
-
-    protected void signOutAndInvalidate() {
-        AuthenticatedWebSession.get().invalidate();
+    protected Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
     protected String getLanguageCode() {
         return ScipamatoPublicSession.get().getLocale().getLanguage();
     }
+
 }

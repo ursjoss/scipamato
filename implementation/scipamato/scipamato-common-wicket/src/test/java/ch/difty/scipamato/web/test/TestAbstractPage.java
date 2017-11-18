@@ -3,10 +3,10 @@ package ch.difty.scipamato.web.test;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import ch.difty.scipamato.config.core.ApplicationProperties;
 import ch.difty.scipamato.web.AbstractPage;
 import ch.difty.scipamato.web.TestRecord;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
@@ -20,15 +20,9 @@ public class TestAbstractPage extends AbstractPage<TestRecord> {
     }
 
     @Override
-    protected Navbar newNavbar(String markupId) {
-        Navbar nb = new Navbar(markupId);
-        nb.setPosition(Navbar.Position.TOP);
-        nb.setBrandName(new ResourceModel("brandname", "foobar"));
-        nb.setInverted(true);
-
+    protected void addLinksTo(Navbar nb) {
         addPageLink(nb, TestHomePage.class, "menu.home", GlyphIconType.home, Navbar.ComponentPosition.LEFT);
         addExternalLink(nb, "https://github.com/ursjoss/scipamato/wiki", new StringResourceModel("menu.help", this, null).getString(), GlyphIconType.questionsign, Navbar.ComponentPosition.RIGHT);
-        return nb;
     }
 
     @Override
@@ -40,6 +34,11 @@ public class TestAbstractPage extends AbstractPage<TestRecord> {
         queueFieldAndLabel(new TextField<String>("foo"));
 
         queueResponsePageButton("respPageButton", () -> new TestHomePage(new PageParameters()));
+    }
+
+    @Override
+    protected ApplicationProperties getProperties() {
+        return new TestApplicationProperties();
     }
 
 }

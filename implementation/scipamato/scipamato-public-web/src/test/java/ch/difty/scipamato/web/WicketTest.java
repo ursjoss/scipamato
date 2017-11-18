@@ -24,9 +24,6 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 @RunWith(SpringRunner.class)
 public abstract class WicketTest {
 
-    private static final String USERNAME = "testuser";
-    private static final String PASSWORD = "secretpw";
-
     @Autowired
     private ScipamatoPublicApplication application;
 
@@ -57,25 +54,12 @@ public abstract class WicketTest {
         Locale locale = new Locale("en_US");
         tester.getSession().setLocale(locale);
         setUpHook();
-        login(USERNAME, PASSWORD);
     }
 
     /**
      * override if needed
      */
     protected void setUpHook() {
-    }
-
-    private void login(String username, String password) {
-        //        SecureWebSession session = (SecureWebSession) tester.getSession();
-        //        session.signOut();
-        //        tester.startPage(PublicPage.class);
-        //        FormTester formTester = tester.newFormTester("form");
-        //        formTester.setValue("username", username);
-        //        formTester.setValue("password", password);
-        //        formTester.submit();
-        //        tester.assertNoErrorMessage();
-        //        tester.assertRenderedPage(PublicPage.class);
     }
 
     protected void assertLabeledTextArea(String b, String id) {
