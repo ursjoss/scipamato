@@ -3,10 +3,14 @@ package ch.difty.scipamato.persistence;
 import static ch.difty.scipamato.db.tables.Paper.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 import ch.difty.scipamato.db.tables.Paper;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
+import ch.difty.scipamato.entity.PopulationCode;
+import ch.difty.scipamato.entity.StudyDesignCode;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
 
 public class PublicPaperFilterConditionMapperTest extends FilterConditionMapperTest<PaperRecord, ch.difty.scipamato.db.tables.Paper, PublicPaperFilter> {
@@ -61,5 +65,17 @@ public class PublicPaperFilterConditionMapperTest extends FilterConditionMapperT
     public void creatingWhereCondition_withPublicationYearUntil_searchesPublicationYear() {
         filter.setPublicationYearUntil(2016);
         assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" <= 2016");
+    }
+
+    @Test
+    public void creatingWhereCondition_withPopulationCodes_searchesPopulationCodes() {
+        filter.setPopulationCodes(Arrays.asList(PopulationCode.CHILDREN));
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"CODES_POPULATION\" @> array[1]");
+    }
+
+    @Test
+    public void creatingWhereCondition_withMethodStudyDesignCodes_searchesStudyDesignCodes() {
+        filter.setStudyDesignCodes(Arrays.asList(StudyDesignCode.EPIODEMIOLOGICAL, StudyDesignCode.OVERVIEW_METHODOLOGY));
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"CODES_STUDY_DESIGN\" @> array[2, 3]");
     }
 }

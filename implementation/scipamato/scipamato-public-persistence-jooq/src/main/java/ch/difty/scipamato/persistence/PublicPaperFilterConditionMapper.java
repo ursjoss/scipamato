@@ -6,13 +6,15 @@ import java.util.List;
 
 import org.jooq.Condition;
 
+import ch.difty.scipamato.entity.PopulationCode;
+import ch.difty.scipamato.entity.StudyDesignCode;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
 
 @FilterConditionMapper
 public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMapper<PublicPaperFilter> {
 
     @Override
-    protected void map(PublicPaperFilter filter, List<Condition> conditions) {
+    protected void map(final PublicPaperFilter filter, final List<Condition> conditions) {
         if (filter.getNumber() != null) {
             conditions.add(PAPER.NUMBER.eq(filter.getNumber()));
         }
@@ -33,6 +35,16 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
 
         if (filter.getPublicationYearUntil() != null) {
             conditions.add(PAPER.PUBLICATION_YEAR.le(filter.getPublicationYearUntil()));
+        }
+
+        if (filter.getPopulationCodes() != null) {
+            final Short[] ids = filter.getPopulationCodes().stream().map(PopulationCode::getId).toArray(Short[]::new);
+            conditions.add(PAPER.CODES_POPULATION.contains(ids));
+        }
+
+        if (filter.getStudyDesignCodes() != null) {
+            final Short[] ids = filter.getStudyDesignCodes().stream().map(StudyDesignCode::getId).toArray(Short[]::new);
+            conditions.add(PAPER.CODES_STUDY_DESIGN.contains(ids));
         }
     }
 
