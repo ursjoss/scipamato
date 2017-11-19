@@ -1,6 +1,7 @@
 package ch.difty.scipamato.web.panel;
 
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -44,4 +45,29 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return (User) principal;
     }
+
+    /**
+     * Retrieves the labels resource string.
+     * @param componentId
+     *     the wicket id of the component the label is assigned to.
+     * @return the label string, taken from the resource.
+     */
+    protected String getLabelResourceFor(final String componentId) {
+        return getResourceFor(componentId, LABEL_RESOURCE_TAG);
+    }
+
+    /**
+     * Retrieves the labels resource string (short form).
+     * @param componentId
+     *     the wicket id of the component the label is assigned to.
+     * @return the label string, taken from the resource.
+     */
+    protected String getShortLabelResourceFor(final String componentId) {
+        return getResourceFor(componentId, LABEL_RESOURCE_TAG);
+    }
+
+    private String getResourceFor(final String componentId, final String tag) {
+        return new StringResourceModel(componentId + tag, this, null).getString();
+    }
+
 }

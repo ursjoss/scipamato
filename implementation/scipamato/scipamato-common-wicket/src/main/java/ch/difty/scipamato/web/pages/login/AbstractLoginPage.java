@@ -64,7 +64,7 @@ public abstract class AbstractLoginPage extends AbstractPage<Void> {
     protected abstract AbstractPage<?> getResponsePage();
 
     private Label newHeader(String id) {
-        return new Label(id, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null));
+        return new Label(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null));
     }
 
     private BootstrapButton newButton(String id) {

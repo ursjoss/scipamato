@@ -60,6 +60,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Story 07/01: New maven modules scipamto-common-entity, scipamato-common-persistence-api, scipamato-common-persistence-jooq
 - Documentation updates
 - pom refactoring and cleanup
+- Small refactorings and improvements
 
 .Deprecated
 

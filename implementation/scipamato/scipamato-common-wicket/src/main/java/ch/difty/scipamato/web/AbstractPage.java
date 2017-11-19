@@ -34,7 +34,7 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     private static final long serialVersionUID = 1L;
 
     protected static final String LABEL_TAG = WicketUtils.LABEL_TAG;
-    protected static final String LABEL_RECOURCE_TAG = WicketUtils.LABEL_RECOURCE_TAG;
+    protected static final String LABEL_RESOURCE_TAG = WicketUtils.LABEL_RESOURCE_TAG;
     protected static final String PANEL_HEADER_RESOURCE_TAG = WicketUtils.PANEL_HEADER_RESOURCE_TAG;
 
     @SpringBean
@@ -143,7 +143,7 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
     protected void queueFieldAndLabel(FormComponent<?> field, PropertyValidator<?> pv) {
         String id = field.getId();
-        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
+        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
         queue(field);
@@ -153,7 +153,7 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     }
 
     protected void queueResponsePageButton(final String id, SerializableSupplier<AbstractPage<?>> responsePage) {
-        BootstrapAjaxButton newButton = new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null), Type.Default) {
+        BootstrapAjaxButton newButton = new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null), Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override

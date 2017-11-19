@@ -98,7 +98,7 @@ public class PublicPage extends BasePage<Void> {
     }
 
     private void makePopulationCodesComplex(String id) {
-        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
+        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
 
         IModel<Collection<PopulationCode>> model = PropertyModel.of(filter, PublicPaperFilter.POPULATION_CODES);
@@ -112,7 +112,7 @@ public class PublicPage extends BasePage<Void> {
     }
 
     private void makeStudyDesignCodesComplex(String id) {
-        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
+        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
 
         IModel<Collection<StudyDesignCode>> model = PropertyModel.of(filter, PublicPaperFilter.STUDY_DESIGN_CODES);

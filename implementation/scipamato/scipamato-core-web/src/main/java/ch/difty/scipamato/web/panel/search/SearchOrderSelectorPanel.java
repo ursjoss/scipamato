@@ -109,7 +109,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
         name = new TextField<>(id);
         name.setConvertEmptyInputStringToNull(true);
         name.setOutputMarkupId(true);
-        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
+        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
         name.setLabel(labelModel);
         name.add(new AjaxFormComponentUpdatingBehavior(CHANGE) {
@@ -239,7 +239,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
         showExcluded.setOutputMarkupPlaceholderTag(true);
         queue(showExcluded);
 
-        showExcludedLabel = new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null)) {
+        showExcludedLabel = new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override

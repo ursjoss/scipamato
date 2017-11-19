@@ -14,8 +14,8 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
     private static final long serialVersionUID = 1L;
 
     protected static final String LABEL_TAG = WicketUtils.LABEL_TAG;
-    protected static final String LABEL_RECOURCE_TAG = WicketUtils.LABEL_RECOURCE_TAG;
-    protected static final String SHORT_LABEL_RECOURCE_TAG = WicketUtils.SHORT_LABEL_RECOURCE_TAG;
+    protected static final String LABEL_RESOURCE_TAG = WicketUtils.LABEL_RESOURCE_TAG;
+    protected static final String SHORT_LABEL_RESOURCE_TAG = WicketUtils.SHORT_LABEL_RESOURCE_TAG;
 
     private final Mode mode;
     private final String submitLinkResourceLabel;
@@ -70,7 +70,7 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
 
     protected void queueFieldAndLabel(FormComponent<?> field, PropertyValidator<?> pv) {
         String id = field.getId();
-        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
+        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
         field.setOutputMarkupId(true);
@@ -82,7 +82,7 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
 
     protected void queueCheckBoxAndLabel(CheckBoxX field) {
         String id = field.getId();
-        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
+        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
         queue(field);

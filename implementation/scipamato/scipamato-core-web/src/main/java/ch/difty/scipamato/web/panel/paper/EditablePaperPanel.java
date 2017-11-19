@@ -145,11 +145,11 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summary", this, null).getString();
         ReportHeaderFields rhf = ReportHeaderFields
             .builder(brand, headerPart)
-            .populationLabel(new StringResourceModel(Paper.POPULATION + LABEL_RECOURCE_TAG, this, null).getString())
-            .goalsLabel(new StringResourceModel(Paper.GOALS + LABEL_RECOURCE_TAG, this, null).getString())
-            .methodsLabel(new StringResourceModel(Paper.METHODS + LABEL_RECOURCE_TAG, this, null).getString())
-            .resultLabel(new StringResourceModel(Paper.RESULT + LABEL_RECOURCE_TAG, this, null).getString())
-            .commentLabel(new StringResourceModel(Paper.COMMENT + LABEL_RECOURCE_TAG, this, null).getString())
+            .populationLabel(getLabelResourceFor(Paper.POPULATION))
+            .goalsLabel(getLabelResourceFor(Paper.GOALS))
+            .methodsLabel(getLabelResourceFor(Paper.METHODS))
+            .resultLabel(getLabelResourceFor(Paper.RESULT))
+            .commentLabel(getLabelResourceFor(Paper.COMMENT))
             .build();
         ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getNumber())
             .withCreator(brand)
@@ -172,21 +172,21 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summaryShort", this, null).getString();
         ReportHeaderFields rhf = ReportHeaderFields
             .builder(headerPart, brand)
-            .goalsLabel(new StringResourceModel(Paper.GOALS + LABEL_RECOURCE_TAG, this, null).getString())
-            .methodsLabel(new StringResourceModel(Paper.METHODS + LABEL_RECOURCE_TAG, this, null).getString())
-            .methodOutcomeLabel(new StringResourceModel(Paper.METHOD_OUTCOME + LABEL_RECOURCE_TAG, this, null).getString())
-            .resultMeasuredOutcomeLabel(new StringResourceModel(Paper.RESULT_MEASURED_OUTCOME + LABEL_RECOURCE_TAG, this, null).getString())
-            .methodStudyDesignLabel(new StringResourceModel(Paper.METHOD_STUDY_DESIGN + LABEL_RECOURCE_TAG, this, null).getString())
-            .populationPlaceLabel(new StringResourceModel(Paper.POPULATION_PLACE + LABEL_RECOURCE_TAG, this, null).getString())
-            .populationParticipantsLabel(new StringResourceModel(Paper.POPULATION_PARTICIPANTS + LABEL_RECOURCE_TAG, this, null).getString())
-            .populationDurationLabel(new StringResourceModel(Paper.POPULATION_DURATION + LABEL_RECOURCE_TAG, this, null).getString())
-            .exposurePollutantLabel(new StringResourceModel(Paper.EXPOSURE_POLLUTANT + LABEL_RECOURCE_TAG, this, null).getString())
-            .exposureAssessmentLabel(new StringResourceModel(Paper.EXPOSURE_ASSESSMENT + LABEL_RECOURCE_TAG, this, null).getString())
-            .resultExposureRangeLabel(new StringResourceModel(Paper.RESULT_EXPOSURE_RANGE + LABEL_RECOURCE_TAG, this, null).getString())
-            .methodStatisticsLabel(new StringResourceModel(Paper.METHOD_STATISTICS + LABEL_RECOURCE_TAG, this, null).getString())
-            .methodConfoundersLabel(new StringResourceModel(Paper.METHOD_CONFOUNDERS + LABEL_RECOURCE_TAG, this, null).getString())
-            .resultEffectEstimateLabel(new StringResourceModel(Paper.RESULT_EFFECT_ESTIMATE + LABEL_RECOURCE_TAG, this, null).getString())
-            .commentLabel(new StringResourceModel(Paper.COMMENT + LABEL_RECOURCE_TAG, this, null).getString())
+            .goalsLabel(getLabelResourceFor(Paper.GOALS))
+            .methodsLabel(getLabelResourceFor(Paper.METHODS))
+            .methodOutcomeLabel(getLabelResourceFor(Paper.METHOD_OUTCOME))
+            .resultMeasuredOutcomeLabel(getLabelResourceFor(Paper.RESULT_MEASURED_OUTCOME))
+            .methodStudyDesignLabel(getLabelResourceFor(Paper.METHOD_STUDY_DESIGN))
+            .populationPlaceLabel(getLabelResourceFor(Paper.POPULATION_PLACE))
+            .populationParticipantsLabel(getLabelResourceFor(Paper.POPULATION_PARTICIPANTS))
+            .populationDurationLabel(getLabelResourceFor(Paper.POPULATION_DURATION))
+            .exposurePollutantLabel(getLabelResourceFor(Paper.EXPOSURE_POLLUTANT))
+            .exposureAssessmentLabel(getLabelResourceFor(Paper.EXPOSURE_ASSESSMENT))
+            .resultExposureRangeLabel(getLabelResourceFor(Paper.RESULT_EXPOSURE_RANGE))
+            .methodStatisticsLabel(getLabelResourceFor(Paper.METHOD_STATISTICS))
+            .methodConfoundersLabel(getLabelResourceFor(Paper.METHOD_CONFOUNDERS))
+            .resultEffectEstimateLabel(getLabelResourceFor(Paper.RESULT_EFFECT_ESTIMATE))
+            .commentLabel(getLabelResourceFor(Paper.COMMENT))
             .build();
         ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getNumber())
             .withCreator(brand)
@@ -333,7 +333,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      */
     private void processStringField(final String fieldName, final String articleValue, final Function<Paper, String> getter, final BiConsumer<Paper, String> setter, final Paper p,
             final ProcessingRecord pr, final AjaxRequestTarget target, final FormComponent<?>... fcs) {
-        final String localizedFieldName = getLocalizedFieldName(fieldName);
+        final String localizedFieldName = getLabelResourceFor(fieldName);
         final String paperValue = getter.apply(p);
         if (paperValue == null || Paper.NA_AUTHORS.equals(paperValue) || Paper.NA_STRING.equals(paperValue)) {
             setPaperFieldFromArticleAndInform(localizedFieldName, articleValue, setter, p, pr, target, fcs);
@@ -366,7 +366,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      */
     private void processIntegerField(final String fieldName, final String rawArticleValue, final Function<Paper, Integer> getter, final BiConsumer<Paper, Integer> setter,
             final String conversionResourceString, final Paper p, final ProcessingRecord pr, final AjaxRequestTarget target, final FormComponent<?>... fcs) {
-        final String localizedFieldName = getLocalizedFieldName(fieldName);
+        final String localizedFieldName = getLabelResourceFor(fieldName);
         final Integer paperValue = getter.apply(p);
         if (paperValue == null || Paper.NA_PUBL_YEAR == paperValue.intValue()) {
             try {
@@ -393,10 +393,6 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         } else if (pr.allMatching()) {
             info(new StringResourceModel("pubmedRetrieval.no-difference.info", this, null).getString());
         }
-    }
-
-    private String getLocalizedFieldName(String fieldName) {
-        return new StringResourceModel(fieldName + LABEL_RECOURCE_TAG, this, null).getString();
     }
 
     private void addTargets(AjaxRequestTarget target, FormComponent<?>... fcs) {
