@@ -2,21 +2,18 @@ package ch.difty.scipamato.persistence;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ch.difty.scipamato.entity.PopulationCode;
 import ch.difty.scipamato.entity.PublicPaper;
+import ch.difty.scipamato.entity.StudyDesignCode;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
 import ch.difty.scipamato.persistence.paging.PaginationRequest;
 
-/**
- * Note: The test will insert some records into the DB. It will try to wipe those records after the test suite terminates.
- *
- * If however, the number of records in the db does not match with the defined constants a few lines further down, the 
- * additional records in the db would be wiped out by the tearDown method. So please make sure the number of records (plus
- * the highest id) match the declarations further down.
- */
 public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     @Autowired
@@ -48,13 +45,13 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
     @Test
     public void findingPageByFilter_() {
         PublicPaperFilter filter = new PublicPaperFilter();
-        assertThat(repo.findPageByFilter(filter, pc)).hasSize(2);
+        assertThat(repo.findPageByFilter(filter, pc)).hasSize(3);
     }
 
     @Test
     public void countingByFilter_withNoFilterCriteria_findsTwo() {
         PublicPaperFilter filter = new PublicPaperFilter();
-        assertThat(repo.countByFilter(filter)).isEqualTo(2);
+        assertThat(repo.countByFilter(filter)).isEqualTo(3);
     }
 
     @Test
@@ -70,4 +67,19 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
         filter.setMethodsMask("Sensitivitätsanalysen");
         assertThat(repo.countByFilter(filter)).isEqualTo(1);
     }
+
+    @Test
+    public void findingPageByFilter_adultsOnly() {
+        PublicPaperFilter filter = new PublicPaperFilter();
+        filter.setPopulationCodes(Arrays.asList(PopulationCode.ADULTS));
+        assertThat(repo.findPageByFilter(filter, pc)).hasSize(2);
+    }
+
+    @Test
+    public void findingPageByFilter_overViewMethodologyOnly() {
+        PublicPaperFilter filter = new PublicPaperFilter();
+        filter.setStudyDesignCodes(Arrays.asList(StudyDesignCode.OVERVIEW_METHODOLOGY));
+        assertThat(repo.findPageByFilter(filter, pc)).hasSize(1);
+    }
+
 }

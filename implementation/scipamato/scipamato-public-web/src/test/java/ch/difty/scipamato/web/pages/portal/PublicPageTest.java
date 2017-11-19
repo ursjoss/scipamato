@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -15,6 +16,7 @@ import ch.difty.scipamato.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.persistence.PublicPaperService;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
 import ch.difty.scipamato.web.pages.BasePageTest;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 public class PublicPageTest extends BasePageTest<PublicPage> {
@@ -59,6 +61,14 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         assertLabeledTextField(b, "methodsSearch");
         assertLabeledTextField(b, "pubYearFrom");
         assertLabeledTextField(b, "pubYearUntil");
+        assertLabeledCombo(b, "populationCodes");
+        assertLabeledCombo(b, "studyDesignCodes");
+    }
+
+    private void assertLabeledCombo(String b, String id) {
+        final String bb = b + ":" + id;
+        getTester().assertComponent(bb + "Label", Label.class);
+        getTester().assertComponent(bb, BootstrapMultiSelect.class);
     }
 
     private void assertResultsTable(String b) {

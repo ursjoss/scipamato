@@ -1,12 +1,9 @@
 package ch.difty.scipamato.persistence.search;
 
-import static ch.difty.scipamato.db.Tables.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 
-import org.jooq.DSLContext;
-import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,13 +12,6 @@ import ch.difty.scipamato.entity.SearchOrder;
 import ch.difty.scipamato.entity.filter.SearchCondition;
 import ch.difty.scipamato.persistence.JooqTransactionalIntegrationTest;
 
-/**
- * Note: The test will insert some records into the DB. It will try to wipe those records after the test suite terminates.
- *
- * If however, the number of records in the db does not match with the defined constants a few lines further down, the 
- * additional records in the db would be wiped out by the tearDown method. So please make sure the number of records (plus
- * the highest id) match the declarations further down.
- */
 public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     private static final Integer RECORD_COUNT_PREPOPULATED = 4;
@@ -29,16 +19,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
     private static final String LC = "de";
 
     @Autowired
-    private DSLContext dsl;
-
-    @Autowired
     private JooqSearchOrderRepo repo;
-
-    @After
-    public void teardown() {
-        // Delete all search orders that were created in any test
-        dsl.delete(SEARCH_ORDER).where(SEARCH_ORDER.ID.gt(RECORD_COUNT_PREPOPULATED.longValue())).execute();
-    }
 
     @Test
     public void findingAll() {
@@ -143,7 +124,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         assertThat(so2).isNotNull();
         assertThat(so2.getAuthors()).isEqualTo("turner");
         // TODO check why this is not set
-//        assertThat(so2.getPublicationYear()).isEqualTo("2014-2015");
+        //        assertThat(so2.getPublicationYear()).isEqualTo("2014-2015");
         assertThat(so2.getDisplayValue()).isEqualTo("turner AND 2014-2015");
     }
 

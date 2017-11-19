@@ -1,7 +1,6 @@
 package ch.difty.scipamato.persistence.paper;
 
 import static ch.difty.scipamato.db.Tables.*;
-import static ch.difty.scipamato.db.tables.SearchExclusion.SEARCH_EXCLUSION;
 import static ch.difty.scipamato.persistence.TestDbConstants.*;
 import static org.assertj.core.api.Assertions.*;
 
@@ -9,9 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.DSLContext;
-import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import ch.difty.scipamato.db.tables.SearchExclusion;
 import ch.difty.scipamato.entity.Paper;
@@ -23,13 +23,6 @@ import ch.difty.scipamato.persistence.JooqTransactionalIntegrationTest;
 import ch.difty.scipamato.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.persistence.paging.Sort.Direction;
 
-/**
- * Note: The test will insert some records into the DB. It will try to wipe those records after the test suite terminates.
- *
- * If however, the number of records in the db does not match with the defined constants a few lines further down, the 
- * additional records in the db would be wiped out by the tearDown method. So please make sure the number of records (plus
- * the highest id) match the declarations further down.
- */
 public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     private static final long TEST_PAPER_ID = 1l;
@@ -55,14 +48,6 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
 
     @Autowired
     private JooqPaperRepo repo;
-
-    @After
-    public void teardown() {
-        // Delete all papers that were created in any test
-        dsl.delete(PAPER).where(PAPER.ID.gt(MAX_ID_PREPOPULATED)).execute();
-        // Delete test attachment
-        dsl.delete(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.NAME.in(TEST_FILE_1, TEST_FILE_2)).and(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).execute();
-    }
 
     @Test
     public void findingAll() {
@@ -331,11 +316,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     }
 
     private void ensureRecordNotPresent(final long searchOrderId, final long paperId) {
-        try {
-            assertExclusionCount(searchOrderId, paperId, 0);
-        } catch (Exception ex) {
-            deleteRecord(searchOrderId, paperId);
-        }
+        assertExclusionCount(searchOrderId, paperId, 0);
     }
 
     private void assertExclusionCount(final long searchOrderId, final long paperId, final int count) {
@@ -345,10 +326,6 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
             .where(SearchExclusion.SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId))
             .and(SearchExclusion.SEARCH_EXCLUSION.PAPER_ID.eq(paperId))
             .fetchOne(0, int.class)).isEqualTo(count);
-    }
-
-    private void deleteRecord(long searchOrderId, long paperId) {
-        dsl.deleteFrom(SEARCH_EXCLUSION).where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId)).and(SEARCH_EXCLUSION.PAPER_ID.eq(paperId)).execute();
     }
 
     @Test
@@ -361,8 +338,6 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         repo.excludePaperFromSearchOrderResults(searchOrderId, paperId);
         repo.excludePaperFromSearchOrderResults(searchOrderId, paperId);
         assertExclusionCount(searchOrderId, paperId, 1);
-
-        deleteRecord(searchOrderId, paperId);
     }
 
     @Test
@@ -448,5 +423,27 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         Paper p = repo.deleteAttachment(id);
         assertThat(p.getAttachments()).extracting("id").doesNotContain(id);
         assertThat(dsl.select(PAPER_ATTACHMENT.ID).from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetchOneInto(Integer.class)).isNull();
+    }
+
+    /**
+     * Verify the rollback is occurring, also that the JooqExceptionTranslator is doing it's job to translate jooq specific exceptions into spring exceptions.
+     */
+    @Test
+    public void testDeclarativeTransaction() {
+        boolean rollback = false;
+        Paper paper = repo.findById(1l);
+        assertThat(paper).isNotNull();
+        try {
+            paper.setNumber(null);
+            repo.update(paper);
+            fail("Should have thrown exception due to null value on non-null column");
+        } catch (org.jooq.exception.DataAccessException dae) {
+            fail("JooqExceptionTranslator did not translate the jooqException into a spring exception");
+        } catch (DataAccessException dae) {
+            rollback = true;
+            assertThat(dae).isInstanceOf(DataIntegrityViolationException.class);
+            dae.getMessage().startsWith("jOOQ; SQL [update \"public\".\"paper\" set \"number\" = ?");
+        }
+        assertThat(rollback).isTrue();
     }
 }
