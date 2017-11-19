@@ -18,7 +18,7 @@ public class PublicPaperFilter extends ScipamatoFilter {
     public static final String METHODS_MASK = "methodsMask";
     public static final String PUB_YEAR_FROM = "publicationYearFrom";
     public static final String PUB_YEAR_UNTIL = "publicationYearUntil";
-    public static final String POPULATION_CODES = "popluationCodes";
+    public static final String POPULATION_CODES = "populationCodes";
     public static final String STUDY_DESIGN_CODES = "studyDesignCodes";
 
     private Long number;
