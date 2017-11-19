@@ -6,9 +6,8 @@ import java.io.Serializable;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
@@ -23,9 +22,8 @@ import net.sf.jasperreports.engine.JasperReport;
  *
  * @author u.joss
  */
+@Slf4j
 public abstract class JasperReportResourceReference extends PackageResourceReference implements Serializable {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(JasperReportResourceReference.class);
 
     private static final long serialVersionUID = 1L;
 
@@ -55,7 +53,7 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
         if (!cacheReport || report == null) {
             try {
                 report = JasperCompileManager.compileReport(getInputStream());
-                LOGGER.info("Successfully compiled JasperReport {}...", getName());
+                log.info("Successfully compiled JasperReport {}...", getName());
             } catch (final JRException e) {
                 throw new JasperReportException(e);
             }

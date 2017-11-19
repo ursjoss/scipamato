@@ -19,7 +19,6 @@ import org.jooq.InsertValuesStep4;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -41,6 +40,7 @@ import ch.difty.scipamato.persistence.JooqSortMapper;
 import ch.difty.scipamato.persistence.UpdateSetStepSetter;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
 import ch.difty.scipamato.persistence.paper.searchorder.PaperBackedSearchOrderRepository;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * The repository to manage {@link Paper}s - including the nested list of {@link Code}s.
@@ -48,13 +48,12 @@ import ch.difty.scipamato.persistence.paper.searchorder.PaperBackedSearchOrderRe
  * @author u.joss
  */
 @Repository
+@Slf4j
 public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.difty.scipamato.db.tables.Paper, PaperRecordMapper, PaperFilter> implements PaperRepository {
 
     private static final String LANGUAGE_CODE = "languageCode";
 
     private static final long serialVersionUID = 1L;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(JooqPaperRepo.class);
 
     private final PaperBackedSearchOrderRepository searchOrderRepository;
 
@@ -68,7 +67,7 @@ public class JooqPaperRepo extends JooqEntityRepo<PaperRecord, Paper, Long, ch.d
 
     @Override
     protected Logger getLogger() {
-        return LOGGER;
+        return log;
     }
 
     @Override

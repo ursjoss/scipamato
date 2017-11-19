@@ -9,7 +9,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -30,6 +29,7 @@ import ch.difty.scipamato.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.persistence.JooqEntityRepo;
 import ch.difty.scipamato.persistence.JooqSortMapper;
 import ch.difty.scipamato.persistence.UpdateSetStepSetter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * The repository to manage {@link User}s - including the nested list of Roles.
@@ -37,12 +37,11 @@ import ch.difty.scipamato.persistence.UpdateSetStepSetter;
  * @author u.joss
  */
 @Repository
+@Slf4j
 @CacheConfig(cacheNames = "userByName")
 public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Integer, ch.difty.scipamato.db.tables.ScipamatoUser, UserRecordMapper, UserFilter> implements UserRepository {
 
     private static final long serialVersionUID = 1L;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(JooqUserRepo.class);
 
     private final UserRoleRepository userRoleRepo;
 
@@ -56,7 +55,7 @@ public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Inte
 
     @Override
     protected Logger getLogger() {
-        return LOGGER;
+        return log;
     }
 
     @Override

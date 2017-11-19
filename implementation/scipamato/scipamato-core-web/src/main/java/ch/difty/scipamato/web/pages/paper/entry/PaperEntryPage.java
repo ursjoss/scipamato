@@ -11,8 +11,6 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.auth.Roles;
@@ -23,6 +21,7 @@ import ch.difty.scipamato.web.PageParameterNames;
 import ch.difty.scipamato.web.pages.SelfUpdatingPage;
 import ch.difty.scipamato.web.panel.paper.EditablePaperPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Page to add new papers or modify existing papers. The page implements the {@link SelfUpdatingPage},
@@ -55,12 +54,11 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCD
  * @author u.joss
  */
 @MountPath("entry")
+@Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
     private static final long serialVersionUID = 1L;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PaperEntryPage.class);
 
     @SpringBean
     private PaperService service;
@@ -176,11 +174,11 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
             }
         } catch (OptimisticLockingException ole) {
             final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null).setParameters(ole.getTableName(), getNullSafeId()).getString();
-            LOGGER.error(msg);
+            log.error(msg);
             error(msg);
         } catch (Exception ex) {
             String msg = new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId(), ex.getMessage()).getString();
-            LOGGER.error(msg);
+            log.error(msg);
             error(msg);
         }
     }

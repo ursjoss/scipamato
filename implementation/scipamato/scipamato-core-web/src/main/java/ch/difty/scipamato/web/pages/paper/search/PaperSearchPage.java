@@ -14,8 +14,6 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.AssertAs;
@@ -33,6 +31,7 @@ import ch.difty.scipamato.web.panel.search.SearchOrderPanel;
 import ch.difty.scipamato.web.panel.search.SearchOrderSelectorPanel;
 import ch.difty.scipamato.web.panel.search.ToggleExclusionsEvent;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * The PaperSearchPage manages {@link SearchOrder}s by allowing the user to select, create or modify them
@@ -47,14 +46,13 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCD
  * @author u.joss
  */
 @MountPath("search")
+@Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 
     private static final int RESULT_PAGE_SIZE = 12;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PaperSearchPage.class);
 
     private PaperSlimBySearchOrderProvider dataProvider;
 
@@ -252,7 +250,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
                 setModelObject(p);
             } catch (OptimisticLockingException ole) {
                 final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null).setParameters(ole.getTableName(), getModelObject().getId()).getString();
-                LOGGER.error(msg);
+                log.error(msg);
                 error(msg);
             }
         }
@@ -272,7 +270,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             setResponsePage(new PaperSearchPage(pp));
         } catch (OptimisticLockingException ole) {
             final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null).setParameters(ole.getTableName(), getModelObject().getId()).getString();
-            LOGGER.error(msg);
+            log.error(msg);
             error(msg);
         }
     }

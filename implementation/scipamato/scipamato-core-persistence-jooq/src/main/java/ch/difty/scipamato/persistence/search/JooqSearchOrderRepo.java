@@ -26,7 +26,6 @@ import org.jooq.InsertValuesStep6;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -52,6 +51,7 @@ import ch.difty.scipamato.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.persistence.JooqEntityRepo;
 import ch.difty.scipamato.persistence.JooqSortMapper;
 import ch.difty.scipamato.persistence.UpdateSetStepSetter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * The repository to manage {@link SearchOrder}s - including the nested list of {@link SearchCondition}s and excluded paper ids.
@@ -59,12 +59,11 @@ import ch.difty.scipamato.persistence.UpdateSetStepSetter;
  * @author u.joss
  */
 @Repository
+@Slf4j
 public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter>
         implements SearchOrderRepository {
 
     private static final long serialVersionUID = 1L;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(JooqSearchOrderRepo.class);
 
     @Autowired
     public JooqSearchOrderRepo(DSLContext dsl, SearchOrderRecordMapper mapper, JooqSortMapper<SearchOrderRecord, SearchOrder, ch.difty.scipamato.db.tables.SearchOrder> sortMapper,
@@ -75,7 +74,7 @@ public class JooqSearchOrderRepo extends JooqEntityRepo<SearchOrderRecord, Searc
 
     @Override
     protected Logger getLogger() {
-        return LOGGER;
+        return log;
     }
 
     @Override

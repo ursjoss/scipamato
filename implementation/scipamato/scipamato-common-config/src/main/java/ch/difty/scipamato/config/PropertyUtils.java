@@ -1,17 +1,16 @@
 package ch.difty.scipamato.config;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Utility class with static helper methods used for configuration/property evaluation purposes.
  *
  * @author u.joss
  */
+@Slf4j
 public final class PropertyUtils {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PropertyUtils.class);
 
     private PropertyUtils() {
     }
@@ -32,13 +31,13 @@ public final class PropertyUtils {
         if (StringUtils.isNotBlank(propertyValue)) {
             for (T s : values) {
                 if (propertyValue.equalsIgnoreCase(s.name())) {
-                    LOGGER.info("{}={}", propertyKey, propertyValue);
+                    log.info("{}={}", propertyKey, propertyValue);
                     return s;
                 }
             }
         }
         final String msg = "{} is not properly defined. Current value: '{}' - now using {} - specify one of {} in your property configuration (e.g. application.properties).";
-        LOGGER.warn(msg, propertyKey, propertyValue, defaultValue, values);
+        log.warn(msg, propertyKey, propertyValue, defaultValue, values);
         return defaultValue;
     }
 
@@ -58,10 +57,10 @@ public final class PropertyUtils {
         int value = defaultValue;
         try {
             value = Integer.parseInt(propertyValue);
-            LOGGER.info("{}={}", propertyKey, propertyValue);
+            log.info("{}={}", propertyKey, propertyValue);
         } catch (NumberFormatException ex) {
             final String msg = "{} is not properly defined. Current value: '{}' - now using {} - specify one in your property configuration (e.g. application.properties).{}";
-            LOGGER.warn(msg, propertyKey, propertyValue, defaultValue, values);
+            log.warn(msg, propertyKey, propertyValue, defaultValue, values);
         }
         return value;
     }

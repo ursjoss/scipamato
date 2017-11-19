@@ -9,14 +9,13 @@ import java.util.stream.Collectors;
 
 import javax.xml.transform.stream.StreamSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.NullArgumentException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Service handling pubmed content.
@@ -24,9 +23,8 @@ import ch.difty.scipamato.NullArgumentException;
  * @author u.joss
  */
 @Service
+@Slf4j
 public class PubmedXmlService implements PubmedArticleService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PubmedXmlService.class);
 
     private final Unmarshaller unmarshaller;
 
@@ -46,7 +44,7 @@ public class PubmedXmlService implements PubmedArticleService {
             final List<java.lang.Object> articles = set.getPubmedArticleOrPubmedBookArticle();
             return articles.stream().map(PubmedArticleFacade::of).findFirst();
         } catch (Exception ex) {
-            LOGGER.error("Unexpected error", ex);
+            log.error("Unexpected error", ex);
             return Optional.empty();
         }
     }
@@ -84,7 +82,7 @@ public class PubmedXmlService implements PubmedArticleService {
             final List<java.lang.Object> aoba = set.getPubmedArticleOrPubmedBookArticle();
             articles.addAll(aoba.stream().map(PubmedArticleFacade::of).collect(Collectors.toList()));
         } catch (final Exception e) {
-            LOGGER.info("Unable to parse xmlString '{}': {}", xmlString, e.getMessage());
+            log.info("Unable to parse xmlString '{}': {}", xmlString, e.getMessage());
         }
         return articles;
     }
