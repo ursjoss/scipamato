@@ -10,6 +10,8 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import ch.difty.scipamato.db.tables.SearchExclusion;
 import ch.difty.scipamato.entity.Paper;
@@ -421,5 +423,27 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         Paper p = repo.deleteAttachment(id);
         assertThat(p.getAttachments()).extracting("id").doesNotContain(id);
         assertThat(dsl.select(PAPER_ATTACHMENT.ID).from(PAPER_ATTACHMENT).where(PAPER_ATTACHMENT.PAPER_ID.eq(TEST_PAPER_ID)).fetchOneInto(Integer.class)).isNull();
+    }
+
+    /**
+     * Verify the rollback is occurring, also that the JooqExceptionTranslator is doing it's job to translate jooq specific exceptions into spring exceptions.
+     */
+    @Test
+    public void testDeclarativeTransaction() {
+        boolean rollback = false;
+        Paper paper = repo.findById(1l);
+        assertThat(paper).isNotNull();
+        try {
+            paper.setNumber(null);
+            repo.update(paper);
+            fail("Should have thrown exception due to null value on non-null column");
+        } catch (org.jooq.exception.DataAccessException dae) {
+            fail("JooqExceptionTranslator did not translate the jooqException into a spring exception");
+        } catch (DataAccessException dae) {
+            rollback = true;
+            assertThat(dae).isInstanceOf(DataIntegrityViolationException.class);
+            dae.getMessage().startsWith("jOOQ; SQL [update \"public\".\"paper\" set \"number\" = ?");
+        }
+        assertThat(rollback).isTrue();
     }
 }

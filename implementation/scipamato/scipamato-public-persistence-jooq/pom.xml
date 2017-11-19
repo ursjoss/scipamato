@@ -219,6 +219,7 @@
                                             <deprecated>false</deprecated>
                                             <instanceFields>true</instanceFields>
                                             <pojos>false</pojos>
+                                            <springAnnotations>true</springAnnotations>
                                         </generate>
                                         <target>
                                             <packageName>ch.difty.scipamato.db</packageName>
