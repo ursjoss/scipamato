@@ -56,15 +56,18 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Public: 07/03: Allow to filter by collective code groups Population (Children vs. Adults) and/or StudyType (Experimental, Epidemiological or Methodology)
 
 .Changed
-- Core: 06/21+24: Open external links in new browser tab
+- Core: 06/21+24: Open external links (to the ChangeLog or wiki pages) in new browser tab
 - Story 07/01: New maven modules scipamto-common-entity, scipamato-common-persistence-api, scipamato-common-persistence-jooq
 - Documentation updates
+- pom refactoring and cleanup
 
 .Deprecated
 
 .Removed
+- obsolete jOOQ configuration classes. Simplified jOOQ configuration based on spring boot autoconfiguration
 
 .Fixed
+- Fixed and improved transaction handling in integration tests
 
 .Security
 - Public: 07/16: Add spring-security to SciPaMaTo-Public: Anonymous login for the page, required login for actuator endpoints
