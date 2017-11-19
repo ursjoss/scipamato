@@ -1,43 +1,24 @@
 package ch.difty.scipamato.persistence.user;
 
-import static ch.difty.scipamato.db.Tables.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 
-import org.jooq.DSLContext;
-import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.auth.Role;
 import ch.difty.scipamato.entity.User;
-import ch.difty.scipamato.persistence.JooqBaseIntegrationTest;
+import ch.difty.scipamato.persistence.JooqTransactionalIntegrationTest;
 import ch.difty.scipamato.persistence.OptimisticLockingException;
 
-/**
- * Note: The test will insert some records into the DB. It will try to wipe those records after the test suite terminates.
- *
- * If however, the number of records in the db does not match with the defined constants a few lines further down, the 
- * additional records in the db would be wiped out by the tearDown method. So please make sure the number of records (plus
- * the highest id) match the declarations further down.
- */
-public class JooqUserRepoIntegrationTest extends JooqBaseIntegrationTest {
+public class JooqUserRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     private static final Integer MAX_ID_PREPOPULATED = 8;
     private static final int RECORD_COUNT_PREPOPULATED = 8;
 
     @Autowired
-    private DSLContext dsl;
-
-    @Autowired
     private JooqUserRepo repo;
-
-    @After
-    public void teardown() {
-        // Delete all users that were created in any test
-        dsl.delete(SCIPAMATO_USER).where(SCIPAMATO_USER.ID.gt(MAX_ID_PREPOPULATED)).execute();
-    }
 
     @Test
     public void findingAll() {

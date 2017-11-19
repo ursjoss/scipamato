@@ -14,13 +14,6 @@ import ch.difty.scipamato.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
 import ch.difty.scipamato.persistence.paging.PaginationRequest;
 
-/**
- * Note: The test will insert some records into the DB. It will try to wipe those records after the test suite terminates.
- *
- * If however, the number of records in the db does not match with the defined constants a few lines further down, the 
- * additional records in the db would be wiped out by the tearDown method. So please make sure the number of records (plus
- * the highest id) match the declarations further down.
- */
 public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     @Autowired
