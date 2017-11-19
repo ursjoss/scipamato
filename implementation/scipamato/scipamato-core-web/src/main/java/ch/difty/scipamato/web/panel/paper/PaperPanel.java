@@ -241,7 +241,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
     private void queueTabPanel(String tabId) {
         List<ITab> tabs = new ArrayList<>();
-        tabs.add(new AbstractTab(new StringResourceModel("tab1" + LABEL_RECOURCE_TAG, this, null)) {
+        tabs.add(new AbstractTab(new StringResourceModel("tab1" + LABEL_RESOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -250,7 +250,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             }
 
         });
-        tabs.add(new AbstractTab(new StringResourceModel("tab2" + LABEL_RECOURCE_TAG, this, null)) {
+        tabs.add(new AbstractTab(new StringResourceModel("tab2" + LABEL_RESOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -258,7 +258,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
                 return new TabPanel2(panelId, form.getModel());
             }
         });
-        tabs.add(new AbstractTab(new StringResourceModel("tab3" + LABEL_RECOURCE_TAG, this, null)) {
+        tabs.add(new AbstractTab(new StringResourceModel("tab3" + LABEL_RESOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -266,7 +266,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
                 return new TabPanel3(panelId, form.getModel());
             }
         });
-        tabs.add(new AbstractTab(new StringResourceModel("tab4" + LABEL_RECOURCE_TAG, this, null)) {
+        tabs.add(new AbstractTab(new StringResourceModel("tab4" + LABEL_RESOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -274,7 +274,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
                 return new TabPanel4(panelId, form.getModel());
             }
         });
-        tabs.add(new AbstractTab(new StringResourceModel("tab5" + LABEL_RECOURCE_TAG, this, null)) {
+        tabs.add(new AbstractTab(new StringResourceModel("tab5" + LABEL_RESOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -282,7 +282,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
                 return new TabPanel5(panelId, form.getModel());
             }
         });
-        tabs.add(new AbstractTab(new StringResourceModel("tab6" + LABEL_RECOURCE_TAG, this, null)) {
+        tabs.add(new AbstractTab(new StringResourceModel("tab6" + LABEL_RESOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -443,7 +443,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         TextArea<String> queueTo(String id, boolean newField, PropertyValidator<?> pv) {
             TextArea<String> field = makeField(id, newField);
             field.setOutputMarkupId(true);
-            StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
+            StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
             queue(new Label(id + LABEL_TAG, labelModel));
             field.setLabel(labelModel);
             if (newField) {
@@ -594,7 +594,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
         private void addMainCodeOfClass1(TextField<String> field) {
             String id = field.getId();
-            StringResourceModel labelModel = new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null);
+            StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
             queue(new Label(id + LABEL_TAG, labelModel));
             field.add(new PropertyValidator<String>());
             field.setOutputMarkupId(true);

@@ -60,7 +60,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
     }
 
     private void queueNewButton(String id, SerializableBiFunction<IModel<SearchCondition>, Long, BasePage<SearchCondition>> pageFunction, SerializableSupplier<IModel<SearchCondition>> modelProvider) {
-        queue(new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RECOURCE_TAG, this, null), Type.Default) {
+        queue(new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null), Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override

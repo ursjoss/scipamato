@@ -15,12 +15,12 @@ public class WicketUtilsTest extends FinalClassTest<WicketUtils> {
 
     @Test
     public void labelResourceTag() {
-        assertThat(WicketUtils.LABEL_RECOURCE_TAG).isEqualTo(".label");
+        assertThat(WicketUtils.LABEL_RESOURCE_TAG).isEqualTo(".label");
     }
 
     @Test
     public void shortLabelResourceTag() {
-        assertThat(WicketUtils.SHORT_LABEL_RECOURCE_TAG).isEqualTo(".short.label");
+        assertThat(WicketUtils.SHORT_LABEL_RESOURCE_TAG).isEqualTo(".short.label");
     }
 
     @Test

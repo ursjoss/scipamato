@@ -53,7 +53,7 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
      * @return the label string, taken from the resource.
      */
     protected String getLabelResourceFor(final String componentId) {
-        return getResourceFor(componentId, LABEL_RECOURCE_TAG);
+        return getResourceFor(componentId, LABEL_RESOURCE_TAG);
     }
 
     /**
@@ -63,7 +63,7 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
      * @return the label string, taken from the resource.
      */
     protected String getShortLabelResourceFor(final String componentId) {
-        return getResourceFor(componentId, LABEL_RECOURCE_TAG);
+        return getResourceFor(componentId, LABEL_RESOURCE_TAG);
     }
 
     private String getResourceFor(final String componentId, final String tag) {
