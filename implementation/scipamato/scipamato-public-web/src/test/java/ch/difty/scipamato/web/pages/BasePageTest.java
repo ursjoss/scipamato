@@ -15,6 +15,8 @@ public abstract class BasePageTest<T extends BasePage<?>> extends WicketTest {
 
         getTester().assertNoErrorMessage();
         getTester().assertNoInfoMessage();
+
+        doVerify();
     }
 
     /**
@@ -31,6 +33,12 @@ public abstract class BasePageTest<T extends BasePage<?>> extends WicketTest {
      * Override if you want to assert specific components
      */
     protected void assertSpecificComponents() {
+    }
+
+    /**
+     * Override if you need to verify mock calls
+     */
+    protected void doVerify() {
     }
 
 }
