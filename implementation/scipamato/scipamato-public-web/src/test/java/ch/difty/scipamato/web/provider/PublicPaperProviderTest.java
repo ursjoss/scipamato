@@ -5,8 +5,10 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.After;
@@ -23,6 +25,7 @@ import ch.difty.scipamato.entity.PublicPaper;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.persistence.PublicPaperService;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.PaginationContextMatcher;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -99,4 +102,14 @@ public class PublicPaperProviderTest {
         assertThat(provider.size()).isEqualTo(2);
         verify(serviceMock).countByFilter(filterMock);
     }
+
+    @Test
+    public void findingAllIdsByFilter() {
+        provider.setSort("title", SortOrder.DESCENDING);
+        when(serviceMock.findPageOfIdsByFilter(eq(filterMock), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(Arrays.asList(5l, 3l, 17l));
+        List<Long> ids = provider.findAllPaperIdsByFilter();
+        assertThat(ids).containsExactly(5l, 3l, 17l);
+        verify(serviceMock).findPageOfIdsByFilter(eq(filterMock), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")));
+    }
+
 }

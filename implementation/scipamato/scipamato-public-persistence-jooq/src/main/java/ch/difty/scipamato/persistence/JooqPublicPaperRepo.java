@@ -103,4 +103,11 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
         return getDsl().fetchCount(getDsl().selectOne().from(PAPER).where(conditions));
     }
 
+    @Override
+    public List<Long> findPageOfIdsByFilter(PublicPaperFilter filter, PaginationContext pc) {
+        final Condition conditions = filterConditionMapper.map(filter);
+        final Collection<SortField<PublicPaper>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
+        return getDsl().select().from(getTable()).where(conditions).orderBy(sortCriteria).limit(pc.getPageSize()).offset(pc.getOffset()).fetch(getTableId());
+    }
+
 }

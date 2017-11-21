@@ -42,6 +42,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     protected void doVerify() {
         verify(serviceMock).countByFilter(isA(PublicPaperFilter.class));
         verify(serviceMock).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
+        verify(serviceMock).findPageOfIdsByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
     }
 
     @After

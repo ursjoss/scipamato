@@ -14,7 +14,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +23,7 @@ import ch.difty.scipamato.ScipamatoApplication;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.PaperSlimFilter;
 import ch.difty.scipamato.entity.projection.PaperSlim;
-import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.PaginationContextMatcher;
 import ch.difty.scipamato.persistence.paper.JooqPaperService;
 import ch.difty.scipamato.persistence.paper.slim.JooqPaperSlimService;
 
@@ -83,28 +82,6 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     @Test
     public void gettingFilterState_returnsFilter() {
         assertThat(provider.getFilterState()).isEqualTo(getFilter());
-    }
-
-    class PaginationContextMatcher extends ArgumentMatcher<PaginationContext> {
-
-        private final int offset;
-        private final int pageSize;
-        private final String sort;
-
-        PaginationContextMatcher(int offset, int pageSize, String sort) {
-            this.offset = offset;
-            this.pageSize = pageSize;
-            this.sort = sort;
-        }
-
-        @Override
-        public boolean matches(Object argument) {
-            if (argument != null && argument instanceof PaginationContext) {
-                PaginationContext p = (PaginationContext) argument;
-                return p.getOffset() == offset && p.getPageSize() == pageSize && sort.equals(p.getSort().toString());
-            }
-            return false;
-        }
     }
 
     @Test

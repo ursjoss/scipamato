@@ -42,4 +42,9 @@ public class JooqPublicPaperService implements PublicPaperService {
         return getRepository().countByFilter(filter);
     }
 
+    @Override
+    public List<Long> findPageOfIdsByFilter(PublicPaperFilter filter, PaginationContext paginationContext) {
+        return getRepository().findPageOfIdsByFilter(filter, paginationContext);
+    }
+
 }

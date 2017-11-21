@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import ch.difty.scipamato.entity.Paper;
 import ch.difty.scipamato.entity.filter.PaperFilter;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
+import ch.difty.scipamato.persistence.paging.PaginationContextMatcher;
 
 public class PaperSlimByPaperFilterProviderTest extends AbstractPaperSlimProviderTest<PaperFilter, PaperSlimByPaperFilterProvider> {
 
@@ -63,7 +64,7 @@ public class PaperSlimByPaperFilterProviderTest extends AbstractPaperSlimProvide
     }
 
     @Test
-    public void gettingAllPapersByFilter() {
+    public void findingAllPapersByFilter() {
         provider.setSort("title", SortOrder.DESCENDING);
         when(paperServiceMock.findPageByFilter(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(pageOfPapers);
         List<Paper> papers = provider.findAllPapersByFilter();

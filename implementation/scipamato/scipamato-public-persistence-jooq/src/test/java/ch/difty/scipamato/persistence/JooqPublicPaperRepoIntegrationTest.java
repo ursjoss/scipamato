@@ -13,6 +13,7 @@ import ch.difty.scipamato.entity.StudyDesignCode;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
 import ch.difty.scipamato.persistence.paging.PaginationRequest;
+import ch.difty.scipamato.persistence.paging.Sort.Direction;
 
 public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
@@ -82,4 +83,10 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
         assertThat(repo.findPageByFilter(filter, pc)).hasSize(1);
     }
 
+    @Test
+    public void findingPageOfIdsByFilter() {
+        PublicPaperFilter filter = new PublicPaperFilter();
+        filter.setPublicationYearFrom(2015);
+        assertThat(repo.findPageOfIdsByFilter(filter, new PaginationRequest(Direction.ASC, "authors"))).isNotEmpty().containsExactly(2l);
+    }
 }

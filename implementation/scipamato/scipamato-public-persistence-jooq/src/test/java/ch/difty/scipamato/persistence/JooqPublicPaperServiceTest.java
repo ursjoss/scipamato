@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,5 +88,13 @@ public class JooqPublicPaperServiceTest {
         when(mockRepo.countByFilter(filterMock)).thenReturn(2);
         assertThat(service.countByFilter(filterMock)).isEqualTo(2);
         verify(mockRepo).countByFilter(filterMock);
+    }
+
+    @Test
+    public void findingPageOfIdsByFilter_delegatesToRepo() {
+        List<Long> idList = Arrays.asList(3l, 5l);
+        when(mockRepo.findPageOfIdsByFilter(filterMock, paginationContextMock)).thenReturn(idList);
+        assertThat(service.findPageOfIdsByFilter(filterMock, paginationContextMock)).isEqualTo(idList);
+        verify(mockRepo).findPageOfIdsByFilter(filterMock, paginationContextMock);
     }
 }

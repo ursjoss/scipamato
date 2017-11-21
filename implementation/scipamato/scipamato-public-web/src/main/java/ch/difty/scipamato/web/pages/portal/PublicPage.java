@@ -22,6 +22,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 
+import ch.difty.scipamato.ScipamatoPublicSession;
 import ch.difty.scipamato.entity.PopulationCode;
 import ch.difty.scipamato.entity.PublicPaper;
 import ch.difty.scipamato.entity.StudyDesignCode;
@@ -54,6 +55,7 @@ public class PublicPage extends BasePage<Void> {
     private void initFilterAndProvider() {
         filter = new PublicPaperFilter();
         dataProvider = new PublicPaperProvider(filter, RESULT_PAGE_SIZE);
+        updateNavigateable();
     }
 
     @Override
@@ -65,7 +67,15 @@ public class PublicPage extends BasePage<Void> {
     }
 
     private void makeAndQueueFilterForm(final String id) {
-        queue(new FilterForm<PublicPaperFilter>(id, dataProvider));
+        queue(new FilterForm<PublicPaperFilter>(id, dataProvider) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit() {
+                super.onSubmit();
+                updateNavigateable();
+            }
+        });
 
         queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(filter, PublicPaperFilter.METHODS_MASK)));
         queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(filter, PublicPaperFilter.AUTHOR_MASK)));
@@ -124,4 +134,13 @@ public class PublicPage extends BasePage<Void> {
         multiSelect.add(new AttributeModifier("data-width", "fit"));
         queue(multiSelect);
     }
+
+    /**
+     * Have the provider provide a list of all paper ids matching the current filter.
+     * Construct a navigateable with this list and set it into the session
+     */
+    private void updateNavigateable() {
+        ScipamatoPublicSession.get().getPaperIdManager().initialize(dataProvider.findAllPaperIdsByFilter());
+    }
+
 }

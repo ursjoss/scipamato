@@ -37,4 +37,13 @@ public interface PublicPaperRepository extends Serializable {
      * @return list of all matching {@link PublicPaper}s
      */
     int countByFilter(PublicPaperFilter filter);
+
+    /**
+     * Finds the ids of the persisted entities matching the provided filter and pagination context.
+     *
+     * @param filter of type {@code F}
+     * @param paginationContext {@link PaginationContext}
+     * @return list of the ids of type {@code ID} of matching entities {@code T}
+     */
+    List<Long> findPageOfIdsByFilter(PublicPaperFilter filter, PaginationContext paginationContext);
 }
