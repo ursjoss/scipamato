@@ -143,7 +143,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     protected PaperSummaryDataSource getSummaryDataSource() {
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summary", this, null).getString();
-        ReportHeaderFields rhf = ReportHeaderFields
+        final ReportHeaderFields rhf = ReportHeaderFields
             .builder(brand, headerPart)
             .populationLabel(getLabelResourceFor(Paper.POPULATION))
             .goalsLabel(getLabelResourceFor(Paper.GOALS))
@@ -151,16 +151,17 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             .resultLabel(getLabelResourceFor(Paper.RESULT))
             .commentLabel(getLabelResourceFor(Paper.COMMENT))
             .build();
-        ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getNumber())
+        final Paper p = getModelObject();
+        final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, p.getNumber())
             .withCreator(brand)
-            .withPaperTitle(getModelObject().getTitle())
-            .withPaperAuthor(getModelObject().getFirstAuthor())
-            .withSubject(getModelObject().getMethods())
-            .withAuthor(getModelObject().getCreatedByFullName())
-            .withCodes(getModelObject().getCodes())
+            .withPaperTitle(p.getTitle())
+            .withPaperAuthor(p.getFirstAuthor())
+            .withSubject(p.getMethods())
+            .withAuthor(p.getCreatedByFullName())
+            .withCodes(p.getCodes())
             .withCompression()
             .build();
-        return new PaperSummaryDataSource(getModelObject(), rhf, config);
+        return new PaperSummaryDataSource(p, rhf, config);
     }
 
     /**
@@ -170,7 +171,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     protected PaperSummaryShortDataSource getSummaryShortDataSource() {
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summaryShort", this, null).getString();
-        ReportHeaderFields rhf = ReportHeaderFields
+        final ReportHeaderFields rhf = ReportHeaderFields
             .builder(headerPart, brand)
             .goalsLabel(getLabelResourceFor(Paper.GOALS))
             .methodsLabel(getLabelResourceFor(Paper.METHODS))
@@ -188,16 +189,17 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             .resultEffectEstimateLabel(getLabelResourceFor(Paper.RESULT_EFFECT_ESTIMATE))
             .commentLabel(getLabelResourceFor(Paper.COMMENT))
             .build();
-        ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, getModelObject().getNumber())
+        final Paper p = getModelObject();
+        final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart, p.getNumber())
             .withCreator(brand)
-            .withPaperTitle(getModelObject().getTitle())
-            .withPaperAuthor(getModelObject().getFirstAuthor())
-            .withSubject(getModelObject().getMethods())
-            .withAuthor(getModelObject().getCreatedByFullName())
-            .withCodes(getModelObject().getCodes())
+            .withPaperTitle(p.getTitle())
+            .withPaperAuthor(p.getFirstAuthor())
+            .withSubject(p.getMethods())
+            .withAuthor(p.getCreatedByFullName())
+            .withCodes(p.getCodes())
             .withCompression()
             .build();
-        return new PaperSummaryShortDataSource(getModelObject(), rhf, config);
+        return new PaperSummaryShortDataSource(p, rhf, config);
     }
 
     /**
