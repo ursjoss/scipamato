@@ -120,7 +120,7 @@ public class PublicPage extends BasePage<Void> {
 
     private void onTitleClick(IModel<PublicPaper> m) {
         ScipamatoPublicSession.get().getPaperIdManager().setFocusToItem(m.getObject().getId());
-        setResponsePage(new PublicPaperDetailPage(m));
+        setResponsePage(new PublicPaperDetailPage(m, getPage().getPageReference()));
     }
 
     private void makePopulationCodesComplex(String id) {

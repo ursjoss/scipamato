@@ -18,7 +18,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
 
     @Override
     protected PublicPaperDetailPage makePage() {
-        return new PublicPaperDetailPage(Model.of(paper));
+        return new PublicPaperDetailPage(Model.of(paper), null);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     @Test
     public void withGoalsMissing_hideGoalsTopic() {
         PublicPaper p = new PublicPaper(1l, 1l, 10000, "authors", "title", "location", 2017, null, "methods", "population", "result", "comment");
-        getTester().startPage(new PublicPaperDetailPage(Model.of(p)));
+        getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
         assertHeader();
         assertReferenceTopic();
@@ -86,7 +86,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     @Test
     public void withPopulationMissing_hidePopulationTopic() {
         PublicPaper p = new PublicPaper(1l, 1l, 10000, "authors", "title", "location", 2017, "goals", "methods", null, "result", "comment");
-        getTester().startPage(new PublicPaperDetailPage(Model.of(p)));
+        getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
         assertHeader();
         assertReferenceTopic();
@@ -101,7 +101,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     @Test
     public void withMethodsMissing_hideMethodsTopic() {
         PublicPaper p = new PublicPaper(1l, 1l, 10000, "authors", "title", "location", 2017, "goals", null, "population", "result", "comment");
-        getTester().startPage(new PublicPaperDetailPage(Model.of(p)));
+        getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
         assertHeader();
         assertReferenceTopic();
@@ -116,7 +116,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     @Test
     public void withResultMissing_hideResultTopic() {
         PublicPaper p = new PublicPaper(1l, 1l, 10000, "authors", "title", "location", 2017, "goals", "methods", "population", null, "comment");
-        getTester().startPage(new PublicPaperDetailPage(Model.of(p)));
+        getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
         assertHeader();
         assertReferenceTopic();
@@ -131,7 +131,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     @Test
     public void withCommentMissing_hideCommentTopic() {
         PublicPaper p = new PublicPaper(1l, 1l, 10000, "authors", "title", "location", 2017, "goals", "methods", "population", "result", null);
-        getTester().startPage(new PublicPaperDetailPage(Model.of(p)));
+        getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
         assertHeader();
         assertReferenceTopic();

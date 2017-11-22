@@ -3,34 +3,49 @@
 <body>
     <wicket:extend>
         <div class="container-fluid">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <p wicket:id="captionLabel"></p>
-                    <h3 wicket:id="title"></h3>
+            <form wicket:id="form">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <p wicket:id="captionLabel"></p>
+                                <h3 wicket:id="title"></h3>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" wicket:id="back" class="btn btn-md"></button>
+                                <button type="submit" wicket:id="previous" tabindex="-1">
+                                    <i wicket:id="icon"></i>
+                                </button>
+                                <button type="submit" wicket:id="next" tabindex="-1">
+                                    <i wicket:id="icon"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <h4 wicket:id="referenceLabel"></h4>
+                        <p>
+                            <span wicket:id="authors"></span><br /> <span wicket:id="title2" style="font-style: italic"></span><br />
+                            <span wicket:id="location"></span>
+                        </p>
+
+                        <h4 wicket:id="goalsLabel"></h4>
+                        <p wicket:id="goals"></p>
+
+                        <h4 wicket:id="populationLabel"></h4>
+                        <p wicket:id="population"></p>
+
+                        <h4 wicket:id="methodsLabel"></h4>
+                        <p wicket:id="methods"></p>
+
+                        <h4 wicket:id="resultLabel"></h4>
+                        <p wicket:id="result"></p>
+
+                        <h4 wicket:id="commentLabel"></h4>
+                        <p wicket:id="comment"></p>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <h4 wicket:id="referenceLabel"></h4>
-                    <p>
-                        <span wicket:id="authors"></span><br /> <span wicket:id="title2" style="font-style: italic"></span><br />
-                        <span wicket:id="location"></span>
-                    </p>
-
-                    <h4 wicket:id="goalsLabel"></h4>
-                    <p wicket:id="goals"></p>
-
-                    <h4 wicket:id="populationLabel"></h4>
-                    <p wicket:id="population"></p>
-
-                    <h4 wicket:id="methodsLabel"></h4>
-                    <p wicket:id="methods"></p>
-
-                    <h4 wicket:id="resultLabel"></h4>
-                    <p wicket:id="result"></p>
-
-                    <h4 wicket:id="commentLabel"></h4>
-                    <p wicket:id="comment"></p>
-                </div>
-            </div>
+            </form>
         </div>
     </wicket:extend>
 </body>
