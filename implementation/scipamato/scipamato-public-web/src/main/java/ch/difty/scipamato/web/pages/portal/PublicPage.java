@@ -18,6 +18,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
@@ -27,6 +28,9 @@ import ch.difty.scipamato.entity.PopulationCode;
 import ch.difty.scipamato.entity.PublicPaper;
 import ch.difty.scipamato.entity.StudyDesignCode;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
+import ch.difty.scipamato.persistence.PublicPaperService;
+import ch.difty.scipamato.web.component.SerializableConsumer;
+import ch.difty.scipamato.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.scipamato.web.pages.BasePage;
 import ch.difty.scipamato.web.provider.PublicPaperProvider;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
@@ -46,6 +50,9 @@ public class PublicPage extends BasePage<Void> {
 
     private PublicPaperFilter filter;
     private PublicPaperProvider dataProvider;
+
+    @SpringBean
+    private PublicPaperService paperService;
 
     public PublicPage(PageParameters parameters) {
         super(parameters);
@@ -97,7 +104,7 @@ public class PublicPage extends BasePage<Void> {
     private List<IColumn<PublicPaper, String>> makeTableColumns() {
         final List<IColumn<PublicPaper, String>> columns = new ArrayList<>();
         columns.add(makePropertyColumn(PublicPaper.AUTHORS));
-        columns.add(makePropertyColumn(PublicPaper.TITLE));
+        columns.add(makeClickableColumn(PublicPaper.TITLE, this::onTitleClick));
         columns.add(makePropertyColumn(PublicPaper.LOCATION));
         columns.add(makePropertyColumn(PublicPaper.PUBL_YEAR));
         return columns;
@@ -105,6 +112,15 @@ public class PublicPage extends BasePage<Void> {
 
     private PropertyColumn<PublicPaper, String> makePropertyColumn(String propExpression) {
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression);
+    }
+
+    private ClickablePropertyColumn<PublicPaper, String> makeClickableColumn(String propExpression, SerializableConsumer<IModel<PublicPaper>> consumer) {
+        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression, consumer);
+    }
+
+    private void onTitleClick(IModel<PublicPaper> m) {
+        ScipamatoPublicSession.get().getPaperIdManager().setFocusToItem(m.getObject().getId());
+        setResponsePage(new PublicPaperDetailPage(m));
     }
 
     private void makePopulationCodesComplex(String id) {
