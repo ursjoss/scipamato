@@ -18,14 +18,14 @@ import ch.difty.scipamato.persistence.paper.searchorder.BySearchOrderRepository;
 public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilter> {
 
     /**
-     * Find Papers with the provided ids.  The codes are not enriched.
+     * Find {@link Paper}s with the provided ids.  The codes are not enriched.
      * @param ids
      * @return list of papers (codes not available, attachments without content)
      */
     List<Paper> findByIds(List<Long> ids);
 
     /**
-     * Find Papers (including codes) with the provided ids
+     * Find {@link Paper}s (including codes) with the provided ids
      * @param ids
      * @param languageCode - must not be null
      * @return list of papers (attachments without content)
@@ -33,7 +33,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     List<Paper> findWithCodesByIds(List<Long> ids, String languageCode);
 
     /**
-     * Finds all entities of type {@code T} matching the provided {@link SearchOrder} specification.
+     * Finds all {@link Paper}s matching the provided {@link SearchOrder} specification.
      * The codes are enriched. The attachments are present but without the actual content.
      *
      * @param searchOrder {@link SearchOrder} the search specification
@@ -43,7 +43,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     List<Paper> findBySearchOrder(SearchOrder searchOrder, String languageCode);
 
     /**
-     * Finds a single page of entities of type {@code T} matching the provided {@link SearchOrder} and {@link PaginationContext}.
+     * Finds a single page of {@link Paper}s matching the provided {@link SearchOrder} and {@link PaginationContext}.
      * The codes are enriched. The attachments are present but without the actual content.
      *
      * @param searchOrder
@@ -59,7 +59,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     int countBySearchOrder(SearchOrder searchOrder);
 
     /**
-     * Finds all entities of type {@code T} matching any of the provided {@code pmIds}.
+     * Finds all {@link Paper}s matching any of the provided {@code pmIds}.
      * The codes are enriched. The attachments are present but without the actual content.
      *
      * @param pmIds list of pubmed ids
@@ -69,7 +69,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     List<Paper> findByPmIds(List<Integer> pmIds, String languageCode);
 
     /**
-     * Returns the PMIDs out of the provided list that have actually been assigned in persisted papers.
+     * Returns the PMIDs out of the provided list that have actually been assigned in persisted {@link Paper}s.
      *
      * @param pmIds list of pubmed ids
      * @return list of PMIDs
@@ -77,7 +77,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     List<Integer> findExistingPmIdsOutOf(List<Integer> pmIds);
 
     /**
-     * Finds all entities of type {@code T} matching any of the provided {@code numbers}.
+     * Finds all {@link Paper}s matching any of the provided {@code numbers}.
      * The codes are enriched. The attachments are present but without the actual content.
      *
      * @param numbers list of numbers
@@ -135,7 +135,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     Paper deleteAttachment(Integer id);
 
     /**
-     * Deletes all papers with the provided ids. No version check. More for internal usage!
+     * Deletes all {@link Paper}s with the provided ids. No version check. More for internal usage!
      * @param ids
      */
     void delete(List<Long> ids);
