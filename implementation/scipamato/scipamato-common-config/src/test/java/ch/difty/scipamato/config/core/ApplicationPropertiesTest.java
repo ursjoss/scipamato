@@ -31,4 +31,9 @@ public class ApplicationPropertiesTest {
         assertThat(ApplicationProperties.PAPER_NUMBER_MIN_TO_RECYCLE).isEqualTo("scipamato.paper.number.minimum-to-be-recycled");
     }
 
+    @Test
+    public void assertPubmedBaseUrl() {
+        assertThat(ApplicationProperties.PUBMED_BASE_URL).isEqualTo("scipamato.pubmed-base-url");
+    }
+
 }

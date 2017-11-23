@@ -48,4 +48,9 @@ public class ScipamatoPropertiesIntegrationTest {
     public void assertMinimumPaperNumberToBeRecycled() {
         assertThat(appProperties.getMinimumPaperNumberToBeRecycled()).isEqualTo(8);
     }
+
+    @Test
+    public void assertPubmedBaseUrl() {
+        assertThat(appProperties.getPubmedBaseUrl()).isEqualTo("https://www.ncbi.nlm.nih.gov/pubmed/");
+    }
 }

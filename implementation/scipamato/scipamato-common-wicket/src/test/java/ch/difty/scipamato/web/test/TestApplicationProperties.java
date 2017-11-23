@@ -30,4 +30,9 @@ public class TestApplicationProperties implements ApplicationProperties {
         return 0;
     }
 
+    @Override
+    public String getPubmedBaseUrl() {
+        return "http://pubmed/";
+    }
+
 }

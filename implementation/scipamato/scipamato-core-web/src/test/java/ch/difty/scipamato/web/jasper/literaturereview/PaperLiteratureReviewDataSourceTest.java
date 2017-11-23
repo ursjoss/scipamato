@@ -23,12 +23,13 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
     private static final String BRAND = "brand";
     private static final String CAPTION = "caption";
     private static final String NUMBER_LABEL = "numberLabel";
+    private static final String PUBMED_BASE_URL = "https://www.ncbi.nlm.nih.gov/pubmed/";
 
     private PaperLiteratureReviewDataSource ds;
     private ReportHeaderFields rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields.builder("", BRAND).numberLabel(NUMBER_LABEL).captionLabel(CAPTION).build();
+        return ReportHeaderFields.builder("", BRAND).numberLabel(NUMBER_LABEL).captionLabel(CAPTION).pubmedBaseUrl(PUBMED_BASE_URL).build();
     }
 
     @Override

@@ -210,7 +210,8 @@ public class ResultPanel extends BasePanel<Void> {
     private void makeAndQueuePdfLiteratureReviewLink(final String id) {
         final String brand = getProperties().getBrand();
         final String pdfCaption = new StringResourceModel("paper_literature_review.caption", this, null).setParameters(brand).getString();
-        final ReportHeaderFields rhf = ReportHeaderFields.builder("", brand).numberLabel(getLabelResourceFor(Paper.NUMBER)).captionLabel(pdfCaption).build();
+        final String url = getProperties().getPubmedBaseUrl();
+        final ReportHeaderFields rhf = ReportHeaderFields.builder("", brand).numberLabel(getLabelResourceFor(Paper.NUMBER)).captionLabel(pdfCaption).pubmedBaseUrl(url).build();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption).withAuthor(getActiveUser()).withCreator(brand).withCompression().build();
 
         queue(newResourceLink(id, "literature_review", new PaperLiteratureReviewDataSource(dataProvider, rhf, config)));

@@ -45,6 +45,10 @@ public class TestApplication {
                 return 10;
             }
 
+            @Override
+            public String getPubmedBaseUrl() {
+                return "http://pubmed/";
+            }
         };
     }
 }

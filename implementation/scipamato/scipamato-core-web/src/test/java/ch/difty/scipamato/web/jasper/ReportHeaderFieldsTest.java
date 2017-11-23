@@ -45,6 +45,7 @@ public class ReportHeaderFieldsTest {
             .captionLabel("cap")
             .numberLabel("n")
             .authorYearLabel("ay")
+            .pubmedBaseUrl("pbu/")
             .build();
 
         assertThat(rhf.getHeaderPart()).isEqualTo("headerPart1");
@@ -70,5 +71,6 @@ public class ReportHeaderFieldsTest {
         assertThat(rhf.getCaptionLabel()).isEqualTo("cap");
         assertThat(rhf.getNumberLabel()).isEqualTo("n");
         assertThat(rhf.getAuthorYearLabel()).isEqualTo("ay");
+        assertThat(rhf.getPubmedBaseUrl()).isEqualTo("pbu/");
     }
 }

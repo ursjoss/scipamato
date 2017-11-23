@@ -19,13 +19,16 @@ public class ScipamatoProperties implements ApplicationProperties {
     private final String buildVersion;
     private final String defaultLocalization;
     private final String brand;
+    private final String pubmedBaseUrl;
 
     private static final String S = "${", E = ":n.a.}";
 
-    public ScipamatoProperties(@Value(S + BUILD_VERSION + E) String buildVersion, @Value(S + LOCALIZATION_DEFAULT + ":en}") String defaultLocalization, @Value(S + BRAND + E) String brand) {
+    public ScipamatoProperties(@Value(S + BUILD_VERSION + E) String buildVersion, @Value(S + LOCALIZATION_DEFAULT + ":en}") String defaultLocalization, @Value(S + BRAND + E) String brand,
+            @Value(S + PUBMED_BASE_URL + E) String pubmedBaseUrl) {
         this.buildVersion = buildVersion;
         this.defaultLocalization = defaultLocalization;
         this.brand = brand;
+        this.pubmedBaseUrl = pubmedBaseUrl;
     }
 
     @Override
@@ -51,6 +54,11 @@ public class ScipamatoProperties implements ApplicationProperties {
     @Override
     public long getMinimumPaperNumberToBeRecycled() {
         return 0;
+    }
+
+    @Override
+    public String getPubmedBaseUrl() {
+        return pubmedBaseUrl;
     }
 
 }
