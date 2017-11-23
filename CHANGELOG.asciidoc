@@ -54,6 +54,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 - Public: 07/01: Add table paper and two sample records. Simple filter in public GUI to retrieve and display the data from database.
 - Public: 07/03: Allow to filter by collective code groups Population (Children vs. Adults) and/or StudyType (Experimental, Epidemiological or Methodology)
+- Public: 07/04: Searching by paper number
+- Public: 07/05: Detail Page when clicking on the title of a paper in the overview list (same fields as Summary PDF)
+- Public: 07/09: External link in detail view pointing to the PubMed site of the related paper
+- Public: 07/14: Rest-like URL using the paper number with bookmarkable links (e.g. http://localhost:8081/paper/number/2) that can be used e.g. in newsletters
 
 .Changed
 - Core: 06/21+24: Open external links (to the ChangeLog or wiki pages) in new browser tab
