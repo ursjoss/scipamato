@@ -12,13 +12,13 @@ import ch.difty.scipamato.persistence.paging.PaginationContext;
 public interface PublicPaperService extends Serializable {
 
     /**
-     * Finds an individual entity by id. Returns it as an optional of {@link PublicPaper}
+     * Finds an individual paper by it's number (business key). Returns it as an optional of {@link PublicPaper}
      *
-     * @param id - must not be null
+     * @param number - must not be null
      * @return Optional
      * @throws NullArgumentException if id is null
      */
-    Optional<PublicPaper> findById(Long id);
+    Optional<PublicPaper> findByNumber(Long number);
 
     /**
      * Finds a page full of {@link PublicPaper}s matching the provided filter and pagination context.
@@ -38,12 +38,12 @@ public interface PublicPaperService extends Serializable {
     int countByFilter(PublicPaperFilter filter);
 
     /**
-     * Finds the ids of the persisted papers matching the provided filter and pagination context.
+     * Finds the numbers (business key) of the persisted papers matching the provided filter and pagination context.
      *
      * @param filter
      * @param paginationContext {@link PaginationContext}
-     * @return list of the ids of matching papers
+     * @return list of the numbers of matching papers
      */
-    List<Long> findPageOfIdsByFilter(PublicPaperFilter filter, PaginationContext paginationContext);
+    List<Long> findPageOfNumbersByFilter(PublicPaperFilter filter, PaginationContext paginationContext);
 
 }

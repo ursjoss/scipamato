@@ -104,12 +104,12 @@ public class PublicPaperProviderTest {
     }
 
     @Test
-    public void findingAllIdsByFilter() {
+    public void findingAllNumbersByFilter() {
         provider.setSort("title", SortOrder.DESCENDING);
-        when(serviceMock.findPageOfIdsByFilter(eq(filterMock), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(Arrays.asList(5l, 3l, 17l));
-        List<Long> ids = provider.findAllPaperIdsByFilter();
+        when(serviceMock.findPageOfNumbersByFilter(eq(filterMock), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(Arrays.asList(5l, 3l, 17l));
+        List<Long> ids = provider.findAllPaperNumbersByFilter();
         assertThat(ids).containsExactly(5l, 3l, 17l);
-        verify(serviceMock).findPageOfIdsByFilter(eq(filterMock), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")));
+        verify(serviceMock).findPageOfNumbersByFilter(eq(filterMock), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")));
     }
 
 }

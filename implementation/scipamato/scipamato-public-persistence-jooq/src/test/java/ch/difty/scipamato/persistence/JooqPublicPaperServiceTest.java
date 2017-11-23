@@ -23,6 +23,7 @@ import ch.difty.scipamato.persistence.paging.PaginationContext;
 public class JooqPublicPaperServiceTest {
 
     private static final long ID = 5;
+    private static final long NUMBER = 15;
 
     private JooqPublicPaperService service;
 
@@ -56,24 +57,24 @@ public class JooqPublicPaperServiceTest {
     }
 
     @Test
-    public void findingById_withRepoFindingRecord_returnsItWrappedAsOptional() {
-        when(mockRepo.findById(ID)).thenReturn(publicPaper);
+    public void findingByNumber_withRepoFindingRecord_returnsItWrappedAsOptional() {
+        when(mockRepo.findByNumber(NUMBER)).thenReturn(publicPaper);
 
-        Optional<PublicPaper> paperOp = service.findById(ID);
+        Optional<PublicPaper> paperOp = service.findByNumber(NUMBER);
 
         assertThat(paperOp).isPresent();
         assertThat(paperOp).hasValue(publicPaper);
-        verify(mockRepo).findById(ID);
+        verify(mockRepo).findByNumber(NUMBER);
     }
 
     @Test
-    public void findingById_withRepoNotFindingRecord_returnsEmptyOptional() {
-        when(mockRepo.findById(ID)).thenReturn(null);
+    public void findingByNumber_withRepoNotFindingRecord_returnsEmptyOptional() {
+        when(mockRepo.findByNumber(NUMBER)).thenReturn(null);
 
-        Optional<PublicPaper> paperOp = service.findById(ID);
+        Optional<PublicPaper> paperOp = service.findByNumber(NUMBER);
 
         assertThat(paperOp).isNotPresent();
-        verify(mockRepo).findById(ID);
+        verify(mockRepo).findByNumber(NUMBER);
     }
 
     @Test
@@ -93,8 +94,8 @@ public class JooqPublicPaperServiceTest {
     @Test
     public void findingPageOfIdsByFilter_delegatesToRepo() {
         List<Long> idList = Arrays.asList(3l, 5l);
-        when(mockRepo.findPageOfIdsByFilter(filterMock, paginationContextMock)).thenReturn(idList);
-        assertThat(service.findPageOfIdsByFilter(filterMock, paginationContextMock)).isEqualTo(idList);
-        verify(mockRepo).findPageOfIdsByFilter(filterMock, paginationContextMock);
+        when(mockRepo.findPageOfNumbersByFilter(filterMock, paginationContextMock)).thenReturn(idList);
+        assertThat(service.findPageOfNumbersByFilter(filterMock, paginationContextMock)).isEqualTo(idList);
+        verify(mockRepo).findPageOfNumbersByFilter(filterMock, paginationContextMock);
     }
 }

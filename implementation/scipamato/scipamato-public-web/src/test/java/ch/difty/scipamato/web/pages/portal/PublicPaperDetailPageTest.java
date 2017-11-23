@@ -1,24 +1,53 @@
 package ch.difty.scipamato.web.pages.portal;
 
+import static org.mockito.Mockito.*;
+
+import java.util.Optional;
+
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.junit.After;
 import org.junit.Test;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.entity.PublicPaper;
+import ch.difty.scipamato.persistence.PublicPaperService;
 import ch.difty.scipamato.web.pages.BasePageTest;
 
 public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPage> {
 
+    private static final long NUMBER = 17l;
+
     private PublicPaper paper;
+
+    @MockBean
+    private PublicPaperService serviceMock;
 
     @Override
     protected void setUpHook() {
         super.setUpHook();
-        paper = new PublicPaper(1l, 1l, 10000, "authors", "title", "location", 2017, "goals", "methods", "population", "result", "comment");
+
+        paper = new PublicPaper(1l, NUMBER, 10000, "authors", "title", "location", 2017, "goals", "methods", "population", "result", "comment");
+
+        when(serviceMock.findByNumber(NUMBER)).thenReturn(Optional.of(paper));
+    }
+
+    @Override
+    protected void doVerify() {
+        verify(serviceMock).findByNumber(NUMBER);
+    }
+
+    @After
+    public void tearDown() {
+        verifyNoMoreInteractions(serviceMock);
     }
 
     @Override
     protected PublicPaperDetailPage makePage() {
-        return new PublicPaperDetailPage(Model.of(paper), null);
+        PageParameters pp = new PageParameters();
+        pp.set(PublicPaperDetailPage.PAGE_PARAM_NUMBER, NUMBER);
+        return new PublicPaperDetailPage(pp);
     }
 
     @Override
@@ -28,118 +57,127 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
 
     @Override
     protected void assertSpecificComponents() {
-        assertHeader();
-        assertReferenceTopic();
+        getTester().debugComponentTrees();
+        String b = "form";
+        getTester().assertComponent(b, Form.class);
+        assertHeader(b);
+        assertReferenceTopic(b);
 
-        assertVisible("goals", "Goals:");
-        assertVisible("population", "Population:");
-        assertVisible("methods", "Methods:");
-        assertVisible("result", "Results:");
-        assertVisible("comment", "Comment:");
+        assertVisible(b, "goals", "Goals:");
+        assertVisible(b, "population", "Population:");
+        assertVisible(b, "methods", "Methods:");
+        assertVisible(b, "result", "Results:");
+        assertVisible(b, "comment", "Comment:");
     }
 
-    private void assertHeader() {
-        getTester().assertLabel("captionLabel", "Summary of Paper (ID 1)");
-        getTester().assertLabel("title", "title");
+    private void assertHeader(String form) {
+        getTester().assertLabel(form + ":captionLabel", "Summary of Paper (No 17)");
+        getTester().assertLabel(form + ":title", "title");
     }
 
-    private void assertReferenceTopic() {
-        getTester().assertLabel("referenceLabel", "Reference:");
-        getTester().assertLabel("authors", "authors");
-        getTester().assertLabel("title2", "title");
-        getTester().assertLabel("location", "location");
+    private void assertReferenceTopic(String form) {
+        getTester().assertLabel(form + ":referenceLabel", "Reference:");
+        getTester().assertLabel(form + ":authors", "authors");
+        getTester().assertLabel(form + ":title2", "title");
+        getTester().assertLabel(form + ":location", "location");
     }
 
-    private void assertVisible(final String topic, final String labelText) {
-        assertTopic(topic, labelText, true);
+    private void assertVisible(final String parent, final String topic, final String labelText) {
+        assertTopic(parent, topic, labelText, true);
     }
 
-    private void assertInvisible(final String topic) {
-        assertTopic(topic, null, false);
+    private void assertInvisible(final String parent, final String topic) {
+        assertTopic(parent, topic, null, false);
     }
 
-    private void assertTopic(final String topic, final String labelText, final boolean visible) {
+    private void assertTopic(final String parent, final String topic, final String labelText, final boolean visible) {
+        String fullTopic = parent + ":" + topic;
         if (visible) {
-            getTester().assertLabel(topic + "Label", labelText);
-            getTester().assertLabel(topic, topic);
+            getTester().assertLabel(fullTopic + "Label", labelText);
+            getTester().assertLabel(fullTopic, topic);
         } else {
-            getTester().assertInvisible(topic + "Label");
-            getTester().assertInvisible(topic);
+            getTester().assertInvisible(fullTopic + "Label");
+            getTester().assertInvisible(fullTopic);
         }
     }
 
     @Test
     public void withGoalsMissing_hideGoalsTopic() {
-        PublicPaper p = new PublicPaper(1l, 1l, 10000, "authors", "title", "location", 2017, null, "methods", "population", "result", "comment");
+        PublicPaper p = new PublicPaper(1l, NUMBER, 10000, "authors", "title", "location", 2017, null, "methods", "population", "result", "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
-        assertHeader();
-        assertReferenceTopic();
+        String b = "form";
+        assertHeader(b);
+        assertReferenceTopic(b);
 
-        assertInvisible("goals");
-        assertVisible("population", "Population:");
-        assertVisible("methods", "Methods:");
-        assertVisible("result", "Results:");
-        assertVisible("comment", "Comment:");
+        assertInvisible(b, "goals");
+        assertVisible(b, "population", "Population:");
+        assertVisible(b, "methods", "Methods:");
+        assertVisible(b, "result", "Results:");
+        assertVisible(b, "comment", "Comment:");
     }
 
     @Test
     public void withPopulationMissing_hidePopulationTopic() {
-        PublicPaper p = new PublicPaper(1l, 1l, 10000, "authors", "title", "location", 2017, "goals", "methods", null, "result", "comment");
+        PublicPaper p = new PublicPaper(1l, NUMBER, 10000, "authors", "title", "location", 2017, "goals", "methods", null, "result", "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
-        assertHeader();
-        assertReferenceTopic();
+        String b = "form";
+        assertHeader(b);
+        assertReferenceTopic(b);
 
-        assertVisible("goals", "Goals:");
-        assertInvisible("population");
-        assertVisible("methods", "Methods:");
-        assertVisible("result", "Results:");
-        assertVisible("comment", "Comment:");
+        assertVisible(b, "goals", "Goals:");
+        assertInvisible(b, "population");
+        assertVisible(b, "methods", "Methods:");
+        assertVisible(b, "result", "Results:");
+        assertVisible(b, "comment", "Comment:");
     }
 
     @Test
     public void withMethodsMissing_hideMethodsTopic() {
-        PublicPaper p = new PublicPaper(1l, 1l, 10000, "authors", "title", "location", 2017, "goals", null, "population", "result", "comment");
+        PublicPaper p = new PublicPaper(1l, NUMBER, 10000, "authors", "title", "location", 2017, "goals", null, "population", "result", "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
-        assertHeader();
-        assertReferenceTopic();
+        String b = "form";
+        assertHeader(b);
+        assertReferenceTopic(b);
 
-        assertVisible("goals", "Goals:");
-        assertVisible("population", "Population:");
-        assertInvisible("methods");
-        assertVisible("result", "Results:");
-        assertVisible("comment", "Comment:");
+        assertVisible(b, "goals", "Goals:");
+        assertVisible(b, "population", "Population:");
+        assertInvisible(b, "methods");
+        assertVisible(b, "result", "Results:");
+        assertVisible(b, "comment", "Comment:");
     }
 
     @Test
     public void withResultMissing_hideResultTopic() {
-        PublicPaper p = new PublicPaper(1l, 1l, 10000, "authors", "title", "location", 2017, "goals", "methods", "population", null, "comment");
+        PublicPaper p = new PublicPaper(1l, NUMBER, 10000, "authors", "title", "location", 2017, "goals", "methods", "population", null, "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
-        assertHeader();
-        assertReferenceTopic();
+        String b = "form";
+        assertHeader(b);
+        assertReferenceTopic(b);
 
-        assertVisible("goals", "Goals:");
-        assertVisible("population", "Population:");
-        assertVisible("methods", "Methods:");
-        assertInvisible("result");
-        assertVisible("comment", "Comment:");
+        assertVisible(b, "goals", "Goals:");
+        assertVisible(b, "population", "Population:");
+        assertVisible(b, "methods", "Methods:");
+        assertInvisible(b, "result");
+        assertVisible(b, "comment", "Comment:");
     }
 
     @Test
     public void withCommentMissing_hideCommentTopic() {
-        PublicPaper p = new PublicPaper(1l, 1l, 10000, "authors", "title", "location", 2017, "goals", "methods", "population", "result", null);
+        PublicPaper p = new PublicPaper(1l, NUMBER, 10000, "authors", "title", "location", 2017, "goals", "methods", "population", "result", null);
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
-        assertHeader();
-        assertReferenceTopic();
+        String b = "form";
+        assertHeader(b);
+        assertReferenceTopic(b);
 
-        assertVisible("goals", "Goals:");
-        assertVisible("population", "Population:");
-        assertVisible("methods", "Methods:");
-        assertVisible("result", "Results:");
-        assertInvisible("comment");
+        assertVisible(b, "goals", "Goals:");
+        assertVisible(b, "population", "Population:");
+        assertVisible(b, "methods", "Methods:");
+        assertVisible(b, "result", "Results:");
+        assertInvisible(b, "comment");
     }
 }

@@ -11,18 +11,16 @@ import ch.difty.scipamato.persistence.paging.PaginationContext;
 public interface PublicPaperRepository extends Serializable {
 
     /**
-     * Finds the persisted {@link PublicPaper} with the provided id.
-     * If a repo requires the language code, the default language code will be used.
+     * Finds the persisted {@link PublicPaper} with the provided number (business key).
      *
-     * @param id - must not be null
+     * @param number - must not be null
      * @return the persisted {@link PublicPaper} or null if it can't be found.
-     * @throws NullArgumentException if the id is null.
+     * @throws NullArgumentException if the number is null.
      */
-    PublicPaper findById(Long id);
+    PublicPaper findByNumber(Long number);
 
     /**
      * Finds the persisted {@link PublicPaper}s matching the provided filter and pagination context.
-     * If a repo requires the language code, the default language code will be used.
      *
      * @param filter {@link PublicPaperFilter}
      * @param paginationContext {@link PaginationContext}
@@ -39,11 +37,12 @@ public interface PublicPaperRepository extends Serializable {
     int countByFilter(PublicPaperFilter filter);
 
     /**
-     * Finds the ids of the persisted entities matching the provided filter and pagination context.
+     * Finds the numbers (business key) of the persisted entities matching the provided filter and pagination context.
      *
      * @param filter of type {@code F}
      * @param paginationContext {@link PaginationContext}
-     * @return list of the ids of type {@code ID} of matching entities {@code T}
+     * @return list of the numbers of type {@code ID} of matching entities {@code T}
      */
-    List<Long> findPageOfIdsByFilter(PublicPaperFilter filter, PaginationContext paginationContext);
+    List<Long> findPageOfNumbersByFilter(PublicPaperFilter filter, PaginationContext paginationContext);
+
 }

@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.SortField;
-import org.jooq.TableField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -53,18 +52,14 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
         return PAPER;
     }
 
-    private TableField<PaperRecord, Long> getTableId() {
-        return PAPER.ID;
-    }
-
     protected Class<? extends PaperRecord> getRecordClass() {
         return PaperRecord.class;
     }
 
     @Override
-    public PublicPaper findById(final Long id) {
-        AssertAs.notNull(id, "id");
-        return getDsl().selectFrom(getTable()).where(getTableId().equal(id)).fetchOneInto(PublicPaper.class);
+    public PublicPaper findByNumber(final Long number) {
+        AssertAs.notNull(number, "number");
+        return getDsl().selectFrom(getTable()).where(PAPER.NUMBER.equal(number)).fetchOneInto(PublicPaper.class);
     }
 
     @Override
@@ -104,10 +99,10 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     }
 
     @Override
-    public List<Long> findPageOfIdsByFilter(PublicPaperFilter filter, PaginationContext pc) {
+    public List<Long> findPageOfNumbersByFilter(PublicPaperFilter filter, PaginationContext pc) {
         final Condition conditions = filterConditionMapper.map(filter);
         final Collection<SortField<PublicPaper>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
-        return getDsl().select().from(getTable()).where(conditions).orderBy(sortCriteria).limit(pc.getPageSize()).offset(pc.getOffset()).fetch(getTableId());
+        return getDsl().select().from(getTable()).where(conditions).orderBy(sortCriteria).limit(pc.getPageSize()).offset(pc.getOffset()).fetch(PAPER.NUMBER);
     }
 
 }

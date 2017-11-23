@@ -27,8 +27,8 @@ public class JooqPublicPaperService implements PublicPaperService {
     }
 
     @Override
-    public Optional<PublicPaper> findById(final Long id) {
-        final PublicPaper entity = getRepository().findById(id);
+    public Optional<PublicPaper> findByNumber(final Long number) {
+        final PublicPaper entity = getRepository().findByNumber(number);
         return Optional.ofNullable(entity);
     }
 
@@ -43,8 +43,8 @@ public class JooqPublicPaperService implements PublicPaperService {
     }
 
     @Override
-    public List<Long> findPageOfIdsByFilter(PublicPaperFilter filter, PaginationContext paginationContext) {
-        return getRepository().findPageOfIdsByFilter(filter, paginationContext);
+    public List<Long> findPageOfNumbersByFilter(PublicPaperFilter filter, PaginationContext paginationContext) {
+        return getRepository().findPageOfNumbersByFilter(filter, paginationContext);
     }
 
 }

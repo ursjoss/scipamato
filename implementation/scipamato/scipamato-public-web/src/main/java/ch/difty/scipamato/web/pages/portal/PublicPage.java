@@ -18,7 +18,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
@@ -28,7 +27,6 @@ import ch.difty.scipamato.entity.PopulationCode;
 import ch.difty.scipamato.entity.PublicPaper;
 import ch.difty.scipamato.entity.StudyDesignCode;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
-import ch.difty.scipamato.persistence.PublicPaperService;
 import ch.difty.scipamato.web.component.SerializableConsumer;
 import ch.difty.scipamato.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.scipamato.web.pages.BasePage;
@@ -50,9 +48,6 @@ public class PublicPage extends BasePage<Void> {
 
     private PublicPaperFilter filter;
     private PublicPaperProvider dataProvider;
-
-    @SpringBean
-    private PublicPaperService paperService;
 
     public PublicPage(PageParameters parameters) {
         super(parameters);
@@ -152,11 +147,11 @@ public class PublicPage extends BasePage<Void> {
     }
 
     /**
-     * Have the provider provide a list of all paper ids matching the current filter.
+     * Have the provider provide a list of all paper numbers (business key) matching the current filter.
      * Construct a navigateable with this list and set it into the session
      */
     private void updateNavigateable() {
-        ScipamatoPublicSession.get().getPaperIdManager().initialize(dataProvider.findAllPaperIdsByFilter());
+        ScipamatoPublicSession.get().getPaperIdManager().initialize(dataProvider.findAllPaperNumbersByFilter());
     }
 
 }

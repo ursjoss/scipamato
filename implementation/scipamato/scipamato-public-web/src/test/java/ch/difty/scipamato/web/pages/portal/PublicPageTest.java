@@ -42,7 +42,8 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     protected void doVerify() {
         verify(serviceMock).countByFilter(isA(PublicPaperFilter.class));
         verify(serviceMock).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
-        verify(serviceMock).findPageOfIdsByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
+        // used in navigateable
+        verify(serviceMock).findPageOfNumbersByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
     }
 
     @After
@@ -91,10 +92,14 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         assertTableRow(b + ":body:rows:2:cells", "authors2", "title2", "location2", "2017");
     }
 
-    private void assertTableRow(String bb, String... values) {
+    private void assertTableRow(final String bb, final String... values) {
         int i = 1;
-        for (String v : values)
-            getTester().assertLabel(bb + ":" + i++ + ":cell", v);
+        for (final String v : values) {
+            if (i != 2)
+                getTester().assertLabel(bb + ":" + i++ + ":cell", v);
+            else
+                getTester().assertLabel(bb + ":" + i++ + ":cell:link:label", v);
+        }
     }
 
 }

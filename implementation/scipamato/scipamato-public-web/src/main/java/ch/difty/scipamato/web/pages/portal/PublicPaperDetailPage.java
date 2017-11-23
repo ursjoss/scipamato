@@ -1,7 +1,5 @@
 package ch.difty.scipamato.web.pages.portal;
 
-import java.util.Optional;
-
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.markup.html.basic.Label;
@@ -10,6 +8,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
@@ -23,15 +22,48 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 
-@MountPath("/details")
+@MountPath("/paper/number/${number}")
 public class PublicPaperDetailPage extends BasePage<PublicPaper> {
 
     private static final long serialVersionUID = 1L;
+
+    public static final String PAGE_PARAM_NUMBER = "number";
 
     @SpringBean
     private PublicPaperService publicPaperService;
 
     private final PageReference callingPageRef;
+
+    public PublicPaperDetailPage(final PageParameters parameters) {
+        this(parameters, null);
+    }
+
+    /**
+     * Loads the page with the record specified by the 'id' passed in via PageParameters. If the parameter 'no'
+     * contains a valid business key number instead, the page will be loaded by number.
+     * @param parameters
+     * @param callingPageRef
+     *     PageReference that will be used to forward to if the user clicks the back button.
+     */
+    public PublicPaperDetailPage(final PageParameters parameters, final PageReference callingPageRef) {
+        super(parameters);
+        this.callingPageRef = callingPageRef;
+
+        tryLoadingRecord(parameters);
+    }
+
+    /**
+     * Try loading the record by ID. If not reasonable id is supplied, try by number.
+     */
+    private void tryLoadingRecord(final PageParameters parameters) {
+        final long number = parameters.get(PAGE_PARAM_NUMBER).toLong(0l);
+        if (number > 0) {
+            publicPaperService.findByNumber(number).ifPresent((p -> setModel(Model.of(p))));
+        }
+        if (getModelObject() == null) {
+            warn("Page parameter " + PAGE_PARAM_NUMBER + " was missing or invalid. No paper loaded.");
+        }
+    }
 
     public PublicPaperDetailPage(final IModel<PublicPaper> paperModel, final PageReference callingPageRef) {
         super(paperModel);
@@ -71,11 +103,11 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
 
             @Override
             public void onSubmit() {
-                final Long id = idSupplier.get();
-                if (id != null) {
-                    final Optional<PublicPaper> p = publicPaperService.findById(id);
-                    if (p.isPresent())
-                        setResponsePage(new PublicPaperDetailPage(Model.of(p.get()), callingPageRef));
+                final Long number = idSupplier.get();
+                if (number != null) {
+                    PageParameters pp = getPageParameters();
+                    pp.set(PAGE_PARAM_NUMBER, number.longValue());
+                    setResponsePage(new PublicPaperDetailPage(pp, callingPageRef));
                 }
             }
 

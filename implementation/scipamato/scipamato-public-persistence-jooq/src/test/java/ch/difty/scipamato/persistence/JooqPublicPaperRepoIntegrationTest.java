@@ -23,17 +23,17 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
     private final PaginationContext pc = new PaginationRequest(0, 10);
 
     @Test
-    public void findingById_withExistingId_returnsEntity() {
-        long id = 1;
-        PublicPaper paper = repo.findById(id);
-        assertThat(paper.getId()).isEqualTo(id);
+    public void findingByNumber_withExistingNumber_returnsEntity() {
+        long number = 1;
+        PublicPaper paper = repo.findByNumber(number);
+        assertThat(paper.getId()).isEqualTo(number);
         assertThat(paper.getPmId()).isEqualTo(25395026);
         assertThat(paper.getAuthors()).isEqualTo("Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.");
     }
 
     @Test
-    public void findingById_withNonExistingId_returnsNull() {
-        assertThat(repo.findById(-1l)).isNull();
+    public void findingByNumber_withNonExistingNumber_returnsNull() {
+        assertThat(repo.findByNumber(-1l)).isNull();
     }
 
     @Test
@@ -84,9 +84,9 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
     }
 
     @Test
-    public void findingPageOfIdsByFilter() {
+    public void findingPageOfNumbersByFilter() {
         PublicPaperFilter filter = new PublicPaperFilter();
         filter.setPublicationYearFrom(2015);
-        assertThat(repo.findPageOfIdsByFilter(filter, new PaginationRequest(Direction.ASC, "authors"))).isNotEmpty().containsExactly(2l);
+        assertThat(repo.findPageOfNumbersByFilter(filter, new PaginationRequest(Direction.ASC, "authors"))).isNotEmpty().containsExactly(2l);
     }
 }

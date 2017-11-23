@@ -83,13 +83,13 @@ public class PublicPaperProvider extends SortableDataProvider<PublicPaper, Strin
     }
 
     /**
-     * Applies the normal filter and the sort aspect of the pageable to return only the ids of all papers (unpaged).
-     * @return list of all paper ids
+     * Applies the normal filter and the sort aspect of the pageable to return only the numbers (business key) of all papers (unpaged).
+     * @return list of all paper numbers
      */
-    public List<Long> findAllPaperIdsByFilter() {
+    public List<Long> findAllPaperNumbersByFilter() {
         final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         final String sortProp = getSort().getProperty();
-        return service.findPageOfIdsByFilter(getFilterState(), new PaginationRequest(dir, sortProp));
+        return service.findPageOfNumbersByFilter(getFilterState(), new PaginationRequest(dir, sortProp));
     }
 
 }
