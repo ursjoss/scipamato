@@ -49,6 +49,12 @@
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-common-persistence-api</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
 
         <!-- JSR 303 bean validation provider implementation -->
         <dependency>

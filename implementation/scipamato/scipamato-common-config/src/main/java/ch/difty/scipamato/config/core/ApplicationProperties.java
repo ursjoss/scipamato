@@ -18,6 +18,7 @@ public interface ApplicationProperties {
     String AUTHOR_PARSER_FACTORY = "scipamato.author.parser";
     String BRAND = "scipamato.brand";
     String PAPER_NUMBER_MIN_TO_RECYCLE = "scipamato.paper.number.minimum-to-be-recycled";
+    String PUBMED_BASE_URL = "scipamato.pubmed-base-url";
 
     /**
      * @return the build version of the application.
@@ -43,4 +44,9 @@ public interface ApplicationProperties {
      * @return the lowest paper.number that can be recycled in case of gaps
      */
     long getMinimumPaperNumberToBeRecycled();
+
+    /**
+     * @return The base url in PubMed to query by pm_id.
+     */
+    String getPubmedBaseUrl();
 }

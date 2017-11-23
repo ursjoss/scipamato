@@ -52,6 +52,8 @@ public class ReportHeaderFields implements IClusterable {
 
     private final String authorYearLabel;
 
+    private final String pubmedBaseUrl;
+
     /**
      * Static builder requiring the headerPart and brand to be passed into the constructor
      * @param headerPart

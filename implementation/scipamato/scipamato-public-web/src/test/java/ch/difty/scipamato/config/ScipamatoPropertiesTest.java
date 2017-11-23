@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class ScipamatoPropertiesTest {
 
-    private final ScipamatoProperties sp = new ScipamatoProperties("0.6.2-SNAPSHOT", "de", "SciPaMaTo");
+    private final ScipamatoProperties sp = new ScipamatoProperties("0.6.2-SNAPSHOT", "de", "SciPaMaTo", "pubmedBaseUrl/");
 
     @Test
     public void canResolveBuildVersion() {
@@ -31,5 +31,10 @@ public class ScipamatoPropertiesTest {
     @Test
     public void canResolveMinimumPaperNumberToBeRecycled() {
         assertThat(sp.getMinimumPaperNumberToBeRecycled()).isEqualTo(0l);
+    }
+
+    @Test
+    public void canResolvePubmedBaseUrl() {
+        assertThat(sp.getPubmedBaseUrl()).isEqualTo("pubmedBaseUrl/");
     }
 }

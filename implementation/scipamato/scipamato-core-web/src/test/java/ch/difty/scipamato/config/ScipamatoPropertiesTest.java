@@ -8,7 +8,7 @@ import ch.difty.scipamato.config.core.AuthorParserStrategy;
 
 public class ScipamatoPropertiesTest {
 
-    private final ScipamatoProperties sp = new ScipamatoProperties("0.6.2-SNAPSHOT", "de", "DEFAULT", "SciPaMaTo", 4l);
+    private final ScipamatoProperties sp = new ScipamatoProperties("0.6.2-SNAPSHOT", "de", "DEFAULT", "SciPaMaTo", 4l, "pubmedBaseUrl/");
 
     @Test
     public void canResolveBuildVersion() {
@@ -36,8 +36,13 @@ public class ScipamatoPropertiesTest {
     }
 
     @Test
+    public void canResolvePubmedBaseUrl() {
+        assertThat(sp.getPubmedBaseUrl()).isEqualTo("pubmedBaseUrl/");
+    }
+
+    @Test
     public void canResolveMinimumPaperNumberToBeRecycled_whenWasNotDefined() {
-        ScipamatoProperties sp = new ScipamatoProperties("xy", "de", "DEFAULT", "SciPaMaTo", null);
+        ScipamatoProperties sp = new ScipamatoProperties("xy", "de", "DEFAULT", "SciPaMaTo", null, "pubmedBaseUrl/");
         assertThat(sp.getMinimumPaperNumberToBeRecycled()).isEqualTo(0l);
     }
 

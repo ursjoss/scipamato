@@ -1,6 +1,7 @@
 package ch.difty.scipamato.web.provider;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
@@ -79,6 +80,16 @@ public class PublicPaperProvider extends SortableDataProvider<PublicPaper, Strin
     @Override
     public void setFilterState(final PublicPaperFilter filterState) {
         this.paperFilter = filterState;
+    }
+
+    /**
+     * Applies the normal filter and the sort aspect of the pageable to return only the numbers (business key) of all papers (unpaged).
+     * @return list of all paper numbers
+     */
+    public List<Long> findAllPaperNumbersByFilter() {
+        final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
+        final String sortProp = getSort().getProperty();
+        return service.findPageOfNumbersByFilter(getFilterState(), new PaginationRequest(dir, sortProp));
     }
 
 }

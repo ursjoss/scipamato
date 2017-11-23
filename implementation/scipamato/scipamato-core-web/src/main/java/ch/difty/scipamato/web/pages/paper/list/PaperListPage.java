@@ -103,7 +103,7 @@ public class PaperListPage extends BasePage<Void> {
 
     /**
      * Have the provider provide a list of all paper ids matching the current filter.
-     * Construct a navigateable with this list and set it into the 
+     * Construct a navigateable with this list and set it into the session
      */
     private void updateNavigateable() {
         ScipamatoSession.get().getPaperIdManager().initialize(dataProvider.findAllPaperIdsByFilter());

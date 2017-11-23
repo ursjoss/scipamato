@@ -22,10 +22,13 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 
+import ch.difty.scipamato.ScipamatoPublicSession;
 import ch.difty.scipamato.entity.PopulationCode;
 import ch.difty.scipamato.entity.PublicPaper;
 import ch.difty.scipamato.entity.StudyDesignCode;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
+import ch.difty.scipamato.web.component.SerializableConsumer;
+import ch.difty.scipamato.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.scipamato.web.pages.BasePage;
 import ch.difty.scipamato.web.provider.PublicPaperProvider;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
@@ -54,6 +57,7 @@ public class PublicPage extends BasePage<Void> {
     private void initFilterAndProvider() {
         filter = new PublicPaperFilter();
         dataProvider = new PublicPaperProvider(filter, RESULT_PAGE_SIZE);
+        updateNavigateable();
     }
 
     @Override
@@ -65,7 +69,15 @@ public class PublicPage extends BasePage<Void> {
     }
 
     private void makeAndQueueFilterForm(final String id) {
-        queue(new FilterForm<PublicPaperFilter>(id, dataProvider));
+        queue(new FilterForm<PublicPaperFilter>(id, dataProvider) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit() {
+                super.onSubmit();
+                updateNavigateable();
+            }
+        });
 
         queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(filter, PublicPaperFilter.METHODS_MASK)));
         queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(filter, PublicPaperFilter.AUTHOR_MASK)));
@@ -87,7 +99,7 @@ public class PublicPage extends BasePage<Void> {
     private List<IColumn<PublicPaper, String>> makeTableColumns() {
         final List<IColumn<PublicPaper, String>> columns = new ArrayList<>();
         columns.add(makePropertyColumn(PublicPaper.AUTHORS));
-        columns.add(makePropertyColumn(PublicPaper.TITLE));
+        columns.add(makeClickableColumn(PublicPaper.TITLE, this::onTitleClick));
         columns.add(makePropertyColumn(PublicPaper.LOCATION));
         columns.add(makePropertyColumn(PublicPaper.PUBL_YEAR));
         return columns;
@@ -95,6 +107,15 @@ public class PublicPage extends BasePage<Void> {
 
     private PropertyColumn<PublicPaper, String> makePropertyColumn(String propExpression) {
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression);
+    }
+
+    private ClickablePropertyColumn<PublicPaper, String> makeClickableColumn(String propExpression, SerializableConsumer<IModel<PublicPaper>> consumer) {
+        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression, consumer);
+    }
+
+    private void onTitleClick(IModel<PublicPaper> m) {
+        ScipamatoPublicSession.get().getPaperIdManager().setFocusToItem(m.getObject().getId());
+        setResponsePage(new PublicPaperDetailPage(m, getPage().getPageReference()));
     }
 
     private void makePopulationCodesComplex(String id) {
@@ -124,4 +145,13 @@ public class PublicPage extends BasePage<Void> {
         multiSelect.add(new AttributeModifier("data-width", "fit"));
         queue(multiSelect);
     }
+
+    /**
+     * Have the provider provide a list of all paper numbers (business key) matching the current filter.
+     * Construct a navigateable with this list and set it into the session
+     */
+    private void updateNavigateable() {
+        ScipamatoPublicSession.get().getPaperIdManager().initialize(dataProvider.findAllPaperNumbersByFilter());
+    }
+
 }
