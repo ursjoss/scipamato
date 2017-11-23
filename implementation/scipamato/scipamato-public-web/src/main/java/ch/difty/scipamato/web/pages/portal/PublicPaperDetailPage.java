@@ -19,7 +19,10 @@ import ch.difty.scipamato.persistence.PublicPaperService;
 import ch.difty.scipamato.web.component.SerializableSupplier;
 import ch.difty.scipamato.web.pages.BasePage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink.Target;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 
 @MountPath("/paper/number/${number}")
@@ -87,6 +90,8 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         }));
         makeAndQueueBackButton("back");
 
+        queuePubmedLink("pubmedLink");
+
         queueTopic(newLabel("caption", getModel()));
         queueTopic(null, newField("title", PublicPaper.TITLE));
         queueTopic(newLabel("reference"), newField("authors", PublicPaper.AUTHORS), newField("title2", PublicPaper.TITLE), newField("location", PublicPaper.LOCATION));
@@ -95,6 +100,24 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         queueTopic(newLabel("methods"), newField("methods", PublicPaper.METHODS));
         queueTopic(newLabel("result"), newField("result", PublicPaper.RESULT));
         queueTopic(newLabel("comment"), newField("comment", PublicPaper.COMMENT));
+    }
+
+    private void queuePubmedLink(final String id) {
+        Integer pmId = getModelObject().getPmId();
+        IModel<String> href = Model.of(getProperties().getPubmedBaseUrl() + pmId);
+        final BootstrapExternalLink link = new BootstrapExternalLink(id, href, Type.Default) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setVisible(pmId != null);
+            }
+        };
+        link.setTarget(Target.blank);
+        link.setLabel(new StringResourceModel("link.pubmed" + LABEL_RESOURCE_TAG, this, null));
+        link.add(new AttributeModifier("title", new StringResourceModel("link.pubmed.title", this, null).getString()));
+        queue(link);
     }
 
     protected BootstrapButton newNavigationButton(String id, GlyphIconType icon, SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
