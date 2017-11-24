@@ -14,6 +14,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import ch.difty.scipamato.entity.PublicPaper;
 import ch.difty.scipamato.persistence.PublicPaperService;
 import ch.difty.scipamato.web.pages.BasePageTest;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
 
 public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPage> {
 
@@ -57,10 +59,9 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
 
     @Override
     protected void assertSpecificComponents() {
-        getTester().debugComponentTrees();
         String b = "form";
         getTester().assertComponent(b, Form.class);
-        assertHeader(b);
+        assertHeader(b, true);
         assertReferenceTopic(b);
 
         assertVisible(b, "goals", "Goals:");
@@ -70,9 +71,18 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
         assertVisible(b, "comment", "Comment:");
     }
 
-    private void assertHeader(String form) {
+    private void assertHeader(String form, boolean pubmedVisible) {
         getTester().assertLabel(form + ":captionLabel", "Summary of Paper (No 17)");
         getTester().assertLabel(form + ":title", "title");
+
+        getTester().assertComponent(form + ":back", BootstrapButton.class);
+        getTester().assertComponent(form + ":previous", BootstrapButton.class);
+        getTester().assertComponent(form + ":next", BootstrapButton.class);
+        if (pubmedVisible)
+            getTester().assertComponent(form + ":pubmed", BootstrapExternalLink.class);
+        else
+            getTester().assertInvisible(form + ":pubmed");
+        getTester().debugComponentTrees();
     }
 
     private void assertReferenceTopic(String form) {
@@ -107,7 +117,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
         String b = "form";
-        assertHeader(b);
+        assertHeader(b, true);
         assertReferenceTopic(b);
 
         assertInvisible(b, "goals");
@@ -123,7 +133,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
         String b = "form";
-        assertHeader(b);
+        assertHeader(b, true);
         assertReferenceTopic(b);
 
         assertVisible(b, "goals", "Goals:");
@@ -139,7 +149,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
         String b = "form";
-        assertHeader(b);
+        assertHeader(b, true);
         assertReferenceTopic(b);
 
         assertVisible(b, "goals", "Goals:");
@@ -155,7 +165,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
         String b = "form";
-        assertHeader(b);
+        assertHeader(b, true);
         assertReferenceTopic(b);
 
         assertVisible(b, "goals", "Goals:");
@@ -171,7 +181,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
         String b = "form";
-        assertHeader(b);
+        assertHeader(b, true);
         assertReferenceTopic(b);
 
         assertVisible(b, "goals", "Goals:");
@@ -179,5 +189,21 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
         assertVisible(b, "methods", "Methods:");
         assertVisible(b, "result", "Results:");
         assertInvisible(b, "comment");
+    }
+
+    @Test
+    public void withNullPmId_pubMedLinkIsInvisible() {
+        PublicPaper p = new PublicPaper(1l, NUMBER, null, "authors", "title", "location", 2017, "goals", "methods", "population", "result", "comment");
+        getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
+
+        String b = "form";
+        assertHeader(b, false);
+        assertReferenceTopic(b);
+
+        assertVisible(b, "goals", "Goals:");
+        assertVisible(b, "population", "Population:");
+        assertVisible(b, "methods", "Methods:");
+        assertVisible(b, "result", "Results:");
+        assertVisible(b, "comment", "Comment:");
     }
 }

@@ -32,6 +32,8 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
 
     public static final String PAGE_PARAM_NUMBER = "number";
 
+    private static final String AM_TITLE = "title";
+
     @SpringBean
     private PublicPaperService publicPaperService;
 
@@ -55,6 +57,11 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         tryLoadingRecord(parameters);
     }
 
+    public PublicPaperDetailPage(final IModel<PublicPaper> paperModel, final PageReference callingPageRef) {
+        super(paperModel);
+        this.callingPageRef = callingPageRef;
+    }
+
     /**
      * Try loading the record by ID. If not reasonable id is supplied, try by number.
      */
@@ -66,11 +73,6 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         if (getModelObject() == null) {
             warn("Page parameter " + PAGE_PARAM_NUMBER + " was missing or invalid. No paper loaded.");
         }
-    }
-
-    public PublicPaperDetailPage(final IModel<PublicPaper> paperModel, final PageReference callingPageRef) {
-        super(paperModel);
-        this.callingPageRef = callingPageRef;
     }
 
     @Override
@@ -90,7 +92,7 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         }));
         makeAndQueueBackButton("back");
 
-        queuePubmedLink("pubmedLink");
+        queuePubmedLink("pubmed");
 
         queueTopic(newLabel("caption", getModel()));
         queueTopic(null, newField("title", PublicPaper.TITLE));
@@ -103,8 +105,8 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
     }
 
     private void queuePubmedLink(final String id) {
-        Integer pmId = getModelObject().getPmId();
-        IModel<String> href = Model.of(getProperties().getPubmedBaseUrl() + pmId);
+        final Integer pmId = getModelObject().getPmId();
+        final IModel<String> href = Model.of(getProperties().getPubmedBaseUrl() + pmId);
         final BootstrapExternalLink link = new BootstrapExternalLink(id, href, Type.Default) {
             private static final long serialVersionUID = 1L;
 
@@ -115,8 +117,8 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
             }
         };
         link.setTarget(Target.blank);
-        link.setLabel(new StringResourceModel("link.pubmed" + LABEL_RESOURCE_TAG, this, null));
-        link.add(new AttributeModifier("title", new StringResourceModel("link.pubmed.title", this, null).getString()));
+        link.setLabel(new StringResourceModel("link." + id + LABEL_RESOURCE_TAG, this, null));
+        link.add(new AttributeModifier(AM_TITLE, new StringResourceModel("link." + id + TITLE_RESOURCE_TAG, this, null).getString()));
         queue(link);
     }
 
@@ -129,7 +131,7 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
                 final Long number = idSupplier.get();
                 if (number != null) {
                     PageParameters pp = getPageParameters();
-                    pp.set(PAGE_PARAM_NUMBER, number.longValue());
+                    pp.set(PAGE_PARAM_NUMBER, number);
                     setResponsePage(new PublicPaperDetailPage(pp, callingPageRef));
                 }
             }
@@ -142,13 +144,13 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         };
         btn.setDefaultFormProcessing(false);
         btn.setIconType(icon);
-        btn.add(new AttributeModifier("title", new StringResourceModel("button." + id + ".title", this, null).getString()));
+        btn.add(new AttributeModifier(AM_TITLE, new StringResourceModel("button." + id + TITLE_RESOURCE_TAG, this, null).getString()));
         btn.setType(Buttons.Type.Primary);
         return btn;
     }
 
-    private void makeAndQueueBackButton(String id) {
-        BootstrapButton back = new BootstrapButton(id, new StringResourceModel("button.back.label"), Buttons.Type.Default) {
+    private void makeAndQueueBackButton(final String id) {
+        BootstrapButton back = new BootstrapButton(id, new StringResourceModel("button." + id + LABEL_RESOURCE_TAG), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -160,7 +162,7 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
             }
         };
         back.setDefaultFormProcessing(false);
-        back.add(new AttributeModifier("title", new StringResourceModel("button.back.title", this, null).getString()));
+        back.add(new AttributeModifier(AM_TITLE, new StringResourceModel("button." + id + TITLE_RESOURCE_TAG, this, null).getString()));
         queue(back);
     }
 

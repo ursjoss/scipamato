@@ -36,6 +36,7 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     protected static final String LABEL_TAG = WicketUtils.LABEL_TAG;
     protected static final String LABEL_RESOURCE_TAG = WicketUtils.LABEL_RESOURCE_TAG;
     protected static final String PANEL_HEADER_RESOURCE_TAG = WicketUtils.PANEL_HEADER_RESOURCE_TAG;
+    protected static final String TITLE_RESOURCE_TAG = WicketUtils.TITLE_RESOURCE_TAG;
 
     @SpringBean
     private DateTimeService dateTimeService;
