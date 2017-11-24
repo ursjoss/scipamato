@@ -1,4 +1,4 @@
-package ch.difty.scipamato.persistence;
+package ch.difty.scipamato.persistence.paper;
 
 import java.io.Serializable;
 import java.util.List;

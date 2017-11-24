@@ -1,4 +1,4 @@
-package ch.difty.scipamato.persistence;
+package ch.difty.scipamato.persistence.paper;
 
 import static ch.difty.scipamato.db.tables.Paper.*;
 import static org.assertj.core.api.Assertions.*;
@@ -13,6 +13,9 @@ import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.PopulationCode;
 import ch.difty.scipamato.entity.StudyDesignCode;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
+import ch.difty.scipamato.persistence.FilterConditionMapperTest;
+import ch.difty.scipamato.persistence.GenericFilterConditionMapper;
+import ch.difty.scipamato.persistence.paper.PublicPaperFilterConditionMapper;
 
 public class PublicPaperFilterConditionMapperTest extends FilterConditionMapperTest<PaperRecord, ch.difty.scipamato.db.tables.Paper, PublicPaperFilter> {
 

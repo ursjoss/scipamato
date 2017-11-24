@@ -1,4 +1,4 @@
-package ch.difty.scipamato.persistence;
+package ch.difty.scipamato.persistence.paper;
 
 import static ch.difty.scipamato.db.tables.Paper.*;
 
@@ -18,6 +18,8 @@ import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.PopulationCode;
 import ch.difty.scipamato.entity.StudyDesignCode;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
+import ch.difty.scipamato.persistence.AbstractFilterConditionMapper;
+import ch.difty.scipamato.persistence.FilterConditionMapper;
 
 @FilterConditionMapper
 public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMapper<PublicPaperFilter> {

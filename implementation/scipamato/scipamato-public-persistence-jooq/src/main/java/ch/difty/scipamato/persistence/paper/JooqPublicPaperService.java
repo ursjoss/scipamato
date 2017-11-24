@@ -1,4 +1,4 @@
-package ch.difty.scipamato.persistence;
+package ch.difty.scipamato.persistence.paper;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.entity.PublicPaper;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
+import ch.difty.scipamato.persistence.PublicPaperService;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 @Service

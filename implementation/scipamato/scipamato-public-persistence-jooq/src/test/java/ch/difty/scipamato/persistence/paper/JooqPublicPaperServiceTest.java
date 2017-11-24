@@ -1,4 +1,4 @@
-package ch.difty.scipamato.persistence;
+package ch.difty.scipamato.persistence.paper;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;

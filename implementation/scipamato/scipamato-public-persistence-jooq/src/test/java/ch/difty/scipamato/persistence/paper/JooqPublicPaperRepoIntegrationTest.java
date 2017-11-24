@@ -18,6 +18,7 @@ import ch.difty.scipamato.persistence.JooqTransactionalIntegrationTest;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
 import ch.difty.scipamato.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.persistence.paging.Sort.Direction;
+import ch.difty.scipamato.persistence.paper.JooqPublicPaperRepo;
 
 public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
