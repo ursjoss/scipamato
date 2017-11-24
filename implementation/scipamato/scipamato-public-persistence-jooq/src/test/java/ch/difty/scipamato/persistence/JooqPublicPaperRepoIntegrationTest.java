@@ -2,11 +2,14 @@ package ch.difty.scipamato.persistence;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.PopulationCode;
 import ch.difty.scipamato.entity.PublicPaper;
 import ch.difty.scipamato.entity.StudyDesignCode;
@@ -21,6 +24,10 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
     private JooqPublicPaperRepo repo;
 
     private final PaginationContext pc = new PaginationRequest(0, 10);
+
+    private final PublicPaperFilter filter = new PublicPaperFilter();
+
+    private final PaginationRequest allSorted = new PaginationRequest(Direction.ASC, "authors");
 
     @Test
     public void findingByNumber_withExistingNumber_returnsEntity() {
@@ -38,55 +45,74 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
 
     @Test
     public void findingPageByFilter_forPapersAsOf2017_findsOne_() {
-        PublicPaperFilter filter = new PublicPaperFilter();
         filter.setPublicationYearFrom(2016);
         assertThat(repo.findPageByFilter(filter, pc)).hasSize(1);
     }
 
     @Test
     public void findingPageByFilter_() {
-        PublicPaperFilter filter = new PublicPaperFilter();
         assertThat(repo.findPageByFilter(filter, pc)).hasSize(3);
     }
 
     @Test
     public void countingByFilter_withNoFilterCriteria_findsTwo() {
-        PublicPaperFilter filter = new PublicPaperFilter();
         assertThat(repo.countByFilter(filter)).isEqualTo(3);
     }
 
     @Test
     public void countingByFilter_withAuthorMask_findsOne() {
-        PublicPaperFilter filter = new PublicPaperFilter();
         filter.setAuthorMask("Gapstur");
         assertThat(repo.countByFilter(filter)).isEqualTo(1);
     }
 
     @Test
     public void countingByFilter_withMethodsMask_findsOne() {
-        PublicPaperFilter filter = new PublicPaperFilter();
         filter.setMethodsMask("Sensitivitätsanalysen");
         assertThat(repo.countByFilter(filter)).isEqualTo(1);
     }
 
     @Test
     public void findingPageByFilter_adultsOnly() {
-        PublicPaperFilter filter = new PublicPaperFilter();
         filter.setPopulationCodes(Arrays.asList(PopulationCode.ADULTS));
         assertThat(repo.findPageByFilter(filter, pc)).hasSize(2);
     }
 
     @Test
     public void findingPageByFilter_overViewMethodologyOnly() {
-        PublicPaperFilter filter = new PublicPaperFilter();
         filter.setStudyDesignCodes(Arrays.asList(StudyDesignCode.OVERVIEW_METHODOLOGY));
         assertThat(repo.findPageByFilter(filter, pc)).hasSize(1);
     }
 
     @Test
     public void findingPageOfNumbersByFilter() {
-        PublicPaperFilter filter = new PublicPaperFilter();
         filter.setPublicationYearFrom(2015);
-        assertThat(repo.findPageOfNumbersByFilter(filter, new PaginationRequest(Direction.ASC, "authors"))).isNotEmpty().containsExactly(2l);
+        assertThat(repo.findPageOfNumbersByFilter(filter, allSorted)).isNotEmpty().containsExactly(2l);
+    }
+
+    private List<Code> newCodes(String... codes) {
+        final List<Code> list = new ArrayList<>();
+        for (String c : codes)
+            list.add(Code.builder().code(c).build());
+        return list;
+    }
+
+    @Test
+    public void findingPageByFilter_withCodes1Fand5H_finds2() {
+        filter.setCodesOfClass1(newCodes("1F"));
+        filter.setCodesOfClass5(newCodes("5H"));
+        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty().extracting("number").containsOnly(1l, 2l);
+    }
+
+    @Test
+    public void findingPageByFilter_withCodes6Mand7L_finds3() {
+        filter.setCodesOfClass6(newCodes("6M"));
+        filter.setCodesOfClass7(newCodes("7L"));
+        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty().extracting("number").containsOnly(1l, 2l, 3l);
+    }
+
+    @Test
+    public void findingPageByFilter_withCode2R_finds1() {
+        filter.setCodesOfClass2(newCodes("2R"));
+        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty().extracting("number").containsExactly(3l);
     }
 }
