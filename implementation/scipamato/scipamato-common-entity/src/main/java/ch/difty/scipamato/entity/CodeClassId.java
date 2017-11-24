@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 /**
- * Code Classes are collections of {@link Code}s that can be maintained separately for a paper.
+ * Code Classes are collections of code that can be maintained separately for a paper.
  * In order to profit from i18n, there is a separate set of tables with one entry per member here.
  *
  * @author u.joss
