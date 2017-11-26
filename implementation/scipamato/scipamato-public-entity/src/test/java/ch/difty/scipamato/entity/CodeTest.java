@@ -2,6 +2,8 @@ package ch.difty.scipamato.entity;
 
 import static org.assertj.core.api.Assertions.*;
 
+import org.junit.Test;
+
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 
@@ -32,4 +34,8 @@ public class CodeTest extends PublicEntityTest<Code> {
         EqualsVerifier.forClass(Code.class).withRedefinedSuperclass().withIgnoredFields(Code.CREATED, Code.MODIFIED).suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
     }
 
+    @Test
+    public void displayValue() {
+        assertThat(getEntity().getDisplayValue()).isEqualTo("name");
+    }
 }

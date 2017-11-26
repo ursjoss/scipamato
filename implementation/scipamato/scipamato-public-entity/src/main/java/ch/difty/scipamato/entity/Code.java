@@ -29,9 +29,6 @@ public class Code extends PublicEntity {
     private final int sort;
 
     public String getDisplayValue() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append(name);
-        sb.append(" (").append(code).append(")");
-        return sb.toString();
+        return name;
     }
 }
