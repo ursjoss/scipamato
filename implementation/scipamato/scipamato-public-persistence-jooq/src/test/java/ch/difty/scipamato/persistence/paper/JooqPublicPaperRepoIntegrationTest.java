@@ -18,7 +18,6 @@ import ch.difty.scipamato.persistence.JooqTransactionalIntegrationTest;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
 import ch.difty.scipamato.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.persistence.paging.Sort.Direction;
-import ch.difty.scipamato.persistence.paper.JooqPublicPaperRepo;
 
 public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
@@ -116,5 +115,12 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
     public void findingPageByFilter_withCode2R_finds1() {
         filter.setCodesOfClass2(newCodes("2R"));
         assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty().extracting("number").containsExactly(3l);
+    }
+
+    @Test
+    public void findingPageByFilter_withOriginallySetAndThenClearedFilter_findsAll() {
+        filter.setCodesOfClass2(newCodes("2R"));
+        filter.getCodesOfClass2().clear();
+        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty().extracting("number").containsOnly(1l, 2l, 3l);
     }
 }

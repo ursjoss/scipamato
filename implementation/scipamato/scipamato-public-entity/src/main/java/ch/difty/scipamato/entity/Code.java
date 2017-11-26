@@ -19,6 +19,7 @@ public class Code extends PublicEntity {
     public static final String NAME = "name";
     public static final String COMMENT = "comment";
     public static final String SORT = "sort";
+    public static final String DISPLAY_VALUE = "displayValue";
 
     private final Integer codeClassId;
     private final String code;
@@ -26,4 +27,11 @@ public class Code extends PublicEntity {
     private final String name;
     private final String comment;
     private final int sort;
+
+    public String getDisplayValue() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(name);
+        sb.append(" (").append(code).append(")");
+        return sb.toString();
+    }
 }

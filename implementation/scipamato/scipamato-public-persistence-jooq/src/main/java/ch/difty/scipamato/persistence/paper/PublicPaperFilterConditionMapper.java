@@ -61,7 +61,8 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
         if (filter.getCodesOfClass1() != null || filter.getCodesOfClass2() != null || filter.getCodesOfClass3() != null || filter.getCodesOfClass4() != null || filter.getCodesOfClass5() != null
                 || filter.getCodesOfClass6() != null || filter.getCodesOfClass7() != null || filter.getCodesOfClass8() != null) {
             final List<String> allCodes = collectAllCodesFrom(filter);
-            conditions.add(codeCondition(allCodes));
+            if (!allCodes.isEmpty())
+                conditions.add(codeCondition(allCodes));
         }
 
     }
@@ -83,7 +84,7 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
         if (codes == null)
             return Collections.emptyList();
         else {
-            return codes.stream().map(Code::getCode).filter(Objects::nonNull).collect(Collectors.toList());
+            return codes.stream().filter(Objects::nonNull).map(Code::getCode).collect(Collectors.toList());
         }
     }
 
@@ -96,7 +97,7 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
      * </pre>
      */
     private Condition codeCondition(final List<String> codeCollection) {
-        final List<Field<String>> convCodes = codeCollection.stream().map(str -> DSL.val(str).cast(PostgresDataType.TEXT)).collect(Collectors.toList());
+        final List<Field<String>> convCodes = codeCollection.stream().filter(Objects::nonNull).map(str -> DSL.val(str).cast(PostgresDataType.TEXT)).collect(Collectors.toList());
         return PAPER.CODES.contains(DSL.array(convCodes));
     }
 

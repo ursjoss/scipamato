@@ -3,6 +3,7 @@ package ch.difty.scipamato.persistence.paper;
 import static ch.difty.scipamato.db.tables.Paper.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -15,7 +16,6 @@ import ch.difty.scipamato.entity.StudyDesignCode;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.persistence.FilterConditionMapperTest;
 import ch.difty.scipamato.persistence.GenericFilterConditionMapper;
-import ch.difty.scipamato.persistence.paper.PublicPaperFilterConditionMapper;
 
 public class PublicPaperFilterConditionMapperTest extends FilterConditionMapperTest<PaperRecord, ch.difty.scipamato.db.tables.Paper, PublicPaperFilter> {
 
@@ -168,6 +168,13 @@ public class PublicPaperFilterConditionMapperTest extends FilterConditionMapperT
                 "  cast('8H' as text)\n" +
                 "]");
         // @formatter:on
+    }
+
+    @Test
+    public void creatingWhereCondition_withSetButThenClearedCodes_doesNotFilterByCodes() {
+        filter.setCodesOfClass1(new ArrayList<>(Arrays.asList(Code.builder().code("1A").build())));
+        filter.getCodesOfClass1().clear();
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase("1 = 1");
     }
 
 }
