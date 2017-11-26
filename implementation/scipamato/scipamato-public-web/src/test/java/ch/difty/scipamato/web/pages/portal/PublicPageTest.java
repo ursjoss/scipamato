@@ -10,13 +10,16 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.junit.After;
+import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.entity.PublicPaper;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
+import ch.difty.scipamato.persistence.CodeClassService;
 import ch.difty.scipamato.persistence.PublicPaperService;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
 import ch.difty.scipamato.web.pages.BasePageTest;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
@@ -24,6 +27,9 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
 
     @MockBean
     private PublicPaperService serviceMock;
+
+    @MockBean
+    private CodeClassService codeClassServiceMock;
 
     private final List<PublicPaper> papers = new ArrayList<>();
 
@@ -36,6 +42,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
 
         when(serviceMock.countByFilter(isA(PublicPaperFilter.class))).thenReturn(papers.size());
         when(serviceMock.findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class))).thenReturn(papers);
+
     }
 
     @Override
@@ -44,11 +51,13 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         verify(serviceMock).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
         // used in navigateable
         verify(serviceMock).findPageOfNumbersByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
+
+        verify(codeClassServiceMock).find("en_us");
     }
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(serviceMock);
+        verifyNoMoreInteractions(serviceMock, codeClassServiceMock);
     }
 
     @Override
@@ -77,6 +86,10 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         assertLabeledTextField(b, "pubYearUntil");
         assertLabeledCombo(b, "populationCodes");
         assertLabeledCombo(b, "studyDesignCodes");
+
+        getTester().assertComponent(b + ":toggleExtendedSearch", BootstrapAjaxButton.class);
+        getTester().assertModelValue(b + ":toggleExtendedSearch:label", "Extended Search");
+        getTester().assertInvisible(b + ":extendedSearchContainer");
     }
 
     private void assertLabeledCombo(String b, String id) {
@@ -102,4 +115,46 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         }
     }
 
+    @Test
+    public void clickExtendedSearch() {
+        getTester().startPage(makePage());
+        getTester().assertRenderedPage(getPageClass());
+
+        final String b = "searchForm:";
+
+        final String tes = b + "toggleExtendedSearch";
+        final String esc = b + "extendedSearchContainer";
+
+        getTester().executeAjaxEvent(tes, "onclick");
+
+        getTester().assertModelValue(tes + ":label", "Simple Search");
+        getTester().assertVisible(esc);
+
+        int i = 1;
+        assertCodeClass(esc, i++);
+        assertCodeClass(esc, i++);
+        assertCodeClass(esc, i++);
+        assertCodeClass(esc, i++);
+        assertCodeClass(esc, i++);
+        assertCodeClass(esc, i++);
+        assertCodeClass(esc, i++);
+        assertCodeClass(esc, i++);
+
+        getTester().executeAjaxEvent(tes, "onclick");
+        getTester().assertModelValue(tes + ":label", "Extended Search");
+        getTester().assertInvisible(esc);
+
+        verify(serviceMock, times(3)).countByFilter(isA(PublicPaperFilter.class));
+        verify(serviceMock, times(3)).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
+        // used in navigateable
+        verify(serviceMock, times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
+
+        verify(codeClassServiceMock).find("en_us");
+    }
+
+    private void assertCodeClass(final String esc, final int ccId) {
+        final String compId = esc + ":codesOfClass" + ccId;
+        getTester().assertLabel(compId + "Label", "CC" + ccId);
+        getTester().assertComponent(compId, BootstrapMultiSelect.class);
+    }
 }

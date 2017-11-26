@@ -1,4 +1,4 @@
-package ch.difty.scipamato.persistence;
+package ch.difty.scipamato.persistence.paper;
 
 import static ch.difty.scipamato.TestUtils.*;
 import static org.mockito.Mockito.*;
@@ -14,6 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ch.difty.scipamato.db.tables.Paper;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.PublicPaper;
+import ch.difty.scipamato.persistence.JooqSortMapper;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JooqPublicPaperRepoTest {

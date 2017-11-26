@@ -31,7 +31,8 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
     private static final long serialVersionUID = 1L;
 
     public static final String PAGE_PARAM_NUMBER = "number";
-
+    private static final String LINK_RESOURCE_PREFIX = "link.";
+    private static final String BUTTON_RESOURCE_PREFIX = "button.";
     private static final String AM_TITLE = "title";
 
     @SpringBean
@@ -117,8 +118,8 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
             }
         };
         link.setTarget(Target.blank);
-        link.setLabel(new StringResourceModel("link." + id + LABEL_RESOURCE_TAG, this, null));
-        link.add(new AttributeModifier(AM_TITLE, new StringResourceModel("link." + id + TITLE_RESOURCE_TAG, this, null).getString()));
+        link.setLabel(new StringResourceModel(LINK_RESOURCE_PREFIX + id + LABEL_RESOURCE_TAG, this, null));
+        link.add(new AttributeModifier(AM_TITLE, new StringResourceModel(LINK_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
         queue(link);
     }
 
@@ -144,13 +145,13 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         };
         btn.setDefaultFormProcessing(false);
         btn.setIconType(icon);
-        btn.add(new AttributeModifier(AM_TITLE, new StringResourceModel("button." + id + TITLE_RESOURCE_TAG, this, null).getString()));
+        btn.add(new AttributeModifier(AM_TITLE, new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
         btn.setType(Buttons.Type.Primary);
         return btn;
     }
 
     private void makeAndQueueBackButton(final String id) {
-        BootstrapButton back = new BootstrapButton(id, new StringResourceModel("button." + id + LABEL_RESOURCE_TAG), Buttons.Type.Default) {
+        BootstrapButton back = new BootstrapButton(id, new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + LABEL_RESOURCE_TAG), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -162,7 +163,7 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
             }
         };
         back.setDefaultFormProcessing(false);
-        back.add(new AttributeModifier(AM_TITLE, new StringResourceModel("button." + id + TITLE_RESOURCE_TAG, this, null).getString()));
+        back.add(new AttributeModifier(AM_TITLE, new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
         queue(back);
     }
 

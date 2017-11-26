@@ -58,6 +58,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Public: 07/05: Detail Page when clicking on the title of a paper in the overview list (same fields as Summary PDF)
 - Public: 07/09: External link in detail view pointing to the PubMed site of the related paper
 - Public: 07/14: Rest-like URL using the paper number with bookmarkable links (e.g. http://localhost:8081/paper/number/2) that can be used e.g. in newsletters
+- Public: 07/24: Allow filtering by Codes
 
 .Changed
 - Core: 06/21+24: Open external links (to the ChangeLog or wiki pages) in new browser tab

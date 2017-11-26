@@ -5,33 +5,83 @@
         <div class="container-fluid">
             <div class="row">
                 <form wicket:id="searchForm" role="form">
-                    <div class="col-md-3">
-                        <div wicket:id="methodsSearchLabel"></div>
-                        <input wicket:id="methodsSearch" class="form-control"></input>
-                    </div>
-                    <div class="col-md-2">
-                        <div wicket:id="authorsSearchLabel"></div>
-                        <input wicket:id="authorsSearch" class="form-control"></input>
-                    </div>
-                    <div class="col-md-1">
-                        <div wicket:id="pubYearFromLabel"></div>
-                        <input wicket:id="pubYearFrom" class="form-control"></input>
-                    </div>
-                    <div class="col-md-1">
-                        <div wicket:id="pubYearUntilLabel"></div>
-                        <input wicket:id="pubYearUntil" class="form-control"></input>
-                    </div>
-                    <div class="col-md-1">
-                        <div wicket:id="numberLabel"></div>
-                        <input wicket:id="number" class="form-control"></input>
-                    </div>
-                    <div class="col-md-1">
-                        <div wicket:id="populationCodesLabel"></div>
-                        <select wicket:id="populationCodes"></select>
-                    </div>
-                    <div class="col-md-2">
-                        <div wicket:id="studyDesignCodesLabel"></div>
-                        <select wicket:id="studyDesignCodes"></select>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div wicket:id="methodsSearchLabel"></div>
+                                <input wicket:id="methodsSearch" class="form-control"></input>
+                            </div>
+                            <div class="col-md-2">
+                                <div wicket:id="authorsSearchLabel"></div>
+                                <input wicket:id="authorsSearch" class="form-control"></input>
+                            </div>
+                            <div class="col-md-1">
+                                <div wicket:id="pubYearFromLabel"></div>
+                                <input wicket:id="pubYearFrom" class="form-control"></input>
+                            </div>
+                            <div class="col-md-1">
+                                <div wicket:id="pubYearUntilLabel"></div>
+                                <input wicket:id="pubYearUntil" class="form-control"></input>
+                            </div>
+                            <div class="col-md-1">
+                                <div wicket:id="numberLabel"></div>
+                                <input wicket:id="number" class="form-control"></input>
+                            </div>
+                            <div class="col-md-1">
+                                <div wicket:id="populationCodesLabel"></div>
+                                <select wicket:id="populationCodes"></select>
+                            </div>
+                            <div class="col-md-1">
+                                <div wicket:id="studyDesignCodesLabel"></div>
+                                <select wicket:id="studyDesignCodes"></select>
+                            </div>
+                            <div class="col-md-1" style="bottom: -20px;">
+                                <button wicket:id="toggleExtendedSearch"></button>
+                            </div>
+                            <div class="col-md-1" style="bottom: -20px;">
+                                <button wicket:id="query"></button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 1em;">
+                            <div wicket:id="extendedSearchContainer" class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div wicket:id="codesOfClass1Label"></div>
+                                        <select wicket:id="codesOfClass1"></select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div wicket:id="codesOfClass2Label"></div>
+                                        <select wicket:id="codesOfClass2"></select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div wicket:id="codesOfClass3Label"></div>
+                                        <select wicket:id="codesOfClass3"></select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div wicket:id="codesOfClass4Label"></div>
+                                        <select wicket:id="codesOfClass4"></select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div wicket:id="codesOfClass5Label"></div>
+                                        <select wicket:id="codesOfClass5"></select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div wicket:id="codesOfClass6Label"></div>
+                                        <select wicket:id="codesOfClass6"></select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div wicket:id="codesOfClass7Label"></div>
+                                        <select wicket:id="codesOfClass7"></select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div wicket:id="codesOfClass8Label"></div>
+                                        <select wicket:id="codesOfClass8"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>

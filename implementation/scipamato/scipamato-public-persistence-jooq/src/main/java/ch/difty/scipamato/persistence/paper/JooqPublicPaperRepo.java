@@ -1,4 +1,4 @@
-package ch.difty.scipamato.persistence;
+package ch.difty.scipamato.persistence.paper;
 
 import static ch.difty.scipamato.db.tables.Paper.*;
 
@@ -17,6 +17,7 @@ import ch.difty.scipamato.db.tables.Paper;
 import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.PublicPaper;
 import ch.difty.scipamato.entity.filter.PublicPaperFilter;
+import ch.difty.scipamato.persistence.JooqSortMapper;
 import ch.difty.scipamato.persistence.paging.PaginationContext;
 
 /**
