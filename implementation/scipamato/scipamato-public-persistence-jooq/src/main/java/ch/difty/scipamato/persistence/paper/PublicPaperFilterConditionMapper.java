@@ -11,9 +11,11 @@ import java.util.stream.Collectors;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.jooq.util.postgres.PostgresDataType;
 
+import ch.difty.scipamato.db.tables.records.PaperRecord;
 import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.PopulationCode;
 import ch.difty.scipamato.entity.StudyDesignCode;
@@ -31,13 +33,11 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
         }
 
         if (filter.getAuthorMask() != null) {
-            final String likeExpression = "%" + filter.getAuthorMask() + "%";
-            conditions.add(PAPER.AUTHORS.likeIgnoreCase(likeExpression));
+            addTokenizedConditions(conditions, filter.getAuthorMask(), PAPER.AUTHORS);
         }
 
         if (filter.getMethodsMask() != null) {
-            final String likeExpression = "%" + filter.getMethodsMask() + "%";
-            conditions.add(PAPER.METHODS.likeIgnoreCase(likeExpression));
+            addTokenizedConditions(conditions, filter.getMethodsMask(), PAPER.METHODS);
         }
 
         if (filter.getPublicationYearFrom() != null) {
@@ -65,6 +65,18 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
                 conditions.add(codeCondition(allCodes));
         }
 
+    }
+
+    private void addTokenizedConditions(final List<Condition> conditions, final String mask, final TableField<PaperRecord, String> field) {
+        if (!mask.contains(" ")) {
+            conditions.add(field.likeIgnoreCase("%" + mask + "%"));
+        } else {
+            for (final String t : mask.split(" ")) {
+                final String token = t.trim();
+                if (!token.isEmpty())
+                    conditions.add(field.likeIgnoreCase("%" + token + "%"));
+            }
+        }
     }
 
     private List<String> collectAllCodesFrom(final PublicPaperFilter filter) {

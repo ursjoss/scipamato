@@ -46,17 +46,46 @@ public class PublicPaperFilterConditionMapperTest extends FilterConditionMapperT
     }
 
     @Test
-    public void creatingWhereCondition_withAuthorMask_searchesFirstAuthorAndAuthors() {
+    public void creatingWhereCondition_withAuthorMask_searchesAuthors() {
         String pattern = "am";
         filter.setAuthorMask(pattern);
         assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(makeWhereClause(pattern, "AUTHORS"));
     }
 
     @Test
-    public void creatingWhereCondition_withMethodsMask_searchesExposureAndMethodFields() {
+    public void creatingWhereCondition_withAuthorMaskHoldingMultipleAuthors_searchesForPapersWithBothAuthorsInAnyOrder() {
+        String pattern = "foo  bar";
+        filter.setAuthorMask(pattern);
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
+        // @formatter:off
+                "(\n" +
+                "  lower(\"public\".\"paper\".\"authors\") like lower('%foo%')\n" +
+                "  and lower(\"public\".\"paper\".\"authors\") like lower('%bar%')\n" +
+                ")"
+        // @formatter:on
+        );
+    }
+
+    @Test
+    public void creatingWhereCondition_withMethodsMask_searchesMethodFields() {
         String pattern = "m";
         filter.setMethodsMask(pattern);
         assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(makeWhereClause(pattern, "METHODS"));
+    }
+
+    @Test
+    public void creatingWhereCondition_withMethodsMaskHoldingMultipleKeywords__searchesMethodFieldsWithAllKeywordsInAnyOrder() {
+        String pattern = "m1 m2 m3";
+        filter.setMethodsMask(pattern);
+        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
+        // @formatter:off
+                "(\n" +
+                "  lower(\"public\".\"paper\".\"methods\") like lower('%m1%')\n" +
+                "  and lower(\"public\".\"paper\".\"methods\") like lower('%m2%')\n" +
+                "  and lower(\"public\".\"paper\".\"methods\") like lower('%m3%')\n" +
+                ")"
+        // @formatter:on
+        );
     }
 
     @Test
