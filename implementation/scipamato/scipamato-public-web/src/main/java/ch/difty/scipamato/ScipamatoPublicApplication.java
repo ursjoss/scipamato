@@ -5,10 +5,12 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cache.annotation.EnableCaching;
 
 import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication;
 
 @SpringBootApplication
+@EnableCaching
 public class ScipamatoPublicApplication extends WicketBootSecuredWebApplication {
 
     public static void main(String[] args) {

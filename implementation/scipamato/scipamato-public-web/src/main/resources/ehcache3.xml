@@ -22,18 +22,4 @@
         <heap unit="entries">1000</heap>
     </cache>
 
-    <cache alias="userByName">
-        <expiry>
-            <ttl unit="hours">4</ttl>
-        </expiry>
-        <heap unit="entries">20</heap>
-    </cache>
-
-    <cache alias="userRolesByUserId">
-        <expiry>
-            <ttl unit="hours">4</ttl>
-        </expiry>
-        <heap unit="entries">100</heap>
-    </cache>
-
 </config>
