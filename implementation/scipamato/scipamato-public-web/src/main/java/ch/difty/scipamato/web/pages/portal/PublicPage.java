@@ -62,6 +62,8 @@ public class PublicPage extends BasePage<Void> {
 
     private static final String CODES_NONE_SELECT_RESOURCE_TAG = "codes.noneSelected";
 
+    private static final String AM_DATA_WIDTH = "data-width";
+
     private PublicPaperFilter filter;
     private PublicPaperProvider dataProvider;
     private boolean extendedSearch = false;
@@ -209,7 +211,7 @@ public class PublicPage extends BasePage<Void> {
 
         final PropertyModel<List<Code>> model = PropertyModel.of(filter, componentId);
         final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<Code>(componentId, model, choices, choiceRenderer).with(config);
-        multiSelect.add(new AttributeModifier("data-width", "fit"));
+        multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
         queue(multiSelect);
         return multiSelect;
     }
@@ -253,7 +255,7 @@ public class PublicPage extends BasePage<Void> {
         final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this, null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true).withLiveSearch(true).withNoneSelectedText(noneSelectedModel.getObject());
         final BootstrapMultiSelect<PopulationCode> multiSelect = new BootstrapMultiSelect<>(id, model, choices, choiceRenderer).with(config);
-        multiSelect.add(new AttributeModifier("data-width", "fit"));
+        multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
         queue(multiSelect);
     }
 
@@ -267,7 +269,7 @@ public class PublicPage extends BasePage<Void> {
         final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this, null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true).withLiveSearch(true).withNoneSelectedText(noneSelectedModel.getObject());
         final BootstrapMultiSelect<StudyDesignCode> multiSelect = new BootstrapMultiSelect<>(id, model, choices, choiceRenderer).with(config);
-        multiSelect.add(new AttributeModifier("data-width", "fit"));
+        multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
         queue(multiSelect);
     }
 
