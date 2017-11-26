@@ -144,8 +144,8 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         getTester().assertModelValue(tes + ":label", "Extended Search");
         getTester().assertInvisible(esc);
 
-        verify(serviceMock, times(1)).countByFilter(isA(PublicPaperFilter.class));
-        verify(serviceMock, times(1)).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
+        verify(serviceMock, times(3)).countByFilter(isA(PublicPaperFilter.class));
+        verify(serviceMock, times(3)).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
         // used in navigateable
         verify(serviceMock, times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
 

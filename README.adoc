@@ -38,11 +38,20 @@ http://getbootstrap.com/[Bootstrap]
 User Documentation
 ------------------
 
+[[user-docu-scipamato-core]]
+=== SciPaMaTo-Core Documentation
+
 * https://github.com/ursjoss/scipamato/wiki/Entering-Papers[Entering
 Papers]
 * https://github.com/ursjoss/scipamato/wiki/Filtering-Papers[Filtering
 Papers]
 * https://github.com/ursjoss/scipamato/wiki/Searches[Complex Searches on
+Papers]
+
+[[user-docu-scipamato-public]]
+=== SciPaMaTo-Public Documentation
+
+* * https://github.com/ursjoss/scipamato/wiki/Filtering-Papers-Public[Filtering
 Papers]
 
 [[information-for-developers]]
