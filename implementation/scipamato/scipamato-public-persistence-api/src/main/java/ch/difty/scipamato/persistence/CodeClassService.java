@@ -1,9 +1,5 @@
 package ch.difty.scipamato.persistence;
 
-import java.io.Serializable;
-import java.util.List;
-
-import ch.difty.scipamato.entity.Code;
 import ch.difty.scipamato.entity.CodeClass;
 
 /**
@@ -11,13 +7,6 @@ import ch.difty.scipamato.entity.CodeClass;
  *
  * @author u.joss
  */
-public interface CodeClassService extends Serializable {
+public interface CodeClassService extends CodeClassLikeService<CodeClass> {
 
-    /**
-     * Find all {@link CodeClass}es localized in language with the provided languageCode
-     *
-     * @param languageCode
-     * @return a list of {@link Code}s
-     */
-    List<CodeClass> find(String languageCode);
 }

@@ -9,7 +9,7 @@ import lombok.Value;
 @Builder
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Code extends PublicEntity {
+public class Code extends PublicEntity implements CodeLike {
 
     private static final long serialVersionUID = 1L;
 

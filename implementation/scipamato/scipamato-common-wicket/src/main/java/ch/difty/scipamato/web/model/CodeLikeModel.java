@@ -4,25 +4,31 @@ import java.util.List;
 
 import org.apache.wicket.injection.Injector;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.entity.CodeClassId;
-import ch.difty.scipamato.entity.ScipamatoEntity;
+import ch.difty.scipamato.entity.CodeLike;
+import ch.difty.scipamato.persistence.CodeLikeService;
 
 /**
- * Common base class for Code Models.
+ * Model used in core/public wicket pages to load {@link CodeLike} code implementations
+ *
  * @author u.joss
  *
- * @param <C> Code entity
+ * @param <T> Code entity extending {@link CodeLike}
  */
-public abstract class AbstractCodeModel<C extends ScipamatoEntity> extends LoadableDetachableModel<List<C>> {
+public abstract class CodeLikeModel<T extends CodeLike, S extends CodeLikeService<T>> extends LoadableDetachableModel<List<T>> {
 
     private static final long serialVersionUID = 1L;
+
+    @SpringBean
+    private S service;
 
     private final CodeClassId codeClassId;
     private final String languageCode;
 
-    protected AbstractCodeModel(final CodeClassId codeClassId, final String languageCode) {
+    protected CodeLikeModel(final CodeClassId codeClassId, final String languageCode) {
         Injector.get().inject(this);
         this.codeClassId = AssertAs.notNull(codeClassId, "codeClassId");
         this.languageCode = AssertAs.notNull(languageCode, "languageCode");
@@ -36,4 +42,8 @@ public abstract class AbstractCodeModel<C extends ScipamatoEntity> extends Loada
         return languageCode;
     }
 
+    @Override
+    protected List<T> load() {
+        return service.findCodesOfClass(getCodeClassId(), getLanguageCode());
+    }
 }
