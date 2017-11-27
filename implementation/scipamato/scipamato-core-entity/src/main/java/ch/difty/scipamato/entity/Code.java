@@ -11,7 +11,7 @@ import lombok.Getter;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
-public class Code extends CoreEntity {
+public class Code extends CoreEntity implements CodeLike {
 
     private static final long serialVersionUID = 1L;
 

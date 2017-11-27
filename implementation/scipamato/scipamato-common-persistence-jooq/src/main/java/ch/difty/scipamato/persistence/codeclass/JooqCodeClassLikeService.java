@@ -16,7 +16,7 @@ import ch.difty.scipamato.persistence.CodeClassLikeService;
  * @param <T> code classes, concrete implementations of {@link CodeClassLike} 
  * @param <R> code class repository, concrete implementations of {@link CodeClassLikeRepository}
  */
-public class JooqCodeClassLikeService<T extends CodeClassLike, R extends CodeClassLikeRepository<T>> implements CodeClassLikeService<T> {
+public abstract class JooqCodeClassLikeService<T extends CodeClassLike, R extends CodeClassLikeRepository<T>> implements CodeClassLikeService<T> {
 
     private static final long serialVersionUID = 1L;
 

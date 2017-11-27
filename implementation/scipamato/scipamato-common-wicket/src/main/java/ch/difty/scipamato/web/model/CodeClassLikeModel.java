@@ -12,6 +12,7 @@ import ch.difty.scipamato.persistence.CodeClassLikeService;
 
 /**
  * Model used in core/public wicket pages to load {@link CodeClassLike} code class implementations
+ *
  * @author u.joss
  *
  * @param <T> code class implementations of {@link CodeClassLike}
