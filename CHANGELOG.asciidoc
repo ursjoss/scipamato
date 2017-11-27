@@ -74,6 +74,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Fixed
 - Fixed and improved transaction handling in integration tests
+- 07/20: Do not automatically run AdHocTests (PubmedXmlServiceIntegrationAdHocTest accessing PubMed over the internet)
 
 .Security
 - Public: 07/16: Add spring-security to SciPaMaTo-Public: Anonymous login for the page, required login for actuator endpoints

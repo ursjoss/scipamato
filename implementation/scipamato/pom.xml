@@ -58,6 +58,7 @@
         <!-- test (surefire) test class definitions -->
         <surefire.testclass.pt>**/*PageTest.java, **/*PanelTest.java</surefire.testclass.pt>
         <surefire.testclass.it>**/*IntegrationTest.java</surefire.testclass.it>
+        <surefire.testclass.at>**/*AdHocTest.java</surefire.testclass.at>
 
         <!-- Sonar properties -->
         <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
@@ -499,7 +500,7 @@
             </build>
         </profile>
 
-        <!-- Maven profile allTests - runs all tests without restrictions -->
+        <!-- Maven profile allTests - runs all tests except for the adHocIntegrationTests that should only be run selectively and manually -->
         <profile>
             <id>allTests</id>
             <activation>
@@ -512,7 +513,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <excludes>
-                                <exclude>none</exclude>
+                                <exclude>${surefire.testclass.at}</exclude>
                             </excludes>
                         </configuration>
                     </plugin>
@@ -582,6 +583,7 @@
                         <excludes>
                             <exclude>${surefire.testclass.pt}</exclude>
                             <exclude>${surefire.testclass.it}</exclude>
+                            <exclude>${surefire.testclass.at}</exclude>
                         </excludes>
                     </configuration>
                 </plugin>

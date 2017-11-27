@@ -14,9 +14,16 @@ import ch.difty.scipamato.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.pubmed.PubmedArticleService;
 import ch.difty.scipamato.pubmed.ScipamatoPubmedArticleIntegrationTest;
 
+/**
+ * Note: This ad hoc integration test should not run automatically, as it actually issues a call to PubMed over the
+ * internet. Thus this test fails if the machine running the test does not have an interent connection and PubMed is
+ * up and accessible.
+ *
+ * @author u.joss
+ */
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class PubmedXmlServiceIntegrationTest {
+public class PubmedXmlServiceIntegrationAdHocTest {
 
     @Autowired
     private PubmedArticleService service;
