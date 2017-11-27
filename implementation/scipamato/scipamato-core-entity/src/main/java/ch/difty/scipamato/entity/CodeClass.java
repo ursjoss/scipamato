@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
-public class CodeClass extends IdScipamatoEntity<Integer> {
+public class CodeClass extends IdScipamatoEntity<Integer> implements CodeClassLike {
 
     private static final long serialVersionUID = 1L;
 
