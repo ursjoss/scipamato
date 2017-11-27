@@ -172,6 +172,11 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>scipamato-core-sync</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>scipamato-core-persistence-jooq</artifactId>
                 <type>test-jar</type>
                 <version>${project.version}</version>
@@ -390,6 +395,7 @@
                 <module>scipamato-core-pubmed-api</module>
                 <module>scipamato-core-persistence-api</module>
                 <module>scipamato-core-persistence-jooq</module>
+                <module>scipamato-core-sync</module>
                 <module>scipamato-core-web</module>
             </modules>
         </profile>
@@ -429,6 +435,7 @@
                 <module>scipamato-core-pubmed-api</module>
                 <module>scipamato-core-persistence-api</module>
                 <module>scipamato-core-persistence-jooq</module>
+                <module>scipamato-core-sync</module>
                 <module>scipamato-core-web</module>
                 <module>scipamato-public-entity</module>
                 <module>scipamato-public-persistence-api</module>
