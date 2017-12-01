@@ -6,6 +6,7 @@
     <artifactId>scipamato</artifactId>
     <version>0.6.4-SNAPSHOT</version>
     <packaging>pom</packaging>
+
     <name>SciPaMaTo :: Parent Project</name>
     <description>SciPaMaTo - Scientific Paper Management Tool</description>
 
@@ -52,6 +53,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <java.version>1.8</java.version>
 
