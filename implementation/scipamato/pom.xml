@@ -371,9 +371,9 @@
     </dependencies>
 
     <profiles>
-        <!-- ============================================================== -->
+        <!-- ========================================================= -->
         <!-- === Profiles managing the build by including modules ==== -->
-        <!-- ============================================================== -->
+        <!-- ========================================================= -->
 
         <!-- Only build SciPaMaTo-Core -->
         <profile>
@@ -437,9 +437,9 @@
             </modules>
         </profile>
 
-        <!-- ============================================================== -->
+        <!-- ==================================================== -->
         <!-- === Profile for including the development tools ==== -->
-        <!-- ============================================================== -->
+        <!-- ==================================================== -->
 
         <!-- Maven profile development - activating the spring-boot-devtools -->
         <profile>
@@ -454,14 +454,15 @@
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-devtools</artifactId>
+                    <scope>runtime</scope>
                 </dependency>
             </dependencies>
         </profile>
 
 
-        <!-- ============================================================== -->
+        <!-- ====================================================== -->
         <!-- === Profiles indicating what kind of tests to run ==== -->
-        <!-- ============================================================== -->
+        <!-- ====================================================== -->
 
         <!-- Maven profile pageTests - limits tests to page/panel tests only -->
         <profile>
@@ -606,7 +607,6 @@
                     <artifactId>properties-maven-plugin</artifactId>
                     <version>${properties-maven-plugin.version}</version>
                 </plugin>
-
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>jaxb2-maven-plugin</artifactId>
