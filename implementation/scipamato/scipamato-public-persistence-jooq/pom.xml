@@ -87,7 +87,6 @@
                     <plugin>
                         <groupId>org.flywaydb</groupId>
                         <artifactId>flyway-maven-plugin</artifactId>
-                        <version>${flyway.version}</version>
                         <executions>
                             <execution>
                                 <id>drop-database</id>
@@ -132,7 +131,6 @@
                     <plugin>
                         <groupId>org.flywaydb</groupId>
                         <artifactId>flyway-maven-plugin</artifactId>
-                        <version>${flyway.version}</version>
                         <executions>
                             <execution>
                                 <id>drop-database</id>
@@ -177,7 +175,6 @@
                     <plugin>
                         <groupId>org.flywaydb</groupId>
                         <artifactId>flyway-maven-plugin</artifactId>
-                        <version>${flyway.version}</version>
                         <executions>
                             <execution>
                                 <id>drop-database</id>
@@ -381,7 +378,6 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>${flyway.version}</version>
                 <configuration>
                     <url>${flyway.url}</url>
                     <user>${flyway.user}</user>
