@@ -13,15 +13,248 @@
     <packaging>jar</packaging>
     <name>SciPaMaTo-Core :: Synchronization Project</name>
 
+    <properties>
+        <org.jooq.target.dir.core>target/generated-sources/jooq</org.jooq.target.dir.core>
+        <org.jooq.target.dir.public>target/generated-sources/jooq/</org.jooq.target.dir.public>
+        <org.jooq.db-generator>org.jooq.util.postgres.PostgresDatabase</org.jooq.db-generator>
+
+        <property-file>${basedir}/src/main/resources/application.properties</property-file>
+    </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-common-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-common-utils</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-batch</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!-- JDBC Driver -->
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- Database -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jooq</artifactId>
+            <exclusions>
+                <exclusion>
+                    <!-- Excluding tomcat-jdbc so we can use HikariCP -->
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>tomcat-jdbc</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <!-- Dummy profile for m2e - http://stackoverflow.com/questions/7905501/get-rid-of-pom-not-found-warning-for-org-eclipse-m2elifecycle-mapping -->
+        <profile>
+            <id>only-eclipse</id>
+            <activation>
+                <property>
+                    <name>m2e.version</name>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
+                        <plugin>
+                            <groupId>org.eclipse.m2e</groupId>
+                            <artifactId>lifecycle-mapping</artifactId>
+                            <version>${m2e-lifecycle-mapping.version}</version>
+                            <configuration>
+                                <lifecycleMappingMetadata>
+                                    <pluginExecutions>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.jooq</groupId>
+                                                <artifactId>jooq-codegen-maven</artifactId>
+                                                <versionRange>${jooq.version}</versionRange>
+                                                <goals>
+                                                    <goal>generate</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore />
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.flywaydb</groupId>
+                                                <artifactId>flyway-maven-plugin</artifactId>
+                                                <versionRange>${flyway.version}</versionRange>
+                                                <goals>
+                                                    <goal>migrate</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore />
+                                            </action>
+                                        </pluginExecution>
+                                    </pluginExecutions>
+                                </lifecycleMappingMetadata>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>${property-file}</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-postgres-core</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <jdbc>
+                                <driver>${sync.source.datasource.driver-class-name}</driver>
+                                <url>${sync.source.datasource.url}</url>
+                                <user>${sync.source.datasource.username}</user>
+                                <password>${sync.source.datasource.password}</password>
+                            </jdbc>
+                            <generator>
+                                <database>
+                                    <name>${org.jooq.db-generator}</name>
+                                    <includes>
+                                        code_class
+                                        | code_class_tr
+                                        | code
+                                        | code_tr
+                                        | paper
+                                        | paper_code
+                                    </includes>
+                                    <excludes />
+                                    <inputSchema>${db.schema}</inputSchema>
+                                    <recordVersionFields>version</recordVersionFields>
+                                </database>
+                                <generate>
+                                    <deprecated>false</deprecated>
+                                    <instanceFields>true</instanceFields>
+                                    <pojos>false</pojos>
+                                </generate>
+                                <target>
+                                    <packageName>ch.difty.scipamato.db.core</packageName>
+                                    <directory>${org.jooq.target.dir.core}</directory>
+                                </target>
+                            </generator>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-postgres-public</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <jdbc>
+                                <driver>${sync.target.datasource.driver-class-name}</driver>
+                                <url>${sync.target.datasource.url}</url>
+                                <user>${sync.target.datasource.username}</user>
+                                <password>${sync.target.datasource.password}</password>
+                            </jdbc>
+                            <generator>
+                                <database>
+                                    <name>${org.jooq.db-generator}</name>
+                                    <includes>
+                                        code_class
+                                        | code
+                                        | paper
+                                    </includes>
+                                    <excludes />
+                                    <inputSchema>${db.schema}</inputSchema>
+                                    <recordVersionFields>version</recordVersionFields>
+                                </database>
+                                <generate>
+                                    <deprecated>false</deprecated>
+                                    <instanceFields>true</instanceFields>
+                                    <pojos>true</pojos>
+                                </generate>
+                                <target>
+                                    <packageName>ch.difty.scipamato.db.public</packageName>
+                                    <directory>${org.jooq.target.dir.public}</directory>
+                                </target>
+                            </generator>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Assist eclipse in recognizing the generates sources (from jOOQ and jaxb) as source files -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${org.jooq.target.dir.core}</source>
+                                <source>${org.jooq.target.dir.public}</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
