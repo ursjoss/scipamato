@@ -8,27 +8,14 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import javax.sql.DataSource;
-
-import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
 import org.jooq.TableField;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.JdbcCursorItemReader;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.RowMapper;
 
-import ch.difty.scipamato.core.sync.houskeeping.HouseKeeper;
+import ch.difty.scipamato.core.sync.jobs.SyncConfig;
 import ch.difty.scipamato.db.core.public_.tables.CodeClass;
 import ch.difty.scipamato.db.core.public_.tables.CodeClassTr;
 import ch.difty.scipamato.db.core.public_.tables.records.CodeClassRecord;
@@ -44,13 +31,9 @@ import ch.difty.scipamato.db.core.public_.tables.records.CodeClassTrRecord;
  * @author u.joss
  */
 @Configuration
-public class CodeClassSyncConfig {
+public class CodeClassSyncConfig extends SyncConfig<PublicCodeClass, ch.difty.scipamato.db.public_.public_.tables.records.CodeClassRecord> {
 
-    private static final String JOB_NAME = "codeClassSyncJob";
-
-    @Value("${purge_grace_time_in_minutes:30}")
-    private int graceTime;
-
+    private static final String TOPIC = "codeClass";
     private static final int CHUNK_SIZE = 50;
 
     // fields of the public Code class record
@@ -62,63 +45,29 @@ public class CodeClassSyncConfig {
     private static final TableField<CodeClassTrRecord, Timestamp> P_CREATED = CODE_CLASS_TR.CREATED;
     private static final TableField<CodeClassTrRecord, Timestamp> P_LAST_MODIFIED = CODE_CLASS_TR.LAST_MODIFIED;
 
-    @Autowired
-    @Qualifier("coreDslContext")
-    private DSLContext jooqCore;
-
-    @Autowired
-    @Qualifier("publicDslContext")
-    private DSLContext jooqPublic;
-
-    @Autowired
-    @Qualifier("scipamatoCoreDataSource")
-    private DataSource scipamatoCoreDataSource;
-
-    @Autowired
-    private JobBuilderFactory jobBuilderFactory;
-
-    @Autowired
-    private StepBuilderFactory stepBuilderFactory;
+    protected CodeClassSyncConfig() {
+        super(TOPIC, CHUNK_SIZE);
+    }
 
     @Bean
     public Job syncCodeClassJob() {
-        // @formatter:off
-        return jobBuilderFactory
-            .get(JOB_NAME).incrementer(new RunIdIncrementer())
-                .flow(codeClassInsertingOrUpdatingStep())
-                .next(codeClassPurgingStep())
-            .end()
-            .build();
-        // @formatter:on
+        return createJob();
     }
 
-    private Step codeClassInsertingOrUpdatingStep() {
-        // @formatter:off
-        return stepBuilderFactory
-            .get("codeClassInsertingOrUpdatingStep")
-            .<PublicCodeClass, PublicCodeClass> chunk(CHUNK_SIZE)
-                .reader(coreReader())
-                .writer(publicWriter())
-            .build();
-        // @formatter:on
+    @Override
+    protected String getJobName() {
+        return "codeClassSyncJob";
     }
 
-    private ItemReader<? extends PublicCodeClass> coreReader() {
-        final JdbcCursorItemReader<PublicCodeClass> reader = new JdbcCursorItemReader<>();
-        reader.setDataSource(scipamatoCoreDataSource);
-        reader.setSql(selectSql());
-        reader.setRowMapper(new RowMapper<PublicCodeClass>() {
-            @Override
-            public PublicCodeClass mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-                return makeEntity(rs);
-            }
-        });
-        return reader;
-    };
+    @Override
+    protected ItemWriter<? super PublicCodeClass> publicWriter() {
+        return new CodeClassItemWriter(getJooqPublic());
+    }
 
-    private String selectSql() {
+    @Override
+    protected String selectSql() {
         // @formatter:off
-        return jooqCore
+        return getJooqCore()
             .select(P_ID, P_LANG_CODE, P_NAME, P_DESCRIPTION, P_VERSION, P_CREATED, P_LAST_MODIFIED)
             .from(CodeClass.CODE_CLASS)
             .innerJoin(CodeClassTr.CODE_CLASS_TR)
@@ -127,7 +76,8 @@ public class CodeClassSyncConfig {
         // @formatter:on
     }
 
-    private PublicCodeClass makeEntity(final ResultSet rs) throws SQLException {
+    @Override
+    protected PublicCodeClass makeEntity(final ResultSet rs) throws SQLException {
         return new PublicCodeClass(
         // @formatter:off
             rs.getInt(P_ID.getName()),
@@ -142,21 +92,12 @@ public class CodeClassSyncConfig {
         );
     }
 
-    private ItemWriter<? super PublicCodeClass> publicWriter() {
-        return new CodeClassItemWriter(jooqPublic);
-    }
-
-    private Step codeClassPurgingStep() {
-        final Timestamp cutOff = Timestamp.valueOf(LocalDateTime.now().minusMinutes(graceTime));
+    @Override
+    protected DeleteConditionStep<ch.difty.scipamato.db.public_.public_.tables.records.CodeClassRecord> getPurgeDdl(final Timestamp cutOff) {
         // @formatter:off
-        final DeleteConditionStep<ch.difty.scipamato.db.public_.public_.tables.records.CodeClassRecord> ddl =
-                jooqPublic
-                    .delete(ch.difty.scipamato.db.public_.public_.tables.CodeClass.CODE_CLASS)
-                    .where(ch.difty.scipamato.db.public_.public_.tables.CodeClass.CODE_CLASS.LAST_SYNCHED.lessThan(cutOff));
-        return stepBuilderFactory
-            .get("codeClassPurgingStep")
-                .tasklet(new HouseKeeper<ch.difty.scipamato.db.public_.public_.tables.records.CodeClassRecord>(ddl, graceTime))
-            .build();
+        return getJooqPublic()
+                .delete(ch.difty.scipamato.db.public_.public_.tables.CodeClass.CODE_CLASS)
+                .where(ch.difty.scipamato.db.public_.public_.tables.CodeClass.CODE_CLASS.LAST_SYNCHED.lessThan(cutOff));
         // @formatter:on
     }
 

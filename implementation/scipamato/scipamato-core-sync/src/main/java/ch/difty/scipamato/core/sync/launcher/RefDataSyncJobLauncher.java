@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
  * Launcher for the reference dat sync job. Comprises of the following synchronization jobs:
  * <ol>
  * <li> code_class </li>
- * <li> codes TODO </li>
+ * <li> codes </li>
  * <li> keywords TODO </li>
  * <li> papers TODO</li>
  * </ol>
@@ -38,6 +38,10 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
     private Job syncCodeClassJob;
 
     @Autowired
+    @Qualifier("syncCodeJob")
+    private Job syncCodeJob;
+
+    @Autowired
     protected JobLauncher jobLauncher;
 
     @Override
@@ -47,6 +51,7 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
         final JobParameters jobParameters = new JobParametersBuilder().addDate("runDate", Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()), true).toJobParameters();
         try {
             runSingleJob("code_classes", syncCodeClassJob, result, jobParameters);
+            runSingleJob("codes", syncCodeJob, result, jobParameters);
             log.info("Job finished successfully.");
         } catch (final Exception ex) {
             log.error("Job terminated.", ex);
