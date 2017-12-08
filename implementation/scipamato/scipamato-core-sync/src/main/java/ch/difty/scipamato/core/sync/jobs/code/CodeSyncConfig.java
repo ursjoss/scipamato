@@ -82,20 +82,19 @@ public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.db
 
     @Override
     protected PublicCode makeEntity(final ResultSet rs) throws SQLException {
-        return new PublicCode(
-        // @formatter:off
-            rs.getString(P_CODE.getName()),
-            rs.getString(P_LANG_CODE.getName()),
-            rs.getInt(P_CODE_CLASS_ID.getName()),
-            rs.getString(P_NAME.getName()),
-            rs.getString(P_COMMENT.getName()),
-            rs.getInt(P_SORT.getName()),
-            rs.getInt(P_VERSION.getName()),
-            rs.getTimestamp(P_CREATED.getName()),
-            rs.getTimestamp(P_LAST_MODIFIED.getName()),
-            Timestamp.valueOf(LocalDateTime.now())
-        // @formatter:on
-        );
+        return PublicCode
+            .builder()
+            .code(rs.getString(P_CODE.getName()))
+            .langCode(rs.getString(P_LANG_CODE.getName()))
+            .codeClassId(rs.getInt(P_CODE_CLASS_ID.getName()))
+            .name(rs.getString(P_NAME.getName()))
+            .comment(rs.getString(P_COMMENT.getName()))
+            .sort(rs.getInt(P_SORT.getName()))
+            .version(rs.getInt(P_VERSION.getName()))
+            .created(rs.getTimestamp(P_CREATED.getName()))
+            .lastModified(rs.getTimestamp(P_LAST_MODIFIED.getName()))
+            .lastSynched(Timestamp.valueOf(LocalDateTime.now()))
+            .build();
     }
 
     @Override

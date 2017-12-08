@@ -78,18 +78,17 @@ public class CodeClassSyncConfig extends SyncConfig<PublicCodeClass, ch.difty.sc
 
     @Override
     protected PublicCodeClass makeEntity(final ResultSet rs) throws SQLException {
-        return new PublicCodeClass(
-        // @formatter:off
-            rs.getInt(P_ID.getName()),
-            rs.getString(P_LANG_CODE.getName()),
-            rs.getString(P_NAME.getName()),
-            rs.getString(P_DESCRIPTION.getName()),
-            rs.getInt(P_VERSION.getName()),
-            rs.getTimestamp(P_CREATED.getName()),
-            rs.getTimestamp(P_LAST_MODIFIED.getName()),
-            Timestamp.valueOf(LocalDateTime.now())
-        // @formatter:on
-        );
+        return PublicCodeClass
+            .builder()
+            .codeClassId(rs.getInt(P_ID.getName()))
+            .langCode(rs.getString(P_LANG_CODE.getName()))
+            .name(rs.getString(P_NAME.getName()))
+            .description(rs.getString(P_DESCRIPTION.getName()))
+            .version(rs.getInt(P_VERSION.getName()))
+            .created(rs.getTimestamp(P_CREATED.getName()))
+            .lastModified(rs.getTimestamp(P_LAST_MODIFIED.getName()))
+            .lastSynched(Timestamp.valueOf(LocalDateTime.now()))
+            .build();
     }
 
     @Override

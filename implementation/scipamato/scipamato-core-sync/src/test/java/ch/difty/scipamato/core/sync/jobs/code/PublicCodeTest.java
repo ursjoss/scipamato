@@ -2,22 +2,27 @@ package ch.difty.scipamato.core.sync.jobs.code;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-
 import org.junit.Test;
 
-public class PublicCodeTest {
+import ch.difty.scipamato.core.sync.jobs.PublicEntityTest;
 
-    private PublicCode pc;
+public class PublicCodeTest extends PublicEntityTest {
 
     @Test
-    public void canInstantiate() {
-        final Timestamp created = Timestamp.valueOf(LocalDateTime.now().minusDays(2));
-        final Timestamp mod = Timestamp.valueOf(LocalDateTime.now().minusDays(1));
-        final Timestamp synch = Timestamp.valueOf(LocalDateTime.now());
-
-        pc = new PublicCode("c", "lc", 1, "name", "comment", 2, 3, created, mod, synch);
+    public void canSetGet() {
+        PublicCode pc = PublicCode
+            .builder()
+            .code("c")
+            .langCode("lc")
+            .codeClassId(1)
+            .name("name")
+            .comment("comment")
+            .sort(2)
+            .version(3)
+            .created(CREATED)
+            .lastModified(MODIFIED)
+            .lastSynched(SYNCHED)
+            .build();
 
         assertThat(pc.getCode()).isEqualTo("c");
         assertThat(pc.getLangCode()).isEqualTo("lc");
@@ -26,8 +31,8 @@ public class PublicCodeTest {
         assertThat(pc.getComment()).isEqualTo("comment");
         assertThat(pc.getSort()).isEqualTo(2);
         assertThat(pc.getVersion()).isEqualTo(3);
-        assertThat(pc.getCreated()).isEqualTo(created);
-        assertThat(pc.getLastModified()).isEqualTo(mod);
-        assertThat(pc.getLastSynched()).isEqualTo(synch);
+        assertThat(pc.getCreated()).isEqualTo(CREATED);
+        assertThat(pc.getLastModified()).isEqualTo(MODIFIED);
+        assertThat(pc.getLastSynched()).isEqualTo(SYNCHED);
     }
 }
