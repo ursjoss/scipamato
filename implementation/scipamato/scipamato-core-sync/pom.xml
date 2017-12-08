@@ -36,6 +36,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-batch</artifactId>
+            <exclusions>
+                <exclusion>
+                    <!-- Excluding tomcat-jdbc so we can use HikariCP -->
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>tomcat-jdbc</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -46,6 +53,12 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- HikariCP connection pool -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
         </dependency>
 
         <!-- JDBC Driver -->
@@ -164,10 +177,10 @@
                         </goals>
                         <configuration>
                             <jdbc>
-                                <driver>${sync.source.datasource.driver-class-name}</driver>
-                                <url>${sync.source.datasource.url}</url>
-                                <user>${sync.source.datasource.username}</user>
-                                <password>${sync.source.datasource.password}</password>
+                                <driver>${sync.batch.datasource.driver-class-name}</driver>
+                                <url>${sync.batch.datasource.jdbc-url}</url>
+                                <user>${sync.batch.datasource.username}</user>
+                                <password>${sync.batch.datasource.password}</password>
                             </jdbc>
                             <generator>
                                 <database>
@@ -205,7 +218,7 @@
                         <configuration>
                             <jdbc>
                                 <driver>${sync.target.datasource.driver-class-name}</driver>
-                                <url>${sync.target.datasource.url}</url>
+                                <url>${sync.target.datasource.jdbc-url}</url>
                                 <user>${sync.target.datasource.username}</user>
                                 <password>${sync.target.datasource.password}</password>
                             </jdbc>

@@ -13,6 +13,7 @@ import org.jooq.Record1;
 import org.jooq.SelectConditionStep;
 import org.jooq.SortField;
 import org.jooq.impl.DSL;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import ch.difty.scipamato.AssertAs;
 import ch.difty.scipamato.db.Tables;
@@ -59,7 +60,7 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
      * @param sortMapper
      *      paper or paperSlim specific {@link JooqSortMapper}
      */
-    public JooqBySearchOrderRepo(final DSLContext dsl, final M mapper, final JooqSortMapper<PaperRecord, T, ch.difty.scipamato.db.tables.Paper> sortMapper) {
+    public JooqBySearchOrderRepo(@Qualifier("dslContext") final DSLContext dsl, final M mapper, final JooqSortMapper<PaperRecord, T, ch.difty.scipamato.db.tables.Paper> sortMapper) {
         this.dsl = dsl;
         this.mapper = mapper;
         this.sortMapper = sortMapper;

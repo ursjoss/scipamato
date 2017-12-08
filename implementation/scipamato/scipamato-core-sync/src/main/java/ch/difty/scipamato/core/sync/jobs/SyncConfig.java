@@ -40,7 +40,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     private int graceTime;
 
     @Autowired
-    @Qualifier("coreDslContext")
+    @Qualifier("dslContext")
     private DSLContext jooqCore;
 
     @Autowired
@@ -48,7 +48,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     private DSLContext jooqPublic;
 
     @Autowired
-    @Qualifier("scipamatoCoreDataSource")
+    @Qualifier("dataSource")
     private DataSource scipamatoCoreDataSource;
 
     @Autowired
@@ -131,7 +131,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
      * Translate the {@link ResultSet} into the entity {@literal T}
      * @param rs
      *    the recordset from scipamato-core
-     * @return the entity of type {@link T}
+     * @return the entity of type {@literal T}
      * @throws SQLException
      */
     protected abstract T makeEntity(ResultSet rs) throws SQLException;
@@ -141,11 +141,6 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
         return stepBuilderFactory.get(topic + "PurgingStep").tasklet(new HouseKeeper<R>(getPurgeDcs(cutOff), graceTime)).build();
     }
 
-    /**
-     * 
-     * @param cutOff
-     * @return
-     */
     protected abstract DeleteConditionStep<R> getPurgeDcs(final Timestamp cutOff);
 
     protected String getString(final TableField<?, String> field, final ResultSet rs) throws SQLException {

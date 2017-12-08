@@ -8,6 +8,7 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
@@ -22,7 +23,7 @@ public class JooqCodeClassRepo implements CodeClassRepository {
     private final DSLContext dslContext;
 
     @Autowired
-    public JooqCodeClassRepo(final DSLContext dslContext) {
+    public JooqCodeClassRepo(@Qualifier("dslContext") final DSLContext dslContext) {
         this.dslContext = dslContext;
     }
 

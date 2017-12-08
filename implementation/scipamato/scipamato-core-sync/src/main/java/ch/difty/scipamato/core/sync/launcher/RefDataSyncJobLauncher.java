@@ -75,7 +75,7 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
         final String exitCode = jobExecution.getExitStatus().getExitCode();
         final String status = jobExecution.getStatus().name();
         final int writeCount = jobExecution.getStepExecutions().stream().mapToInt((se) -> se.getWriteCount()).sum();
-        final String msg = String.format("Job %d has returned with exitCode %s (status %s): {} {} were synchronized.", id, exitCode, status, writeCount, topic);
+        final String msg = String.format("Job %d has returned with exitCode %s (status %s): %d %s were synchronized.", id, exitCode, status, writeCount, topic);
         switch (jobExecution.getStatus()) {
         case COMPLETED:
             result.setSuccess(msg);

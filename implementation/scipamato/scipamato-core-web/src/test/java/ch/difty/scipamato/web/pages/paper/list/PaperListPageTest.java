@@ -109,6 +109,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         getTester().assertComponent("navbar", Navbar.class);
         assertPageLinkButton(0, "Left", NavbarButton.class, "Papers");
         assertPageLinkButton(1, "Left", NavbarButton.class, "Search");
+        assertPageLinkButton(2, "Left", NavbarButton.class, "Synchronize");
 
         assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:0:component", "https://github.com/ursjoss/scipamato/wiki/");
         assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:1:component", "https://github.com/ursjoss/scipamato/blob/master/CHANGELOG.asciidoc");

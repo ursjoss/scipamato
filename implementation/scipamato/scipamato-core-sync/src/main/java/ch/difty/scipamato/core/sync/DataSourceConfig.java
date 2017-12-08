@@ -20,17 +20,6 @@ public class DataSourceConfig {
     private String dialect;
 
     /**
-     * Scipamato-Core as primary datasource, i.e. will also
-     * be used for spring-batch meta-tables
-     */
-    @Primary
-    @Bean
-    @ConfigurationProperties(prefix = "sync.source.datasource")
-    public DataSource scipamatoCoreDataSource() {
-        return DataSourceBuilder.create().build();
-    }
-
-    /**
      * Scipamato-Public datasource.
      */
     @Bean
@@ -40,11 +29,14 @@ public class DataSourceConfig {
     }
 
     /**
-     * @return {@link org.jooq.Configuration} for scipamato-core
+     * Scipamato-Core as batch datasource. Needs to create
+     * the batch meta tables.
      */
     @Bean
-    public org.jooq.Configuration coreConfiguration() {
-        return considerSettingDialect(new DefaultConfiguration().derive(scipamatoCoreDataSource()));
+    @Primary
+    @ConfigurationProperties(prefix = "sync.batch.datasource")
+    public DataSource batchDataSource() {
+        return DataSourceBuilder.create().build();
     }
 
     /**
@@ -55,14 +47,6 @@ public class DataSourceConfig {
             return configuration.derive(SQLDialect.valueOf(dialect));
         else
             return configuration;
-    }
-
-    /**
-     * @return {@link DSLContext} for scipamato-core
-     */
-    @Bean
-    public DSLContext coreDslContext() {
-        return DSL.using(coreConfiguration());
     }
 
     /**
@@ -79,6 +63,22 @@ public class DataSourceConfig {
     @Bean
     public DSLContext publicDslContext() {
         return DSL.using(publicConfiguration());
+    }
+
+    /**
+     * @return {@link org.jooq.Configuration} for spring batch
+     */
+    @Bean
+    public org.jooq.Configuration batchConfiguration() {
+        return considerSettingDialect(new DefaultConfiguration().derive(batchDataSource()));
+    }
+
+    /**
+     * @return {@link DSLContext} for batch on scipamato-core
+     */
+    @Bean
+    public DSLContext batchDslContext() {
+        return DSL.using(batchConfiguration());
     }
 
 }

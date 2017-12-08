@@ -125,7 +125,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         final String tes = b + "toggleExtendedSearch";
         final String esc = b + "extendedSearchContainer";
 
-        getTester().executeAjaxEvent(tes, "onclick");
+        getTester().executeAjaxEvent(tes, "click");
 
         getTester().assertModelValue(tes + ":label", "Simple Search");
         getTester().assertVisible(esc);
