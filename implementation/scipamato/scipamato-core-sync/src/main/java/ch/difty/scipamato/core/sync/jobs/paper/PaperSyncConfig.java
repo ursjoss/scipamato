@@ -5,10 +5,11 @@ import static ch.difty.scipamato.db.core.public_.tables.Paper.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.jooq.DeleteConditionStep;
-import org.jooq.Record16;
-import org.jooq.SelectHavingStep;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.springframework.batch.core.Job;
@@ -89,14 +90,14 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
             .on(Paper.PAPER.ID.eq(PaperCode.PAPER_CODE.PAPER_ID))
             .innerJoin(Code.CODE)
             .on(PaperCode.PAPER_CODE.CODE.eq(Code.CODE.CODE_))
-            .where(Code.CODE.INTERNAL.isFalse())
+//            .where(Code.CODE.INTERNAL.isFalse()) // TODO need to filter only some of those
             .groupBy(C_ID, C_NUMBER, C_PM_ID, C_AUTHORS, C_TITLE, C_LOCATION, C_PUB_YEAR, C_GOALS, C_METHODS, C_POPULATION, C_RESULT, C_COMMENT, C_VERSION, C_CREATED, C_LAST_MODIFIED)
             .getSQL();
     }
 
     @Override
     protected PublicPaper makeEntity(final ResultSet rs) throws SQLException {
-        return PublicPaper
+        final PublicPaper paper = PublicPaper
             .builder()
             .id(getLong(C_ID, rs))
             .number(getLong(C_NUMBER, rs))
@@ -110,15 +111,37 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
             .population(getString(C_POPULATION, rs))
             .result(getString(C_RESULT, rs))
             .comment(getString(C_COMMENT, rs))
-            // TODO remaining code stuff
-            .codesPopulation(new Short[] {})
-            .codesStudyDesign(new Short[] {})
             .codes(extractCodes(ALIAS_CODES, rs))
             .version(getInt(C_VERSION, rs))
             .created(getTimestamp(C_CREATED, rs))
             .lastModified(getTimestamp(C_LAST_MODIFIED, rs))
             .lastSynched(getNow())
             .build();
+        paper.setCodesPopulation(getPopulationCodes(paper));
+        paper.setCodesStudyDesign(getStudyDesignCodes(paper));
+        return paper;
+    }
+
+    // Population (1: Children (Codes 3A+3B), 2: Adults (Codes 3C)
+    private Short[] getPopulationCodes(final PublicPaper paper) {
+        final List<Short> pcList = new ArrayList<>();
+        if (Stream.of(paper.getCodes()).anyMatch(x -> x.equals("3A") || x.equals("3B")))
+            pcList.add((short) 1);
+        if (Stream.of(paper.getCodes()).anyMatch(x -> x.equals("3C")))
+            pcList.add((short) 2);
+        return pcList.toArray(new Short[pcList.size()]);
+    }
+
+    // (1: Experimental Studies (5A+5B+5C), 2: Epidemiolog. Studies (5E+5F+5G+5H+5I)), 3. Overview/Methodology (5U+5M)
+    private Short[] getStudyDesignCodes(final PublicPaper paper) {
+        final List<Short> pcList = new ArrayList<>();
+        if (Stream.of(paper.getCodes()).anyMatch(x -> x.equals("5A") || x.equals("5B") || x.equals("5C")))
+            pcList.add((short) 1);
+        if (Stream.of(paper.getCodes()).anyMatch(x -> x.equals("5E") || x.equals("5F") || x.equals("5G") || x.equals("5H") || x.equals("5I")))
+            pcList.add((short) 2);
+        if (Stream.of(paper.getCodes()).anyMatch(x -> x.equals("5U") || x.equals("5M")))
+            pcList.add((short) 3);
+        return pcList.toArray(new Short[pcList.size()]);
     }
 
     private String[] extractCodes(final String alias, final ResultSet rs) throws SQLException {

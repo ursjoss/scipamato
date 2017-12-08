@@ -27,6 +27,8 @@ import ch.difty.scipamato.db.public_.public_.tables.records.PaperRecord;
 @RunWith(SpringRunner.class)
 public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
+    private ResultSet rs = Mockito.mock(ResultSet.class);
+
     @Autowired
     private PaperSyncConfig config;
 
@@ -57,7 +59,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
                 + "\"public\".\"paper\".\"methods\", \"public\".\"paper\".\"population\", \"public\".\"paper\".\"result\", \"public\".\"paper\".\"comment\", "
                 + "\"public\".\"paper\".\"version\", \"public\".\"paper\".\"created\", \"public\".\"paper\".\"last_modified\", array_agg(\"public\".\"paper_code\".\"code\") as \"codes\" "
                 + "from \"public\".\"paper\" join \"public\".\"paper_code\" on \"public\".\"paper\".\"id\" = \"public\".\"paper_code\".\"paper_id\" "
-                + "join \"public\".\"code\" on \"public\".\"paper_code\".\"code\" = \"public\".\"code\".\"code\" where \"public\".\"code\".\"internal\" = false "
+                + "join \"public\".\"code\" on \"public\".\"paper_code\".\"code\" = \"public\".\"code\".\"code\" "
                 + "group by \"public\".\"paper\".\"id\", \"public\".\"paper\".\"number\", \"public\".\"paper\".\"pm_id\", \"public\".\"paper\".\"authors\", "
                 + "\"public\".\"paper\".\"title\", \"public\".\"paper\".\"location\", \"public\".\"paper\".\"publication_year\", \"public\".\"paper\".\"goals\", "
                 + "\"public\".\"paper\".\"methods\", \"public\".\"paper\".\"population\", \"public\".\"paper\".\"result\", \"public\".\"paper\".\"comment\", "
@@ -71,7 +73,6 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
     @Test
     public void makingEntity() throws SQLException {
-        ResultSet rs = Mockito.mock(ResultSet.class);
         when(rs.getLong(Paper.PAPER.ID.getName())).thenReturn(1l);
         when(rs.getLong(Paper.PAPER.NUMBER.getName())).thenReturn(2l);
         when(rs.getInt(Paper.PAPER.PM_ID.getName())).thenReturn(3);
@@ -103,7 +104,8 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         assertThat(pp.getPopulation()).isEqualTo("p");
         assertThat(pp.getResult()).isEqualTo("r");
         assertThat(pp.getComment()).isEqualTo("c");
-        // TODO code arrays
+        assertThat(pp.getCodesPopulation()).isEmpty();
+        assertThat(pp.getCodesStudyDesign()).isEmpty();
         assertThat(pp.getVersion()).isEqualTo(4);
         assertThat(pp.getCreated()).isEqualTo(CREATED);
         assertThat(pp.getLastModified()).isEqualTo(MODIFIED);
@@ -128,4 +130,98 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
         verifyNoMoreInteractions(rs);
     }
+
+    @Test
+    public void verifyCodeTranslation_with3A_has1() throws SQLException {
+        verifyCodesPopulation(new String[] { "3A" }, new Short[] { (short) 1 });
+    }
+
+    @Test
+    public void verifyCodeTranslation_with3B_has1() throws SQLException {
+        verifyCodesPopulation(new String[] { "3B" }, new Short[] { (short) 1 });
+    }
+
+    @Test
+    public void verifyCodeTranslation_with3C_has2() throws SQLException {
+        verifyCodesPopulation(new String[] { "3C" }, new Short[] { (short) 2 });
+    }
+
+    @Test
+    public void verifyCodeTranslation_with3AandC_hasBoth() throws SQLException {
+        verifyCodesPopulation(new String[] { "3A", "3C" }, new Short[] { (short) 1, (short) 2 });
+    }
+
+    private void verifyCodesPopulation(String[] codes, Short[] expected) throws SQLException {
+        when(rs.getArray("codes")).thenReturn(new MockArray<String>(SQLDialect.POSTGRES, codes, String[].class));
+
+        PublicPaper pp = config.makeEntity(rs);
+        assertThat(pp.getCodesPopulation()).contains(expected);
+        assertThat(pp.getCodesStudyDesign()).isEmpty();
+    }
+
+    //    // (1: Experimental Studies (5A+5B+5C), 2: Epidemiolog. Studies (5E+5F+5G+5H+5I)), 3. Overview/Methodology (5U+5M)
+
+    @Test
+    public void verifyCodeTranslation_with5A_has1() throws SQLException {
+        verifyCodesStudyDesign(new String[] { "5A" }, new Short[] { (short) 1 });
+    }
+
+    @Test
+    public void verifyCodeTranslation_with5B_has1() throws SQLException {
+        verifyCodesStudyDesign(new String[] { "5B" }, new Short[] { (short) 1 });
+    }
+
+    @Test
+    public void verifyCodeTranslation_with5C_has1() throws SQLException {
+        verifyCodesStudyDesign(new String[] { "5C" }, new Short[] { (short) 1 });
+    }
+
+    @Test
+    public void verifyCodeTranslation_with5E_has2() throws SQLException {
+        verifyCodesStudyDesign(new String[] { "5E" }, new Short[] { (short) 2 });
+    }
+
+    @Test
+    public void verifyCodeTranslation_with5F_has2() throws SQLException {
+        verifyCodesStudyDesign(new String[] { "5F" }, new Short[] { (short) 2 });
+    }
+
+    @Test
+    public void verifyCodeTranslation_with5G_has2() throws SQLException {
+        verifyCodesStudyDesign(new String[] { "5G" }, new Short[] { (short) 2 });
+    }
+
+    @Test
+    public void verifyCodeTranslation_with5H_has2() throws SQLException {
+        verifyCodesStudyDesign(new String[] { "5H" }, new Short[] { (short) 2 });
+    }
+
+    @Test
+    public void verifyCodeTranslation_with5I_has2() throws SQLException {
+        verifyCodesStudyDesign(new String[] { "5I" }, new Short[] { (short) 2 });
+    }
+
+    @Test
+    public void verifyCodeTranslation_with5U_has3() throws SQLException {
+        verifyCodesStudyDesign(new String[] { "5U" }, new Short[] { (short) 3 });
+    }
+
+    @Test
+    public void verifyCodeTranslation_with5M_has3() throws SQLException {
+        verifyCodesStudyDesign(new String[] { "5M" }, new Short[] { (short) 3 });
+    }
+
+    @Test
+    public void verifyCodeTranslation_with5AEU_has123() throws SQLException {
+        verifyCodesStudyDesign(new String[] { "5A", "5E", "5U" }, new Short[] { (short) 1, (short) 2, (short) 3 });
+    }
+
+    private void verifyCodesStudyDesign(String[] codes, Short[] expected) throws SQLException {
+        when(rs.getArray("codes")).thenReturn(new MockArray<String>(SQLDialect.POSTGRES, codes, String[].class));
+
+        PublicPaper pp = config.makeEntity(rs);
+        assertThat(pp.getCodesPopulation()).isEmpty();
+        assertThat(pp.getCodesStudyDesign()).contains(expected);
+    }
+
 }

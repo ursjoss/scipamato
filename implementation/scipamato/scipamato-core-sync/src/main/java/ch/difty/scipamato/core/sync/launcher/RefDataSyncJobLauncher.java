@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
  * <li> code_class </li>
  * <li> codes </li>
  * <li> keywords TODO </li>
- * <li> papers TODO</li>
+ * <li> papers</li>
  * </ol>
  * @author u.joss
  */
