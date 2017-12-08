@@ -42,6 +42,10 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
     private Job syncCodeJob;
 
     @Autowired
+    @Qualifier("syncPaperJob")
+    private Job syncPaperJob;
+
+    @Autowired
     protected JobLauncher jobLauncher;
 
     @Override
@@ -52,6 +56,7 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
         try {
             runSingleJob("code_classes", syncCodeClassJob, result, jobParameters);
             runSingleJob("codes", syncCodeJob, result, jobParameters);
+            runSingleJob("papers", syncPaperJob, result, jobParameters);
             log.info("Job finished successfully.");
         } catch (final Exception ex) {
             log.error("Job terminated.", ex);
