@@ -6,7 +6,6 @@ import static ch.difty.scipamato.db.core.public_.tables.CodeTr.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import org.jooq.DeleteConditionStep;
 import org.jooq.TableField;
@@ -36,16 +35,16 @@ public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.db
     private static final String TOPIC = "code";
     private static final int CHUNK_SIZE = 50;
 
-    // fields of the public Code class record
-    private static final TableField<CodeRecord, String> P_CODE = CODE.CODE_;
-    private static final TableField<CodeTrRecord, String> P_LANG_CODE = CODE_TR.LANG_CODE;
-    private static final TableField<CodeRecord, Integer> P_CODE_CLASS_ID = CODE.CODE_CLASS_ID;
-    private static final TableField<CodeTrRecord, String> P_NAME = CODE_TR.NAME;
-    private static final TableField<CodeTrRecord, String> P_COMMENT = CODE_TR.COMMENT;
-    private static final TableField<CodeRecord, Integer> P_SORT = CODE.SORT;
-    private static final TableField<CodeTrRecord, Integer> P_VERSION = CODE_TR.VERSION;
-    private static final TableField<CodeTrRecord, Timestamp> P_CREATED = CODE_TR.CREATED;
-    private static final TableField<CodeTrRecord, Timestamp> P_LAST_MODIFIED = CODE_TR.LAST_MODIFIED;
+    // relevant fields of the core Code class record
+    private static final TableField<CodeRecord, String> C_CODE = CODE.CODE_;
+    private static final TableField<CodeTrRecord, String> C_LANG_CODE = CODE_TR.LANG_CODE;
+    private static final TableField<CodeRecord, Integer> C_CODE_CLASS_ID = CODE.CODE_CLASS_ID;
+    private static final TableField<CodeTrRecord, String> C_NAME = CODE_TR.NAME;
+    private static final TableField<CodeTrRecord, String> C_COMMENT = CODE_TR.COMMENT;
+    private static final TableField<CodeRecord, Integer> C_SORT = CODE.SORT;
+    private static final TableField<CodeTrRecord, Integer> C_VERSION = CODE_TR.VERSION;
+    private static final TableField<CodeTrRecord, Timestamp> C_CREATED = CODE_TR.CREATED;
+    private static final TableField<CodeTrRecord, Timestamp> C_LAST_MODIFIED = CODE_TR.LAST_MODIFIED;
 
     protected CodeSyncConfig() {
         super(TOPIC, CHUNK_SIZE);
@@ -58,7 +57,7 @@ public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.db
 
     @Override
     protected String getJobName() {
-        return "codeSyncJob";
+        return "syncCodeJob";
     }
 
     @Override
@@ -70,11 +69,11 @@ public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.db
     protected String selectSql() {
         // @formatter:off
         return getJooqCore()
-            .select(P_CODE, P_LANG_CODE, P_CODE_CLASS_ID, P_NAME, P_COMMENT, P_SORT, P_VERSION, P_CREATED, P_LAST_MODIFIED)
+            .select(C_CODE, C_LANG_CODE, C_CODE_CLASS_ID, C_NAME, C_COMMENT, C_SORT, C_VERSION, C_CREATED, C_LAST_MODIFIED)
             .from(Code.CODE)
             .innerJoin(CodeTr.CODE_TR)
-            .on(P_CODE.eq(CodeTr.CODE_TR.CODE))
-            .where(CODE.INTERNAL.isTrue())
+            .on(C_CODE.eq(CodeTr.CODE_TR.CODE))
+            .where(CODE.INTERNAL.isFalse())
             // TODO union with aggregated codes (yet to be implemented in scipamato-core
             .getSQL();
         // @formatter:on
@@ -84,21 +83,21 @@ public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.db
     protected PublicCode makeEntity(final ResultSet rs) throws SQLException {
         return PublicCode
             .builder()
-            .code(rs.getString(P_CODE.getName()))
-            .langCode(rs.getString(P_LANG_CODE.getName()))
-            .codeClassId(rs.getInt(P_CODE_CLASS_ID.getName()))
-            .name(rs.getString(P_NAME.getName()))
-            .comment(rs.getString(P_COMMENT.getName()))
-            .sort(rs.getInt(P_SORT.getName()))
-            .version(rs.getInt(P_VERSION.getName()))
-            .created(rs.getTimestamp(P_CREATED.getName()))
-            .lastModified(rs.getTimestamp(P_LAST_MODIFIED.getName()))
-            .lastSynched(Timestamp.valueOf(LocalDateTime.now()))
+            .code(getString(C_CODE, rs))
+            .langCode(getString(C_LANG_CODE, rs))
+            .codeClassId(getInt(C_CODE_CLASS_ID, rs))
+            .name(getString(C_NAME, rs))
+            .comment(getString(C_COMMENT, rs))
+            .sort(getInt(C_SORT, rs))
+            .version(getInt(C_VERSION, rs))
+            .created(getTimestamp(C_CREATED, rs))
+            .lastModified(getTimestamp(C_LAST_MODIFIED, rs))
+            .lastSynched(getNow())
             .build();
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.db.public_.public_.tables.records.CodeRecord> getPurgeDdl(final Timestamp cutOff) {
+    protected DeleteConditionStep<ch.difty.scipamato.db.public_.public_.tables.records.CodeRecord> getPurgeDcs(final Timestamp cutOff) {
         // @formatter:off
         return getJooqPublic()
                 .delete(ch.difty.scipamato.db.public_.public_.tables.Code.CODE)

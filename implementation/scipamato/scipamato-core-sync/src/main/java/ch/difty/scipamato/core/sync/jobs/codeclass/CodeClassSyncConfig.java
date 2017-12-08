@@ -6,7 +6,6 @@ import static ch.difty.scipamato.db.core.public_.tables.CodeClassTr.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import org.jooq.DeleteConditionStep;
 import org.jooq.TableField;
@@ -36,14 +35,14 @@ public class CodeClassSyncConfig extends SyncConfig<PublicCodeClass, ch.difty.sc
     private static final String TOPIC = "codeClass";
     private static final int CHUNK_SIZE = 50;
 
-    // fields of the public Code class record
-    private static final TableField<CodeClassRecord, Integer> P_ID = CODE_CLASS.ID;
-    private static final TableField<CodeClassTrRecord, String> P_LANG_CODE = CODE_CLASS_TR.LANG_CODE;
-    private static final TableField<CodeClassTrRecord, String> P_NAME = CODE_CLASS_TR.NAME;
-    private static final TableField<CodeClassTrRecord, String> P_DESCRIPTION = CODE_CLASS_TR.DESCRIPTION;
-    private static final TableField<CodeClassTrRecord, Integer> P_VERSION = CODE_CLASS_TR.VERSION;
-    private static final TableField<CodeClassTrRecord, Timestamp> P_CREATED = CODE_CLASS_TR.CREATED;
-    private static final TableField<CodeClassTrRecord, Timestamp> P_LAST_MODIFIED = CODE_CLASS_TR.LAST_MODIFIED;
+    // relevant fields of the core Code class record
+    private static final TableField<CodeClassRecord, Integer> C_ID = CODE_CLASS.ID;
+    private static final TableField<CodeClassTrRecord, String> C_LANG_CODE = CODE_CLASS_TR.LANG_CODE;
+    private static final TableField<CodeClassTrRecord, String> C_NAME = CODE_CLASS_TR.NAME;
+    private static final TableField<CodeClassTrRecord, String> C_DESCRIPTION = CODE_CLASS_TR.DESCRIPTION;
+    private static final TableField<CodeClassTrRecord, Integer> C_VERSION = CODE_CLASS_TR.VERSION;
+    private static final TableField<CodeClassTrRecord, Timestamp> C_CREATED = CODE_CLASS_TR.CREATED;
+    private static final TableField<CodeClassTrRecord, Timestamp> C_LAST_MODIFIED = CODE_CLASS_TR.LAST_MODIFIED;
 
     protected CodeClassSyncConfig() {
         super(TOPIC, CHUNK_SIZE);
@@ -56,7 +55,7 @@ public class CodeClassSyncConfig extends SyncConfig<PublicCodeClass, ch.difty.sc
 
     @Override
     protected String getJobName() {
-        return "codeClassSyncJob";
+        return "syncCodeClassJob";
     }
 
     @Override
@@ -68,10 +67,10 @@ public class CodeClassSyncConfig extends SyncConfig<PublicCodeClass, ch.difty.sc
     protected String selectSql() {
         // @formatter:off
         return getJooqCore()
-            .select(P_ID, P_LANG_CODE, P_NAME, P_DESCRIPTION, P_VERSION, P_CREATED, P_LAST_MODIFIED)
+            .select(C_ID, C_LANG_CODE, C_NAME, C_DESCRIPTION, C_VERSION, C_CREATED, C_LAST_MODIFIED)
             .from(CodeClass.CODE_CLASS)
             .innerJoin(CodeClassTr.CODE_CLASS_TR)
-            .on(P_ID.eq(CodeClassTr.CODE_CLASS_TR.CODE_CLASS_ID))
+            .on(C_ID.eq(CodeClassTr.CODE_CLASS_TR.CODE_CLASS_ID))
             .getSQL();
         // @formatter:on
     }
@@ -80,19 +79,19 @@ public class CodeClassSyncConfig extends SyncConfig<PublicCodeClass, ch.difty.sc
     protected PublicCodeClass makeEntity(final ResultSet rs) throws SQLException {
         return PublicCodeClass
             .builder()
-            .codeClassId(rs.getInt(P_ID.getName()))
-            .langCode(rs.getString(P_LANG_CODE.getName()))
-            .name(rs.getString(P_NAME.getName()))
-            .description(rs.getString(P_DESCRIPTION.getName()))
-            .version(rs.getInt(P_VERSION.getName()))
-            .created(rs.getTimestamp(P_CREATED.getName()))
-            .lastModified(rs.getTimestamp(P_LAST_MODIFIED.getName()))
-            .lastSynched(Timestamp.valueOf(LocalDateTime.now()))
+            .codeClassId(getInt(C_ID, rs))
+            .langCode(getString(C_LANG_CODE, rs))
+            .name(getString(C_NAME, rs))
+            .description(getString(C_DESCRIPTION, rs))
+            .version(getInt(C_VERSION, rs))
+            .created(getTimestamp(C_CREATED, rs))
+            .lastModified(getTimestamp(C_LAST_MODIFIED, rs))
+            .lastSynched(getNow())
             .build();
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.db.public_.public_.tables.records.CodeClassRecord> getPurgeDdl(final Timestamp cutOff) {
+    protected DeleteConditionStep<ch.difty.scipamato.db.public_.public_.tables.records.CodeClassRecord> getPurgeDcs(final Timestamp cutOff) {
         // @formatter:off
         return getJooqPublic()
                 .delete(ch.difty.scipamato.db.public_.public_.tables.CodeClass.CODE_CLASS)

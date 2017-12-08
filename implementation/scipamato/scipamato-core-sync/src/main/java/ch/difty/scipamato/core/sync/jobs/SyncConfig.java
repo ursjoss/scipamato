@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
+import org.jooq.TableField;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -137,7 +138,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
 
     private Step purgingStep() {
         final Timestamp cutOff = Timestamp.valueOf(LocalDateTime.now().minusMinutes(graceTime));
-        return stepBuilderFactory.get(topic + "PurgingStep").tasklet(new HouseKeeper<R>(getPurgeDdl(cutOff), graceTime)).build();
+        return stepBuilderFactory.get(topic + "PurgingStep").tasklet(new HouseKeeper<R>(getPurgeDcs(cutOff), graceTime)).build();
     }
 
     /**
@@ -145,6 +146,26 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
      * @param cutOff
      * @return
      */
-    protected abstract DeleteConditionStep<R> getPurgeDdl(final Timestamp cutOff);
+    protected abstract DeleteConditionStep<R> getPurgeDcs(final Timestamp cutOff);
+
+    protected String getString(final TableField<?, String> field, final ResultSet rs) throws SQLException {
+        return rs.getString(field.getName());
+    }
+
+    protected Integer getInt(final TableField<?, Integer> field, final ResultSet rs) throws SQLException {
+        return rs.getInt(field.getName());
+    }
+
+    protected Long getLong(final TableField<?, Long> field, final ResultSet rs) throws SQLException {
+        return rs.getLong(field.getName());
+    }
+
+    protected Timestamp getTimestamp(final TableField<?, Timestamp> field, final ResultSet rs) throws SQLException {
+        return rs.getTimestamp(field.getName());
+    }
+
+    protected Timestamp getNow() {
+        return Timestamp.valueOf(LocalDateTime.now());
+    }
 
 }
