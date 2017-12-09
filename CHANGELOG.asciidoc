@@ -66,7 +66,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Documentation updates
 - pom refactoring and cleanup
 - Small refactorings and improvements
-- Version bump: spring-boot-parent, jOOQ, commons-lang3, equalsverifier, sonar-maven-plugin
+- Version bump: spring-boot-parent, jOOQ, Flyway, commons-lang3, equalsverifier, sonar-maven-plugin
+
+NOTE: Switching to flyway 5.x brings with it a rename of the flyway meta table (from `schema_version` to `flyway_schema_history`). While
+current versions of flyway can deal with the old table name, this fallback will be dropped in flyway 6.x. I recommend you to manually rename
+the table in your database instances (`alter table schema_version rename to flyway_schema_history;`).
+
 
 .Deprecated
 
