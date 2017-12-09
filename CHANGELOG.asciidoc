@@ -49,7 +49,23 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 [[unreleased]]
-== [Unreleased]
+== [unreleased]
+
+.Added
+
+.Changed
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
+
+[[v0.7.0]]
+== [0.7.0] -- 2017-12-09
 
 .Added
 - Public: 07/01: Add table paper and two sample records. Simple filter in public GUI to retrieve and display the data from database.
