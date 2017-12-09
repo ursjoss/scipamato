@@ -53,9 +53,6 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
     private static final TableField<PaperRecord, String> C_POPULATION = PAPER.POPULATION;
     private static final TableField<PaperRecord, String> C_RESULT = PAPER.RESULT;
     private static final TableField<PaperRecord, String> C_COMMENT = PAPER.COMMENT;
-
-    // TODO code arrays
-
     private static final TableField<PaperRecord, Integer> C_VERSION = PAPER.VERSION;
     private static final TableField<PaperRecord, Timestamp> C_CREATED = PAPER.CREATED;
     private static final TableField<PaperRecord, Timestamp> C_LAST_MODIFIED = PAPER.LAST_MODIFIED;
@@ -82,7 +79,6 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
     @Override
     protected String selectSql() {
         return getJooqCore()
-            // TODO derive remaining code stuff
             .select(C_ID, C_NUMBER, C_PM_ID, C_AUTHORS, C_TITLE, C_LOCATION, C_PUB_YEAR, C_GOALS, C_METHODS, C_POPULATION, C_RESULT, C_COMMENT, C_VERSION, C_CREATED, C_LAST_MODIFIED,
                     DSL.arrayAgg(PaperCode.PAPER_CODE.CODE).as(ALIAS_CODES))
             .from(Paper.PAPER)
@@ -90,7 +86,6 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
             .on(Paper.PAPER.ID.eq(PaperCode.PAPER_CODE.PAPER_ID))
             .innerJoin(Code.CODE)
             .on(PaperCode.PAPER_CODE.CODE.eq(Code.CODE.CODE_))
-//            .where(Code.CODE.INTERNAL.isFalse()) // TODO need to filter only some of those
             .groupBy(C_ID, C_NUMBER, C_PM_ID, C_AUTHORS, C_TITLE, C_LOCATION, C_PUB_YEAR, C_GOALS, C_METHODS, C_POPULATION, C_RESULT, C_COMMENT, C_VERSION, C_CREATED, C_LAST_MODIFIED)
             .getSQL();
     }
