@@ -61,7 +61,7 @@ public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.db
     }
 
     @Override
-    protected ItemWriter<? super PublicCode> publicWriter() {
+    protected ItemWriter<PublicCode> publicWriter() {
         return new CodeItemWriter(getJooqPublic());
     }
 

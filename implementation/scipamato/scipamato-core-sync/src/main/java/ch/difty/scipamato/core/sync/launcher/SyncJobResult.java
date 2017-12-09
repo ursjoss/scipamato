@@ -30,7 +30,7 @@ public class SyncJobResult {
         logMessages.add(msg);
     }
 
-    private static enum JobResult {
+    private enum JobResult {
         UNKNOWN,
         SUCCESS,
         FAILURE;

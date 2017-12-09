@@ -59,7 +59,7 @@ public class CodeClassSyncConfig extends SyncConfig<PublicCodeClass, ch.difty.sc
     }
 
     @Override
-    protected ItemWriter<? super PublicCodeClass> publicWriter() {
+    protected ItemWriter<PublicCodeClass> publicWriter() {
         return new CodeClassItemWriter(getJooqPublic());
     }
 

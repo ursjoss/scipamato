@@ -107,7 +107,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     /**
      * @return implementation of the {@link ItemWriter} interface to insert/update type {@literal T}
      */
-    protected abstract ItemWriter<? super T> publicWriter();
+    protected abstract ItemWriter<T> publicWriter();
 
     private ItemReader<? extends T> coreReader() {
         final JdbcCursorItemReader<T> reader = new JdbcCursorItemReader<>();
