@@ -7,6 +7,7 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.InsertValuesStep2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -29,7 +30,7 @@ public class JooqUserRoleRepo implements UserRoleRepository {
     private final DSLContext dsl;
 
     @Autowired
-    public JooqUserRoleRepo(final DSLContext dsl) {
+    public JooqUserRoleRepo(@Qualifier("dslContext") final DSLContext dsl) {
         this.dsl = dsl;
     }
 

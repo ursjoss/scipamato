@@ -16,6 +16,7 @@ import ch.difty.scipamato.web.AbstractPage;
 import ch.difty.scipamato.web.pages.login.LogoutPage;
 import ch.difty.scipamato.web.pages.paper.list.PaperListPage;
 import ch.difty.scipamato.web.pages.paper.search.PaperSearchPage;
+import ch.difty.scipamato.web.pages.sync.RefDataSyncPage;
 import ch.difty.scipamato.web.resources.MainCssResourceReference;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
@@ -50,6 +51,7 @@ public abstract class BasePage<T> extends AbstractPage<T> {
         super.addLinksTo(nb);
         addPageLink(nb, PaperListPage.class, "menu.papers", GlyphIconType.list, Navbar.ComponentPosition.LEFT);
         addPageLink(nb, PaperSearchPage.class, "menu.search", GlyphIconType.search, Navbar.ComponentPosition.LEFT);
+        addPageLink(nb, RefDataSyncPage.class, "menu.sync", GlyphIconType.export, Navbar.ComponentPosition.LEFT);
 
         addExternalLink(nb, new StringResourceModel("menu.help.url", this, null).getString(), new StringResourceModel("menu.help", this, null).getString(), GlyphIconType.questionsign,
                 Navbar.ComponentPosition.RIGHT);

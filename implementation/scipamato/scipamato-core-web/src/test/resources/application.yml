@@ -1,2 +1,8 @@
 spring:
-  autoconfigure.exclude: org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration
+  batch:
+    initializer:
+      enabled: false
+    job:
+      enabled: false
