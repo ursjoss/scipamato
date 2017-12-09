@@ -4,11 +4,13 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
+import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
@@ -74,15 +76,17 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
         final Long id = jobExecution.getId();
         final String exitCode = jobExecution.getExitStatus().getExitCode();
         final String status = jobExecution.getStatus().name();
-        final int writeCount = jobExecution.getStepExecutions().stream().mapToInt((se) -> se.getWriteCount()).sum();
+        final int writeCount = jobExecution.getStepExecutions().stream().mapToInt(StepExecution::getWriteCount).sum();
         final String msg = String.format("Job %d has returned with exitCode %s (status %s): %d %s were synchronized.", id, exitCode, status, writeCount, topic);
-        switch (jobExecution.getStatus()) {
-        case COMPLETED:
+
+        setMessageToResult(result, msg, jobExecution.getStatus());
+    }
+
+    private void setMessageToResult(final SyncJobResult result, final String msg, final BatchStatus status) {
+        if (status == BatchStatus.COMPLETED)
             result.setSuccess(msg);
-            break;
-        default:
+        else
             result.setFailure(msg);
-        }
     }
 
 }
