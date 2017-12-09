@@ -75,7 +75,7 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
     }
 
     @Override
-    protected ItemWriter<? super PublicPaper> publicWriter() {
+    protected ItemWriter<PublicPaper> publicWriter() {
         return new PaperItemWriter(getJooqPublic());
     }
 
