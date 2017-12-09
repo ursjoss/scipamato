@@ -430,17 +430,18 @@
                 <module>scipamato-common-persistence-api</module>
                 <module>scipamato-common-persistence-jooq</module>
                 <module>scipamato-common-wicket</module>
+                <module>scipamato-public-entity</module>
+                <module>scipamato-public-persistence-api</module>
+                <module>scipamato-public-persistence-jooq</module>
+                <module>scipamato-public-web</module>
                 <module>scipamato-core-logic</module>
                 <module>scipamato-core-entity</module>
                 <module>scipamato-core-pubmed-api</module>
                 <module>scipamato-core-persistence-api</module>
                 <module>scipamato-core-persistence-jooq</module>
+                <!-- Note have both persistence-jooq modules built before sync, so the flyway migrations are done -->
                 <module>scipamato-core-sync</module>
                 <module>scipamato-core-web</module>
-                <module>scipamato-public-entity</module>
-                <module>scipamato-public-persistence-api</module>
-                <module>scipamato-public-persistence-jooq</module>
-                <module>scipamato-public-web</module>
             </modules>
         </profile>
 
