@@ -140,7 +140,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         assertCodeClass(esc, i++);
         assertCodeClass(esc, i++);
 
-        getTester().executeAjaxEvent(tes, "onclick");
+        getTester().executeAjaxEvent(tes, "click");
         getTester().assertModelValue(tes + ":label", "Extended Search");
         getTester().assertInvisible(esc);
 
