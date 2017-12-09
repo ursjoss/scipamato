@@ -120,9 +120,9 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
     // Population (1: Children (Codes 3A+3B), 2: Adults (Codes 3C)
     private Short[] getPopulationCodes(final PublicPaper paper) {
         final List<Short> pcList = new ArrayList<>();
-        if (Stream.of(paper.getCodes()).anyMatch(x -> x.equals("3A") || x.equals("3B")))
+        if (Stream.of(paper.getCodes()).anyMatch(x -> "3A".equals(x) || "3B".equals(x)))
             pcList.add((short) 1);
-        if (Stream.of(paper.getCodes()).anyMatch(x -> x.equals("3C")))
+        if (Stream.of(paper.getCodes()).anyMatch(x -> "3C".equals(x)))
             pcList.add((short) 2);
         return pcList.toArray(new Short[pcList.size()]);
     }
@@ -130,11 +130,11 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
     // (1: Experimental Studies (5A+5B+5C), 2: Epidemiolog. Studies (5E+5F+5G+5H+5I)), 3. Overview/Methodology (5U+5M)
     private Short[] getStudyDesignCodes(final PublicPaper paper) {
         final List<Short> pcList = new ArrayList<>();
-        if (Stream.of(paper.getCodes()).anyMatch(x -> x.equals("5A") || x.equals("5B") || x.equals("5C")))
+        if (Stream.of(paper.getCodes()).anyMatch(x -> "5A".equals(x) || "5B".equals(x) || "5C".equals(x)))
             pcList.add((short) 1);
-        if (Stream.of(paper.getCodes()).anyMatch(x -> x.equals("5E") || x.equals("5F") || x.equals("5G") || x.equals("5H") || x.equals("5I")))
+        if (Stream.of(paper.getCodes()).anyMatch(x -> "5E".equals(x) || "5F".equals(x) || "5G".equals(x) || "5H".equals(x) || "5I".equals(x)))
             pcList.add((short) 2);
-        if (Stream.of(paper.getCodes()).anyMatch(x -> x.equals("5U") || x.equals("5M")))
+        if (Stream.of(paper.getCodes()).anyMatch(x -> "5U".equals(x) || "5M".equals(x)))
             pcList.add((short) 3);
         return pcList.toArray(new Short[pcList.size()]);
     }
