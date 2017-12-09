@@ -35,6 +35,14 @@ http://getbootstrap.com/[Bootstrap]
 * Caching
 ** JCache with http://www.ehcache.org/[Ehcache3]
 
+[[architecture-documentation]]
+Architecture Documentation
+--------------------------
+
+I started using http://structure101.com/[Structure101] to assess and track the architecture of SciPaMaTo. Many thanks to the friendly people of Structure101 to provide a free license for SciPaMaTo as an open source project!
+
+image:http://structure101.com/images/s101_170.png[Structure101]
+
 [[user-documentation]]
 User Documentation
 ------------------
