@@ -31,6 +31,7 @@ http://getbootstrap.com/[Bootstrap]
 ** https://github.com/brettwooldridge/HikariCP[HikariCP]
 ** https://www.postgresql.org/[PostgreSQL]
 ** https://flywaydb.org/[Flyway] for database migrations
+** https://projects.spring.io/spring-batch/[Spring Batch] for pushing data from the core to the public database
 * Caching
 ** JCache with http://www.ehcache.org/[Ehcache3]
 
