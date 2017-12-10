@@ -52,8 +52,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
+- QuickStart guide Wiki page
 
 .Changed
+- Improved DeveloperInformation and Operations Wiki pages
 
 .Deprecated
 
