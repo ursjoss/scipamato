@@ -42,7 +42,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxb2-maven-plugin</artifactId>
                 <configuration>
-                    <packageName>ch.difty.scipamato.pubmed</packageName>
+                    <packageName>ch.difty.scipamato.core.pubmed</packageName>
                     <sourceType>dtd</sourceType>
                     <sources>
                         <source>src/main/dtd</source>

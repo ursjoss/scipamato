@@ -19,9 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import ch.difty.scipamato.core.db.public_.tables.Paper;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
-import ch.difty.scipamato.db.core.public_.tables.Paper;
-import ch.difty.scipamato.db.public_.public_.tables.records.PaperRecord;
+import ch.difty.scipamato.public_.db.public_.tables.records.PaperRecord;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)

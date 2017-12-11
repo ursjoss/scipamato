@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.paper;
 
-import static ch.difty.scipamato.db.core.public_.tables.Paper.*;
+import static ch.difty.scipamato.core.db.public_.tables.Paper.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,11 +17,11 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import ch.difty.scipamato.core.db.public_.tables.Code;
+import ch.difty.scipamato.core.db.public_.tables.Paper;
+import ch.difty.scipamato.core.db.public_.tables.PaperCode;
+import ch.difty.scipamato.core.db.public_.tables.records.PaperRecord;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
-import ch.difty.scipamato.db.core.public_.tables.Code;
-import ch.difty.scipamato.db.core.public_.tables.Paper;
-import ch.difty.scipamato.db.core.public_.tables.PaperCode;
-import ch.difty.scipamato.db.core.public_.tables.records.PaperRecord;
 
 /**
  * Defines the paper synchronization job, applying two steps:
@@ -33,7 +33,7 @@ import ch.difty.scipamato.db.core.public_.tables.records.PaperRecord;
  * @author u.joss
  */
 @Configuration
-public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.db.public_.public_.tables.records.PaperRecord> {
+public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.public_.db.public_.tables.records.PaperRecord> {
 
     private static final String TOPIC = "paper";
     private static final int CHUNK_SIZE = 100;
@@ -144,11 +144,11 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.db.public_.public_.tables.records.PaperRecord> getPurgeDcs(final Timestamp cutOff) {
+    protected DeleteConditionStep<ch.difty.scipamato.public_.db.public_.tables.records.PaperRecord> getPurgeDcs(final Timestamp cutOff) {
         // @formatter:off
         return getJooqPublic()
-                .delete(ch.difty.scipamato.db.public_.public_.tables.Paper.PAPER)
-                .where(ch.difty.scipamato.db.public_.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(cutOff));
+                .delete(ch.difty.scipamato.public_.db.public_.tables.Paper.PAPER)
+                .where(ch.difty.scipamato.public_.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(cutOff));
         // @formatter:on
     }
 

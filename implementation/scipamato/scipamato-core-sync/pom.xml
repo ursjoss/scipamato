@@ -203,7 +203,7 @@
                                     <pojos>false</pojos>
                                 </generate>
                                 <target>
-                                    <packageName>ch.difty.scipamato.db.core</packageName>
+                                    <packageName>ch.difty.scipamato.core.db</packageName>
                                     <directory>${org.jooq.target.dir.core}</directory>
                                 </target>
                             </generator>
@@ -240,7 +240,7 @@
                                     <pojos>true</pojos>
                                 </generate>
                                 <target>
-                                    <packageName>ch.difty.scipamato.db.public</packageName>
+                                    <packageName>ch.difty.scipamato.public.db</packageName>
                                     <directory>${org.jooq.target.dir.public}</directory>
                                 </target>
                             </generator>

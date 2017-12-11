@@ -5,7 +5,7 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.springframework.batch.item.ItemWriter;
 
-import ch.difty.scipamato.AssertAs;
+import ch.difty.scipamato.common.AssertAs;
 import lombok.extern.slf4j.Slf4j;
 
 /**

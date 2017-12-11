@@ -12,7 +12,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.batch.item.ItemWriter;
 
-import ch.difty.scipamato.TestUtils;
+import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.sync.jobs.code.CodeItemWriter;
 
 @RunWith(MockitoJUnitRunner.class)

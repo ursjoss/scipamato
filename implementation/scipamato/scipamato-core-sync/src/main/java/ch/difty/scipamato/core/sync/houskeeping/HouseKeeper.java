@@ -7,7 +7,7 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 
-import ch.difty.scipamato.AssertAs;
+import ch.difty.scipamato.common.AssertAs;
 import lombok.extern.slf4j.Slf4j;
 
 /**

@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.houskeeping;
 
-import static ch.difty.scipamato.TestUtils.*;
+import static ch.difty.scipamato.common.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -14,7 +14,7 @@ import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.repeat.RepeatStatus;
 
-import ch.difty.scipamato.db.public_.public_.tables.records.CodeClassRecord;
+import ch.difty.scipamato.public_.db.public_.tables.records.CodeClassRecord;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HouseKeeperTest {

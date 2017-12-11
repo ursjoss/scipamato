@@ -15,6 +15,7 @@
 
     <properties>
         <org.jooq.target.dir>target/generated-sources/jooq</org.jooq.target.dir>
+        <org.jooq.target.package>ch.difty.scipamato.core.db</org.jooq.target.package>
         <org.jooq.db-generator>org.jooq.util.postgres.PostgresDatabase</org.jooq.db-generator>
 
         <property-file>${basedir}/src/main/resources/application.properties</property-file>
@@ -225,7 +226,7 @@
                                             <springAnnotations>true</springAnnotations>
                                         </generate>
                                         <target>
-                                            <packageName>ch.difty.scipamato.db</packageName>
+                                            <packageName>${org.jooq.target.package}</packageName>
                                             <directory>${org.jooq.target.dir}</directory>
                                         </target>
                                     </generator>
@@ -434,7 +435,7 @@
                                     <pojos>false</pojos>
                                 </generate>
                                 <target>
-                                    <packageName>ch.difty.scipamato.db</packageName>
+                                    <packageName>${org.jooq.target.package}</packageName>
                                     <directory>${org.jooq.target.dir}</directory>
                                 </target>
                             </generator>

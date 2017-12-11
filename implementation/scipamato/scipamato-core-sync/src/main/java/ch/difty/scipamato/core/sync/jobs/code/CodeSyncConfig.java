@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.sync.jobs.code;
 
-import static ch.difty.scipamato.db.core.public_.tables.Code.*;
-import static ch.difty.scipamato.db.core.public_.tables.CodeTr.*;
+import static ch.difty.scipamato.core.db.public_.tables.Code.*;
+import static ch.difty.scipamato.core.db.public_.tables.CodeTr.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,11 +14,11 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import ch.difty.scipamato.core.db.public_.tables.Code;
+import ch.difty.scipamato.core.db.public_.tables.CodeTr;
+import ch.difty.scipamato.core.db.public_.tables.records.CodeRecord;
+import ch.difty.scipamato.core.db.public_.tables.records.CodeTrRecord;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
-import ch.difty.scipamato.db.core.public_.tables.Code;
-import ch.difty.scipamato.db.core.public_.tables.CodeTr;
-import ch.difty.scipamato.db.core.public_.tables.records.CodeRecord;
-import ch.difty.scipamato.db.core.public_.tables.records.CodeTrRecord;
 
 /**
  * Defines the code synchronization job, applying two steps:
@@ -30,7 +30,7 @@ import ch.difty.scipamato.db.core.public_.tables.records.CodeTrRecord;
  * @author u.joss
  */
 @Configuration
-public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.db.public_.public_.tables.records.CodeRecord> {
+public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.public_.db.public_.tables.records.CodeRecord> {
 
     private static final String TOPIC = "code";
     private static final int CHUNK_SIZE = 50;
@@ -97,11 +97,11 @@ public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.db
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.db.public_.public_.tables.records.CodeRecord> getPurgeDcs(final Timestamp cutOff) {
+    protected DeleteConditionStep<ch.difty.scipamato.public_.db.public_.tables.records.CodeRecord> getPurgeDcs(final Timestamp cutOff) {
         // @formatter:off
         return getJooqPublic()
-                .delete(ch.difty.scipamato.db.public_.public_.tables.Code.CODE)
-                .where(ch.difty.scipamato.db.public_.public_.tables.Code.CODE.LAST_SYNCHED.lessThan(cutOff));
+                .delete(ch.difty.scipamato.public_.db.public_.tables.Code.CODE)
+                .where(ch.difty.scipamato.public_.db.public_.tables.Code.CODE.LAST_SYNCHED.lessThan(cutOff));
         // @formatter:on
     }
 
