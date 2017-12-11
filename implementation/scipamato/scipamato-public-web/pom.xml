@@ -15,7 +15,7 @@
 
     <properties>
         <!-- The main class to start by executing java -jar -->
-        <start-class>ch.difty.scipamato.ScipamatoPublicApplication</start-class>
+        <start-class>ch.difty.scipamato.public_.ScipamatoPublicApplication</start-class>
     </properties>
 
     <dependencies>
