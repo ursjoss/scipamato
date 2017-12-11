@@ -79,11 +79,11 @@ public class CodeClassSyncConfig extends SyncConfig<PublicCodeClass, ch.difty.sc
     protected PublicCodeClass makeEntity(final ResultSet rs) throws SQLException {
         return PublicCodeClass
             .builder()
-            .codeClassId(getInt(C_ID, rs))
+            .codeClassId(getInteger(C_ID, rs))
             .langCode(getString(C_LANG_CODE, rs))
             .name(getString(C_NAME, rs))
             .description(getString(C_DESCRIPTION, rs))
-            .version(getInt(C_VERSION, rs))
+            .version(getInteger(C_VERSION, rs))
             .created(getTimestamp(C_CREATED, rs))
             .lastModified(getTimestamp(C_LAST_MODIFIED, rs))
             .lastSynched(getNow())

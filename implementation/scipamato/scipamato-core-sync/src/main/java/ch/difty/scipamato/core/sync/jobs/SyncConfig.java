@@ -147,12 +147,20 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
         return rs.getString(field.getName());
     }
 
-    protected Integer getInt(final TableField<?, Integer> field, final ResultSet rs) throws SQLException {
-        return rs.getInt(field.getName());
+    /**
+     * @return returns null if the column was null, the boxed integer value otherwise
+     */
+    protected Integer getInteger(final TableField<?, Integer> field, final ResultSet rs) throws SQLException {
+        final int val = rs.getInt(field.getName());
+        return rs.wasNull() ? null : val;
     }
 
+    /**
+     * @return returns null if the column was null, the boxed long value otherwise
+     */
     protected Long getLong(final TableField<?, Long> field, final ResultSet rs) throws SQLException {
-        return rs.getLong(field.getName());
+        final long val = rs.getLong(field.getName());
+        return rs.wasNull() ? null : val;
     }
 
     protected Timestamp getTimestamp(final TableField<?, Timestamp> field, final ResultSet rs) throws SQLException {

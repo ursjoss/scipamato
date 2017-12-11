@@ -97,6 +97,7 @@ public class CodeSyncConfigTest extends SyncConfigTest<CodeRecord> {
         verify(rs).getInt(CodeTr.CODE_TR.VERSION.getName());
         verify(rs).getTimestamp(CodeTr.CODE_TR.CREATED.getName());
         verify(rs).getTimestamp(CodeTr.CODE_TR.LAST_MODIFIED.getName());
+        verify(rs, times(3)).wasNull();
 
         verifyNoMoreInteractions(rs);
     }

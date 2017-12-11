@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.function.Supplier;
 
 import org.jooq.DeleteConditionStep;
 import org.jooq.SQLDialect;
@@ -127,6 +128,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         verify(rs).getInt(Paper.PAPER.VERSION.getName());
         verify(rs).getTimestamp(Paper.PAPER.CREATED.getName());
         verify(rs).getTimestamp(Paper.PAPER.LAST_MODIFIED.getName());
+        verify(rs, times(5)).wasNull();
 
         verifyNoMoreInteractions(rs);
     }
@@ -222,6 +224,68 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         PublicPaper pp = config.makeEntity(rs);
         assertThat(pp.getCodesPopulation()).isEmpty();
         assertThat(pp.getCodesStudyDesign()).contains(expected);
+    }
+
+    @Test
+    public void makingEntity_withNullValueInPM_ID() throws SQLException {
+        final String fieldName = Paper.PAPER.PM_ID.getName();
+        validateNullableIntColumn(() -> {
+            try {
+                return rs.getInt(fieldName);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+        verify(rs).getInt(fieldName);
+    }
+
+    @Test
+    public void makingEntity_withNullValueInPublicationYear() throws SQLException {
+        final String fieldName = Paper.PAPER.PUBLICATION_YEAR.getName();
+        validateNullableIntColumn(() -> {
+            try {
+                return rs.getInt(fieldName);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+        verify(rs).getInt(fieldName);
+    }
+
+    @Test
+    public void makingEntity_withNullNumber() throws SQLException {
+        final String fieldName = Paper.PAPER.NUMBER.getName();
+        validateNullableLongColumn(() -> {
+            try {
+                return rs.getLong(fieldName);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+        verify(rs).getLong(fieldName);
+    }
+
+    private void validateNullableIntColumn(Supplier<Integer> suppl) throws SQLException {
+        when(suppl.get()).thenReturn(0);
+        validateNullableNumberColumn(suppl);
+    }
+
+    private void validateNullableLongColumn(Supplier<Long> suppl) throws SQLException {
+        when(suppl.get()).thenReturn(0l);
+        validateNullableNumberColumn(suppl);
+    }
+
+    private void validateNullableNumberColumn(Supplier<? extends Number> suppl) throws SQLException {
+        when(rs.wasNull()).thenReturn(true);
+        when(rs.getArray("codes")).thenReturn(new MockArray<String>(SQLDialect.POSTGRES, new String[] { "1A", "2B" }, String[].class));
+
+        PublicPaper pp = config.makeEntity(rs);
+
+        assertThat(pp.getNumber()).isNull();
+        verify(rs, times(5)).wasNull();
     }
 
 }
