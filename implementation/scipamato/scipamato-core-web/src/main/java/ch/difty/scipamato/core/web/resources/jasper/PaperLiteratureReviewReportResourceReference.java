@@ -12,7 +12,7 @@ public class PaperLiteratureReviewReportResourceReference extends JasperReportRe
     private static final String NAME = "paper_literature_review_A4";
 
     // Use the respective constructor depending on whether your developing the report or are in production.
-    // Note: the concrete file that is read resides in target/classes/ch/difty/scipamato/web/resources/jasper/
+    // Note: the concrete file that is read resides in target/classes/ch/difty/scipamato/core/web/resources/jasper/
     private static final PaperLiteratureReviewReportResourceReference INSTANCE = new PaperLiteratureReviewReportResourceReference();
 
     /**
