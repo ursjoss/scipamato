@@ -5,15 +5,16 @@ import static ch.difty.scipamato.core.db.public_.tables.Paper.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+
+import javax.annotation.PostConstruct;
 
 import org.jooq.DeleteConditionStep;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,6 +22,7 @@ import ch.difty.scipamato.core.db.public_.tables.Code;
 import ch.difty.scipamato.core.db.public_.tables.Paper;
 import ch.difty.scipamato.core.db.public_.tables.PaperCode;
 import ch.difty.scipamato.core.db.public_.tables.records.PaperRecord;
+import ch.difty.scipamato.core.sync.code.CodeAggregator;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
 
 /**
@@ -57,8 +59,20 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
     private static final TableField<PaperRecord, Timestamp> C_CREATED = PAPER.CREATED;
     private static final TableField<PaperRecord, Timestamp> C_LAST_MODIFIED = PAPER.LAST_MODIFIED;
 
+    @Autowired
+    private CodeAggregator codeAggregator;
+
     protected PaperSyncConfig() {
         super(TOPIC, CHUNK_SIZE);
+    }
+
+    @PostConstruct
+    private void setInternalCodes() {
+        codeAggregator.setInternalCodes(fetchInternalCodesFromDb());
+    }
+
+    private List<String> fetchInternalCodesFromDb() {
+        return getJooqCore().select().from(Code.CODE).where(Code.CODE.INTERNAL.isTrue()).fetch(Code.CODE.CODE_);
     }
 
     @Bean
@@ -112,31 +126,11 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
             .lastModified(getTimestamp(C_LAST_MODIFIED, rs))
             .lastSynched(getNow())
             .build();
-        paper.setCodesPopulation(getPopulationCodes(paper));
-        paper.setCodesStudyDesign(getStudyDesignCodes(paper));
+        codeAggregator.load(paper.getCodes());
+        paper.setCodesPopulation(codeAggregator.getCodesPopulation());
+        paper.setCodesStudyDesign(codeAggregator.getCodesStudyDesign());
+        paper.setCodes(codeAggregator.getAggregatedCodes());
         return paper;
-    }
-
-    // Population (1: Children (Codes 3A+3B), 2: Adults (Codes 3C)
-    private Short[] getPopulationCodes(final PublicPaper paper) {
-        final List<Short> pcList = new ArrayList<>();
-        if (Stream.of(paper.getCodes()).anyMatch(x -> "3A".equals(x) || "3B".equals(x)))
-            pcList.add((short) 1);
-        if (Stream.of(paper.getCodes()).anyMatch(x -> "3C".equals(x)))
-            pcList.add((short) 2);
-        return pcList.toArray(new Short[pcList.size()]);
-    }
-
-    // (1: Experimental Studies (5A+5B+5C), 2: Epidemiolog. Studies (5E+5F+5G+5H+5I)), 3. Overview/Methodology (5U+5M)
-    private Short[] getStudyDesignCodes(final PublicPaper paper) {
-        final List<Short> pcList = new ArrayList<>();
-        if (Stream.of(paper.getCodes()).anyMatch(x -> "5A".equals(x) || "5B".equals(x) || "5C".equals(x)))
-            pcList.add((short) 1);
-        if (Stream.of(paper.getCodes()).anyMatch(x -> "5E".equals(x) || "5F".equals(x) || "5G".equals(x) || "5H".equals(x) || "5I".equals(x)))
-            pcList.add((short) 2);
-        if (Stream.of(paper.getCodes()).anyMatch(x -> "5U".equals(x) || "5M".equals(x)))
-            pcList.add((short) 3);
-        return pcList.toArray(new Short[pcList.size()]);
     }
 
     private String[] extractCodes(final String alias, final ResultSet rs) throws SQLException {
