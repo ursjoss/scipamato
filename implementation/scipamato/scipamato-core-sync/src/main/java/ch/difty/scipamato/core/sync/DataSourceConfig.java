@@ -6,12 +6,12 @@ import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class DataSourceConfig {
@@ -22,7 +22,8 @@ public class DataSourceConfig {
     /**
      * Scipamato-Public datasource.
      */
-    @Bean
+    @Bean(destroyMethod = "close")
+    @Qualifier("scipamatoPublicDataSource")
     @ConfigurationProperties(prefix = "sync.target.datasource")
     public DataSource scipamatoPublicDataSource() {
         return DataSourceBuilder.create().build();
@@ -32,8 +33,8 @@ public class DataSourceConfig {
      * Scipamato-Core as batch datasource. Needs to create
      * the batch meta tables.
      */
-    @Bean
-    @Primary
+    @Bean(destroyMethod = "close")
+    @Qualifier("batchDataSource")
     @ConfigurationProperties(prefix = "sync.batch.datasource")
     public DataSource batchDataSource() {
         return DataSourceBuilder.create().build();

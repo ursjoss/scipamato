@@ -56,6 +56,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Improved DeveloperInformation and Operations Wiki pages
+- Improved DataSource/HikariCP configuration and added tests
 
 .Deprecated
 

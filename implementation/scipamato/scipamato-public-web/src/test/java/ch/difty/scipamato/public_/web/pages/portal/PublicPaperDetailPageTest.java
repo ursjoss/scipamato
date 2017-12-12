@@ -82,7 +82,6 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
             getTester().assertComponent(form + ":pubmed", BootstrapExternalLink.class);
         else
             getTester().assertInvisible(form + ":pubmed");
-        getTester().debugComponentTrees();
     }
 
     private void assertReferenceTopic(String form) {

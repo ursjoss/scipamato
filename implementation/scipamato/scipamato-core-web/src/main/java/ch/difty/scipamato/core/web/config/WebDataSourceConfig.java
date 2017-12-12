@@ -21,7 +21,7 @@ public class WebDataSourceConfig {
     /**
      * Scipamato-Core as primary datasource
      */
-    @Bean
+    @Bean(destroyMethod = "close")
     @ConfigurationProperties(prefix = "sync.source.datasource")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();

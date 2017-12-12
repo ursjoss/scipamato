@@ -6,11 +6,13 @@ import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class TestDataSourceConfig {
@@ -22,6 +24,8 @@ public class TestDataSourceConfig {
      * Scipamato-Core as primary datasource
      */
     @Bean
+    @Primary
+    @Qualifier("sourceDataSource")
     @ConfigurationProperties(prefix = "sync.source.datasource")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
