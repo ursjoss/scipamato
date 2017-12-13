@@ -9,7 +9,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -46,7 +45,6 @@ public class JooqUserRepo extends JooqEntityRepo<ScipamatoUserRecord, User, Inte
 
     private final UserRoleRepository userRoleRepo;
 
-    @Autowired
     public JooqUserRepo(@Qualifier("dslContext") final DSLContext dsl, final UserRecordMapper mapper,
             final JooqSortMapper<ScipamatoUserRecord, User, ch.difty.scipamato.core.db.tables.ScipamatoUser> sortMapper, final GenericFilterConditionMapper<UserFilter> filterConditionMapper,
             final DateTimeService dateTimeService, final InsertSetStepSetter<ScipamatoUserRecord, User> insertSetStepSetter, final UpdateSetStepSetter<ScipamatoUserRecord, User> updateSetStepSetter,

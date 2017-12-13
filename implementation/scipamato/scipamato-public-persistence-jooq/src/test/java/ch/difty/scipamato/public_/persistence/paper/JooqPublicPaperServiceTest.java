@@ -42,8 +42,7 @@ public class JooqPublicPaperServiceTest {
 
     @Before
     public void setUp() {
-        service = new JooqPublicPaperService();
-        service.setRepository(mockRepo);
+        service = new JooqPublicPaperService(mockRepo);
 
         publicPaper = PublicPaper.builder().id(ID).build();
 

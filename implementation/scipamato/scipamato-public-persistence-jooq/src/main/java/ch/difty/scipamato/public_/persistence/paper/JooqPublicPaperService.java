@@ -3,7 +3,6 @@ package ch.difty.scipamato.public_.persistence.paper;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -16,15 +15,14 @@ public class JooqPublicPaperService implements PublicPaperService {
 
     private static final long serialVersionUID = 1L;
 
-    private PublicPaperRepository repository;
+    private final PublicPaperRepository repository;
+
+    public JooqPublicPaperService(final PublicPaperRepository repository) {
+        this.repository = repository;
+    }
 
     private PublicPaperRepository getRepository() {
         return repository;
-    }
-
-    @Autowired
-    public void setRepository(final PublicPaperRepository repository) {
-        this.repository = repository;
     }
 
     @Override

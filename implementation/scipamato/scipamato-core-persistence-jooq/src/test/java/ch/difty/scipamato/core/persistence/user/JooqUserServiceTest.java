@@ -23,7 +23,7 @@ import ch.difty.scipamato.core.entity.filter.UserFilter;
 @RunWith(MockitoJUnitRunner.class)
 public class JooqUserServiceTest {
 
-    private final JooqUserService service = new JooqUserService();
+    private JooqUserService service;
 
     @Mock
     private UserRepository repoMock;
@@ -38,7 +38,7 @@ public class JooqUserServiceTest {
 
     @Before
     public void setUp() {
-        service.setRepository(repoMock);
+        service = new JooqUserService(repoMock);
 
         users.add(userMock);
         users.add(userMock);

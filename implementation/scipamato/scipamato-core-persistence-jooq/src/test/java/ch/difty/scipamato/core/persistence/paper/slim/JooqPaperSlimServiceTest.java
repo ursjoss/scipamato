@@ -22,7 +22,7 @@ import ch.difty.scipamato.core.persistence.AbstractServiceTest;
 @RunWith(MockitoJUnitRunner.class)
 public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSlim, PaperSlimRepository> {
 
-    private final JooqPaperSlimService service = new JooqPaperSlimService();
+    private JooqPaperSlimService service;
 
     @Mock
     private PaperSlimRepository repoMock;
@@ -51,8 +51,7 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
 
     @Override
     public void specificSetUp() {
-        service.setRepository(repoMock);
-        service.setUserRepository(userRepoMock);
+        service = new JooqPaperSlimService(repoMock, userRepoMock);
 
         papers.add(paperSlimMock);
         papers.add(paperSlimMock);

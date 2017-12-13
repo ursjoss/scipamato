@@ -32,10 +32,10 @@ import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
 
-    private final JooqPaperService service = new JooqPaperService();
-
     private static final long MINIMUM_NUMBER = 7l;
     private static final String LC = "de";
+
+    private JooqPaperService service;
 
     @Mock
     private PaperRepository repoMock;
@@ -66,8 +66,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Override
     public void specificSetUp() {
-        service.setRepository(repoMock);
-        service.setUserRepository(userRepoMock);
+        service = new JooqPaperService(repoMock, userRepoMock);
 
         papers.add(paperMock);
         papers.add(paperMock);

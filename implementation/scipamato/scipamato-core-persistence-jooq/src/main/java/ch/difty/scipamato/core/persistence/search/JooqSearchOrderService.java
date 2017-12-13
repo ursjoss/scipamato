@@ -8,6 +8,7 @@ import ch.difty.scipamato.core.entity.filter.SearchCondition;
 import ch.difty.scipamato.core.entity.filter.SearchOrderFilter;
 import ch.difty.scipamato.core.persistence.JooqEntityService;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
+import ch.difty.scipamato.core.persistence.user.UserRepository;
 
 /**
  * jOOQ specific implementation of the {@link SearchOrderService} interface.
@@ -18,6 +19,10 @@ import ch.difty.scipamato.core.persistence.SearchOrderService;
 public class JooqSearchOrderService extends JooqEntityService<Long, SearchOrder, SearchOrderFilter, SearchOrderRepository> implements SearchOrderService {
 
     private static final long serialVersionUID = 1L;
+
+    protected JooqSearchOrderService(final SearchOrderRepository repo, final UserRepository userRepo) {
+        super(repo, userRepo);
+    }
 
     /** {@inheritDoc} */
     @Override

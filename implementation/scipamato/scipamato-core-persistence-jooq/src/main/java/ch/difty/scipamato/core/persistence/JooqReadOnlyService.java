@@ -3,7 +3,6 @@ package ch.difty.scipamato.core.persistence;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
@@ -29,12 +28,12 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
 
     private static final long serialVersionUID = 1L;
 
-    private REPO repo;
-    private UserRepository userRepo;
+    private final REPO repo;
+    private final UserRepository userRepo;
 
-    @Autowired
-    public void setRepository(REPO repo) {
+    protected JooqReadOnlyService(final REPO repo, final UserRepository userRepo) {
         this.repo = repo;
+        this.userRepo = userRepo;
     }
 
     protected REPO getRepository() {
@@ -43,11 +42,6 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
 
     protected UserRepository getUserRepository() {
         return userRepo;
-    }
-
-    @Autowired
-    public void setUserRepository(UserRepository userRepo) {
-        this.userRepo = userRepo;
     }
 
     /** {@inheritDoc} */

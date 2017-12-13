@@ -3,7 +3,6 @@ package ch.difty.scipamato.core.persistence.user;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -23,10 +22,9 @@ public class JooqUserService implements UserService {
 
     private static final long serialVersionUID = 1L;
 
-    private UserRepository repo;
+    private final UserRepository repo;
 
-    @Autowired
-    public void setRepository(UserRepository repo) {
+    public JooqUserService(final UserRepository repo) {
         this.repo = repo;
     }
 

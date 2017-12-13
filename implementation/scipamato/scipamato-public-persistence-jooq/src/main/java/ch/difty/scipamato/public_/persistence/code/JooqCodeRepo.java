@@ -5,7 +5,6 @@ import static ch.difty.scipamato.public_.db.tables.Code.*;
 import java.util.List;
 
 import org.jooq.DSLContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
@@ -21,7 +20,6 @@ public class JooqCodeRepo implements CodeRepository {
 
     private final DSLContext dslContext;
 
-    @Autowired
     public JooqCodeRepo(final DSLContext dslContext) {
         this.dslContext = dslContext;
     }

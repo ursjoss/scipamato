@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.jooq.DSLContext;
 import org.jooq.TableField;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
@@ -29,7 +28,6 @@ public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, 
 
     private final PaperSlimBackedSearchOrderRepository searchOrderRepository;
 
-    @Autowired
     public JooqPaperSlimRepo(@Qualifier("dslContext") DSLContext dsl, PaperSlimRecordMapper mapper, JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapper,
             GenericFilterConditionMapper<PaperFilter> filterConditionMapper, PaperSlimBackedSearchOrderRepository searchOrderRepository, ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, applicationProperties);

@@ -16,14 +16,14 @@ import ch.difty.scipamato.public_.entity.CodeClass;
 @RunWith(MockitoJUnitRunner.class)
 public class JooqCodeClassServiceTest {
 
-    private final JooqCodeClassService service = new JooqCodeClassService();
+    private JooqCodeClassService service;
 
     @Mock
     private CodeClassRepository repoMock;
 
     @Test
     public void findingCodeClasss_delegatesToRepo() {
-        service.setRepository(repoMock);
+        service = new JooqCodeClassService(repoMock);
 
         String languageCodeClass = "de";
 

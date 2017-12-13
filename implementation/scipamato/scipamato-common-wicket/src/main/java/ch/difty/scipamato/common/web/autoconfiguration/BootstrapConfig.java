@@ -1,7 +1,6 @@
 package ch.difty.scipamato.common.web.autoconfiguration;
 
 import org.apache.wicket.protocol.http.WebApplication;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -20,8 +19,11 @@ import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchThemeProvid
 @EnableConfigurationProperties({ BootstrapProperties.class })
 public class BootstrapConfig implements WicketApplicationInitConfiguration {
 
-    @Autowired
-    private BootstrapProperties prop;
+    private final BootstrapProperties prop;
+
+    public BootstrapConfig(BootstrapProperties prop) {
+        this.prop = prop;
+    }
 
     @Override
     public void init(WebApplication webApplication) {

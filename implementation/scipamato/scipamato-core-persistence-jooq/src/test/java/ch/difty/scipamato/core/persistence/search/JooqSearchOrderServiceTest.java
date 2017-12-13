@@ -24,7 +24,7 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
 
     private static final String LC = "de";
 
-    private final JooqSearchOrderService service = new JooqSearchOrderService();
+    private JooqSearchOrderService service;
 
     @Mock
     private SearchOrderRepository repoMock;
@@ -51,8 +51,7 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
 
     @Override
     public void specificSetUp() {
-        service.setRepository(repoMock);
-        service.setUserRepository(userRepoMock);
+        service = new JooqSearchOrderService(repoMock, userRepoMock);
 
         searchorders.add(searchOrderMock);
         searchorders.add(searchOrderMock);

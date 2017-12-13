@@ -10,6 +10,7 @@ import ch.difty.scipamato.core.entity.filter.PaperFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.JooqReadOnlyService;
 import ch.difty.scipamato.core.persistence.PaperSlimService;
+import ch.difty.scipamato.core.persistence.user.UserRepository;
 
 /**
  * jOOQ specific implementation of the {@link PaperSlimService} interface.
@@ -20,6 +21,10 @@ import ch.difty.scipamato.core.persistence.PaperSlimService;
 public class JooqPaperSlimService extends JooqReadOnlyService<Long, PaperSlim, PaperFilter, PaperSlimRepository> implements PaperSlimService {
 
     private static final long serialVersionUID = 1L;
+
+    protected JooqPaperSlimService(final PaperSlimRepository repo, final UserRepository userRepo) {
+        super(repo, userRepo);
+    }
 
     /** {@inheritDoc} */
     @Override

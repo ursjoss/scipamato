@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import javax.xml.transform.stream.StreamSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.stereotype.Service;
 
@@ -27,10 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 public class PubmedXmlService implements PubmedArticleService {
 
     private final Unmarshaller unmarshaller;
-
     private final PubMed pubMed;
 
-    @Autowired
     public PubmedXmlService(final Unmarshaller unmarshaller, final PubMed pubMed) {
         this.unmarshaller = AssertAs.notNull(unmarshaller, "unmarshaller");
         this.pubMed = AssertAs.notNull(pubMed, "pubMed");

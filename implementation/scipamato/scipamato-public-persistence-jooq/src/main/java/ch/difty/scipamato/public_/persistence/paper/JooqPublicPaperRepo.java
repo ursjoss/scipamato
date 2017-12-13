@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.SortField;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -34,7 +33,6 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     private final JooqSortMapper<PaperRecord, PublicPaper, Paper> sortMapper;
     private final PublicPaperFilterConditionMapper filterConditionMapper;
 
-    @Autowired
     public JooqPublicPaperRepo(final DSLContext dsl, final JooqSortMapper<PaperRecord, PublicPaper, Paper> sortMapper, final PublicPaperFilterConditionMapper filterConditionMapper) {
         this.dsl = dsl;
         this.sortMapper = sortMapper;

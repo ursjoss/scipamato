@@ -2,8 +2,6 @@ package ch.difty.scipamato.common.persistence.code;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.CodeLike;
 import ch.difty.scipamato.common.persistence.CodeLikeService;
@@ -20,10 +18,9 @@ public abstract class JooqCodeLikeService<T extends CodeLike, R extends CodeLike
 
     private static final long serialVersionUID = 1L;
 
-    private R repo;
+    private final R repo;
 
-    @Autowired
-    public void setRepository(final R repo) {
+    public JooqCodeLikeService(final R repo) {
         this.repo = repo;
     }
 

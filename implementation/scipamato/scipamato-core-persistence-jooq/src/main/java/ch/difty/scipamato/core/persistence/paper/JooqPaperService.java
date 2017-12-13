@@ -18,6 +18,7 @@ import ch.difty.scipamato.core.persistence.DefaultServiceResult;
 import ch.difty.scipamato.core.persistence.JooqEntityService;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.ServiceResult;
+import ch.difty.scipamato.core.persistence.user.UserRepository;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 
 /**
@@ -29,6 +30,10 @@ import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter, PaperRepository> implements PaperService {
 
     private static final long serialVersionUID = 1L;
+
+    protected JooqPaperService(final PaperRepository repo, final UserRepository userRepo) {
+        super(repo, userRepo);
+    }
 
     /** {@inheritDoc} */
     @Override

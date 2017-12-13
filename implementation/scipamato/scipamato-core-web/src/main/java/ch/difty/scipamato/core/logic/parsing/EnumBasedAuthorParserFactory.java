@@ -19,8 +19,7 @@ public class EnumBasedAuthorParserFactory implements AuthorParserFactory {
 
     private final AuthorParserStrategy authorParserStrategy;
 
-    @Autowired
-    public EnumBasedAuthorParserFactory(ApplicationProperties appProperties) {
+    public EnumBasedAuthorParserFactory(final ApplicationProperties appProperties) {
         AssertAs.notNull(appProperties, "appProperties");
         this.authorParserStrategy = appProperties.getAuthorParserStrategy();
     }

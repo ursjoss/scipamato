@@ -57,6 +57,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Changed
 - Improved DeveloperInformation and Operations Wiki pages
 - Improved DataSource/HikariCP configuration and added tests
+- Switched to immplicit constructor injection as of spring 4.3
 
 .Deprecated
 
