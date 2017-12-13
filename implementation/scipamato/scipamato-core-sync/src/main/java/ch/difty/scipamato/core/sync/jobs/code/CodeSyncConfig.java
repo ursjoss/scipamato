@@ -74,10 +74,11 @@ public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.pu
     @Override
     protected String selectSql() {
         final Timestamp now = getNow();
+        final String comm = "aggregated codes";
+        final Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggDe = DSL.row("5abc", "de", 5, "Experimentelle Studie", comm, 1, 1, now, now);
+        final Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggEn = DSL.row("5abc", "en", 5, "Experimental study", comm, 1, 1, now, now);
+        final Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggFr = DSL.row("5abc", "fr", 5, "Etude expérimentale", comm, 1, 1, now, now);
         // @formatter:off
-        Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggDe = DSL.row("5abc", "de", 5, "Experimentelle Studie", "aggregated codes", 1, 1, now, now);
-        Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggEn = DSL.row("5abc", "en", 5, "Experimental study", "aggregated codes", 1, 1, now, now);
-        Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggFr = DSL.row("5abc", "fr", 5, "Etude expérimentale", "aggregated codes", 1, 1, now, now);
         return getJooqCore()
             .select(C_CODE, C_LANG_CODE, C_CODE_CLASS_ID, C_NAME, C_COMMENT, C_SORT, C_VERSION, C_CREATED, C_LAST_MODIFIED)
             .from(Code.CODE)

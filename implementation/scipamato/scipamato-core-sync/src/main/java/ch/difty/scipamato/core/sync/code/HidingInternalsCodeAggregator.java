@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * The {@link HidingInternalsCodeAggregator} has the purpose of
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
  * </ul>
  * @author u.joss
  */
-@Service
+@Component
 @Scope("prototype")
 public class HidingInternalsCodeAggregator implements CodeAggregator {
 
@@ -66,14 +66,14 @@ public class HidingInternalsCodeAggregator implements CodeAggregator {
      * HARDCODED consider moving aggregation into some table in scipamato-core (see also CodeSyncConfig#selectSql)
      */
     private List<String> filterAndEnrich(final String[] codeArray) {
-        final Set<String> codes = new HashSet<>();
+        final Set<String> filtered = new HashSet<>();
         for (final String code : codeArray) {
             if ("5A".equals(code) || "5B".equals(code) || "5C".equals(code))
-                codes.add("5abc");
+                filtered.add("5abc");
             else if (!internalCodes.contains(code))
-                codes.add(code);
+                filtered.add(code);
         }
-        return new ArrayList<>(codes);
+        return new ArrayList<>(filtered);
     }
 
     private List<Short> gatherCodesPopulation() {
