@@ -9,4 +9,5 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = "ch.difty.scipamato")
 public class BatchConfiguration {
 
+    // TODO currently uses the wrong datasource. Should use batchDataSource with the admin permissions but uses the sourceDataSource.
 }
