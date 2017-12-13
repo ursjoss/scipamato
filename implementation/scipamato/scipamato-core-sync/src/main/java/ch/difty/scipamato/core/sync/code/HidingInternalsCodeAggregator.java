@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * The {@link HidingInternalsCodeAggregator} has the purpose of
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
  * </ul>
  * @author u.joss
  */
-@Service
+@Component
 @Scope("prototype")
 public class HidingInternalsCodeAggregator implements CodeAggregator {
 
