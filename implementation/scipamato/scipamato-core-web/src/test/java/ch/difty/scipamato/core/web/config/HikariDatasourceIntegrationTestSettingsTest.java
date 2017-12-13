@@ -20,15 +20,15 @@ import com.zaxxer.hikari.HikariDataSource;
 public class HikariDatasourceIntegrationTestSettingsTest {
 
     @Autowired
-    @Qualifier("batchDataSource")
+    @Qualifier("hikariBatchDataSource")
     private DataSource batchDataSource;
 
     @Autowired
-    @Qualifier("scipamatoPublicDataSource")
+    @Qualifier("hikariPublicDataSource")
     private DataSource publicDataSource;
 
     @Autowired
-    @Qualifier("dataSource")
+    @Qualifier("hikariCoreDataSource")
     private DataSource coreDataSource;
 
     @Test

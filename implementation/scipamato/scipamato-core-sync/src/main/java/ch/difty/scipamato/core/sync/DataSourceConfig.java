@@ -6,12 +6,18 @@ import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.jooq.impl.DefaultExecuteListenerProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
+import org.springframework.transaction.PlatformTransactionManager;
+
+import ch.difty.scipamato.core.sync.jooq.JooqExceptionTranslator;
+import ch.difty.scipamato.core.sync.jooq.SpringTransactionProvider;
 
 @Configuration
 public class DataSourceConfig {
@@ -19,14 +25,21 @@ public class DataSourceConfig {
     @Value("${spring.jooq.sql-dialect}")
     private String dialect;
 
+    @Autowired
+    private PlatformTransactionManager txManager;
+
     /**
      * Scipamato-Public datasource.
      */
     @Bean(destroyMethod = "close")
-    @Qualifier("scipamatoPublicDataSource")
     @ConfigurationProperties(prefix = "sync.target.datasource")
-    public DataSource scipamatoPublicDataSource() {
+    public DataSource hikariPublicDataSource() {
         return DataSourceBuilder.create().build();
+    }
+
+    @Bean
+    public TransactionAwareDataSourceProxy publicDataSource() {
+        return new TransactionAwareDataSourceProxy(hikariPublicDataSource());
     }
 
     /**
@@ -34,10 +47,14 @@ public class DataSourceConfig {
      * the batch meta tables.
      */
     @Bean(destroyMethod = "close")
-    @Qualifier("batchDataSource")
     @ConfigurationProperties(prefix = "sync.batch.datasource")
-    public DataSource batchDataSource() {
+    public DataSource hikariBatchDataSource() {
         return DataSourceBuilder.create().build();
+    }
+
+    @Bean
+    public TransactionAwareDataSourceProxy batchDataSource() {
+        return new TransactionAwareDataSourceProxy(hikariBatchDataSource());
     }
 
     /**
@@ -55,7 +72,12 @@ public class DataSourceConfig {
      */
     @Bean
     public org.jooq.Configuration publicConfiguration() {
-        return considerSettingDialect(new DefaultConfiguration().derive(scipamatoPublicDataSource()));
+        // @formatter:off
+        return considerSettingDialect(new DefaultConfiguration().derive(publicDataSource()))
+                .derive(new DefaultExecuteListenerProvider(new JooqExceptionTranslator()))
+                .derive(new SpringTransactionProvider(txManager));
+        // @formatter:on
+
     }
 
     /**
@@ -71,7 +93,11 @@ public class DataSourceConfig {
      */
     @Bean
     public org.jooq.Configuration batchConfiguration() {
-        return considerSettingDialect(new DefaultConfiguration().derive(batchDataSource()));
+        // @formatter:off
+        return considerSettingDialect(new DefaultConfiguration().derive(batchDataSource()))
+                .derive(new DefaultExecuteListenerProvider(new JooqExceptionTranslator()))
+                .derive(new SpringTransactionProvider(txManager));
+        // @formatter:on
     }
 
     /**
