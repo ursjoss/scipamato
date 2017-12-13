@@ -18,8 +18,6 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -39,33 +37,26 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     @Value("${purge_grace_time_in_minutes:30}")
     private int graceTime;
 
-    @Autowired
-    @Qualifier("dslContext")
-    private DSLContext jooqCore;
-
-    @Autowired
-    @Qualifier("publicDslContext")
-    private DSLContext jooqPublic;
-
-    @Autowired
-    @Qualifier("dataSource")
-    private DataSource scipamatoCoreDataSource;
-
-    @Autowired
-    private JobBuilderFactory jobBuilderFactory;
-
-    @Autowired
-    private StepBuilderFactory stepBuilderFactory;
-
-    @Autowired
-    private DateTimeService dateTimeService;
+    private final DSLContext jooqCore;
+    private final DSLContext jooqPublic;
+    private final DataSource scipamatoCoreDataSource;
+    private final JobBuilderFactory jobBuilderFactory;
+    private final StepBuilderFactory stepBuilderFactory;
+    private final DateTimeService dateTimeService;
 
     private final String topic;
     private final int chunkSize;
 
-    protected SyncConfig(final String topic, final int chunkSize) {
+    protected SyncConfig(final String topic, final int chunkSize, DSLContext jooqCore, DSLContext jooqPublic, DataSource scipoamatoCoreDataSource, JobBuilderFactory jobBuilderFactory,
+            StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
         this.topic = topic;
         this.chunkSize = chunkSize;
+        this.jooqCore = jooqCore;
+        this.jooqPublic = jooqPublic;
+        this.scipamatoCoreDataSource = scipoamatoCoreDataSource;
+        this.jobBuilderFactory = jobBuilderFactory;
+        this.stepBuilderFactory = stepBuilderFactory;
+        this.dateTimeService = dateTimeService;
     }
 
     protected StepBuilderFactory getStepBuilderFactory() {

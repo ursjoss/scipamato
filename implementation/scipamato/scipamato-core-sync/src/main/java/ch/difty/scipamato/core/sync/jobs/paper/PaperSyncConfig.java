@@ -7,17 +7,21 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
 
+import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.db.public_.tables.Code;
 import ch.difty.scipamato.core.db.public_.tables.Paper;
 import ch.difty.scipamato.core.db.public_.tables.PaperCode;
@@ -59,14 +63,15 @@ public class PaperSyncConfig extends SyncConfig<PublicPaper, ch.difty.scipamato.
     private static final TableField<PaperRecord, Timestamp> C_CREATED = PAPER.CREATED;
     private static final TableField<PaperRecord, Timestamp> C_LAST_MODIFIED = PAPER.LAST_MODIFIED;
 
-    @Autowired
-    private CodeAggregator codeAggregator;
+    private final CodeAggregator codeAggregator;
 
-    protected PaperSyncConfig() {
-        super(TOPIC, CHUNK_SIZE);
+    protected PaperSyncConfig(CodeAggregator codeAggregator, @Qualifier("dslContext") DSLContext jooqCore, @Qualifier("publicDslContext") DSLContext jooqPublic,
+            @Qualifier("dataSource") DataSource scipamatoCoreDataSource, JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+        super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, scipamatoCoreDataSource, jobBuilderFactory, stepBuilderFactory, dateTimeService);
+        this.codeAggregator = codeAggregator;
+        setInternalCodes();
     }
 
-    @PostConstruct
     private void setInternalCodes() {
         codeAggregator.setInternalCodes(fetchInternalCodesFromDb());
     }

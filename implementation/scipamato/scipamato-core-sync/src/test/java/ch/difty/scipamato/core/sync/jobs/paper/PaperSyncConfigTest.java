@@ -8,19 +8,36 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Supplier;
 
+import javax.sql.DataSource;
+
+import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
+import org.jooq.Record;
 import org.jooq.SQLDialect;
+import org.jooq.SelectConditionStep;
+import org.jooq.SelectJoinStep;
+import org.jooq.SelectSelectStep;
 import org.jooq.tools.jdbc.MockArray;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import ch.difty.scipamato.common.DateTimeService;
+import ch.difty.scipamato.core.db.public_.tables.Code;
 import ch.difty.scipamato.core.db.public_.tables.Paper;
 import ch.difty.scipamato.core.sync.code.CodeAggregator;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
@@ -30,13 +47,60 @@ import ch.difty.scipamato.public_.db.public_.tables.records.PaperRecord;
 @RunWith(SpringRunner.class)
 public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
-    private ResultSet rs = mock(ResultSet.class);
-
-    @MockBean
-    private CodeAggregator codeAggregator;
+    private PaperSyncConfig config;
 
     @Autowired
-    private PaperSyncConfig config;
+    private JobBuilderFactory jobBuilderFactory;
+    @Autowired
+    private StepBuilderFactory stepBuilderFactory;
+    @Autowired
+    private DateTimeService dateTimeService;
+
+    @Mock
+    private CodeAggregator codeAggregator;
+
+    @SpyBean(name = "dslContext")
+    private DSLContext jooqCore;
+
+    @Mock
+    private DSLContext jooqPublic;
+    @Mock
+    private DataSource scipamatoCoreDataSource;
+
+    @Mock
+    private SelectSelectStep<Record> selectSelectStep;
+    @Mock
+    private SelectJoinStep<Record> selectJoinStep;
+    @Mock
+    private SelectConditionStep<Record> selectConditionStep;
+    @Mock
+    private ResultSet rs;
+
+    @Mock
+    private DeleteWhereStep<PaperRecord> deleteWhereStep;
+    @Mock
+    private DeleteConditionStep<PaperRecord> deleteConditionStep;
+
+    private final List<String> internalCodes = Arrays.asList("1N", "1U", "1Z");
+
+    @Before
+    public void setUp() {
+        when(jooqCore.select()).thenReturn(selectSelectStep);
+        when(selectSelectStep.from(Code.CODE)).thenReturn(selectJoinStep);
+        when(selectJoinStep.where(Code.CODE.INTERNAL.isTrue())).thenReturn(selectConditionStep);
+        when(selectConditionStep.fetch(Code.CODE.CODE_)).thenReturn(internalCodes);
+
+        when(jooqPublic.delete(ch.difty.scipamato.public_.db.public_.tables.Paper.PAPER)).thenReturn(deleteWhereStep);
+        Timestamp ref = Timestamp.valueOf(LocalDateTime.parse("2016-12-09T05:32:13.0"));
+        when(deleteWhereStep.where(ch.difty.scipamato.public_.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(ref))).thenReturn(deleteConditionStep);
+
+        config = new PaperSyncConfig(codeAggregator, jooqCore, jooqPublic, scipamatoCoreDataSource, jobBuilderFactory, stepBuilderFactory, dateTimeService);
+    }
+
+    @After
+    public void tearDown() {
+        verifyNoMoreInteractions(codeAggregator, jooqPublic, scipamatoCoreDataSource);
+    }
 
     @Override
     protected Job getJob() {
@@ -140,11 +204,17 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         verify(rs).getTimestamp(Paper.PAPER.LAST_MODIFIED.getName());
         verify(rs, times(5)).wasNull();
 
+        verifyCodeAggregator();
+
+        verifyNoMoreInteractions(rs);
+    }
+
+    private void verifyCodeAggregator() {
+        verify(codeAggregator).setInternalCodes(internalCodes);
         verify(codeAggregator).load(new String[] { "1A", "2B" });
         verify(codeAggregator).getCodesPopulation();
         verify(codeAggregator).getCodesStudyDesign();
         verify(codeAggregator).getAggregatedCodes();
-        verifyNoMoreInteractions(rs);
     }
 
     @Test
@@ -159,6 +229,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
             return null;
         });
         verify(rs).getInt(fieldName);
+        verifyCodeAggregator();
     }
 
     @Test
@@ -173,6 +244,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
             return null;
         });
         verify(rs).getInt(fieldName);
+        verifyCodeAggregator();
     }
 
     @Test
@@ -187,6 +259,8 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
             return null;
         });
         verify(rs).getLong(fieldName);
+
+        verifyCodeAggregator();
     }
 
     private void validateNullableIntColumn(Supplier<Integer> suppl) throws SQLException {
@@ -213,6 +287,38 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     @Test
     public void assertInternalCodesAreSet() {
         verify(codeAggregator).setInternalCodes(anyList());
+    }
+
+    @Test
+    @Override
+    public void assertingJobName() {
+        verify(codeAggregator).setInternalCodes(internalCodes);
+    }
+
+    @Test
+    @Override
+    public void jobIsRestartable() {
+        verify(codeAggregator).setInternalCodes(internalCodes);
+    }
+
+    @Test
+    @Override
+    public void assertingJobIncrementer_toBeRunIdIncrementer() {
+        verify(codeAggregator).setInternalCodes(internalCodes);
+    }
+
+    @Test
+    @Override
+    public void assertingPurgeDdl() {
+        verify(codeAggregator).setInternalCodes(internalCodes);
+        verifyNoMoreInteractions(jooqPublic);
+    }
+
+    @Test
+    @Override
+    public void assertingSql() {
+        assertThat(selectSql()).isEqualTo(expectedSelectSql());
+        verify(codeAggregator).setInternalCodes(internalCodes);
     }
 
 }

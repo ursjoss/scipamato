@@ -7,13 +7,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import javax.sql.DataSource;
+
+import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
 import org.jooq.TableField;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.db.public_.tables.CodeClass;
 import ch.difty.scipamato.core.db.public_.tables.CodeClassTr;
 import ch.difty.scipamato.core.db.public_.tables.records.CodeClassRecord;
@@ -44,8 +51,9 @@ public class CodeClassSyncConfig extends SyncConfig<PublicCodeClass, ch.difty.sc
     private static final TableField<CodeClassTrRecord, Timestamp> C_CREATED = CODE_CLASS_TR.CREATED;
     private static final TableField<CodeClassTrRecord, Timestamp> C_LAST_MODIFIED = CODE_CLASS_TR.LAST_MODIFIED;
 
-    protected CodeClassSyncConfig() {
-        super(TOPIC, CHUNK_SIZE);
+    protected CodeClassSyncConfig(@Qualifier("dslContext") DSLContext jooqCore, @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource scipamatoCoreDataSource,
+            JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+        super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, scipamatoCoreDataSource, jobBuilderFactory, stepBuilderFactory, dateTimeService);
     }
 
     @Bean
