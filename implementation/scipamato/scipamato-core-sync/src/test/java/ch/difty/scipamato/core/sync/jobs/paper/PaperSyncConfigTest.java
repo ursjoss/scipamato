@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.sync.jobs.paper;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.sql.ResultSet;
@@ -14,13 +15,14 @@ import org.jooq.SQLDialect;
 import org.jooq.tools.jdbc.MockArray;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.batch.core.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.scipamato.core.db.public_.tables.Paper;
+import ch.difty.scipamato.core.sync.code.CodeAggregator;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
 import ch.difty.scipamato.public_.db.public_.tables.records.PaperRecord;
 
@@ -28,7 +30,10 @@ import ch.difty.scipamato.public_.db.public_.tables.records.PaperRecord;
 @RunWith(SpringRunner.class)
 public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
-    private ResultSet rs = Mockito.mock(ResultSet.class);
+    private ResultSet rs = mock(ResultSet.class);
+
+    @MockBean
+    private CodeAggregator codeAggregator;
 
     @Autowired
     private PaperSyncConfig config;
@@ -91,6 +96,10 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         when(rs.getTimestamp(Paper.PAPER.CREATED.getName())).thenReturn(CREATED);
         when(rs.getTimestamp(Paper.PAPER.LAST_MODIFIED.getName())).thenReturn(MODIFIED);
 
+        when(codeAggregator.getCodesPopulation()).thenReturn(new Short[] { 1, 2 });
+        when(codeAggregator.getCodesStudyDesign()).thenReturn(new Short[] { 3, 4 });
+        when(codeAggregator.getAggregatedCodes()).thenReturn(new String[] { "1A", "2B" });
+
         PublicPaper pp = config.makeEntity(rs);
 
         assertThat(pp.getId()).isEqualTo(1l);
@@ -105,12 +114,13 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         assertThat(pp.getPopulation()).isEqualTo("p");
         assertThat(pp.getResult()).isEqualTo("r");
         assertThat(pp.getComment()).isEqualTo("c");
-        assertThat(pp.getCodesPopulation()).isEmpty();
-        assertThat(pp.getCodesStudyDesign()).isEmpty();
+        assertThat(pp.getCodes()).containsExactly("1A", "2B");
+        assertThat(pp.getCodesPopulation()).containsExactly((short) 1, (short) 2);
+        assertThat(pp.getCodesStudyDesign()).containsExactly((short) 3, (short) 4);
         assertThat(pp.getVersion()).isEqualTo(4);
         assertThat(pp.getCreated()).isEqualTo(CREATED);
         assertThat(pp.getLastModified()).isEqualTo(MODIFIED);
-        assertThat(pp.getLastSynched()).isAfterOrEqualsTo(Timestamp.valueOf(LocalDateTime.now().minusSeconds(3)));
+        assertThat(pp.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
 
         verify(rs).getLong(Paper.PAPER.ID.getName());
         verify(rs).getLong(Paper.PAPER.NUMBER.getName());
@@ -130,100 +140,11 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         verify(rs).getTimestamp(Paper.PAPER.LAST_MODIFIED.getName());
         verify(rs, times(5)).wasNull();
 
+        verify(codeAggregator).load(new String[] { "1A", "2B" });
+        verify(codeAggregator).getCodesPopulation();
+        verify(codeAggregator).getCodesStudyDesign();
+        verify(codeAggregator).getAggregatedCodes();
         verifyNoMoreInteractions(rs);
-    }
-
-    @Test
-    public void verifyCodeTranslation_with3A_has1() throws SQLException {
-        verifyCodesPopulation(new String[] { "3A" }, new Short[] { (short) 1 });
-    }
-
-    @Test
-    public void verifyCodeTranslation_with3B_has1() throws SQLException {
-        verifyCodesPopulation(new String[] { "3B" }, new Short[] { (short) 1 });
-    }
-
-    @Test
-    public void verifyCodeTranslation_with3C_has2() throws SQLException {
-        verifyCodesPopulation(new String[] { "3C" }, new Short[] { (short) 2 });
-    }
-
-    @Test
-    public void verifyCodeTranslation_with3AandC_hasBoth() throws SQLException {
-        verifyCodesPopulation(new String[] { "3A", "3C" }, new Short[] { (short) 1, (short) 2 });
-    }
-
-    private void verifyCodesPopulation(String[] codes, Short[] expected) throws SQLException {
-        when(rs.getArray("codes")).thenReturn(new MockArray<String>(SQLDialect.POSTGRES, codes, String[].class));
-
-        PublicPaper pp = config.makeEntity(rs);
-        assertThat(pp.getCodesPopulation()).contains(expected);
-        assertThat(pp.getCodesStudyDesign()).isEmpty();
-    }
-
-    //    // (1: Experimental Studies (5A+5B+5C), 2: Epidemiolog. Studies (5E+5F+5G+5H+5I)), 3. Overview/Methodology (5U+5M)
-
-    @Test
-    public void verifyCodeTranslation_with5A_has1() throws SQLException {
-        verifyCodesStudyDesign(new String[] { "5A" }, new Short[] { (short) 1 });
-    }
-
-    @Test
-    public void verifyCodeTranslation_with5B_has1() throws SQLException {
-        verifyCodesStudyDesign(new String[] { "5B" }, new Short[] { (short) 1 });
-    }
-
-    @Test
-    public void verifyCodeTranslation_with5C_has1() throws SQLException {
-        verifyCodesStudyDesign(new String[] { "5C" }, new Short[] { (short) 1 });
-    }
-
-    @Test
-    public void verifyCodeTranslation_with5E_has2() throws SQLException {
-        verifyCodesStudyDesign(new String[] { "5E" }, new Short[] { (short) 2 });
-    }
-
-    @Test
-    public void verifyCodeTranslation_with5F_has2() throws SQLException {
-        verifyCodesStudyDesign(new String[] { "5F" }, new Short[] { (short) 2 });
-    }
-
-    @Test
-    public void verifyCodeTranslation_with5G_has2() throws SQLException {
-        verifyCodesStudyDesign(new String[] { "5G" }, new Short[] { (short) 2 });
-    }
-
-    @Test
-    public void verifyCodeTranslation_with5H_has2() throws SQLException {
-        verifyCodesStudyDesign(new String[] { "5H" }, new Short[] { (short) 2 });
-    }
-
-    @Test
-    public void verifyCodeTranslation_with5I_has2() throws SQLException {
-        verifyCodesStudyDesign(new String[] { "5I" }, new Short[] { (short) 2 });
-    }
-
-    @Test
-    public void verifyCodeTranslation_with5U_has3() throws SQLException {
-        verifyCodesStudyDesign(new String[] { "5U" }, new Short[] { (short) 3 });
-    }
-
-    @Test
-    public void verifyCodeTranslation_with5M_has3() throws SQLException {
-        verifyCodesStudyDesign(new String[] { "5M" }, new Short[] { (short) 3 });
-    }
-
-    @Test
-    public void verifyCodeTranslation_with5AEU_has123() throws SQLException {
-        verifyCodesStudyDesign(new String[] { "5A", "5E", "5U" }, new Short[] { (short) 1, (short) 2, (short) 3 });
-    }
-
-    private void verifyCodesStudyDesign(String[] codes, Short[] expected) throws SQLException {
-        when(rs.getArray("codes")).thenReturn(new MockArray<String>(SQLDialect.POSTGRES, codes, String[].class));
-
-        PublicPaper pp = config.makeEntity(rs);
-        assertThat(pp.getCodesPopulation()).isEmpty();
-        assertThat(pp.getCodesStudyDesign()).contains(expected);
     }
 
     @Test
@@ -286,6 +207,12 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
         assertThat(pp.getNumber()).isNull();
         verify(rs, times(5)).wasNull();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void assertInternalCodesAreSet() {
+        verify(codeAggregator).setInternalCodes(anyList());
     }
 
 }

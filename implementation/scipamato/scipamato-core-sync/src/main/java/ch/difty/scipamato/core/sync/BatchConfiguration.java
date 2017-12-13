@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan(basePackageClasses = DefaultBatchConfigurer.class)
+@ComponentScan(basePackages = "ch.difty.scipamato")
 public class BatchConfiguration {
 
 }

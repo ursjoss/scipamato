@@ -51,10 +51,21 @@ public class CodeSyncConfigTest extends SyncConfigTest<CodeRecord> {
 
     @Override
     protected String expectedSelectSql() {
-        return "select \"public\".\"code\".\"code\", \"public\".\"code_tr\".\"lang_code\", \"public\".\"code\".\"code_class_id\", "
-                + "\"public\".\"code_tr\".\"name\", \"public\".\"code_tr\".\"comment\", \"public\".\"code\".\"sort\", \"public\".\"code_tr\".\"version\", "
-                + "\"public\".\"code_tr\".\"created\", \"public\".\"code_tr\".\"last_modified\" from \"public\".\"code\" "
-                + "join \"public\".\"code_tr\" on \"public\".\"code\".\"code\" = \"public\".\"code_tr\".\"code\" where \"public\".\"code\".\"internal\" = false";
+        // @formatter:off
+        return "(select \"public\".\"code\".\"code\", \"public\".\"code_tr\".\"lang_code\", \"public\".\"code\".\"code_class_id\", \"public\".\"code_tr\".\"name\", \"public\".\"code_tr\".\"comment\", "
+                    + "\"public\".\"code\".\"sort\", \"public\".\"code_tr\".\"version\", \"public\".\"code_tr\".\"created\", \"public\".\"code_tr\".\"last_modified\" "
+                + "from \"public\".\"code\" "
+                + "join \"public\".\"code_tr\" on \"public\".\"code\".\"code\" = \"public\".\"code_tr\".\"code\" "
+                + "where \"public\".\"code\".\"internal\" = false) "
+                + "union all ("
+                    + "select \"v\".\"c1\", \"v\".\"c2\", \"v\".\"c3\", \"v\".\"c4\", \"v\".\"c5\", \"v\".\"c6\", \"v\".\"c7\", \"v\".\"c8\", \"v\".\"c9\" "
+                    + "from (values "
+                        + "('5abc', 'de', 5, 'Experimentelle Studie', 'aggregated codes', 1, 1, timestamp '2016-12-09 06:02:13.0', timestamp '2016-12-09 06:02:13.0'), "
+                        + "('5abc', 'en', 5, 'Experimental study', 'aggregated codes', 1, 1, timestamp '2016-12-09 06:02:13.0', timestamp '2016-12-09 06:02:13.0'), "
+                        + "('5abc', 'fr', 5, 'Etude expérimentale', 'aggregated codes', 1, 1, timestamp '2016-12-09 06:02:13.0', timestamp '2016-12-09 06:02:13.0')"
+                    + ") as \"v\"(\"c1\", \"c2\", \"c3\", \"c4\", \"c5\", \"c6\", \"c7\", \"c8\", \"c9\")"
+                + ")";
+        // @formatter:on
     }
 
     @Override
@@ -86,7 +97,7 @@ public class CodeSyncConfigTest extends SyncConfigTest<CodeRecord> {
         assertThat(pc.getVersion()).isEqualTo(3);
         assertThat(pc.getCreated()).isEqualTo(CREATED);
         assertThat(pc.getLastModified()).isEqualTo(MODIFIED);
-        assertThat(pc.getLastSynched()).isAfterOrEqualsTo(Timestamp.valueOf(LocalDateTime.now().minusSeconds(3)));
+        assertThat(pc.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
 
         verify(rs).getString(Code.CODE.CODE_.getName());
         verify(rs).getString(CodeTr.CODE_TR.LANG_CODE.getName());

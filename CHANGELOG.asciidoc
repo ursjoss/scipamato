@@ -56,6 +56,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Improved DeveloperInformation and Operations Wiki pages
+- Improved DataSource/HikariCP configuration and added tests
 
 .Deprecated
 
@@ -63,6 +64,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Fixed
 - 07/30: Do not synchronize null int/long columns as 0 (PublicationYear, PM_ID...)
+- 07/25: Code-Synchronization: Don't synchronize internals, aggregate 5A/B/C to 5abc
 
 .Security
 

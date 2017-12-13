@@ -3,7 +3,6 @@ package ch.difty.scipamato.core.sync.jobs;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import javax.sql.DataSource;
 
@@ -24,6 +23,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
 
+import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.sync.houskeeping.HouseKeeper;
 
 /**
@@ -57,6 +57,9 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
 
+    @Autowired
+    private DateTimeService dateTimeService;
+
     private final String topic;
     private final int chunkSize;
 
@@ -75,6 +78,10 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
 
     protected DSLContext getJooqPublic() {
         return jooqPublic;
+    }
+
+    protected DateTimeService getDateTimeService() {
+        return dateTimeService;
     }
 
     protected final Job createJob() {
@@ -137,7 +144,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     protected abstract T makeEntity(ResultSet rs) throws SQLException;
 
     private Step purgingStep() {
-        final Timestamp cutOff = Timestamp.valueOf(LocalDateTime.now().minusMinutes(graceTime));
+        final Timestamp cutOff = Timestamp.valueOf(getDateTimeService().getCurrentDateTime().minusMinutes(graceTime));
         return stepBuilderFactory.get(topic + "PurgingStep").tasklet(new HouseKeeper<R>(getPurgeDcs(cutOff), graceTime)).build();
     }
 
@@ -168,7 +175,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     }
 
     protected Timestamp getNow() {
-        return Timestamp.valueOf(LocalDateTime.now());
+        return getDateTimeService().getCurrentTimestamp();
     }
 
 }
