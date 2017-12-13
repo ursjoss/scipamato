@@ -9,7 +9,7 @@ package ch.difty.scipamato.core.sync.launcher;
 public interface SyncJobLauncher {
 
     /**
-     * Launche the synchronization
+     * Launch the synchronization
      * @return {@link SyncJobResult}
      */
     public SyncJobResult launch();
