@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.logic.parsing;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.AssertAs;

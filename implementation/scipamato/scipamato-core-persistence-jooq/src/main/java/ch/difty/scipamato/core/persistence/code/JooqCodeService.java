@@ -16,8 +16,8 @@ public class JooqCodeService extends JooqCodeLikeService<Code, CodeRepository> i
 
     private static final long serialVersionUID = 1L;
 
-    public JooqCodeService(final CodeRepository CodeRepository) {
-        super(CodeRepository);
+    public JooqCodeService(final CodeRepository codeRepository) {
+        super(codeRepository);
     }
 
 }
