@@ -120,7 +120,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         assertThat(pp.getVersion()).isEqualTo(4);
         assertThat(pp.getCreated()).isEqualTo(CREATED);
         assertThat(pp.getLastModified()).isEqualTo(MODIFIED);
-        assertThat(pp.getLastSynched()).isAfterOrEqualsTo(Timestamp.valueOf(LocalDateTime.now().minusSeconds(3)));
+        assertThat(pp.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
 
         verify(rs).getLong(Paper.PAPER.ID.getName());
         verify(rs).getLong(Paper.PAPER.NUMBER.getName());

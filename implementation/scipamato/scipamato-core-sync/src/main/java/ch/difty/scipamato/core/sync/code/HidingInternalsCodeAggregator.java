@@ -62,6 +62,9 @@ public class HidingInternalsCodeAggregator implements CodeAggregator {
         return codeList;
     }
 
+    /**
+     * HARDCODED consider moving aggregation into some table in scipamato-core (see also CodeSyncConfig#selectSql)
+     */
     private List<String> filterAndEnrich(final String[] codeArray) {
         final Set<String> codes = new HashSet<>();
         for (final String code : codeArray) {

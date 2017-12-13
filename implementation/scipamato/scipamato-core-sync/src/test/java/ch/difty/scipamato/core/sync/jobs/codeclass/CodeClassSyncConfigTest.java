@@ -81,7 +81,7 @@ public class CodeClassSyncConfigTest extends SyncConfigTest<CodeClassRecord> {
         assertThat(pcc.getVersion()).isEqualTo(2);
         assertThat(pcc.getCreated()).isEqualTo(CREATED);
         assertThat(pcc.getLastModified()).isEqualTo(MODIFIED);
-        assertThat(pcc.getLastSynched()).isAfterOrEqualsTo(Timestamp.valueOf(LocalDateTime.now().minusSeconds(3)));
+        assertThat(pcc.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
 
         verify(rs).getInt(CodeClass.CODE_CLASS.ID.getName());
         verify(rs).getString(CodeClassTr.CODE_CLASS_TR.LANG_CODE.getName());

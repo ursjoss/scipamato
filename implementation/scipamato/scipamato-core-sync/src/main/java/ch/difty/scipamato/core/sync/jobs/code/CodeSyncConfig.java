@@ -8,7 +8,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import org.jooq.DeleteConditionStep;
+import org.jooq.Row9;
 import org.jooq.TableField;
+import org.jooq.conf.ParamType;
+import org.jooq.impl.DSL;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.context.annotation.Bean;
@@ -65,17 +68,24 @@ public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.pu
         return new CodeItemWriter(getJooqPublic());
     }
 
+    /**
+     *  HARDCODED consider moving the aggregated code 5abc into some tyble in scipamato-core. See also HidingInternalsCodeAggregator#filterAndEnrich
+     */
     @Override
     protected String selectSql() {
+        final Timestamp now = getNow();
         // @formatter:off
+        Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggDe = DSL.row("5abc", "de", 5, "Experimentelle Studie", "aggregated codes", 1, 1, now, now);
+        Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggEn = DSL.row("5abc", "en", 5, "Experimental study", "aggregated codes", 1, 1, now, now);
+        Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggFr = DSL.row("5abc", "fr", 5, "Etude expérimentale", "aggregated codes", 1, 1, now, now);
         return getJooqCore()
             .select(C_CODE, C_LANG_CODE, C_CODE_CLASS_ID, C_NAME, C_COMMENT, C_SORT, C_VERSION, C_CREATED, C_LAST_MODIFIED)
             .from(Code.CODE)
             .innerJoin(CodeTr.CODE_TR)
             .on(C_CODE.eq(CodeTr.CODE_TR.CODE))
             .where(CODE.INTERNAL.isFalse())
-            // TODO union with aggregated codes (yet to be implemented in scipamato-core
-            .getSQL();
+            .unionAll(DSL.selectFrom(DSL.values(aggDe, aggEn, aggFr)))
+            .getSQL(ParamType.INLINED);
         // @formatter:on
     }
 
