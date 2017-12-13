@@ -15,7 +15,6 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -35,20 +34,18 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class RefDataSyncJobLauncher implements SyncJobLauncher {
 
-    @Autowired
-    @Qualifier("syncCodeClassJob")
-    private Job syncCodeClassJob;
+    private final Job syncCodeClassJob;
+    private final Job syncCodeJob;
+    private final Job syncPaperJob;
+    protected final JobLauncher jobLauncher;
 
-    @Autowired
-    @Qualifier("syncCodeJob")
-    private Job syncCodeJob;
-
-    @Autowired
-    @Qualifier("syncPaperJob")
-    private Job syncPaperJob;
-
-    @Autowired
-    protected JobLauncher jobLauncher;
+    public RefDataSyncJobLauncher(final JobLauncher jobLauncher, @Qualifier("syncCodeClassJob") final Job syncCodeClassJob, @Qualifier("syncCodeJob") final Job syncCodeJob,
+            @Qualifier("syncPaperJob") final Job syncPaperJob) {
+        this.jobLauncher = jobLauncher;
+        this.syncCodeClassJob = syncCodeClassJob;
+        this.syncCodeJob = syncCodeJob;
+        this.syncPaperJob = syncPaperJob;
+    }
 
     @Override
     public SyncJobResult launch() {
