@@ -13,6 +13,7 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
             .authorizeRequests()
                 .antMatchers("/**").permitAll()
+                .antMatchers("/ws/**").permitAll()
             .and()
                 .logout().permitAll();
         http.headers().frameOptions().disable();

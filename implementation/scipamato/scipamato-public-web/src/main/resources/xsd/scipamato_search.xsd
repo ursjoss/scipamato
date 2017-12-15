@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.difty.ch/scipamato/public" targetNamespace="http://www.difty.ch/scipamato/public" elementFormDefault="qualified">
+
+    <xs:element name="getPapersRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="number" type="xs:long" minOccurs="0" maxOccurs="1" />
+                <xs:element name="authorMask" type="xs:string" minOccurs="0" maxOccurs="1" />
+                <xs:element name="methodsMask" type="xs:string" minOccurs="0" maxOccurs="1" />
+                <xs:element name="publicationYearFrom" type="xs:int" minOccurs="0" maxOccurs="1" />
+                <xs:element name="publicationYearUntil" type="xs:int" minOccurs="0" maxOccurs="1" />
+                <xs:element name="populationCodes" type="tns:populationcodetype" minOccurs="0" maxOccurs="2" />
+                <xs:element name="studyDesignCodes" type="tns:studydesigncodetype" minOccurs="0" maxOccurs="3" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="populationcodetype">
+        <xs:restriction base="xs:short">
+            <xs:enumeration value="1" />
+            <xs:enumeration value="2" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="studydesigncodetype">
+        <xs:restriction base="xs:short">
+            <xs:enumeration value="1" />
+            <xs:enumeration value="2" />
+            <xs:enumeration value="3" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="getPapersResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="papers" type="tns:paper" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="paper">
+        <xs:sequence>
+            <xs:element name="number" type="xs:long" />
+            <xs:element name="pmId" type="xs:int" minOccurs="0" />
+            <xs:element name="authors" type="xs:string" />
+            <xs:element name="title" type="xs:string" />
+            <xs:element name="location" type="xs:string" />
+            <xs:element name="publicationYear" type="xs:int" minOccurs="0" />
+            <xs:element name="goals" type="xs:string" />
+            <xs:element name="methods" type="xs:string" />
+            <xs:element name="population" type="xs:string" />
+            <xs:element name="result" type="xs:string" />
+            <xs:element name="comment" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
