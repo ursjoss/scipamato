@@ -82,6 +82,7 @@
         <wicket.version>7.9.0</wicket.version>
         <wicket-spring-boot-starter.version>1.0.10</wicket-spring-boot-starter.version>
         <wicket-bootstrap.version>0.10.16</wicket-bootstrap.version>
+        <bootstrap.version>3.3.7-1</bootstrap.version>
         <jasperreports.version>6.4.3</jasperreports.version>
 
         <spring-cloud.version>Edgware.RELEASE</spring-cloud.version>
@@ -319,6 +320,13 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- need to explicitly override the version pulled in by spring-cloud-dependencies -->
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>bootstrap</artifactId>
+                <version>${bootstrap.version}</version>
             </dependency>
 
             <!-- JasperReport for PDF generation -->
