@@ -47,6 +47,7 @@
                     <sources>
                         <source>src/main/dtd</source>
                     </sources>
+                    <outputDirectory>${org.jaxb.target.dir}</outputDirectory>
                 </configuration>
                 <executions>
                     <execution>
