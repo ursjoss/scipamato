@@ -120,7 +120,7 @@ public class PublicPage extends BasePage<Void> {
     }
 
     private void queueQueryButton(final String id, final FilterForm<PublicPaperFilter> filterForm) {
-        final StringResourceModel labelModel = new StringResourceModel("button.query.label", this, null);
+        final StringResourceModel labelModel = new StringResourceModel("button." + id + LABEL_RESOURCE_TAG, this, null);
         BootstrapButton queryButton = new BootstrapButton(id, labelModel, Buttons.Type.Primary);
         queue(queryButton);
         filterForm.setDefaultButton(queryButton);
