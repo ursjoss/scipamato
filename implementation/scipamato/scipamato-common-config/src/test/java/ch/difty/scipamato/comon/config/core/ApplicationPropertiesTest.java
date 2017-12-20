@@ -15,7 +15,7 @@ public class ApplicationPropertiesTest {
 
     @Test
     public void assertDefaultLocalizationProperty() {
-        assertThat(ApplicationProperties.LOCALIZATION_DEFAULT).isEqualTo("scipamato.localization.default");
+        assertThat(ApplicationProperties.LOCALIZATION_DEFAULT).isEqualTo("scipamato.default-localization");
     }
 
     @Test
