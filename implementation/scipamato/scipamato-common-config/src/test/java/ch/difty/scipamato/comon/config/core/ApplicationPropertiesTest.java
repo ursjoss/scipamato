@@ -20,7 +20,7 @@ public class ApplicationPropertiesTest {
 
     @Test
     public void assertAuthorParserRactoryProperty() {
-        assertThat(ApplicationProperties.AUTHOR_PARSER_FACTORY).isEqualTo("scipamato.author.parser");
+        assertThat(ApplicationProperties.AUTHOR_PARSER_FACTORY).isEqualTo("scipamato.author-parser");
     }
 
     @Test
@@ -30,7 +30,7 @@ public class ApplicationPropertiesTest {
 
     @Test
     public void assertMinimumPaperNumberToBeRecycled() {
-        assertThat(ApplicationProperties.PAPER_NUMBER_MIN_TO_RECYCLE).isEqualTo("scipamato.paper.number.minimum-to-be-recycled");
+        assertThat(ApplicationProperties.PAPER_NUMBER_MIN_TO_RECYCLE).isEqualTo("scipamato.paper-number-minimum-to-be-recycled");
     }
 
     @Test

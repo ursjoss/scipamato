@@ -15,9 +15,9 @@ public interface ApplicationProperties {
 
     String BUILD_VERSION = "build.version";
     String LOCALIZATION_DEFAULT = "scipamato.default-localization";
-    String AUTHOR_PARSER_FACTORY = "scipamato.author.parser";
+    String AUTHOR_PARSER_FACTORY = "scipamato.author-parser";
     String BRAND = "scipamato.brand";
-    String PAPER_NUMBER_MIN_TO_RECYCLE = "scipamato.paper.number.minimum-to-be-recycled";
+    String PAPER_NUMBER_MIN_TO_RECYCLE = "scipamato.paper-number-minimum-to-be-recycled";
     String PUBMED_BASE_URL = "scipamato.pubmed-base-url";
 
     /**
