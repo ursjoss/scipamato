@@ -1,48 +1,82 @@
 package ch.difty.scipamato.core.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
+import ch.difty.scipamato.common.config.MavenProperties;
 import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ScipamatoCorePropertiesTest {
 
-    private final ScipamatoCoreProperties scp = new ScipamatoCoreProperties();
+    private ScipamatoCoreProperties prop;
 
-    @Test
-    public void brand_hasDefaultValue() {
-        assertThat(scp.getBrand()).isEqualTo("SciPaMaTo-Core");
+    @Mock
+    private ScipamatoProperties scipamatoPropMock;
+    @Mock
+    private MavenProperties     mavenPropMock;
+
+    @Before
+    public void setUp() {
+        prop = new ScipamatoCoreProperties(scipamatoPropMock, mavenPropMock);
+
+        when(scipamatoPropMock.getBrand()).thenReturn("brand");
+        when(scipamatoPropMock.getDefaultLocalization()).thenReturn("dl");
+        when(scipamatoPropMock.getPubmedBaseUrl()).thenReturn("pbUrl");
+        when(scipamatoPropMock.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.DEFAULT);
+        when(scipamatoPropMock.getPaperNumberMinimumToBeRecycled()).thenReturn(100);
+
+        when(mavenPropMock.getVersion()).thenReturn("0.0.1-SNAPSHOT");
+    }
+
+    @After
+    public void tearDown() {
+        verifyNoMoreInteractions(scipamatoPropMock, mavenPropMock);
     }
 
     @Test
-    public void defaultLocalization_hasDefaultEnglish() {
-        assertThat(scp.getDefaultLocalization()).isEqualTo("en");
+    public void gettingBrand_delegatesToScipamatoProps() {
+        assertThat(prop.getBrand()).isEqualTo("brand");
+        verify(scipamatoPropMock).getBrand();
     }
 
     @Test
-    public void pubmedBaseUrl_hasDefaultValue() {
-        assertThat(scp.getPubmedBaseUrl()).isEqualTo("https://www.ncbi.nlm.nih.gov/pubmed/");
+    public void gettingDefaultLocalization_delegatesToScipamatoProps() {
+        assertThat(prop.getDefaultLocalization()).isEqualTo("dl");
+        verify(scipamatoPropMock).getDefaultLocalization();
     }
 
     @Test
-    public void authorParser_isDefault() {
-        assertThat(scp.getAuthorParser()).isEqualTo("DEFAULT");
+    public void gettingPubmedBaseUrl_delegatesToScipamatoProps() {
+        assertThat(prop.getPubmedBaseUrl()).isEqualTo("pbUrl");
+        verify(scipamatoPropMock).getPubmedBaseUrl();
     }
 
     @Test
-    public void authorParserStrategy_isDefault() {
-        assertThat(scp.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.DEFAULT);
+    public void gettingBuildVersion_delegatesToMavenProp() {
+        assertThat(prop.getBuildVersion()).isEqualTo("0.0.1-SNAPSHOT");
+        verify(mavenPropMock).getVersion();
     }
 
     @Test
-    public void paperMinimumToBeRecycled_hasDefaultValue() {
-        assertThat(scp.getPaperNumberMinimumToBeRecycled()).isEqualTo(0);
+    public void gettingAuthorParserStrategy_delegatesToScipamatoProps() {
+        assertThat(prop.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.DEFAULT);
+        verify(scipamatoPropMock).getAuthorParserStrategy();
     }
 
     @Test
-    public void dbSchema_hasDefaultValuePublic() {
-        assertThat(scp.getDbSchema()).isEqualTo("public");
+    public void gettingPaperNumberMin2BeRecycled_delegatesToScipamatoProps() {
+        assertThat(prop.getMinimumPaperNumberToBeRecycled()).isEqualTo(100);
+        verify(scipamatoPropMock).getPaperNumberMinimumToBeRecycled();
     }
 
 }

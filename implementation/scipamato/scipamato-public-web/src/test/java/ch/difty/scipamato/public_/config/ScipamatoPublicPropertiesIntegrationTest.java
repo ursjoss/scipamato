@@ -1,6 +1,6 @@
 package ch.difty.scipamato.public_.config;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,28 +8,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import ch.difty.scipamato.common.config.core.ApplicationProperties;
 import ch.difty.scipamato.public_.ScipamatoPublicApplication;
 
+/**
+ * Note,  this test class currently derives the configured values from application.properties.
+ *
+ * @author u.joss
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ScipamatoPublicApplication.class)
 public class ScipamatoPublicPropertiesIntegrationTest {
 
     @Autowired
-    private ScipamatoPublicProperties spp;
+    public ApplicationProperties appProperties;
 
     @Test
-    public void brand_hasDefaultValue() {
-        assertThat(spp.getBrand()).isEqualTo("SciPaMaTo");
+    public void gettingBuildVersion() {
+        assertThat(appProperties.getBuildVersion()).matches("\\d+\\.\\d+\\.\\d+.*");
     }
 
     @Test
-    public void defaultLocalization_hasDefaultEnglish() {
-        assertThat(spp.getDefaultLocalization()).isEqualTo("de");
+    public void gettingDefaultStrategy() {
+        assertThat(appProperties.getAuthorParserStrategy()).isNull();
     }
 
     @Test
-    public void pubmedBaseUrl_hasDefaultValue() {
-        assertThat(spp.getPubmedBaseUrl()).isEqualTo("https://www.ncbi.nlm.nih.gov/pubmed/");
+    public void assertDefaultlocalization() {
+        assertThat(appProperties.getDefaultLocalization()).isEqualTo("de");
     }
 
+    @Test
+    public void assertBrand() {
+        assertThat(appProperties.getBrand()).isEqualTo("SciPaMaTo");
+    }
+
+    @Test
+    public void assertMinimumPaperNumberToBeRecycled() {
+        assertThat(appProperties.getMinimumPaperNumberToBeRecycled()).isEqualTo(0);
+    }
+
+    @Test
+    public void assertPubmedBaseUrl() {
+        assertThat(appProperties.getPubmedBaseUrl()).isEqualTo("https://www.ncbi.nlm.nih.gov/pubmed/");
+    }
 }

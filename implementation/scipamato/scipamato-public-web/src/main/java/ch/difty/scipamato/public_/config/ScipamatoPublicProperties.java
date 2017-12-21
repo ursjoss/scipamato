@@ -1,30 +1,59 @@
 package ch.difty.scipamato.public_.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import lombok.Getter;
-import lombok.Setter;
+import ch.difty.scipamato.common.config.MavenProperties;
+import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
 
+/**
+ * This bean is used to evaluate all environment properties used in the
+ * application in one place and serve those as bean to wherever they are used.
+ *
+ * @see <a href=
+ *      "https://www.petrikainulainen.net/programming/spring-framework/spring-from-the-trenches-injecting-property-values-into-configuration-beans/">https://www.petrikainulainen.net/programming/spring-framework/spring-from-the-trenches-injecting-property-values-into-configuration-beans/</a>
+ *
+ * @author u.joss
+ */
 @Component
-@ConfigurationProperties(prefix = "scipamato")
-@Getter
-@Setter
-public class ScipamatoPublicProperties {
+public class ScipamatoPublicProperties implements ApplicationProperties {
 
-    /**
-     * Brand name of the application. Appears e.g. in the Navbar.
-     */
-    private String brand = "SciPaMaTo-Public";
+    private final ScipamatoProperties scipamatoPublicProperties;
+    private final MavenProperties     mavenProperties;
 
-    /**
-     * Default localization. Normally the browser locale is used.
-     */
-    private String defaultLocalization = "en";
+    public ScipamatoPublicProperties(ScipamatoProperties scipamatoPublicProperties, MavenProperties mavenProperties) {
+        this.scipamatoPublicProperties = scipamatoPublicProperties;
+        this.mavenProperties = mavenProperties;
+    }
 
-    /**
-     * The base url used to access the Pubmed API.
-     */
-    private String pubmedBaseUrl = "https://www.ncbi.nlm.nih.gov/pubmed/";
+    @Override
+    public String getBuildVersion() {
+        return mavenProperties.getVersion();
+    }
+
+    @Override
+    public String getDefaultLocalization() {
+        return scipamatoPublicProperties.getDefaultLocalization();
+    }
+
+    @Override
+    public AuthorParserStrategy getAuthorParserStrategy() {
+        return null;
+    }
+
+    @Override
+    public String getBrand() {
+        return scipamatoPublicProperties.getBrand();
+    }
+
+    @Override
+    public long getMinimumPaperNumberToBeRecycled() {
+        return 0;
+    }
+
+    @Override
+    public String getPubmedBaseUrl() {
+        return scipamatoPublicProperties.getPubmedBaseUrl();
+    }
 
 }

@@ -1,57 +1,54 @@
 package ch.difty.scipamato.core.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.common.config.MavenProperties;
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
 import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * This bean is used to evaluate all environment properties used in the
- * application in one place and serve those as bean to wherever they are used.
- *
- * @see <a href=
- *      "https://www.petrikainulainen.net/programming/spring-framework/spring-from-the-trenches-injecting-property-values-into-configuration-beans/">https://www.petrikainulainen.net/programming/spring-framework/spring-from-the-trenches-injecting-property-values-into-configuration-beans/</a>
- *
- * @author u.joss
- */
 @Component
-public class ScipamatoProperties implements ApplicationProperties {
+@ConfigurationProperties(prefix = "scipamato")
+@Getter
+@Setter
+public class ScipamatoProperties {
 
-    @Autowired
-    private MavenProperties         mavenProperties;
-    @Autowired
-    private ScipamatoCoreProperties scipamatoProperties;
+    /**
+     * Brand name of the application. Appears e.g. in the Navbar.
+     */
+    private String brand = "SciPaMaTo-Core";
 
-    @Override
-    public String getBuildVersion() {
-        return mavenProperties.getVersion();
-    }
+    /**
+     * Default localization. Normally the browser locale is used.
+     */
+    private String defaultLocalization = "en";
 
-    @Override
-    public String getDefaultLocalization() {
-        return scipamatoProperties.getDefaultLocalization();
-    }
+    /**
+     * The base url used to access the Pubmed API.
+     */
+    private String pubmedBaseUrl = "https://www.ncbi.nlm.nih.gov/pubmed/";
 
-    @Override
+    /**
+     * The author parser used for parsing Author Strings. Currently only
+     * {@literal DEFAULT} is implemented.
+     */
+    private String authorParser = "DEFAULT";
+
+    /**
+     * Any free number below this threshold will not be reused.
+     */
+    private int paperNumberMinimumToBeRecycled;
+
+    /**
+     * DB Schema.
+     */
+    private String dbSchema = "public";
+
+    /**
+     * @return the author parser strategy used for interpreting the authors string.
+     */
     public AuthorParserStrategy getAuthorParserStrategy() {
-        return scipamatoProperties.getAuthorParserStrategy();
-    }
-
-    @Override
-    public String getBrand() {
-        return scipamatoProperties.getBrand();
-    }
-
-    @Override
-    public long getMinimumPaperNumberToBeRecycled() {
-        return scipamatoProperties.getPaperNumberMinimumToBeRecycled();
-    }
-
-    @Override
-    public String getPubmedBaseUrl() {
-        return scipamatoProperties.getPubmedBaseUrl();
+        return AuthorParserStrategy.fromProperty(authorParser);
     }
 
 }

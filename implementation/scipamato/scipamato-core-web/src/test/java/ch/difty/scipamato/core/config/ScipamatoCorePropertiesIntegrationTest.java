@@ -8,43 +8,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
 import ch.difty.scipamato.core.ScipamatoApplication;
 
+/**
+ * Note, this test class currently derives the configured values from
+ * application.properties.
+ *
+ * @author u.joss
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ScipamatoApplication.class)
 public class ScipamatoCorePropertiesIntegrationTest {
 
     @Autowired
-    private ScipamatoCoreProperties scp;
+    public ApplicationProperties appProperties;
 
     @Test
-    public void brand_hasDefaultValue() {
-        assertThat(scp.getBrand()).isEqualTo("SciPaMaTo - Scientific Paper Management Tool");
+    public void gettingBuildVersion() {
+        assertThat(appProperties.getBuildVersion()).matches("\\d+\\.\\d+\\.\\d+.*");
     }
 
     @Test
-    public void defaultLocalization_hasDefaultEnglish() {
-        assertThat(scp.getDefaultLocalization()).isEqualTo("de");
+    public void gettingDefaultStrategy() {
+        assertThat(appProperties.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.DEFAULT);
     }
 
     @Test
-    public void pubmedBaseUrl_hasDefaultValue() {
-        assertThat(scp.getPubmedBaseUrl()).isEqualTo("https://www.ncbi.nlm.nih.gov/pubmed/");
+    public void assertDefaultlocalization() {
+        assertThat(appProperties.getDefaultLocalization()).isEqualTo("de");
     }
 
     @Test
-    public void authorParser_isDefault() {
-        assertThat(scp.getAuthorParser()).isEqualTo("DEFAULT");
+    public void assertBrand() {
+        assertThat(appProperties.getBrand()).isEqualTo("SciPaMaTo - Scientific Paper Management Tool");
     }
 
     @Test
-    public void paperMinimumToBeRecycled_hasDefaultValue() {
-        assertThat(scp.getPaperNumberMinimumToBeRecycled()).isEqualTo(8);
+    public void assertMinimumPaperNumberToBeRecycled() {
+        assertThat(appProperties.getMinimumPaperNumberToBeRecycled()).isEqualTo(8);
     }
 
     @Test
-    public void dbSchema_hasValuePublic() {
-        assertThat(scp.getDbSchema()).isEqualTo("public");
+    public void assertPubmedBaseUrl() {
+        assertThat(appProperties.getPubmedBaseUrl()).isEqualTo("https://www.ncbi.nlm.nih.gov/pubmed/");
     }
-
 }
