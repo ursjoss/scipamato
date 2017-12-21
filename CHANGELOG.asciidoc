@@ -54,6 +54,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
+- 07/44: Use @ConfigurationProperties to define custom properties
 - Version bump: spring-boot-admin-starter-client
 
 .Deprecated

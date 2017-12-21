@@ -1,40 +1,26 @@
 package ch.difty.scipamato.public_.config;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
 public class ScipamatoPropertiesTest {
 
-    private final ScipamatoProperties sp = new ScipamatoProperties("0.6.2-SNAPSHOT", "de", "SciPaMaTo", "pubmedBaseUrl/");
+    private final ScipamatoProperties sp = new ScipamatoProperties();
 
     @Test
-    public void canResolveBuildVersion() {
-        assertThat(sp.getBuildVersion()).isEqualTo("0.6.2-SNAPSHOT");
+    public void brand_hasDefaultValue() {
+        assertThat(sp.getBrand()).isEqualTo("SciPaMaTo-Public");
     }
 
     @Test
-    public void canResolveDefaultLocalization() {
-        assertThat(sp.getDefaultLocalization()).isEqualTo("de");
+    public void defaultLocalization_hasDefaultEnglish() {
+        assertThat(sp.getDefaultLocalization()).isEqualTo("en");
     }
 
     @Test
-    public void canResolveAuthorParserStrategy() {
-        assertThat(sp.getAuthorParserStrategy()).isNull();
+    public void pubmedBaseUrl_hasDefaultValue() {
+        assertThat(sp.getPubmedBaseUrl()).isEqualTo("https://www.ncbi.nlm.nih.gov/pubmed/");
     }
 
-    @Test
-    public void canResolveBrand() {
-        assertThat(sp.getBrand()).isEqualTo("SciPaMaTo");
-    }
-
-    @Test
-    public void canResolveMinimumPaperNumberToBeRecycled() {
-        assertThat(sp.getMinimumPaperNumberToBeRecycled()).isEqualTo(0l);
-    }
-
-    @Test
-    public void canResolvePubmedBaseUrl() {
-        assertThat(sp.getPubmedBaseUrl()).isEqualTo("pubmedBaseUrl/");
-    }
 }

@@ -1,69 +1,54 @@
 package ch.difty.scipamato.core.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
 import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * This bean is used to evaluate all environment properties used in the application in one place and serve those as bean to wherever they are used.
- *
- * @see <a href="https://www.petrikainulainen.net/programming/spring-framework/spring-from-the-trenches-injecting-property-values-into-configuration-beans/">https://www.petrikainulainen.net/programming/spring-framework/spring-from-the-trenches-injecting-property-values-into-configuration-beans/</a>
- *
- * @author u.joss
- */
 @Component
-public class ScipamatoProperties implements ApplicationProperties {
+@ConfigurationProperties(prefix = "scipamato")
+@Getter
+@Setter
+public class ScipamatoProperties {
 
-    private final String buildVersion;
-    private final String defaultLocalization;
-    private final AuthorParserStrategy authorParserStrategy;
-    private final String brand;
-    private final long minimumPaperNumberToBeRecycled;
-    private final String pubmedBaseUrl;
+    /**
+     * Brand name of the application. Appears e.g. in the Navbar.
+     */
+    private String brand = "SciPaMaTo-Core";
 
-    private static final String S = "${", E = ":n.a.}";
+    /**
+     * Default localization. Normally the browser locale is used.
+     */
+    private String defaultLocalization = "en";
 
-    public ScipamatoProperties(@Value(S + BUILD_VERSION + E) String buildVersion, @Value(S + LOCALIZATION_DEFAULT + ":en}") String defaultLocalization,
-            @Value(S + AUTHOR_PARSER_FACTORY + E) String authorParserStrategy, @Value(S + BRAND + E) String brand, @Value(S + PAPER_NUMBER_MIN_TO_RECYCLE + E) Long minimumPaperNumberToBeRecycled,
-            @Value(S + PUBMED_BASE_URL + E) String pubmedBaseUrl) {
-        this.buildVersion = buildVersion;
-        this.defaultLocalization = defaultLocalization;
-        this.authorParserStrategy = AuthorParserStrategy.fromProperty(authorParserStrategy);
-        this.brand = brand;
-        this.minimumPaperNumberToBeRecycled = minimumPaperNumberToBeRecycled != null ? minimumPaperNumberToBeRecycled.longValue() : 0;
-        this.pubmedBaseUrl = pubmedBaseUrl;
-    }
+    /**
+     * The base url used to access the Pubmed API.
+     */
+    private String pubmedBaseUrl = "https://www.ncbi.nlm.nih.gov/pubmed/";
 
-    @Override
-    public String getBuildVersion() {
-        return buildVersion;
-    }
+    /**
+     * The author parser used for parsing Author Strings. Currently only
+     * {@literal DEFAULT} is implemented.
+     */
+    private String authorParser = "DEFAULT";
 
-    @Override
-    public String getDefaultLocalization() {
-        return defaultLocalization;
-    }
+    /**
+     * Any free number below this threshold will not be reused.
+     */
+    private int paperNumberMinimumToBeRecycled;
 
-    @Override
+    /**
+     * DB Schema.
+     */
+    private String dbSchema = "public";
+
+    /**
+     * @return the author parser strategy used for interpreting the authors string.
+     */
     public AuthorParserStrategy getAuthorParserStrategy() {
-        return authorParserStrategy;
-    }
-
-    @Override
-    public String getBrand() {
-        return brand;
-    }
-
-    @Override
-    public long getMinimumPaperNumberToBeRecycled() {
-        return minimumPaperNumberToBeRecycled;
-    }
-
-    @Override
-    public String getPubmedBaseUrl() {
-        return pubmedBaseUrl;
+        return AuthorParserStrategy.fromProperty(authorParser);
     }
 
 }

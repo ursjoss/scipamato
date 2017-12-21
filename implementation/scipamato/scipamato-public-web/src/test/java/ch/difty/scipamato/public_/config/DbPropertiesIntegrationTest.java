@@ -9,27 +9,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.scipamato.public_.ScipamatoPublicApplication;
+import ch.difty.scipamato.public_.config.DbProperties;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ScipamatoPublicApplication.class)
-public class ScipamatoPropertiesIntegrationTest {
+public class DbPropertiesIntegrationTest {
 
     @Autowired
-    private ScipamatoProperties sp;
+    private DbProperties dbProperties;
 
     @Test
-    public void brand_hasDefaultValue() {
-        assertThat(sp.getBrand()).isEqualTo("SciPaMaTo");
+    public void schema_hasValuePublic() {
+        assertThat(dbProperties.getSchema()).isEqualTo("public");
     }
-
-    @Test
-    public void defaultLocalization_hasDefaultEnglish() {
-        assertThat(sp.getDefaultLocalization()).isEqualTo("de");
-    }
-
-    @Test
-    public void pubmedBaseUrl_hasDefaultValue() {
-        assertThat(sp.getPubmedBaseUrl()).isEqualTo("https://www.ncbi.nlm.nih.gov/pubmed/");
-    }
-
 }
