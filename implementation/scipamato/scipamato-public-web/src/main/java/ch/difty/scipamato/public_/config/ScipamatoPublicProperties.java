@@ -18,11 +18,11 @@ import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
 @Component
 public class ScipamatoPublicProperties implements ApplicationProperties {
 
-    private final ScipamatoProperties scipamatoPublicProperties;
+    private final ScipamatoProperties scipamatoProperties;
     private final MavenProperties     mavenProperties;
 
-    public ScipamatoPublicProperties(ScipamatoProperties scipamatoPublicProperties, MavenProperties mavenProperties) {
-        this.scipamatoPublicProperties = scipamatoPublicProperties;
+    public ScipamatoPublicProperties(ScipamatoProperties scipamatoProperties, MavenProperties mavenProperties) {
+        this.scipamatoProperties = scipamatoProperties;
         this.mavenProperties = mavenProperties;
     }
 
@@ -33,7 +33,7 @@ public class ScipamatoPublicProperties implements ApplicationProperties {
 
     @Override
     public String getDefaultLocalization() {
-        return scipamatoPublicProperties.getDefaultLocalization();
+        return scipamatoProperties.getDefaultLocalization();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ScipamatoPublicProperties implements ApplicationProperties {
 
     @Override
     public String getBrand() {
-        return scipamatoPublicProperties.getBrand();
+        return scipamatoProperties.getBrand();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ScipamatoPublicProperties implements ApplicationProperties {
 
     @Override
     public String getPubmedBaseUrl() {
-        return scipamatoPublicProperties.getPubmedBaseUrl();
+        return scipamatoProperties.getPubmedBaseUrl();
     }
 
 }
