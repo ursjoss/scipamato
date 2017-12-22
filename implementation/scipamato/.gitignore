@@ -6,3 +6,5 @@ log/
 **/.project
 **/.settings
 **/target
+scipamato-public-web/keystore.p12
+scipamato-public-web/application.properties
