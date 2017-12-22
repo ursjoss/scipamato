@@ -27,4 +27,10 @@ public class ScipamatoProperties {
      */
     private String pubmedBaseUrl = "https://www.ncbi.nlm.nih.gov/pubmed/";
 
+    /**
+     * Port from where an unsecured http connection is forwarded to the secured
+     * https port (@literal server.port}. Only has an effect if https is configured.
+     */
+    private Integer redirectFromPort;
+
 }
