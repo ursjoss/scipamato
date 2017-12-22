@@ -11,11 +11,12 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
      // @formatter:off
         http.csrf().disable()
+            .headers().frameOptions().disable()
+            .and()
             .authorizeRequests()
                 .antMatchers("/**").permitAll()
             .and()
                 .logout().permitAll();
-        http.headers().frameOptions().disable();
      // @formatter:on
     }
 
