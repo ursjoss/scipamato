@@ -1,7 +1,12 @@
 package ch.difty.scipamato.core.entity.filter;
 
-import static ch.difty.scipamato.core.entity.filter.SearchTermType.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.core.entity.filter.SearchTermType.AUDIT;
+import static ch.difty.scipamato.core.entity.filter.SearchTermType.BOOLEAN;
+import static ch.difty.scipamato.core.entity.filter.SearchTermType.INTEGER;
+import static ch.difty.scipamato.core.entity.filter.SearchTermType.STRING;
+import static ch.difty.scipamato.core.entity.filter.SearchTermType.values;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.Test;
 
@@ -34,13 +39,15 @@ public class SearchTermTypeTest {
             SearchTermType.byId(-1);
             fail("should have thrown");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class).hasMessage("id -1 is not supported");
+            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("id -1 is not supported");
         }
         try {
             SearchTermType.byId(4);
             fail("should have thrown");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class).hasMessage("id 4 is not supported");
+            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("id 4 is not supported");
         }
     }
 }

@@ -1,7 +1,10 @@
 package ch.difty.scipamato.core.entity;
 
-import static ch.difty.scipamato.core.entity.CoreEntity.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.CREATED;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.MODIFIED;
+import static ch.difty.scipamato.core.entity.CoreEntity.CREATOR_ID;
+import static ch.difty.scipamato.core.entity.CoreEntity.MODIFIER_ID;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,13 +19,13 @@ import nl.jqno.equalsverifier.Warning;
 
 public class UserTest {
 
-    private static final int ID = 1;
-    private static final String USER_NAME = "username";
-    private static final String FIRST_NAME = "firstname";
-    private static final String LAST_NAME = "lastname";
-    private static final String EMAIL = "email";
-    private static final String PASSWORD = "password";
-    private static final boolean ENABLED = true;
+    private static final int     ID         = 1;
+    private static final String  USER_NAME  = "username";
+    private static final String  FIRST_NAME = "firstname";
+    private static final String  LAST_NAME  = "lastname";
+    private static final String  EMAIL      = "email";
+    private static final String  PASSWORD   = "password";
+    private static final boolean ENABLED    = true;
 
     final User user = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
 
@@ -75,7 +78,8 @@ public class UserTest {
     public void constructingByUser2() {
         final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
         assertThat(u.isEnabled()).isFalse();
-        assertThat(u.getRoles()).isNotNull().isEmpty();
+        assertThat(u.getRoles()).isNotNull()
+            .isEmpty();
 
         u.setEnabled(true);
         u.setRoles(roles);
@@ -147,8 +151,7 @@ public class UserTest {
 
     @Test
     public void equals() {
-        EqualsVerifier
-            .forClass(User.class)
+        EqualsVerifier.forClass(User.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
@@ -158,6 +161,6 @@ public class UserTest {
     @Test
     public void testingToString() {
         assertThat(user.toString()).isEqualTo(
-                "User[userName=username,firstName=firstname,lastName=lastname,email=email,password=password,enabled=false,roles=[],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
+            "User[userName=username,firstName=firstname,lastName=lastname,email=email,password=password,enabled=false,roles=[],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
     }
 }

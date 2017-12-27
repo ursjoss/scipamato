@@ -1,7 +1,10 @@
 package ch.difty.scipamato.core.entity.projection;
 
-import static ch.difty.scipamato.core.entity.CoreEntity.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.CREATED;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.MODIFIED;
+import static ch.difty.scipamato.core.entity.CoreEntity.CREATOR_ID;
+import static ch.difty.scipamato.core.entity.CoreEntity.MODIFIER_ID;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +41,8 @@ public class PaperSlimTest {
 
     @Test
     public void testingToString() {
-        assertThat(ps.toString()).isEqualTo("PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title)");
+        assertThat(ps.toString())
+            .isEqualTo("PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title)");
     }
 
     @Test
@@ -49,8 +53,7 @@ public class PaperSlimTest {
 
     @Test
     public void equals() {
-        EqualsVerifier
-            .forClass(PaperSlim.class)
+        EqualsVerifier.forClass(PaperSlim.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)

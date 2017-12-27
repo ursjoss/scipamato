@@ -18,12 +18,12 @@ public class Code extends CoreEntity implements CodeLike {
 
     public static final String CODE_REGEX = "[1-9][A-Z]";
 
-    public static final String CODE = "code";
+    public static final String CODE       = "code";
     public static final String CODE_CLASS = "codeClass";
-    public static final String NAME = "name";
-    public static final String COMMENT = "comment";
-    public static final String INTERNAL = "internal";
-    public static final String SORT = "sort";
+    public static final String NAME       = "name";
+    public static final String COMMENT    = "comment";
+    public static final String INTERNAL   = "internal";
+    public static final String SORT       = "sort";
 
     @NotNull
     @Pattern(regexp = CODE_REGEX, message = "{code.invalidCode}")
@@ -41,18 +41,22 @@ public class Code extends CoreEntity implements CodeLike {
 
     private final int sort;
 
-    public Code(final String code, final String name, final String comment, final boolean internal, final Integer codeClassId, final String codeClassName, final String codeClassDescription,
-            final int sort) {
-        this(code, name, comment, internal, codeClassId, codeClassName, codeClassDescription, sort, null, null, null, null, null);
+    public Code(final String code, final String name, final String comment, final boolean internal,
+            final Integer codeClassId, final String codeClassName, final String codeClassDescription, final int sort) {
+        this(code, name, comment, internal, codeClassId, codeClassName, codeClassDescription, sort, null, null, null,
+                null, null);
     }
 
-    public Code(final String code, final String name, final String comment, final boolean internal, final Integer codeClassId, final String codeClassName, final String codeClassDescription,
-            final int sort, final LocalDateTime created, final Integer createdBy, final LocalDateTime lastModified, final Integer lastModifiedBy, final Integer version) {
+    public Code(final String code, final String name, final String comment, final boolean internal,
+            final Integer codeClassId, final String codeClassName, final String codeClassDescription, final int sort,
+            final LocalDateTime created, final Integer createdBy, final LocalDateTime lastModified,
+            final Integer lastModifiedBy, final Integer version) {
         this.code = AssertAs.notNull(code, "code");
         this.name = name;
         this.comment = comment;
         this.internal = internal;
-        this.codeClass = new CodeClass(AssertAs.notNull(codeClassId, "codeClassId"), codeClassName, codeClassDescription);
+        this.codeClass = new CodeClass(AssertAs.notNull(codeClassId, "codeClassId"), codeClassName,
+                codeClassDescription);
         this.sort = sort;
         setCreated(created);
         setCreatedBy(createdBy);
@@ -62,11 +66,13 @@ public class Code extends CoreEntity implements CodeLike {
     }
 
     public Code(final Code from) {
-        this(from.code, from.name, from.comment, from.internal, new CodeClass(from.codeClass), from.sort, from.getCreated(), from.getCreatedBy(), from.getLastModified(), from.getLastModifiedBy(),
+        this(from.code, from.name, from.comment, from.internal, new CodeClass(from.codeClass), from.sort,
+                from.getCreated(), from.getCreatedBy(), from.getLastModified(), from.getLastModifiedBy(),
                 from.getVersion());
     }
 
-    private Code(final String code, final String name, final String comment, final boolean internal, final CodeClass codeClass, final int sort, final LocalDateTime created, final Integer createdBy,
+    private Code(final String code, final String name, final String comment, final boolean internal,
+            final CodeClass codeClass, final int sort, final LocalDateTime created, final Integer createdBy,
             final LocalDateTime lastModified, final Integer lastModifiedBy, final Integer version) {
         this.code = AssertAs.notNull(code, CODE);
         this.name = name;
@@ -85,7 +91,9 @@ public class Code extends CoreEntity implements CodeLike {
     public String getDisplayValue() {
         final StringBuilder sb = new StringBuilder();
         sb.append(name);
-        sb.append(" (").append(code).append(")");
+        sb.append(" (")
+            .append(code)
+            .append(")");
         return sb.toString();
     }
 

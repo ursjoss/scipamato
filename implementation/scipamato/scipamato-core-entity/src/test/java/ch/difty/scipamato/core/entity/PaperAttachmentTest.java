@@ -1,7 +1,11 @@
 package ch.difty.scipamato.core.entity;
 
-import static ch.difty.scipamato.core.entity.PaperAttachment.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.CREATED;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.MODIFIED;
+import static ch.difty.scipamato.core.entity.CoreEntity.CREATOR_ID;
+import static ch.difty.scipamato.core.entity.CoreEntity.MODIFIER_ID;
+import static ch.difty.scipamato.core.entity.PaperAttachment.CONTENT;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -48,8 +52,7 @@ public class PaperAttachmentTest {
 
     @Test
     public void equals() {
-        EqualsVerifier
-            .forClass(PaperAttachment.class)
+        EqualsVerifier.forClass(PaperAttachment.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(CONTENT, CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)

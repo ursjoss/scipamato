@@ -1,6 +1,39 @@
 package ch.difty.scipamato.core.entity.filter;
 
-import static ch.difty.scipamato.core.entity.Paper.*;
+import static ch.difty.scipamato.core.entity.IdScipamatoEntity.ID;
+import static ch.difty.scipamato.core.entity.Paper.AUTHORS;
+import static ch.difty.scipamato.core.entity.Paper.COMMENT;
+import static ch.difty.scipamato.core.entity.Paper.CREATED;
+import static ch.difty.scipamato.core.entity.Paper.CREATED_BY;
+import static ch.difty.scipamato.core.entity.Paper.DOI;
+import static ch.difty.scipamato.core.entity.Paper.EXPOSURE_ASSESSMENT;
+import static ch.difty.scipamato.core.entity.Paper.EXPOSURE_POLLUTANT;
+import static ch.difty.scipamato.core.entity.Paper.FIRST_AUTHOR;
+import static ch.difty.scipamato.core.entity.Paper.FIRST_AUTHOR_OVERRIDDEN;
+import static ch.difty.scipamato.core.entity.Paper.GOALS;
+import static ch.difty.scipamato.core.entity.Paper.INTERN;
+import static ch.difty.scipamato.core.entity.Paper.LAST_MOD;
+import static ch.difty.scipamato.core.entity.Paper.LAST_MOD_BY;
+import static ch.difty.scipamato.core.entity.Paper.LOCATION;
+import static ch.difty.scipamato.core.entity.Paper.MAIN_CODE_OF_CODECLASS1;
+import static ch.difty.scipamato.core.entity.Paper.METHODS;
+import static ch.difty.scipamato.core.entity.Paper.METHOD_CONFOUNDERS;
+import static ch.difty.scipamato.core.entity.Paper.METHOD_OUTCOME;
+import static ch.difty.scipamato.core.entity.Paper.METHOD_STATISTICS;
+import static ch.difty.scipamato.core.entity.Paper.METHOD_STUDY_DESIGN;
+import static ch.difty.scipamato.core.entity.Paper.NUMBER;
+import static ch.difty.scipamato.core.entity.Paper.ORIGINAL_ABSTRACT;
+import static ch.difty.scipamato.core.entity.Paper.PMID;
+import static ch.difty.scipamato.core.entity.Paper.POPULATION;
+import static ch.difty.scipamato.core.entity.Paper.POPULATION_DURATION;
+import static ch.difty.scipamato.core.entity.Paper.POPULATION_PARTICIPANTS;
+import static ch.difty.scipamato.core.entity.Paper.POPULATION_PLACE;
+import static ch.difty.scipamato.core.entity.Paper.PUBL_YEAR;
+import static ch.difty.scipamato.core.entity.Paper.RESULT;
+import static ch.difty.scipamato.core.entity.Paper.RESULT_EFFECT_ESTIMATE;
+import static ch.difty.scipamato.core.entity.Paper.RESULT_EXPOSURE_RANGE;
+import static ch.difty.scipamato.core.entity.Paper.RESULT_MEASURED_OUTCOME;
+import static ch.difty.scipamato.core.entity.Paper.TITLE;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,17 +51,24 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.SearchConditionCodeBox;
 
 /**
- * The {@link SearchCondition} is an instance of {@link ScipamatoFilter} that provides
- * accessors for all fields present in the entity {@link Paper}, but all in String form.<p>
+ * The {@link SearchCondition} is an instance of {@link ScipamatoFilter} that
+ * provides accessors for all fields present in the entity {@link Paper}, but
+ * all in String form.
+ * <p>
  *
- * The provided String values may contain query specific meta information that can be interpreted
- * by the query infrastructure to specify e.g. ranges or wildcards.<p>
+ * The provided String values may contain query specific meta information that
+ * can be interpreted by the query infrastructure to specify e.g. ranges or
+ * wildcards.
+ * <p>
  *
- * Internally it stores any of the fields that were explicitly set in Maps that can be accessed
- * to be evaluated by the query engine.<p>
+ * Internally it stores any of the fields that were explicitly set in Maps that
+ * can be accessed to be evaluated by the query engine.
+ * <p>
  *
- * <b>Note:</b> the actual ID of the {@link SearchCondition} is called {@code searchConditionId}
- * due to the name clash with its search condition id, which holds the search term for the paper id.<p>
+ * <b>Note:</b> the actual ID of the {@link SearchCondition} is called
+ * {@code searchConditionId} due to the name clash with its search condition id,
+ * which holds the search term for the paper id.
+ * <p>
  *
  * @author u.joss
  */
@@ -40,12 +80,12 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
 
     private Long searchConditionId;
 
-    private final StringSearchTerms stringSearchTerms = new StringSearchTerms();
+    private final StringSearchTerms  stringSearchTerms  = new StringSearchTerms();
     private final IntegerSearchTerms integerSearchTerms = new IntegerSearchTerms();
     private final BooleanSearchTerms booleanSearchTerms = new BooleanSearchTerms();
-    private final AuditSearchTerms auditSearchTerms = new AuditSearchTerms();
-    private final CodeBox codes = new SearchConditionCodeBox();
-    private final Set<String> removedKeys = new HashSet<>();
+    private final AuditSearchTerms   auditSearchTerms   = new AuditSearchTerms();
+    private final CodeBox            codes              = new SearchConditionCodeBox();
+    private final Set<String>        removedKeys        = new HashSet<>();
 
     public SearchCondition() {
         // default constructor
@@ -82,7 +122,8 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
             auditSearchTerms.put(ast.getFieldName(), ast);
             break;
         default:
-            throw new UnsupportedOperationException("SearchTermType." + searchTerm.getSearchTermType() + " is not supported");
+            throw new UnsupportedOperationException(
+                    "SearchTermType." + searchTerm.getSearchTermType() + " is not supported");
         }
     }
 
@@ -492,11 +533,27 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
 
     public String getDisplayValue() {
         final StringBuilder sb = new StringBuilder();
-        final String textString = stringSearchTerms.values().stream().map(StringSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
-        final String intString = integerSearchTerms.values().stream().map(IntegerSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
-        final String boolString = booleanSearchTerms.values().stream().map(BooleanSearchTerm::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER));
-        final String auditString = auditSearchTerms.values().stream().map(AuditSearchTerm::getDisplayValue).distinct().collect(Collectors.joining(JOIN_DELIMITER));
-        sb.append(Arrays.asList(textString, intString, boolString, auditString).stream().filter((String s) -> !s.isEmpty()).collect(Collectors.joining(JOIN_DELIMITER)));
+        final String textString = stringSearchTerms.values()
+            .stream()
+            .map(StringSearchTerm::getDisplayValue)
+            .collect(Collectors.joining(JOIN_DELIMITER));
+        final String intString = integerSearchTerms.values()
+            .stream()
+            .map(IntegerSearchTerm::getDisplayValue)
+            .collect(Collectors.joining(JOIN_DELIMITER));
+        final String boolString = booleanSearchTerms.values()
+            .stream()
+            .map(BooleanSearchTerm::getDisplayValue)
+            .collect(Collectors.joining(JOIN_DELIMITER));
+        final String auditString = auditSearchTerms.values()
+            .stream()
+            .map(AuditSearchTerm::getDisplayValue)
+            .distinct()
+            .collect(Collectors.joining(JOIN_DELIMITER));
+        sb.append(Arrays.asList(textString, intString, boolString, auditString)
+            .stream()
+            .filter((String s) -> !s.isEmpty())
+            .collect(Collectors.joining(JOIN_DELIMITER)));
         if (!codes.isEmpty()) {
             if (sb.length() > 0)
                 sb.append(JOIN_DELIMITER);

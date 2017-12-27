@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.entity;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.extractProperty;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,12 +17,12 @@ import ch.difty.scipamato.common.entity.CodeClassId;
 
 public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
-    private static final String VALID_AUTHORS = "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.";
+    private static final String VALID_AUTHORS                 = "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.";
     private static final String VALID_AUTHORS_WITH_COLLECTIVE = "Mehta AJ, Thun GA, Imboden M, Ferrarotti I, Keidel D, Künzli N, Kromhout H, Miedinger D, Phuleria H, Rochat T, Russi EW, Schindler C, Schwartz J, Vermeulen R, Luisetti M, Probst-Hensch N; SAPALDIA team.";
-    private static final String FIRST_AUTHOR = "Turner MC";
-    private static final String TITLE = "Title";
-    private static final String VALID_DOI = "10.1093/aje/kwu275";
-    private static final String NON_NULL_STRING = "foo";
+    private static final String FIRST_AUTHOR                  = "Turner MC";
+    private static final String TITLE                         = "Title";
+    private static final String VALID_DOI                     = "10.1093/aje/kwu275";
+    private static final String NON_NULL_STRING               = "foo";
 
     private final Paper p = new Paper();
 
@@ -83,11 +84,14 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     private void validateAndAssertFailure(final String field, final Object invalidValue, final String msg) {
         validate(p);
 
-        assertThat(getViolations()).isNotEmpty().hasSize(1);
-        ConstraintViolation<Paper> violation = getViolations().iterator().next();
+        assertThat(getViolations()).isNotEmpty()
+            .hasSize(1);
+        ConstraintViolation<Paper> violation = getViolations().iterator()
+            .next();
         assertThat(violation.getMessageTemplate()).isEqualTo(msg);
         assertThat(violation.getInvalidValue()).isEqualTo(invalidValue);
-        assertThat(violation.getPropertyPath().toString()).isEqualTo(field);
+        assertThat(violation.getPropertyPath()
+            .toString()).isEqualTo(field);
     }
 
     private void verifyFailedAuthorValidation(final String invalidValue) {
@@ -295,7 +299,8 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @Test
     public void addingCode_addsItAndAllowsToRetrieveIt() {
-        assertThat(p.getCodes()).isNotNull().isEmpty();
+        assertThat(p.getCodes()).isNotNull()
+            .isEmpty();
         p.addCode(makeCode(1, "C"));
 
         assertThat(extractProperty(Code.CODE).from(p.getCodes())).containsExactly("1C");
@@ -313,7 +318,8 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(extractProperty(Code.CODE).from(p.getCodes())).containsExactly("1C", "1D", "2A");
 
         p.clearCodes();
-        assertThat(p.getCodes()).isNotNull().isEmpty();
+        assertThat(p.getCodes()).isNotNull()
+            .isEmpty();
     }
 
     @Test
@@ -331,11 +337,13 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @Test
     public void clearingCode_delegatesClearingToCode() {
-        assertThat(p.getCodes()).isNotNull().isEmpty();
+        assertThat(p.getCodes()).isNotNull()
+            .isEmpty();
         p.addCode(makeCode(CodeClassId.CC1.getId(), "C"));
         assertThat(p.getCodes()).isNotEmpty();
         p.clearCodesOf(CodeClassId.CC1);
-        assertThat(p.getCodes()).isNotNull().isEmpty();
+        assertThat(p.getCodes()).isNotNull()
+            .isEmpty();
     }
 
     @Test
@@ -384,12 +392,14 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @Test
     public void newPaper_hasNonNullButEmptyAttachments() {
-        assertThat(p.getAttachments()).isNotNull().isEmpty();
+        assertThat(p.getAttachments()).isNotNull()
+            .isEmpty();
     }
 
     @Test
     public void cannotAddAttachment_viaGetter() {
-        p.getAttachments().add(new PaperAttachment());
+        p.getAttachments()
+            .add(new PaperAttachment());
         assertThat(p.getAttachments()).isEmpty();
     }
 
@@ -401,15 +411,18 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @Test
     public void cannotModifyAttachmentsAfterSettig() {
-        List<PaperAttachment> attachments = new ArrayList<>(Arrays.asList(new PaperAttachment(), new PaperAttachment()));
+        List<PaperAttachment> attachments = new ArrayList<>(
+                Arrays.asList(new PaperAttachment(), new PaperAttachment()));
         p.setAttachments(attachments);
         attachments.add(new PaperAttachment());
-        assertThat(p.getAttachments().size()).isLessThan(attachments.size());
+        assertThat(p.getAttachments()
+            .size()).isLessThan(attachments.size());
     }
 
     @Test
     public void canUnsetAttachments_withNullParameter() {
-        List<PaperAttachment> attachments = new ArrayList<>(Arrays.asList(new PaperAttachment(), new PaperAttachment()));
+        List<PaperAttachment> attachments = new ArrayList<>(
+                Arrays.asList(new PaperAttachment(), new PaperAttachment()));
         p.setAttachments(attachments);
         assertThat(p.getAttachments()).hasSize(2);
         p.setAttachments(null);
@@ -418,7 +431,8 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @Test
     public void canUnsetAttachments_withEmptyListParameter() {
-        List<PaperAttachment> attachments = new ArrayList<>(Arrays.asList(new PaperAttachment(), new PaperAttachment()));
+        List<PaperAttachment> attachments = new ArrayList<>(
+                Arrays.asList(new PaperAttachment(), new PaperAttachment()));
         p.setAttachments(attachments);
         assertThat(p.getAttachments()).hasSize(2);
         p.setAttachments(new ArrayList<PaperAttachment>());
@@ -427,7 +441,8 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @SuppressWarnings("unlikely-arg-type")
     @Test
-    // Note: Did not get this to run with equalsverifier due to 'Abstract delegation: Paper's hashCode method delegates to an abstract method' on codes
+    // Note: Did not get this to run with equalsverifier due to 'Abstract
+    // delegation: Paper's hashCode method delegates to an abstract method' on codes
     public void equalityAndHashCode() {
         Paper p1 = new Paper();
         p1.setId(1l);
