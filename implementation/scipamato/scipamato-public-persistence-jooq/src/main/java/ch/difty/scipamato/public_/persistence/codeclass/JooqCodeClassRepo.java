@@ -1,6 +1,6 @@
 package ch.difty.scipamato.public_.persistence.codeclass;
 
-import static ch.difty.scipamato.public_.db.tables.CodeClass.*;
+import static ch.difty.scipamato.public_.db.tables.CodeClass.CODE_CLASS;
 
 import java.util.List;
 
