@@ -1,6 +1,6 @@
 package ch.difty.scipamato.public_.entity;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
 

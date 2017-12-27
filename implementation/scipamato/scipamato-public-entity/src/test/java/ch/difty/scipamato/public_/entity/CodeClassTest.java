@@ -1,6 +1,6 @@
 package ch.difty.scipamato.public_.entity;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
@@ -9,7 +9,12 @@ public class CodeClassTest extends PublicEntityTest<CodeClass> {
 
     @Override
     protected CodeClass newEntity() {
-        return CodeClass.builder().codeClassId(1).langCode("lc").name("name").description("description").build();
+        return CodeClass.builder()
+            .codeClassId(1)
+            .langCode("lc")
+            .name("name")
+            .description("description")
+            .build();
     }
 
     @Override
@@ -27,8 +32,7 @@ public class CodeClassTest extends PublicEntityTest<CodeClass> {
 
     @Override
     protected void verifyEquals() {
-        EqualsVerifier
-            .forClass(CodeClass.class)
+        EqualsVerifier.forClass(CodeClass.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(CodeClass.CREATED, CodeClass.MODIFIED)
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)

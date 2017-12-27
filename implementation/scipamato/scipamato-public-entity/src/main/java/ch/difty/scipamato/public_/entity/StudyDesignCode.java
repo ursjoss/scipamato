@@ -3,10 +3,11 @@ package ch.difty.scipamato.public_.entity;
 /**
  * StudyDesignCode contains aggregated Codes of Code Class 5:
  * <ol>
- * <li> Experimental Studies: Codes 5A + 5B + 5C </li>
- * <li> Epidemiological Studies: Codes 5E + 5F + 5G + 5H + 5I </li>
- * <li> Overview Methodology: Codes 5U + 5M </li>
+ * <li>Experimental Studies: Codes 5A + 5B + 5C</li>
+ * <li>Epidemiological Studies: Codes 5E + 5F + 5G + 5H + 5I</li>
+ * <li>Overview Methodology: Codes 5U + 5M</li>
  * </ol>
+ *
  * @author u.joss
  */
 public enum StudyDesignCode {
