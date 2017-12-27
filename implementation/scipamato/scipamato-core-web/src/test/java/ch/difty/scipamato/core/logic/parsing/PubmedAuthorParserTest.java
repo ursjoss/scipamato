@@ -8,14 +8,14 @@ import org.junit.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
 
-public class DefaultAuthorParserTest {
+public class PubmedAuthorParserTest {
 
-    private DefaultAuthorParser p;
+    private PubmedAuthorParser p;
 
     @Test
     public void degenerateConstruction() {
         try {
-            new DefaultAuthorParser(null);
+            new PubmedAuthorParser(null);
             fail("Should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(NullArgumentException.class)
@@ -26,12 +26,12 @@ public class DefaultAuthorParserTest {
     @Test
     public void canReturnOriginalAuthorsString() {
         String authorsString = "Bond J.";
-        p = new DefaultAuthorParser(authorsString);
+        p = new PubmedAuthorParser(authorsString);
         assertThat(p.getAuthorsString()).isEqualTo(authorsString);
     }
 
     private void assertFirstAuthorOf(String input, String expected) {
-        p = new DefaultAuthorParser(input);
+        p = new PubmedAuthorParser(input);
         assertThat(p.getFirstAuthor()
             .orElse("n.a.")).isEqualTo(expected);
     }
@@ -65,7 +65,7 @@ public class DefaultAuthorParserTest {
 
     @Test
     public void canParseNameWithCardinality() {
-        p = new DefaultAuthorParser("Ln FN 1st, Ln FN 2nd, Ln FN 3rd, Ln FN 4th, Ln FN 5th, Ln FN 100th, Ln FN.");
+        p = new PubmedAuthorParser("Ln FN 1st, Ln FN 2nd, Ln FN 3rd, Ln FN 4th, Ln FN 5th, Ln FN 100th, Ln FN.");
         assertThat(p.getFirstAuthor()
             .orElse("n.a.")).isEqualTo("Ln");
         assertThat(p.getAuthors()
@@ -99,7 +99,7 @@ public class DefaultAuthorParserTest {
 
     @Test
     public void canReturnAuthors() {
-        p = new DefaultAuthorParser(
+        p = new PubmedAuthorParser(
                 "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Krewsky D, Beckermann BS, Samet JM.");
         assertThat(p.getAuthors()
             .map(Author::getLastName)
@@ -112,7 +112,7 @@ public class DefaultAuthorParserTest {
 
     @Test
     public void canDoUmlaute() {
-        p = new DefaultAuthorParser("Flückiger P, Bäni HU.");
+        p = new PubmedAuthorParser("Flückiger P, Bäni HU.");
         assertThat(p.getAuthors()
             .map(Author::getLastName)
             .collect(toList())).containsExactly("Flückiger", "Bäni");

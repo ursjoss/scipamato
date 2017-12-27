@@ -8,12 +8,12 @@ package ch.difty.scipamato.core.config;
 public enum AuthorParserStrategy {
 
     /**
-     * The only {@link AuthorParserStrategy}
+     * The {@link AuthorParserStrategy} interpreting PubMed Authors string
      */
-    DEFAULT;
+    PUBMED;
 
     public static AuthorParserStrategy fromProperty(final String propertyValue) {
-        return PropertyUtils.fromProperty(propertyValue, values(), DEFAULT,
+        return PropertyUtils.fromProperty(propertyValue, values(), PUBMED,
             ApplicationCoreProperties.AUTHOR_PARSER_FACTORY);
     }
 }

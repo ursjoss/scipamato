@@ -11,15 +11,13 @@ import java.util.stream.Stream;
 import ch.difty.scipamato.common.AssertAs;
 
 /**
- * Utility class to lex and parse Author strings. From the list of parsed
- * authors it can return the first author.
+ * Utility class to lex and parse Author strings in the PubMed format. From the
+ * list of parsed authors it can return the first author.
  * <p>
  *
- * An example of a typical author string is:
- * <p>
+ * An example of a typical PubMed author string is:
  *
  * {@code Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.}
- * <p>
  *
  * <ul>
  * <li>An author can have one or more names + initials.
@@ -29,14 +27,14 @@ import ch.difty.scipamato.common.AssertAs;
  *
  * @author u.joss
  */
-public class DefaultAuthorParser implements AuthorParser {
+public class PubmedAuthorParser implements AuthorParser {
 
     private static final Pattern CARDINALITY_PATTERN = Pattern.compile("(?:1st|2nd|3rd)|(?:\\d+th)|(?:Jr)");
 
     private final String       authorsString;
     private final List<Author> authors;
 
-    public DefaultAuthorParser(final String authorsString) {
+    public PubmedAuthorParser(final String authorsString) {
         this.authorsString = AssertAs.notNull(authorsString, "authorsString")
             .trim();
 

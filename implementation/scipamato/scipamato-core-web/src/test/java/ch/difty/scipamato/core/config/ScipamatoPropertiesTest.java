@@ -30,7 +30,7 @@ public class ScipamatoPropertiesTest {
 
     @Test
     public void authorParserStrategy_isDefault() {
-        assertThat(sp.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.DEFAULT);
+        assertThat(sp.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.PUBMED);
     }
 
     @Test

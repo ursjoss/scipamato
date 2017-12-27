@@ -30,7 +30,7 @@ public class ScipamatoCorePropertiesIntegrationTest {
 
     @Test
     public void gettingDefaultStrategy() {
-        assertThat(appProperties.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.DEFAULT);
+        assertThat(appProperties.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.PUBMED);
     }
 
     @Test

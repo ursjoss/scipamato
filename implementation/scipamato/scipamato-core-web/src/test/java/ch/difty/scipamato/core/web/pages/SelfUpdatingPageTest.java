@@ -20,7 +20,7 @@ public abstract class SelfUpdatingPageTest<T extends BasePage<?>> extends BasePa
 
     @Override
     protected final void setUpHook() {
-        when(applicationProperties.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.DEFAULT);
+        when(applicationProperties.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.PUBMED);
         when(applicationProperties.getDefaultLocalization()).thenReturn("de");
         when(applicationProperties.getBrand()).thenReturn("SciPaMaTo");
         when(applicationProperties.getMinimumPaperNumberToBeRecycled()).thenReturn(7l);

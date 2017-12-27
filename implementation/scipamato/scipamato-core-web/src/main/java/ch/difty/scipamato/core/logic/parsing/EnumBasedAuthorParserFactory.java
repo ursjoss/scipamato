@@ -30,9 +30,9 @@ public class EnumBasedAuthorParserFactory implements AuthorParserFactory {
         AssertAs.notNull(authorString, "authorString");
 
         switch (authorParserStrategy) {
-        case DEFAULT:
+        case PUBMED:
         default:
-            return new DefaultAuthorParser(authorString);
+            return new PubmedAuthorParser(authorString);
         }
     }
 

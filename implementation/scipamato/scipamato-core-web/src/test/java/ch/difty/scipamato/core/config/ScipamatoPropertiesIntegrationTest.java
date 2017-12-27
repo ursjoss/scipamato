@@ -34,7 +34,7 @@ public class ScipamatoPropertiesIntegrationTest {
 
     @Test
     public void authorParser_isDefault() {
-        assertThat(sp.getAuthorParser()).isEqualTo("DEFAULT");
+        assertThat(sp.getAuthorParser()).isEqualTo("PUBMED");
     }
 
     @Test

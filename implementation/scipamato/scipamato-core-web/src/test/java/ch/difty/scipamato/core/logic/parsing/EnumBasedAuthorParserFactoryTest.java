@@ -26,7 +26,7 @@ public class EnumBasedAuthorParserFactoryTest {
 
     @Before
     public void setUp() {
-        when(appProperties.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.DEFAULT);
+        when(appProperties.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.PUBMED);
         factory = new EnumBasedAuthorParserFactory(appProperties);
     }
 
@@ -49,7 +49,7 @@ public class EnumBasedAuthorParserFactoryTest {
     @Test
     public void cratingParser_withNoSetting_usesDefaultAuthorParser() {
         AuthorParser parser = factory.createParser("Turner MC.");
-        assertThat(parser).isInstanceOf(DefaultAuthorParser.class);
+        assertThat(parser).isInstanceOf(PubmedAuthorParser.class);
         verify(appProperties).getAuthorParserStrategy();
     }
 

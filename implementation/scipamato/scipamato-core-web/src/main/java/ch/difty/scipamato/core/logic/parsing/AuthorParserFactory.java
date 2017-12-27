@@ -12,7 +12,7 @@ public interface AuthorParserFactory {
 
     /**
      * Creates an implementation of an {@link AuthorParser} depending on the
-     * provided {@code author string}. Returns a {@code DEFAULT}
+     * provided {@code author string}. Returns a {@code PUBMED}
      * {@link AuthorParser} if the {@code authorString} is null or undefined.
      *
      * @param authorString
