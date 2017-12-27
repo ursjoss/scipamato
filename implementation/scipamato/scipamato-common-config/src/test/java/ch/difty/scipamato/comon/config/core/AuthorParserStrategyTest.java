@@ -1,7 +1,7 @@
 package ch.difty.scipamato.comon.config.core;
 
-import static ch.difty.scipamato.common.config.core.AuthorParserStrategy.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.common.config.core.AuthorParserStrategy.DEFAULT;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 

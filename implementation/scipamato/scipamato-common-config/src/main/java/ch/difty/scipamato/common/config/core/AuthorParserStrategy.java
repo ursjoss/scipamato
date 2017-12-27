@@ -15,6 +15,7 @@ public enum AuthorParserStrategy {
     DEFAULT;
 
     public static AuthorParserStrategy fromProperty(final String propertyValue) {
-        return PropertyUtils.fromProperty(propertyValue, values(), DEFAULT, ApplicationProperties.AUTHOR_PARSER_FACTORY);
+        return PropertyUtils.fromProperty(propertyValue, values(), DEFAULT,
+            ApplicationProperties.AUTHOR_PARSER_FACTORY);
     }
 }

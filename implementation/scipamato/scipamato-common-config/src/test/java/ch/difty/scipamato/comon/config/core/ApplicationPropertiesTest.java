@@ -1,6 +1,6 @@
 package ch.difty.scipamato.comon.config.core;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -30,7 +30,8 @@ public class ApplicationPropertiesTest {
 
     @Test
     public void assertMinimumPaperNumberToBeRecycled() {
-        assertThat(ApplicationProperties.PAPER_NUMBER_MIN_TO_RECYCLE).isEqualTo("scipamato.paper-number-minimum-to-be-recycled");
+        assertThat(ApplicationProperties.PAPER_NUMBER_MIN_TO_RECYCLE)
+            .isEqualTo("scipamato.paper-number-minimum-to-be-recycled");
     }
 
     @Test
