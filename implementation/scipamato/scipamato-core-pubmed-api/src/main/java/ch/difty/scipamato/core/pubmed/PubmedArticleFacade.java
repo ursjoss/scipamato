@@ -9,8 +9,9 @@ import org.springframework.util.StringUtils;
 import lombok.Data;
 
 /**
- * Facade encapsulating both {@link PubmedArticle}s and {@link PubmedBookArticle}s, making the
- * relevant information accessible through simple getters.
+ * Facade encapsulating both {@link PubmedArticle}s and
+ * {@link PubmedBookArticle}s, making the relevant information accessible
+ * through simple getters.
  *
  * @author u.joss
  */
@@ -29,19 +30,24 @@ public abstract class PubmedArticleFacade {
     private String originalAbstract;
 
     /**
-     * Instantiate an instance of {@link ScipamatoPubmedArticle} if the provided object is an instance of {@link PubmedArticle}
-     * or an instance of {@link ScipamatoPubmedBookArticle} if the provided object is an instance of {@link PubmedBookArticle}.
+     * Instantiate an instance of {@link ScipamatoPubmedArticle} if the provided
+     * object is an instance of {@link PubmedArticle} or an instance of
+     * {@link ScipamatoPubmedBookArticle} if the provided object is an instance of
+     * {@link PubmedBookArticle}.
      *
      * @param pubmedArticleOrPubmedBookArticle
      * @return a derivative of {@link PubmedArticleFacade}
-     * @throws IllegalArgumentException - if the parameter is of any other class than one of the two managed ones. 
+     * @throws IllegalArgumentException
+     *             - if the parameter is of any other class than one of the two
+     *             managed ones.
      */
     public static PubmedArticleFacade of(java.lang.Object pubmedArticleOrPubmedBookArticle) {
         if (pubmedArticleOrPubmedBookArticle instanceof PubmedArticle)
             return new ScipamatoPubmedArticle((PubmedArticle) pubmedArticleOrPubmedBookArticle);
         else if (pubmedArticleOrPubmedBookArticle instanceof PubmedBookArticle)
             return new ScipamatoPubmedBookArticle((PubmedBookArticle) pubmedArticleOrPubmedBookArticle);
-        throw new IllegalArgumentException("Cannot instantiate ScipamatoArticle from provided object " + pubmedArticleOrPubmedBookArticle.toString());
+        throw new IllegalArgumentException("Cannot instantiate ScipamatoArticle from provided object "
+                + pubmedArticleOrPubmedBookArticle.toString());
     }
 
     protected String getAuthorsFrom(final AuthorList authorList) {
@@ -57,7 +63,8 @@ public abstract class PubmedArticleFacade {
             if (auth.length() > 0)
                 names.add(auth.toString());
         }
-        return names.stream().collect(Collectors.joining(", ", "", ""));
+        return names.stream()
+            .collect(Collectors.joining(", ", "", ""));
     }
 
     private StringBuilder parseIndividualAuthor(final Author author) {
@@ -84,7 +91,8 @@ public abstract class PubmedArticleFacade {
             if (asb.length() > 0)
                 names.add(asb.toString());
         }
-        return names.stream().collect(Collectors.joining(", ", "", ""));
+        return names.stream()
+            .collect(Collectors.joining(", ", "", ""));
     }
 
     private StringBuilder parseCollectiveAuthor(final Author author) {
@@ -112,8 +120,7 @@ public abstract class PubmedArticleFacade {
     }
 
     protected String getFirstAuthorFrom(final AuthorList authorList) {
-        return authorList
-            .getAuthor()
+        return authorList.getAuthor()
             .stream()
             .map(Author::getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName)
             .flatMap(List<java.lang.Object>::stream)
@@ -126,7 +133,12 @@ public abstract class PubmedArticleFacade {
 
     protected String getDoiFromArticleIdList(ArticleIdList articleIdList) {
         if (articleIdList != null) {
-            return articleIdList.getArticleId().stream().filter(ai -> "doi".equals(ai.getIdType())).map(ArticleId::getvalue).findFirst().orElse(null);
+            return articleIdList.getArticleId()
+                .stream()
+                .filter(ai -> "doi".equals(ai.getIdType()))
+                .map(ArticleId::getvalue)
+                .findFirst()
+                .orElse(null);
         }
         return null;
     }
@@ -134,7 +146,10 @@ public abstract class PubmedArticleFacade {
     protected String getAbstractFrom(final Abstract abstr) {
         if (abstr == null)
             return null;
-        return abstr.getAbstractText().stream().map(this::concatenateAbstract).collect(Collectors.joining("\n"));
+        return abstr.getAbstractText()
+            .stream()
+            .map(this::concatenateAbstract)
+            .collect(Collectors.joining("\n"));
     }
 
     private String concatenateAbstract(AbstractText a) {
