@@ -22,7 +22,9 @@ public class TestAbstractPage extends AbstractPage<TestRecord> {
     @Override
     protected void addLinksTo(Navbar nb) {
         addPageLink(nb, TestHomePage.class, "menu.home", GlyphIconType.home, Navbar.ComponentPosition.LEFT);
-        addExternalLink(nb, "https://github.com/ursjoss/scipamato/wiki", new StringResourceModel("menu.help", this, null).getString(), GlyphIconType.questionsign, Navbar.ComponentPosition.RIGHT);
+        addExternalLink(nb, "https://github.com/ursjoss/scipamato/wiki",
+            new StringResourceModel("menu.help", this, null).getString(), GlyphIconType.questionsign,
+            Navbar.ComponentPosition.RIGHT);
     }
 
     @Override

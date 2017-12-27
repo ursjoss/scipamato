@@ -1,7 +1,7 @@
 package ch.difty.scipamato.common.web.component.table.column;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.DataGridView;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
@@ -22,7 +22,7 @@ public class ClickablePropertyColumnTest extends WicketBaseTest {
     private SerializableConsumer<IModel<String>> consumerMock;
 
     private IModel<String> displayModel = new Model<String>("foo");
-    private String property = "prop";
+    private String         property     = "prop";
 
     private String clickPerformed = null;
 
@@ -49,7 +49,8 @@ public class ClickablePropertyColumnTest extends WicketBaseTest {
     }
 
     private void setVariable(IModel<TestRecord> trModel) {
-        clickPerformed = trModel.getObject().toString();
+        clickPerformed = trModel.getObject()
+            .toString();
     }
 
     private void assertComponents() {

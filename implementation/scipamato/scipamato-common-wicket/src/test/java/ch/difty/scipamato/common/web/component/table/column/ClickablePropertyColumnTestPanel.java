@@ -37,7 +37,8 @@ class ClickablePropertyColumnTestPanel extends Panel {
         add(new DefaultDataTable<TestRecord, String>("table", columns, new TestDataProvider(), 10));
     }
 
-    private IColumn<TestRecord, String> makeClickableColumn(String id, SerializableConsumer<IModel<TestRecord>> consumer) {
+    private IColumn<TestRecord, String> makeClickableColumn(String id,
+            SerializableConsumer<IModel<TestRecord>> consumer) {
         return new ClickablePropertyColumn<TestRecord, String>(Model.of("linkIconColumnLabel"), "name", consumer) {
             private static final long serialVersionUID = 1L;
         };
@@ -49,7 +50,8 @@ class ClickablePropertyColumnTestPanel extends Panel {
 
         @Override
         public Iterator<TestRecord> iterator(long first, long count) {
-            return Arrays.asList(new TestRecord(1, "foo")).iterator();
+            return Arrays.asList(new TestRecord(1, "foo"))
+                .iterator();
         }
 
         @Override

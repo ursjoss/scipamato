@@ -29,7 +29,7 @@ public abstract class LinkIconPanel extends Panel {
 
     private static final long serialVersionUID = 1L;
 
-    private static final String ID_LINK = "link";
+    private static final String ID_LINK  = "link";
     private static final String ID_IMAGE = "image";
 
     private final IModel<String> titleModel;

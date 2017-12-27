@@ -1,6 +1,6 @@
 package ch.difty.scipamato.common.web;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;

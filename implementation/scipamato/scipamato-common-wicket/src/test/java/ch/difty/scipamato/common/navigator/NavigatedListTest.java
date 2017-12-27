@@ -1,6 +1,6 @@
 package ch.difty.scipamato.common.navigator;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import ch.difty.scipamato.common.NullArgumentException;
 
 public class NavigatedListTest {
 
-    private final List<Long> ids = new ArrayList<>(Arrays.asList(13l, 2l, 5l, 27l, 7l, 3l, 30l));
+    private final List<Long>          ids           = new ArrayList<>(Arrays.asList(13l, 2l, 5l, 27l, 7l, 3l, 30l));
     private final NavigatedList<Long> navigatedList = new NavigatedList<Long>(ids);
 
     @Test(expected = NullArgumentException.class)
@@ -38,13 +38,15 @@ public class NavigatedListTest {
     @Test
     public void doesNotAcceptNullValues() {
         NavigatedList<Long> nav = new NavigatedList<Long>(Arrays.asList(13l, 2l, null, 5l));
-        assertThat(nav.getItems()).containsExactly(13l, 2l, 5l).doesNotContain((Long) null);
+        assertThat(nav.getItems()).containsExactly(13l, 2l, 5l)
+            .doesNotContain((Long) null);
     }
 
     @Test
     public void doesNotAcceptDuplicateValues() {
         NavigatedList<Long> nav = new NavigatedList<Long>(Arrays.asList(13l, 2l, 2l, 5l));
-        assertThat(nav.getItems()).hasSize(3).containsExactly(13l, 2l, 5l);
+        assertThat(nav.getItems()).hasSize(3)
+            .containsExactly(13l, 2l, 5l);
     }
 
     @Test
@@ -60,7 +62,8 @@ public class NavigatedListTest {
 
     @Test
     public void cannotModifyItemsOfResultSet() {
-        navigatedList.getItems().add(100l);
+        navigatedList.getItems()
+            .add(100l);
         assertThat(navigatedList.getItems()).containsExactlyElementsOf(ids);
     }
 

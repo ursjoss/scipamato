@@ -1,7 +1,7 @@
 package ch.difty.scipamato.common.web.event;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.junit.After;
@@ -40,7 +40,9 @@ public class WicketEventTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(WicketEvent.class).suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(WicketEvent.class)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 
     @Test

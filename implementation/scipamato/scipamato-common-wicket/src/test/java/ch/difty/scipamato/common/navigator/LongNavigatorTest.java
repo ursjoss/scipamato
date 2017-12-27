@@ -1,6 +1,7 @@
 package ch.difty.scipamato.common.navigator;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -123,7 +124,8 @@ public class LongNavigatorTest {
             nm.setFocusToItem(100l);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class).hasMessage("Cannot set focus to item that is not part of the managed list (item 100).");
+            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Cannot set focus to item that is not part of the managed list (item 100).");
         }
     }
 }

@@ -1,7 +1,8 @@
 package ch.difty.scipamato.common.web.component.table.column;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -19,15 +20,15 @@ public class ClickablePropertyColumn2Test {
     @Mock
     private SerializableBiConsumer<IModel<String>, Integer> biConsumerMock;
     @Mock
-    private SerializableSupplier<Integer> supplierMock;
+    private SerializableSupplier<Integer>                   supplierMock;
 
     private IModel<String> displayModel = new Model<String>("foo");
-    private String sort = "sort";
-    private String property = "prop";
+    private String         sort         = "sort";
+    private String         property     = "prop";
 
     private ClickablePropertyColumn2<String, String, Integer> c;
-    private final int suppliedValue = 5;
-    Model<String> clickModel = Model.of("bar");
+    private final int                                         suppliedValue = 5;
+    Model<String>                                             clickModel    = Model.of("bar");
 
     @Test
     public void testOnClick_withSortProperty() {
