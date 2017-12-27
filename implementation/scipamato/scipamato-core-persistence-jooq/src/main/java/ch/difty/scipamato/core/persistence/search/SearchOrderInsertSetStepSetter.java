@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.search;
 
-import static ch.difty.scipamato.core.db.tables.SearchOrder.*;
+import static ch.difty.scipamato.core.db.tables.SearchOrder.SEARCH_ORDER;
 
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
@@ -13,7 +13,8 @@ import ch.difty.scipamato.core.entity.filter.SearchCondition;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 
 /**
- * The insert step setter used for inserting new {@link SearchOrder}s.<p>
+ * The insert step setter used for inserting new {@link SearchOrder}s.
+ * <p>
  *
  * <b>Note:</b> the {@link SearchCondition}s are not inserted here.
  *
@@ -24,7 +25,8 @@ public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<Searc
 
     /** {@inheritDoc} */
     @Override
-    public InsertSetMoreStep<SearchOrderRecord> setNonKeyFieldsFor(InsertSetStep<SearchOrderRecord> step, SearchOrder e) {
+    public InsertSetMoreStep<SearchOrderRecord> setNonKeyFieldsFor(InsertSetStep<SearchOrderRecord> step,
+            SearchOrder e) {
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
 

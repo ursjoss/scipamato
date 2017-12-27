@@ -18,7 +18,8 @@ import ch.difty.scipamato.core.persistence.user.UserRepository;
  * @author u.joss
  */
 @Service
-public class JooqPaperSlimService extends JooqReadOnlyService<Long, PaperSlim, PaperFilter, PaperSlimRepository> implements PaperSlimService {
+public class JooqPaperSlimService extends JooqReadOnlyService<Long, PaperSlim, PaperFilter, PaperSlimRepository>
+        implements PaperSlimService {
 
     private static final long serialVersionUID = 1L;
 

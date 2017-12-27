@@ -1,8 +1,14 @@
 package ch.difty.scipamato.core.persistence.search;
 
-import static ch.difty.scipamato.core.db.tables.SearchOrder.*;
-import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.core.db.tables.SearchOrder.SEARCH_ORDER;
+import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.GLOBAL;
+import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.ID;
+import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.NAME;
+import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.OWNER;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.mockito.Matchers;
@@ -52,8 +58,10 @@ public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<
 
     @Override
     protected void setStepFixtureAudit() {
-        when(getMoreStep().set(SEARCH_ORDER.CREATED_BY, SearchOrderRecordMapperTest.CREATED_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SEARCH_ORDER.LAST_MODIFIED_BY, SearchOrderRecordMapperTest.LAST_MOD_BY)).thenReturn(getMoreStep());
+        when(getMoreStep().set(SEARCH_ORDER.CREATED_BY, SearchOrderRecordMapperTest.CREATED_BY))
+            .thenReturn(getMoreStep());
+        when(getMoreStep().set(SEARCH_ORDER.LAST_MODIFIED_BY, SearchOrderRecordMapperTest.LAST_MOD_BY))
+            .thenReturn(getMoreStep());
     }
 
     @Override

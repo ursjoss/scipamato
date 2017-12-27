@@ -1,7 +1,12 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder;
 
-import static ch.difty.scipamato.core.entity.filter.StringSearchTerm.MatchType.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.core.entity.filter.StringSearchTerm.MatchType.CONTAINS;
+import static ch.difty.scipamato.core.entity.filter.StringSearchTerm.MatchType.EQUALS;
+import static ch.difty.scipamato.core.entity.filter.StringSearchTerm.MatchType.LENGTH;
+import static ch.difty.scipamato.core.entity.filter.StringSearchTerm.MatchType.LIKE;
+import static ch.difty.scipamato.core.entity.filter.StringSearchTerm.MatchType.NONE;
+import static ch.difty.scipamato.core.entity.filter.StringSearchTerm.MatchType.REGEX;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Collectors;
 
@@ -110,9 +115,14 @@ public class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluato
     @Parameters(method = "stringParameters")
     public void stringTest(String rawSearchTerm, String tokenString, String condition, MatchType type) {
         final StringSearchTerm st = makeSearchTerm(rawSearchTerm);
-        assertThat(st.getTokens().stream().map(Token::toString).collect(Collectors.joining())).isEqualTo(tokenString);
+        assertThat(st.getTokens()
+            .stream()
+            .map(Token::toString)
+            .collect(Collectors.joining())).isEqualTo(tokenString);
 
-        assertThat(st.getTokens().get(0).getType().matchType).isEqualTo(type);
+        assertThat(st.getTokens()
+            .get(0)
+            .getType().matchType).isEqualTo(type);
 
         final StringSearchTermEvaluator ste = getEvaluator();
         final Condition s = ste.evaluate(st);

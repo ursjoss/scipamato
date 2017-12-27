@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.persistence;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 import java.sql.Timestamp;
 
@@ -14,11 +14,11 @@ import ch.difty.scipamato.core.entity.CoreEntity;
 
 public abstract class RecordMapperTest<R extends Record, E extends CoreEntity> {
 
-    public static final int VERSION = 1;
-    public static final Timestamp CREATED = new Timestamp(1469999999999l);
-    public static final Integer CREATED_BY = 1;
-    public static final Timestamp LAST_MOD = new Timestamp(1479999999999l);
-    public static final Integer LAST_MOD_BY = 2;
+    public static final int       VERSION     = 1;
+    public static final Timestamp CREATED     = new Timestamp(1469999999999l);
+    public static final Integer   CREATED_BY  = 1;
+    public static final Timestamp LAST_MOD    = new Timestamp(1479999999999l);
+    public static final Integer   LAST_MOD_BY = 2;
 
     private final RecordMapper<R, E> mapper = getMapper();
 
@@ -52,13 +52,12 @@ public abstract class RecordMapperTest<R extends Record, E extends CoreEntity> {
     }
 
     /**
-     * Create the record and set its field (except for the audit fields, which are set separately).
+     * Create the record and set its field (except for the audit fields, which are
+     * set separately).
      */
     protected abstract R makeRecord();
 
     /**
-     * @param set the audit fields into the record, typically as such:
-     *
      * <code><pre>
      *  record.setCreated(CREATED);
      *  record.setCreatedBy(CREATED_BY);
@@ -66,11 +65,15 @@ public abstract class RecordMapperTest<R extends Record, E extends CoreEntity> {
      *  record.setLastModifiedBy(LAST_MOD_BY);
      *  record.setVersion(VERSION);
      *  </pre></code>
+     *
+     * @param set
+     *            the audit fields into the record, typically as such:
      */
     protected abstract void setAuditFieldsIn(R record);
 
     /**
      * Assert non-audit fields of entity (audit fields are asserted separately)
+     *
      * @param entity
      */
     protected abstract void assertEntity(E entity);

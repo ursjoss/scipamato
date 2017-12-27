@@ -1,8 +1,21 @@
 package ch.difty.scipamato.core.persistence.user;
 
-import static ch.difty.scipamato.core.db.tables.ScipamatoUser.*;
-import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
+import static ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED;
+import static ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED_BY;
+import static ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD;
+import static ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY;
+import static ch.difty.scipamato.core.persistence.RecordMapperTest.VERSION;
+import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.EMAIL;
+import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.ENABLED;
+import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.FIRST_NAME;
+import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.ID;
+import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.LAST_NAME;
+import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.PASSWORD;
+import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.USER_NAME;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import org.mockito.Mock;
 

@@ -1,8 +1,10 @@
 package ch.difty.scipamato.core.persistence.paper;
 
-import static ch.difty.scipamato.core.db.Tables.*;
-import static ch.difty.scipamato.core.persistence.TestDbConstants.*;
-import static org.junit.Assert.*;
+import static ch.difty.scipamato.core.db.Tables.PAPER;
+import static ch.difty.scipamato.core.persistence.TestDbConstants.MAX_ID_PREPOPULATED;
+import static ch.difty.scipamato.core.persistence.TestDbConstants.RECORD_COUNT_PREPOPULATED;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -32,7 +34,9 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
     @After
     public void teardown() {
         // Delete all books that were created in any test
-        dsl.delete(PAPER).where(PAPER.ID.gt(MAX_ID_PREPOPULATED)).execute();
+        dsl.delete(PAPER)
+            .where(PAPER.ID.gt(MAX_ID_PREPOPULATED))
+            .execute();
     }
 
     @Test

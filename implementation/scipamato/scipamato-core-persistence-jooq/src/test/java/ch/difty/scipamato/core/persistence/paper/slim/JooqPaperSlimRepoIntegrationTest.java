@@ -1,7 +1,8 @@
 package ch.difty.scipamato.core.persistence.paper.slim;
 
-import static ch.difty.scipamato.core.persistence.TestDbConstants.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.core.persistence.TestDbConstants.MAX_ID_PREPOPULATED;
+import static ch.difty.scipamato.core.persistence.TestDbConstants.RECORD_COUNT_PREPOPULATED;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 

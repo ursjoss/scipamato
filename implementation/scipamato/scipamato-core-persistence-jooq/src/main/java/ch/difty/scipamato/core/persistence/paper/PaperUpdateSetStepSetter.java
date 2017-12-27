@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper;
 
-import static ch.difty.scipamato.core.db.tables.Paper.*;
+import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
@@ -14,7 +14,8 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 
 /**
- * The update step setter used for updating {@link Paper}s.<p>
+ * The update step setter used for updating {@link Paper}s.
+ * <p>
  *
  * <b>Note:</b> the {@link Code}s are not updated here.
  *

@@ -19,7 +19,8 @@ public class BooleanSearchTermEvaluator implements SearchTermEvaluator<BooleanSe
     public Condition evaluate(final BooleanSearchTerm searchTerm) {
         AssertAs.notNull(searchTerm, "searchTerm");
         final String fieldName = TranslationUtils.deCamelCase(searchTerm.getFieldName());
-        return DSL.field(fieldName).equal(DSL.val(searchTerm.getValue()));
+        return DSL.field(fieldName)
+            .equal(DSL.val(searchTerm.getValue()));
     }
 
 }

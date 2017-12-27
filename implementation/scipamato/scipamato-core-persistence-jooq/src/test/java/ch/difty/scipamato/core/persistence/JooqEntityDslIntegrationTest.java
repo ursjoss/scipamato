@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.persistence;
 
-import static ch.difty.scipamato.core.db.Tables.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.core.db.Tables.PAPER;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jooq.DSLContext;
 import org.jooq.Result;
@@ -22,7 +22,9 @@ public class JooqEntityDslIntegrationTest extends JooqTransactionalIntegrationTe
 
     @Test
     public void testPaperRecords() {
-        Result<PaperRecord> result = create.selectFrom(PAPER).orderBy(PAPER.ID).fetch();
+        Result<PaperRecord> result = create.selectFrom(PAPER)
+            .orderBy(PAPER.ID)
+            .fetch();
         assertThat(result).hasSize(TestDbConstants.RECORD_COUNT_PREPOPULATED);
     }
 

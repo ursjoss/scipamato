@@ -1,6 +1,9 @@
 package ch.difty.scipamato.core.persistence;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,11 +18,12 @@ import ch.difty.scipamato.core.persistence.user.UserRepository;
 @RunWith(MockitoJUnitRunner.class)
 public abstract class AbstractServiceTest<ID extends Number, T extends IdScipamatoEntity<ID>, R extends ReadOnlyRepository<T, ID, ?>> {
 
-    protected static final int CREATOR_ID = 10;
+    protected static final int CREATOR_ID  = 10;
     protected static final int MODIFIER_ID = 20;
 
     @Mock
     protected UserRepository userRepoMock;
+
     @Mock
     protected User creatorMock;
     @Mock
@@ -73,7 +77,9 @@ public abstract class AbstractServiceTest<ID extends Number, T extends IdScipama
 
     /**
      * Call this method to verify the audit names have been set.
-     * @param times number of times the methods have been called.
+     *
+     * @param times
+     *            number of times the methods have been called.
      */
     protected void verifyAudit(final int times) {
         verify(getEntity(), times(times)).getCreatedBy();

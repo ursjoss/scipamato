@@ -1,7 +1,9 @@
 package ch.difty.scipamato.core.persistence.paper.slim;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +29,15 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
     @Mock
     private PaperSlimRepository repoMock;
     @Mock
-    private PaperFilter filterMock;
+    private PaperFilter         filterMock;
     @Mock
-    private SearchOrder searchOrderMock;
+    private SearchOrder         searchOrderMock;
     @Mock
-    private PaginationContext paginationContextMock;
+    private PaginationContext   paginationContextMock;
     @Mock
-    private PaperSlim paperSlimMock;
+    private PaperSlim           paperSlimMock;
     @Mock
-    private Paper paperMock;
+    private Paper               paperMock;
 
     private final List<PaperSlim> papers = new ArrayList<>();
 
@@ -59,7 +61,8 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
 
     @Override
     public void specificTearDown() {
-        verifyNoMoreInteractions(repoMock, filterMock, searchOrderMock, paginationContextMock, paperSlimMock, paperMock);
+        verifyNoMoreInteractions(repoMock, filterMock, searchOrderMock, paginationContextMock, paperSlimMock,
+            paperMock);
     }
 
     @Test
@@ -81,7 +84,8 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
         Long id = 7l;
         when(repoMock.findById(id)).thenReturn(null);
 
-        assertThat(service.findById(id).isPresent()).isFalse();
+        assertThat(service.findById(id)
+            .isPresent()).isFalse();
 
         verify(repoMock).findById(id);
     }

@@ -12,7 +12,8 @@ import ch.difty.scipamato.core.persistence.CodeClassService;
  * @author u.joss
  */
 @Service
-public class JooqCodeClassService extends JooqCodeClassLikeService<CodeClass, CodeClassRepository> implements CodeClassService {
+public class JooqCodeClassService extends JooqCodeClassLikeService<CodeClass, CodeClassRepository>
+        implements CodeClassService {
 
     private static final long serialVersionUID = 1L;
 

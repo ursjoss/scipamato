@@ -1,8 +1,9 @@
 package ch.difty.scipamato.core.persistence.paper.slim;
 
-import static ch.difty.scipamato.core.db.tables.Paper.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,30 +21,31 @@ import ch.difty.scipamato.core.persistence.JooqReadOnlyRepoTest;
 import ch.difty.scipamato.core.persistence.ReadOnlyRepository;
 import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSearchOrderRepository;
 
-public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter> {
+public class JooqPaperSlimRepoTest extends
+        JooqReadOnlyRepoTest<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter> {
 
     private static final Long SAMPLE_ID = 3l;
 
     private JooqPaperSlimRepo repo;
 
     @Mock
-    private PaperSlim unpersistedEntity;
+    private PaperSlim                            unpersistedEntity;
     @Mock
-    private PaperSlim persistedEntity;
+    private PaperSlim                            persistedEntity;
     @Mock
-    private PaperRecord persistedRecord;
+    private PaperRecord                          persistedRecord;
     @Mock
-    private PaperSlimRecordMapper mapperMock;
+    private PaperSlimRecordMapper                mapperMock;
     @Mock
-    private PaperFilter filterMock;
+    private PaperFilter                          filterMock;
     @Mock
     private PaperSlimBackedSearchOrderRepository searchOrderRepositoryMock;
     @Mock
-    private SearchOrder searchOrderMock;
+    private SearchOrder                          searchOrderMock;
     @Mock
-    private PaperSlim paperSlimMock;
+    private PaperSlim                            paperSlimMock;
     @Mock
-    private PaginationContext pageableMock;
+    private PaginationContext                    pageableMock;
 
     private final List<PaperSlim> paperSlims = new ArrayList<>();
 
@@ -61,14 +63,16 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
     @Override
     protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> getRepo() {
         if (repo == null) {
-            repo = new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), searchOrderRepositoryMock, getApplicationProperties());
+            repo = new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+                    searchOrderRepositoryMock, getApplicationProperties());
         }
         return repo;
     }
 
     @Override
     protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> makeRepoFindingEntityById(PaperSlim entity) {
-        return new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), searchOrderRepositoryMock, getApplicationProperties()) {
+        return new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+                searchOrderRepositoryMock, getApplicationProperties()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -176,7 +180,8 @@ public class JooqPaperSlimRepoTest extends JooqReadOnlyRepoTest<PaperRecord, Pap
     @Test
     public void findingPageBySearchOrder_delegatesToSearchOrderFinder() {
         when(searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, pageableMock)).thenReturn(paperSlims);
-        assertThat(repo.findPageBySearchOrder(searchOrderMock, pageableMock)).containsExactly(paperSlimMock, paperSlimMock);
+        assertThat(repo.findPageBySearchOrder(searchOrderMock, pageableMock)).containsExactly(paperSlimMock,
+            paperSlimMock);
         verify(searchOrderRepositoryMock).findPageBySearchOrder(searchOrderMock, pageableMock);
     }
 

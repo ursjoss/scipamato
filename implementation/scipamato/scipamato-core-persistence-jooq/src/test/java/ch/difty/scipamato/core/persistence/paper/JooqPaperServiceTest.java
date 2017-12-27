@@ -1,8 +1,15 @@
 package ch.difty.scipamato.core.persistence.paper;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,23 +39,23 @@ import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
 
-    private static final long MINIMUM_NUMBER = 7l;
-    private static final String LC = "de";
+    private static final long   MINIMUM_NUMBER = 7l;
+    private static final String LC             = "de";
 
     private JooqPaperService service;
 
     @Mock
-    private PaperRepository repoMock;
+    private PaperRepository   repoMock;
     @Mock
-    private PaperFilter filterMock;
+    private PaperFilter       filterMock;
     @Mock
-    private SearchOrder searchOrderMock;
+    private SearchOrder       searchOrderMock;
     @Mock
     private PaginationContext paginationContextMock;
     @Mock
-    private Paper paperMock, paperMock2, paperMock3;
+    private Paper             paperMock, paperMock2, paperMock3;
     @Mock
-    private PaperAttachment attachmentMock;
+    private PaperAttachment   attachmentMock;
 
     private final List<PubmedArticleFacade> articles = new ArrayList<>();
 
@@ -98,7 +105,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         Long id = 7l;
         when(repoMock.findById(id)).thenReturn(null);
 
-        assertThat(service.findById(id).isPresent()).isFalse();
+        assertThat(service.findById(id)
+            .isPresent()).isFalse();
 
         verify(repoMock).findById(id);
     }
@@ -208,7 +216,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         ServiceResult sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER);
         assertThat(sr).isNotNull();
         assertThat(sr.getInfoMessages()).isEmpty();
-        assertThat(sr.getWarnMessages()).hasSize(1).contains("PMID " + pmIdValue);
+        assertThat(sr.getWarnMessages()).hasSize(1)
+            .contains("PMID " + pmIdValue);
         assertThat(sr.getErrorMessages()).isEmpty();
 
         verify(repoMock).findExistingPmIdsOutOf(Arrays.asList(pmIdValue));
@@ -229,7 +238,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
         ServiceResult sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER);
         assertThat(sr).isNotNull();
-        assertThat(sr.getInfoMessages()).hasSize(1).contains("PMID " + pmIdValue + " (id 27)");
+        assertThat(sr.getInfoMessages()).hasSize(1)
+            .contains("PMID " + pmIdValue + " (id 27)");
         assertThat(sr.getWarnMessages()).isEmpty();
         assertThat(sr.getErrorMessages()).isEmpty();
 

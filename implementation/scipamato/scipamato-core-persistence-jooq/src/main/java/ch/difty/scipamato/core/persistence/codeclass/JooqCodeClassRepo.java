@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.persistence.codeclass;
 
-import static ch.difty.scipamato.core.db.tables.CodeClass.*;
-import static ch.difty.scipamato.core.db.tables.CodeClassTr.*;
+import static ch.difty.scipamato.core.db.tables.CodeClass.CODE_CLASS;
+import static ch.difty.scipamato.core.db.tables.CodeClassTr.CODE_CLASS_TR;
 
 import java.util.List;
 

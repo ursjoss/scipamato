@@ -15,9 +15,11 @@ import ch.difty.scipamato.core.persistence.paper.PaperRecordMapper;
  * @author u.joss
  */
 @Repository
-public class JooqPaperBySearchOrderRepo extends JooqBySearchOrderRepo<Paper, PaperRecordMapper> implements PaperBackedSearchOrderRepository {
+public class JooqPaperBySearchOrderRepo extends JooqBySearchOrderRepo<Paper, PaperRecordMapper>
+        implements PaperBackedSearchOrderRepository {
 
-    public JooqPaperBySearchOrderRepo(@Qualifier("dslContext") DSLContext dsl, PaperRecordMapper mapper, JooqSortMapper<PaperRecord, Paper, ch.difty.scipamato.core.db.tables.Paper> sortMapper) {
+    public JooqPaperBySearchOrderRepo(@Qualifier("dslContext") DSLContext dsl, PaperRecordMapper mapper,
+            JooqSortMapper<PaperRecord, Paper, ch.difty.scipamato.core.db.tables.Paper> sortMapper) {
         super(dsl, mapper, sortMapper);
     }
 

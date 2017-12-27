@@ -13,14 +13,19 @@ import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.persistence.user.UserRepository;
 
 /**
- * Abstract base repository class providing the fundamental functionality of a  jooq read-only Service
+ * Abstract base repository class providing the fundamental functionality of a
+ * jooq read-only Service
  *
  * @author u.joss
  *
- * @param <ID> the type of the id in the {@link CoreEntity}
- * @param <T> the entity type, extending {@link CoreEntity}
- * @param <F> the filter, extending {@link ScipamatoFilter}
- * @param <REPO> the entity repository (extending {@link EntityRepository}
+ * @param <ID>
+ *            the type of the id in the {@link CoreEntity}
+ * @param <T>
+ *            the entity type, extending {@link CoreEntity}
+ * @param <F>
+ *            the filter, extending {@link ScipamatoFilter}
+ * @param <REPO>
+ *            the entity repository (extending {@link EntityRepository}
  */
 @Transactional(readOnly = true)
 public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipamatoEntity<ID>, F extends ScipamatoFilter, REPO extends ReadOnlyRepository<T, ID, F>>
@@ -28,7 +33,7 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
 
     private static final long serialVersionUID = 1L;
 
-    private final REPO repo;
+    private final REPO           repo;
     private final UserRepository userRepo;
 
     protected JooqReadOnlyService(final REPO repo, final UserRepository userRepo) {
@@ -62,12 +67,15 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
 
     private void setCreatedMetaData(T entity) {
         final Optional<User> user = getUserWithId(entity.getCreatedBy());
-        entity.setCreatedByName(user.map(User::getDisplayValue).orElse(null));
-        entity.setCreatedByFullName(user.map(User::getFullName).orElse(null));
+        entity.setCreatedByName(user.map(User::getDisplayValue)
+            .orElse(null));
+        entity.setCreatedByFullName(user.map(User::getFullName)
+            .orElse(null));
     }
 
     private void setModifiedMeta(T entity) {
-        entity.setLastModifiedByName(getUserWithId(entity.getLastModifiedBy()).map(User::getDisplayValue).orElse(null));
+        entity.setLastModifiedByName(getUserWithId(entity.getLastModifiedBy()).map(User::getDisplayValue)
+            .orElse(null));
     }
 
     private Optional<User> getUserWithId(final Integer id) {

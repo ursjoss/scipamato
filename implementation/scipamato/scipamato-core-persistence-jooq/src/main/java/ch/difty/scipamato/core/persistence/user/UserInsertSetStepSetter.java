@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.user;
 
-import static ch.difty.scipamato.core.db.tables.ScipamatoUser.*;
+import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
 
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
@@ -13,7 +13,8 @@ import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 
 /**
- * The insert step setter used for inserting new {@link User}s.<p>
+ * The insert step setter used for inserting new {@link User}s.
+ * <p>
  *
  * <b>Note:</b> the {@link Role}s are not inserted here.
  *

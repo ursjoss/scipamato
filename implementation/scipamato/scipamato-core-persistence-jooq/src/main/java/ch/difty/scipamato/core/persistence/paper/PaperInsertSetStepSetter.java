@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper;
 
-import static ch.difty.scipamato.core.db.tables.Paper.*;
+import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
@@ -13,7 +13,8 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 
 /**
- * The insert step setter used for inserting new {@link Paper}s.<p>
+ * The insert step setter used for inserting new {@link Paper}s.
+ * <p>
  *
  * <b>Note:</b> the {@link Code}s are not inserted here.
  *

@@ -1,8 +1,9 @@
 package ch.difty.scipamato.core.persistence;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,7 +52,8 @@ public class SortMapperTest {
         sortProperties.add(new SortProperty("authors", Direction.DESC));
         sortProperties.add(new SortProperty("title", Direction.ASC));
 
-        Collection<SortField<Paper>> sortFields = mapper.map(new Sort(sortProperties), ch.difty.scipamato.core.db.tables.Paper.PAPER);
+        Collection<SortField<Paper>> sortFields = mapper.map(new Sort(sortProperties),
+            ch.difty.scipamato.core.db.tables.Paper.PAPER);
         assertThat(sortFields).hasSize(2);
 
         Iterator<SortField<Paper>> it = sortFields.iterator();
@@ -67,7 +69,8 @@ public class SortMapperTest {
     @Test
     public void gettingTableField_withExistingField_returnsTableField() {
         String existingFieldName = ch.difty.scipamato.core.db.tables.Paper.PAPER.AUTHORS.getName();
-        TableField<PaperRecord, Paper> field = mapper.getTableField(existingFieldName.toLowerCase(), ch.difty.scipamato.core.db.tables.Paper.PAPER);
+        TableField<PaperRecord, Paper> field = mapper.getTableField(existingFieldName.toLowerCase(),
+            ch.difty.scipamato.core.db.tables.Paper.PAPER);
         assertThat(field).isNotNull();
         assertThat(field.getName()).isEqualTo(existingFieldName);
     }
@@ -79,14 +82,16 @@ public class SortMapperTest {
             mapper.getTableField(notExistingFieldName, ch.difty.scipamato.core.db.tables.Paper.PAPER);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(InvalidDataAccessApiUsageException.class).hasMessage("Could not find table field: foo; nested exception is java.lang.NoSuchFieldException: FOO");
+            assertThat(ex).isInstanceOf(InvalidDataAccessApiUsageException.class)
+                .hasMessage("Could not find table field: foo; nested exception is java.lang.NoSuchFieldException: FOO");
         }
     }
 
     @Test
     public void gettingTableField_withNullField_throws() {
         String nullFieldName = null;
-        assertDegenerateSupplierParameter(() -> mapper.getTableField(nullFieldName, ch.difty.scipamato.core.db.tables.Paper.PAPER), "sortFieldName");
+        assertDegenerateSupplierParameter(
+            () -> mapper.getTableField(nullFieldName, ch.difty.scipamato.core.db.tables.Paper.PAPER), "sortFieldName");
     }
 
     @Test
@@ -100,7 +105,8 @@ public class SortMapperTest {
         sortProperties.add(new SortProperty("publicationYear", Direction.DESC));
         sortProperties.add(new SortProperty("populationParticipants", Direction.ASC));
 
-        Collection<SortField<Paper>> sortFields = mapper.map(new Sort(sortProperties), ch.difty.scipamato.core.db.tables.Paper.PAPER);
+        Collection<SortField<Paper>> sortFields = mapper.map(new Sort(sortProperties),
+            ch.difty.scipamato.core.db.tables.Paper.PAPER);
         assertThat(sortFields).hasSize(2);
 
         Iterator<SortField<Paper>> it = sortFields.iterator();
