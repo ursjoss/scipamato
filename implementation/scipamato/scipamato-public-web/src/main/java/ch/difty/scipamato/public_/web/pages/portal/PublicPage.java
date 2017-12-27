@@ -57,24 +57,25 @@ public class PublicPage extends BasePage<Void> {
 
     private static final int RESULT_PAGE_SIZE = 20;
 
-    private static final String COLUMN_HEADER = "column.header.";
+    private static final String COLUMN_HEADER         = "column.header.";
     private static final String CODES_CLASS_BASE_NAME = "codesOfClass";
 
     private static final String CODES_NONE_SELECT_RESOURCE_TAG = "codes.noneSelected";
 
     private static final String AM_DATA_WIDTH = "data-width";
 
-    private PublicPaperFilter filter;
+    private PublicPaperFilter   filter;
     private PublicPaperProvider dataProvider;
-    private boolean extendedSearch = false;
+    private boolean             extendedSearch = false;
 
-    private WebMarkupContainer extendedSearchContainer;
+    private WebMarkupContainer             extendedSearchContainer;
     private DataTable<PublicPaper, String> results;
 
     public PublicPage(PageParameters parameters) {
         super(parameters);
         initFilterAndProvider();
-        extendedSearch = parameters.get("extendedSearch").toBoolean(false);
+        extendedSearch = parameters.get("extendedSearch")
+            .toBoolean(false);
     }
 
     private void initFilterAndProvider() {
@@ -104,10 +105,14 @@ public class PublicPage extends BasePage<Void> {
         };
         queue(filterForm);
 
-        queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(filter, PublicPaperFilter.METHODS_MASK)));
-        queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(filter, PublicPaperFilter.AUTHOR_MASK)));
-        queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(filter, PublicPaperFilter.PUB_YEAR_FROM)));
-        queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(filter, PublicPaperFilter.PUB_YEAR_UNTIL)));
+        queueFieldAndLabel(
+            new TextField<String>("methodsSearch", PropertyModel.of(filter, PublicPaperFilter.METHODS_MASK)));
+        queueFieldAndLabel(
+            new TextField<String>("authorsSearch", PropertyModel.of(filter, PublicPaperFilter.AUTHOR_MASK)));
+        queueFieldAndLabel(
+            new TextField<String>("pubYearFrom", PropertyModel.of(filter, PublicPaperFilter.PUB_YEAR_FROM)));
+        queueFieldAndLabel(
+            new TextField<String>("pubYearUntil", PropertyModel.of(filter, PublicPaperFilter.PUB_YEAR_UNTIL)));
         queueFieldAndLabel(new TextField<String>("number", PropertyModel.of(filter, PublicPaperFilter.NUMBER)));
 
         queuePopulationCodesComplex("populationCodes");
@@ -160,14 +165,22 @@ public class PublicPage extends BasePage<Void> {
             }
 
             private void clearCodeSelectBoxes() {
-                filter.getCodesOfClass1().clear();
-                filter.getCodesOfClass2().clear();
-                filter.getCodesOfClass3().clear();
-                filter.getCodesOfClass4().clear();
-                filter.getCodesOfClass5().clear();
-                filter.getCodesOfClass6().clear();
-                filter.getCodesOfClass7().clear();
-                filter.getCodesOfClass8().clear();
+                filter.getCodesOfClass1()
+                    .clear();
+                filter.getCodesOfClass2()
+                    .clear();
+                filter.getCodesOfClass3()
+                    .clear();
+                filter.getCodesOfClass4()
+                    .clear();
+                filter.getCodesOfClass5()
+                    .clear();
+                filter.getCodesOfClass6()
+                    .clear();
+                filter.getCodesOfClass7()
+                    .clear();
+                filter.getCodesOfClass8()
+                    .clear();
             }
         });
     }
@@ -198,19 +211,28 @@ public class PublicPage extends BasePage<Void> {
         makeCodeClassComplex(CodeClassId.CC8, codeClasses);
     }
 
-    private BootstrapMultiSelect<Code> makeCodeClassComplex(final CodeClassId codeClassId, final List<CodeClass> codeClasses) {
+    private BootstrapMultiSelect<Code> makeCodeClassComplex(final CodeClassId codeClassId,
+            final List<CodeClass> codeClasses) {
         final int id = codeClassId.getId();
         final String componentId = CODES_CLASS_BASE_NAME + id;
-        final String className = codeClasses.stream().filter(cc -> cc.getCodeClassId() == id).map(CodeClass::getName).findFirst().orElse(codeClassId.name());
+        final String className = codeClasses.stream()
+            .filter(cc -> cc.getCodeClassId() == id)
+            .map(CodeClass::getName)
+            .findFirst()
+            .orElse(codeClassId.name());
         queue(new Label(componentId + LABEL_TAG, Model.of(className)));
 
         final CodeModel choices = new CodeModel(codeClassId, getLanguageCode());
         final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(Code.DISPLAY_VALUE, Code.CODE);
-        final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this, null);
-        final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true).withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);
+        final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
+                null);
+        final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)
+            .withNoneSelectedText(noneSelectedModel.getObject())
+            .withLiveSearch(true);
 
         final PropertyModel<List<Code>> model = PropertyModel.of(filter, componentId);
-        final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<Code>(componentId, model, choices, choiceRenderer).with(config);
+        final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<Code>(componentId, model, choices,
+                choiceRenderer).with(config);
         multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
         queue(multiSelect);
         return multiSelect;
@@ -219,7 +241,8 @@ public class PublicPage extends BasePage<Void> {
     private void makeAndQueueResultTable(String id) {
         results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, dataProvider.getRowsPerPage());
         results.setOutputMarkupId(true);
-        results.add(new TableBehavior().striped().hover());
+        results.add(new TableBehavior().striped()
+            .hover());
         queue(results);
     }
 
@@ -233,15 +256,21 @@ public class PublicPage extends BasePage<Void> {
     }
 
     private PropertyColumn<PublicPaper, String> makePropertyColumn(String propExpression) {
-        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression);
+        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
+                propExpression);
     }
 
-    private ClickablePropertyColumn<PublicPaper, String> makeClickableColumn(String propExpression, SerializableConsumer<IModel<PublicPaper>> consumer) {
-        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression, consumer);
+    private ClickablePropertyColumn<PublicPaper, String> makeClickableColumn(String propExpression,
+            SerializableConsumer<IModel<PublicPaper>> consumer) {
+        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null),
+                propExpression, propExpression, consumer);
     }
 
     private void onTitleClick(IModel<PublicPaper> m) {
-        ScipamatoPublicSession.get().getPaperIdManager().setFocusToItem(m.getObject().getId());
+        ScipamatoPublicSession.get()
+            .getPaperIdManager()
+            .setFocusToItem(m.getObject()
+                .getId());
         setResponsePage(new PublicPaperDetailPage(m, getPage().getPageReference()));
     }
 
@@ -252,9 +281,13 @@ public class PublicPage extends BasePage<Void> {
         IModel<Collection<PopulationCode>> model = PropertyModel.of(filter, PublicPaperFilter.POPULATION_CODES);
         List<? extends PopulationCode> choices = Arrays.asList(PopulationCode.values());
         final IChoiceRenderer<PopulationCode> choiceRenderer = new EnumChoiceRenderer<>(this);
-        final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this, null);
-        final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true).withLiveSearch(true).withNoneSelectedText(noneSelectedModel.getObject());
-        final BootstrapMultiSelect<PopulationCode> multiSelect = new BootstrapMultiSelect<>(id, model, choices, choiceRenderer).with(config);
+        final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
+                null);
+        final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)
+            .withLiveSearch(true)
+            .withNoneSelectedText(noneSelectedModel.getObject());
+        final BootstrapMultiSelect<PopulationCode> multiSelect = new BootstrapMultiSelect<>(id, model, choices,
+                choiceRenderer).with(config);
         multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
         queue(multiSelect);
     }
@@ -266,19 +299,26 @@ public class PublicPage extends BasePage<Void> {
         IModel<Collection<StudyDesignCode>> model = PropertyModel.of(filter, PublicPaperFilter.STUDY_DESIGN_CODES);
         List<? extends StudyDesignCode> choices = Arrays.asList(StudyDesignCode.values());
         final IChoiceRenderer<StudyDesignCode> choiceRenderer = new EnumChoiceRenderer<>(this);
-        final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this, null);
-        final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true).withLiveSearch(true).withNoneSelectedText(noneSelectedModel.getObject());
-        final BootstrapMultiSelect<StudyDesignCode> multiSelect = new BootstrapMultiSelect<>(id, model, choices, choiceRenderer).with(config);
+        final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
+                null);
+        final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)
+            .withLiveSearch(true)
+            .withNoneSelectedText(noneSelectedModel.getObject());
+        final BootstrapMultiSelect<StudyDesignCode> multiSelect = new BootstrapMultiSelect<>(id, model, choices,
+                choiceRenderer).with(config);
         multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
         queue(multiSelect);
     }
 
     /**
-     * Have the provider provide a list of all paper numbers (business key) matching the current filter.
-     * Construct a navigateable with this list and set it into the session
+     * Have the provider provide a list of all paper numbers (business key) matching
+     * the current filter. Construct a navigateable with this list and set it into
+     * the session
      */
     private void updateNavigateable() {
-        ScipamatoPublicSession.get().getPaperIdManager().initialize(dataProvider.findAllPaperNumbersByFilter());
+        ScipamatoPublicSession.get()
+            .getPaperIdManager()
+            .initialize(dataProvider.findAllPaperNumbersByFilter());
     }
 
 }

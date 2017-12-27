@@ -30,10 +30,10 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String PAGE_PARAM_NUMBER = "number";
-    private static final String LINK_RESOURCE_PREFIX = "link.";
+    public static final String  PAGE_PARAM_NUMBER      = "number";
+    private static final String LINK_RESOURCE_PREFIX   = "link.";
     private static final String BUTTON_RESOURCE_PREFIX = "button.";
-    private static final String AM_TITLE = "title";
+    private static final String AM_TITLE               = "title";
 
     @SpringBean
     private PublicPaperService publicPaperService;
@@ -45,11 +45,14 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
     }
 
     /**
-     * Loads the page with the record specified by the 'id' passed in via PageParameters. If the parameter 'no'
-     * contains a valid business key number instead, the page will be loaded by number.
+     * Loads the page with the record specified by the 'id' passed in via
+     * PageParameters. If the parameter 'no' contains a valid business key number
+     * instead, the page will be loaded by number.
+     *
      * @param parameters
      * @param callingPageRef
-     *     PageReference that will be used to forward to if the user clicks the back button.
+     *            PageReference that will be used to forward to if the user clicks
+     *            the back button.
      */
     public PublicPaperDetailPage(final PageParameters parameters, final PageReference callingPageRef) {
         super(parameters);
@@ -64,12 +67,15 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
     }
 
     /**
-     * Try loading the record by ID. If not reasonable id is supplied, try by number.
+     * Try loading the record by ID. If not reasonable id is supplied, try by
+     * number.
      */
     private void tryLoadingRecord(final PageParameters parameters) {
-        final long number = parameters.get(PAGE_PARAM_NUMBER).toLong(0l);
+        final long number = parameters.get(PAGE_PARAM_NUMBER)
+            .toLong(0l);
         if (number > 0) {
-            publicPaperService.findByNumber(number).ifPresent((p -> setModel(Model.of(p))));
+            publicPaperService.findByNumber(number)
+                .ifPresent((p -> setModel(Model.of(p))));
         }
         if (getModelObject() == null) {
             warn("Page parameter " + PAGE_PARAM_NUMBER + " was missing or invalid. No paper loaded.");
@@ -82,7 +88,8 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
 
         queue(new Form<Void>("form"));
 
-        final ItemNavigator<Long> pm = ScipamatoPublicSession.get().getPaperIdManager();
+        final ItemNavigator<Long> pm = ScipamatoPublicSession.get()
+            .getPaperIdManager();
         queue(newNavigationButton("previous", GlyphIconType.stepbackward, pm::hasPrevious, () -> {
             pm.previous();
             return pm.getItemWithFocus();
@@ -97,7 +104,8 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
 
         queueTopic(newLabel("caption", getModel()));
         queueTopic(null, newField("title", PublicPaper.TITLE));
-        queueTopic(newLabel("reference"), newField("authors", PublicPaper.AUTHORS), newField("title2", PublicPaper.TITLE), newField("location", PublicPaper.LOCATION));
+        queueTopic(newLabel("reference"), newField("authors", PublicPaper.AUTHORS),
+            newField("title2", PublicPaper.TITLE), newField("location", PublicPaper.LOCATION));
         queueTopic(newLabel("goals"), newField("goals", PublicPaper.GOALS));
         queueTopic(newLabel("population"), newField("population", PublicPaper.POPULATION));
         queueTopic(newLabel("methods"), newField("methods", PublicPaper.METHODS));
@@ -119,11 +127,13 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         };
         link.setTarget(Target.blank);
         link.setLabel(new StringResourceModel(LINK_RESOURCE_PREFIX + id + LABEL_RESOURCE_TAG, this, null));
-        link.add(new AttributeModifier(AM_TITLE, new StringResourceModel(LINK_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
+        link.add(new AttributeModifier(AM_TITLE,
+                new StringResourceModel(LINK_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
         queue(link);
     }
 
-    protected BootstrapButton newNavigationButton(String id, GlyphIconType icon, SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
+    protected BootstrapButton newNavigationButton(String id, GlyphIconType icon,
+            SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
         final BootstrapButton btn = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
@@ -145,13 +155,15 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         };
         btn.setDefaultFormProcessing(false);
         btn.setIconType(icon);
-        btn.add(new AttributeModifier(AM_TITLE, new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
+        btn.add(new AttributeModifier(AM_TITLE,
+                new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
         btn.setType(Buttons.Type.Primary);
         return btn;
     }
 
     private void makeAndQueueBackButton(final String id) {
-        BootstrapButton back = new BootstrapButton(id, new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + LABEL_RESOURCE_TAG), Buttons.Type.Default) {
+        BootstrapButton back = new BootstrapButton(id,
+                new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + LABEL_RESOURCE_TAG), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -163,7 +175,8 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
             }
         };
         back.setDefaultFormProcessing(false);
-        back.add(new AttributeModifier(AM_TITLE, new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
+        back.add(new AttributeModifier(AM_TITLE,
+                new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
         queue(back);
     }
 
@@ -185,11 +198,13 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
     }
 
     private Label newLabel(final String idPart, IModel<?> parameterModel) {
-        return new Label(idPart + LABEL_TAG, new StringResourceModel(idPart + LABEL_RESOURCE_TAG, this, parameterModel).getString());
+        return new Label(idPart + LABEL_TAG,
+                new StringResourceModel(idPart + LABEL_RESOURCE_TAG, this, parameterModel).getString());
     }
 
     private Label newLabel(final String idPart) {
-        return new Label(idPart + LABEL_TAG, new StringResourceModel(idPart + LABEL_RESOURCE_TAG, this, null).getString() + ":");
+        return new Label(idPart + LABEL_TAG,
+                new StringResourceModel(idPart + LABEL_RESOURCE_TAG, this, null).getString() + ":");
     }
 
     private Label newField(final String id, final String property) {

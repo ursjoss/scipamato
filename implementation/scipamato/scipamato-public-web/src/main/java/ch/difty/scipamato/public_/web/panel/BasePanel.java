@@ -23,7 +23,9 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
     }
 
     protected String getLocalization() {
-        return ScipamatoPublicSession.get().getLocale().getLanguage();
+        return ScipamatoPublicSession.get()
+            .getLocale()
+            .getLanguage();
     }
 
 }

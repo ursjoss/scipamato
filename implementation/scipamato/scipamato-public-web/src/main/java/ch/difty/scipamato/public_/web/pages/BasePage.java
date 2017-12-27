@@ -49,11 +49,14 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     }
 
     protected Authentication getAuthentication() {
-        return SecurityContextHolder.getContext().getAuthentication();
+        return SecurityContextHolder.getContext()
+            .getAuthentication();
     }
 
     protected String getLanguageCode() {
-        return ScipamatoPublicSession.get().getLocale().getLanguage();
+        return ScipamatoPublicSession.get()
+            .getLocale()
+            .getLanguage();
     }
 
 }

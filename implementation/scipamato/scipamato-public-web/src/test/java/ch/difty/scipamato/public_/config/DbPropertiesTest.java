@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.public_.config.DbProperties;
-
 public class DbPropertiesTest {
 
     private final DbProperties dbProperties = new DbProperties();
