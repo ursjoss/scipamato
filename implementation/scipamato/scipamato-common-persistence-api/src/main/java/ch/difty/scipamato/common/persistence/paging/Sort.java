@@ -10,10 +10,11 @@ import org.springframework.util.StringUtils;
 import ch.difty.scipamato.common.AssertAs;
 
 /**
- * Sort specification offering a list of {@link SortProperty} items, each providing a name of the
- * to be sorted property and the sort direction.
+ * Sort specification offering a list of {@link SortProperty} items, each
+ * providing a name of the to be sorted property and the sort direction.
  *
- * This Sort implementation initially was a simplified version of the spring data Sort class.
+ * This Sort implementation initially was a simplified version of the spring
+ * data Sort class.
  *
  * @author u.joss
  */
@@ -25,6 +26,7 @@ public class Sort implements Iterable<ch.difty.scipamato.common.persistence.pagi
 
     /**
      * Instantiate {@link Sort} with a predefined list of {@link SortProperty} items
+     *
      * @param sortProperties
      */
     public Sort(final List<SortProperty> sortProperties) {
@@ -34,9 +36,13 @@ public class Sort implements Iterable<ch.difty.scipamato.common.persistence.pagi
     }
 
     /**
-     * Instantiate {@link Sort} with various property names all to be sorted in the same {@link Direction}
-     * @param direction the sort direction
-     * @param propertyNames a list of property names to be sorted
+     * Instantiate {@link Sort} with various property names all to be sorted in the
+     * same {@link Direction}
+     *
+     * @param direction
+     *            the sort direction
+     * @param propertyNames
+     *            a list of property names to be sorted
      */
     public Sort(final Direction direction, final String... propertyNames) {
         checkPreconditionsFor(propertyNames);
@@ -68,7 +74,8 @@ public class Sort implements Iterable<ch.difty.scipamato.common.persistence.pagi
 
     public SortProperty getSortPropertyFor(final String propertyName) {
         for (final SortProperty sortProperty : this.sortProperties)
-            if (sortProperty.getName().equals(propertyName))
+            if (sortProperty.getName()
+                .equals(propertyName))
                 return sortProperty;
         return null;
     }
@@ -98,8 +105,8 @@ public class Sort implements Iterable<ch.difty.scipamato.common.persistence.pagi
     }
 
     /**
-     * Individual sort specification for a particular property, consisting
-     * of a property name and a sort direction.
+     * Individual sort specification for a particular property, consisting of a
+     * property name and a sort direction.
      */
     public static class SortProperty implements Serializable {
 
@@ -107,7 +114,7 @@ public class Sort implements Iterable<ch.difty.scipamato.common.persistence.pagi
 
         private static final Direction DEFAULT_DIRECTION = Direction.ASC;
 
-        private final String name;
+        private final String    name;
         private final Direction direction;
 
         public SortProperty(final String name, final Direction direction) {

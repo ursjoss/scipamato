@@ -9,7 +9,8 @@ import ch.difty.scipamato.common.entity.CodeLike;
 public interface CodeLikeService<T extends CodeLike> extends Serializable {
 
     /**
-     * Find all codes of type {@code T} of the specified {@link CodeClassId} localized in language with the provided languageCode
+     * Find all codes of type {@code T} of the specified {@link CodeClassId}
+     * localized in language with the provided languageCode
      *
      * @param codeClassId
      * @param languageCode

@@ -1,6 +1,6 @@
 package ch.difty.scipamato.common.persistence.paging;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -9,7 +9,7 @@ import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
 public class PaginationRequestTest {
 
     private PaginationRequest pr;
-    private String sort;
+    private String            sort;
 
     @Test(expected = IllegalArgumentException.class)
     public void degenerateConstruction_withInvalidOffset() {
@@ -26,7 +26,8 @@ public class PaginationRequestTest {
         assertThat(pc.getPageSize()).isEqualTo(pageSize);
         if (fooSort != null) {
             final Sort s = pc.getSort();
-            assertThat(s.getSortPropertyFor("foo").toString()).isEqualTo(fooSort);
+            assertThat(s.getSortPropertyFor("foo")
+                .toString()).isEqualTo(fooSort);
             assertThat(s.getSortPropertyFor("bar")).isNull();
         } else {
             assertThat(pc.getSort()).isNull();
