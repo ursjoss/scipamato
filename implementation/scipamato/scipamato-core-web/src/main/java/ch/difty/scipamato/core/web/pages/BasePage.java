@@ -9,7 +9,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.AbstractPage;
 import ch.difty.scipamato.core.ScipamatoSession;
 import ch.difty.scipamato.core.entity.User;

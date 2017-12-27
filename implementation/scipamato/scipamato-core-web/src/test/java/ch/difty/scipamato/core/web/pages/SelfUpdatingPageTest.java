@@ -6,15 +6,15 @@ import static org.mockito.Mockito.when;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
-import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
+import ch.difty.scipamato.core.config.ApplicationCoreProperties;
+import ch.difty.scipamato.core.config.AuthorParserStrategy;
 
 public abstract class SelfUpdatingPageTest<T extends BasePage<?>> extends BasePageTest<T> {
 
     @MockBean
-    private ApplicationProperties applicationProperties;
+    private ApplicationCoreProperties applicationProperties;
 
-    protected ApplicationProperties getAppProps() {
+    protected ApplicationCoreProperties getAppProps() {
         return applicationProperties;
     }
 

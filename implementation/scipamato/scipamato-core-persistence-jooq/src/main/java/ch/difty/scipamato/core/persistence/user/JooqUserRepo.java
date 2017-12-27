@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
 import ch.difty.scipamato.core.auth.Role;

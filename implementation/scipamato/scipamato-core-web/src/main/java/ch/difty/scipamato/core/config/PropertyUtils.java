@@ -1,4 +1,4 @@
-package ch.difty.scipamato.common.config;
+package ch.difty.scipamato.core.config;
 
 import org.apache.commons.lang3.StringUtils;
 

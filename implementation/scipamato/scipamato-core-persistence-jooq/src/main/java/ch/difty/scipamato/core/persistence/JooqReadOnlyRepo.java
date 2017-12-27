@@ -13,7 +13,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
 
 import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;

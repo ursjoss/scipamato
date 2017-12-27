@@ -17,7 +17,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.Strings;
 
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink.Target;

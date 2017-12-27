@@ -104,11 +104,6 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-common-config</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>scipamato-common-entity</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -388,7 +383,6 @@
             <id>core</id>
             <modules>
                 <module>scipamato-common-utils</module>
-                <module>scipamato-common-config</module>
                 <module>scipamato-common-entity</module>
                 <module>scipamato-common-persistence-api</module>
                 <module>scipamato-common-persistence-jooq</module>
@@ -407,7 +401,6 @@
             <id>public</id>
             <modules>
                 <module>scipamato-common-utils</module>
-                <module>scipamato-common-config</module>
                 <module>scipamato-common-entity</module>
                 <module>scipamato-common-persistence-api</module>
                 <module>scipamato-common-persistence-jooq</module>
@@ -427,7 +420,6 @@
             </activation>
             <modules>
                 <module>scipamato-common-utils</module>
-                <module>scipamato-common-config</module>
                 <module>scipamato-common-entity</module>
                 <module>scipamato-common-persistence-api</module>
                 <module>scipamato-common-persistence-jooq</module>

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;

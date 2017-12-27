@@ -31,7 +31,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.scipamato.common.NullArgumentException;
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;

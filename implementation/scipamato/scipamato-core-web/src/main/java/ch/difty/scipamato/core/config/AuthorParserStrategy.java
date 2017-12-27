@@ -1,6 +1,4 @@
-package ch.difty.scipamato.common.config.core;
-
-import ch.difty.scipamato.common.config.PropertyUtils;
+package ch.difty.scipamato.core.config;
 
 /**
  * Parses a property value to define the AuthorParserStrategy to be used.
@@ -16,6 +14,6 @@ public enum AuthorParserStrategy {
 
     public static AuthorParserStrategy fromProperty(final String propertyValue) {
         return PropertyUtils.fromProperty(propertyValue, values(), DEFAULT,
-            ApplicationProperties.AUTHOR_PARSER_FACTORY);
+            ApplicationCoreProperties.AUTHOR_PARSER_FACTORY);
     }
 }

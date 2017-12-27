@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.scipamato.common.config.MavenProperties;
-import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ScipamatoCorePropertiesTest {

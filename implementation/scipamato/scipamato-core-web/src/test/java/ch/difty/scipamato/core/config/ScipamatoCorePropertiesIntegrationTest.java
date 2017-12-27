@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
-import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
 import ch.difty.scipamato.core.ScipamatoApplication;
 
 /**
@@ -23,7 +21,7 @@ import ch.difty.scipamato.core.ScipamatoApplication;
 public class ScipamatoCorePropertiesIntegrationTest {
 
     @Autowired
-    public ApplicationProperties appProperties;
+    public ApplicationCoreProperties appProperties;
 
     @Test
     public void gettingBuildVersion() {

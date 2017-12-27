@@ -16,7 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.DateTimeService;
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;

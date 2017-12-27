@@ -64,14 +64,4 @@ public class ScipamatoPublicPropertiesTest {
         verify(mavenPropMock).getVersion();
     }
 
-    @Test
-    public void gettingAuthorParserStrategy_returnsHardCodedNull() {
-        assertThat(prop.getAuthorParserStrategy()).isNull();
-    }
-
-    @Test
-    public void gettingPaperNumberMin2BeRecycled_returnsHardcoded0() {
-        assertThat(prop.getMinimumPaperNumberToBeRecycled()).isEqualTo(0);
-    }
-
 }

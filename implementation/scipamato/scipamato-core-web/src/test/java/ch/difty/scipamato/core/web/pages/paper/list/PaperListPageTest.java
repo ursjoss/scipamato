@@ -20,9 +20,9 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
+import ch.difty.scipamato.core.config.ApplicationCoreProperties;
 import ch.difty.scipamato.core.entity.filter.PaperFilter;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
@@ -45,14 +45,13 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
     private static final String LC = "en_us";
 
     @MockBean
-    private PubmedImporter pubmedImportService;
-
+    private PubmedImporter            pubmedImportService;
     @MockBean
-    private CodeService           codeServiceMock;
+    private CodeService               codeServiceMock;
     @MockBean
-    private CodeClassService      codeClassServiceMock;
+    private CodeClassService          codeClassServiceMock;
     @MockBean
-    private ApplicationProperties applicationPropertiesMock;
+    private ApplicationCoreProperties applicationPropertiesMock;
 
     @Override
     protected void setUpHook() {

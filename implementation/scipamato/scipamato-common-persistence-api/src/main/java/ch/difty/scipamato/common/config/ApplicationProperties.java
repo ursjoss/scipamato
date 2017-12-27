@@ -1,4 +1,4 @@
-package ch.difty.scipamato.common.config.core;
+package ch.difty.scipamato.common.config;
 
 /**
  * Manages property based configuration parameters.
@@ -11,16 +11,15 @@ package ch.difty.scipamato.common.config.core;
  * <p>
  * <b>Note:</b> Consciously applying the constant interface anti-pattern, I
  * think it makes sense here....
+ *
  * @author u.joss
  */
 public interface ApplicationProperties {
 
-    String BUILD_VERSION               = "build.version";
-    String LOCALIZATION_DEFAULT        = "scipamato.default-localization";
-    String AUTHOR_PARSER_FACTORY       = "scipamato.author-parser";
-    String BRAND                       = "scipamato.brand";
-    String PAPER_NUMBER_MIN_TO_RECYCLE = "scipamato.paper-number-minimum-to-be-recycled";
-    String PUBMED_BASE_URL             = "scipamato.pubmed-base-url";
+    String BUILD_VERSION        = "build.version";
+    String LOCALIZATION_DEFAULT = "scipamato.default-localization";
+    String BRAND                = "scipamato.brand";
+    String PUBMED_BASE_URL      = "scipamato.pubmed-base-url";
 
     /**
      * @return the build version of the application.
@@ -33,19 +32,9 @@ public interface ApplicationProperties {
     String getDefaultLocalization();
 
     /**
-     * @return the strategy how to interpret the author string.
-     */
-    AuthorParserStrategy getAuthorParserStrategy();
-
-    /**
      * @return the brand name
      */
     String getBrand();
-
-    /**
-     * @return the lowest paper.number that can be recycled in case of gaps
-     */
-    long getMinimumPaperNumberToBeRecycled();
 
     /**
      * @return The base url in PubMed to query by pm_id.
