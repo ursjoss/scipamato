@@ -16,7 +16,8 @@ import net.sf.jasperreports.export.PdfExporterConfiguration;
 /**
  * DataSource for the PaperLiteratureReviewReport.
  *
- * The meta fields are not contained within a paper instance and make up the caption
+ * The meta fields are not contained within a paper instance and make up the
+ * caption
  *
  * @author u.joss
  */
@@ -29,23 +30,27 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
     private final ReportHeaderFields reportHeaderFields;
 
     /**
-     * Using the dataProvider for the Result Panel as record source. Needs the {@link PaperService} to retrieve the papers
-     * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
+     * Using the dataProvider for the Result Panel as record source. Needs the
+     * {@link PaperService} to retrieve the papers based on the ids of the
+     * {@link PaperSlim}s that are used in the dataProvider.
+     *
      * @param dataProvider
-     *      the {@link AbstractPaperSlimProvider} - must not be null
+     *            the {@link AbstractPaperSlimProvider} - must not be null
      * @param reportHeaderFields
-     *      collection of localized labels for the report fields
+     *            collection of localized labels for the report fields
      * @param config
-     *      {@link PdfExporterConfiguration}
+     *            {@link PdfExporterConfiguration}
      */
-    public PaperLiteratureReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final ReportHeaderFields reportHeaderFields, PdfExporterConfiguration config) {
+    public PaperLiteratureReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
+            final ReportHeaderFields reportHeaderFields, PdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), FILE_NAME, AssertAs.notNull(dataProvider, "dataProvider"));
         this.reportHeaderFields = AssertAs.notNull(reportHeaderFields, "reportHeaderFields");
     }
 
     @Override
     protected JasperReport getReport() {
-        return PaperLiteratureReviewReportResourceReference.get().getReport();
+        return PaperLiteratureReviewReportResourceReference.get()
+            .getReport();
     }
 
     @Override

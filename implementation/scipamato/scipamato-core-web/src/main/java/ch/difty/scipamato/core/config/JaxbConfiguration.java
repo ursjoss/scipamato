@@ -19,7 +19,8 @@ public class JaxbConfiguration {
 
     private static final String PACKAGE = "ch.difty.scipamato.core.pubmed";
 
-    private final JAXBContextFactory jaxbFactory = new JAXBContextFactory.Builder().withMarshallerJAXBEncoding("UTF-8").build();
+    private final JAXBContextFactory jaxbFactory = new JAXBContextFactory.Builder().withMarshallerJAXBEncoding("UTF-8")
+        .build();
 
     @Bean
     public Marshaller marshaller() {
@@ -38,6 +39,11 @@ public class JaxbConfiguration {
 
     @Bean
     public PubMed pubMed() {
-        return Feign.builder().client(new OkHttpClient()).logger(new Slf4jLogger()).logLevel(Logger.Level.FULL).decoder(new JAXBDecoder(jaxbFactory)).target(PubMed.class, PubMed.URL);
+        return Feign.builder()
+            .client(new OkHttpClient())
+            .logger(new Slf4jLogger())
+            .logLevel(Logger.Level.FULL)
+            .decoder(new JAXBDecoder(jaxbFactory))
+            .target(PubMed.class, PubMed.URL);
     }
 }

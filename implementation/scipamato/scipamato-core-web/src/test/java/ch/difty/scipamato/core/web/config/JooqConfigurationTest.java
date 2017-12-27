@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.config;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.SQLException;
 
@@ -59,15 +59,20 @@ public class JooqConfigurationTest {
         assertThat(config.connectionProvider()).isInstanceOf(DataSourceConnectionProvider.class);
         DataSourceConnectionProvider dscp = (DataSourceConnectionProvider) config.connectionProvider();
         assertThat(dscp.dataSource()).isInstanceOf(TransactionAwareDataSourceProxy.class);
-        assertThat(dscp.dataSource().isWrapperFor(HikariDataSource.class)).isTrue();
+        assertThat(dscp.dataSource()
+            .isWrapperFor(HikariDataSource.class)).isTrue();
 
         // assert executeListenerProviders
         assertThat(config.executeListenerProviders()).hasSize(1);
         DefaultExecuteListenerProvider elp = (DefaultExecuteListenerProvider) config.executeListenerProviders()[0];
-        assertThat(elp.provide().getClass().getName()).isEqualTo("ch.difty.scipamato.core.sync.jooq.JooqExceptionTranslator");
+        assertThat(elp.provide()
+            .getClass()
+            .getName()).isEqualTo("ch.difty.scipamato.core.sync.jooq.JooqExceptionTranslator");
 
         // assert TransactionProvider
         assertThat(config.transactionProvider()).isNotNull();
-        assertThat(config.transactionProvider().getClass().getName()).isEqualTo("ch.difty.scipamato.core.sync.jooq.SpringTransactionProvider");
+        assertThat(config.transactionProvider()
+            .getClass()
+            .getName()).isEqualTo("ch.difty.scipamato.core.sync.jooq.SpringTransactionProvider");
     }
 }

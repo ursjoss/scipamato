@@ -1,8 +1,12 @@
 package ch.difty.scipamato.core.web.pages.paper.provider;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +20,8 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContextMatcher;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.filter.PaperFilter;
 
-public class PaperSlimByPaperFilterProviderTest extends AbstractPaperSlimProviderTest<PaperFilter, PaperSlimByPaperFilterProvider> {
+public class PaperSlimByPaperFilterProviderTest
+        extends AbstractPaperSlimProviderTest<PaperFilter, PaperSlimByPaperFilterProvider> {
 
     @Mock
     private PaperFilter filterMock;
@@ -66,20 +71,25 @@ public class PaperSlimByPaperFilterProviderTest extends AbstractPaperSlimProvide
     @Test
     public void findingAllPapersByFilter() {
         provider.setSort("title", SortOrder.DESCENDING);
-        when(paperServiceMock.findPageByFilter(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(pageOfPapers);
+        when(paperServiceMock.findPageByFilter(eq(getFilter()),
+            argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(pageOfPapers);
         List<Paper> papers = provider.findAllPapersByFilter();
         assertThat(papers).hasSize(5);
         assertThat(papers).containsOnly(paperMock);
-        verify(paperServiceMock).findPageByFilter(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")));
+        verify(paperServiceMock).findPageByFilter(eq(getFilter()),
+            argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")));
     }
 
     @Test
     public void findingAllIdsByFilter() {
         provider.setSort("title", SortOrder.DESCENDING);
-        when(paperServiceMock.findPageOfIdsByFilter(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(Arrays.asList(5l, 3l, 17l));
+        when(paperServiceMock.findPageOfIdsByFilter(eq(getFilter()),
+            argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC"))))
+                .thenReturn(Arrays.asList(5l, 3l, 17l));
         List<Long> ids = provider.findAllPaperIdsByFilter();
         assertThat(ids).containsExactly(5l, 3l, 17l);
-        verify(paperServiceMock).findPageOfIdsByFilter(eq(getFilter()), argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")));
+        verify(paperServiceMock).findPageOfIdsByFilter(eq(getFilter()),
+            argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")));
     }
 
     // I know: The Liskov Substitution Principle ... :-(

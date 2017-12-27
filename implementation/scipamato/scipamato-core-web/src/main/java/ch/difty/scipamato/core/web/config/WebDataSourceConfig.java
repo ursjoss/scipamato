@@ -36,7 +36,8 @@ public class WebDataSourceConfig {
     @Bean(destroyMethod = "close")
     @ConfigurationProperties(prefix = "sync.source.datasource")
     public DataSource hikariCoreDataSource() {
-        return DataSourceBuilder.create().build();
+        return DataSourceBuilder.create()
+            .build();
     }
 
     @Bean

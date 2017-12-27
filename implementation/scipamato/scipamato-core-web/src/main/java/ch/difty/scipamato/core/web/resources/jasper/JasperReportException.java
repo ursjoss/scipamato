@@ -1,8 +1,8 @@
 package ch.difty.scipamato.core.web.resources.jasper;
 
 /**
- * Unchecked JasperReport Exception that can wrap a checked exception
- * or be instantiated with a string message only.
+ * Unchecked JasperReport Exception that can wrap a checked exception or be
+ * instantiated with a string message only.
  *
  * @author u.joss
  */

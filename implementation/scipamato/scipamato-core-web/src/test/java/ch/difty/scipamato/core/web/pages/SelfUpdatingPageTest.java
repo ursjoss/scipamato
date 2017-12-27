@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.web.pages;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -29,7 +29,8 @@ public abstract class SelfUpdatingPageTest<T extends BasePage<?>> extends BasePa
     @Test
     public void renderedPage_setsOutputMarkupIdToComponents() {
         getTester().startPage(makePage());
-        assertThat(getTester().getComponentFromLastRenderedPage("contentPanel:form:title").getOutputMarkupId()).isTrue();
+        assertThat(getTester().getComponentFromLastRenderedPage("contentPanel:form:title")
+            .getOutputMarkupId()).isTrue();
     }
 
 }

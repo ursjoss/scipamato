@@ -21,7 +21,8 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configAuthentication(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailService)
+            .passwordEncoder(passwordEncoder());
     }
 
     @Bean

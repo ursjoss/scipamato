@@ -5,7 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * Common base class for PaperSummary entities. 
+ * Common base class for PaperSummary entities.
+ *
  * @author u.joss
  */
 @Data
@@ -34,17 +35,20 @@ public abstract class PaperSummaryCommon extends JasperEntity {
      * Instantiation with a {@link Paper} and the {@link ReportHeaderFields}
      *
      * @param p
-     *      the paper with the relevant fields
+     *            the paper with the relevant fields
      * @param rhf
-     *      the reportHeaderFields with the localized field headers
+     *            the reportHeaderFields with the localized field headers
      */
     protected PaperSummaryCommon(final Paper p, final ReportHeaderFields rhf) {
-        this(p.getNumber(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getMethods(), p.getComment(), rhf.getGoalsLabel(), rhf.getMethodsLabel(), rhf.getCommentLabel(),
-                rhf.getHeaderPart(), rhf.getBrand(), p.getCreatedByName());
+        this(p.getNumber(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getMethods(), p.getComment(),
+                rhf.getGoalsLabel(), rhf.getMethodsLabel(), rhf.getCommentLabel(), rhf.getHeaderPart(), rhf.getBrand(),
+                p.getCreatedByName());
     }
 
-    private PaperSummaryCommon(final Long number, final String authors, final String title, final String location, final String goals, final String methods, final String comment,
-            final String goalsLabel, final String methodsLabel, final String commentLabel, final String headerPart, final String brand, final String createdBy) {
+    private PaperSummaryCommon(final Long number, final String authors, final String title, final String location,
+            final String goals, final String methods, final String comment, final String goalsLabel,
+            final String methodsLabel, final String commentLabel, final String headerPart, final String brand,
+            final String createdBy) {
 
         this.number = number != null ? String.valueOf(number) : "";
         this.authors = na(authors);

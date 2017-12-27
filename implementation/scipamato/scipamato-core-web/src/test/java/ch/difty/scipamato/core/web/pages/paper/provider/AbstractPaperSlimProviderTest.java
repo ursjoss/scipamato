@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.web.pages.paper.provider;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -39,15 +39,15 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     @Mock
     protected JooqPaperSlimService serviceMock;
     @Mock
-    protected JooqPaperService paperServiceMock;
+    protected JooqPaperService     paperServiceMock;
     @Mock
-    protected PaperSlim entityMock;
+    protected PaperSlim            entityMock;
     @Mock
-    protected Paper paperMock;
+    protected Paper                paperMock;
 
-    protected P provider;
+    protected P               provider;
     protected List<PaperSlim> pageOfSlimPapers;
-    protected List<Paper> pageOfPapers;
+    protected List<Paper>     pageOfPapers;
 
     protected abstract F getFilter();
 

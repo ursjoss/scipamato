@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.web.resources.jasper;
 
-public class PaperSummaryTableReportResourceReferenceTest extends JasperReportResourceReferenceTest<PaperSummaryTableReportResourceReference> {
+public class PaperSummaryTableReportResourceReferenceTest
+        extends JasperReportResourceReferenceTest<PaperSummaryTableReportResourceReference> {
 
     @Override
     protected PaperSummaryTableReportResourceReference getResourceReference() {

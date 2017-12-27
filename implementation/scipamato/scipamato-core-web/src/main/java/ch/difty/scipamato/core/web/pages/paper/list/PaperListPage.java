@@ -32,8 +32,11 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 /**
  * Page to list all papers and apply simple filters to limit the results.
  *
- * <p>Offers the option to create new papers and also to process XML strings exported (as file) from the PubMed User Interface.
- * Processing those pubmed articles results in inserting papers that are not yet available in scipamato (based on PMID).
+ * <p>
+ * Offers the option to create new papers and also to process XML strings
+ * exported (as file) from the PubMed User Interface. Processing those pubmed
+ * articles results in inserting papers that are not yet available in scipamato
+ * (based on PMID).
  *
  * @author u.joss
  */
@@ -49,10 +52,10 @@ public class PaperListPage extends BasePage<Void> {
     @SpringBean
     private PubmedImporter pubmedImportService;
 
-    private PaperFilter filter;
+    private PaperFilter                    filter;
     private PaperSlimByPaperFilterProvider dataProvider;
-    private ModalWindow xmlPasteModalWindow;
-    private ResultPanel resultPanel;
+    private ModalWindow                    xmlPasteModalWindow;
+    private ResultPanel                    resultPanel;
 
     public PaperListPage(PageParameters parameters) {
         super(parameters);
@@ -97,16 +100,19 @@ public class PaperListPage extends BasePage<Void> {
         queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(filter, PaperFilter.PUB_YEAR_FROM)));
         queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(filter, PaperFilter.PUB_YEAR_UNTIL)));
 
-        queueResponsePageButton("newPaper", () -> new PaperEntryPage(getPageParameters(), getPage().getPageReference()));
+        queueResponsePageButton("newPaper",
+            () -> new PaperEntryPage(getPageParameters(), getPage().getPageReference()));
         queueXmlPasteModalPanelAndLink("xmlPasteModal", "showXmlPasteModalLink");
     }
 
     /**
-     * Have the provider provide a list of all paper ids matching the current filter.
-     * Construct a navigateable with this list and set it into the session
+     * Have the provider provide a list of all paper ids matching the current
+     * filter. Construct a navigateable with this list and set it into the session
      */
     private void updateNavigateable() {
-        ScipamatoSession.get().getPaperIdManager().initialize(dataProvider.findAllPaperIdsByFilter());
+        ScipamatoSession.get()
+            .getPaperIdManager()
+            .initialize(dataProvider.findAllPaperIdsByFilter());
     }
 
     private void makeAndQueueResultPanel(String id) {
@@ -133,7 +139,8 @@ public class PaperListPage extends BasePage<Void> {
         xmlPasteModalWindow.setMinimalHeight(500);
         xmlPasteModalWindow.setMaskType(MaskType.SEMI_TRANSPARENT);
         xmlPasteModalWindow.setCssClassName(ModalWindow.CSS_CLASS_BLUE);
-        xmlPasteModalWindow.setWindowClosedCallback(target -> onXmlPasteModalPanelClose(panel.getPastedContent(), target));
+        xmlPasteModalWindow
+            .setWindowClosedCallback(target -> onXmlPasteModalPanelClose(panel.getPastedContent(), target));
         return xmlPasteModalWindow;
     }
 
@@ -148,14 +155,17 @@ public class PaperListPage extends BasePage<Void> {
         };
         link.setOutputMarkupPlaceholderTag(true);
         link.setLabel(new StringResourceModel("xmlPasteModalLink.label", this, null));
-        link.add(new AttributeModifier("title", new StringResourceModel("xmlPasteModalLink.title", this, null).getString()));
+        link.add(
+            new AttributeModifier("title", new StringResourceModel("xmlPasteModalLink.title", this, null).getString()));
         return link;
     }
 
     /**
-     * Converts the XML string to articles and dump the new papers into the db. Present the service result messages. Protected for test
+     * Converts the XML string to articles and dump the new papers into the db.
+     * Present the service result messages. Protected for test
      *
-     * @param pubmedContent the xml content as string
+     * @param pubmedContent
+     *            the xml content as string
      * @param target
      */
     protected void onXmlPasteModalPanelClose(final String pubmedContent, final AjaxRequestTarget target) {
@@ -171,12 +181,25 @@ public class PaperListPage extends BasePage<Void> {
 
     /**
      * @param result
-     * @param target, can be null if called from constructor
+     * @param target,
+     *            can be null if called from constructor
      */
-    private void translateServiceResultMessagesToLocalizedUserMessages(final ServiceResult result, final AjaxRequestTarget target) {
-        result.getErrorMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.xml.invalid", this, null).getString()).forEach(this::error);
-        result.getWarnMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.exists", this, null).setParameters(msg).getString()).forEach(this::warn);
-        result.getInfoMessages().stream().map(msg -> new StringResourceModel("xmlPasteModal.saved", this, null).setParameters(msg).getString()).forEach(this::info);
+    private void translateServiceResultMessagesToLocalizedUserMessages(final ServiceResult result,
+            final AjaxRequestTarget target) {
+        result.getErrorMessages()
+            .stream()
+            .map(msg -> new StringResourceModel("xmlPasteModal.xml.invalid", this, null).getString())
+            .forEach(this::error);
+        result.getWarnMessages()
+            .stream()
+            .map(msg -> new StringResourceModel("xmlPasteModal.exists", this, null).setParameters(msg)
+                .getString())
+            .forEach(this::warn);
+        result.getInfoMessages()
+            .stream()
+            .map(msg -> new StringResourceModel("xmlPasteModal.saved", this, null).setParameters(msg)
+                .getString())
+            .forEach(this::info);
         if (target != null)
             target.add(getFeedbackPanel());
     }

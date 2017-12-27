@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.pubmed.service;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
@@ -15,9 +15,10 @@ import ch.difty.scipamato.core.pubmed.PubmedArticleService;
 import ch.difty.scipamato.core.pubmed.ScipamatoPubmedArticleIntegrationTest;
 
 /**
- * Note: This ad hoc integration test should not run automatically, as it actually issues a call to PubMed over the
- * internet. Thus this test fails if the machine running the test does not have an interent connection and PubMed is
- * up and accessible.
+ * Note: This ad hoc integration test should not run automatically, as it
+ * actually issues a call to PubMed over the internet. Thus this test fails if
+ * the machine running the test does not have an interent connection and PubMed
+ * is up and accessible.
  *
  * @author u.joss
  */

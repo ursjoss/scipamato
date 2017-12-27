@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.pages.login;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -38,11 +38,12 @@ public class LogoutPageTest extends WicketTest {
     @Test
     public void submitting_invalidatesSessionAndSendsToHomePage_whichForwardsToLoginPage() {
         getTester().startPage(makePage());
-        assertThat(getTester().getSession().isSessionInvalidated()).isFalse();
+        assertThat(getTester().getSession()
+            .isSessionInvalidated()).isFalse();
         // TODO does not work in the test scenario, investigate
-        //        getTester().submitForm(FORM);
-        //        getTester().assertRenderedPage(LoginPage.class);
-        //        assertThat(getTester().getSession().isSessionInvalidated()).isTrue();
+        // getTester().submitForm(FORM);
+        // getTester().assertRenderedPage(LoginPage.class);
+        // assertThat(getTester().getSession().isSessionInvalidated()).isTrue();
     }
 
 }

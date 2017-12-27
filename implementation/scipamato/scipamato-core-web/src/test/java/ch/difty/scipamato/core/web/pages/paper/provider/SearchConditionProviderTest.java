@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.web.pages.paper.provider;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,7 +42,8 @@ public class SearchConditionProviderTest {
     @Test
     public void degenerateConstruction_withNullSearchOrderModel1() {
         List<SearchCondition> conditions = null;
-        assertDegenerateSupplierParameter(() -> new SearchConditionProvider(Model.ofList(conditions)), "searchConditions");
+        assertDegenerateSupplierParameter(() -> new SearchConditionProvider(Model.ofList(conditions)),
+            "searchConditions");
     }
 
     @Test
@@ -52,7 +53,8 @@ public class SearchConditionProviderTest {
 
     @Test
     public void iterator_fromStartWithPageSizeLargerThanActualSize_returnsAll() {
-        assertThat(provider.iterator(0, 100)).containsExactly(mockCondition1, mockCondition2, mockCondition3, mockCondition4);
+        assertThat(provider.iterator(0, 100)).containsExactly(mockCondition1, mockCondition2, mockCondition3,
+            mockCondition4);
     }
 
     @Test

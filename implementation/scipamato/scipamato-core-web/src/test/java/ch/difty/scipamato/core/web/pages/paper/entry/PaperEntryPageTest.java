@@ -1,8 +1,9 @@
 package ch.difty.scipamato.core.web.pages.paper.entry;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -70,12 +71,18 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         b += ":tabs";
         getTester().assertComponent(b, ClientSideBootstrapTabbedPanel.class);
         b += ":panelsContainer:panels";
-        assertTabPanelFields(1, 1, b, Paper.GOALS, Paper.POPULATION, Paper.METHODS, Paper.POPULATION_PLACE, Paper.POPULATION_PARTICIPANTS, Paper.POPULATION_DURATION, Paper.EXPOSURE_POLLUTANT,
-                Paper.EXPOSURE_ASSESSMENT, Paper.METHOD_STUDY_DESIGN, Paper.METHOD_OUTCOME, Paper.METHOD_STATISTICS, Paper.METHOD_CONFOUNDERS);
-        assertTabPanelFields(2, 3, b, Paper.RESULT, Paper.COMMENT, Paper.INTERN, Paper.RESULT_EXPOSURE_RANGE, Paper.RESULT_EFFECT_ESTIMATE, Paper.RESULT_MEASURED_OUTCOME);
-        assertTabPanelFieldsOfTab3(5, b, Paper.MAIN_CODE_OF_CODECLASS1, "codesClass1", "codesClass2", "codesClass3", "codesClass4", "codesClass5", "codesClass6", "codesClass7", "codesClass8");
-        assertTabPanelFields(4, 7, b, Paper.POPULATION_PLACE, Paper.POPULATION_PARTICIPANTS, Paper.POPULATION_DURATION, Paper.EXPOSURE_POLLUTANT, Paper.EXPOSURE_ASSESSMENT, Paper.METHOD_STUDY_DESIGN,
-                Paper.METHOD_OUTCOME, Paper.METHOD_STATISTICS, Paper.METHOD_CONFOUNDERS, Paper.RESULT_EXPOSURE_RANGE, Paper.RESULT_EFFECT_ESTIMATE, Paper.RESULT_MEASURED_OUTCOME);
+        assertTabPanelFields(1, 1, b, Paper.GOALS, Paper.POPULATION, Paper.METHODS, Paper.POPULATION_PLACE,
+            Paper.POPULATION_PARTICIPANTS, Paper.POPULATION_DURATION, Paper.EXPOSURE_POLLUTANT,
+            Paper.EXPOSURE_ASSESSMENT, Paper.METHOD_STUDY_DESIGN, Paper.METHOD_OUTCOME, Paper.METHOD_STATISTICS,
+            Paper.METHOD_CONFOUNDERS);
+        assertTabPanelFields(2, 3, b, Paper.RESULT, Paper.COMMENT, Paper.INTERN, Paper.RESULT_EXPOSURE_RANGE,
+            Paper.RESULT_EFFECT_ESTIMATE, Paper.RESULT_MEASURED_OUTCOME);
+        assertTabPanelFieldsOfTab3(5, b, Paper.MAIN_CODE_OF_CODECLASS1, "codesClass1", "codesClass2", "codesClass3",
+            "codesClass4", "codesClass5", "codesClass6", "codesClass7", "codesClass8");
+        assertTabPanelFields(4, 7, b, Paper.POPULATION_PLACE, Paper.POPULATION_PARTICIPANTS, Paper.POPULATION_DURATION,
+            Paper.EXPOSURE_POLLUTANT, Paper.EXPOSURE_ASSESSMENT, Paper.METHOD_STUDY_DESIGN, Paper.METHOD_OUTCOME,
+            Paper.METHOD_STATISTICS, Paper.METHOD_CONFOUNDERS, Paper.RESULT_EXPOSURE_RANGE,
+            Paper.RESULT_EFFECT_ESTIMATE, Paper.RESULT_MEASURED_OUTCOME);
         assertTabPanelFields(5, 9, b, Paper.ORIGINAL_ABSTRACT);
         assertTabPanelFields(6, 11, b);
     }
@@ -126,7 +133,8 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         getTester().startPage(makePage());
         applyTestHackWithNstedMultiPartForms();
         getTester().submitForm("contentPanel:form");
-        getTester().assertErrorMessages("'Authors' is required.", "'Title' is required.", "'Location' is required.", "'Pub. Year' is required.", "'No.' is required.", "'Goals' is required.");
+        getTester().assertErrorMessages("'Authors' is required.", "'Title' is required.", "'Location' is required.",
+            "'Pub. Year' is required.", "'No.' is required.", "'Goals' is required.");
     }
 
     // See https://issues.apache.org/jira/browse/WICKET-2790
@@ -161,14 +169,16 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
     @Test
     public void serviceThrowingOptimisticLockingException() {
-        when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenThrow(new OptimisticLockingException("paper", "rcd", Type.UPDATE));
+        when(paperServiceMock.saveOrUpdate(isA(Paper.class)))
+            .thenThrow(new OptimisticLockingException("paper", "rcd", Type.UPDATE));
 
         getTester().startPage(makePage());
 
         FormTester formTester = makeSaveablePaperTester();
         formTester.submit();
 
-        getTester().assertErrorMessages("The paper with id 0 has been modified concurrently by another user. Please reload it and apply your changes once more.");
+        getTester().assertErrorMessages(
+            "The paper with id 0 has been modified concurrently by another user. Please reload it and apply your changes once more.");
         verify(paperServiceMock).saveOrUpdate(isA(Paper.class));
     }
 

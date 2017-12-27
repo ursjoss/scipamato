@@ -1,7 +1,8 @@
 package ch.difty.scipamato.core.web.pages.paper.search;
 
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -45,7 +46,8 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
     @Override
     protected void setUpHook() {
         when(searchOrderServiceMock.findById(SEARCH_ORDER_ID)).thenReturn(Optional.of(searchOrder));
-        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class))).thenReturn(Arrays.asList(searchOrder));
+        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class)))
+            .thenReturn(Arrays.asList(searchOrder));
     }
 
     @Override

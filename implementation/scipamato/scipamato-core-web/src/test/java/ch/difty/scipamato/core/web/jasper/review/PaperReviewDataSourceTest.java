@@ -1,7 +1,9 @@
 package ch.difty.scipamato.core.web.jasper.review;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
@@ -21,11 +23,10 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
     private static final Long NUMBER = 15l;
 
     private PaperReviewDataSource ds;
-    private ReportHeaderFields rhf = newReportHeaderFields();
+    private ReportHeaderFields    rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields
-            .builder("", "b")
+        return ReportHeaderFields.builder("", "b")
             .numberLabel("nl")
             .authorYearLabel("ayl")
             .populationPlaceLabel("ppl")
@@ -61,7 +62,8 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
 
     private void assertDataSource(String fileName) throws JRException {
         assertThat(ds.getConnectionProvider()).isNull();
-        assertThat(ds.getContentDisposition().toString()).isEqualTo("ATTACHMENT");
+        assertThat(ds.getContentDisposition()
+            .toString()).isEqualTo("ATTACHMENT");
         assertThat(ds.getContentType()).isEqualTo("application/pdf");
         assertThat(ds.getExtension()).isEqualTo("pdf");
         assertThat(ds.getJasperReport()).isInstanceOf(JasperReport.class);

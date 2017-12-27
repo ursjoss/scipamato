@@ -1,8 +1,13 @@
 package ch.difty.scipamato.core.web.panel.result;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -31,14 +36,14 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 
 public class ResultPanelTest extends PanelTest<ResultPanel> {
 
-    private static final long NUMBER = 2l;
-    private static final int ROWS_PER_PAGE = 12;
-    private static final String LC = "en_us";
+    private static final long   NUMBER        = 2l;
+    private static final int    ROWS_PER_PAGE = 12;
+    private static final String LC            = "en_us";
 
     @MockBean
     private CodeClassService codeClassServiceMock;
     @MockBean
-    private CodeService codeServiceMock;
+    private CodeService      codeServiceMock;
 
     @Mock
     private SearchOrder searchOrderMock;
@@ -51,9 +56,11 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     @Override
     protected void setUpHook() {
         when(paperSlimServiceMock.countBySearchOrder(searchOrderMock)).thenReturn(1);
-        when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class))).thenReturn(Arrays.asList(paperSlim));
+        when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class)))
+            .thenReturn(Arrays.asList(paperSlim));
 
-        when(paperServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class), eq(LC))).thenReturn(Arrays.asList(paperMock));
+        when(paperServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class), eq(LC)))
+            .thenReturn(Arrays.asList(paperMock));
     }
 
     @After
@@ -61,7 +68,8 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         // after the login
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
-        verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeClassServiceMock, codeServiceMock, searchOrderMock);
+        verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeClassServiceMock, codeServiceMock,
+            searchOrderMock);
     }
 
     @Override
@@ -134,10 +142,12 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     }
 
     /**
-     * Note, we're partially also testing the PaperSummaryDataSource and even the Provider here in order to make
-     * sure the functionality is triggered. Not sure how to verify the action otherwise.
+     * Note, we're partially also testing the PaperSummaryDataSource and even the
+     * Provider here in order to make sure the functionality is triggered. Not sure
+     * how to verify the action otherwise.
      * 
-     * Also, this is not really asserting anything, just verifying the methods have been called. Bit of a workaround
+     * Also, this is not really asserting anything, just verifying the methods have
+     * been called. Bit of a workaround
      */
     private void verifyPdfExport() {
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
@@ -203,7 +213,8 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     private void assertExcludeIcon(String iconClass, String titleValue) {
         getTester().startComponentInPage(makePanel());
 
-        String responseTxt = getTester().getLastResponse().getDocument();
+        String responseTxt = getTester().getLastResponse()
+            .getDocument();
 
         TagTester iconTagTester = TagTester.createTagByAttribute(responseTxt, "class", iconClass);
         assertThat(iconTagTester).isNotNull();

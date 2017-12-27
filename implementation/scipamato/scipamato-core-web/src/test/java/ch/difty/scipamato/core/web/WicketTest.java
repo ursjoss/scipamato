@@ -52,11 +52,12 @@ public abstract class WicketTest {
     @SpyBean
     private CustomAuthenticationManager customAuthenticationManager;
 
-    // The paper slim service and paper service are used in the home page PaperListPage
+    // The paper slim service and paper service are used in the home page
+    // PaperListPage
     @MockBean
     protected PaperSlimService paperSlimServiceMock;
     @MockBean
-    protected PaperService paperServiceMock;
+    protected PaperService     paperServiceMock;
 
     private WicketTester tester;
 
@@ -77,7 +78,8 @@ public abstract class WicketTest {
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock);
         tester = new WicketTester(application);
         Locale locale = new Locale("en_US");
-        tester.getSession().setLocale(locale);
+        tester.getSession()
+            .setLocale(locale);
         setUpHook();
         login(USERNAME, PASSWORD);
     }

@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.panel.search;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.junit.Test;

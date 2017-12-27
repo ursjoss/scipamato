@@ -1,8 +1,10 @@
 package ch.difty.scipamato.core.web.panel.paper;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -34,9 +36,9 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 
 public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperPanel> {
 
-    private static final int PMID = 1234;
-    private static final long SEARCH_ORDER_ID = 5678l;
-    private static final boolean SHOW_EXCLUDED = false;
+    private static final int     PMID            = 1234;
+    private static final long    SEARCH_ORDER_ID = 5678l;
+    private static final boolean SHOW_EXCLUDED   = false;
 
     @MockBean
     private PubmedArticleService pubmedArticleServiceMock;
@@ -44,7 +46,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Mock
     private PubmedArticleFacade pubmedArticleMock;
     @Mock
-    private PageReference callingPageMock;
+    private PageReference       callingPageMock;
 
     // used for referring to PaperSearchPage - not verifying
     @MockBean
@@ -52,7 +54,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
     @Override
     protected void setUpLocalHook() {
-        // when  referring to PaperSearchPage
+        // when referring to PaperSearchPage
         when(searchOrderServiceMock.findById(5678l)).thenReturn(Optional.empty());
     }
 
@@ -323,7 +325,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().executeAjaxEvent(formId + "codesClass1", "change");
         assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("1F");
 
-        // only select the second option in codesOfCodeClass1 -> adjusts mainCodeOfCodeClass1 accordingly
+        // only select the second option in codesOfCodeClass1 -> adjusts
+        // mainCodeOfCodeClass1 accordingly
         indices = new int[1];
         indices[0] = 1;
         formTester.selectMultiple("codesClass1", indices, true);
@@ -372,7 +375,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
-    private void fixPubmedRetrievalButtonClicked(String a, String fa, String t, String l, String py, String doi, String oa) {
+    private void fixPubmedRetrievalButtonClicked(String a, String fa, String t, String l, String py, String doi,
+            String oa) {
         when(pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID)).thenReturn(Optional.of(pubmedArticleMock));
         when(pubmedArticleMock.getPmId()).thenReturn(String.valueOf(PMID));
         when(pubmedArticleMock.getAuthors()).thenReturn(a);
@@ -405,7 +409,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         fixPubmedRetrievalButtonClicked("_a", "fa", "t", "l", "2017", "doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed Authors: _a");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING),
+            "PubMed Authors: _a");
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 
@@ -420,7 +425,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         fixPubmedRetrievalButtonClicked("a", "_fa", "t", "l", "2017", "doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed First Author: _fa");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING),
+            "PubMed First Author: _fa");
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 
@@ -435,7 +441,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         fixPubmedRetrievalButtonClicked("a", "fa", "_t", "l", "2017", "doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed Title: _t");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING),
+            "PubMed Title: _t");
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 
@@ -450,7 +457,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "_l", "2017", "doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed Location: _l");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING),
+            "PubMed Location: _l");
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 
@@ -465,7 +473,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2016", "doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed Pub. Year: 2016");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING),
+            "PubMed Pub. Year: 2016");
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 
@@ -480,7 +489,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "_doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed DOI: _doi");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING),
+            "PubMed DOI: _doi");
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 
@@ -510,8 +520,9 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         fixPubmedRetrievalButtonClicked("_a", "_fa", "_t", "_l", "2016", "_doi", "_oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING), "PubMed Authors: _a", "PubMed First Author: _fa", "PubMed Title: _t", "PubMed Pub. Year: 2016",
-                "PubMed Location: _l", "PubMed DOI: _doi");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING),
+            "PubMed Authors: _a", "PubMed First Author: _fa", "PubMed Title: _t", "PubMed Pub. Year: 2016",
+            "PubMed Location: _l", "PubMed DOI: _doi");
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 
@@ -534,7 +545,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertInfoMessages("Some fields have changed (Authors, First Author, Title, Pub. Year, Location, DOI, Original Abstract). Click save if you want to keep the changes.");
+        getTester().assertInfoMessages(
+            "Some fields have changed (Authors, First Author, Title, Pub. Year, Location, DOI, Original Abstract). Click save if you want to keep the changes.");
         getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
         getTester().assertNoErrorMessage();
 
@@ -548,7 +560,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertInfoMessages("Some fields have changed (" + field + "). Click save if you want to keep the changes.");
+        getTester().assertInfoMessages(
+            "Some fields have changed (" + field + "). Click save if you want to keep the changes.");
         getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
         getTester().assertNoErrorMessage();
 
@@ -559,7 +572,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptAuthor_setsAuthor() {
         EditablePaperPanel panel = makePanel();
-        panel.getModelObject().setAuthors(null);
+        panel.getModelObject()
+            .setAuthors(null);
         testAndVerifySingleFieldSet(panel, "Authors");
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
@@ -567,7 +581,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptFirstAuthor_setsFirstAuthor() {
         EditablePaperPanel panel = makePanel();
-        panel.getModelObject().setFirstAuthor(null);
+        panel.getModelObject()
+            .setFirstAuthor(null);
         testAndVerifySingleFieldSet(panel, "First Author");
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
@@ -575,7 +590,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptTitle_setsTitle() {
         EditablePaperPanel panel = makePanel();
-        panel.getModelObject().setTitle(null);
+        panel.getModelObject()
+            .setTitle(null);
         testAndVerifySingleFieldSet(panel, "Title");
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
@@ -583,7 +599,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptLocation_setsLocation() {
         EditablePaperPanel panel = makePanel();
-        panel.getModelObject().setLocation(null);
+        panel.getModelObject()
+            .setLocation(null);
         testAndVerifySingleFieldSet(panel, "Location");
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
@@ -591,7 +608,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptYear_setsYear() {
         EditablePaperPanel panel = makePanel();
-        panel.getModelObject().setPublicationYear(null);
+        panel.getModelObject()
+            .setPublicationYear(null);
         testAndVerifySingleFieldSet(panel, "Pub. Year");
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
@@ -599,7 +617,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptDoi_setsDoi() {
         EditablePaperPanel panel = makePanel();
-        panel.getModelObject().setDoi(null);
+        panel.getModelObject()
+            .setDoi(null);
         testAndVerifySingleFieldSet(panel, "DOI");
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
@@ -607,7 +626,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptOriginalAbstract_setsOriginalAbstract() {
         EditablePaperPanel panel = makePanel();
-        panel.getModelObject().setOriginalAbstract(null);
+        panel.getModelObject()
+            .setOriginalAbstract(null);
         testAndVerifySingleFieldSet(panel, "Original Abstract");
     }
 
@@ -618,7 +638,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "invalid", "doi", "oa");
 
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertInfoMessages("Some fields have changed (Authors, First Author, Title, Location, DOI, Original Abstract). Click save if you want to keep the changes.");
+        getTester().assertInfoMessages(
+            "Some fields have changed (Authors, First Author, Title, Location, DOI, Original Abstract). Click save if you want to keep the changes.");
         getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
         getTester().assertErrorMessages("Unable to parse the year 'invalid'");
 
@@ -639,7 +660,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         };
     }
 
-    protected EditablePaperPanel makePanelWith(Integer pmId, PageReference callingPage, Long searchOrderId, boolean showExcluded) {
+    protected EditablePaperPanel makePanelWith(Integer pmId, PageReference callingPage, Long searchOrderId,
+            boolean showExcluded) {
         Paper p = new Paper();
         p.setId(1l);
         p.setPmId(pmId);
@@ -705,7 +727,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     private void assertExcluded(boolean showingExclusion, String titleValue, String iconValue) {
         getTester().startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, showingExclusion));
 
-        String responseTxt = getTester().getLastResponse().getDocument();
+        String responseTxt = getTester().getLastResponse()
+            .getDocument();
         TagTester tagTester = TagTester.createTagByAttribute(responseTxt, "title", titleValue);
         assertThat(tagTester).isNotNull();
         assertThat(tagTester.getName()).isEqualTo("button");

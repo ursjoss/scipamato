@@ -15,13 +15,15 @@ import ch.difty.scipamato.core.persistence.ServiceResult;
 public class PubmedImportService implements PubmedImporter {
 
     private final PubmedArticleService pubmedArticleService;
-    private final PaperService paperService;
-    private final long minimumNumber;
+    private final PaperService         paperService;
+    private final long                 minimumNumber;
 
-    public PubmedImportService(final PubmedArticleService pubmedArticleService, final PaperService paperService, final ApplicationProperties applicationProperties) {
+    public PubmedImportService(final PubmedArticleService pubmedArticleService, final PaperService paperService,
+            final ApplicationProperties applicationProperties) {
         this.pubmedArticleService = AssertAs.notNull(pubmedArticleService, "pubmedArticleService");
         this.paperService = AssertAs.notNull(paperService, "paperService");
-        this.minimumNumber = AssertAs.notNull(applicationProperties, "applicationProperties").getMinimumPaperNumberToBeRecycled();
+        this.minimumNumber = AssertAs.notNull(applicationProperties, "applicationProperties")
+            .getMinimumPaperNumberToBeRecycled();
     }
 
     /** {@inheritDoc} */

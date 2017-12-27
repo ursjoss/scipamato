@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.jasper;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -22,7 +22,8 @@ public class ScipamatoPdfResourceHandlerTest {
     }
 
     private void validateDefaultConfig(ScipamatoPdfResourceHandler h) {
-        JRAbstractExporter<PdfReportConfiguration, PdfExporterConfiguration, OutputStreamExporterOutput, JRPdfExporterContext> exporter = h.newExporter();
+        JRAbstractExporter<PdfReportConfiguration, PdfExporterConfiguration, OutputStreamExporterOutput, JRPdfExporterContext> exporter = h
+            .newExporter();
         assertThat(exporter).isNotNull();
         assertThat(exporter.getExporterKey()).isEqualTo("net.sf.jasperreports.pdf");
         assertThat(exporter.getExporterPropertiesPrefix()).isEqualTo("net.sf.jasperreports.export.pdf.");
@@ -36,7 +37,8 @@ public class ScipamatoPdfResourceHandlerTest {
 
     @Test
     public void testWithExplicitConfig() {
-        PdfExporterConfiguration c = new Builder("hp", 1l).withAuthor("a").build();
+        PdfExporterConfiguration c = new Builder("hp", 1l).withAuthor("a")
+            .build();
         ScipamatoPdfResourceHandler h = new ScipamatoPdfResourceHandler(c);
         validateDefaultConfig(h);
     }
