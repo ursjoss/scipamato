@@ -4,10 +4,11 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
- * Implementations of the {@link AuthorParser} interface accept an {@code author} String
- * (typically as a constructor argument). The string is lexed and parsed and individual authors are
- * maintained. There are various ways to access the parsed authors, especially the {@code First Author}
- * is of importance.
+ * Implementations of the {@link AuthorParser} interface accept an
+ * {@code author} String (typically as a constructor argument). The string is
+ * lexed and parsed and individual authors are maintained. There are various
+ * ways to access the parsed authors, especially the {@code First Author} is of
+ * importance.
  *
  * @author u.joss
  */

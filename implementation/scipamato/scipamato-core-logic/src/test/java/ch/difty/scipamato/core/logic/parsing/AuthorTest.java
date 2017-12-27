@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.logic.parsing;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -9,8 +9,8 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 public class AuthorTest {
 
     private static final String AUTHOR_STRING = "authorString";
-    private static final String LAST_NAME = "lastName";
-    private static final String FIRST_NAME = "firstName";
+    private static final String LAST_NAME     = "lastName";
+    private static final String FIRST_NAME    = "firstName";
 
     @Test
     public void canGetValues() {
@@ -22,6 +22,7 @@ public class AuthorTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(Author.class).verify();
+        EqualsVerifier.forClass(Author.class)
+            .verify();
     }
 }
