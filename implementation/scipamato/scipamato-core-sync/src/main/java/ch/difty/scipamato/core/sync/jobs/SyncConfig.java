@@ -29,25 +29,28 @@ import ch.difty.scipamato.core.sync.houskeeping.HouseKeeper;
  *
  * @author u.joss
  *
- * @param <T> type of sync classes
- * @param <R> related record implementation
+ * @param <T>
+ *            type of sync classes
+ * @param <R>
+ *            related record implementation
  */
 public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
 
     @Value("${purge_grace_time_in_minutes:30}")
     private int graceTime;
 
-    private final DSLContext jooqCore;
-    private final DSLContext jooqPublic;
-    private final DataSource scipamatoCoreDataSource;
-    private final JobBuilderFactory jobBuilderFactory;
+    private final DSLContext         jooqCore;
+    private final DSLContext         jooqPublic;
+    private final DataSource         scipamatoCoreDataSource;
+    private final JobBuilderFactory  jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
-    private final DateTimeService dateTimeService;
+    private final DateTimeService    dateTimeService;
 
     private final String topic;
-    private final int chunkSize;
+    private final int    chunkSize;
 
-    protected SyncConfig(final String topic, final int chunkSize, DSLContext jooqCore, DSLContext jooqPublic, DataSource scipoamatoCoreDataSource, JobBuilderFactory jobBuilderFactory,
+    protected SyncConfig(final String topic, final int chunkSize, DSLContext jooqCore, DSLContext jooqPublic,
+            DataSource scipoamatoCoreDataSource, JobBuilderFactory jobBuilderFactory,
             StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
         this.topic = topic;
         this.chunkSize = chunkSize;
@@ -103,7 +106,8 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     }
 
     /**
-     * @return implementation of the {@link ItemWriter} interface to insert/update type {@literal T}
+     * @return implementation of the {@link ItemWriter} interface to insert/update
+     *         type {@literal T}
      */
     protected abstract ItemWriter<T> publicWriter();
 
@@ -127,16 +131,20 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
 
     /**
      * Translate the {@link ResultSet} into the entity {@literal T}
+     *
      * @param rs
-     *    the recordset from scipamato-core
+     *            the recordset from scipamato-core
      * @return the entity of type {@literal T}
      * @throws SQLException
      */
     protected abstract T makeEntity(ResultSet rs) throws SQLException;
 
     private Step purgingStep() {
-        final Timestamp cutOff = Timestamp.valueOf(getDateTimeService().getCurrentDateTime().minusMinutes(graceTime));
-        return stepBuilderFactory.get(topic + "PurgingStep").tasklet(new HouseKeeper<R>(getPurgeDcs(cutOff), graceTime)).build();
+        final Timestamp cutOff = Timestamp.valueOf(getDateTimeService().getCurrentDateTime()
+            .minusMinutes(graceTime));
+        return stepBuilderFactory.get(topic + "PurgingStep")
+            .tasklet(new HouseKeeper<R>(getPurgeDcs(cutOff), graceTime))
+            .build();
     }
 
     protected abstract DeleteConditionStep<R> getPurgeDcs(final Timestamp cutOff);
@@ -146,7 +154,8 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     }
 
     /**
-     * @return returns null if the column was null, the boxed integer value otherwise
+     * @return returns null if the column was null, the boxed integer value
+     *         otherwise
      */
     protected Integer getInteger(final TableField<?, Integer> field, final ResultSet rs) throws SQLException {
         final int val = rs.getInt(field.getName());

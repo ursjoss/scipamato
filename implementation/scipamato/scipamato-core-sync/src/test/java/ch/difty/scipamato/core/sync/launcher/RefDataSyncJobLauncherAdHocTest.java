@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.launcher;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +18,8 @@ public class RefDataSyncJobLauncherAdHocTest {
     @Test
     public void run() {
         SyncJobResult result = launcher.launch();
-        result.getMessages().forEach(System.out::println);
+        result.getMessages()
+            .forEach(System.out::println);
         assertThat(result.isSuccessful()).isTrue();
     }
 }

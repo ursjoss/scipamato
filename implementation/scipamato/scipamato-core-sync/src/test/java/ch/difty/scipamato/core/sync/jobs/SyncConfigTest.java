@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -13,8 +13,10 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 
 public abstract class SyncConfigTest<R extends UpdatableRecord<R>> {
 
-    protected static final Timestamp CREATED = Timestamp.valueOf(LocalDateTime.now().minusDays(2));
-    protected static final Timestamp MODIFIED = Timestamp.valueOf(LocalDateTime.now().minusDays(1));
+    protected static final Timestamp CREATED  = Timestamp.valueOf(LocalDateTime.now()
+        .minusDays(2));
+    protected static final Timestamp MODIFIED = Timestamp.valueOf(LocalDateTime.now()
+        .minusDays(1));
 
     /**
      * @return the job instance

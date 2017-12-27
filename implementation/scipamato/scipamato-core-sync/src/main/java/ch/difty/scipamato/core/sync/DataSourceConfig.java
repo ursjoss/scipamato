@@ -34,7 +34,8 @@ public class DataSourceConfig {
     @Bean(destroyMethod = "close")
     @ConfigurationProperties(prefix = "sync.target.datasource")
     public DataSource hikariPublicDataSource() {
-        return DataSourceBuilder.create().build();
+        return DataSourceBuilder.create()
+            .build();
     }
 
     @Bean
@@ -43,13 +44,13 @@ public class DataSourceConfig {
     }
 
     /**
-     * Scipamato-Core as batch datasource. Needs to create
-     * the batch meta tables.
+     * Scipamato-Core as batch datasource. Needs to create the batch meta tables.
      */
     @Bean(destroyMethod = "close")
     @ConfigurationProperties(prefix = "sync.batch.datasource")
     public DataSource hikariBatchDataSource() {
-        return DataSourceBuilder.create().build();
+        return DataSourceBuilder.create()
+            .build();
     }
 
     @Bean

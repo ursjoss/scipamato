@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.paper;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -10,8 +10,7 @@ public class PublicPaperTest extends PublicEntityTest {
 
     @Test
     public void canSetGet() {
-        PublicPaper pp = PublicPaper
-            .builder()
+        PublicPaper pp = PublicPaper.builder()
             .id(1l)
             .number(2l)
             .pmId(10000)

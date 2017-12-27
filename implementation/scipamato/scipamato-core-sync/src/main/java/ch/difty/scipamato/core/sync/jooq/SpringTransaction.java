@@ -25,8 +25,10 @@ import org.springframework.transaction.TransactionStatus;
  * @author Andreas Ahlenstorf
  * @author Phillip Webb
  *
- * Copy of org.springframework.boot.autoconfigure.jooq.SpringTransaction, which has default access modifier for now.
- * See https://github.com/spring-projects/spring-boot/issues/11324
+ *         Copy of
+ *         org.springframework.boot.autoconfigure.jooq.SpringTransaction, which
+ *         has default access modifier for now. See
+ *         https://github.com/spring-projects/spring-boot/issues/11324
  */
 class SpringTransaction implements Transaction {
 

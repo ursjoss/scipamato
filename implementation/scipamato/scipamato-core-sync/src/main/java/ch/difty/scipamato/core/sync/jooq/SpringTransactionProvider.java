@@ -29,8 +29,10 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
  * @author Andreas Ahlenstorf
  * @author Phillip Webb
  *
- * Copy of org.springframework.boot.autoconfigure.jooq.SpringTransactionProvider, which has default access modifier for now.
- * See https://github.com/spring-projects/spring-boot/issues/11324
+ *         Copy of
+ *         org.springframework.boot.autoconfigure.jooq.SpringTransactionProvider,
+ *         which has default access modifier for now. See
+ *         https://github.com/spring-projects/spring-boot/issues/11324
  */
 public class SpringTransactionProvider implements TransactionProvider {
 
