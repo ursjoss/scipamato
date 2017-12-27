@@ -142,11 +142,6 @@
             <!-- SciPaMaTo-Core modules -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-core-logic</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>scipamato-core-entity</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -398,7 +393,6 @@
                 <module>scipamato-common-persistence-api</module>
                 <module>scipamato-common-persistence-jooq</module>
                 <module>scipamato-common-wicket</module>
-                <module>scipamato-core-logic</module>
                 <module>scipamato-core-entity</module>
                 <module>scipamato-core-pubmed-api</module>
                 <module>scipamato-core-persistence-api</module>
@@ -442,7 +436,6 @@
                 <module>scipamato-public-persistence-api</module>
                 <module>scipamato-public-persistence-jooq</module>
                 <module>scipamato-public-web</module>
-                <module>scipamato-core-logic</module>
                 <module>scipamato-core-entity</module>
                 <module>scipamato-core-pubmed-api</module>
                 <module>scipamato-core-persistence-api</module>
