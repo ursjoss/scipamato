@@ -1,6 +1,6 @@
 package ch.difty.scipamato.public_.entity;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
@@ -9,8 +9,7 @@ public class PublicPaperTest extends PublicEntityTest<PublicPaper> {
 
     @Override
     protected PublicPaper newEntity() {
-        return PublicPaper
-            .builder()
+        return PublicPaper.builder()
             .id(1l)
             .number(2l)
             .pmId(1000)
@@ -48,8 +47,7 @@ public class PublicPaperTest extends PublicEntityTest<PublicPaper> {
 
     @Override
     public void verifyEquals() {
-        EqualsVerifier
-            .forClass(PublicPaper.class)
+        EqualsVerifier.forClass(PublicPaper.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(PublicPaper.CREATED, PublicPaper.MODIFIED)
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)

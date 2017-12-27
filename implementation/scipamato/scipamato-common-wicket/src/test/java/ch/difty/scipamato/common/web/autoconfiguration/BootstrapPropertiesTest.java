@@ -1,6 +1,6 @@
 package ch.difty.scipamato.common.web.autoconfiguration;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 

@@ -5,8 +5,8 @@ import java.util.List;
 
 public class DefaultServiceResult implements ServiceResult {
 
-    private final List<String> infoMessages = new ArrayList<>();
-    private final List<String> warnMessages = new ArrayList<>();
+    private final List<String> infoMessages  = new ArrayList<>();
+    private final List<String> warnMessages  = new ArrayList<>();
     private final List<String> errorMessages = new ArrayList<>();
 
     @Override

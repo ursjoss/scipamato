@@ -1,6 +1,6 @@
 package ch.difty.scipamato.common.web.component.table.column;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -26,7 +26,8 @@ public class LinkIconColumnTest extends WicketBaseTest {
 
             @Override
             protected void onClickPerformed(IModel<TestRecord> rowModel, AjaxLink<Void> link) {
-                clickPerformed = rowModel.getObject().toString();
+                clickPerformed = rowModel.getObject()
+                    .toString();
             }
         };
     }
@@ -50,7 +51,8 @@ public class LinkIconColumnTest extends WicketBaseTest {
     }
 
     private void assertImageTitle() {
-        String responseTxt = getTester().getLastResponse().getDocument();
+        String responseTxt = getTester().getLastResponse()
+            .getDocument();
         TagTester tagTester = TagTester.createTagByName(responseTxt, "i");
         assertThat(tagTester).isNotNull();
         assertThat(tagTester.getAttribute("title")).isEqualTo("the title");
@@ -65,7 +67,8 @@ public class LinkIconColumnTest extends WicketBaseTest {
     }
 
     private void assertNoImageTitle() {
-        String responseTxt = getTester().getLastResponse().getDocument();
+        String responseTxt = getTester().getLastResponse()
+            .getDocument();
         TagTester tagTester = TagTester.createTagByName(responseTxt, "i");
         assertThat(tagTester).isNotNull();
         assertThat(tagTester.getAttribute("title")).isNull();
@@ -88,13 +91,15 @@ public class LinkIconColumnTest extends WicketBaseTest {
 
         @Override
         protected void onClickPerformed(AjaxRequestTarget target, IModel<TestRecord> rowModel, AjaxLink<Void> link) {
-            clickPerformed = rowModel.getObject().toString();
+            clickPerformed = rowModel.getObject()
+                .toString();
         }
     };
 
     @Test
     public void cssClassIsNull_canSetLater() {
-        assertThat(lc.getDisplayModel().getObject()).isEqualTo("headerText");
+        assertThat(lc.getDisplayModel()
+            .getObject()).isEqualTo("headerText");
     }
 
     @Test

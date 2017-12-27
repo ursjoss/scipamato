@@ -46,9 +46,9 @@ public class PaperSummaryShort extends PaperSummaryCommon {
      * Instantiation with a {@link Paper} and the {@link ReportHeaderFields}
      *
      * @param p
-     *      the paper with the relevant fields
+     *            the paper with the relevant fields
      * @param rhf
-     *      the reportHeaderFields with the localized field headers
+     *            the reportHeaderFields with the localized field headers
      */
     public PaperSummaryShort(final Paper p, final ReportHeaderFields rhf) {
         super(AssertAs.notNull(p, "p"), AssertAs.notNull(rhf, "rhf"));

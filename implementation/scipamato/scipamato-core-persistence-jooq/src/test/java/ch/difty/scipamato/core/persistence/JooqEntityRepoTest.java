@@ -1,9 +1,14 @@
 package ch.difty.scipamato.core.persistence;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +39,16 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 
 /**
- * TODO find a more feasible approach to test the actual jOOQ part via unit tests. The current approach is too cumbersome.
+ * TODO find a more feasible approach to test the actual jOOQ part via unit
+ * tests. The current approach is too cumbersome.
  * <p>
- * I played around with the MockDataProvider (see branch exp/jooq_mocking), see also https://www.jooq.org/doc/3.9/manual/tools/jdbc-mocking/
- * but that did not seem to solve what I want to achieve (testing the query composition in the repo methods).
+ * I played around with the MockDataProvider (see branch exp/jooq_mocking), see
+ * also https://www.jooq.org/doc/3.9/manual/tools/jdbc-mocking/ but that did not
+ * seem to solve what I want to achieve (testing the query composition in the
+ * repo methods).
  * <p>
- * Let's postpone this and remove the ignored test methods for now (gentle pressure of sonarqube :-) )
+ * Let's postpone this and remove the ignored test methods for now (gentle
+ * pressure of sonarqube :-) )
  */
 @RunWith(SpringRunner.class)
 public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamatoEntity<ID>, ID extends Number, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
@@ -52,28 +61,28 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     @Mock
     private UpdateSetStepSetter<R, T> updateSetStepSetterMock;
     @Mock
-    private InsertSetStep<R> insertSetStepMock;
+    private InsertSetStep<R>          insertSetStepMock;
     @Mock
-    private InsertSetMoreStep<R> insertSetMoreStepMock;
+    private InsertSetMoreStep<R>      insertSetMoreStepMock;
     @Mock
-    private InsertResultStep<R> insertResultStepMock;
+    private InsertResultStep<R>       insertResultStepMock;
     @Mock
-    protected DeleteWhereStep<R> deleteWhereStepMock;
+    protected DeleteWhereStep<R>      deleteWhereStepMock;
     @Mock
-    private DeleteConditionStep<R> deleteConditionStep1Mock, deleteConditionStep2Mock;
+    private DeleteConditionStep<R>    deleteConditionStep1Mock, deleteConditionStep2Mock;
     @Mock
-    private UpdateSetFirstStep<R> updateSetFirstStepMock;
+    private UpdateSetFirstStep<R>     updateSetFirstStepMock;
     @Mock
-    private UpdateConditionStep<R> updateConditionStepMock;
+    private UpdateConditionStep<R>    updateConditionStepMock;
     @Mock
-    private UpdateSetMoreStep<R> updateSetMoreStepMock;
+    private UpdateSetMoreStep<R>      updateSetMoreStepMock;
     @Mock
-    private UpdateResultStep<R> updateResultStepMock;
+    private UpdateResultStep<R>       updateResultStepMock;
     @Mock
-    private PaginationContext paginationContextMock;
+    private PaginationContext         paginationContextMock;
 
     private final List<T> entities = new ArrayList<>();
-    private final List<R> records = new ArrayList<>();
+    private final List<R> records  = new ArrayList<>();
 
     private final ID id = getSampleId();
 
@@ -95,15 +104,17 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     protected abstract ID getSampleId();
 
     /**
-     * @return the specific repository instantiated 
+     * @return the specific repository instantiated
      */
     @Override
     protected abstract EntityRepository<T, ID, F> getRepo();
 
     /**
-     * Hand-rolled spy that returns the provided entity in the method {@code findById(ID id)}
+     * Hand-rolled spy that returns the provided entity in the method
+     * {@code findById(ID id)}
      *
-     * @param entity the entity to be found.
+     * @param entity
+     *            the entity to be found.
      * @return the entity
      */
     @Override
@@ -123,8 +134,10 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
         records.add(getPersistedRecord());
 
         when(getDsl().insertInto(getTable())).thenReturn(insertSetStepMock);
-        when(insertSetStepSetterMock.setNonKeyFieldsFor(insertSetStepMock, getUnpersistedEntity())).thenReturn(insertSetMoreStepMock);
-        when(insertSetStepMock.set(isA(TableField.class), eq(getUnpersistedEntity()))).thenReturn(insertSetMoreStepMock);
+        when(insertSetStepSetterMock.setNonKeyFieldsFor(insertSetStepMock, getUnpersistedEntity()))
+            .thenReturn(insertSetMoreStepMock);
+        when(insertSetStepMock.set(isA(TableField.class), eq(getUnpersistedEntity())))
+            .thenReturn(insertSetMoreStepMock);
         when(insertSetMoreStepMock.returning()).thenReturn(insertResultStepMock);
 
         when(getMapper().map(getPersistedRecord())).thenReturn(getPersistedEntity());
@@ -133,7 +146,8 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
         when(deleteWhereStepMock.where(getTableId().equal(id))).thenReturn(deleteConditionStep1Mock);
 
         when(getDsl().update(getTable())).thenReturn(updateSetFirstStepMock);
-        when(updateSetStepSetterMock.setFieldsFor(updateSetFirstStepMock, getUnpersistedEntity())).thenReturn(updateSetMoreStepMock);
+        when(updateSetStepSetterMock.setFieldsFor(updateSetFirstStepMock, getUnpersistedEntity()))
+            .thenReturn(updateSetMoreStepMock);
         when(updateConditionStepMock.returning()).thenReturn(updateResultStepMock);
 
         testSpecificSetUp();
@@ -149,9 +163,11 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     public final void specificTearDown() {
         testSpecificTearDown();
 
-        verifyNoMoreInteractions(insertSetStepMock, insertSetMoreStepMock, insertResultStepMock, insertSetStepSetterMock);
+        verifyNoMoreInteractions(insertSetStepMock, insertSetMoreStepMock, insertResultStepMock,
+            insertSetStepSetterMock);
         verifyNoMoreInteractions(deleteWhereStepMock, deleteConditionStep1Mock, deleteConditionStep2Mock);
-        verifyNoMoreInteractions(updateSetFirstStepMock, updateConditionStepMock, updateSetMoreStepMock, updateResultStepMock, updateSetStepSetterMock);
+        verifyNoMoreInteractions(updateSetFirstStepMock, updateConditionStepMock, updateSetMoreStepMock,
+            updateResultStepMock, updateSetStepSetterMock);
     }
 
     /**
@@ -197,7 +213,8 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(OptimisticLockingException.class);
-            assertThat(ex.getMessage()).isEqualTo("Record in table '" + getTable().getName() + "' has been modified prior to the delete attempt. Aborting....");
+            assertThat(ex.getMessage()).isEqualTo("Record in table '" + getTable().getName()
+                    + "' has been modified prior to the delete attempt. Aborting....");
         }
     }
 

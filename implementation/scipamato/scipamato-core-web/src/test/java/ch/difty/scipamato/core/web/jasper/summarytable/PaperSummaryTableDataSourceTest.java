@@ -1,7 +1,9 @@
 package ch.difty.scipamato.core.web.jasper.summarytable;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,18 +23,18 @@ import net.sf.jasperreports.engine.design.JRDesignField;
 
 public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
 
-    private static final Long NUMBER = 100l;
-    private static final String FIRST_AUTHOR = "firstAuthor";
-    private static final int PUBLICATION_YEAR = 2017;
-    private static final String GOALS = "goals";
-    private static final String TITLE = "title";
-    private static final String RESULT = "result";
-    private static final String CODES_OF_CC1 = "1F";
-    private static final String CODES_OF_CC4 = "4A,4C";
-    private static final String CODES_OF_CC7 = "7B";
-    private static final String CAPTION = "caption";
-    private static final String BRAND = "brand";
-    private static final String NUMBER_LABEL = "nl";
+    private static final Long   NUMBER           = 100l;
+    private static final String FIRST_AUTHOR     = "firstAuthor";
+    private static final int    PUBLICATION_YEAR = 2017;
+    private static final String GOALS            = "goals";
+    private static final String TITLE            = "title";
+    private static final String RESULT           = "result";
+    private static final String CODES_OF_CC1     = "1F";
+    private static final String CODES_OF_CC4     = "4A,4C";
+    private static final String CODES_OF_CC7     = "7B";
+    private static final String CAPTION          = "caption";
+    private static final String BRAND            = "brand";
+    private static final String NUMBER_LABEL     = "nl";
 
     private static final String FILE_NAME = "paper_summary_table.pdf";
 
@@ -41,10 +43,13 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     private final List<Code> codesOfCodeClass7 = new ArrayList<>();
 
     private PaperSummaryTableDataSource ds;
-    private ReportHeaderFields rhf = newReportHeaderFields();
+    private ReportHeaderFields          rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields.builder("", BRAND).numberLabel(NUMBER_LABEL).captionLabel(CAPTION).build();
+        return ReportHeaderFields.builder("", BRAND)
+            .numberLabel(NUMBER_LABEL)
+            .captionLabel(CAPTION)
+            .build();
     }
 
     @Override
@@ -68,7 +73,8 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
 
     private void assertDataSource(String fileName) throws JRException {
         assertThat(ds.getConnectionProvider()).isNull();
-        assertThat(ds.getContentDisposition().toString()).isEqualTo("ATTACHMENT");
+        assertThat(ds.getContentDisposition()
+            .toString()).isEqualTo("ATTACHMENT");
         assertThat(ds.getContentType()).isEqualTo("application/pdf");
         assertThat(ds.getExtension()).isEqualTo("pdf");
         assertThat(ds.getJasperReport()).isInstanceOf(JasperReport.class);
@@ -122,7 +128,8 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0l);
         ds = new PaperSummaryTableDataSource(dataProviderMock, rhf, true, pdfExporterConfigMock);
-        assertThat(ds.getReportDataSource().next()).isFalse();
+        assertThat(ds.getReportDataSource()
+            .next()).isFalse();
         verify(dataProviderMock).size();
     }
 
@@ -131,7 +138,8 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
         try {
             new PaperSummaryTableDataSource(null, rhf, true, pdfExporterConfigMock);
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dataProvider must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class)
+                .hasMessage("dataProvider must not be null.");
         }
     }
 

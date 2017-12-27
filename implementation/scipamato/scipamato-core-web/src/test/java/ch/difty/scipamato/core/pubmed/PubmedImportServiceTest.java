@@ -1,8 +1,10 @@
 package ch.difty.scipamato.core.pubmed;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +26,15 @@ public class PubmedImportServiceTest {
     private PubmedImporter pubmedImporter;
 
     @Mock
-    private PubmedArticleService pubmedArticleServiceMock;
+    private PubmedArticleService  pubmedArticleServiceMock;
     @Mock
-    private PaperService paperServiceMock;
+    private PaperService          paperServiceMock;
     @Mock
     private ApplicationProperties applicationPropertiesMock;
     @Mock
-    private PubmedArticleFacade pubmedArticleMock;
+    private PubmedArticleFacade   pubmedArticleMock;
     @Mock
-    private ServiceResult serviceResultMock;
+    private ServiceResult         serviceResultMock;
 
     private final List<PubmedArticleFacade> pubmedArticles = new ArrayList<>();
 
@@ -45,24 +47,28 @@ public class PubmedImportServiceTest {
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(pubmedArticleServiceMock, paperServiceMock, pubmedArticleMock, serviceResultMock, applicationPropertiesMock);
+        verifyNoMoreInteractions(pubmedArticleServiceMock, paperServiceMock, pubmedArticleMock, serviceResultMock,
+            applicationPropertiesMock);
     }
 
     @Test
     public void degenerateConstruction_withNullPubmedArticleService_throws() {
-        assertDegenerateSupplierParameter(() -> new PubmedImportService(null, paperServiceMock, applicationPropertiesMock), "pubmedArticleService");
+        assertDegenerateSupplierParameter(
+            () -> new PubmedImportService(null, paperServiceMock, applicationPropertiesMock), "pubmedArticleService");
         verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
     }
 
     @Test
     public void degenerateConstruction_withNullSaperService_throws() {
-        assertDegenerateSupplierParameter(() -> new PubmedImportService(pubmedArticleServiceMock, null, applicationPropertiesMock), "paperService");
+        assertDegenerateSupplierParameter(
+            () -> new PubmedImportService(pubmedArticleServiceMock, null, applicationPropertiesMock), "paperService");
         verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
     }
 
     @Test
     public void degenerateConstruction_withNullApplicationProperties_throws() {
-        assertDegenerateSupplierParameter(() -> new PubmedImportService(pubmedArticleServiceMock, paperServiceMock, null), "applicationProperties");
+        assertDegenerateSupplierParameter(
+            () -> new PubmedImportService(pubmedArticleServiceMock, paperServiceMock, null), "applicationProperties");
         verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
     }
 

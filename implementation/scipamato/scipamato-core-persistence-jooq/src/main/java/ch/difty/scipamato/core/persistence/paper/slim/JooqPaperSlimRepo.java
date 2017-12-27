@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper.slim;
 
-import static ch.difty.scipamato.core.db.tables.Paper.*;
+import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 
 import java.util.List;
 
@@ -22,14 +22,18 @@ import ch.difty.scipamato.core.persistence.JooqReadOnlyRepo;
 import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSearchOrderRepository;
 
 @Repository
-public class JooqPaperSlimRepo extends JooqReadOnlyRepo<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter> implements PaperSlimRepository {
+public class JooqPaperSlimRepo extends
+        JooqReadOnlyRepo<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter>
+        implements PaperSlimRepository {
 
     private static final long serialVersionUID = 1L;
 
     private final PaperSlimBackedSearchOrderRepository searchOrderRepository;
 
-    public JooqPaperSlimRepo(@Qualifier("dslContext") DSLContext dsl, PaperSlimRecordMapper mapper, JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapper,
-            GenericFilterConditionMapper<PaperFilter> filterConditionMapper, PaperSlimBackedSearchOrderRepository searchOrderRepository, ApplicationProperties applicationProperties) {
+    public JooqPaperSlimRepo(@Qualifier("dslContext") DSLContext dsl, PaperSlimRecordMapper mapper,
+            JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapper,
+            GenericFilterConditionMapper<PaperFilter> filterConditionMapper,
+            PaperSlimBackedSearchOrderRepository searchOrderRepository, ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, applicationProperties);
         this.searchOrderRepository = AssertAs.notNull(searchOrderRepository, "searchOrderRepository");
     }

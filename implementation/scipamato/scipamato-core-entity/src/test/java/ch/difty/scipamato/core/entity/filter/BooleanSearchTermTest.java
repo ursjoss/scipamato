@@ -1,13 +1,13 @@
 package ch.difty.scipamato.core.entity.filter;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
 public class BooleanSearchTermTest {
 
-    private static final long CONDITION_ID = 3;
-    private static final String FIELD_NAME = "fn";
+    private static final long   CONDITION_ID = 3;
+    private static final String FIELD_NAME   = "fn";
 
     private BooleanSearchTerm st;
 

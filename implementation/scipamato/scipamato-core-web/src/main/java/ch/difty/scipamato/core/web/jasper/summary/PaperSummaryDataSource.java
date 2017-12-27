@@ -22,13 +22,15 @@ import net.sf.jasperreports.export.PdfExporterConfiguration;
  * Can be instantiated in different ways, either by passing in
  *
  * <ul>
- * <li> a single {@link Paper} + report header fields + export config</li>
- * <li> a single {@link PaperSummary} + export config</li>
- * <li> a collection of {@link PaperSummary} entities + export config or</li>
- * <li> an instance of a {@link AbstractPaperSlimProvider} + report header fields + export config</li>
+ * <li>a single {@link Paper} + report header fields + export config</li>
+ * <li>a single {@link PaperSummary} + export config</li>
+ * <li>a collection of {@link PaperSummary} entities + export config or</li>
+ * <li>an instance of a {@link AbstractPaperSlimProvider} + report header fields
+ * + export config</li>
  * </ul>
  *
- * The report header fields are not contained within a paper instance and make up e.g. localized labels, the brand or part of the header.
+ * The report header fields are not contained within a paper instance and make
+ * up e.g. localized labels, the brand or part of the header.
  *
  * @author u.joss
  */
@@ -36,59 +38,72 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
 
     private static final long serialVersionUID = 1L;
 
-    private static final String BASE_NAME_SINGLE = "paper_summary_no_";
+    private static final String BASE_NAME_SINGLE          = "paper_summary_no_";
     private static final String BASE_NAME_SINGLE_FALLBACK = "paper_summary";
-    private static final String BASE_NAME_MULTIPLE = "paper_summaries";
+    private static final String BASE_NAME_MULTIPLE        = "paper_summaries";
 
     private ReportHeaderFields reportHeaderFields;
 
     /**
-     * Build up the paper summary from a {@link Paper} and any additional information not contained within the paper
+     * Build up the paper summary from a {@link Paper} and any additional
+     * information not contained within the paper
+     *
      * @param paper
-     *      an instance of {@link Paper} - must not be null.
+     *            an instance of {@link Paper} - must not be null.
      * @param reportHeaderFields
-     *      collection of localized labels for report fields
-     * @param config {@link PdfExporterConfiguration}
+     *            collection of localized labels for report fields
+     * @param config
+     *            {@link PdfExporterConfiguration}
      */
-    public PaperSummaryDataSource(final Paper paper, final ReportHeaderFields reportHeaderFields, PdfExporterConfiguration config) {
-        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"), AssertAs.notNull(reportHeaderFields, "reportHeaderFields"))), config,
+    public PaperSummaryDataSource(final Paper paper, final ReportHeaderFields reportHeaderFields,
+            PdfExporterConfiguration config) {
+        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"),
+                AssertAs.notNull(reportHeaderFields, "reportHeaderFields"))), config,
                 makeSinglePaperBaseName(paper.getNumber() != null ? String.valueOf(paper.getNumber()) : null));
         this.reportHeaderFields = reportHeaderFields;
     }
 
     /**
-     * Populate the report from a single {@link PaperSummary}, using a specific file name including the id of the paper.
+     * Populate the report from a single {@link PaperSummary}, using a specific file
+     * name including the id of the paper.
+     *
      * @param paperSummary
-     *     collection of {@link PaperSummary} instances - must not be null
+     *            collection of {@link PaperSummary} instances - must not be null
      * @param config
-     *     the {@link PdfExporterConfiguration}
+     *            the {@link PdfExporterConfiguration}
      */
     public PaperSummaryDataSource(final PaperSummary paperSummary, PdfExporterConfiguration config) {
-        this(Arrays.asList(AssertAs.notNull(paperSummary, "paperSummary")), config, makeSinglePaperBaseName(paperSummary.getNumber()));
+        this(Arrays.asList(AssertAs.notNull(paperSummary, "paperSummary")), config,
+                makeSinglePaperBaseName(paperSummary.getNumber()));
     }
 
-    private PaperSummaryDataSource(final Collection<PaperSummary> paperSummaries, PdfExporterConfiguration config, String baseName) {
+    private PaperSummaryDataSource(final Collection<PaperSummary> paperSummaries, PdfExporterConfiguration config,
+            String baseName) {
         super(new ScipamatoPdfResourceHandler(config), baseName, paperSummaries);
     }
 
     /**
-     * Using the dataProvider for the Result Panel as record source. Needs the {@link PaperService} to retrieve the papers
-     * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
+     * Using the dataProvider for the Result Panel as record source. Needs the
+     * {@link PaperService} to retrieve the papers based on the ids of the
+     * {@link PaperSlim}s that are used in the dataProvider.
+     *
      * @param dataProvider
-     *      the {@link AbstractPaperSlimProvider} - must not be null
+     *            the {@link AbstractPaperSlimProvider} - must not be null
      * @param reportHeaderFields
-     *      collection of localized labels for the report fields
+     *            collection of localized labels for the report fields
      * @param config
-     *      {@link PdfExporterConfiguration}
+     *            {@link PdfExporterConfiguration}
      */
-    public PaperSummaryDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final ReportHeaderFields reportHeaderFields, PdfExporterConfiguration config) {
+    public PaperSummaryDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
+            final ReportHeaderFields reportHeaderFields, PdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), BASE_NAME_MULTIPLE, dataProvider);
         this.reportHeaderFields = reportHeaderFields;
     }
 
     @Override
     protected JasperReport getReport() {
-        return PaperSummaryReportResourceReference.get().getReport();
+        return PaperSummaryReportResourceReference.get()
+            .getReport();
     }
 
     @Override

@@ -23,7 +23,7 @@ public abstract class BasePageTest<T extends BasePage<?>> extends WicketTest {
     protected abstract T makePage();
 
     /**
-     * @return  page class to be tested
+     * @return page class to be tested
      */
     protected abstract Class<T> getPageClass();
 

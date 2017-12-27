@@ -11,7 +11,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * The {@link SearchOrder} is the entry point for the entire (complex) search, containing one or combining several {@link SearchCondition}s
+ * The {@link SearchOrder} is the entry point for the entire (complex) search,
+ * containing one or combining several {@link SearchCondition}s
  *
  * @author u.joss
  */
@@ -22,17 +23,17 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
 
     private static final long serialVersionUID = 1L;
 
-    public static final String NAME = "name";
-    public static final String OWNER = "owner";
-    public static final String GLOBAL = "global";
-    public static final String CONDITIONS = "searchConditions";
+    public static final String NAME          = "name";
+    public static final String OWNER         = "owner";
+    public static final String GLOBAL        = "global";
+    public static final String CONDITIONS    = "searchConditions";
     public static final String SHOW_EXCLUDED = "showExcluded";
 
     private static final String JOIN_DELIMITER = "; OR ";
 
-    private String name;
-    private int owner;
-    private boolean global;
+    private String                      name;
+    private int                         owner;
+    private boolean                     global;
     private final List<SearchCondition> searchConditions = new ArrayList<>();
 
     private final List<Long> excludedPaperIds = new ArrayList<>();
@@ -48,7 +49,8 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
         setSearchConditions(searchConditions);
     }
 
-    public SearchOrder(final long id, final String name, final int owner, final boolean global, final List<SearchCondition> searchConditions, final List<Long> excludedPaperIds) {
+    public SearchOrder(final long id, final String name, final int owner, final boolean global,
+            final List<SearchCondition> searchConditions, final List<Long> excludedPaperIds) {
         setId(id);
         setName(name);
         setOwner(owner);
@@ -67,7 +69,8 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
     /**
      * Add a new instance of a {@link SearchCondition}.
      *
-     * @param searchCondition to be added.
+     * @param searchCondition
+     *            to be added.
      */
     public void add(final SearchCondition searchCondition) {
         if (searchCondition != null && !searchConditions.contains(searchCondition))
@@ -77,7 +80,8 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
     /**
      * Removes the specified {@link SearchCondition} - if not null and present.
      *
-     * @param searchCondition the condition to remove
+     * @param searchCondition
+     *            the condition to remove
      */
     public void remove(final SearchCondition searchCondition) {
         if (searchCondition != null) {
@@ -99,7 +103,8 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
     /**
      * Add a new paper id for exclusion.
      *
-     * @param paperId paper id to be added to exclusions
+     * @param paperId
+     *            paper id to be added to exclusions
      */
     public void addExclusionOfPaperWithId(final long paperId) {
         if (!excludedPaperIds.contains(paperId))
@@ -109,7 +114,8 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
     /**
      * Removes the specified paperId from the list of exclusions.
      *
-     * @param paperId the id to remove from exclusions
+     * @param paperId
+     *            the id to remove from exclusions
      */
     public void removeExlusionOfPaperWithId(final long paperId) {
         excludedPaperIds.remove(paperId);
@@ -119,12 +125,17 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
     public String getDisplayValue() {
         final StringBuilder sb = new StringBuilder();
         if (getName() != null) {
-            sb.append(getName()).append(": ");
+            sb.append(getName())
+                .append(": ");
         }
-        sb.append(searchConditions.stream().map(SearchCondition::getDisplayValue).collect(Collectors.joining(JOIN_DELIMITER)));
+        sb.append(searchConditions.stream()
+            .map(SearchCondition::getDisplayValue)
+            .collect(Collectors.joining(JOIN_DELIMITER)));
         if (sb.length() == 0)
             sb.append("--");
-        sb.append(" (").append(getId()).append(")");
+        sb.append(" (")
+            .append(getId())
+            .append(")");
         if (isGlobal())
             sb.append("*");
         return sb.toString();

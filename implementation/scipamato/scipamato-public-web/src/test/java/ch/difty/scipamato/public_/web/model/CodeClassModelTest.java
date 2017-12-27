@@ -1,8 +1,11 @@
 package ch.difty.scipamato.public_.web.model;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.extractProperty;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;

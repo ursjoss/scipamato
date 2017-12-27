@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.persistence.paper;
 
-import static ch.difty.scipamato.core.db.tables.Paper.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -11,7 +11,8 @@ import ch.difty.scipamato.core.db.tables.Paper;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.filter.PaperFilter;
 
-public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<PaperRecord, ch.difty.scipamato.core.db.tables.Paper, PaperFilter> {
+public class PaperFilterConditionMapperTest
+        extends FilterConditionMapperTest<PaperRecord, ch.difty.scipamato.core.db.tables.Paper, PaperFilter> {
 
     private final PaperFilterConditionMapper mapper = new PaperFilterConditionMapper();
 
@@ -36,14 +37,16 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
     public void creatingWhereCondition_withNumber_searchesNumber() {
         Long number = 17l;
         filter.setNumber(number);
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"NUMBER\" = 17");
+        assertThat(mapper.map(filter)
+            .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"NUMBER\" = 17");
     }
 
     @Test
     public void creatingWhereCondition_withAuthorMask_searchesFirstAuthorAndAuthors() {
         String pattern = "am";
         filter.setAuthorMask(pattern);
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(makeWhereClause(pattern, "FIRST_AUTHOR", "AUTHORS"));
+        assertThat(mapper.map(filter)
+            .toString()).isEqualToIgnoringCase(makeWhereClause(pattern, "FIRST_AUTHOR", "AUTHORS"));
     }
 
     @Test
@@ -91,13 +94,15 @@ public class PaperFilterConditionMapperTest extends FilterConditionMapperTest<Pa
     @Test
     public void creatingWhereCondition_withPublicationYearFrom_searchesPublicationYear() {
         filter.setPublicationYearFrom(2016);
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" >= 2016");
+        assertThat(mapper.map(filter)
+            .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" >= 2016");
     }
 
     @Test
     public void creatingWhereCondition_withPublicationYearUntil_searchesPublicationYear() {
         filter.setPublicationYearUntil(2016);
-        assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" <= 2016");
+        assertThat(mapper.map(filter)
+            .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" <= 2016");
     }
 
 }

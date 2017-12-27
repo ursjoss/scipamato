@@ -1,6 +1,6 @@
 package ch.difty.scipamato.public_.config;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +12,8 @@ import ch.difty.scipamato.common.config.core.ApplicationProperties;
 import ch.difty.scipamato.public_.ScipamatoPublicApplication;
 
 /**
- * Note,  this test class currently derives the configured values from application.properties.
+ * Note, this test class currently derives the configured values from
+ * application.properties.
  *
  * @author u.joss
  */

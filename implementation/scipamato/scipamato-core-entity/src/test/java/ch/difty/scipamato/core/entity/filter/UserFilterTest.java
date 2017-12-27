@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.entity.filter;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -25,6 +25,9 @@ public class UserFilterTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(UserFilter.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(UserFilter.class)
+            .withRedefinedSuperclass()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 }

@@ -1,8 +1,11 @@
 package ch.difty.scipamato.core.web.security;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
@@ -25,7 +28,7 @@ public class ScipamatoUserDetailServiceTest {
 
     @Mock
     private UserService userServiceMock;
-    private User user = new User(10, "un", "fn", "ln", "em", "pw");
+    private User        user = new User(10, "un", "fn", "ln", "em", "pw");
 
     @Before
     public void setUp() {
@@ -50,7 +53,8 @@ public class ScipamatoUserDetailServiceTest {
             service.loadUserByUsername(username);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(UsernameNotFoundException.class).hasMessage("No user found with name " + username);
+            assertThat(ex).isInstanceOf(UsernameNotFoundException.class)
+                .hasMessage("No user found with name " + username);
         }
         verify(userServiceMock).findByUserName(username);
     }
@@ -62,7 +66,8 @@ public class ScipamatoUserDetailServiceTest {
 
         UserDetails usd = service.loadUserByUsername(username);
 
-        assertThat(usd).isNotNull().isInstanceOf(ScipamatoUserDetails.class);
+        assertThat(usd).isNotNull()
+            .isInstanceOf(ScipamatoUserDetails.class);
         assertThat(usd.getUsername()).isEqualTo("un");
         assertThat(usd.getPassword()).isEqualTo("pw");
 

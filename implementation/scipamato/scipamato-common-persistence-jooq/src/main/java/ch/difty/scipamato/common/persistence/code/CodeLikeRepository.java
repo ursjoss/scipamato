@@ -10,12 +10,14 @@ import ch.difty.scipamato.common.entity.CodeLike;
  *
  * @author u.joss
  *
- * @param <T> codes of type {@code T}, extending {@link CodeLike}
+ * @param <T>
+ *            codes of type {@code T}, extending {@link CodeLike}
  */
 public interface CodeLikeRepository<T extends CodeLike> {
 
     /**
-     * Find all codes of type {@code T} of the specified {@link CodeClassId} localized in language with the provided languageCode
+     * Find all codes of type {@code T} of the specified {@link CodeClassId}
+     * localized in language with the provided languageCode
      *
      * @param codeClassId
      * @param languageCode

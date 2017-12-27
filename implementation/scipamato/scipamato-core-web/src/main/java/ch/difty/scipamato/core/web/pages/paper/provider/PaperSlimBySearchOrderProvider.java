@@ -14,7 +14,8 @@ import ch.difty.scipamato.core.entity.SearchOrder;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 
 /**
- * Extension of the {@link AbstractPaperSlimProvider} using the {@link SearchOrder} as filter class.
+ * Extension of the {@link AbstractPaperSlimProvider} using the
+ * {@link SearchOrder} as filter class.
  *
  * @author u.joss
  */
@@ -23,21 +24,25 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiate the provider with a {@link SearchOrder} and a specific number of rews per page (pageSize)
+     * Instantiate the provider with a {@link SearchOrder} and a specific number of
+     * rews per page (pageSize)
+     *
      * @param searchOrder
-     *          the search specification 
+     *            the search specification
      * @param rowsPerPage
      */
     public PaperSlimBySearchOrderProvider(final SearchOrder searchOrder, final int rowsPerPage) {
         super(searchOrder != null ? searchOrder : new SearchOrder(), rowsPerPage);
-        Injector.get().inject(this);
+        Injector.get()
+            .inject(this);
         setSort(Paper.ID, SortOrder.DESCENDING);
     }
 
     /** {@inheritDoc} */
     @Override
     protected Iterator<PaperSlim> findPage(final PaginationContext pc) {
-        return getService().findPageBySearchOrder(getFilterState(), pc).iterator();
+        return getService().findPageBySearchOrder(getFilterState(), pc)
+            .iterator();
     }
 
     /** {@inheritDoc} */
@@ -49,7 +54,8 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
     /** {@inheritDoc} */
     @Override
     protected List<Paper> findAll(final Direction dir, final String sortProp) {
-        return getPaperService().findPageBySearchOrder(getFilterState(), new PaginationRequest(dir, sortProp), getLanguageCode());
+        return getPaperService().findPageBySearchOrder(getFilterState(), new PaginationRequest(dir, sortProp),
+            getLanguageCode());
     }
 
     @Override

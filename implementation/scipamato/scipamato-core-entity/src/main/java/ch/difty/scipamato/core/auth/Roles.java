@@ -6,11 +6,12 @@ package ch.difty.scipamato.core.auth;
  * They are used in two places, that should be consistent:
  *
  * <ol>
- * <li> as keys in the {@link Role} enum defining the roles. </li>
- * <li> for authorization on page level (where the enum can't be used) </li>
+ * <li>as keys in the {@link Role} enum defining the roles.</li>
+ * <li>for authorization on page level (where the enum can't be used)</li>
  * </ol>
  *
- * An example of how to authorize on page level:<p>
+ * An example of how to authorize on page level:
+ * <p>
  *
  * {@literal @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })}
  *
@@ -18,8 +19,8 @@ package ch.difty.scipamato.core.auth;
  */
 public final class Roles {
 
-    public static final String USER = "ROLE_USER";
-    public static final String ADMIN = "ROLE_ADMIN";
+    public static final String USER   = "ROLE_USER";
+    public static final String ADMIN  = "ROLE_ADMIN";
     public static final String VIEWER = "ROLE_VIEWER";
 
     private Roles() {

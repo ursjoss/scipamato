@@ -32,13 +32,14 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
  *
  * <ul>
  * <li>selecting from previously saved search orders via a select box</li>
- * <li>changing the name and/or global flag of search orders </li>
+ * <li>changing the name and/or global flag of search orders</li>
  * <li>changing whether excluded papers are excluded or selected</li>
  * <li>saving new or modified search orders</li>
  * </ul>
  *
- * Once a modification has been issued, the panel will issue a {@link SearchOrderChangeEvent} to the page.
- * The page and other panels within the page can then react to the new or modified selection.
+ * Once a modification has been issued, the panel will issue a
+ * {@link SearchOrderChangeEvent} to the page. The page and other panels within
+ * the page can then react to the new or modified selection.
  *
  * @author u.joss
  */
@@ -47,18 +48,19 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
 
     private static final String CHANGE = "change";
 
-    // HARDCODED static number of search orders to be visible in the select box. Might need to become more dynamic
+    // HARDCODED static number of search orders to be visible in the select box.
+    // Might need to become more dynamic
     private static final int SEARCH_ORDER_MAX = 20;
 
     @SpringBean
     private SearchOrderService searchOrderService;
 
-    private Form<SearchOrder> form;
+    private Form<SearchOrder>            form;
     private BootstrapSelect<SearchOrder> searchOrder;
-    private TextField<String> name;
-    private CheckBoxX global;
-    private AjaxCheckBox showExcluded;
-    private Label showExcludedLabel;
+    private TextField<String>            name;
+    private CheckBoxX                    global;
+    private AjaxCheckBox                 showExcluded;
+    private Label                        showExcludedLabel;
 
     public SearchOrderSelectorPanel(String id, IModel<SearchOrder> model) {
         super(id, model, Mode.EDIT);
@@ -83,9 +85,12 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
 
     private void makeAndQueueSearchOrderSelectBox(final String id) {
         final SearchOrderModel choices = new SearchOrderModel(getActiveUser().getId(), SEARCH_ORDER_MAX);
-        final IChoiceRenderer<SearchOrder> choiceRenderer = new ChoiceRenderer<>(SearchOrder.DISPLAY_VALUE, SearchOrder.ID);
+        final IChoiceRenderer<SearchOrder> choiceRenderer = new ChoiceRenderer<>(SearchOrder.DISPLAY_VALUE,
+                SearchOrder.ID);
         final StringResourceModel noneSelectedModel = new StringResourceModel(id + ".noneSelected", this, null);
-        final BootstrapSelectConfig config = new BootstrapSelectConfig().withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);
+        final BootstrapSelectConfig config = new BootstrapSelectConfig()
+            .withNoneSelectedText(noneSelectedModel.getObject())
+            .withLiveSearch(true);
         searchOrder = new BootstrapSelect<SearchOrder>(id, getModel(), choices, choiceRenderer).with(config);
         searchOrder.add(new AjaxFormComponentUpdatingBehavior(CHANGE) {
             private static final long serialVersionUID = 1L;
@@ -146,7 +151,9 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
             }
         };
         global.setOutputMarkupId(true);
-        global.getConfig().withThreeState(false).withUseNative(true);
+        global.getConfig()
+            .withThreeState(false)
+            .withUseNative(true);
         queueCheckBoxAndLabel(global);
     }
 
@@ -197,7 +204,8 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                setEnabled(SearchOrderSelectorPanel.this.isModelSelected() && SearchOrderSelectorPanel.this.isUserEntitled());
+                setEnabled(
+                    SearchOrderSelectorPanel.this.isModelSelected() && SearchOrderSelectorPanel.this.isUserEntitled());
             }
 
             @Override

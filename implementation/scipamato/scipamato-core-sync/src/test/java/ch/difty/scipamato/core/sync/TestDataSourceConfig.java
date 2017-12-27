@@ -28,7 +28,8 @@ public class TestDataSourceConfig {
     @Qualifier("sourceDataSource")
     @ConfigurationProperties(prefix = "sync.source.datasource")
     public DataSource dataSource() {
-        return DataSourceBuilder.create().build();
+        return DataSourceBuilder.create()
+            .build();
     }
 
     /**

@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.panel.search;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.junit.Test;
@@ -53,14 +53,16 @@ public class SearchOrderChangeEventTest {
 
     @Test
     public void requestingNewSearchOrder_withExcludedPaperIdAndNewSearchOrderRequest_newSearchOrderRequestWins() {
-        e = new SearchOrderChangeEvent(targetMock).withExcludedPaperId(5l).requestingNewSearchOrder();
+        e = new SearchOrderChangeEvent(targetMock).withExcludedPaperId(5l)
+            .requestingNewSearchOrder();
         assertThat(e.isNewSearchOrderRequested()).isTrue();
         assertThat(e.getExcludedId()).isNull();
     }
 
     @Test
     public void requestingNewSearchOrder_withNewSearchOrderRequestAndthenExcludedPaperId_exclusionWins() {
-        e = new SearchOrderChangeEvent(targetMock).requestingNewSearchOrder().withExcludedPaperId(5l);
+        e = new SearchOrderChangeEvent(targetMock).requestingNewSearchOrder()
+            .withExcludedPaperId(5l);
         assertThat(e.getExcludedId()).isEqualTo(5l);
         assertThat(e.isNewSearchOrderRequested()).isFalse();
     }
@@ -75,7 +77,10 @@ public class SearchOrderChangeEventTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(SearchOrderChangeEvent.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(SearchOrderChangeEvent.class)
+            .withRedefinedSuperclass()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 
 }

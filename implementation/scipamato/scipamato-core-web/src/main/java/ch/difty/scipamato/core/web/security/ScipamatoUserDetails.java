@@ -13,7 +13,7 @@ import ch.difty.scipamato.core.entity.User;
 import lombok.EqualsAndHashCode;
 
 /**
- * Implementation of {@link UserDetails} working the the {@link User} entity. 
+ * Implementation of {@link UserDetails} working the the {@link User} entity.
  */
 @EqualsAndHashCode(callSuper = true)
 public class ScipamatoUserDetails extends User implements UserDetails {

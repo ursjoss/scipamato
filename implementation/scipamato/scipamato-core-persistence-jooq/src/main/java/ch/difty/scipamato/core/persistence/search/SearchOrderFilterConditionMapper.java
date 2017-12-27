@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.search;
 
-import static ch.difty.scipamato.core.db.tables.SearchOrder.*;
+import static ch.difty.scipamato.core.db.tables.SearchOrder.SEARCH_ORDER;
 
 import java.util.List;
 
@@ -12,7 +12,8 @@ import ch.difty.scipamato.common.persistence.FilterConditionMapper;
 import ch.difty.scipamato.core.entity.filter.SearchOrderFilter;
 
 /**
- * Mapper turning the provider {@link SearchOrderFilter} into a jOOQ {@link Condition}.
+ * Mapper turning the provider {@link SearchOrderFilter} into a jOOQ
+ * {@link Condition}.
  *
  * @author u.joss
  */
@@ -22,10 +23,13 @@ public class SearchOrderFilterConditionMapper extends AbstractFilterConditionMap
     @Override
     public void map(final SearchOrderFilter filter, final List<Condition> conditions) {
         if (filter.getOwnerIncludingGlobal() != null) {
-            conditions.add(DSL.or(SEARCH_ORDER.OWNER.equal(filter.getOwnerIncludingGlobal()), SEARCH_ORDER.GLOBAL.equal(true)));
+            conditions.add(
+                DSL.or(SEARCH_ORDER.OWNER.equal(filter.getOwnerIncludingGlobal()), SEARCH_ORDER.GLOBAL.equal(true)));
         } else {
             if (filter.getNameMask() != null) {
-                conditions.add(SEARCH_ORDER.NAME.lower().contains(filter.getNameMask().toLowerCase()));
+                conditions.add(SEARCH_ORDER.NAME.lower()
+                    .contains(filter.getNameMask()
+                        .toLowerCase()));
             }
             if (filter.getOwner() != null) {
                 conditions.add(SEARCH_ORDER.OWNER.equal(filter.getOwner()));

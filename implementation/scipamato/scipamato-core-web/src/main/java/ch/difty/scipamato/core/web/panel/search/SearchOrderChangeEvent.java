@@ -7,14 +7,17 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
- * The event indicates that there were changes in the search order deriving from the {@link SearchOrderPanel}
- * that will or may affect other child components of the parent page container holding the {@link SearchOrderPanel}.
+ * The event indicates that there were changes in the search order deriving from
+ * the {@link SearchOrderPanel} that will or may affect other child components
+ * of the parent page container holding the {@link SearchOrderPanel}.
  *
  * There are a couple of special options that can be achieved with the event:
  *
  * <ul>
- * <li> if the excluded id is set, the sink will be requested to handle that id an treat it as an excluded id.</li>
- * <li>if the newSearchOrderRequestd flag is set, the sink will need to take care of creating a new SearchOrder and set it as the model.</li>
+ * <li>if the excluded id is set, the sink will be requested to handle that id
+ * an treat it as an excluded id.</li>
+ * <li>if the newSearchOrderRequestd flag is set, the sink will need to take
+ * care of creating a new SearchOrder and set it as the model.</li>
  * </ul>
  *
  * @author u.joss
@@ -23,8 +26,8 @@ import lombok.Getter;
 @EqualsAndHashCode(callSuper = true)
 public class SearchOrderChangeEvent extends WicketEvent {
 
-    private Long excludedId;
-    private Long droppedConditionId;
+    private Long    excludedId;
+    private Long    droppedConditionId;
     private boolean newSearchOrderRequested;
 
     public SearchOrderChangeEvent(final AjaxRequestTarget target) {

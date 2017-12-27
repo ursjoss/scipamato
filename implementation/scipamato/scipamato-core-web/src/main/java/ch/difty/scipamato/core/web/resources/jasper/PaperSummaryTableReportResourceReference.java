@@ -11,8 +11,10 @@ public class PaperSummaryTableReportResourceReference extends JasperReportResour
 
     private static final String NAME = "paper_summary_table_A4";
 
-    // Use the respective constructor depending on whether your developing the report or are in production.
-    // Note: the concrete file that is read resides in target/classes/ch/difty/scipamato/core/web/resources/jasper/
+    // Use the respective constructor depending on whether your developing the
+    // report or are in production.
+    // Note: the concrete file that is read resides in
+    // target/classes/ch/difty/scipamato/core/web/resources/jasper/
     private static final PaperSummaryTableReportResourceReference INSTANCE = new PaperSummaryTableReportResourceReference();
 
     /**
@@ -23,10 +25,12 @@ public class PaperSummaryTableReportResourceReference extends JasperReportResour
     }
 
     /**
-     * Use this constructor with parameter {@code false} while developing the report.
+     * Use this constructor with parameter {@code false} while developing the
+     * report.
      *
-     * @param cacheReport if {@code true} the compiled report is cached. 
-     *                    If {@code false} it will be recompiled every time the report is retrieved.
+     * @param cacheReport
+     *            if {@code true} the compiled report is cached. If {@code false} it
+     *            will be recompiled every time the report is retrieved.
      */
     private PaperSummaryTableReportResourceReference(final boolean cacheReport) {
         super(PaperSummaryTableReportResourceReference.class, NAME, cacheReport);

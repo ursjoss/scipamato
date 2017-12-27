@@ -3,9 +3,10 @@ package ch.difty.scipamato.public_.entity;
 /**
  * PopulationCode contains aggregated Codes of Code Class 3:
  * <ol>
- * <li> Children: Codes 3A + 3B </li>
- * <li> Adults: Codes 3C </li>
+ * <li>Children: Codes 3A + 3B</li>
+ * <li>Adults: Codes 3C</li>
  * </ol>
+ *
  * @author u.joss
  */
 public enum PopulationCode {

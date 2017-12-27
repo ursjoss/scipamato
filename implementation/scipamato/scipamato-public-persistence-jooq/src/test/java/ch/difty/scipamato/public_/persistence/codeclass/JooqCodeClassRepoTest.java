@@ -1,7 +1,7 @@
 package ch.difty.scipamato.public_.persistence.codeclass;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.jooq.DSLContext;
 import org.junit.After;

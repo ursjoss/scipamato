@@ -1,7 +1,10 @@
 package ch.difty.scipamato.core.web.panel.paper;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -66,7 +69,8 @@ public class NewFieldChangeEventTest {
 
     @Test
     public void usingWithIdAndMarkupId_doesAddBoth() {
-        e = new NewFieldChangeEvent(targetMock).withId("hups").withMarkupId("goo");
+        e = new NewFieldChangeEvent(targetMock).withId("hups")
+            .withMarkupId("goo");
         assertThat(e.getId()).isEqualTo("hups");
         assertThat(e.getMarkupId()).isEqualTo("goo");
     }
@@ -91,7 +95,8 @@ public class NewFieldChangeEventTest {
 
     @Test
     public void consideringAddingToTarget_withDifferingId_doesNotAddTarget() {
-        e = new NewFieldChangeEvent(targetMock).withId("otherId").withMarkupId("mId");
+        e = new NewFieldChangeEvent(targetMock).withId("otherId")
+            .withMarkupId("mId");
         e.considerAddingToTarget(mockComponent);
         verify(targetMock, never()).add(mockComponent);
     }
@@ -108,21 +113,26 @@ public class NewFieldChangeEventTest {
 
     @Test
     public void consideringAddingToTarget_withSameIdAndDifferingMarkupId_addsTarget() {
-        e = new NewFieldChangeEvent(targetMock).withId("id").withMarkupId("otherMarkupId");
+        e = new NewFieldChangeEvent(targetMock).withId("id")
+            .withMarkupId("otherMarkupId");
         e.considerAddingToTarget(mockComponent);
         verify(targetMock).add(mockComponent);
     }
 
     @Test
     public void consideringAddingToTarget_withSameIdButSameMarkupId_doesNotAddTarget() {
-        e = new NewFieldChangeEvent(targetMock).withId("id").withMarkupId("mId");
+        e = new NewFieldChangeEvent(targetMock).withId("id")
+            .withMarkupId("mId");
         e.considerAddingToTarget(mockComponent);
         verify(targetMock, never()).add(mockComponent);
     }
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(NewFieldChangeEvent.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(NewFieldChangeEvent.class)
+            .withRedefinedSuperclass()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 
 }

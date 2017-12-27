@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.search;
 
-import static ch.difty.scipamato.core.db.tables.SearchOrder.*;
+import static ch.difty.scipamato.core.db.tables.SearchOrder.SEARCH_ORDER;
 
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
@@ -14,7 +14,8 @@ import ch.difty.scipamato.core.entity.filter.SearchCondition;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 
 /**
- * The update step setter used for updating {@link SearchOrder}s.<p>
+ * The update step setter used for updating {@link SearchOrder}s.
+ * <p>
  *
  * <b>Note:</b> the {@link SearchCondition}s are not updated here.
  *
@@ -25,12 +26,11 @@ public class SearchOrderUpdateSetStepSetter implements UpdateSetStepSetter<Searc
 
     /** {@inheritDoc} */
     @Override
-    public UpdateSetMoreStep<SearchOrderRecord> setFieldsFor(UpdateSetFirstStep<SearchOrderRecord> step, SearchOrder e) {
+    public UpdateSetMoreStep<SearchOrderRecord> setFieldsFor(UpdateSetFirstStep<SearchOrderRecord> step,
+            SearchOrder e) {
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
-        // @formatter:off
-        return step
-            .set(SEARCH_ORDER.NAME, e.getName())
+        return step.set(SEARCH_ORDER.NAME, e.getName())
             .set(SEARCH_ORDER.OWNER, e.getOwner())
             .set(SEARCH_ORDER.GLOBAL, e.isGlobal())
 
@@ -39,7 +39,6 @@ public class SearchOrderUpdateSetStepSetter implements UpdateSetStepSetter<Searc
             .set(SEARCH_ORDER.LAST_MODIFIED, DateUtils.tsOf(e.getLastModified()))
             .set(SEARCH_ORDER.LAST_MODIFIED_BY, e.getLastModifiedBy())
             .set(SEARCH_ORDER.VERSION, e.getVersion() + 1);
-         // @formatter:on
     }
 
 }

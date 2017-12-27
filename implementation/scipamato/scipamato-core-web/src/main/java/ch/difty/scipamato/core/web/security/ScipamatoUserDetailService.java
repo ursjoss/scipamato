@@ -12,8 +12,9 @@ import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.persistence.UserService;
 
 /**
- * The implementation of {@link UserDetailsService} loads the user from the {@link UserService} and
- * wraps it into a a scipamato specific implementation of {@link UserDetails}.
+ * The implementation of {@link UserDetailsService} loads the user from the
+ * {@link UserService} and wraps it into a a scipamato specific implementation
+ * of {@link UserDetails}.
  *
  * @author u.joss
  */

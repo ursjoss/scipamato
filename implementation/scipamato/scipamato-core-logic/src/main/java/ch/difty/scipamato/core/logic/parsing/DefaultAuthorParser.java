@@ -11,16 +11,20 @@ import java.util.stream.Stream;
 import ch.difty.scipamato.common.AssertAs;
 
 /**
- * Utility class to lex and parse Author strings. From the list of parsed authors it can return the first author.<p>
+ * Utility class to lex and parse Author strings. From the list of parsed
+ * authors it can return the first author.
+ * <p>
  *
- * An example of a typical author string is:<p>
+ * An example of a typical author string is:
+ * <p>
  *
- * {@code Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.}<p>
+ * {@code Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.}
+ * <p>
  *
  * <ul>
- * <li> An author can have one or more names + initials.
- * <li> One or more authors appear in a comma delimited list.
- * <li> The last character is a period.
+ * <li>An author can have one or more names + initials.
+ * <li>One or more authors appear in a comma delimited list.
+ * <li>The last character is a period.
  * </ul>
  *
  * @author u.joss
@@ -29,11 +33,12 @@ public class DefaultAuthorParser implements AuthorParser {
 
     private static final Pattern CARDINALITY_PATTERN = Pattern.compile("(?:1st|2nd|3rd)|(?:\\d+th)|(?:Jr)");
 
-    private final String authorsString;
+    private final String       authorsString;
     private final List<Author> authors;
 
     public DefaultAuthorParser(final String authorsString) {
-        this.authorsString = AssertAs.notNull(authorsString, "authorsString").trim();
+        this.authorsString = AssertAs.notNull(authorsString, "authorsString")
+            .trim();
 
         final String as = preprocess();
         final List<String> authorStrings = lexAuthors(as);
@@ -67,8 +72,10 @@ public class DefaultAuthorParser implements AuthorParser {
         final List<String> tokens = Arrays.asList(authorString.split(" +"));
         if (tokens.size() > 1) {
             final int i = getIndexOfFirstName(tokens);
-            firstName = String.join(" ", tokens.subList(i, tokens.size())).trim();
-            lastName = String.join(" ", tokens.subList(0, i)).trim();
+            firstName = String.join(" ", tokens.subList(i, tokens.size()))
+                .trim();
+            lastName = String.join(" ", tokens.subList(0, i))
+                .trim();
         }
         return new Author(authorString, lastName, firstName);
     }
@@ -85,7 +92,9 @@ public class DefaultAuthorParser implements AuthorParser {
     /** {@inheritDoc} */
     @Override
     public Optional<String> getFirstAuthor() {
-        return authors.stream().findFirst().map(Author::getLastName);
+        return authors.stream()
+            .findFirst()
+            .map(Author::getLastName);
     }
 
     /** {@inheritDoc} */

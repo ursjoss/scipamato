@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.persistence.user;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +14,13 @@ import ch.difty.scipamato.core.persistence.RecordMapperTest;
 
 public class UserRecordMapperTest extends RecordMapperTest<ScipamatoUserRecord, User> {
 
-    public static final int ID = 3;
-    public static final String USER_NAME = "userName";
-    public static final String FIRST_NAME = "firstName";
-    public static final String LAST_NAME = "lastName";
-    public static final String EMAIL = "email";
-    public static final String PASSWORD = "password";
-    public static final Boolean ENABLED = true;
+    public static final int     ID         = 3;
+    public static final String  USER_NAME  = "userName";
+    public static final String  FIRST_NAME = "firstName";
+    public static final String  LAST_NAME  = "lastName";
+    public static final String  EMAIL      = "email";
+    public static final String  PASSWORD   = "password";
+    public static final Boolean ENABLED    = true;
 
     public final List<User> users = new ArrayList<>();
 
@@ -42,7 +42,8 @@ public class UserRecordMapperTest extends RecordMapperTest<ScipamatoUserRecord, 
 
     @Override
     protected ScipamatoUserRecord makeRecord() {
-        return new ScipamatoUserRecord(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, VERSION, CREATED, CREATED_BY, LAST_MOD, LAST_MOD_BY);
+        return new ScipamatoUserRecord(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, VERSION, CREATED,
+                CREATED_BY, LAST_MOD, LAST_MOD_BY);
     }
 
     @Override

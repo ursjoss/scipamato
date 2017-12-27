@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 public class AuditFields {
     final LocalDateTime created;
     final LocalDateTime lastModified;
-    final Integer createdBy;
-    final Integer lastModifiedBy;
-    final int version;
+    final Integer       createdBy;
+    final Integer       lastModifiedBy;
+    final int           version;
 
     public AuditFields(final Timestamp c, final Integer cb, final Timestamp lm, final Integer lmb, final Integer v) {
         created = c != null ? c.toLocalDateTime() : null;

@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PubmedXmlService implements PubmedArticleService {
 
     private final Unmarshaller unmarshaller;
-    private final PubMed pubMed;
+    private final PubMed       pubMed;
 
     public PubmedXmlService(final Unmarshaller unmarshaller, final PubMed pubMed) {
         this.unmarshaller = AssertAs.notNull(unmarshaller, "unmarshaller");
@@ -39,7 +39,9 @@ public class PubmedXmlService implements PubmedArticleService {
         try {
             final PubmedArticleSet set = pubMed.articleWithId(String.valueOf(pmId));
             final List<java.lang.Object> articles = set.getPubmedArticleOrPubmedBookArticle();
-            return articles.stream().map(PubmedArticleFacade::of).findFirst();
+            return articles.stream()
+                .map(PubmedArticleFacade::of)
+                .findFirst();
         } catch (Exception ex) {
             log.error("Unexpected error", ex);
             return Optional.empty();
@@ -47,7 +49,8 @@ public class PubmedXmlService implements PubmedArticleService {
     }
 
     /**
-     * Unmarshal the XML content of the pubmed XML export. Returns a {@link  PubmedArticleSet}.
+     * Unmarshal the XML content of the pubmed XML export. Returns a
+     * {@link PubmedArticleSet}.
      *
      * @param xmlString
      * @return {@link PubmedArticleSet}
@@ -59,17 +62,24 @@ public class PubmedXmlService implements PubmedArticleService {
     }
 
     /**
-     * Extracts pubmed articles and pubmed book articles from the source string representing XML exported from Pubmed.
+     * Extracts pubmed articles and pubmed book articles from the source string
+     * representing XML exported from Pubmed.
      *
-     * <p>The XML string could be derived e.g. from
+     * <p>
+     * The XML string could be derived e.g. from
      * <ul>
-     * <li> via API, e.g. {@code https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=25395026&retmode=xml}</li>
-     * <li> through the Web UI (e.g. https://www.ncbi.nlm.nih.gov/pubmed/25395026) when sending to {@code file} in format {@code XML}</li>
+     * <li>via API, e.g.
+     * {@code https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=25395026&retmode=xml}</li>
+     * <li>through the Web UI (e.g. https://www.ncbi.nlm.nih.gov/pubmed/25395026)
+     * when sending to {@code file} in format {@code XML}</li>
      * </ul>
      *
-     * @param xmlString pubmed content in XML format, as String. Must not be null.
-     * @return List of {@link PubmedArticleFacade} entries. Never null. Will be empty if there are issues with the XML.
-     * @throws NullArgumentException in case of null xmlString.
+     * @param xmlString
+     *            pubmed content in XML format, as String. Must not be null.
+     * @return List of {@link PubmedArticleFacade} entries. Never null. Will be
+     *         empty if there are issues with the XML.
+     * @throws NullArgumentException
+     *             in case of null xmlString.
      */
     @Override
     public List<PubmedArticleFacade> extractArticlesFrom(final String xmlString) {
@@ -77,7 +87,9 @@ public class PubmedXmlService implements PubmedArticleService {
         try {
             final PubmedArticleSet set = unmarshal(xmlString);
             final List<java.lang.Object> aoba = set.getPubmedArticleOrPubmedBookArticle();
-            articles.addAll(aoba.stream().map(PubmedArticleFacade::of).collect(Collectors.toList()));
+            articles.addAll(aoba.stream()
+                .map(PubmedArticleFacade::of)
+                .collect(Collectors.toList()));
         } catch (final Exception e) {
             log.info("Unable to parse xmlString '{}': {}", xmlString, e.getMessage());
         }

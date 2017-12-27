@@ -1,7 +1,12 @@
 package ch.difty.scipamato.public_.entity;
 
-import static ch.difty.scipamato.public_.entity.StudyDesignCode.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.public_.entity.StudyDesignCode.EPIODEMIOLOGICAL;
+import static ch.difty.scipamato.public_.entity.StudyDesignCode.EXPERIMENTAL;
+import static ch.difty.scipamato.public_.entity.StudyDesignCode.OVERVIEW_METHODOLOGY;
+import static ch.difty.scipamato.public_.entity.StudyDesignCode.values;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.extractProperty;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.Test;
 
@@ -28,7 +33,8 @@ public class StudyDesignCodeTest {
             StudyDesignCode.of((short) 0);
             fail("Should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class).hasMessage("No matching type for id 0");
+            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("No matching type for id 0");
         }
     }
 }

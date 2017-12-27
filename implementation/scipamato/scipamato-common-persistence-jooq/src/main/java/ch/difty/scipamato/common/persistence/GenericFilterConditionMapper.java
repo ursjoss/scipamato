@@ -9,7 +9,8 @@ import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
  *
  * @author u.joss
  *
- * @param <F> Filter class extending {@link ScipamatoFilter}
+ * @param <F>
+ *            Filter class extending {@link ScipamatoFilter}
  */
 @FunctionalInterface
 public interface GenericFilterConditionMapper<F extends ScipamatoFilter> {
@@ -17,7 +18,8 @@ public interface GenericFilterConditionMapper<F extends ScipamatoFilter> {
     /**
      * Map the provided filter into a jOOQ {@link Condition}
      *
-     * @param filter filter class extending {@link ScipamatoFilter}
+     * @param filter
+     *            filter class extending {@link ScipamatoFilter}
      * @return the Condition
      */
     Condition map(F filter);

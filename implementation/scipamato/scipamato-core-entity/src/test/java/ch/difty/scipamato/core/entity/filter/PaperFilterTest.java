@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.entity.filter;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -27,12 +27,16 @@ public class PaperFilterTest {
         assertThat(f.getPublicationYearFrom()).isEqualTo(2015);
         assertThat(f.getPublicationYearUntil()).isEqualTo(2017);
 
-        assertThat(f.toString()).isEqualTo("PaperFilter(number=1, authorMask=authorMask, methodsMask=methodsMask, searchMask=searchMask, publicationYearFrom=2015, publicationYearUntil=2017)");
+        assertThat(f.toString()).isEqualTo(
+            "PaperFilter(number=1, authorMask=authorMask, methodsMask=methodsMask, searchMask=searchMask, publicationYearFrom=2015, publicationYearUntil=2017)");
     }
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(PaperFilter.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(PaperFilter.class)
+            .withRedefinedSuperclass()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 
 }

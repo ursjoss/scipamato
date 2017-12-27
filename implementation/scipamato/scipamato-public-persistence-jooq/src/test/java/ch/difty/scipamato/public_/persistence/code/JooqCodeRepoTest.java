@@ -1,6 +1,6 @@
 package ch.difty.scipamato.public_.persistence.code;
 
-import static ch.difty.scipamato.common.TestUtils.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 
 import org.jooq.DSLContext;
 import org.junit.Before;

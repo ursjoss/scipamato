@@ -7,9 +7,10 @@ import ch.difty.scipamato.common.config.core.ApplicationProperties;
 import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
 
 /**
- * Default implementation of the {@link AuthorParserFactory} which relies on the application config enum
- * defined in {@link ApplicationProperties} and the associated {@link AuthorParserStrategy} enum to parse
- * and provide the property.
+ * Default implementation of the {@link AuthorParserFactory} which relies on the
+ * application config enum defined in {@link ApplicationProperties} and the
+ * associated {@link AuthorParserStrategy} enum to parse and provide the
+ * property.
  *
  * @author u.joss
  */

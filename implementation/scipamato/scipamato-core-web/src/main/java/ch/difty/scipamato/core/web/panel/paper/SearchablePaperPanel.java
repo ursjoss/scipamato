@@ -25,10 +25,11 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZon
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 /**
- * The {@link SearchablePaperPanel} offers a look-alike panel to the paper entry panel,
- * but for entering search terms. It therefore hides some components that are visible
- * in the edit panel. It does not implement specific behavior and therefore
- * simply implements the abstract methods of the {@link PaperPanel} as no-ops.
+ * The {@link SearchablePaperPanel} offers a look-alike panel to the paper entry
+ * panel, but for entering search terms. It therefore hides some components that
+ * are visible in the edit panel. It does not implement specific behavior and
+ * therefore simply implements the abstract methods of the {@link PaperPanel} as
+ * no-ops.
  *
  * @author u.joss
  */
@@ -56,7 +57,8 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
     }
 
     @Override
-    protected BootstrapButton newNavigationButton(String id, GlyphIconType icon, SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
+    protected BootstrapButton newNavigationButton(String id, GlyphIconType icon,
+            SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
         final BootstrapButton btn = new BootstrapButton(id, Model.of(""), Buttons.Type.Default);
         btn.setVisible(false);
         return btn;
@@ -64,7 +66,8 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
 
     @Override
     protected BootstrapButton newExcludeButton(String id) {
-        final BootstrapButton exclude = new BootstrapButton(id, new StringResourceModel("button.exclude.label"), Buttons.Type.Default);
+        final BootstrapButton exclude = new BootstrapButton(id, new StringResourceModel("button.exclude.label"),
+                Buttons.Type.Default);
         exclude.setVisible(false);
         return exclude;
     }
@@ -86,7 +89,8 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
     @Override
     protected DataTable<PaperAttachment, String> newAttachmentTable(String id) {
         PaperAttachmentProvider provider = new PaperAttachmentProvider(Model.ofList(new ArrayList<PaperAttachment>()));
-        DataTable<PaperAttachment, String> attachments = new BootstrapDefaultDataTable<>(id, new ArrayList<>(), provider, 10);
+        DataTable<PaperAttachment, String> attachments = new BootstrapDefaultDataTable<>(id, new ArrayList<>(),
+                provider, 10);
         attachments.setVisible(false);
         return attachments;
     }

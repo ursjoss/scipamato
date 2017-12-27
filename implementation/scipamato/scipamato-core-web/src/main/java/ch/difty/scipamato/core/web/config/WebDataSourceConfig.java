@@ -36,7 +36,8 @@ public class WebDataSourceConfig {
     @Bean(destroyMethod = "close")
     @ConfigurationProperties(prefix = "sync.source.datasource")
     public DataSource hikariCoreDataSource() {
-        return DataSourceBuilder.create().build();
+        return DataSourceBuilder.create()
+            .build();
     }
 
     @Bean
@@ -49,11 +50,9 @@ public class WebDataSourceConfig {
      */
     @Bean
     public org.jooq.Configuration configuration() {
-        // @formatter:off
         return considerSettingDialect(new DefaultConfiguration().derive(dataSource()))
-                .derive(new DefaultExecuteListenerProvider(new JooqExceptionTranslator()))
-                .derive(new SpringTransactionProvider(txManager));
-        // @formatter:on
+            .derive(new DefaultExecuteListenerProvider(new JooqExceptionTranslator()))
+            .derive(new SpringTransactionProvider(txManager));
     }
 
     /**

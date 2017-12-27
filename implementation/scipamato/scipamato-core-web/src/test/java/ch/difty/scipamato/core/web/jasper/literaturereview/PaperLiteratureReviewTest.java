@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.web.jasper.literaturereview;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -16,10 +16,14 @@ public class PaperLiteratureReviewTest extends JasperEntityTest {
     private static final String PUBMED_BASE_URL = "baseUrl/";
 
     private PaperLiteratureReview plr;
-    private ReportHeaderFields rhf = newReportHeaderFields();
+    private ReportHeaderFields    rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields.builder(HEADER_PART, BRAND).numberLabel(NUMBER_LABEL).captionLabel(CAPTION).pubmedBaseUrl(PUBMED_BASE_URL).build();
+        return ReportHeaderFields.builder(HEADER_PART, BRAND)
+            .numberLabel(NUMBER_LABEL)
+            .captionLabel(CAPTION)
+            .pubmedBaseUrl(PUBMED_BASE_URL)
+            .build();
     }
 
     @Test
@@ -34,7 +38,10 @@ public class PaperLiteratureReviewTest extends JasperEntityTest {
 
     @Test
     public void degenerateConstruction_withNullPubmedBaseUrl_throws() {
-        ReportHeaderFields rhf2 = ReportHeaderFields.builder(HEADER_PART, BRAND).numberLabel(NUMBER_LABEL).captionLabel(CAPTION).build();
+        ReportHeaderFields rhf2 = ReportHeaderFields.builder(HEADER_PART, BRAND)
+            .numberLabel(NUMBER_LABEL)
+            .captionLabel(CAPTION)
+            .build();
         assertThat(rhf2.getPubmedBaseUrl()).isNull();
         assertDegenerateSupplierParameter(() -> new PaperLiteratureReview(new Paper(), rhf2), "pubmedBaseUrl");
     }
@@ -82,14 +89,17 @@ public class PaperLiteratureReviewTest extends JasperEntityTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(PaperLiteratureReview.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(PaperLiteratureReview.class)
+            .withRedefinedSuperclass()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 
     @Test
     public void testingToString() {
         plr = new PaperLiteratureReview(p, rhf);
         assertThat(plr.toString()).isEqualTo(
-                "PaperLiteratureReview(number=100, authors=authors, publicationYear=2017, title=title, location=location, pubmedLink=baseUrl/1234, caption=caption, brand=brand, numberLabel=numberLabel)");
+            "PaperLiteratureReview(number=100, authors=authors, publicationYear=2017, title=title, location=location, pubmedLink=baseUrl/1234, caption=caption, brand=brand, numberLabel=numberLabel)");
     }
 
 }

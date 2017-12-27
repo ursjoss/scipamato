@@ -8,14 +8,19 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import ch.difty.scipamato.core.persistence.user.UserRepository;
 
 /**
- * Abstract base repository class providing the fundamental functionality of a JooqService
+ * Abstract base repository class providing the fundamental functionality of a
+ * JooqService
  *
  * @author u.joss
  *
- * @param <ID> the type of the id in the {@link CoreEntity}
- * @param <T> the entity type, extending {@link CoreEntity}
- * @param <F> the filter, extending {@link ScipamatoFilter}
- * @param <REPO> the entity repository (extending {@link EntityRepository}
+ * @param <ID>
+ *            the type of the id in the {@link CoreEntity}
+ * @param <T>
+ *            the entity type, extending {@link CoreEntity}
+ * @param <F>
+ *            the filter, extending {@link ScipamatoFilter}
+ * @param <REPO>
+ *            the entity repository (extending {@link EntityRepository}
  */
 public abstract class JooqEntityService<ID extends Number, T extends IdScipamatoEntity<ID>, F extends ScipamatoFilter, REPO extends EntityRepository<T, ID, F>>
         extends JooqReadOnlyService<ID, T, F, REPO> implements EntityService<ID, T, F> {

@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import java.util.ArrayList;
 

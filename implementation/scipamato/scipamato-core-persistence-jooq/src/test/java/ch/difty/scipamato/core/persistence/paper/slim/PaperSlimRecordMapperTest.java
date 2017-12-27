@@ -1,8 +1,12 @@
 package ch.difty.scipamato.core.persistence.paper.slim;
 
-import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.FIRST_AUTHOR;
+import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.ID;
+import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.NUMBER;
+import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.PUBLICATION_YEAR;
+import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.TITLE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 import org.jooq.RecordMapper;
 

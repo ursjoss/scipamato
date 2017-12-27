@@ -6,7 +6,7 @@ import java.util.List;
 public class SyncJobResult {
 
     private final List<String> logMessages = new ArrayList<>();
-    private JobResult result = JobResult.UNKNOWN;
+    private JobResult          result      = JobResult.UNKNOWN;
 
     public boolean isSuccessful() {
         return result == JobResult.SUCCESS;

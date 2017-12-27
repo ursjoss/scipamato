@@ -1,6 +1,6 @@
 package ch.difty.scipamato.public_.config;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.sql.DataSource;
 

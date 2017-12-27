@@ -24,7 +24,7 @@ public class XmlPasteModalPanel extends Panel {
 
     private String content;
 
-    private Form<Object> form;
+    private Form<Object>     form;
     private TextArea<String> contentField;
 
     public XmlPasteModalPanel(String id) {
@@ -61,21 +61,31 @@ public class XmlPasteModalPanel extends Panel {
             protected void onUpload(AjaxRequestTarget target, Map<String, List<FileItem>> fileMap) {
                 if (fileMap != null && fileMap.containsKey("file")) {
                     for (final FileItem file : fileMap.get("file")) {
-                        if (file.getContentType().equals(TEXT_XML)) {
+                        if (file.getContentType()
+                            .equals(TEXT_XML)) {
                             content = file.getString();
-                            info(new StringResourceModel("dropzone.upload.successful", this, null).setParameters(file.getName(), file.getContentType()).getString());
+                            info(new StringResourceModel("dropzone.upload.successful", this, null)
+                                .setParameters(file.getName(), file.getContentType())
+                                .getString());
                         }
                     }
                     target.add(contentField);
                 }
             }
         };
-        upload.getConfig().withMaxFileSize(1).withThumbnailHeight(80).withThumbnailWidth(80).withParallelUploads(1).withAutoQueue(true).withAcceptedFiles(TEXT_XML);
+        upload.getConfig()
+            .withMaxFileSize(1)
+            .withThumbnailHeight(80)
+            .withThumbnailWidth(80)
+            .withParallelUploads(1)
+            .withAutoQueue(true)
+            .withAcceptedFiles(TEXT_XML);
         return upload;
     }
 
     private BootstrapAjaxButton newButton(String id) {
-        return new BootstrapAjaxButton(id, new StringResourceModel(id + ".label", this, null), form, Buttons.Type.Primary) {
+        return new BootstrapAjaxButton(id, new StringResourceModel(id + ".label", this, null), form,
+                Buttons.Type.Primary) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -87,7 +97,8 @@ public class XmlPasteModalPanel extends Panel {
     }
 
     private BootstrapAjaxButton newCancelButton(String id) {
-        return new BootstrapAjaxButton(id, new StringResourceModel(id + ".label", this, null), form, Buttons.Type.Primary) {
+        return new BootstrapAjaxButton(id, new StringResourceModel(id + ".label", this, null), form,
+                Buttons.Type.Primary) {
             private static final long serialVersionUID = 1L;
 
             @Override

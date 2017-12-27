@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -22,19 +22,22 @@ public class OptimisticLockingExceptionTest {
 
     @Test
     public void validateMessage() {
-        assertThat(ole.getMessage()).isEqualTo("Record in table 'tablefoo' has been modified prior to the delete attempt. Aborting.... [foo 1]");
+        assertThat(ole.getMessage()).isEqualTo(
+            "Record in table 'tablefoo' has been modified prior to the delete attempt. Aborting.... [foo 1]");
     }
 
     @Test
     public void validateMessage_withUpdateException() {
         OptimisticLockingException ole2 = new OptimisticLockingException("tablebar", "bar 2", Type.UPDATE);
-        assertThat(ole2.getMessage()).isEqualTo("Record in table 'tablebar' has been modified prior to the update attempt. Aborting.... [bar 2]");
+        assertThat(ole2.getMessage()).isEqualTo(
+            "Record in table 'tablebar' has been modified prior to the update attempt. Aborting.... [bar 2]");
     }
 
     @Test
     public void validateMessage_withoutRecordParameter() {
         OptimisticLockingException ole3 = new OptimisticLockingException("tablebar", Type.UPDATE);
-        assertThat(ole3.getMessage()).isEqualTo("Record in table 'tablebar' has been modified prior to the update attempt. Aborting....");
+        assertThat(ole3.getMessage())
+            .isEqualTo("Record in table 'tablebar' has been modified prior to the update attempt. Aborting....");
     }
 
 }

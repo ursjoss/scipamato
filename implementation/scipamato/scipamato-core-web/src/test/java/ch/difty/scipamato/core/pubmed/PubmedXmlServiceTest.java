@@ -1,9 +1,12 @@
 package ch.difty.scipamato.core.pubmed;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,29 +33,29 @@ public class PubmedXmlServiceTest {
     private PubmedXmlService service;
 
     @Mock
-    private Jaxb2Marshaller unmarshallerMock;
+    private Jaxb2Marshaller    unmarshallerMock;
     @Mock
-    private PubMed pubMedMock;
+    private PubMed             pubMedMock;
     @Mock
-    private PubmedArticleSet pubmedArticleSetMock;
+    private PubmedArticleSet   pubmedArticleSetMock;
     @Mock
-    private PubmedArticle pubmedArticleMock;
+    private PubmedArticle      pubmedArticleMock;
     @Mock
-    private MedlineCitation medLineCitationMock;
+    private MedlineCitation    medLineCitationMock;
     @Mock
-    private Article articleMock;
+    private Article            articleMock;
     @Mock
-    private Journal journalMock;
+    private Journal            journalMock;
     @Mock
-    private PMID pmidMock;
+    private PMID               pmidMock;
     @Mock
-    private JournalIssue journalIssueMock;
+    private JournalIssue       journalIssueMock;
     @Mock
-    private PubDate pubDateMock;
+    private PubDate            pubDateMock;
     @Mock
     private MedlineJournalInfo medLineJournalInfoMock;
     @Mock
-    private ArticleTitle articleTitleMock;
+    private ArticleTitle       articleTitleMock;
 
     @Before
     public void setUp() {
@@ -89,7 +92,8 @@ public class PubmedXmlServiceTest {
             service.unmarshal(null);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("xmlString must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class)
+                .hasMessage("xmlString must not be null.");
         }
     }
 
@@ -168,14 +172,16 @@ public class PubmedXmlServiceTest {
 
     public static PubmedArticleSet makeMinimalValidPubmedArticleSet() {
         PubmedArticleSet pubmedArticleSet = new PubmedArticleSet();
-        pubmedArticleSet.getPubmedArticleOrPubmedBookArticle().add(ScipamatoPubmedArticleTest.makeMinimalValidPubmedArticle());
+        pubmedArticleSet.getPubmedArticleOrPubmedBookArticle()
+            .add(ScipamatoPubmedArticleTest.makeMinimalValidPubmedArticle());
         return pubmedArticleSet;
     }
 
     @Test
     public void gettingPubmedArticleWithPmid_withNoNetwork_returnsEmptyOptional() {
         final int pmId = 25395026;
-        when(pubMedMock.articleWithId(String.valueOf(pmId))).thenThrow(new RuntimeException("The network is not reachable"));
+        when(pubMedMock.articleWithId(String.valueOf(pmId)))
+            .thenThrow(new RuntimeException("The network is not reachable"));
 
         Optional<PubmedArticleFacade> pa = service.getPubmedArticleWithPmid(pmId);
         assertThat(pa.isPresent()).isFalse();

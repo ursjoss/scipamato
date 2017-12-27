@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.web.pages.paper.provider;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,7 +51,8 @@ public class PaperAttachmentProviderTest {
 
     @Test
     public void iterator_fromStartWithPageSizeLargerThanActualSize_returnsAll() {
-        assertThat(provider.iterator(0, 100)).containsExactly(mockAttachment1, mockAttachment2, mockAttachment3, mockAttachment4);
+        assertThat(provider.iterator(0, 100)).containsExactly(mockAttachment1, mockAttachment2, mockAttachment3,
+            mockAttachment4);
     }
 
     @Test

@@ -12,19 +12,25 @@ import ch.difty.scipamato.public_.entity.filter.PublicPaperFilter;
 public interface PublicPaperService extends Serializable {
 
     /**
-     * Finds an individual paper by it's number (business key). Returns it as an optional of {@link PublicPaper}
+     * Finds an individual paper by it's number (business key). Returns it as an
+     * optional of {@link PublicPaper}
      *
-     * @param number - must not be null
+     * @param number
+     *            - must not be null
      * @return Optional
-     * @throws NullArgumentException if id is null
+     * @throws NullArgumentException
+     *             if id is null
      */
     Optional<PublicPaper> findByNumber(Long number);
 
     /**
-     * Finds a page full of {@link PublicPaper}s matching the provided filter and pagination context.
+     * Finds a page full of {@link PublicPaper}s matching the provided filter and
+     * pagination context.
      *
-     * @param filter the filter
-     * @param paginationContext context defining paging and sorting
+     * @param filter
+     *            the filter
+     * @param paginationContext
+     *            context defining paging and sorting
      * @return a page of papers as list
      */
     List<PublicPaper> findPageByFilter(PublicPaperFilter filter, PaginationContext paginationContext);
@@ -38,10 +44,12 @@ public interface PublicPaperService extends Serializable {
     int countByFilter(PublicPaperFilter filter);
 
     /**
-     * Finds the numbers (business key) of the persisted papers matching the provided filter and pagination context.
+     * Finds the numbers (business key) of the persisted papers matching the
+     * provided filter and pagination context.
      *
      * @param filter
-     * @param paginationContext {@link PaginationContext}
+     * @param paginationContext
+     *            {@link PaginationContext}
      * @return list of the numbers of matching papers
      */
     List<Long> findPageOfNumbersByFilter(PublicPaperFilter filter, PaginationContext paginationContext);

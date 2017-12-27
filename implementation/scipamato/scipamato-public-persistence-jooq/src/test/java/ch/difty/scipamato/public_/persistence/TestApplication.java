@@ -13,7 +13,8 @@ import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
 public class TestApplication {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder().sources(TestApplication.class).run(args);
+        new SpringApplicationBuilder().sources(TestApplication.class)
+            .run(args);
     }
 
     @Bean

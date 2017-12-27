@@ -11,14 +11,18 @@ import ch.difty.scipamato.common.entity.CodeClassLike;
 import ch.difty.scipamato.common.persistence.CodeClassLikeService;
 
 /**
- * Model used in core/public wicket pages to load {@link CodeClassLike} code class implementations
+ * Model used in core/public wicket pages to load {@link CodeClassLike} code
+ * class implementations
  *
  * @author u.joss
  *
- * @param <T> code class implementations of {@link CodeClassLike}
- * @param <S> service implementations of {@link CodeClassLikeService}
+ * @param <T>
+ *            code class implementations of {@link CodeClassLike}
+ * @param <S>
+ *            service implementations of {@link CodeClassLikeService}
  */
-public abstract class CodeClassLikeModel<T extends CodeClassLike, S extends CodeClassLikeService<T>> extends LoadableDetachableModel<List<T>> {
+public abstract class CodeClassLikeModel<T extends CodeClassLike, S extends CodeClassLikeService<T>>
+        extends LoadableDetachableModel<List<T>> {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +32,8 @@ public abstract class CodeClassLikeModel<T extends CodeClassLike, S extends Code
     private final String languageCode;
 
     public CodeClassLikeModel(final String languageCode) {
-        Injector.get().inject(this);
+        Injector.get()
+            .inject(this);
         this.languageCode = AssertAs.notNull(languageCode, "languageCode");
     }
 

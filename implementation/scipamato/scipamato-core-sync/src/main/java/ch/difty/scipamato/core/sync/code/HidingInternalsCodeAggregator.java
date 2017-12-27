@@ -12,27 +12,28 @@ import org.springframework.stereotype.Component;
 /**
  * The {@link HidingInternalsCodeAggregator} has the purpose of
  * <ul>
- * <li> Providing aggregated codes by </li>
- *    <ul>
- *    <li> Enriching codes with aggregated codes </li>
- *    <li> Filtering out internal codes </li>
- *    </ul>
- * <li> providing the aggregated </li>
- *    <ul>
- *    <li> codesPopulation values </li>
- *    <li> codesStudyDesign values </li>
- *    </ul>
+ * <li>Providing aggregated codes by</li>
+ * <ul>
+ * <li>Enriching codes with aggregated codes</li>
+ * <li>Filtering out internal codes</li>
  * </ul>
+ * <li>providing the aggregated</li>
+ * <ul>
+ * <li>codesPopulation values</li>
+ * <li>codesStudyDesign values</li>
+ * </ul>
+ * </ul>
+ *
  * @author u.joss
  */
 @Component
 @Scope("prototype")
 public class HidingInternalsCodeAggregator implements CodeAggregator {
 
-    private final List<String> internalCodes = new ArrayList<>();
-    private final List<String> codes = new ArrayList<>();
-    private final List<Short> codesPopulation = new ArrayList<>();
-    private final List<Short> codesStudyDesign = new ArrayList<>();
+    private final List<String> internalCodes    = new ArrayList<>();
+    private final List<String> codes            = new ArrayList<>();
+    private final List<Short>  codesPopulation  = new ArrayList<>();
+    private final List<Short>  codesStudyDesign = new ArrayList<>();
 
     @Override
     public void setInternalCodes(final List<String> internalCodes) {
@@ -63,7 +64,8 @@ public class HidingInternalsCodeAggregator implements CodeAggregator {
     }
 
     /**
-     * HARDCODED consider moving aggregation into some table in scipamato-core (see also CodeSyncConfig#selectSql)
+     * HARDCODED consider moving aggregation into some table in scipamato-core (see
+     * also CodeSyncConfig#selectSql)
      */
     private List<String> filterAndEnrich(final String[] codeArray) {
         final Set<String> filtered = new HashSet<>();
@@ -78,20 +80,25 @@ public class HidingInternalsCodeAggregator implements CodeAggregator {
 
     private List<Short> gatherCodesPopulation() {
         final List<Short> pcs = new ArrayList<>();
-        if (codes.stream().anyMatch(x -> "3A".equals(x) || "3B".equals(x)))
+        if (codes.stream()
+            .anyMatch(x -> "3A".equals(x) || "3B".equals(x)))
             pcs.add((short) 1);
-        if (codes.stream().anyMatch(x -> "3C".equals(x)))
+        if (codes.stream()
+            .anyMatch(x -> "3C".equals(x)))
             pcs.add((short) 2);
         return pcs;
     }
 
     private List<Short> gatherCodesStudyDesign() {
         final List<Short> csds = new ArrayList<>();
-        if (codes.stream().anyMatch(x -> "5abc".equals(x)))
+        if (codes.stream()
+            .anyMatch(x -> "5abc".equals(x)))
             csds.add((short) 1);
-        if (codes.stream().anyMatch(x -> "5E".equals(x) || "5F".equals(x) || "5G".equals(x) || "5H".equals(x) || "5I".equals(x)))
+        if (codes.stream()
+            .anyMatch(x -> "5E".equals(x) || "5F".equals(x) || "5G".equals(x) || "5H".equals(x) || "5I".equals(x)))
             csds.add((short) 2);
-        if (codes.stream().anyMatch(x -> "5U".equals(x) || "5M".equals(x)))
+        if (codes.stream()
+            .anyMatch(x -> "5U".equals(x) || "5M".equals(x)))
             csds.add((short) 3);
         return csds;
     }

@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.security;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,7 @@ public class ScipamatoAuthenticatedWebSessionConfigTest extends WicketTest {
     @Test
     public void providesSecureWebSession() {
         assertThat(config.getAuthenticatedWebSessionClass()).isNotNull();
-        assertThat(config.getAuthenticatedWebSessionClass().getName()).isEqualTo(SecureWebSession.class.getName());
+        assertThat(config.getAuthenticatedWebSessionClass()
+            .getName()).isEqualTo(SecureWebSession.class.getName());
     }
 }

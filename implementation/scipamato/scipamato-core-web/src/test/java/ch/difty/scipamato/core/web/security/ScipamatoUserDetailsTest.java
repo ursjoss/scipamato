@@ -1,7 +1,11 @@
 package ch.difty.scipamato.core.web.security;
 
-import static ch.difty.scipamato.core.entity.CoreEntity.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.CREATED;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.MODIFIED;
+import static ch.difty.scipamato.core.entity.CoreEntity.CREATOR_ID;
+import static ch.difty.scipamato.core.entity.CoreEntity.MODIFIER_ID;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.extractProperty;
 
 import java.util.Arrays;
 
@@ -37,13 +41,12 @@ public class ScipamatoUserDetailsTest {
         assertThat(sud.isCredentialsNonExpired()).isTrue();
 
         assertThat(sud.toString()).isEqualTo(
-                "ScipamatoUserDetails[roles=[ROLE_ADMIN, ROLE_USER],userName=un,firstName=fn,lastName=ln,email=em,password=pw,enabled=true,roles=[ROLE_ADMIN, ROLE_USER],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
+            "ScipamatoUserDetails[roles=[ROLE_ADMIN, ROLE_USER],userName=un,firstName=fn,lastName=ln,email=em,password=pw,enabled=true,roles=[ROLE_ADMIN, ROLE_USER],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
     }
 
     @Test
     public void equals() {
-        EqualsVerifier
-            .forClass(User.class)
+        EqualsVerifier.forClass(User.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)

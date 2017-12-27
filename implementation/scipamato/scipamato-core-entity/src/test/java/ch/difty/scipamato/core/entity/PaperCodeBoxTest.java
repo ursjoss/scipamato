@@ -1,7 +1,8 @@
 package ch.difty.scipamato.core.entity;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import ch.difty.scipamato.common.entity.CodeClassId;
 public class PaperCodeBoxTest {
 
     private static final LocalDateTime CREAT = LocalDateTime.parse("2017-01-01T08:00:00.123");
-    private static final LocalDateTime MOD = LocalDateTime.parse("2017-01-02T09:00:00.456");
+    private static final LocalDateTime MOD   = LocalDateTime.parse("2017-01-02T09:00:00.456");
 
     private static final Code CODE_1F = makeCode(CodeClassId.CC1, "F", 1);
     private static final Code CODE_5H = makeCode(CodeClassId.CC5, "H", 7);
@@ -66,7 +67,8 @@ public class PaperCodeBoxTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void gettingCodes_andThenAlteringList_throws() {
-        codeBox.getCodes().add(CODE_5H);
+        codeBox.getCodes()
+            .add(CODE_5H);
     }
 
     @Test
@@ -113,7 +115,8 @@ public class PaperCodeBoxTest {
             codeBox.clearBy(null);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("codeClassId must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class)
+                .hasMessage("codeClassId must not be null.");
         }
     }
 

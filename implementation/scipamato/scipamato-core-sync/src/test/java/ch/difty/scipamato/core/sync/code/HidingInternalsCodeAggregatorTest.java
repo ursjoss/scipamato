@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.code;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 
@@ -24,8 +24,8 @@ public class HidingInternalsCodeAggregatorTest {
     @SuppressWarnings("unused")
     private Object[] paramsCodeAggregation() {
         /**
-         * input            String[]: the code array to be loaded
-         * aggregatedCodes  String[]: the expected resulting array of (partially) aggregated codes
+         * input String[]: the code array to be loaded aggregatedCodes String[]: the
+         * expected resulting array of (partially) aggregated codes
          */
         // @formatter:off
         return new Object[] {
@@ -96,8 +96,8 @@ public class HidingInternalsCodeAggregatorTest {
     @SuppressWarnings("unused")
     private Object[] paramsCodeStudyDesign() {
         /**
-         * input             String[]: the code array to be loaded
-         * codesStudyDesign   Short[]: the expected resulting array of code ids for codesStudyDesign
+         * input String[]: the code array to be loaded codesStudyDesign Short[]: the
+         * expected resulting array of code ids for codesStudyDesign
          */
         // @formatter:off
         return new Object[] {
@@ -145,10 +145,11 @@ public class HidingInternalsCodeAggregatorTest {
     @SuppressWarnings("unused")
     private Object[] paramsAll() {
         /**
-         * input            String[]: the code array to be loaded
-         * codesPopulation   Short[]: the expected resulting array of code ids for codesPopulation
-         * aggregatedCodes  String[]: the expected resulting array of (partially) aggregated codes
-         * codesStudyDesign   Short[]: the expected resulting array of code ids for codesStudyDesign
+         * input String[]: the code array to be loaded codesPopulation Short[]: the
+         * expected resulting array of code ids for codesPopulation aggregatedCodes
+         * String[]: the expected resulting array of (partially) aggregated codes
+         * codesStudyDesign Short[]: the expected resulting array of code ids for
+         * codesStudyDesign
          */
         // @formatter:off
         return new Object[] {

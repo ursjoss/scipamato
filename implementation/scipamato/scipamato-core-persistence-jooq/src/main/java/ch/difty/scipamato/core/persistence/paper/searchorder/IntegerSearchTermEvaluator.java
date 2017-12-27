@@ -43,7 +43,8 @@ public class IntegerSearchTermEvaluator implements SearchTermEvaluator<IntegerSe
         case PRESENT:
             return field.isNotNull();
         default:
-            throw new UnsupportedOperationException("Evaluation of type " + searchTerm.getType() + " is not supported...");
+            throw new UnsupportedOperationException(
+                    "Evaluation of type " + searchTerm.getType() + " is not supported...");
         }
     }
 

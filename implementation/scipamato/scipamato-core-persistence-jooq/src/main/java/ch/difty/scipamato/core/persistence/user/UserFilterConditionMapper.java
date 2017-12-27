@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.user;
 
-import static ch.difty.scipamato.core.db.tables.ScipamatoUser.*;
+import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
 
 import java.util.List;
 
@@ -22,8 +22,9 @@ public class UserFilterConditionMapper extends AbstractFilterConditionMapper<Use
     public void map(final UserFilter filter, final List<Condition> conditions) {
         if (filter.getNameMask() != null) {
             final String likeExpression = "%" + filter.getNameMask() + "%";
-            conditions
-                .add(SCIPAMATO_USER.USER_NAME.likeIgnoreCase(likeExpression).or(SCIPAMATO_USER.FIRST_NAME.likeIgnoreCase(likeExpression)).or(SCIPAMATO_USER.LAST_NAME.likeIgnoreCase(likeExpression)));
+            conditions.add(SCIPAMATO_USER.USER_NAME.likeIgnoreCase(likeExpression)
+                .or(SCIPAMATO_USER.FIRST_NAME.likeIgnoreCase(likeExpression))
+                .or(SCIPAMATO_USER.LAST_NAME.likeIgnoreCase(likeExpression)));
         }
         if (filter.getEmailMask() != null) {
             final String likeExpression = "%" + filter.getEmailMask() + "%";

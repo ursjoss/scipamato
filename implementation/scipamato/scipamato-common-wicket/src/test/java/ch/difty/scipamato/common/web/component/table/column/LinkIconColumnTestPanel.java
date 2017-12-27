@@ -53,7 +53,8 @@ abstract class LinkIconColumnTestPanel extends Panel {
             }
 
             @Override
-            protected void onClickPerformed(AjaxRequestTarget target, IModel<TestRecord> rowModel, AjaxLink<Void> link) {
+            protected void onClickPerformed(AjaxRequestTarget target, IModel<TestRecord> rowModel,
+                    AjaxLink<Void> link) {
                 LinkIconColumnTestPanel.this.onClickPerformed(rowModel, link);
             }
         };
@@ -67,7 +68,8 @@ abstract class LinkIconColumnTestPanel extends Panel {
 
         @Override
         public Iterator<TestRecord> iterator(long first, long count) {
-            return Arrays.asList(new TestRecord(1, "foo")).iterator();
+            return Arrays.asList(new TestRecord(1, "foo"))
+                .iterator();
         }
 
         @Override

@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jooq.Condition;
 import org.jooq.DSLContext;
@@ -24,15 +24,15 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     private JooqBySearchOrderRepo<PaperSlim, PaperSlimRecordMapper> finder;
 
     @Mock
-    private DSLContext dslMock;
+    private DSLContext                                                                      dslMock;
     @Mock
-    private PaperSlimRecordMapper mapperMock;
+    private PaperSlimRecordMapper                                                           mapperMock;
     @Mock
     private JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapperMock;
     @Mock
-    private PaperSlim unpersistedEntity;
+    private PaperSlim                                                                       unpersistedEntity;
     @Mock
-    private PaperSlim persistedEntity;
+    private PaperSlim                                                                       persistedEntity;
 
     @Before
     public void setUp() {
@@ -99,7 +99,8 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     public void getConditions_withSearchOrderWithAuditSearchTermForCreationTimeStamp() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1l);
-        SearchTerm st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "paper.created", ">=\"2017-02-01 23:55:12\"");
+        SearchTerm st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "paper.created",
+            ">=\"2017-02-01 23:55:12\"");
         sc1.addSearchTerm(st);
         searchOrder.add(sc1);
 
@@ -111,7 +112,8 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     public void getConditions_withSearchOrderWithAuditSearchTermForLastModTimeStamp() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1l);
-        SearchTerm st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "paper.last_modified", "<2017-02-01 23:55:12");
+        SearchTerm st = SearchTerm.of(2l, SearchTermType.AUDIT.getId(), 1, "paper.last_modified",
+            "<2017-02-01 23:55:12");
         sc1.addSearchTerm(st);
         searchOrder.add(sc1);
 

@@ -1,7 +1,10 @@
 package ch.difty.scipamato.core.web.jasper.summary;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
@@ -19,36 +22,35 @@ import net.sf.jasperreports.engine.design.JRDesignField;
 
 public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
-    private static final Long NUMBER = 100l;
-    private static final String AUTHORS = "authors";
-    private static final String TITLE = "title";
-    private static final String LOCATION = "location";
-    private static final String GOALS = "goals";
+    private static final Long   NUMBER     = 100l;
+    private static final String AUTHORS    = "authors";
+    private static final String TITLE      = "title";
+    private static final String LOCATION   = "location";
+    private static final String GOALS      = "goals";
     private static final String POPULATION = "population";
-    private static final String METHODS = "methods";
-    private static final String RESULT = "result";
-    private static final String COMMENT = "comment";
+    private static final String METHODS    = "methods";
+    private static final String RESULT     = "result";
+    private static final String COMMENT    = "comment";
     private static final String CREATED_BY = "creatingUser";
 
     private static final String POPULATION_LABEL = "Kollektiv";
-    private static final String GOALS_LABEL = "Ziele";
-    private static final String METHODS_LABEL = "Methoden";
-    private static final String RESULT_LABEL = "Resultat";
-    private static final String COMMENT_LABEL = "Bemerkungen";
-    private static final String HEADER_PART = "LUDOK-Zusammenfassung Nr.";
-    private static final String HEADER = HEADER_PART + " " + NUMBER;
-    private static final String BRAND = "LUDOK";
+    private static final String GOALS_LABEL      = "Ziele";
+    private static final String METHODS_LABEL    = "Methoden";
+    private static final String RESULT_LABEL     = "Resultat";
+    private static final String COMMENT_LABEL    = "Bemerkungen";
+    private static final String HEADER_PART      = "LUDOK-Zusammenfassung Nr.";
+    private static final String HEADER           = HEADER_PART + " " + NUMBER;
+    private static final String BRAND            = "LUDOK";
 
-    private static final String FILE_NAME_SINGLE = "paper_summary_no_" + NUMBER + ".pdf";
+    private static final String FILE_NAME_SINGLE          = "paper_summary_no_" + NUMBER + ".pdf";
     private static final String FILE_NAME_SINGLE_FALLBACK = "paper_summary.pdf";
-    private static final String FILE_NAME_MULTIPLE = "paper_summaries.pdf";
+    private static final String FILE_NAME_MULTIPLE        = "paper_summaries.pdf";
 
     private PaperSummaryDataSource ds;
-    private ReportHeaderFields rhf = newReportHeaderFields();
+    private ReportHeaderFields     rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields
-            .builder(HEADER_PART, BRAND)
+        return ReportHeaderFields.builder(HEADER_PART, BRAND)
             .populationLabel(POPULATION_LABEL)
             .goalsLabel(GOALS_LABEL)
             .methodsLabel(METHODS_LABEL)
@@ -95,7 +97,8 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
     private void assertDataSource(String fileName) throws JRException {
         assertThat(ds.getConnectionProvider()).isNull();
-        assertThat(ds.getContentDisposition().toString()).isEqualTo("ATTACHMENT");
+        assertThat(ds.getContentDisposition()
+            .toString()).isEqualTo("ATTACHMENT");
         assertThat(ds.getContentType()).isEqualTo("application/pdf");
         assertThat(ds.getExtension()).isEqualTo("pdf");
         assertThat(ds.getJasperReport()).isInstanceOf(JasperReport.class);
@@ -140,7 +143,8 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     }
 
     @Test
-    public void instantiatingWithPaperSummaryWithoutNumber_returnsPdfDataSourceWithOneRecordAndFallBackName() throws JRException {
+    public void instantiatingWithPaperSummaryWithoutNumber_returnsPdfDataSourceWithOneRecordAndFallBackName()
+            throws JRException {
         reset(paperMock);
         when(paperMock.getNumber()).thenReturn(null);
 
@@ -153,7 +157,8 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     }
 
     @Test
-    public void instantiatingWithPaperWithoutNumber_returnsPdfDataSourceWithOneRecordAndFallBackName() throws JRException {
+    public void instantiatingWithPaperWithoutNumber_returnsPdfDataSourceWithOneRecordAndFallBackName()
+            throws JRException {
         reset(paperMock);
         when(paperMock.getNumber()).thenReturn(null);
 
@@ -182,7 +187,8 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0l);
         ds = new PaperSummaryDataSource(dataProviderMock, rhf, pdfExporterConfigMock);
-        assertThat(ds.getReportDataSource().next()).isFalse();
+        assertThat(ds.getReportDataSource()
+            .next()).isFalse();
         verify(dataProviderMock).size();
     }
 
@@ -192,7 +198,8 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
         try {
             new PaperSummaryDataSource(provider, rhf, pdfExporterConfigMock);
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("dataProvider must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class)
+                .hasMessage("dataProvider must not be null.");
         }
     }
 

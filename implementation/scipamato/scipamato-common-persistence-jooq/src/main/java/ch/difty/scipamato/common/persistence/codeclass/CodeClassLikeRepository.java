@@ -9,7 +9,8 @@ import ch.difty.scipamato.common.entity.CodeClassLike;
  *
  * @author u.joss
  *
- * @param <T> code classes of type {@code T}, extending {@link CodeClassLike}
+ * @param <T>
+ *            code classes of type {@code T}, extending {@link CodeClassLike}
  */
 public interface CodeClassLikeRepository<T extends CodeClassLike> {
 

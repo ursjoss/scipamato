@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.persistence.codeclass;
 
-import static ch.difty.scipamato.core.db.tables.CodeClass.*;
-import static ch.difty.scipamato.core.db.tables.CodeClassTr.*;
+import static ch.difty.scipamato.core.db.tables.CodeClass.CODE_CLASS;
+import static ch.difty.scipamato.core.db.tables.CodeClassTr.CODE_CLASS_TR;
 
 import java.util.List;
 
@@ -30,15 +30,16 @@ public class JooqCodeClassRepo implements CodeClassRepository {
     @Cacheable
     public List<CodeClass> find(final String languageCode) {
         final String lang = TranslationUtils.trimLanguageCode(languageCode);
-        // @formatter:off
         return dslContext
-            .select(  CODE_CLASS.ID.as("CC_ID")
-                    , DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL).as("CC_NAME")
-                    , DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL).as("CC_DESCRIPTION"))
+            .select(CODE_CLASS.ID.as("CC_ID"), DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
+                .as("CC_NAME"),
+                DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
+                    .as("CC_DESCRIPTION"))
             .from(CODE_CLASS)
-            .leftOuterJoin(CODE_CLASS_TR).on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID).and(CODE_CLASS_TR.LANG_CODE.equal(lang)))
+            .leftOuterJoin(CODE_CLASS_TR)
+            .on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID)
+                .and(CODE_CLASS_TR.LANG_CODE.equal(lang)))
             .fetchInto(CodeClass.class);
-        // @formatter:on
     }
 
 }

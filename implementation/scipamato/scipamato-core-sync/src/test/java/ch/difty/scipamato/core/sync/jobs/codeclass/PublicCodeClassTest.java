@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.codeclass;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -10,8 +10,7 @@ public class PublicCodeClassTest extends PublicEntityTest {
 
     @Test
     public void canSetGet() {
-        PublicCodeClass pcc = PublicCodeClass
-            .builder()
+        PublicCodeClass pcc = PublicCodeClass.builder()
             .codeClassId(1)
             .langCode("lc")
             .name("name")

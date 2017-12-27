@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.jasper.summarytable;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -12,11 +12,11 @@ import nl.jqno.equalsverifier.Warning;
 
 public class PaperSummaryTableTest extends JasperEntityTest {
 
-    private static final String BRAND = "brand";
-    private static final String CAPTION = "caption";
+    private static final String BRAND        = "brand";
+    private static final String CAPTION      = "caption";
     private static final String NUMBER_LABEL = "nl";
 
-    private PaperSummaryTable pst;
+    private PaperSummaryTable  pst;
     private ReportHeaderFields rhf = newReportHeaderFields();
 
     @Test(expected = NullArgumentException.class)
@@ -36,7 +36,11 @@ public class PaperSummaryTableTest extends JasperEntityTest {
     }
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields.builder(HEADER_PART, BRAND).captionLabel(CAPTION).methodsLabel(METHODS_LABEL).numberLabel(NUMBER_LABEL).build();
+        return ReportHeaderFields.builder(HEADER_PART, BRAND)
+            .captionLabel(CAPTION)
+            .methodsLabel(METHODS_LABEL)
+            .numberLabel(NUMBER_LABEL)
+            .build();
     }
 
     private void assertPst() {
@@ -85,13 +89,16 @@ public class PaperSummaryTableTest extends JasperEntityTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(PaperSummaryTable.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(PaperSummaryTable.class)
+            .withRedefinedSuperclass()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 
     @Test
     public void testingToString() {
         pst = new PaperSummaryTable(p, rhf, true);
         assertThat(pst.toString()).isEqualTo(
-                "PaperSummaryTable(number=100, firstAuthor=firstAuthor, publicationYear=2017, codesOfClass1=1F, codesOfClass4=4A,4C, codesOfClass7=7B, goals=goals, title=title, result=results, caption=caption, brand=brand, numberLabel=nl)");
+            "PaperSummaryTable(number=100, firstAuthor=firstAuthor, publicationYear=2017, codesOfClass1=1F, codesOfClass4=4A,4C, codesOfClass7=7B, goals=goals, title=title, result=results, caption=caption, brand=brand, numberLabel=nl)");
     }
 }

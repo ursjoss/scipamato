@@ -7,13 +7,13 @@ import lombok.NonNull;
 import lombok.Value;
 
 /**
- * Context holder for localized jasper report captions. Uses builder pattern
- * in order to avoid having constructor with numerous String arguments.
+ * Context holder for localized jasper report captions. Uses builder pattern in
+ * order to avoid having constructor with numerous String arguments.
  *
  * This class can be used to serve various jasper reports with different needs
- * for localized labels. Consequently hardly any validation occurs in this class.
- * It is up to the DTOs that are passed into the reports to validate the required
- * labels are non-null.
+ * for localized labels. Consequently hardly any validation occurs in this
+ * class. It is up to the DTOs that are passed into the reports to validate the
+ * required labels are non-null.
  *
  * @author u.joss
  */
@@ -55,13 +55,16 @@ public class ReportHeaderFields implements IClusterable {
     private final String pubmedBaseUrl;
 
     /**
-     * Static builder requiring the headerPart and brand to be passed into the constructor
+     * Static builder requiring the headerPart and brand to be passed into the
+     * constructor
+     *
      * @param headerPart
      * @param brand
      * @return ReportHeaderFieldsBuilder
      */
     public static ReportHeaderFieldsBuilder builder(final String headerPart, final String brand) {
-        return hiddenBuilder().headerPart(headerPart).brand(brand);
+        return hiddenBuilder().headerPart(headerPart)
+            .brand(brand);
     }
 
 }

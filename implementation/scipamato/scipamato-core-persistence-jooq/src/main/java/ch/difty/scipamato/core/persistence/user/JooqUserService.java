@@ -13,7 +13,8 @@ import ch.difty.scipamato.core.persistence.UserService;
 /**
  * jOOQ specific implementation of the {@link UserService} interface.
  *
- * Note: This service is deliberately not extending  JooqEntityService as that depending on on this service itself. 
+ * Note: This service is deliberately not extending JooqEntityService as that
+ * depending on on this service itself.
  *
  * @author u.joss
  */

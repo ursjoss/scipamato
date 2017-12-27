@@ -21,25 +21,28 @@ import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Launcher for the reference dat sync job. Comprises of the following synchronization jobs:
+ * Launcher for the reference dat sync job. Comprises of the following
+ * synchronization jobs:
  * <ol>
- * <li> code_class </li>
- * <li> codes </li>
- * <li> keywords TODO </li>
- * <li> papers</li>
+ * <li>code_class</li>
+ * <li>codes</li>
+ * <li>keywords TODO</li>
+ * <li>papers</li>
  * </ol>
+ * 
  * @author u.joss
  */
 @Slf4j
 @Component
 public class RefDataSyncJobLauncher implements SyncJobLauncher {
 
-    private final Job syncCodeClassJob;
-    private final Job syncCodeJob;
-    private final Job syncPaperJob;
+    private final Job           syncCodeClassJob;
+    private final Job           syncCodeJob;
+    private final Job           syncPaperJob;
     protected final JobLauncher jobLauncher;
 
-    public RefDataSyncJobLauncher(final JobLauncher jobLauncher, @Qualifier("syncCodeClassJob") final Job syncCodeClassJob, @Qualifier("syncCodeJob") final Job syncCodeJob,
+    public RefDataSyncJobLauncher(final JobLauncher jobLauncher,
+            @Qualifier("syncCodeClassJob") final Job syncCodeClassJob, @Qualifier("syncCodeJob") final Job syncCodeJob,
             @Qualifier("syncPaperJob") final Job syncPaperJob) {
         this.jobLauncher = jobLauncher;
         this.syncCodeClassJob = syncCodeClassJob;
@@ -51,7 +54,10 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
     public SyncJobResult launch() {
         log.info("Starting synchronization job from scipamato-core to scipamato-public...");
         final SyncJobResult result = new SyncJobResult();
-        final JobParameters jobParameters = new JobParametersBuilder().addDate("runDate", Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()), true).toJobParameters();
+        final JobParameters jobParameters = new JobParametersBuilder().addDate("runDate", Date.from(LocalDateTime.now()
+            .atZone(ZoneId.systemDefault())
+            .toInstant()), true)
+            .toJobParameters();
         try {
             runSingleJob("code_classes", syncCodeClassJob, result, jobParameters);
             runSingleJob("codes", syncCodeJob, result, jobParameters);
@@ -64,17 +70,24 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
         return result;
     }
 
-    private void runSingleJob(final String topic, final Job job, final SyncJobResult result, final JobParameters jobParameters)
-            throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
+    private void runSingleJob(final String topic, final Job job, final SyncJobResult result,
+            final JobParameters jobParameters) throws JobExecutionAlreadyRunningException, JobRestartException,
+            JobInstanceAlreadyCompleteException, JobParametersInvalidException {
         setResultFrom(jobLauncher.run(job, jobParameters), result, topic);
     }
 
     private void setResultFrom(final JobExecution jobExecution, final SyncJobResult result, final String topic) {
         final Long id = jobExecution.getId();
-        final String exitCode = jobExecution.getExitStatus().getExitCode();
-        final String status = jobExecution.getStatus().name();
-        final int writeCount = jobExecution.getStepExecutions().stream().mapToInt(StepExecution::getWriteCount).sum();
-        final String msg = String.format("Job %d has returned with exitCode %s (status %s): %d %s were synchronized.", id, exitCode, status, writeCount, topic);
+        final String exitCode = jobExecution.getExitStatus()
+            .getExitCode();
+        final String status = jobExecution.getStatus()
+            .name();
+        final int writeCount = jobExecution.getStepExecutions()
+            .stream()
+            .mapToInt(StepExecution::getWriteCount)
+            .sum();
+        final String msg = String.format("Job %d has returned with exitCode %s (status %s): %d %s were synchronized.",
+            id, exitCode, status, writeCount, topic);
 
         setMessageToResult(result, msg, jobExecution.getStatus());
     }

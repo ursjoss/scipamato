@@ -20,13 +20,16 @@ import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.PaperSlimService;
 
 /**
- * Abstract base class for data providers providing the wicket components access to the persisted paper data in the slim format.
+ * Abstract base class for data providers providing the wicket components access
+ * to the persisted paper data in the slim format.
  *
  * @author u.joss
  *
- * @param <F> the type of the filter state
+ * @param <F>
+ *            the type of the filter state
  */
-public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<F> {
+public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
+        extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<F> {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,6 +45,7 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> exten
 
     /**
      * Instantiate the provider with the filter and the number of rows per page.
+     *
      * @param filterState
      * @param rowsPerPage
      */
@@ -69,7 +73,8 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> exten
     }
 
     /**
-     * provides an iterator going through the records, starting with the {@literal first} (offset) and providing {@literal count} number of records.
+     * provides an iterator going through the records, starting with the
+     * {@literal first} (offset) and providing {@literal count} number of records.
      */
     @Override
     public Iterator<PaperSlim> iterator(final long first, final long count) {
@@ -81,7 +86,9 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> exten
     protected abstract Iterator<PaperSlim> findPage(PaginationContext pc);
 
     /**
-     * Applies the normal filter and the sort aspect of the pageable to return all records as {@link Paper}s.
+     * Applies the normal filter and the sort aspect of the pageable to return all
+     * records as {@link Paper}s.
+     *
      * @return list of all papers
      */
     public List<Paper> findAllPapersByFilter() {
@@ -93,7 +100,9 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> exten
     protected abstract List<Paper> findAll(Direction dir, String sortProp);
 
     /**
-     * Applies the normal filter and the sort aspect of the pageable to return only the ids of all papers (unpaged).
+     * Applies the normal filter and the sort aspect of the pageable to return only
+     * the ids of all papers (unpaged).
+     *
      * @return list of all paper ids
      */
     public List<Long> findAllPaperIdsByFilter() {
@@ -127,7 +136,9 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> exten
     }
 
     /**
-     * Return the (max) rowsPerPage (or pageSize), regardless of the number of records actually available on the page.
+     * Return the (max) rowsPerPage (or pageSize), regardless of the number of
+     * records actually available on the page.
+     *
      * @return rows per page
      */
     public int getRowsPerPage() {
@@ -136,6 +147,7 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> exten
 
     /**
      * Override if needed
+     *
      * @return searchOrderId if it applies, null otherwise
      */
     public Long getSearchOrderId() {
@@ -143,21 +155,24 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter> exten
     }
 
     /**
-     * @return showExcluded flag, indicating if the search results are to be shown (if false) or the excluded papers (true). False by default
-     * Override if needed
+     * @return showExcluded flag, indicating if the search results are to be shown
+     *         (if false) or the excluded papers (true). False by default Override
+     *         if needed
      */
     public boolean isShowExcluded() {
         return false;
     }
 
     /**
-     * Sets the flag whether to show search results (false) or papers excluded from search (true)
-     * Override if needed
+     * Sets the flag whether to show search results (false) or papers excluded from
+     * search (true) Override if needed
      */
     public void setShowExcluded(boolean showExcluded) {
     }
 
     protected String getLanguageCode() {
-        return ScipamatoSession.get().getLocale().getLanguage();
+        return ScipamatoSession.get()
+            .getLocale()
+            .getLanguage();
     }
 }

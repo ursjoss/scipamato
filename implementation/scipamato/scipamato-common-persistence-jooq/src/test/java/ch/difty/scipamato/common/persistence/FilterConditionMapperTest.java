@@ -1,6 +1,6 @@
 package ch.difty.scipamato.common.persistence;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jooq.Record;
 import org.jooq.impl.TableImpl;
@@ -15,9 +15,16 @@ public abstract class FilterConditionMapperTest<R extends Record, TI extends Tab
         final boolean withMultiplefields = fields > 1;
         final StringBuilder sb = new StringBuilder();
         if (withMultiplefields)
-            sb.append("(").append("\n  ");
+            sb.append("(")
+                .append("\n  ");
         for (final String fieldName : fieldNames) {
-            sb.append("lower(\"public\".\"").append(getTable().getName()).append("\".\"").append(fieldName).append("\") like lower('%").append(pattern).append("%')");
+            sb.append("lower(\"public\".\"")
+                .append(getTable().getName())
+                .append("\".\"")
+                .append(fieldName)
+                .append("\") like lower('%")
+                .append(pattern)
+                .append("%')");
             if (withMultiplefields)
                 sb.append("\n");
             if (fields-- > 1)
@@ -35,14 +42,16 @@ public abstract class FilterConditionMapperTest<R extends Record, TI extends Tab
 
     @Test
     public void mappingFilter_withNullFilter_returnsNoOpCondition() {
-        assertThat(getMapper().map(null).toString()).isEqualTo("1 = 1");
+        assertThat(getMapper().map(null)
+            .toString()).isEqualTo("1 = 1");
     }
 
     protected abstract GenericFilterConditionMapper<F> getMapper();
 
     @Test
     public void creatingWhereCondition_withNoFilterConditions_returnsNoOpCondition() {
-        assertThat(getMapper().map(getFilter()).toString()).isEqualTo("1 = 1");
+        assertThat(getMapper().map(getFilter())
+            .toString()).isEqualTo("1 = 1");
     }
 
     protected abstract F getFilter();

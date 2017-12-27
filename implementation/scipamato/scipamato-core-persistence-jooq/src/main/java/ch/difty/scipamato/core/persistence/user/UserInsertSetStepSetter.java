@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.user;
 
-import static ch.difty.scipamato.core.db.tables.ScipamatoUser.*;
+import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
 
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
@@ -13,7 +13,8 @@ import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 
 /**
- * The insert step setter used for inserting new {@link User}s.<p>
+ * The insert step setter used for inserting new {@link User}s.
+ * <p>
  *
  * <b>Note:</b> the {@link Role}s are not inserted here.
  *
@@ -28,9 +29,7 @@ public class UserInsertSetStepSetter implements InsertSetStepSetter<ScipamatoUse
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
 
-        // @formatter:off
-        return step
-            .set(SCIPAMATO_USER.USER_NAME, e.getUserName())
+        return step.set(SCIPAMATO_USER.USER_NAME, e.getUserName())
             .set(SCIPAMATO_USER.FIRST_NAME, e.getFirstName())
             .set(SCIPAMATO_USER.LAST_NAME, e.getLastName())
             .set(SCIPAMATO_USER.EMAIL, e.getEmail())
@@ -39,7 +38,6 @@ public class UserInsertSetStepSetter implements InsertSetStepSetter<ScipamatoUse
 
             .set(SCIPAMATO_USER.CREATED_BY, e.getCreatedBy())
             .set(SCIPAMATO_USER.LAST_MODIFIED_BY, e.getLastModifiedBy());
-        // @formatter:on
     }
 
     /** {@inheritDoc} */

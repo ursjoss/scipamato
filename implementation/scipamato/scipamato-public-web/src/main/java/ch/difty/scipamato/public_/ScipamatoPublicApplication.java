@@ -16,7 +16,8 @@ import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplicatio
 public class ScipamatoPublicApplication extends WicketBootSecuredWebApplication {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder().sources(ScipamatoPublicApplication.class).run(args);
+        new SpringApplicationBuilder().sources(ScipamatoPublicApplication.class)
+            .run(args);
     }
 
     @Override

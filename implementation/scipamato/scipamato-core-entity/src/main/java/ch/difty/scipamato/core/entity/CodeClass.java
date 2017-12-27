@@ -12,7 +12,7 @@ public class CodeClass extends IdScipamatoEntity<Integer> implements CodeClassLi
 
     private static final long serialVersionUID = 1L;
 
-    public static final String NAME = "name";
+    public static final String NAME        = "name";
     public static final String DESCRIPTION = "description";
 
     @NotNull

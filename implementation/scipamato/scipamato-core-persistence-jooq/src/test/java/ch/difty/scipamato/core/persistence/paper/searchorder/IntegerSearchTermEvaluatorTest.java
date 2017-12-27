@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 import org.jooq.Condition;
 import org.junit.Test;

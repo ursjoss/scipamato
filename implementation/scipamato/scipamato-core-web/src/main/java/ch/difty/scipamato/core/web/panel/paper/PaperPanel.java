@@ -68,21 +68,21 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
     private static final long serialVersionUID = 1L;
 
-    protected static final String TITLE = "title";
-    private static final String CHANGE = "change";
+    protected static final String TITLE  = "title";
+    private static final String   CHANGE = "change";
 
     private ResourceLink<Void> summaryLink;
     private ResourceLink<Void> summaryShortLink;
-    private String pubmedXml;
+    private String             pubmedXml;
 
-    protected TextArea<String> authors;
-    protected TextField<String> firstAuthor;
-    protected TextArea<Object> title;
-    protected TextField<Object> location;
-    protected TextField<Object> publicationYear;
-    protected TextField<Object> doi;
-    protected TextArea<String> originalAbstract;
-    private BootstrapAjaxLink<Void> pubmedRetrieval;
+    protected TextArea<String>                 authors;
+    protected TextField<String>                firstAuthor;
+    protected TextArea<Object>                 title;
+    protected TextField<Object>                location;
+    protected TextField<Object>                publicationYear;
+    protected TextField<Object>                doi;
+    protected TextArea<String>                 originalAbstract;
+    private BootstrapAjaxLink<Void>            pubmedRetrieval;
     private DataTable<PaperAttachment, String> attachments;
 
     private final PageReference callingPage;
@@ -149,7 +149,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         queueAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
         title = new TextArea<>(Paper.TITLE);
 
-        final ItemNavigator<Long> pm = ScipamatoSession.get().getPaperIdManager();
+        final ItemNavigator<Long> pm = ScipamatoSession.get()
+            .getPaperIdManager();
         queue(newNavigationButton("previous", GlyphIconType.stepbackward, pm::hasPrevious, () -> {
             pm.previous();
             return pm.getItemWithFocus();
@@ -179,8 +180,10 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             @Override
             public void onEvent(IEvent<?> event) {
                 super.onEvent(event);
-                if (event.getPayload().getClass() == SelfUpdateEvent.class) {
-                    ((SelfUpdateEvent) event.getPayload()).getTarget().add(this);
+                if (event.getPayload()
+                    .getClass() == SelfUpdateEvent.class) {
+                    ((SelfUpdateEvent) event.getPayload()).getTarget()
+                        .add(this);
                     event.dontBroadcastDeeper();
                 }
             }
@@ -194,8 +197,10 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             @Override
             public void onEvent(IEvent<?> event) {
                 super.onEvent(event);
-                if (event.getPayload().getClass() == SelfUpdateEvent.class) {
-                    ((SelfUpdateEvent) event.getPayload()).getTarget().add(this);
+                if (event.getPayload()
+                    .getClass() == SelfUpdateEvent.class) {
+                    ((SelfUpdateEvent) event.getPayload()).getTarget()
+                        .add(this);
                     event.dontBroadcastDeeper();
                 }
             }
@@ -209,8 +214,10 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             @Override
             public void onEvent(IEvent<?> event) {
                 super.onEvent(event);
-                if (event.getPayload().getClass() == SelfUpdateEvent.class) {
-                    ((SelfUpdateEvent) event.getPayload()).getTarget().add(this);
+                if (event.getPayload()
+                    .getClass() == SelfUpdateEvent.class) {
+                    ((SelfUpdateEvent) event.getPayload()).getTarget()
+                        .add(this);
                     event.dontBroadcastDeeper();
                 }
             }
@@ -294,8 +301,10 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
     }
 
     /*
-     * The authors field determines the firstAuthor field, but only unless overridden. Changes in the author field (if not overridden)
-     * or in the override checkbox can have an effect on the firstAuthor field (enabled, content) 
+     * The authors field determines the firstAuthor field, but only unless
+     * overridden. Changes in the author field (if not overridden) or in the
+     * override checkbox can have an effect on the firstAuthor field (enabled,
+     * content)
      */
     private void queueAuthorComplex(String authorsId, String firstAuthorId, String firstAuthorOverriddenId) {
         authors = new TextArea<>(authorsId);
@@ -304,7 +313,9 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
         PropertyModel<Boolean> firstAuthorOverriddenModel = new PropertyModel<>(getModel(), firstAuthorOverriddenId);
         CheckBoxX firstAuthorOverridden = new CheckBoxX(firstAuthorOverriddenId, firstAuthorOverriddenModel);
-        firstAuthorOverridden.getConfig().withThreeState(isSearchMode()).withUseNative(true);
+        firstAuthorOverridden.getConfig()
+            .withThreeState(isSearchMode())
+            .withUseNative(true);
         queueCheckBoxAndLabel(firstAuthorOverridden);
 
         firstAuthor = makeFirstAuthor(firstAuthorId, firstAuthorOverridden);
@@ -320,13 +331,16 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
     }
 
     /** override if special behavior is required */
-    protected void addAuthorBehavior(TextArea<String> authors, CheckBox firstAuthorOverridden, TextField<String> firstAuthor) {
+    protected void addAuthorBehavior(TextArea<String> authors, CheckBox firstAuthorOverridden,
+            TextField<String> firstAuthor) {
     }
 
-    protected abstract BootstrapButton newNavigationButton(String id, GlyphIconType icon, SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier);
+    protected abstract BootstrapButton newNavigationButton(String id, GlyphIconType icon,
+            SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier);
 
     private void makeAndQueueBackButton(String id) {
-        BootstrapButton back = new BootstrapButton(id, new StringResourceModel("button.back.label"), Buttons.Type.Default) {
+        BootstrapButton back = new BootstrapButton(id, new StringResourceModel("button.back.label"),
+                Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -349,7 +363,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
     protected abstract BootstrapButton newExcludeButton(String id);
 
     private void makeAndQueueSubmitButton(String id) {
-        BootstrapButton submit = new BootstrapButton(id, new StringResourceModel(getSubmitLinkResourceLabel()), Buttons.Type.Default) {
+        BootstrapButton submit = new BootstrapButton(id, new StringResourceModel(getSubmitLinkResourceLabel()),
+                Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             /**
@@ -392,17 +407,22 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             protected void onInitialize() {
                 super.onInitialize();
                 if (isVisible())
-                    add(new ButtonBehavior().setType(Buttons.Type.Info).setBlock(true).setSize(Size.Large));
+                    add(new ButtonBehavior().setType(Buttons.Type.Info)
+                        .setBlock(true)
+                        .setSize(Size.Large));
             }
 
             @Override
             public void onEvent(IEvent<?> event) {
                 super.onEvent(event);
-                if (event.getPayload().getClass() == SelfUpdateEvent.class) {
+                if (event.getPayload()
+                    .getClass() == SelfUpdateEvent.class) {
                     if (isVisible()) {
                         setEnabled(false);
-                        add(new AttributeModifier(TITLE, new StringResourceModel(button + id + ".title.disabled", this, null).getString()));
-                        ((SelfUpdateEvent) event.getPayload()).getTarget().add(this);
+                        add(new AttributeModifier(TITLE,
+                                new StringResourceModel(button + id + ".title.disabled", this, null).getString()));
+                        ((SelfUpdateEvent) event.getPayload()).getTarget()
+                            .add(this);
                     }
                     event.dontBroadcastDeeper();
                 }
@@ -457,7 +477,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         }
 
         /**
-         * The new fields are present on the page more than once, they need to be able to handle the {@link NewFieldChangeEvent}.
+         * The new fields are present on the page more than once, they need to be able
+         * to handle the {@link NewFieldChangeEvent}.
          */
         private TextArea<String> makeField(String id, boolean newField) {
             if (!newField) {
@@ -468,7 +489,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
                     @Override
                     public void onEvent(IEvent<?> event) {
-                        if (event.getPayload().getClass() == NewFieldChangeEvent.class) {
+                        if (event.getPayload()
+                            .getClass() == NewFieldChangeEvent.class) {
                             ((NewFieldChangeEvent) event.getPayload()).considerAddingToTarget(this);
                             event.dontBroadcastDeeper();
                         }
@@ -478,8 +500,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         }
 
         /**
-         * New fields need to broadcast the {@link NewFieldChangeEvent} and have a special visual indication
-         * that they are a new field.
+         * New fields need to broadcast the {@link NewFieldChangeEvent} and have a
+         * special visual indication that they are a new field.
          */
         private void addNewFieldSpecificAttributes(final TextArea<String> field) {
             field.add(new AttributeAppender("class", " newField"));
@@ -490,7 +512,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
                 protected void onUpdate(AjaxRequestTarget target) {
                     final String id = field.getId();
                     final String markupId = field.getMarkupId();
-                    send(getPage(), Broadcast.BREADTH, new NewFieldChangeEvent(target).withId(id).withMarkupId(markupId));
+                    send(getPage(), Broadcast.BREADTH, new NewFieldChangeEvent(target).withId(id)
+                        .withMarkupId(markupId));
                 }
             });
         }
@@ -603,9 +626,14 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             queue(field);
         }
 
-        private BootstrapMultiSelect<Code> makeCodeClassComplex(final CodeClassId codeClassId, final List<CodeClass> codeClasses) {
+        private BootstrapMultiSelect<Code> makeCodeClassComplex(final CodeClassId codeClassId,
+                final List<CodeClass> codeClasses) {
             final int id = codeClassId.getId();
-            final String className = codeClasses.stream().filter(cc -> cc.getId() == id).map(CodeClass::getName).findFirst().orElse(codeClassId.name());
+            final String className = codeClasses.stream()
+                .filter(cc -> cc.getId() == id)
+                .map(CodeClass::getName)
+                .findFirst()
+                .orElse(codeClassId.name());
             queue(new Label(CODES_CLASS_BASE_NAME + id + "Label", Model.of(className)));
 
             final ChainingModel<List<Code>> model = new ChainingModel<List<Code>>(getModel()) {
@@ -614,23 +642,29 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
                 @SuppressWarnings("unchecked")
                 @Override
                 public List<Code> getObject() {
-                    return ((IModel<CodeBoxAware>) getTarget()).getObject().getCodesOf(codeClassId);
+                    return ((IModel<CodeBoxAware>) getTarget()).getObject()
+                        .getCodesOf(codeClassId);
                 }
 
                 @SuppressWarnings("unchecked")
                 @Override
                 public void setObject(final List<Code> codes) {
-                    ((IModel<CodeBoxAware>) getTarget()).getObject().clearCodesOf(codeClassId);
+                    ((IModel<CodeBoxAware>) getTarget()).getObject()
+                        .clearCodesOf(codeClassId);
                     if (CollectionUtils.isNotEmpty(codes)) {
-                        ((IModel<CodeBoxAware>) getTarget()).getObject().addCodes(codes);
+                        ((IModel<CodeBoxAware>) getTarget()).getObject()
+                            .addCodes(codes);
                     }
                 }
             };
             final CodeModel choices = new CodeModel(codeClassId, getLocalization());
             final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(Code.DISPLAY_VALUE, Code.CODE);
             final StringResourceModel noneSelectedModel = new StringResourceModel("codes.noneSelected", this, null);
-            final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true).withNoneSelectedText(noneSelectedModel.getObject()).withLiveSearch(true);
-            final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<Code>(CODES_CLASS_BASE_NAME + id, model, choices, choiceRenderer).with(config);
+            final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)
+                .withNoneSelectedText(noneSelectedModel.getObject())
+                .withLiveSearch(true);
+            final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<Code>(CODES_CLASS_BASE_NAME + id,
+                    model, choices, choiceRenderer).with(config);
             multiSelect.add(new AttributeModifier("data-width", "fit"));
             queue(multiSelect);
             return multiSelect;
@@ -716,7 +750,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
     protected abstract DropZoneFileUpload newDropZoneFileUpload();
 
     /** override if needed */
-    protected void addCodeClass1ChangeBehavior(final TextField<String> mainCodeOfCodeClass1, final BootstrapMultiSelect<Code> codeClass1) {
+    protected void addCodeClass1ChangeBehavior(final TextField<String> mainCodeOfCodeClass1,
+            final BootstrapMultiSelect<Code> codeClass1) {
     }
 
     static class CodeClass1ConsistencyValidator extends AbstractFormValidator {
@@ -725,7 +760,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
         private final FormComponent<?>[] components;
 
-        public CodeClass1ConsistencyValidator(BootstrapMultiSelect<Code> codeClass1, TextField<String> mainCodeOfCodeClass1) {
+        public CodeClass1ConsistencyValidator(BootstrapMultiSelect<Code> codeClass1,
+                TextField<String> mainCodeOfCodeClass1) {
             AssertAs.notNull(codeClass1);
             AssertAs.notNull(mainCodeOfCodeClass1);
             components = new FormComponent<?>[] { codeClass1, mainCodeOfCodeClass1 };
@@ -742,7 +778,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             final BootstrapMultiSelect<Code> codeClass1 = (BootstrapMultiSelect<Code>) components[0];
             final FormComponent<?> mainCode = components[1];
 
-            if (!codeClass1.getModelObject().isEmpty() && mainCode.getModelObject() == null) {
+            if (!codeClass1.getModelObject()
+                .isEmpty() && mainCode.getModelObject() == null) {
                 String key = resourceKey();
                 error(mainCode, key + ".mainCodeOfCodeclass1Required");
             }
@@ -756,7 +793,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             @Override
             protected void onInitialize() {
                 super.onInitialize();
-                add(new ButtonBehavior().setType(Buttons.Type.Info).setSize(Size.Medium));
+                add(new ButtonBehavior().setType(Buttons.Type.Info)
+                    .setSize(Size.Medium));
             }
 
             @Override
@@ -770,10 +808,12 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
                 setVisible(isEditMode());
                 if (hasPubMedId()) {
                     setEnabled(true);
-                    add(new AttributeModifier(TITLE, new StringResourceModel("pubmedRetrieval.title", this, null).getString()));
+                    add(new AttributeModifier(TITLE,
+                            new StringResourceModel("pubmedRetrieval.title", this, null).getString()));
                 } else {
                     setEnabled(false);
-                    add(new AttributeModifier(TITLE, new StringResourceModel("pubmedRetrieval.title.disabled", this, null).getString()));
+                    add(new AttributeModifier(TITLE,
+                            new StringResourceModel("pubmedRetrieval.title.disabled", this, null).getString()));
                 }
             }
         };

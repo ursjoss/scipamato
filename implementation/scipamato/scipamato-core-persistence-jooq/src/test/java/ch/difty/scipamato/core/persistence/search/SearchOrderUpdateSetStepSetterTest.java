@@ -1,8 +1,18 @@
 package ch.difty.scipamato.core.persistence.search;
 
-import static ch.difty.scipamato.core.db.tables.SearchOrder.*;
-import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.core.db.tables.SearchOrder.SEARCH_ORDER;
+import static ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED;
+import static ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED_BY;
+import static ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD;
+import static ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY;
+import static ch.difty.scipamato.core.persistence.RecordMapperTest.VERSION;
+import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.GLOBAL;
+import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.ID;
+import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.NAME;
+import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.OWNER;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import org.mockito.Mock;
 

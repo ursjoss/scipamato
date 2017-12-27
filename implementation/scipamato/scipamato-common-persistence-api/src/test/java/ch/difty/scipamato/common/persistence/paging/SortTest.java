@@ -1,7 +1,8 @@
 package ch.difty.scipamato.common.persistence.paging;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,7 +42,8 @@ public class SortTest {
             new Sort(Collections.emptyList());
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class).hasMessage("sortProperties can't be empty.");
+            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("sortProperties can't be empty.");
         }
     }
 
@@ -56,7 +58,8 @@ public class SortTest {
             new Sort(Direction.ASC, new String[] {});
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class).hasMessage("propertyNames can't be empty.");
+            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("propertyNames can't be empty.");
         }
     }
 
@@ -107,15 +110,18 @@ public class SortTest {
     @Test
     public void gettingSortPropertyFor_nonExistingName_returnsNull() {
         String p = "x";
-        assertThat(sortProperties).extracting("name").doesNotContain(p);
+        assertThat(sortProperties).extracting("name")
+            .doesNotContain(p);
         assertThat(sort.getSortPropertyFor(p)).isNull();
     }
 
     @Test
     public void gettingSortPropertyFor_existingName_returnsRespectiveSortProperty() {
         String p = "c";
-        assertThat(sortProperties).extracting("name").contains(p);
-        assertThat(sort.getSortPropertyFor(p).getName()).isEqualTo(p);
+        assertThat(sortProperties).extracting("name")
+            .contains(p);
+        assertThat(sort.getSortPropertyFor(p)
+            .getName()).isEqualTo(p);
     }
 
     @Test

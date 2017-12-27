@@ -1,12 +1,12 @@
 package ch.difty.scipamato.core.entity.filter;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
 public class StringSearchTermsTest {
 
-    private static final String KEY = "key";
+    private static final String KEY   = "key";
     private static final String VALUE = "value";
 
     private final StringSearchTerms st1 = new StringSearchTerms();

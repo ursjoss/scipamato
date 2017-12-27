@@ -1,7 +1,9 @@
 package ch.difty.scipamato.core.web.panel.search;
 
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +36,7 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
     @MockBean
     private CodeClassService codeClassServiceMock;
     @MockBean
-    private CodeService codeServiceMock;
+    private CodeService      codeServiceMock;
 
     @Override
     protected SearchOrderPanel makePanel() {

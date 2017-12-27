@@ -33,16 +33,16 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
     private static final long serialVersionUID = 1L;
 
-    protected static final String LABEL_TAG = WicketUtils.LABEL_TAG;
-    protected static final String LABEL_RESOURCE_TAG = WicketUtils.LABEL_RESOURCE_TAG;
+    protected static final String LABEL_TAG                 = WicketUtils.LABEL_TAG;
+    protected static final String LABEL_RESOURCE_TAG        = WicketUtils.LABEL_RESOURCE_TAG;
     protected static final String PANEL_HEADER_RESOURCE_TAG = WicketUtils.PANEL_HEADER_RESOURCE_TAG;
-    protected static final String TITLE_RESOURCE_TAG = WicketUtils.TITLE_RESOURCE_TAG;
+    protected static final String TITLE_RESOURCE_TAG        = WicketUtils.TITLE_RESOURCE_TAG;
 
     @SpringBean
     private DateTimeService dateTimeService;
 
     private NotificationPanel feedbackPanel;
-    private Navbar navbar;
+    private Navbar            navbar;
 
     public AbstractPage(final PageParameters parameters) {
         super(parameters);
@@ -91,7 +91,8 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     }
 
     private void createAndAddDebugBar(String label) {
-        if (getApplication().getDebugSettings().isDevelopmentUtilitiesEnabled()) {
+        if (getApplication().getDebugSettings()
+            .isDevelopmentUtilitiesEnabled()) {
             queue(new DebugBar(label).positionBottom());
         } else {
             queue(new EmptyPanel(label).setVisible(false));
@@ -122,13 +123,15 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     protected void addLinksTo(Navbar nb) {
     }
 
-    protected <P extends AbstractPage<?>> void addPageLink(Navbar navbar, Class<P> pageClass, String labelResource, IconType iconType, Navbar.ComponentPosition position) {
+    protected <P extends AbstractPage<?>> void addPageLink(Navbar navbar, Class<P> pageClass, String labelResource,
+            IconType iconType, Navbar.ComponentPosition position) {
         final String label = new StringResourceModel(labelResource, this, null).getString();
         NavbarButton<Void> button = new NavbarButton<Void>(pageClass, Model.of(label)).setIconType(iconType);
         navbar.addComponents(NavbarComponents.transform(position, button));
     }
 
-    protected void addExternalLink(final Navbar navbar, final String url, final String label, final IconType iconType, final Navbar.ComponentPosition position) {
+    protected void addExternalLink(final Navbar navbar, final String url, final String label, final IconType iconType,
+            final Navbar.ComponentPosition position) {
         NavbarExternalLink link = new NavbarExternalLink(Model.of(url));
         link.setLabel(Model.of(label));
         link.setTarget(Target.blank);
@@ -154,7 +157,8 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     }
 
     protected void queueResponsePageButton(final String id, SerializableSupplier<AbstractPage<?>> responsePage) {
-        BootstrapAjaxButton newButton = new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null), Type.Default) {
+        BootstrapAjaxButton newButton = new BootstrapAjaxButton(id,
+                new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null), Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -171,15 +175,18 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     }
 
     protected boolean isSignedIn() {
-        return AuthenticatedWebSession.get().isSignedIn();
+        return AuthenticatedWebSession.get()
+            .isSignedIn();
     }
 
     protected boolean signIn(String username, String password) {
-        return AuthenticatedWebSession.get().signIn(username, password);
+        return AuthenticatedWebSession.get()
+            .signIn(username, password);
     }
 
     protected void signOutAndInvalidate() {
-        AuthenticatedWebSession.get().invalidate();
+        AuthenticatedWebSession.get()
+            .invalidate();
     }
 
 }

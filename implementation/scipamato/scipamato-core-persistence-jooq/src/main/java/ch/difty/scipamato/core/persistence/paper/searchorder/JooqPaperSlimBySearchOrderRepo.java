@@ -10,12 +10,14 @@ import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.paper.slim.PaperSlimRecordMapper;
 
 /**
- * {@link PaperSlim} specific repository returning those entities by SearchOrders.
+ * {@link PaperSlim} specific repository returning those entities by
+ * SearchOrders.
  *
  * @author u.joss
  */
 @Repository
-public class JooqPaperSlimBySearchOrderRepo extends JooqBySearchOrderRepo<PaperSlim, PaperSlimRecordMapper> implements PaperSlimBackedSearchOrderRepository {
+public class JooqPaperSlimBySearchOrderRepo extends JooqBySearchOrderRepo<PaperSlim, PaperSlimRecordMapper>
+        implements PaperSlimBackedSearchOrderRepository {
 
     public JooqPaperSlimBySearchOrderRepo(@Qualifier("dslContext") DSLContext dsl, PaperSlimRecordMapper mapper,
             JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapper) {

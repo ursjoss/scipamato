@@ -5,7 +5,8 @@ import java.util.List;
 import ch.difty.scipamato.common.entity.CodeClassId;
 
 /**
- * Accessor methods to the {@link Code}s for entities holding an instance of the CodeBox
+ * Accessor methods to the {@link Code}s for entities holding an instance of the
+ * CodeBox
  *
  * @author u.joss
  */
@@ -17,7 +18,8 @@ public interface CodeBoxAware {
     List<Code> getCodes();
 
     /**
-     * @param ccId the code class id
+     * @param ccId
+     *            the code class id
      * @return all {@link Code}s of a specific {@link CodeClassId} assigned
      */
     List<Code> getCodesOf(CodeClassId ccId);
@@ -29,21 +31,25 @@ public interface CodeBoxAware {
 
     /**
      * Clear all assigned codes of the specified {@link CodeClassId}
-     * @param ccId the code class id
+     *
+     * @param ccId
+     *            the code class id
      */
     void clearCodesOf(CodeClassId ccId);
 
     /**
      * Add the specified {@link Code}
      *
-     * @param code to add
+     * @param code
+     *            to add
      */
     void addCode(Code code);
 
     /**
      * Add the entire list of {@link Code}s.
      *
-     * @param codes to add
+     * @param codes
+     *            to add
      */
     void addCodes(List<Code> codes);
 
