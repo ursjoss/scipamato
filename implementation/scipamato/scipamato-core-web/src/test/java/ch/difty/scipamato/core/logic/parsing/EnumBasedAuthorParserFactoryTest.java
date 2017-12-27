@@ -13,8 +13,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.scipamato.common.NullArgumentException;
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
-import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
+import ch.difty.scipamato.core.config.ApplicationCoreProperties;
+import ch.difty.scipamato.core.config.AuthorParserStrategy;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EnumBasedAuthorParserFactoryTest {
@@ -22,7 +22,7 @@ public class EnumBasedAuthorParserFactoryTest {
     private AuthorParserFactory factory;
 
     @Mock
-    private ApplicationProperties appProperties;
+    private ApplicationCoreProperties appProperties;
 
     @Before
     public void setUp() {

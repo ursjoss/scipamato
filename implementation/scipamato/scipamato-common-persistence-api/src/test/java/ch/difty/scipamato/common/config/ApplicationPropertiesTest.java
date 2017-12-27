@@ -1,10 +1,8 @@
-package ch.difty.scipamato.comon.config.core;
+package ch.difty.scipamato.common.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
-
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
 
 public class ApplicationPropertiesTest {
 
@@ -19,19 +17,8 @@ public class ApplicationPropertiesTest {
     }
 
     @Test
-    public void assertAuthorParserRactoryProperty() {
-        assertThat(ApplicationProperties.AUTHOR_PARSER_FACTORY).isEqualTo("scipamato.author-parser");
-    }
-
-    @Test
     public void assertBrandProperty() {
         assertThat(ApplicationProperties.BRAND).isEqualTo("scipamato.brand");
-    }
-
-    @Test
-    public void assertMinimumPaperNumberToBeRecycled() {
-        assertThat(ApplicationProperties.PAPER_NUMBER_MIN_TO_RECYCLE)
-            .isEqualTo("scipamato.paper-number-minimum-to-be-recycled");
     }
 
     @Test

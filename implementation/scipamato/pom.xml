@@ -104,11 +104,6 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-common-config</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>scipamato-common-entity</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -140,11 +135,6 @@
                 <version>${project.version}</version>
             </dependency>
             <!-- SciPaMaTo-Core modules -->
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>scipamato-core-logic</artifactId>
-                <version>${project.version}</version>
-            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>scipamato-core-entity</artifactId>
@@ -393,12 +383,10 @@
             <id>core</id>
             <modules>
                 <module>scipamato-common-utils</module>
-                <module>scipamato-common-config</module>
                 <module>scipamato-common-entity</module>
                 <module>scipamato-common-persistence-api</module>
                 <module>scipamato-common-persistence-jooq</module>
                 <module>scipamato-common-wicket</module>
-                <module>scipamato-core-logic</module>
                 <module>scipamato-core-entity</module>
                 <module>scipamato-core-pubmed-api</module>
                 <module>scipamato-core-persistence-api</module>
@@ -413,7 +401,6 @@
             <id>public</id>
             <modules>
                 <module>scipamato-common-utils</module>
-                <module>scipamato-common-config</module>
                 <module>scipamato-common-entity</module>
                 <module>scipamato-common-persistence-api</module>
                 <module>scipamato-common-persistence-jooq</module>
@@ -433,7 +420,6 @@
             </activation>
             <modules>
                 <module>scipamato-common-utils</module>
-                <module>scipamato-common-config</module>
                 <module>scipamato-common-entity</module>
                 <module>scipamato-common-persistence-api</module>
                 <module>scipamato-common-persistence-jooq</module>
@@ -442,7 +428,6 @@
                 <module>scipamato-public-persistence-api</module>
                 <module>scipamato-public-persistence-jooq</module>
                 <module>scipamato-public-web</module>
-                <module>scipamato-core-logic</module>
                 <module>scipamato-core-entity</module>
                 <module>scipamato-core-pubmed-api</module>
                 <module>scipamato-core-persistence-api</module>

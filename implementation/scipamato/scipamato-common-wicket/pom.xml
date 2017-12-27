@@ -26,10 +26,6 @@
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
-            <artifactId>scipamato-common-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.difty</groupId>
             <artifactId>scipamato-common-entity</artifactId>
         </dependency>
         <dependency>

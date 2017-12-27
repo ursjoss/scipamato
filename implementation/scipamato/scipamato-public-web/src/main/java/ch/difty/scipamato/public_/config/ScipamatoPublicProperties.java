@@ -2,9 +2,8 @@ package ch.difty.scipamato.public_.config;
 
 import org.springframework.stereotype.Component;
 
+import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.config.MavenProperties;
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
-import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
 
 /**
  * This bean is used to evaluate all environment properties used in the
@@ -37,18 +36,8 @@ public class ScipamatoPublicProperties implements ApplicationProperties {
     }
 
     @Override
-    public AuthorParserStrategy getAuthorParserStrategy() {
-        return null;
-    }
-
-    @Override
     public String getBrand() {
         return scipamatoProperties.getBrand();
-    }
-
-    @Override
-    public long getMinimumPaperNumberToBeRecycled() {
-        return 0;
     }
 
     @Override

@@ -9,7 +9,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.core.config.ApplicationCoreProperties;
 
 /**
  * Abstract page that enables the implementing concrete pages to auto-update the
@@ -34,7 +34,7 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
     private static final long serialVersionUID = 1L;
 
     @SpringBean
-    private ApplicationProperties applicationProperties;
+    private ApplicationCoreProperties applicationProperties;
 
     public SelfUpdatingPage(PageParameters parameters) {
         super(parameters);
@@ -44,7 +44,7 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
         super(model);
     }
 
-    protected ApplicationProperties getApplicationProperties() {
+    protected ApplicationCoreProperties getApplicationProperties() {
         return applicationProperties;
     }
 

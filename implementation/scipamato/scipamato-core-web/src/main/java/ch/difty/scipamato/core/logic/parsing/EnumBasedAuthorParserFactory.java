@@ -3,8 +3,9 @@ package ch.difty.scipamato.core.logic.parsing;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
-import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
+import ch.difty.scipamato.common.config.ApplicationProperties;
+import ch.difty.scipamato.core.config.ApplicationCoreProperties;
+import ch.difty.scipamato.core.config.AuthorParserStrategy;
 
 /**
  * Default implementation of the {@link AuthorParserFactory} which relies on the
@@ -19,7 +20,7 @@ public class EnumBasedAuthorParserFactory implements AuthorParserFactory {
 
     private final AuthorParserStrategy authorParserStrategy;
 
-    public EnumBasedAuthorParserFactory(final ApplicationProperties appProperties) {
+    public EnumBasedAuthorParserFactory(final ApplicationCoreProperties appProperties) {
         AssertAs.notNull(appProperties, "appProperties");
         this.authorParserStrategy = appProperties.getAuthorParserStrategy();
     }

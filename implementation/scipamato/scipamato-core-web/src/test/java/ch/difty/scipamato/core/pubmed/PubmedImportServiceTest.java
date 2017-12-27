@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.core.config.ApplicationCoreProperties;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.ServiceResult;
 
@@ -26,15 +26,15 @@ public class PubmedImportServiceTest {
     private PubmedImporter pubmedImporter;
 
     @Mock
-    private PubmedArticleService  pubmedArticleServiceMock;
+    private PubmedArticleService      pubmedArticleServiceMock;
     @Mock
-    private PaperService          paperServiceMock;
+    private PaperService              paperServiceMock;
     @Mock
-    private ApplicationProperties applicationPropertiesMock;
+    private ApplicationCoreProperties applicationPropertiesMock;
     @Mock
-    private PubmedArticleFacade   pubmedArticleMock;
+    private PubmedArticleFacade       pubmedArticleMock;
     @Mock
-    private ServiceResult         serviceResultMock;
+    private ServiceResult             serviceResultMock;
 
     private final List<PubmedArticleFacade> pubmedArticles = new ArrayList<>();
 

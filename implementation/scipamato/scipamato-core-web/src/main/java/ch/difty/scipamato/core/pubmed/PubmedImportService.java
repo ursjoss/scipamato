@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.core.config.ApplicationCoreProperties;
 import ch.difty.scipamato.core.persistence.DefaultServiceResult;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.ServiceResult;
@@ -19,7 +19,7 @@ public class PubmedImportService implements PubmedImporter {
     private final long                 minimumNumber;
 
     public PubmedImportService(final PubmedArticleService pubmedArticleService, final PaperService paperService,
-            final ApplicationProperties applicationProperties) {
+            final ApplicationCoreProperties applicationProperties) {
         this.pubmedArticleService = AssertAs.notNull(pubmedArticleService, "pubmedArticleService");
         this.paperService = AssertAs.notNull(paperService, "paperService");
         this.minimumNumber = AssertAs.notNull(applicationProperties, "applicationProperties")

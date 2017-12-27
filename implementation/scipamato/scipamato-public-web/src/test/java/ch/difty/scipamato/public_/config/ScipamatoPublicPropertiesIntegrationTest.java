@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.public_.ScipamatoPublicApplication;
 
 /**
@@ -30,11 +30,6 @@ public class ScipamatoPublicPropertiesIntegrationTest {
     }
 
     @Test
-    public void gettingDefaultStrategy() {
-        assertThat(appProperties.getAuthorParserStrategy()).isNull();
-    }
-
-    @Test
     public void assertDefaultlocalization() {
         assertThat(appProperties.getDefaultLocalization()).isEqualTo("de");
     }
@@ -42,11 +37,6 @@ public class ScipamatoPublicPropertiesIntegrationTest {
     @Test
     public void assertBrand() {
         assertThat(appProperties.getBrand()).isEqualTo("SciPaMaTo");
-    }
-
-    @Test
-    public void assertMinimumPaperNumberToBeRecycled() {
-        assertThat(appProperties.getMinimumPaperNumberToBeRecycled()).isEqualTo(0);
     }
 
     @Test
