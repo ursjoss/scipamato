@@ -27,19 +27,12 @@ public class JooqCodeClassRepo implements CodeClassRepository {
     @Cacheable
     public List<CodeClass> find(final String languageCode) {
         final String lang = TranslationUtils.trimLanguageCode(languageCode);
-        // @formatter:off
         return dslContext
-            .select(  CODE_CLASS.CODE_CLASS_ID
-                    , CODE_CLASS.LANG_CODE
-                    , CODE_CLASS.NAME
-                    , CODE_CLASS.DESCRIPTION
-                    , CODE_CLASS.CREATED
-                    , CODE_CLASS.LAST_MODIFIED
-                    , CODE_CLASS.VERSION)
+            .select(CODE_CLASS.CODE_CLASS_ID, CODE_CLASS.LANG_CODE, CODE_CLASS.NAME, CODE_CLASS.DESCRIPTION,
+                CODE_CLASS.CREATED, CODE_CLASS.LAST_MODIFIED, CODE_CLASS.VERSION)
             .from(CODE_CLASS)
             .where(CODE_CLASS.LANG_CODE.eq(lang))
             .fetchInto(CodeClass.class);
-        // @formatter:on
     }
 
 }

@@ -30,9 +30,7 @@ public class SearchOrderUpdateSetStepSetter implements UpdateSetStepSetter<Searc
             SearchOrder e) {
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
-        // @formatter:off
-        return step
-            .set(SEARCH_ORDER.NAME, e.getName())
+        return step.set(SEARCH_ORDER.NAME, e.getName())
             .set(SEARCH_ORDER.OWNER, e.getOwner())
             .set(SEARCH_ORDER.GLOBAL, e.isGlobal())
 
@@ -41,7 +39,6 @@ public class SearchOrderUpdateSetStepSetter implements UpdateSetStepSetter<Searc
             .set(SEARCH_ORDER.LAST_MODIFIED, DateUtils.tsOf(e.getLastModified()))
             .set(SEARCH_ORDER.LAST_MODIFIED_BY, e.getLastModifiedBy())
             .set(SEARCH_ORDER.VERSION, e.getVersion() + 1);
-         // @formatter:on
     }
 
 }

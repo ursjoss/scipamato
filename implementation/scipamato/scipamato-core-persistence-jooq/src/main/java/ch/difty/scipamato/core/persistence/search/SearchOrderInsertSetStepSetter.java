@@ -30,15 +30,12 @@ public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<Searc
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
 
-        // @formatter:off
-        return step
-            .set(SEARCH_ORDER.NAME, e.getName())
+        return step.set(SEARCH_ORDER.NAME, e.getName())
             .set(SEARCH_ORDER.OWNER, e.getOwner())
             .set(SEARCH_ORDER.GLOBAL, e.isGlobal())
 
             .set(SEARCH_ORDER.CREATED_BY, e.getCreatedBy())
             .set(SEARCH_ORDER.LAST_MODIFIED_BY, e.getLastModifiedBy());
-        // @formatter:on
     }
 
     /** {@inheritDoc} */

@@ -96,16 +96,15 @@ public class CodeSyncConfig
             .row("5abc", "en", 5, "Experimental study", comm, 1, 1, now, now);
         final Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggFr = DSL
             .row("5abc", "fr", 5, "Etude expérimentale", comm, 1, 1, now, now);
-        // @formatter:off
         return getJooqCore()
-            .select(C_CODE, C_LANG_CODE, C_CODE_CLASS_ID, C_NAME, C_COMMENT, C_SORT, C_VERSION, C_CREATED, C_LAST_MODIFIED)
+            .select(C_CODE, C_LANG_CODE, C_CODE_CLASS_ID, C_NAME, C_COMMENT, C_SORT, C_VERSION, C_CREATED,
+                C_LAST_MODIFIED)
             .from(Code.CODE)
             .innerJoin(CodeTr.CODE_TR)
             .on(C_CODE.eq(CodeTr.CODE_TR.CODE))
             .where(CODE.INTERNAL.isFalse())
             .unionAll(DSL.selectFrom(DSL.values(aggDe, aggEn, aggFr)))
             .getSQL(ParamType.INLINED);
-        // @formatter:on
     }
 
     @Override
@@ -127,11 +126,8 @@ public class CodeSyncConfig
     @Override
     protected DeleteConditionStep<ch.difty.scipamato.public_.db.public_.tables.records.CodeRecord> getPurgeDcs(
             final Timestamp cutOff) {
-        // @formatter:off
-        return getJooqPublic()
-                .delete(ch.difty.scipamato.public_.db.public_.tables.Code.CODE)
-                .where(ch.difty.scipamato.public_.db.public_.tables.Code.CODE.LAST_SYNCHED.lessThan(cutOff));
-        // @formatter:on
+        return getJooqPublic().delete(ch.difty.scipamato.public_.db.public_.tables.Code.CODE)
+            .where(ch.difty.scipamato.public_.db.public_.tables.Code.CODE.LAST_SYNCHED.lessThan(cutOff));
     }
 
 }

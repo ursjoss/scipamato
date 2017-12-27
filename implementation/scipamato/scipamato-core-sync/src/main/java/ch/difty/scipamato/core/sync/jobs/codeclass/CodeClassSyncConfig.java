@@ -79,14 +79,11 @@ public class CodeClassSyncConfig
 
     @Override
     protected String selectSql() {
-        // @formatter:off
-        return getJooqCore()
-            .select(C_ID, C_LANG_CODE, C_NAME, C_DESCRIPTION, C_VERSION, C_CREATED, C_LAST_MODIFIED)
+        return getJooqCore().select(C_ID, C_LANG_CODE, C_NAME, C_DESCRIPTION, C_VERSION, C_CREATED, C_LAST_MODIFIED)
             .from(CodeClass.CODE_CLASS)
             .innerJoin(CodeClassTr.CODE_CLASS_TR)
             .on(C_ID.eq(CodeClassTr.CODE_CLASS_TR.CODE_CLASS_ID))
             .getSQL();
-        // @formatter:on
     }
 
     @Override
@@ -106,11 +103,8 @@ public class CodeClassSyncConfig
     @Override
     protected DeleteConditionStep<ch.difty.scipamato.public_.db.public_.tables.records.CodeClassRecord> getPurgeDcs(
             final Timestamp cutOff) {
-        // @formatter:off
-        return getJooqPublic()
-                .delete(ch.difty.scipamato.public_.db.public_.tables.CodeClass.CODE_CLASS)
-                .where(ch.difty.scipamato.public_.db.public_.tables.CodeClass.CODE_CLASS.LAST_SYNCHED.lessThan(cutOff));
-        // @formatter:on
+        return getJooqPublic().delete(ch.difty.scipamato.public_.db.public_.tables.CodeClass.CODE_CLASS)
+            .where(ch.difty.scipamato.public_.db.public_.tables.CodeClass.CODE_CLASS.LAST_SYNCHED.lessThan(cutOff));
     }
 
 }

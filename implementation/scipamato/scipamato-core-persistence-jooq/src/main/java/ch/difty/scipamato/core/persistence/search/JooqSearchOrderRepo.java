@@ -137,20 +137,16 @@ public class JooqSearchOrderRepo extends
     }
 
     protected List<SearchTerm> fetchSearchTermsForSearchOrderWithId(final long searchOrderId) {
-        // @formatter:off
         return getDsl()
-                .select(
-                        SEARCH_TERM.ID.as("id"),
-                        SEARCH_TERM.SEARCH_TERM_TYPE.as("stt"),
-                        SEARCH_TERM.SEARCH_CONDITION_ID.as("scid"),
-                        SEARCH_TERM.FIELD_NAME.as("fn"),
-                        SEARCH_TERM.RAW_VALUE.as("rv"))
-                .from(SEARCH_TERM)
-                .innerJoin(SEARCH_CONDITION)
-                .on(SEARCH_CONDITION.SEARCH_CONDITION_ID.equal(SEARCH_TERM.SEARCH_CONDITION_ID))
-                .where(SEARCH_CONDITION.SEARCH_ORDER_ID.equal(searchOrderId))
-                .fetch(r -> SearchTerm.of((long) r.get("id"), (int) r.get("stt"), (long) r.get("scid"), (String) r.get("fn"), (String) r.get("rv")));
-        // @formatter:on
+            .select(SEARCH_TERM.ID.as("id"), SEARCH_TERM.SEARCH_TERM_TYPE.as("stt"),
+                SEARCH_TERM.SEARCH_CONDITION_ID.as("scid"), SEARCH_TERM.FIELD_NAME.as("fn"),
+                SEARCH_TERM.RAW_VALUE.as("rv"))
+            .from(SEARCH_TERM)
+            .innerJoin(SEARCH_CONDITION)
+            .on(SEARCH_CONDITION.SEARCH_CONDITION_ID.equal(SEARCH_TERM.SEARCH_CONDITION_ID))
+            .where(SEARCH_CONDITION.SEARCH_ORDER_ID.equal(searchOrderId))
+            .fetch(r -> SearchTerm.of((long) r.get("id"), (int) r.get("stt"), (long) r.get("scid"),
+                (String) r.get("fn"), (String) r.get("rv")));
     }
 
     /*
@@ -176,20 +172,16 @@ public class JooqSearchOrderRepo extends
     }
 
     protected List<SearchTerm> fetchSearchTermsForSearchConditionWithId(final long searchConditionId) {
-        // @formatter:off
         return getDsl()
-                .select(
-                        SEARCH_TERM.ID.as("id"),
-                        SEARCH_TERM.SEARCH_TERM_TYPE.as("stt"),
-                        SEARCH_TERM.SEARCH_CONDITION_ID.as("scid"),
-                        SEARCH_TERM.FIELD_NAME.as("fn"),
-                        SEARCH_TERM.RAW_VALUE.as("rv"))
-                .from(SEARCH_TERM)
-                .innerJoin(SEARCH_CONDITION)
-                .on(SEARCH_CONDITION.SEARCH_CONDITION_ID.equal(SEARCH_TERM.SEARCH_CONDITION_ID))
-                .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.equal(searchConditionId))
-                .fetch(r -> SearchTerm.of((long) r.get("id"), (int) r.get("stt"), (long) r.get("scid"), (String) r.get("fn"), (String) r.get("rv")));
-        // @formatter:on
+            .select(SEARCH_TERM.ID.as("id"), SEARCH_TERM.SEARCH_TERM_TYPE.as("stt"),
+                SEARCH_TERM.SEARCH_CONDITION_ID.as("scid"), SEARCH_TERM.FIELD_NAME.as("fn"),
+                SEARCH_TERM.RAW_VALUE.as("rv"))
+            .from(SEARCH_TERM)
+            .innerJoin(SEARCH_CONDITION)
+            .on(SEARCH_CONDITION.SEARCH_CONDITION_ID.equal(SEARCH_TERM.SEARCH_CONDITION_ID))
+            .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.equal(searchConditionId))
+            .fetch(r -> SearchTerm.of((long) r.get("id"), (int) r.get("stt"), (long) r.get("scid"),
+                (String) r.get("fn"), (String) r.get("rv")));
     }
 
     private void fillSearchTermsInto(SearchCondition searchCondition, Map<Long, List<SearchTerm>> map) {
@@ -245,13 +237,10 @@ public class JooqSearchOrderRepo extends
     }
 
     protected List<Long> fetchExcludedPaperIdsForSearchOrderWithId(final long searchOrderId) {
-        // @formatter:off
-        return getDsl()
-                .select(SEARCH_EXCLUSION.PAPER_ID)
-                .from(SEARCH_EXCLUSION)
-                .where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.equal(searchOrderId))
-                .fetch(r -> (Long) r.get(0));
-        // @formatter:on
+        return getDsl().select(SEARCH_EXCLUSION.PAPER_ID)
+            .from(SEARCH_EXCLUSION)
+            .where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.equal(searchOrderId))
+            .fetch(r -> (Long) r.get(0));
     }
 
     @Override
@@ -416,25 +405,28 @@ public class JooqSearchOrderRepo extends
 
     protected List<Code> fetchCodesForSearchConditionWithId(final SearchCondition searchCondition,
             String languageCode) {
-        // @formatter:off
-        return getDsl()
-            .select(CODE.CODE_.as("C_ID")
-                    , DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL).as("C_NAME")
-                    , CODE_TR.COMMENT.as("C_COMMENT")
-                    , CODE.INTERNAL.as("C_INTERNAL")
-                    , CODE_CLASS.ID.as("CC_ID")
-                    , DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL).as("CC_NAME")
-                    , DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL).as("CC_DESCRIPTION")
-                    , CODE.SORT)
+        return getDsl().select(CODE.CODE_.as("C_ID"), DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
+            .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"), CODE_CLASS.ID.as("CC_ID"),
+            DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
+                .as("CC_NAME"),
+            DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
+                .as("CC_DESCRIPTION"),
+            CODE.SORT)
             .from(SEARCH_CONDITION_CODE)
-            .join(SEARCH_CONDITION).on(SEARCH_CONDITION_CODE.SEARCH_CONDITION_ID.equal(SEARCH_CONDITION.SEARCH_CONDITION_ID))
-            .join(CODE).on(SEARCH_CONDITION_CODE.CODE.equal(CODE.CODE_))
-            .join(CODE_CLASS).on(CODE.CODE_CLASS_ID.equal(CODE_CLASS.ID))
-            .leftOuterJoin(CODE_TR).on(CODE.CODE_.equal(CODE_TR.CODE).and(CODE_TR.LANG_CODE.equal(languageCode)))
-            .leftOuterJoin(CODE_CLASS_TR).on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID).and(CODE_CLASS_TR.LANG_CODE.equal(languageCode)))
+            .join(SEARCH_CONDITION)
+            .on(SEARCH_CONDITION_CODE.SEARCH_CONDITION_ID.equal(SEARCH_CONDITION.SEARCH_CONDITION_ID))
+            .join(CODE)
+            .on(SEARCH_CONDITION_CODE.CODE.equal(CODE.CODE_))
+            .join(CODE_CLASS)
+            .on(CODE.CODE_CLASS_ID.equal(CODE_CLASS.ID))
+            .leftOuterJoin(CODE_TR)
+            .on(CODE.CODE_.equal(CODE_TR.CODE)
+                .and(CODE_TR.LANG_CODE.equal(languageCode)))
+            .leftOuterJoin(CODE_CLASS_TR)
+            .on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID)
+                .and(CODE_CLASS_TR.LANG_CODE.equal(languageCode)))
             .where(SEARCH_CONDITION_CODE.SEARCH_CONDITION_ID.equal(searchCondition.getSearchConditionId()))
             .fetchInto(Code.class);
-        // @formatter:on
     }
 
     private void saveOrUpdateValidTerms(SearchCondition searchCondition, Long searchConditionId) {

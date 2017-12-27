@@ -29,9 +29,7 @@ public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord
     public UpdateSetMoreStep<PaperRecord> setFieldsFor(UpdateSetFirstStep<PaperRecord> step, Paper e) {
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
-        // @formatter:off
-        return step
-            .set(PAPER.NUMBER, e.getNumber())
+        return step.set(PAPER.NUMBER, e.getNumber())
             .set(PAPER.PM_ID, e.getPmId())
             .set(PAPER.DOI, e.getDoi())
             .set(PAPER.AUTHORS, e.getAuthors())
@@ -72,7 +70,6 @@ public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord
             .set(PAPER.LAST_MODIFIED, DateUtils.tsOf(e.getLastModified()))
             .set(PAPER.LAST_MODIFIED_BY, e.getLastModifiedBy())
             .set(PAPER.VERSION, e.getVersion() + 1);
-         // @formatter:on
     }
 
 }

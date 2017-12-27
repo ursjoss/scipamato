@@ -29,9 +29,7 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
 
-        // @formatter:off
-        return step
-            .set(PAPER.NUMBER, e.getNumber())
+        return step.set(PAPER.NUMBER, e.getNumber())
             .set(PAPER.PM_ID, e.getPmId())
             .set(PAPER.DOI, e.getDoi())
             .set(PAPER.AUTHORS, e.getAuthors())
@@ -69,7 +67,6 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
 
             .set(PAPER.CREATED_BY, e.getCreatedBy())
             .set(PAPER.LAST_MODIFIED_BY, e.getLastModifiedBy());
-        // @formatter:on
     }
 
     /** {@inheritDoc} */

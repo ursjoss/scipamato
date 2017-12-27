@@ -79,14 +79,12 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     }
 
     protected final Job createJob() {
-        // @formatter:off
-        return jobBuilderFactory
-            .get(getJobName()).incrementer(new RunIdIncrementer())
-                .flow(insertingOrUpdatingStep())
-                .next(purgingStep())
+        return jobBuilderFactory.get(getJobName())
+            .incrementer(new RunIdIncrementer())
+            .flow(insertingOrUpdatingStep())
+            .next(purgingStep())
             .end()
             .build();
-        // @formatter:on
     }
 
     /**
@@ -95,14 +93,11 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     protected abstract String getJobName();
 
     private Step insertingOrUpdatingStep() {
-        // @formatter:off
-        return getStepBuilderFactory()
-            .get(topic + "InsertingOrUpdatingStep")
-            .<T, T> chunk(chunkSize)
-                .reader(coreReader())
-                .writer(publicWriter())
+        return getStepBuilderFactory().get(topic + "InsertingOrUpdatingStep")
+            .<T, T>chunk(chunkSize)
+            .reader(coreReader())
+            .writer(publicWriter())
             .build();
-        // @formatter:on
     }
 
     /**

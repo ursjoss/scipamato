@@ -50,11 +50,9 @@ public class WebDataSourceConfig {
      */
     @Bean
     public org.jooq.Configuration configuration() {
-        // @formatter:off
         return considerSettingDialect(new DefaultConfiguration().derive(dataSource()))
-                .derive(new DefaultExecuteListenerProvider(new JooqExceptionTranslator()))
-                .derive(new SpringTransactionProvider(txManager));
-        // @formatter:on
+            .derive(new DefaultExecuteListenerProvider(new JooqExceptionTranslator()))
+            .derive(new SpringTransactionProvider(txManager));
     }
 
     /**

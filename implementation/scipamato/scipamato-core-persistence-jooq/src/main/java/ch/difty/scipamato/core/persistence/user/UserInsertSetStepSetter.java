@@ -29,9 +29,7 @@ public class UserInsertSetStepSetter implements InsertSetStepSetter<ScipamatoUse
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
 
-        // @formatter:off
-        return step
-            .set(SCIPAMATO_USER.USER_NAME, e.getUserName())
+        return step.set(SCIPAMATO_USER.USER_NAME, e.getUserName())
             .set(SCIPAMATO_USER.FIRST_NAME, e.getFirstName())
             .set(SCIPAMATO_USER.LAST_NAME, e.getLastName())
             .set(SCIPAMATO_USER.EMAIL, e.getEmail())
@@ -40,7 +38,6 @@ public class UserInsertSetStepSetter implements InsertSetStepSetter<ScipamatoUse
 
             .set(SCIPAMATO_USER.CREATED_BY, e.getCreatedBy())
             .set(SCIPAMATO_USER.LAST_MODIFIED_BY, e.getLastModifiedBy());
-        // @formatter:on
     }
 
     /** {@inheritDoc} */

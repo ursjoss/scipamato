@@ -30,19 +30,12 @@ public class JooqCodeRepo implements CodeRepository {
     public List<Code> findCodesOfClass(final CodeClassId codeClassId, final String languageCode) {
         AssertAs.notNull(codeClassId, "codeClassId");
         final String lang = TranslationUtils.trimLanguageCode(languageCode);
-        // @formatter:off
-        return dslContext
-            .select(CODE.CODE_CLASS_ID
-                    , CODE.CODE_
-                    , CODE.LANG_CODE
-                    , CODE.NAME
-                    , CODE.COMMENT
-                    , CODE.SORT)
+        return dslContext.select(CODE.CODE_CLASS_ID, CODE.CODE_, CODE.LANG_CODE, CODE.NAME, CODE.COMMENT, CODE.SORT)
             .from(CODE)
-            .where(CODE.LANG_CODE.eq(lang).and(CODE.CODE_CLASS_ID.equal(codeClassId.getId())))
+            .where(CODE.LANG_CODE.eq(lang)
+                .and(CODE.CODE_CLASS_ID.equal(codeClassId.getId())))
             .orderBy(CODE.CODE_CLASS_ID, CODE.SORT)
             .fetchInto(Code.class);
-        // @formatter:on
     }
 
 }

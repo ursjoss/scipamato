@@ -49,7 +49,6 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
             // This is a "bug". The same book is created twice, resulting in a
             // constraint violation exception
             for (long i = 0; i < 2; i++)
-                // @formatter:off
                 dsl.insertInto(PAPER)
                     .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
                     .set(PAPER.NUMBER, 1000l)
@@ -59,8 +58,7 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
                     .set(PAPER.TITLE, "title")
                     .set(PAPER.LOCATION, "location")
                     .set(PAPER.GOALS, "goals")
-                .execute();
-                // @formatter:off
+                    .execute();
             Assert.fail();
         }
 
@@ -74,7 +72,6 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
         assertTrue(rollback);
     }
 
-
     @Test
     public void testjOOQTransactionsSimple() {
         boolean rollback = false;
@@ -85,7 +82,6 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
                 // This is a "bug". The same book is created twice, resulting in a
                 // constraint violation exception
                 for (long i = 0; i < 2; i++)
-                    // @formatter:off
                     dsl.insertInto(PAPER)
                         .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
                         .set(PAPER.AUTHORS, "authors")
@@ -94,14 +90,13 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
                         .set(PAPER.TITLE, "title")
                         .set(PAPER.LOCATION, "location")
                         .set(PAPER.GOALS, "goals")
-                    .execute();
-                    // @formatter:off
-
+                        .execute();
                 Assert.fail();
             });
         }
 
-        // Upon the constraint violation, the transaction must already have been rolled back
+        // Upon the constraint violation, the transaction must already have been rolled
+        // back
         catch (DataAccessException e) {
             rollback = true;
         }
@@ -121,7 +116,6 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
             dsl.transaction(c1 -> {
 
                 // The first insertion will work
-                // @formatter:off
                 dsl.insertInto(PAPER)
                     .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
                     .set(PAPER.NUMBER, 1000l)
@@ -131,8 +125,7 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
                     .set(PAPER.TITLE, "title2")
                     .set(PAPER.LOCATION, "location")
                     .set(PAPER.GOALS, "goals")
-                .execute();
-                // @formatter:off
+                    .execute();
 
                 assertEquals(RECORD_COUNT_PREPOPULATED + 1, dsl.fetchCount(PAPER));
 
@@ -144,7 +137,6 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
 
                         // The second insertion shouldn't work
                         for (long i = 0; i < 2; i++)
-                            // @formatter:off
                             dsl.insertInto(PAPER)
                                 .set(PAPER.ID, 3l)
                                 .set(PAPER.NUMBER, 1001l)
@@ -154,9 +146,7 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
                                 .set(PAPER.TITLE, "title3")
                                 .set(PAPER.LOCATION, "location")
                                 .set(PAPER.GOALS, "goals")
-                            .execute();
-                            // @formatter:off
-
+                                .execute();
                         Assert.fail();
                     });
                 }
@@ -172,7 +162,8 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
             });
         }
 
-        // Upon the constraint violation, the transaction must already have been rolled back
+        // Upon the constraint violation, the transaction must already have been rolled
+        // back
         catch (org.jooq.exception.DataAccessException e) {
             assertEquals("Rollback", e.getMessage());
             rollback2.set(true);

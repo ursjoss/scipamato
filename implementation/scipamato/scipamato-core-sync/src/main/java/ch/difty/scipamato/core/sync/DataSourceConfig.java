@@ -73,12 +73,9 @@ public class DataSourceConfig {
      */
     @Bean
     public org.jooq.Configuration publicConfiguration() {
-        // @formatter:off
         return considerSettingDialect(new DefaultConfiguration().derive(publicDataSource()))
-                .derive(new DefaultExecuteListenerProvider(new JooqExceptionTranslator()))
-                .derive(new SpringTransactionProvider(txManager));
-        // @formatter:on
-
+            .derive(new DefaultExecuteListenerProvider(new JooqExceptionTranslator()))
+            .derive(new SpringTransactionProvider(txManager));
     }
 
     /**
@@ -94,11 +91,9 @@ public class DataSourceConfig {
      */
     @Bean
     public org.jooq.Configuration batchConfiguration() {
-        // @formatter:off
         return considerSettingDialect(new DefaultConfiguration().derive(batchDataSource()))
-                .derive(new DefaultExecuteListenerProvider(new JooqExceptionTranslator()))
-                .derive(new SpringTransactionProvider(txManager));
-        // @formatter:on
+            .derive(new DefaultExecuteListenerProvider(new JooqExceptionTranslator()))
+            .derive(new SpringTransactionProvider(txManager));
     }
 
     /**

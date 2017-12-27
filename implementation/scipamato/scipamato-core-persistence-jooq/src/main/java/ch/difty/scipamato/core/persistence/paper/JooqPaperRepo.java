@@ -121,30 +121,29 @@ public class JooqPaperRepo extends
     }
 
     private void enrichCodesOf(final Paper entity, final String languageCode) {
-        // @formatter:off
         final List<Code> codes = getDsl()
-            .select(CODE.CODE_.as("C_ID")
-                    , DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL).as("C_NAME")
-                    , CODE_TR.COMMENT.as("C_COMMENT")
-                    , CODE.INTERNAL.as("C_INTERNAL")
-                    , CODE_CLASS.ID.as("CC_ID")
-                    , DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL).as("CC_NAME")
-                    , DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL).as("CC_DESCRIPTION")
-                    , CODE.SORT
-                    , CODE.CREATED
-                    , CODE.CREATED_BY
-                    , CODE.LAST_MODIFIED
-                    , CODE.LAST_MODIFIED_BY
-                    , CODE.VERSION)
+            .select(CODE.CODE_.as("C_ID"), DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
+                .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"),
+                CODE_CLASS.ID.as("CC_ID"), DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .as("CC_NAME"),
+                DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
+                    .as("CC_DESCRIPTION"),
+                CODE.SORT, CODE.CREATED, CODE.CREATED_BY, CODE.LAST_MODIFIED, CODE.LAST_MODIFIED_BY, CODE.VERSION)
             .from(PAPER_CODE)
-            .join(PAPER).on(PAPER_CODE.PAPER_ID.equal(PAPER.ID))
-            .join(CODE).on(PAPER_CODE.CODE.equal(CODE.CODE_))
-            .join(CODE_CLASS).on(CODE.CODE_CLASS_ID.equal(CODE_CLASS.ID))
-            .leftOuterJoin(CODE_TR).on(CODE.CODE_.equal(CODE_TR.CODE).and(CODE_TR.LANG_CODE.equal(languageCode)))
-            .leftOuterJoin(CODE_CLASS_TR).on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID).and(CODE_CLASS_TR.LANG_CODE.equal(languageCode)))
+            .join(PAPER)
+            .on(PAPER_CODE.PAPER_ID.equal(PAPER.ID))
+            .join(CODE)
+            .on(PAPER_CODE.CODE.equal(CODE.CODE_))
+            .join(CODE_CLASS)
+            .on(CODE.CODE_CLASS_ID.equal(CODE_CLASS.ID))
+            .leftOuterJoin(CODE_TR)
+            .on(CODE.CODE_.equal(CODE_TR.CODE)
+                .and(CODE_TR.LANG_CODE.equal(languageCode)))
+            .leftOuterJoin(CODE_CLASS_TR)
+            .on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID)
+                .and(CODE_CLASS_TR.LANG_CODE.equal(languageCode)))
             .where(PAPER_CODE.PAPER_ID.equal(entity.getId()))
             .fetchInto(Code.class);
-        // @formatter:on
         if (CollectionUtils.isNotEmpty(codes))
             entity.addCodes(codes);
     }

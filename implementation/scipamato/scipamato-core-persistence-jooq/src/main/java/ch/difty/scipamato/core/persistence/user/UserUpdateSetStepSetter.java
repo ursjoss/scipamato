@@ -29,9 +29,7 @@ public class UserUpdateSetStepSetter implements UpdateSetStepSetter<ScipamatoUse
     public UpdateSetMoreStep<ScipamatoUserRecord> setFieldsFor(UpdateSetFirstStep<ScipamatoUserRecord> step, User e) {
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
-        // @formatter:off
-        return step
-            .set(SCIPAMATO_USER.USER_NAME, e.getUserName())
+        return step.set(SCIPAMATO_USER.USER_NAME, e.getUserName())
             .set(SCIPAMATO_USER.FIRST_NAME, e.getFirstName())
             .set(SCIPAMATO_USER.LAST_NAME, e.getLastName())
             .set(SCIPAMATO_USER.EMAIL, e.getEmail())
@@ -43,7 +41,6 @@ public class UserUpdateSetStepSetter implements UpdateSetStepSetter<ScipamatoUse
             .set(SCIPAMATO_USER.LAST_MODIFIED, DateUtils.tsOf(e.getLastModified()))
             .set(SCIPAMATO_USER.LAST_MODIFIED_BY, e.getLastModifiedBy())
             .set(SCIPAMATO_USER.VERSION, e.getVersion() + 1);
-        // @formatter:on
     }
 
 }

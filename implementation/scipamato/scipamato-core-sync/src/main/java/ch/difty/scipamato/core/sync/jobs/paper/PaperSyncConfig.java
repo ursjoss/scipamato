@@ -157,11 +157,8 @@ public class PaperSyncConfig
     @Override
     protected DeleteConditionStep<ch.difty.scipamato.public_.db.public_.tables.records.PaperRecord> getPurgeDcs(
             final Timestamp cutOff) {
-        // @formatter:off
-        return getJooqPublic()
-                .delete(ch.difty.scipamato.public_.db.public_.tables.Paper.PAPER)
-                .where(ch.difty.scipamato.public_.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(cutOff));
-        // @formatter:on
+        return getJooqPublic().delete(ch.difty.scipamato.public_.db.public_.tables.Paper.PAPER)
+            .where(ch.difty.scipamato.public_.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(cutOff));
     }
 
 }
