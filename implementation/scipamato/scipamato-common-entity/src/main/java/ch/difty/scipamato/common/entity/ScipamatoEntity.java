@@ -17,13 +17,13 @@ public class ScipamatoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String CREATED = "created";
+    public static final String CREATED  = "created";
     public static final String MODIFIED = "lastModified";
-    public static final String VERSION = "version";
+    public static final String VERSION  = "version";
 
     private LocalDateTime created;
     private LocalDateTime lastModified;
-    private int version;
+    private int           version;
 
     @Override
     public String toString() {
