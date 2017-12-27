@@ -34,7 +34,7 @@ public class PaginationRequest implements PaginationContext {
      * @param pageSize
      *            the page size
      */
-    public PaginationRequest(int offset, int pageSize) {
+    public PaginationRequest(final int offset, final int pageSize) {
         this(offset, pageSize, null);
     }
 
@@ -51,7 +51,8 @@ public class PaginationRequest implements PaginationContext {
      * @param properties
      *            the properties to sort by, must not be {@literal null} or empty.
      */
-    public PaginationRequest(int offset, int pageSize, Direction direction, String... properties) {
+    public PaginationRequest(final int offset, final int pageSize, final Direction direction,
+            final String... properties) {
         this(offset, pageSize, new Sort(direction, properties));
     }
 
@@ -65,7 +66,7 @@ public class PaginationRequest implements PaginationContext {
      * @param properties
      *            the properties to sort by, must not be {@literal null} or empty.
      */
-    public PaginationRequest(Direction direction, String... properties) {
+    public PaginationRequest(final Direction direction, final String... properties) {
         this(0, Integer.MAX_VALUE, new Sort(direction, properties));
     }
 
@@ -79,14 +80,14 @@ public class PaginationRequest implements PaginationContext {
      * @param sort
      *            - can be {@literal null}.
      */
-    public PaginationRequest(int offset, int pageSize, Sort sort) {
+    public PaginationRequest(final int offset, final int pageSize, final Sort sort) {
         checkConstraints(offset, pageSize);
         this.offset = offset;
         this.pageSize = pageSize;
         this.sort = sort;
     }
 
-    private void checkConstraints(int offset, int pageSize) {
+    private void checkConstraints(final int offset, final int pageSize) {
         if (offset < 0)
             throw new IllegalArgumentException("offset must not be less than zero!");
         if (pageSize < 1)

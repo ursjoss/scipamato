@@ -16,7 +16,6 @@ import ch.difty.scipamato.core.entity.filter.IntegerSearchTerm;
  */
 public class IntegerSearchTermEvaluator implements SearchTermEvaluator<IntegerSearchTerm> {
 
-    /** {@inheritDoc} */
     @Override
     public Condition evaluate(final IntegerSearchTerm searchTerm) {
         AssertAs.notNull(searchTerm, "searchTerm");

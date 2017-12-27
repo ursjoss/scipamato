@@ -23,7 +23,6 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 @Component
 public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<SearchOrderRecord, SearchOrder> {
 
-    /** {@inheritDoc} */
     @Override
     public InsertSetMoreStep<SearchOrderRecord> setNonKeyFieldsFor(InsertSetStep<SearchOrderRecord> step,
             SearchOrder e) {
@@ -38,7 +37,6 @@ public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<Searc
             .set(SEARCH_ORDER.LAST_MODIFIED_BY, e.getLastModifiedBy());
     }
 
-    /** {@inheritDoc} */
     @Override
     public void considerSettingKeyOf(InsertSetMoreStep<SearchOrderRecord> step, SearchOrder entity) {
         AssertAs.notNull(step, "step");
@@ -48,11 +46,9 @@ public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<Searc
             step.set(SEARCH_ORDER.ID, id);
     }
 
-    /** {@inheritDoc} */
     @Override
     public void resetIdToEntity(SearchOrder entity, SearchOrderRecord saved) {
-        if (saved != null) {
+        if (saved != null)
             entity.setId(saved.getId());
-        }
     }
 }

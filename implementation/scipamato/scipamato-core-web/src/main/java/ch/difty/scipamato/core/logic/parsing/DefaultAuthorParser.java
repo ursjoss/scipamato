@@ -89,7 +89,6 @@ public class DefaultAuthorParser implements AuthorParser {
             return i;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Optional<String> getFirstAuthor() {
         return authors.stream()
@@ -97,13 +96,11 @@ public class DefaultAuthorParser implements AuthorParser {
             .map(Author::getLastName);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getAuthorsString() {
         return authorsString;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Stream<Author> getAuthors() {
         return authors.stream();

@@ -46,14 +46,12 @@ public class SearchConditionProvider extends SortableDataProvider<SearchConditio
             .iterator();
     }
 
-    /** {@inheritDoc} */
     @Override
     public long size() {
         return searchConditionsModel.getObject()
             .size();
     }
 
-    /** {@inheritDoc} */
     @Override
     public IModel<SearchCondition> model(final SearchCondition searchCondition) {
         return new Model<>(searchCondition);

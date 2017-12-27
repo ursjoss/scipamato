@@ -20,7 +20,6 @@ import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 public abstract class AbstractFilterConditionMapper<F extends ScipamatoFilter>
         implements GenericFilterConditionMapper<F> {
 
-    /** {@inheritDoc} */
     @Override
     public final Condition map(final F filter) {
         final List<Condition> conditions = new ArrayList<>();

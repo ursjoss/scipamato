@@ -33,7 +33,6 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
     // chars
     private static final int DATE_RANGE_PATTERN_LENGTH = 39;
 
-    /** {@inheritDoc} */
     @Override
     public Condition evaluate(final AuditSearchTerm searchTerm) {
         AssertAs.notNull(searchTerm, "searchTerm");

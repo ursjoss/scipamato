@@ -332,7 +332,6 @@ public class JooqSearchOrderRepo extends
             .execute();
     }
 
-    /** {@inheritDoc} */
     @Override
     public SearchCondition addSearchCondition(SearchCondition searchCondition, long searchOrderId,
             final String languageCode) {
@@ -547,7 +546,6 @@ public class JooqSearchOrderRepo extends
             .execute();
     }
 
-    /** {@inheritDoc} */
     @Override
     public SearchCondition updateSearchCondition(SearchCondition searchCondition, long searchOrderId,
             final String languageCode) {
@@ -572,7 +570,6 @@ public class JooqSearchOrderRepo extends
         return persistedSearchCondition;
     }
 
-    /** {@inheritDoc} */
     @Override
     public void deleteSearchConditionWithId(long searchConditionId) {
         getDsl().deleteFrom(SEARCH_CONDITION)

@@ -49,7 +49,6 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
         return userRepo;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Optional<T> findById(ID id) {
         T entity = repo.findById(id);
@@ -86,7 +85,6 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
 
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<T> findPageByFilter(F filter, PaginationContext paginationContext) {
         final List<T> entities = repo.findPageByFilter(filter, paginationContext);
@@ -94,7 +92,6 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
         return entities;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int countByFilter(F filter) {
         return repo.countByFilter(filter);

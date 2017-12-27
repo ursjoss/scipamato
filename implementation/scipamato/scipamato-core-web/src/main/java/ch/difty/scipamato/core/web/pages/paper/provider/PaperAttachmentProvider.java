@@ -46,14 +46,12 @@ public class PaperAttachmentProvider extends SortableDataProvider<PaperAttachmen
             .iterator();
     }
 
-    /** {@inheritDoc} */
     @Override
     public long size() {
         return attachmentsModel.getObject()
             .size();
     }
 
-    /** {@inheritDoc} */
     @Override
     public IModel<PaperAttachment> model(final PaperAttachment attachment) {
         return new Model<>(attachment);

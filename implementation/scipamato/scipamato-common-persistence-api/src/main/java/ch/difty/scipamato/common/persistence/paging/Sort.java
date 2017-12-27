@@ -12,7 +12,7 @@ import ch.difty.scipamato.common.AssertAs;
 /**
  * Sort specification offering a list of {@link SortProperty} items, each
  * providing a name of the to be sorted property and the sort direction.
- *
+ * <p>
  * This Sort implementation initially was a simplified version of the spring
  * data Sort class.
  *
@@ -48,23 +48,20 @@ public class Sort implements Iterable<ch.difty.scipamato.common.persistence.pagi
         checkPreconditionsFor(propertyNames);
 
         this.sortProperties = new ArrayList<>(propertyNames.length);
-        for (final String pn : propertyNames) {
+        for (final String pn : propertyNames)
             sortProperties.add(new SortProperty(pn, direction));
-        }
     }
 
     private void checkPreconditionsFor(final List<SortProperty> sortProperties) {
         AssertAs.notNull(sortProperties, "sortProperties");
-        if (sortProperties.isEmpty()) {
+        if (sortProperties.isEmpty())
             throw new IllegalArgumentException("sortProperties can't be empty.");
-        }
     }
 
     private void checkPreconditionsFor(final String... propertyNames) {
         AssertAs.notNull(propertyNames, "propertyNames");
-        if (propertyNames.length == 0) {
+        if (propertyNames.length == 0)
             throw new IllegalArgumentException("propertyNames can't be empty.");
-        }
     }
 
     @Override
@@ -81,14 +78,14 @@ public class Sort implements Iterable<ch.difty.scipamato.common.persistence.pagi
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null)
             return false;
         if (this == obj)
             return true;
         if (this.getClass() != obj.getClass())
             return false;
-        Sort that = (Sort) obj;
+        final Sort that = (Sort) obj;
         return this.sortProperties.equals(that.sortProperties);
     }
 
@@ -139,14 +136,14 @@ public class Sort implements Iterable<ch.difty.scipamato.common.persistence.pagi
         }
 
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             if (obj == null)
                 return false;
             if (this == obj)
                 return true;
             if (this.getClass() != obj.getClass())
                 return false;
-            SortProperty that = (SortProperty) obj;
+            final SortProperty that = (SortProperty) obj;
             return this.direction.equals(that.direction) && this.name.equals(that.name);
         }
 

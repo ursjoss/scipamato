@@ -54,7 +54,6 @@ public class PaperCodeBox implements CodeBox {
             .intValue();
     }
 
-    /** {@inheritDoc} */
     @Override
     public void addCode(final Code code) {
         if (isNewAndNonNull(code))
@@ -65,19 +64,16 @@ public class PaperCodeBox implements CodeBox {
         return code != null && !codes.contains(code);
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<Code> getCodes() {
         return new UnmodifiableList<>(codes);
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<Code> getCodesBy(final CodeClassId codeClassId) {
         return new UnmodifiableList<>(collectBy(nullSafe(codeClassId)));
     }
 
-    /** {@inheritDoc} */
     @Override
     public void addCodes(final List<Code> newCodes) {
         if (!CollectionUtils.isEmpty(newCodes))
@@ -87,13 +83,11 @@ public class PaperCodeBox implements CodeBox {
                 .collect(Collectors.toList()));
     }
 
-    /** {@inheritDoc} */
     @Override
     public void clear() {
         codes.clear();
     }
 
-    /** {@inheritDoc} */
     @Override
     public void clearBy(final CodeClassId codeClassId) {
         codes.removeIf(isMatching(nullSafe(codeClassId)));

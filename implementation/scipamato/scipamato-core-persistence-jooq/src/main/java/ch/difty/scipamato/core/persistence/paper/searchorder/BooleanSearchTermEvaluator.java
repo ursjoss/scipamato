@@ -14,7 +14,6 @@ import ch.difty.scipamato.core.entity.filter.BooleanSearchTerm;
  */
 public class BooleanSearchTermEvaluator implements SearchTermEvaluator<BooleanSearchTerm> {
 
-    /** {@inheritDoc} */
     @Override
     public Condition evaluate(final BooleanSearchTerm searchTerm) {
         AssertAs.notNull(searchTerm, "searchTerm");

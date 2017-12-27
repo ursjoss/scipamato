@@ -36,26 +36,22 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         super(repo, userRepo);
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<Paper> findBySearchOrder(final SearchOrder searchOrder, final String languageCode) {
         return getRepository().findBySearchOrder(searchOrder, languageCode);
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<Paper> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext paginationContext,
             final String languageCode) {
         return getRepository().findPageBySearchOrder(searchOrder, paginationContext, languageCode);
     }
 
-    /** {@inheritDoc} */
     @Override
     public int countBySearchOrder(final SearchOrder searchOrder) {
         return getRepository().countBySearchOrder(searchOrder);
     }
 
-    /** {@inheritDoc} */
     @Override
     @Transactional(readOnly = false)
     public ServiceResult dumpPubmedArticlesToDb(final List<PubmedArticleFacade> articles, final long minimumNumber) {
@@ -104,7 +100,6 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
             .forEach(sr::addInfoMessage);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Optional<Paper> findByNumber(Long number, final String languageCode) {
         List<Paper> papers = getRepository().findByNumbers(Arrays.asList(number), languageCode);
@@ -118,7 +113,6 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public long findLowestFreeNumberStartingFrom(long minimumPaperNumberToBeRecycled) {
         return getRepository().findLowestFreeNumberStartingFrom(minimumPaperNumberToBeRecycled);

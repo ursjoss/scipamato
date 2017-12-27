@@ -23,7 +23,6 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 @Component
 public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord, Paper> {
 
-    /** {@inheritDoc} */
     @Override
     public InsertSetMoreStep<PaperRecord> setNonKeyFieldsFor(InsertSetStep<PaperRecord> step, Paper e) {
         AssertAs.notNull(step, "step");
@@ -69,7 +68,6 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
             .set(PAPER.LAST_MODIFIED_BY, e.getLastModifiedBy());
     }
 
-    /** {@inheritDoc} */
     @Override
     public void considerSettingKeyOf(InsertSetMoreStep<PaperRecord> step, Paper entity) {
         AssertAs.notNull(step, "step");
@@ -81,9 +79,8 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
 
     @Override
     public void resetIdToEntity(Paper entity, PaperRecord saved) {
-        if (saved != null) {
+        if (saved != null)
             entity.setId(saved.getId());
-        }
     }
 
 }

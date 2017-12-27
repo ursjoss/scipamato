@@ -24,7 +24,6 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 @Component
 public class UserUpdateSetStepSetter implements UpdateSetStepSetter<ScipamatoUserRecord, User> {
 
-    /** {@inheritDoc} */
     @Override
     public UpdateSetMoreStep<ScipamatoUserRecord> setFieldsFor(UpdateSetFirstStep<ScipamatoUserRecord> step, User e) {
         AssertAs.notNull(step, "step");

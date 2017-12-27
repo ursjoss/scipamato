@@ -14,10 +14,11 @@ import nl.jqno.equalsverifier.Warning;
 
 public class ScipamatoEntityTest {
 
-    private static final int           VERSION = 10;
-    private static final LocalDateTime CD      = LocalDateTime.now()
+    private static final int VERSION = 10;
+
+    private static final LocalDateTime CD = LocalDateTime.now()
         .minusDays(1);
-    private static final LocalDateTime LM      = LocalDateTime.now()
+    private static final LocalDateTime LM = LocalDateTime.now()
         .plusDays(1);
 
     ScipamatoEntity e = new ScipamatoEntity();

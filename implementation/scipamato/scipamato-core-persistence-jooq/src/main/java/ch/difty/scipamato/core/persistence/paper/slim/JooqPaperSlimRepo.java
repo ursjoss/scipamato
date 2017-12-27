@@ -63,7 +63,6 @@ public class JooqPaperSlimRepo extends
         return PAPER.VERSION;
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<PaperSlim> findBySearchOrder(final SearchOrder searchOrder) {
         List<PaperSlim> papers = searchOrderRepository.findBySearchOrder(searchOrder);
@@ -71,7 +70,6 @@ public class JooqPaperSlimRepo extends
         return papers;
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<PaperSlim> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext) {
         final List<PaperSlim> entities = searchOrderRepository.findPageBySearchOrder(searchOrder, paginationContext);
@@ -79,7 +77,6 @@ public class JooqPaperSlimRepo extends
         return entities;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int countBySearchOrder(SearchOrder searchOrder) {
         return searchOrderRepository.countBySearchOrder(searchOrder);

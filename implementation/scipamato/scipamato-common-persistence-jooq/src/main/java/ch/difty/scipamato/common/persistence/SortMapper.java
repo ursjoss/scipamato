@@ -37,7 +37,6 @@ import ch.difty.scipamato.common.persistence.paging.Sort;
 public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends TableImpl<R>>
         implements JooqSortMapper<R, T, TI> {
 
-    /** {@inheritDoc} */
     @Override
     public Collection<SortField<T>> map(Sort sortSpecification, TI table) {
         Collection<SortField<T>> querySortFields = new ArrayList<>();

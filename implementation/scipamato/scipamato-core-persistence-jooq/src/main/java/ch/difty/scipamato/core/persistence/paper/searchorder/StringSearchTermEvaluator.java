@@ -17,7 +17,6 @@ import ch.difty.scipamato.core.persistence.ConditionalSupplier;
  */
 public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSearchTerm> {
 
-    /** {@inheritDoc} */
     @Override
     public Condition evaluate(final StringSearchTerm searchTerm) {
         AssertAs.notNull(searchTerm, "searchTerm");

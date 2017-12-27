@@ -24,7 +24,6 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 @Component
 public class SearchOrderUpdateSetStepSetter implements UpdateSetStepSetter<SearchOrderRecord, SearchOrder> {
 
-    /** {@inheritDoc} */
     @Override
     public UpdateSetMoreStep<SearchOrderRecord> setFieldsFor(UpdateSetFirstStep<SearchOrderRecord> step,
             SearchOrder e) {

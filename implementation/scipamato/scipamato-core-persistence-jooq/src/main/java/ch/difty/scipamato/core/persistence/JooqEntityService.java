@@ -31,7 +31,6 @@ public abstract class JooqEntityService<ID extends Number, T extends IdScipamato
         super(repo, userRepo);
     }
 
-    /** {@inheritDoc} */
     @Transactional(readOnly = false)
     @Override
     public T saveOrUpdate(T entity) {
@@ -46,7 +45,6 @@ public abstract class JooqEntityService<ID extends Number, T extends IdScipamato
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     @Transactional(readOnly = false)
     public void remove(T entity) {

@@ -25,7 +25,6 @@ public class EnumBasedAuthorParserFactory implements AuthorParserFactory {
         this.authorParserStrategy = appProperties.getAuthorParserStrategy();
     }
 
-    /** {@inheritDoc} */
     @Override
     public AuthorParser createParser(String authorString) {
         AssertAs.notNull(authorString, "authorString");

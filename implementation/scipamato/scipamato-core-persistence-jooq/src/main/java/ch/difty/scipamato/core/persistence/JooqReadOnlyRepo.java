@@ -111,13 +111,11 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
 
     protected abstract TableField<R, Integer> getRecordVersion();
 
-    /** {@inheritDoc} */
     @Override
     public List<T> findAll() {
         return findAll(getApplicationProperties().getDefaultLocalization());
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<T> findAll(String languageCode) {
         final List<T> entities = getDsl().selectFrom(getTable())
@@ -132,13 +130,11 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public T findById(final ID id) {
         return findById(id, getApplicationProperties().getDefaultLocalization());
     }
 
-    /** {@inheritDoc} */
     @Override
     public T findById(final ID id, final String languageCode) {
         AssertAs.notNull(id, "id");
@@ -149,13 +145,11 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
         return entity;
     }
 
-    /** {@inheritDoc} */
     @Override
     public T findById(final ID id, final int version) {
         return findById(id, version, getApplicationProperties().getDefaultLocalization());
     }
 
-    /** {@inheritDoc} */
     @Override
     public T findById(final ID id, final int version, String languageCode) {
         AssertAs.notNull(id, "id");
@@ -177,7 +171,6 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
     protected void enrichAssociatedEntitiesOf(final T entity, final String languageCode) {
     }
 
-    /** {@inheritDoc} */
     @Override
     public int countByFilter(final F filter) {
         final Condition conditions = filterConditionMapper.map(filter);
@@ -186,13 +179,11 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
             .where(conditions));
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<T> findPageByFilter(final F filter, final PaginationContext pc) {
         return findPageByFilter(filter, pc, getApplicationProperties().getDefaultLocalization());
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<T> findPageByFilter(final F filter, final PaginationContext pc, final String languageCode) {
         final Condition conditions = filterConditionMapper.map(filter);
@@ -213,7 +204,6 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
         return entities;
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<ID> findPageOfIdsByFilter(final F filter, final PaginationContext pc) {
         final Condition conditions = filterConditionMapper.map(filter);

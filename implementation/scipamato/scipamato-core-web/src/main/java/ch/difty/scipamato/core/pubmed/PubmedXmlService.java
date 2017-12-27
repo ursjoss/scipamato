@@ -33,16 +33,15 @@ public class PubmedXmlService implements PubmedArticleService {
         this.pubMed = AssertAs.notNull(pubMed, "pubMed");
     }
 
-    /** {@inheritDoc} */
     @Override
-    public Optional<PubmedArticleFacade> getPubmedArticleWithPmid(int pmId) {
+    public Optional<PubmedArticleFacade> getPubmedArticleWithPmid(final int pmId) {
         try {
             final PubmedArticleSet set = pubMed.articleWithId(String.valueOf(pmId));
             final List<java.lang.Object> articles = set.getPubmedArticleOrPubmedBookArticle();
             return articles.stream()
                 .map(PubmedArticleFacade::of)
                 .findFirst();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             log.error("Unexpected error", ex);
             return Optional.empty();
         }

@@ -22,7 +22,6 @@ public class JooqCodeClassRepo implements CodeClassRepository {
         this.dslContext = dslContext;
     }
 
-    /** {@inheritDoc} */
     @Override
     @Cacheable
     public List<CodeClass> find(final String languageCode) {

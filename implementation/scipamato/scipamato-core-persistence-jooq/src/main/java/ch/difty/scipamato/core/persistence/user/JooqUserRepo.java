@@ -132,7 +132,6 @@ public class JooqUserRepo extends
         userRoleRepo.deleteAllRolesExcept(userId, roleIds);
     }
 
-    /** {@inheritDoc} */
     @Override
     @Cacheable
     public User findByUserName(final String userName) {

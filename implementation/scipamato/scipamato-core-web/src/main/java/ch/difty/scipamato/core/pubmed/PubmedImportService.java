@@ -26,7 +26,6 @@ public class PubmedImportService implements PubmedImporter {
             .getMinimumPaperNumberToBeRecycled();
     }
 
-    /** {@inheritDoc} */
     @Transactional
     @Override
     public ServiceResult persistPubmedArticlesFromXml(final String xml) {

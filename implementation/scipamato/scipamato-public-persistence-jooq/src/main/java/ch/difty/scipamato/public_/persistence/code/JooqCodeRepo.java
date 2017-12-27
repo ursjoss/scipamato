@@ -24,7 +24,6 @@ public class JooqCodeRepo implements CodeRepository {
         this.dslContext = dslContext;
     }
 
-    /** {@inheritDoc} */
     @Override
     @Cacheable
     public List<Code> findCodesOfClass(final CodeClassId codeClassId, final String languageCode) {

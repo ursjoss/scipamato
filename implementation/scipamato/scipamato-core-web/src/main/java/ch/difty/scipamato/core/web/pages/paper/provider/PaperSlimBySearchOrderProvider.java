@@ -38,20 +38,17 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
         setSort(Paper.ID, SortOrder.DESCENDING);
     }
 
-    /** {@inheritDoc} */
     @Override
     protected Iterator<PaperSlim> findPage(final PaginationContext pc) {
         return getService().findPageBySearchOrder(getFilterState(), pc)
             .iterator();
     }
 
-    /** {@inheritDoc} */
     @Override
     protected long getSize() {
         return getService().countBySearchOrder(getFilterState());
     }
 
-    /** {@inheritDoc} */
     @Override
     protected List<Paper> findAll(final Direction dir, final String sortProp) {
         return getPaperService().findPageBySearchOrder(getFilterState(), new PaginationRequest(dir, sortProp),

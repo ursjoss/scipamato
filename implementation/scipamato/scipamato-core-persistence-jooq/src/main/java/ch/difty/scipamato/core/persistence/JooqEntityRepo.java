@@ -107,13 +107,11 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      */
     protected abstract ID getIdFrom(T entity);
 
-    /** {@inheritDoc} */
     @Override
     public T add(final T entity) {
         return add(entity, getApplicationProperties().getDefaultLocalization());
     }
 
-    /** {@inheritDoc} */
     @Override
     public T add(final T entity, final String languageCode) {
         AssertAs.notNull(entity, "entity");
@@ -149,7 +147,6 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
     protected void saveAssociatedEntitiesOf(T entity, String languageCode) {
     }
 
-    /** {@inheritDoc} */
     @Override
     public T delete(final ID id, int version) {
         AssertAs.notNull(id, "id");
@@ -181,13 +178,11 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
     protected void deleteAssociatedEntitiesOf(T entity) {
     }
 
-    /** {@inheritDoc} */
     @Override
     public T update(final T entity) {
         return update(entity, getApplicationProperties().getDefaultLocalization());
     }
 
-    /** {@inheritDoc} */
     @Override
     public T update(final T entity, final String languageCode) {
         AssertAs.notNull(entity, "entity");

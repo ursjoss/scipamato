@@ -23,7 +23,6 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 @Component
 public class UserInsertSetStepSetter implements InsertSetStepSetter<ScipamatoUserRecord, User> {
 
-    /** {@inheritDoc} */
     @Override
     public InsertSetMoreStep<ScipamatoUserRecord> setNonKeyFieldsFor(InsertSetStep<ScipamatoUserRecord> step, User e) {
         AssertAs.notNull(step, "step");
@@ -40,7 +39,6 @@ public class UserInsertSetStepSetter implements InsertSetStepSetter<ScipamatoUse
             .set(SCIPAMATO_USER.LAST_MODIFIED_BY, e.getLastModifiedBy());
     }
 
-    /** {@inheritDoc} */
     @Override
     public void considerSettingKeyOf(InsertSetMoreStep<ScipamatoUserRecord> step, User entity) {
         AssertAs.notNull(step, "step");
@@ -50,12 +48,10 @@ public class UserInsertSetStepSetter implements InsertSetStepSetter<ScipamatoUse
             step.set(SCIPAMATO_USER.ID, id);
     }
 
-    /** {@inheritDoc} */
     @Override
     public void resetIdToEntity(User entity, ScipamatoUserRecord saved) {
-        if (saved != null) {
+        if (saved != null)
             entity.setId(saved.getId());
-        }
     }
 
 }

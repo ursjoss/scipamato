@@ -23,11 +23,10 @@ import ch.difty.scipamato.core.entity.CoreEntity;
  */
 public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity> implements RecordMapper<R, T> {
 
-    /** {@inheritDoc} */
     @Override
-    public T map(R from) {
+    public T map(final R from) {
         AssertAs.notNull(from, "from");
-        T to = makeEntity();
+        final T to = makeEntity();
         mapFields(from, to);
         mapAuditFields(from, to);
         return to;
@@ -66,7 +65,7 @@ public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity>
      * @param to
      *            the entity to fill the audit fields into
      */
-    private void mapAuditFields(R from, T to) {
+    private void mapAuditFields(final R from, final T to) {
         final AuditFields af = getAuditFieldsOf(from);
         to.setCreated(af.created);
         to.setCreatedBy(af.createdBy);

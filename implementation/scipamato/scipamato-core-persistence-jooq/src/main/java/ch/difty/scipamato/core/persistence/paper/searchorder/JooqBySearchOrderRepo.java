@@ -89,7 +89,6 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
         return PaperRecord.class;
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<T> findBySearchOrder(final SearchOrder searchOrder) {
         AssertAs.notNull(searchOrder, "searchOrder");
@@ -165,7 +164,6 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
         return codeConditions.combineWithAnd();
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<T> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext pc) {
         final Condition paperMatches = getConditionsFrom(searchOrder);
@@ -181,7 +179,6 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
             .collect(Collectors.toList());
     }
 
-    /** {@inheritDoc} */
     @Override
     public int countBySearchOrder(final SearchOrder searchOrder) {
         AssertAs.notNull(searchOrder, "searchOrder");

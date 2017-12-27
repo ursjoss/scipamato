@@ -51,7 +51,6 @@ public enum Role {
         return key;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString() {
         return key;
