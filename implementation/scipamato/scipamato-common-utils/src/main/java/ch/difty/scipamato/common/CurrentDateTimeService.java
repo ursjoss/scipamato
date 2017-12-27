@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 
 /**
- * Implementation of {@link DateTimeService} actually providing access to the system clock.
- * To be used in production.
+ * Implementation of {@link DateTimeService} actually providing access to the
+ * system clock. To be used in production.
  *
  * @author u.joss
  */

@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 /**
- * Implementation of {@link DateTimeService} constantly returning a frozen moment.
- * This is the implementation to be used in test context.
+ * Implementation of {@link DateTimeService} constantly returning a frozen
+ * moment. This is the implementation to be used in test context.
  *
  * @author u.joss
  */

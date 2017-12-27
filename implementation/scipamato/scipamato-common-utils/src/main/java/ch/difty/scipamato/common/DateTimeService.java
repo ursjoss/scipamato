@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * Implementations provide access to date and time.
- * It's useful to have this as service in order to be mockable.
+ * Implementations provide access to date and time. It's useful to have this as
+ * service in order to be mockable.
  *
  * @author u.joss
  */
