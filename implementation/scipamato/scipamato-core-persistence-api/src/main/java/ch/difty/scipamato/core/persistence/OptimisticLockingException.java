@@ -19,9 +19,15 @@ public class OptimisticLockingException extends RuntimeException {
 
     private static String makeMessage(final String tableName, final String record, Type type) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Record in table '").append(tableName).append("' has been modified prior to the ").append(type.descr).append(" attempt. Aborting....");
+        sb.append("Record in table '")
+            .append(tableName)
+            .append("' has been modified prior to the ")
+            .append(type.descr)
+            .append(" attempt. Aborting....");
         if (record != null)
-            sb.append(" [").append(record).append("]");
+            sb.append(" [")
+                .append(record)
+                .append("]");
         return sb.toString();
     }
 
