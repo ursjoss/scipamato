@@ -1,6 +1,6 @@
 package ch.difty.scipamato.public_.entity;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -11,7 +11,14 @@ public class CodeTest extends PublicEntityTest<Code> {
 
     @Override
     protected Code newEntity() {
-        return Code.builder().codeClassId(1).code("code").langCode("lc").name("name").comment("comment").sort(3).build();
+        return Code.builder()
+            .codeClassId(1)
+            .code("code")
+            .langCode("lc")
+            .name("name")
+            .comment("comment")
+            .sort(3)
+            .build();
     }
 
     @Override
@@ -31,7 +38,11 @@ public class CodeTest extends PublicEntityTest<Code> {
 
     @Override
     protected void verifyEquals() {
-        EqualsVerifier.forClass(Code.class).withRedefinedSuperclass().withIgnoredFields(Code.CREATED, Code.MODIFIED).suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(Code.class)
+            .withRedefinedSuperclass()
+            .withIgnoredFields(Code.CREATED, Code.MODIFIED)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 
     @Test

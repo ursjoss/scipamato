@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.search;
 
-import static ch.difty.scipamato.core.db.tables.SearchOrder.*;
+import static ch.difty.scipamato.core.db.tables.SearchOrder.SEARCH_ORDER;
 
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
@@ -13,7 +13,8 @@ import ch.difty.scipamato.core.entity.filter.SearchCondition;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 
 /**
- * The insert step setter used for inserting new {@link SearchOrder}s.<p>
+ * The insert step setter used for inserting new {@link SearchOrder}s.
+ * <p>
  *
  * <b>Note:</b> the {@link SearchCondition}s are not inserted here.
  *
@@ -22,24 +23,20 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 @Component
 public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<SearchOrderRecord, SearchOrder> {
 
-    /** {@inheritDoc} */
     @Override
-    public InsertSetMoreStep<SearchOrderRecord> setNonKeyFieldsFor(InsertSetStep<SearchOrderRecord> step, SearchOrder e) {
+    public InsertSetMoreStep<SearchOrderRecord> setNonKeyFieldsFor(InsertSetStep<SearchOrderRecord> step,
+            SearchOrder e) {
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
 
-        // @formatter:off
-        return step
-            .set(SEARCH_ORDER.NAME, e.getName())
+        return step.set(SEARCH_ORDER.NAME, e.getName())
             .set(SEARCH_ORDER.OWNER, e.getOwner())
             .set(SEARCH_ORDER.GLOBAL, e.isGlobal())
 
             .set(SEARCH_ORDER.CREATED_BY, e.getCreatedBy())
             .set(SEARCH_ORDER.LAST_MODIFIED_BY, e.getLastModifiedBy());
-        // @formatter:on
     }
 
-    /** {@inheritDoc} */
     @Override
     public void considerSettingKeyOf(InsertSetMoreStep<SearchOrderRecord> step, SearchOrder entity) {
         AssertAs.notNull(step, "step");
@@ -49,11 +46,9 @@ public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<Searc
             step.set(SEARCH_ORDER.ID, id);
     }
 
-    /** {@inheritDoc} */
     @Override
     public void resetIdToEntity(SearchOrder entity, SearchOrderRecord saved) {
-        if (saved != null) {
+        if (saved != null)
             entity.setId(saved.getId());
-        }
     }
 }

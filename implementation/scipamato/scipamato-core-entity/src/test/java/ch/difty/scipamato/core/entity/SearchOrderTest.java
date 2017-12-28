@@ -1,7 +1,11 @@
 package ch.difty.scipamato.core.entity;
 
-import static ch.difty.scipamato.core.entity.SearchOrder.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.CREATED;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.MODIFIED;
+import static ch.difty.scipamato.core.entity.CoreEntity.CREATOR_ID;
+import static ch.difty.scipamato.core.entity.CoreEntity.MODIFIER_ID;
+import static ch.difty.scipamato.core.entity.SearchOrder.SHOW_EXCLUDED;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,7 +34,7 @@ public class SearchOrderTest {
     public SearchCondition mockCondition2;
 
     private List<SearchCondition> searchConditions = new ArrayList<>();
-    private List<Long> excludedIds = new ArrayList<>();
+    private List<Long>            excludedIds      = new ArrayList<>();
 
     @Test
     public void testGetters() {
@@ -75,14 +79,16 @@ public class SearchOrderTest {
     @Test
     public void whenInstantiating_withNonEmptyConditionList_hasHandedOverConditions() {
         searchConditions.addAll(Arrays.asList(mockCondition1, mockCondition2));
-        assertThat(new SearchOrder(searchConditions).getSearchConditions()).containsExactly(mockCondition1, mockCondition2);
+        assertThat(new SearchOrder(searchConditions).getSearchConditions()).containsExactly(mockCondition1,
+            mockCondition2);
     }
 
     @Test
     public void whenInstantiating_withNonEmptyExlusionList_hasHandedOverExclusions() {
         excludedIds.add(3l);
         excludedIds.add(5l);
-        assertThat(new SearchOrder(10l, SO_NAME, 1, false, null, excludedIds).getExcludedPaperIds()).containsExactly(3l, 5l);
+        assertThat(new SearchOrder(10l, SO_NAME, 1, false, null, excludedIds).getExcludedPaperIds()).containsExactly(3l,
+            5l);
     }
 
     @Test
@@ -169,7 +175,7 @@ public class SearchOrderTest {
         assertThat(so.getSearchConditions()).hasSize(0);
         assertThat(so.getExcludedPaperIds()).hasSize(0);
         assertThat(so.toString()).isEqualTo(
-                "SearchOrder[name=soName,owner=1,global=false,searchConditions=[],excludedPaperIds=[],showExcluded=false,id=10,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
+            "SearchOrder[name=soName,owner=1,global=false,searchConditions=[],excludedPaperIds=[],showExcluded=false,id=10,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
     }
 
     @Test
@@ -179,7 +185,7 @@ public class SearchOrderTest {
         so.addExclusionOfPaperWithId(3l);
         so.addExclusionOfPaperWithId(5l);
         assertThat(so.toString()).isEqualTo(
-                "SearchOrder[name=soName,owner=1,global=false,searchConditions=[mockCondition1, mockCondition2],excludedPaperIds=[3, 5],showExcluded=false,id=10,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
+            "SearchOrder[name=soName,owner=1,global=false,searchConditions=[mockCondition1, mockCondition2],excludedPaperIds=[3, 5],showExcluded=false,id=10,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
     }
 
     @Test
@@ -307,8 +313,7 @@ public class SearchOrderTest {
 
     @Test
     public void equals() {
-        EqualsVerifier
-            .forClass(SearchOrder.class)
+        EqualsVerifier.forClass(SearchOrder.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(SHOW_EXCLUDED, CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)

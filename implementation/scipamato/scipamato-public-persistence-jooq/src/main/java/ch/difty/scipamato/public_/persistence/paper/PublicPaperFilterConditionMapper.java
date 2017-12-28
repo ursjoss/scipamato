@@ -1,6 +1,6 @@
 package ch.difty.scipamato.public_.persistence.paper;
 
-import static ch.difty.scipamato.public_.db.tables.Paper.*;
+import static ch.difty.scipamato.public_.db.tables.Paper.PAPER;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,17 +49,25 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
         }
 
         if (filter.getPopulationCodes() != null) {
-            final Short[] ids = filter.getPopulationCodes().stream().map(PopulationCode::getId).toArray(Short[]::new);
+            final Short[] ids = filter.getPopulationCodes()
+                .stream()
+                .map(PopulationCode::getId)
+                .toArray(Short[]::new);
             conditions.add(PAPER.CODES_POPULATION.contains(ids));
         }
 
         if (filter.getStudyDesignCodes() != null) {
-            final Short[] ids = filter.getStudyDesignCodes().stream().map(StudyDesignCode::getId).toArray(Short[]::new);
+            final Short[] ids = filter.getStudyDesignCodes()
+                .stream()
+                .map(StudyDesignCode::getId)
+                .toArray(Short[]::new);
             conditions.add(PAPER.CODES_STUDY_DESIGN.contains(ids));
         }
 
-        if (filter.getCodesOfClass1() != null || filter.getCodesOfClass2() != null || filter.getCodesOfClass3() != null || filter.getCodesOfClass4() != null || filter.getCodesOfClass5() != null
-                || filter.getCodesOfClass6() != null || filter.getCodesOfClass7() != null || filter.getCodesOfClass8() != null) {
+        if (filter.getCodesOfClass1() != null || filter.getCodesOfClass2() != null || filter.getCodesOfClass3() != null
+                || filter.getCodesOfClass4() != null || filter.getCodesOfClass5() != null
+                || filter.getCodesOfClass6() != null || filter.getCodesOfClass7() != null
+                || filter.getCodesOfClass8() != null) {
             final List<String> allCodes = collectAllCodesFrom(filter);
             if (!allCodes.isEmpty())
                 conditions.add(codeCondition(allCodes));
@@ -67,7 +75,8 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
 
     }
 
-    private void addTokenizedConditions(final List<Condition> conditions, final String mask, final TableField<PaperRecord, String> field) {
+    private void addTokenizedConditions(final List<Condition> conditions, final String mask,
+            final TableField<PaperRecord, String> field) {
         if (!mask.contains(" ")) {
             conditions.add(field.likeIgnoreCase("%" + mask + "%"));
         } else {
@@ -96,20 +105,27 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
         if (codes == null)
             return Collections.emptyList();
         else {
-            return codes.stream().filter(Objects::nonNull).map(Code::getCode).collect(Collectors.toList());
+            return codes.stream()
+                .filter(Objects::nonNull)
+                .map(Code::getCode)
+                .collect(Collectors.toList());
         }
     }
 
     /**
-     * Due to bug https://github.com/jOOQ/jOOQ/issues/4754, the straightforward way of mapping the codes to the
-     * array of type text does not work:
+     * Due to bug https://github.com/jOOQ/jOOQ/issues/4754, the straightforward way
+     * of mapping the codes to the array of type text does not work:
      *
      * <pre>
      * return PAPER.CODES.contains(codeCollection.toArray(new String[codeCollection.size()]));
      * </pre>
      */
     private Condition codeCondition(final List<String> codeCollection) {
-        final List<Field<String>> convCodes = codeCollection.stream().filter(Objects::nonNull).map(str -> DSL.val(str).cast(PostgresDataType.TEXT)).collect(Collectors.toList());
+        final List<Field<String>> convCodes = codeCollection.stream()
+            .filter(Objects::nonNull)
+            .map(str -> DSL.val(str)
+                .cast(PostgresDataType.TEXT))
+            .collect(Collectors.toList());
         return PAPER.CODES.contains(DSL.array(convCodes));
     }
 

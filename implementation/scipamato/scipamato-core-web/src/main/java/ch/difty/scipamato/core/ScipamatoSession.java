@@ -11,9 +11,10 @@ import ch.difty.scipamato.common.navigator.LongNavigator;
 /**
  * Scipamato specific Session
  *
- * Holds an instance of {@link ItemNavigator} to manage the paper ids of the lastest search result.
- * Both keeps track of the id of the currently viewed/edited paper ('focus') and/or move the focus
- * to the previous/next paper in the list of managed ids.
+ * Holds an instance of {@link ItemNavigator} to manage the paper ids of the
+ * lastest search result. Both keeps track of the id of the currently
+ * viewed/edited paper ('focus') and/or move the focus to the previous/next
+ * paper in the list of managed ids.
  *
  * @author u.joss
  */

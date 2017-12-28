@@ -9,7 +9,8 @@ public interface UserRepository extends EntityRepository<User, Integer, UserFilt
     /**
      * Find user by name
      *
-     * @param userName - must not be null
+     * @param userName
+     *            - must not be null
      * @return user or null
      */
     User findByUserName(String userName);

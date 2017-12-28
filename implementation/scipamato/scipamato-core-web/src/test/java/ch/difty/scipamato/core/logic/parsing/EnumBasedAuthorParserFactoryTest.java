@@ -1,7 +1,9 @@
 package ch.difty.scipamato.core.logic.parsing;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,8 +13,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.scipamato.common.NullArgumentException;
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
-import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
+import ch.difty.scipamato.core.config.ApplicationCoreProperties;
+import ch.difty.scipamato.core.config.AuthorParserStrategy;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EnumBasedAuthorParserFactoryTest {
@@ -20,11 +22,11 @@ public class EnumBasedAuthorParserFactoryTest {
     private AuthorParserFactory factory;
 
     @Mock
-    private ApplicationProperties appProperties;
+    private ApplicationCoreProperties appProperties;
 
     @Before
     public void setUp() {
-        when(appProperties.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.DEFAULT);
+        when(appProperties.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.PUBMED);
         factory = new EnumBasedAuthorParserFactory(appProperties);
     }
 
@@ -47,7 +49,7 @@ public class EnumBasedAuthorParserFactoryTest {
     @Test
     public void cratingParser_withNoSetting_usesDefaultAuthorParser() {
         AuthorParser parser = factory.createParser("Turner MC.");
-        assertThat(parser).isInstanceOf(DefaultAuthorParser.class);
+        assertThat(parser).isInstanceOf(PubmedAuthorParser.class);
         verify(appProperties).getAuthorParserStrategy();
     }
 

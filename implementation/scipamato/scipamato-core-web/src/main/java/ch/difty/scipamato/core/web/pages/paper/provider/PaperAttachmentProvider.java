@@ -11,7 +11,8 @@ import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.PaperAttachment;
 
 /**
- * Builds up the {@link PaperAttachment} provider based on the model passed into the constructor.
+ * Builds up the {@link PaperAttachment} provider based on the model passed into
+ * the constructor.
  *
  * @author u.joss
  */
@@ -29,24 +30,28 @@ public class PaperAttachmentProvider extends SortableDataProvider<PaperAttachmen
 
     /**
      * Returns paged {@link PaperAttachment} iterator
+     *
      * @param offset
-     *          skipping records
+     *            skipping records
      * @param size
-     *          page size
+     *            page size
      * @return iterator
      */
     @Override
     public Iterator<PaperAttachment> iterator(final long offset, final long size) {
-        return attachmentsModel.getObject().stream().skip(offset).limit(size).iterator();
+        return attachmentsModel.getObject()
+            .stream()
+            .skip(offset)
+            .limit(size)
+            .iterator();
     }
 
-    /** {@inheritDoc} */
     @Override
     public long size() {
-        return attachmentsModel.getObject().size();
+        return attachmentsModel.getObject()
+            .size();
     }
 
-    /** {@inheritDoc} */
     @Override
     public IModel<PaperAttachment> model(final PaperAttachment attachment) {
         return new Model<>(attachment);

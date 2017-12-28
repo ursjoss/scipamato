@@ -1,8 +1,11 @@
 package ch.difty.scipamato.core.web.panel.search;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,9 +33,9 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 
 public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorPanel> {
 
-    private static final long ID = 17l;
-    private static final String NAME = "soName";
-    private static final int OWNER_ID = 2;
+    private static final long   ID       = 17l;
+    private static final String NAME     = "soName";
+    private static final int    OWNER_ID = 2;
 
     @MockBean
     private SearchOrderService searchOrderServiceMock;
@@ -42,7 +45,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     @Mock
     private SearchOrder searchOrderMock2;
 
-    private List<SearchOrder> searchOrders;
+    private List<SearchOrder>           searchOrders;
     private final List<SearchCondition> searchConditions = new ArrayList<>();
 
     @Override
@@ -54,8 +57,10 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     protected void setUpHook() {
         super.setUpHook();
 
-        searchOrders = Arrays.asList(searchOrderMock, new SearchOrder(20l, "soName", OWNER_ID, true, searchConditions, null));
-        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class))).thenReturn(searchOrders);
+        searchOrders = Arrays.asList(searchOrderMock,
+            new SearchOrder(20l, "soName", OWNER_ID, true, searchConditions, null));
+        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class)))
+            .thenReturn(searchOrders);
         when(searchOrderMock.getId()).thenReturn(ID);
     }
 
@@ -115,7 +120,8 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.SHOW_EXCLUDED);
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.SHOW_EXCLUDED + "Label");
 
-        // TODO how to assert the event was actually broadcast without issuing the test info message
+        // TODO how to assert the event was actually broadcast without issuing the test
+        // info message
         getTester().assertInfoMessages("Sent SearchOrderChangeEvent");
     }
 
@@ -162,7 +168,8 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponentOnAjaxResponse(b + SearchOrder.SHOW_EXCLUDED + "Label");
 
         verify(searchOrderMock, times(10)).getId();
-        verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
+        verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class),
+            isA(PaginationContext.class));
         verify(searchOrderServiceMock, never()).saveOrUpdate(searchOrderMock);
     }
 
@@ -180,7 +187,8 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponentOnAjaxResponse(b);
 
         verify(searchOrderMock, times(13)).getId();
-        verify(searchOrderServiceMock, times(3)).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
+        verify(searchOrderServiceMock, times(3)).findPageByFilter(isA(SearchOrderFilter.class),
+            isA(PaginationContext.class));
         verify(searchOrderServiceMock).remove(searchOrderMock);
     }
 

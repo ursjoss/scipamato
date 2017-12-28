@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.persistence.paper;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 import org.jooq.RecordMapper;
 
@@ -11,36 +11,36 @@ import ch.difty.scipamato.core.persistence.RecordMapperTest;
 
 public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> {
 
-    public static final Long ID = 1l;
-    public static final Long NUMBER = 10l;
-    public static final int PM_ID = 2;
-    public static final String DOI = "101000/1234";
-    public static final String AUTHORS = "authors";
-    public static final String FIRST_AUTHOR = "first author";
+    public static final Long    ID                      = 1l;
+    public static final Long    NUMBER                  = 10l;
+    public static final int     PM_ID                   = 2;
+    public static final String  DOI                     = "101000/1234";
+    public static final String  AUTHORS                 = "authors";
+    public static final String  FIRST_AUTHOR            = "first author";
     public static final boolean FIRST_AUTHOR_OVERRIDDEN = false;
-    public static final String TITLE = "title";
-    public static final String LOCATION = "location";
-    public static final Integer PUBLICATION_YEAR = 3;
-    public static final String GOALS = "goals";
-    public static final String POPULATION = "population";
-    public static final String METHODS = "methods";
-    public static final String POPULATION_PLACE = "population place";
-    public static final String POPULATION_PARTICIPANTS = "population  participants";
-    public static final String POPULATION_DURATION = "population duration";
-    public static final String EXPOSURE_POLLUTANT = "exposure pollutant";
-    public static final String EXPOSURE_ASSESSMENT = "exporsure assessment";
-    public static final String METHOD_STUDY_DESIGN = "method study design";
-    public static final String METHOD_OUTCOME = "method outcome";
-    public static final String METHOD_STATISTICS = "method statistics";
-    public static final String METHOD_CONFOUNDERS = "method confounders";
-    public static final String RESULT = "result";
-    public static final String COMMENT = "comment";
-    public static final String INTERN = "intern";
-    public static final String RESULT_EXPOSURE_RANGE = "result exposure range";
-    public static final String RESULT_EFFECT_ESTIMATE = "result effect estimate";
-    public static final String RESULT_MEASURED_OUTCOME = "result measured outcome";
-    public static final String ORIGINAL_ABSTRACT = "oa";
-    public static final String MAIN_CODE_OF_CODECLASS1 = "1F";
+    public static final String  TITLE                   = "title";
+    public static final String  LOCATION                = "location";
+    public static final Integer PUBLICATION_YEAR        = 3;
+    public static final String  GOALS                   = "goals";
+    public static final String  POPULATION              = "population";
+    public static final String  METHODS                 = "methods";
+    public static final String  POPULATION_PLACE        = "population place";
+    public static final String  POPULATION_PARTICIPANTS = "population  participants";
+    public static final String  POPULATION_DURATION     = "population duration";
+    public static final String  EXPOSURE_POLLUTANT      = "exposure pollutant";
+    public static final String  EXPOSURE_ASSESSMENT     = "exporsure assessment";
+    public static final String  METHOD_STUDY_DESIGN     = "method study design";
+    public static final String  METHOD_OUTCOME          = "method outcome";
+    public static final String  METHOD_STATISTICS       = "method statistics";
+    public static final String  METHOD_CONFOUNDERS      = "method confounders";
+    public static final String  RESULT                  = "result";
+    public static final String  COMMENT                 = "comment";
+    public static final String  INTERN                  = "intern";
+    public static final String  RESULT_EXPOSURE_RANGE   = "result exposure range";
+    public static final String  RESULT_EFFECT_ESTIMATE  = "result effect estimate";
+    public static final String  RESULT_MEASURED_OUTCOME = "result measured outcome";
+    public static final String  ORIGINAL_ABSTRACT       = "oa";
+    public static final String  MAIN_CODE_OF_CODECLASS1 = "1F";
 
     public static void entityFixtureWithoutIdFields(Paper entityMock) {
         when(entityMock.getNumber()).thenReturn(NUMBER);

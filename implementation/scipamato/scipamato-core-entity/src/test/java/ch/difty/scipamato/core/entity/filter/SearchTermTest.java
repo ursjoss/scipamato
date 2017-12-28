@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.entity.filter;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -47,8 +47,10 @@ public class SearchTermTest {
         assertThat(sst.getFieldName()).isEqualTo("fn3");
         assertThat(sst.getRawSearchTerm()).isEqualTo("foo*");
         assertThat(sst.getTokens()).hasSize(1);
-        assertThat(sst.getTokens().get(0).sqlData).isEqualTo("foo%");
-        assertThat(sst.getTokens().get(0).negate).isFalse();
+        assertThat(sst.getTokens()
+            .get(0).sqlData).isEqualTo("foo%");
+        assertThat(sst.getTokens()
+            .get(0).negate).isFalse();
     }
 
     @Test
@@ -73,8 +75,12 @@ public class SearchTermTest {
         assertThat(ast.getFieldName()).isEqualTo(userFieldName);
         assertThat(ast.getRawSearchTerm()).isEqualTo("foo >=\"2017-02-01\"");
         assertThat(ast.getTokens()).hasSize(1);
-        assertThat(ast.getTokens().get(0).getUserSqlData()).isEqualTo("foo");
-        assertThat(ast.getTokens().get(0).getDateSqlData()).isNull();
+        assertThat(ast.getTokens()
+            .get(0)
+            .getUserSqlData()).isEqualTo("foo");
+        assertThat(ast.getTokens()
+            .get(0)
+            .getDateSqlData()).isNull();
     }
 
     @Test
@@ -90,8 +96,12 @@ public class SearchTermTest {
         assertThat(ast.getFieldName()).isEqualTo(userFieldName);
         assertThat(ast.getRawSearchTerm()).isEqualTo("foo >=\"2017-02-01\"");
         assertThat(ast.getTokens()).hasSize(1);
-        assertThat(ast.getTokens().get(0).getUserSqlData()).isNull();
-        assertThat(ast.getTokens().get(0).getDateSqlData()).isEqualTo("2017-02-01 00:00:00");
+        assertThat(ast.getTokens()
+            .get(0)
+            .getUserSqlData()).isNull();
+        assertThat(ast.getTokens()
+            .get(0)
+            .getDateSqlData()).isEqualTo("2017-02-01 00:00:00");
     }
 
     @Test

@@ -1,6 +1,6 @@
 package ch.difty.scipamato.public_.persistence.paper;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +36,8 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
         PublicPaper paper = repo.findByNumber(number);
         assertThat(paper.getId()).isEqualTo(number);
         assertThat(paper.getPmId()).isEqualTo(25395026);
-        assertThat(paper.getAuthors()).isEqualTo("Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.");
+        assertThat(paper.getAuthors()).isEqualTo(
+            "Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.");
     }
 
     @Test
@@ -87,13 +88,16 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
     @Test
     public void findingPageOfNumbersByFilter() {
         filter.setPublicationYearFrom(2015);
-        assertThat(repo.findPageOfNumbersByFilter(filter, allSorted)).isNotEmpty().containsExactly(2l);
+        assertThat(repo.findPageOfNumbersByFilter(filter, allSorted)).isNotEmpty()
+            .containsExactly(2l);
     }
 
     private List<Code> newCodes(String... codes) {
         final List<Code> list = new ArrayList<>();
         for (String c : codes)
-            list.add(Code.builder().code(c).build());
+            list.add(Code.builder()
+                .code(c)
+                .build());
         return list;
     }
 
@@ -101,26 +105,35 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
     public void findingPageByFilter_withCodes1Fand5H_finds2() {
         filter.setCodesOfClass1(newCodes("1F"));
         filter.setCodesOfClass5(newCodes("5H"));
-        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty().extracting("number").containsOnly(1l, 2l);
+        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty()
+            .extracting("number")
+            .containsOnly(1l, 2l);
     }
 
     @Test
     public void findingPageByFilter_withCodes6Mand7L_finds3() {
         filter.setCodesOfClass6(newCodes("6M"));
         filter.setCodesOfClass7(newCodes("7L"));
-        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty().extracting("number").containsOnly(1l, 2l, 3l);
+        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty()
+            .extracting("number")
+            .containsOnly(1l, 2l, 3l);
     }
 
     @Test
     public void findingPageByFilter_withCode2R_finds1() {
         filter.setCodesOfClass2(newCodes("2R"));
-        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty().extracting("number").containsExactly(3l);
+        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty()
+            .extracting("number")
+            .containsExactly(3l);
     }
 
     @Test
     public void findingPageByFilter_withOriginallySetAndThenClearedFilter_findsAll() {
         filter.setCodesOfClass2(newCodes("2R"));
-        filter.getCodesOfClass2().clear();
-        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty().extracting("number").containsOnly(1l, 2l, 3l);
+        filter.getCodesOfClass2()
+            .clear();
+        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty()
+            .extracting("number")
+            .containsOnly(1l, 2l, 3l);
     }
 }

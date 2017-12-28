@@ -11,7 +11,8 @@ import lombok.Setter;
  *
  * @author u.joss
  *
- * @param <ID> type of the numeric id
+ * @param <ID>
+ *            type of the numeric id
  */
 @Setter
 @Getter

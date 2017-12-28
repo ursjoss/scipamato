@@ -3,13 +3,15 @@ package ch.difty.scipamato.core.logic.parsing;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
-import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
+import ch.difty.scipamato.common.config.ApplicationProperties;
+import ch.difty.scipamato.core.config.ApplicationCoreProperties;
+import ch.difty.scipamato.core.config.AuthorParserStrategy;
 
 /**
- * Default implementation of the {@link AuthorParserFactory} which relies on the application config enum
- * defined in {@link ApplicationProperties} and the associated {@link AuthorParserStrategy} enum to parse
- * and provide the property.
+ * Default implementation of the {@link AuthorParserFactory} which relies on the
+ * application config enum defined in {@link ApplicationProperties} and the
+ * associated {@link AuthorParserStrategy} enum to parse and provide the
+ * property.
  *
  * @author u.joss
  */
@@ -18,20 +20,19 @@ public class EnumBasedAuthorParserFactory implements AuthorParserFactory {
 
     private final AuthorParserStrategy authorParserStrategy;
 
-    public EnumBasedAuthorParserFactory(final ApplicationProperties appProperties) {
+    public EnumBasedAuthorParserFactory(final ApplicationCoreProperties appProperties) {
         AssertAs.notNull(appProperties, "appProperties");
         this.authorParserStrategy = appProperties.getAuthorParserStrategy();
     }
 
-    /** {@inheritDoc} */
     @Override
-    public AuthorParser createParser(String authorString) {
+    public AuthorParser createParser(final String authorString) {
         AssertAs.notNull(authorString, "authorString");
 
         switch (authorParserStrategy) {
-        case DEFAULT:
+        case PUBMED:
         default:
-            return new DefaultAuthorParser(authorString);
+            return new PubmedAuthorParser(authorString);
         }
     }
 

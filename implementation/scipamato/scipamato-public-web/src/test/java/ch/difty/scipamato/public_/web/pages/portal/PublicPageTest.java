@@ -1,7 +1,10 @@
 package ch.difty.scipamato.public_.web.pages.portal;
 
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +40,14 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     protected void setUpHook() {
         super.setUpHook();
 
-        papers.add(new PublicPaper(1l, 1l, 1000, "authors1", "title1", "location1", 2016, "goals1", "methods1", "population1", "result1", "comment1"));
-        papers.add(new PublicPaper(2l, 2l, 1002, "authors2", "title2", "location2", 2017, "goals2", "methods2", "population2", "result2", "comment2"));
+        papers.add(new PublicPaper(1l, 1l, 1000, "authors1", "title1", "location1", 2016, "goals1", "methods1",
+                "population1", "result1", "comment1"));
+        papers.add(new PublicPaper(2l, 2l, 1002, "authors2", "title2", "location2", 2017, "goals2", "methods2",
+                "population2", "result2", "comment2"));
 
         when(serviceMock.countByFilter(isA(PublicPaperFilter.class))).thenReturn(papers.size());
-        when(serviceMock.findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class))).thenReturn(papers);
+        when(serviceMock.findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class)))
+            .thenReturn(papers);
 
     }
 
@@ -147,7 +153,8 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         verify(serviceMock, times(3)).countByFilter(isA(PublicPaperFilter.class));
         verify(serviceMock, times(3)).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
         // used in navigateable
-        verify(serviceMock, times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
+        verify(serviceMock, times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
+            isA(PaginationContext.class));
 
         verify(codeClassServiceMock).find("en_us");
     }

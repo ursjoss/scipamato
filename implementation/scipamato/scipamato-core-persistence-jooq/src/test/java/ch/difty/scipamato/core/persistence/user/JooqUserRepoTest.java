@@ -1,9 +1,10 @@
 package ch.difty.scipamato.core.persistence.user;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static ch.difty.scipamato.core.db.tables.ScipamatoUser.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.jooq.TableField;
 import org.junit.Test;
@@ -15,7 +16,8 @@ import ch.difty.scipamato.core.entity.filter.UserFilter;
 import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 
-public class JooqUserRepoTest extends JooqEntityRepoTest<ScipamatoUserRecord, User, Integer, ch.difty.scipamato.core.db.tables.ScipamatoUser, UserRecordMapper, UserFilter> {
+public class JooqUserRepoTest extends
+        JooqEntityRepoTest<ScipamatoUserRecord, User, Integer, ch.difty.scipamato.core.db.tables.ScipamatoUser, UserRecordMapper, UserFilter> {
 
     private static final Integer SAMPLE_ID = 3;
 
@@ -32,7 +34,8 @@ public class JooqUserRepoTest extends JooqEntityRepoTest<ScipamatoUserRecord, Us
     @Override
     protected JooqUserRepo getRepo() {
         if (repo == null) {
-            repo = new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
+            repo = new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+                    getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
                     getApplicationProperties(), userRoleRepoMock);
         }
         return repo;
@@ -40,8 +43,9 @@ public class JooqUserRepoTest extends JooqEntityRepoTest<ScipamatoUserRecord, Us
 
     @Override
     protected EntityRepository<User, Integer, UserFilter> makeRepoFindingEntityById(User user) {
-        return new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                getApplicationProperties(), userRoleRepoMock) {
+        return new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(),
+                userRoleRepoMock) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -136,24 +140,42 @@ public class JooqUserRepoTest extends JooqEntityRepoTest<ScipamatoUserRecord, Us
 
     @Test
     public void degenerateConstruction() {
-        assertDegenerateSupplierParameter(() -> new JooqUserRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(),
-                getUpdateSetStepSetter(), getApplicationProperties(), userRoleRepoMock), "dsl");
-        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                getApplicationProperties(), userRoleRepoMock), "mapper");
-        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                getApplicationProperties(), userRoleRepoMock), "sortMapper");
-        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), null, getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                getApplicationProperties(), userRoleRepoMock), "filterConditionMapper");
-        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null, getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                getApplicationProperties(), userRoleRepoMock), "dateTimeService");
-        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), null, getUpdateSetStepSetter(),
-                getApplicationProperties(), userRoleRepoMock), "insertSetStepSetter");
-        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), null,
-                getApplicationProperties(), userRoleRepoMock), "updateSetStepSetter");
-        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(),
-                getUpdateSetStepSetter(), null, userRoleRepoMock), "applicationProperties");
-        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(),
-                getUpdateSetStepSetter(), getApplicationProperties(), null), "userRoleRepo");
+        assertDegenerateSupplierParameter(
+            () -> new JooqUserRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(), getDateTimeService(),
+                    getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(), userRoleRepoMock),
+            "dsl");
+        assertDegenerateSupplierParameter(
+            () -> new JooqUserRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(), getDateTimeService(),
+                    getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(), userRoleRepoMock),
+            "mapper");
+        assertDegenerateSupplierParameter(
+            () -> new JooqUserRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getDateTimeService(),
+                    getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(), userRoleRepoMock),
+            "sortMapper");
+        assertDegenerateSupplierParameter(
+            () -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), null, getDateTimeService(),
+                    getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(), userRoleRepoMock),
+            "filterConditionMapper");
+        assertDegenerateSupplierParameter(
+            () -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null,
+                    getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(), userRoleRepoMock),
+            "dateTimeService");
+        assertDegenerateSupplierParameter(
+            () -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+                    getDateTimeService(), null, getUpdateSetStepSetter(), getApplicationProperties(), userRoleRepoMock),
+            "insertSetStepSetter");
+        assertDegenerateSupplierParameter(
+            () -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+                    getDateTimeService(), getInsertSetStepSetter(), null, getApplicationProperties(), userRoleRepoMock),
+            "updateSetStepSetter");
+        assertDegenerateSupplierParameter(
+            () -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+                    getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null, userRoleRepoMock),
+            "applicationProperties");
+        assertDegenerateSupplierParameter(() -> new JooqUserRepo(getDsl(), getMapper(), getSortMapper(),
+                getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
+                getApplicationProperties(), null),
+            "userRoleRepo");
     }
 
     @Test

@@ -7,12 +7,13 @@ import lombok.Builder;
 import lombok.experimental.Delegate;
 
 /**
- * Facade to the scipamato-public {@link CodeClass} so we can refer to it
- * with a name that is clearly distinct from the scipamato-core code class.
+ * Facade to the scipamato-public {@link CodeClass} so we can refer to it with a
+ * name that is clearly distinct from the scipamato-core code class.
  *
  * Also decouples from the jOOQ generated entity class that has constructor
- * parameters sorted based on the order of columns in the table. We don't
- * have control over that and thus avoid passing in constructor arguments.
+ * parameters sorted based on the order of columns in the table. We don't have
+ * control over that and thus avoid passing in constructor arguments.
+ *
  * @author u.joss
  */
 public class PublicCodeClass {
@@ -21,7 +22,8 @@ public class PublicCodeClass {
     private final CodeClass delegate;
 
     @Builder
-    private PublicCodeClass(final Integer codeClassId, final String langCode, final String name, final String description, final Integer version, final Timestamp created, final Timestamp lastModified,
+    private PublicCodeClass(final Integer codeClassId, final String langCode, final String name,
+            final String description, final Integer version, final Timestamp created, final Timestamp lastModified,
             final Timestamp lastSynched) {
         delegate = new CodeClass();
         delegate.setCodeClassId(codeClassId);

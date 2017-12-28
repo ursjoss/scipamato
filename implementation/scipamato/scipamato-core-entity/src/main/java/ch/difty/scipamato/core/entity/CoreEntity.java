@@ -18,25 +18,56 @@ public abstract class CoreEntity extends ScipamatoEntity {
     public static final String DISPLAY_VALUE = "displayValue";
 
     /**
-     * Regex extending the classical \w with non-ASCII characters. To be used within a character class,<p>
+     * Regex extending the classical \w with non-ASCII characters. To be used within
+     * a character class,
+     * <p>
      *
-     * e.g. {@literal [\\w\\u00C0-\\u024f]}<p>
+     * e.g. {@literal [\\w\\u00C0-\\u024f]}
+     * <p>
      *
-     * Thanks to hqx5 @see <a href="http://stackoverflow.com/questions/4043307/why-this-regex-is-not-working-for-german-words">stackoverflow</a>
+     * Thanks to hqx5 for his answer to the following <a href=
+     * "http://stackoverflow.com/questions/4043307/why-this-regex-is-not-working-for-german-words">stackoverflow
+     * question </a>
      */
     protected static final String RE_W = "\\w\\u00C0-\\u024f";
+
+    /**
+     * Regex extending {@link #RE_W} with dash ({@literal -}) and hyphen
+     * ({@literal '}) and matching one or more of them.
+     *
+     * @see #RE_W
+     */
     protected static final String RE_WW = "[" + RE_W + "-']+";
+
+    /**
+     * Regex extending {@link #RE_W} with dash ({@literal -}), hyphen ({@literal '})
+     * and dot ({@literal .}) and matching one or more of them.
+     *
+     * @see #RE_W
+     */
     protected static final String RE_WW2 = "[." + RE_W + "-']+";
-    // White Space
+
+    /**
+     * Regex comprising a single of the typical 'separating' characters:
+     * <ul>
+     * <li>Space</li>
+     * <li>Tab ({@literal \t})</li>
+     * <li>Page Break ({@literal \f})</li>
+     * <li>Newline ({@literal \n} (Linux), {@literal \r} (Mac) or {@literal \r\n}
+     * (Windows))</li>
+     * </ul>
+     * Note that the Windows newlines {@literal \r\n} requires two (i.e. more than
+     * one) {@literal RE_S} to match.
+     */
     protected static final String RE_S = "[ \\t\\f\\r\\n]";
 
-    public static final String CREATED_DV = "createdDisplayValue";
-    public static final String MODIFIED_DV = "modifiedDisplayValue";
-    public static final String CREATOR_ID = "createdBy";
-    public static final String CREATOR_NAME = "createdByName";
+    public static final String CREATED_DV        = "createdDisplayValue";
+    public static final String MODIFIED_DV       = "modifiedDisplayValue";
+    public static final String CREATOR_ID        = "createdBy";
+    public static final String CREATOR_NAME      = "createdByName";
     public static final String CREATOR_FULL_NAME = "createdByFullName";
-    public static final String MODIFIER_ID = "lastModifiedBy";
-    public static final String MODIFIER_NAME = "lastModifiedByName";
+    public static final String MODIFIER_ID       = "lastModifiedBy";
+    public static final String MODIFIER_NAME     = "lastModifiedByName";
 
     private Integer createdBy;
     private Integer lastModifiedBy;
@@ -62,7 +93,8 @@ public abstract class CoreEntity extends ScipamatoEntity {
                 sb.append(" (");
                 close = ")";
             }
-            sb.append(ldt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).append(close);
+            sb.append(ldt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .append(close);
         }
         return sb.toString();
     }

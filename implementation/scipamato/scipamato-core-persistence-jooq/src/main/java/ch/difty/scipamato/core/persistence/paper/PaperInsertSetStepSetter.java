@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper;
 
-import static ch.difty.scipamato.core.db.tables.Paper.*;
+import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
@@ -13,7 +13,8 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 
 /**
- * The insert step setter used for inserting new {@link Paper}s.<p>
+ * The insert step setter used for inserting new {@link Paper}s.
+ * <p>
  *
  * <b>Note:</b> the {@link Code}s are not inserted here.
  *
@@ -22,15 +23,12 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 @Component
 public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord, Paper> {
 
-    /** {@inheritDoc} */
     @Override
     public InsertSetMoreStep<PaperRecord> setNonKeyFieldsFor(InsertSetStep<PaperRecord> step, Paper e) {
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
 
-        // @formatter:off
-        return step
-            .set(PAPER.NUMBER, e.getNumber())
+        return step.set(PAPER.NUMBER, e.getNumber())
             .set(PAPER.PM_ID, e.getPmId())
             .set(PAPER.DOI, e.getDoi())
             .set(PAPER.AUTHORS, e.getAuthors())
@@ -68,10 +66,8 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
 
             .set(PAPER.CREATED_BY, e.getCreatedBy())
             .set(PAPER.LAST_MODIFIED_BY, e.getLastModifiedBy());
-        // @formatter:on
     }
 
-    /** {@inheritDoc} */
     @Override
     public void considerSettingKeyOf(InsertSetMoreStep<PaperRecord> step, Paper entity) {
         AssertAs.notNull(step, "step");
@@ -83,9 +79,8 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
 
     @Override
     public void resetIdToEntity(Paper entity, PaperRecord saved) {
-        if (saved != null) {
+        if (saved != null)
             entity.setId(saved.getId());
-        }
     }
 
 }

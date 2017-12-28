@@ -3,8 +3,8 @@ package ch.difty.scipamato.core.entity.filter;
 /**
  * Implementation of {@link SearchTerm} working with Boolean fields.
  *
- * There is no meta-specification possible in boolean {@link SearchTerm}s.
- * The value can either be {@code true} or {@code false}.
+ * There is no meta-specification possible in boolean {@link SearchTerm}s. The
+ * value can either be {@code true} or {@code false}.
  *
  * @author u.joss
  */
@@ -32,8 +32,7 @@ public class BooleanSearchTerm extends SearchTerm {
     }
 
     /**
-     * If true: {@code fieldName}
-     * If false: {@code -fieldName}
+     * If true: {@code fieldName}. If false: {@code -fieldName}
      */
     @Override
     public String getDisplayValue() {

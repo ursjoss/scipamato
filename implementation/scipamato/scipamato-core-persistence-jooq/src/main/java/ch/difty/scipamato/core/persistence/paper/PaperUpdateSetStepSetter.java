@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper;
 
-import static ch.difty.scipamato.core.db.tables.Paper.*;
+import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
@@ -14,7 +14,8 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 
 /**
- * The update step setter used for updating {@link Paper}s.<p>
+ * The update step setter used for updating {@link Paper}s.
+ * <p>
  *
  * <b>Note:</b> the {@link Code}s are not updated here.
  *
@@ -23,14 +24,11 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 @Component
 public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord, Paper> {
 
-    /** {@inheritDoc} */
     @Override
     public UpdateSetMoreStep<PaperRecord> setFieldsFor(UpdateSetFirstStep<PaperRecord> step, Paper e) {
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
-        // @formatter:off
-        return step
-            .set(PAPER.NUMBER, e.getNumber())
+        return step.set(PAPER.NUMBER, e.getNumber())
             .set(PAPER.PM_ID, e.getPmId())
             .set(PAPER.DOI, e.getDoi())
             .set(PAPER.AUTHORS, e.getAuthors())
@@ -71,7 +69,6 @@ public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord
             .set(PAPER.LAST_MODIFIED, DateUtils.tsOf(e.getLastModified()))
             .set(PAPER.LAST_MODIFIED_BY, e.getLastModifiedBy())
             .set(PAPER.VERSION, e.getVersion() + 1);
-         // @formatter:on
     }
 
 }

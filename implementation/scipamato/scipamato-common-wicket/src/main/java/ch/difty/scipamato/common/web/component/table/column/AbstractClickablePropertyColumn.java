@@ -15,8 +15,11 @@ import org.apache.wicket.model.PropertyModel;
  *
  * @author u.joss
  *
- * @param <T> the type of the object that will be rendered in this column's cells
- * @param <S> the type of the sort property
+ * @param <T>
+ *            the type of the object that will be rendered in this column's
+ *            cells
+ * @param <S>
+ *            the type of the sort property
  */
 public abstract class AbstractClickablePropertyColumn<T, S> extends AbstractColumn<T, S> {
     private static final long serialVersionUID = 1L;

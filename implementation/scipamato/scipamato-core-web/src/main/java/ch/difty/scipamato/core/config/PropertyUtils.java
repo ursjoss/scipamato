@@ -1,11 +1,12 @@
-package ch.difty.scipamato.common.config;
+package ch.difty.scipamato.core.config;
 
 import org.apache.commons.lang3.StringUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Utility class with static helper methods used for configuration/property evaluation purposes.
+ * Utility class with static helper methods used for configuration/property
+ * evaluation purposes.
  *
  * @author u.joss
  */
@@ -17,17 +18,20 @@ public final class PropertyUtils {
 
     /**
      * Derive an enum from a configuration property value.
+     *
      * @param propertyValue
-     *          the configured property value.
+     *            the configured property value.
      * @param values
-     *          all values of the enum, hand in {@code T.values}
+     *            all values of the enum, hand in {@code T.values}
      * @param defaultValue
-     *          the default enum value that shall be returned if the property value does not explicitly match an enum value.
+     *            the default enum value that shall be returned if the property
+     *            value does not explicitly match an enum value.
      * @param propertyKey
-     *          the property key, used only for logging purposes
+     *            the property key, used only for logging purposes
      * @return enum of type {@code T}
      */
-    public static <T extends Enum<T>> T fromProperty(String propertyValue, T[] values, T defaultValue, String propertyKey) {
+    public static <T extends Enum<T>> T fromProperty(String propertyValue, T[] values, T defaultValue,
+            String propertyKey) {
         if (StringUtils.isNotBlank(propertyValue)) {
             for (T s : values) {
                 if (propertyValue.equalsIgnoreCase(s.name())) {
@@ -36,21 +40,24 @@ public final class PropertyUtils {
                 }
             }
         }
-        final String msg = "{} is not properly defined. Current value: '{}' - now using {} - specify one of {} in your property configuration (e.g. application.properties).";
+        final String msg = "{} is not properly defined. Current value: '{}' - now using {} - "
+                + "specify one of {} in your property configuration (e.g. application.properties).";
         log.warn(msg, propertyKey, propertyValue, defaultValue, values);
         return defaultValue;
     }
 
     /**
      * Derive an int value from a configuration property value.
+     *
      * @param propertyValue
-     *          the configured property value as string
+     *            the configured property value as string
      * @param values
-     *          possible values for log in case of a warn message
+     *            possible values for log in case of a warn message
      * @param defaultValue
-     *          the default value that shall be returned if the property value cannot be parsed as integer
+     *            the default value that shall be returned if the property value
+     *            cannot be parsed as integer
      * @param propertyKey
-     *          the property key, used only for logging purposes
+     *            the property key, used only for logging purposes
      * @return the int value
      */
     public static int parseInt(String propertyValue, String values, int defaultValue, String propertyKey) {
@@ -59,7 +66,8 @@ public final class PropertyUtils {
             value = Integer.parseInt(propertyValue);
             log.info("{}={}", propertyKey, propertyValue);
         } catch (NumberFormatException ex) {
-            final String msg = "{} is not properly defined. Current value: '{}' - now using {} - specify one in your property configuration (e.g. application.properties).{}";
+            final String msg = "{} is not properly defined. Current value: '{}' - now using {} - "
+                    + "specify one in your property configuration (e.g. application.properties).{}";
             log.warn(msg, propertyKey, propertyValue, defaultValue, values);
         }
         return value;

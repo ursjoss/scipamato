@@ -1,7 +1,9 @@
 package ch.difty.scipamato.public_.persistence.paper;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +24,7 @@ import ch.difty.scipamato.public_.entity.filter.PublicPaperFilter;
 @RunWith(MockitoJUnitRunner.class)
 public class JooqPublicPaperServiceTest {
 
-    private static final long ID = 5;
+    private static final long ID     = 5;
     private static final long NUMBER = 15;
 
     private JooqPublicPaperService service;
@@ -44,10 +46,14 @@ public class JooqPublicPaperServiceTest {
     public void setUp() {
         service = new JooqPublicPaperService(mockRepo);
 
-        publicPaper = PublicPaper.builder().id(ID).build();
+        publicPaper = PublicPaper.builder()
+            .id(ID)
+            .build();
 
         papers.add(publicPaper);
-        papers.add(PublicPaper.builder().id(ID + 1).build());
+        papers.add(PublicPaper.builder()
+            .id(ID + 1)
+            .build());
     }
 
     @After
@@ -79,7 +85,9 @@ public class JooqPublicPaperServiceTest {
     @Test
     public void findingPageByFilter_delegatesToRepo() {
         when(mockRepo.findPageByFilter(filterMock, paginationContextMock)).thenReturn(papers);
-        assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isNotNull().isNotEmpty().hasSize(2);
+        assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isNotNull()
+            .isNotEmpty()
+            .hasSize(2);
         verify(mockRepo).findPageByFilter(filterMock, paginationContextMock);
     }
 

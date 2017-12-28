@@ -1,8 +1,10 @@
 package ch.difty.scipamato.core.entity;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static ch.difty.scipamato.core.entity.CoreEntity.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.MODIFIED;
+import static ch.difty.scipamato.core.entity.CoreEntity.CREATOR_ID;
+import static ch.difty.scipamato.core.entity.CoreEntity.MODIFIER_ID;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
 
@@ -15,11 +17,13 @@ import nl.jqno.equalsverifier.Warning;
 
 public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
-    private static final String CODE1 = "code1";
-    private static final String JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE = "{javax.validation.constraints.NotNull.message}";
-    private static final String CODECLASS10 = "codeclass10";
-    private static final LocalDateTime CREATED = LocalDateTime.parse("2017-01-01T08:01:33.821");
-    private static final LocalDateTime LAST_MOD = LocalDateTime.parse("2017-02-02T08:01:33.821");
+    private static final String        CODE1                                         = "code1";
+    private static final String        JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE = "{javax.validation.constraints.NotNull.message}";
+    private static final String        CODECLASS10                                   = "codeclass10";
+    private static final LocalDateTime CREATED                                       = LocalDateTime
+        .parse("2017-01-01T08:01:33.821");
+    private static final LocalDateTime LAST_MOD                                      = LocalDateTime
+        .parse("2017-02-02T08:01:33.821");
 
     private final Code c = new Code("1A", CODE1, null, false, 1, "c1", "", 1);
 
@@ -31,20 +35,26 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     private void validateAndAssertFailure(Code code, final String field, final Object invalidValue, final String msg) {
         validate(code);
 
-        assertThat(getViolations()).isNotEmpty().hasSize(1);
-        ConstraintViolation<Code> violation = getViolations().iterator().next();
+        assertThat(getViolations()).isNotEmpty()
+            .hasSize(1);
+        ConstraintViolation<Code> violation = getViolations().iterator()
+            .next();
         assertThat(violation.getMessageTemplate()).isEqualTo(msg);
         assertThat(violation.getInvalidValue()).isEqualTo(invalidValue);
-        assertThat(violation.getPropertyPath().toString()).isEqualTo(field);
+        assertThat(violation.getPropertyPath()
+            .toString()).isEqualTo(field);
     }
 
     @Test
     public void constructing_withAllValues_populatesCodeClass() {
         Code c1 = new Code("C1", "c1", null, false, 10, "cc10", CODECLASS10, 2);
         assertThat(c1.getCodeClass()).isNotNull();
-        assertThat(c1.getCodeClass().getId()).isEqualTo(10);
-        assertThat(c1.getCodeClass().getName()).isEqualTo("cc10");
-        assertThat(c1.getCodeClass().getDescription()).isEqualTo(CODECLASS10);
+        assertThat(c1.getCodeClass()
+            .getId()).isEqualTo(10);
+        assertThat(c1.getCodeClass()
+            .getName()).isEqualTo("cc10");
+        assertThat(c1.getCodeClass()
+            .getDescription()).isEqualTo(CODECLASS10);
     }
 
     @Test
@@ -78,7 +88,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     public void testingToString() {
         final Code c1 = new Code("1A", CODE1, null, false, 1, "c1", "", 1, CREATED, 10, LAST_MOD, 20, 3);
         assertThat(c1.toString()).isEqualTo(
-                "Code[code=1A,name=code1,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T08:01:33.821,lastModified=2017-02-02T08:01:33.821,version=3]");
+            "Code[code=1A,name=code1,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T08:01:33.821,lastModified=2017-02-02T08:01:33.821,version=3]");
     }
 
     @Test
@@ -218,8 +228,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void equals() {
-        EqualsVerifier
-            .forClass(Code.class)
+        EqualsVerifier.forClass(Code.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(Code.CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)

@@ -1,7 +1,13 @@
 package ch.difty.scipamato.core.web.pages.paper.list;
 
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -14,9 +20,9 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
+import ch.difty.scipamato.core.config.ApplicationCoreProperties;
 import ch.difty.scipamato.core.entity.filter.PaperFilter;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
@@ -39,14 +45,13 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
     private static final String LC = "en_us";
 
     @MockBean
-    private PubmedImporter pubmedImportService;
-
+    private PubmedImporter            pubmedImportService;
     @MockBean
-    private CodeService codeServiceMock;
+    private CodeService               codeServiceMock;
     @MockBean
-    private CodeClassService codeClassServiceMock;
+    private CodeClassService          codeClassServiceMock;
     @MockBean
-    private ApplicationProperties applicationPropertiesMock;
+    private ApplicationCoreProperties applicationPropertiesMock;
 
     @Override
     protected void setUpHook() {
@@ -55,7 +60,8 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeServiceMock, codeClassServiceMock, paperServiceMock, pubmedImportService);
+        verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeServiceMock, codeClassServiceMock,
+            paperServiceMock, pubmedImportService);
     }
 
     @Override
@@ -111,13 +117,17 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         assertPageLinkButton(1, "Left", NavbarButton.class, "Search");
         assertPageLinkButton(2, "Left", NavbarButton.class, "Synchronize");
 
-        assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:0:component", "https://github.com/ursjoss/scipamato/wiki/");
-        assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:1:component", "https://github.com/ursjoss/scipamato/blob/master/CHANGELOG.asciidoc");
+        assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:0:component",
+            "https://github.com/ursjoss/scipamato/wiki/");
+        assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:1:component",
+            "https://github.com/ursjoss/scipamato/blob/master/CHANGELOG.asciidoc");
         assertPageLinkButton(2, "Right", NavbarButton.class, "Logout");
     }
 
-    private void assertPageLinkButton(int index, String position, Class<? extends Component> expectedComponentClass, String expectedLabelText) {
-        String path = "navbar:container:collapse:nav" + position + "ListEnclosure:nav" + position + "List:" + index + ":component";
+    private void assertPageLinkButton(int index, String position, Class<? extends Component> expectedComponentClass,
+            String expectedLabelText) {
+        String path = "navbar:container:collapse:nav" + position + "ListEnclosure:nav" + position + "List:" + index
+                + ":component";
         getTester().assertComponent(path, NavbarButton.class);
         getTester().assertLabel(path + ":label", expectedLabelText);
     }
@@ -202,7 +212,8 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
         verify(pubmedImportService).persistPubmedArticlesFromXml(content);
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
-        // The third call to findPageOfIds... is to update the Navigateable, the fourth one because of the page redirect
+        // The third call to findPageOfIds... is to update the Navigateable, the fourth
+        // one because of the page redirect
         verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 

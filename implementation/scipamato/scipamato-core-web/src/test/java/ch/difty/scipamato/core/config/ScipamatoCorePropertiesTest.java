@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.scipamato.common.config.MavenProperties;
-import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ScipamatoCorePropertiesTest {
@@ -32,7 +31,7 @@ public class ScipamatoCorePropertiesTest {
         when(scipamatoPropMock.getBrand()).thenReturn("brand");
         when(scipamatoPropMock.getDefaultLocalization()).thenReturn("dl");
         when(scipamatoPropMock.getPubmedBaseUrl()).thenReturn("pbUrl");
-        when(scipamatoPropMock.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.DEFAULT);
+        when(scipamatoPropMock.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.PUBMED);
         when(scipamatoPropMock.getPaperNumberMinimumToBeRecycled()).thenReturn(100);
 
         when(mavenPropMock.getVersion()).thenReturn("0.0.1-SNAPSHOT");
@@ -69,7 +68,7 @@ public class ScipamatoCorePropertiesTest {
 
     @Test
     public void gettingAuthorParserStrategy_delegatesToScipamatoProps() {
-        assertThat(prop.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.DEFAULT);
+        assertThat(prop.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.PUBMED);
         verify(scipamatoPropMock).getAuthorParserStrategy();
     }
 

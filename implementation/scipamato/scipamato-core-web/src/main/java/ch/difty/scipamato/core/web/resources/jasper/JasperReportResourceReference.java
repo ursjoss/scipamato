@@ -13,12 +13,14 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
 
 /**
- * Static resource reference for a jasper report, wrapping the xml report definition (jrxml), but also providing
- * access to the compiled {@link JasperReport}.
+ * Static resource reference for a jasper report, wrapping the xml report
+ * definition (jrxml), but also providing access to the compiled
+ * {@link JasperReport}.
  *
- * The compiled report is typically cached, in order to avoid multiple compilation, which is time intensive.
- * However, e.g. when developing the report, you might want to override the caching, so the compilation picks
- * up the latest changes in the report definition file.
+ * The compiled report is typically cached, in order to avoid multiple
+ * compilation, which is time intensive. However, e.g. when developing the
+ * report, you might want to override the caching, so the compilation picks up
+ * the latest changes in the report definition file.
  *
  * @author u.joss
  */
@@ -28,16 +30,18 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
     private static final long serialVersionUID = 1L;
 
     private final boolean cacheReport;
-    private JasperReport report;
+    private JasperReport  report;
 
     /**
-     * Resource reference for a particular jasper report, wrapping the XML report definition.
+     * Resource reference for a particular jasper report, wrapping the XML report
+     * definition.
      *
      * @param scope
      * @param name
-     *           the name of the report (without the extension .jrxml
+     *            the name of the report (without the extension .jrxml
      * @param cacheReport
-     *           if {@code true} the report is only compiled from xml when the report is requested for the first time. 
+     *            if {@code true} the report is only compiled from xml when the
+     *            report is requested for the first time.
      */
     public JasperReportResourceReference(final Class<?> scope, final String name, final boolean cacheReport) {
         super(scope, name + ".jrxml");
@@ -46,8 +50,10 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
 
     /**
      * @return the compiled {@link JasperReport} object.
-     * @throws {@link JasperReportException}, an unchecked runtime exception wrapping
-     *    two checked exceptions ({@link ResourceStreamNotFoundException} and {@link JRException})
+     * @throws {@link
+     *             JasperReportException}, an unchecked runtime exception wrapping
+     *             two checked exceptions ({@link ResourceStreamNotFoundException}
+     *             and {@link JRException})
      */
     public JasperReport getReport() {
         if (!cacheReport || report == null) {

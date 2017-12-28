@@ -18,7 +18,8 @@ import ch.difty.scipamato.core.persistence.user.UserRepository;
  * @author u.joss
  */
 @Service
-public class JooqPaperSlimService extends JooqReadOnlyService<Long, PaperSlim, PaperFilter, PaperSlimRepository> implements PaperSlimService {
+public class JooqPaperSlimService extends JooqReadOnlyService<Long, PaperSlim, PaperFilter, PaperSlimRepository>
+        implements PaperSlimService {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,19 +27,16 @@ public class JooqPaperSlimService extends JooqReadOnlyService<Long, PaperSlim, P
         super(repo, userRepo);
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<PaperSlim> findBySearchOrder(SearchOrder searchOrder) {
         return getRepository().findBySearchOrder(searchOrder);
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<PaperSlim> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext) {
         return getRepository().findPageBySearchOrder(searchOrder, paginationContext);
     }
 
-    /** {@inheritDoc} */
     @Override
     public int countBySearchOrder(SearchOrder searchOrder) {
         return getRepository().countBySearchOrder(searchOrder);

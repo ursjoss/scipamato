@@ -1,7 +1,7 @@
 package ch.difty.scipamato.public_.persistence.paper;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.jooq.DSLContext;
 import org.junit.After;
@@ -22,11 +22,11 @@ public class JooqPublicPaperRepoTest {
     private PublicPaperRepository repo;
 
     @Mock
-    private DSLContext dslMock;
+    private DSLContext                                      dslMock;
     @Mock
     private JooqSortMapper<PaperRecord, PublicPaper, Paper> sortMapperMock;
     @Mock
-    private PublicPaperFilterConditionMapper filterConditionMapperMock;
+    private PublicPaperFilterConditionMapper                filterConditionMapperMock;
 
     @Before
     public void setUp() {

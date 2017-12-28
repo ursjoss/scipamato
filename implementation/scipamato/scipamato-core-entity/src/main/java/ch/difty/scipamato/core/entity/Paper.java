@@ -14,6 +14,19 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * The main entity of SciPaMaTo. A Paper is the representation of a scientific
+ * study within the application. Within SciPaMaTo-Core the full range of fields
+ * is maintained (as opposed to the more restricted fields exposed for a paper
+ * in SciPaMaTo-Public).
+ * <p>
+ * Most fields are represented as simple strings or numeric values. Exceptions
+ * to this are attachments (stored as list of {@link PaperAttachment} and
+ * especially {@link Code}s managed in a {@link CodeBox} implementation (hence
+ * implementing {@link CodeBoxAware}).
+ *
+ * @author u.joss
+ */
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -21,79 +34,109 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String NA_AUTHORS = "N A.";
-    public static final String NA_STRING = "n.a.";
-    public static final int NA_PUBL_YEAR = 1500;
+    public static final String NA_AUTHORS   = "N A.";
+    public static final String NA_STRING    = "n.a.";
+    public static final int    NA_PUBL_YEAR = 1500;
 
     /**
-     * One or more of the extended word characters including {@literal -} and {@literal '}
+     * One or more of the extended word characters including {@literal -} and
+     * {@literal '} following a space.
+     *
+     * @see CoreEntity#RE_WW
      */
     private static final String RE_S_WW = "\\s" + RE_WW;
 
     /**
      * Regex verifying the correctness of an Author string. Comprises of:
      * <ol>
-     * <li> a single author, made up of one or more "name words", each made up of
+     * <li>a single author, made up of one or more "name words", each made up of
      * <ul>
-     * <li> any ASCII character out of the word character class \w ([a-zA-Z_0-9]) </li>
-     * <li> additional unicode characters (\u00C0-\u024f) </li>
-     * <li> dashes ({@literal -})</li>
-     * <li> hyphens ({@literal '}) </li>
+     * <li>any ASCII character out of the word character class \w ([a-zA-Z_0-9])
+     * </li>
+     * <li>additional unicode characters (\u00C0-\u024f)</li>
+     * <li>dashes ({@literal -})</li>
+     * <li>hyphens ({@literal '})</li>
      * </ul>
-     * <li> then optionally followed by one or more of such authors, separated by a comma ({@literal ,})</li>
-     * <li> then optionally followed by one collective author, made up of the same characters as normal authors, but separated by a semicolon ({@literal ;})</li>
+     * <li>then optionally followed by one or more of such authors, separated by a
+     * comma ({@literal ,})</li>
+     * <li>then optionally followed by one collective author, made up of the same
+     * characters as normal authors, but separated by a semicolon
+     * ({@literal ;})</li>
      * </ol>
      *
-     * The resulting regex:<p>
+     * The resulting regex:
+     * <p>
      * {@code ^[\w\u00C0-\u024f-']+(\s[\w\u00C0-\u024f-']+){0,}(,\s[\w\u00C0-\u024f-']+(\s[\w\u00C0-\u024f-']+){0,}){0,}(;\s[\w\u00C0-\u024f-']+(\s[\w\u00C0-\u024f-']+){0,}){0,1}\.$}
+     * <p>
+     * <b>Beware:</b> The validation of the author field should actually be
+     * functionally dependent on the selected configurable author parser strategy
+     * (see ScipamatoCoreProperties#getAuthorParserStrategy()). Making this static
+     * on this entity is a shortcut that only works as long as we only have a single
+     * strategy.
+     *
+     * @see PubmedAuthorParser
      */
-    private static final String AUTHOR_REGEX = "^" + RE_WW + "(" + RE_S_WW + "){0,}(," + RE_S_WW + "(" + RE_S_WW + "){0,}){0,}(;" + RE_S_WW + "(" + RE_S_WW + "){0,}){0,1}\\.$";
+    private static final String AUTHOR_REGEX = "^" + RE_WW + "(" + RE_S_WW + "){0,}(," + RE_S_WW + "(" + RE_S_WW
+            + "){0,}){0,}(;" + RE_S_WW + "(" + RE_S_WW + "){0,}){0,1}\\.$";
 
     /**
-     * Regex to validate DOIs. Does not capture the full range of possible DOIs, but nearly all of the likely ones.
+     * Regex to validate DOIs. Does not capture the full range of possible DOIs, but
+     * nearly all of the likely ones.
      *
      * <ol>
-     * <li> starting with {@literal 10} followed by a period</li>
-     * <li> continuing with 4 to 9 digits</li>
-     * <li> followed by a dash ({@literal /})</li>
-     * <li> followed by one or more ASCII characters, numbers or special characters ({@literal -._;()/:})</li>
+     * <li>starting with {@literal 10} followed by a period</li>
+     * <li>continuing with 4 to 9 digits</li>
+     * <li>followed by a dash ({@literal /})</li>
+     * <li>followed by one or more ASCII characters, numbers or special characters
+     * ({@literal -._;()/:})</li>
      * </ol>
      *
-     * The resulting regex:<p>
+     * The resulting regex:
+     * <p>
      * {@code ^10\.\d{4,9}/[-._;()/:A-Z0-9]+$}
+     * <p>
+     * The validation pattern is simplified and seems to catch roughly 74.4M out of
+     * 74.9M DOIs. The uncaught ones seem to be old and hopefully don't turn up
+     * within SciPaMaTo. Otherwise additional regex patterns catching more of the
+     * remaining ones can be found in the blogpost (thanks to Andrew Gilmartin)
+     * referenced below:
+     *
+     * @see <a href=
+     *      "http://blog.crossref.org/2015/08/doi-regular-expressions.html">
+     *      http://blog.crossref.org/2015/08/doi-regular-expressions.html</a>
      */
     private static final String DOI_REGEX = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$";
 
-    public static final String NUMBER = "number";
-    public static final String DOI = "doi";
-    public static final String PMID = "pmId";
-    public static final String AUTHORS = "authors";
-    public static final String FIRST_AUTHOR = "firstAuthor";
+    public static final String NUMBER                  = "number";
+    public static final String DOI                     = "doi";
+    public static final String PMID                    = "pmId";
+    public static final String AUTHORS                 = "authors";
+    public static final String FIRST_AUTHOR            = "firstAuthor";
     public static final String FIRST_AUTHOR_OVERRIDDEN = "firstAuthorOverridden";
-    public static final String TITLE = "title";
-    public static final String LOCATION = "location";
-    public static final String PUBL_YEAR = "publicationYear";
+    public static final String TITLE                   = "title";
+    public static final String LOCATION                = "location";
+    public static final String PUBL_YEAR               = "publicationYear";
 
-    public static final String GOALS = "goals";
+    public static final String GOALS      = "goals";
     public static final String POPULATION = "population";
-    public static final String METHODS = "methods";
+    public static final String METHODS    = "methods";
 
-    public static final String POPULATION_PLACE = "populationPlace";
+    public static final String POPULATION_PLACE        = "populationPlace";
     public static final String POPULATION_PARTICIPANTS = "populationParticipants";
-    public static final String POPULATION_DURATION = "populationDuration";
-    public static final String EXPOSURE_POLLUTANT = "exposurePollutant";
-    public static final String EXPOSURE_ASSESSMENT = "exposureAssessment";
-    public static final String METHOD_STUDY_DESIGN = "methodStudyDesign";
-    public static final String METHOD_OUTCOME = "methodOutcome";
-    public static final String METHOD_STATISTICS = "methodStatistics";
-    public static final String METHOD_CONFOUNDERS = "methodConfounders";
+    public static final String POPULATION_DURATION     = "populationDuration";
+    public static final String EXPOSURE_POLLUTANT      = "exposurePollutant";
+    public static final String EXPOSURE_ASSESSMENT     = "exposureAssessment";
+    public static final String METHOD_STUDY_DESIGN     = "methodStudyDesign";
+    public static final String METHOD_OUTCOME          = "methodOutcome";
+    public static final String METHOD_STATISTICS       = "methodStatistics";
+    public static final String METHOD_CONFOUNDERS      = "methodConfounders";
 
-    public static final String RESULT = "result";
+    public static final String RESULT  = "result";
     public static final String COMMENT = "comment";
-    public static final String INTERN = "intern";
+    public static final String INTERN  = "intern";
 
-    public static final String RESULT_EXPOSURE_RANGE = "resultExposureRange";
-    public static final String RESULT_EFFECT_ESTIMATE = "resultEffectEstimate";
+    public static final String RESULT_EXPOSURE_RANGE   = "resultExposureRange";
+    public static final String RESULT_EFFECT_ESTIMATE  = "resultEffectEstimate";
     public static final String RESULT_MEASURED_OUTCOME = "resultMeasuredOutcome";
 
     public static final String ORIGINAL_ABSTRACT = "originalAbstract";
@@ -105,23 +148,17 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
     public static final String CODES = "codes";
 
     // Override to get unique names
-    public static final String CREATED = "paper.created";
-    public static final String CREATED_BY = "paper.created_by";
-    public static final String LAST_MOD = "paper.last_modified";
+    public static final String CREATED     = "paper.created";
+    public static final String CREATED_BY  = "paper.created_by";
+    public static final String LAST_MOD    = "paper.last_modified";
     public static final String LAST_MOD_BY = "paper.last_modified_by";
 
     @NotNull
     @Min(0)
     private Long number;
 
-    /*
+    /**
      * Digital Object Identifier (see http://www.doi.org)
-     *
-     * The validation pattern is simplified and seems to catch roughly 74.4M out of 74.9M DOIs.
-     * The uncaught ones seem to be old and hopefully don't turn up within SciPaMaTo. Otherwise additional
-     * regex patterns catching more of the remaining ones can be found here:
-     *
-     * <a href="http://blog.crossref.org/2015/08/doi-regular-expressions.html">http://blog.crossref.org/2015/08/doi-regular-expressions.html (thx to Andrew Gilmartin)</a>
      *
      * /^10.\d{4,9}/[-._;()/:A-Z0-9]+$/i
      */
@@ -135,12 +172,12 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
     private String authors;
 
     @NotNull
-    private String firstAuthor;
+    private String  firstAuthor;
     private boolean firstAuthorOverridden;
     @NotNull
-    private String title;
+    private String  title;
     @NotNull
-    private String location;
+    private String  location;
 
     @NotNull
     @Min(value = 1500, message = "{paper.invalidPublicationYear}")
@@ -218,8 +255,12 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
     @Override
     public String getDisplayValue() {
         final StringBuilder sb = new StringBuilder();
-        sb.append(firstAuthor).append(" (").append(publicationYear).append("): ");
-        sb.append(title).append(".");
+        sb.append(firstAuthor)
+            .append(" (")
+            .append(publicationYear)
+            .append("): ");
+        sb.append(title)
+            .append(".");
         return sb.toString();
     }
 

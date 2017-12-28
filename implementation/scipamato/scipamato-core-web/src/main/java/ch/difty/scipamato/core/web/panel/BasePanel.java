@@ -5,7 +5,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.AbstractPanel;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.ScipamatoSession;
@@ -35,21 +35,26 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
     }
 
     protected String getLocalization() {
-        return ScipamatoSession.get().getLocale().getLanguage();
+        return ScipamatoSession.get()
+            .getLocale()
+            .getLanguage();
     }
 
     /**
      * Get the currently active user
      */
     protected User getActiveUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = SecurityContextHolder.getContext()
+            .getAuthentication()
+            .getPrincipal();
         return (User) principal;
     }
 
     /**
      * Retrieves the labels resource string.
+     *
      * @param componentId
-     *     the wicket id of the component the label is assigned to.
+     *            the wicket id of the component the label is assigned to.
      * @return the label string, taken from the resource.
      */
     protected String getLabelResourceFor(final String componentId) {
@@ -58,8 +63,9 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
 
     /**
      * Retrieves the labels resource string (short form).
+     *
      * @param componentId
-     *     the wicket id of the component the label is assigned to.
+     *            the wicket id of the component the label is assigned to.
      * @return the label string, taken from the resource.
      */
     protected String getShortLabelResourceFor(final String componentId) {

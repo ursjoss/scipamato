@@ -14,14 +14,17 @@ import ch.difty.scipamato.core.web.pages.BasePage;
 import ch.difty.scipamato.core.web.panel.paper.SearchablePaperPanel;
 
 /**
- * Lookalike of the PaperEditPage that works with a {@link SearchCondition} instead of a Paper entity,
- * which can be used as a kind of Query by example (QBE) functionality.
+ * Lookalike of the PaperEditPage that works with a {@link SearchCondition}
+ * instead of a Paper entity, which can be used as a kind of Query by example
+ * (QBE) functionality.
  *
- * The page is instantiated with a model of a {@link SearchCondition} capturing the specification from this form.
- * If instantiated with a {@link SearchOrder} as parameter, it will add the current query
- * specification {@link SearchCondition} to the search order.
+ * The page is instantiated with a model of a {@link SearchCondition} capturing
+ * the specification from this form. If instantiated with a {@link SearchOrder}
+ * as parameter, it will add the current query specification
+ * {@link SearchCondition} to the search order.
  *
- * Submitting the page will call the {@link PaperSearchPage} handing over the updated {@link SearchOrder}.
+ * Submitting the page will call the {@link PaperSearchPage} handing over the
+ * updated {@link SearchOrder}.
  *
  * @author u.joss
  */

@@ -12,7 +12,7 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity;
 
 public abstract class Jsr303ValidatedEntityTest<T extends ScipamatoEntity> {
 
-    private LocalValidatorFactoryBean validatorFactoryBean;
+    private LocalValidatorFactoryBean   validatorFactoryBean;
     private Set<ConstraintViolation<T>> violations;
 
     @Before

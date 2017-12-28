@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.entity.filter;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.Test;
 
@@ -8,8 +9,8 @@ import ch.difty.scipamato.core.entity.filter.IntegerSearchTerm.MatchType;
 
 public class IntegerSearchTermTest {
 
-    private static final long CONDITION_ID = 7;
-    private static final String FIELD_NAME = "fn";
+    private static final long   CONDITION_ID = 7;
+    private static final String FIELD_NAME   = "fn";
 
     private IntegerSearchTerm st;
 
@@ -125,7 +126,8 @@ public class IntegerSearchTermTest {
             new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, "2014a");
             fail("Should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NumberFormatException.class).hasMessage("For input string: \"2014a\"");
+            assertThat(ex).isInstanceOf(NumberFormatException.class)
+                .hasMessage("For input string: \"2014a\"");
         }
     }
 
@@ -135,7 +137,8 @@ public class IntegerSearchTermTest {
             new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, ">>2014");
             fail("Should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class).hasMessage("For input string: \">2014\"");
+            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("For input string: \">2014\"");
         }
     }
 

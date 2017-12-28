@@ -22,7 +22,8 @@ public class PaperSlimRecordMapper extends EntityRecordMapper<PaperRecord, Paper
 
     @Override
     protected AuditFields getAuditFieldsOf(PaperRecord r) {
-        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion());
+        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(),
+                r.getVersion());
     }
 
     @Override

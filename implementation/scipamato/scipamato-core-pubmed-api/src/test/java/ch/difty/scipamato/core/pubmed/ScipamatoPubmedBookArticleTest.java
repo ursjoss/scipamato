@@ -1,7 +1,8 @@
 package ch.difty.scipamato.core.pubmed;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +28,15 @@ public class ScipamatoPubmedBookArticleTest {
 
         List<AuthorList> authorLists = new ArrayList<>();
         AuthorList authorList = new AuthorList();
-        authorList.getAuthor().add(makeAuthor("ln1", "i1"));
-        authorList.getAuthor().add(makeAuthor("ln2", "i2"));
-        authorList.getAuthor().add(makeAuthor("ln3", "i3"));
+        authorList.getAuthor()
+            .add(makeAuthor("ln1", "i1"));
+        authorList.getAuthor()
+            .add(makeAuthor("ln2", "i2"));
+        authorList.getAuthor()
+            .add(makeAuthor("ln3", "i3"));
         authorLists.add(authorList);
-        bookDocument.getAuthorList().addAll(authorLists);
+        bookDocument.getAuthorList()
+            .addAll(authorLists);
 
         ContributionDate contributionDate = new ContributionDate();
         Year year = new Year();
@@ -39,8 +44,10 @@ public class ScipamatoPubmedBookArticleTest {
         contributionDate.setYear(year);
         bookDocument.setContributionDate(contributionDate);
 
-        bookDocument.getLocationLabel().add(makeLocationLabel("ll1"));
-        bookDocument.getLocationLabel().add(makeLocationLabel("ll2"));
+        bookDocument.getLocationLabel()
+            .add(makeLocationLabel("ll1"));
+        bookDocument.getLocationLabel()
+            .add(makeLocationLabel("ll2"));
 
         ArticleTitle articleTitle = new ArticleTitle();
         articleTitle.setvalue("title");
@@ -49,18 +56,21 @@ public class ScipamatoPubmedBookArticleTest {
         ArticleIdList articleIdList = new ArticleIdList();
         ArticleId pmIdArticleId = new ArticleId();
         pmIdArticleId.setvalue("pmid");
-        articleIdList.getArticleId().add(pmIdArticleId);
+        articleIdList.getArticleId()
+            .add(pmIdArticleId);
         ArticleId doiId = new ArticleId();
         doiId.setIdType("doi");
         doiId.setvalue("DOI");
-        articleIdList.getArticleId().add(doiId);
+        articleIdList.getArticleId()
+            .add(doiId);
         bookDocument.setArticleIdList(articleIdList);
 
         Abstract abstr = new Abstract();
         AbstractText abstrText = new AbstractText();
         abstrText.setLabel("ABSTRACT");
         abstrText.setvalue("abstract");
-        abstr.getAbstractText().add(abstrText);
+        abstr.getAbstractText()
+            .add(abstrText);
         bookDocument.setAbstract(abstr);
 
     }
@@ -69,10 +79,12 @@ public class ScipamatoPubmedBookArticleTest {
         Author author = new Author();
         LastName ln = new LastName();
         ln.setvalue(lastName);
-        author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName().add(ln);
+        author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()
+            .add(ln);
         Initials i = new Initials();
         i.setvalue(initials);
-        author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName().add(i);
+        author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()
+            .add(i);
         return author;
     }
 
@@ -91,7 +103,8 @@ public class ScipamatoPubmedBookArticleTest {
     public void degenerateConstruction_withNullBookDocument_throws() {
         PubmedBookArticle pubmedBookArticle = new PubmedBookArticle();
         assertThat(pubmedBookArticle.getBookDocument()).isNull();
-        assertDegenerateSupplierParameter(() -> new ScipamatoPubmedBookArticle(pubmedBookArticle), "pubmedBookArticle.bookDocument");
+        assertDegenerateSupplierParameter(() -> new ScipamatoPubmedBookArticle(pubmedBookArticle),
+            "pubmedBookArticle.bookDocument");
     }
 
     @Test
@@ -124,19 +137,24 @@ public class ScipamatoPubmedBookArticleTest {
         assertThat(pa.getOriginalAbstract()).startsWith("ABSTRACT: abstract");
 
         assertThat(pa.toString()).isEqualTo(
-                "PubmedArticleFacade(pmId=pmid, authors=ln1 i1, ln2 i2, ln3 i3., firstAuthor=ln1, publicationYear=2017, location=ll1 - ll2, title=title, doi=DOI, originalAbstract=ABSTRACT: abstract)");
+            "PubmedArticleFacade(pmId=pmid, authors=ln1 i1, ln2 i2, ln3 i3., firstAuthor=ln1, publicationYear=2017, location=ll1 - ll2, title=title, doi=DOI, originalAbstract=ABSTRACT: abstract)");
     }
 
     @Test
     public void canParseAbstractWithoutAbstractLAbel() {
-        pubmedBookArticle.getBookDocument().getAbstract().getAbstractText().get(0).setLabel(null);
+        pubmedBookArticle.getBookDocument()
+            .getAbstract()
+            .getAbstractText()
+            .get(0)
+            .setLabel(null);
         PubmedArticleFacade pa = new ScipamatoPubmedBookArticle(pubmedBookArticle);
         assertThat(pa.getOriginalAbstract()).startsWith("abstract");
     }
 
     @Test
     public void withArticleIdListNull_leavesDoiNull() {
-        pubmedBookArticle.getBookDocument().setArticleIdList(null);
+        pubmedBookArticle.getBookDocument()
+            .setArticleIdList(null);
 
         PubmedArticleFacade pa = new ScipamatoPubmedBookArticle(pubmedBookArticle);
 
@@ -145,7 +163,9 @@ public class ScipamatoPubmedBookArticleTest {
 
     @Test
     public void withAuthorsNull_leavesAuthorAndFirstAuthorNull() {
-        pubmedBookArticle.getBookDocument().getAuthorList().clear();
+        pubmedBookArticle.getBookDocument()
+            .getAuthorList()
+            .clear();
 
         PubmedArticleFacade pa = new ScipamatoPubmedBookArticle(pubmedBookArticle);
 
@@ -164,13 +184,16 @@ public class ScipamatoPubmedBookArticleTest {
             ScipamatoPubmedArticle.of(Integer.valueOf(1));
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class).hasMessage("Cannot instantiate ScipamatoArticle from provided object 1");
+            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Cannot instantiate ScipamatoArticle from provided object 1");
         }
     }
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(ScipamatoPubmedBookArticle.class).suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(ScipamatoPubmedBookArticle.class)
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 
 }

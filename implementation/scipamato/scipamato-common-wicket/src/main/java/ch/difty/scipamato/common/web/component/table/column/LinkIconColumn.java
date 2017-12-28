@@ -49,6 +49,7 @@ public abstract class LinkIconColumn<T extends Serializable> extends AbstractCol
 
     /**
      * Override to set the title model
+     *
      * @param rowModel
      * @return title model
      */

@@ -9,7 +9,8 @@ import ch.difty.scipamato.core.persistence.AuditFields;
 import ch.difty.scipamato.core.persistence.EntityRecordMapper;
 
 /**
- * Record mapper mapping {@link ScipamatoUserRecord} into entity {@link User}.<p>
+ * Record mapper mapping {@link ScipamatoUserRecord} into entity {@link User}.
+ * <p>
  *
  * <b>Note:</b> The mapper leaves the nested list of {@link Role}s empty.
  *
@@ -25,7 +26,8 @@ public class UserRecordMapper extends EntityRecordMapper<ScipamatoUserRecord, Us
 
     @Override
     protected AuditFields getAuditFieldsOf(ScipamatoUserRecord r) {
-        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion());
+        return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(),
+                r.getVersion());
     }
 
     @Override

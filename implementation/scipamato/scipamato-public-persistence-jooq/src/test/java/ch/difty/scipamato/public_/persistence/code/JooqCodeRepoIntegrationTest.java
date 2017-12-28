@@ -1,6 +1,6 @@
 package ch.difty.scipamato.public_.persistence.code;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -21,21 +21,24 @@ public class JooqCodeRepoIntegrationTest extends JooqTransactionalIntegrationTes
     @Test
     public void findingAllCodes1InGerman() {
         List<Code> codesOfClass1 = repo.findCodesOfClass(CodeClassId.CC1, "de");
-        assertThat(codesOfClass1).isNotEmpty().hasSize(18);
+        assertThat(codesOfClass1).isNotEmpty()
+            .hasSize(18);
         codesOfClass1.forEach((c) -> log.debug(c.toString()));
     }
 
     @Test
     public void findingAllCodes2InEnglish() {
         List<Code> codesOfClass1 = repo.findCodesOfClass(CodeClassId.CC2, "en");
-        assertThat(codesOfClass1).isNotEmpty().hasSize(2);
+        assertThat(codesOfClass1).isNotEmpty()
+            .hasSize(2);
         codesOfClass1.forEach((c) -> log.debug(c.toString()));
     }
 
     @Test
     public void findingAllCodes3InEnglish() {
         List<Code> codesOfClass1 = repo.findCodesOfClass(CodeClassId.CC3, "fr");
-        assertThat(codesOfClass1).isNotEmpty().hasSize(12);
+        assertThat(codesOfClass1).isNotEmpty()
+            .hasSize(12);
         codesOfClass1.forEach((c) -> log.debug(c.toString()));
     }
 

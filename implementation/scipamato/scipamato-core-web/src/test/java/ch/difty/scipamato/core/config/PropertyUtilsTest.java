@@ -1,11 +1,10 @@
-package ch.difty.scipamato.comon.config;
+package ch.difty.scipamato.core.config;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
 import ch.difty.scipamato.common.FinalClassTest;
-import ch.difty.scipamato.common.config.PropertyUtils;
 
 public class PropertyUtilsTest extends FinalClassTest<PropertyUtils> {
 
@@ -25,12 +24,14 @@ public class PropertyUtilsTest extends FinalClassTest<PropertyUtils> {
 
     @Test
     public void fromProperty_withNullProperty_resortsToDefaultValue() {
-        assertThat(PropertyUtils.fromProperty(null, values, PropertyTestEnum.DEFAULT, PROPERTY_KEY)).isEqualTo(PropertyTestEnum.DEFAULT);
+        assertThat(PropertyUtils.fromProperty(null, values, PropertyTestEnum.DEFAULT, PROPERTY_KEY))
+            .isEqualTo(PropertyTestEnum.DEFAULT);
     }
 
     @Test
     public void fromProperty() {
-        assertThat(PropertyUtils.fromProperty("VAL2", values, PropertyTestEnum.DEFAULT, PROPERTY_KEY)).isEqualTo(PropertyTestEnum.VAL2);
+        assertThat(PropertyUtils.fromProperty("VAL2", values, PropertyTestEnum.DEFAULT, PROPERTY_KEY))
+            .isEqualTo(PropertyTestEnum.VAL2);
     }
 
     @Test

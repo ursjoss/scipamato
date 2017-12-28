@@ -1,8 +1,9 @@
 package ch.difty.scipamato.core.persistence;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.jooq.Record;
 import org.jooq.UpdateSetFirstStep;
@@ -22,7 +23,7 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEn
     @Mock
     private UpdateSetFirstStep<R> stepMock;
     @Mock
-    private UpdateSetMoreStep<R> moreStepMock;
+    private UpdateSetMoreStep<R>  moreStepMock;
 
     protected UpdateSetFirstStep<R> getStep() {
         return stepMock;
@@ -49,7 +50,8 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEn
     protected abstract void entityFixture();
 
     /**
-     * fixture for stepSet, starting with {@code getStep()}, following up with {@code getMoreStep()}, e.g.
+     * fixture for stepSet, starting with {@code getStep()}, following up with
+     * {@code getMoreStep()}, e.g.
      *
      * <code><pre>
      * when(getStep().set(PAPER.PM_ID, PM_ID)).thenReturn(getMoreStep());

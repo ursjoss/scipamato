@@ -11,7 +11,8 @@ import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.filter.SearchCondition;
 
 /**
- * Builds up the {@link SearchCondition} provider based on the model passed into the constructor.
+ * Builds up the {@link SearchCondition} provider based on the model passed into
+ * the constructor.
  *
  * @author u.joss
  */
@@ -29,24 +30,28 @@ public class SearchConditionProvider extends SortableDataProvider<SearchConditio
 
     /**
      * Returns paged {@link SearchCondition} iterator
+     *
      * @param offset
-     *          skipping records
+     *            skipping records
      * @param size
-     *          page size
+     *            page size
      * @return iterator
      */
     @Override
     public Iterator<SearchCondition> iterator(final long offset, final long size) {
-        return searchConditionsModel.getObject().stream().skip(offset).limit(size).iterator();
+        return searchConditionsModel.getObject()
+            .stream()
+            .skip(offset)
+            .limit(size)
+            .iterator();
     }
 
-    /** {@inheritDoc} */
     @Override
     public long size() {
-        return searchConditionsModel.getObject().size();
+        return searchConditionsModel.getObject()
+            .size();
     }
 
-    /** {@inheritDoc} */
     @Override
     public IModel<SearchCondition> model(final SearchCondition searchCondition) {
         return new Model<>(searchCondition);

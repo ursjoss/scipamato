@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.search;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -15,8 +15,8 @@ import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
 public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     private static final Integer RECORD_COUNT_PREPOPULATED = 4;
-    private static final Long MAX_ID_PREPOPULATED = 4l;
-    private static final String LC = "de";
+    private static final Long    MAX_ID_PREPOPULATED       = 4l;
+    private static final String  LC                        = "de";
 
     @Autowired
     private JooqSearchOrderRepo repo;
@@ -49,16 +49,32 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         so.add(searchCondition);
         so.addExclusionOfPaperWithId(4l);
         assertThat(so.getId()).isNull();
-        assertThat(so.getSearchConditions().get(0).getId()).isNull();
-        assertThat(so.getSearchConditions().get(0).getStringSearchTerms().iterator().next().getId()).isNull();
+        assertThat(so.getSearchConditions()
+            .get(0)
+            .getId()).isNull();
+        assertThat(so.getSearchConditions()
+            .get(0)
+            .getStringSearchTerms()
+            .iterator()
+            .next()
+            .getId()).isNull();
 
         SearchOrder saved = repo.add(so);
 
         assertThat(saved).isNotNull();
-        assertThat(saved.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED);
+        assertThat(saved.getId()).isNotNull()
+            .isGreaterThan(MAX_ID_PREPOPULATED);
         assertThat(saved.getOwner()).isEqualTo(10);
-        assertThat(saved.getSearchConditions().get(0).getSearchConditionId()).isNotNull().isGreaterThan(5l);
-        assertThat(saved.getSearchConditions().get(0).getStringSearchTerms().iterator().next().getId()).isNotNull();
+        assertThat(saved.getSearchConditions()
+            .get(0)
+            .getSearchConditionId()).isNotNull()
+                .isGreaterThan(5l);
+        assertThat(saved.getSearchConditions()
+            .get(0)
+            .getStringSearchTerms()
+            .iterator()
+            .next()
+            .getId()).isNotNull();
 
         assertThat(saved.getExcludedPaperIds()).containsOnly(4l);
     }
@@ -75,7 +91,8 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
     public void updatingRecord() {
         SearchOrder searchOrder = repo.add(makeMinimalSearchOrder());
         assertThat(searchOrder).isNotNull();
-        assertThat(searchOrder.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED);
+        assertThat(searchOrder.getId()).isNotNull()
+            .isGreaterThan(MAX_ID_PREPOPULATED);
         final long id = searchOrder.getId();
         assertThat(searchOrder.getOwner()).isEqualTo(10);
         assertThat(searchOrder.getName()).isNull();
@@ -97,7 +114,8 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
     public void deletingRecord() {
         SearchOrder searchOrder = repo.add(makeMinimalSearchOrder());
         assertThat(searchOrder).isNotNull();
-        assertThat(searchOrder.getId()).isNotNull().isGreaterThan(MAX_ID_PREPOPULATED);
+        assertThat(searchOrder.getId()).isNotNull()
+            .isGreaterThan(MAX_ID_PREPOPULATED);
         final long id = searchOrder.getId();
         assertThat(searchOrder.getOwner()).isEqualTo(10);
 
@@ -113,18 +131,21 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         so.setId(1l);
         repo.enrichAssociatedEntitiesOf(so, LC);
 
-        assertThat(so.getSearchConditions().size()).isGreaterThanOrEqualTo(2);
+        assertThat(so.getSearchConditions()
+            .size()).isGreaterThanOrEqualTo(2);
 
-        SearchCondition so1 = so.getSearchConditions().get(0);
+        SearchCondition so1 = so.getSearchConditions()
+            .get(0);
         assertThat(so1).isNotNull();
         assertThat(so1.getAuthors()).isEqualTo("kutlar");
         assertThat(so1.getDisplayValue()).isEqualTo("kutlar");
 
-        SearchCondition so2 = so.getSearchConditions().get(1);
+        SearchCondition so2 = so.getSearchConditions()
+            .get(1);
         assertThat(so2).isNotNull();
         assertThat(so2.getAuthors()).isEqualTo("turner");
         // TODO check why this is not set
-        //        assertThat(so2.getPublicationYear()).isEqualTo("2014-2015");
+        // assertThat(so2.getPublicationYear()).isEqualTo("2014-2015");
         assertThat(so2.getDisplayValue()).isEqualTo("turner AND 2014-2015");
     }
 
@@ -134,7 +155,8 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         so.setId(4l);
         repo.enrichAssociatedEntitiesOf(so, LC);
 
-        assertThat(so.getExcludedPaperIds()).hasSize(1).containsExactly(1l);
+        assertThat(so.getExcludedPaperIds()).hasSize(1)
+            .containsExactly(1l);
     }
 
     @Test
@@ -145,7 +167,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         assertThat(initialSearchOrder.getId()).isNull();
 
         SearchOrder savedSearchOrder = repo.add(initialSearchOrder);
-        // saved search order now has a db-generated id, still has single condition. 
+        // saved search order now has a db-generated id, still has single condition.
         long searchOrderId = savedSearchOrder.getId();
         assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(1);
 
@@ -155,7 +177,8 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         assertSearchTermCount(1, 0, 0, 0, savedCondition);
         assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(2);
 
-        // modify the currently savedCondition to also have a publicationYear integer search term
+        // modify the currently savedCondition to also have a publicationYear integer
+        // search term
         savedCondition.setPublicationYear("2000");
         SearchCondition modifiedCondition = repo.updateSearchCondition(savedCondition, searchOrderId, LC);
         assertSearchTermCount(1, 1, 0, 0, modifiedCondition);
@@ -173,7 +196,8 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         SearchCondition modifiedCondition3 = repo.updateSearchCondition(savedCondition, searchOrderId, LC);
         assertSearchTermCount(1, 1, 1, 0, modifiedCondition3);
         assertThat(modifiedCondition3.getCodes()).hasSize(1);
-        assertThat(modifiedCondition3.getCodes()).extracting(Code.CODE).containsExactly("1A");
+        assertThat(modifiedCondition3.getCodes()).extracting(Code.CODE)
+            .containsExactly("1A");
         assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(4);
 
         // Change the boolean condition

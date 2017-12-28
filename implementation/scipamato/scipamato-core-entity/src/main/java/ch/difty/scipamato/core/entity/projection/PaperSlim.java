@@ -15,13 +15,13 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    private Long number;
+    private Long    number;
     @NotNull
-    private String firstAuthor;
+    private String  firstAuthor;
     @NotNull
     private Integer publicationYear;
     @NotNull
-    private String title;
+    private String  title;
 
     public PaperSlim(Long id, Long number, String firstAuthor, Integer publicationYear, String title) {
         setId(id);
@@ -34,8 +34,12 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
     @Override
     public String getDisplayValue() {
         final StringBuilder sb = new StringBuilder();
-        sb.append(firstAuthor).append(" (").append(publicationYear).append("): ");
-        sb.append(title).append(".");
+        sb.append(firstAuthor)
+            .append(" (")
+            .append(publicationYear)
+            .append("): ");
+        sb.append(title)
+            .append(".");
         return sb.toString();
     }
 

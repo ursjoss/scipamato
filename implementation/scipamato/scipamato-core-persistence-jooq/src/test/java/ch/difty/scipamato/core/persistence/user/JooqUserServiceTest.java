@@ -1,8 +1,12 @@
 package ch.difty.scipamato.core.persistence.user;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,13 +30,13 @@ public class JooqUserServiceTest {
     private JooqUserService service;
 
     @Mock
-    private UserRepository repoMock;
+    private UserRepository    repoMock;
     @Mock
-    private UserFilter filterMock;
+    private UserFilter        filterMock;
     @Mock
     private PaginationContext paginationContextMock;
     @Mock
-    private User userMock;
+    private User              userMock;
 
     private final List<User> users = new ArrayList<>();
 
@@ -66,7 +70,8 @@ public class JooqUserServiceTest {
         Integer id = 7;
         when(repoMock.findById(id)).thenReturn(null);
 
-        assertThat(service.findById(id).isPresent()).isFalse();
+        assertThat(service.findById(id)
+            .isPresent()).isFalse();
 
         verify(repoMock).findById(id);
     }
@@ -105,7 +110,8 @@ public class JooqUserServiceTest {
 
     @Test
     public void findingByUserName_withNullName_returnsEmptyOptional() {
-        assertThat(service.findByUserName(null).isPresent()).isFalse();
+        assertThat(service.findByUserName(null)
+            .isPresent()).isFalse();
     }
 
     @Test

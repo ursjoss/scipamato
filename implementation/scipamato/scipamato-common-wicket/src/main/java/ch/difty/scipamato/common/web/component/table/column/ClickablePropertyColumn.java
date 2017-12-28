@@ -10,19 +10,24 @@ import ch.difty.scipamato.common.web.component.SerializableConsumer;
  *
  * @author u.joss
  *
- * @param <T> the type of the object that will be rendered in this column's cells
- * @param <S> the type of the sort property
+ * @param <T>
+ *            the type of the object that will be rendered in this column's
+ *            cells
+ * @param <S>
+ *            the type of the sort property
  */
 public class ClickablePropertyColumn<T, S> extends AbstractClickablePropertyColumn<T, S> {
     private static final long serialVersionUID = 1L;
 
     private final SerializableConsumer<IModel<T>> consumer;
 
-    public ClickablePropertyColumn(final IModel<String> displayModel, final String property, final SerializableConsumer<IModel<T>> consumer) {
+    public ClickablePropertyColumn(final IModel<String> displayModel, final String property,
+            final SerializableConsumer<IModel<T>> consumer) {
         this(displayModel, null, property, consumer);
     }
 
-    public ClickablePropertyColumn(final IModel<String> displayModel, final S sort, final String property, final SerializableConsumer<IModel<T>> consumer) {
+    public ClickablePropertyColumn(final IModel<String> displayModel, final S sort, final String property,
+            final SerializableConsumer<IModel<T>> consumer) {
         super(displayModel, sort, property);
         this.consumer = consumer;
     }

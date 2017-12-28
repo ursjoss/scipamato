@@ -10,46 +10,61 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of {@link SearchTerm} working with the two audit fields createdDisplayValue and lastModifiedDisplayValue,
- * both of which handle both the user and the date of the create or last change.
+ * Implementation of {@link SearchTerm} working with the two audit fields
+ * createdDisplayValue and lastModifiedDisplayValue, both of which handle both
+ * the user and the date of the create or last change.
  * <p>
- * There are different {@link TokenType}s, each of which is able to lex particular elements of the raw search terms string.
+ * There are different {@link TokenType}s, each of which is able to lex
+ * particular elements of the raw search terms string.
  * <p>
- * Every token type implements a particular {@link MatchType} which will be relevant for building
- * up the search logic for the particular token. The different {@link TokenType}s of one particular
- * {@link MatchType} are required to parse and lex parts of search terms with slightly different syntax,
- * e.g. whether a string part is quoted or not. However, when evaluating the list of tokens, we can
- * safely ignore the different types and simply distinguish the {@link MatchType} to apply the concrete
- * search logic to the database.
+ * Every token type implements a particular {@link MatchType} which will be
+ * relevant for building up the search logic for the particular token. The
+ * different {@link TokenType}s of one particular {@link MatchType} are required
+ * to parse and lex parts of search terms with slightly different syntax, e.g.
+ * whether a string part is quoted or not. However, when evaluating the list of
+ * tokens, we can safely ignore the different types and simply distinguish the
+ * {@link MatchType} to apply the concrete search logic to the database.
  * <p>
- * Each token returned by the class offers the lexed {@code rawData}, an sql-ized form of it already
- * containing the wild-card indicator (%) for appropriate.
+ * Each token returned by the class offers the lexed {@code rawData}, an
+ * sql-ized form of it already containing the wild-card indicator (%) for
+ * appropriate.
  * <p>
- * The tokens targeted for the user fields, could be of match type: 
+ * The tokens targeted for the user fields, could be of match type:
  * <ul>
- * <li> <b>CONTAINS:</b> search term contained within field, e.g. {@code createdBy like '%foo%'} </code> </li>
- * <li> <b>NONE:</b> dummy category which will be ignored.</li>
+ * <li><b>CONTAINS:</b> search term contained within field, e.g.
+ * {@code createdBy like '%foo%'} </code></li>
+ * <li><b>NONE:</b> dummy category which will be ignored.</li>
  * </ul>
  * <p>
- * The date fields may either contain a complete time stamp in the format {@code yyyy-MM-dd hh:mm:ss} or only
- * the date part {@code yyyy-MM-dd}. In the latter case, the date will be complemented with a time part, depending
- * on the match type with ' 23:59:59' or with ' 00:00:00'.
+ * The date fields may either contain a complete time stamp in the format
+ * {@code yyyy-MM-dd hh:mm:ss} or only the date part {@code yyyy-MM-dd}. In the
+ * latter case, the date will be complemented with a time part, depending on the
+ * match type with ' 23:59:59' or with ' 00:00:00'.
  * <ul>
- * <li> <b>EQUALS:</b> exact search, e.g. {@code field = 'foo'} (dates are complemented with ' 00:00:00') </li>
- * <li> <b>GREATER_THAN:</b> date is after the specified date (dates are complemented with ' 23:59:59') </li>
- * <li> <b>GREATER_OR_EQUAL:</b> the date is at or after the specified date (dates are complemented with ' 00:00:00')</li>
- * <li> <b>LESS_THAN:</b> the date is before the specified date (dates are complemented with ' 00:00:00')</li>
- * <li> <b>LESS_OR_EQUAL:</b> the date is at or before the specified date (dates are complemented with ' 23:59:59')</li>
- * <li> <b>RANGE:</b> the date is between two specified dates (inclusive) (dates without time are complemented with
- *      ' 00:00:00' (begin date) or ' 23:59:59' (end date))</li>
- * <li> <b>NONE:</b> dummy category which will be ignored.</li>
+ * <li><b>EQUALS:</b> exact search, e.g. {@code field = 'foo'} (dates are
+ * complemented with ' 00:00:00')</li>
+ * <li><b>GREATER_THAN:</b> date is after the specified date (dates are
+ * complemented with ' 23:59:59')</li>
+ * <li><b>GREATER_OR_EQUAL:</b> the date is at or after the specified date
+ * (dates are complemented with ' 00:00:00')</li>
+ * <li><b>LESS_THAN:</b> the date is before the specified date (dates are
+ * complemented with ' 00:00:00')</li>
+ * <li><b>LESS_OR_EQUAL:</b> the date is at or before the specified date (dates
+ * are complemented with ' 23:59:59')</li>
+ * <li><b>RANGE:</b> the date is between two specified dates (inclusive) (dates
+ * without time are complemented with ' 00:00:00' (begin date) or ' 23:59:59'
+ * (end date))</li>
+ * <li><b>NONE:</b> dummy category which will be ignored.</li>
  * </ul>
  * <p>
- * The lexing logic was strongly inspired from one of Gio Carlo Cielos blog posts about lexing with capturing-groups (see link below).
+ * The lexing logic was strongly inspired from one of Gio Carlo Cielos blog
+ * posts about lexing with capturing-groups (see link below).
  * <p>
+ *
  * @author u.joss
  *
- * @see <a href="http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html">http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html</a>
+ * @see <a href=
+ *      "http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html">http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html</a>
  */
 public class AuditSearchTerm extends SearchTerm {
 
@@ -57,8 +72,8 @@ public class AuditSearchTerm extends SearchTerm {
 
     private static final String USER_FIELD_TAG = "_BY";
 
-    private static final String RE_DATE = "\\d{4}-\\d{2}-\\d{2}(?: \\d{2}:\\d{2}:\\d{2})?";
-    private static final String RE_QUOTE = "\"";
+    private static final String RE_DATE      = "\\d{4}-\\d{2}-\\d{2}(?: \\d{2}:\\d{2}:\\d{2})?";
+    private static final String RE_QUOTE     = "\"";
     private static final String RE_RANGE_DIV = "-";
 
     private final List<Token> tokens;
@@ -78,7 +93,8 @@ public class AuditSearchTerm extends SearchTerm {
     }
 
     protected boolean isUserTypeSearchTerm() {
-        return getFieldName().toUpperCase().endsWith(USER_FIELD_TAG);
+        return getFieldName().toUpperCase()
+            .endsWith(USER_FIELD_TAG);
     }
 
     protected boolean isDateTypeSearchTerm() {
@@ -107,16 +123,30 @@ public class AuditSearchTerm extends SearchTerm {
     }
 
     public enum TokenType {
-        // Token types must not have underscores. Otherwise the named capturing groups in the constructed regexes will break
+        // Token types must not have underscores. Otherwise the named capturing groups
+        // in the constructed regexes will break
         WHITESPACE(RE_S + "+", MatchType.NONE, FieldType.NONE, 1),
 
-        RANGEQUOTED("=?" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE + RE_RANGE_DIV + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.RANGE, FieldType.DATE, 3),
+        RANGEQUOTED(
+                "=?" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE + RE_RANGE_DIV + RE_QUOTE + "(" + RE_DATE + ")"
+                        + RE_QUOTE,
+                MatchType.RANGE,
+                FieldType.DATE,
+                3),
         RANGE("=?" + "(" + RE_DATE + ")" + RE_RANGE_DIV + "(" + RE_DATE + ")", MatchType.RANGE, FieldType.DATE, 6),
-        GREATEROREQUALQUOTED(">=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.GREATER_OR_EQUAL, FieldType.DATE, 9),
+        GREATEROREQUALQUOTED(
+                ">=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE,
+                MatchType.GREATER_OR_EQUAL,
+                FieldType.DATE,
+                9),
         GREATEROREQUAL(">=" + "(" + RE_DATE + ")", MatchType.GREATER_OR_EQUAL, FieldType.DATE, 11),
         GREATERTHANQUOTED(">" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.GREATER_THAN, FieldType.DATE, 13),
         GREATERTHAN(">" + "(" + RE_DATE + ")", MatchType.GREATER_THAN, FieldType.DATE, 15),
-        LESSOREQUALQUOTED("<=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.LESS_OR_EQUAL, FieldType.DATE, 17),
+        LESSOREQUALQUOTED(
+                "<=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE,
+                MatchType.LESS_OR_EQUAL,
+                FieldType.DATE,
+                17),
         LESSOREQUAL("<=" + "(" + RE_DATE + ")", MatchType.LESS_OR_EQUAL, FieldType.DATE, 19),
         LESSTHANQUOTED("<" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.LESS_THAN, FieldType.DATE, 21),
         LESSTHAN("<" + "(" + RE_DATE + ")", MatchType.LESS_THAN, FieldType.DATE, 23),
@@ -127,10 +157,10 @@ public class AuditSearchTerm extends SearchTerm {
 
         RAW("", MatchType.NONE, FieldType.NONE, 30);
 
-        public final String pattern;
+        public final String    pattern;
         public final MatchType matchType;
         public final FieldType fieldType;
-        private final int group;
+        private final int      group;
 
         private TokenType(final String pattern, final MatchType matchType, final FieldType fieldType, final int group) {
             this.pattern = pattern;
@@ -154,7 +184,7 @@ public class AuditSearchTerm extends SearchTerm {
     public static class Token implements Serializable {
         private static final long serialVersionUID = 1L;
 
-        private final TokenType type;
+        private final TokenType              type;
         private final Map<FieldType, String> rawDataMap = new EnumMap<>(FieldType.class);
         private final Map<FieldType, String> sqlDataMap = new EnumMap<>(FieldType.class);
 
@@ -203,7 +233,13 @@ public class AuditSearchTerm extends SearchTerm {
         public String toString() {
             final StringBuilder sb = new StringBuilder();
             for (final Entry<FieldType, String> e : sqlDataMap.entrySet()) {
-                sb.append("(").append(e.getKey()).append(" ").append(type.name()).append(" ").append(e.getValue()).append(")");
+                sb.append("(")
+                    .append(e.getKey())
+                    .append(" ")
+                    .append(type.name())
+                    .append(" ")
+                    .append(e.getValue())
+                    .append(")");
             }
             return sb.toString();
         }
@@ -221,11 +257,13 @@ public class AuditSearchTerm extends SearchTerm {
         return Pattern.compile(tokenPatternBuilder.substring(1));
     }
 
-    private static List<Token> tokenize(final String input, final Pattern pattern, final boolean isUserType, final boolean isDateType) {
+    private static List<Token> tokenize(final String input, final Pattern pattern, final boolean isUserType,
+            final boolean isDateType) {
         return processTokens(pattern.matcher(input), isUserType, isDateType);
     }
 
-    private static List<Token> processTokens(final Matcher matcher, final boolean isUserType, final boolean isDateType) {
+    private static List<Token> processTokens(final Matcher matcher, final boolean isUserType,
+            final boolean isDateType) {
         final List<Token> tokens = new ArrayList<>();
         tokenIteration: while (matcher.find()) {
             for (final TokenType tk : TokenType.values()) {
@@ -276,14 +314,16 @@ public class AuditSearchTerm extends SearchTerm {
     }
 
     /**
-     * Both the field and the token are of type user -> relevant for the user fields created_by, last_modified_by
+     * Both the field and the token are of type user -> relevant for the user fields
+     * created_by, last_modified_by
      */
     private static boolean isUserRelevant(final boolean isUserType, final TokenType tk) {
         return tk.fieldType == FieldType.USER && isUserType;
     }
 
     /**
-     * Both the field and the token are of type date -> relevant for the date fields created, last_modified
+     * Both the field and the token are of type date -> relevant for the date fields
+     * created, last_modified
      */
     private static boolean isDateRelevant(final boolean isDateType, final TokenType tk) {
         return tk.fieldType == FieldType.DATE && isDateType;

@@ -20,19 +20,23 @@ import ch.difty.scipamato.common.persistence.paging.Sort;
 /**
  * Default implementation of the {@link JooqSortMapper} interface.
  *
- * Sort properties are de-camel-cased; java property names are therefore converted to table column names,
- * e.g. {@code publicationYear} will be translated to {@code publication_year}
+ * Sort properties are de-camel-cased; java property names are therefore
+ * converted to table column names, e.g. {@code publicationYear} will be
+ * translated to {@code publication_year}
  *
  * @author u.joss
  *
- * @param <R> the type of the record, extending {@link Record}
- * @param <T> the type of the entity, extending {@link ScipamatoEntity}
- * @param <TI> the type of the table implementation of record {@code R}
+ * @param <R>
+ *            the type of the record, extending {@link Record}
+ * @param <T>
+ *            the type of the entity, extending {@link ScipamatoEntity}
+ * @param <TI>
+ *            the type of the table implementation of record {@code R}
  */
 @Component
-public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends TableImpl<R>> implements JooqSortMapper<R, T, TI> {
+public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends TableImpl<R>>
+        implements JooqSortMapper<R, T, TI> {
 
-    /** {@inheritDoc} */
     @Override
     public Collection<SortField<T>> map(Sort sortSpecification, TI table) {
         Collection<SortField<T>> querySortFields = new ArrayList<>();
@@ -57,7 +61,10 @@ public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends 
         return querySortFields;
     }
 
-    /** public for test purposes (can't be tested in common due to missing generated classes) */
+    /**
+     * public for test purposes (can't be tested in common due to missing generated
+     * classes)
+     */
     @SuppressWarnings("unchecked")
     public TableField<R, T> getTableField(String sortFieldName, TI table) {
         AssertAs.notNull(sortFieldName, "sortFieldName");
@@ -66,7 +73,8 @@ public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends 
         TableField<R, T> sortField = null;
         try {
             final String columnName = deCamelCase(sortFieldName);
-            final Field tableField = table.getClass().getField(columnName);
+            final Field tableField = table.getClass()
+                .getField(columnName);
             sortField = (TableField<R, T>) tableField.get(table);
         } catch (NoSuchFieldException | IllegalAccessException ex) {
             String errorMessage = String.format("Could not find table field: %s", sortFieldName);
@@ -77,7 +85,8 @@ public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends 
     }
 
     private String deCamelCase(String sortFieldName) {
-        return TranslationUtils.deCamelCase(sortFieldName).toUpperCase();
+        return TranslationUtils.deCamelCase(sortFieldName)
+            .toUpperCase();
     }
 
     private SortField<T> convertTableFieldToSortField(TableField<R, T> tableField, Sort.Direction sortDirection) {

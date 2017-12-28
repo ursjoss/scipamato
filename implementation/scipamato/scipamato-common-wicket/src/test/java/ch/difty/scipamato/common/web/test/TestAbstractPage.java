@@ -6,7 +6,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.AbstractPage;
 import ch.difty.scipamato.common.web.TestRecord;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
@@ -22,7 +22,9 @@ public class TestAbstractPage extends AbstractPage<TestRecord> {
     @Override
     protected void addLinksTo(Navbar nb) {
         addPageLink(nb, TestHomePage.class, "menu.home", GlyphIconType.home, Navbar.ComponentPosition.LEFT);
-        addExternalLink(nb, "https://github.com/ursjoss/scipamato/wiki", new StringResourceModel("menu.help", this, null).getString(), GlyphIconType.questionsign, Navbar.ComponentPosition.RIGHT);
+        addExternalLink(nb, "https://github.com/ursjoss/scipamato/wiki",
+            new StringResourceModel("menu.help", this, null).getString(), GlyphIconType.questionsign,
+            Navbar.ComponentPosition.RIGHT);
     }
 
     @Override

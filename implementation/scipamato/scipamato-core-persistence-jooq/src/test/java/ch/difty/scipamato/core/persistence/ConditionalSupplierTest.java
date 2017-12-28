@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jooq.Condition;
 import org.jooq.impl.DSL;
@@ -21,7 +21,8 @@ public class ConditionalSupplierTest {
     @Test
     public void combiningWithAnd_withSingleConditionConsideredPresent_returnsSingleElementCondition() {
         boolean present = true;
-        cs.add(present, () -> DSL.field("baz").eq(DSL.value("boo")));
+        cs.add(present, () -> DSL.field("baz")
+            .eq(DSL.value("boo")));
         c = cs.combineWithAnd();
         assertThat(c.toString()).isEqualTo("baz = 'boo'");
     }
@@ -29,22 +30,26 @@ public class ConditionalSupplierTest {
     @Test
     public void combiningWithAnd_withSingleConditionNotConsideredPresent_returnsDummyTrueCondition() {
         boolean present = false;
-        cs.add(present, () -> DSL.field("foo").eq(DSL.value("bar")));
+        cs.add(present, () -> DSL.field("foo")
+            .eq(DSL.value("bar")));
         c = cs.combineWithAnd();
         assertThat(c.toString()).isEqualTo("1 = 1");
     }
 
     @Test
     public void combiningWithAnd_withSingleCondition_returnsSingleElementCondition() {
-        cs.add(() -> DSL.field("foo").eq(DSL.value("bar")));
+        cs.add(() -> DSL.field("foo")
+            .eq(DSL.value("bar")));
         c = cs.combineWithAnd();
         assertThat(c.toString()).isEqualTo("foo = 'bar'");
     }
 
     @Test
     public void combiningWithAnd_withTwoConditions_appliesDummyTermWithConditions() {
-        cs.add(() -> DSL.field("foo").eq(DSL.value("bar")));
-        cs.add(() -> DSL.field("baz").eq(DSL.value("boo")));
+        cs.add(() -> DSL.field("foo")
+            .eq(DSL.value("bar")));
+        cs.add(() -> DSL.field("baz")
+            .eq(DSL.value("boo")));
         c = cs.combineWithAnd();
         assertThat(c.toString()).isEqualTo(
         // @formatter:off
@@ -70,15 +75,18 @@ public class ConditionalSupplierTest {
 
     @Test
     public void combiningWithOr_withSingleConditions_appliesDummyTermWith() {
-        cs.add(() -> DSL.field("foo").eq(DSL.value("bar")));
+        cs.add(() -> DSL.field("foo")
+            .eq(DSL.value("bar")));
         c = cs.combineWithOr();
         assertThat(c.toString()).isEqualTo("foo = 'bar'");
     }
 
     @Test
     public void combiningWithOr_withDoubleConditions() {
-        cs.add(() -> DSL.field("foo").eq(DSL.value("bar")));
-        cs.add(() -> DSL.field("baz").eq(DSL.value("boo")));
+        cs.add(() -> DSL.field("foo")
+            .eq(DSL.value("bar")));
+        cs.add(() -> DSL.field("baz")
+            .eq(DSL.value("boo")));
         c = cs.combineWithOr();
         assertThat(c.toString()).isEqualTo(
         // @formatter:off

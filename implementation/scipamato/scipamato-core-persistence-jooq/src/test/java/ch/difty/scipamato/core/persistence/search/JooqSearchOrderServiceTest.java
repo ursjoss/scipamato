@@ -1,8 +1,13 @@
 package ch.difty.scipamato.core.persistence.search;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +34,13 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
     @Mock
     private SearchOrderRepository repoMock;
     @Mock
-    private SearchOrderFilter filterMock;
+    private SearchOrderFilter     filterMock;
     @Mock
-    private PaginationContext paginationContextMock;
+    private PaginationContext     paginationContextMock;
     @Mock
-    private SearchOrder searchOrderMock;
+    private SearchOrder           searchOrderMock;
     @Mock
-    private SearchCondition searchConditionMock;
+    private SearchCondition       searchConditionMock;
 
     private final List<SearchOrder> searchorders = new ArrayList<>();
 
@@ -80,7 +85,8 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
         Long id = 7l;
         when(repoMock.findById(id)).thenReturn(null);
 
-        assertThat(service.findById(id).isPresent()).isFalse();
+        assertThat(service.findById(id)
+            .isPresent()).isFalse();
 
         verify(repoMock).findById(id);
     }
@@ -125,7 +131,8 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
         final long searchOrderId = 3;
         when(searchConditionMock.getSearchConditionId()).thenReturn(null);
         when(repoMock.addSearchCondition(searchConditionMock, searchOrderId, LC)).thenReturn(searchConditionMock);
-        assertThat(service.saveOrUpdateSearchCondition(searchConditionMock, searchOrderId, LC)).isEqualTo(searchConditionMock);
+        assertThat(service.saveOrUpdateSearchCondition(searchConditionMock, searchOrderId, LC))
+            .isEqualTo(searchConditionMock);
         verify(repoMock).addSearchCondition(searchConditionMock, searchOrderId, LC);
         verify(searchConditionMock).getSearchConditionId();
     }
@@ -135,7 +142,8 @@ public class JooqSearchOrderServiceTest extends AbstractServiceTest<Long, Search
         final long searchOrderId = 3;
         when(searchConditionMock.getSearchConditionId()).thenReturn(17l);
         when(repoMock.updateSearchCondition(searchConditionMock, searchOrderId, LC)).thenReturn(searchConditionMock);
-        assertThat(service.saveOrUpdateSearchCondition(searchConditionMock, searchOrderId, LC)).isEqualTo(searchConditionMock);
+        assertThat(service.saveOrUpdateSearchCondition(searchConditionMock, searchOrderId, LC))
+            .isEqualTo(searchConditionMock);
         verify(repoMock).updateSearchCondition(searchConditionMock, searchOrderId, LC);
         verify(searchConditionMock).getSearchConditionId();
     }

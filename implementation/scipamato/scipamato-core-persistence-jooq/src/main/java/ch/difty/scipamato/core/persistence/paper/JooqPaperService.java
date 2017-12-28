@@ -27,7 +27,8 @@ import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
  * @author u.joss
  */
 @Service
-public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter, PaperRepository> implements PaperService {
+public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter, PaperRepository>
+        implements PaperService {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,34 +36,37 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         super(repo, userRepo);
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<Paper> findBySearchOrder(final SearchOrder searchOrder, final String languageCode) {
         return getRepository().findBySearchOrder(searchOrder, languageCode);
     }
 
-    /** {@inheritDoc} */
     @Override
-    public List<Paper> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext paginationContext, final String languageCode) {
+    public List<Paper> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext paginationContext,
+            final String languageCode) {
         return getRepository().findPageBySearchOrder(searchOrder, paginationContext, languageCode);
     }
 
-    /** {@inheritDoc} */
     @Override
     public int countBySearchOrder(final SearchOrder searchOrder) {
         return getRepository().countBySearchOrder(searchOrder);
     }
 
-    /** {@inheritDoc} */
     @Override
     @Transactional(readOnly = false)
     public ServiceResult dumpPubmedArticlesToDb(final List<PubmedArticleFacade> articles, final long minimumNumber) {
         final ServiceResult sr = new DefaultServiceResult();
-        final List<Integer> pmIdCandidates = articles.stream().map(PubmedArticleFacade::getPmId).filter(Objects::nonNull).map(Integer::valueOf).collect(Collectors.toList());
+        final List<Integer> pmIdCandidates = articles.stream()
+            .map(PubmedArticleFacade::getPmId)
+            .filter(Objects::nonNull)
+            .map(Integer::valueOf)
+            .collect(Collectors.toList());
         if (!pmIdCandidates.isEmpty()) {
-            final List<String> existingPmIds = getRepository().findExistingPmIdsOutOf(pmIdCandidates).stream().map(String::valueOf).collect(Collectors.toList());
-            final List<Paper> savedPapers = articles
+            final List<String> existingPmIds = getRepository().findExistingPmIdsOutOf(pmIdCandidates)
                 .stream()
+                .map(String::valueOf)
+                .collect(Collectors.toList());
+            final List<Paper> savedPapers = articles.stream()
                 .filter(a -> a.getPmId() != null && !existingPmIds.contains(a.getPmId()))
                 .map((PubmedArticleFacade a) -> this.savePubmedArticle(a, minimumNumber))
                 .filter(Objects::nonNull)
@@ -86,12 +90,16 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         return getRepository().add(p);
     }
 
-    private void fillServiceResultFrom(final List<Paper> newPapers, final List<String> existingPmIds, final ServiceResult sr) {
-        existingPmIds.stream().map(pmId -> "PMID " + pmId).forEach(sr::addWarnMessage);
-        newPapers.stream().map(p -> "PMID " + p.getPmId() + " (id " + p.getId() + ")").forEach(sr::addInfoMessage);
+    private void fillServiceResultFrom(final List<Paper> newPapers, final List<String> existingPmIds,
+            final ServiceResult sr) {
+        existingPmIds.stream()
+            .map(pmId -> "PMID " + pmId)
+            .forEach(sr::addWarnMessage);
+        newPapers.stream()
+            .map(p -> "PMID " + p.getPmId() + " (id " + p.getId() + ")")
+            .forEach(sr::addInfoMessage);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Optional<Paper> findByNumber(Long number, final String languageCode) {
         List<Paper> papers = getRepository().findByNumbers(Arrays.asList(number), languageCode);
@@ -105,7 +113,6 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public long findLowestFreeNumberStartingFrom(long minimumPaperNumberToBeRecycled) {
         return getRepository().findLowestFreeNumberStartingFrom(minimumPaperNumberToBeRecycled);

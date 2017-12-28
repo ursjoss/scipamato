@@ -1,7 +1,9 @@
 package ch.difty.scipamato.core.web.jasper.literaturereview;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
@@ -20,16 +22,20 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
 
     private static final Long NUMBER = 5l;
 
-    private static final String BRAND = "brand";
-    private static final String CAPTION = "caption";
-    private static final String NUMBER_LABEL = "numberLabel";
+    private static final String BRAND           = "brand";
+    private static final String CAPTION         = "caption";
+    private static final String NUMBER_LABEL    = "numberLabel";
     private static final String PUBMED_BASE_URL = "https://www.ncbi.nlm.nih.gov/pubmed/";
 
     private PaperLiteratureReviewDataSource ds;
-    private ReportHeaderFields rhf = newReportHeaderFields();
+    private ReportHeaderFields              rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields.builder("", BRAND).numberLabel(NUMBER_LABEL).captionLabel(CAPTION).pubmedBaseUrl(PUBMED_BASE_URL).build();
+        return ReportHeaderFields.builder("", BRAND)
+            .numberLabel(NUMBER_LABEL)
+            .captionLabel(CAPTION)
+            .pubmedBaseUrl(PUBMED_BASE_URL)
+            .build();
     }
 
     @Override
@@ -44,7 +50,8 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
 
     private void assertDataSource(String fileName) throws JRException {
         assertThat(ds.getConnectionProvider()).isNull();
-        assertThat(ds.getContentDisposition().toString()).isEqualTo("ATTACHMENT");
+        assertThat(ds.getContentDisposition()
+            .toString()).isEqualTo("ATTACHMENT");
         assertThat(ds.getContentType()).isEqualTo("application/pdf");
         assertThat(ds.getExtension()).isEqualTo("pdf");
         assertThat(ds.getJasperReport()).isInstanceOf(JasperReport.class);

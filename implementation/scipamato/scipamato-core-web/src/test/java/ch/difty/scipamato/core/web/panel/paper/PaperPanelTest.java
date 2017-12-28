@@ -1,6 +1,9 @@
 package ch.difty.scipamato.core.web.panel.paper;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,15 +41,15 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
     @MockBean
     private CodeService codeServiceMock;
 
-    private final List<CodeClass> codeClasses = new ArrayList<>();
-    private final List<Code> codesOfClass1 = new ArrayList<>();
-    private final List<Code> codesOfClass2 = new ArrayList<>();
-    private final List<Code> codesOfClass3 = new ArrayList<>();
-    private final List<Code> codesOfClass4 = new ArrayList<>();
-    private final List<Code> codesOfClass5 = new ArrayList<>();
-    private final List<Code> codesOfClass6 = new ArrayList<>();
-    private final List<Code> codesOfClass7 = new ArrayList<>();
-    private final List<Code> codesOfClass8 = new ArrayList<>();
+    private final List<CodeClass> codeClasses   = new ArrayList<>();
+    private final List<Code>      codesOfClass1 = new ArrayList<>();
+    private final List<Code>      codesOfClass2 = new ArrayList<>();
+    private final List<Code>      codesOfClass3 = new ArrayList<>();
+    private final List<Code>      codesOfClass4 = new ArrayList<>();
+    private final List<Code>      codesOfClass5 = new ArrayList<>();
+    private final List<Code>      codesOfClass6 = new ArrayList<>();
+    private final List<Code>      codesOfClass7 = new ArrayList<>();
+    private final List<Code>      codesOfClass8 = new ArrayList<>();
 
     // See https://issues.apache.org/jira/browse/WICKET-2790
     protected void applyTestHackWithNstedMultiPartForms() {
@@ -56,7 +59,8 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
 
     @Override
     protected final void setUpHook() {
-        codeClasses.addAll(Arrays.asList(newCC(1), newCC(2), newCC(3), newCC(4), newCC(5), newCC(6), newCC(7), newCC(8)));
+        codeClasses
+            .addAll(Arrays.asList(newCC(1), newCC(2), newCC(3), newCC(4), newCC(5), newCC(6), newCC(7), newCC(8)));
         when(codeClassServiceMock.find(LOCALE)).thenReturn(codeClasses);
 
         int ccId = 0;
@@ -132,7 +136,8 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
         getTester().assertLabel(path + "Label", labelText);
     }
 
-    protected void assertComponentWithLabel(String path, Class<? extends Component> componentClass, Object modelValue, String labelText) {
+    protected void assertComponentWithLabel(String path, Class<? extends Component> componentClass, Object modelValue,
+            String labelText) {
         getTester().assertComponent(path, componentClass);
         getTester().assertModelValue(path, modelValue);
         getTester().assertLabel(path + "Label", labelText);

@@ -1,6 +1,6 @@
 package ch.difty.scipamato.public_.persistence.paper;
 
-import static ch.difty.scipamato.public_.db.tables.Paper.*;
+import static ch.difty.scipamato.public_.db.tables.Paper.PAPER;
 
 import java.util.Collection;
 import java.util.List;
@@ -29,11 +29,12 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
 
     private static final long serialVersionUID = 1L;
 
-    private final DSLContext dsl;
+    private final DSLContext                                      dsl;
     private final JooqSortMapper<PaperRecord, PublicPaper, Paper> sortMapper;
-    private final PublicPaperFilterConditionMapper filterConditionMapper;
+    private final PublicPaperFilterConditionMapper                filterConditionMapper;
 
-    public JooqPublicPaperRepo(final DSLContext dsl, final JooqSortMapper<PaperRecord, PublicPaper, Paper> sortMapper, final PublicPaperFilterConditionMapper filterConditionMapper) {
+    public JooqPublicPaperRepo(final DSLContext dsl, final JooqSortMapper<PaperRecord, PublicPaper, Paper> sortMapper,
+            final PublicPaperFilterConditionMapper filterConditionMapper) {
         this.dsl = dsl;
         this.sortMapper = sortMapper;
         this.filterConditionMapper = filterConditionMapper;
@@ -58,20 +59,28 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     @Override
     public PublicPaper findByNumber(final Long number) {
         AssertAs.notNull(number, "number");
-        return getDsl().selectFrom(getTable()).where(PAPER.NUMBER.equal(number)).fetchOneInto(PublicPaper.class);
+        return getDsl().selectFrom(getTable())
+            .where(PAPER.NUMBER.equal(number))
+            .fetchOneInto(PublicPaper.class);
     }
 
     @Override
     public List<PublicPaper> findPageByFilter(final PublicPaperFilter filter, final PaginationContext pc) {
         final Condition conditions = filterConditionMapper.map(filter);
         final Collection<SortField<PublicPaper>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
-        final List<PaperRecord> tuples = getDsl().selectFrom(getTable()).where(conditions).orderBy(sortCriteria).limit(pc.getPageSize()).offset(pc.getOffset()).fetchInto(getRecordClass());
-        return tuples.stream().map(this::map).collect(Collectors.toList());
+        final List<PaperRecord> tuples = getDsl().selectFrom(getTable())
+            .where(conditions)
+            .orderBy(sortCriteria)
+            .limit(pc.getPageSize())
+            .offset(pc.getOffset())
+            .fetchInto(getRecordClass());
+        return tuples.stream()
+            .map(this::map)
+            .collect(Collectors.toList());
     }
 
     private PublicPaper map(final PaperRecord r) {
-        PublicPaper pp = PublicPaper
-            .builder()
+        PublicPaper pp = PublicPaper.builder()
             .id(r.getId())
             .number(r.getNumber())
             .pmId(r.getPmId())
@@ -85,8 +94,10 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
             .result(r.getResult())
             .comment(r.getComment())
             .build();
-        pp.setCreated(r.getCreated() != null ? r.getCreated().toLocalDateTime() : null);
-        pp.setLastModified(r.getLastModified() != null ? r.getLastModified().toLocalDateTime() : null);
+        pp.setCreated(r.getCreated() != null ? r.getCreated()
+            .toLocalDateTime() : null);
+        pp.setLastModified(r.getLastModified() != null ? r.getLastModified()
+            .toLocalDateTime() : null);
         pp.setVersion(r.getVersion());
         return pp;
     }
@@ -94,14 +105,22 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     @Override
     public int countByFilter(final PublicPaperFilter filter) {
         final Condition conditions = filterConditionMapper.map(filter);
-        return getDsl().fetchCount(getDsl().selectOne().from(PAPER).where(conditions));
+        return getDsl().fetchCount(getDsl().selectOne()
+            .from(PAPER)
+            .where(conditions));
     }
 
     @Override
     public List<Long> findPageOfNumbersByFilter(PublicPaperFilter filter, PaginationContext pc) {
         final Condition conditions = filterConditionMapper.map(filter);
         final Collection<SortField<PublicPaper>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
-        return getDsl().select().from(getTable()).where(conditions).orderBy(sortCriteria).limit(pc.getPageSize()).offset(pc.getOffset()).fetch(PAPER.NUMBER);
+        return getDsl().select()
+            .from(getTable())
+            .where(conditions)
+            .orderBy(sortCriteria)
+            .limit(pc.getPageSize())
+            .offset(pc.getOffset())
+            .fetch(PAPER.NUMBER);
     }
 
 }

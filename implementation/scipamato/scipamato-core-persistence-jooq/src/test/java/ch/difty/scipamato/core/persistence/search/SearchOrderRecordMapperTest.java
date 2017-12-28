@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.persistence.search;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 import org.jooq.RecordMapper;
 
@@ -11,9 +11,9 @@ import ch.difty.scipamato.core.persistence.RecordMapperTest;
 
 public class SearchOrderRecordMapperTest extends RecordMapperTest<SearchOrderRecord, SearchOrder> {
 
-    static final Long ID = 2l;
-    static final String NAME = "soName";
-    static final Integer OWNER = 1;
+    static final Long    ID     = 2l;
+    static final String  NAME   = "soName";
+    static final Integer OWNER  = 1;
     static final boolean GLOBAL = true;
 
     public static void entityFixtureWithoutIdFields(SearchOrder entityMock) {

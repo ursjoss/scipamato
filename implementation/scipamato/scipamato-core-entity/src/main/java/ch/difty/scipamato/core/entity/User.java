@@ -28,13 +28,13 @@ public class User extends IdScipamatoEntity<Integer> {
 
     public static final User NO_USER = new User(-1, "noUser", "n.a", "n.a.", "n.a.", "n.a");
 
-    public static final String USER_NAME = "userName";
+    public static final String USER_NAME  = "userName";
     public static final String FIRST_NAME = "firstName";
-    public static final String LAST_NAME = "lastName";
-    public static final String EMAIL = "email";
-    public static final String PASSWORD = "password";
-    public static final String ENABLED = "enabled";
-    public static final String ROLES = "roles";
+    public static final String LAST_NAME  = "lastName";
+    public static final String EMAIL      = "email";
+    public static final String PASSWORD   = "password";
+    public static final String ENABLED    = "enabled";
+    public static final String ROLES      = "roles";
 
     @NotNull
     @Size(max = 30)
@@ -56,7 +56,8 @@ public class User extends IdScipamatoEntity<Integer> {
 
     private final List<Role> roles = new ArrayList<>();
 
-    public User(final int id, final String userName, final String firstName, final String lastName, final String email, final String password, final boolean enabled, final List<Role> roles) {
+    public User(final int id, final String userName, final String firstName, final String lastName, final String email,
+            final String password, final boolean enabled, final List<Role> roles) {
         setId(id);
         this.userName = userName;
         this.firstName = firstName;
@@ -67,7 +68,8 @@ public class User extends IdScipamatoEntity<Integer> {
         setRoles(roles);
     }
 
-    public User(final int id, final String userName, final String firstName, final String lastName, final String email, final String password) {
+    public User(final int id, final String userName, final String firstName, final String lastName, final String email,
+            final String password) {
         this(id, userName, firstName, lastName, email, password, false, null);
     }
 
@@ -110,7 +112,9 @@ public class User extends IdScipamatoEntity<Integer> {
 
     public String getFullName() {
         final StringBuilder sb = new StringBuilder();
-        sb.append(firstName).append(" ").append(lastName);
+        sb.append(firstName)
+            .append(" ")
+            .append(lastName);
         return sb.toString();
     }
 }

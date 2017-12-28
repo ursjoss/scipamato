@@ -16,7 +16,9 @@ import net.sf.jasperreports.export.PdfExporterConfiguration;
 /**
  * DataSource for the PaperReviewReport.
  *
- * The meta fields are not contained within a paper instance and make up e.g. localized labels, the brand or part of the header.
+ * The meta fields are not contained within a paper instance and make up e.g.
+ * localized labels, the brand or part of the header.
+ *
  * @author u.joss
  */
 public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
@@ -28,23 +30,28 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
     private ReportHeaderFields reportHeaderFields;
 
     /**
-     * Using the dataProvider for the Result Panel as record source. Needs the {@link PaperService} to retrieve the papers
-     * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
+     * Using the dataProvider for the Result Panel as record source. Needs the
+     * {@link PaperService} to retrieve the papers based on the ids of the
+     * {@link PaperSlim}s that are used in the dataProvider.
+     *
      * @param dataProvider
-     *      the {@link AbstractPaperSlimProvider} - must not be null
+     *            the {@link AbstractPaperSlimProvider} - must not be null
      * @param reportHeaderFields
-     *      collection of localized labels for the report fields - must not be null
+     *            collection of localized labels for the report fields - must not be
+     *            null
      * @param config
-     *      {@link PdfExporterConfiguration}
+     *            {@link PdfExporterConfiguration}
      */
-    public PaperReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final ReportHeaderFields reportHeaderFields, PdfExporterConfiguration config) {
+    public PaperReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
+            final ReportHeaderFields reportHeaderFields, PdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), FILE_BASE_NAME, AssertAs.notNull(dataProvider, "dataProvider"));
         this.reportHeaderFields = AssertAs.notNull(reportHeaderFields, "reportHeaderFields");
     }
 
     @Override
     protected JasperReport getReport() {
-        return PaperReviewReportResourceReference.get().getReport();
+        return PaperReviewReportResourceReference.get()
+            .getReport();
     }
 
     @Override

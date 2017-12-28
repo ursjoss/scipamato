@@ -6,15 +6,19 @@ import ch.difty.scipamato.common.entity.CodeClassLike;
 import ch.difty.scipamato.common.persistence.CodeClassLikeService;
 
 /**
- * Generic implementation of the {@link CodeClassLikeRepository}.
- * Can be used for concrete implementations in the core or public modules for code classes.
+ * Generic implementation of the {@link CodeClassLikeRepository}. Can be used
+ * for concrete implementations in the core or public modules for code classes.
  *
  * @author u.joss
  *
- * @param <T> code classes, concrete implementations of {@link CodeClassLike} 
- * @param <R> code class repository, concrete implementations of {@link CodeClassLikeRepository}
+ * @param <T>
+ *            code classes, concrete implementations of {@link CodeClassLike}
+ * @param <R>
+ *            code class repository, concrete implementations of
+ *            {@link CodeClassLikeRepository}
  */
-public abstract class JooqCodeClassLikeService<T extends CodeClassLike, R extends CodeClassLikeRepository<T>> implements CodeClassLikeService<T> {
+public abstract class JooqCodeClassLikeService<T extends CodeClassLike, R extends CodeClassLikeRepository<T>>
+        implements CodeClassLikeService<T> {
 
     private static final long serialVersionUID = 1L;
 

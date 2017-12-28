@@ -17,7 +17,8 @@ import net.sf.jasperreports.export.PdfExporterConfiguration;
  *
  * Can be instantiated in different ways, either by passing in
  *
- * The report header fields are not contained within a paper instance and make up e.g. localized labels, the brand or part of the header.
+ * The report header fields are not contained within a paper instance and make
+ * up e.g. localized labels, the brand or part of the header.
  *
  * @author u.joss
  */
@@ -28,21 +29,24 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
     private static final String FILE_NAME = "paper_summary_table";
 
     private ReportHeaderFields reportHeaderFields;
-    private boolean includeResults;
+    private boolean            includeResults;
 
     /**
-     * Using the dataProvider for the Result Panel as record source. Needs the {@link PaperService} to retrieve the papers
-     * based on the ids of the {@link PaperSlim}s that are used in the dataProvider.
+     * Using the dataProvider for the Result Panel as record source. Needs the
+     * {@link PaperService} to retrieve the papers based on the ids of the
+     * {@link PaperSlim}s that are used in the dataProvider.
+     *
      * @param dataProvider
-     *      the {@link AbstractPaperSlimProvider} - must not be null
+     *            the {@link AbstractPaperSlimProvider} - must not be null
      * @param reportHeaderFields
-     *      collection of localized labels for the report fields
+     *            collection of localized labels for the report fields
      * @param includeResults
-     *      true: show results in pdf, false: hide it
+     *            true: show results in pdf, false: hide it
      * @param config
-     *      {@link PdfExporterConfiguration}
+     *            {@link PdfExporterConfiguration}
      */
-    public PaperSummaryTableDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, final ReportHeaderFields reportHeaderFields, final boolean includeResults,
+    public PaperSummaryTableDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
+            final ReportHeaderFields reportHeaderFields, final boolean includeResults,
             PdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), FILE_NAME, dataProvider);
         this.reportHeaderFields = reportHeaderFields;
@@ -51,7 +55,8 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
 
     @Override
     protected JasperReport getReport() {
-        return PaperSummaryTableReportResourceReference.get().getReport();
+        return PaperSummaryTableReportResourceReference.get()
+            .getReport();
     }
 
     @Override

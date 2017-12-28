@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.launcher;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -29,7 +29,8 @@ public class SyncJobResultTest {
         assertThat(result.isSuccessful()).isTrue();
         assertThat(result.isFailed()).isFalse();
         assertThat(result.getMessages()).hasSize(1);
-        assertThat(result.getMessages().get(0)).isEqualTo("foo");
+        assertThat(result.getMessages()
+            .get(0)).isEqualTo("foo");
     }
 
     @Test
@@ -38,6 +39,7 @@ public class SyncJobResultTest {
         assertThat(result.isSuccessful()).isFalse();
         assertThat(result.isFailed()).isTrue();
         assertThat(result.getMessages()).hasSize(1);
-        assertThat(result.getMessages().get(0)).isEqualTo("bar");
+        assertThat(result.getMessages()
+            .get(0)).isEqualTo("bar");
     }
 }

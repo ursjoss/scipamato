@@ -3,8 +3,6 @@ package ch.difty.scipamato.core.config;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.config.MavenProperties;
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
-import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
 
 /**
  * This bean is used to evaluate all environment properties used in the
@@ -16,7 +14,7 @@ import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
  * @author u.joss
  */
 @Component
-public class ScipamatoCoreProperties implements ApplicationProperties {
+public class ScipamatoCoreProperties implements ApplicationCoreProperties {
 
     private final ScipamatoProperties scipamatoProperties;
     private final MavenProperties     mavenProperties;

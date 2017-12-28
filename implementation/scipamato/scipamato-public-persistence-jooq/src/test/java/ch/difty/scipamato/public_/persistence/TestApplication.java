@@ -5,15 +5,15 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
-import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
+import ch.difty.scipamato.common.config.ApplicationProperties;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "ch.difty.scipamato")
 public class TestApplication {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder().sources(TestApplication.class).run(args);
+        new SpringApplicationBuilder().sources(TestApplication.class)
+            .run(args);
     }
 
     @Bean
@@ -31,18 +31,8 @@ public class TestApplication {
             }
 
             @Override
-            public AuthorParserStrategy getAuthorParserStrategy() {
-                return AuthorParserStrategy.DEFAULT;
-            }
-
-            @Override
             public String getBrand() {
                 return "scipamato";
-            }
-
-            @Override
-            public long getMinimumPaperNumberToBeRecycled() {
-                return 10;
             }
 
             @Override

@@ -14,7 +14,8 @@ import ch.difty.scipamato.core.entity.filter.SearchOrderFilter;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 
 /**
- * Model that offers a wicket page to load a certain amount of {@link SearchOrder}s visible to user with provided id.
+ * Model that offers a wicket page to load a certain amount of
+ * {@link SearchOrder}s visible to user with provided id.
  *
  * @author u.joss
  */
@@ -29,7 +30,8 @@ public class SearchOrderModel extends LoadableDetachableModel<List<SearchOrder>>
     private final int maxRows;
 
     public SearchOrderModel(int userId, int maxRows) {
-        Injector.get().inject(this);
+        Injector.get()
+            .inject(this);
         this.owner = userId;
         this.maxRows = maxRows;
     }

@@ -1,8 +1,11 @@
 package ch.difty.scipamato.core.sync.jobs.paper;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyList;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -50,11 +53,11 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     private PaperSyncConfig config;
 
     @Autowired
-    private JobBuilderFactory jobBuilderFactory;
+    private JobBuilderFactory  jobBuilderFactory;
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
     @Autowired
-    private DateTimeService dateTimeService;
+    private DateTimeService    dateTimeService;
 
     @Mock
     private CodeAggregator codeAggregator;
@@ -68,16 +71,16 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     private DataSource scipamatoCoreDataSource;
 
     @Mock
-    private SelectSelectStep<Record> selectSelectStep;
+    private SelectSelectStep<Record>    selectSelectStep;
     @Mock
-    private SelectJoinStep<Record> selectJoinStep;
+    private SelectJoinStep<Record>      selectJoinStep;
     @Mock
     private SelectConditionStep<Record> selectConditionStep;
     @Mock
-    private ResultSet rs;
+    private ResultSet                   rs;
 
     @Mock
-    private DeleteWhereStep<PaperRecord> deleteWhereStep;
+    private DeleteWhereStep<PaperRecord>     deleteWhereStep;
     @Mock
     private DeleteConditionStep<PaperRecord> deleteConditionStep;
 
@@ -92,9 +95,11 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
         when(jooqPublic.delete(ch.difty.scipamato.public_.db.public_.tables.Paper.PAPER)).thenReturn(deleteWhereStep);
         Timestamp ref = Timestamp.valueOf(LocalDateTime.parse("2016-12-09T05:32:13.0"));
-        when(deleteWhereStep.where(ch.difty.scipamato.public_.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(ref))).thenReturn(deleteConditionStep);
+        when(deleteWhereStep.where(ch.difty.scipamato.public_.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(ref)))
+            .thenReturn(deleteConditionStep);
 
-        config = new PaperSyncConfig(codeAggregator, jooqCore, jooqPublic, scipamatoCoreDataSource, jobBuilderFactory, stepBuilderFactory, dateTimeService);
+        config = new PaperSyncConfig(codeAggregator, jooqCore, jooqPublic, scipamatoCoreDataSource, jobBuilderFactory,
+                stepBuilderFactory, dateTimeService);
     }
 
     @After
@@ -155,7 +160,8 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         when(rs.getString(Paper.PAPER.POPULATION.getName())).thenReturn("p");
         when(rs.getString(Paper.PAPER.RESULT.getName())).thenReturn("r");
         when(rs.getString(Paper.PAPER.COMMENT.getName())).thenReturn("c");
-        when(rs.getArray("codes")).thenReturn(new MockArray<String>(SQLDialect.POSTGRES, new String[] { "1A", "2B" }, String[].class));
+        when(rs.getArray("codes"))
+            .thenReturn(new MockArray<String>(SQLDialect.POSTGRES, new String[] { "1A", "2B" }, String[].class));
         when(rs.getInt(Paper.PAPER.VERSION.getName())).thenReturn(4);
         when(rs.getTimestamp(Paper.PAPER.CREATED.getName())).thenReturn(CREATED);
         when(rs.getTimestamp(Paper.PAPER.LAST_MODIFIED.getName())).thenReturn(MODIFIED);
@@ -275,7 +281,8 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
     private void validateNullableNumberColumn(Supplier<? extends Number> suppl) throws SQLException {
         when(rs.wasNull()).thenReturn(true);
-        when(rs.getArray("codes")).thenReturn(new MockArray<String>(SQLDialect.POSTGRES, new String[] { "1A", "2B" }, String[].class));
+        when(rs.getArray("codes"))
+            .thenReturn(new MockArray<String>(SQLDialect.POSTGRES, new String[] { "1A", "2B" }, String[].class));
 
         PublicPaper pp = config.makeEntity(rs);
 

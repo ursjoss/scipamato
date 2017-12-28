@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.entity;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.validation.ConstraintViolation;
 
@@ -9,21 +9,25 @@ import org.junit.Test;
 public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
 
     private static final String JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE = "{javax.validation.constraints.NotNull.message}";
-    private static final String THIS_IS_CC1 = "this is cc1";
+    private static final String THIS_IS_CC1                                   = "this is cc1";
 
     private void verifySuccessfulValidation(final CodeClass cc) {
         validate(cc);
         assertThat(getViolations()).isEmpty();
     }
 
-    private void validateAndAssertFailure(final CodeClass cc, final String field, final Object invalidValue, final String msg) {
+    private void validateAndAssertFailure(final CodeClass cc, final String field, final Object invalidValue,
+            final String msg) {
         validate(cc);
 
-        assertThat(getViolations()).isNotEmpty().hasSize(1);
-        ConstraintViolation<CodeClass> violation = getViolations().iterator().next();
+        assertThat(getViolations()).isNotEmpty()
+            .hasSize(1);
+        ConstraintViolation<CodeClass> violation = getViolations().iterator()
+            .next();
         assertThat(violation.getMessageTemplate()).isEqualTo(msg);
         assertThat(violation.getInvalidValue()).isEqualTo(invalidValue);
-        assertThat(violation.getPropertyPath().toString()).isEqualTo(field);
+        assertThat(violation.getPropertyPath()
+            .toString()).isEqualTo(field);
     }
 
     @Test

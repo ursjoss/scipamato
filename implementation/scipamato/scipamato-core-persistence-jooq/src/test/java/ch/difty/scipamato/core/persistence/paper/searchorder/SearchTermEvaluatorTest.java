@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder;
 
-import static ch.difty.scipamato.common.TestUtils.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,8 @@ public abstract class SearchTermEvaluatorTest<T extends SearchTerm> {
     protected String concat(String... strings) {
         final StringBuilder sb = new StringBuilder();
         for (final String s : strings) {
-            sb.append(s).append(NL);
+            sb.append(s)
+                .append(NL);
         }
         if (sb.length() > NL.length()) {
             return sb.substring(0, sb.length() - NL.length());

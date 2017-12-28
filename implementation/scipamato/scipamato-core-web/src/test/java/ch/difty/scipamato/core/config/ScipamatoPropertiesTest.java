@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.common.config.core.AuthorParserStrategy;
-
 public class ScipamatoPropertiesTest {
 
     private final ScipamatoProperties sp = new ScipamatoProperties();
@@ -32,7 +30,7 @@ public class ScipamatoPropertiesTest {
 
     @Test
     public void authorParserStrategy_isDefault() {
-        assertThat(sp.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.DEFAULT);
+        assertThat(sp.getAuthorParserStrategy()).isEqualTo(AuthorParserStrategy.PUBMED);
     }
 
     @Test

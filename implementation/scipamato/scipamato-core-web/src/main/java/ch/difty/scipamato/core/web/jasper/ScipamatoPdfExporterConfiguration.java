@@ -14,7 +14,8 @@ import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
  *
  * <ul>
  * <li>is clusterable</li>
- * <li>and uses the builder pattern to set the parameters relevant to scipamato reports</li>
+ * <li>and uses the builder pattern to set the parameters relevant to scipamato
+ * reports</li>
  * </ul>
  *
  * @author u.joss
@@ -47,7 +48,8 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
         if (sb.length() > 0 && (builder.paperAuthor != null || builder.paperTitle != null))
             sb.append(" - ");
         if (builder.paperAuthor != null)
-            sb.append(builder.paperAuthor).append(" et al.");
+            sb.append(builder.paperAuthor)
+                .append(" et al.");
         if (builder.paperAuthor != null && builder.paperTitle != null)
             sb.append(": ");
         if (builder.paperTitle != null)
@@ -59,19 +61,21 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
         private static final String QUOTE = "\"";
 
         private final String title;
-        private String author;
-        private String paperTitle;
-        private String paperAuthor;
-        private String subject;
-        private String creator;
-        private String keywords;
-        private boolean compression = false;
+        private String       author;
+        private String       paperTitle;
+        private String       paperAuthor;
+        private String       subject;
+        private String       creator;
+        private String       keywords;
+        private boolean      compression = false;
 
         /**
-         * Derive the metadata title from headerPart and the paper number  (if you also set the paperTitle, it will be appended as well...)
+         * Derive the metadata title from headerPart and the paper number (if you also
+         * set the paperTitle, it will be appended as well...)
+         *
          * @param headerPart
          * @param number
-         *      the unique number of the paper
+         *            the unique number of the paper
          */
         public Builder(final String headerPart, final Long number) {
             final StringBuilder sb = new StringBuilder();
@@ -90,7 +94,9 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
         }
 
         /**
-         * Set the metadata title directly. (if you also set the paperTitle, it will be appended as well...)
+         * Set the metadata title directly. (if you also set the paperTitle, it will be
+         * appended as well...)
+         *
          * @param title
          */
         public Builder(final String title) {

@@ -1,8 +1,11 @@
 package ch.difty.scipamato.core.persistence;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
@@ -21,7 +24,7 @@ import ch.difty.scipamato.core.entity.CoreEntity;
 public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEntity> {
 
     @Mock
-    private InsertSetStep<R> stepMock;
+    private InsertSetStep<R>     stepMock;
     @Mock
     private InsertSetMoreStep<R> moreStepMock;
 
@@ -47,7 +50,8 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
     protected abstract void entityFixture();
 
     /**
-     * Create the test fixture for the set steps, starting with getStep(), continuing with getMoreStep(), e.g.
+     * Create the test fixture for the set steps, starting with getStep(),
+     * continuing with getMoreStep(), e.g.
      *
      * <code><pre>
      *  when(getStep().set(PAPER.PM_ID, PM_ID)).thenReturn(getMoreStep());
@@ -64,13 +68,17 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
     /**
      * Create the test fixture for set steps, continuing with getMoreStep(), e.g.
      *
-     * <code><pre>
+     * <code>
+     * 
+     * <pre>
      * when(getMoreStep().set(PAPER.CREATED, CREATED)).thenReturn(getMoreStep());
      * when(getMoreStep().set(PAPER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
      * when(getMoreStep().set(PAPER.LAST_MODIFIED, LAST_MOD)).thenReturn(getMoreStep());
      * when(getMoreStep().set(PAPER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
      * when(getMoreStep().set(PAPER.VERSION, VERSION)).thenReturn(getMoreStep());
-     * </pre></code
+     * </pre>
+     * 
+     * </code
      */
     protected abstract void setStepFixtureAudit();
 
@@ -129,7 +137,8 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
             getSetter().considerSettingKeyOf(null, getEntity());
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("step must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class)
+                .hasMessage("step must not be null.");
         }
     }
 
@@ -139,7 +148,8 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
             getSetter().considerSettingKeyOf(getMoreStep(), null);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("entity must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class)
+                .hasMessage("entity must not be null.");
         }
     }
 

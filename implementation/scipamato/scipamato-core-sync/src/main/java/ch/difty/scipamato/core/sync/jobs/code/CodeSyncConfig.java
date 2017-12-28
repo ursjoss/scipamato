@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.sync.jobs.code;
 
-import static ch.difty.scipamato.core.db.public_.tables.Code.*;
-import static ch.difty.scipamato.core.db.public_.tables.CodeTr.*;
+import static ch.difty.scipamato.core.db.public_.tables.Code.CODE;
+import static ch.difty.scipamato.core.db.public_.tables.CodeTr.CODE_TR;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,32 +33,38 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
 /**
  * Defines the code synchronization job, applying two steps:
  * <ol>
- * <li> codeInsertingOrUpdating: inserts new records or updates if already present</li>
- * <li> codePurging: removes records that have not been touched by the first step
- *      (within a defined grace time in minutes)</li>
+ * <li>codeInsertingOrUpdating: inserts new records or updates if already
+ * present</li>
+ * <li>codePurging: removes records that have not been touched by the first step
+ * (within a defined grace time in minutes)</li>
  * </ol>
+ *
  * @author u.joss
  */
 @Configuration
-public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.public_.db.public_.tables.records.CodeRecord> {
+public class CodeSyncConfig
+        extends SyncConfig<PublicCode, ch.difty.scipamato.public_.db.public_.tables.records.CodeRecord> {
 
-    private static final String TOPIC = "code";
-    private static final int CHUNK_SIZE = 50;
+    private static final String TOPIC      = "code";
+    private static final int    CHUNK_SIZE = 50;
 
     // relevant fields of the core Code class record
-    private static final TableField<CodeRecord, String> C_CODE = CODE.CODE_;
-    private static final TableField<CodeTrRecord, String> C_LANG_CODE = CODE_TR.LANG_CODE;
-    private static final TableField<CodeRecord, Integer> C_CODE_CLASS_ID = CODE.CODE_CLASS_ID;
-    private static final TableField<CodeTrRecord, String> C_NAME = CODE_TR.NAME;
-    private static final TableField<CodeTrRecord, String> C_COMMENT = CODE_TR.COMMENT;
-    private static final TableField<CodeRecord, Integer> C_SORT = CODE.SORT;
-    private static final TableField<CodeTrRecord, Integer> C_VERSION = CODE_TR.VERSION;
-    private static final TableField<CodeTrRecord, Timestamp> C_CREATED = CODE_TR.CREATED;
+    private static final TableField<CodeRecord, String>      C_CODE          = CODE.CODE_;
+    private static final TableField<CodeTrRecord, String>    C_LANG_CODE     = CODE_TR.LANG_CODE;
+    private static final TableField<CodeRecord, Integer>     C_CODE_CLASS_ID = CODE.CODE_CLASS_ID;
+    private static final TableField<CodeTrRecord, String>    C_NAME          = CODE_TR.NAME;
+    private static final TableField<CodeTrRecord, String>    C_COMMENT       = CODE_TR.COMMENT;
+    private static final TableField<CodeRecord, Integer>     C_SORT          = CODE.SORT;
+    private static final TableField<CodeTrRecord, Integer>   C_VERSION       = CODE_TR.VERSION;
+    private static final TableField<CodeTrRecord, Timestamp> C_CREATED       = CODE_TR.CREATED;
     private static final TableField<CodeTrRecord, Timestamp> C_LAST_MODIFIED = CODE_TR.LAST_MODIFIED;
 
-    protected CodeSyncConfig(@Qualifier("dslContext") DSLContext jooqCore, @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource scipamatoCoreDataSource,
-            JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
-        super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, scipamatoCoreDataSource, jobBuilderFactory, stepBuilderFactory, dateTimeService);
+    protected CodeSyncConfig(@Qualifier("dslContext") DSLContext jooqCore,
+            @Qualifier("publicDslContext") DSLContext jooqPublic,
+            @Qualifier("dataSource") DataSource scipamatoCoreDataSource, JobBuilderFactory jobBuilderFactory,
+            StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+        super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, scipamatoCoreDataSource, jobBuilderFactory, stepBuilderFactory,
+                dateTimeService);
     }
 
     @Bean
@@ -77,31 +83,33 @@ public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.pu
     }
 
     /**
-     *  HARDCODED consider moving the aggregated code 5abc into some tyble in scipamato-core. See also HidingInternalsCodeAggregator#filterAndEnrich
+     * HARDCODED consider moving the aggregated code 5abc into some tyble in
+     * scipamato-core. See also HidingInternalsCodeAggregator#filterAndEnrich
      */
     @Override
     protected String selectSql() {
         final Timestamp now = getNow();
         final String comm = "aggregated codes";
-        final Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggDe = DSL.row("5abc", "de", 5, "Experimentelle Studie", comm, 1, 1, now, now);
-        final Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggEn = DSL.row("5abc", "en", 5, "Experimental study", comm, 1, 1, now, now);
-        final Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggFr = DSL.row("5abc", "fr", 5, "Etude expérimentale", comm, 1, 1, now, now);
-        // @formatter:off
+        final Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggDe = DSL
+            .row("5abc", "de", 5, "Experimentelle Studie", comm, 1, 1, now, now);
+        final Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggEn = DSL
+            .row("5abc", "en", 5, "Experimental study", comm, 1, 1, now, now);
+        final Row9<String, String, Integer, String, String, Integer, Integer, Timestamp, Timestamp> aggFr = DSL
+            .row("5abc", "fr", 5, "Etude expérimentale", comm, 1, 1, now, now);
         return getJooqCore()
-            .select(C_CODE, C_LANG_CODE, C_CODE_CLASS_ID, C_NAME, C_COMMENT, C_SORT, C_VERSION, C_CREATED, C_LAST_MODIFIED)
+            .select(C_CODE, C_LANG_CODE, C_CODE_CLASS_ID, C_NAME, C_COMMENT, C_SORT, C_VERSION, C_CREATED,
+                C_LAST_MODIFIED)
             .from(Code.CODE)
             .innerJoin(CodeTr.CODE_TR)
             .on(C_CODE.eq(CodeTr.CODE_TR.CODE))
             .where(CODE.INTERNAL.isFalse())
             .unionAll(DSL.selectFrom(DSL.values(aggDe, aggEn, aggFr)))
             .getSQL(ParamType.INLINED);
-        // @formatter:on
     }
 
     @Override
     protected PublicCode makeEntity(final ResultSet rs) throws SQLException {
-        return PublicCode
-            .builder()
+        return PublicCode.builder()
             .code(getString(C_CODE, rs))
             .langCode(getString(C_LANG_CODE, rs))
             .codeClassId(getInteger(C_CODE_CLASS_ID, rs))
@@ -116,12 +124,10 @@ public class CodeSyncConfig extends SyncConfig<PublicCode, ch.difty.scipamato.pu
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.public_.db.public_.tables.records.CodeRecord> getPurgeDcs(final Timestamp cutOff) {
-        // @formatter:off
-        return getJooqPublic()
-                .delete(ch.difty.scipamato.public_.db.public_.tables.Code.CODE)
-                .where(ch.difty.scipamato.public_.db.public_.tables.Code.CODE.LAST_SYNCHED.lessThan(cutOff));
-        // @formatter:on
+    protected DeleteConditionStep<ch.difty.scipamato.public_.db.public_.tables.records.CodeRecord> getPurgeDcs(
+            final Timestamp cutOff) {
+        return getJooqPublic().delete(ch.difty.scipamato.public_.db.public_.tables.Code.CODE)
+            .where(ch.difty.scipamato.public_.db.public_.tables.Code.CODE.LAST_SYNCHED.lessThan(cutOff));
     }
 
 }

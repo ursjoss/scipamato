@@ -1,8 +1,10 @@
 package ch.difty.scipamato.core.persistence;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,7 +31,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.difty.scipamato.common.NullArgumentException;
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
@@ -43,37 +45,37 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     private ReadOnlyRepository<T, ID, F> repo;
 
     private final List<T> entities = new ArrayList<>();
-    private final List<R> records = new ArrayList<>();
+    private final List<R> records  = new ArrayList<>();
 
     private final ID id = getSampleId();
 
     @Mock
-    private DSLContext dslMock;
+    private DSLContext                            dslMock;
     @Mock
-    private GenericFilterConditionMapper<F> filterConditionMapperMock;
+    private GenericFilterConditionMapper<F>       filterConditionMapperMock;
     @Mock
-    private R unpersistedRecord;
+    private R                                     unpersistedRecord;
     @Mock
-    private JooqSortMapper<R, T, TI> sortMapperMock;
+    private JooqSortMapper<R, T, TI>              sortMapperMock;
     @Mock
-    private SelectWhereStep<R> selectWhereStepMock;
+    private SelectWhereStep<R>                    selectWhereStepMock;
     @Mock
-    private SelectConditionStep<R> selectConditionStepMock;
+    private SelectConditionStep<R>                selectConditionStepMock;
     @Mock
-    private SelectSelectStep<Record1<Integer>> selectSelectStepMock;
+    private SelectSelectStep<Record1<Integer>>    selectSelectStepMock;
     @Mock
-    private SelectJoinStep<Record1<Integer>> selectJoinStepMock;
+    private SelectJoinStep<Record1<Integer>>      selectJoinStepMock;
     @Mock
     private SelectConditionStep<Record1<Integer>> selectConditionStepMock2;
 
     @Mock
-    private PaginationContext paginationContextMock;
+    private PaginationContext        paginationContextMock;
     @Mock
-    private Sort sortMock;
+    private Sort                     sortMock;
     @Mock
     private Collection<SortField<T>> sortFieldsMock;
     @Mock
-    private SelectSeekStepN<R> selectSeekStepNMock;
+    private SelectSeekStepN<R>       selectSeekStepNMock;
 
     @Mock
     private Condition conditionMock;
@@ -115,9 +117,11 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     protected abstract ReadOnlyRepository<T, ID, F> getRepo();
 
     /**
-     * Hand-rolled spy that returns the provided entity in the method {@code findById(ID id)}
+     * Hand-rolled spy that returns the provided entity in the method
+     * {@code findById(ID id)}
      *
-     * @param entity the entity to be found.
+     * @param entity
+     *            the entity to be found.
      * @return the entity
      */
     protected abstract ReadOnlyRepository<T, ID, F> makeRepoFindingEntityById(T entity);

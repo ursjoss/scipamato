@@ -50,9 +50,9 @@ public class PaperReview extends JasperEntity {
      * Instantiation with a {@link Paper} and the {@link ReportHeaderFields}
      *
      * @param p
-     *      the paper with the relevant fields
+     *            the paper with the relevant fields
      * @param rhf
-     *      the reportHeaderFields with the localized field headers
+     *            the reportHeaderFields with the localized field headers
      */
     public PaperReview(final Paper p, final ReportHeaderFields rhf) {
         AssertAs.notNull(p, "p");

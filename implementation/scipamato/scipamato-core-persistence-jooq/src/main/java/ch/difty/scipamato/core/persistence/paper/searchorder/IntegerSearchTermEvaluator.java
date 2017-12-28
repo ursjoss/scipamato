@@ -16,7 +16,6 @@ import ch.difty.scipamato.core.entity.filter.IntegerSearchTerm;
  */
 public class IntegerSearchTermEvaluator implements SearchTermEvaluator<IntegerSearchTerm> {
 
-    /** {@inheritDoc} */
     @Override
     public Condition evaluate(final IntegerSearchTerm searchTerm) {
         AssertAs.notNull(searchTerm, "searchTerm");
@@ -43,7 +42,8 @@ public class IntegerSearchTermEvaluator implements SearchTermEvaluator<IntegerSe
         case PRESENT:
             return field.isNotNull();
         default:
-            throw new UnsupportedOperationException("Evaluation of type " + searchTerm.getType() + " is not supported...");
+            throw new UnsupportedOperationException(
+                    "Evaluation of type " + searchTerm.getType() + " is not supported...");
         }
     }
 

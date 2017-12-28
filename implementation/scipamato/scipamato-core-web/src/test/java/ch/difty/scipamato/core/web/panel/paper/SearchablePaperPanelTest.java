@@ -1,8 +1,9 @@
 package ch.difty.scipamato.core.web.panel.paper;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;

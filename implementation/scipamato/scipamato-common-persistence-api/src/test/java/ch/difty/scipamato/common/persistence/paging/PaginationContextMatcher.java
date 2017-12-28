@@ -4,8 +4,8 @@ import org.mockito.ArgumentMatcher;
 
 public class PaginationContextMatcher extends ArgumentMatcher<PaginationContext> {
 
-    private final int offset;
-    private final int pageSize;
+    private final int    offset;
+    private final int    pageSize;
     private final String sort;
 
     public PaginationContextMatcher(int offset, int pageSize, String sort) {
@@ -18,7 +18,8 @@ public class PaginationContextMatcher extends ArgumentMatcher<PaginationContext>
     public boolean matches(Object argument) {
         if (argument != null && argument instanceof PaginationContext) {
             PaginationContext p = (PaginationContext) argument;
-            return p.getOffset() == offset && p.getPageSize() == pageSize && sort.equals(p.getSort().toString());
+            return p.getOffset() == offset && p.getPageSize() == pageSize && sort.equals(p.getSort()
+                .toString());
         }
         return false;
     }

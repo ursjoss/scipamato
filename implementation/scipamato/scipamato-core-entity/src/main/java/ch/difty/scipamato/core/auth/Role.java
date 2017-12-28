@@ -3,7 +3,9 @@ package ch.difty.scipamato.core.auth;
 /**
  * The different {@link Role}s users can be assigned to in SciPaMaTo.
  *
- * The keys are defined in an external interface, so they can be used for authorization in pages, e.g.:<p>
+ * The keys are defined in an external interface, so they can be used for
+ * authorization in pages, e.g.:
+ * <p>
  *
  * {@literal @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })}
  *
@@ -16,8 +18,8 @@ public enum Role {
     VIEWER(3, Roles.VIEWER, "Read-only Viewer");
 
     private final Integer id;
-    private final String key;
-    private final String description;
+    private final String  key;
+    private final String  description;
 
     Role(final Integer id, final String key, final String description) {
         this.id = id;
@@ -49,7 +51,6 @@ public enum Role {
         return key;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString() {
         return key;

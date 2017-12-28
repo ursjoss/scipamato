@@ -14,7 +14,8 @@ import ch.difty.scipamato.core.entity.filter.PaperFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 
 /**
- * Extension of {@link AbstractPaperSlimProvider} using the {@link PaperFilter} as filter class.
+ * Extension of {@link AbstractPaperSlimProvider} using the {@link PaperFilter}
+ * as filter class.
  *
  * @author u.joss
  */
@@ -23,31 +24,32 @@ public class PaperSlimByPaperFilterProvider extends AbstractPaperSlimProvider<Pa
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiate the provider with a {@link PaperFilter} and a specific number of rows per page (pageSize)
+     * Instantiate the provider with a {@link PaperFilter} and a specific number of
+     * rows per page (pageSize)
+     *
      * @param filter
-     *     the paper filter search specification
+     *            the paper filter search specification
      * @param rowsPerPage
-     *     the max numbers of rows per page
+     *            the max numbers of rows per page
      */
     public PaperSlimByPaperFilterProvider(final PaperFilter filter, final int rowsPerPage) {
         super(filter != null ? filter : new PaperFilter(), rowsPerPage);
-        Injector.get().inject(this);
+        Injector.get()
+            .inject(this);
         setSort(Paper.ID, SortOrder.DESCENDING);
     }
 
-    /** {@inheritDoc} */
     @Override
     protected Iterator<PaperSlim> findPage(final PaginationContext pc) {
-        return getService().findPageByFilter(getFilterState(), pc).iterator();
+        return getService().findPageByFilter(getFilterState(), pc)
+            .iterator();
     }
 
-    /** {@inheritDoc} */
     @Override
     protected long getSize() {
         return getService().countByFilter(getFilterState());
     }
 
-    /** {@inheritDoc} */
     @Override
     protected List<Paper> findAll(final Direction dir, final String sortProp) {
         return getPaperService().findPageByFilter(getFilterState(), new PaginationRequest(dir, sortProp));

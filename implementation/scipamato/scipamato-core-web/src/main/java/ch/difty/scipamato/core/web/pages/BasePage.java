@@ -9,7 +9,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.AbstractPage;
 import ch.difty.scipamato.core.ScipamatoSession;
 import ch.difty.scipamato.core.entity.User;
@@ -53,9 +53,11 @@ public abstract class BasePage<T> extends AbstractPage<T> {
         addPageLink(nb, PaperSearchPage.class, "menu.search", GlyphIconType.search, Navbar.ComponentPosition.LEFT);
         addPageLink(nb, RefDataSyncPage.class, "menu.sync", GlyphIconType.export, Navbar.ComponentPosition.LEFT);
 
-        addExternalLink(nb, new StringResourceModel("menu.help.url", this, null).getString(), new StringResourceModel("menu.help", this, null).getString(), GlyphIconType.questionsign,
-                Navbar.ComponentPosition.RIGHT);
-        addExternalLink(nb, new StringResourceModel("menu.changelog.url", this, null).getString(), getVersionLink(), GlyphIconType.briefcase, Navbar.ComponentPosition.RIGHT);
+        addExternalLink(nb, new StringResourceModel("menu.help.url", this, null).getString(),
+            new StringResourceModel("menu.help", this, null).getString(), GlyphIconType.questionsign,
+            Navbar.ComponentPosition.RIGHT);
+        addExternalLink(nb, new StringResourceModel("menu.changelog.url", this, null).getString(), getVersionLink(),
+            GlyphIconType.briefcase, Navbar.ComponentPosition.RIGHT);
         addPageLink(nb, LogoutPage.class, "menu.logout", GlyphIconType.edit, Navbar.ComponentPosition.RIGHT);
     }
 
@@ -64,7 +66,8 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     }
 
     protected Authentication getAuthentication() {
-        return SecurityContextHolder.getContext().getAuthentication();
+        return SecurityContextHolder.getContext()
+            .getAuthentication();
     }
 
     protected User getActiveUser() {
@@ -72,7 +75,9 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     }
 
     protected String getLanguageCode() {
-        return ScipamatoSession.get().getLocale().getLanguage();
+        return ScipamatoSession.get()
+            .getLocale()
+            .getLanguage();
     }
 
 }

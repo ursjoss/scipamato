@@ -10,15 +10,16 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Base class for ItemWriter implementations.
+ *
  * @author u.joss
  *
- * @param <T> 
+ * @param <T>
  */
 @Slf4j
 public abstract class ScipamatoItemWriter<T> implements ItemWriter<T> {
 
     private final DSLContext dslContext;
-    private final String topic;
+    private final String     topic;
 
     public ScipamatoItemWriter(final DSLContext jooqDslContextPublic, final String topic) {
         this.dslContext = AssertAs.notNull(jooqDslContextPublic, "jooqDslContextPublic");

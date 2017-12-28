@@ -20,22 +20,25 @@ import ch.difty.scipamato.public_.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.public_.persistence.api.PublicPaperService;
 
 /**
- * The data provider for {@link PublicPaper} entities providing the wicket components access to the persisted data
+ * The data provider for {@link PublicPaper} entities providing the wicket
+ * components access to the persisted data
  *
  * @author u.joss
  */
-public class PublicPaperProvider extends SortableDataProvider<PublicPaper, String> implements ISortableDataProvider<PublicPaper, String>, IFilterStateLocator<PublicPaperFilter> {
+public class PublicPaperProvider extends SortableDataProvider<PublicPaper, String>
+        implements ISortableDataProvider<PublicPaper, String>, IFilterStateLocator<PublicPaperFilter> {
 
     private static final long serialVersionUID = 1L;
 
     private PublicPaperFilter paperFilter;
-    private final int maxRowsPerPage;
+    private final int         maxRowsPerPage;
 
     @SpringBean
     private PublicPaperService service;
 
     public PublicPaperProvider(final PublicPaperFilter paperFilter, final int resultPageSize) {
-        Injector.get().inject(this);
+        Injector.get()
+            .inject(this);
         this.paperFilter = paperFilter != null ? paperFilter : new PublicPaperFilter();
         this.maxRowsPerPage = resultPageSize;
         setSort(PublicPaper.NUMBER, SortOrder.DESCENDING);
@@ -47,7 +50,9 @@ public class PublicPaperProvider extends SortableDataProvider<PublicPaper, Strin
     }
 
     /**
-     * Return the (max) rowsPerPage (or pageSize), regardless of the number of records actually available on the page.
+     * Return the (max) rowsPerPage (or pageSize), regardless of the number of
+     * records actually available on the page.
+     *
      * @return rows per page
      */
     public int getRowsPerPage() {
@@ -59,7 +64,8 @@ public class PublicPaperProvider extends SortableDataProvider<PublicPaper, Strin
         Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         String sortProp = getSort().getProperty();
         PaginationContext pc = new PaginationRequest((int) offset, (int) count, dir, sortProp);
-        return service.findPageByFilter(paperFilter, pc).iterator();
+        return service.findPageByFilter(paperFilter, pc)
+            .iterator();
     }
 
     @Override
@@ -83,7 +89,9 @@ public class PublicPaperProvider extends SortableDataProvider<PublicPaper, Strin
     }
 
     /**
-     * Applies the normal filter and the sort aspect of the pageable to return only the numbers (business key) of all papers (unpaged).
+     * Applies the normal filter and the sort aspect of the pageable to return only
+     * the numbers (business key) of all papers (unpaged).
+     *
      * @return list of all paper numbers
      */
     public List<Long> findAllPaperNumbersByFilter() {

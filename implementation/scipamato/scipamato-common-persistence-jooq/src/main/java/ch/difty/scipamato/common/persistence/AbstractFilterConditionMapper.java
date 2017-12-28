@@ -9,26 +9,28 @@ import org.jooq.impl.DSL;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 
 /**
- * Abstract class providing the basic algorithm as template method to map the filter into the conditions.
+ * Abstract class providing the basic algorithm as template method to map the
+ * filter into the conditions.
  *
  * @author u.joss
  *
- * @param <F> Type of the filter class, extending {@link ScipamatoFilter}
+ * @param <F>
+ *            Type of the filter class, extending {@link ScipamatoFilter}
  */
-public abstract class AbstractFilterConditionMapper<F extends ScipamatoFilter> implements GenericFilterConditionMapper<F> {
+public abstract class AbstractFilterConditionMapper<F extends ScipamatoFilter>
+        implements GenericFilterConditionMapper<F> {
 
-    /** {@inheritDoc}*/
     @Override
     public final Condition map(final F filter) {
         final List<Condition> conditions = new ArrayList<>();
-        if (filter != null) {
+        if (filter != null)
             map(filter, conditions);
-        }
         return DSL.and(conditions);
     }
 
     /**
-     * Implement to map the actual filter attributes into the provided list of conditions.
+     * Implement to map the actual filter attributes into the provided list of
+     * conditions.
      *
      * @param conditions
      */

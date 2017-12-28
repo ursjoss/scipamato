@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.web.jasper.review;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -13,12 +13,11 @@ import nl.jqno.equalsverifier.Warning;
 
 public class PaperReviewTest extends JasperEntityTest {
 
-    private PaperReview pr;
+    private PaperReview        pr;
     private ReportHeaderFields rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields
-            .builder("", BRAND)
+        return ReportHeaderFields.builder("", BRAND)
             .numberLabel(NUMBER_LABEL)
             .authorYearLabel(AUTHOR_YEAR_LABEL)
             .populationPlaceLabel(POPULATION_PLACE_LABEL)
@@ -40,7 +39,8 @@ public class PaperReviewTest extends JasperEntityTest {
         try {
             new PaperReview(null, rhf);
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("p must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class)
+                .hasMessage("p must not be null.");
         }
     }
 
@@ -49,7 +49,8 @@ public class PaperReviewTest extends JasperEntityTest {
         try {
             new PaperReview(new Paper(), null);
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class).hasMessage("rhf must not be null.");
+            assertThat(ex).isInstanceOf(NullArgumentException.class)
+                .hasMessage("rhf must not be null.");
         }
     }
 
@@ -122,7 +123,10 @@ public class PaperReviewTest extends JasperEntityTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(PaperReview.class).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(PaperReview.class)
+            .withRedefinedSuperclass()
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
     }
 
 }

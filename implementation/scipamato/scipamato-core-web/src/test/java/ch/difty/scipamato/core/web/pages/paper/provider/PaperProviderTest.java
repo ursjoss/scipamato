@@ -1,8 +1,12 @@
 package ch.difty.scipamato.core.web.pages.paper.provider;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -102,7 +106,7 @@ public class PaperProviderTest {
 
     private class PaginationContextMatcher extends ArgumentMatcher<PaginationContext> {
 
-        private final int pageSize;
+        private final int    pageSize;
         private final String sort;
 
         PaginationContextMatcher(int pageSize, String sort) {
@@ -114,7 +118,8 @@ public class PaperProviderTest {
         public boolean matches(Object argument) {
             if (argument != null && argument instanceof PaginationContext) {
                 PaginationContext p = (PaginationContext) argument;
-                return p.getPageSize() == pageSize && sort.equals(p.getSort().toString());
+                return p.getPageSize() == pageSize && sort.equals(p.getSort()
+                    .toString());
             }
             return false;
         }

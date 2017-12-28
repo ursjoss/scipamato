@@ -1,6 +1,6 @@
 package ch.difty.scipamato.public_.config;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.difty.scipamato.common.config.core.ApplicationProperties;
+import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.public_.ScipamatoPublicApplication;
 
 /**
- * Note,  this test class currently derives the configured values from application.properties.
+ * Note, this test class currently derives the configured values from
+ * application.properties.
  *
  * @author u.joss
  */
@@ -29,11 +30,6 @@ public class ScipamatoPublicPropertiesIntegrationTest {
     }
 
     @Test
-    public void gettingDefaultStrategy() {
-        assertThat(appProperties.getAuthorParserStrategy()).isNull();
-    }
-
-    @Test
     public void assertDefaultlocalization() {
         assertThat(appProperties.getDefaultLocalization()).isEqualTo("de");
     }
@@ -41,11 +37,6 @@ public class ScipamatoPublicPropertiesIntegrationTest {
     @Test
     public void assertBrand() {
         assertThat(appProperties.getBrand()).isEqualTo("SciPaMaTo");
-    }
-
-    @Test
-    public void assertMinimumPaperNumberToBeRecycled() {
-        assertThat(appProperties.getMinimumPaperNumberToBeRecycled()).isEqualTo(0);
     }
 
     @Test

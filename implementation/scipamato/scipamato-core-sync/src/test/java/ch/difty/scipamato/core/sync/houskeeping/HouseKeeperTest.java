@@ -1,8 +1,10 @@
 package ch.difty.scipamato.core.sync.houskeeping;
 
-import static ch.difty.scipamato.common.TestUtils.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import org.jooq.DeleteConditionStep;
 import org.junit.Before;
@@ -19,13 +21,13 @@ import ch.difty.scipamato.public_.db.public_.tables.records.CodeClassRecord;
 @RunWith(MockitoJUnitRunner.class)
 public class HouseKeeperTest {
 
-    private HouseKeeper<CodeClassRecord> hk;
+    private HouseKeeper<CodeClassRecord>         hk;
     @Mock
     private DeleteConditionStep<CodeClassRecord> stepMock;
     @Mock
-    private StepContribution contributionMock;
+    private StepContribution                     contributionMock;
     @Mock
-    private ChunkContext chunkContextMock;
+    private ChunkContext                         chunkContextMock;
 
     @Before
     public void setUp() {
@@ -34,7 +36,8 @@ public class HouseKeeperTest {
 
     @Test
     public void degenerateConstruction_throws() {
-        assertDegenerateSupplierParameter(() -> new HouseKeeper<CodeClassRecord>((DeleteConditionStep<CodeClassRecord>) null, 30), "deleteDdl");
+        assertDegenerateSupplierParameter(
+            () -> new HouseKeeper<CodeClassRecord>((DeleteConditionStep<CodeClassRecord>) null, 30), "deleteDdl");
     }
 
     @Test
@@ -47,7 +50,8 @@ public class HouseKeeperTest {
         when(stepMock.execute()).thenReturn(1);
         hk.execute(contributionMock, chunkContextMock);
         verify(stepMock).execute();
-        // log unasserted, log format different from the one in the next test (visual assertion)
+        // log unasserted, log format different from the one in the next test (visual
+        // assertion)
     }
 
     @Test
@@ -55,7 +59,8 @@ public class HouseKeeperTest {
         when(stepMock.execute()).thenReturn(2);
         hk.execute(contributionMock, chunkContextMock);
         verify(stepMock).execute();
-        // log unasserted, log format different form that in the previous test (visual assertion)
+        // log unasserted, log format different form that in the previous test (visual
+        // assertion)
     }
 
     @Test

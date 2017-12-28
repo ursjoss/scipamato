@@ -18,7 +18,8 @@ import ch.difty.scipamato.core.entity.filter.PaperFilter;
 import ch.difty.scipamato.core.persistence.PaperService;
 
 /**
- * The data provider providing the wicket components access to the persisted paper data
+ * The data provider providing the wicket components access to the persisted
+ * paper data
  *
  * @author u.joss
  */
@@ -36,7 +37,8 @@ public class PaperProvider extends SortableDataProvider<Paper, String> implement
     }
 
     public PaperProvider(PaperFilter filter) {
-        Injector.get().inject(this);
+        Injector.get()
+            .inject(this);
         this.filter = filter != null ? filter : new PaperFilter();
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
     }
@@ -51,7 +53,8 @@ public class PaperProvider extends SortableDataProvider<Paper, String> implement
         Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         String sortProp = getSort().getProperty();
         PaginationContext pc = new PaginationRequest((int) offset, (int) size, dir, sortProp);
-        return service.findPageByFilter(filter, pc).iterator();
+        return service.findPageByFilter(filter, pc)
+            .iterator();
     }
 
     @Override
