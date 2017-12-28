@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.logic.parsing;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * Implementations of the {@link AuthorParser} interface accept an
@@ -25,8 +25,8 @@ public interface AuthorParser {
     String getAuthorsString();
 
     /**
-     * @return a stream of {@link Author}s.
+     * @return the list of {@link Author}s.
      */
-    Stream<Author> getAuthors();
+    List<Author> getAuthors();
 
 }

@@ -69,9 +69,11 @@ public class PubmedAuthorParserTest {
         assertThat(p.getFirstAuthor()
             .orElse("n.a.")).isEqualTo("Ln");
         assertThat(p.getAuthors()
+            .stream()
             .map(Author::getLastName)
             .toArray()).containsOnly("Ln");
         assertThat(p.getAuthors()
+            .stream()
             .map(Author::getFirstName)
             .toArray()).containsExactly("FN 1st", "FN 2nd", "FN 3rd", "FN 4th", "FN 5th", "FN 100th", "FN");
     }
@@ -102,10 +104,12 @@ public class PubmedAuthorParserTest {
         p = new PubmedAuthorParser(
                 "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Krewsky D, Beckermann BS, Samet JM.");
         assertThat(p.getAuthors()
+            .stream()
             .map(Author::getLastName)
             .collect(toList())).containsExactly("Turner", "Cohen", "Jerret", "Gapstur", "Driver", "Krewsky",
                 "Beckermann", "Samet");
         assertThat(p.getAuthors()
+            .stream()
             .map(Author::getFirstName)
             .collect(toList())).containsExactly("MC", "A", "M", "SM", "WR", "D", "BS", "JM");
     }
@@ -114,9 +118,11 @@ public class PubmedAuthorParserTest {
     public void canDoUmlaute() {
         p = new PubmedAuthorParser("Flückiger P, Bäni HU.");
         assertThat(p.getAuthors()
+            .stream()
             .map(Author::getLastName)
             .collect(toList())).containsExactly("Flückiger", "Bäni");
         assertThat(p.getAuthors()
+            .stream()
             .map(Author::getFirstName)
             .collect(toList())).containsExactly("P", "HU");
     }
