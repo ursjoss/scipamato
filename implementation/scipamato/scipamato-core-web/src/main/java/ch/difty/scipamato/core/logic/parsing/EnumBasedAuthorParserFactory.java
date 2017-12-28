@@ -26,7 +26,7 @@ public class EnumBasedAuthorParserFactory implements AuthorParserFactory {
     }
 
     @Override
-    public AuthorParser createParser(String authorString) {
+    public AuthorParser createParser(final String authorString) {
         AssertAs.notNull(authorString, "authorString");
 
         switch (authorParserStrategy) {

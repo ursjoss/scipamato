@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ch.difty.scipamato.common.AssertAs;
+import ch.difty.scipamato.core.entity.Paper;
 
 /**
  * Utility class to lex and parse Author strings in the PubMed format. From the
@@ -23,6 +24,12 @@ import ch.difty.scipamato.common.AssertAs;
  * <li>One or more authors appear in a comma delimited list.
  * <li>The last character is a period.
  * </ul>
+ * <p>
+ * <b>Note:</b> The entity {@link Paper} currently has a static JSR303 bean
+ * validation regex making sure the author string only contains an authors
+ * format compliant with the PubmedAuthorParser. Once we have more than one
+ * author parser strategy, we need a different (more dynamic) way of validating
+ * the author strings in the entity.
  *
  * @author u.joss
  */
@@ -56,9 +63,8 @@ public class PubmedAuthorParser implements AuthorParser {
 
     private List<Author> parseAuthors(final List<String> authorStrings) {
         final List<Author> parsedAuthors = new ArrayList<>();
-        for (final String as : authorStrings) {
+        for (final String as : authorStrings)
             parsedAuthors.add(parseAuthor(as));
-        }
         return parsedAuthors;
     }
 

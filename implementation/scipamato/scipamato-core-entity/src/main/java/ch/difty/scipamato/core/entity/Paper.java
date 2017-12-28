@@ -14,6 +14,19 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * The main entity of SciPaMaTo. A Paper is the representation of a scientific
+ * study within the application. Within SciPaMaTo-Core the full range of fields
+ * is maintained (as opposed to the more restricted fields exposed for a paper
+ * in SciPaMaTo-Public).
+ * <p>
+ * Most fields are represented as simple strings or numeric values. Exceptions
+ * to this are attachments (stored as list of {@link PaperAttachment} and
+ * especially {@link Code}s managed in a {@link CodeBox} implementation (hence
+ * implementing {@link CodeBoxAware}).
+ *
+ * @author u.joss
+ */
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -27,7 +40,9 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
 
     /**
      * One or more of the extended word characters including {@literal -} and
-     * {@literal '}
+     * {@literal '} following a space.
+     *
+     * @see CoreEntity#RE_WW
      */
     private static final String RE_S_WW = "\\s" + RE_WW;
 
@@ -52,6 +67,14 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
      * The resulting regex:
      * <p>
      * {@code ^[\w\u00C0-\u024f-']+(\s[\w\u00C0-\u024f-']+){0,}(,\s[\w\u00C0-\u024f-']+(\s[\w\u00C0-\u024f-']+){0,}){0,}(;\s[\w\u00C0-\u024f-']+(\s[\w\u00C0-\u024f-']+){0,}){0,1}\.$}
+     * <p>
+     * <b>Beware:</b> The validation of the author field should actually be
+     * functionally dependent on the selected configurable author parser strategy
+     * (see ScipamatoCoreProperties#getAuthorParserStrategy()). Making this static
+     * on this entity is a shortcut that only works as long as we only have a single
+     * strategy.
+     *
+     * @see PubmedAuthorParser
      */
     private static final String AUTHOR_REGEX = "^" + RE_WW + "(" + RE_S_WW + "){0,}(," + RE_S_WW + "(" + RE_S_WW
             + "){0,}){0,}(;" + RE_S_WW + "(" + RE_S_WW + "){0,}){0,1}\\.$";
@@ -71,6 +94,16 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
      * The resulting regex:
      * <p>
      * {@code ^10\.\d{4,9}/[-._;()/:A-Z0-9]+$}
+     * <p>
+     * The validation pattern is simplified and seems to catch roughly 74.4M out of
+     * 74.9M DOIs. The uncaught ones seem to be old and hopefully don't turn up
+     * within SciPaMaTo. Otherwise additional regex patterns catching more of the
+     * remaining ones can be found in the blogpost (thanks to Andrew Gilmartin)
+     * referenced below:
+     *
+     * @see <a href=
+     *      "http://blog.crossref.org/2015/08/doi-regular-expressions.html">
+     *      http://blog.crossref.org/2015/08/doi-regular-expressions.html</a>
      */
     private static final String DOI_REGEX = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$";
 
@@ -124,18 +157,8 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
     @Min(0)
     private Long number;
 
-    /*
+    /**
      * Digital Object Identifier (see http://www.doi.org)
-     *
-     * The validation pattern is simplified and seems to catch roughly 74.4M out of
-     * 74.9M DOIs. The uncaught ones seem to be old and hopefully don't turn up
-     * within SciPaMaTo. Otherwise additional regex patterns catching more of the
-     * remaining ones can be found here:
-     *
-     * <a
-     * href="http://blog.crossref.org/2015/08/doi-regular-expressions.html">http://
-     * blog.crossref.org/2015/08/doi-regular-expressions.html (thx to Andrew
-     * Gilmartin)</a>
      *
      * /^10.\d{4,9}/[-._;()/:A-Z0-9]+$/i
      */
