@@ -17,9 +17,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
 public class AbstractLoginPageTest extends WicketBaseTest {
 
-    private static final String USERNAME = "testuser";
-    private static final String PASSWORD = "secretpw";
-
     private AbstractLoginPage page;
 
     @MockBean
@@ -59,7 +56,7 @@ public class AbstractLoginPageTest extends WicketBaseTest {
     }
 
     @Test
-    public void submitting_() {
+    public void submitting_withInvalidCredentials_doesNotLoginAndRendersErrorMessage() {
         getTester().startPage(page);
         getTester().assertRenderedPage(TestLoginPage.class);
 

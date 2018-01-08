@@ -16,6 +16,9 @@ import org.springframework.test.util.ReflectionTestUtils;
 @SpringBootTest(classes = TestApplication.class)
 public abstract class WicketBaseTest {
 
+    protected static final String USERNAME = "testuser";
+    protected static final String PASSWORD = "secretpw";
+
     private WicketTester tester;
 
     @Autowired
