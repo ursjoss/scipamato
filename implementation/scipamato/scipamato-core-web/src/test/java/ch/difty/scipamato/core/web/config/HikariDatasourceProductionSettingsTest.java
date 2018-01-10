@@ -47,7 +47,7 @@ public class HikariDatasourceProductionSettingsTest {
     }
 
     @Test
-    public void validateTargetDataSourceInProcution() {
+    public void validateTargetDataSourceInProduction() {
         assertThat(publicDataSource).isInstanceOf(HikariDataSource.class);
         HikariDataSource ds = (HikariDataSource) publicDataSource;
 

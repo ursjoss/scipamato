@@ -20,7 +20,7 @@ public class HikariDatasourceProductionSettingsTest {
     private DataSource datasource;
 
     @Test
-    public void validateSettingsInProcution() {
+    public void validateSettingsInProduction() {
         assertThat(datasource).isInstanceOf(HikariDataSource.class);
         HikariDataSource ds = (HikariDataSource) datasource;
 
