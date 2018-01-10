@@ -6,6 +6,7 @@ import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
+import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
@@ -13,6 +14,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
+import org.springframework.transaction.PlatformTransactionManager;
+
+import ch.difty.scipamato.core.sync.jooq.JooqExceptionTranslator;
+import ch.difty.scipamato.core.sync.jooq.SpringTransactionProvider;
 
 @Configuration
 public class TestDataSourceConfig {
@@ -23,21 +29,28 @@ public class TestDataSourceConfig {
     /**
      * Scipamato-Core as primary datasource
      */
-    @Bean
+    @Bean(destroyMethod = "close")
     @Primary
-    @Qualifier("sourceDataSource")
     @ConfigurationProperties(prefix = "sync.source.datasource")
-    public DataSource dataSource() {
+    public DataSource hikariSourceDataSource() {
         return DataSourceBuilder.create()
             .build();
+    }
+
+    @Bean
+    @Qualifier("dataSource")
+    public TransactionAwareDataSourceProxy sourceDataSource() {
+        return new TransactionAwareDataSourceProxy(hikariSourceDataSource());
     }
 
     /**
      * @return {@link org.jooq.Configuration} for scipamato-core
      */
     @Bean
-    public org.jooq.Configuration coreConfiguration() {
-        return considerSettingDialect(new DefaultConfiguration().derive(dataSource()));
+    public org.jooq.Configuration coreConfiguration(PlatformTransactionManager txManager) {
+        return considerSettingDialect(new DefaultConfiguration().derive(sourceDataSource()))
+            .derive(new DefaultExecuteListenerProvider(new JooqExceptionTranslator()))
+            .derive(new SpringTransactionProvider(txManager));
     }
 
     /**
@@ -54,8 +67,8 @@ public class TestDataSourceConfig {
      * @return {@link DSLContext} for scipamato-core
      */
     @Bean
-    public DSLContext dslContext() {
-        return DSL.using(coreConfiguration());
+    public DSLContext dslContext(PlatformTransactionManager txManager) {
+        return DSL.using(coreConfiguration(txManager));
     }
 
 }
