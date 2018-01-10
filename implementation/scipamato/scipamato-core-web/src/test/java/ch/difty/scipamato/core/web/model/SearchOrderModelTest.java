@@ -1,8 +1,7 @@
 package ch.difty.scipamato.core.web.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Matchers.isA;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -14,6 +13,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
@@ -43,11 +43,11 @@ public class SearchOrderModelTest extends ModelTest {
         SearchOrderModel m = new SearchOrderModel(owner, maxRows);
         assertThat(m.load()).containsExactly(mockSearchOrder, mockSearchOrder);
 
-        verify(serviceMock).findPageByFilter(argThat(new SearchOrderFilterMatcher(owner)),
-            argThat(new PaginationRequestWithMaxRows(maxRows)));
+        verify(serviceMock).findPageByFilter(Mockito.argThat(new SearchOrderFilterMatcher(owner)),
+            Mockito.argThat(new PaginationRequestWithMaxRows(maxRows)));
     }
 
-    protected class SearchOrderFilterMatcher extends ArgumentMatcher<SearchOrderFilter> {
+    protected class SearchOrderFilterMatcher implements ArgumentMatcher<SearchOrderFilter> {
         private int ownerIncludingGlobal;
 
         public SearchOrderFilterMatcher(int ownerIncludingGlobal) {
@@ -55,18 +55,14 @@ public class SearchOrderModelTest extends ModelTest {
         }
 
         @Override
-        public boolean matches(Object arg) {
-            if (arg != null && arg instanceof SearchOrderFilter) {
-                SearchOrderFilter f = (SearchOrderFilter) arg;
-                return f.getOwnerIncludingGlobal() != null && f.getOwnerIncludingGlobal()
-                    .intValue() == ownerIncludingGlobal && f.getNameMask() == null && f.getOwner() == null
-                        && f.getGlobal() == null;
-            }
-            return false;
+        public boolean matches(SearchOrderFilter f) {
+            return f != null && f.getOwnerIncludingGlobal() != null && f.getOwnerIncludingGlobal()
+                .intValue() == ownerIncludingGlobal && f.getNameMask() == null && f.getOwner() == null
+                    && f.getGlobal() == null;
         }
     }
 
-    protected class PaginationRequestWithMaxRows extends ArgumentMatcher<PaginationRequest> {
+    protected class PaginationRequestWithMaxRows implements ArgumentMatcher<PaginationRequest> {
         private static final String GLOBAL = "global";
 
         private int maxRows;
@@ -76,17 +72,14 @@ public class SearchOrderModelTest extends ModelTest {
         }
 
         @Override
-        public boolean matches(Object arg) {
-            if (arg != null && arg instanceof PaginationRequest) {
-                PaginationRequest pr = (PaginationRequest) arg;
-                if (pr.getOffset() == 0 && pr.getPageSize() == maxRows) {
-                    Iterator<SortProperty> it = pr.getSort()
-                        .iterator();
-                    if (it.hasNext()) {
-                        SortProperty sp = it.next();
-                        return GLOBAL.equals(sp.getName()) && sp.getDirection()
-                            .isAscending();
-                    }
+        public boolean matches(PaginationRequest pr) {
+            if (pr != null && pr.getOffset() == 0 && pr.getPageSize() == maxRows) {
+                Iterator<SortProperty> it = pr.getSort()
+                    .iterator();
+                if (it.hasNext()) {
+                    SortProperty sp = it.next();
+                    return GLOBAL.equals(sp.getName()) && sp.getDirection()
+                        .isAscending();
                 }
             }
             return false;

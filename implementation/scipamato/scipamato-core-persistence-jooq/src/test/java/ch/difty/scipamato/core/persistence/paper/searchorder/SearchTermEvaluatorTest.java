@@ -4,7 +4,7 @@ import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParame
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import ch.difty.scipamato.core.entity.filter.SearchTerm;
 

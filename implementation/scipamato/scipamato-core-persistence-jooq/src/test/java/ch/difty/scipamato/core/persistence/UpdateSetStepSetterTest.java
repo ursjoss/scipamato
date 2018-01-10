@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import ch.difty.scipamato.core.entity.CoreEntity;
 
@@ -102,6 +102,9 @@ public abstract class UpdateSetStepSetterTest<R extends Record, E extends CoreEn
 
     @Test
     public void settingNonKeyFields() {
+        RecordMapperTest.auditFixtureFor(getEntity());
+        RecordMapperTest.auditExtendedFixtureFor(getEntity());
+
         getSetter().setFieldsFor(stepMock, getEntity());
 
         verifyCallToAllFieldsExceptAudit();

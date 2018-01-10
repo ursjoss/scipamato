@@ -14,7 +14,6 @@ import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.EX
 import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.FIRST_AUTHOR;
 import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.FIRST_AUTHOR_OVERRIDDEN;
 import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.GOALS;
-import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.ID;
 import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.INTERN;
 import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.LOCATION;
 import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.MAIN_CODE_OF_CODECLASS1;
@@ -71,7 +70,6 @@ public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperR
 
     @Override
     protected void entityFixture() {
-        when(entityMock.getId()).thenReturn(ID);
         PaperRecordMapperTest.entityFixtureWithoutIdFields(entityMock);
     }
 

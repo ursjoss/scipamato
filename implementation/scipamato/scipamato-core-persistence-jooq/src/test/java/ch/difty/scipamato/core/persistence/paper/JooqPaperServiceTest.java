@@ -1,9 +1,9 @@
 package ch.difty.scipamato.core.persistence.paper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.isA;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -382,7 +382,6 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Test
     public void findingByFilter_withPaperWithNullCreator() {
-        when(paperMock3.getId()).thenReturn(100l);
         when(paperMock3.getCreatedBy()).thenReturn(null);
         when(paperMock3.getLastModifiedBy()).thenReturn(null);
         papers.clear();

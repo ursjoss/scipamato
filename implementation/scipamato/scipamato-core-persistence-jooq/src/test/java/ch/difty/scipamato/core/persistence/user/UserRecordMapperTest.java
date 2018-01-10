@@ -31,8 +31,6 @@ public class UserRecordMapperTest extends RecordMapperTest<ScipamatoUserRecord, 
         when(entityMock.getEmail()).thenReturn(EMAIL);
         when(entityMock.getPassword()).thenReturn(PASSWORD);
         when(entityMock.isEnabled()).thenReturn(ENABLED);
-
-        auditFixtureFor(entityMock);
     }
 
     @Override

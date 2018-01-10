@@ -7,7 +7,6 @@ import static ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD;
 import static ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY;
 import static ch.difty.scipamato.core.persistence.RecordMapperTest.VERSION;
 import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.GLOBAL;
-import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.ID;
 import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.NAME;
 import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.OWNER;
 import static org.mockito.Mockito.verify;
@@ -45,7 +44,6 @@ public class SearchOrderUpdateSetStepSetterTest extends UpdateSetStepSetterTest<
 
     @Override
     protected void entityFixture() {
-        when(entityMock.getId()).thenReturn(ID);
         SearchOrderRecordMapperTest.entityFixtureWithoutIdFields(entityMock);
     }
 

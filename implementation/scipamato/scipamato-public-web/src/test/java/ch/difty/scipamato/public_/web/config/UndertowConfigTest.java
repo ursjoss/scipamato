@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.embedded.JspServlet;
 import org.springframework.boot.context.embedded.undertow.UndertowBuilderCustomizer;
@@ -40,9 +39,6 @@ import io.undertow.servlet.api.WebResourceCollection;
 @RunWith(MockitoJUnitRunner.class)
 public class UndertowConfigTest {
 
-    private static final int PORT               = 5678;
-    private static final int REDIRECT_FROM_PORT = 1234;
-
     private UndertowConfig                          config;
     private UndertowEmbeddedServletContainerFactory factory;
 
@@ -58,9 +54,6 @@ public class UndertowConfigTest {
     public void setUp() {
         config = new UndertowConfig(serverPropsMock, scipamatoPropertiesMock);
         factory = (UndertowEmbeddedServletContainerFactory) config.undertow();
-
-        when(scipamatoPropertiesMock.getRedirectFromPort()).thenReturn(REDIRECT_FROM_PORT);
-        when(serverPropsMock.getPort()).thenReturn(PORT);
     }
 
     @After

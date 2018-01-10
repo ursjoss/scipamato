@@ -5,13 +5,13 @@ import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapper
 import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.ID;
 import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.NAME;
 import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.OWNER;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
@@ -104,7 +104,7 @@ public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<
     @Test
     public void resettingIdToEntity_withNullRecord_doesNothing() {
         getSetter().resetIdToEntity(entityMock, null);
-        verify(entityMock, never()).setId(Matchers.anyLong());
+        verify(entityMock, never()).setId(anyLong());
     }
 
     @Test
@@ -112,7 +112,7 @@ public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<
         when(recordMock.getId()).thenReturn(3l);
         getSetter().resetIdToEntity(entityMock, recordMock);
         verify(recordMock).getId();
-        verify(entityMock).setId(Matchers.anyLong());
+        verify(entityMock).setId(anyLong());
     }
 
 }

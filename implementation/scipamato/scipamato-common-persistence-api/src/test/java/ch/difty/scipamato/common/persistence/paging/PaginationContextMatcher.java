@@ -2,7 +2,7 @@ package ch.difty.scipamato.common.persistence.paging;
 
 import org.mockito.ArgumentMatcher;
 
-public class PaginationContextMatcher extends ArgumentMatcher<PaginationContext> {
+public class PaginationContextMatcher implements ArgumentMatcher<PaginationContext> {
 
     private final int    offset;
     private final int    pageSize;
@@ -15,12 +15,9 @@ public class PaginationContextMatcher extends ArgumentMatcher<PaginationContext>
     }
 
     @Override
-    public boolean matches(Object argument) {
-        if (argument != null && argument instanceof PaginationContext) {
-            PaginationContext p = (PaginationContext) argument;
-            return p.getOffset() == offset && p.getPageSize() == pageSize && sort.equals(p.getSort()
-                .toString());
-        }
-        return false;
+    public boolean matches(PaginationContext p) {
+        return p != null && p.getOffset() == offset && p.getPageSize() == pageSize && sort.equals(p.getSort()
+            .toString());
     }
+
 }
