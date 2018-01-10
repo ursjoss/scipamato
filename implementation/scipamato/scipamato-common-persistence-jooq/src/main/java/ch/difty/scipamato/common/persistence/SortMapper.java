@@ -1,6 +1,5 @@
 package ch.difty.scipamato.common.persistence;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -20,9 +19,9 @@ import ch.difty.scipamato.common.persistence.paging.Sort;
 /**
  * Default implementation of the {@link JooqSortMapper} interface.
  *
- * Sort properties are de-camel-cased; java property names are therefore
- * converted to table column names, e.g. {@code publicationYear} will be
- * translated to {@code publication_year}
+ * Sort properties are de-camel- and upper-cased; java property names are
+ * therefore converted to table column names, e.g. {@code publicationYear} will
+ * be translated to {@code PUBLICATION_YEAR}
  *
  * @author u.joss
  *
@@ -38,58 +37,62 @@ public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends 
         implements JooqSortMapper<R, T, TI> {
 
     @Override
-    public Collection<SortField<T>> map(Sort sortSpecification, TI table) {
-        Collection<SortField<T>> querySortFields = new ArrayList<>();
+    public Collection<SortField<T>> map(final Sort sortSpecification, final TI table) {
+        final Collection<SortField<T>> querySortFields = new ArrayList<>();
 
         if (sortSpecification == null) {
             return querySortFields;
         }
 
-        Iterator<Sort.SortProperty> sortProperties = sortSpecification.iterator();
+        final Iterator<Sort.SortProperty> sortProperties = sortSpecification.iterator();
 
         while (sortProperties.hasNext()) {
-            Sort.SortProperty sortProperty = sortProperties.next();
+            final Sort.SortProperty sortProperty = sortProperties.next();
 
-            String propName = sortProperty.getName();
-            Sort.Direction sortDirection = sortProperty.getDirection();
+            final String propName = sortProperty.getName();
+            final Sort.Direction sortDirection = sortProperty.getDirection();
 
-            TableField<R, T> tableField = getTableField(propName, table);
-            SortField<T> querySortField = convertTableFieldToSortField(tableField, sortDirection);
+            final TableField<R, T> tableField = getTableField(propName, table);
+            final SortField<T> querySortField = convertTableFieldToSortField(tableField, sortDirection);
             querySortFields.add(querySortField);
         }
 
         return querySortFields;
     }
 
-    /**
-     * public for test purposes (can't be tested in common due to missing generated
-     * classes)
-     */
-    @SuppressWarnings("unchecked")
-    public TableField<R, T> getTableField(String sortFieldName, TI table) {
-        AssertAs.notNull(sortFieldName, "sortFieldName");
+    private TableField<R, T> getTableField(final String fieldName, final TI table) {
         AssertAs.notNull(table, "table");
 
-        TableField<R, T> sortField = null;
+        TableField<R, T> tableField = null;
         try {
-            final String columnName = deCamelCase(sortFieldName);
-            final Field tableField = table.getClass()
-                .getField(columnName);
-            sortField = (TableField<R, T>) tableField.get(table);
+            final String columnName = deCamelCase(fieldName);
+            tableField = getTableFieldFor(table, columnName);
         } catch (NoSuchFieldException | IllegalAccessException ex) {
-            String errorMessage = String.format("Could not find table field: %s", sortFieldName);
+            final String errorMessage = String.format("Could not find table field: %s", fieldName);
             throw new InvalidDataAccessApiUsageException(errorMessage, ex);
         }
 
-        return sortField;
+        return tableField;
     }
 
-    private String deCamelCase(String sortFieldName) {
+    /**
+     * reflection based field extraction so we can stub it out in tests
+     */
+    @SuppressWarnings("unchecked")
+    protected TableField<R, T> getTableFieldFor(final TI table, final String columnName)
+            throws NoSuchFieldException, IllegalAccessException {
+        return (TableField<R, T>) table.getClass()
+            .getField(columnName)
+            .get(table);
+    }
+
+    private String deCamelCase(final String sortFieldName) {
         return TranslationUtils.deCamelCase(sortFieldName)
             .toUpperCase();
     }
 
-    private SortField<T> convertTableFieldToSortField(TableField<R, T> tableField, Sort.Direction sortDirection) {
+    private SortField<T> convertTableFieldToSortField(final TableField<R, T> tableField,
+            final Sort.Direction sortDirection) {
         return sortDirection == Sort.Direction.ASC ? tableField.asc() : tableField.desc();
     }
 
