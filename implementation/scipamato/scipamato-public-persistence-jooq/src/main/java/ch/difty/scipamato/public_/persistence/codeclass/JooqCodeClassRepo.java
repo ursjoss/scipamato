@@ -31,6 +31,7 @@ public class JooqCodeClassRepo implements CodeClassRepository {
                 CODE_CLASS.CREATED, CODE_CLASS.LAST_MODIFIED, CODE_CLASS.VERSION)
             .from(CODE_CLASS)
             .where(CODE_CLASS.LANG_CODE.eq(lang))
+            .orderBy(CODE_CLASS.CODE_CLASS_ID)
             .fetchInto(CodeClass.class);
     }
 
