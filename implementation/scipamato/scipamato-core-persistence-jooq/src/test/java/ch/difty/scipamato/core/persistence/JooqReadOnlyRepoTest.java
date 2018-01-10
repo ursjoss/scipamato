@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.isA;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -28,7 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.config.ApplicationProperties;
@@ -46,8 +46,6 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
 
     private final List<T> entities = new ArrayList<>();
     private final List<R> records  = new ArrayList<>();
-
-    private final ID id = getSampleId();
 
     @Mock
     private DSLContext                            dslMock;
@@ -109,8 +107,6 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
         return conditionMock;
     }
 
-    protected abstract ID getSampleId();
-
     /**
      * @return the specific repository instantiated
      */
@@ -165,13 +161,6 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
 
         records.add(getPersistedRecord());
         records.add(getPersistedRecord());
-
-        when(dslMock.selectFrom(getTable())).thenReturn(selectWhereStepMock);
-
-        when(selectWhereStepMock.fetchInto(getEntityClass())).thenReturn(entities);
-        when(selectWhereStepMock.where(getTableId().equal(id))).thenReturn(selectConditionStepMock);
-
-        when(getMapper().map(getPersistedRecord())).thenReturn(getPersistedEntity());
 
         when(filterConditionMapperMock.map(filterMock)).thenReturn(conditionMock);
 

@@ -66,6 +66,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Improved JavaDoc for author strings, highlighted dependency on author parser strategy
   and current limitation with JSR303 validation of author strings.
 - Updated jOOQ, flyway, jasperreports, assertj, jacoco-maven-plugin
+- Switched to mockito-2
 
 .Deprecated
 

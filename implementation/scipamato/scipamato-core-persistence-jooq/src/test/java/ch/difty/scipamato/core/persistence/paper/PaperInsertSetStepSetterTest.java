@@ -31,7 +31,7 @@ import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.RE
 import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.RESULT_EXPOSURE_RANGE;
 import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.RESULT_MEASURED_OUTCOME;
 import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.TITLE;
-import static org.mockito.Matchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;

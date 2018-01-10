@@ -17,7 +17,6 @@ public class SearchOrderRecordMapperTest extends RecordMapperTest<SearchOrderRec
     static final boolean GLOBAL = true;
 
     public static void entityFixtureWithoutIdFields(SearchOrder entityMock) {
-        when(entityMock.getId()).thenReturn(ID);
         when(entityMock.getName()).thenReturn(NAME);
         when(entityMock.getOwner()).thenReturn(OWNER);
         when(entityMock.isGlobal()).thenReturn(GLOBAL);

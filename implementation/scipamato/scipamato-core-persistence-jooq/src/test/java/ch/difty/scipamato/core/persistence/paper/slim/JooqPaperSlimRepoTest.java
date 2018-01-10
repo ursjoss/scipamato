@@ -56,11 +56,6 @@ public class JooqPaperSlimRepoTest extends
     }
 
     @Override
-    protected Long getSampleId() {
-        return SAMPLE_ID;
-    }
-
-    @Override
     protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> getRepo() {
         if (repo == null) {
             repo = new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),

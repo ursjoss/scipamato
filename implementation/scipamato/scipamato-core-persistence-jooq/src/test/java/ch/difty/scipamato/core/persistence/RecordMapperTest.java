@@ -30,10 +30,18 @@ public abstract class RecordMapperTest<R extends Record, E extends CoreEntity> {
      * @param entityMock
      */
     protected static void auditFixtureFor(CoreEntity entityMock) {
-        when(entityMock.getCreated()).thenReturn(CREATED.toLocalDateTime());
         when(entityMock.getCreatedBy()).thenReturn(CREATED_BY);
-        when(entityMock.getLastModified()).thenReturn(LAST_MOD.toLocalDateTime());
         when(entityMock.getLastModifiedBy()).thenReturn(LAST_MOD_BY);
+    }
+
+    /**
+     * Test fixture for the entity mock audit fields.
+     *
+     * @param entityMock
+     */
+    protected static void auditExtendedFixtureFor(CoreEntity entityMock) {
+        when(entityMock.getCreated()).thenReturn(CREATED.toLocalDateTime());
+        when(entityMock.getLastModified()).thenReturn(LAST_MOD.toLocalDateTime());
         when(entityMock.getVersion()).thenReturn(VERSION);
     }
 

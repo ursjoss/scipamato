@@ -3,9 +3,8 @@ package ch.difty.scipamato.core.persistence;
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -100,7 +99,6 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
         return updateSetStepSetterMock;
     }
 
-    @Override
     protected abstract ID getSampleId();
 
     /**
@@ -222,21 +220,21 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     public void deleting_validPersistentEntity_returnsDeletedEntity() {
         repo = makeRepoFindingEntityById(getPersistedEntity());
 
-        when(deleteConditionStep1Mock.and(getRecordVersion().equal(anyInt()))).thenReturn(deleteConditionStep2Mock);
+        when(deleteConditionStep1Mock.and(getRecordVersion().eq(0))).thenReturn(deleteConditionStep2Mock);
         when(deleteConditionStep2Mock.execute()).thenReturn(1);
 
         assertThat(repo.delete(id, 0)).isEqualTo(getPersistedEntity());
 
         verify(getDsl()).delete(getTable());
         verify(deleteWhereStepMock).where(getTableId().equal(id));
-        verify(deleteConditionStep1Mock).and(getRecordVersion().equal(anyInt()));
+        verify(deleteConditionStep1Mock).and(getRecordVersion().eq(0));
         verify(deleteConditionStep2Mock).execute();
     }
 
     @Test
     public void deleting_validPersistentEntity_withFailingDelete_returnsDeletedEntity() {
         repo = makeRepoFindingEntityById(getPersistedEntity());
-        when(deleteConditionStep1Mock.and(getRecordVersion().equal(anyInt()))).thenReturn(deleteConditionStep2Mock);
+        when(deleteConditionStep1Mock.and(getRecordVersion().eq(0))).thenReturn(deleteConditionStep2Mock);
         when(deleteConditionStep2Mock.execute()).thenReturn(0);
 
         try {
@@ -247,7 +245,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
         }
 
         verify(getDsl()).delete(getTable());
-        verify(deleteConditionStep1Mock).and(getRecordVersion().equal(anyInt()));
+        verify(deleteConditionStep1Mock).and(getRecordVersion().eq(0));
         verify(deleteWhereStepMock).where(getTableId().equal(id));
         verify(deleteConditionStep2Mock).execute();
     }

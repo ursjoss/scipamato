@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.sync.jobs.paper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.anyList;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -290,7 +290,6 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         verify(rs, times(5)).wasNull();
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void assertInternalCodesAreSet() {
         verify(codeAggregator).setInternalCodes(anyList());

@@ -1,9 +1,8 @@
 package ch.difty.scipamato.core.web.pages.paper.provider;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,6 +13,7 @@ import java.util.List;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationContextMatcher;
@@ -53,7 +53,7 @@ public class PaperSlimBySearchOrderProviderTest
 
     @Override
     protected void verifyFilterMock(PaginationContextMatcher matcher) {
-        verify(serviceMock).findPageBySearchOrder(eq(searchOrder), argThat(matcher));
+        verify(serviceMock).findPageBySearchOrder(eq(searchOrder), Mockito.argThat(matcher));
     }
 
     @Test
@@ -82,13 +82,13 @@ public class PaperSlimBySearchOrderProviderTest
     public void gettingAllPapersByFilter() {
         provider.setSort("authors", SortOrder.ASCENDING);
         when(paperServiceMock.findPageBySearchOrder(eq(getFilter()),
-            argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")), eq(LC)))
+            Mockito.argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")), eq(LC)))
                 .thenReturn(pageOfPapers);
         List<Paper> papers = provider.findAllPapersByFilter();
         assertThat(papers).hasSize(5);
         assertThat(papers).containsOnly(paperMock);
         verify(paperServiceMock).findPageBySearchOrder(eq(getFilter()),
-            argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")), eq(LC));
+            Mockito.argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")), eq(LC));
     }
 
     @Test
@@ -96,11 +96,11 @@ public class PaperSlimBySearchOrderProviderTest
         final List<Long> ids = Arrays.asList(3l, 18l, 6l);
         provider.setSort("authors", SortOrder.ASCENDING);
         when(paperServiceMock.findPageOfIdsBySearchOrder(eq(getFilter()),
-            argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")))).thenReturn(ids);
+            Mockito.argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")))).thenReturn(ids);
         List<Long> papers = provider.findAllPaperIdsByFilter();
         assertThat(papers).isEqualTo(ids);
         verify(paperServiceMock).findPageOfIdsBySearchOrder(eq(getFilter()),
-            argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")));
+            Mockito.argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")));
     }
 
     @Test

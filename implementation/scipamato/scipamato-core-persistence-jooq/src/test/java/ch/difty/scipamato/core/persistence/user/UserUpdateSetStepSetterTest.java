@@ -9,7 +9,6 @@ import static ch.difty.scipamato.core.persistence.RecordMapperTest.VERSION;
 import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.EMAIL;
 import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.ENABLED;
 import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.FIRST_NAME;
-import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.ID;
 import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.LAST_NAME;
 import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.PASSWORD;
 import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.USER_NAME;
@@ -48,7 +47,6 @@ public class UserUpdateSetStepSetterTest extends UpdateSetStepSetterTest<Scipama
 
     @Override
     protected void entityFixture() {
-        when(entityMock.getId()).thenReturn(ID);
         UserRecordMapperTest.entityFixtureWithoutIdFields(entityMock);
     }
 
@@ -68,7 +66,6 @@ public class UserUpdateSetStepSetterTest extends UpdateSetStepSetterTest<Scipama
         when(getMoreStep().set(SCIPAMATO_USER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
         when(getMoreStep().set(SCIPAMATO_USER.LAST_MODIFIED, LAST_MOD)).thenReturn(getMoreStep());
         when(getMoreStep().set(SCIPAMATO_USER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.VERSION, VERSION)).thenReturn(getMoreStep());
     }
 
     @Override

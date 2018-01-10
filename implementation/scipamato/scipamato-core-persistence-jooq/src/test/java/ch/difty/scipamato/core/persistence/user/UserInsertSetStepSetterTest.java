@@ -8,7 +8,7 @@ import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.ID;
 import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.LAST_NAME;
 import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.PASSWORD;
 import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.USER_NAME;
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;

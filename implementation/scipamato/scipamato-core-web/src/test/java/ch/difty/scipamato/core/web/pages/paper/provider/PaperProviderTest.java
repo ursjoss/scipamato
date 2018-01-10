@@ -1,9 +1,9 @@
 package ch.difty.scipamato.core.web.pages.paper.provider;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -104,7 +104,7 @@ public class PaperProviderTest {
         assertThat(provider.getFilterState()).isEqualTo(filterMock);
     }
 
-    private class PaginationContextMatcher extends ArgumentMatcher<PaginationContext> {
+    private class PaginationContextMatcher implements ArgumentMatcher<PaginationContext> {
 
         private final int    pageSize;
         private final String sort;
@@ -115,13 +115,9 @@ public class PaperProviderTest {
         }
 
         @Override
-        public boolean matches(Object argument) {
-            if (argument != null && argument instanceof PaginationContext) {
-                PaginationContext p = (PaginationContext) argument;
-                return p.getPageSize() == pageSize && sort.equals(p.getSort()
-                    .toString());
-            }
-            return false;
+        public boolean matches(PaginationContext p) {
+            return p != null && p.getPageSize() == pageSize && sort.equals(p.getSort()
+                .toString());
         }
     }
 
