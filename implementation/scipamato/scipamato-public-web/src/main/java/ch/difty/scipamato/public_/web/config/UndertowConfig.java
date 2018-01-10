@@ -19,7 +19,7 @@ public class UndertowConfig {
     private final ServerProperties    serverProperties;
     private final ScipamatoProperties scipamatoProperties;
 
-    public UndertowConfig(ServerProperties serverProps, ScipamatoProperties scipamatoProperties) {
+    public UndertowConfig(final ServerProperties serverProps, final ScipamatoProperties scipamatoProperties) {
         this.serverProperties = serverProps;
         this.scipamatoProperties = scipamatoProperties;
     }
