@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.persistence.paper;
+package ch.difty.scipamato.core.persistence;
 
 import static ch.difty.scipamato.core.db.Tables.PAPER;
 import static ch.difty.scipamato.core.persistence.TestDbConstants.MAX_ID_PREPOPULATED;
@@ -18,22 +18,17 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import ch.difty.scipamato.core.persistence.JooqBaseIntegrationTest;
-
-public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegrationTest {
+public class JooqDslTransactionIntegrationTest extends JooqBaseIntegrationTest {
 
     @Autowired
-    DSLContext dsl;
+    private DSLContext dsl;
 
     @Autowired
-    DataSourceTransactionManager txMgr;
-
-    @Autowired
-    JooqPaperRepo books;
+    private DataSourceTransactionManager txMgr;
 
     @After
     public void teardown() {
-        // Delete all books that were created in any test
+        // Delete all books that were created in any test - just in case
         dsl.delete(PAPER)
             .where(PAPER.ID.gt(MAX_ID_PREPOPULATED))
             .execute();
@@ -45,7 +40,6 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
 
         TransactionStatus tx = txMgr.getTransaction(new DefaultTransactionDefinition());
         try {
-
             // This is a "bug". The same book is created twice, resulting in a
             // constraint violation exception
             for (long i = 0; i < 2; i++)
@@ -60,10 +54,8 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
                     .set(PAPER.GOALS, "goals")
                     .execute();
             Assert.fail();
-        }
-
-        // Upon the constraint violation, we explicitly roll back the transaction.
-        catch (DataAccessException e) {
+        } catch (DataAccessException e) {
+            // Upon the constraint violation, we explicitly roll back the transaction.
             txMgr.rollback(tx);
             rollback = true;
         }
@@ -93,11 +85,9 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
                         .execute();
                 Assert.fail();
             });
-        }
-
-        // Upon the constraint violation, the transaction must already have been rolled
-        // back
-        catch (DataAccessException e) {
+        } catch (DataAccessException e) {
+            // Upon the constraint violation, the transaction must already have been rolled
+            // back
             rollback = true;
         }
 
@@ -111,7 +101,6 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
         AtomicBoolean rollback2 = new AtomicBoolean(false);
 
         try {
-
             // If using Spring transactions, we don't need the c1 reference
             dsl.transaction(c1 -> {
 
@@ -130,7 +119,6 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
                 assertEquals(RECORD_COUNT_PREPOPULATED + 1, dsl.fetchCount(PAPER));
 
                 try {
-
                     // Nest transactions using Spring. This should create a savepoint, right here
                     // If using Spring transactions, we don't need the c2 reference
                     dsl.transaction(c2 -> {
@@ -160,11 +148,9 @@ public class JooqPaperRepoTransactionIntegrationTest extends JooqBaseIntegration
 
                 throw new org.jooq.exception.DataAccessException("Rollback");
             });
-        }
-
-        // Upon the constraint violation, the transaction must already have been rolled
-        // back
-        catch (org.jooq.exception.DataAccessException e) {
+        } catch (org.jooq.exception.DataAccessException e) {
+            // Upon the constraint violation, the transaction must already have been rolled
+            // back
             assertEquals("Rollback", e.getMessage());
             rollback2.set(true);
         }
