@@ -172,6 +172,12 @@
                 <type>test-jar</type>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>scipamato-public-persistence-jooq</artifactId>
+                <type>test-jar</type>
+                <version>${project.version}</version>
+            </dependency>
             <!-- SciPaMaTo-Public Modules -->
             <dependency>
                 <groupId>${project.groupId}</groupId>

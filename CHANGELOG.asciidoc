@@ -52,6 +52,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
+- Test Coverage of untested parts of SciPaMaTo
 
 .Changed
 

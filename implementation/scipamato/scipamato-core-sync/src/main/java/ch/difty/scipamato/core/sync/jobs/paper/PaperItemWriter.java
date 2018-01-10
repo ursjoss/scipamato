@@ -27,37 +27,37 @@ public class PaperItemWriter extends ScipamatoItemWriter<PublicPaper> {
     }
 
     @Override
-    protected int executeUpdate(final PublicPaper c) {
+    protected int executeUpdate(final PublicPaper p) {
         return getDslContext().insertInto(PAPER)
             .columns(PAPER.ID, PAPER.NUMBER, PAPER.PM_ID, PAPER.AUTHORS, PAPER.TITLE, PAPER.LOCATION,
                 PAPER.PUBLICATION_YEAR, PAPER.GOALS, PAPER.METHODS, PAPER.POPULATION, PAPER.RESULT, PAPER.COMMENT,
                 PAPER.CODES_POPULATION, PAPER.CODES_STUDY_DESIGN, PAPER.CODES, PAPER.VERSION, PAPER.CREATED,
                 PAPER.LAST_MODIFIED, PAPER.LAST_SYNCHED)
-            .values(c.getId(), c.getNumber(), c.getPmId(), c.getAuthors(), c.getTitle(), c.getLocation(),
-                c.getPublicationYear(), c.getGoals(), c.getMethods(), c.getPopulation(), c.getResult(), c.getComment(),
-                c.getCodesPopulation(), c.getCodesStudyDesign(), c.getCodes(), c.getVersion(), c.getCreated(),
-                c.getLastModified(), c.getLastSynched())
+            .values(p.getId(), p.getNumber(), p.getPmId(), p.getAuthors(), p.getTitle(), p.getLocation(),
+                p.getPublicationYear(), p.getGoals(), p.getMethods(), p.getPopulation(), p.getResult(), p.getComment(),
+                p.getCodesPopulation(), p.getCodesStudyDesign(), p.getCodes(), p.getVersion(), p.getCreated(),
+                p.getLastModified(), p.getLastSynched())
             .onConflict(PAPER.ID)
             .doUpdate()
-            .set(PAPER.NUMBER, c.getNumber())
-            .set(PAPER.PM_ID, c.getPmId())
-            .set(PAPER.AUTHORS, c.getAuthors())
-            .set(PAPER.TITLE, c.getTitle())
-            .set(PAPER.LOCATION, c.getLocation())
-            .set(PAPER.PUBLICATION_YEAR, c.getPublicationYear())
-            .set(PAPER.GOALS, c.getGoals())
-            .set(PAPER.METHODS, c.getMethods())
-            .set(PAPER.POPULATION, c.getPopulation())
-            .set(PAPER.RESULT, c.getResult())
-            .set(PAPER.COMMENT, c.getComment())
-            .set(PAPER.CODES_POPULATION, c.getCodesPopulation())
-            .set(PAPER.CODES_STUDY_DESIGN, c.getCodesStudyDesign())
-            .set(PAPER.CODES, c.getCodes())
-            .set(PAPER.VERSION, c.getVersion())
-            .set(PAPER.CREATED, c.getCreated())
-            .set(PAPER.LAST_MODIFIED, c.getLastModified())
-            .set(PAPER.LAST_SYNCHED, c.getLastSynched())
-            .where(PAPER.ID.eq(c.getId()))
+            .set(PAPER.NUMBER, p.getNumber())
+            .set(PAPER.PM_ID, p.getPmId())
+            .set(PAPER.AUTHORS, p.getAuthors())
+            .set(PAPER.TITLE, p.getTitle())
+            .set(PAPER.LOCATION, p.getLocation())
+            .set(PAPER.PUBLICATION_YEAR, p.getPublicationYear())
+            .set(PAPER.GOALS, p.getGoals())
+            .set(PAPER.METHODS, p.getMethods())
+            .set(PAPER.POPULATION, p.getPopulation())
+            .set(PAPER.RESULT, p.getResult())
+            .set(PAPER.COMMENT, p.getComment())
+            .set(PAPER.CODES_POPULATION, p.getCodesPopulation())
+            .set(PAPER.CODES_STUDY_DESIGN, p.getCodesStudyDesign())
+            .set(PAPER.CODES, p.getCodes())
+            .set(PAPER.VERSION, p.getVersion())
+            .set(PAPER.CREATED, p.getCreated())
+            .set(PAPER.LAST_MODIFIED, p.getLastModified())
+            .set(PAPER.LAST_SYNCHED, p.getLastSynched())
+            .where(PAPER.ID.eq(p.getId()))
             .execute();
     }
 

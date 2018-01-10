@@ -32,10 +32,25 @@ public abstract class CodeLikeModel<T extends CodeLike, S extends CodeLikeServic
     private final String      languageCode;
 
     protected CodeLikeModel(final CodeClassId codeClassId, final String languageCode) {
-        Injector.get()
-            .inject(this);
+        injectThis();
         this.codeClassId = AssertAs.notNull(codeClassId, "codeClassId");
         this.languageCode = AssertAs.notNull(languageCode, "languageCode");
+    }
+
+    /**
+     * Protected constructor for testing without wicket application.
+     */
+    protected CodeLikeModel(final CodeClassId codeClassId, final String languageCode, final S service) {
+        this(codeClassId, languageCode);
+        this.service = service;
+    }
+
+    /**
+     * Extracted into protected method for testing without wicket application
+     */
+    protected void injectThis() {
+        Injector.get()
+            .inject(this);
     }
 
     protected CodeClassId getCodeClassId() {

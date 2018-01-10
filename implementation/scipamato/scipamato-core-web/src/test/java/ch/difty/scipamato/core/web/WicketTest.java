@@ -13,12 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.ApplicationContext;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -48,9 +43,6 @@ public abstract class WicketTest {
 
     @Autowired
     private DateTimeService dateTimeService;
-
-    @SpyBean
-    private CustomAuthenticationManager customAuthenticationManager;
 
     // The paper slim service and paper service are used in the home page
     // PaperListPage
@@ -88,13 +80,6 @@ public abstract class WicketTest {
      * override if needed
      */
     protected void setUpHook() {
-    }
-
-    public static class CustomAuthenticationManager implements AuthenticationManager {
-        @Override
-        public Authentication authenticate(Authentication arg0) throws AuthenticationException {
-            return new TestingAuthenticationToken(USERNAME, PASSWORD, "USER", "ADMIN");
-        }
     }
 
     private void login(String username, String password) {
