@@ -75,6 +75,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 
 - AuthorParser: Don't let streams escape their context. Based on review by Prof. Dierk König.
+- Do not run the data synchronization from core to public during the nightly build (profile-sonar)
 
 .Security
 
