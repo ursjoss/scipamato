@@ -1,4 +1,4 @@
-package ch.difty.scipamato.public_.web.config;
+package ch.difty.scipamato.common.web.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -7,7 +7,7 @@ import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServle
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import ch.difty.scipamato.public_.config.ScipamatoProperties;
+import ch.difty.scipamato.common.config.ApplicationProperties;
 import io.undertow.servlet.api.SecurityConstraint;
 import io.undertow.servlet.api.SecurityInfo;
 import io.undertow.servlet.api.TransportGuaranteeType;
@@ -16,10 +16,10 @@ import io.undertow.servlet.api.WebResourceCollection;
 @Configuration
 public class UndertowConfig {
 
-    private final ServerProperties    serverProperties;
-    private final ScipamatoProperties scipamatoProperties;
+    private final ServerProperties      serverProperties;
+    private final ApplicationProperties scipamatoProperties;
 
-    public UndertowConfig(final ServerProperties serverProps, final ScipamatoProperties scipamatoProperties) {
+    public UndertowConfig(final ServerProperties serverProps, final ApplicationProperties scipamatoProperties) {
         this.serverProperties = serverProps;
         this.scipamatoProperties = scipamatoProperties;
     }

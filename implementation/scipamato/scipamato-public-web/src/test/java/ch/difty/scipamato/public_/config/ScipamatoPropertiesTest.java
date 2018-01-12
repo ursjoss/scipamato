@@ -23,4 +23,9 @@ public class ScipamatoPropertiesTest {
         assertThat(sp.getPubmedBaseUrl()).isEqualTo("https://www.ncbi.nlm.nih.gov/pubmed/");
     }
 
+    @Test
+    public void gettingRedirectPort_hasNoDefaultValue() {
+        assertThat(sp.getRedirectFromPort()).isNull();
+    }
+
 }

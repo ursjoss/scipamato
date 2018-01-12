@@ -50,4 +50,10 @@ public class ScipamatoProperties {
         return AuthorParserStrategy.fromProperty(authorParser);
     }
 
+    /**
+     * Port from where an unsecured http connection is forwarded to the secured
+     * https port (@literal server.port}. Only has an effect if https is configured.
+     */
+    private Integer redirectFromPort;
+
 }

@@ -54,4 +54,9 @@ public class ScipamatoCoreProperties implements ApplicationCoreProperties {
         return scipamatoProperties.getPubmedBaseUrl();
     }
 
+    @Override
+    public Integer getRedirectFromPort() {
+        return scipamatoProperties.getRedirectFromPort();
+    }
+
 }

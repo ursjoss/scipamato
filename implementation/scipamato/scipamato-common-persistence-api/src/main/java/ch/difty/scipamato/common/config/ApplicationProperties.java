@@ -20,6 +20,7 @@ public interface ApplicationProperties {
     String LOCALIZATION_DEFAULT = "scipamato.default-localization";
     String BRAND                = "scipamato.brand";
     String PUBMED_BASE_URL      = "scipamato.pubmed-base-url";
+    String REDIRECT_FROM_PORT   = "scipamato.redirect-from-port";
 
     /**
      * @return the build version of the application.
@@ -40,4 +41,10 @@ public interface ApplicationProperties {
      * @return The base url in PubMed to query by pm_id.
      */
     String getPubmedBaseUrl();
+
+    /**
+     * @return The base url in PubMed to query by pm_id.
+     */
+    Integer getRedirectFromPort();
+
 }

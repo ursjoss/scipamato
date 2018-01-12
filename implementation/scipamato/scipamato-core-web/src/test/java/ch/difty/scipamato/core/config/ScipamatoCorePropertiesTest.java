@@ -33,6 +33,7 @@ public class ScipamatoCorePropertiesTest {
         when(scipamatoPropMock.getPubmedBaseUrl()).thenReturn("pbUrl");
         when(scipamatoPropMock.getAuthorParserStrategy()).thenReturn(AuthorParserStrategy.PUBMED);
         when(scipamatoPropMock.getPaperNumberMinimumToBeRecycled()).thenReturn(100);
+        when(scipamatoPropMock.getRedirectFromPort()).thenReturn(5678);
 
         when(mavenPropMock.getVersion()).thenReturn("0.0.1-SNAPSHOT");
     }
@@ -76,6 +77,12 @@ public class ScipamatoCorePropertiesTest {
     public void gettingPaperNumberMin2BeRecycled_delegatesToScipamatoProps() {
         assertThat(prop.getMinimumPaperNumberToBeRecycled()).isEqualTo(100);
         verify(scipamatoPropMock).getPaperNumberMinimumToBeRecycled();
+    }
+
+    @Test
+    public void gettingRedirectFromPort_delegatesToScipamatoProps() {
+        assertThat(prop.getRedirectFromPort()).isEqualTo(5678);
+        verify(scipamatoPropMock).getRedirectFromPort();
     }
 
 }

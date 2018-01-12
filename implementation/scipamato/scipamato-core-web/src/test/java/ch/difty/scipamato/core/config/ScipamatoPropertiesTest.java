@@ -43,4 +43,9 @@ public class ScipamatoPropertiesTest {
         assertThat(sp.getDbSchema()).isEqualTo("public");
     }
 
+    @Test
+    public void gettingRedirectPort_hasNoDefaultValue() {
+        assertThat(sp.getRedirectFromPort()).isNull();
+    }
+
 }

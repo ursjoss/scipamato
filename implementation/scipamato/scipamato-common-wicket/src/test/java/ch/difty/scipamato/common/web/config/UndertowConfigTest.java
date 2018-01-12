@@ -1,4 +1,4 @@
-package ch.difty.scipamato.public_.web.config;
+package ch.difty.scipamato.common.web.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -21,7 +21,8 @@ import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServle
 import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
 import org.xnio.XnioWorker;
 
-import ch.difty.scipamato.public_.config.ScipamatoProperties;
+import ch.difty.scipamato.common.config.ApplicationProperties;
+import ch.difty.scipamato.common.web.config.UndertowConfig;
 import io.undertow.Undertow;
 import io.undertow.Undertow.Builder;
 import io.undertow.Undertow.ListenerInfo;
@@ -43,9 +44,9 @@ public class UndertowConfigTest {
     private UndertowEmbeddedServletContainerFactory factory;
 
     @Mock
-    private ServerProperties    serverPropsMock;
+    private ServerProperties      serverPropsMock;
     @Mock
-    private ScipamatoProperties scipamatoPropertiesMock;
+    private ApplicationProperties scipamatoPropertiesMock;
 
     private Builder        undertowBuilder = Undertow.builder();
     private DeploymentInfo deploymentInfo  = new DeploymentInfo();

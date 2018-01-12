@@ -45,4 +45,9 @@ public class ScipamatoPublicProperties implements ApplicationProperties {
         return scipamatoProperties.getPubmedBaseUrl();
     }
 
+    @Override
+    public Integer getRedirectFromPort() {
+        return scipamatoProperties.getRedirectFromPort();
+    }
+
 }

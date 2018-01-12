@@ -39,6 +39,11 @@ public class TestApplication {
             public String getPubmedBaseUrl() {
                 return "http://pubmed/";
             }
+
+            @Override
+            public Integer getRedirectFromPort() {
+                return 8081;
+            }
         };
     }
 }

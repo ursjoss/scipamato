@@ -46,6 +46,11 @@ public class TestApplication {
                 return "http://pubmed/";
             }
 
+            @Override
+            public Integer getRedirectFromPort() {
+                return 8080;
+            }
+
         };
     }
 

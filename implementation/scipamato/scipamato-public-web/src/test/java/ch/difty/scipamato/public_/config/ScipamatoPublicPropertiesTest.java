@@ -31,6 +31,7 @@ public class ScipamatoPublicPropertiesTest {
         when(scipamatoPropMock.getBrand()).thenReturn("brand");
         when(scipamatoPropMock.getDefaultLocalization()).thenReturn("dl");
         when(scipamatoPropMock.getPubmedBaseUrl()).thenReturn("pbUrl");
+        when(scipamatoPropMock.getRedirectFromPort()).thenReturn(5678);
 
         when(mavenPropMock.getVersion()).thenReturn("0.0.1-SNAPSHOT");
     }
@@ -56,6 +57,12 @@ public class ScipamatoPublicPropertiesTest {
     public void gettingPubmedBaseUrl_delegatesToScipamatoProps() {
         assertThat(prop.getPubmedBaseUrl()).isEqualTo("pbUrl");
         verify(scipamatoPropMock).getPubmedBaseUrl();
+    }
+
+    @Test
+    public void gettingRedirectFromPort_delegatesToScipamatoProp() {
+        assertThat(prop.getRedirectFromPort()).isEqualTo(5678);
+        verify(scipamatoPropMock).getRedirectFromPort();
     }
 
     @Test
