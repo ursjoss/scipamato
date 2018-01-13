@@ -122,10 +122,10 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
 
     @Test
     public void iterating_throughThirdPage() {
-        provider.setSort("title", SortOrder.DESCENDING);
+        provider.setSort("title", SortOrder.ASCENDING);
         Iterator<PaperSlim> it = provider.iterator(6, 3);
         assertRecordsIn(it);
-        verifyFilterMock(new PaginationContextMatcher(6, 3, "title: DESC"));
+        verifyFilterMock(new PaginationContextMatcher(6, 3, "title: ASC"));
     }
 
     @Test
@@ -153,6 +153,11 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
         Iterator<PaperSlim> it = provider.iterator(6, actualSize);
         assertRecordsIn(it);
         verifyFilterMock(new PaginationContextMatcher(6, actualSize, "title: DESC"));
+    }
+
+    @Test
+    public void gettingLanguageCode() {
+        assertThat(provider.getLanguageCode()).isEqualTo("de");
     }
 
 }

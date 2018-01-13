@@ -33,7 +33,7 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
 
     private static final long serialVersionUID = 1L;
 
-    private int maxRowsPerPage;
+    private final int maxRowsPerPage;
 
     private F filterState;
 
@@ -167,7 +167,7 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
      * Sets the flag whether to show search results (false) or papers excluded from
      * search (true) Override if needed
      */
-    public void setShowExcluded(boolean showExcluded) {
+    public void setShowExcluded(final boolean showExcluded) {
     }
 
     protected String getLanguageCode() {
