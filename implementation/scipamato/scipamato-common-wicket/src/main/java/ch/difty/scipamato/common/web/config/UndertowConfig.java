@@ -35,9 +35,9 @@ public class UndertowConfig {
     public EmbeddedServletContainerFactory undertow() {
         final int portUnsecured = scipamatoProperties.getRedirectFromPort();
         final int portSecured = serverProperties.getPort();
-        final UndertowEmbeddedServletContainerFactory undertow = new UndertowEmbeddedServletContainerFactory();
-        undertow.addBuilderCustomizers(builder -> builder.addHttpListener(portUnsecured, "0.0.0.0"));
-        undertow.addDeploymentInfoCustomizers(deploymentInfo -> {
+        final UndertowEmbeddedServletContainerFactory factory = new UndertowEmbeddedServletContainerFactory();
+        factory.addBuilderCustomizers(builder -> builder.addHttpListener(portUnsecured, "0.0.0.0"));
+        factory.addDeploymentInfoCustomizers(deploymentInfo -> {
             deploymentInfo
                 .addSecurityConstraint(
                     new SecurityConstraint().addWebResourceCollection(new WebResourceCollection().addUrlPattern("/*"))
@@ -45,7 +45,7 @@ public class UndertowConfig {
                         .setEmptyRoleSemantic(SecurityInfo.EmptyRoleSemantic.PERMIT))
                 .setConfidentialPortManager(exchange -> portSecured);
         });
-        return undertow;
+        return factory;
     }
 
 }
