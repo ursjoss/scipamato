@@ -1,6 +1,8 @@
 package ch.difty.scipamato.public_.persistence.paper;
 
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.jooq.DSLContext;
@@ -19,7 +21,7 @@ import ch.difty.scipamato.public_.entity.PublicPaper;
 @RunWith(MockitoJUnitRunner.class)
 public class JooqPublicPaperRepoTest {
 
-    private PublicPaperRepository repo;
+    private JooqPublicPaperRepo repo;
 
     @Mock
     private DSLContext                                      dslMock;
@@ -41,5 +43,13 @@ public class JooqPublicPaperRepoTest {
     @Test
     public void findingByNumber_withNullNumber_throws() {
         assertDegenerateSupplierParameter(() -> repo.findByNumber(null), "number");
+    }
+
+    @Test
+    public void mapping_withPaperRecordHandingBackNullEvenForAuditDates_doesNotThrow() {
+        PaperRecord pr = mock(PaperRecord.class);
+        PublicPaper pp = repo.map(pr);
+        assertThat(pp.getCreated()).isNull();
+        assertThat(pp.getLastModified()).isNull();
     }
 }
