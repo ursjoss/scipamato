@@ -56,9 +56,14 @@ public abstract class BasePage<T> extends AbstractPage<T> {
         addExternalLink(nb, new StringResourceModel("menu.help.url", this, null).getString(),
             new StringResourceModel("menu.help", this, null).getString(), GlyphIconType.questionsign,
             Navbar.ComponentPosition.RIGHT);
-        addExternalLink(nb, new StringResourceModel("menu.changelog.url", this, null).getString(), getVersionLink(),
-            GlyphIconType.briefcase, Navbar.ComponentPosition.RIGHT);
+        addExternalLink(nb, new StringResourceModel("menu.changelog.url", this, null).setParameters(getVersionAnker())
+            .getString(), getVersionLink(), GlyphIconType.briefcase, Navbar.ComponentPosition.RIGHT);
         addPageLink(nb, LogoutPage.class, "menu.logout", GlyphIconType.edit, Navbar.ComponentPosition.RIGHT);
+    }
+
+    private String getVersionAnker() {
+        final String version = getProperties().getBuildVersion();
+        return "#" + (version.endsWith("SNAPSHOT") ? "unreleased" : "v" + version);
     }
 
     private String getVersionLink() {
