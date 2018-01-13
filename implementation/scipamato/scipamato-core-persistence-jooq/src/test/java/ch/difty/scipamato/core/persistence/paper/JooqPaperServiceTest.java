@@ -228,6 +228,57 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
         articles.add(PubmedArticleFacade.of(pa));
+        assertThat(articles.get(0)
+            .getPmId()).isNotNull();
+
+        when(repoMock.findExistingPmIdsOutOf(Arrays.asList(pmIdValue))).thenReturn(Arrays.asList());
+        when(repoMock.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)).thenReturn(17l);
+
+        when(repoMock.add(isA(Paper.class))).thenReturn(paperMock2);
+        when(paperMock2.getId()).thenReturn(27l);
+        when(paperMock2.getPmId()).thenReturn(pmIdValue);
+
+        ServiceResult sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER);
+        assertThat(sr).isNotNull();
+        assertThat(sr.getInfoMessages()).hasSize(1)
+            .contains("PMID " + pmIdValue + " (id 27)");
+        assertThat(sr.getWarnMessages()).isEmpty();
+        assertThat(sr.getErrorMessages()).isEmpty();
+
+        verify(repoMock).findExistingPmIdsOutOf(Arrays.asList(pmIdValue));
+        verify(repoMock).findLowestFreeNumberStartingFrom(MINIMUM_NUMBER);
+        verify(repoMock).add(isA(Paper.class));
+        verify(paperMock2).getId();
+        verify(paperMock2).getPmId();
+    }
+
+    @Test
+    public void dumpingSingleNewArticleWithNullPmId_doesNotTryToSave() {
+        Integer pmIdValue = 23193287;
+        PubmedArticle pa = newPubmedArticle(pmIdValue);
+        articles.add(PubmedArticleFacade.of(pa));
+        articles.get(0)
+            .setPmId(null);
+
+        ServiceResult sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER);
+        assertThat(sr).isNotNull();
+        assertThat(sr.getInfoMessages()).isEmpty();
+        assertThat(sr.getWarnMessages()).isEmpty();
+        assertThat(sr.getErrorMessages()).isEmpty();
+
+        verify(repoMock, never()).findExistingPmIdsOutOf(Arrays.asList(pmIdValue));
+    }
+
+    @Test
+    public void dumpingTwoNewArticleOneOfWhichWithNullPmId_savesOnlyOther() {
+        Integer pmIdValue = 23193287;
+        PubmedArticle pa1 = newPubmedArticle(pmIdValue);
+        articles.add(PubmedArticleFacade.of(pa1));
+        articles.add(PubmedArticleFacade.of(newPubmedArticle(0)));
+        assertThat(articles.get(1)
+            .getPmId()).isEqualTo("0");
+        articles.get(1)
+            .setPmId(null);
 
         when(repoMock.findExistingPmIdsOutOf(Arrays.asList(pmIdValue))).thenReturn(Arrays.asList());
         when(repoMock.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)).thenReturn(17l);
