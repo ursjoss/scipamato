@@ -41,7 +41,7 @@ public abstract class PubmedArticleFacade {
      *             - if the parameter is of any other class than one of the two
      *             managed ones.
      */
-    public static PubmedArticleFacade of(java.lang.Object pubmedArticleOrPubmedBookArticle) {
+    public static PubmedArticleFacade of(final java.lang.Object pubmedArticleOrPubmedBookArticle) {
         if (pubmedArticleOrPubmedBookArticle instanceof PubmedArticle)
             return new ScipamatoPubmedArticle((PubmedArticle) pubmedArticleOrPubmedBookArticle);
         else if (pubmedArticleOrPubmedBookArticle instanceof PubmedBookArticle)
@@ -78,7 +78,7 @@ public abstract class PubmedArticleFacade {
                 asb.append(((LastName) o).getvalue());
             else if (o instanceof Initials)
                 asb.append(((Initials) o).getvalue());
-            else if (o instanceof Suffix)
+            else
                 asb.append(((Suffix) o).getvalue());
         }
         return asb;
@@ -109,7 +109,7 @@ public abstract class PubmedArticleFacade {
     private String combine(final String individualAuthors, final String collectives) {
         final StringBuilder comb = new StringBuilder();
         comb.append(individualAuthors);
-        if (comb.length() > 0 && !StringUtils.isEmpty(collectives)) {
+        if (!StringUtils.isEmpty(collectives)) {
             if (comb.length() > 0)
                 comb.append("; ");
             comb.append(collectives);
@@ -125,13 +125,21 @@ public abstract class PubmedArticleFacade {
             .map(Author::getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName)
             .flatMap(List<java.lang.Object>::stream)
             .filter(o -> o instanceof LastName)
-            .map(lm -> ((LastName) lm).getvalue())
+            .map(ln -> ((LastName) ln).getvalue())
             .limit(1)
             .findFirst()
-            .orElseGet(null);
+            .orElse(authorList.getAuthor()
+                .stream()
+                .map(Author::getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName)
+                .flatMap(List<java.lang.Object>::stream)
+                .filter(o -> o instanceof CollectiveName)
+                .map(cn -> ((CollectiveName) cn).getvalue())
+                .limit(1)
+                .findFirst()
+                .orElse(""));
     }
 
-    protected String getDoiFromArticleIdList(ArticleIdList articleIdList) {
+    protected String getDoiFromArticleIdList(final ArticleIdList articleIdList) {
         if (articleIdList != null) {
             return articleIdList.getArticleId()
                 .stream()
@@ -152,7 +160,7 @@ public abstract class PubmedArticleFacade {
             .collect(Collectors.joining("\n"));
     }
 
-    private String concatenateAbstract(AbstractText a) {
+    private String concatenateAbstract(final AbstractText a) {
         if (a.getLabel() != null)
             return a.getLabel() + ": " + a.getvalue();
         else

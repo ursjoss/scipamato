@@ -202,6 +202,29 @@ public class ScipamatoPubmedArticleTest {
     }
 
     @Test
+    public void noAuthors_withCollectiveAuthor() {
+        AuthorList authorList = new AuthorList();
+        authorList.getAuthor()
+            .add(makeAuthor(null, null, null, null, "Joice J"));
+        pubmedArticle.getMedlineCitation()
+            .getArticle()
+            .setAuthorList(authorList);
+        ScipamatoPubmedArticle spa = new ScipamatoPubmedArticle(pubmedArticle);
+        assertThat(spa.getAuthors()).isEqualTo("Joice J.");
+        assertThat(spa.getFirstAuthor()).isEqualTo("Joice J");
+    }
+    @Test
+    public void noAuthors_noCollectiveAuthor() {
+        AuthorList authorList = new AuthorList();
+        pubmedArticle.getMedlineCitation()
+        .getArticle()
+        .setAuthorList(authorList);
+        ScipamatoPubmedArticle spa = new ScipamatoPubmedArticle(pubmedArticle);
+        assertThat(spa.getAuthors()).isEqualTo("");
+        assertThat(spa.getFirstAuthor()).isEqualTo("");
+    }
+
+    @Test
     public void location_withMedlinePagination() {
         pubmedArticle.getMedlineCitation()
             .getMedlineJournalInfo()
