@@ -17,7 +17,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
+import ch.difty.scipamato.core.db.tables.Code;
+import ch.difty.scipamato.core.db.tables.CodeClass;
 import ch.difty.scipamato.core.db.tables.SearchExclusion;
+import ch.difty.scipamato.core.db.tables.records.CodeClassRecord;
+import ch.difty.scipamato.core.db.tables.records.CodeRecord;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
 import ch.difty.scipamato.core.entity.SearchOrder;
@@ -128,6 +132,38 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(newCopy).isNotEqualTo(paper);
         assertThat(newCopy.getId()).isEqualTo(id);
         assertThat(newCopy.getAuthors()).isEqualTo("b");
+    }
+
+    @Test
+    public void savingAssociatedEntitiesOf_withCodes() {
+        Paper paper = repo.add(makeMinimalPaper());
+        assertThat(paper).isNotNull();
+        assertThat(paper.getId()).isNotNull()
+            .isGreaterThan(MAX_ID_PREPOPULATED);
+        final long id = paper.getId();
+        assertThat(paper.getAuthors()).isEqualTo("a");
+
+        CodeRecord cr = dsl.selectFrom(Code.CODE)
+            .limit(1)
+            .fetchOne();
+        CodeClassRecord ccr = dsl.selectFrom(CodeClass.CODE_CLASS)
+            .where(CodeClass.CODE_CLASS.ID.eq(cr.getCodeClassId()))
+            .fetchOne();
+        ch.difty.scipamato.core.entity.CodeClass codeClass = new ch.difty.scipamato.core.entity.CodeClass(ccr.getId(),
+                "", "");
+        ch.difty.scipamato.core.entity.Code code = new ch.difty.scipamato.core.entity.Code(cr.getCode(), "", "", true,
+                codeClass.getId(), codeClass.getName(), codeClass.getDescription(), cr.getSort(), null, null, null,
+                null, null);
+        paper.addCode(code);
+
+        repo.update(paper);
+        assertThat(paper.getId()).isEqualTo(id);
+
+        Paper newCopy = repo.findById(id);
+        assertThat(newCopy).isNotEqualTo(paper);
+        assertThat(newCopy.getId()).isEqualTo(id);
+        assertThat(newCopy.getCodes()).extracting(Code.CODE.CODE_.getName())
+            .containsExactly(code.getCode());
     }
 
     @Test
