@@ -92,6 +92,29 @@ public class PaperSummaryTest extends JasperEntityTest {
     }
 
     @Test
+    public void headerHasNoNumberIfNumberIsNull() {
+        p.setNumber(null);
+        ps = newPaperSummary();
+
+        assertThat(ps.getHeader()).isEqualTo("headerPart");
+    }
+
+    @Test
+    public void headerOnlyShowsIdIfHeaderPartIsBlank() {
+        rhf = ReportHeaderFields.builder("", BRAND)
+            .populationLabel(POPULATION_LABEL)
+            .goalsLabel(GOALS_LABEL)
+            .methodsLabel(METHODS_LABEL)
+            .resultLabel(RESULT_LABEL)
+            .commentLabel(COMMENT_LABEL)
+            .build();
+        p.setNumber(5l);
+        ps = newPaperSummary();
+
+        assertThat(ps.getHeader()).isEqualTo("5");
+    }
+
+    @Test
     public void equalsverify() {
         EqualsVerifier.forClass(PaperSummary.class)
             .withRedefinedSuperclass()

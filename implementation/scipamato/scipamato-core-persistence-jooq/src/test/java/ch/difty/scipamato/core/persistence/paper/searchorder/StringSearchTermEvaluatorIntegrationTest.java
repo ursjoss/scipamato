@@ -121,8 +121,7 @@ public class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluato
             .collect(Collectors.joining())).isEqualTo(tokenString);
 
         assertThat(st.getTokens()
-            .get(0)
-            .getType().matchType).isEqualTo(type);
+            .get(0).type.matchType).isEqualTo(type);
 
         final StringSearchTermEvaluator ste = getEvaluator();
         final Condition s = ste.evaluate(st);

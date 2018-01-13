@@ -4,6 +4,7 @@ import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParame
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -22,6 +23,7 @@ import org.jooq.SortField;
 import org.jooq.TableField;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -29,6 +31,7 @@ import ch.difty.scipamato.common.persistence.paging.Sort;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.Paper;
+import ch.difty.scipamato.core.entity.PaperAttachment;
 import ch.difty.scipamato.core.entity.SearchOrder;
 import ch.difty.scipamato.core.entity.filter.PaperFilter;
 import ch.difty.scipamato.core.persistence.EntityRepository;
@@ -63,6 +66,8 @@ public class JooqPaperRepoTest extends
     private PaginationContext                paginationContextMock;
     @Mock
     private DeleteConditionStep<PaperRecord> deleteConditionStepMock;
+    @Mock
+    private PaperAttachment                  paperAttachmentMock;
 
     private final List<Paper> papers = new ArrayList<>();
 
@@ -262,6 +267,13 @@ public class JooqPaperRepoTest extends
     }
 
     @Test
+    public void gettingIdFromPaperRecord() {
+        when(persistedRecord.getId()).thenReturn(17l);
+        assertThat(repo.getIdFrom(persistedRecord)).isEqualTo(17l);
+        verify(persistedRecord).getId();
+    }
+
+    @Test
     public void gettingByIds_withNullIdList_throwsNullArgumentException() {
         try {
             repo.findByIds(null);
@@ -448,6 +460,42 @@ public class JooqPaperRepoTest extends
         verify(getDsl()).deleteFrom(getTable());
         verify(deleteWhereStepMock).where(PAPER.ID.in(ids));
         verify(deleteConditionStepMock).execute();
+    }
+
+    @Test
+    public void enrichingAssociatedEntitiesOf_withNullEntity_doesNothing() {
+        repo.enrichAssociatedEntitiesOf(null, "de");
+    }
+
+    @Test
+    public void enrichingAssociatedEntitiesOf_withNullLanguageCode_withNullPaperId_doesNotCallRepo() {
+        when(paperMock.getId()).thenReturn(null);
+        repo = makeRepoStubbingAttachmentEnriching();
+        repo.enrichAssociatedEntitiesOf(paperMock, null);
+        verify(paperMock).getId();
+        verify(paperMock, never()).setAttachments(Mockito.anyList());
+    }
+
+    @Test
+    public void enrichingAssociatedEntitiesOf_withNullLanguageCode_withPaperWithId_enrichesAttachments() {
+        when(paperMock.getId()).thenReturn(17l);
+        repo = makeRepoStubbingAttachmentEnriching();
+        repo.enrichAssociatedEntitiesOf(paperMock, null);
+        verify(paperMock).getId();
+        verify(paperMock).setAttachments(Arrays.asList(paperAttachmentMock));
+    }
+
+    protected JooqPaperRepo makeRepoStubbingAttachmentEnriching() {
+        return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+                getApplicationProperties()) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public List<PaperAttachment> loadSlimAttachment(long paperId) {
+                return Arrays.asList(paperAttachmentMock);
+            }
+        };
     }
 
 }

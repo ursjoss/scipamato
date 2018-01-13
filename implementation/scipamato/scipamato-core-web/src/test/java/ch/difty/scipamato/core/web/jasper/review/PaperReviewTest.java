@@ -76,6 +76,45 @@ public class PaperReviewTest extends JasperEntityTest {
         assertThat(pr.getCreatedBy()).isEqualTo(CREATED_BY);
     }
 
+    @Test
+    public void instantiatingWithNullNumber_returnsBlank() {
+        p.setNumber(null);
+        pr = new PaperReview(p, rhf);
+        assertThat(pr.getNumber()).isEqualTo("");
+    }
+
+    @Test
+    public void instantiatingWithNullFirstAuthorAndPubYear_returnsBlank() {
+        p.setFirstAuthor(null);
+        p.setPublicationYear(null);
+        pr = new PaperReview(p, rhf);
+        assertThat(pr.getAuthorYear()).isEqualTo("");
+    }
+
+    @Test
+    public void instantiatingWithNullFirstAuthorAndPubYear0_returnsBlank() {
+        p.setFirstAuthor(null);
+        p.setPublicationYear(0);
+        pr = new PaperReview(p, rhf);
+        assertThat(pr.getAuthorYear()).isEqualTo("");
+    }
+
+    @Test
+    public void instantiatingWithNonNullFirstAuthorButNullPubYear_returnsFirstAuthorOnly() {
+        assertThat(p.getFirstAuthor()).isNotNull();
+        p.setPublicationYear(null);
+        pr = new PaperReview(p, rhf);
+        assertThat(pr.getAuthorYear()).isEqualTo("firstAuthor");
+    }
+
+    @Test
+    public void instantiatingWithNonNullFirstAuthorButPubYear0_returnsFirstAuthorOnly() {
+        assertThat(p.getFirstAuthor()).isNotNull();
+        p.setPublicationYear(0);
+        pr = new PaperReview(p, rhf);
+        assertThat(pr.getAuthorYear()).isEqualTo("firstAuthor");
+    }
+
     private void assertFieldValues() {
         assertThat(pr.getNumber()).isEqualTo(String.valueOf(NUMBER));
         assertThat(pr.getAuthorYear()).isEqualTo(FIRST_AUTHOR + " " + String.valueOf(PUBLICATION_YEAR));

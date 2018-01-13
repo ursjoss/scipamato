@@ -27,7 +27,7 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
     private ScipamatoPdfExporterConfiguration(final Builder builder) {
         if (builder.author != null)
             setMetadataAuthor(builder.author);
-        if (builder.title != null)
+        if (builder.title != null || builder.paperTitle != null)
             setMetadataTitle(makeTitle(builder));
         if (getMetadataTitle() != null)
             setDisplayMetadataTitle(true);
@@ -44,7 +44,8 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
 
     private String makeTitle(final Builder builder) {
         final StringBuilder sb = new StringBuilder();
-        sb.append(builder.title);
+        if (builder.title != null)
+            sb.append(builder.title);
         if (sb.length() > 0 && (builder.paperAuthor != null || builder.paperTitle != null))
             sb.append(" - ");
         if (builder.paperAuthor != null)
@@ -139,7 +140,7 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
             return this;
         }
 
-        public Builder withCodes(List<Code> codes) {
+        public Builder withCodes(final List<Code> codes) {
             if (!CollectionUtils.isEmpty(codes)) {
                 final StringBuilder sb = new StringBuilder();
                 for (final Code c : codes) {

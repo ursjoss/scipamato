@@ -81,6 +81,13 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
+    public void withAuthor_asNullUser_doesNotSetMetadataAuthor() {
+        config = new ScipamatoPdfExporterConfiguration.Builder(TITLE).withAuthor((User) null)
+            .build();
+        assertThat(config.getMetadataAuthor()).isNull();
+    }
+
+    @Test
     public void withPaperTitle_concatsTitleAndPaperTitleIntoMetadataTitle() {
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE).withPaperTitle("papertitle")
             .build();
@@ -90,6 +97,21 @@ public class ScipamatoPdfExporterConfigurationTest {
         assertThat(config.getMetadataSubject()).isNull();
         assertThat(config.getMetadataKeywords()).isNull();
         assertThat(config.isCompressed()).isFalse();
+    }
+
+    @Test
+    public void withPaperTitle_withNullTitle_onlyAppliesPaperTitle() {
+        config = new ScipamatoPdfExporterConfiguration.Builder(null).withPaperTitle("papertitle")
+            .build();
+        assertThat(config.getMetadataTitle()).isEqualTo("papertitle");
+    }
+
+    @Test
+    public void withNullPaperTitle_withTitleAndAuthor_appliesTitleAndAuthor() {
+        config = new ScipamatoPdfExporterConfiguration.Builder(TITLE).withPaperTitle(null)
+            .withPaperAuthor("author")
+            .build();
+        assertThat(config.getMetadataTitle()).isEqualTo("title - author et al.");
     }
 
     @Test
@@ -191,6 +213,18 @@ public class ScipamatoPdfExporterConfigurationTest {
         assertThat(config.getMetadataSubject()).isEqualTo("s");
         assertThat(config.getMetadataKeywords()).isEqualTo("c1,\"c2 with spaces\"");
         assertThat(config.isCompressed()).isTrue();
+    }
+
+    @Test
+    public void withNullCodes_returnsNullMetadataKeywords() {
+        config = new ScipamatoPdfExporterConfiguration.Builder(TITLE).withCodes(null)
+            .build();
+        assertThat(config.getMetadataCreator()).isNull();
+        assertThat(config.getMetadataAuthor()).isNull();
+        assertThat(config.getMetadataTitle()).isEqualTo(TITLE);
+        assertThat(config.getMetadataSubject()).isNull();
+        assertThat(config.getMetadataKeywords()).isNull();
+        assertThat(config.isCompressed()).isFalse();
     }
 
 }

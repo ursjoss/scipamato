@@ -79,8 +79,9 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
             .collect(Collectors.toList());
     }
 
-    private PublicPaper map(final PaperRecord r) {
-        PublicPaper pp = PublicPaper.builder()
+    /** protected for test purposes */
+    protected PublicPaper map(final PaperRecord r) {
+        final PublicPaper pp = PublicPaper.builder()
             .id(r.getId())
             .number(r.getNumber())
             .pmId(r.getPmId())
@@ -111,7 +112,7 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     }
 
     @Override
-    public List<Long> findPageOfNumbersByFilter(PublicPaperFilter filter, PaginationContext pc) {
+    public List<Long> findPageOfNumbersByFilter(final PublicPaperFilter filter, final PaginationContext pc) {
         final Condition conditions = filterConditionMapper.map(filter);
         final Collection<SortField<PublicPaper>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
         return getDsl().select()

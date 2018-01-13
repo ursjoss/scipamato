@@ -45,6 +45,7 @@ public abstract class PaperSummaryCommon extends JasperEntity {
                 p.getCreatedByName());
     }
 
+    // headerPart is exected not to be null (it can't in rhf)
     private PaperSummaryCommon(final Long number, final String authors, final String title, final String location,
             final String goals, final String methods, final String comment, final String goalsLabel,
             final String methodsLabel, final String commentLabel, final String headerPart, final String brand,
@@ -69,9 +70,7 @@ public abstract class PaperSummaryCommon extends JasperEntity {
 
     private String makeHeader(final Long number, final String headerPart) {
         final StringBuilder sb = new StringBuilder();
-        if (headerPart != null) {
-            sb.append(headerPart);
-        }
+        sb.append(headerPart);
         if (number != null) {
             if (sb.length() > 0)
                 sb.append(" ");

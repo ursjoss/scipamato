@@ -301,4 +301,10 @@ public class StringSearchTermTest {
             .toString()).isEqualTo("(WORD foo)");
     }
 
+    @Test
+    public void lexingEmptyString_resturnsRaw() {
+        st = new StringSearchTerm(FIELD_NAME, "");
+        assertSingleToken(TokenType.RAW, "", "", false);
+    }
+
 }

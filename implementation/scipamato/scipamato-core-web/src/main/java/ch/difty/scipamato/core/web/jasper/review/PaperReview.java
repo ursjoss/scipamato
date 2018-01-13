@@ -89,22 +89,26 @@ public class PaperReview extends JasperEntity {
         this.createdBy = na(p.getCreatedByName());
     }
 
-    private String makeAuthorYearFrom(Paper p) {
+    private String makeAuthorYearFrom(final Paper p) {
         final String fa = p.getFirstAuthor();
         final Integer py = p.getPublicationYear();
-        if (fa == null && (py == null || py.intValue() == 0)) {
+        if (fa == null && isPubYearMissingOrPseudoMissing(py)) {
             return "";
         } else {
             final StringBuilder sb = new StringBuilder();
             if (fa != null) {
                 sb.append(fa);
-                if (py != null)
+                if (!isPubYearMissingOrPseudoMissing(py))
                     sb.append(" ");
             }
-            if (py != null && py.intValue() > 0)
+            if (!isPubYearMissingOrPseudoMissing(py))
                 sb.append(py);
             return sb.toString();
         }
+    }
+
+    private boolean isPubYearMissingOrPseudoMissing(final Integer pubYear) {
+        return pubYear == null || pubYear.intValue() == 0;
     }
 
 }

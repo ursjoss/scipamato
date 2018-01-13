@@ -188,7 +188,7 @@ public class StringSearchTerm extends SearchTerm {
             this.sqlData = sqlize(data);
         }
 
-        private String sqlize(String data) {
+        private String sqlize(final String data) {
             final StringBuilder sb = new StringBuilder();
             switch (type.matchType) {
             case REGEX:
@@ -205,10 +205,6 @@ public class StringSearchTerm extends SearchTerm {
                 sb.append(data);
             }
             return sb.toString();
-        }
-
-        public TokenType getType() {
-            return type;
         }
 
         @Override

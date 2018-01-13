@@ -68,7 +68,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
                 .collect(Collectors.toList());
             final List<Paper> savedPapers = articles.stream()
                 .filter(a -> a.getPmId() != null && !existingPmIds.contains(a.getPmId()))
-                .map((PubmedArticleFacade a) -> this.savePubmedArticle(a, minimumNumber))
+                .map((final PubmedArticleFacade a) -> this.savePubmedArticle(a, minimumNumber))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
             fillServiceResultFrom(savedPapers, existingPmIds, sr);
@@ -101,10 +101,10 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     }
 
     @Override
-    public Optional<Paper> findByNumber(Long number, final String languageCode) {
-        List<Paper> papers = getRepository().findByNumbers(Arrays.asList(number), languageCode);
+    public Optional<Paper> findByNumber(final Long number, final String languageCode) {
+        final List<Paper> papers = getRepository().findByNumbers(Arrays.asList(number), languageCode);
         if (!papers.isEmpty()) {
-            Paper paper = papers.get(0);
+            final Paper paper = papers.get(0);
 
             enrichAuditNamesOf(paper);
             return Optional.ofNullable(paper);
@@ -114,47 +114,48 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     }
 
     @Override
-    public long findLowestFreeNumberStartingFrom(long minimumPaperNumberToBeRecycled) {
+    public long findLowestFreeNumberStartingFrom(final long minimumPaperNumberToBeRecycled) {
         return getRepository().findLowestFreeNumberStartingFrom(minimumPaperNumberToBeRecycled);
     }
 
     @Override
-    public List<Long> findPageOfIdsBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext) {
+    public List<Long> findPageOfIdsBySearchOrder(final SearchOrder searchOrder,
+            final PaginationContext paginationContext) {
         return getRepository().findPageOfIdsBySearchOrder(searchOrder, paginationContext);
     }
 
     @Transactional(readOnly = false)
     @Override
-    public void excludeFromSearchOrder(long searchOrderId, long paperId) {
+    public void excludeFromSearchOrder(final long searchOrderId, final long paperId) {
         getRepository().excludePaperFromSearchOrderResults(searchOrderId, paperId);
     }
 
     @Transactional(readOnly = false)
     @Override
-    public void reincludeIntoSearchOrder(long searchOrderId, long paperId) {
+    public void reincludeIntoSearchOrder(final long searchOrderId, final long paperId) {
         getRepository().reincludePaperIntoSearchOrderResults(searchOrderId, paperId);
     }
 
     @Transactional(readOnly = false)
     @Override
-    public Paper saveAttachment(PaperAttachment paperAttachment) {
+    public Paper saveAttachment(final PaperAttachment paperAttachment) {
         return getRepository().saveAttachment(paperAttachment);
     }
 
     @Override
-    public PaperAttachment loadAttachmentWithContentBy(Integer id) {
+    public PaperAttachment loadAttachmentWithContentBy(final Integer id) {
         return getRepository().loadAttachmentWithContentBy(id);
     }
 
     @Transactional(readOnly = false)
     @Override
-    public Paper deleteAttachment(Integer id) {
+    public Paper deleteAttachment(final Integer id) {
         return getRepository().deleteAttachment(id);
     }
 
     @Transactional(readOnly = false)
     @Override
-    public void deletePapersWithIds(List<Long> ids) {
+    public void deletePapersWithIds(final List<Long> ids) {
         getRepository().delete(ids);
     }
 
