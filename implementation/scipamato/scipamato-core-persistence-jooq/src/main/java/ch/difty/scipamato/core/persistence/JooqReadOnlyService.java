@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.CoreEntity;
@@ -37,8 +38,8 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
     private final UserRepository userRepo;
 
     protected JooqReadOnlyService(final REPO repo, final UserRepository userRepo) {
-        this.repo = repo;
-        this.userRepo = userRepo;
+        this.repo = AssertAs.notNull(repo, "repo");
+        this.userRepo = AssertAs.notNull(userRepo, "userRepo");
     }
 
     protected REPO getRepository() {
@@ -50,21 +51,20 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
     }
 
     @Override
-    public Optional<T> findById(ID id) {
-        T entity = repo.findById(id);
+    public Optional<T> findById(final ID id) {
+        final T entity = repo.findById(id);
         enrichAuditNamesOf(entity);
         return Optional.ofNullable(entity);
     }
 
-    protected void enrichAuditNamesOf(T entity) {
+    protected void enrichAuditNamesOf(final T entity) {
         if (entity != null) {
             setCreatedMetaData(entity);
             setModifiedMeta(entity);
         }
-
     }
 
-    private void setCreatedMetaData(T entity) {
+    private void setCreatedMetaData(final T entity) {
         final Optional<User> user = getUserWithId(entity.getCreatedBy());
         entity.setCreatedByName(user.map(User::getDisplayValue)
             .orElse(null));
@@ -72,33 +72,32 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
             .orElse(null));
     }
 
-    private void setModifiedMeta(T entity) {
+    private void setModifiedMeta(final T entity) {
         entity.setLastModifiedByName(getUserWithId(entity.getLastModifiedBy()).map(User::getDisplayValue)
             .orElse(null));
     }
 
     private Optional<User> getUserWithId(final Integer id) {
-        if (id != null && getUserRepository() != null) {
+        if (id != null)
             return Optional.ofNullable(getUserRepository().findById(id));
-        }
         return Optional.empty();
 
     }
 
     @Override
-    public List<T> findPageByFilter(F filter, PaginationContext paginationContext) {
+    public List<T> findPageByFilter(final F filter, final PaginationContext paginationContext) {
         final List<T> entities = repo.findPageByFilter(filter, paginationContext);
         entities.forEach(this::enrichAuditNamesOf);
         return entities;
     }
 
     @Override
-    public int countByFilter(F filter) {
+    public int countByFilter(final F filter) {
         return repo.countByFilter(filter);
     }
 
     @Override
-    public List<ID> findPageOfIdsByFilter(F filter, PaginationContext paginationContext) {
+    public List<ID> findPageOfIdsByFilter(final F filter, final PaginationContext paginationContext) {
         return repo.findPageOfIdsByFilter(filter, paginationContext);
     }
 
