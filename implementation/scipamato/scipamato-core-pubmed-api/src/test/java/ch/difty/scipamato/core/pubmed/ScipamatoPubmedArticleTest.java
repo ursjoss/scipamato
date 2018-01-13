@@ -213,12 +213,13 @@ public class ScipamatoPubmedArticleTest {
         assertThat(spa.getAuthors()).isEqualTo("Joice J.");
         assertThat(spa.getFirstAuthor()).isEqualTo("Joice J");
     }
+
     @Test
     public void noAuthors_noCollectiveAuthor() {
         AuthorList authorList = new AuthorList();
         pubmedArticle.getMedlineCitation()
-        .getArticle()
-        .setAuthorList(authorList);
+            .getArticle()
+            .setAuthorList(authorList);
         ScipamatoPubmedArticle spa = new ScipamatoPubmedArticle(pubmedArticle);
         assertThat(spa.getAuthors()).isEqualTo("");
         assertThat(spa.getFirstAuthor()).isEqualTo("");
@@ -263,6 +264,43 @@ public class ScipamatoPubmedArticleTest {
             .add(pagination);
         ScipamatoPubmedArticle spa = new ScipamatoPubmedArticle(pubmedArticle);
         assertThat(spa.getLocation()).isEqualTo("Medline TA. 2016; 6 (10): 1145-1149.");
+    }
+
+    @Test
+    public void location_withMedlinePaginationWithoutPageRange() {
+        pubmedArticle.getMedlineCitation()
+            .getMedlineJournalInfo()
+            .setMedlineTA("Medline TA");
+        Year year = new Year();
+        year.setvalue("2016");
+        pubmedArticle.getMedlineCitation()
+            .getArticle()
+            .getJournal()
+            .getJournalIssue()
+            .getPubDate()
+            .getYearOrMonthOrDayOrSeasonOrMedlineDate()
+            .add(year);
+        pubmedArticle.getMedlineCitation()
+            .getArticle()
+            .getJournal()
+            .getJournalIssue()
+            .setVolume("6");
+        pubmedArticle.getMedlineCitation()
+            .getArticle()
+            .getJournal()
+            .getJournalIssue()
+            .setIssue("10");
+        Pagination pagination = new Pagination();
+        MedlinePgn medlinePgn = new MedlinePgn();
+        medlinePgn.setvalue("1145");
+        pagination.getStartPageOrEndPageOrMedlinePgn()
+            .add(medlinePgn);
+        pubmedArticle.getMedlineCitation()
+            .getArticle()
+            .getPaginationOrELocationID()
+            .add(pagination);
+        ScipamatoPubmedArticle spa = new ScipamatoPubmedArticle(pubmedArticle);
+        assertThat(spa.getLocation()).isEqualTo("Medline TA. 2016; 6 (10): 1145.");
     }
 
     @Test

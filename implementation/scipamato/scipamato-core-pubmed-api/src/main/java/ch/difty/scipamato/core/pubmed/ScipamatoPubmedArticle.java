@@ -113,7 +113,7 @@ public class ScipamatoPubmedArticle extends PubmedArticleFacade {
      */
     private String complementPageRange(final String pages) {
         final int psPos = pages.indexOf(PAGE_SEPARATOR);
-        if (psPos > -1 && psPos < pages.length()) {
+        if (psPos > -1) {
             final String first = pages.substring(0, psPos);
             final String last = pages.substring(psPos + 1, pages.length());
             final StringBuilder sb = new StringBuilder();
@@ -137,7 +137,7 @@ public class ScipamatoPubmedArticle extends PubmedArticleFacade {
                 .getArticleIdList());
         }
         if (doi == null) {
-            Article article = pubmedArticle.getMedlineCitation()
+            final Article article = pubmedArticle.getMedlineCitation()
                 .getArticle();
             doi = article.getPaginationOrELocationID()
                 .stream()
