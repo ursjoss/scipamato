@@ -21,6 +21,9 @@ public enum CodeClassId {
     CC7(7),
     CC8(8);
 
+    // cache values
+    private static final CodeClassId[] codeClassId = values();
+
     private final int id;
 
     CodeClassId(final int id) {
@@ -32,7 +35,7 @@ public enum CodeClassId {
     }
 
     public static Optional<CodeClassId> fromId(final int id) {
-        return Arrays.asList(CodeClassId.values())
+        return Arrays.asList(codeClassId)
             .stream()
             .filter(i -> i.getId() == id)
             .findFirst();
