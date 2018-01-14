@@ -17,6 +17,8 @@ public enum Role {
     USER(2, Roles.USER, "Main SciPaMaTo Users"),
     VIEWER(3, Roles.VIEWER, "Read-only Viewer");
 
+    private static final Role[] ROLES = values();
+
     private final Integer id;
     private final String  key;
     private final String  description;
@@ -28,14 +30,11 @@ public enum Role {
     }
 
     public static Role of(final Integer id) {
-        if (id == null) {
+        if (id == null)
             return null;
-        }
-        for (final Role r : Role.values()) {
-            if (id.equals(r.getId())) {
+        for (final Role r : ROLES)
+            if (id.equals(r.getId()))
                 return r;
-            }
-        }
         throw new IllegalArgumentException("No matching type for id " + id);
     }
 
