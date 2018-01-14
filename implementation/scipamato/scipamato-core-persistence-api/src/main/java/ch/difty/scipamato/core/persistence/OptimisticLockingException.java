@@ -7,18 +7,18 @@ public class OptimisticLockingException extends RuntimeException {
     private final String tableName;
     private final String record;
 
-    public OptimisticLockingException(final String tableName, Type type) {
+    public OptimisticLockingException(final String tableName, final Type type) {
         this(tableName, null, type);
     }
 
-    public OptimisticLockingException(final String tableName, final String record, Type type) {
+    public OptimisticLockingException(final String tableName, final String record, final Type type) {
         super(makeMessage(tableName, record, type));
         this.tableName = tableName;
         this.record = record;
     }
 
-    private static String makeMessage(final String tableName, final String record, Type type) {
-        StringBuilder sb = new StringBuilder();
+    private static String makeMessage(final String tableName, final String record, final Type type) {
+        final StringBuilder sb = new StringBuilder();
         sb.append("Record in table '")
             .append(tableName)
             .append("' has been modified prior to the ")
@@ -45,7 +45,7 @@ public class OptimisticLockingException extends RuntimeException {
 
         private final String descr;
 
-        Type(String descr) {
+        Type(final String descr) {
             this.descr = descr;
         }
     }
