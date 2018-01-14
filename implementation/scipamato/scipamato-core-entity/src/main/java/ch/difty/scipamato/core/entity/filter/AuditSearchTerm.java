@@ -157,6 +157,9 @@ public class AuditSearchTerm extends SearchTerm {
 
         RAW("", MatchType.NONE, FieldType.NONE, 30);
 
+        // cache values
+        private static final TokenType[] TOKEN_TYPES = values();
+
         public final String    pattern;
         public final MatchType matchType;
         public final FieldType fieldType;
@@ -171,11 +174,9 @@ public class AuditSearchTerm extends SearchTerm {
 
         public static List<TokenType> byMatchType(final MatchType mt) {
             final List<TokenType> types = new ArrayList<>();
-            for (final TokenType tt : values()) {
-                if (tt.matchType == mt) {
+            for (final TokenType tt : TOKEN_TYPES)
+                if (tt.matchType == mt)
                     types.add(tt);
-                }
-            }
             return types;
         }
 
@@ -251,7 +252,7 @@ public class AuditSearchTerm extends SearchTerm {
 
     private static Pattern buildPattern() {
         final StringBuilder tokenPatternBuilder = new StringBuilder();
-        for (final TokenType tokenType : TokenType.values())
+        for (final TokenType tokenType : TokenType.TOKEN_TYPES)
             if (tokenType != TokenType.RAW)
                 tokenPatternBuilder.append(String.format("|(?<%s>%s)", tokenType.name(), tokenType.pattern));
         return Pattern.compile(tokenPatternBuilder.substring(1));
@@ -266,7 +267,7 @@ public class AuditSearchTerm extends SearchTerm {
             final boolean isDateType) {
         final List<Token> tokens = new ArrayList<>();
         tokenIteration: while (matcher.find()) {
-            for (final TokenType tk : TokenType.values()) {
+            for (final TokenType tk : TokenType.TOKEN_TYPES) {
                 if (tk == TokenType.RAW || matcher.group(TokenType.WHITESPACE.name()) != null)
                     continue;
                 else if (matcher.group(tk.name()) != null) {
