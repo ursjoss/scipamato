@@ -12,7 +12,7 @@ public enum Cookie {
 
     private final String name;
 
-    private Cookie(final String name) {
+    Cookie(final String name) {
         this.name = TAG + name;
     }
 
