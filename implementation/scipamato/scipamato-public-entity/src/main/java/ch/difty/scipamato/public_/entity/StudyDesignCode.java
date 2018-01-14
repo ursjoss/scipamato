@@ -15,6 +15,9 @@ public enum StudyDesignCode {
     EPIODEMIOLOGICAL((short) 2),
     OVERVIEW_METHODOLOGY((short) 3);
 
+    // cache values
+    private static final StudyDesignCode[] CODES = values();
+
     private final short id;
 
     StudyDesignCode(final short id) {
@@ -22,7 +25,7 @@ public enum StudyDesignCode {
     }
 
     public static StudyDesignCode of(final short id) {
-        for (final StudyDesignCode r : values())
+        for (final StudyDesignCode r : CODES)
             if (id == r.getId())
                 return r;
         throw new IllegalArgumentException("No matching type for id " + id);
