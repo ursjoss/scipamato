@@ -231,7 +231,7 @@ public class StringSearchTerm extends SearchTerm {
         final Matcher matcher = pattern.matcher(input);
         final List<Token> tokens = new ArrayList<>();
         while (matcher.find())
-            getNextToken(matcher).map(t -> tokens.add(t));
+            getNextToken(matcher).ifPresent(tokens::add);
         if (tokens.isEmpty())
             tokens.add(new Token(TokenType.RAW, input));
         return tokens;

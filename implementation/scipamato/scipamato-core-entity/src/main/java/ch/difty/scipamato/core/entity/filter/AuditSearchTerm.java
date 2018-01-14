@@ -268,7 +268,7 @@ public class AuditSearchTerm extends SearchTerm {
             final boolean isDateType) {
         final List<Token> tokens = new ArrayList<>();
         while (matcher.find())
-            getNextToken(matcher, isUserType, isDateType).map(t -> tokens.add(t));
+            getNextToken(matcher, isUserType, isDateType).ifPresent(tokens::add);
         return tokens;
     }
 
@@ -280,7 +280,7 @@ public class AuditSearchTerm extends SearchTerm {
             if (matcher.group(tk.name()) != null) {
                 if (isAppropriate(tk, isUserType, isDateType))
                     return Optional.of(new Token(tk, gatherData(matcher, tk)));
-                break;
+                return Optional.empty();
             }
         }
         return Optional.empty();
