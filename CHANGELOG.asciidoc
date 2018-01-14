@@ -65,7 +65,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Renamed DefaultAuthorParser to PubmedAuthorParser
 - Improved JavaDoc for author strings, highlighted dependency on author parser strategy
   and current limitation with JSR303 validation of author strings.
-- Updated jOOQ, flyway, jasperreports, assertj, jacoco-maven-plugin
+- Updated jOOQ, flyway, lombok, jasperreports, assertj, jacoco-maven-plugin
 - Switched to mockito-2
 
 .Deprecated
@@ -77,6 +77,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - AuthorParser: Don't let streams escape their context. Based on review by Prof. Dierk König.
 - Do not run the data synchronization from core to public during the nightly build (profile-sonar)
 - A few minor so far non-surfacing bugs showing up when working on the test-coverage :-)
+- A few imprecise repo methods that started failing with lombok-1.16.20
 
 .Security
 

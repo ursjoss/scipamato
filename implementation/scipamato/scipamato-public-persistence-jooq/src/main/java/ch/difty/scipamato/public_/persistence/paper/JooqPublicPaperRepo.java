@@ -59,9 +59,13 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     @Override
     public PublicPaper findByNumber(final Long number) {
         AssertAs.notNull(number, "number");
-        return getDsl().selectFrom(getTable())
+        final PaperRecord tuple = getDsl().selectFrom(getTable())
             .where(PAPER.NUMBER.equal(number))
-            .fetchOneInto(PublicPaper.class);
+            .fetchOneInto(getRecordClass());
+        if (tuple != null)
+            return map(tuple);
+        else
+            return null;
     }
 
     @Override
