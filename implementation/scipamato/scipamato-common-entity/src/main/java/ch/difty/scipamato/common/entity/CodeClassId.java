@@ -22,7 +22,7 @@ public enum CodeClassId {
     CC8(8);
 
     // cache values
-    private static final CodeClassId[] codeClassId = values();
+    private static final CodeClassId[] CODE_CLASS_IDS = values();
 
     private final int id;
 
@@ -35,7 +35,7 @@ public enum CodeClassId {
     }
 
     public static Optional<CodeClassId> fromId(final int id) {
-        return Arrays.asList(codeClassId)
+        return Arrays.asList(CODE_CLASS_IDS)
             .stream()
             .filter(i -> i.getId() == id)
             .findFirst();
