@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.entity.filter;
 
-import static ch.difty.scipamato.core.entity.filter.SearchTermType.AUDIT;
+import static ch.difty.scipamato.core.entity.filter.SearchTermType.*;
 import static ch.difty.scipamato.core.entity.filter.SearchTermType.BOOLEAN;
 import static ch.difty.scipamato.core.entity.filter.SearchTermType.INTEGER;
 import static ch.difty.scipamato.core.entity.filter.SearchTermType.STRING;
@@ -14,7 +14,7 @@ public class SearchTermTypeTest {
 
     @Test
     public void testValues() {
-        assertThat(values()).containsExactly(BOOLEAN, INTEGER, STRING, AUDIT);
+        assertThat(values()).containsExactly(BOOLEAN, INTEGER, STRING, AUDIT, UNSUPPORTED);
     }
 
     @Test
@@ -23,6 +23,7 @@ public class SearchTermTypeTest {
         assertThat(INTEGER.getId()).isEqualTo(1);
         assertThat(STRING.getId()).isEqualTo(2);
         assertThat(AUDIT.getId()).isEqualTo(3);
+        assertThat(UNSUPPORTED.getId()).isEqualTo(-1);
     }
 
     @Test
@@ -36,11 +37,18 @@ public class SearchTermTypeTest {
     @Test
     public void testById_withInvalidIds() {
         try {
+            SearchTermType.byId(-2);
+            fail("should have thrown");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("id -2 is not supported");
+        }
+        try {
             SearchTermType.byId(-1);
             fail("should have thrown");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("id -1 is not supported");
+            .hasMessage("id -1 is not supported");
         }
         try {
             SearchTermType.byId(4);
@@ -50,4 +58,5 @@ public class SearchTermTypeTest {
                 .hasMessage("id 4 is not supported");
         }
     }
+
 }

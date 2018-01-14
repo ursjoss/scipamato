@@ -5,6 +5,7 @@ import static ch.difty.scipamato.core.entity.Paper.DOI;
 import static ch.difty.scipamato.core.entity.Paper.FIRST_AUTHOR_OVERRIDDEN;
 import static ch.difty.scipamato.core.entity.Paper.NUMBER;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Arrays;
 
@@ -976,6 +977,21 @@ public class SearchConditionTest {
         assertThat(sc2.getCodes()).hasSize(2);
         sc2.clearCodes();
         assertThat(sc2.getCodes()).isEmpty();
+    }
+
+    @Test
+    public void validateHandlingUndefinedValuesInSwitchConstructs() {
+        final SearchTerm searchTermWithUndefinedType = new SearchTerm(1l, SearchTermType.UNSUPPORTED, 1l, "fieldName",
+                "rawSearchTerm") {
+            private static final long serialVersionUID = 1L;
+        };
+        try {
+            sc1.addSearchTerm(searchTermWithUndefinedType);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("SearchTermType.UNSUPPORTED is not supported");
+        }
     }
 
 }

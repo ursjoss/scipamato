@@ -91,7 +91,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         // default constructor
     }
 
-    public SearchCondition(Long searchConditionId) {
+    public SearchCondition(final Long searchConditionId) {
         setSearchConditionId(searchConditionId);
     }
 
@@ -99,7 +99,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return searchConditionId;
     }
 
-    public void setSearchConditionId(Long searchConditionId) {
+    public void setSearchConditionId(final Long searchConditionId) {
         this.searchConditionId = searchConditionId;
     }
 
@@ -164,7 +164,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getIntegerValue(ID);
     }
 
-    public void setId(String value) {
+    public void setId(final String value) {
         setIntegerValue(value, ID);
     }
 
@@ -172,7 +172,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getIntegerValue(NUMBER);
     }
 
-    public void setNumber(String value) {
+    public void setNumber(final String value) {
         setIntegerValue(value, NUMBER);
     }
 
@@ -180,7 +180,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(DOI);
     }
 
-    public void setDoi(String value) {
+    public void setDoi(final String value) {
         setStringValue(value, DOI);
     }
 
@@ -188,7 +188,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(PMID);
     }
 
-    public void setPmId(String value) {
+    public void setPmId(final String value) {
         setStringValue(value, PMID);
     }
 
@@ -196,7 +196,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(AUTHORS);
     }
 
-    public void setAuthors(String value) {
+    public void setAuthors(final String value) {
         setStringValue(value, AUTHORS);
     }
 
@@ -204,7 +204,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(FIRST_AUTHOR);
     }
 
-    public void setFirstAuthor(String value) {
+    public void setFirstAuthor(final String value) {
         setStringValue(value, FIRST_AUTHOR);
     }
 
@@ -212,7 +212,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getBooleanValue(FIRST_AUTHOR_OVERRIDDEN);
     }
 
-    public void setFirstAuthorOverridden(Boolean value) {
+    public void setFirstAuthorOverridden(final Boolean value) {
         setBooleanValue(FIRST_AUTHOR_OVERRIDDEN, value);
     }
 
@@ -220,7 +220,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(TITLE);
     }
 
-    public void setTitle(String value) {
+    public void setTitle(final String value) {
         setStringValue(value, TITLE);
     }
 
@@ -228,7 +228,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(LOCATION);
     }
 
-    public void setLocation(String value) {
+    public void setLocation(final String value) {
         setStringValue(value, LOCATION);
     }
 
@@ -236,7 +236,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getIntegerValue(PUBL_YEAR);
     }
 
-    public void setPublicationYear(String value) {
+    public void setPublicationYear(final String value) {
         setIntegerValue(value, PUBL_YEAR);
     }
 
@@ -244,7 +244,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(GOALS);
     }
 
-    public void setGoals(String value) {
+    public void setGoals(final String value) {
         setStringValue(value, GOALS);
     }
 
@@ -252,7 +252,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(POPULATION);
     }
 
-    public void setPopulation(String value) {
+    public void setPopulation(final String value) {
         setStringValue(value, POPULATION);
     }
 
@@ -260,7 +260,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(METHODS);
     }
 
-    public void setMethods(String value) {
+    public void setMethods(final String value) {
         setStringValue(value, METHODS);
     }
 
@@ -268,7 +268,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(RESULT);
     }
 
-    public void setResult(String value) {
+    public void setResult(final String value) {
         setStringValue(value, RESULT);
     }
 
@@ -276,7 +276,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(COMMENT);
     }
 
-    public void setComment(String value) {
+    public void setComment(final String value) {
         setStringValue(value, COMMENT);
     }
 
@@ -284,7 +284,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(INTERN);
     }
 
-    public void setIntern(String value) {
+    public void setIntern(final String value) {
         setStringValue(value, INTERN);
     }
 
@@ -292,7 +292,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(ORIGINAL_ABSTRACT);
     }
 
-    public void setOriginalAbstract(String value) {
+    public void setOriginalAbstract(final String value) {
         setStringValue(value, ORIGINAL_ABSTRACT);
     }
 
@@ -300,7 +300,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(POPULATION_PLACE);
     }
 
-    public void setPopulationPlace(String value) {
+    public void setPopulationPlace(final String value) {
         setStringValue(value, POPULATION_PLACE);
     }
 
@@ -308,7 +308,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(POPULATION_PARTICIPANTS);
     }
 
-    public void setPopulationParticipants(String value) {
+    public void setPopulationParticipants(final String value) {
         setStringValue(value, POPULATION_PARTICIPANTS);
     }
 
@@ -316,7 +316,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(POPULATION_DURATION);
     }
 
-    public void setPopulationDuration(String value) {
+    public void setPopulationDuration(final String value) {
         setStringValue(value, POPULATION_DURATION);
     }
 
@@ -324,7 +324,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(EXPOSURE_POLLUTANT);
     }
 
-    public void setExposurePollutant(String value) {
+    public void setExposurePollutant(final String value) {
         setStringValue(value, EXPOSURE_POLLUTANT);
     }
 
@@ -332,7 +332,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(EXPOSURE_ASSESSMENT);
     }
 
-    public void setExposureAssessment(String value) {
+    public void setExposureAssessment(final String value) {
         setStringValue(value, EXPOSURE_ASSESSMENT);
     }
 
@@ -340,7 +340,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(METHOD_STUDY_DESIGN);
     }
 
-    public void setMethodStudyDesign(String value) {
+    public void setMethodStudyDesign(final String value) {
         setStringValue(value, METHOD_STUDY_DESIGN);
     }
 
@@ -348,7 +348,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(METHOD_OUTCOME);
     }
 
-    public void setMethodOutcome(String value) {
+    public void setMethodOutcome(final String value) {
         setStringValue(value, METHOD_OUTCOME);
     }
 
@@ -356,7 +356,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(METHOD_STATISTICS);
     }
 
-    public void setMethodStatistics(String value) {
+    public void setMethodStatistics(final String value) {
         setStringValue(value, METHOD_STATISTICS);
     }
 
@@ -364,7 +364,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(METHOD_CONFOUNDERS);
     }
 
-    public void setMethodConfounders(String value) {
+    public void setMethodConfounders(final String value) {
         setStringValue(value, METHOD_CONFOUNDERS);
     }
 
@@ -372,7 +372,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(RESULT_EXPOSURE_RANGE);
     }
 
-    public void setResultExposureRange(String value) {
+    public void setResultExposureRange(final String value) {
         setStringValue(value, RESULT_EXPOSURE_RANGE);
     }
 
@@ -380,7 +380,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(RESULT_EFFECT_ESTIMATE);
     }
 
-    public void setResultEffectEstimate(String value) {
+    public void setResultEffectEstimate(final String value) {
         setStringValue(value, RESULT_EFFECT_ESTIMATE);
     }
 
@@ -388,7 +388,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(RESULT_MEASURED_OUTCOME);
     }
 
-    public void setResultMeasuredOutcome(String value) {
+    public void setResultMeasuredOutcome(final String value) {
         setStringValue(value, RESULT_MEASURED_OUTCOME);
     }
 
@@ -396,7 +396,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getStringValue(MAIN_CODE_OF_CODECLASS1);
     }
 
-    public void setMainCodeOfCodeclass1(String value) {
+    public void setMainCodeOfCodeclass1(final String value) {
         setStringValue(value, MAIN_CODE_OF_CODECLASS1);
     }
 
@@ -404,7 +404,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getAuditValue(CREATED_BY);
     }
 
-    public void setCreatedDisplayValue(String value) {
+    public void setCreatedDisplayValue(final String value) {
         setAuditValue(value, CREATED_BY, CREATED);
     }
 
@@ -412,7 +412,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return getAuditValue(LAST_MOD_BY);
     }
 
-    public void setModifiedDisplayValue(String value) {
+    public void setModifiedDisplayValue(final String value) {
         setAuditValue(value, LAST_MOD_BY, LAST_MOD);
     }
 
@@ -445,31 +445,31 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
     }
 
     @Override
-    public List<Code> getCodesOf(CodeClassId ccId) {
+    public List<Code> getCodesOf(final CodeClassId ccId) {
         return this.codes.getCodesBy(ccId);
     }
 
     @Override
-    public void clearCodesOf(CodeClassId ccId) {
+    public void clearCodesOf(final CodeClassId ccId) {
         this.codes.clearBy(ccId);
     }
 
     @Override
-    public void addCode(Code code) {
+    public void addCode(final Code code) {
         this.codes.addCode(code);
     }
 
     @Override
-    public void addCodes(List<Code> codes) {
+    public void addCodes(final List<Code> codes) {
         this.codes.addCodes(codes);
     }
 
-    private String getStringValue(String key) {
+    private String getStringValue(final String key) {
         final StringSearchTerm st = stringSearchTerms.get(key);
         return st != null ? st.getRawSearchTerm() : null;
     }
 
-    private void setStringValue(String value, final String key) {
+    private void setStringValue(final String value, final String key) {
         if (value != null) {
             stringSearchTerms.put(key, new StringSearchTerm(key, value));
             getRemovedKeys().remove(key);
@@ -479,12 +479,12 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         }
     }
 
-    private String getIntegerValue(String key) {
+    private String getIntegerValue(final String key) {
         final IntegerSearchTerm st = integerSearchTerms.get(key);
         return st != null ? st.getRawSearchTerm() : null;
     }
 
-    private void setIntegerValue(String value, final String key) {
+    private void setIntegerValue(final String value, final String key) {
         if (value != null) {
             integerSearchTerms.put(key, new IntegerSearchTerm(key, value));
             getRemovedKeys().remove(key);
@@ -494,12 +494,12 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         }
     }
 
-    private Boolean getBooleanValue(String key) {
+    private Boolean getBooleanValue(final String key) {
         final BooleanSearchTerm st = booleanSearchTerms.get(key);
         return st != null ? st.getValue() : null;
     }
 
-    private void setBooleanValue(final String key, Boolean value) {
+    private void setBooleanValue(final String key, final Boolean value) {
         if (value != null) {
             booleanSearchTerms.put(key, new BooleanSearchTerm(key, value.toString()));
             getRemovedKeys().remove(key);
@@ -509,7 +509,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         }
     }
 
-    private String getAuditValue(String key) {
+    private String getAuditValue(final String key) {
         final AuditSearchTerm st = auditSearchTerms.get(key);
         return st != null ? st.getRawSearchTerm() : null;
     }
@@ -517,10 +517,8 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
     /**
      * Here we allow multiple keys (i.e. fields)
      */
-    private void setAuditValue(String value, final String... keys) {
-        if (keys.length == 0)
-            throw new IllegalArgumentException("You must provide at least one key");
-        for (String key : keys) {
+    private void setAuditValue(final String value, final String... keys) {
+        for (final String key : keys) {
             if (value != null) {
                 auditSearchTerms.put(key, new AuditSearchTerm(key, value));
                 getRemovedKeys().remove(key);
@@ -552,7 +550,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
             .collect(Collectors.joining(JOIN_DELIMITER));
         sb.append(Arrays.asList(textString, intString, boolString, auditString)
             .stream()
-            .filter((String s) -> !s.isEmpty())
+            .filter((final String s) -> !s.isEmpty())
             .collect(Collectors.joining(JOIN_DELIMITER)));
         if (!codes.isEmpty()) {
             if (sb.length() > 0)
@@ -584,14 +582,14 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
             return false;
         if (getClass() != obj.getClass())
             return false;
-        SearchCondition other = (SearchCondition) obj;
+        final SearchCondition other = (SearchCondition) obj;
         if (searchConditionId == null) {
             if (other.searchConditionId != null)
                 return false;
