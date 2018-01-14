@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.model.IModel;
@@ -51,9 +52,14 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
 
     protected abstract F getFilter();
 
+    private WicketTester tester;
+
     @Before
     public final void setUp() {
-        new WicketTester(application);
+        tester = new WicketTester(application);
+        tester.getSession()
+            .setLocale(new Locale("en"));
+
         provider = newProvider();
         provider.setService(serviceMock);
         provider.setPaperService(paperServiceMock);
@@ -157,7 +163,7 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
 
     @Test
     public void gettingLanguageCode() {
-        assertThat(provider.getLanguageCode()).isEqualTo("de");
+        assertThat(provider.getLanguageCode()).isEqualTo("en");
     }
 
 }

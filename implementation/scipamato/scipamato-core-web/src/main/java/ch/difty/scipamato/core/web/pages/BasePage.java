@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.pages;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.model.IModel;
@@ -63,7 +64,10 @@ public abstract class BasePage<T> extends AbstractPage<T> {
 
     private String getVersionAnker() {
         final String version = getProperties().getBuildVersion();
-        return "#" + (version.endsWith("SNAPSHOT") ? "unreleased" : "v" + version);
+        if (StringUtils.isEmpty(version))
+            return "";
+        else
+            return "#" + (version.endsWith("SNAPSHOT") ? "unreleased" : "v" + version);
     }
 
     private String getVersionLink() {

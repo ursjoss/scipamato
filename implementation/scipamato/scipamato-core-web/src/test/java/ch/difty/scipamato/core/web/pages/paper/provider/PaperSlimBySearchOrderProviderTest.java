@@ -23,7 +23,7 @@ import ch.difty.scipamato.core.entity.SearchOrder;
 public class PaperSlimBySearchOrderProviderTest
         extends AbstractPaperSlimProviderTest<SearchOrder, PaperSlimBySearchOrderProvider> {
 
-    private static final String LC = "de";
+    private static final String LC = "en";
 
     @Mock
     private SearchOrder searchOrder;
