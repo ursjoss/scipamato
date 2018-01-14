@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.entity.filter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -227,23 +228,23 @@ public class StringSearchTerm extends SearchTerm {
     }
 
     private static List<Token> tokenize(final String input, final Pattern pattern) {
-        final List<Token> tokens = new ArrayList<>();
         final Matcher matcher = pattern.matcher(input);
-        tokenIteration: while (matcher.find()) {
-            for (final TokenType tk : TokenType.TOKEN_TYPES) {
-                if (tk == TokenType.RAW)
-                    continue;
-                if (matcher.group(TokenType.WHITESPACE.name()) != null)
-                    continue;
-                else if (matcher.group(tk.name()) != null) {
-                    tokens.add(new Token(tk, matcher.group(tk.group)));
-                    continue tokenIteration;
-                }
-            }
-        }
+        final List<Token> tokens = new ArrayList<>();
+        while (matcher.find())
+            getNextToken(matcher).map(t -> tokens.add(t));
         if (tokens.isEmpty())
             tokens.add(new Token(TokenType.RAW, input));
         return tokens;
+    }
+
+    private static Optional<Token> getNextToken(final Matcher matcher) {
+        for (final TokenType tk : TokenType.TOKEN_TYPES) {
+            if (tk == TokenType.RAW || matcher.group(TokenType.WHITESPACE.name()) != null)
+                continue;
+            if (matcher.group(tk.name()) != null)
+                return Optional.of(new Token(tk, matcher.group(tk.group)));
+        }
+        return Optional.empty();
     }
 
 }

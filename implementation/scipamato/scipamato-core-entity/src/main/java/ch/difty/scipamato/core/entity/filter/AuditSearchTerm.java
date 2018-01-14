@@ -6,6 +6,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -266,19 +267,23 @@ public class AuditSearchTerm extends SearchTerm {
     private static List<Token> processTokens(final Matcher matcher, final boolean isUserType,
             final boolean isDateType) {
         final List<Token> tokens = new ArrayList<>();
-        tokenIteration: while (matcher.find()) {
-            for (final TokenType tk : TokenType.TOKEN_TYPES) {
-                if (tk == TokenType.RAW || matcher.group(TokenType.WHITESPACE.name()) != null)
-                    continue;
-                else if (matcher.group(tk.name()) != null) {
-                    if (isAppropriate(tk, isUserType, isDateType)) {
-                        tokens.add(new Token(tk, gatherData(matcher, tk)));
-                    }
-                    continue tokenIteration;
-                }
+        while (matcher.find())
+            getNextToken(matcher, isUserType, isDateType).map(t -> tokens.add(t));
+        return tokens;
+    }
+
+    private static Optional<Token> getNextToken(final Matcher matcher, final boolean isUserType,
+            final boolean isDateType) {
+        for (final TokenType tk : TokenType.TOKEN_TYPES) {
+            if (tk == TokenType.RAW || matcher.group(TokenType.WHITESPACE.name()) != null)
+                continue;
+            if (matcher.group(tk.name()) != null) {
+                if (isAppropriate(tk, isUserType, isDateType))
+                    return Optional.of(new Token(tk, gatherData(matcher, tk)));
+                break;
             }
         }
-        return tokens;
+        return Optional.empty();
     }
 
     private static String gatherData(final Matcher matcher, final TokenType tk) {
