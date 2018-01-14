@@ -140,6 +140,9 @@ public class StringSearchTerm extends SearchTerm {
         WORD("\\b(" + RE_WW2 + ")\\b", MatchType.CONTAINS, 39, false, false, false),
         RAW("", MatchType.NONE, 41, false, false, false);
 
+        // cache values
+        private static final TokenType[] TOKEN_TYPES = values();
+
         public final String    pattern;
         public final MatchType matchType;
         private final int      group;
@@ -159,11 +162,9 @@ public class StringSearchTerm extends SearchTerm {
 
         public static List<TokenType> byMatchType(final MatchType mt) {
             final List<TokenType> types = new ArrayList<>();
-            for (final TokenType tt : values()) {
-                if (tt.matchType == mt) {
+            for (final TokenType tt : TOKEN_TYPES)
+                if (tt.matchType == mt)
                     types.add(tt);
-                }
-            }
             return types;
         }
 
@@ -219,7 +220,7 @@ public class StringSearchTerm extends SearchTerm {
 
     private static Pattern buildPattern() {
         final StringBuilder tokenPatternBuilder = new StringBuilder();
-        for (final TokenType tokenType : TokenType.values())
+        for (final TokenType tokenType : TokenType.TOKEN_TYPES)
             if (tokenType != TokenType.RAW)
                 tokenPatternBuilder.append(String.format("|(?<%s>%s)", tokenType.name(), tokenType.pattern));
         return Pattern.compile(tokenPatternBuilder.substring(1));
@@ -229,7 +230,7 @@ public class StringSearchTerm extends SearchTerm {
         final List<Token> tokens = new ArrayList<>();
         final Matcher matcher = pattern.matcher(input);
         tokenIteration: while (matcher.find()) {
-            for (final TokenType tk : TokenType.values()) {
+            for (final TokenType tk : TokenType.TOKEN_TYPES) {
                 if (tk == TokenType.RAW)
                     continue;
                 if (matcher.group(TokenType.WHITESPACE.name()) != null)
@@ -240,9 +241,8 @@ public class StringSearchTerm extends SearchTerm {
                 }
             }
         }
-        if (tokens.isEmpty()) {
+        if (tokens.isEmpty())
             tokens.add(new Token(TokenType.RAW, input));
-        }
         return tokens;
     }
 

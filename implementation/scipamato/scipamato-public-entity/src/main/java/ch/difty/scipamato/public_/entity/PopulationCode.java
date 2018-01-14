@@ -13,6 +13,9 @@ public enum PopulationCode {
     CHILDREN((short) 1),
     ADULTS((short) 2);
 
+    // cache values
+    private static final PopulationCode[] CODES = values();
+
     private final short id;
 
     PopulationCode(final short id) {
@@ -20,7 +23,7 @@ public enum PopulationCode {
     }
 
     public static PopulationCode of(final short id) {
-        for (final PopulationCode r : values())
+        for (final PopulationCode r : CODES)
             if (id == r.getId())
                 return r;
         throw new IllegalArgumentException("No matching type for id " + id);

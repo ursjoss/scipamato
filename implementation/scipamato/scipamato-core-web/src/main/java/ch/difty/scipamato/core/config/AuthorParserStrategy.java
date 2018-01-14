@@ -12,8 +12,10 @@ public enum AuthorParserStrategy {
      */
     PUBMED;
 
+    private static final AuthorParserStrategy[] STRATEGIES = values();
+
     public static AuthorParserStrategy fromProperty(final String propertyValue) {
-        return PropertyUtils.fromProperty(propertyValue, values(), PUBMED,
+        return PropertyUtils.fromProperty(propertyValue, STRATEGIES, PUBMED,
             ApplicationCoreProperties.AUTHOR_PARSER_FACTORY);
     }
 }
