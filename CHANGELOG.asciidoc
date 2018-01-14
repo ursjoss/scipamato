@@ -52,6 +52,23 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
+
+.Changed
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
+
+[[v0.7.3]]
+== [0.7.3] -- 2018-01-14
+
+
+.Added
 - Test Coverage of untested parts of SciPaMaTo
 
 .Changed
@@ -68,18 +85,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Updated jOOQ, flyway, lombok, jasperreports, assertj, jacoco-maven-plugin
 - Switched to mockito-2
 
-.Deprecated
-
-.Removed
-
 .Fixed
 
 - AuthorParser: Don't let streams escape their context. Based on review by Prof. Dierk König.
 - Do not run the data synchronization from core to public during the nightly build (profile-sonar)
 - A few minor so far non-surfacing bugs showing up when working on the test-coverage :-)
 - A few imprecise repo methods that started failing with lombok-1.16.20
-
-.Security
 
 
 [[v0.7.2]]
@@ -90,10 +101,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Changed
 - 07/44: Use @ConfigurationProperties to define custom properties
 - Version bump: spring-boot-admin-starter-client
-
-.Deprecated
-
-.Removed
 
 .Fixed
 - Explicitly manage the bootstrap version (3.3.7-1) that was overridden by spring-cloud-dependencies to 3.2.0
@@ -113,15 +120,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Improved DataSource/HikariCP configuration and added tests
 - Switched to immplicit constructor injection as of spring 4.3
 
-.Deprecated
-
-.Removed
-
 .Fixed
 - 07/30: Do not synchronize null int/long columns as 0 (PublicationYear, PM_ID...)
 - 07/25: Code-Synchronization: Don't synchronize internals, aggregate 5A/B/C to 5abc
 
-.Security
 
 
 [[v0.7.0]]
@@ -151,8 +153,6 @@ current versions of flyway can deal with the old table name, this fallback will 
 the table in your database instances (`alter table schema_version rename to flyway_schema_history;`).
 
 
-.Deprecated
-
 .Removed
 - obsolete jOOQ configuration classes. Simplified jOOQ configuration based on spring boot autoconfiguration
 
@@ -166,23 +166,15 @@ the table in your database instances (`alter table schema_version rename to flyw
 [[v0.6.3]]
 == [0.6.3] -- 2017-11-06
 
-.Added
-
 .Changed
 - Updated jaxb-api, jasperrerports, spring-cloud-starter-feign, assertj, JUnitParams
 - pom refactoring
-
-.Deprecated
-
-.Removed
 
 .Fixed
 - Bug 06/22: Fixes the exception we had after clicking on a freshly imported pubmed paper.
 - Bug 06/23: Include new format for collective authors in the author validation.
 - Bug 06/27: Fix layout issues with XmlPasteModal panel (Caption, initial size)
 - Bug 06/27: When the XMlPasteModal was opened and closed, it could not be opened again without page refresh
-
-.Security
 
 
 [[v0.6.2]]
@@ -196,17 +188,11 @@ the table in your database instances (`alter table schema_version rename to flyw
 - Improved documentation and code coverage
 - Updated to spring-boot-1.5.8, wicket-7.9.0, bumped wicket-spring-boot-starter, jOOQ-3.10.1, feign
 
-.Deprecated
-
-.Removed
-
 .Fixed
 - Fix version alignment between different modules for jOOQ and the postgresql jdbc driver
 - Selective improvements with Eclipse Clean-up functionality
 - Bug 06/23: Parsing Authors from PubmedXml: Delimiter between normal authors and authors with CollectiveName needs to be semicolon.
 - Bug 06/22: PaperListPage: Refresh ResultPanel after having imported via XML from PubMed to immediately show the updated paper list.
-
-.Security
 
 
 [[v0.6.1]]
