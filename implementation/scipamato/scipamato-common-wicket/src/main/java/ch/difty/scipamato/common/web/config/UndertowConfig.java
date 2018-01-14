@@ -33,18 +33,15 @@ public class UndertowConfig {
     @Bean
     @ConditionalOnProperty(name = "scipamato.redirect-from-port", relaxedNames = true)
     public EmbeddedServletContainerFactory undertow() {
-        final int portUnsecured = scipamatoProperties.getRedirectFromPort();
-        final int portSecured = serverProperties.getPort();
         final UndertowEmbeddedServletContainerFactory factory = new UndertowEmbeddedServletContainerFactory();
-        factory.addBuilderCustomizers(builder -> builder.addHttpListener(portUnsecured, "0.0.0.0"));
-        factory.addDeploymentInfoCustomizers(deploymentInfo -> {
-            deploymentInfo
-                .addSecurityConstraint(
-                    new SecurityConstraint().addWebResourceCollection(new WebResourceCollection().addUrlPattern("/*"))
-                        .setTransportGuaranteeType(TransportGuaranteeType.CONFIDENTIAL)
-                        .setEmptyRoleSemantic(SecurityInfo.EmptyRoleSemantic.PERMIT))
-                .setConfidentialPortManager(exchange -> portSecured);
-        });
+        factory.addBuilderCustomizers(
+            builder -> builder.addHttpListener(scipamatoProperties.getRedirectFromPort(), "0.0.0.0"));
+        factory.addDeploymentInfoCustomizers(deploymentInfo -> deploymentInfo
+            .addSecurityConstraint(
+                new SecurityConstraint().addWebResourceCollection(new WebResourceCollection().addUrlPattern("/*"))
+                    .setTransportGuaranteeType(TransportGuaranteeType.CONFIDENTIAL)
+                    .setEmptyRoleSemantic(SecurityInfo.EmptyRoleSemantic.PERMIT))
+            .setConfidentialPortManager(exchange -> serverProperties.getPort()));
         return factory;
     }
 

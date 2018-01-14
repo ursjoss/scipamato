@@ -44,16 +44,16 @@ public class ScipamatoProperties {
     private String dbSchema = "public";
 
     /**
+     * Port from where an unsecured http connection is forwarded to the secured
+     * https port (@literal server.port}. Only has an effect if https is configured.
+     */
+    private Integer redirectFromPort;
+
+    /**
      * @return the author parser strategy used for interpreting the authors string.
      */
     public AuthorParserStrategy getAuthorParserStrategy() {
         return AuthorParserStrategy.fromProperty(authorParser);
     }
-
-    /**
-     * Port from where an unsecured http connection is forwarded to the secured
-     * https port (@literal server.port}. Only has an effect if https is configured.
-     */
-    private Integer redirectFromPort;
 
 }
