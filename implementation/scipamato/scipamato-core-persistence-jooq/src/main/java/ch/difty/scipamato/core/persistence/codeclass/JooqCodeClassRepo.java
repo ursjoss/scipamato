@@ -29,6 +29,7 @@ public class JooqCodeClassRepo implements CodeClassRepository {
     @Cacheable
     public List<CodeClass> find(final String languageCode) {
         final String lang = TranslationUtils.trimLanguageCode(languageCode);
+        // skipping the audit fields
         return dslContext
             .select(CODE_CLASS.ID.as("CC_ID"), DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
                 .as("CC_NAME"),

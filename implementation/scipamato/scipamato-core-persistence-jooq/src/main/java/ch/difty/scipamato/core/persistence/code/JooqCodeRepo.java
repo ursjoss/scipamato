@@ -34,6 +34,7 @@ public class JooqCodeRepo implements CodeRepository {
     public List<Code> findCodesOfClass(final CodeClassId codeClassId, final String languageCode) {
         AssertAs.notNull(codeClassId, "codeClassId");
         final String lang = TranslationUtils.trimLanguageCode(languageCode);
+        // skipping the audit fields
         return dslContext.select(CODE.CODE_.as("C_ID"), DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
             .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"), CODE_CLASS.ID.as("CC_ID"),
             DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
