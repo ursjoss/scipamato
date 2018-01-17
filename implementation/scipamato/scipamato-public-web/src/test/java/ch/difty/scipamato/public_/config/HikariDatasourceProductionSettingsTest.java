@@ -19,13 +19,6 @@ public class HikariDatasourceProductionSettingsTest {
     @Autowired
     private DataSource datasource;
 
-    /**
-     * Oddly failing when running the tests via maven (but succeeding via eclipse):
-     * <code>
-     * assertThat(ds.getIdleTimeout()).isEqualTo(600000);
-     * assertThat(ds.getMinimumIdle()).isEqualTo(-1);
-     * </code>
-     */
     @Test
     public void validateSettingsInProduction() {
         assertThat(datasource).isInstanceOf(HikariDataSource.class);
@@ -35,7 +28,9 @@ public class HikariDatasourceProductionSettingsTest {
         assertThat(ds.getUsername()).isEqualTo("scipamatopub");
         assertThat(ds.getPassword()).isEqualTo("scipamatopub");
         assertThat(ds.getConnectionTimeout()).isEqualTo(15000);
+        assertThat(ds.getIdleTimeout()).isEqualTo(600000);
         assertThat(ds.getMaxLifetime()).isEqualTo(600000);
+        assertThat(ds.getMinimumIdle()).isEqualTo(-1);
         assertThat(ds.getMaximumPoolSize()).isEqualTo(9);
         assertThat(ds.getPoolName()).isEqualTo("SciPaMaTo-Public-HikariCP");
         assertThat(ds.isReadOnly()).isTrue();

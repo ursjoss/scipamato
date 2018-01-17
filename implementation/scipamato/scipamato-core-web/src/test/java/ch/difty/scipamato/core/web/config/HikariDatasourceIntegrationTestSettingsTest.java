@@ -75,7 +75,7 @@ public class HikariDatasourceIntegrationTestSettingsTest {
         assertThat(ds.getPassword()).isEqualTo("scipamato");
         assertThat(ds.getConnectionTimeout()).isEqualTo(1000);
         assertThat(ds.getIdleTimeout()).isEqualTo(10000);
-        assertThat(ds.getMaxLifetime()).isEqualTo(10000);
+        assertThat(ds.getMaxLifetime()).isEqualTo(1800000);
         assertThat(ds.getMinimumIdle()).isEqualTo(2);
         assertThat(ds.getMaximumPoolSize()).isEqualTo(2);
         assertThat(ds.getPoolName()).isEqualTo("SciPaMaTo-Source-HikariCP");
