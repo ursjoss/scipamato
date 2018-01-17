@@ -9,3 +9,4 @@ log/
 scipamato-public-web/keystore.p12
 scipamato-public-web/application.properties
 scipamato-core-web/application.properties
+.mvn/
