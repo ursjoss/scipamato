@@ -54,7 +54,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Updated jOOQ, jasperreports, spring-cloud
+- Updated jOOQ, jasperreports, spring-cloud, flyway
 - 07/47: Correctly add the maven wrapper
 
 .Deprecated
