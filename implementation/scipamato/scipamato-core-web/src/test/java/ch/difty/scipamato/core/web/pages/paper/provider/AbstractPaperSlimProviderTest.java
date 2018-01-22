@@ -25,8 +25,8 @@ import ch.difty.scipamato.core.ScipamatoApplication;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.filter.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
-import ch.difty.scipamato.core.persistence.paper.JooqPaperService;
-import ch.difty.scipamato.core.persistence.paper.slim.JooqPaperSlimService;
+import ch.difty.scipamato.core.persistence.PaperService;
+import ch.difty.scipamato.core.persistence.PaperSlimService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -38,9 +38,9 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     protected ScipamatoApplication application;
 
     @Mock
-    protected JooqPaperSlimService serviceMock;
+    protected PaperSlimService serviceMock;
     @Mock
-    protected JooqPaperService     paperServiceMock;
+    protected PaperService     paperServiceMock;
     @Mock
     protected PaperSlim            entityMock;
     @Mock

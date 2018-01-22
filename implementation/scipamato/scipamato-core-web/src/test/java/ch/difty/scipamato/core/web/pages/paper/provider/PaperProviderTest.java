@@ -29,7 +29,7 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.ScipamatoApplication;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.filter.PaperFilter;
-import ch.difty.scipamato.core.persistence.paper.JooqPaperService;
+import ch.difty.scipamato.core.persistence.PaperService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -38,7 +38,7 @@ public class PaperProviderTest {
     private PaperProvider provider;
 
     @Mock
-    private JooqPaperService serviceMock;
+    private PaperService serviceMock;
 
     @Mock
     private PaperFilter filterMock;
