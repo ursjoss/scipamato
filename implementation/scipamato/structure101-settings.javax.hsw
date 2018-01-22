@@ -9,7 +9,7 @@
   <property name="relative-to" value="const(THIS_FILE)" />
   <property name="action-set-mod" value="1" />
   <property name="detail-mode" value="true" />
-  <property name="restructuring-system-file" value="../../../../../../eclipse-workspace/structure101-actions.xml" />
+  <property name="restructuring-system-file" value="structure101-actions.xml" />
   <property name="hide-deprecated" value="false" />
   <property name="resolve-name-clashes" value="true" />
   <property name="project-excluded" />
@@ -160,12 +160,10 @@
     <module name="scipamato-public-web" />
   </modules-in-scope>
   <excludes>
-    <exclude expression="scipamato*/*ch.difty.scipamato.*Test" active="false" />
-    <exclude expression="ch.difty.scipamato.core.db" active="true" />
-    <exclude expression="ch.difty.scipamato.public_.db" active="false" />
-    <exclude expression="scipamato-public-persistence-jooq/target/classes/ch/difty/scipamato/public_/db/*" active="false" />
-    <exclude expression="scipamato-core-persistence-jooq.target.classes.ch.difty.scipamato.core.db.*" active="false" />
-    <exclude expression="SciPaMaTo-Core.persistence-core.scipamato-core-persistence-jooq.ch.difty.scipamato.core.persistence.db.*" active="false" />
+    <exclude expression="scipamato-core-persistence-jooq.ch.difty.scipamato.core.db.*" active="true" />
+    <exclude expression="scipamato-public-persistence-jooq.ch.difty.scipamato.public_.db.*" active="true" />
+    <exclude expression="scipamato-core-sync.ch.difty.scipamato.public_.db.*" active="true" />
+    <exclude expression="scipamato-core-sync.ch.difty.scipamato.core.db.*" active="true" />
   </excludes>
   <grid-set sep="." version="5.0.13210" />
 </local-project>
