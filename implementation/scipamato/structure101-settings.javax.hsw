@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local-project language="javax" version="5.0.13210" xml-version="3" flavor="j2se">
+  <property name="publish-architecture-artifacts" value="true" />
+  <property name="force-classpath" value="false" />
+  <property name="project-type" value="classpath" />
+  <property name="hide-externals" value="true" />
+  <property name="parse-archive-in-archive" value="false" />
+  <property name="include-injected-dependency" value="false" />
+  <property name="relative-to" value="const(THIS_FILE)" />
+  <property name="action-set-mod" value="1" />
+  <property name="detail-mode" value="true" />
+  <property name="restructuring-system-file" value="../../../../../../eclipse-workspace/structure101-actions.xml" />
+  <property name="hide-deprecated" value="false" />
+  <property name="resolve-name-clashes" value="true" />
+  <property name="project-excluded" />
+  <property name="show-needs-to-compile" value="false" />
+  <property name="physical-layering-system-file" value="structure101-spec.xml" />
+  <classpath>
+    <classpathentry kind="lib" path="scipamato-common-persistence-jooq/target/classes" module="scipamato-common-persistence-jooq" />
+    <classpathentry kind="lib" path="scipamato-public-persistence-api/target/classes" module="scipamato-public-persistence-api" />
+    <classpathentry kind="lib" path="scipamato-common-wicket/target/classes" module="scipamato-common-wicket" />
+    <classpathentry kind="lib" path="scipamato-common-persistence-jooq/target/test-classes" module="scipamato-common-persistence-jooq" />
+    <classpathentry kind="lib" path="scipamato-core-web/target/classes" module="scipamato-core-web" />
+    <classpathentry kind="lib" path="scipamato-core-persistence-jooq/target/classes" module="scipamato-core-persistence-jooq" />
+    <classpathentry kind="lib" path="scipamato-common-entity/target/test-classes" module="scipamato-common-entity" />
+    <classpathentry kind="lib" path="scipamato-public-persistence-jooq/target/classes" module="scipamato-public-persistence-jooq" />
+    <classpathentry kind="lib" path="scipamato-public-web/target/classes" module="scipamato-public-web" />
+    <classpathentry kind="lib" path="scipamato-public-persistence-jooq/target/test-classes" module="scipamato-public-persistence-jooq" />
+    <classpathentry kind="lib" path="scipamato-common-utils/target/classes" module="scipamato-common-utils" />
+    <classpathentry kind="lib" path="scipamato-common-wicket/target/test-classes" module="scipamato-common-wicket" />
+    <classpathentry kind="lib" path="scipamato-common-entity/target/classes" module="scipamato-common-entity" />
+    <classpathentry kind="lib" path="scipamato-public-entity/target/test-classes" module="scipamato-public-entity" />
+    <classpathentry kind="lib" path="scipamato-core-entity/target/test-classes" module="scipamato-core-entity" />
+    <classpathentry kind="lib" path="scipamato-core-sync/target/test-classes" module="scipamato-core-sync" />
+    <classpathentry kind="lib" path="scipamato-core-persistence-api/target/test-classes" module="scipamato-core-persistence-api" />
+    <classpathentry kind="lib" path="scipamato-core-web/target/test-classes" module="scipamato-core-web" />
+    <classpathentry kind="lib" path="scipamato-core-persistence-jooq/target/test-classes" module="scipamato-core-persistence-jooq" />
+    <classpathentry kind="lib" path="scipamato-public-entity/target/classes" module="scipamato-public-entity" />
+    <classpathentry kind="lib" path="scipamato-public-persistence-api/target/test-classes" module="scipamato-public-persistence-api" />
+    <classpathentry kind="lib" path="scipamato-common-persistence-api/target/classes" module="scipamato-common-persistence-api" />
+    <classpathentry kind="lib" path="scipamato-common-utils/target/test-classes" module="scipamato-common-utils" />
+    <classpathentry kind="lib" path="scipamato-public-web/target/test-classes" module="scipamato-public-web" />
+    <classpathentry kind="lib" path="scipamato-common-persistence-api/target/test-classes" module="scipamato-common-persistence-api" />
+    <classpathentry kind="lib" path="scipamato-core-sync/target/classes" module="scipamato-core-sync" />
+    <classpathentry kind="lib" path="scipamato-core-persistence-api/target/classes" module="scipamato-core-persistence-api" />
+    <classpathentry kind="lib" path="scipamato-core-pubmed-api/target/test-classes" module="scipamato-core-pubmed-api" />
+    <classpathentry kind="lib" path="scipamato-core-entity/target/classes" module="scipamato-core-entity" />
+    <classpathentry kind="lib" path="scipamato-core-pubmed-api/target/classes" module="scipamato-core-pubmed-api" />
+  </classpath>
+  <pom-root-files />
+  <modules>
+    <module name="scipamato" kind="ide-project" />
+    <module name="scipamato-common-utils" kind="ide-project" />
+    <module name="scipamato-common-entity" kind="ide-project">
+      <requires name="scipamato-common-utils" kind="ide-project" />
+    </module>
+    <module name="scipamato-core-pubmed-api" kind="ide-project">
+      <requires name="scipamato-common-utils" kind="ide-project" />
+    </module>
+    <module name="scipamato-common-persistence-api" kind="ide-project">
+      <requires name="scipamato-common-utils" kind="ide-project" />
+      <requires name="scipamato-common-entity" kind="ide-project" />
+    </module>
+    <module name="scipamato-core-entity" kind="ide-project">
+      <requires name="scipamato-common-entity" kind="ide-project" />
+      <requires name="scipamato-common-utils" kind="ide-project" />
+    </module>
+    <module name="scipamato-public-entity" kind="ide-project">
+      <requires name="scipamato-common-entity" kind="ide-project" />
+      <requires name="scipamato-common-utils" kind="ide-project" />
+    </module>
+    <module name="scipamato-common-persistence-jooq" kind="ide-project">
+      <requires name="scipamato-common-entity" kind="ide-project" />
+      <requires name="scipamato-common-utils" kind="ide-project" />
+      <requires name="scipamato-common-persistence-api" kind="ide-project" />
+    </module>
+    <module name="scipamato-common-wicket" kind="ide-project">
+      <requires name="scipamato-common-utils" kind="ide-project" />
+      <requires name="scipamato-common-entity" kind="ide-project" />
+      <requires name="scipamato-common-persistence-api" kind="ide-project" />
+    </module>
+    <module name="scipamato-public-persistence-api" kind="ide-project">
+      <requires name="scipamato-common-persistence-api" kind="ide-project" />
+      <requires name="scipamato-common-utils" kind="ide-project" />
+      <requires name="scipamato-common-entity" kind="ide-project" />
+      <requires name="scipamato-public-entity" kind="ide-project" />
+    </module>
+    <module name="scipamato-core-persistence-api" kind="ide-project">
+      <requires name="scipamato-common-persistence-api" kind="ide-project" />
+      <requires name="scipamato-common-utils" kind="ide-project" />
+      <requires name="scipamato-common-entity" kind="ide-project" />
+      <requires name="scipamato-core-entity" kind="ide-project" />
+      <requires name="scipamato-core-pubmed-api" kind="ide-project" />
+    </module>
+    <module name="scipamato-public-persistence-jooq" kind="ide-project">
+      <requires name="scipamato-public-persistence-api" kind="ide-project" />
+      <requires name="scipamato-common-persistence-api" kind="ide-project" />
+      <requires name="scipamato-common-utils" kind="ide-project" />
+      <requires name="scipamato-public-entity" kind="ide-project" />
+      <requires name="scipamato-common-persistence-jooq" kind="ide-project" />
+      <requires name="scipamato-common-entity" kind="ide-project" />
+    </module>
+    <module name="scipamato-core-persistence-jooq" kind="ide-project">
+      <requires name="scipamato-core-persistence-api" kind="ide-project" />
+      <requires name="scipamato-common-persistence-api" kind="ide-project" />
+      <requires name="scipamato-common-utils" kind="ide-project" />
+      <requires name="scipamato-core-entity" kind="ide-project" />
+      <requires name="scipamato-core-pubmed-api" kind="ide-project" />
+      <requires name="scipamato-common-persistence-jooq" kind="ide-project" />
+      <requires name="scipamato-common-entity" kind="ide-project" />
+    </module>
+    <module name="scipamato-core-sync" kind="ide-project">
+      <requires name="scipamato-common-utils" kind="ide-project" />
+      <requires name="scipamato-public-persistence-jooq" kind="ide-project" />
+      <requires name="scipamato-public-persistence-api" kind="ide-project" />
+      <requires name="scipamato-common-persistence-api" kind="ide-project" />
+      <requires name="scipamato-public-entity" kind="ide-project" />
+      <requires name="scipamato-common-persistence-jooq" kind="ide-project" />
+      <requires name="scipamato-common-entity" kind="ide-project" />
+    </module>
+    <module name="scipamato-public-web" kind="ide-project">
+      <requires name="scipamato-public-entity" kind="ide-project" />
+      <requires name="scipamato-common-entity" kind="ide-project" />
+      <requires name="scipamato-common-utils" kind="ide-project" />
+      <requires name="scipamato-public-persistence-api" kind="ide-project" />
+      <requires name="scipamato-common-persistence-api" kind="ide-project" />
+      <requires name="scipamato-public-persistence-jooq" kind="ide-project" />
+      <requires name="scipamato-common-persistence-jooq" kind="ide-project" />
+      <requires name="scipamato-common-wicket" kind="ide-project" />
+    </module>
+    <module name="scipamato-core-web" kind="ide-project">
+      <requires name="scipamato-core-entity" kind="ide-project" />
+      <requires name="scipamato-common-entity" kind="ide-project" />
+      <requires name="scipamato-common-utils" kind="ide-project" />
+      <requires name="scipamato-core-persistence-api" kind="ide-project" />
+      <requires name="scipamato-common-persistence-api" kind="ide-project" />
+      <requires name="scipamato-core-persistence-jooq" kind="ide-project" />
+      <requires name="scipamato-common-persistence-jooq" kind="ide-project" />
+      <requires name="scipamato-common-wicket" kind="ide-project" />
+      <requires name="scipamato-core-pubmed-api" kind="ide-project" />
+      <requires name="scipamato-core-sync" kind="ide-project" />
+    </module>
+  </modules>
+  <modules-in-scope>
+    <module name="scipamato" />
+    <module name="scipamato-common-entity" />
+    <module name="scipamato-common-utils" />
+    <module name="scipamato-common-persistence-api" />
+    <module name="scipamato-common-persistence-jooq" />
+    <module name="scipamato-common-wicket" />
+    <module name="scipamato-core-entity" />
+    <module name="scipamato-core-persistence-api" />
+    <module name="scipamato-core-pubmed-api" />
+    <module name="scipamato-core-persistence-jooq" />
+    <module name="scipamato-core-sync" />
+    <module name="scipamato-public-persistence-jooq" />
+    <module name="scipamato-public-persistence-api" />
+    <module name="scipamato-public-entity" />
+    <module name="scipamato-core-web" />
+    <module name="scipamato-public-web" />
+  </modules-in-scope>
+  <excludes>
+    <exclude expression="scipamato*/*ch.difty.scipamato.*Test" active="false" />
+    <exclude expression="ch.difty.scipamato.core.db" active="true" />
+    <exclude expression="ch.difty.scipamato.public_.db" active="false" />
+    <exclude expression="scipamato-public-persistence-jooq/target/classes/ch/difty/scipamato/public_/db/*" active="false" />
+    <exclude expression="scipamato-core-persistence-jooq.target.classes.ch.difty.scipamato.core.db.*" active="false" />
+    <exclude expression="SciPaMaTo-Core.persistence-core.scipamato-core-persistence-jooq.ch.difty.scipamato.core.persistence.db.*" active="false" />
+  </excludes>
+  <grid-set sep="." version="5.0.13210" />
+</local-project>
