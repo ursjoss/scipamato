@@ -12,9 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.batch.item.ItemWriter;
 
-import ch.difty.scipamato.common.TestUtils;
-import ch.difty.scipamato.core.sync.jobs.code.CodeItemWriter;
-
 @RunWith(MockitoJUnitRunner.class)
 public abstract class AbstractItemWriterTest<T, W extends ItemWriter<T>> {
 
@@ -29,11 +26,6 @@ public abstract class AbstractItemWriterTest<T, W extends ItemWriter<T>> {
     }
 
     protected abstract W newWriter(DSLContext dslContextMock);
-
-    @Test
-    public void degenerateConstruction_withNullDslContext_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new CodeItemWriter(null), "jooqDslContextPublic");
-    }
 
     @Test
     public void writingEmptyList_doesNotInteractWithJooq() throws Exception {
