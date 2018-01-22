@@ -11,10 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.AbstractPage;
 import ch.difty.scipamato.public_.ScipamatoPublicSession;
-import ch.difty.scipamato.public_.web.pages.portal.PublicPage;
 import ch.difty.scipamato.public_.web.resources.MainCssResourceReference;
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
 public abstract class BasePage<T> extends AbstractPage<T> {
 
@@ -40,12 +37,6 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
         response.render(CssHeaderItem.forReference(MainCssResourceReference.get()));
-    }
-
-    @Override
-    protected void addLinksTo(Navbar nb) {
-        super.addLinksTo(nb);
-        addPageLink(nb, PublicPage.class, "menu.home", GlyphIconType.home, Navbar.ComponentPosition.LEFT);
     }
 
     protected Authentication getAuthentication() {
