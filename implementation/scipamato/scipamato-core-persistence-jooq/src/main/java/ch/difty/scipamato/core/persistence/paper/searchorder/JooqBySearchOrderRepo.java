@@ -110,9 +110,9 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
      * Note: searchOrder must not be null. this is to be guarded from the public
      * entry methods.
      *
-     * protected for test purposes
+     * public for test purposes
      */
-    protected Condition getConditionsFrom(final SearchOrder searchOrder) {
+    public Condition getConditionsFrom(final SearchOrder searchOrder) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
         if (searchOrder.isShowExcluded()) {
             return PAPER.ID.in(searchOrder.getExcludedPaperIds());

@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.persistence.paper.searchorder;
+package ch.difty.scipamato.core.persistence.paper;
 
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.core.persistence.paper.PaperRecordMapper;
+import ch.difty.scipamato.core.persistence.paper.searchorder.JooqBySearchOrderRepo;
+import ch.difty.scipamato.core.persistence.paper.searchorder.PaperBackedSearchOrderRepository;
 
 /**
  * {@link Paper} specific repository returning those entities by searchOrders.

@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.persistence.paper.searchorder;
+package ch.difty.scipamato.core.persistence.paper.slim;
 
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +17,7 @@ import ch.difty.scipamato.core.entity.filter.SearchCondition;
 import ch.difty.scipamato.core.entity.filter.SearchTerm;
 import ch.difty.scipamato.core.entity.filter.SearchTermType;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
-import ch.difty.scipamato.core.persistence.paper.slim.PaperSlimRecordMapper;
+import ch.difty.scipamato.core.persistence.paper.searchorder.JooqBySearchOrderRepo;
 
 public class JooqPaperSlimBySearchOrderRepoTest {
 

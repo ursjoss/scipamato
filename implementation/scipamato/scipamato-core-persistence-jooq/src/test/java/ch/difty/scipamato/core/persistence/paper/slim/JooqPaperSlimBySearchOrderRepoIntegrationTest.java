@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.persistence.paper.searchorder;
+package ch.difty.scipamato.core.persistence.paper.slim;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

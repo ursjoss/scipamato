@@ -10,7 +10,7 @@
             <cell name="persistence-core" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true" bgcolor="204,204,255">
               <grid>
                 <row>
-                  <cell name="scipamato-core-persistence-jooq" pattern="scipamato-core-persistence-jooq.*" vexpanded="false" illegal="false" visibility="private" drill="true" />
+                  <cell name="scipamato-core-persistence-jooq" pattern="scipamato-core-persistence-jooq.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
                 </row>
                 <row>
                   <cell name="scipamato-core-persistence-api" pattern="scipamato-core-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
