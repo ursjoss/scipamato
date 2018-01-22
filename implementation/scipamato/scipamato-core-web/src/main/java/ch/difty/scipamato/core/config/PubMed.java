@@ -1,5 +1,6 @@
-package ch.difty.scipamato.core.pubmed;
+package ch.difty.scipamato.core.config;
 
+import ch.difty.scipamato.core.pubmed.PubmedArticleSet;
 import feign.Param;
 import feign.RequestLine;
 

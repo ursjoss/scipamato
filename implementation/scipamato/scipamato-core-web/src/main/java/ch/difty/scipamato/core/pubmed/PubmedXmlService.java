@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.NullArgumentException;
+import ch.difty.scipamato.core.config.PubMed;
 import lombok.extern.slf4j.Slf4j;
 
 /**

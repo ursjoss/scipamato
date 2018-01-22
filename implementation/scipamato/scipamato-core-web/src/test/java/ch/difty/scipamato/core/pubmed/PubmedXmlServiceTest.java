@@ -26,6 +26,7 @@ import org.springframework.oxm.XmlMappingException;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import ch.difty.scipamato.common.NullArgumentException;
+import ch.difty.scipamato.core.config.PubMed;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PubmedXmlServiceTest {

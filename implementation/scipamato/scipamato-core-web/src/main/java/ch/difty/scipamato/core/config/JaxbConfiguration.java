@@ -6,7 +6,6 @@ import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
-import ch.difty.scipamato.core.pubmed.PubMed;
 import feign.Feign;
 import feign.Logger;
 import feign.jaxb.JAXBContextFactory;
