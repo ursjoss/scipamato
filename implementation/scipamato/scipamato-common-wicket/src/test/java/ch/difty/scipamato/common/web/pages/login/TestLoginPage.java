@@ -1,11 +1,10 @@
-package ch.difty.scipamato.common.web.test;
+package ch.difty.scipamato.common.web.pages.login;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.giffing.wicket.spring.boot.context.scan.WicketSignInPage;
 
 import ch.difty.scipamato.common.web.AbstractPage;
-import ch.difty.scipamato.common.web.pages.login.AbstractLoginPage;
 
 @WicketSignInPage
 public class TestLoginPage extends AbstractLoginPage {
