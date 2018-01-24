@@ -125,6 +125,12 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
                 // no-op
             }
 
+            @Override
+            protected PaperEntryPage getResponsePage(Optional<Paper> p, Long searchOrderId, boolean showingExclusions) {
+                // no-op
+                return null;
+            }
+
         };
     }
 
@@ -658,6 +664,12 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
             protected void onFormSubmit() {
                 // no-op
             }
+
+            @Override
+            protected PaperEntryPage getResponsePage(Optional<Paper> p, Long searchOrderId, boolean showingExclusions) {
+                // no-op
+                return null;
+            }
         };
     }
 
@@ -672,6 +684,12 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
             @Override
             protected void onFormSubmit() {
                 // no-op
+            }
+
+            @Override
+            protected PaperEntryPage getResponsePage(Optional<Paper> p, Long searchOrderId, boolean showingExclusions) {
+                // no-op
+                return null;
             }
         };
     }

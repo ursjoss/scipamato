@@ -18,6 +18,7 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -502,8 +503,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 if (id != null) {
                     final Optional<Paper> p = paperService.findById(id);
                     if (p.isPresent())
-                        setResponsePage(
-                            new PaperEntryPage(Model.of(p.get()), getCallingPage(), searchOrderId, showingExclusions));
+                        setResponsePage(getResponsePage(p, searchOrderId, showingExclusions));
                 }
             }
 
@@ -520,6 +520,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         btn.setType(Buttons.Type.Primary);
         return btn;
     }
+
+    protected abstract GenericWebPage<Paper> getResponsePage(final Optional<Paper> p, Long searchOrderId,
+            boolean showingExclusions);
 
     @Override
     protected BootstrapButton newExcludeButton(String id) {
