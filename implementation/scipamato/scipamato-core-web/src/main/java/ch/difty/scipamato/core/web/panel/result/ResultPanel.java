@@ -10,6 +10,7 @@ import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -32,7 +33,6 @@ import ch.difty.scipamato.core.web.jasper.review.PaperReviewDataSource;
 import ch.difty.scipamato.core.web.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.core.web.jasper.summaryshort.PaperSummaryShortDataSource;
 import ch.difty.scipamato.core.web.jasper.summarytable.PaperSummaryTableDataSource;
-import ch.difty.scipamato.core.web.pages.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.core.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.panel.BasePanel;
 import ch.difty.scipamato.core.web.panel.search.SearchOrderChangeEvent;
@@ -46,7 +46,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
  *
  * @author u.joss
  */
-public class ResultPanel extends BasePanel<Void> {
+public abstract class ResultPanel extends BasePanel<Void> {
 
     private static final long serialVersionUID = 1L;
 
@@ -115,11 +115,11 @@ public class ResultPanel extends BasePanel<Void> {
         String languageCode = ScipamatoSession.get()
             .getLocale()
             .getLanguage();
-        setResponsePage(new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject()
-            .getNumber(), languageCode)
-            .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
-                dataProvider.isShowExcluded()));
+        setResponsePage(getResponsePage(m, languageCode, paperService, dataProvider));
     }
+
+    protected abstract GenericWebPage<Paper> getResponsePage(IModel<PaperSlim> m, String languageCode,
+            PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider);
 
     private PropertyColumn<PaperSlim, String> makePropertyColumn(String propExpression) {
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,

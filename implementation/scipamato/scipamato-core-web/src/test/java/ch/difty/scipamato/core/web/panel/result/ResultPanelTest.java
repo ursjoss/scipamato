@@ -13,8 +13,11 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.TagTester;
 import org.junit.After;
 import org.junit.Test;
@@ -26,10 +29,13 @@ import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.SearchOrder;
 import ch.difty.scipamato.core.entity.filter.PaperFilter;
+import ch.difty.scipamato.core.entity.filter.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
+import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.web.pages.paper.entry.PaperEntryPage;
+import ch.difty.scipamato.core.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.pages.paper.provider.PaperSlimBySearchOrderProvider;
 import ch.difty.scipamato.core.web.panel.PanelTest;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
@@ -74,7 +80,18 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
     @Override
     protected ResultPanel makePanel() {
-        return new ResultPanel(PANEL_ID, new PaperSlimBySearchOrderProvider(searchOrderMock, ROWS_PER_PAGE));
+        return new ResultPanel(PANEL_ID, new PaperSlimBySearchOrderProvider(searchOrderMock, ROWS_PER_PAGE)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected GenericWebPage<Paper> getResponsePage(IModel<PaperSlim> m, String languageCode,
+                    PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
+                return new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject()
+                    .getNumber(), languageCode)
+                    .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
+                        dataProvider.isShowExcluded());
+            }
+        };
     }
 
     @Override

@@ -19,11 +19,17 @@ import org.wicketstuff.annotation.mount.MountPath;
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.ScipamatoSession;
 import ch.difty.scipamato.core.auth.Roles;
+import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.SearchOrder;
+import ch.difty.scipamato.core.entity.filter.PaperSlimFilter;
+import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
+import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.web.PageParameterNames;
 import ch.difty.scipamato.core.web.pages.BasePage;
+import ch.difty.scipamato.core.web.pages.paper.entry.PaperEntryPage;
+import ch.difty.scipamato.core.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.pages.paper.provider.PaperSlimBySearchOrderProvider;
 import ch.difty.scipamato.core.web.panel.result.ResultPanel;
 import ch.difty.scipamato.core.web.panel.search.SearchOrderChangeEvent;
@@ -201,7 +207,19 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         resultPanelLabel.setOutputMarkupId(true);
         queue(resultPanelLabel);
 
-        resultPanel = new ResultPanel(id, dataProvider);
+        resultPanel = new ResultPanel(id, dataProvider) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected PaperEntryPage getResponsePage(IModel<PaperSlim> m, String languageCode,
+                    PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
+                return new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject()
+                    .getNumber(), languageCode)
+                    .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
+                        dataProvider.isShowExcluded());
+            }
+
+        };
         resultPanel.setOutputMarkupId(true);
         queue(resultPanel);
     }

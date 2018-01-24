@@ -7,6 +7,8 @@ import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.MaskType;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -18,11 +20,16 @@ import com.google.common.base.Strings;
 
 import ch.difty.scipamato.core.ScipamatoSession;
 import ch.difty.scipamato.core.auth.Roles;
+import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.filter.PaperFilter;
+import ch.difty.scipamato.core.entity.filter.PaperSlimFilter;
+import ch.difty.scipamato.core.entity.projection.PaperSlim;
+import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.ServiceResult;
 import ch.difty.scipamato.core.pubmed.PubmedImporter;
 import ch.difty.scipamato.core.web.pages.BasePage;
 import ch.difty.scipamato.core.web.pages.paper.entry.PaperEntryPage;
+import ch.difty.scipamato.core.web.pages.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.pages.paper.provider.PaperSlimByPaperFilterProvider;
 import ch.difty.scipamato.core.web.panel.pastemodal.XmlPasteModalPanel;
 import ch.difty.scipamato.core.web.panel.result.ResultPanel;
@@ -116,7 +123,19 @@ public class PaperListPage extends BasePage<Void> {
     }
 
     private void makeAndQueueResultPanel(String id) {
-        resultPanel = new ResultPanel(id, dataProvider);
+        resultPanel = new ResultPanel(id, dataProvider) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected PaperEntryPage getResponsePage(IModel<PaperSlim> m, String languageCode,
+                    PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
+                return new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject()
+                    .getNumber(), languageCode)
+                    .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
+                        dataProvider.isShowExcluded());
+            }
+
+        };
         resultPanel.setOutputMarkupId(true);
         queue(resultPanel);
     }
