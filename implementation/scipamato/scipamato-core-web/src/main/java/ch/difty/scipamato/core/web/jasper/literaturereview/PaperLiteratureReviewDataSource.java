@@ -8,7 +8,7 @@ import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.web.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.jasper.ReportHeaderFields;
 import ch.difty.scipamato.core.web.jasper.ScipamatoPdfResourceHandler;
-import ch.difty.scipamato.core.web.pages.paper.provider.AbstractPaperSlimProvider;
+import ch.difty.scipamato.core.web.paper.provider.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.resources.jasper.PaperLiteratureReviewReportResourceReference;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.export.PdfExporterConfiguration;

@@ -14,7 +14,7 @@ import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.entity.filter.PaperSlimFilter;
 import ch.difty.scipamato.core.web.jasper.PaperDataSourceTest;
 import ch.difty.scipamato.core.web.jasper.ReportHeaderFields;
-import ch.difty.scipamato.core.web.pages.paper.provider.AbstractPaperSlimProvider;
+import ch.difty.scipamato.core.web.paper.provider.AbstractPaperSlimProvider;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;

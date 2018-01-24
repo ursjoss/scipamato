@@ -10,7 +10,7 @@ import org.wicketstuff.jasperreports.JRConcreteResource;
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.filter.PaperSlimFilter;
-import ch.difty.scipamato.core.web.pages.paper.provider.AbstractPaperSlimProvider;
+import ch.difty.scipamato.core.web.paper.provider.AbstractPaperSlimProvider;
 import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;

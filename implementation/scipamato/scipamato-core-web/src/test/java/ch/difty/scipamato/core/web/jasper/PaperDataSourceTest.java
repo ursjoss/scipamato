@@ -10,7 +10,7 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.SearchOrder;
 import ch.difty.scipamato.core.entity.filter.PaperFilter;
 import ch.difty.scipamato.core.web.WicketTest;
-import ch.difty.scipamato.core.web.pages.paper.provider.AbstractPaperSlimProvider;
+import ch.difty.scipamato.core.web.paper.provider.AbstractPaperSlimProvider;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.design.JRDesignField;

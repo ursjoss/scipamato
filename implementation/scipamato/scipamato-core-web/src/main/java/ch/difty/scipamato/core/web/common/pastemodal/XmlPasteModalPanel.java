@@ -1,0 +1,123 @@
+package ch.difty.scipamato.core.web.common.pastemodal;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.StringResourceModel;
+
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
+
+public class XmlPasteModalPanel extends Panel {
+
+    private static final long serialVersionUID = 1L;
+
+    private static final String TEXT_XML = "text/xml";
+
+    private String content;
+
+    private Form<Object>     form;
+    private TextArea<String> contentField;
+
+    public XmlPasteModalPanel(String id) {
+        super(id);
+    }
+
+    @Override
+    protected void onInitialize() {
+        super.onInitialize();
+
+        queue(newForm("form"));
+        queue(newTextArea("content"));
+        queue(newDropZoneFileUpload("dropzone"));
+        queue(newButton("submit"));
+        queue(newCancelButton("cancel"));
+    }
+
+    private Form<Object> newForm(String id) {
+        form = new Form<>(id, new CompoundPropertyModel<Object>(this));
+        return form;
+    }
+
+    private TextArea<String> newTextArea(String id) {
+        contentField = new TextArea<>(id);
+        contentField.setOutputMarkupId(true);
+        return contentField;
+    }
+
+    protected DropZoneFileUpload newDropZoneFileUpload(String id) {
+        DropZoneFileUpload upload = new DropZoneFileUpload(id) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onUpload(AjaxRequestTarget target, Map<String, List<FileItem>> fileMap) {
+                if (fileMap != null && fileMap.containsKey("file")) {
+                    for (final FileItem file : fileMap.get("file")) {
+                        if (file.getContentType()
+                            .equals(TEXT_XML)) {
+                            content = file.getString();
+                            info(new StringResourceModel("dropzone.upload.successful", this, null)
+                                .setParameters(file.getName(), file.getContentType())
+                                .getString());
+                        }
+                    }
+                    target.add(contentField);
+                }
+            }
+        };
+        upload.getConfig()
+            .withMaxFileSize(1)
+            .withThumbnailHeight(80)
+            .withThumbnailWidth(80)
+            .withParallelUploads(1)
+            .withAutoQueue(true)
+            .withAcceptedFiles(TEXT_XML);
+        return upload;
+    }
+
+    private BootstrapAjaxButton newButton(String id) {
+        return new BootstrapAjaxButton(id, new StringResourceModel(id + ".label", this, null), form,
+                Buttons.Type.Primary) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form) {
+                super.onAfterSubmit(target, form);
+                ModalWindow.closeCurrent(target);
+            }
+        };
+    }
+
+    private BootstrapAjaxButton newCancelButton(String id) {
+        return new BootstrapAjaxButton(id, new StringResourceModel(id + ".label", this, null), form,
+                Buttons.Type.Primary) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                super.onSubmit(target, form);
+                content = null;
+                getFeedbackMessages().clear();
+            }
+
+            @Override
+            protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form) {
+                super.onAfterSubmit(target, form);
+                ModalWindow.closeCurrent(target);
+            }
+        };
+    }
+
+    public String getPastedContent() {
+        return content;
+    }
+
+}
