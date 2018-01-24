@@ -6,7 +6,6 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
-import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -20,8 +19,6 @@ import ch.difty.scipamato.common.web.test.TestAbstractPage;
 import ch.difty.scipamato.common.web.test.TestApplicationProperties;
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink;
 
 public class AbstractPageTest extends WicketBaseTest {
 
@@ -84,6 +81,7 @@ public class AbstractPageTest extends WicketBaseTest {
     public void assertPage() {
         getTester().startPage(new TestAbstractPage(Model.of(new TestRecord(1, "foo"))));
         getTester().assertRenderedPage(TestAbstractPage.class);
+        getTester().debugComponentTrees();
         assertComponents();
     }
 
@@ -92,18 +90,6 @@ public class AbstractPageTest extends WicketBaseTest {
 
         getTester().assertComponent("navbar", Navbar.class);
         getTester().assertComponent("navbar:container:collapse:extraItems", RepeatingView.class);
-        getTester().assertComponent("navbar:container:collapse:navLeftListEnclosure:navLeftList", ListView.class);
-        getTester().assertComponent("navbar:container:collapse:navLeftListEnclosure:navLeftList:0:component",
-            NavbarButton.class);
-        getTester().assertLabel("navbar:container:collapse:navLeftListEnclosure:navLeftList:0:component:label", "Home");
-
-        getTester().assertComponent("navbar:container:collapse:navRightListEnclosure:navRightList", ListView.class);
-        getTester().assertComponent("navbar:container:collapse:navRightListEnclosure:navRightList:0:component",
-            NavbarExternalLink.class);
-        getTester().assertModelValue("navbar:container:collapse:navRightListEnclosure:navRightList:0:component",
-            "https://github.com/ursjoss/scipamato/wiki");
-        getTester().assertLabel("navbar:container:collapse:navRightListEnclosure:navRightList:0:component:label",
-            "Help");
 
         getTester().assertLabel("navbar:container:collapseButton:toggleNavigationLabel", "Toggle Navigation");
         getTester().assertLabel("navbar:container:brandName:brandLabel", "SciPaMaTo");

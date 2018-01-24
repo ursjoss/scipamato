@@ -1,10 +1,8 @@
 package ch.difty.scipamato.core.web.pages;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.core.Authentication;
@@ -12,14 +10,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.AbstractPage;
+import ch.difty.scipamato.common.web.pages.MenuBuilder;
 import ch.difty.scipamato.core.ScipamatoSession;
 import ch.difty.scipamato.core.entity.User;
-import ch.difty.scipamato.core.web.pages.login.LogoutPage;
-import ch.difty.scipamato.core.web.pages.paper.list.PaperListPage;
-import ch.difty.scipamato.core.web.pages.paper.search.PaperSearchPage;
-import ch.difty.scipamato.core.web.pages.sync.RefDataSyncPage;
 import ch.difty.scipamato.core.web.resources.MainCssResourceReference;
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
 public abstract class BasePage<T> extends AbstractPage<T> {
@@ -28,6 +22,8 @@ public abstract class BasePage<T> extends AbstractPage<T> {
 
     @SpringBean
     private ApplicationProperties applicationProperties;
+    @SpringBean
+    private MenuBuilder           menuBuilder;
 
     public BasePage(final PageParameters parameters) {
         super(parameters);
@@ -42,36 +38,15 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     }
 
     @Override
-    public void renderHead(IHeaderResponse response) {
+    public void renderHead(final IHeaderResponse response) {
         super.renderHead(response);
         response.render(CssHeaderItem.forReference(MainCssResourceReference.get()));
     }
 
     @Override
-    protected void addLinksTo(Navbar nb) {
+    protected void addLinksTo(final Navbar nb) {
         super.addLinksTo(nb);
-        addPageLink(nb, PaperListPage.class, "menu.papers", GlyphIconType.list, Navbar.ComponentPosition.LEFT);
-        addPageLink(nb, PaperSearchPage.class, "menu.search", GlyphIconType.search, Navbar.ComponentPosition.LEFT);
-        addPageLink(nb, RefDataSyncPage.class, "menu.sync", GlyphIconType.export, Navbar.ComponentPosition.LEFT);
-
-        addExternalLink(nb, new StringResourceModel("menu.help.url", this, null).getString(),
-            new StringResourceModel("menu.help", this, null).getString(), GlyphIconType.questionsign,
-            Navbar.ComponentPosition.RIGHT);
-        addExternalLink(nb, new StringResourceModel("menu.changelog.url", this, null).setParameters(getVersionAnker())
-            .getString(), getVersionLink(), GlyphIconType.briefcase, Navbar.ComponentPosition.RIGHT);
-        addPageLink(nb, LogoutPage.class, "menu.logout", GlyphIconType.edit, Navbar.ComponentPosition.RIGHT);
-    }
-
-    private String getVersionAnker() {
-        final String version = getProperties().getBuildVersion();
-        if (StringUtils.isEmpty(version))
-            return "";
-        else
-            return "#" + (version.endsWith("SNAPSHOT") ? "unreleased" : "v" + version);
-    }
-
-    private String getVersionLink() {
-        return "version " + getProperties().getBuildVersion();
+        menuBuilder.addMenuLinksTo(nb, this);
     }
 
     protected Authentication getAuthentication() {

@@ -20,14 +20,9 @@ import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink.Target;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarComponents;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink;
 
 public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
@@ -121,24 +116,6 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     protected abstract ApplicationProperties getProperties();
 
     protected void addLinksTo(Navbar nb) {
-    }
-
-    protected <P extends AbstractPage<?>> void addPageLink(Navbar navbar, Class<P> pageClass, String labelResource,
-            IconType iconType, Navbar.ComponentPosition position) {
-        final String label = new StringResourceModel(labelResource, this, null).getString();
-        NavbarButton<Void> button = new NavbarButton<Void>(pageClass, Model.of(label)).setIconType(iconType);
-        navbar.addComponents(NavbarComponents.transform(position, button));
-    }
-
-    protected void addExternalLink(final Navbar navbar, final String url, final String label, final IconType iconType,
-            final Navbar.ComponentPosition position) {
-        NavbarExternalLink link = new NavbarExternalLink(Model.of(url));
-        link.setLabel(Model.of(label));
-        link.setTarget(Target.blank);
-        if (iconType != null)
-            link.setIconType(iconType);
-        navbar.addComponents(NavbarComponents.transform(position, link));
-
     }
 
     protected void queueFieldAndLabel(FormComponent<?> field) {
