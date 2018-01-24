@@ -10,7 +10,7 @@
             <cell name="persistence-core" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true" bgcolor="204,204,255">
               <grid>
                 <row>
-                  <cell name="scipamato-core-persistence-jooq" pattern="scipamato-core-persistence-jooq.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                  <cell name="scipamato-core-persistence-jooq" pattern="scipamato-core-persistence-jooq.*" vexpanded="false" illegal="false" visibility="private" drill="true" />
                 </row>
                 <row>
                   <cell name="scipamato-core-persistence-api" pattern="scipamato-core-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
@@ -40,7 +40,7 @@
             <cell name="persistence-public" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true" bgcolor="204,204,255">
               <grid>
                 <row>
-                  <cell name="scipamato-public-persistence-jooq" pattern="scipamato-public-persistence-jooq.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                  <cell name="scipamato-public-persistence-jooq" pattern="scipamato-public-persistence-jooq.*" vexpanded="false" illegal="false" visibility="private" drill="true" />
                 </row>
                 <row>
                   <cell name="scipamato-public-persistence-api" pattern="scipamato-public-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
@@ -81,6 +81,9 @@
         </grid>
       </cell>
     </row>
+    <override source="$GP0.0$GP0.0" target="$GP0.0$GP1.0$GP0.0" allowed="true" source_disp="scipamato-core-web" target_disp="scipamato-core-persistence-jooq" synthetic="false" num-violations="0" num-violations-weighted="0" />
+    <override source="$GP1.0" target="$GP2.0$GP1.0$GP0.0" allowed="true" source_disp="scipamato-core-sync" target_disp="scipamato-public-persistence-jooq" synthetic="false" num-violations="0" num-violations-weighted="0" />
+    <override source="$GP2.0$GP0.0" target="$GP2.0$GP1.0$GP0.0" allowed="true" source_disp="scipamato-public-web" target_disp="scipamato-public-persistence-jooq" synthetic="false" num-violations="0" num-violations-weighted="0" />
     <description>Top-level breakout</description>
   </grid>
 </physical-grid-set>
