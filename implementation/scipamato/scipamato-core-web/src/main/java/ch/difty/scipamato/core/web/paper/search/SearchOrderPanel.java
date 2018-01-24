@@ -24,7 +24,7 @@ import ch.difty.scipamato.core.entity.SearchOrder;
 import ch.difty.scipamato.core.entity.filter.SearchCondition;
 import ch.difty.scipamato.core.web.common.BasePage;
 import ch.difty.scipamato.core.web.common.BasePanel;
-import ch.difty.scipamato.core.web.paper.provider.SearchConditionProvider;
+import ch.difty.scipamato.core.web.paper.SearchConditionProvider;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;

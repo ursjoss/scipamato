@@ -35,9 +35,9 @@ import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.web.common.PanelTest;
+import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
+import ch.difty.scipamato.core.web.paper.PaperSlimBySearchOrderProvider;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
-import ch.difty.scipamato.core.web.paper.provider.AbstractPaperSlimProvider;
-import ch.difty.scipamato.core.web.paper.provider.PaperSlimBySearchOrderProvider;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 public class ResultPanelTest extends PanelTest<ResultPanel> {
