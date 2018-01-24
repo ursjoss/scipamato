@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.web.common;
+package ch.difty.scipamato.core.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -10,7 +10,7 @@ import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.pages.MenuBuilder;
-import ch.difty.scipamato.core.web.WicketTest;
+import ch.difty.scipamato.core.web.common.BasePage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
 public class CoreMenuBuilderTest extends WicketTest {
