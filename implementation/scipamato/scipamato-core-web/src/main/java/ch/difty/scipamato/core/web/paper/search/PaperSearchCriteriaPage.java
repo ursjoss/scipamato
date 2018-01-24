@@ -11,6 +11,7 @@ import ch.difty.scipamato.core.entity.filter.SearchCondition;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.web.PageParameterNames;
 import ch.difty.scipamato.core.web.common.BasePage;
+import ch.difty.scipamato.core.web.paper.PageFactory;
 import ch.difty.scipamato.core.web.paper.common.SearchablePaperPanel;
 
 /**
@@ -36,6 +37,9 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
     @SpringBean
     private SearchOrderService searchOrderService;
 
+    @SpringBean
+    private PageFactory pageFactory;
+
     public PaperSearchCriteriaPage(final IModel<SearchCondition> searchConditionModel, final long searchOrderId) {
         super(searchConditionModel);
         getPageParameters().add(PageParameterNames.SEARCH_ORDER_ID, searchOrderId);
@@ -55,7 +59,8 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
             @Override
             protected void onFormSubmit() {
                 searchOrderService.saveOrUpdateSearchCondition(getModelObject(), getSearchOrderId(), getLanguageCode());
-                setResponsePage(new PaperSearchPage(getPageParameters()));
+                pageFactory.setResponsePageToPaperSearchPageConsumer(this)
+                    .accept(getPageParameters());
             }
         };
     }

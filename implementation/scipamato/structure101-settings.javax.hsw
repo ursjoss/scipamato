@@ -36,7 +36,6 @@
     <classpathentry kind="lib" path="scipamato-core-web/target/test-classes" module="scipamato-core-web" />
     <classpathentry kind="lib" path="scipamato-core-persistence-jooq/target/test-classes" module="scipamato-core-persistence-jooq" />
     <classpathentry kind="lib" path="scipamato-public-entity/target/classes" module="scipamato-public-entity" />
-    <classpathentry kind="lib" path="scipamato-public-persistence-api/target/test-classes" module="scipamato-public-persistence-api" />
     <classpathentry kind="lib" path="scipamato-common-persistence-api/target/classes" module="scipamato-common-persistence-api" />
     <classpathentry kind="lib" path="scipamato-common-utils/target/test-classes" module="scipamato-common-utils" />
     <classpathentry kind="lib" path="scipamato-public-web/target/test-classes" module="scipamato-public-web" />
@@ -164,11 +163,8 @@
     <exclude expression="scipamato-public-persistence-jooq.ch.difty.scipamato.public_.db.*" active="true" />
     <exclude expression="scipamato-core-sync.ch.difty.scipamato.public_.db.*" active="true" />
     <exclude expression="scipamato-core-sync.ch.difty.scipamato.core.db.*" active="true" />
-    <exclude expression="scipamato-core-web.ch.difty.scipamato.core.web.panel.*Test" active="true" />
-    <exclude expression="scipamato-core-web.ch.difty.scipamato.core.web.pages.*Test" active="true" />
-    <exclude expression="scipamato-core-web.ch.difty.scipamato.core.web.pages.paper.*.*Test" active="true" />
-    <exclude expression="scipamato-core-web.ch.difty.scipamato.core.web.*Test" active="true" />
-    <exclude expression="scipamato-core-web.ch.difty.scipamato.core.web.panel.*.*Test" active="true" />
+    <exclude expression="scipamato-core-web.ch.difty.scipamato.core.web.paper.entry.EditablePaperPanelTest" active="true" />
+    <exclude expression="scipamato-core-web.ch.difty.scipamato.core.web.WicketTest" active="true" />
   </excludes>
   <grid-set sep="." version="5.0.13210" />
 </local-project>

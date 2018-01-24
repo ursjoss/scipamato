@@ -48,13 +48,13 @@ import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.PubmedArticleService;
 import ch.difty.scipamato.core.web.PageParameterNames;
 import ch.difty.scipamato.core.web.common.BasePage;
+import ch.difty.scipamato.core.web.paper.PageFactory;
 import ch.difty.scipamato.core.web.paper.PaperAttachmentProvider;
 import ch.difty.scipamato.core.web.paper.common.PaperPanel;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfExporterConfiguration;
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource;
-import ch.difty.scipamato.core.web.paper.search.PaperSearchPage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
@@ -85,6 +85,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @SpringBean
     private PubmedArticleService pubmedArticleService;
+
+    @SpringBean
+    private PageFactory pageFactory;
 
     public EditablePaperPanel(String id, IModel<Paper> model, PageReference previousPage, Long searchOrderId,
             boolean showingExclusions) {
@@ -543,7 +546,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 PageParameters pp = new PageParameters();
                 pp.add(PageParameterNames.SEARCH_ORDER_ID, searchOrderId);
                 pp.add(PageParameterNames.SHOW_EXCLUDED, showingExclusions);
-                setResponsePage(new PaperSearchPage(pp));
+                pageFactory.setResponsePageToPaperSearchPageConsumer(this)
+                    .accept(pp);
             }
 
             @Override

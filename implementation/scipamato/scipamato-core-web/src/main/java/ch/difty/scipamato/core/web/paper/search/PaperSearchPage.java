@@ -29,7 +29,9 @@ import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.web.PageParameterNames;
 import ch.difty.scipamato.core.web.common.BasePage;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
+import ch.difty.scipamato.core.web.paper.PageFactory;
 import ch.difty.scipamato.core.web.paper.PaperSlimBySearchOrderProvider;
+import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
@@ -67,6 +69,9 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     @SpringBean
     private SearchOrderService searchOrderService;
+
+    @SpringBean
+    private PageFactory pageFactory;
 
     /**
      * Instantiates page by either:
@@ -295,6 +300,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             final PageParameters pp = new PageParameters();
             pp.add(PageParameterNames.SEARCH_ORDER_ID, persistedNewSearchOrder.getId());
             pp.add(PageParameterNames.SHOW_EXCLUDED, false);
+            pageFactory.setResponsePageToPaperSearchPageConsumer(this);
             setResponsePage(new PaperSearchPage(pp));
         } catch (OptimisticLockingException ole) {
             final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null)

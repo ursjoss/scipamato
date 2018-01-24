@@ -1,8 +1,9 @@
-package ch.difty.scipamato.core.web.paper.search;
+package ch.difty.scipamato.core.web.paper;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import ch.difty.scipamato.common.web.event.WicketEvent;
+import ch.difty.scipamato.core.web.paper.search.SearchOrderPanel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
