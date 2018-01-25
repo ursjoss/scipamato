@@ -10,8 +10,8 @@ import org.apache.wicket.model.Model;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
-import ch.difty.scipamato.core.entity.filter.PaperFilter;
-import ch.difty.scipamato.core.entity.filter.SearchCondition;
+import ch.difty.scipamato.core.entity.search.PaperFilter;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
 
 public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, SearchablePaperPanel> {
 

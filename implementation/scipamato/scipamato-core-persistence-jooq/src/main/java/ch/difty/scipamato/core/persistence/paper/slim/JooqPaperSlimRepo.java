@@ -15,9 +15,9 @@ import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
-import ch.difty.scipamato.core.entity.SearchOrder;
-import ch.difty.scipamato.core.entity.filter.PaperFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
+import ch.difty.scipamato.core.entity.search.PaperFilter;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.JooqReadOnlyRepo;
 import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSearchOrderRepository;
 

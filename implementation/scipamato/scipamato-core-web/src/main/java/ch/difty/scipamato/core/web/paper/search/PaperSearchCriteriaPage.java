@@ -6,8 +6,8 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
 import ch.difty.scipamato.core.auth.Roles;
-import ch.difty.scipamato.core.entity.SearchOrder;
-import ch.difty.scipamato.core.entity.filter.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.web.PageParameterNames;
 import ch.difty.scipamato.core.web.common.BasePage;

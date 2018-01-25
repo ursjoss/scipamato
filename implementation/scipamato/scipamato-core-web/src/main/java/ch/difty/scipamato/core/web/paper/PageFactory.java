@@ -8,7 +8,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import ch.difty.scipamato.common.web.component.SerializableBiConsumer;
 import ch.difty.scipamato.common.web.component.SerializableBiFunction;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
-import ch.difty.scipamato.core.entity.filter.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
 
 /**
  * Together with spring dependency injection, this interface and its

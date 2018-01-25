@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import ch.difty.scipamato.common.web.component.SerializableBiConsumer;
 import ch.difty.scipamato.common.web.component.SerializableBiFunction;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
-import ch.difty.scipamato.core.entity.filter.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.web.WicketTest;
 import ch.difty.scipamato.core.web.paper.search.PaperSearchCriteriaPage;
 

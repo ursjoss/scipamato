@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ch.difty.scipamato.common.persistence.paging.PaginationContextMatcher;
 import ch.difty.scipamato.core.ScipamatoApplication;
 import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.core.entity.filter.PaperSlimFilter;
+import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.PaperSlimService;

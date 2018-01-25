@@ -9,7 +9,7 @@ import ch.difty.scipamato.common.persistence.FilterConditionMapperTest;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
 import ch.difty.scipamato.core.db.tables.ScipamatoUser;
 import ch.difty.scipamato.core.db.tables.records.ScipamatoUserRecord;
-import ch.difty.scipamato.core.entity.filter.UserFilter;
+import ch.difty.scipamato.core.entity.search.UserFilter;
 
 public class UserFilterConditionMapperTest extends
         FilterConditionMapperTest<ScipamatoUserRecord, ch.difty.scipamato.core.db.tables.ScipamatoUser, UserFilter> {

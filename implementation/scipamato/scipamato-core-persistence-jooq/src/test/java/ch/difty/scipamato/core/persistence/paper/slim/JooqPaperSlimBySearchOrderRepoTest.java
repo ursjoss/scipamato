@@ -12,12 +12,12 @@ import org.mockito.Mock;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.Code;
-import ch.difty.scipamato.core.entity.SearchOrder;
-import ch.difty.scipamato.core.entity.filter.SearchCondition;
-import ch.difty.scipamato.core.entity.filter.SearchTerm;
-import ch.difty.scipamato.core.entity.filter.SearchTermType;
-import ch.difty.scipamato.core.entity.filter.SearchTerms;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
+import ch.difty.scipamato.core.entity.search.SearchTerm;
+import ch.difty.scipamato.core.entity.search.SearchTermType;
+import ch.difty.scipamato.core.entity.search.SearchTerms;
 import ch.difty.scipamato.core.persistence.paper.searchorder.JooqBySearchOrderRepo;
 
 public class JooqPaperSlimBySearchOrderRepoTest {

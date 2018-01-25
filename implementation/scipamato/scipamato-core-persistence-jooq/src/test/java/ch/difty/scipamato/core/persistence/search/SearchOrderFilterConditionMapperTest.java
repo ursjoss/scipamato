@@ -9,7 +9,7 @@ import ch.difty.scipamato.common.persistence.FilterConditionMapperTest;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
 import ch.difty.scipamato.core.db.tables.SearchOrder;
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
-import ch.difty.scipamato.core.entity.filter.SearchOrderFilter;
+import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
 
 public class SearchOrderFilterConditionMapperTest extends
         FilterConditionMapperTest<SearchOrderRecord, ch.difty.scipamato.core.db.tables.SearchOrder, SearchOrderFilter> {

@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.persistence;
 import java.util.Optional;
 
 import ch.difty.scipamato.core.entity.User;
-import ch.difty.scipamato.core.entity.filter.UserFilter;
+import ch.difty.scipamato.core.entity.search.UserFilter;
 
 /**
  * The {@link UserService} interface - defining {@link User} specific service

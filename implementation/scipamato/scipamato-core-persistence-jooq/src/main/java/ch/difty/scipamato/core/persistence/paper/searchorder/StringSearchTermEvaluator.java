@@ -6,8 +6,8 @@ import org.jooq.impl.DSL;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.TranslationUtils;
-import ch.difty.scipamato.core.entity.filter.StringSearchTerm;
-import ch.difty.scipamato.core.entity.filter.StringSearchTerm.Token;
+import ch.difty.scipamato.core.entity.search.StringSearchTerm;
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.Token;
 import ch.difty.scipamato.core.persistence.ConditionalSupplier;
 
 /**

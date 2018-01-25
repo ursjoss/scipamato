@@ -5,8 +5,8 @@ import java.util.List;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
-import ch.difty.scipamato.core.entity.SearchOrder;
-import ch.difty.scipamato.core.entity.filter.PaperFilter;
+import ch.difty.scipamato.core.entity.search.PaperFilter;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.paper.searchorder.BySearchOrderRepository;
 

@@ -18,7 +18,7 @@ import org.mockito.Mockito;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationContextMatcher;
 import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.core.entity.SearchOrder;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
 
 public class PaperSlimBySearchOrderProviderTest
         extends AbstractPaperSlimProviderTest<SearchOrder, PaperSlimBySearchOrderProvider> {

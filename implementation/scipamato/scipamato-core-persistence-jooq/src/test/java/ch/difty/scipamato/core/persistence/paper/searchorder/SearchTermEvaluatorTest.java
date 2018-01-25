@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import ch.difty.scipamato.core.entity.filter.SearchTerm;
+import ch.difty.scipamato.core.entity.search.SearchTerm;
 
 @RunWith(MockitoJUnitRunner.class)
 public abstract class SearchTermEvaluatorTest<T extends SearchTerm> {

@@ -8,7 +8,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.core.entity.filter.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
 
 /**
  * Builds up the {@link SearchCondition} provider based on the model passed into

@@ -22,7 +22,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.User;
-import ch.difty.scipamato.core.entity.filter.UserFilter;
+import ch.difty.scipamato.core.entity.search.UserFilter;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JooqUserServiceTest {

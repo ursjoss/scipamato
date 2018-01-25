@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.persistence.paper.searchorder;
 
 import org.jooq.Condition;
 
-import ch.difty.scipamato.core.entity.filter.SearchTerm;
+import ch.difty.scipamato.core.entity.search.SearchTerm;
 
 /**
  * Evaluates the {@link SearchTerm} implementation to build a concrete jOOQ

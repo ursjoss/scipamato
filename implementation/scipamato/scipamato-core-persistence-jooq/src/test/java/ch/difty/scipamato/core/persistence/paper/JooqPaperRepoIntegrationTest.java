@@ -24,9 +24,9 @@ import ch.difty.scipamato.core.db.tables.records.CodeClassRecord;
 import ch.difty.scipamato.core.db.tables.records.CodeRecord;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
-import ch.difty.scipamato.core.entity.SearchOrder;
-import ch.difty.scipamato.core.entity.filter.PaperFilter;
-import ch.difty.scipamato.core.entity.filter.SearchCondition;
+import ch.difty.scipamato.core.entity.search.PaperFilter;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
 
 public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTest {

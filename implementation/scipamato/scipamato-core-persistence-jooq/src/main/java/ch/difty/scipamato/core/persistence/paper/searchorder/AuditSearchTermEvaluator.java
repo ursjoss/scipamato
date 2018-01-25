@@ -15,9 +15,9 @@ import org.jooq.impl.DSL;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.core.entity.filter.AuditSearchTerm;
-import ch.difty.scipamato.core.entity.filter.AuditSearchTerm.MatchType;
-import ch.difty.scipamato.core.entity.filter.AuditSearchTerm.Token;
+import ch.difty.scipamato.core.entity.search.AuditSearchTerm;
+import ch.difty.scipamato.core.entity.search.AuditSearchTerm.MatchType;
+import ch.difty.scipamato.core.entity.search.AuditSearchTerm.Token;
 import ch.difty.scipamato.core.persistence.ConditionalSupplier;
 
 /**

@@ -11,7 +11,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
-import ch.difty.scipamato.core.entity.filter.PaperSlimFilter;
+import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;

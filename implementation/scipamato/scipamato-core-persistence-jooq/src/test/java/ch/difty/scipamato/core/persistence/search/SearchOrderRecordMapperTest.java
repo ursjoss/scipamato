@@ -6,7 +6,7 @@ import static org.mockito.Mockito.when;
 import org.jooq.RecordMapper;
 
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
-import ch.difty.scipamato.core.entity.SearchOrder;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.RecordMapperTest;
 
 public class SearchOrderRecordMapperTest extends RecordMapperTest<SearchOrderRecord, SearchOrder> {

@@ -26,10 +26,10 @@ import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
-import ch.difty.scipamato.core.entity.SearchOrder;
-import ch.difty.scipamato.core.entity.filter.SearchCondition;
-import ch.difty.scipamato.core.entity.filter.SearchOrderFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
+import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;

@@ -10,8 +10,8 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
 import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.core.entity.SearchOrder;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
 
 /**
  * Extension of the {@link AbstractPaperSlimProvider} using the

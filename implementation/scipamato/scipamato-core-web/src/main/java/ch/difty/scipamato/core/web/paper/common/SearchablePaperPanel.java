@@ -14,7 +14,7 @@ import org.apache.wicket.model.StringResourceModel;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
 import ch.difty.scipamato.core.entity.PaperAttachment;
-import ch.difty.scipamato.core.entity.filter.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.web.paper.PaperAttachmentProvider;
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource;

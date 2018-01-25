@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
-import ch.difty.scipamato.core.entity.SearchOrder;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest;
 

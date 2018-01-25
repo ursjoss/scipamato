@@ -1,20 +1,20 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder;
 
-import static ch.difty.scipamato.core.entity.filter.IntegerSearchTerm.MatchType.EXACT;
-import static ch.difty.scipamato.core.entity.filter.IntegerSearchTerm.MatchType.GREATER_OR_EQUAL;
-import static ch.difty.scipamato.core.entity.filter.IntegerSearchTerm.MatchType.GREATER_THAN;
-import static ch.difty.scipamato.core.entity.filter.IntegerSearchTerm.MatchType.LESS_OR_EQUAL;
-import static ch.difty.scipamato.core.entity.filter.IntegerSearchTerm.MatchType.LESS_THAN;
-import static ch.difty.scipamato.core.entity.filter.IntegerSearchTerm.MatchType.RANGE;
+import static ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.EXACT;
+import static ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.GREATER_OR_EQUAL;
+import static ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.GREATER_THAN;
+import static ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.LESS_OR_EQUAL;
+import static ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.LESS_THAN;
+import static ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.RANGE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jooq.Condition;
 import org.junit.Test;
 
-import ch.difty.scipamato.core.entity.filter.IntegerSearchTerm;
-import ch.difty.scipamato.core.entity.filter.IntegerSearchTerm.MatchType;
-import ch.difty.scipamato.core.entity.filter.SearchTermType;
-import ch.difty.scipamato.core.entity.filter.SearchTerms;
+import ch.difty.scipamato.core.entity.search.IntegerSearchTerm;
+import ch.difty.scipamato.core.entity.search.SearchTermType;
+import ch.difty.scipamato.core.entity.search.SearchTerms;
+import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType;
 import junitparams.Parameters;
 
 /**

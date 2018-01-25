@@ -17,12 +17,12 @@ import org.mockito.Mock;
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.core.entity.SearchOrder;
-import ch.difty.scipamato.core.entity.filter.SearchCondition;
-import ch.difty.scipamato.core.entity.filter.SearchOrderFilter;
-import ch.difty.scipamato.core.entity.filter.SearchTerm;
-import ch.difty.scipamato.core.entity.filter.SearchTermType;
-import ch.difty.scipamato.core.entity.filter.SearchTerms;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
+import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
+import ch.difty.scipamato.core.entity.search.SearchTerm;
+import ch.difty.scipamato.core.entity.search.SearchTermType;
+import ch.difty.scipamato.core.entity.search.SearchTerms;
 import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 

@@ -8,7 +8,7 @@ import org.jooq.Condition;
 
 import ch.difty.scipamato.common.persistence.AbstractFilterConditionMapper;
 import ch.difty.scipamato.common.persistence.FilterConditionMapper;
-import ch.difty.scipamato.core.entity.filter.PaperFilter;
+import ch.difty.scipamato.core.entity.search.PaperFilter;
 
 /**
  * Mapper turning the provider {@link PaperFilter} into a jOOQ

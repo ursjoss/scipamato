@@ -7,8 +7,8 @@ import org.junit.After;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.core.entity.SearchOrder;
-import ch.difty.scipamato.core.entity.filter.PaperFilter;
+import ch.difty.scipamato.core.entity.search.PaperFilter;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.web.WicketTest;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import net.sf.jasperreports.engine.JRDataSource;
