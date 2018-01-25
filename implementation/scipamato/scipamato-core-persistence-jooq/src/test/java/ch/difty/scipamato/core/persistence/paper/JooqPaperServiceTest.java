@@ -36,6 +36,7 @@ import ch.difty.scipamato.core.pubmed.PMID;
 import ch.difty.scipamato.core.pubmed.PubDate;
 import ch.difty.scipamato.core.pubmed.PubmedArticle;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
+import ch.difty.scipamato.core.pubmed.ScipamatoPubmedArticles;
 
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
 
@@ -208,7 +209,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void dumpingSingleArticle_whichAlreadyExists_doesNotSave() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
-        articles.add(PubmedArticleFacade.of(pa));
+        articles.add(ScipamatoPubmedArticles.newPubmedArticleFrom(pa));
 
         // existing papers
         when(repoMock.findExistingPmIdsOutOf(Arrays.asList(pmIdValue))).thenReturn(Arrays.asList(pmIdValue));
@@ -227,7 +228,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void dumpingSingleNewArticle_saves() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
-        articles.add(PubmedArticleFacade.of(pa));
+        articles.add(ScipamatoPubmedArticles.newPubmedArticleFrom(pa));
         assertThat(articles.get(0)
             .getPmId()).isNotNull();
 
@@ -256,7 +257,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void dumpingSingleNewArticleWithNullPmId_doesNotTryToSave() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
-        articles.add(PubmedArticleFacade.of(pa));
+        articles.add(ScipamatoPubmedArticles.newPubmedArticleFrom(pa));
         articles.get(0)
             .setPmId(null);
 
@@ -273,8 +274,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void dumpingTwoNewArticleOneOfWhichWithNullPmId_savesOnlyOther() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa1 = newPubmedArticle(pmIdValue);
-        articles.add(PubmedArticleFacade.of(pa1));
-        articles.add(PubmedArticleFacade.of(newPubmedArticle(0)));
+        articles.add(ScipamatoPubmedArticles.newPubmedArticleFrom(pa1));
+        articles.add(ScipamatoPubmedArticles.newPubmedArticleFrom(newPubmedArticle(0)));
         assertThat(articles.get(1)
             .getPmId()).isEqualTo("0");
         articles.get(1)

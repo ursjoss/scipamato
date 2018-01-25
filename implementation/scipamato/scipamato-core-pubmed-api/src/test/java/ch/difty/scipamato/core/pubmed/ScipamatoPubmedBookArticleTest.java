@@ -175,13 +175,13 @@ public class ScipamatoPubmedBookArticleTest {
 
     @Test
     public void validConstructionUsingOf() {
-        assertThat(ScipamatoPubmedArticle.of(pubmedBookArticle)).isNotNull();
+        assertThat(ScipamatoPubmedArticles.newPubmedArticleFrom(pubmedBookArticle)).isNotNull();
     }
 
     @Test
     public void invalidConstructionUsingOfWithForiegnObject() {
         try {
-            ScipamatoPubmedArticle.of(Integer.valueOf(1));
+            ScipamatoPubmedArticles.newPubmedArticleFrom(Integer.valueOf(1));
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(IllegalArgumentException.class)

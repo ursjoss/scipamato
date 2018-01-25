@@ -102,7 +102,7 @@ public class ScipamatoPubmedArticleTest {
 
     @Test
     public void validConstructionUsingOf() {
-        assertThat(ScipamatoPubmedArticle.of(pubmedArticle)).isNotNull();
+        assertThat(ScipamatoPubmedArticles.newPubmedArticleFrom(pubmedArticle)).isNotNull();
     }
 
     @Test
