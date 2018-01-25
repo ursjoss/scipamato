@@ -1,4 +1,4 @@
-package ch.difty.scipamato.public_.web.security;
+package ch.difty.scipamato.public_.web.authentication;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

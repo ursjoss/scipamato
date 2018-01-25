@@ -1,4 +1,4 @@
-package ch.difty.scipamato.public_.web.provider;
+package ch.difty.scipamato.public_.web.paper.browse;
 
 import java.util.Iterator;
 import java.util.List;

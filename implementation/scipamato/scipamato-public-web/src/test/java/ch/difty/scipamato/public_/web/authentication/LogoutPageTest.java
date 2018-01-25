@@ -1,4 +1,4 @@
-package ch.difty.scipamato.public_.web.pages.login;
+package ch.difty.scipamato.public_.web.authentication;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,7 +15,7 @@ import org.springframework.security.core.AuthenticationException;
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 
 import ch.difty.scipamato.public_.web.WicketTest;
-import ch.difty.scipamato.public_.web.pages.portal.PublicPage;
+import ch.difty.scipamato.public_.web.paper.browse.PublicPage;
 
 public class LogoutPageTest extends WicketTest {
 

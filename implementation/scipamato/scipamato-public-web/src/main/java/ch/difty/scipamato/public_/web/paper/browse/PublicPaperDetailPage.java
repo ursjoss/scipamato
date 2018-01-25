@@ -1,4 +1,4 @@
-package ch.difty.scipamato.public_.web.pages.portal;
+package ch.difty.scipamato.public_.web.paper.browse;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.PageReference;
@@ -17,7 +17,7 @@ import ch.difty.scipamato.common.web.component.SerializableSupplier;
 import ch.difty.scipamato.public_.ScipamatoPublicSession;
 import ch.difty.scipamato.public_.entity.PublicPaper;
 import ch.difty.scipamato.public_.persistence.api.PublicPaperService;
-import ch.difty.scipamato.public_.web.pages.BasePage;
+import ch.difty.scipamato.public_.web.common.BasePage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink.Target;

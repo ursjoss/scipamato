@@ -1,4 +1,4 @@
-package ch.difty.scipamato.public_.web.pages.portal;
+package ch.difty.scipamato.public_.web.paper.browse;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -15,7 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.public_.entity.PublicPaper;
 import ch.difty.scipamato.public_.persistence.api.PublicPaperService;
-import ch.difty.scipamato.public_.web.pages.BasePageTest;
+import ch.difty.scipamato.public_.web.common.BasePageTest;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
 

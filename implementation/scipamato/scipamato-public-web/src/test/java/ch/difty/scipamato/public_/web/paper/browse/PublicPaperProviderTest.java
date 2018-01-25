@@ -1,4 +1,4 @@
-package ch.difty.scipamato.public_.web.provider;
+package ch.difty.scipamato.public_.web.paper.browse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.argThat;

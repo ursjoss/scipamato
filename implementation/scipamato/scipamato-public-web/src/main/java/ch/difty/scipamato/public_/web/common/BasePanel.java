@@ -1,4 +1,4 @@
-package ch.difty.scipamato.public_.web.panel;
+package ch.difty.scipamato.public_.web.common;
 
 import org.apache.wicket.model.IModel;
 

@@ -1,4 +1,4 @@
-package ch.difty.scipamato.public_.web.pages.portal;
+package ch.difty.scipamato.public_.web.paper.browse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,10 +37,9 @@ import ch.difty.scipamato.public_.entity.PopulationCode;
 import ch.difty.scipamato.public_.entity.PublicPaper;
 import ch.difty.scipamato.public_.entity.StudyDesignCode;
 import ch.difty.scipamato.public_.entity.filter.PublicPaperFilter;
+import ch.difty.scipamato.public_.web.common.BasePage;
 import ch.difty.scipamato.public_.web.model.CodeClassModel;
 import ch.difty.scipamato.public_.web.model.CodeModel;
-import ch.difty.scipamato.public_.web.pages.BasePage;
-import ch.difty.scipamato.public_.web.provider.PublicPaperProvider;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;

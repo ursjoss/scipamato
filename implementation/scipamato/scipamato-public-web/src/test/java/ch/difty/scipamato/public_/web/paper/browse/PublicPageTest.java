@@ -1,4 +1,4 @@
-package ch.difty.scipamato.public_.web.pages.portal;
+package ch.difty.scipamato.public_.web.paper.browse;
 
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.times;
@@ -21,7 +21,7 @@ import ch.difty.scipamato.public_.entity.PublicPaper;
 import ch.difty.scipamato.public_.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.public_.persistence.api.CodeClassService;
 import ch.difty.scipamato.public_.persistence.api.PublicPaperService;
-import ch.difty.scipamato.public_.web.pages.BasePageTest;
+import ch.difty.scipamato.public_.web.common.BasePageTest;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;

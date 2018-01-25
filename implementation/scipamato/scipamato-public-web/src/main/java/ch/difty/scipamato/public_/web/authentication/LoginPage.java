@@ -1,4 +1,4 @@
-package ch.difty.scipamato.public_.web.pages.login;
+package ch.difty.scipamato.public_.web.authentication;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.annotation.mount.MountPath;
@@ -6,8 +6,8 @@ import org.wicketstuff.annotation.mount.MountPath;
 import com.giffing.wicket.spring.boot.context.scan.WicketSignInPage;
 
 import ch.difty.scipamato.common.web.pages.login.AbstractLoginPage;
-import ch.difty.scipamato.public_.web.pages.BasePage;
-import ch.difty.scipamato.public_.web.pages.portal.PublicPage;
+import ch.difty.scipamato.public_.web.common.BasePage;
+import ch.difty.scipamato.public_.web.paper.browse.PublicPage;
 
 @MountPath("login")
 @WicketSignInPage

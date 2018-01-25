@@ -1,4 +1,4 @@
-package ch.difty.scipamato.public_.web.pages.login;
+package ch.difty.scipamato.public_.web.authentication;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;

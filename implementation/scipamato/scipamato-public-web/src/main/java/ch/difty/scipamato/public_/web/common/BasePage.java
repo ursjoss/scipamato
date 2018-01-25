@@ -1,4 +1,4 @@
-package ch.difty.scipamato.public_.web.pages;
+package ch.difty.scipamato.public_.web.common;
 
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;

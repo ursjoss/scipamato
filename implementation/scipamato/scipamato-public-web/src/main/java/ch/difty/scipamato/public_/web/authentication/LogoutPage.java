@@ -1,4 +1,4 @@
-package ch.difty.scipamato.public_.web.pages.login;
+package ch.difty.scipamato.public_.web.authentication;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.annotation.mount.MountPath;
