@@ -7,130 +7,32 @@ import org.junit.Test;
 public class SearchTermTest {
 
     @Test
-    public void booleanSearchTerm() {
-        SearchTerm st = SearchTerm.of(10, 0, 1l, "fn", "true");
-        assertThat(st).isInstanceOf(BooleanSearchTerm.class);
-
-        BooleanSearchTerm bst = (BooleanSearchTerm) st;
-        assertThat(bst.getId()).isEqualTo(10);
-        assertThat(bst.getSearchTermType()).isEqualTo(SearchTermType.BOOLEAN);
-        assertThat(bst.getSearchConditionId()).isEqualTo(1l);
-        assertThat(bst.getFieldName()).isEqualTo("fn");
-        assertThat(bst.getRawSearchTerm()).isEqualTo("true");
-        assertThat(bst.getValue()).isTrue();
-    }
-
-    @Test
-    public void integerSearchTerm() {
-        SearchTerm st = SearchTerm.of(11, 1, 2l, "fn2", "5-7");
-        assertThat(st).isInstanceOf(IntegerSearchTerm.class);
-
-        IntegerSearchTerm ist = (IntegerSearchTerm) st;
-        assertThat(ist.getId()).isEqualTo(11);
-        assertThat(ist.getSearchTermType()).isEqualTo(SearchTermType.INTEGER);
-        assertThat(ist.getSearchConditionId()).isEqualTo(2l);
-        assertThat(ist.getFieldName()).isEqualTo("fn2");
-        assertThat(ist.getRawSearchTerm()).isEqualTo("5-7");
-        assertThat(ist.getValue()).isEqualTo(5);
-        assertThat(ist.getValue2()).isEqualTo(7);
-    }
-
-    @Test
-    public void stringSearchTerm() {
-        SearchTerm st = SearchTerm.of(12, 2, 3l, "fn3", "foo*");
-        assertThat(st).isInstanceOf(StringSearchTerm.class);
-
-        StringSearchTerm sst = (StringSearchTerm) st;
-        assertThat(sst.getId()).isEqualTo(12);
-        assertThat(sst.getSearchTermType()).isEqualTo(SearchTermType.STRING);
-        assertThat(sst.getSearchConditionId()).isEqualTo(3l);
-        assertThat(sst.getFieldName()).isEqualTo("fn3");
-        assertThat(sst.getRawSearchTerm()).isEqualTo("foo*");
-        assertThat(sst.getTokens()).hasSize(1);
-        assertThat(sst.getTokens()
-            .get(0).sqlData).isEqualTo("foo%");
-        assertThat(sst.getTokens()
-            .get(0).negate).isFalse();
-    }
-
-    @Test
-    public void auditSearchTerm_forFieldEndingWithUserTag_akaUserField_returnsUserTokenOnly() {
-        assertUserFieldEndingWith("_BY");
-    }
-
-    @Test
-    public void auditSearchTerm_forFieldEndingWithUserTagLC_akaUserField_returnsUserTokenOnly() {
-        assertUserFieldEndingWith("_by");
-    }
-
-    private void assertUserFieldEndingWith(String userFieldTag) {
-        String userFieldName = "fn4" + userFieldTag;
-        SearchTerm st = SearchTerm.of(13, 3, 4l, userFieldName, "foo >=\"2017-02-01\"");
-        assertThat(st).isInstanceOf(AuditSearchTerm.class);
-
-        AuditSearchTerm ast = (AuditSearchTerm) st;
-        assertThat(ast.getId()).isEqualTo(13);
-        assertThat(ast.getSearchTermType()).isEqualTo(SearchTermType.AUDIT);
-        assertThat(ast.getSearchConditionId()).isEqualTo(4l);
-        assertThat(ast.getFieldName()).isEqualTo(userFieldName);
-        assertThat(ast.getRawSearchTerm()).isEqualTo("foo >=\"2017-02-01\"");
-        assertThat(ast.getTokens()).hasSize(1);
-        assertThat(ast.getTokens()
-            .get(0)
-            .getUserSqlData()).isEqualTo("foo");
-        assertThat(ast.getTokens()
-            .get(0)
-            .getDateSqlData()).isNull();
-    }
-
-    @Test
-    public void auditSearchTerm_forFieldNotEndingWithUserTag_akaDateField_returnsDateTokenOnly() {
-        String userFieldName = "fn4";
-        SearchTerm st = SearchTerm.of(13, 3, 4l, userFieldName, "foo >=\"2017-02-01\"");
-        assertThat(st).isInstanceOf(AuditSearchTerm.class);
-
-        AuditSearchTerm ast = (AuditSearchTerm) st;
-        assertThat(ast.getId()).isEqualTo(13);
-        assertThat(ast.getSearchTermType()).isEqualTo(SearchTermType.AUDIT);
-        assertThat(ast.getSearchConditionId()).isEqualTo(4l);
-        assertThat(ast.getFieldName()).isEqualTo(userFieldName);
-        assertThat(ast.getRawSearchTerm()).isEqualTo("foo >=\"2017-02-01\"");
-        assertThat(ast.getTokens()).hasSize(1);
-        assertThat(ast.getTokens()
-            .get(0)
-            .getUserSqlData()).isNull();
-        assertThat(ast.getTokens()
-            .get(0)
-            .getDateSqlData()).isEqualTo("2017-02-01 00:00:00");
-    }
-
-    @Test
     public void equality_withEqualValuesIncludingNonNullIds_equal() {
-        SearchTerm st1 = SearchTerm.of(12, 2, 3l, "fn3", "foo*");
-        SearchTerm st2 = SearchTerm.of(12, 2, 3l, "fn3", "foo*");
+        SearchTerm st1 = SearchTerms.newSearchTerm(12, 2, 3l, "fn3", "foo*");
+        SearchTerm st2 = SearchTerms.newSearchTerm(12, 2, 3l, "fn3", "foo*");
         assertEqualityBetween(st1, st2);
     }
 
     @Test
     public void equality_withEqualValues_butDifferingSearchConditionIds_differs() {
-        SearchTerm st1 = SearchTerm.of(12, 2, 3l, "fn3", "foo*");
-        SearchTerm st2 = SearchTerm.of(12, 2, 4l, "fn3", "foo*");
+        SearchTerm st1 = SearchTerms.newSearchTerm(12, 2, 3l, "fn3", "foo*");
+        SearchTerm st2 = SearchTerms.newSearchTerm(12, 2, 4l, "fn3", "foo*");
         assertEqualityBetween(st1, st2);
     }
 
     @Test
     public void equality_withEqualValuesAndNullIds() {
-        SearchTerm st1 = SearchTerm.of(12, 2, 3l, "fn3", "foo*");
+        SearchTerm st1 = SearchTerms.newSearchTerm(12, 2, 3l, "fn3", "foo*");
         st1.setId(null);
-        SearchTerm st2 = SearchTerm.of(12, 2, 3l, "fn3", "foo*");
+        SearchTerm st2 = SearchTerms.newSearchTerm(12, 2, 3l, "fn3", "foo*");
         st2.setId(null);
         assertEqualityBetween(st1, st2);
     }
 
     @Test
     public void equality_withEqualValuesAndMixedNullIds() {
-        SearchTerm st1 = SearchTerm.of(12, 2, 3l, "fn3", "foo*");
-        SearchTerm st2 = SearchTerm.of(12, 2, 3l, "fn3", "foo*");
+        SearchTerm st1 = SearchTerms.newSearchTerm(12, 2, 3l, "fn3", "foo*");
+        SearchTerm st2 = SearchTerms.newSearchTerm(12, 2, 3l, "fn3", "foo*");
         st2.setId(null);
         assertEqualityBetween(st1, st2);
 
@@ -147,8 +49,8 @@ public class SearchTermTest {
 
     @Test
     public void equality_withNonEqualValuesInNonIds() {
-        assertInequalityBetween(SearchTerm.of(12, 2, 3l, "fn4", "foo*"), SearchTerm.of(12, 2, 3l, "fn3", "foo*"));
-        assertInequalityBetween(SearchTerm.of(12, 2, 3l, "fn3", "bar*"), SearchTerm.of(12, 2, 3l, "fn3", "foo*"));
+        assertInequalityBetween(SearchTerms.newSearchTerm(12, 2, 3l, "fn4", "foo*"), SearchTerms.newSearchTerm(12, 2, 3l, "fn3", "foo*"));
+        assertInequalityBetween(SearchTerms.newSearchTerm(12, 2, 3l, "fn3", "bar*"), SearchTerms.newSearchTerm(12, 2, 3l, "fn3", "foo*"));
     }
 
     private void assertInequalityBetween(SearchTerm st1, SearchTerm st2) {
@@ -160,7 +62,7 @@ public class SearchTermTest {
     @SuppressWarnings("unlikely-arg-type")
     @Test
     public void equality_withSpecialCases() {
-        SearchTerm st1 = SearchTerm.of(12, 2, 3l, "fn3", "foo*");
+        SearchTerm st1 = SearchTerms.newSearchTerm(12, 2, 3l, "fn3", "foo*");
         assertThat(st1.equals(st1)).isTrue();
         assertThat(st1.equals(null)).isFalse();
         assertThat(st1.equals("")).isFalse();
@@ -168,7 +70,7 @@ public class SearchTermTest {
 
     @Test
     public void displayValueEqualsSearchTerm() {
-        SearchTerm st = SearchTerm.of(11, 1, 2l, "fn2", "5-7");
+        SearchTerm st = SearchTerms.newSearchTerm(11, 1, 2l, "fn2", "5-7");
         assertThat(st).isInstanceOf(IntegerSearchTerm.class);
         assertThat(st.getDisplayValue()).isEqualTo(st.getRawSearchTerm());
     }

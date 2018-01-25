@@ -38,23 +38,6 @@ public abstract class SearchTerm extends IdScipamatoEntity<Long> {
         this.rawSearchTerm = AssertAs.notNull(rawSearchTerm, "rawSearchTerm");
     }
 
-    public static SearchTerm of(final long id, final int searchTermTypeId, final long searchConditionId,
-            final String fieldName, final String rawSearchTerm) {
-        SearchTermType type = SearchTermType.byId(searchTermTypeId);
-        switch (type) {
-        case BOOLEAN:
-            return new BooleanSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
-        case INTEGER:
-            return new IntegerSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
-        case STRING:
-            return new StringSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
-        case AUDIT:
-            return new AuditSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
-        default:
-            throw new UnsupportedOperationException("SearchTermType." + type + " is not supported");
-        }
-    }
-
     @Override
     public String getDisplayValue() {
         return rawSearchTerm;

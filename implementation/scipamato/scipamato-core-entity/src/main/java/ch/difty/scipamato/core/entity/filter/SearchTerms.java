@@ -7,18 +7,52 @@ public abstract class SearchTerms<C extends Serializable> extends LinkedHashMap<
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Static factory method to produce instances of {@link SearchTerm}s of the
+     * various subtypes.
+     *
+     * @param id
+     *            the database id
+     * @param searchTermTypeId
+     *            one of the ids as defined in enum {@link SearchTermType}
+     * @param searchConditionId
+     *            the database id of the associated search condition
+     * @param fieldName
+     *            the name of the field (in table paper) the search is to be
+     *            performed on
+     * @param rawSearchTerm
+     *            the search term definition
+     * @return one of the subtypes of {@link SearchTerm}
+     */
+    public static SearchTerm newSearchTerm(final long id, final int searchTermTypeId, final long searchConditionId,
+            final String fieldName, final String rawSearchTerm) {
+        final SearchTermType type = SearchTermType.byId(searchTermTypeId);
+        switch (type) {
+        case BOOLEAN:
+            return new BooleanSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+        case INTEGER:
+            return new IntegerSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+        case STRING:
+            return new StringSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+        case AUDIT:
+            return new AuditSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+        default:
+            throw new UnsupportedOperationException("SearchTermType." + type + " is not supported");
+        }
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        for (C st : values()) {
+        for (final C st : values()) {
             result = prime * result + st.hashCode();
         }
         return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -26,12 +60,12 @@ public abstract class SearchTerms<C extends Serializable> extends LinkedHashMap<
         if (getClass() != obj.getClass())
             return false;
         @SuppressWarnings("unchecked")
-        LinkedHashMap<String, C> other = (LinkedHashMap<String, C>) obj;
+        final LinkedHashMap<String, C> other = (LinkedHashMap<String, C>) obj;
         if (values().size() != other.values()
             .size())
             return false;
         else
-            for (C st : values())
+            for (final C st : values())
                 if (!other.values()
                     .contains(st))
                     return false;

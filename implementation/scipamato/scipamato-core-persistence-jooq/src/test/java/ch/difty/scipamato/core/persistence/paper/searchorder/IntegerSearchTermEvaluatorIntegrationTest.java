@@ -13,8 +13,8 @@ import org.junit.Test;
 
 import ch.difty.scipamato.core.entity.filter.IntegerSearchTerm;
 import ch.difty.scipamato.core.entity.filter.IntegerSearchTerm.MatchType;
-import ch.difty.scipamato.core.entity.filter.SearchTerm;
 import ch.difty.scipamato.core.entity.filter.SearchTermType;
+import ch.difty.scipamato.core.entity.filter.SearchTerms;
 import junitparams.Parameters;
 
 /**
@@ -44,7 +44,7 @@ public class IntegerSearchTermEvaluatorIntegrationTest extends SearchTermEvaluat
 
     @Override
     protected IntegerSearchTerm makeSearchTerm(String rawSearchTerm) {
-        return (IntegerSearchTerm) SearchTerm.of(ID, searchTermType, SC_ID, FN, rawSearchTerm);
+        return (IntegerSearchTerm) SearchTerms.newSearchTerm(ID, searchTermType, SC_ID, FN, rawSearchTerm);
     }
 
     @Override
