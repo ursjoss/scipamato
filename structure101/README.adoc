@@ -1,0 +1,18 @@
+= Structure101
+
+http://structure101.com/[Structure 101] is an agile _architecture developement environment_ that let's the software team organize their code base. [from their website]
+
+The friendly people from Structure101 have kindly provided a free license for their excellent product to me in the context of SciPaMaTo as an open-source-project. Many thanks for that!!
+
+I am currently using
+
+* http://structure101.com/help/java/studio/[Structure101 Studio]
+* http://structure101.com/products/structure101-developer-overview/[Structure101 Workspace] within eclipse
+
+mainly to
+
+* get and keep the project acyclic
+* visualisation and documentation
+* inspect and browse the project with architectural focus
+
+and I'm just scratching the surface of the potential of their tools.
