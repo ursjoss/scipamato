@@ -6,6 +6,19 @@ import java.util.stream.Collectors;
 
 import org.springframework.util.StringUtils;
 
+import ch.difty.scipamato.core.pubmed.api.Abstract;
+import ch.difty.scipamato.core.pubmed.api.AbstractText;
+import ch.difty.scipamato.core.pubmed.api.ArticleId;
+import ch.difty.scipamato.core.pubmed.api.ArticleIdList;
+import ch.difty.scipamato.core.pubmed.api.Author;
+import ch.difty.scipamato.core.pubmed.api.AuthorList;
+import ch.difty.scipamato.core.pubmed.api.CollectiveName;
+import ch.difty.scipamato.core.pubmed.api.ForeName;
+import ch.difty.scipamato.core.pubmed.api.Initials;
+import ch.difty.scipamato.core.pubmed.api.LastName;
+import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
+import ch.difty.scipamato.core.pubmed.api.PubmedBookArticle;
+import ch.difty.scipamato.core.pubmed.api.Suffix;
 import lombok.Data;
 
 /**
@@ -28,27 +41,6 @@ public abstract class PubmedArticleFacade {
     private String title;
     private String doi;
     private String originalAbstract;
-
-    /**
-     * Instantiate an instance of {@link ScipamatoPubmedArticle} if the provided
-     * object is an instance of {@link PubmedArticle} or an instance of
-     * {@link ScipamatoPubmedBookArticle} if the provided object is an instance of
-     * {@link PubmedBookArticle}.
-     *
-     * @param pubmedArticleOrPubmedBookArticle
-     * @return a derivative of {@link PubmedArticleFacade}
-     * @throws IllegalArgumentException
-     *             - if the parameter is of any other class than one of the two
-     *             managed ones.
-     */
-    public static PubmedArticleFacade of(final java.lang.Object pubmedArticleOrPubmedBookArticle) {
-        if (pubmedArticleOrPubmedBookArticle instanceof PubmedArticle)
-            return new ScipamatoPubmedArticle((PubmedArticle) pubmedArticleOrPubmedBookArticle);
-        else if (pubmedArticleOrPubmedBookArticle instanceof PubmedBookArticle)
-            return new ScipamatoPubmedBookArticle((PubmedBookArticle) pubmedArticleOrPubmedBookArticle);
-        throw new IllegalArgumentException("Cannot instantiate ScipamatoArticle from provided object "
-                + pubmedArticleOrPubmedBookArticle.toString());
-    }
 
     protected String getAuthorsFrom(final AuthorList authorList) {
         final String individualAuthors = getIndividualAuthors(authorList);

@@ -11,9 +11,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import ch.difty.scipamato.core.entity.filter.StringSearchTerm;
-import ch.difty.scipamato.core.entity.filter.StringSearchTerm.Token;
-import ch.difty.scipamato.core.entity.filter.StringSearchTerm.TokenType;
+import ch.difty.scipamato.core.entity.search.StringSearchTerm;
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.Token;
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<StringSearchTerm> {

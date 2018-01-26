@@ -1,0 +1,19 @@
+package ch.difty.scipamato.common.web.pages.login;
+
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+
+import ch.difty.scipamato.common.web.AbstractPage;
+
+public class TestLogoutPage extends AbstractLogoutPage {
+    private static final long serialVersionUID = 1L;
+
+    public TestLogoutPage(PageParameters parameters) {
+        super(parameters);
+    }
+
+    @Override
+    protected AbstractPage<?> getResponsePage() {
+        return null;
+    }
+
+}

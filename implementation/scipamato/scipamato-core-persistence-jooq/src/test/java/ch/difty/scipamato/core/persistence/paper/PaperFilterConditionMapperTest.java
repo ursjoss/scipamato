@@ -9,7 +9,7 @@ import ch.difty.scipamato.common.persistence.FilterConditionMapperTest;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
 import ch.difty.scipamato.core.db.tables.Paper;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
-import ch.difty.scipamato.core.entity.filter.PaperFilter;
+import ch.difty.scipamato.core.entity.search.PaperFilter;
 
 public class PaperFilterConditionMapperTest
         extends FilterConditionMapperTest<PaperRecord, ch.difty.scipamato.core.db.tables.Paper, PaperFilter> {

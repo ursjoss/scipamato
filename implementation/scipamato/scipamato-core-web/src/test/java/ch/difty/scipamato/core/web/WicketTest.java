@@ -23,8 +23,8 @@ import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.ScipamatoApplication;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.PaperSlimService;
-import ch.difty.scipamato.core.web.pages.login.LoginPage;
-import ch.difty.scipamato.core.web.pages.paper.list.PaperListPage;
+import ch.difty.scipamato.core.web.authentication.LoginPage;
+import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 

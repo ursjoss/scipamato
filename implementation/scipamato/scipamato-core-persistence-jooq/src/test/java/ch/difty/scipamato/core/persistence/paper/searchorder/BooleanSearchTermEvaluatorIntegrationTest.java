@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.jooq.Condition;
 import org.junit.Test;
 
-import ch.difty.scipamato.core.entity.filter.BooleanSearchTerm;
-import ch.difty.scipamato.core.entity.filter.SearchTerm;
-import ch.difty.scipamato.core.entity.filter.SearchTermType;
+import ch.difty.scipamato.core.entity.search.BooleanSearchTerm;
+import ch.difty.scipamato.core.entity.search.SearchTermType;
+import ch.difty.scipamato.core.entity.search.SearchTerms;
 import junitparams.Parameters;
 
 /**
@@ -33,7 +33,7 @@ public class BooleanSearchTermEvaluatorIntegrationTest extends SearchTermEvaluat
 
     @Override
     protected BooleanSearchTerm makeSearchTerm(String rawSearchTerm) {
-        return (BooleanSearchTerm) SearchTerm.of(ID, searchTermType, SC_ID, FN, rawSearchTerm);
+        return (BooleanSearchTerm) SearchTerms.newSearchTerm(ID, searchTermType, SC_ID, FN, rawSearchTerm);
     }
 
     @Override

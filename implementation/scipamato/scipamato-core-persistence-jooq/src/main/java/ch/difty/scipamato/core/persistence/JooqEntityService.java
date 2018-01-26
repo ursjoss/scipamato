@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.core.entity.CoreEntity;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
-import ch.difty.scipamato.core.persistence.user.UserRepository;
 
 /**
  * Abstract base repository class providing the fundamental functionality of a

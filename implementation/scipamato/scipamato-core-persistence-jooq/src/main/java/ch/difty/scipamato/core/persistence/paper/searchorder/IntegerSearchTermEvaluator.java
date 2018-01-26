@@ -7,7 +7,7 @@ import org.jooq.impl.DSL;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.TranslationUtils;
-import ch.difty.scipamato.core.entity.filter.IntegerSearchTerm;
+import ch.difty.scipamato.core.entity.search.IntegerSearchTerm;
 
 /**
  * {@link SearchTermEvaluator} implementation evaluating integer searchTerms.

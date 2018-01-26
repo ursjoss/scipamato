@@ -10,9 +10,9 @@ import java.util.List;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ch.difty.scipamato.core.entity.filter.AuditSearchTerm;
-import ch.difty.scipamato.core.entity.filter.AuditSearchTerm.Token;
-import ch.difty.scipamato.core.entity.filter.AuditSearchTerm.TokenType;
+import ch.difty.scipamato.core.entity.search.AuditSearchTerm;
+import ch.difty.scipamato.core.entity.search.AuditSearchTerm.Token;
+import ch.difty.scipamato.core.entity.search.AuditSearchTerm.TokenType;
 
 public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditSearchTerm> {
 

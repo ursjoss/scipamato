@@ -5,7 +5,7 @@ import org.jooq.impl.DSL;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.TranslationUtils;
-import ch.difty.scipamato.core.entity.filter.BooleanSearchTerm;
+import ch.difty.scipamato.core.entity.search.BooleanSearchTerm;
 
 /**
  * {@link SearchTermEvaluator} implementation evaluating boolean searchTerms.

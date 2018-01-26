@@ -3,7 +3,11 @@ package ch.difty.scipamato.common;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.function.Supplier;
+
+import org.apache.commons.io.IOUtils;
 
 public final class TestUtils {
 
@@ -28,6 +32,20 @@ public final class TestUtils {
             assertThat(ex).isInstanceOf(NullArgumentException.class)
                 .hasMessage(fieldName + " must not be null.");
         }
+    }
+
+    /**
+     * Read the file with the provided name from the system and hand it over as a
+     * string.
+     *
+     * @param fileName
+     *            the relative path of the file within the resources folder (e.g.
+     *            'xml/myfile.xml')
+     * @return file content as string.
+     * @throws IOException
+     */
+    public static String readFileAsString(final String fileName) throws IOException {
+        return IOUtils.toString(ClassLoader.getSystemResourceAsStream(fileName), StandardCharsets.UTF_8);
     }
 
 }

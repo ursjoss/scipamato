@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ch.difty.scipamato.common.AssertAs;
+import ch.difty.scipamato.core.pubmed.api.AuthorList;
+import ch.difty.scipamato.core.pubmed.api.BookDocument;
+import ch.difty.scipamato.core.pubmed.api.LocationLabel;
+import ch.difty.scipamato.core.pubmed.api.PubmedBookArticle;
 
 /**
  * Derives from {@link PubmedArticleFacade} wrapping an instance of

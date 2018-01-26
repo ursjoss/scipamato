@@ -22,12 +22,12 @@ import ch.difty.scipamato.core.db.Tables;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
-import ch.difty.scipamato.core.entity.SearchOrder;
-import ch.difty.scipamato.core.entity.filter.AuditSearchTerm;
-import ch.difty.scipamato.core.entity.filter.BooleanSearchTerm;
-import ch.difty.scipamato.core.entity.filter.IntegerSearchTerm;
-import ch.difty.scipamato.core.entity.filter.SearchCondition;
-import ch.difty.scipamato.core.entity.filter.StringSearchTerm;
+import ch.difty.scipamato.core.entity.search.AuditSearchTerm;
+import ch.difty.scipamato.core.entity.search.BooleanSearchTerm;
+import ch.difty.scipamato.core.entity.search.IntegerSearchTerm;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
+import ch.difty.scipamato.core.entity.search.StringSearchTerm;
 import ch.difty.scipamato.core.persistence.ConditionalSupplier;
 import ch.difty.scipamato.core.persistence.EntityRecordMapper;
 
@@ -110,9 +110,9 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
      * Note: searchOrder must not be null. this is to be guarded from the public
      * entry methods.
      *
-     * protected for test purposes
+     * public for test purposes
      */
-    protected Condition getConditionsFrom(final SearchOrder searchOrder) {
+    public Condition getConditionsFrom(final SearchOrder searchOrder) {
         final ConditionalSupplier conditions = new ConditionalSupplier();
         if (searchOrder.isShowExcluded()) {
             return PAPER.ID.in(searchOrder.getExcludedPaperIds());

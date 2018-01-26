@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import ch.difty.scipamato.public_.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.core.sync.JooqTransactionalIntegrationTest;
 
 public abstract class AbstractItemWriterIntegrationTest<E, W extends ScipamatoItemWriter<E>>
         extends JooqTransactionalIntegrationTest {

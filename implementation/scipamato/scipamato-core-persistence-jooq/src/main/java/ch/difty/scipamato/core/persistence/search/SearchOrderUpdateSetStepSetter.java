@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.DateUtils;
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
-import ch.difty.scipamato.core.entity.SearchOrder;
-import ch.difty.scipamato.core.entity.filter.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 
 /**

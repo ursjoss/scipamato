@@ -12,13 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
-import ch.difty.scipamato.core.entity.SearchOrder;
-import ch.difty.scipamato.core.entity.filter.PaperFilter;
+import ch.difty.scipamato.core.entity.search.PaperFilter;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.DefaultServiceResult;
 import ch.difty.scipamato.core.persistence.JooqEntityService;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.ServiceResult;
-import ch.difty.scipamato.core.persistence.user.UserRepository;
+import ch.difty.scipamato.core.persistence.UserRepository;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 
 /**

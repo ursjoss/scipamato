@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.core.auth.Role;
 import ch.difty.scipamato.core.entity.User;
+import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails;
 
 /**
  * This service has precedence over the productive implementations of

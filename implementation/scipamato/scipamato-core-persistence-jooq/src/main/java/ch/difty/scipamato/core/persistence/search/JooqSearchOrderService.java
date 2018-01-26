@@ -3,12 +3,12 @@ package ch.difty.scipamato.core.persistence.search;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.difty.scipamato.core.entity.SearchOrder;
-import ch.difty.scipamato.core.entity.filter.SearchCondition;
-import ch.difty.scipamato.core.entity.filter.SearchOrderFilter;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
+import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
 import ch.difty.scipamato.core.persistence.JooqEntityService;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
-import ch.difty.scipamato.core.persistence.user.UserRepository;
+import ch.difty.scipamato.core.persistence.UserRepository;
 
 /**
  * jOOQ specific implementation of the {@link SearchOrderService} interface.

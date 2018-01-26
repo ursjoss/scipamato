@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 
 import ch.difty.scipamato.core.web.WicketTest;
+import ch.difty.scipamato.core.web.authentication.ScipamatoAuthenticatedWebSessionConfig;
 
 public class ScipamatoAuthenticatedWebSessionConfigTest extends WicketTest {
 

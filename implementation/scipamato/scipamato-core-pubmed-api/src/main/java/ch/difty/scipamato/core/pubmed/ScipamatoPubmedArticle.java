@@ -6,6 +6,19 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import ch.difty.scipamato.common.AssertAs;
+import ch.difty.scipamato.core.pubmed.api.Article;
+import ch.difty.scipamato.core.pubmed.api.AuthorList;
+import ch.difty.scipamato.core.pubmed.api.ELocationID;
+import ch.difty.scipamato.core.pubmed.api.Journal;
+import ch.difty.scipamato.core.pubmed.api.JournalIssue;
+import ch.difty.scipamato.core.pubmed.api.MedlineCitation;
+import ch.difty.scipamato.core.pubmed.api.MedlineDate;
+import ch.difty.scipamato.core.pubmed.api.MedlineJournalInfo;
+import ch.difty.scipamato.core.pubmed.api.MedlinePgn;
+import ch.difty.scipamato.core.pubmed.api.Pagination;
+import ch.difty.scipamato.core.pubmed.api.PubDate;
+import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
+import ch.difty.scipamato.core.pubmed.api.Year;
 
 /**
  * Derives from {@link PubmedArticleFacade} wrapping an instance of

@@ -9,7 +9,7 @@ import org.jooq.impl.DSL;
 
 import ch.difty.scipamato.common.persistence.AbstractFilterConditionMapper;
 import ch.difty.scipamato.common.persistence.FilterConditionMapper;
-import ch.difty.scipamato.core.entity.filter.SearchOrderFilter;
+import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
 
 /**
  * Mapper turning the provider {@link SearchOrderFilter} into a jOOQ

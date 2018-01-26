@@ -40,14 +40,15 @@ import ch.difty.scipamato.core.db.tables.records.SearchConditionRecord;
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
 import ch.difty.scipamato.core.db.tables.records.SearchTermRecord;
 import ch.difty.scipamato.core.entity.Code;
-import ch.difty.scipamato.core.entity.SearchOrder;
-import ch.difty.scipamato.core.entity.filter.AuditSearchTerm;
-import ch.difty.scipamato.core.entity.filter.BooleanSearchTerm;
-import ch.difty.scipamato.core.entity.filter.IntegerSearchTerm;
-import ch.difty.scipamato.core.entity.filter.SearchCondition;
-import ch.difty.scipamato.core.entity.filter.SearchOrderFilter;
-import ch.difty.scipamato.core.entity.filter.SearchTerm;
-import ch.difty.scipamato.core.entity.filter.StringSearchTerm;
+import ch.difty.scipamato.core.entity.search.AuditSearchTerm;
+import ch.difty.scipamato.core.entity.search.BooleanSearchTerm;
+import ch.difty.scipamato.core.entity.search.IntegerSearchTerm;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
+import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
+import ch.difty.scipamato.core.entity.search.SearchTerm;
+import ch.difty.scipamato.core.entity.search.SearchTerms;
+import ch.difty.scipamato.core.entity.search.StringSearchTerm;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.core.persistence.JooqEntityRepo;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
@@ -145,7 +146,7 @@ public class JooqSearchOrderRepo extends
             .innerJoin(SEARCH_CONDITION)
             .on(SEARCH_CONDITION.SEARCH_CONDITION_ID.equal(SEARCH_TERM.SEARCH_CONDITION_ID))
             .where(SEARCH_CONDITION.SEARCH_ORDER_ID.equal(searchOrderId))
-            .fetch(r -> SearchTerm.of((long) r.get("id"), (int) r.get("stt"), (long) r.get("scid"),
+            .fetch(r -> SearchTerms.newSearchTerm((long) r.get("id"), (int) r.get("stt"), (long) r.get("scid"),
                 (String) r.get("fn"), (String) r.get("rv")));
     }
 
@@ -180,7 +181,7 @@ public class JooqSearchOrderRepo extends
             .innerJoin(SEARCH_CONDITION)
             .on(SEARCH_CONDITION.SEARCH_CONDITION_ID.equal(SEARCH_TERM.SEARCH_CONDITION_ID))
             .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.equal(searchConditionId))
-            .fetch(r -> SearchTerm.of((long) r.get("id"), (int) r.get("stt"), (long) r.get("scid"),
+            .fetch(r -> SearchTerms.newSearchTerm((long) r.get("id"), (int) r.get("stt"), (long) r.get("scid"),
                 (String) r.get("fn"), (String) r.get("rv")));
     }
 

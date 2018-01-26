@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.persistence.paper.searchorder;
 
 import org.junit.runner.RunWith;
 
-import ch.difty.scipamato.core.entity.filter.SearchTerm;
+import ch.difty.scipamato.core.entity.search.SearchTerm;
 import junitparams.JUnitParamsRunner;
 
 @RunWith(JUnitParamsRunner.class)

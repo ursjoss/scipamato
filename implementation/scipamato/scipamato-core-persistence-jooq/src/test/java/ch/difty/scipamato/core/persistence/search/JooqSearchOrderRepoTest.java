@@ -17,11 +17,12 @@ import org.mockito.Mock;
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.core.entity.SearchOrder;
-import ch.difty.scipamato.core.entity.filter.SearchCondition;
-import ch.difty.scipamato.core.entity.filter.SearchOrderFilter;
-import ch.difty.scipamato.core.entity.filter.SearchTerm;
-import ch.difty.scipamato.core.entity.filter.SearchTermType;
+import ch.difty.scipamato.core.entity.search.SearchCondition;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
+import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
+import ch.difty.scipamato.core.entity.search.SearchTerm;
+import ch.difty.scipamato.core.entity.search.SearchTermType;
+import ch.difty.scipamato.core.entity.search.SearchTerms;
 import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 
@@ -200,10 +201,11 @@ public class JooqSearchOrderRepoTest extends
                 getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
             private static final long serialVersionUID = 1L;
 
-            SearchTerm st1 = SearchTerm.of(1, SearchTermType.STRING.getId(), 3, Paper.AUTHORS, "joss");
-            SearchTerm st2 = SearchTerm.of(2, SearchTermType.INTEGER.getId(), 3, Paper.PUBL_YEAR, "2014");
-            SearchTerm st3 = SearchTerm.of(3, SearchTermType.INTEGER.getId(), 4, Paper.PUBL_YEAR, "2014-2016");
-            SearchTerm st4 = SearchTerm.of(4, SearchTermType.AUDIT.getId(), 5, Paper.CREATED_BY, "mkj");
+            SearchTerm st1 = SearchTerms.newSearchTerm(1, SearchTermType.STRING.getId(), 3, Paper.AUTHORS, "joss");
+            SearchTerm st2 = SearchTerms.newSearchTerm(2, SearchTermType.INTEGER.getId(), 3, Paper.PUBL_YEAR, "2014");
+            SearchTerm st3 = SearchTerms.newSearchTerm(3, SearchTermType.INTEGER.getId(), 4, Paper.PUBL_YEAR,
+                "2014-2016");
+            SearchTerm st4 = SearchTerms.newSearchTerm(4, SearchTermType.AUDIT.getId(), 5, Paper.CREATED_BY, "mkj");
 
             @Override
             protected List<SearchTerm> fetchSearchTermsForSearchOrderWithId(long searchOrderId) {

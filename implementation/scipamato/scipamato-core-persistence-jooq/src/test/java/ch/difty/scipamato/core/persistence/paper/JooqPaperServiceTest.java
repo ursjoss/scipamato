@@ -22,20 +22,21 @@ import org.mockito.Mock;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
-import ch.difty.scipamato.core.entity.SearchOrder;
-import ch.difty.scipamato.core.entity.filter.PaperFilter;
+import ch.difty.scipamato.core.entity.search.PaperFilter;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.AbstractServiceTest;
 import ch.difty.scipamato.core.persistence.ServiceResult;
-import ch.difty.scipamato.core.pubmed.Article;
-import ch.difty.scipamato.core.pubmed.ArticleTitle;
-import ch.difty.scipamato.core.pubmed.Journal;
-import ch.difty.scipamato.core.pubmed.JournalIssue;
-import ch.difty.scipamato.core.pubmed.MedlineCitation;
-import ch.difty.scipamato.core.pubmed.MedlineJournalInfo;
-import ch.difty.scipamato.core.pubmed.PMID;
-import ch.difty.scipamato.core.pubmed.PubDate;
-import ch.difty.scipamato.core.pubmed.PubmedArticle;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
+import ch.difty.scipamato.core.pubmed.ScipamatoPubmedArticles;
+import ch.difty.scipamato.core.pubmed.api.Article;
+import ch.difty.scipamato.core.pubmed.api.ArticleTitle;
+import ch.difty.scipamato.core.pubmed.api.Journal;
+import ch.difty.scipamato.core.pubmed.api.JournalIssue;
+import ch.difty.scipamato.core.pubmed.api.MedlineCitation;
+import ch.difty.scipamato.core.pubmed.api.MedlineJournalInfo;
+import ch.difty.scipamato.core.pubmed.api.PMID;
+import ch.difty.scipamato.core.pubmed.api.PubDate;
+import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
 
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
 
@@ -208,7 +209,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void dumpingSingleArticle_whichAlreadyExists_doesNotSave() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
-        articles.add(PubmedArticleFacade.of(pa));
+        articles.add(ScipamatoPubmedArticles.newPubmedArticleFrom(pa));
 
         // existing papers
         when(repoMock.findExistingPmIdsOutOf(Arrays.asList(pmIdValue))).thenReturn(Arrays.asList(pmIdValue));
@@ -227,7 +228,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void dumpingSingleNewArticle_saves() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
-        articles.add(PubmedArticleFacade.of(pa));
+        articles.add(ScipamatoPubmedArticles.newPubmedArticleFrom(pa));
         assertThat(articles.get(0)
             .getPmId()).isNotNull();
 
@@ -256,7 +257,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void dumpingSingleNewArticleWithNullPmId_doesNotTryToSave() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
-        articles.add(PubmedArticleFacade.of(pa));
+        articles.add(ScipamatoPubmedArticles.newPubmedArticleFrom(pa));
         articles.get(0)
             .setPmId(null);
 
@@ -273,8 +274,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void dumpingTwoNewArticleOneOfWhichWithNullPmId_savesOnlyOther() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa1 = newPubmedArticle(pmIdValue);
-        articles.add(PubmedArticleFacade.of(pa1));
-        articles.add(PubmedArticleFacade.of(newPubmedArticle(0)));
+        articles.add(ScipamatoPubmedArticles.newPubmedArticleFrom(pa1));
+        articles.add(ScipamatoPubmedArticles.newPubmedArticleFrom(newPubmedArticle(0)));
         assertThat(articles.get(1)
             .getPmId()).isEqualTo("0");
         articles.get(1)

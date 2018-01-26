@@ -25,10 +25,11 @@ import ch.difty.scipamato.common.persistence.JooqSortMapper;
 import ch.difty.scipamato.core.auth.Role;
 import ch.difty.scipamato.core.db.tables.records.ScipamatoUserRecord;
 import ch.difty.scipamato.core.entity.User;
-import ch.difty.scipamato.core.entity.filter.UserFilter;
+import ch.difty.scipamato.core.entity.search.UserFilter;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.core.persistence.JooqEntityRepo;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
+import ch.difty.scipamato.core.persistence.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 
 /**

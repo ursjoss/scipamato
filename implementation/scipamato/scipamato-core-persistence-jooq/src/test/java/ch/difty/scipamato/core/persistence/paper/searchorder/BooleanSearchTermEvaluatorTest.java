@@ -7,7 +7,7 @@ import org.jooq.Condition;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import ch.difty.scipamato.core.entity.filter.BooleanSearchTerm;
+import ch.difty.scipamato.core.entity.search.BooleanSearchTerm;
 
 public class BooleanSearchTermEvaluatorTest extends SearchTermEvaluatorTest<BooleanSearchTerm> {
 

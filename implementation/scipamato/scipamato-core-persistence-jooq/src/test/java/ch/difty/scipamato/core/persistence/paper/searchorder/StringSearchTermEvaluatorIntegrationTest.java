@@ -1,11 +1,11 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder;
 
-import static ch.difty.scipamato.core.entity.filter.StringSearchTerm.MatchType.CONTAINS;
-import static ch.difty.scipamato.core.entity.filter.StringSearchTerm.MatchType.EQUALS;
-import static ch.difty.scipamato.core.entity.filter.StringSearchTerm.MatchType.LENGTH;
-import static ch.difty.scipamato.core.entity.filter.StringSearchTerm.MatchType.LIKE;
-import static ch.difty.scipamato.core.entity.filter.StringSearchTerm.MatchType.NONE;
-import static ch.difty.scipamato.core.entity.filter.StringSearchTerm.MatchType.REGEX;
+import static ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.CONTAINS;
+import static ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.EQUALS;
+import static ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.LENGTH;
+import static ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.LIKE;
+import static ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.NONE;
+import static ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.REGEX;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Collectors;
@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 import org.jooq.Condition;
 import org.junit.Test;
 
-import ch.difty.scipamato.core.entity.filter.SearchTerm;
-import ch.difty.scipamato.core.entity.filter.SearchTermType;
-import ch.difty.scipamato.core.entity.filter.StringSearchTerm;
-import ch.difty.scipamato.core.entity.filter.StringSearchTerm.MatchType;
-import ch.difty.scipamato.core.entity.filter.StringSearchTerm.Token;
+import ch.difty.scipamato.core.entity.search.SearchTermType;
+import ch.difty.scipamato.core.entity.search.SearchTerms;
+import ch.difty.scipamato.core.entity.search.StringSearchTerm;
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType;
+import ch.difty.scipamato.core.entity.search.StringSearchTerm.Token;
 import junitparams.Parameters;
 
 /**
@@ -103,7 +103,7 @@ public class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluato
 
     @Override
     protected StringSearchTerm makeSearchTerm(String rawSearchTerm) {
-        return (StringSearchTerm) SearchTerm.of(ID, searchTermType, SC_ID, FN, rawSearchTerm);
+        return (StringSearchTerm) SearchTerms.newSearchTerm(ID, searchTermType, SC_ID, FN, rawSearchTerm);
     }
 
     @Override

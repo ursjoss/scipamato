@@ -9,8 +9,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import ch.difty.scipamato.core.entity.filter.IntegerSearchTerm;
-import ch.difty.scipamato.core.entity.filter.IntegerSearchTerm.MatchType;
+import ch.difty.scipamato.core.entity.search.IntegerSearchTerm;
+import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType;
 
 @RunWith(MockitoJUnitRunner.class)
 public class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<IntegerSearchTerm> {

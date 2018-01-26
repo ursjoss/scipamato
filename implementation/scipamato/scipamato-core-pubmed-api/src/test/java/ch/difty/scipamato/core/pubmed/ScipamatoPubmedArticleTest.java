@@ -5,6 +5,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
+import ch.difty.scipamato.core.pubmed.api.Article;
+import ch.difty.scipamato.core.pubmed.api.ArticleId;
+import ch.difty.scipamato.core.pubmed.api.ArticleIdList;
+import ch.difty.scipamato.core.pubmed.api.ArticleTitle;
+import ch.difty.scipamato.core.pubmed.api.Author;
+import ch.difty.scipamato.core.pubmed.api.AuthorList;
+import ch.difty.scipamato.core.pubmed.api.CollectiveName;
+import ch.difty.scipamato.core.pubmed.api.ELocationID;
+import ch.difty.scipamato.core.pubmed.api.ForeName;
+import ch.difty.scipamato.core.pubmed.api.Initials;
+import ch.difty.scipamato.core.pubmed.api.Journal;
+import ch.difty.scipamato.core.pubmed.api.JournalIssue;
+import ch.difty.scipamato.core.pubmed.api.LastName;
+import ch.difty.scipamato.core.pubmed.api.MedlineCitation;
+import ch.difty.scipamato.core.pubmed.api.MedlineDate;
+import ch.difty.scipamato.core.pubmed.api.MedlineJournalInfo;
+import ch.difty.scipamato.core.pubmed.api.MedlinePgn;
+import ch.difty.scipamato.core.pubmed.api.Month;
+import ch.difty.scipamato.core.pubmed.api.PMID;
+import ch.difty.scipamato.core.pubmed.api.Pagination;
+import ch.difty.scipamato.core.pubmed.api.PubDate;
+import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
+import ch.difty.scipamato.core.pubmed.api.PubmedData;
+import ch.difty.scipamato.core.pubmed.api.Suffix;
+import ch.difty.scipamato.core.pubmed.api.Year;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 
@@ -102,7 +127,7 @@ public class ScipamatoPubmedArticleTest {
 
     @Test
     public void validConstructionUsingOf() {
-        assertThat(ScipamatoPubmedArticle.of(pubmedArticle)).isNotNull();
+        assertThat(ScipamatoPubmedArticles.newPubmedArticleFrom(pubmedArticle)).isNotNull();
     }
 
     @Test

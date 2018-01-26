@@ -52,8 +52,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
+- Added structure101 configuration to project both for studio and workspace
 
 .Changed
+- architectural refactorings to remove dependency cycles (tangles) both on class and package level
+- keep generated pubmed-api classes strictly within scipamato-core-pubmed-api
+- have infinitest ignore integration tests
 
 .Deprecated
 
