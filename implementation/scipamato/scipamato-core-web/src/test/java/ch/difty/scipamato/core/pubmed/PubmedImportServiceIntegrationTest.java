@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.pubmed.service;
+package ch.difty.scipamato.core.pubmed;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,10 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.ServiceResult;
-import ch.difty.scipamato.core.pubmed.PubmedImporter;
-import ch.difty.scipamato.core.pubmed.PubmedIntegrationTest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -37,7 +36,7 @@ public class PubmedImportServiceIntegrationTest {
 
     @Test
     public void canReadXmlFile_whichHas3Studies() throws IOException {
-        final String xml = PubmedIntegrationTest.readXmlFile(XML);
+        final String xml = TestUtils.readFileAsString(XML);
         assertThat(xml).startsWith("<?xml version")
             .endsWith("</PubmedArticleSet>\n");
         assertThat(xml).contains("<PMID Version=\"1\">" + PMID1 + "</PMID>");
@@ -47,7 +46,7 @@ public class PubmedImportServiceIntegrationTest {
 
     @Test
     public void test() throws IOException {
-        final String xml = PubmedIntegrationTest.readXmlFile(XML);
+        final String xml = TestUtils.readFileAsString(XML);
 
         final ServiceResult result = importer.persistPubmedArticlesFromXml(xml);
 

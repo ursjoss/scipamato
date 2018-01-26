@@ -1,8 +1,10 @@
-package ch.difty.scipamato.core.config;
+package ch.difty.scipamato.core.pubmed;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
+
+import ch.difty.scipamato.core.pubmed.PubMed;
 
 public class PubMedTest {
 

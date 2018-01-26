@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.NullArgumentException;
-import ch.difty.scipamato.core.config.PubMed;
+import ch.difty.scipamato.core.pubmed.api.PubmedArticleSet;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Service handling pubmed content.
+ * Service handling PubMed content.
  *
  * @author u.joss
  */
@@ -62,8 +62,8 @@ public class PubmedXmlService implements PubmedArticleService {
     }
 
     /**
-     * Extracts pubmed articles and pubmed book articles from the source string
-     * representing XML exported from Pubmed.
+     * Extracts PubMed articles and PubMed book articles from the source string
+     * representing XML exported from PubMed.
      *
      * <p>
      * The XML string could be derived e.g. from

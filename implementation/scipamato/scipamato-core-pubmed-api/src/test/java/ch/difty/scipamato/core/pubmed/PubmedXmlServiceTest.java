@@ -26,7 +26,16 @@ import org.springframework.oxm.XmlMappingException;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import ch.difty.scipamato.common.NullArgumentException;
-import ch.difty.scipamato.core.config.PubMed;
+import ch.difty.scipamato.core.pubmed.api.Article;
+import ch.difty.scipamato.core.pubmed.api.ArticleTitle;
+import ch.difty.scipamato.core.pubmed.api.Journal;
+import ch.difty.scipamato.core.pubmed.api.JournalIssue;
+import ch.difty.scipamato.core.pubmed.api.MedlineCitation;
+import ch.difty.scipamato.core.pubmed.api.MedlineJournalInfo;
+import ch.difty.scipamato.core.pubmed.api.PMID;
+import ch.difty.scipamato.core.pubmed.api.PubDate;
+import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
+import ch.difty.scipamato.core.pubmed.api.PubmedArticleSet;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PubmedXmlServiceTest {

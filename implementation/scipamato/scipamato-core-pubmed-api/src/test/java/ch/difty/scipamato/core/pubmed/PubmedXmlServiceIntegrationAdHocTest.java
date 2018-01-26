@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.pubmed.service;
+package ch.difty.scipamato.core.pubmed;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,13 +12,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.PubmedArticleService;
-import ch.difty.scipamato.core.pubmed.ScipamatoPubmedArticleIntegrationTest;
 
 /**
- * Note: This ad hoc integration test should not run automatically, as it
+ * Note: This ad-hoc integration test should not run automatically, as it
  * actually issues a call to PubMed over the internet. Thus this test fails if
- * the machine running the test does not have an interent connection and PubMed
- * is up and accessible.
+ * the machine running the test is offline or cannot reach PubMed for some other
+ * reason.
+ *
+ * Also it's not polite to continuously
  *
  * @author u.joss
  */

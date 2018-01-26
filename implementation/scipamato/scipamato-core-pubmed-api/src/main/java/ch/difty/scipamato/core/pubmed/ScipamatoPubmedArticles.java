@@ -1,5 +1,8 @@
 package ch.difty.scipamato.core.pubmed;
 
+import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
+import ch.difty.scipamato.core.pubmed.api.PubmedBookArticle;
+
 public final class ScipamatoPubmedArticles {
 
     private ScipamatoPubmedArticles() {

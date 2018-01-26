@@ -6,6 +6,19 @@ import java.util.stream.Collectors;
 
 import org.springframework.util.StringUtils;
 
+import ch.difty.scipamato.core.pubmed.api.Abstract;
+import ch.difty.scipamato.core.pubmed.api.AbstractText;
+import ch.difty.scipamato.core.pubmed.api.ArticleId;
+import ch.difty.scipamato.core.pubmed.api.ArticleIdList;
+import ch.difty.scipamato.core.pubmed.api.Author;
+import ch.difty.scipamato.core.pubmed.api.AuthorList;
+import ch.difty.scipamato.core.pubmed.api.CollectiveName;
+import ch.difty.scipamato.core.pubmed.api.ForeName;
+import ch.difty.scipamato.core.pubmed.api.Initials;
+import ch.difty.scipamato.core.pubmed.api.LastName;
+import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
+import ch.difty.scipamato.core.pubmed.api.PubmedBookArticle;
+import ch.difty.scipamato.core.pubmed.api.Suffix;
 import lombok.Data;
 
 /**

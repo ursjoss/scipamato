@@ -9,6 +9,27 @@ import java.util.stream.Collectors;
 import org.junit.Test;
 import org.springframework.oxm.XmlMappingException;
 
+import ch.difty.scipamato.core.pubmed.api.Article;
+import ch.difty.scipamato.core.pubmed.api.ArticleDate;
+import ch.difty.scipamato.core.pubmed.api.Author;
+import ch.difty.scipamato.core.pubmed.api.AuthorList;
+import ch.difty.scipamato.core.pubmed.api.ChemicalList;
+import ch.difty.scipamato.core.pubmed.api.Day;
+import ch.difty.scipamato.core.pubmed.api.ELocationID;
+import ch.difty.scipamato.core.pubmed.api.Journal;
+import ch.difty.scipamato.core.pubmed.api.JournalIssue;
+import ch.difty.scipamato.core.pubmed.api.KeywordList;
+import ch.difty.scipamato.core.pubmed.api.LastName;
+import ch.difty.scipamato.core.pubmed.api.MedlineCitation;
+import ch.difty.scipamato.core.pubmed.api.MedlineJournalInfo;
+import ch.difty.scipamato.core.pubmed.api.MedlinePgn;
+import ch.difty.scipamato.core.pubmed.api.MeshHeadingList;
+import ch.difty.scipamato.core.pubmed.api.Month;
+import ch.difty.scipamato.core.pubmed.api.Pagination;
+import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
+import ch.difty.scipamato.core.pubmed.api.PubmedArticleSet;
+import ch.difty.scipamato.core.pubmed.api.Year;
+
 public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest {
 
     private static final String XML_2539026  = "xml/pubmed_result_25395026.xml";

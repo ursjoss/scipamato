@@ -26,17 +26,17 @@ import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.AbstractServiceTest;
 import ch.difty.scipamato.core.persistence.ServiceResult;
-import ch.difty.scipamato.core.pubmed.Article;
-import ch.difty.scipamato.core.pubmed.ArticleTitle;
-import ch.difty.scipamato.core.pubmed.Journal;
-import ch.difty.scipamato.core.pubmed.JournalIssue;
-import ch.difty.scipamato.core.pubmed.MedlineCitation;
-import ch.difty.scipamato.core.pubmed.MedlineJournalInfo;
-import ch.difty.scipamato.core.pubmed.PMID;
-import ch.difty.scipamato.core.pubmed.PubDate;
-import ch.difty.scipamato.core.pubmed.PubmedArticle;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.ScipamatoPubmedArticles;
+import ch.difty.scipamato.core.pubmed.api.Article;
+import ch.difty.scipamato.core.pubmed.api.ArticleTitle;
+import ch.difty.scipamato.core.pubmed.api.Journal;
+import ch.difty.scipamato.core.pubmed.api.JournalIssue;
+import ch.difty.scipamato.core.pubmed.api.MedlineCitation;
+import ch.difty.scipamato.core.pubmed.api.MedlineJournalInfo;
+import ch.difty.scipamato.core.pubmed.api.PMID;
+import ch.difty.scipamato.core.pubmed.api.PubDate;
+import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
 
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
 
