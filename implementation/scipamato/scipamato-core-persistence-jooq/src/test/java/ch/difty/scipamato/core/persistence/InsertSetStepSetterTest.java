@@ -109,7 +109,7 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
     @Test
     public void settingNonKeyFields() {
         RecordMapperTest.auditFixtureFor(getEntity());
-        
+
         getSetter().setNonKeyFieldsFor(getStep(), getEntity());
 
         verifyCallToFieldsExceptKeyAndAudit();

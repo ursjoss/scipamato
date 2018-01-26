@@ -4,9 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.core.entity.search.BooleanSearchTerm;
-import ch.difty.scipamato.core.entity.search.SearchTermType;
-
 public class BooleanSearchTermTest {
 
     private static final long   CONDITION_ID = 3;

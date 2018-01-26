@@ -12,11 +12,6 @@ import org.junit.Test;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.core.entity.Code;
-import ch.difty.scipamato.core.entity.search.BooleanSearchTerm;
-import ch.difty.scipamato.core.entity.search.IntegerSearchTerm;
-import ch.difty.scipamato.core.entity.search.SearchCondition;
-import ch.difty.scipamato.core.entity.search.SearchTerms;
-import ch.difty.scipamato.core.entity.search.StringSearchTerm;
 
 public class SearchConditionTest {
 

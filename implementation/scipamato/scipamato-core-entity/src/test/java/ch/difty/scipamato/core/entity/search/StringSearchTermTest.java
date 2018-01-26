@@ -26,7 +26,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.core.entity.search.StringSearchTerm;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType;
 

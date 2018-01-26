@@ -12,9 +12,9 @@ import org.jooq.Condition;
 import org.junit.Test;
 
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm;
+import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType;
 import ch.difty.scipamato.core.entity.search.SearchTermType;
 import ch.difty.scipamato.core.entity.search.SearchTerms;
-import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType;
 import junitparams.Parameters;
 
 /**

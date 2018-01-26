@@ -17,8 +17,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import ch.difty.scipamato.core.entity.search.SearchCondition;
-import ch.difty.scipamato.core.entity.search.SearchOrder;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 

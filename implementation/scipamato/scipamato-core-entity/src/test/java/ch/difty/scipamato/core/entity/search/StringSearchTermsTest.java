@@ -4,9 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.core.entity.search.SearchTerms;
-import ch.difty.scipamato.core.entity.search.StringSearchTerms;
-
 public class StringSearchTermsTest {
 
     private static final String KEY   = "key";

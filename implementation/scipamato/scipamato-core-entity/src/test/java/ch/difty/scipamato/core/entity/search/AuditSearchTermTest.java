@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.core.entity.search.AuditSearchTerm;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.MatchType;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.TokenType;
 

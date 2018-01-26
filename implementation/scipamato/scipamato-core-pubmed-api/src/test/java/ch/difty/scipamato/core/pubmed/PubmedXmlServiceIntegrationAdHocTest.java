@@ -10,9 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
-import ch.difty.scipamato.core.pubmed.PubmedArticleService;
-
 /**
  * Note: This ad-hoc integration test should not run automatically, as it
  * actually issues a call to PubMed over the internet. Thus this test fails if

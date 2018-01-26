@@ -22,7 +22,6 @@ import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServle
 import org.xnio.XnioWorker;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
-import ch.difty.scipamato.common.web.config.UndertowConfig;
 import io.undertow.Undertow;
 import io.undertow.Undertow.Builder;
 import io.undertow.Undertow.ListenerInfo;

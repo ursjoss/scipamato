@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.core.entity.search.IntegerSearchTerm;
-import ch.difty.scipamato.core.entity.search.SearchTermType;
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType;
 
 public class IntegerSearchTermTest {
