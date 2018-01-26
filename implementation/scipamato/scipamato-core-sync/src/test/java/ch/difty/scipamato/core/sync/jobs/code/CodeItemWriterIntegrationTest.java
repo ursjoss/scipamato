@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.code;
 
-import static ch.difty.scipamato.public_.db.public_.tables.Code.CODE;
+import static ch.difty.scipamato.publ.db.public_.tables.Code.CODE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Timestamp;
@@ -10,7 +10,7 @@ import org.junit.After;
 import org.junit.Test;
 
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
-import ch.difty.scipamato.public_.db.public_.tables.records.CodeRecord;
+import ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord;
 
 public class CodeItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<PublicCode, CodeItemWriter> {
 

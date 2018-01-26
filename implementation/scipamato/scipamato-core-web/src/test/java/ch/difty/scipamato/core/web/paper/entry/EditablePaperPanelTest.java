@@ -126,7 +126,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
             }
 
             @Override
-            protected PaperEntryPage getResponsePage(Optional<Paper> p, Long searchOrderId, boolean showingExclusions) {
+            protected PaperEntryPage getResponsePage(Paper p, Long searchOrderId, boolean showingExclusions) {
                 // no-op
                 return null;
             }
@@ -666,7 +666,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
             }
 
             @Override
-            protected PaperEntryPage getResponsePage(Optional<Paper> p, Long searchOrderId, boolean showingExclusions) {
+            protected PaperEntryPage getResponsePage(Paper p, Long searchOrderId, boolean showingExclusions) {
                 // no-op
                 return null;
             }
@@ -687,7 +687,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
             }
 
             @Override
-            protected PaperEntryPage getResponsePage(Optional<Paper> p, Long searchOrderId, boolean showingExclusions) {
+            protected PaperEntryPage getResponsePage(Paper p, Long searchOrderId, boolean showingExclusions) {
                 // no-op
                 return null;
             }

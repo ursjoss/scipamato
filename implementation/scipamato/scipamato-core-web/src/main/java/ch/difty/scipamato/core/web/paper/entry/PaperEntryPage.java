@@ -1,7 +1,5 @@
 package ch.difty.scipamato.core.web.paper.entry;
 
-import java.util.Optional;
-
 import org.apache.wicket.PageReference;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.head.CssHeaderItem;
@@ -184,8 +182,8 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
             }
 
             @Override
-            protected PaperEntryPage getResponsePage(Optional<Paper> p, Long searchOrderId, boolean showingExclusions) {
-                return new PaperEntryPage(Model.of(p.get()), getCallingPage(), searchOrderId, showingExclusions);
+            protected PaperEntryPage getResponsePage(Paper p, Long searchOrderId, boolean showingExclusions) {
+                return new PaperEntryPage(Model.of(p), getCallingPage(), searchOrderId, showingExclusions);
             }
         };
         queue(contentPanel);

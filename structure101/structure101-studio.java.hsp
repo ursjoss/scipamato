@@ -50,9 +50,9 @@
   </pom-root-files>
   <excludes>
     <exclude expression="scipamato.scipamato-core-persistence-jooq.scipamato-core-persistence-jooq-*.ch.difty.scipamato.core.db.*" active="true" />
-    <exclude expression="scipamato.scipamato-public-persistence-jooq.scipamato-public-persistence-jooq-*.ch.difty.scipamato.public_.db.*" active="true" />
+    <exclude expression="scipamato.scipamato-public-persistence-jooq.scipamato-public-persistence-jooq-*.ch.difty.scipamato.publ.db.*" active="true" />
     <exclude expression="scipamato.scipamato-core-sync.scipamato-core-sync.*.ch.difty.scipamato.core.db.*" active="true" />
-    <exclude expression="scipamato.scipamato-core-sync.scipamato-core-sync.*.ch.difty.scipamato.public_.db.*" active="true" />
+    <exclude expression="scipamato.scipamato-core-sync.scipamato-core-sync.*.ch.difty.scipamato.publ.db.*" active="true" />
     <exclude expression="scipamato.scipamato-core-pubmed-api.scipamato-core-pubmed-api-*.ch.difty.scipamato.core.pubmed.api.*" active="true" />
   </excludes>
   <excludes-from-xs>
@@ -63,26 +63,26 @@
   <restructuring>
     <set version="3" name="Model 1" hiview="Codemap" active="true" todo="false" list="0">
       <hide>
-        <item-fqn fqn="scipamato.scipamato-public-persistence-jooq.scipamato-public-persistence-jooq-0_7_5-SNAPSHOT.ch.difty.scipamato.public_.db" type="package">
+        <item-fqn fqn="scipamato.scipamato-public-persistence-jooq.scipamato-public-persistence-jooq-0_7_5-SNAPSHOT.ch.difty.scipamato.publ.db" type="package">
           <node name="scipamato" type="pom" />
           <node name="scipamato-public-persistence-jooq" type="pom" />
           <node name="scipamato-public-persistence-jooq-0_7_5-SNAPSHOT" type="jar" />
           <node name="ch" type="package" />
           <node name="difty" type="package" />
           <node name="scipamato" type="package" />
-          <node name="public_" type="package" />
+          <node name="publ" type="package" />
           <node name="db" type="package" />
         </item-fqn>
       </hide>
       <hide>
-        <item-fqn fqn="scipamato.scipamato-core-sync.scipamato-core-sync-0_7_5-SNAPSHOT.ch.difty.scipamato.public_.db" type="package">
+        <item-fqn fqn="scipamato.scipamato-core-sync.scipamato-core-sync-0_7_5-SNAPSHOT.ch.difty.scipamato.publ.db" type="package">
           <node name="scipamato" type="pom" />
           <node name="scipamato-core-sync" type="pom" />
           <node name="scipamato-core-sync-0_7_5-SNAPSHOT" type="jar" />
           <node name="ch" type="package" />
           <node name="difty" type="package" />
           <node name="scipamato" type="package" />
-          <node name="public_" type="package" />
+          <node name="publ" type="package" />
           <node name="db" type="package" />
         </item-fqn>
       </hide>
@@ -99,7 +99,7 @@
         </item-fqn>
       </hide>
       <hide>
-        <item-fqn fqn="scipamato.scipamato-core-sync.scipamato-core-sync-0_7_5-SNAPSHOT.ch.difty.scipamato.core.db.public_" type="package">
+        <item-fqn fqn="scipamato.scipamato-core-sync.scipamato-core-sync-0_7_5-SNAPSHOT.ch.difty.scipamato.core.db.publ" type="package">
           <node name="scipamato" type="pom" />
           <node name="scipamato-core-sync" type="pom" />
           <node name="scipamato-core-sync-0_7_5-SNAPSHOT" type="jar" />
@@ -108,7 +108,7 @@
           <node name="scipamato" type="package" />
           <node name="core" type="package" />
           <node name="db" type="package" />
-          <node name="public_" type="package" />
+          <node name="publ" type="package" />
         </item-fqn>
       </hide>
       <hide>

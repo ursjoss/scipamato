@@ -160,8 +160,8 @@
   </modules-in-scope>
   <excludes>
     <exclude expression="scipamato-core-persistence-jooq.ch.difty.scipamato.core.db.*" active="true" />
-    <exclude expression="scipamato-public-persistence-jooq.ch.difty.scipamato.public_.db.*" active="true" />
-    <exclude expression="scipamato-core-sync.ch.difty.scipamato.public_.db.*" active="true" />
+    <exclude expression="scipamato-public-persistence-jooq.ch.difty.scipamato.publ.db.*" active="true" />
+    <exclude expression="scipamato-core-sync.ch.difty.scipamato.publ.db.*" active="true" />
     <exclude expression="scipamato-core-sync.ch.difty.scipamato.core.db.*" active="true" />
     <exclude expression="scipamato-core-web.ch.difty.scipamato.core.web.paper.entry.EditablePaperPanelTest" active="true" />
     <exclude expression="scipamato-core-web.ch.difty.scipamato.core.web.WicketTest" active="true" />

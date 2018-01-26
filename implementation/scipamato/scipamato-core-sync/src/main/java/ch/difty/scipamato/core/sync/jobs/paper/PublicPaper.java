@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.sync.jobs.paper;
 
 import java.sql.Timestamp;
 
-import ch.difty.scipamato.public_.db.public_.tables.pojos.Paper;
+import ch.difty.scipamato.publ.db.public_.tables.pojos.Paper;
 import lombok.Builder;
 import lombok.experimental.Delegate;
 

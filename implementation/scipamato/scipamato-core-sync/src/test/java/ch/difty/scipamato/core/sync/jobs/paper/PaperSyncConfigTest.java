@@ -44,7 +44,7 @@ import ch.difty.scipamato.core.db.public_.tables.Code;
 import ch.difty.scipamato.core.db.public_.tables.Paper;
 import ch.difty.scipamato.core.sync.code.CodeAggregator;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
-import ch.difty.scipamato.public_.db.public_.tables.records.PaperRecord;
+import ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -93,9 +93,9 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         when(selectJoinStep.where(Code.CODE.INTERNAL.isTrue())).thenReturn(selectConditionStep);
         when(selectConditionStep.fetch(Code.CODE.CODE_)).thenReturn(internalCodes);
 
-        when(jooqPublic.delete(ch.difty.scipamato.public_.db.public_.tables.Paper.PAPER)).thenReturn(deleteWhereStep);
+        when(jooqPublic.delete(ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER)).thenReturn(deleteWhereStep);
         Timestamp ref = Timestamp.valueOf(LocalDateTime.parse("2016-12-09T05:32:13.0"));
-        when(deleteWhereStep.where(ch.difty.scipamato.public_.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(ref)))
+        when(deleteWhereStep.where(ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(ref)))
             .thenReturn(deleteConditionStep);
 
         config = new PaperSyncConfig(codeAggregator, jooqCore, jooqPublic, scipamatoCoreDataSource, jobBuilderFactory,

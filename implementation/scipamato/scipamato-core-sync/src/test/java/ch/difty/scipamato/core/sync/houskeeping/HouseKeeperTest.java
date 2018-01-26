@@ -16,7 +16,7 @@ import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.repeat.RepeatStatus;
 
-import ch.difty.scipamato.public_.db.public_.tables.records.CodeClassRecord;
+import ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HouseKeeperTest {
