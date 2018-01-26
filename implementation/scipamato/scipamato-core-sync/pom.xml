@@ -258,7 +258,7 @@
                                     <pojos>true</pojos>
                                 </generate>
                                 <target>
-                                    <packageName>ch.difty.scipamato.public.db</packageName>
+                                    <packageName>ch.difty.scipamato.publ.db</packageName>
                                     <directory>${org.jooq.target.dir.public}</directory>
                                 </target>
                             </generator>

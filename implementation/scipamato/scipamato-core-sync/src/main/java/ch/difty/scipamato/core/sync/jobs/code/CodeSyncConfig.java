@@ -43,7 +43,7 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
  */
 @Configuration
 public class CodeSyncConfig
-        extends SyncConfig<PublicCode, ch.difty.scipamato.public_.db.public_.tables.records.CodeRecord> {
+        extends SyncConfig<PublicCode, ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord> {
 
     private static final String TOPIC      = "code";
     private static final int    CHUNK_SIZE = 50;
@@ -124,10 +124,10 @@ public class CodeSyncConfig
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.public_.db.public_.tables.records.CodeRecord> getPurgeDcs(
+    protected DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord> getPurgeDcs(
             final Timestamp cutOff) {
-        return getJooqPublic().delete(ch.difty.scipamato.public_.db.public_.tables.Code.CODE)
-            .where(ch.difty.scipamato.public_.db.public_.tables.Code.CODE.LAST_SYNCHED.lessThan(cutOff));
+        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.Code.CODE)
+            .where(ch.difty.scipamato.publ.db.public_.tables.Code.CODE.LAST_SYNCHED.lessThan(cutOff));
     }
 
 }

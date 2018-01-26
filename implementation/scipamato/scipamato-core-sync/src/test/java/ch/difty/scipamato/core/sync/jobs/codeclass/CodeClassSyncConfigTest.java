@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ch.difty.scipamato.core.db.public_.tables.CodeClass;
 import ch.difty.scipamato.core.db.public_.tables.CodeClassTr;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
-import ch.difty.scipamato.public_.db.public_.tables.records.CodeClassRecord;
+import ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)

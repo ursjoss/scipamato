@@ -2,7 +2,7 @@ package ch.difty.scipamato.core.sync.jobs.codeclass;
 
 import java.sql.Timestamp;
 
-import ch.difty.scipamato.public_.db.public_.tables.pojos.CodeClass;
+import ch.difty.scipamato.publ.db.public_.tables.pojos.CodeClass;
 import lombok.Builder;
 import lombok.experimental.Delegate;
 

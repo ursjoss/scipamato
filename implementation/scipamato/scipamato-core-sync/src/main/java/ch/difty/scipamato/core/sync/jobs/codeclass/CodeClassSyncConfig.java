@@ -40,7 +40,7 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
  */
 @Configuration
 public class CodeClassSyncConfig
-        extends SyncConfig<PublicCodeClass, ch.difty.scipamato.public_.db.public_.tables.records.CodeClassRecord> {
+        extends SyncConfig<PublicCodeClass, ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord> {
 
     private static final String TOPIC      = "codeClass";
     private static final int    CHUNK_SIZE = 50;
@@ -101,10 +101,10 @@ public class CodeClassSyncConfig
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.public_.db.public_.tables.records.CodeClassRecord> getPurgeDcs(
+    protected DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord> getPurgeDcs(
             final Timestamp cutOff) {
-        return getJooqPublic().delete(ch.difty.scipamato.public_.db.public_.tables.CodeClass.CODE_CLASS)
-            .where(ch.difty.scipamato.public_.db.public_.tables.CodeClass.CODE_CLASS.LAST_SYNCHED.lessThan(cutOff));
+        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.CodeClass.CODE_CLASS)
+            .where(ch.difty.scipamato.publ.db.public_.tables.CodeClass.CODE_CLASS.LAST_SYNCHED.lessThan(cutOff));
     }
 
 }

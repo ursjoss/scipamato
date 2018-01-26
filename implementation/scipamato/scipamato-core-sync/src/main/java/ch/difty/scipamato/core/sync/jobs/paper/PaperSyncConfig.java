@@ -42,7 +42,7 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
  */
 @Configuration
 public class PaperSyncConfig
-        extends SyncConfig<PublicPaper, ch.difty.scipamato.public_.db.public_.tables.records.PaperRecord> {
+        extends SyncConfig<PublicPaper, ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord> {
 
     private static final String TOPIC      = "paper";
     private static final int    CHUNK_SIZE = 100;
@@ -155,10 +155,10 @@ public class PaperSyncConfig
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.public_.db.public_.tables.records.PaperRecord> getPurgeDcs(
+    protected DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord> getPurgeDcs(
             final Timestamp cutOff) {
-        return getJooqPublic().delete(ch.difty.scipamato.public_.db.public_.tables.Paper.PAPER)
-            .where(ch.difty.scipamato.public_.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(cutOff));
+        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER)
+            .where(ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(cutOff));
     }
 
 }
