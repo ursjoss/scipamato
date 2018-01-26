@@ -53,19 +53,9 @@
     <exclude expression="scipamato.scipamato-public-persistence-jooq.scipamato-public-persistence-jooq-*.ch.difty.scipamato.public_.db.*" active="true" />
     <exclude expression="scipamato.scipamato-core-sync.scipamato-core-sync.*.ch.difty.scipamato.core.db.*" active="true" />
     <exclude expression="scipamato.scipamato-core-sync.scipamato-core-sync.*.ch.difty.scipamato.public_.db.*" active="true" />
+    <exclude expression="scipamato.scipamato-core-pubmed-api.scipamato-core-pubmed-api-*.ch.difty.scipamato.core.pubmed.api.*" active="true" />
   </excludes>
   <excludes-from-xs>
-    <exclude-from-xs expression="scipamato" active="true" />
-    <exclude-from-xs expression="scipamato-core-persistence-jooq-0_7_5-SNAPSHOT.ch.difty.scipamato.core.db" active="true" />
-    <exclude-from-xs expression="scipamato.scipamato-core-persistence-jooq.scipamato-core-persistence-jooq.ch.difty.scipamato.core.db.tables" active="true" />
-    <exclude-from-xs expression="scipamato.scipamato-core-persistence-jooq.scipamato-core-persistence-jooq.ch.difty.scipamato.core.db" active="true" />
-    <exclude-from-xs expression="scipamato.scipamato-core-sync.scipamato-core-sync.ch.difty.scipamato.core.db.public_" active="true" />
-    <exclude-from-xs expression="scipamato.scipamato-core-sync.scipamato-core-sync.ch.difty.scipamato.public_.db.public_" active="true" />
-    <exclude-from-xs expression="scipamato.scipamato-core-sync.scipamato-core-sync.ch.difty.scipamato.core.db.public_.tables" active="true" />
-    <exclude-from-xs expression="scipamato.scipamato-core-sync.scipamato-core-sync.ch.difty.scipamato.public_.db.public_.tables" active="true" />
-    <exclude-from-xs expression="scipamato.scipamato-public-persistence-jooq.scipamato-public-persistence-jooq.ch.difty.scipamato.public_.db.tables" active="true" />
-    <exclude-from-xs expression="scipamato.scipamato-public-persistence-jooq.scipamato-public-persistence-jooq.ch.difty.scipamato.public_.db" active="true" />
-    <exclude-from-xs expression="ch.difty.scipamato.public_.db.public_.tables.records.PaperRecord" active="true" />
   </excludes-from-xs>
   <transformations>
     <transformation in="*" out="{jar}.*" />
