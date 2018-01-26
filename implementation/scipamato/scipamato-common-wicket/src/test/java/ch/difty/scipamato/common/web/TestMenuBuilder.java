@@ -1,4 +1,4 @@
-package ch.difty.scipamato.common.web.test;
+package ch.difty.scipamato.common.web;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.model.StringResourceModel;

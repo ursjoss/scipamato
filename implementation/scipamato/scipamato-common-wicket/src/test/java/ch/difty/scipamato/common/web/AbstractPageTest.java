@@ -15,8 +15,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
-import ch.difty.scipamato.common.web.test.TestAbstractPage;
-import ch.difty.scipamato.common.web.test.TestApplicationProperties;
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 

@@ -1,11 +1,10 @@
-package ch.difty.scipamato.common.web.test;
+package ch.difty.scipamato.common.web;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
-import ch.difty.scipamato.common.web.AbstractPage;
 
 @WicketHomePage
 public class TestHomePage extends AbstractPage<Void> {

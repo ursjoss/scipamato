@@ -1,4 +1,4 @@
-package ch.difty.scipamato.common.web.test;
+package ch.difty.scipamato.common.web;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -6,8 +6,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
-import ch.difty.scipamato.common.web.AbstractPage;
-import ch.difty.scipamato.common.web.TestRecord;
 
 public class TestAbstractPage extends AbstractPage<TestRecord> {
     private static final long serialVersionUID = 1L;

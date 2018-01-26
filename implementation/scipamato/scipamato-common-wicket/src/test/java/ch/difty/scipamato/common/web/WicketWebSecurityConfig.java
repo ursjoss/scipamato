@@ -1,4 +1,4 @@
-package ch.difty.scipamato.common.web.test;
+package ch.difty.scipamato.common.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

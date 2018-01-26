@@ -1,4 +1,4 @@
-package ch.difty.scipamato.common.web.test;
+package ch.difty.scipamato.common.web;
 
 import java.util.Arrays;
 import java.util.Collection;
