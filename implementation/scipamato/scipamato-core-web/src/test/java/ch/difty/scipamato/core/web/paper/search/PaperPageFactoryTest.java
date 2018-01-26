@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.web.paper;
+package ch.difty.scipamato.core.web.paper.search;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,7 +15,6 @@ import ch.difty.scipamato.common.web.component.SerializableBiFunction;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.web.WicketTest;
-import ch.difty.scipamato.core.web.paper.search.PaperSearchCriteriaPage;
 
 public class PaperPageFactoryTest extends WicketTest {
 

@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.web.paper;
+package ch.difty.scipamato.core.web.paper.search;
 
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.GenericWebPage;
@@ -10,8 +10,7 @@ import ch.difty.scipamato.common.web.component.SerializableBiConsumer;
 import ch.difty.scipamato.common.web.component.SerializableBiFunction;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
-import ch.difty.scipamato.core.web.paper.search.PaperSearchCriteriaPage;
-import ch.difty.scipamato.core.web.paper.search.PaperSearchPage;
+import ch.difty.scipamato.core.web.paper.PageFactory;
 
 @Component
 public class PaperPageFactory implements PageFactory {
