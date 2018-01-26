@@ -18,7 +18,7 @@ import ch.difty.scipamato.core.persistence.DefaultServiceResult;
 import ch.difty.scipamato.core.persistence.JooqEntityService;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.ServiceResult;
-import ch.difty.scipamato.core.persistence.user.UserRepository;
+import ch.difty.scipamato.core.persistence.UserRepository;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 
 /**

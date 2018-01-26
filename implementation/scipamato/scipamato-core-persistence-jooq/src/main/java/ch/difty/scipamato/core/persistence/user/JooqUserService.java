@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.entity.search.UserFilter;
+import ch.difty.scipamato.core.persistence.UserRepository;
 import ch.difty.scipamato.core.persistence.UserService;
 
 /**

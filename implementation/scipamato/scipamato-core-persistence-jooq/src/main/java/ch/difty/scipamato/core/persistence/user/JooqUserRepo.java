@@ -29,6 +29,7 @@ import ch.difty.scipamato.core.entity.search.UserFilter;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.core.persistence.JooqEntityRepo;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
+import ch.difty.scipamato.core.persistence.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 
 /**

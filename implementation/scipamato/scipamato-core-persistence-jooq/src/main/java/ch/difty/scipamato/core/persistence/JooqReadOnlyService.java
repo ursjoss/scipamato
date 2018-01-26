@@ -11,7 +11,6 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.CoreEntity;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import ch.difty.scipamato.core.entity.User;
-import ch.difty.scipamato.core.persistence.user.UserRepository;
 
 /**
  * Abstract base repository class providing the fundamental functionality of a

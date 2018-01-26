@@ -10,7 +10,7 @@ import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.JooqReadOnlyService;
 import ch.difty.scipamato.core.persistence.PaperSlimService;
-import ch.difty.scipamato.core.persistence.user.UserRepository;
+import ch.difty.scipamato.core.persistence.UserRepository;
 
 /**
  * jOOQ specific implementation of the {@link PaperSlimService} interface.
