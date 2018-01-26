@@ -506,7 +506,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 if (id != null) {
                     final Optional<Paper> p = paperService.findById(id);
                     if (p.isPresent())
-                        setResponsePage(getResponsePage(p, searchOrderId, showingExclusions));
+                        setResponsePage(getResponsePage(p.get(), searchOrderId, showingExclusions));
                 }
             }
 
@@ -524,7 +524,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         return btn;
     }
 
-    protected abstract GenericWebPage<Paper> getResponsePage(final Optional<Paper> p, Long searchOrderId,
+    protected abstract GenericWebPage<Paper> getResponsePage(final Paper p, Long searchOrderId,
             boolean showingExclusions);
 
     @Override
