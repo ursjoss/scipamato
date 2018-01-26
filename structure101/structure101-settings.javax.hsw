@@ -165,6 +165,7 @@
     <exclude expression="scipamato-core-sync.ch.difty.scipamato.core.db.*" active="true" />
     <exclude expression="scipamato-core-web.ch.difty.scipamato.core.web.paper.entry.EditablePaperPanelTest" active="true" />
     <exclude expression="scipamato-core-web.ch.difty.scipamato.core.web.WicketTest" active="true" />
+    <exclude expression="scipamato-core-pubmed-api.ch.difty.scipamato.core.pubmed.api.*" active="true" />
   </excludes>
   <grid-set sep="." version="5.0.13210" />
 </local-project>
