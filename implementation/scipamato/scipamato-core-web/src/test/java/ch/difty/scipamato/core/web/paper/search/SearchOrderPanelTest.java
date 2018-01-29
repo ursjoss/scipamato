@@ -22,8 +22,8 @@ import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.web.component.table.column.LinkIconPanel;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
+import ch.difty.scipamato.core.entity.search.SearchTerm;
 import ch.difty.scipamato.core.entity.search.SearchTermType;
-import ch.difty.scipamato.core.entity.search.SearchTerms;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.PanelTest;
@@ -40,7 +40,7 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
     @Override
     protected SearchOrderPanel makePanel() {
         SearchCondition sc = new SearchCondition();
-        sc.addSearchTerm(SearchTerms.newSearchTerm(1, SearchTermType.STRING.getId(), 1, "authors", "foo"));
+        sc.addSearchTerm(SearchTerm.newSearchTerm(1, SearchTermType.STRING.getId(), 1, "authors", "foo"));
         final List<SearchCondition> conditions = Arrays.asList(sc);
         final SearchOrder searchOrder = new SearchOrder(conditions);
         searchOrder.setId(5l);

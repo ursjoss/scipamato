@@ -1,14 +1,14 @@
 package ch.difty.scipamato.core.entity.search;
 
 /**
- * Implementation of {@link SearchTerm} working with Boolean fields.
+ * Implementation of {@link AbstractSearchTerm} working with Boolean fields.
  *
- * There is no meta-specification possible in boolean {@link SearchTerm}s. The
+ * There is no meta-specification possible in boolean {@link AbstractSearchTerm}s. The
  * value can either be {@code true} or {@code false}.
  *
  * @author u.joss
  */
-public class BooleanSearchTerm extends SearchTerm {
+public class BooleanSearchTerm extends AbstractSearchTerm {
     private static final long serialVersionUID = 1L;
 
     private final boolean value;

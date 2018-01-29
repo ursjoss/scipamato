@@ -22,7 +22,6 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
 import ch.difty.scipamato.core.entity.search.SearchTerm;
 import ch.difty.scipamato.core.entity.search.SearchTermType;
-import ch.difty.scipamato.core.entity.search.SearchTerms;
 import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 
@@ -201,11 +200,11 @@ public class JooqSearchOrderRepoTest extends
                 getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
             private static final long serialVersionUID = 1L;
 
-            SearchTerm st1 = SearchTerms.newSearchTerm(1, SearchTermType.STRING.getId(), 3, Paper.AUTHORS, "joss");
-            SearchTerm st2 = SearchTerms.newSearchTerm(2, SearchTermType.INTEGER.getId(), 3, Paper.PUBL_YEAR, "2014");
-            SearchTerm st3 = SearchTerms.newSearchTerm(3, SearchTermType.INTEGER.getId(), 4, Paper.PUBL_YEAR,
+            SearchTerm st1 = SearchTerm.newSearchTerm(1, SearchTermType.STRING.getId(), 3, Paper.AUTHORS, "joss");
+            SearchTerm st2 = SearchTerm.newSearchTerm(2, SearchTermType.INTEGER.getId(), 3, Paper.PUBL_YEAR, "2014");
+            SearchTerm st3 = SearchTerm.newSearchTerm(3, SearchTermType.INTEGER.getId(), 4, Paper.PUBL_YEAR,
                 "2014-2016");
-            SearchTerm st4 = SearchTerms.newSearchTerm(4, SearchTermType.AUDIT.getId(), 5, Paper.CREATED_BY, "mkj");
+            SearchTerm st4 = SearchTerm.newSearchTerm(4, SearchTermType.AUDIT.getId(), 5, Paper.CREATED_BY, "mkj");
 
             @Override
             protected List<SearchTerm> fetchSearchTermsForSearchOrderWithId(long searchOrderId) {

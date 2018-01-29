@@ -834,9 +834,9 @@ public class SearchConditionTest {
     @Test
     public void equalsAndHash8_withDifferentBooleanSearchTerms() {
         SearchCondition f1 = new SearchCondition();
-        f1.addSearchTerm(SearchTerms.newBooleanSearchTerm("f1", "false"));
+        f1.addSearchTerm(SearchTerm.newBooleanSearchTerm("f1", "false"));
         SearchCondition f2 = new SearchCondition();
-        f2.addSearchTerm(SearchTerms.newBooleanSearchTerm("f1", "true"));
+        f2.addSearchTerm(SearchTerm.newBooleanSearchTerm("f1", "true"));
         assertInequality(f1, f2);
     }
 
@@ -849,27 +849,27 @@ public class SearchConditionTest {
     @Test
     public void equalsAndHash8_withDifferentIntegerSearchTerms() {
         SearchCondition f1 = new SearchCondition();
-        f1.addSearchTerm(SearchTerms.newIntegerSearchTerm("f1", "1"));
+        f1.addSearchTerm(SearchTerm.newIntegerSearchTerm("f1", "1"));
         SearchCondition f2 = new SearchCondition();
-        f2.addSearchTerm(SearchTerms.newIntegerSearchTerm("f1", "2"));
+        f2.addSearchTerm(SearchTerm.newIntegerSearchTerm("f1", "2"));
         assertInequality(f1, f2);
     }
 
     @Test
     public void equalsAndHash9_withDifferentStringSearchTerms() {
         SearchCondition f1 = new SearchCondition();
-        f1.addSearchTerm(SearchTerms.newStringSearchTerm("f1", "foo"));
+        f1.addSearchTerm(SearchTerm.newStringSearchTerm("f1", "foo"));
         SearchCondition f2 = new SearchCondition();
-        f2.addSearchTerm(SearchTerms.newStringSearchTerm("f1", "bar"));
+        f2.addSearchTerm(SearchTerm.newStringSearchTerm("f1", "bar"));
         assertInequality(f1, f2);
     }
 
     @Test
     public void equalsAndHash10_withDifferentStringAuditTerms() {
         SearchCondition f1 = new SearchCondition();
-        f1.addSearchTerm(SearchTerms.newAuditSearchTerm("f1", "foo"));
+        f1.addSearchTerm(SearchTerm.newAuditSearchTerm("f1", "foo"));
         SearchCondition f2 = new SearchCondition();
-        f2.addSearchTerm(SearchTerms.newAuditSearchTerm("f1", "bar"));
+        f2.addSearchTerm(SearchTerm.newAuditSearchTerm("f1", "bar"));
         assertInequality(f1, f2);
     }
 
@@ -928,7 +928,7 @@ public class SearchConditionTest {
 
     @Test
     public void addingBooleanTermString() {
-        sc2.addSearchTerm(SearchTerms.newBooleanSearchTerm("fn", "rst"));
+        sc2.addSearchTerm(SearchTerm.newBooleanSearchTerm("fn", "rst"));
         assertThat(sc2.getBooleanSearchTerms()).hasSize(1);
         assertThat(sc2.getIntegerSearchTerms()).isEmpty();
         assertThat(sc2.getStringSearchTerms()).isEmpty();
@@ -937,7 +937,7 @@ public class SearchConditionTest {
 
     @Test
     public void addingIntegerTermString() {
-        sc2.addSearchTerm(SearchTerms.newIntegerSearchTerm("fn", "1"));
+        sc2.addSearchTerm(SearchTerm.newIntegerSearchTerm("fn", "1"));
         assertThat(sc2.getBooleanSearchTerms()).isEmpty();
         assertThat(sc2.getIntegerSearchTerms()).hasSize(1);
         assertThat(sc2.getStringSearchTerms()).isEmpty();
@@ -946,7 +946,7 @@ public class SearchConditionTest {
 
     @Test
     public void addingSearchTermString() {
-        sc1.addSearchTerm(SearchTerms.newStringSearchTerm("fn", "rst"));
+        sc1.addSearchTerm(SearchTerm.newStringSearchTerm("fn", "rst"));
         assertThat(sc1.getBooleanSearchTerms()).isEmpty();
         assertThat(sc1.getIntegerSearchTerms()).isEmpty();
         assertThat(sc1.getStringSearchTerms()).hasSize(1);
@@ -955,7 +955,7 @@ public class SearchConditionTest {
 
     @Test
     public void addingAuditTermString() {
-        sc2.addSearchTerm(SearchTerms.newAuditSearchTerm("fn", "rst"));
+        sc2.addSearchTerm(SearchTerm.newAuditSearchTerm("fn", "rst"));
         assertThat(sc2.getBooleanSearchTerms()).isEmpty();
         assertThat(sc2.getIntegerSearchTerms()).isEmpty();
         assertThat(sc2.getStringSearchTerms()).isEmpty();

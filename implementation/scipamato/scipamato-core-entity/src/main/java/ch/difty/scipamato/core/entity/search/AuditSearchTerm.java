@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of {@link SearchTerm} working with the two audit fields
+ * Implementation of {@link AbstractSearchTerm} working with the two audit fields
  * createdDisplayValue and lastModifiedDisplayValue, both of which handle both
  * the user and the date of the create or last change.
  * <p>
@@ -67,7 +67,7 @@ import java.util.regex.Pattern;
  * @see <a href=
  *      "http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html">http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html</a>
  */
-public class AuditSearchTerm extends SearchTerm {
+public class AuditSearchTerm extends AbstractSearchTerm {
 
     private static final long serialVersionUID = 1L;
 

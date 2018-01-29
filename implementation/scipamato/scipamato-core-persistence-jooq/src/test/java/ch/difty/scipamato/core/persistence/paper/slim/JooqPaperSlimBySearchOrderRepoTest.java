@@ -17,7 +17,6 @@ import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.entity.search.SearchTerm;
 import ch.difty.scipamato.core.entity.search.SearchTermType;
-import ch.difty.scipamato.core.entity.search.SearchTerms;
 import ch.difty.scipamato.core.persistence.paper.searchorder.JooqBySearchOrderRepo;
 
 public class JooqPaperSlimBySearchOrderRepoTest {
@@ -69,7 +68,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     public void getConditions_withSearchOrderWithIntegerSearchTerm() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1l);
-        sc1.addSearchTerm(SearchTerms.newSearchTerm(2l, SearchTermType.INTEGER.getId(), 1, "publicationYear", ">2014"));
+        sc1.addSearchTerm(SearchTerm.newSearchTerm(2l, SearchTermType.INTEGER.getId(), 1, "publicationYear", ">2014"));
         searchOrder.add(sc1);
 
         Condition cond = finder.getConditionsFrom(searchOrder);
@@ -80,7 +79,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     public void getConditions_withSearchOrderWithAuditSearchTermForCreatedUser() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1l);
-        sc1.addSearchTerm(SearchTerms.newSearchTerm(2l, SearchTermType.AUDIT.getId(), 1, "paper.created_by", "mkj"));
+        sc1.addSearchTerm(SearchTerm.newSearchTerm(2l, SearchTermType.AUDIT.getId(), 1, "paper.created_by", "mkj"));
         searchOrder.add(sc1);
 
         Condition cond = finder.getConditionsFrom(searchOrder);
@@ -100,7 +99,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     public void getConditions_withSearchOrderWithAuditSearchTermForCreationTimeStamp() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1l);
-        SearchTerm st = SearchTerms.newSearchTerm(2l, SearchTermType.AUDIT.getId(), 1, "paper.created",
+        SearchTerm st = SearchTerm.newSearchTerm(2l, SearchTermType.AUDIT.getId(), 1, "paper.created",
             ">=\"2017-02-01 23:55:12\"");
         sc1.addSearchTerm(st);
         searchOrder.add(sc1);
@@ -113,7 +112,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     public void getConditions_withSearchOrderWithAuditSearchTermForLastModTimeStamp() {
         SearchOrder searchOrder = new SearchOrder();
         SearchCondition sc1 = new SearchCondition(1l);
-        SearchTerm st = SearchTerms.newSearchTerm(2l, SearchTermType.AUDIT.getId(), 1, "paper.last_modified",
+        SearchTerm st = SearchTerm.newSearchTerm(2l, SearchTermType.AUDIT.getId(), 1, "paper.last_modified",
             "<2017-02-01 23:55:12");
         sc1.addSearchTerm(st);
         searchOrder.add(sc1);
@@ -293,14 +292,14 @@ public class JooqPaperSlimBySearchOrderRepoTest {
         SearchOrder searchOrder = new SearchOrder();
 
         SearchCondition sc1 = new SearchCondition(1l);
-        sc1.addSearchTerm(SearchTerms.newSearchTerm(1l, SearchTermType.STRING.getId(), 1, "authors", "turner"));
+        sc1.addSearchTerm(SearchTerm.newSearchTerm(1l, SearchTermType.STRING.getId(), 1, "authors", "turner"));
         sc1.addSearchTerm(
-            SearchTerms.newSearchTerm(2l, SearchTermType.INTEGER.getId(), 1, "publicationYear", "2014-2015"));
+            SearchTerm.newSearchTerm(2l, SearchTermType.INTEGER.getId(), 1, "publicationYear", "2014-2015"));
         searchOrder.add(sc1);
 
         SearchCondition sc2 = new SearchCondition(2l);
         sc2.addSearchTerm(
-            SearchTerms.newSearchTerm(3l, SearchTermType.BOOLEAN.getId(), 2, "firstAuthorOverridden", "false"));
+            SearchTerm.newSearchTerm(3l, SearchTermType.BOOLEAN.getId(), 2, "firstAuthorOverridden", "false"));
         sc2.addCode(new Code("1F", "C1F", "", false, 1, "CC1", "", 0));
         sc2.addCode(new Code("5S", "C5S", "", false, 5, "CC5", "", 1));
         searchOrder.add(sc2);

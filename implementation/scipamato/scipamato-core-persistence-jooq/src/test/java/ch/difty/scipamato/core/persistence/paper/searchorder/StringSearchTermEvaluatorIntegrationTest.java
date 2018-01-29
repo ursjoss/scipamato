@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 import org.jooq.Condition;
 import org.junit.Test;
 
+import ch.difty.scipamato.core.entity.search.SearchTerm;
 import ch.difty.scipamato.core.entity.search.SearchTermType;
-import ch.difty.scipamato.core.entity.search.SearchTerms;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.Token;
@@ -103,7 +103,7 @@ public class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluato
 
     @Override
     protected StringSearchTerm makeSearchTerm(String rawSearchTerm) {
-        return (StringSearchTerm) SearchTerms.newSearchTerm(ID, searchTermType, SC_ID, FN, rawSearchTerm);
+        return (StringSearchTerm) SearchTerm.newSearchTerm(ID, searchTermType, SC_ID, FN, rawSearchTerm);
     }
 
     @Override

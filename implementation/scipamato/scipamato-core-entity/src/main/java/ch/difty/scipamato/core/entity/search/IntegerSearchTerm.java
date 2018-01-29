@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.entity.search;
 
 /**
- * Implementation of {@link SearchTerm} working with Integer fields. The
+ * Implementation of {@link AbstractSearchTerm} working with Integer fields. The
  * following {@link MatchType}s are implemented:
  *
  * <ul>
@@ -26,7 +26,7 @@ package ch.difty.scipamato.core.entity.search;
  *
  * @author u.joss
  */
-public class IntegerSearchTerm extends SearchTerm {
+public class IntegerSearchTerm extends AbstractSearchTerm {
     private static final long serialVersionUID = 1L;
 
     public enum MatchType {

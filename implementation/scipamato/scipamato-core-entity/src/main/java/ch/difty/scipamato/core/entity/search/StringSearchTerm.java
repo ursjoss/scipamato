@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of {@link SearchTerm} working with String fields. The search
+ * Implementation of {@link AbstractSearchTerm} working with String fields. The search
  * term (applying to one particular field) is lexed and transferred into one or
  * more {@link Token}s.
  * <p>
@@ -53,7 +53,7 @@ import java.util.regex.Pattern;
  * @see <a href=
  *      "http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html">http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html</a>
  */
-public class StringSearchTerm extends SearchTerm {
+public class StringSearchTerm extends AbstractSearchTerm {
     private static final long serialVersionUID = 1L;
 
     private static final String RE_NOT   = "-";

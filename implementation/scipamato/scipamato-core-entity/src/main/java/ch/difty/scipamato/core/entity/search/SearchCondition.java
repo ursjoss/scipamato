@@ -470,7 +470,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
 
     private void setStringValue(final String value, final String key) {
         if (value != null) {
-            stringSearchTerms.put(key, SearchTerms.newStringSearchTerm(key, value));
+            stringSearchTerms.put(key, SearchTerm.newStringSearchTerm(key, value));
             getRemovedKeys().remove(key);
         } else {
             getRemovedKeys().add(key);
@@ -485,7 +485,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
 
     private void setIntegerValue(final String value, final String key) {
         if (value != null) {
-            integerSearchTerms.put(key, SearchTerms.newIntegerSearchTerm(key, value));
+            integerSearchTerms.put(key, SearchTerm.newIntegerSearchTerm(key, value));
             getRemovedKeys().remove(key);
         } else {
             getRemovedKeys().add(key);
@@ -500,7 +500,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
 
     private void setBooleanValue(final String key, final Boolean value) {
         if (value != null) {
-            booleanSearchTerms.put(key, SearchTerms.newBooleanSearchTerm(key, value.toString()));
+            booleanSearchTerms.put(key, SearchTerm.newBooleanSearchTerm(key, value.toString()));
             getRemovedKeys().remove(key);
         } else {
             getRemovedKeys().add(key);
@@ -519,7 +519,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
     private void setAuditValue(final String value, final String... keys) {
         for (final String key : keys) {
             if (value != null) {
-                auditSearchTerms.put(key, SearchTerms.newAuditSearchTerm(key, value));
+                auditSearchTerms.put(key, SearchTerm.newAuditSearchTerm(key, value));
                 getRemovedKeys().remove(key);
             } else {
                 getRemovedKeys().add(key);

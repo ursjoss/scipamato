@@ -1,46 +1,112 @@
 package ch.difty.scipamato.core.entity.search;
 
-import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.core.entity.IdScipamatoEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+public interface SearchTerm {
 
-/**
- * Implementations of {@link SearchTerm} accept a {@code fieldName} as key and a
- * {@code rawSearchTerm} as value. The rawSearchTerm holds a comparison
- * specification holding a value and some meta information on how to compare the
- * field with the provided value.
- * <p>
- *
- * <b>Note:</b>Identity is based on {@code fieldName} and {@code rawSearchTerm}
- * only, thus ignoring {@code id} or {@code searchConditionId}. This might be an
- * issue in some use cases in the future!
- *
- * @author u.joss
- */
-@Data
-@EqualsAndHashCode(callSuper = false, exclude = { "searchConditionId", "searchTermType" })
-public abstract class SearchTerm extends IdScipamatoEntity<Long> {
-
-    private static final long serialVersionUID = 1L;
-
-    private final Long           searchConditionId;
-    private final SearchTermType searchTermType;
-    private final String         fieldName;
-    private final String         rawSearchTerm;
-
-    SearchTerm(final Long id, final SearchTermType type, final Long searchConditionId, final String fieldName,
-            final String rawSearchTerm) {
-        super(id);
-        this.searchConditionId = searchConditionId;
-        this.searchTermType = AssertAs.notNull(type);
-        this.fieldName = AssertAs.notNull(fieldName, "fieldName");
-        this.rawSearchTerm = AssertAs.notNull(rawSearchTerm, "rawSearchTerm");
+    /**
+     * Static factory method to produce implementations of {@link SearchTerm}s of
+     * the various subtypes.
+     *
+     * @param id
+     *            the database id
+     * @param searchTermTypeId
+     *            one of the ids as defined in enum {@link SearchTermType}
+     * @param searchConditionId
+     *            the database id of the associated search condition
+     * @param fieldName
+     *            the name of the field (in table paper) the search is to be
+     *            performed on
+     * @param rawSearchTerm
+     *            the search term definition
+     * @return one of the implementations of {@link SearchTerm}
+     */
+    static SearchTerm newSearchTerm(final long id, final int searchTermTypeId, final long searchConditionId,
+            final String fieldName, final String rawSearchTerm) {
+        final SearchTermType type = SearchTermType.byId(searchTermTypeId);
+        switch (type) {
+        case BOOLEAN:
+            return new BooleanSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+        case INTEGER:
+            return new IntegerSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+        case STRING:
+            return new StringSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+        case AUDIT:
+            return new AuditSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+        default:
+            throw new UnsupportedOperationException("SearchTermType." + type + " is not supported");
+        }
     }
 
-    @Override
-    public String getDisplayValue() {
-        return rawSearchTerm;
+    /**
+     * Instantiates a new {@link StringSearchTerm} based on fieldName and
+     * rawSearchTerm only
+     *
+     * @param fieldName
+     * @param rawSearchTerm
+     * @return the search term
+     */
+    static StringSearchTerm newStringSearchTerm(final String fieldName, final String rawSearchTerm) {
+        return new StringSearchTerm(fieldName, rawSearchTerm);
     }
+
+    /**
+     * Instantiates a new {@link IntegerSearchTerm} based on fieldName and
+     * rawSearchTerm only
+     *
+     * @param fieldName
+     * @param rawSearchTerm
+     * @return the search term
+     */
+    static IntegerSearchTerm newIntegerSearchTerm(final String fieldName, final String rawSearchTerm) {
+        return new IntegerSearchTerm(fieldName, rawSearchTerm);
+    }
+
+    /**
+     * Instantiates a new {@link BooleanSearchTerm} based on fieldName and
+     * rawSearchTerm only
+     *
+     * @param fieldName
+     * @param rawSearchTerm
+     * @return the search term
+     */
+    static BooleanSearchTerm newBooleanSearchTerm(final String fieldName, final String rawSearchTerm) {
+        return new BooleanSearchTerm(fieldName, rawSearchTerm);
+    }
+
+    /**
+     * Instantiates a new {@link AuditSearchTerm} based on fieldName and
+     * rawSearchTerm only
+     *
+     * @param fieldName
+     * @param rawSearchTerm
+     * @return the search term
+     */
+    static AuditSearchTerm newAuditSearchTerm(final String fieldName, final String rawSearchTerm) {
+        return new AuditSearchTerm(fieldName, rawSearchTerm);
+    }
+
+    /**
+     * @return the database id of the search condition
+     */
+    Long getSearchConditionId();
+
+    /**
+     * @return the {@link SearchTermType}
+     */
+    SearchTermType getSearchTermType();
+
+    /**
+     * @return the name of the field that is searched
+     */
+    String getFieldName();
+
+    /**
+     * @return the raw search term
+     */
+    String getRawSearchTerm();
+
+    /**
+     * @return the display value for given search term
+     */
+    String getDisplayValue();
 
 }
