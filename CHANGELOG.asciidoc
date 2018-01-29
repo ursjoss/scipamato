@@ -59,7 +59,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - keep generated pubmed-api classes strictly within scipamato-core-pubmed-api
 - have infinitest ignore integration tests
 - renamed public packages from ch.difty.scipamato.public_ to ch.difty.scipamato.publ
-- updated postgresql jdbc driver
+- updated postgresql jdbc driver, spring-boot-admin
 
 .Deprecated
 
