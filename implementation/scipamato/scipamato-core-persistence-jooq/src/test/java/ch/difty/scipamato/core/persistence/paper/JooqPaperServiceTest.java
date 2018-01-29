@@ -26,8 +26,8 @@ import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.AbstractServiceTest;
 import ch.difty.scipamato.core.persistence.ServiceResult;
+import ch.difty.scipamato.core.pubmed.AbstractPubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
-import ch.difty.scipamato.core.pubmed.ScipamatoPubmedArticles;
 import ch.difty.scipamato.core.pubmed.api.Article;
 import ch.difty.scipamato.core.pubmed.api.ArticleTitle;
 import ch.difty.scipamato.core.pubmed.api.Journal;
@@ -209,7 +209,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void dumpingSingleArticle_whichAlreadyExists_doesNotSave() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
-        articles.add(ScipamatoPubmedArticles.newPubmedArticleFrom(pa));
+        articles.add(PubmedArticleFacade.newPubmedArticleFrom(pa));
 
         // existing papers
         when(repoMock.findExistingPmIdsOutOf(Arrays.asList(pmIdValue))).thenReturn(Arrays.asList(pmIdValue));
@@ -228,7 +228,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void dumpingSingleNewArticle_saves() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
-        articles.add(ScipamatoPubmedArticles.newPubmedArticleFrom(pa));
+        articles.add(PubmedArticleFacade.newPubmedArticleFrom(pa));
         assertThat(articles.get(0)
             .getPmId()).isNotNull();
 
@@ -257,9 +257,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void dumpingSingleNewArticleWithNullPmId_doesNotTryToSave() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
-        articles.add(ScipamatoPubmedArticles.newPubmedArticleFrom(pa));
-        articles.get(0)
-            .setPmId(null);
+        articles.add(PubmedArticleFacade.newPubmedArticleFrom(pa));
+        ((AbstractPubmedArticleFacade) articles.get(0)).setPmId(null);
 
         ServiceResult sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER);
         assertThat(sr).isNotNull();
@@ -274,12 +273,11 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void dumpingTwoNewArticleOneOfWhichWithNullPmId_savesOnlyOther() {
         Integer pmIdValue = 23193287;
         PubmedArticle pa1 = newPubmedArticle(pmIdValue);
-        articles.add(ScipamatoPubmedArticles.newPubmedArticleFrom(pa1));
-        articles.add(ScipamatoPubmedArticles.newPubmedArticleFrom(newPubmedArticle(0)));
+        articles.add(PubmedArticleFacade.newPubmedArticleFrom(pa1));
+        articles.add(PubmedArticleFacade.newPubmedArticleFrom(newPubmedArticle(0)));
         assertThat(articles.get(1)
             .getPmId()).isEqualTo("0");
-        articles.get(1)
-            .setPmId(null);
+        ((AbstractPubmedArticleFacade) articles.get(1)).setPmId(null);
 
         when(repoMock.findExistingPmIdsOutOf(Arrays.asList(pmIdValue))).thenReturn(Arrays.asList());
         when(repoMock.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)).thenReturn(17l);

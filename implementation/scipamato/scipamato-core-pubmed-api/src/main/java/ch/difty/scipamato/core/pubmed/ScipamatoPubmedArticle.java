@@ -21,12 +21,12 @@ import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
 import ch.difty.scipamato.core.pubmed.api.Year;
 
 /**
- * Derives from {@link PubmedArticleFacade} wrapping an instance of
+ * Derives from {@link AbstractPubmedArticleFacade} wrapping an instance of
  * {@link PubmedArticle}.
  * 
  * @author u.joss
  */
-public class ScipamatoPubmedArticle extends PubmedArticleFacade {
+public class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
 
     private static final String PII = "pii";
 

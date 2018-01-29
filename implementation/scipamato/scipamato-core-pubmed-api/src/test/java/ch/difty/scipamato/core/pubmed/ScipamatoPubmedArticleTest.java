@@ -127,7 +127,7 @@ public class ScipamatoPubmedArticleTest {
 
     @Test
     public void validConstructionUsingOf() {
-        assertThat(ScipamatoPubmedArticles.newPubmedArticleFrom(pubmedArticle)).isNotNull();
+        assertThat(PubmedArticleFacade.newPubmedArticleFrom(pubmedArticle)).isNotNull();
     }
 
     @Test
@@ -459,6 +459,6 @@ public class ScipamatoPubmedArticleTest {
     public void testingToString() {
         ScipamatoPubmedArticle pa = new ScipamatoPubmedArticle(pubmedArticle);
         assertThat(pa.toString()).isEqualTo(
-            "PubmedArticleFacade(pmId=null, authors=null, firstAuthor=null, publicationYear=0, location=null. 0;, title=null, doi=null, originalAbstract=null)");
+            "AbstractPubmedArticleFacade(pmId=null, authors=null, firstAuthor=null, publicationYear=0, location=null. 0;, title=null, doi=null, originalAbstract=null)");
     }
 }

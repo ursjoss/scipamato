@@ -40,7 +40,7 @@ public class PubmedXmlService implements PubmedArticleService {
             final PubmedArticleSet set = pubMed.articleWithId(String.valueOf(pmId));
             final List<java.lang.Object> articles = set.getPubmedArticleOrPubmedBookArticle();
             return articles.stream()
-                .map(ScipamatoPubmedArticles::newPubmedArticleFrom)
+                .map(PubmedArticleFacade::newPubmedArticleFrom)
                 .findFirst();
         } catch (final Exception ex) {
             log.error("Unexpected error", ex);
@@ -88,7 +88,7 @@ public class PubmedXmlService implements PubmedArticleService {
             final PubmedArticleSet set = unmarshal(xmlString);
             final List<java.lang.Object> aoba = set.getPubmedArticleOrPubmedBookArticle();
             articles.addAll(aoba.stream()
-                .map(ScipamatoPubmedArticles::newPubmedArticleFrom)
+                .map(PubmedArticleFacade::newPubmedArticleFrom)
                 .collect(Collectors.toList()));
         } catch (final Exception e) {
             log.info("Unable to parse xmlString '{}': {}", xmlString, e.getMessage());

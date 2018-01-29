@@ -152,7 +152,7 @@ public class ScipamatoPubmedBookArticleTest {
         assertThat(pa.getOriginalAbstract()).startsWith("ABSTRACT: abstract");
 
         assertThat(pa.toString()).isEqualTo(
-            "PubmedArticleFacade(pmId=pmid, authors=ln1 i1, ln2 i2, ln3 i3., firstAuthor=ln1, publicationYear=2017, location=ll1 - ll2, title=title, doi=DOI, originalAbstract=ABSTRACT: abstract)");
+            "AbstractPubmedArticleFacade(pmId=pmid, authors=ln1 i1, ln2 i2, ln3 i3., firstAuthor=ln1, publicationYear=2017, location=ll1 - ll2, title=title, doi=DOI, originalAbstract=ABSTRACT: abstract)");
     }
 
     @Test
@@ -190,13 +190,13 @@ public class ScipamatoPubmedBookArticleTest {
 
     @Test
     public void validConstructionUsingOf() {
-        assertThat(ScipamatoPubmedArticles.newPubmedArticleFrom(pubmedBookArticle)).isNotNull();
+        assertThat(PubmedArticleFacade.newPubmedArticleFrom(pubmedBookArticle)).isNotNull();
     }
 
     @Test
     public void invalidConstructionUsingOfWithForiegnObject() {
         try {
-            ScipamatoPubmedArticles.newPubmedArticleFrom(Integer.valueOf(1));
+            PubmedArticleFacade.newPubmedArticleFrom(Integer.valueOf(1));
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(IllegalArgumentException.class)

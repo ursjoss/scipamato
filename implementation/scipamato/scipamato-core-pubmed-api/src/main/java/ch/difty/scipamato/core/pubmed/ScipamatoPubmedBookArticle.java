@@ -10,7 +10,7 @@ import ch.difty.scipamato.core.pubmed.api.LocationLabel;
 import ch.difty.scipamato.core.pubmed.api.PubmedBookArticle;
 
 /**
- * Derives from {@link PubmedArticleFacade} wrapping an instance of
+ * Derives from {@link AbstractPubmedArticleFacade} wrapping an instance of
  * {@link PubmedBookArticle}.
  * <p>
  * <b>Note:</b> The extraction of the fields implemented so far is purely based
@@ -21,7 +21,7 @@ import ch.difty.scipamato.core.pubmed.api.PubmedBookArticle;
  *
  * @author u.joss
  */
-public class ScipamatoPubmedBookArticle extends PubmedArticleFacade {
+public class ScipamatoPubmedBookArticle extends AbstractPubmedArticleFacade {
 
     protected ScipamatoPubmedBookArticle(final PubmedBookArticle pubmedBookArticle) {
         AssertAs.notNull(pubmedBookArticle, "pubmedBookArticle");
