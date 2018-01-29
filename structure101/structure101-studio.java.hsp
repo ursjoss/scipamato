@@ -55,8 +55,6 @@
     <exclude expression="scipamato.scipamato-core-sync.scipamato-core-sync.*.ch.difty.scipamato.publ.db.*" active="true" />
     <exclude expression="scipamato.scipamato-core-pubmed-api.scipamato-core-pubmed-api-*.ch.difty.scipamato.core.pubmed.api.*" active="true" />
   </excludes>
-  <excludes-from-xs>
-  </excludes-from-xs>
   <transformations>
     <transformation in="*" out="{jar}.*" />
   </transformations>
@@ -148,74 +146,119 @@
         <cell name="SciPaMaTo-Core" pattern="scipamato.*" vexpanded="true" illegal="false" visibility="public" drill="true">
           <grid>
             <row>
-              <cell name="scipamato-core-web" pattern="scipamato.scipamato-core-web.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,255" />
-            </row>
-            <row>
-              <cell name="scipamato-core-sync" pattern="scipamato.scipamato-core-sync.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="255,204,204">
+              <cell name="Presentation Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
                 <grid>
                   <row>
-                    <cell name="test-classes" pattern="scipamato.scipamato-core-sync.test-classes.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                    <cell name="scipamato-core-web" pattern="scipamato.scipamato-core-web.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,255" />
                   </row>
                   <row>
-                    <cell name="scipamato-core-sync-0_7_1-SNAPSHOT" pattern="scipamato.scipamato-core-sync.scipamato-core-sync-0_7_1-SNAPSHOT.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                    <cell name="scipamato-core-sync" pattern="scipamato.scipamato-core-sync.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="255,204,204">
+                      <grid>
+                        <row>
+                          <cell name="test-classes" pattern="scipamato.scipamato-core-sync.test-classes.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                        </row>
+                        <row>
+                          <cell name="scipamato-core-sync-0_7_1-SNAPSHOT" pattern="scipamato.scipamato-core-sync.scipamato-core-sync-0_7_1-SNAPSHOT.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                        </row>
+                      </grid>
+                    </cell>
+                  </row>
+                  <row>
+                    <cell name="scipamato-common-wicket" pattern="scipamato.scipamato-common-wicket.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,255">
+                      <grid>
+                        <row>
+                          <cell name="test-classes" pattern="scipamato.scipamato-common-wicket.test-classes.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                        </row>
+                        <row>
+                          <cell name="scipamato-common-wicket" pattern="scipamato.scipamato-common-wicket.scipamato-common-wicket.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                        </row>
+                      </grid>
+                    </cell>
                   </row>
                 </grid>
               </cell>
             </row>
             <row>
-              <cell name="scipamato-common-wicket" pattern="scipamato.scipamato-common-wicket.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,255">
+              <cell name="Persistence Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
                 <grid>
                   <row>
-                    <cell name="test-classes" pattern="scipamato.scipamato-common-wicket.test-classes.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                    <cell name="scipamato-core-persistence-jooq" pattern="scipamato.scipamato-core-persistence-jooq.*" vexpanded="false" illegal="false" visibility="private" drill="true" bgcolor="204,255,204" />
                   </row>
                   <row>
-                    <cell name="scipamato-common-wicket" pattern="scipamato.scipamato-common-wicket.scipamato-common-wicket.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                    <cell name="scipamato-common-persistence-jooq" pattern="scipamato.scipamato-common-persistence-jooq.*" vexpanded="false" illegal="false" visibility="private" drill="true" bgcolor="204,255,204" />
+                    <cell name="scipamato-core-persistence-api" pattern="scipamato.scipamato-core-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                  </row>
+                  <row>
+                    <cell name="scipamato-common-persistence-api" pattern="scipamato.scipamato-common-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
                   </row>
                 </grid>
               </cell>
-              <cell name="scipamato-core-persistence-jooq" pattern="scipamato.scipamato-core-persistence-jooq.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
             </row>
             <row>
-              <cell name="scipamato-common-persistence-jooq" pattern="scipamato.scipamato-common-persistence-jooq.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
-              <cell name="scipamato-core-persistence-api" pattern="scipamato.scipamato-core-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
-            </row>
-            <row>
-              <cell name="scipamato-common-persistence-api" pattern="scipamato.scipamato-common-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
-              <cell name="scipamato-core-entity" pattern="scipamato.scipamato-core-entity.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+              <cell name="Entity Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="scipamato-core-entity" pattern="scipamato.scipamato-core-entity.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+                  </row>
+                  <row>
+                    <cell name="scipamato-common-entity" pattern="scipamato.scipamato-common-entity.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+                  </row>
+                </grid>
+              </cell>
             </row>
             <row>
               <cell name="scipamato-core-pubmed-api" pattern="scipamato.scipamato-core-pubmed-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="255,204,255" />
             </row>
             <row>
               <cell name="scipamato-common-utils" pattern="scipamato.scipamato-common-utils.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
-              <cell name="scipamato-common-entity" pattern="scipamato.scipamato-common-entity.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
             </row>
           </grid>
         </cell>
       </row>
-      <description>Generated from LSM "Model 1"</description>
     </grid>
     <grid name="SciPaMaTo-Public" enforce="true" locked="true" strict="false" excludes="">
       <row>
         <cell name="SciPaMaTo-Public" pattern="scipamato.*" vexpanded="true" illegal="false" visibility="public" drill="true">
           <grid>
             <row>
-              <cell name="scipamato-public-web" pattern="scipamato.scipamato-public-web.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,255" />
+              <cell name="Presentation Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="scipamato-public-web" pattern="scipamato.scipamato-public-web.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,255" />
+                  </row>
+                  <row>
+                    <cell name="scipamato-common-wicket" pattern="scipamato.scipamato-common-wicket.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,255" />
+                  </row>
+                </grid>
+              </cell>
             </row>
             <row>
-              <cell name="scipamato-common-wicket" pattern="scipamato.scipamato-common-wicket.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,255" />
-              <cell name="scipamato-public-persistence-jooq" pattern="scipamato.scipamato-public-persistence-jooq.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+              <cell name="Persistence Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="scipamato-public-persistence-jooq" pattern="scipamato.scipamato-public-persistence-jooq.*" vexpanded="false" illegal="false" visibility="private" drill="true" bgcolor="204,255,204" />
+                  </row>
+                  <row>
+                    <cell name="scipamato-common-persistence-jooq" pattern="scipamato.scipamato-common-persistence-jooq.*" vexpanded="false" illegal="false" visibility="private" drill="true" bgcolor="204,255,204" />
+                    <cell name="scipamato-public-persistence-api" pattern="scipamato.scipamato-public-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                  </row>
+                  <row>
+                    <cell name="scipamato-common-persistence-api" pattern="scipamato.scipamato-common-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                  </row>
+                </grid>
+              </cell>
             </row>
             <row>
-              <cell name="scipamato-common-persistence-jooq" pattern="scipamato.scipamato-common-persistence-jooq.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
-              <cell name="scipamato-public-persistence-api" pattern="scipamato.scipamato-public-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
-            </row>
-            <row>
-              <cell name="scipamato-common-persistence-api" pattern="scipamato.scipamato-common-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
-              <cell name="scipamato-public-entity" pattern="scipamato.scipamato-public-entity.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
-            </row>
-            <row>
-              <cell name="scipamato-common-entity" pattern="scipamato.scipamato-common-entity.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+              <cell name="Entity Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="scipamato-public-entity" pattern="scipamato.scipamato-public-entity.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+                  </row>
+                  <row>
+                    <cell name="scipamato-common-entity" pattern="scipamato.scipamato-common-entity.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+                  </row>
+                </grid>
+              </cell>
             </row>
             <row>
               <cell name="scipamato-common-utils" pattern="scipamato.scipamato-common-utils.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
@@ -223,37 +266,95 @@
           </grid>
         </cell>
       </row>
-      <description>Generated from LSM "Model 1"</description>
     </grid>
     <grid name="All Modules" enforce="true" locked="true" strict="false" excludes="">
       <row>
-        <cell name="scipamato" pattern="scipamato.*" vexpanded="true" illegal="false" visibility="public" drill="true">
+        <cell name="SciPaMaTo-Project" pattern="scipamato.*" vexpanded="true" illegal="false" visibility="public" drill="true">
           <grid>
             <row>
-              <cell name="scipamato-core-web" pattern="scipamato.scipamato-core-web.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,255" />
-              <cell name="scipamato-public-web" pattern="scipamato.scipamato-public-web.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,255" />
+              <cell name="Presentation Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="Presentation-Core" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                      <grid>
+                        <row>
+                          <cell name="scipamato-core-web" pattern="scipamato.scipamato-core-web.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,255" />
+                        </row>
+                        <row>
+                          <cell name="scipamato-core-sync" pattern="scipamato.scipamato-core-sync.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="255,204,204" />
+                        </row>
+                      </grid>
+                    </cell>
+                    <cell name="Presentation-Public" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                      <grid>
+                        <row>
+                          <cell name="scipamato-public-web" pattern="scipamato.scipamato-public-web.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,255" />
+                        </row>
+                      </grid>
+                    </cell>
+                  </row>
+                  <row>
+                    <cell name="scipamato-common-wicket" pattern="scipamato.scipamato-common-wicket.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,255" />
+                  </row>
+                </grid>
+              </cell>
             </row>
             <row>
-              <cell name="scipamato-core-sync" pattern="scipamato.scipamato-core-sync.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="255,204,204" />
+              <cell name="Persistence Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="Pesistence-Core" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                      <grid>
+                        <row>
+                          <cell name="scipamato-core-persistence-jooq" pattern="scipamato.scipamato-core-persistence-jooq.*" vexpanded="false" illegal="false" visibility="private" drill="true" bgcolor="204,255,204" />
+                        </row>
+                        <row>
+                          <cell name="scipamato-core-persistence-api" pattern="scipamato.scipamato-core-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                        </row>
+                      </grid>
+                    </cell>
+                    <cell name="Persistence-Public" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                      <grid>
+                        <row>
+                          <cell name="scipamato-public-persistence-jooq" pattern="scipamato.scipamato-public-persistence-jooq.*" vexpanded="false" illegal="false" visibility="private" drill="true" bgcolor="204,255,204" />
+                        </row>
+                        <row>
+                          <cell name="scipamato-public-persistence-api" pattern="scipamato.scipamato-public-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                        </row>
+                      </grid>
+                    </cell>
+                  </row>
+                  <row>
+                    <cell name="scipamato-common-persistence-jooq" pattern="scipamato.scipamato-common-persistence-jooq.*" vexpanded="false" illegal="false" visibility="private" drill="true" bgcolor="204,255,204" />
+                  </row>
+                  <row>
+                    <cell name="scipamato-common-persistence-api" pattern="scipamato.scipamato-common-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+                  </row>
+                </grid>
+              </cell>
             </row>
             <row>
-              <cell name="scipamato-core-persistence-jooq" pattern="scipamato.scipamato-core-persistence-jooq.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
-              <cell name="scipamato-public-persistence-jooq" pattern="scipamato.scipamato-public-persistence-jooq.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
+              <cell name="Entity Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="scipamato-core-entity" pattern="scipamato.scipamato-core-entity.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+                    <cell name="scipamato-public-entity" pattern="scipamato.scipamato-public-entity.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+                  </row>
+                  <row>
+                    <cell name="scipamato-common-entity" pattern="scipamato.scipamato-common-entity.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
+                  </row>
+                </grid>
+              </cell>
             </row>
             <row>
-              <cell name="scipamato-common-persistence-jooq" pattern="scipamato.scipamato-common-persistence-jooq.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
-              <cell name="scipamato-common-wicket" pattern="scipamato.scipamato-common-wicket.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,255" />
-              <cell name="scipamato-core-persistence-api" pattern="scipamato.scipamato-core-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
-              <cell name="scipamato-public-persistence-api" pattern="scipamato.scipamato-public-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
-            </row>
-            <row>
-              <cell name="scipamato-common-persistence-api" pattern="scipamato.scipamato-common-persistence-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,255,204" />
-              <cell name="scipamato-core-entity" pattern="scipamato.scipamato-core-entity.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
-              <cell name="scipamato-public-entity" pattern="scipamato.scipamato-public-entity.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
-            </row>
-            <row>
-              <cell name="scipamato-common-entity" pattern="scipamato.scipamato-common-entity.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="204,204,255" />
-              <cell name="scipamato-core-pubmed-api" pattern="scipamato.scipamato-core-pubmed-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+              <cell name="Pubmed" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="scipamato-core-pubmed-api" pattern="scipamato.scipamato-core-pubmed-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                  </row>
+                </grid>
+              </cell>
+              <cell pattern="" vexpanded="false" illegal="false" visibility="public" drill="true" />
             </row>
             <row>
               <cell name="scipamato-common-utils" pattern="scipamato.scipamato-common-utils.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
