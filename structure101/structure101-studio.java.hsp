@@ -55,6 +55,9 @@
     <exclude expression="scipamato.scipamato-core-sync.scipamato-core-sync.*.ch.difty.scipamato.publ.db.*" active="true" />
     <exclude expression="scipamato.scipamato-core-pubmed-api.scipamato-core-pubmed-api-*.ch.difty.scipamato.core.pubmed.api.*" active="true" />
   </excludes>
+  <excludes-from-xs>
+    <exclude-from-xs expression="scipamato.scipamato-core-pubmed-api.scipamato-core-pubmed-api-0_7_5-SNAPSHOT.ch.difty.scipamato.core.pubmed.api" active="true" />
+  </excludes-from-xs>
   <transformations>
     <transformation in="*" out="{jar}.*" />
   </transformations>
