@@ -12,7 +12,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
-import ch.difty.scipamato.core.ScipamatoSession;
+import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
@@ -42,6 +42,9 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
 
     @SpringBean
     private PaperService paperService;
+
+    @SpringBean
+    private ScipamatoWebSessionFacade webSessionFacade;
 
     /**
      * Instantiate the provider with the filter and the number of rows per page.
@@ -171,8 +174,6 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
     }
 
     protected String getLanguageCode() {
-        return ScipamatoSession.get()
-            .getLocale()
-            .getLanguage();
+        return webSessionFacade.getLanguageCode();
     }
 }

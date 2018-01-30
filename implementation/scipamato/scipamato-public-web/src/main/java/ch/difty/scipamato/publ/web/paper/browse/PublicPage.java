@@ -30,7 +30,6 @@ import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
 import ch.difty.scipamato.common.web.component.table.column.ClickablePropertyColumn;
-import ch.difty.scipamato.publ.ScipamatoPublicSession;
 import ch.difty.scipamato.publ.entity.Code;
 import ch.difty.scipamato.publ.entity.CodeClass;
 import ch.difty.scipamato.publ.entity.PopulationCode;
@@ -266,10 +265,8 @@ public class PublicPage extends BasePage<Void> {
     }
 
     private void onTitleClick(IModel<PublicPaper> m) {
-        ScipamatoPublicSession.get()
-            .getPaperIdManager()
-            .setFocusToItem(m.getObject()
-                .getId());
+        getPaperIdManager().setFocusToItem(m.getObject()
+            .getId());
         setResponsePage(new PublicPaperDetailPage(m, getPage().getPageReference()));
     }
 
@@ -315,9 +312,7 @@ public class PublicPage extends BasePage<Void> {
      * the session
      */
     private void updateNavigateable() {
-        ScipamatoPublicSession.get()
-            .getPaperIdManager()
-            .initialize(dataProvider.findAllPaperNumbersByFilter());
+        getPaperIdManager().initialize(dataProvider.findAllPaperNumbersByFilter());
     }
 
 }

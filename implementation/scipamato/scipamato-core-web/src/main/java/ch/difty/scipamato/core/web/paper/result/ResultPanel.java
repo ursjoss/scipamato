@@ -20,7 +20,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
 import ch.difty.scipamato.common.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.scipamato.common.web.component.table.column.LinkIconColumn;
-import ch.difty.scipamato.core.ScipamatoSession;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
@@ -108,14 +107,9 @@ public abstract class ResultPanel extends BasePanel<Void> {
     }
 
     private void onTitleClick(IModel<PaperSlim> m) {
-        ScipamatoSession.get()
-            .getPaperIdManager()
-            .setFocusToItem(m.getObject()
-                .getId());
-        String languageCode = ScipamatoSession.get()
-            .getLocale()
-            .getLanguage();
-        setResponsePage(getResponsePage(m, languageCode, paperService, dataProvider));
+        getPaperIdManager().setFocusToItem(m.getObject()
+            .getId());
+        setResponsePage(getResponsePage(m, getLocalization(), paperService, dataProvider));
     }
 
     protected abstract GenericWebPage<Paper> getResponsePage(IModel<PaperSlim> m, String languageCode,

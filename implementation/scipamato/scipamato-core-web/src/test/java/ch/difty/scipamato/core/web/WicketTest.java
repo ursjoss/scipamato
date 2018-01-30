@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web;
 
+import static org.mockito.Mockito.when;
+
 import java.util.Locale;
 
 import org.apache.wicket.markup.html.basic.Label;
@@ -20,6 +22,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 
 import ch.difty.scipamato.common.DateTimeService;
+import ch.difty.scipamato.common.navigator.ItemNavigator;
+import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.core.ScipamatoApplication;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.PaperSlimService;
@@ -43,6 +47,12 @@ public abstract class WicketTest {
 
     @Autowired
     private DateTimeService dateTimeService;
+
+    @MockBean
+    private ScipamatoWebSessionFacade sessionFacadeMock;
+
+    @MockBean
+    private ItemNavigator<Long> itemNavigatorMock;
 
     // The paper slim service and paper service are used in the home page
     // PaperListPage
@@ -69,8 +79,10 @@ public abstract class WicketTest {
     public final void setUp() {
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock);
         tester = new WicketTester(application);
+        when(sessionFacadeMock.getPaperIdManager()).thenReturn(itemNavigatorMock);
         Locale locale = new Locale("en_US");
-        tester.getSession()
+        when(sessionFacadeMock.getLanguageCode()).thenReturn(locale.getLanguage());
+        getTester().getSession()
             .setLocale(locale);
         setUpHook();
         login(USERNAME, PASSWORD);

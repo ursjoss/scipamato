@@ -9,9 +9,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
+import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.AbstractPage;
+import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.common.web.pages.MenuBuilder;
-import ch.difty.scipamato.core.ScipamatoSession;
 import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.web.resources.MainCssResourceReference;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
@@ -21,9 +22,11 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     private static final long serialVersionUID = 1L;
 
     @SpringBean
-    private ApplicationProperties applicationProperties;
+    private ApplicationProperties     applicationProperties;
     @SpringBean
-    private MenuBuilder           menuBuilder;
+    private MenuBuilder               menuBuilder;
+    @SpringBean
+    private ScipamatoWebSessionFacade sessionFacade;
 
     public BasePage(final PageParameters parameters) {
         super(parameters);
@@ -58,10 +61,12 @@ public abstract class BasePage<T> extends AbstractPage<T> {
         return (User) getAuthentication().getPrincipal();
     }
 
+    protected ItemNavigator<Long> getPaperIdManager() {
+        return sessionFacade.getPaperIdManager();
+    }
+
     protected String getLanguageCode() {
-        return ScipamatoSession.get()
-            .getLocale()
-            .getLanguage();
+        return sessionFacade.getLanguageCode();
     }
 
 }

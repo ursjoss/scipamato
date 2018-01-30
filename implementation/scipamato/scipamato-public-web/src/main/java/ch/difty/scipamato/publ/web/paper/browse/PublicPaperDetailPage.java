@@ -14,7 +14,6 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
-import ch.difty.scipamato.publ.ScipamatoPublicSession;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
 import ch.difty.scipamato.publ.web.common.BasePage;
@@ -88,8 +87,7 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
 
         queue(new Form<Void>("form"));
 
-        final ItemNavigator<Long> pm = ScipamatoPublicSession.get()
-            .getPaperIdManager();
+        final ItemNavigator<Long> pm = getPaperIdManager();
         queue(newNavigationButton("previous", GlyphIconType.stepbackward, pm::hasPrevious, () -> {
             pm.previous();
             return pm.getItemWithFocus();

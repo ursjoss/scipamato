@@ -17,7 +17,6 @@ import org.apache.wicket.util.string.StringValue;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.core.ScipamatoSession;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
@@ -349,12 +348,8 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
      * null.
      */
     private void updateNavigateable() {
-        ScipamatoSession.get()
-            .getPaperIdManager()
-            .setFocusToItem(null);
-        ScipamatoSession.get()
-            .getPaperIdManager()
-            .initialize(dataProvider.findAllPaperIdsByFilter());
+        getPaperIdManager().setFocusToItem(null);
+        getPaperIdManager().initialize(dataProvider.findAllPaperIdsByFilter());
     }
 
 }

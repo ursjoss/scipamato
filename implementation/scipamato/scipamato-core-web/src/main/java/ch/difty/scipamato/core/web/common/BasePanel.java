@@ -6,9 +6,10 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
+import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.AbstractPanel;
 import ch.difty.scipamato.common.web.Mode;
-import ch.difty.scipamato.core.ScipamatoSession;
+import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.core.entity.User;
 
 public abstract class BasePanel<T> extends AbstractPanel<T> {
@@ -16,7 +17,9 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
     private static final long serialVersionUID = 1L;
 
     @SpringBean
-    private ApplicationProperties properties;
+    private ApplicationProperties     properties;
+    @SpringBean
+    private ScipamatoWebSessionFacade webSessionFacade;
 
     public BasePanel(final String id) {
         this(id, null, Mode.VIEW);
@@ -34,10 +37,12 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
         return properties;
     }
 
+    protected ItemNavigator<Long> getPaperIdManager() {
+        return webSessionFacade.getPaperIdManager();
+    }
+
     protected String getLocalization() {
-        return ScipamatoSession.get()
-            .getLocale()
-            .getLanguage();
+        return webSessionFacade.getLanguageCode();
     }
 
     /**

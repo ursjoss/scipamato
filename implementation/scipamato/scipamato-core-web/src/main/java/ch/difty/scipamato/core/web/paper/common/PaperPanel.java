@@ -39,7 +39,6 @@ import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
-import ch.difty.scipamato.core.ScipamatoSession;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.CodeBoxAware;
 import ch.difty.scipamato.core.entity.CodeClass;
@@ -149,8 +148,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         queueAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
         title = new TextArea<>(Paper.TITLE);
 
-        final ItemNavigator<Long> pm = ScipamatoSession.get()
-            .getPaperIdManager();
+        final ItemNavigator<Long> pm = getPaperIdManager();
         queue(newNavigationButton("previous", GlyphIconType.stepbackward, pm::hasPrevious, () -> {
             pm.previous();
             return pm.getItemWithFocus();

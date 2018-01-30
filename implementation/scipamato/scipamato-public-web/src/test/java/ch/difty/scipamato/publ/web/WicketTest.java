@@ -1,5 +1,7 @@
 package ch.difty.scipamato.publ.web;
 
+import static org.mockito.Mockito.when;
+
 import java.util.Locale;
 
 import org.apache.wicket.markup.html.basic.Label;
@@ -11,11 +13,14 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import ch.difty.scipamato.common.DateTimeService;
+import ch.difty.scipamato.common.navigator.ItemNavigator;
+import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.publ.ScipamatoPublicApplication;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
@@ -32,6 +37,12 @@ public abstract class WicketTest {
 
     @Autowired
     private DateTimeService dateTimeService;
+
+    @MockBean
+    private ScipamatoWebSessionFacade sessionFacadeMock;
+
+    @MockBean
+    private ItemNavigator<Long> itemNavigatorMock;
 
     private WicketTester tester;
 
@@ -51,8 +62,10 @@ public abstract class WicketTest {
     public final void setUp() {
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock);
         tester = new WicketTester(application);
+        when(sessionFacadeMock.getPaperIdManager()).thenReturn(itemNavigatorMock);
         Locale locale = new Locale("en_US");
-        tester.getSession()
+        when(sessionFacadeMock.getLanguageCode()).thenReturn(locale.getLanguage());
+        getTester().getSession()
             .setLocale(locale);
         setUpHook();
     }

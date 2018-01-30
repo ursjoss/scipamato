@@ -9,8 +9,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
+import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.AbstractPage;
-import ch.difty.scipamato.publ.ScipamatoPublicSession;
+import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.publ.web.resources.MainCssResourceReference;
 
 public abstract class BasePage<T> extends AbstractPage<T> {
@@ -18,7 +19,9 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     private static final long serialVersionUID = 1L;
 
     @SpringBean
-    private ApplicationProperties applicationProperties;
+    private ApplicationProperties     applicationProperties;
+    @SpringBean
+    private ScipamatoWebSessionFacade sessionFacade;
 
     public BasePage(final PageParameters parameters) {
         super(parameters);
@@ -45,9 +48,11 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     }
 
     protected String getLanguageCode() {
-        return ScipamatoPublicSession.get()
-            .getLocale()
-            .getLanguage();
+        return sessionFacade.getLanguageCode();
+    }
+
+    protected ItemNavigator<Long> getPaperIdManager() {
+        return sessionFacade.getPaperIdManager();
     }
 
 }

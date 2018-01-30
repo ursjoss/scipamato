@@ -18,7 +18,6 @@ import org.wicketstuff.annotation.mount.MountPath;
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 import com.google.common.base.Strings;
 
-import ch.difty.scipamato.core.ScipamatoSession;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
@@ -117,9 +116,7 @@ public class PaperListPage extends BasePage<Void> {
      * filter. Construct a navigateable with this list and set it into the session
      */
     private void updateNavigateable() {
-        ScipamatoSession.get()
-            .getPaperIdManager()
-            .initialize(dataProvider.findAllPaperIdsByFilter());
+        getPaperIdManager().initialize(dataProvider.findAllPaperIdsByFilter());
     }
 
     private void makeAndQueueResultPanel(String id) {
