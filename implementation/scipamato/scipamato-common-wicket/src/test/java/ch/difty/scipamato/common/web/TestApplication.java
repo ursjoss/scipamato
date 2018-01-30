@@ -10,4 +10,5 @@ public class TestApplication {
         new SpringApplicationBuilder().sources(TestApplication.class)
             .run(args);
     }
+
 }
