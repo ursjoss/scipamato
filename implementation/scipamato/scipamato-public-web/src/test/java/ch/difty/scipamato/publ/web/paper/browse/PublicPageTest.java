@@ -164,4 +164,21 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         getTester().assertLabel(compId + "Label", "CC" + ccId);
         getTester().assertComponent(compId, BootstrapMultiSelect.class);
     }
+
+    @Test
+    public void clickingTitle_forwardsToDetailsPage() {
+        getTester().startPage(makePage());
+        getTester().assertRenderedPage(getPageClass());
+
+        getTester().clickLink("results:body:rows:1:cells:2:cell:link");
+        getTester().assertRenderedPage(PublicPaperDetailPage.class);
+
+        verify(serviceMock, times(1)).countByFilter(isA(PublicPaperFilter.class));
+        verify(serviceMock, times(1)).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
+        // used in navigateable
+        verify(serviceMock, times(1)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
+            isA(PaginationContext.class));
+
+        verify(codeClassServiceMock).find("en_us");
+    }
 }
