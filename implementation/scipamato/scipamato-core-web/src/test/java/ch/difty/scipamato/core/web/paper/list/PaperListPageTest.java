@@ -9,6 +9,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
@@ -23,6 +26,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.core.config.ApplicationCoreProperties;
+import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
@@ -223,5 +227,30 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         serviceResult.addWarnMessage("warn");
         serviceResult.addErrorMessage("error");
         return serviceResult;
+    }
+
+    @Test
+    public void clickingOnResultTitle_forwardsToPaperEntryPage() {
+        final List<PaperSlim> list = new ArrayList<>();
+        long number = 10l;
+        list.add(new PaperSlim(1l, number, "author", 2018, "title"));
+        when(paperSlimServiceMock.countByFilter(isA(PaperFilter.class))).thenReturn(list.size());
+        when(paperSlimServiceMock.findPageByFilter(isA(PaperFilter.class), isA(PaginationRequest.class)))
+            .thenReturn(list);
+
+        getTester().startPage(getPageClass());
+
+        getTester().clickLink("resultPanel:table:body:rows:1:cells:5:cell:link");
+        getTester().assertRenderedPage(PaperEntryPage.class);
+
+        verify(paperSlimServiceMock, times(2)).countByFilter(isA(PaperFilter.class));
+        verify(paperSlimServiceMock).findPageByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock).findByNumber(number, LC);
+        verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
+        // from PaperEntryPage
+        verify(codeClassServiceMock).find(LC);
+        for (CodeClassId ccid : CodeClassId.values())
+            verify(codeServiceMock).findCodesOfClass(ccid, LC);
     }
 }
