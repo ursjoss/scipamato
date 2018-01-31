@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<local-project language="javax" version="5.0.13210" xml-version="3" flavor="j2se">
+<local-project language="java" version="5.0.13248" xml-version="3" flavor="j2se">
   <property name="publish-architecture-artifacts" value="true" />
   <property name="force-classpath" value="false" />
   <property name="project-type" value="classpath" />
@@ -36,6 +36,7 @@
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-web/target/test-classes" module="scipamato-core-web" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-persistence-jooq/target/test-classes" module="scipamato-core-persistence-jooq" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-entity/target/classes" module="scipamato-public-entity" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-persistence-api/target/test-classes" module="scipamato-public-persistence-api" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-persistence-api/target/classes" module="scipamato-common-persistence-api" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-utils/target/test-classes" module="scipamato-common-utils" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-web/target/test-classes" module="scipamato-public-web" />
@@ -167,5 +168,5 @@
     <exclude expression="scipamato-core-web.ch.difty.scipamato.core.web.WicketTest" active="true" />
     <exclude expression="scipamato-core-pubmed-api.ch.difty.scipamato.core.pubmed.api.*" active="true" />
   </excludes>
-  <grid-set sep="." version="5.0.13210" />
+  <grid-set sep="." version="5.0.13248" />
 </local-project>
