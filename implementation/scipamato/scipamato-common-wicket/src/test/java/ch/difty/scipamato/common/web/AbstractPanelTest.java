@@ -1,9 +1,19 @@
 package ch.difty.scipamato.common.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
+import org.apache.wicket.bean.validation.PropertyValidator;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 import org.junit.Test;
 
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
@@ -82,6 +92,49 @@ public class AbstractPanelTest extends WicketBaseTest {
         getTester().assertComponent("panel:bar", TextField.class);
         getTester().assertLabel("panel:bazLabel", "Baz");
         getTester().assertComponent("panel:baz", CheckBoxX.class);
+    }
+
+    @Test
+    public void queuingFieldAndLabel_withPropertyValidatorInEditMode_addsLatterToComponent() {
+        FormComponent<?> fc = mock(FormComponent.class);
+        when(fc.getId()).thenReturn("fcId");
+        PropertyValidator<?> pv = mock(PropertyValidator.class);
+
+        AbstractPanel<TestRecord> p = new TestAbstractPanel("panel", Mode.EDIT);
+        p.queueFieldAndLabel(fc, pv);
+
+        verify(fc, times(3)).getId();
+        verify(fc).setLabel(isA(StringResourceModel.class));
+        verify(fc).add(pv);
+        verifyNoMoreInteractions(fc, pv);
+    }
+
+    @Test
+    public void queuingFieldAndLabel_withPropertyValidatorInViewMode_addsNothingToComponent() {
+        FormComponent<?> fc = mock(FormComponent.class);
+        when(fc.getId()).thenReturn("fcId");
+        PropertyValidator<?> pv = mock(PropertyValidator.class);
+
+        AbstractPanel<TestRecord> p = new TestAbstractPanel("panel", Mode.VIEW);
+        p.queueFieldAndLabel(fc, pv);
+
+        verify(fc, times(3)).getId();
+        verify(fc).setLabel(isA(StringResourceModel.class));
+        verify(fc, never()).add(pv);
+        verifyNoMoreInteractions(fc, pv);
+    }
+
+    @Test
+    public void queuingFieldAndLabel_withNullPropertyValidator_addsNothingToComponent() {
+        FormComponent<?> fc = mock(FormComponent.class);
+        when(fc.getId()).thenReturn("fcId");
+
+        AbstractPanel<TestRecord> p = new TestAbstractPanel("panel", Mode.EDIT);
+        p.queueFieldAndLabel(fc, null);
+
+        verify(fc, times(3)).getId();
+        verify(fc).setLabel(isA(StringResourceModel.class));
+        verifyNoMoreInteractions(fc);
     }
 
 }
