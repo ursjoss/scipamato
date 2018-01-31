@@ -67,12 +67,12 @@ public class JooqConfigurationTest {
         DefaultExecuteListenerProvider elp = (DefaultExecuteListenerProvider) config.executeListenerProviders()[0];
         assertThat(elp.provide()
             .getClass()
-            .getName()).isEqualTo("ch.difty.scipamato.core.sync.jooq.JooqExceptionTranslator");
+            .getName()).isEqualTo("org.springframework.boot.autoconfigure.jooq.JooqExceptionTranslator");
 
         // assert TransactionProvider
         assertThat(config.transactionProvider()).isNotNull();
         assertThat(config.transactionProvider()
             .getClass()
-            .getName()).isEqualTo("ch.difty.scipamato.core.sync.jooq.SpringTransactionProvider");
+            .getName()).isEqualTo("org.springframework.boot.autoconfigure.jooq.SpringTransactionProvider");
     }
 }
