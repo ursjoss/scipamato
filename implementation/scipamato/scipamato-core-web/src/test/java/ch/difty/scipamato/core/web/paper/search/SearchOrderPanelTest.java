@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.paper.search;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.times;
@@ -111,6 +112,26 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
         getTester().startComponentInPage(makePanel());
         getTester().clickLink(PANEL_ID + ":form:searchConditions:body:rows:1:cells:1:cell:link");
         getTester().assertRenderedPage(PaperSearchCriteriaPage.class);
+    }
+
+    @Test
+    public void searchOrderIdDefined_withRegularModel() {
+        SearchOrderPanel p = makePanel();
+        assertThat(p.isSearchOrderIdDefined()).isTrue();
+    }
+
+    @Test
+    public void searchOrderIdDefined_withNullModel() {
+        SearchOrderPanel p = new SearchOrderPanel(PANEL_ID, null);
+        assertThat(p.isSearchOrderIdDefined()).isFalse();
+    }
+
+    @Test
+    public void searchOrderIdDefined_withModelOFSearchOrderWIthNullId() {
+        SearchOrder searchOrder = new SearchOrder();
+        assertThat(searchOrder.getId()).isNull();
+        SearchOrderPanel p = new SearchOrderPanel(PANEL_ID, Model.of(searchOrder));
+        assertThat(p.isSearchOrderIdDefined()).isFalse();
     }
 
 }

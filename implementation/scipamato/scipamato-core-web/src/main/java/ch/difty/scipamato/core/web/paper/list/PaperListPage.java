@@ -37,7 +37,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 
 /**
  * Page to list all papers and apply simple filters to limit the results.
- *
  * <p>
  * Offers the option to create new papers and also to process XML strings
  * exported (as file) from the PubMed User Interface. Processing those pubmed

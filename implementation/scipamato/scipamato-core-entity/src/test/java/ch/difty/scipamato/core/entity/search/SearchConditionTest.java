@@ -5,11 +5,17 @@ import static ch.difty.scipamato.core.entity.Paper.DOI;
 import static ch.difty.scipamato.core.entity.Paper.FIRST_AUTHOR_OVERRIDDEN;
 import static ch.difty.scipamato.core.entity.Paper.NUMBER;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
+import ch.difty.scipamato.common.NullArgumentException;
+import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.core.entity.Code;
 
@@ -915,7 +921,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void addingSearchTerm_xafterRemovingIt_removesItFromRemovedKeys() {
+    public void celaringRemovedKeys_removesAllPresent() {
         sc1.setAuthors("foo");
         sc1.setAuthors(null);
         sc1.setPublicationYear("2014");
@@ -927,7 +933,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void addingBooleanTermString() {
+    public void addingBooleanSearchTerm() {
         sc2.addSearchTerm(SearchTerm.newBooleanSearchTerm("fn", "rst"));
         assertThat(sc2.getBooleanSearchTerms()).hasSize(1);
         assertThat(sc2.getIntegerSearchTerms()).isEmpty();
@@ -936,7 +942,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void addingIntegerTermString() {
+    public void addingIntegerTerm() {
         sc2.addSearchTerm(SearchTerm.newIntegerSearchTerm("fn", "1"));
         assertThat(sc2.getBooleanSearchTerms()).isEmpty();
         assertThat(sc2.getIntegerSearchTerms()).hasSize(1);
@@ -945,7 +951,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void addingSearchTermString() {
+    public void addingStringSearchTerm() {
         sc1.addSearchTerm(SearchTerm.newStringSearchTerm("fn", "rst"));
         assertThat(sc1.getBooleanSearchTerms()).isEmpty();
         assertThat(sc1.getIntegerSearchTerms()).isEmpty();
@@ -954,12 +960,36 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void addingAuditTermString() {
+    public void addingAuditSearchTerm() {
         sc2.addSearchTerm(SearchTerm.newAuditSearchTerm("fn", "rst"));
         assertThat(sc2.getBooleanSearchTerms()).isEmpty();
         assertThat(sc2.getIntegerSearchTerms()).isEmpty();
         assertThat(sc2.getStringSearchTerms()).isEmpty();
         assertThat(sc2.getAuditSearchTerms()).hasSize(1);
+    }
+
+    @Test
+    public void addingUnsupportedSearchTerm() {
+        SearchTerm stMock = mock(SearchTerm.class);
+        when(stMock.getSearchTermType()).thenReturn(SearchTermType.UNSUPPORTED);
+        try {
+            sc2.addSearchTerm(stMock);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("SearchTermType.UNSUPPORTED is not supported");
+        }
+    }
+
+    @Test
+    public void addingNullSearchTerm() {
+        try {
+            sc2.addSearchTerm(null);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(NullArgumentException.class)
+                .hasMessage("searchTerm must not be null.");
+        }
     }
 
     @Test

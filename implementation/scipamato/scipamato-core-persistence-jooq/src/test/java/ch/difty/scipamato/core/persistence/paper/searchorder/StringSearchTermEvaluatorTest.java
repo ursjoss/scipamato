@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -236,6 +237,18 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
         expectToken(TokenType.RAW, "foo");
         assertThat(e.evaluate(stMock)
             .toString()).isEqualTo("1 = 1");
+    }
+
+    @Test
+    public void buildingConditionForUnexpected_throws() {
+        expectToken(TokenType.UNSUPPORTED, "foo");
+        try {
+            e.evaluate(stMock);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("Evaluation of type UNSUPPORTED is not supported...");
+        }
     }
 
 }
