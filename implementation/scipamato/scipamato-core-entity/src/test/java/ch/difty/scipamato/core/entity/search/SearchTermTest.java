@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.entity.search;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.Test;
 
@@ -8,7 +9,7 @@ public class SearchTermTest {
 
     @Test
     public void booleanSearchTerm() {
-        SearchTerm st = SearchTerm.newSearchTerm(10, 0, 1l, "fn", "true");
+        SearchTerm st = SearchTerm.newSearchTerm(10, SearchTermType.BOOLEAN.getId(), 1l, "fn", "true");
         assertThat(st).isInstanceOf(BooleanSearchTerm.class);
 
         BooleanSearchTerm bst = (BooleanSearchTerm) st;
@@ -22,7 +23,7 @@ public class SearchTermTest {
 
     @Test
     public void integerSearchTerm() {
-        SearchTerm st = SearchTerm.newSearchTerm(11, 1, 2l, "fn2", "5-7");
+        SearchTerm st = SearchTerm.newSearchTerm(11, SearchTermType.INTEGER.getId(), 2l, "fn2", "5-7");
         assertThat(st).isInstanceOf(IntegerSearchTerm.class);
 
         IntegerSearchTerm ist = (IntegerSearchTerm) st;
@@ -37,9 +38,13 @@ public class SearchTermTest {
 
     @Test
     public void stringSearchTerm() {
-        SearchTerm st = SearchTerm.newSearchTerm(12, 2, 3l, "fn3", "foo*");
+        SearchTerm st = SearchTerm.newSearchTerm(12, SearchTermType.STRING.getId(), 3l, "fn3", "foo*");
         assertThat(st).isInstanceOf(StringSearchTerm.class);
 
+        verify(st);
+    }
+
+    private void verify(SearchTerm st) {
         StringSearchTerm sst = (StringSearchTerm) st;
         assertThat(sst.getId()).isEqualTo(12);
         assertThat(sst.getSearchTermType()).isEqualTo(SearchTermType.STRING);
@@ -51,6 +56,25 @@ public class SearchTermTest {
             .get(0).sqlData).isEqualTo("foo%");
         assertThat(sst.getTokens()
             .get(0).negate).isFalse();
+    }
+
+    @Test
+    public void stringSearchTerm2() {
+        SearchTerm st = SearchTerm.newSearchTerm(12, SearchTermType.STRING, 3l, "fn3", "foo*");
+        assertThat(st).isInstanceOf(StringSearchTerm.class);
+
+        verify(st);
+    }
+
+    @Test
+    public void undefinedSearchTerm_throws() {
+        try {
+            SearchTerm.newSearchTerm(13, SearchTermType.UNSUPPORTED, 4l, "fn4", "whatever");
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("SearchTermType.UNSUPPORTED is not supported");
+        }
     }
 
     @Test

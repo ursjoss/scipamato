@@ -8,9 +8,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of {@link AbstractSearchTerm} working with String fields. The search
- * term (applying to one particular field) is lexed and transferred into one or
- * more {@link Token}s.
+ * Implementation of {@link AbstractSearchTerm} working with String fields. The
+ * search term (applying to one particular field) is lexed and transferred into
+ * one or more {@link Token}s.
  * <p>
  * There are different {@link TokenType}s, each of which is able to lex
  * particular elements of the raw search terms string.
@@ -88,7 +88,8 @@ public class StringSearchTerm extends AbstractSearchTerm {
         LIKE,
         REGEX,
         LENGTH,
-        NONE;
+        NONE,
+        UNSUPPORTED;
     }
 
     public enum TokenType {
@@ -139,7 +140,8 @@ public class StringSearchTerm extends AbstractSearchTerm {
         QUOTED(RE_QUOTE + "([^" + RE_QUOTE + "]+)" + RE_QUOTE, MatchType.EQUALS, 35, false, false, false),
         NOTWORD(RE_NOT + "\\b(" + RE_WW2 + "\\b)", MatchType.CONTAINS, 37, false, false, true),
         WORD("\\b(" + RE_WW2 + ")\\b", MatchType.CONTAINS, 39, false, false, false),
-        RAW("", MatchType.NONE, 41, false, false, false);
+        RAW("", MatchType.NONE, 41, false, false, false),
+        UNSUPPORTED("", MatchType.UNSUPPORTED, -1, false, false, false);
 
         // cache values
         private static final TokenType[] TOKEN_TYPES = values();

@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.core.entity.Code;
@@ -103,6 +104,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
     }
 
     public void addSearchTerm(final SearchTerm searchTerm) {
+        AssertAs.notNull(searchTerm, "searchTerm");
         switch (searchTerm.getSearchTermType()) {
         case BOOLEAN:
             final BooleanSearchTerm bst = (BooleanSearchTerm) searchTerm;
