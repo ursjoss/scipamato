@@ -2,13 +2,12 @@ package ch.difty.scipamato.core.web.model;
 
 import java.util.List;
 
-import org.apache.wicket.injection.Injector;
-import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
+import ch.difty.scipamato.common.web.model.InjectedLoadableDetachableModel;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
@@ -19,7 +18,7 @@ import ch.difty.scipamato.core.persistence.SearchOrderService;
  *
  * @author u.joss
  */
-public class SearchOrderModel extends LoadableDetachableModel<List<SearchOrder>> {
+public class SearchOrderModel extends InjectedLoadableDetachableModel<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,9 +28,8 @@ public class SearchOrderModel extends LoadableDetachableModel<List<SearchOrder>>
     private final int owner;
     private final int maxRows;
 
-    public SearchOrderModel(int userId, int maxRows) {
-        Injector.get()
-            .inject(this);
+    public SearchOrderModel(final int userId, final int maxRows) {
+        super();
         this.owner = userId;
         this.maxRows = maxRows;
     }

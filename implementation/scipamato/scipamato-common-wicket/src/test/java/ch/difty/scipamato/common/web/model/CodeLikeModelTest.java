@@ -38,6 +38,7 @@ public class CodeLikeModelTest {
         model = new CodeLikeModel<CodeLike, CodeLikeService<CodeLike>>(CC_ID, LANG_CODE, serviceMock) {
             private static final long serialVersionUID = 1L;
 
+            @Override
             protected void injectThis() {
                 // no-op
             }

@@ -2,8 +2,6 @@ package ch.difty.scipamato.common.web.model;
 
 import java.util.List;
 
-import org.apache.wicket.injection.Injector;
-import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -21,7 +19,7 @@ import ch.difty.scipamato.common.persistence.CodeLikeService;
  *            Code entity extending {@link CodeLike}
  */
 public abstract class CodeLikeModel<T extends CodeLike, S extends CodeLikeService<T>>
-        extends LoadableDetachableModel<List<T>> {
+        extends InjectedLoadableDetachableModel<T> {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +30,7 @@ public abstract class CodeLikeModel<T extends CodeLike, S extends CodeLikeServic
     private final String      languageCode;
 
     protected CodeLikeModel(final CodeClassId codeClassId, final String languageCode) {
-        injectThis();
+        super();
         this.codeClassId = AssertAs.notNull(codeClassId, "codeClassId");
         this.languageCode = AssertAs.notNull(languageCode, "languageCode");
     }
@@ -43,14 +41,6 @@ public abstract class CodeLikeModel<T extends CodeLike, S extends CodeLikeServic
     protected CodeLikeModel(final CodeClassId codeClassId, final String languageCode, final S service) {
         this(codeClassId, languageCode);
         this.service = service;
-    }
-
-    /**
-     * Extracted into protected method for testing without wicket application
-     */
-    protected void injectThis() {
-        Injector.get()
-            .inject(this);
     }
 
     protected CodeClassId getCodeClassId() {
