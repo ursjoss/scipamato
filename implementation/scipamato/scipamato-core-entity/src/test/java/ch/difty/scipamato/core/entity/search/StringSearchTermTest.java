@@ -20,6 +20,7 @@ import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.Q
 import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.RAW;
 import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.REGEX;
 import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.SOME;
+import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.UNSUPPORTED;
 import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.WHITESPACE;
 import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.WORD;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -231,7 +232,7 @@ public class StringSearchTermTest {
         assertThat(StringSearchTerm.TokenType.values()).containsExactly(NOTREGEX, REGEX, WHITESPACE, SOME, EMPTY,
             NOTOPENLEFTRIGHTQUOTED, OPENLEFTRIGHTQUOTED, NOTOPENLEFTRIGHT, OPENLEFTRIGHT, NOTOPENRIGHTQUOTED,
             OPENRIGHTQUOTED, NOTOPENRIGHT, OPENRIGHT, NOTOPENLEFTQUOTED, OPENLEFTQUOTED, NOTOPENLEFT, OPENLEFT,
-            NOTQUOTED, QUOTED, NOTWORD, WORD, RAW);
+            NOTQUOTED, QUOTED, NOTWORD, WORD, RAW, UNSUPPORTED);
     }
 
     @Test

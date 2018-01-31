@@ -243,7 +243,7 @@ public class StringSearchTerm extends AbstractSearchTerm {
         for (final TokenType tk : TokenType.TOKEN_TYPES) {
             if (tk == TokenType.RAW || matcher.group(TokenType.WHITESPACE.name()) != null)
                 continue;
-            if (matcher.group(tk.name()) != null)
+            if (matcher.group(tk.name()) != null && tk.group >= 0)
                 return Optional.of(new Token(tk, matcher.group(tk.group)));
         }
         return Optional.empty();
