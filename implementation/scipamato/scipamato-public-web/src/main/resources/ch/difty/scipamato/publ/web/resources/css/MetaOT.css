@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+
+@import url('../MetaOT/MetaOT-Bold.css');
+
+@import url('../MetaOT/MetaOT-Book.css');
+
+@import url('../MetaOT/MetaOT-BookIta.css');
+
+p {
+	font-family: 'MetaOT-Book';
+	color: #000;
+	margin: 1rem 0;
+}
+
+h4 {
+	font-family: 'MetaOT-Bold';
+	color: #000;
+	margin: 1rem 0;
+}
