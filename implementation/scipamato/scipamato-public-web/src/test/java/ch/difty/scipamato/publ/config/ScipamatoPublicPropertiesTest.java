@@ -60,6 +60,20 @@ public class ScipamatoPublicPropertiesTest {
     }
 
     @Test
+    public void checkingCommercialFontPresence_ifPresent_delegatesToMavenProp() {
+        when(scipamatoPropMock.isCommercialFontPresent()).thenReturn(true);
+        assertThat(prop.isCommercialFontPresent()).isEqualTo(true);
+        verify(scipamatoPropMock).isCommercialFontPresent();
+    }
+
+    @Test
+    public void checkingCommercialFontPresence_ifNotPresent_delegatesToMavenProp() {
+        when(scipamatoPropMock.isCommercialFontPresent()).thenReturn(false);
+        assertThat(prop.isCommercialFontPresent()).isEqualTo(false);
+        verify(scipamatoPropMock).isCommercialFontPresent();
+    }
+
+    @Test
     public void gettingRedirectFromPort_delegatesToScipamatoProp() {
         assertThat(prop.getRedirectFromPort()).isEqualTo(5678);
         verify(scipamatoPropMock).getRedirectFromPort();

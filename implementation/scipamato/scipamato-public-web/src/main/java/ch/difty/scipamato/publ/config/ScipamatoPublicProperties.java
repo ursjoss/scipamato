@@ -2,7 +2,6 @@ package ch.difty.scipamato.publ.config;
 
 import org.springframework.stereotype.Component;
 
-import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.config.MavenProperties;
 
 /**
@@ -15,7 +14,7 @@ import ch.difty.scipamato.common.config.MavenProperties;
  * @author u.joss
  */
 @Component
-public class ScipamatoPublicProperties implements ApplicationProperties {
+public class ScipamatoPublicProperties implements ApplicationPublicProperties {
 
     private final ScipamatoProperties scipamatoProperties;
     private final MavenProperties     mavenProperties;
@@ -48,6 +47,11 @@ public class ScipamatoPublicProperties implements ApplicationProperties {
     @Override
     public Integer getRedirectFromPort() {
         return scipamatoProperties.getRedirectFromPort();
+    }
+
+    @Override
+    public boolean isCommercialFontPresent() {
+        return scipamatoProperties.isCommercialFontPresent();
     }
 
 }

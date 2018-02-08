@@ -28,4 +28,8 @@ public class ScipamatoPropertiesTest {
         assertThat(sp.getRedirectFromPort()).isNull();
     }
 
+    @Test
+    public void isCommercailFontPresent() {
+        assertThat(sp.isCommercialFontPresent()).isFalse();
+    }
 }

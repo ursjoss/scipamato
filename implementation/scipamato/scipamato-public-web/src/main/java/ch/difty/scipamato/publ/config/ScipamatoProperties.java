@@ -33,4 +33,14 @@ public class ScipamatoProperties {
      */
     private Integer redirectFromPort;
 
+    /**
+     * Indicates whether the commercial font MetaOT is present and can be used.
+     * <p>
+     * The location where SciPaMaTo expectes the font is:
+     *
+     * <pre>
+     * src/main/resources/ch/difty/scipamato/publ/web/resources/MetaOT/
+     * </pre>
+     */
+    private boolean commercialFontPresent;
 }

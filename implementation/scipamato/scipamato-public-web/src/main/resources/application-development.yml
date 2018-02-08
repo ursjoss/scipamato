@@ -46,3 +46,5 @@ logging:
       difty: DEBUG
     org:
       jooq: INFO
+scipamato:
+  commercial-font-present: true
