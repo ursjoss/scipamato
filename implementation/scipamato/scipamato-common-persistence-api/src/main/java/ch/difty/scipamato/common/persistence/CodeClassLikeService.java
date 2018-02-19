@@ -1,6 +1,5 @@
 package ch.difty.scipamato.common.persistence;
 
-import java.io.Serializable;
 import java.util.List;
 
 import ch.difty.scipamato.common.entity.CodeClassLike;
@@ -13,7 +12,7 @@ import ch.difty.scipamato.common.entity.CodeClassLike;
  * @param <T>
  *            CodeClass like entities
  */
-public interface CodeClassLikeService<T extends CodeClassLike> extends Serializable {
+public interface CodeClassLikeService<T extends CodeClassLike> {
 
     /**
      * Find all code classes of Type {@code T} localized in language with the

@@ -33,7 +33,6 @@ public class JooqCodeClassLikeServiceTest {
     @Before
     public void setUp() {
         service = new JooqCodeClassLikeService<CodeClassLike, CodeClassLikeRepository<CodeClassLike>>(repoMock) {
-            private static final long serialVersionUID = 1L;
         };
 
         codeClasses.add(cclMock);

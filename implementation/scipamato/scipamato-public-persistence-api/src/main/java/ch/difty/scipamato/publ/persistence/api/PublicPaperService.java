@@ -1,6 +1,5 @@
 package ch.difty.scipamato.publ.persistence.api;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +8,7 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 
-public interface PublicPaperService extends Serializable {
+public interface PublicPaperService {
 
     /**
      * Finds an individual paper by it's number (business key). Returns it as an
