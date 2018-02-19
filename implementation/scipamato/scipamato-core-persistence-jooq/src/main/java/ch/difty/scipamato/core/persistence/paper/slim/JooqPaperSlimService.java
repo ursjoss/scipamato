@@ -21,8 +21,6 @@ import ch.difty.scipamato.core.persistence.UserRepository;
 public class JooqPaperSlimService extends JooqReadOnlyService<Long, PaperSlim, PaperFilter, PaperSlimRepository>
         implements PaperSlimService {
 
-    private static final long serialVersionUID = 1L;
-
     protected JooqPaperSlimService(final PaperSlimRepository repo, final UserRepository userRepo) {
         super(repo, userRepo);
     }

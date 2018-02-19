@@ -22,8 +22,6 @@ import ch.difty.scipamato.core.persistence.UserService;
 @Service
 public class JooqUserService implements UserService {
 
-    private static final long serialVersionUID = 1L;
-
     private final UserRepository repo;
 
     public JooqUserService(final UserRepository repo) {

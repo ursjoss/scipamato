@@ -30,8 +30,6 @@ import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter, PaperRepository>
         implements PaperService {
 
-    private static final long serialVersionUID = 1L;
-
     protected JooqPaperService(final PaperRepository repo, final UserRepository userRepo) {
         super(repo, userRepo);
     }

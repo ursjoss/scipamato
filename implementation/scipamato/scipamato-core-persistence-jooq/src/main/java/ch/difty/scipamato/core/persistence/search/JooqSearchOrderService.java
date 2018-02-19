@@ -19,8 +19,6 @@ import ch.difty.scipamato.core.persistence.UserRepository;
 public class JooqSearchOrderService extends
         JooqEntityService<Long, SearchOrder, SearchOrderFilter, SearchOrderRepository> implements SearchOrderService {
 
-    private static final long serialVersionUID = 1L;
-
     protected JooqSearchOrderService(final SearchOrderRepository repo, final UserRepository userRepo) {
         super(repo, userRepo);
     }

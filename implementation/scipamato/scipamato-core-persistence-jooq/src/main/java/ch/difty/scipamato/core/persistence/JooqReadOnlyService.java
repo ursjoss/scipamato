@@ -31,8 +31,6 @@ import ch.difty.scipamato.core.entity.User;
 public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipamatoEntity<ID>, F extends ScipamatoFilter, REPO extends ReadOnlyRepository<T, ID, F>>
         implements ReadOnlyService<ID, T, F> {
 
-    private static final long serialVersionUID = 1L;
-
     private final REPO           repo;
     private final UserRepository userRepo;
 

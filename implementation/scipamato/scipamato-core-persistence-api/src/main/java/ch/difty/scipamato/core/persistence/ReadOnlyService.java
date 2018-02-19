@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.persistence;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +21,7 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
  * @param <F>
  *            the filter, extending {@link ScipamatoFilter}
  */
-public interface ReadOnlyService<ID extends Number, T extends IdScipamatoEntity<ID>, F extends ScipamatoFilter>
-        extends Serializable {
+public interface ReadOnlyService<ID extends Number, T extends IdScipamatoEntity<ID>, F extends ScipamatoFilter> {
 
     /**
      * Finds an individual entity by ID. Returns it as an optional of type {@code T}

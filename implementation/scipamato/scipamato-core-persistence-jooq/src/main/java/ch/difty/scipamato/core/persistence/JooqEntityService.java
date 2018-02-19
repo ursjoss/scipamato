@@ -24,8 +24,6 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 public abstract class JooqEntityService<ID extends Number, T extends IdScipamatoEntity<ID>, F extends ScipamatoFilter, REPO extends EntityRepository<T, ID, F>>
         extends JooqReadOnlyService<ID, T, F, REPO> implements EntityService<ID, T, F> {
 
-    private static final long serialVersionUID = 1L;
-
     protected JooqEntityService(final REPO repo, final UserRepository userRepo) {
         super(repo, userRepo);
     }
