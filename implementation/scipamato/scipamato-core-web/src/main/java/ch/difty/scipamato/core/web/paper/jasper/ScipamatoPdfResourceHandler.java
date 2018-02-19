@@ -18,7 +18,7 @@ public class ScipamatoPdfResourceHandler extends PdfResourceHandler {
 
     private static final long serialVersionUID = 1L;
 
-    private final PdfExporterConfiguration config;
+    private final ClusterablePdfExporterConfiguration config;
 
     /**
      * Default constructor creating its own default exporter configuration.
@@ -28,9 +28,9 @@ public class ScipamatoPdfResourceHandler extends PdfResourceHandler {
     }
 
     /**
-     * Constructor accepting a {@link PdfExporterConfiguration}
+     * Constructor accepting a {@link ClusterablePdfExporterConfiguration}
      */
-    public ScipamatoPdfResourceHandler(final PdfExporterConfiguration config) {
+    public ScipamatoPdfResourceHandler(final ClusterablePdfExporterConfiguration config) {
         if (config != null) {
             this.config = config;
         } else {

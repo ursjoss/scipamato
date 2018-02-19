@@ -9,12 +9,12 @@ import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
+import ch.difty.scipamato.core.web.paper.jasper.ClusterablePdfExporterConfiguration;
 import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfResourceHandler;
 import ch.difty.scipamato.core.web.resources.jasper.PaperSummaryReportResourceReference;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.export.PdfExporterConfiguration;
 
 /**
  * DataSource for the PaperSummaryReport.
@@ -53,10 +53,10 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      * @param reportHeaderFields
      *            collection of localized labels for report fields
      * @param config
-     *            {@link PdfExporterConfiguration}
+     *            {@link ClusterablePdfExporterConfiguration}
      */
     public PaperSummaryDataSource(final Paper paper, final ReportHeaderFields reportHeaderFields,
-            PdfExporterConfiguration config) {
+            ClusterablePdfExporterConfiguration config) {
         this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"),
                 AssertAs.notNull(reportHeaderFields, "reportHeaderFields"))), config,
                 makeSinglePaperBaseName(paper.getNumber() != null ? String.valueOf(paper.getNumber()) : null));
@@ -68,17 +68,28 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      * name including the id of the paper.
      *
      * @param paperSummary
-     *            collection of {@link PaperSummary} instances - must not be null
+     *            single {@link PaperSummary} - must not be null
      * @param config
-     *            the {@link PdfExporterConfiguration}
+     *            the {@link ClusterablePdfExporterConfiguration}
      */
-    public PaperSummaryDataSource(final PaperSummary paperSummary, PdfExporterConfiguration config) {
+    public PaperSummaryDataSource(final PaperSummary paperSummary, ClusterablePdfExporterConfiguration config) {
         this(Arrays.asList(AssertAs.notNull(paperSummary, "paperSummary")), config,
                 makeSinglePaperBaseName(paperSummary.getNumber()));
     }
 
-    private PaperSummaryDataSource(final Collection<PaperSummary> paperSummaries, PdfExporterConfiguration config,
-            String baseName) {
+    /**
+     * Populate the report from a collection of {@link PaperSummary PaperSummaries},
+     * using a specific file name including the id of the paper.
+     *
+     * @param paperSummaries
+     *            collection of {@link PaperSummary} instances
+     * @param config
+     *            the {@link ClusterablePdfExporterConfiguration}
+     * @param baseName
+     *            the file name without the extension (.pdf)
+     */
+    private PaperSummaryDataSource(final Collection<PaperSummary> paperSummaries,
+            ClusterablePdfExporterConfiguration config, String baseName) {
         super(new ScipamatoPdfResourceHandler(config), baseName, paperSummaries);
     }
 
@@ -92,10 +103,10 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      * @param reportHeaderFields
      *            collection of localized labels for the report fields
      * @param config
-     *            {@link PdfExporterConfiguration}
+     *            {@link ClusterablePdfExporterConfiguration}
      */
     public PaperSummaryDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
-            final ReportHeaderFields reportHeaderFields, PdfExporterConfiguration config) {
+            final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), BASE_NAME_MULTIPLE, dataProvider);
         this.reportHeaderFields = reportHeaderFields;
     }

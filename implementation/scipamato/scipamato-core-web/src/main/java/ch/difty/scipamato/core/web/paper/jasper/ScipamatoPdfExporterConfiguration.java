@@ -3,24 +3,20 @@ package ch.difty.scipamato.core.web.paper.jasper;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.wicket.util.io.IClusterable;
 
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.User;
 import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 
 /**
- * Custom implementation of the {@link SimplePdfExporterConfiguration} with is
- *
- * <ul>
- * <li>is clusterable</li>
- * <li>and uses the builder pattern to set the parameters relevant to scipamato
- * reports</li>
- * </ul>
+ * Custom implementation of the {@link SimplePdfExporterConfiguration} which is
+ * clusterable and uses the builder pattern to set the parameters relevant to
+ * scipamato.
  *
  * @author u.joss
  */
-public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfiguration implements IClusterable {
+public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfiguration
+        implements ClusterablePdfExporterConfiguration {
 
     private static final long serialVersionUID = 1L;
 

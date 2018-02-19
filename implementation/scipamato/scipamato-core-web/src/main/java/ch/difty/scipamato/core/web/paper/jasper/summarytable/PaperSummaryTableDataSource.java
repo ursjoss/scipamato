@@ -5,12 +5,12 @@ import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
+import ch.difty.scipamato.core.web.paper.jasper.ClusterablePdfExporterConfiguration;
 import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfResourceHandler;
 import ch.difty.scipamato.core.web.resources.jasper.PaperSummaryTableReportResourceReference;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.export.PdfExporterConfiguration;
 
 /**
  * DataSource for the PaperSummaryTableReport.
@@ -43,11 +43,11 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
      * @param includeResults
      *            true: show results in pdf, false: hide it
      * @param config
-     *            {@link PdfExporterConfiguration}
+     *            {@link ClusterablePdfExporterConfiguration}
      */
     public PaperSummaryTableDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
             final ReportHeaderFields reportHeaderFields, final boolean includeResults,
-            PdfExporterConfiguration config) {
+            ClusterablePdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), FILE_NAME, dataProvider);
         this.reportHeaderFields = reportHeaderFields;
         this.includeResults = includeResults;

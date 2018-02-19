@@ -14,7 +14,6 @@ import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.design.JRDesignField;
-import net.sf.jasperreports.export.PdfExporterConfiguration;
 
 public abstract class PaperDataSourceTest extends WicketTest {
 
@@ -27,7 +26,7 @@ public abstract class PaperDataSourceTest extends WicketTest {
     @Mock
     protected Paper                                  paperMock;
     @Mock
-    protected PdfExporterConfiguration               pdfExporterConfigMock;
+    protected ClusterablePdfExporterConfiguration    pdfExporterConfigMock;
 
     protected PaperFilter paperFilter = new PaperFilter();
 

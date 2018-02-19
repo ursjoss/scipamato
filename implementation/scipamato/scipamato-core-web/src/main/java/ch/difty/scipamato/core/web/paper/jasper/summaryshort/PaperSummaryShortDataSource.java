@@ -9,12 +9,13 @@ import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
+import ch.difty.scipamato.core.web.paper.jasper.ClusterablePdfExporterConfiguration;
 import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfResourceHandler;
+import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummary;
 import ch.difty.scipamato.core.web.resources.jasper.PaperSummaryShortReportResourceReference;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.export.PdfExporterConfiguration;
 
 /**
  * DataSource for the PaperSummaryShortReport.
@@ -54,10 +55,10 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      * @param reportHeaderFields
      *            collection of localized labels for report fields
      * @param config
-     *            {@link PdfExporterConfiguration}
+     *            {@link ClusterablePdfExporterConfiguration}
      */
     public PaperSummaryShortDataSource(final Paper paper, final ReportHeaderFields reportHeaderFields,
-            PdfExporterConfiguration config) {
+            ClusterablePdfExporterConfiguration config) {
         this(Arrays.asList(new PaperSummaryShort(AssertAs.notNull(paper, "paper"),
                 AssertAs.notNull(reportHeaderFields, "reportHeaderFields"))), config,
                 makeSinglePaperBaseName(paper.getNumber() != null ? String.valueOf(paper.getNumber()) : null));
@@ -69,18 +70,30 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      * file name including the id of the paper.
      *
      * @param paperSummaryShort
-     *            collection of {@link PaperSummaryShort} instances - must not be
-     *            null
+     *            single {@link PaperSummaryShort} - must not be null
      * @param config
-     *            the {@link PdfExporterConfiguration}
+     *            the {@link ClusterablePdfExporterConfiguration}
      */
-    public PaperSummaryShortDataSource(final PaperSummaryShort paperSummaryShort, PdfExporterConfiguration config) {
+    public PaperSummaryShortDataSource(final PaperSummaryShort paperSummaryShort,
+            ClusterablePdfExporterConfiguration config) {
         this(Arrays.asList(AssertAs.notNull(paperSummaryShort, "paperSummaryShort")), config,
                 makeSinglePaperBaseName(paperSummaryShort.getNumber()));
     }
 
+    /**
+     * Populate the report from a collection of {@link PaperSummaryShort
+     * PaperSummaryShorts}, using a specific file name including the id of the
+     * paper.
+     *
+     * @param paperSummaryShorts
+     *            collection of {@link PaperSummary} instances
+     * @param config
+     *            the {@link ClusterablePdfExporterConfiguration}
+     * @param baseName
+     *            the file name without the extension (.pdf)
+     */
     private PaperSummaryShortDataSource(final Collection<PaperSummaryShort> paperSummaryShorts,
-            PdfExporterConfiguration config, String baseName) {
+            ClusterablePdfExporterConfiguration config, String baseName) {
         super(new ScipamatoPdfResourceHandler(config), baseName, paperSummaryShorts);
     }
 
@@ -94,10 +107,10 @@ public class PaperSummaryShortDataSource extends JasperPaperDataSource<PaperSumm
      * @param reportHeaderFields
      *            collection of localized labels for the report fields
      * @param config
-     *            {@link PdfExporterConfiguration}
+     *            {@link ClusterablePdfExporterConfiguration}
      */
     public PaperSummaryShortDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
-            final ReportHeaderFields reportHeaderFields, PdfExporterConfiguration config) {
+            final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), BASE_NAME_MULTIPLE, dataProvider);
         this.reportHeaderFields = reportHeaderFields;
     }

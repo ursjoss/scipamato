@@ -6,12 +6,12 @@ import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
+import ch.difty.scipamato.core.web.paper.jasper.ClusterablePdfExporterConfiguration;
 import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfResourceHandler;
 import ch.difty.scipamato.core.web.resources.jasper.PaperLiteratureReviewReportResourceReference;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.export.PdfExporterConfiguration;
 
 /**
  * DataSource for the PaperLiteratureReviewReport.
@@ -39,10 +39,10 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
      * @param reportHeaderFields
      *            collection of localized labels for the report fields
      * @param config
-     *            {@link PdfExporterConfiguration}
+     *            {@link ClusterablePdfExporterConfiguration}
      */
     public PaperLiteratureReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
-            final ReportHeaderFields reportHeaderFields, PdfExporterConfiguration config) {
+            final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), FILE_NAME, AssertAs.notNull(dataProvider, "dataProvider"));
         this.reportHeaderFields = AssertAs.notNull(reportHeaderFields, "reportHeaderFields");
     }
