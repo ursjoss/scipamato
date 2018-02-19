@@ -52,15 +52,18 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
+- Added customized sonar quality profile used for SciPaMaTo
 
 .Changed
 - Updated screenshots sonar + architecture
+- Updated dependencies: jOOQ, flyway, mockito, spring-cloud, equalsverifier
 
 .Deprecated
 
 .Removed
 
 .Fixed
+- Amend sonar quality profile and fix some issues highlighted by sonar (mostly serializable related)
 
 .Security
 
