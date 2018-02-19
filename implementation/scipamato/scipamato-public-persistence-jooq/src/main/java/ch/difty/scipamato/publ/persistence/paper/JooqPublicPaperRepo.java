@@ -27,8 +27,6 @@ import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 @Repository
 public class JooqPublicPaperRepo implements PublicPaperRepository {
 
-    private static final long serialVersionUID = 1L;
-
     private final DSLContext                                      dsl;
     private final JooqSortMapper<PaperRecord, PublicPaper, Paper> sortMapper;
     private final PublicPaperFilterConditionMapper                filterConditionMapper;

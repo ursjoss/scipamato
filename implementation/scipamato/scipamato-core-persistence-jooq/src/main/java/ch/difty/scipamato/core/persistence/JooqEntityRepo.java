@@ -46,8 +46,6 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException.Type;
 public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
         extends JooqReadOnlyRepo<R, T, ID, TI, M, F> implements EntityRepository<T, ID, F> {
 
-    private static final long serialVersionUID = 1L;
-
     private final DateTimeService           dateTimeService;
     private final InsertSetStepSetter<R, T> insertSetStepSetter;
     private final UpdateSetStepSetter<R, T> updateSetStepSetter;

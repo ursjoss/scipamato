@@ -65,8 +65,6 @@ public class JooqSearchOrderRepo extends
         JooqEntityRepo<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.core.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter>
         implements SearchOrderRepository {
 
-    private static final long serialVersionUID = 1L;
-
     public JooqSearchOrderRepo(@Qualifier("dslContext") DSLContext dsl, SearchOrderRecordMapper mapper,
             JooqSortMapper<SearchOrderRecord, SearchOrder, ch.difty.scipamato.core.db.tables.SearchOrder> sortMapper,
             GenericFilterConditionMapper<SearchOrderFilter> filterConditionMapper, DateTimeService dateTimeService,

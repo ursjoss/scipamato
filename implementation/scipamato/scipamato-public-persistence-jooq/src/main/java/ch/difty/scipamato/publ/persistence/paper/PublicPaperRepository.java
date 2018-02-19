@@ -1,6 +1,5 @@
 package ch.difty.scipamato.publ.persistence.paper;
 
-import java.io.Serializable;
 import java.util.List;
 
 import ch.difty.scipamato.common.NullArgumentException;
@@ -8,7 +7,7 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 
-public interface PublicPaperRepository extends Serializable {
+public interface PublicPaperRepository {
 
     /**
      * Finds the persisted {@link PublicPaper} with the provided number (business

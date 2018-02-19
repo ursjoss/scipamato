@@ -24,7 +24,6 @@ import ch.difty.scipamato.core.entity.User;
 @Repository
 @CacheConfig(cacheNames = "userRolesByUserId")
 public class JooqUserRoleRepo implements UserRoleRepository {
-    private static final long serialVersionUID = 1L;
 
     private final DSLContext dsl;
 

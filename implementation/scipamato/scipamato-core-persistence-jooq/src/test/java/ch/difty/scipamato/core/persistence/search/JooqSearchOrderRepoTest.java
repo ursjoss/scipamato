@@ -64,7 +64,6 @@ public class JooqSearchOrderRepoTest extends
             SearchOrder searchOrder) {
         return new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
                 getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
-            private static final long serialVersionUID = 1L;
 
             @Override
             public SearchOrder findById(Long id, int version) {
@@ -198,7 +197,6 @@ public class JooqSearchOrderRepoTest extends
     private JooqSearchOrderRepo makeRepoFindingNestedEntities() {
         return new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
                 getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
-            private static final long serialVersionUID = 1L;
 
             SearchTerm st1 = SearchTerm.newSearchTerm(1, SearchTermType.STRING.getId(), 3, Paper.AUTHORS, "joss");
             SearchTerm st2 = SearchTerm.newSearchTerm(2, SearchTermType.INTEGER.getId(), 3, Paper.PUBL_YEAR, "2014");

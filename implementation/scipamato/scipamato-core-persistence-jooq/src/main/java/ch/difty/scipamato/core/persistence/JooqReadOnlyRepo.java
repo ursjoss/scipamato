@@ -42,8 +42,6 @@ import ch.difty.scipamato.core.entity.CoreEntity;
 public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
         implements ReadOnlyRepository<T, ID, F> {
 
-    private static final long serialVersionUID = 1L;
-
     private final DSLContext                      dsl;
     private final M                               mapper;
     private final JooqSortMapper<R, T, TI>        sortMapper;

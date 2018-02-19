@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.persistence;
 
-import java.io.Serializable;
 import java.util.List;
 
 import ch.difty.scipamato.common.NullArgumentException;
@@ -20,7 +19,7 @@ import ch.difty.scipamato.core.entity.CoreEntity;
  * @param <F>
  *            the type of the filter extending {@link ScipamatoFilter}
  */
-public interface ReadOnlyRepository<T extends CoreEntity, ID, F extends ScipamatoFilter> extends Serializable {
+public interface ReadOnlyRepository<T extends CoreEntity, ID, F extends ScipamatoFilter> {
 
     /**
      * Finds all persisted entities. If a repo requires the language code, the

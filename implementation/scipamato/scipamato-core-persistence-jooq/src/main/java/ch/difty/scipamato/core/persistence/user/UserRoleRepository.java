@@ -1,11 +1,10 @@
 package ch.difty.scipamato.core.persistence.user;
 
-import java.io.Serializable;
 import java.util.List;
 
 import ch.difty.scipamato.core.auth.Role;
 
-public interface UserRoleRepository extends Serializable {
+public interface UserRoleRepository {
 
     /**
      * Finds all {@link Role}s assigned to user with the provided id.

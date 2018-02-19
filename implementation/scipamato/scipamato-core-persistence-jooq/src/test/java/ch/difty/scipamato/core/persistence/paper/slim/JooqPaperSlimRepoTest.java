@@ -68,8 +68,6 @@ public class JooqPaperSlimRepoTest extends
     protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> makeRepoFindingEntityById(PaperSlim entity) {
         return new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
                 searchOrderRepositoryMock, getApplicationProperties()) {
-            private static final long serialVersionUID = 1L;
-
             @Override
             public PaperSlim findById(Long id) {
                 return entity;

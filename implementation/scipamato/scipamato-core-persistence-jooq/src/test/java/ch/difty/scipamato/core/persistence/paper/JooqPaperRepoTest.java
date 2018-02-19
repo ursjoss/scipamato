@@ -103,7 +103,6 @@ public class JooqPaperRepoTest extends
         return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
                 getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
                 getApplicationProperties()) {
-            private static final long serialVersionUID = 1L;
 
             @Override
             public Paper findById(Long id, int version) {
@@ -116,7 +115,6 @@ public class JooqPaperRepoTest extends
         return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
                 getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
                 getApplicationProperties()) {
-            private static final long serialVersionUID = 1L;
 
             @Override
             protected void enrichAssociatedEntitiesOf(Paper entity, String language) {
@@ -489,7 +487,6 @@ public class JooqPaperRepoTest extends
         return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
                 getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
                 getApplicationProperties()) {
-            private static final long serialVersionUID = 1L;
 
             @Override
             public List<PaperAttachment> loadSlimAttachment(long paperId) {
