@@ -243,8 +243,7 @@ public class JooqSearchOrderRepo extends
 
     @Override
     protected void updateAssociatedEntities(final SearchOrder searchOrder, final String languageCode) {
-        storeSearchConditionsOf(searchOrder, languageCode);
-        storeExcludedIdsOf(searchOrder);
+        saveAssociatedEntitiesOf(searchOrder, languageCode);
     }
 
     @Override
