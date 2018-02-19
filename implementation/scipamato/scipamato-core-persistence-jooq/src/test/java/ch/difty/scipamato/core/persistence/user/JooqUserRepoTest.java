@@ -46,8 +46,6 @@ public class JooqUserRepoTest extends
         return new JooqUserRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
                 getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(),
                 userRoleRepoMock) {
-            private static final long serialVersionUID = 1L;
-
             @Override
             public User findById(Integer id, int version) {
                 return user;

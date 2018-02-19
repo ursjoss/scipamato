@@ -34,7 +34,6 @@ public class JooqCodeLikeServiceTest {
     @Before
     public void setUp() {
         service = new JooqCodeLikeService<CodeLike, CodeLikeRepository<CodeLike>>(repoMock) {
-            private static final long serialVersionUID = 1L;
         };
 
         codeClasses.add(cclMock);

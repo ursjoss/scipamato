@@ -26,8 +26,6 @@ public class JooqPaperSlimRepo extends
         JooqReadOnlyRepo<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter>
         implements PaperSlimRepository {
 
-    private static final long serialVersionUID = 1L;
-
     private final PaperSlimBackedSearchOrderRepository searchOrderRepository;
 
     public JooqPaperSlimRepo(@Qualifier("dslContext") DSLContext dsl, PaperSlimRecordMapper mapper,

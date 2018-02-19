@@ -1,12 +1,11 @@
 package ch.difty.scipamato.common.persistence;
 
-import java.io.Serializable;
 import java.util.List;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.CodeLike;
 
-public interface CodeLikeService<T extends CodeLike> extends Serializable {
+public interface CodeLikeService<T extends CodeLike> {
 
     /**
      * Find all codes of type {@code T} of the specified {@link CodeClassId}

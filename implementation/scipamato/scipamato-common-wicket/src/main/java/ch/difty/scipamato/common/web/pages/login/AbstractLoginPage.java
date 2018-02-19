@@ -19,7 +19,7 @@ public abstract class AbstractLoginPage extends AbstractPage<Void> {
     private static final long serialVersionUID = 1L;
 
     @SpringBean
-    private ApplicationProperties scipapamtoProperties;
+    private ApplicationProperties scipamatoProperties;
 
     private String username;
     private String password;
@@ -30,7 +30,7 @@ public abstract class AbstractLoginPage extends AbstractPage<Void> {
 
     @Override
     protected ApplicationProperties getProperties() {
-        return scipapamtoProperties;
+        return scipamatoProperties;
     }
 
     @Override

@@ -44,8 +44,6 @@ public class JooqUserRepo extends
         JooqEntityRepo<ScipamatoUserRecord, User, Integer, ch.difty.scipamato.core.db.tables.ScipamatoUser, UserRecordMapper, UserFilter>
         implements UserRepository {
 
-    private static final long serialVersionUID = 1L;
-
     private final UserRoleRepository userRoleRepo;
 
     public JooqUserRepo(@Qualifier("dslContext") final DSLContext dsl, final UserRecordMapper mapper,

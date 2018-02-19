@@ -56,8 +56,6 @@ public class JooqPaperRepo extends
 
     private static final String LANGUAGE_CODE = "languageCode";
 
-    private static final long serialVersionUID = 1L;
-
     private final PaperBackedSearchOrderRepository searchOrderRepository;
 
     public JooqPaperRepo(@Qualifier("dslContext") final DSLContext dsl, final PaperRecordMapper mapper,

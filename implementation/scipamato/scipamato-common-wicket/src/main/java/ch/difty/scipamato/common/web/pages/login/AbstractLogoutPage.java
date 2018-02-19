@@ -14,7 +14,7 @@ public abstract class AbstractLogoutPage extends AbstractPage<Void> {
     private static final long serialVersionUID = 1L;
 
     @SpringBean
-    private ApplicationProperties scipapamtoProperties;
+    private ApplicationProperties scipamatoProperties;
 
     public AbstractLogoutPage(PageParameters parameters) {
         super(parameters);
@@ -22,7 +22,7 @@ public abstract class AbstractLogoutPage extends AbstractPage<Void> {
 
     @Override
     protected ApplicationProperties getProperties() {
-        return scipapamtoProperties;
+        return scipamatoProperties;
     }
 
     @Override

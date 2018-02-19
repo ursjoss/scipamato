@@ -13,8 +13,6 @@ import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
 @Service
 public class JooqPublicPaperService implements PublicPaperService {
 
-    private static final long serialVersionUID = 1L;
-
     private final PublicPaperRepository repository;
 
     public JooqPublicPaperService(final PublicPaperRepository repository) {
