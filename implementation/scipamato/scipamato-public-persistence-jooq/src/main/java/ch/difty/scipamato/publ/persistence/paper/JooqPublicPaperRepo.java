@@ -81,8 +81,8 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
             .collect(Collectors.toList());
     }
 
-    /** protected for test purposes */
-    protected PublicPaper map(final PaperRecord r) {
+    /** package-private for test purposes */
+    PublicPaper map(final PaperRecord r) {
         final PublicPaper pp = PublicPaper.builder()
             .id(r.getId())
             .number(r.getNumber())

@@ -43,8 +43,8 @@ public class PaperProvider extends SortableDataProvider<Paper, String> implement
         setSort(Paper.AUTHORS, SortOrder.ASCENDING);
     }
 
-    /** protected for test purposes */
-    protected void setService(PaperService service) {
+    /** package-private for test purposes */
+    void setService(PaperService service) {
         this.service = service;
     }
 

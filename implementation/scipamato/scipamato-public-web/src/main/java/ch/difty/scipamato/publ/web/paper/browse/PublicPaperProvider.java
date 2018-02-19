@@ -44,8 +44,8 @@ public class PublicPaperProvider extends SortableDataProvider<PublicPaper, Strin
         setSort(PublicPaper.NUMBER, SortOrder.DESCENDING);
     }
 
-    /** protected for test purposes */
-    protected void setService(final PublicPaperService service) {
+    /** package-private for test purposes */
+    void setService(final PublicPaperService service) {
         this.service = service;
     }
 

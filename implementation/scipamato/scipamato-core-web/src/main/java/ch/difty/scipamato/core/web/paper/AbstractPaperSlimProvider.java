@@ -61,8 +61,8 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
         return service;
     }
 
-    /** protected for test purposes */
-    protected void setService(final PaperSlimService service) {
+    /** package-private for test purposes */
+    void setService(final PaperSlimService service) {
         this.service = service;
     }
 
@@ -70,8 +70,8 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
         return paperService;
     }
 
-    /** protected for test purposes */
-    protected void setPaperService(final PaperService paperService) {
+    /** package-private for test purposes */
+    void setPaperService(final PaperService paperService) {
         this.paperService = paperService;
     }
 
