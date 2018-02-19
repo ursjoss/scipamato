@@ -1,5 +1,6 @@
 package ch.difty.scipamato.common.navigator;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -14,8 +15,9 @@ import ch.difty.scipamato.common.NullArgumentException;
  * @author u.joss
  *
  * @param <T>
+ *            type of the items that are managed. Must implement Serializable.
  */
-class NavigatedList<T> implements NavigatedItems<T> {
+class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
     private static final long serialVersionUID = 1L;
 
     private final List<T> items = new ArrayList<>();
