@@ -56,7 +56,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Updated screenshots sonar + architecture
-- Updated dependencies: jOOQ, flyway, mockito, spring-cloud, equalsverifier
+- Updated dependencies: wicket, jOOQ, flyway, mockito, spring-cloud, equalsverifier
 
 .Deprecated
 
