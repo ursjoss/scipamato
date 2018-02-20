@@ -14,16 +14,16 @@ public class AuthorParserStrategyTest {
 
     @Test
     public void canParsePubmed() {
-        assertThat(AuthorParserStrategy.fromProperty("PUBMED")).isEqualTo(PUBMED);
+        assertThat(AuthorParserStrategy.fromProperty("PUBMED", "whatever-key-for-loggin-only")).isEqualTo(PUBMED);
     }
 
     @Test
     public void gettingStrategyByName_withNotExistingName_returnsPubmedStrategy() {
-        assertThat(AuthorParserStrategy.fromProperty("ksjdflksjdk")).isEqualTo(PUBMED);
+        assertThat(AuthorParserStrategy.fromProperty("ksjdflksjdk", "key")).isEqualTo(PUBMED);
     }
 
     @Test
     public void gettingStrategyByName_withNullName_returnsPubmedStrategy() {
-        assertThat(AuthorParserStrategy.fromProperty(null)).isEqualTo(PUBMED);
+        assertThat(AuthorParserStrategy.fromProperty(null, "key")).isEqualTo(PUBMED);
     }
 }
