@@ -121,8 +121,7 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         case NONE:
             break;
         default:
-            throw new UnsupportedOperationException(
-                    "Evaluation of type " + token.getType().matchType + " is not supported...");
+            throw new AssertionError("Evaluation of type " + token.getType().matchType + " is not supported...");
         }
     }
 }

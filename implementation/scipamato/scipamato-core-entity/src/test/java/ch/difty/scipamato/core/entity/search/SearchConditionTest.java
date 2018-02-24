@@ -973,8 +973,8 @@ public class SearchConditionTest {
         try {
             sc2.addSearchTerm(stMock);
             fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(UnsupportedOperationException.class)
+        } catch (Error ex) {
+            assertThat(ex).isInstanceOf(AssertionError.class)
                 .hasMessage("SearchTermType.UNSUPPORTED is not supported");
         }
     }

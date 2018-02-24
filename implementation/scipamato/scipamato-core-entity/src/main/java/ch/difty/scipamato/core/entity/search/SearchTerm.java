@@ -52,8 +52,9 @@ public interface SearchTerm {
             return new StringSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
         case AUDIT:
             return new AuditSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);
+        case UNSUPPORTED:
         default:
-            throw new UnsupportedOperationException("SearchTermType." + type + " is not supported");
+            throw new AssertionError("SearchTermType." + type + " is not supported");
         }
     }
 

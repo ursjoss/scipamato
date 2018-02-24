@@ -56,8 +56,9 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
                     : field.isNotNull()
                         .and(length.greaterThan(0)));
             break;
+        case UNSUPPORTED:
         default:
-            throw new UnsupportedOperationException("Evaluation of type " + tk.type.matchType + " is not supported...");
+            throw new AssertionError("Evaluation of type " + tk.type.matchType + " is not supported...");
         }
     }
 }

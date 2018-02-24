@@ -71,8 +71,8 @@ public class SearchTermTest {
         try {
             SearchTerm.newSearchTerm(13, SearchTermType.UNSUPPORTED, 4l, "fn4", "whatever");
             fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(UnsupportedOperationException.class)
+        } catch (Error ex) {
+            assertThat(ex).isInstanceOf(AssertionError.class)
                 .hasMessage("SearchTermType.UNSUPPORTED is not supported");
         }
     }

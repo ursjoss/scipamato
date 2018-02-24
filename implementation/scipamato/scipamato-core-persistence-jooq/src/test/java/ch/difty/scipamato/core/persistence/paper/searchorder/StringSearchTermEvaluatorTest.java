@@ -245,8 +245,8 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
         try {
             e.evaluate(stMock);
             fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(UnsupportedOperationException.class)
+        } catch (Error ex) {
+            assertThat(ex).isInstanceOf(AssertionError.class)
                 .hasMessage("Evaluation of type UNSUPPORTED is not supported...");
         }
     }

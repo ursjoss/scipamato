@@ -1,6 +1,6 @@
 package ch.difty.scipamato.common;
 
-public class NullArgumentException extends RuntimeException {
+public class NullArgumentException extends IllegalArgumentException {
 
     private static final long serialVersionUID = 1L;
 

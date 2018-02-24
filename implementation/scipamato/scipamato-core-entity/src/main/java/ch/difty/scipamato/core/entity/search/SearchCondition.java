@@ -122,9 +122,9 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
             final AuditSearchTerm ast = (AuditSearchTerm) searchTerm;
             auditSearchTerms.put(ast.getFieldName(), ast);
             break;
+        case UNSUPPORTED:
         default:
-            throw new UnsupportedOperationException(
-                    "SearchTermType." + searchTerm.getSearchTermType() + " is not supported");
+            throw new AssertionError("SearchTermType." + searchTerm.getSearchTermType() + " is not supported");
         }
     }
 
