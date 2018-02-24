@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.entity;
 
+import ch.difty.scipamato.common.entity.FieldEnumType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,17 +26,30 @@ public class PaperAttachment extends IdScipamatoEntity<Integer> {
 
     private static final long BYTES_PER_KB = 1024;
 
-    public static final String PAPER_ID     = "paperId";
-    public static final String NAME         = "name";
-    public static final String CONTENT      = "content";
-    public static final String CONTENT_TYPE = "contentType";
-    public static final String SIZE         = "size";
-    public static final String SIZE_KB      = "sizeKiloBytes";
-
     private Long   paperId;
     private String name;
     private String contentType;
     private Long   size;
+
+    public enum PaperAttachmentFields implements FieldEnumType {
+        PAPER_ID("paperId"),
+        NAME("name"),
+        CONTENT("content"),
+        CONTENT_TYPE("contentType"),
+        SIZE("size"),
+        SIZE_KB("sizeKiloBytes");
+
+        private String name;
+
+        PaperAttachmentFields(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+    }
 
     // not persisted or loaded when loading through paper
     private byte[] content;

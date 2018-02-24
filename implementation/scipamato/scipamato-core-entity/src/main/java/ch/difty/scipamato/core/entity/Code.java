@@ -7,6 +7,7 @@ import javax.validation.constraints.Pattern;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeLike;
+import ch.difty.scipamato.common.entity.FieldEnumType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -18,28 +19,36 @@ public class Code extends CoreEntity implements CodeLike {
 
     public static final String CODE_REGEX = "[1-9][A-Z]";
 
-    public static final String CODE       = "code";
-    public static final String CODE_CLASS = "codeClass";
-    public static final String NAME       = "name";
-    public static final String COMMENT    = "comment";
-    public static final String INTERNAL   = "internal";
-    public static final String SORT       = "sort";
-
     @NotNull
     @Pattern(regexp = CODE_REGEX, message = "{code.invalidCode}")
-    private final String code;
-
+    private final String    code;
     @NotNull
-    private final String name;
-
-    private final String comment;
-
-    private final boolean internal;
-
+    private final String    name;
+    private final String    comment;
+    private final boolean   internal;
     @NotNull
     private final CodeClass codeClass;
+    private final int       sort;
 
-    private final int sort;
+    public enum CodeFields implements FieldEnumType {
+        CODE("code"),
+        CODE_CLASS("codeClass"),
+        NAME("name"),
+        COMMENT("comment"),
+        INTERNAL("internal"),
+        SORT("sort");
+
+        private String name;
+
+        CodeFields(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+    }
 
     public Code(final String code, final String name, final String comment, final boolean internal,
             final Integer codeClassId, final String codeClassName, final String codeClassDescription, final int sort) {
@@ -74,11 +83,11 @@ public class Code extends CoreEntity implements CodeLike {
     private Code(final String code, final String name, final String comment, final boolean internal,
             final CodeClass codeClass, final int sort, final LocalDateTime created, final Integer createdBy,
             final LocalDateTime lastModified, final Integer lastModifiedBy, final Integer version) {
-        this.code = AssertAs.notNull(code, CODE);
+        this.code = AssertAs.notNull(code, CodeFields.CODE.getName());
         this.name = name;
         this.comment = comment;
         this.internal = internal;
-        this.codeClass = AssertAs.notNull(codeClass, CODE_CLASS);
+        this.codeClass = AssertAs.notNull(codeClass, CodeFields.CODE_CLASS.getName());
         this.sort = sort;
         setCreated(created);
         setCreatedBy(createdBy);

@@ -1,7 +1,7 @@
 package ch.difty.scipamato.common.entity;
 
-import static ch.difty.scipamato.common.entity.ScipamatoEntity.CREATED;
-import static ch.difty.scipamato.common.entity.ScipamatoEntity.MODIFIED;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
@@ -46,7 +46,7 @@ public class ScipamatoEntityTest {
     @Test
     public void equals() {
         EqualsVerifier.forClass(ScipamatoEntity.class)
-            .withIgnoredFields(CREATED, MODIFIED)
+            .withIgnoredFields(CREATED.getName(), MODIFIED.getName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }

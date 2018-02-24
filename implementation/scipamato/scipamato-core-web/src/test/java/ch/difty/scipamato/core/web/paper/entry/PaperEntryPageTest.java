@@ -1,5 +1,34 @@
 package ch.difty.scipamato.core.web.paper.entry;
 
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.AUTHORS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.COMMENT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.DOI;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_ASSESSMENT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_POLLUTANT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR_OVERRIDDEN;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.GOALS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.INTERN;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.LOCATION;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.MAIN_CODE_OF_CODECLASS1;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHODS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_CONFOUNDERS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_OUTCOME;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STATISTICS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STUDY_DESIGN;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.NUMBER;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.ORIGINAL_ABSTRACT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.PMID;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_DURATION;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PARTICIPANTS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PLACE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.PUBL_YEAR;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EFFECT_ESTIMATE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EXPOSURE_RANGE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_MEASURED_OUTCOME;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
@@ -57,33 +86,34 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         b += ":form";
         getTester().assertComponent(b, Form.class);
 
-        assertLabeledTextArea(b, Paper.AUTHORS);
-        assertLabeledTextField(b, Paper.FIRST_AUTHOR);
-        assertLabeledCheckBoxX(b, Paper.FIRST_AUTHOR_OVERRIDDEN);
-        assertLabeledTextArea(b, Paper.TITLE);
-        assertLabeledTextField(b, Paper.LOCATION);
+        assertLabeledTextArea(b, AUTHORS.getName());
+        assertLabeledTextField(b, FIRST_AUTHOR.getName());
+        assertLabeledCheckBoxX(b, FIRST_AUTHOR_OVERRIDDEN.getName());
+        assertLabeledTextArea(b, TITLE.getName());
+        assertLabeledTextField(b, LOCATION.getName());
 
-        assertLabeledTextField(b, Paper.ID);
-        assertLabeledTextField(b, Paper.PUBL_YEAR);
-        assertLabeledTextField(b, Paper.PMID);
-        assertLabeledTextField(b, Paper.DOI);
+        assertLabeledTextField(b, Paper.IdScipamatoEntityFields.ID.getName());
+        assertLabeledTextField(b, PUBL_YEAR.getName());
+        assertLabeledTextField(b, PMID.getName());
+        assertLabeledTextField(b, DOI.getName());
 
         b += ":tabs";
         getTester().assertComponent(b, ClientSideBootstrapTabbedPanel.class);
         b += ":panelsContainer:panels";
-        assertTabPanelFields(1, 1, b, Paper.GOALS, Paper.POPULATION, Paper.METHODS, Paper.POPULATION_PLACE,
-            Paper.POPULATION_PARTICIPANTS, Paper.POPULATION_DURATION, Paper.EXPOSURE_POLLUTANT,
-            Paper.EXPOSURE_ASSESSMENT, Paper.METHOD_STUDY_DESIGN, Paper.METHOD_OUTCOME, Paper.METHOD_STATISTICS,
-            Paper.METHOD_CONFOUNDERS);
-        assertTabPanelFields(2, 3, b, Paper.RESULT, Paper.COMMENT, Paper.INTERN, Paper.RESULT_EXPOSURE_RANGE,
-            Paper.RESULT_EFFECT_ESTIMATE, Paper.RESULT_MEASURED_OUTCOME);
-        assertTabPanelFieldsOfTab3(5, b, Paper.MAIN_CODE_OF_CODECLASS1, "codesClass1", "codesClass2", "codesClass3",
+        assertTabPanelFields(1, 1, b, GOALS.getName(), POPULATION.getName(), METHODS.getName(),
+            POPULATION_PLACE.getName(), POPULATION_PARTICIPANTS.getName(), POPULATION_DURATION.getName(),
+            EXPOSURE_POLLUTANT.getName(), EXPOSURE_ASSESSMENT.getName(), METHOD_STUDY_DESIGN.getName(),
+            METHOD_OUTCOME.getName(), METHOD_STATISTICS.getName(), METHOD_CONFOUNDERS.getName());
+        assertTabPanelFields(2, 3, b, RESULT.getName(), COMMENT.getName(), INTERN.getName(),
+            RESULT_EXPOSURE_RANGE.getName(), RESULT_EFFECT_ESTIMATE.getName(), RESULT_MEASURED_OUTCOME.getName());
+        assertTabPanelFieldsOfTab3(5, b, MAIN_CODE_OF_CODECLASS1.getName(), "codesClass1", "codesClass2", "codesClass3",
             "codesClass4", "codesClass5", "codesClass6", "codesClass7", "codesClass8");
-        assertTabPanelFields(4, 7, b, Paper.POPULATION_PLACE, Paper.POPULATION_PARTICIPANTS, Paper.POPULATION_DURATION,
-            Paper.EXPOSURE_POLLUTANT, Paper.EXPOSURE_ASSESSMENT, Paper.METHOD_STUDY_DESIGN, Paper.METHOD_OUTCOME,
-            Paper.METHOD_STATISTICS, Paper.METHOD_CONFOUNDERS, Paper.RESULT_EXPOSURE_RANGE,
-            Paper.RESULT_EFFECT_ESTIMATE, Paper.RESULT_MEASURED_OUTCOME);
-        assertTabPanelFields(5, 9, b, Paper.ORIGINAL_ABSTRACT);
+        assertTabPanelFields(4, 7, b, POPULATION_PLACE.getName(), POPULATION_PARTICIPANTS.getName(),
+            POPULATION_DURATION.getName(), EXPOSURE_POLLUTANT.getName(), EXPOSURE_ASSESSMENT.getName(),
+            METHOD_STUDY_DESIGN.getName(), METHOD_OUTCOME.getName(), METHOD_STATISTICS.getName(),
+            METHOD_CONFOUNDERS.getName(), RESULT_EXPOSURE_RANGE.getName(), RESULT_EFFECT_ESTIMATE.getName(),
+            RESULT_MEASURED_OUTCOME.getName());
+        assertTabPanelFields(5, 9, b, ORIGINAL_ABSTRACT.getName());
         assertTabPanelFields(6, 11, b);
     }
 
@@ -205,12 +235,12 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
         FormTester formTester = getTester().newFormTester("contentPanel:form");
 
-        assertThat(formTester.getTextComponentValue(Paper.NUMBER)).isNotNull();
-        assertThat(formTester.getTextComponentValue(Paper.AUTHORS)).isNotNull();
-        assertThat(formTester.getTextComponentValue(Paper.FIRST_AUTHOR)).isNotNull();
-        assertThat(formTester.getTextComponentValue(Paper.TITLE)).isNotNull();
-        assertThat(formTester.getTextComponentValue(Paper.LOCATION)).isNotNull();
-        assertThat(formTester.getTextComponentValue(Paper.PUBL_YEAR)).isNotNull();
+        assertThat(formTester.getTextComponentValue(NUMBER.getName())).isNotNull();
+        assertThat(formTester.getTextComponentValue(AUTHORS.getName())).isNotNull();
+        assertThat(formTester.getTextComponentValue(FIRST_AUTHOR.getName())).isNotNull();
+        assertThat(formTester.getTextComponentValue(TITLE.getName())).isNotNull();
+        assertThat(formTester.getTextComponentValue(LOCATION.getName())).isNotNull();
+        assertThat(formTester.getTextComponentValue(PUBL_YEAR.getName())).isNotNull();
         assertThat(formTester.getTextComponentValue("tabs:panelsContainer:panels:1:tab1Form:goals")).isNotNull();
 
         formTester.submit();

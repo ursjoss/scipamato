@@ -1,5 +1,32 @@
 package ch.difty.scipamato.core.web.paper.entry;
 
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.ATTACHMENTS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.AUTHORS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.COMMENT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.DOI;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_ASSESSMENT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_POLLUTANT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.GOALS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.LOCATION;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHODS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_CONFOUNDERS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_OUTCOME;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STATISTICS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STUDY_DESIGN;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.ORIGINAL_ABSTRACT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_DURATION;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PARTICIPANTS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PLACE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.PUBL_YEAR;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EFFECT_ESTIMATE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EXPOSURE_RANGE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_MEASURED_OUTCOME;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.TITLE;
+import static ch.difty.scipamato.core.entity.PaperAttachment.PaperAttachmentFields.NAME;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -33,6 +60,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.ByteArrayResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
@@ -156,11 +184,11 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summary", this, null).getString();
         final ReportHeaderFields rhf = ReportHeaderFields.builder(brand, headerPart)
-            .populationLabel(getLabelResourceFor(Paper.POPULATION))
-            .goalsLabel(getLabelResourceFor(Paper.GOALS))
-            .methodsLabel(getLabelResourceFor(Paper.METHODS))
-            .resultLabel(getLabelResourceFor(Paper.RESULT))
-            .commentLabel(getLabelResourceFor(Paper.COMMENT))
+            .populationLabel(getLabelResourceFor(POPULATION.getName()))
+            .goalsLabel(getLabelResourceFor(GOALS.getName()))
+            .methodsLabel(getLabelResourceFor(METHODS.getName()))
+            .resultLabel(getLabelResourceFor(RESULT.getName()))
+            .commentLabel(getLabelResourceFor(COMMENT.getName()))
             .build();
         final Paper p = getModelObject();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart,
@@ -185,21 +213,21 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         final String headerPart = brand + "-"
                 + new StringResourceModel("headerPart.summaryShort", this, null).getString();
         final ReportHeaderFields rhf = ReportHeaderFields.builder(headerPart, brand)
-            .goalsLabel(getLabelResourceFor(Paper.GOALS))
-            .methodsLabel(getLabelResourceFor(Paper.METHODS))
-            .methodOutcomeLabel(getLabelResourceFor(Paper.METHOD_OUTCOME))
-            .resultMeasuredOutcomeLabel(getLabelResourceFor(Paper.RESULT_MEASURED_OUTCOME))
-            .methodStudyDesignLabel(getLabelResourceFor(Paper.METHOD_STUDY_DESIGN))
-            .populationPlaceLabel(getLabelResourceFor(Paper.POPULATION_PLACE))
-            .populationParticipantsLabel(getLabelResourceFor(Paper.POPULATION_PARTICIPANTS))
-            .populationDurationLabel(getLabelResourceFor(Paper.POPULATION_DURATION))
-            .exposurePollutantLabel(getLabelResourceFor(Paper.EXPOSURE_POLLUTANT))
-            .exposureAssessmentLabel(getLabelResourceFor(Paper.EXPOSURE_ASSESSMENT))
-            .resultExposureRangeLabel(getLabelResourceFor(Paper.RESULT_EXPOSURE_RANGE))
-            .methodStatisticsLabel(getLabelResourceFor(Paper.METHOD_STATISTICS))
-            .methodConfoundersLabel(getLabelResourceFor(Paper.METHOD_CONFOUNDERS))
-            .resultEffectEstimateLabel(getLabelResourceFor(Paper.RESULT_EFFECT_ESTIMATE))
-            .commentLabel(getLabelResourceFor(Paper.COMMENT))
+            .goalsLabel(getLabelResourceFor(GOALS.getName()))
+            .methodsLabel(getLabelResourceFor(METHODS.getName()))
+            .methodOutcomeLabel(getLabelResourceFor(METHOD_OUTCOME.getName()))
+            .resultMeasuredOutcomeLabel(getLabelResourceFor(RESULT_MEASURED_OUTCOME.getName()))
+            .methodStudyDesignLabel(getLabelResourceFor(METHOD_STUDY_DESIGN.getName()))
+            .populationPlaceLabel(getLabelResourceFor(POPULATION_PLACE.getName()))
+            .populationParticipantsLabel(getLabelResourceFor(POPULATION_PARTICIPANTS.getName()))
+            .populationDurationLabel(getLabelResourceFor(POPULATION_DURATION.getName()))
+            .exposurePollutantLabel(getLabelResourceFor(EXPOSURE_POLLUTANT.getName()))
+            .exposureAssessmentLabel(getLabelResourceFor(EXPOSURE_ASSESSMENT.getName()))
+            .resultExposureRangeLabel(getLabelResourceFor(RESULT_EXPOSURE_RANGE.getName()))
+            .methodStatisticsLabel(getLabelResourceFor(METHOD_STATISTICS.getName()))
+            .methodConfoundersLabel(getLabelResourceFor(METHOD_CONFOUNDERS.getName()))
+            .resultEffectEstimateLabel(getLabelResourceFor(RESULT_EFFECT_ESTIMATE.getName()))
+            .commentLabel(getLabelResourceFor(COMMENT.getName()))
             .build();
         final Paper p = getModelObject();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart,
@@ -336,17 +364,17 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     private void setFieldsIfNotSetCompareOtherwise(Paper p, PubmedArticleFacade a, AjaxRequestTarget target) {
         final ProcessingRecord pr = new ProcessingRecord();
 
-        processStringField(Paper.AUTHORS, a.getAuthors(), Paper::getAuthors, Paper::setAuthors, p, pr, target, authors,
-            firstAuthor);
-        processStringField(Paper.FIRST_AUTHOR, a.getFirstAuthor(), Paper::getFirstAuthor, Paper::setFirstAuthor, p, pr,
-            target, firstAuthor);
-        processStringField(Paper.TITLE, a.getTitle(), Paper::getTitle, Paper::setTitle, p, pr, target, title);
-        processIntegerField(Paper.PUBL_YEAR, a.getPublicationYear(), Paper::getPublicationYear,
+        processStringField(AUTHORS.getName(), a.getAuthors(), Paper::getAuthors, Paper::setAuthors, p, pr, target,
+            authors, firstAuthor);
+        processStringField(FIRST_AUTHOR.getName(), a.getFirstAuthor(), Paper::getFirstAuthor, Paper::setFirstAuthor, p,
+            pr, target, firstAuthor);
+        processStringField(TITLE.getName(), a.getTitle(), Paper::getTitle, Paper::setTitle, p, pr, target, title);
+        processIntegerField(PUBL_YEAR.getName(), a.getPublicationYear(), Paper::getPublicationYear,
             Paper::setPublicationYear, "year.parse.error", p, pr, target, publicationYear);
-        processStringField(Paper.LOCATION, a.getLocation(), Paper::getLocation, Paper::setLocation, p, pr, target,
+        processStringField(LOCATION.getName(), a.getLocation(), Paper::getLocation, Paper::setLocation, p, pr, target,
             location);
-        processStringField(Paper.DOI, a.getDoi(), Paper::getDoi, Paper::setDoi, p, pr, target, doi);
-        processStringField(Paper.ORIGINAL_ABSTRACT, a.getOriginalAbstract(), Paper::getOriginalAbstract,
+        processStringField(DOI.getName(), a.getDoi(), Paper::getDoi, Paper::setDoi, p, pr, target, doi);
+        processStringField(ORIGINAL_ABSTRACT.getName(), a.getOriginalAbstract(), Paper::getOriginalAbstract,
             Paper::setOriginalAbstract, p, pr, target, originalAbstract);
 
         provideUserInfo(pr);
@@ -385,7 +413,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         if (paperValue == null || Paper.NA_AUTHORS.equals(paperValue) || Paper.NA_STRING.equals(paperValue)) {
             setPaperFieldFromArticleAndInform(localizedFieldName, articleValue, setter, p, pr, target, fcs);
         } else {
-            if (!Paper.ORIGINAL_ABSTRACT.equals(fieldName))
+            if (!ORIGINAL_ABSTRACT.getName()
+                .equals(fieldName))
                 warnNonmatchingFields(localizedFieldName, articleValue, paperValue, pr);
         }
     }
@@ -518,8 +547,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         };
         btn.setDefaultFormProcessing(false);
         btn.setIconType(icon);
-        btn.add(
-            new AttributeModifier(TITLE, new StringResourceModel("button." + id + ".title", this, null).getString()));
+        btn.add(new AttributeModifier(TITLE_ATTR,
+                new StringResourceModel("button." + id + ".title", this, null).getString()));
         btn.setType(Buttons.Type.Primary);
         return btn;
     }
@@ -556,11 +585,11 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 setVisible(searchOrderId != null);
                 if (showingExclusions) {
                     setIconType(GlyphIconType.okcircle);
-                    add(new AttributeModifier(TITLE,
+                    add(new AttributeModifier(TITLE_ATTR,
                             new StringResourceModel("button.exclude.title.reinclude", this, null).getString()));
                 } else {
                     setIconType(GlyphIconType.bancircle);
-                    add(new AttributeModifier(TITLE,
+                    add(new AttributeModifier(TITLE_ATTR,
                             new StringResourceModel("button.exclude.title.exclude", this, null).getString()));
                 }
             }
@@ -621,7 +650,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @Override
     protected DataTable<PaperAttachment, String> newAttachmentTable(String id) {
-        PropertyModel<List<PaperAttachment>> model = new PropertyModel<>(getModel(), Paper.ATTACHMENTS);
+        PropertyModel<List<PaperAttachment>> model = new PropertyModel<>(getModel(), ATTACHMENTS.getName());
         PaperAttachmentProvider provider = new PaperAttachmentProvider(model);
         BootstrapDefaultDataTable<PaperAttachment, String> table = new BootstrapDefaultDataTable<PaperAttachment, String>(
                 id, makeTableColumns(), provider, 10) {
@@ -631,7 +660,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             protected Item<PaperAttachment> newRowItem(String id, int index, IModel<PaperAttachment> model) {
                 final PaperAttachment pa = model.getObject();
                 final Item<PaperAttachment> item = super.newRowItem(id, index, model);
-                item.add(AttributeModifier.replace(TITLE, pa.getSizeKiloBytes() + " kB - " + pa.getContentType()));
+                item.add(AttributeModifier.replace(TITLE_ATTR, pa.getSizeKiloBytes() + " kB - " + pa.getContentType()));
                 return item;
             }
         };
@@ -641,7 +670,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     private List<IColumn<PaperAttachment, String>> makeTableColumns() {
         final List<IColumn<PaperAttachment, String>> columns = new ArrayList<>();
-        columns.add(makeClickableColumn(PaperAttachment.NAME, this::onTitleClick));
+        columns.add(makeClickableColumn(NAME, this::onTitleClick));
         columns.add(makeLinkIconColumn("removeAttachment"));
         return columns;
     }
@@ -654,10 +683,11 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         getRequestCycle().scheduleRequestHandlerAfterCurrent(new ResourceRequestHandler(r, new PageParameters()));
     }
 
-    private ClickablePropertyColumn<PaperAttachment, String> makeClickableColumn(String propExpression,
+    private ClickablePropertyColumn<PaperAttachment, String> makeClickableColumn(FieldEnumType propExpression,
             SerializableConsumer<IModel<PaperAttachment>> consumer) {
-        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), null,
-                propExpression, consumer);
+        return new ClickablePropertyColumn<>(
+                new StringResourceModel(COLUMN_HEADER + propExpression.getName(), this, null), null,
+                propExpression.getName(), consumer);
     }
 
     private IColumn<PaperAttachment, String> makeLinkIconColumn(String id) {

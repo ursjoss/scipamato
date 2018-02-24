@@ -1,10 +1,14 @@
 package ch.difty.scipamato.core.entity;
 
+import static ch.difty.scipamato.core.entity.CodeClass.CodeClassFields.DESCRIPTION;
+import static ch.difty.scipamato.core.entity.CodeClass.CodeClassFields.NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.validation.ConstraintViolation;
 
 import org.junit.Test;
+
+import ch.difty.scipamato.common.entity.FieldEnumType;
 
 public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
 
@@ -16,7 +20,7 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
         assertThat(getViolations()).isEmpty();
     }
 
-    private void validateAndAssertFailure(final CodeClass cc, final String field, final Object invalidValue,
+    private void validateAndAssertFailure(final CodeClass cc, final FieldEnumType fieldType, final Object invalidValue,
             final String msg) {
         validate(cc);
 
@@ -27,7 +31,7 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
         assertThat(violation.getMessageTemplate()).isEqualTo(msg);
         assertThat(violation.getInvalidValue()).isEqualTo(invalidValue);
         assertThat(violation.getPropertyPath()
-            .toString()).isEqualTo(field);
+            .toString()).isEqualTo(fieldType.getName());
     }
 
     @Test
@@ -38,13 +42,13 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     @Test
     public void validatingCodeClass_withNullName_fails() {
         CodeClass cc = new CodeClass(1, null, "bar");
-        validateAndAssertFailure(cc, CodeClass.NAME, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
+        validateAndAssertFailure(cc, NAME, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
     }
 
     @Test
     public void validatingCodeClass_withNullDescription_fails() {
         CodeClass cc = new CodeClass(1, "foo", null);
-        validateAndAssertFailure(cc, CodeClass.DESCRIPTION, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
+        validateAndAssertFailure(cc, DESCRIPTION, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
     }
 
     @Test

@@ -28,6 +28,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
+import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
 import ch.difty.scipamato.common.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.scipamato.publ.entity.Code;
@@ -103,15 +104,16 @@ public class PublicPage extends BasePage<Void> {
         };
         queue(filterForm);
 
-        queueFieldAndLabel(
-            new TextField<String>("methodsSearch", PropertyModel.of(filter, PublicPaperFilter.METHODS_MASK)));
-        queueFieldAndLabel(
-            new TextField<String>("authorsSearch", PropertyModel.of(filter, PublicPaperFilter.AUTHOR_MASK)));
-        queueFieldAndLabel(
-            new TextField<String>("pubYearFrom", PropertyModel.of(filter, PublicPaperFilter.PUB_YEAR_FROM)));
-        queueFieldAndLabel(
-            new TextField<String>("pubYearUntil", PropertyModel.of(filter, PublicPaperFilter.PUB_YEAR_UNTIL)));
-        queueFieldAndLabel(new TextField<String>("number", PropertyModel.of(filter, PublicPaperFilter.NUMBER)));
+        queueFieldAndLabel(new TextField<String>("methodsSearch",
+                PropertyModel.of(filter, PublicPaperFilter.PublicPaperFilterFields.METHODS_MASK.getName())));
+        queueFieldAndLabel(new TextField<String>("authorsSearch",
+                PropertyModel.of(filter, PublicPaperFilter.PublicPaperFilterFields.AUTHOR_MASK.getName())));
+        queueFieldAndLabel(new TextField<String>("pubYearFrom",
+                PropertyModel.of(filter, PublicPaperFilter.PublicPaperFilterFields.PUB_YEAR_FROM.getName())));
+        queueFieldAndLabel(new TextField<String>("pubYearUntil",
+                PropertyModel.of(filter, PublicPaperFilter.PublicPaperFilterFields.PUB_YEAR_UNTIL.getName())));
+        queueFieldAndLabel(new TextField<String>("number",
+                PropertyModel.of(filter, PublicPaperFilter.PublicPaperFilterFields.NUMBER.getName())));
 
         queuePopulationCodesComplex("populationCodes");
         queueStudyDesignCodesComplex("studyDesignCodes");
@@ -221,7 +223,8 @@ public class PublicPage extends BasePage<Void> {
         queue(new Label(componentId + LABEL_TAG, Model.of(className)));
 
         final CodeModel choices = new CodeModel(codeClassId, getLanguageCode());
-        final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(Code.DISPLAY_VALUE, Code.CODE);
+        final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(Code.CodeFields.DISPLAY_VALUE.getName(),
+                Code.CodeFields.CODE.getName());
         final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
                 null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)
@@ -246,20 +249,22 @@ public class PublicPage extends BasePage<Void> {
 
     private List<IColumn<PublicPaper, String>> makeTableColumns() {
         final List<IColumn<PublicPaper, String>> columns = new ArrayList<>();
-        columns.add(makePropertyColumn(PublicPaper.AUTHORS));
-        columns.add(makeClickableColumn(PublicPaper.TITLE, this::onTitleClick));
-        columns.add(makePropertyColumn(PublicPaper.LOCATION));
-        columns.add(makePropertyColumn(PublicPaper.PUBL_YEAR));
+        columns.add(makePropertyColumn(PublicPaper.PublicPaperFields.AUTHORS));
+        columns.add(makeClickableColumn(PublicPaper.PublicPaperFields.TITLE, this::onTitleClick));
+        columns.add(makePropertyColumn(PublicPaper.PublicPaperFields.LOCATION));
+        columns.add(makePropertyColumn(PublicPaper.PublicPaperFields.PUBL_YEAR));
         return columns;
     }
 
-    private PropertyColumn<PublicPaper, String> makePropertyColumn(String propExpression) {
+    private PropertyColumn<PublicPaper, String> makePropertyColumn(FieldEnumType fieldType) {
+        final String propExpression = fieldType.getName();
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
                 propExpression);
     }
 
-    private ClickablePropertyColumn<PublicPaper, String> makeClickableColumn(String propExpression,
+    private ClickablePropertyColumn<PublicPaper, String> makeClickableColumn(FieldEnumType fieldType,
             SerializableConsumer<IModel<PublicPaper>> consumer) {
+        final String propExpression = fieldType.getName();
         return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null),
                 propExpression, propExpression, consumer);
     }
@@ -274,7 +279,8 @@ public class PublicPage extends BasePage<Void> {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
 
-        IModel<Collection<PopulationCode>> model = PropertyModel.of(filter, PublicPaperFilter.POPULATION_CODES);
+        IModel<Collection<PopulationCode>> model = PropertyModel.of(filter,
+            PublicPaperFilter.PublicPaperFilterFields.POPULATION_CODES.getName());
         List<? extends PopulationCode> choices = Arrays.asList(PopulationCode.values());
         final IChoiceRenderer<PopulationCode> choiceRenderer = new EnumChoiceRenderer<>(this);
         final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
@@ -292,7 +298,8 @@ public class PublicPage extends BasePage<Void> {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
 
-        IModel<Collection<StudyDesignCode>> model = PropertyModel.of(filter, PublicPaperFilter.STUDY_DESIGN_CODES);
+        IModel<Collection<StudyDesignCode>> model = PropertyModel.of(filter,
+            PublicPaperFilter.PublicPaperFilterFields.STUDY_DESIGN_CODES.getName());
         List<? extends StudyDesignCode> choices = Arrays.asList(StudyDesignCode.values());
         final IChoiceRenderer<StudyDesignCode> choiceRenderer = new EnumChoiceRenderer<>(this);
         final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,

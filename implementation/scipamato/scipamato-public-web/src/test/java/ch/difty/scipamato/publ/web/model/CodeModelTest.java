@@ -45,7 +45,7 @@ public class CodeModelTest extends ModelTest {
 
         final CodeModel model = new CodeModel(CodeClassId.CC1, "de");
 
-        assertThat(extractProperty(Code.CODE).from(model.load())).containsExactly("1F", "1N");
+        assertThat(extractProperty(Code.CodeFields.CODE.getName()).from(model.load())).containsExactly("1F", "1N");
 
         verify(serviceMock).findCodesOfClass(ccId, languageCode);
 

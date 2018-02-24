@@ -1,5 +1,7 @@
 package ch.difty.scipamato.publ.entity;
 
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
@@ -49,7 +51,7 @@ public class PublicPaperTest extends PublicEntityTest<PublicPaper> {
     public void verifyEquals() {
         EqualsVerifier.forClass(PublicPaper.class)
             .withRedefinedSuperclass()
-            .withIgnoredFields(PublicPaper.CREATED, PublicPaper.MODIFIED)
+            .withIgnoredFields(CREATED.getName(), MODIFIED.getName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }

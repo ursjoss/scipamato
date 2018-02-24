@@ -1,9 +1,9 @@
 package ch.difty.scipamato.core.entity.search;
 
-import static ch.difty.scipamato.core.entity.IdScipamatoEntity.ID;
-import static ch.difty.scipamato.core.entity.Paper.DOI;
-import static ch.difty.scipamato.core.entity.Paper.FIRST_AUTHOR_OVERRIDDEN;
-import static ch.difty.scipamato.core.entity.Paper.NUMBER;
+import static ch.difty.scipamato.core.entity.IdScipamatoEntity.IdScipamatoEntityFields.ID;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.DOI;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR_OVERRIDDEN;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.NUMBER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
@@ -119,7 +119,7 @@ public class SearchConditionTest {
         IntegerSearchTerm st = sc1.getIntegerSearchTerms()
             .iterator()
             .next();
-        assertThat(st.getFieldName()).isEqualTo(ID);
+        assertThat(st.getFieldName()).isEqualTo(ID.getName());
         assertThat(st.getRawSearchTerm()).isEqualTo("5");
 
         sc1.setId("10");
@@ -130,7 +130,7 @@ public class SearchConditionTest {
         st = sc1.getIntegerSearchTerms()
             .iterator()
             .next();
-        assertThat(st.getFieldName()).isEqualTo(ID);
+        assertThat(st.getFieldName()).isEqualTo(ID.getName());
         assertThat(st.getRawSearchTerm()).isEqualTo("10");
 
         sc1.setId(null);
@@ -155,7 +155,7 @@ public class SearchConditionTest {
         IntegerSearchTerm st = sc1.getIntegerSearchTerms()
             .iterator()
             .next();
-        assertThat(st.getFieldName()).isEqualTo(NUMBER);
+        assertThat(st.getFieldName()).isEqualTo(NUMBER.getName());
         assertThat(st.getRawSearchTerm()).isEqualTo("50");
 
         sc1.setNumber("100");
@@ -166,7 +166,7 @@ public class SearchConditionTest {
         st = sc1.getIntegerSearchTerms()
             .iterator()
             .next();
-        assertThat(st.getFieldName()).isEqualTo(NUMBER);
+        assertThat(st.getFieldName()).isEqualTo(NUMBER.getName());
         assertThat(st.getRawSearchTerm()).isEqualTo("100");
 
         sc1.setNumber(null);
@@ -191,7 +191,7 @@ public class SearchConditionTest {
         StringSearchTerm st = sc1.getStringSearchTerms()
             .iterator()
             .next();
-        assertThat(st.getFieldName()).isEqualTo(DOI);
+        assertThat(st.getFieldName()).isEqualTo(DOI.getName());
         assertThat(st.getRawSearchTerm()).isEqualTo("101111");
 
         sc1.setDoi("102222");
@@ -202,7 +202,7 @@ public class SearchConditionTest {
         st = sc1.getStringSearchTerms()
             .iterator()
             .next();
-        assertThat(st.getFieldName()).isEqualTo(DOI);
+        assertThat(st.getFieldName()).isEqualTo(DOI.getName());
         assertThat(st.getRawSearchTerm()).isEqualTo("102222");
 
         sc1.setDoi(null);
@@ -271,7 +271,7 @@ public class SearchConditionTest {
         BooleanSearchTerm st = sc1.getBooleanSearchTerms()
             .iterator()
             .next();
-        assertThat(st.getFieldName()).isEqualTo(FIRST_AUTHOR_OVERRIDDEN);
+        assertThat(st.getFieldName()).isEqualTo(FIRST_AUTHOR_OVERRIDDEN.getName());
         assertThat(st.getRawSearchTerm()).isEqualTo("true");
         assertThat(st.getValue()).isTrue();
 
@@ -283,7 +283,7 @@ public class SearchConditionTest {
         st = sc1.getBooleanSearchTerms()
             .iterator()
             .next();
-        assertThat(st.getFieldName()).isEqualTo(FIRST_AUTHOR_OVERRIDDEN);
+        assertThat(st.getFieldName()).isEqualTo(FIRST_AUTHOR_OVERRIDDEN.getName());
         assertThat(st.getRawSearchTerm()).isEqualTo("false");
         assertThat(st.getValue()).isFalse();
 

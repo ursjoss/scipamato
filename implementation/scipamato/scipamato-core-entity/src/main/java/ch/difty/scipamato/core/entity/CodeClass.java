@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.entity;
 import javax.validation.constraints.NotNull;
 
 import ch.difty.scipamato.common.entity.CodeClassLike;
+import ch.difty.scipamato.common.entity.FieldEnumType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -12,13 +13,26 @@ public class CodeClass extends IdScipamatoEntity<Integer> implements CodeClassLi
 
     private static final long serialVersionUID = 1L;
 
-    public static final String NAME        = "name";
-    public static final String DESCRIPTION = "description";
-
     @NotNull
     private final String name;
     @NotNull
     private final String description;
+
+    public enum CodeClassFields implements FieldEnumType {
+        NAME("name"),
+        DESCRIPTION("description");
+
+        private String name;
+
+        CodeClassFields(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+    }
 
     public CodeClass(final Integer id, final String name, final String description) {
         super(id);

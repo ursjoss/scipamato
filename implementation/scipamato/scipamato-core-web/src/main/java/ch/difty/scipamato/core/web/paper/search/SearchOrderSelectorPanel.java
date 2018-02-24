@@ -1,5 +1,9 @@
 package ch.difty.scipamato.core.web.paper.search;
 
+import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.GLOBAL;
+import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.NAME;
+import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.SHOW_EXCLUDED;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -77,17 +81,17 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
         form = new Form<>(id, new CompoundPropertyModel<>(getModel()));
         queue(form);
         makeAndQueueSearchOrderSelectBox("searchOrder");
-        makeAndQueueName(SearchOrder.NAME);
-        makeAndQueueGlobalCheckBox(SearchOrder.GLOBAL);
+        makeAndQueueName(NAME.getName());
+        makeAndQueueGlobalCheckBox(GLOBAL.getName());
         makeAndQueueNewButton("new");
         makeAndQueueDeleteButton("delete");
-        makeAndQueueShowExcludedCheckBox(SearchOrder.SHOW_EXCLUDED);
+        makeAndQueueShowExcludedCheckBox(SHOW_EXCLUDED.getName());
     }
 
     private void makeAndQueueSearchOrderSelectBox(final String id) {
         final SearchOrderModel choices = new SearchOrderModel(getActiveUser().getId(), SEARCH_ORDER_MAX);
-        final IChoiceRenderer<SearchOrder> choiceRenderer = new ChoiceRenderer<>(SearchOrder.DISPLAY_VALUE,
-                SearchOrder.ID);
+        final IChoiceRenderer<SearchOrder> choiceRenderer = new ChoiceRenderer<>(
+                SearchOrder.CoreEntityFields.DISPLAY_VALUE.getName(), SearchOrder.IdScipamatoEntityFields.ID.getName());
         final StringResourceModel noneSelectedModel = new StringResourceModel(id + ".noneSelected", this, null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig()
             .withNoneSelectedText(noneSelectedModel.getObject())

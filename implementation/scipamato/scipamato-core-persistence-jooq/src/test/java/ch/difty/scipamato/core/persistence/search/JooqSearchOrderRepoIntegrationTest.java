@@ -196,7 +196,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         SearchCondition modifiedCondition3 = repo.updateSearchCondition(savedCondition, searchOrderId, LC);
         assertSearchTermCount(1, 1, 1, 0, modifiedCondition3);
         assertThat(modifiedCondition3.getCodes()).hasSize(1);
-        assertThat(modifiedCondition3.getCodes()).extracting(Code.CODE)
+        assertThat(modifiedCondition3.getCodes()).extracting(Code.CodeFields.CODE.getName())
             .containsExactly("1A");
         assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(4);
 

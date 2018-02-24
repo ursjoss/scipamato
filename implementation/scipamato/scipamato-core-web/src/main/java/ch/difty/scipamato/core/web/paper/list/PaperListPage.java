@@ -1,5 +1,12 @@
 package ch.difty.scipamato.core.web.paper.list;
 
+import static ch.difty.scipamato.core.entity.search.PaperFilter.PaperFilterFields.AUTHOR_MASK;
+import static ch.difty.scipamato.core.entity.search.PaperFilter.PaperFilterFields.METHODS_MASK;
+import static ch.difty.scipamato.core.entity.search.PaperFilter.PaperFilterFields.NUMBER;
+import static ch.difty.scipamato.core.entity.search.PaperFilter.PaperFilterFields.PUB_YEAR_FROM;
+import static ch.difty.scipamato.core.entity.search.PaperFilter.PaperFilterFields.PUB_YEAR_UNTIL;
+import static ch.difty.scipamato.core.entity.search.PaperFilter.PaperFilterFields.SEARCH_MASK;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -98,12 +105,12 @@ public class PaperListPage extends BasePage<Void> {
             }
         });
 
-        queueFieldAndLabel(new TextField<String>("number", PropertyModel.of(filter, PaperFilter.NUMBER)));
-        queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(filter, PaperFilter.AUTHOR_MASK)));
-        queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(filter, PaperFilter.METHODS_MASK)));
-        queueFieldAndLabel(new TextField<String>("fieldSearch", PropertyModel.of(filter, PaperFilter.SEARCH_MASK)));
-        queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(filter, PaperFilter.PUB_YEAR_FROM)));
-        queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(filter, PaperFilter.PUB_YEAR_UNTIL)));
+        queueFieldAndLabel(new TextField<String>("number", PropertyModel.of(filter, NUMBER.getName())));
+        queueFieldAndLabel(new TextField<String>("authorsSearch", PropertyModel.of(filter, AUTHOR_MASK.getName())));
+        queueFieldAndLabel(new TextField<String>("methodsSearch", PropertyModel.of(filter, METHODS_MASK.getName())));
+        queueFieldAndLabel(new TextField<String>("fieldSearch", PropertyModel.of(filter, SEARCH_MASK.getName())));
+        queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(filter, PUB_YEAR_FROM.getName())));
+        queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(filter, PUB_YEAR_UNTIL.getName())));
 
         queueResponsePageButton("newPaper",
             () -> new PaperEntryPage(getPageParameters(), getPage().getPageReference()));

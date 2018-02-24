@@ -101,14 +101,15 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         queuePubmedLink("pubmed");
 
         queueTopic(newLabel("caption", getModel()));
-        queueTopic(null, newField("title", PublicPaper.TITLE));
-        queueTopic(newLabel("reference"), newField("authors", PublicPaper.AUTHORS),
-            newField("title2", PublicPaper.TITLE), newField("location", PublicPaper.LOCATION));
-        queueTopic(newLabel("goals"), newField("goals", PublicPaper.GOALS));
-        queueTopic(newLabel("population"), newField("population", PublicPaper.POPULATION));
-        queueTopic(newLabel("methods"), newField("methods", PublicPaper.METHODS));
-        queueTopic(newLabel("result"), newField("result", PublicPaper.RESULT));
-        queueTopic(newLabel("comment"), newField("comment", PublicPaper.COMMENT));
+        queueTopic(null, newField("title", PublicPaper.PublicPaperFields.TITLE.getName()));
+        queueTopic(newLabel("reference"), newField("authors", PublicPaper.PublicPaperFields.AUTHORS.getName()),
+            newField("title2", PublicPaper.PublicPaperFields.TITLE.getName()),
+            newField("location", PublicPaper.PublicPaperFields.LOCATION.getName()));
+        queueTopic(newLabel("goals"), newField("goals", PublicPaper.PublicPaperFields.GOALS.getName()));
+        queueTopic(newLabel("population"), newField("population", PublicPaper.PublicPaperFields.POPULATION.getName()));
+        queueTopic(newLabel("methods"), newField("methods", PublicPaper.PublicPaperFields.METHODS.getName()));
+        queueTopic(newLabel("result"), newField("result", PublicPaper.PublicPaperFields.RESULT.getName()));
+        queueTopic(newLabel("comment"), newField("comment", PublicPaper.PublicPaperFields.COMMENT.getName()));
     }
 
     private void queuePubmedLink(final String id) {

@@ -1,39 +1,39 @@
 package ch.difty.scipamato.core.entity.search;
 
-import static ch.difty.scipamato.core.entity.IdScipamatoEntity.ID;
-import static ch.difty.scipamato.core.entity.Paper.AUTHORS;
-import static ch.difty.scipamato.core.entity.Paper.COMMENT;
-import static ch.difty.scipamato.core.entity.Paper.CREATED;
-import static ch.difty.scipamato.core.entity.Paper.CREATED_BY;
-import static ch.difty.scipamato.core.entity.Paper.DOI;
-import static ch.difty.scipamato.core.entity.Paper.EXPOSURE_ASSESSMENT;
-import static ch.difty.scipamato.core.entity.Paper.EXPOSURE_POLLUTANT;
-import static ch.difty.scipamato.core.entity.Paper.FIRST_AUTHOR;
-import static ch.difty.scipamato.core.entity.Paper.FIRST_AUTHOR_OVERRIDDEN;
-import static ch.difty.scipamato.core.entity.Paper.GOALS;
-import static ch.difty.scipamato.core.entity.Paper.INTERN;
-import static ch.difty.scipamato.core.entity.Paper.LAST_MOD;
-import static ch.difty.scipamato.core.entity.Paper.LAST_MOD_BY;
-import static ch.difty.scipamato.core.entity.Paper.LOCATION;
-import static ch.difty.scipamato.core.entity.Paper.MAIN_CODE_OF_CODECLASS1;
-import static ch.difty.scipamato.core.entity.Paper.METHODS;
-import static ch.difty.scipamato.core.entity.Paper.METHOD_CONFOUNDERS;
-import static ch.difty.scipamato.core.entity.Paper.METHOD_OUTCOME;
-import static ch.difty.scipamato.core.entity.Paper.METHOD_STATISTICS;
-import static ch.difty.scipamato.core.entity.Paper.METHOD_STUDY_DESIGN;
-import static ch.difty.scipamato.core.entity.Paper.NUMBER;
-import static ch.difty.scipamato.core.entity.Paper.ORIGINAL_ABSTRACT;
-import static ch.difty.scipamato.core.entity.Paper.PMID;
-import static ch.difty.scipamato.core.entity.Paper.POPULATION;
-import static ch.difty.scipamato.core.entity.Paper.POPULATION_DURATION;
-import static ch.difty.scipamato.core.entity.Paper.POPULATION_PARTICIPANTS;
-import static ch.difty.scipamato.core.entity.Paper.POPULATION_PLACE;
-import static ch.difty.scipamato.core.entity.Paper.PUBL_YEAR;
-import static ch.difty.scipamato.core.entity.Paper.RESULT;
-import static ch.difty.scipamato.core.entity.Paper.RESULT_EFFECT_ESTIMATE;
-import static ch.difty.scipamato.core.entity.Paper.RESULT_EXPOSURE_RANGE;
-import static ch.difty.scipamato.core.entity.Paper.RESULT_MEASURED_OUTCOME;
-import static ch.difty.scipamato.core.entity.Paper.TITLE;
+import static ch.difty.scipamato.core.entity.IdScipamatoEntity.IdScipamatoEntityFields.ID;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.AUTHORS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.COMMENT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.CREATED;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.CREATED_BY;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.DOI;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_ASSESSMENT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_POLLUTANT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR_OVERRIDDEN;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.GOALS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.INTERN;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.LAST_MOD;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.LAST_MOD_BY;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.LOCATION;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.MAIN_CODE_OF_CODECLASS1;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHODS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_CONFOUNDERS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_OUTCOME;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STATISTICS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STUDY_DESIGN;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.NUMBER;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.ORIGINAL_ABSTRACT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.PMID;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_DURATION;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PARTICIPANTS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PLACE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.PUBL_YEAR;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EFFECT_ESTIMATE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EXPOSURE_RANGE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_MEASURED_OUTCOME;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.TITLE;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -44,6 +44,7 @@ import java.util.stream.Collectors;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeClassId;
+import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.CodeBox;
@@ -214,7 +215,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
     }
 
     public void setFirstAuthorOverridden(final Boolean value) {
-        setBooleanValue(FIRST_AUTHOR_OVERRIDDEN, value);
+        setBooleanValue(value, FIRST_AUTHOR_OVERRIDDEN);
     }
 
     public String getTitle() {
@@ -465,12 +466,13 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         this.codes.addCodes(codes);
     }
 
-    private String getStringValue(final String key) {
-        final StringSearchTerm st = stringSearchTerms.get(key);
+    private String getStringValue(final FieldEnumType fieldType) {
+        final StringSearchTerm st = stringSearchTerms.get(fieldType.getName());
         return st != null ? st.getRawSearchTerm() : null;
     }
 
-    private void setStringValue(final String value, final String key) {
+    private void setStringValue(final String value, final FieldEnumType fieldType) {
+        final String key = fieldType.getName();
         if (value != null) {
             stringSearchTerms.put(key, SearchTerm.newStringSearchTerm(key, value));
             getRemovedKeys().remove(key);
@@ -480,12 +482,13 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         }
     }
 
-    private String getIntegerValue(final String key) {
-        final IntegerSearchTerm st = integerSearchTerms.get(key);
+    private String getIntegerValue(final FieldEnumType fieldType) {
+        final IntegerSearchTerm st = integerSearchTerms.get(fieldType.getName());
         return st != null ? st.getRawSearchTerm() : null;
     }
 
-    private void setIntegerValue(final String value, final String key) {
+    private void setIntegerValue(final String value, final FieldEnumType fieldType) {
+        final String key = fieldType.getName();
         if (value != null) {
             integerSearchTerms.put(key, SearchTerm.newIntegerSearchTerm(key, value));
             getRemovedKeys().remove(key);
@@ -495,12 +498,13 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         }
     }
 
-    private Boolean getBooleanValue(final String key) {
-        final BooleanSearchTerm st = booleanSearchTerms.get(key);
+    private Boolean getBooleanValue(final FieldEnumType fieldType) {
+        final BooleanSearchTerm st = booleanSearchTerms.get(fieldType.getName());
         return st != null ? st.getValue() : null;
     }
 
-    private void setBooleanValue(final String key, final Boolean value) {
+    private void setBooleanValue(final Boolean value, final FieldEnumType fieldType) {
+        final String key = fieldType.getName();
         if (value != null) {
             booleanSearchTerms.put(key, SearchTerm.newBooleanSearchTerm(key, value.toString()));
             getRemovedKeys().remove(key);
@@ -510,16 +514,17 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         }
     }
 
-    private String getAuditValue(final String key) {
-        final AuditSearchTerm st = auditSearchTerms.get(key);
+    private String getAuditValue(final FieldEnumType fieldType) {
+        final AuditSearchTerm st = auditSearchTerms.get(fieldType.getName());
         return st != null ? st.getRawSearchTerm() : null;
     }
 
     /**
      * Here we allow multiple keys (i.e. fields)
      */
-    private void setAuditValue(final String value, final String... keys) {
-        for (final String key : keys) {
+    private void setAuditValue(final String value, final FieldEnumType... fieldTypes) {
+        for (final FieldEnumType fieldType : fieldTypes) {
+            final String key = fieldType.getName();
             if (value != null) {
                 auditSearchTerms.put(key, SearchTerm.newAuditSearchTerm(key, value));
                 getRemovedKeys().remove(key);

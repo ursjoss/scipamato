@@ -1,9 +1,10 @@
 package ch.difty.scipamato.core.entity;
 
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
-import static ch.difty.scipamato.common.entity.ScipamatoEntity.MODIFIED;
-import static ch.difty.scipamato.core.entity.CoreEntity.CREATOR_ID;
-import static ch.difty.scipamato.core.entity.CoreEntity.MODIFIER_ID;
+import static ch.difty.scipamato.core.entity.Code.CodeFields.CODE;
+import static ch.difty.scipamato.core.entity.Code.CodeFields.NAME;
+import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID;
+import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,8 @@ import javax.validation.ConstraintViolation;
 
 import org.junit.Test;
 
+import ch.difty.scipamato.common.entity.FieldEnumType;
+import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 
@@ -32,7 +35,8 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
         assertThat(getViolations()).isEmpty();
     }
 
-    private void validateAndAssertFailure(Code code, final String field, final Object invalidValue, final String msg) {
+    private void validateAndAssertFailure(Code code, final FieldEnumType fieldType, final Object invalidValue,
+            final String msg) {
         validate(code);
 
         assertThat(getViolations()).isNotEmpty()
@@ -42,7 +46,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
         assertThat(violation.getMessageTemplate()).isEqualTo(msg);
         assertThat(violation.getInvalidValue()).isEqualTo(invalidValue);
         assertThat(violation.getPropertyPath()
-            .toString()).isEqualTo(field);
+            .toString()).isEqualTo(fieldType.getName());
     }
 
     @Test
@@ -75,13 +79,13 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     @Test
     public void validatingCode_withNullName_fails() {
         Code c1 = new Code("1A", null, null, false, 1, "c1", "", 1);
-        validateAndAssertFailure(c1, Code.NAME, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
+        validateAndAssertFailure(c1, NAME, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
     }
 
     @Test
     public void validatingCode_withWrongCodeFormat_fails() {
         Code c1 = new Code("xyz", CODE1, null, false, 1, "c1", "", 1);
-        validateAndAssertFailure(c1, Code.CODE, "xyz", "{code.invalidCode}");
+        validateAndAssertFailure(c1, CODE, "xyz", "{code.invalidCode}");
     }
 
     @Test
@@ -230,7 +234,8 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     public void equals() {
         EqualsVerifier.forClass(Code.class)
             .withRedefinedSuperclass()
-            .withIgnoredFields(Code.CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
+            .withIgnoredFields(ScipamatoEntityFields.CREATED.getName(), CREATOR_ID.getName(),
+                ScipamatoEntityFields.MODIFIED.getName(), MODIFIER_ID.getName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }
