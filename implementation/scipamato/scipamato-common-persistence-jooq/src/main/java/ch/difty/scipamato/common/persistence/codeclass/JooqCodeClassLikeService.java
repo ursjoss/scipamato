@@ -20,8 +20,6 @@ import ch.difty.scipamato.common.persistence.CodeClassLikeService;
 public abstract class JooqCodeClassLikeService<T extends CodeClassLike, R extends CodeClassLikeRepository<T>>
         implements CodeClassLikeService<T> {
 
-    private static final long serialVersionUID = 1L;
-
     private final R repo;
 
     public JooqCodeClassLikeService(final R repo) {

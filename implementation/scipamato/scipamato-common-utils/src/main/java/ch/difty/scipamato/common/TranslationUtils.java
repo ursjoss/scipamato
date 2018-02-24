@@ -14,8 +14,8 @@ public final class TranslationUtils {
      *            the language code to trim
      * @return trimmed languageCode
      */
-    public static String trimLanguageCode(String languageCode) {
-        String lc = AssertAs.notNull(languageCode, "languageCode");
+    public static String trimLanguageCode(final String languageCode) {
+        final String lc = AssertAs.notNull(languageCode, "languageCode");
         if (lc.length() > 2)
             return lc.substring(0, 2);
         return lc;
@@ -29,7 +29,7 @@ public final class TranslationUtils {
      *            the camel cased string
      * @return de-camel-cased string (or null if original is null)
      */
-    public static String deCamelCase(String original) {
+    public static String deCamelCase(final String original) {
         if (original == null)
             return null;
         if (original.isEmpty())

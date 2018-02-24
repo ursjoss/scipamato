@@ -4,12 +4,12 @@ public interface SearchTerm {
 
     /**
      * Static factory method to produce implementations of {@link SearchTerm}s of
-     * the various subtypes.
+     * the various sub types.
      *
      * @param id
      *            the database id
      * @param searchTermTypeId
-     *            one of the ids as defined in enum {@link SearchTermType}
+     *            one of the IDs as defined in enum {@link SearchTermType}
      * @param searchConditionId
      *            the database id of the associated search condition
      * @param fieldName
@@ -26,7 +26,7 @@ public interface SearchTerm {
 
     /**
      * Static factory method to produce implementations of {@link SearchTerm}s of
-     * the various subtypes.
+     * the various sub types.
      *
      * @param id
      *            the database id

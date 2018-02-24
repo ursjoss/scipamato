@@ -17,11 +17,9 @@ import org.jooq.lambda.tuple.Tuple2;
  * Conditional Supplier allowing to add {@link Condition}s and combine them with
  * {@code OR} or {@code AND}.
  * <p>
- *
  * Original version by Lukas Saldanha. Optimized using jOOλ with some hints by
  * Lukas Eder.
  * <p>
- * 
  * Example of usage:
  * <p>
  * 
@@ -34,12 +32,13 @@ import org.jooq.lambda.tuple.Tuple2;
  *      "http://stackoverflow.com/questions/19803058/java-8-stream-getting-head-and-tail">http://stackoverflow.com/questions/19803058/java-8-stream-getting-head-and-tail</a>
  */
 public class ConditionalSupplier {
+
     final List<Supplier<Condition>> conditionSuppliers = new ArrayList<>();
 
     /**
      * Adds the provided condition supplier.
      */
-    public ConditionalSupplier add(Supplier<Condition> conditionSupplier) {
+    public ConditionalSupplier add(final Supplier<Condition> conditionSupplier) {
         conditionSuppliers.add(conditionSupplier);
         return this;
     }
@@ -54,7 +53,7 @@ public class ConditionalSupplier {
      *            the supplier to add
      * @return the resulting conditional supplier
      */
-    public ConditionalSupplier add(boolean isPresent, Supplier<Condition> conditionSupplier) {
+    public ConditionalSupplier add(final boolean isPresent, final Supplier<Condition> conditionSupplier) {
         if (isPresent)
             conditionSuppliers.add(conditionSupplier);
         return this;
@@ -82,8 +81,8 @@ public class ConditionalSupplier {
             .reduce(head, Condition::or);
     }
 
-    private static <T> Tuple2<Optional<T>, Seq<T>> splitAtHead(Stream<T> stream) {
-        Iterator<T> it = stream.iterator();
+    private static <T> Tuple2<Optional<T>, Seq<T>> splitAtHead(final Stream<T> stream) {
+        final Iterator<T> it = stream.iterator();
         return Tuple.tuple(it.hasNext() ? Optional.of(it.next()) : Optional.empty(), Seq.seq(it));
     }
 }

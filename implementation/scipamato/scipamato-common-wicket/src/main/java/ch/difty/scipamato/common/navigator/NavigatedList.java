@@ -15,7 +15,8 @@ import ch.difty.scipamato.common.NullArgumentException;
  * @author u.joss
  *
  * @param <T>
- *            type of the items that are managed. Must implement Serializable.
+ *            type of the items that are managed. Must implement
+ *            {@link Serializable}.
  */
 class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
     private static final long serialVersionUID = 1L;

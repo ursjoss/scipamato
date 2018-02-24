@@ -8,7 +8,14 @@ public final class DateUtils {
     private DateUtils() {
     }
 
-    public static Timestamp tsOf(LocalDateTime ldt) {
+    /**
+     * Converts a {@link LocalDateTime} into a {@link Timestamp}.
+     *
+     * @param ldt
+     *            the localdatetime to convert
+     * @return the timestamp - or null if ldt is null
+     */
+    public static Timestamp tsOf(final LocalDateTime ldt) {
         return ldt != null ? Timestamp.valueOf(ldt) : null;
     }
 }

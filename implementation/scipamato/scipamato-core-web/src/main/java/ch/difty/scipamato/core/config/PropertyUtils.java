@@ -30,10 +30,10 @@ public final class PropertyUtils {
      *            the property key, used only for logging purposes
      * @return enum of type {@code T}
      */
-    public static <T extends Enum<T>> T fromProperty(String propertyValue, T[] values, T defaultValue,
-            String propertyKey) {
+    public static <T extends Enum<T>> T fromProperty(final String propertyValue, final T[] values, final T defaultValue,
+            final String propertyKey) {
         if (StringUtils.isNotBlank(propertyValue)) {
-            for (T s : values) {
+            for (final T s : values) {
                 if (propertyValue.equalsIgnoreCase(s.name())) {
                     log.info("{}={}", propertyKey, propertyValue);
                     return s;
@@ -60,12 +60,13 @@ public final class PropertyUtils {
      *            the property key, used only for logging purposes
      * @return the int value
      */
-    public static int parseInt(String propertyValue, String values, int defaultValue, String propertyKey) {
+    public static int parseInt(final String propertyValue, final String values, final int defaultValue,
+            final String propertyKey) {
         int value = defaultValue;
         try {
             value = Integer.parseInt(propertyValue);
             log.info("{}={}", propertyKey, propertyValue);
-        } catch (NumberFormatException ex) {
+        } catch (final NumberFormatException ex) {
             final String msg = "{} is not properly defined. Current value: '{}' - now using {} - "
                     + "specify one in your property configuration (e.g. application.properties).{}";
             log.warn(msg, propertyKey, propertyValue, defaultValue, values);
