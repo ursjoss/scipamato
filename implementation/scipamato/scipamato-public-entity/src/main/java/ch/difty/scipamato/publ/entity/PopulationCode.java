@@ -1,5 +1,11 @@
 package ch.difty.scipamato.publ.entity;
 
+import static java.util.stream.Collectors.toMap;
+
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 /**
  * PopulationCode contains aggregated Codes of Code Class 3:
  * <ol>
@@ -13,8 +19,8 @@ public enum PopulationCode {
     CHILDREN((short) 1),
     ADULTS((short) 2);
 
-    // cache values
-    private static final PopulationCode[] CODES = values();
+    private static final Map<Short, PopulationCode> ID2CODE = Stream.of(values())
+        .collect(toMap(PopulationCode::getId, e -> e));
 
     private final short id;
 
@@ -22,11 +28,8 @@ public enum PopulationCode {
         this.id = id;
     }
 
-    public static PopulationCode of(final short id) {
-        for (final PopulationCode r : CODES)
-            if (id == r.getId())
-                return r;
-        throw new IllegalArgumentException("No matching type for id " + id);
+    public static Optional<PopulationCode> of(final short id) {
+        return Optional.ofNullable(ID2CODE.get(id));
     }
 
     public short getId() {

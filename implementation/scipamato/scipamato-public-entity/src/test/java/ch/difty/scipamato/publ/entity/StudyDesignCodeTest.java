@@ -6,7 +6,6 @@ import static ch.difty.scipamato.publ.entity.StudyDesignCode.OVERVIEW_METHODOLOG
 import static ch.difty.scipamato.publ.entity.StudyDesignCode.values;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
-import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.Test;
 
@@ -24,17 +23,11 @@ public class StudyDesignCodeTest {
 
     @Test
     public void of_withExistingId() {
-        assertThat(StudyDesignCode.of((short) 1)).isEqualTo(EXPERIMENTAL);
+        assertThat(StudyDesignCode.of((short) 1)).hasValue(EXPERIMENTAL);
     }
 
     @Test
-    public void of_withNotExistingId_throws() {
-        try {
-            StudyDesignCode.of((short) 0);
-            fail("Should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("No matching type for id 0");
-        }
+    public void of_withNotExistingId_returnsEmptyOptioal() {
+        assertThat(StudyDesignCode.of((short) 0)).isEmpty();
     }
 }

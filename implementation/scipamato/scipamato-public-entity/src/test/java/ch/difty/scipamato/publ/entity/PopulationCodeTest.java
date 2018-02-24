@@ -5,7 +5,6 @@ import static ch.difty.scipamato.publ.entity.PopulationCode.CHILDREN;
 import static ch.difty.scipamato.publ.entity.PopulationCode.values;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
-import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.Test;
 
@@ -23,18 +22,12 @@ public class PopulationCodeTest {
 
     @Test
     public void of_withExistingId() {
-        assertThat(PopulationCode.of((short) 1)).isEqualTo(CHILDREN);
+        assertThat(PopulationCode.of((short) 1)).hasValue(CHILDREN);
     }
 
     @Test
-    public void of_withNotExistingId_throws() {
-        try {
-            PopulationCode.of((short) 0);
-            fail("Should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("No matching type for id 0");
-        }
+    public void of_withNotExistingId_returnsEmptyOptioal() {
+        assertThat(PopulationCode.of((short) 0)).isEmpty();
     }
 
 }
