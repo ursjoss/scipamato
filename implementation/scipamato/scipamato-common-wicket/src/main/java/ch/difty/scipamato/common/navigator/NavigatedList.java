@@ -30,7 +30,7 @@ class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
      * @param items
      *            collection of items, must not be null or empty.
      */
-    public NavigatedList(final Collection<T> items) {
+    public NavigatedList(final Collection<? extends T> items) {
         if (items == null)
             throw new NullArgumentException("items");
         if (items.isEmpty())

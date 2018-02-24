@@ -24,9 +24,10 @@ public interface ItemNavigator<T> extends Serializable {
      * Initializes a new set of managed items. Must have at least one item.
      *
      * @param items
-     *            list of items of type {@code T}, must not be null nor empty.
+     *            list of items of type {@code T} or a subclass, must not be null
+     *            nor empty.
      */
-    void initialize(List<T> items);
+    void initialize(List<? extends T> items);
 
     /**
      * Sets the focus to item. Ignores the command if the navigator has not been
