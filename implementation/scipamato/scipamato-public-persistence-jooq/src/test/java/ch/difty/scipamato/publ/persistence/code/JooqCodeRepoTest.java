@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
-import ch.difty.scipamato.publ.persistence.code.JooqCodeRepo;
 
 public class JooqCodeRepoTest {
 

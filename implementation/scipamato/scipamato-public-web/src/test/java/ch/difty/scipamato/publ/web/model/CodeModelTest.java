@@ -16,7 +16,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.publ.entity.Code;
 import ch.difty.scipamato.publ.persistence.api.CodeService;
-import ch.difty.scipamato.publ.web.model.CodeModel;
 
 public class CodeModelTest extends ModelTest {
 

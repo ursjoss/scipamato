@@ -20,8 +20,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
-import ch.difty.scipamato.publ.persistence.paper.JooqPublicPaperService;
-import ch.difty.scipamato.publ.persistence.paper.PublicPaperRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JooqPublicPaperServiceTest {

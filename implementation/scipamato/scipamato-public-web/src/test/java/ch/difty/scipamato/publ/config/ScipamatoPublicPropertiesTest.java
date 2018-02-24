@@ -13,8 +13,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import ch.difty.scipamato.common.config.MavenProperties;
-import ch.difty.scipamato.publ.config.ScipamatoProperties;
-import ch.difty.scipamato.publ.config.ScipamatoPublicProperties;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ScipamatoPublicPropertiesTest {

@@ -2,7 +2,6 @@ package ch.difty.scipamato.publ.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import ch.difty.scipamato.publ.entity.CodeClass;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 

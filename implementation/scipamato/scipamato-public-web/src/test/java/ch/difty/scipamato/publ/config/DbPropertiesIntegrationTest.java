@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.scipamato.publ.ScipamatoPublicApplication;
-import ch.difty.scipamato.publ.config.DbProperties;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ScipamatoPublicApplication.class)

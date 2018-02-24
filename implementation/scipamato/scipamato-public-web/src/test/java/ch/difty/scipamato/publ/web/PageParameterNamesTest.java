@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.FinalClassTest;
-import ch.difty.scipamato.publ.web.PageParameterNames;
 
 public class PageParameterNamesTest extends FinalClassTest<PageParameterNames> {
 

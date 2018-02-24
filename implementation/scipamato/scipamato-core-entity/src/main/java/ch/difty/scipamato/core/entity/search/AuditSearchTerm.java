@@ -11,9 +11,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of {@link AbstractSearchTerm} working with the two audit fields
- * createdDisplayValue and lastModifiedDisplayValue, both of which handle both
- * the user and the date of the create or last change.
+ * Implementation of {@link AbstractSearchTerm} working with the two audit
+ * fields createdDisplayValue and lastModifiedDisplayValue, both of which handle
+ * both the user and the date of the create or last change.
  * <p>
  * There are different {@link TokenType}s, each of which is able to lex
  * particular elements of the raw search terms string.

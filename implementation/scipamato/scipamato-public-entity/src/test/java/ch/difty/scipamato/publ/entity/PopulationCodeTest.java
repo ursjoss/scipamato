@@ -9,8 +9,6 @@ import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.publ.entity.PopulationCode;
-
 public class PopulationCodeTest {
 
     @Test

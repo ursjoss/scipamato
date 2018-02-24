@@ -30,7 +30,6 @@ import ch.difty.scipamato.publ.ScipamatoPublicApplication;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
-import ch.difty.scipamato.publ.web.paper.browse.PublicPaperProvider;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

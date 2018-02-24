@@ -7,8 +7,6 @@ import java.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.difty.scipamato.publ.entity.PublicEntity;
-
 public abstract class PublicEntityTest<T extends PublicEntity> {
 
     protected static final LocalDateTime CREATED_DATE = LocalDateTime.parse("2017-01-01T22:15:13.111");

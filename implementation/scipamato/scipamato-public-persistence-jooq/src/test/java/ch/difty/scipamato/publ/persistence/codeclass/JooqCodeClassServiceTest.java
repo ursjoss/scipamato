@@ -15,8 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import ch.difty.scipamato.publ.entity.CodeClass;
-import ch.difty.scipamato.publ.persistence.codeclass.CodeClassRepository;
-import ch.difty.scipamato.publ.persistence.codeclass.JooqCodeClassService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JooqCodeClassServiceTest {

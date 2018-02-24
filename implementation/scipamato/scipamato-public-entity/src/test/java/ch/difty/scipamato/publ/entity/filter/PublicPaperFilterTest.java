@@ -9,7 +9,6 @@ import org.junit.Test;
 import ch.difty.scipamato.publ.entity.Code;
 import ch.difty.scipamato.publ.entity.PopulationCode;
 import ch.difty.scipamato.publ.entity.StudyDesignCode;
-import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 

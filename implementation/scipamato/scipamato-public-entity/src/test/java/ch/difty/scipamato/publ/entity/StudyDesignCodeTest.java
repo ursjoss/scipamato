@@ -10,8 +10,6 @@ import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.publ.entity.StudyDesignCode;
-
 public class StudyDesignCodeTest {
 
     @Test

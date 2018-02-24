@@ -6,10 +6,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * Implementations of {@link AbstractSearchTerm} accept a {@code fieldName} as key and a
- * {@code rawSearchTerm} as value. The rawSearchTerm holds a comparison
- * specification holding a value and some meta information on how to compare the
- * field with the provided value.
+ * Implementations of {@link AbstractSearchTerm} accept a {@code fieldName} as
+ * key and a {@code rawSearchTerm} as value. The rawSearchTerm holds a
+ * comparison specification holding a value and some meta information on how to
+ * compare the field with the provided value.
  * <p>
  *
  * <b>Note:</b>Identity is based on {@code fieldName} and {@code rawSearchTerm}
