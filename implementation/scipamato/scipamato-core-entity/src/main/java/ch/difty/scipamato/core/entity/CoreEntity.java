@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.entity;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.ScipamatoEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,8 +15,6 @@ import lombok.Setter;
 public abstract class CoreEntity extends ScipamatoEntity {
 
     private static final long serialVersionUID = 1L;
-
-    public static final String DISPLAY_VALUE = "displayValue";
 
     /**
      * Regex extending the classical \w with non-ASCII characters. To be used within
@@ -61,14 +60,6 @@ public abstract class CoreEntity extends ScipamatoEntity {
      */
     protected static final String RE_S = "[ \\t\\f\\r\\n]";
 
-    public static final String CREATED_DV        = "createdDisplayValue";
-    public static final String MODIFIED_DV       = "modifiedDisplayValue";
-    public static final String CREATOR_ID        = "createdBy";
-    public static final String CREATOR_NAME      = "createdByName";
-    public static final String CREATOR_FULL_NAME = "createdByFullName";
-    public static final String MODIFIER_ID       = "lastModifiedBy";
-    public static final String MODIFIER_NAME     = "lastModifiedByName";
-
     private Integer createdBy;
     private Integer lastModifiedBy;
 
@@ -77,6 +68,28 @@ public abstract class CoreEntity extends ScipamatoEntity {
     private transient String lastModifiedByName;
 
     public abstract String getDisplayValue();
+
+    public enum CoreEntityFields implements FieldEnumType {
+        DISPLAY_VALUE("displayValue"),
+        CREATED_DV("createdDisplayValue"),
+        MODIFIED_DV("modifiedDisplayValue"),
+        CREATOR_ID("createdBy"),
+        CREATOR_NAME("createdByName"),
+        CREATOR_FULL_NAME("createdByFullName"),
+        MODIFIER_ID("lastModifiedBy"),
+        MODIFIER_NAME("lastModifiedByName");
+
+        private String name;
+
+        CoreEntityFields(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+    }
 
     public String getCreatedDisplayValue() {
         return makeDisplayValue(createdByName, getCreated());

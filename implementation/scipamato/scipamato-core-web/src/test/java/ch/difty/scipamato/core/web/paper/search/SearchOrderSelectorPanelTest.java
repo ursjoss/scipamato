@@ -1,5 +1,8 @@
 package ch.difty.scipamato.core.web.paper.search;
 
+import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.GLOBAL;
+import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.NAME;
+import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.SHOW_EXCLUDED;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.never;
@@ -33,9 +36,9 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 
 public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorPanel> {
 
-    private static final long   ID       = 17l;
-    private static final String NAME     = "soName";
-    private static final int    OWNER_ID = 2;
+    private static final long   ID         = 17l;
+    private static final String VALID_NAME = "soName";
+    private static final int    OWNER_ID   = 2;
 
     @MockBean
     private SearchOrderService searchOrderServiceMock;
@@ -115,10 +118,10 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().executeAjaxEvent(PANEL_ID + ":form:searchOrder", "change");
 
         String b = PANEL_ID + ":form:";
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.GLOBAL);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.NAME);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.SHOW_EXCLUDED);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.SHOW_EXCLUDED + "Label");
+        getTester().assertComponentOnAjaxResponse(b + GLOBAL.getName());
+        getTester().assertComponentOnAjaxResponse(b + NAME.getName());
+        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName());
+        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName() + "Label");
 
         // TODO how to assert the event was actually broadcast without issuing the test
         // info message
@@ -132,10 +135,10 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().executeAjaxEvent(PANEL_ID + ":form:name", "change");
 
         String b = PANEL_ID + ":form:";
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.GLOBAL);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.NAME);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.SHOW_EXCLUDED);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.SHOW_EXCLUDED + "Label");
+        getTester().assertComponentOnAjaxResponse(b + GLOBAL.getName());
+        getTester().assertComponentOnAjaxResponse(b + NAME.getName());
+        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName());
+        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName() + "Label");
     }
 
     @Test
@@ -154,7 +157,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
     @Test
     public void testSubmittingWithNewButton_createsNewSearchOrder() {
-        when(searchOrderMock.getName()).thenReturn(NAME);
+        when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
@@ -162,10 +165,10 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         formTester.submit("new");
 
         String b = PANEL_ID + ":form:";
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.GLOBAL);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.NAME);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.SHOW_EXCLUDED);
-        getTester().assertComponentOnAjaxResponse(b + SearchOrder.SHOW_EXCLUDED + "Label");
+        getTester().assertComponentOnAjaxResponse(b + GLOBAL.getName());
+        getTester().assertComponentOnAjaxResponse(b + NAME.getName());
+        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName());
+        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName() + "Label");
 
         verify(searchOrderMock, times(10)).getId();
         verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class),
@@ -175,7 +178,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
     @Test
     public void testSubmittingWithDeleteButton_deletesSearchOrder() {
-        when(searchOrderMock.getName()).thenReturn(NAME);
+        when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
 
@@ -194,7 +197,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
     @Test
     public void withGlobalSearchOrders_withSameOwner_globalCheckBox_enabled() {
-        when(searchOrderMock.getName()).thenReturn(NAME);
+        when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
         getTester().startComponentInPage(makePanel());
 
@@ -205,7 +208,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
     @Test
     public void withGlobalSearchOrders_withOtherOwner_globalCheckBox_disabled() {
-        when(searchOrderMock.getName()).thenReturn(NAME);
+        when(searchOrderMock.getName()).thenReturn(VALID_NAME);
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID + 1);
         getTester().startComponentInPage(makePanel());
 

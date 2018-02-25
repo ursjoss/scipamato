@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.code;
 
+import static ch.difty.scipamato.core.entity.Code.CodeFields.CODE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 import static org.mockito.Mockito.verify;
@@ -37,8 +38,8 @@ public class JooqCodeServiceTest {
         codes.add(new Code("c2", "Code2", null, false, 1, "cc1", "", 2));
         when(repoMock.findCodesOfClass(ccId, languageCode)).thenReturn(codes);
 
-        assertThat(extractProperty(Code.CODE).from(service.findCodesOfClass(ccId, languageCode))).containsOnly("c1",
-            "c2");
+        assertThat(extractProperty(CODE.getName()).from(service.findCodesOfClass(ccId, languageCode)))
+            .containsOnly("c1", "c2");
 
         verify(repoMock).findCodesOfClass(ccId, languageCode);
 

@@ -1,5 +1,14 @@
 package ch.difty.scipamato.core.entity;
 
+import static ch.difty.scipamato.core.entity.Code.CodeFields.CODE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.AUTHORS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.DOI;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.GOALS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.LOCATION;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.NUMBER;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.PUBL_YEAR;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.TITLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 
@@ -14,13 +23,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
+import ch.difty.scipamato.common.entity.FieldEnumType;
 
 public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     private static final String VALID_AUTHORS                 = "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.";
     private static final String VALID_AUTHORS_WITH_COLLECTIVE = "Mehta AJ, Thun GA, Imboden M, Ferrarotti I, Keidel D, Künzli N, Kromhout H, Miedinger D, Phuleria H, Rochat T, Russi EW, Schindler C, Schwartz J, Vermeulen R, Luisetti M, Probst-Hensch N; SAPALDIA team.";
-    private static final String FIRST_AUTHOR                  = "Turner MC";
-    private static final String TITLE                         = "Title";
+    private static final String VALID_FIRST_AUTHOR            = "Turner MC";
+    private static final String VALID_TITLE                   = "Title";
     private static final String VALID_DOI                     = "10.1093/aje/kwu275";
     private static final String NON_NULL_STRING               = "foo";
 
@@ -36,9 +46,9 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         p.setDoi(VALID_DOI);
         p.setPmId(1000);
         p.setAuthors(VALID_AUTHORS);
-        p.setFirstAuthor(FIRST_AUTHOR);
+        p.setFirstAuthor(VALID_FIRST_AUTHOR);
         p.setFirstAuthorOverridden(false);
-        p.setTitle(TITLE);
+        p.setTitle(VALID_TITLE);
         p.setLocation(NON_NULL_STRING);
         p.setPublicationYear(2016);
         p.setGoals(NON_NULL_STRING);
@@ -66,22 +76,22 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Test
     public void validatingPaper_withNullNumber_fails() {
         p.setNumber(null);
-        validateAndAssertFailure(Paper.NUMBER, null, "{javax.validation.constraints.NotNull.message}");
+        validateAndAssertFailure(NUMBER, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingPaper_withNegativeNumber_fails() {
         p.setNumber(-1l);
-        validateAndAssertFailure(Paper.NUMBER, -1L, "{javax.validation.constraints.Min.message}");
+        validateAndAssertFailure(NUMBER, -1L, "{javax.validation.constraints.Min.message}");
     }
 
     @Test
     public void validatingPaper_withNullTitle_fails() {
         p.setTitle(null);
-        validateAndAssertFailure(Paper.TITLE, null, "{javax.validation.constraints.NotNull.message}");
+        validateAndAssertFailure(TITLE, null, "{javax.validation.constraints.NotNull.message}");
     }
 
-    private void validateAndAssertFailure(final String field, final Object invalidValue, final String msg) {
+    private void validateAndAssertFailure(final FieldEnumType fieldType, final Object invalidValue, final String msg) {
         validate(p);
 
         assertThat(getViolations()).isNotEmpty()
@@ -91,11 +101,11 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(violation.getMessageTemplate()).isEqualTo(msg);
         assertThat(violation.getInvalidValue()).isEqualTo(invalidValue);
         assertThat(violation.getPropertyPath()
-            .toString()).isEqualTo(field);
+            .toString()).isEqualTo(fieldType.getName());
     }
 
     private void verifyFailedAuthorValidation(final String invalidValue) {
-        validateAndAssertFailure(Paper.AUTHORS, invalidValue, "{paper.invalidAuthor}");
+        validateAndAssertFailure(AUTHORS, invalidValue, "{paper.invalidAuthor}");
     }
 
     @Test
@@ -160,7 +170,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Test
     public void validatingPaper_withNullFirstAuthor_fails() {
         p.setFirstAuthor(null);
-        validateAndAssertFailure(Paper.FIRST_AUTHOR, null, "{javax.validation.constraints.NotNull.message}");
+        validateAndAssertFailure(FIRST_AUTHOR, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
@@ -178,7 +188,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Test
     public void validatingPaper_withNullLocation_fails() {
         p.setLocation(null);
-        validateAndAssertFailure(Paper.LOCATION, null, "{javax.validation.constraints.NotNull.message}");
+        validateAndAssertFailure(LOCATION, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
@@ -186,7 +196,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         final int tooEarly = 1499;
         p.setPublicationYear(tooEarly);
         validate(p);
-        validateAndAssertFailure(Paper.PUBL_YEAR, tooEarly, "{paper.invalidPublicationYear}");
+        validateAndAssertFailure(PUBL_YEAR, tooEarly, "{paper.invalidPublicationYear}");
     }
 
     @Test
@@ -206,7 +216,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         final int tooLate = 2101;
         p.setPublicationYear(tooLate);
         validate(p);
-        validateAndAssertFailure(Paper.PUBL_YEAR, tooLate, "{paper.invalidPublicationYear}");
+        validateAndAssertFailure(PUBL_YEAR, tooLate, "{paper.invalidPublicationYear}");
     }
 
     @Test
@@ -214,13 +224,13 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         final String invalidDoi = "abc";
         p.setDoi(invalidDoi);
         validate(p);
-        validateAndAssertFailure(Paper.DOI, invalidDoi, "{paper.invalidDOI}");
+        validateAndAssertFailure(DOI, invalidDoi, "{paper.invalidDOI}");
     }
 
     @Test
     public void validatingPaper_withNullGoals_fails() {
         p.setGoals(null);
-        validateAndAssertFailure(Paper.GOALS, null, "{javax.validation.constraints.NotNull.message}");
+        validateAndAssertFailure(GOALS, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
@@ -294,9 +304,9 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
             .isEmpty();
         p.addCode(makeCode(1, "C"));
 
-        assertThat(extractProperty(Code.CODE).from(p.getCodes())).containsExactly("1C");
-        assertThat(extractProperty(Code.CODE).from(p.getCodesOf(CodeClassId.CC1))).containsExactly("1C");
-        assertThat(extractProperty(Code.CODE).from(p.getCodesOf(CodeClassId.CC2))).isEmpty();
+        assertThat(extractProperty(CODE.getName()).from(p.getCodes())).containsExactly("1C");
+        assertThat(extractProperty(CODE.getName()).from(p.getCodesOf(CodeClassId.CC1))).containsExactly("1C");
+        assertThat(extractProperty(CODE.getName()).from(p.getCodesOf(CodeClassId.CC2))).isEmpty();
     }
 
     @Test
@@ -306,7 +316,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         Code c2A = makeCode(2, "A");
         p.addCodes(Arrays.asList(c1D, c2A));
 
-        assertThat(extractProperty(Code.CODE).from(p.getCodes())).containsExactly("1C", "1D", "2A");
+        assertThat(extractProperty(CODE.getName()).from(p.getCodes())).containsExactly("1C", "1D", "2A");
 
         p.clearCodes();
         assertThat(p.getCodes()).isNotNull()

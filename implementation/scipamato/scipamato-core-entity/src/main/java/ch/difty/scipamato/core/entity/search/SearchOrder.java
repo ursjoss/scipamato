@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import lombok.EqualsAndHashCode;
@@ -23,23 +24,37 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
 
     private static final long serialVersionUID = 1L;
 
-    public static final String NAME          = "name";
-    public static final String OWNER         = "owner";
-    public static final String GLOBAL        = "global";
-    public static final String CONDITIONS    = "searchConditions";
-    public static final String SHOW_EXCLUDED = "showExcluded";
-
     private static final String JOIN_DELIMITER = "; OR ";
 
-    private String                      name;
-    private int                         owner;
-    private boolean                     global;
-    private final List<SearchCondition> searchConditions = new ArrayList<>();
+    private String  name;
+    private int     owner;
+    private boolean global;
 
-    private final List<Long> excludedPaperIds = new ArrayList<>();
+    private final List<SearchCondition> searchConditions = new ArrayList<>();
+    private final List<Long>            excludedPaperIds = new ArrayList<>();
 
     // this will not get persisted
     private boolean showExcluded = false;
+
+    public enum SearchOrderFields implements FieldEnumType {
+        NAME("name"),
+        OWNER("owner"),
+        GLOBAL("global"),
+        CONDITIONS("searchConditions"),
+        EXCLUDED_PAPER_IDS("excludedPaperIds"),
+        SHOW_EXCLUDED("showExcluded");
+
+        private String name;
+
+        SearchOrderFields(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+    }
 
     public SearchOrder() {
         // default constructor

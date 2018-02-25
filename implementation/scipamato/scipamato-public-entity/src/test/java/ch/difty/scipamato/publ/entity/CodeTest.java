@@ -1,5 +1,7 @@
 package ch.difty.scipamato.publ.entity;
 
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
@@ -40,7 +42,7 @@ public class CodeTest extends PublicEntityTest<Code> {
     protected void verifyEquals() {
         EqualsVerifier.forClass(Code.class)
             .withRedefinedSuperclass()
-            .withIgnoredFields(Code.CREATED, Code.MODIFIED)
+            .withIgnoredFields(CREATED.getName(), MODIFIED.getName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }

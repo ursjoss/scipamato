@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.paper.search;
 
+import static ch.difty.scipamato.core.web.PageParameters.SEARCH_ORDER_ID;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.atLeast;
@@ -35,13 +36,12 @@ import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException.Type;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
-import ch.difty.scipamato.core.web.PageParameterNames;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 
 public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
-    private static final long SEARCH_ORDER_ID = 7;
+    private static final long SO_ID = 7;
 
     private static final String LABEL = "Label";
 
@@ -56,11 +56,11 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
     @Mock
     private SearchOrder        searchOrderMock, searchOrderMock2;
 
-    private final SearchOrder searchOrder = new SearchOrder(SEARCH_ORDER_ID, "soName", 1, false, null, null);
+    private final SearchOrder searchOrder = new SearchOrder(SO_ID, "soName", 1, false, null, null);
 
     @Override
     protected void setUpHook() {
-        when(searchOrderServiceMock.findById(SEARCH_ORDER_ID)).thenReturn(Optional.of(searchOrder));
+        when(searchOrderServiceMock.findById(SO_ID)).thenReturn(Optional.of(searchOrder));
         when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class)))
             .thenReturn(Arrays.asList(searchOrder));
         when(paperSlimMock.getId()).thenReturn(41l);
@@ -113,7 +113,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Test
     public void clickingAddSearchCondition_forwardsToPaperSearchCriteriaPageToLoadSearchOrder() {
-        PageParameters pp = new PageParameters().add(PageParameterNames.SEARCH_ORDER_ID, SEARCH_ORDER_ID);
+        PageParameters pp = new PageParameters().add(SEARCH_ORDER_ID.getName(), SO_ID);
         getTester().startPage(getPageClass(), pp);
         getTester().assertRenderedPage(getPageClass());
 
@@ -122,7 +122,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
         getTester().assertRenderedPage(PaperSearchCriteriaPage.class);
 
-        verify(searchOrderServiceMock).findById(SEARCH_ORDER_ID);
+        verify(searchOrderServiceMock).findById(SO_ID);
 
         verify(searchOrderServiceMock).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
         verify(paperSlimServiceMock).countBySearchOrder(isA(SearchOrder.class));
@@ -161,7 +161,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
         // TODO test that the event is sent, and also that receiving the event adds the
         // filter panel to the target. See also next test
-        verify(searchOrderServiceMock, never()).findById(SEARCH_ORDER_ID);
+        verify(searchOrderServiceMock, never()).findById(SO_ID);
 
         verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class),
             isA(PaginationContext.class));
@@ -245,7 +245,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Test
     public void clickingRemoveButtonOnResults_removesResultAndSavesSearchOrder() {
-        when(searchOrderMock.getId()).thenReturn(SEARCH_ORDER_ID);
+        when(searchOrderMock.getId()).thenReturn(SO_ID);
 
         when(paperSlimServiceMock.countBySearchOrder(eq(searchOrderMock))).thenReturn(1, 0);
         when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationContext.class)))
@@ -281,13 +281,13 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Test
     public void constructingPage_withPageParametersHavingSearchOrderId_loadsSearchOrderFromDb() {
-        PageParameters pp = new PageParameters().add(PageParameterNames.SEARCH_ORDER_ID, SEARCH_ORDER_ID);
+        PageParameters pp = new PageParameters().add(SEARCH_ORDER_ID.getName(), SO_ID);
         getTester().startPage(getPageClass(), pp);
         getTester().assertRenderedPage(getPageClass());
 
         getTester().assertModelValue("searchOrderSelectorPanel:form:searchOrder", searchOrder);
 
-        verify(searchOrderServiceMock).findById(SEARCH_ORDER_ID);
+        verify(searchOrderServiceMock).findById(SO_ID);
 
         verify(searchOrderServiceMock).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
         verify(paperSlimServiceMock).countBySearchOrder(isA(SearchOrder.class));
@@ -299,7 +299,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().startPage(getPageClass(), new PageParameters());
         getTester().assertRenderedPage(getPageClass());
 
-        verify(searchOrderServiceMock, never()).findById(SEARCH_ORDER_ID);
+        verify(searchOrderServiceMock, never()).findById(SO_ID);
 
         verify(searchOrderServiceMock).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
         verify(paperSlimServiceMock).countBySearchOrder(isA(SearchOrder.class));
@@ -308,7 +308,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Test
     public void searchOrderMock_withNoExclusions_hidesShowExcludedButton() {
-        when(searchOrderMock.getId()).thenReturn(SEARCH_ORDER_ID);
+        when(searchOrderMock.getId()).thenReturn(SO_ID);
         when(searchOrderMock.getExcludedPaperIds()).thenReturn(new ArrayList<Long>());
 
         when(paperSlimServiceMock.countBySearchOrder(eq(searchOrderMock))).thenReturn(1, 0);
@@ -334,7 +334,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
 
     @Test
     public void searchOrderMock_withExclusions_whenClicking_sendsEvent() {
-        when(searchOrderMock.getId()).thenReturn(SEARCH_ORDER_ID);
+        when(searchOrderMock.getId()).thenReturn(SO_ID);
         when(searchOrderMock.getExcludedPaperIds()).thenReturn(Arrays.asList(5l, 3l));
 
         when(paperSlimServiceMock.countBySearchOrder(eq(searchOrderMock))).thenReturn(1, 0);

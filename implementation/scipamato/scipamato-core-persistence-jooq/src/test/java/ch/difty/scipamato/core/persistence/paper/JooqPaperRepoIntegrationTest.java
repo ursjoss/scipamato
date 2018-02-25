@@ -223,7 +223,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     public void gettingByIds_returnsRecordForEveryIdExisting() {
         List<Paper> papers = repo.findByIds(Arrays.asList(1l, 2l, 3l, 10l, -17l));
         assertThat(papers).hasSize(4);
-        assertThat(papers).extracting(Paper.ID)
+        assertThat(papers).extracting(Paper.IdScipamatoEntityFields.ID.getName())
             .containsExactly(1l, 2l, 3l, 10l);
 
         // codes not enriched
@@ -240,7 +240,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     public void gettingWithCodesByIds_returnsRecordForEveryIdExisting() {
         List<Paper> papers = repo.findWithCodesByIds(Arrays.asList(1l, 2l, 3l, 10l, -17l), LC);
         assertThat(papers).hasSize(4);
-        assertThat(papers).extracting(Paper.ID)
+        assertThat(papers).extracting(Paper.IdScipamatoEntityFields.ID.getName())
             .containsExactly(1l, 2l, 3l, 10l);
 
         // codes are present
@@ -252,7 +252,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     public void findingPapersByPmIds_withThreeValidPmIds_returnsThreePapers() {
         List<Paper> papers = repo.findByPmIds(Arrays.asList(20335815, 27128166, 25104428), LC);
         assertThat(papers).hasSize(3);
-        assertThat(papers).extracting(Paper.PMID)
+        assertThat(papers).extracting(Paper.PaperFields.PMID.getName())
             .containsOnly(20335815, 27128166, 25104428);
     }
 
@@ -284,7 +284,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     public void findingPapersByNumbers_withThreeValidNumbers_returnsThreePapers() {
         List<Paper> papers = repo.findByNumbers(Arrays.asList(1l, 2l, 3l), LC);
         assertThat(papers).hasSize(3);
-        assertThat(papers).extracting(Paper.NUMBER)
+        assertThat(papers).extracting(Paper.PaperFields.NUMBER.getName())
             .containsOnly(1l, 2l, 3l);
     }
 

@@ -1,9 +1,9 @@
 package ch.difty.scipamato.core.entity;
 
-import static ch.difty.scipamato.common.entity.ScipamatoEntity.CREATED;
-import static ch.difty.scipamato.common.entity.ScipamatoEntity.MODIFIED;
-import static ch.difty.scipamato.core.entity.CoreEntity.CREATOR_ID;
-import static ch.difty.scipamato.core.entity.CoreEntity.MODIFIER_ID;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED;
+import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID;
+import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
@@ -153,7 +153,7 @@ public class UserTest {
     public void equals() {
         EqualsVerifier.forClass(User.class)
             .withRedefinedSuperclass()
-            .withIgnoredFields(CREATED, CREATOR_ID, MODIFIED, MODIFIER_ID)
+            .withIgnoredFields(CREATED.getName(), CREATOR_ID.getName(), MODIFIED.getName(), MODIFIER_ID.getName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }

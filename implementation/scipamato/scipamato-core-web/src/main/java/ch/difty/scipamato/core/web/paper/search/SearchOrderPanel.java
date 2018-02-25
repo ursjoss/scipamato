@@ -58,8 +58,8 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
         queueNewButton("addSearchCondition", pageFactory.newPaperSearchCriteriaPage(),
             () -> Model.of(new SearchCondition()));
 
-        SearchConditionProvider p = new SearchConditionProvider(
-                new PropertyModel<List<SearchCondition>>(getModel(), SearchOrder.CONDITIONS));
+        SearchConditionProvider p = new SearchConditionProvider(new PropertyModel<List<SearchCondition>>(getModel(),
+                SearchOrder.SearchOrderFields.CONDITIONS.getName()));
         searchConditions = new BootstrapDefaultDataTable<>("searchConditions", makeTableColumns(), p, 10);
         searchConditions.setOutputMarkupId(true);
         searchConditions.add(new TableBehavior().striped()

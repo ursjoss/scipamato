@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.entity;
 
+import ch.difty.scipamato.common.entity.FieldEnumType;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,8 +24,21 @@ public abstract class IdScipamatoEntity<ID extends Number> extends CoreEntity {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String ID = "id";
-
     private ID id;
+
+    public enum IdScipamatoEntityFields implements FieldEnumType {
+        ID("id");
+
+        private String name;
+
+        IdScipamatoEntityFields(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+    }
 
 }

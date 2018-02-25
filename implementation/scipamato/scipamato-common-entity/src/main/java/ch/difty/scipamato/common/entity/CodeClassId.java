@@ -1,7 +1,9 @@
 package ch.difty.scipamato.common.entity;
 
-import java.util.Arrays;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Code Classes are collections of code that can be maintained separately for a
@@ -21,8 +23,8 @@ public enum CodeClassId {
     CC7(7),
     CC8(8);
 
-    // cache values
-    private static final CodeClassId[] CODE_CLASS_IDS = values();
+    private static final Map<Integer, CodeClassId> ID2ENUM = Stream.of(values())
+        .collect(Collectors.toMap(CodeClassId::getId, e -> e));
 
     private final int id;
 
@@ -35,10 +37,7 @@ public enum CodeClassId {
     }
 
     public static Optional<CodeClassId> fromId(final int id) {
-        return Arrays.asList(CODE_CLASS_IDS)
-            .stream()
-            .filter(i -> i.getId() == id)
-            .findFirst();
+        return Optional.ofNullable(ID2ENUM.get(id));
     }
 
 }

@@ -10,6 +10,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Pattern.Flag;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
+import ch.difty.scipamato.common.entity.FieldEnumType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -107,51 +108,54 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
      */
     private static final String DOI_REGEX = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$";
 
-    public static final String NUMBER                  = "number";
-    public static final String DOI                     = "doi";
-    public static final String PMID                    = "pmId";
-    public static final String AUTHORS                 = "authors";
-    public static final String FIRST_AUTHOR            = "firstAuthor";
-    public static final String FIRST_AUTHOR_OVERRIDDEN = "firstAuthorOverridden";
-    public static final String TITLE                   = "title";
-    public static final String LOCATION                = "location";
-    public static final String PUBL_YEAR               = "publicationYear";
+    public enum PaperFields implements FieldEnumType {
+        NUMBER("number"),
+        DOI("doi"),
+        PMID("pmId"),
+        AUTHORS("authors"),
+        FIRST_AUTHOR("firstAuthor"),
+        FIRST_AUTHOR_OVERRIDDEN("firstAuthorOverridden"),
+        TITLE("title"),
+        LOCATION("location"),
+        PUBL_YEAR("publicationYear"),
+        GOALS("goals"),
+        POPULATION("population"),
+        METHODS("methods"),
+        POPULATION_PLACE("populationPlace"),
+        POPULATION_PARTICIPANTS("populationParticipants"),
+        POPULATION_DURATION("populationDuration"),
+        EXPOSURE_POLLUTANT("exposurePollutant"),
+        EXPOSURE_ASSESSMENT("exposureAssessment"),
+        METHOD_STUDY_DESIGN("methodStudyDesign"),
+        METHOD_OUTCOME("methodOutcome"),
+        METHOD_STATISTICS("methodStatistics"),
+        METHOD_CONFOUNDERS("methodConfounders"),
+        RESULT("result"),
+        COMMENT("comment"),
+        INTERN("intern"),
+        RESULT_EXPOSURE_RANGE("resultExposureRange"),
+        RESULT_EFFECT_ESTIMATE("resultEffectEstimate"),
+        RESULT_MEASURED_OUTCOME("resultMeasuredOutcome"),
+        ORIGINAL_ABSTRACT("originalAbstract"),
+        ATTACHMENTS("attachments"),
+        MAIN_CODE_OF_CODECLASS1("mainCodeOfCodeclass1"),
+        CODES("codes"),
+        CREATED("paper.created"),
+        CREATED_BY("paper.created_by"),
+        LAST_MOD("paper.last_modified"),
+        LAST_MOD_BY("paper.last_modified_by");
 
-    public static final String GOALS      = "goals";
-    public static final String POPULATION = "population";
-    public static final String METHODS    = "methods";
+        private String name;
 
-    public static final String POPULATION_PLACE        = "populationPlace";
-    public static final String POPULATION_PARTICIPANTS = "populationParticipants";
-    public static final String POPULATION_DURATION     = "populationDuration";
-    public static final String EXPOSURE_POLLUTANT      = "exposurePollutant";
-    public static final String EXPOSURE_ASSESSMENT     = "exposureAssessment";
-    public static final String METHOD_STUDY_DESIGN     = "methodStudyDesign";
-    public static final String METHOD_OUTCOME          = "methodOutcome";
-    public static final String METHOD_STATISTICS       = "methodStatistics";
-    public static final String METHOD_CONFOUNDERS      = "methodConfounders";
+        PaperFields(final String name) {
+            this.name = name;
+        }
 
-    public static final String RESULT  = "result";
-    public static final String COMMENT = "comment";
-    public static final String INTERN  = "intern";
-
-    public static final String RESULT_EXPOSURE_RANGE   = "resultExposureRange";
-    public static final String RESULT_EFFECT_ESTIMATE  = "resultEffectEstimate";
-    public static final String RESULT_MEASURED_OUTCOME = "resultMeasuredOutcome";
-
-    public static final String ORIGINAL_ABSTRACT = "originalAbstract";
-
-    public static final String ATTACHMENTS = "attachments";
-
-    public static final String MAIN_CODE_OF_CODECLASS1 = "mainCodeOfCodeclass1";
-
-    public static final String CODES = "codes";
-
-    // Override to get unique names
-    public static final String CREATED     = "paper.created";
-    public static final String CREATED_BY  = "paper.created_by";
-    public static final String LAST_MOD    = "paper.last_modified";
-    public static final String LAST_MOD_BY = "paper.last_modified_by";
+        @Override
+        public String getName() {
+            return name;
+        }
+    }
 
     @NotNull
     @Min(0)

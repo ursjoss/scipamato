@@ -1,5 +1,11 @@
 package ch.difty.scipamato.publ.entity;
 
+import static java.util.stream.Collectors.toMap;
+
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 /**
  * StudyDesignCode contains aggregated Codes of Code Class 5:
  * <ol>
@@ -15,8 +21,8 @@ public enum StudyDesignCode {
     EPIODEMIOLOGICAL((short) 2),
     OVERVIEW_METHODOLOGY((short) 3);
 
-    // cache values
-    private static final StudyDesignCode[] CODES = values();
+    private static final Map<Short, StudyDesignCode> ID2CODE = Stream.of(values())
+        .collect(toMap(StudyDesignCode::getId, e -> e));
 
     private final short id;
 
@@ -24,11 +30,8 @@ public enum StudyDesignCode {
         this.id = id;
     }
 
-    public static StudyDesignCode of(final short id) {
-        for (final StudyDesignCode r : CODES)
-            if (id == r.getId())
-                return r;
-        throw new IllegalArgumentException("No matching type for id " + id);
+    public static Optional<StudyDesignCode> of(final short id) {
+        return Optional.ofNullable(ID2CODE.get(id));
     }
 
     public short getId() {

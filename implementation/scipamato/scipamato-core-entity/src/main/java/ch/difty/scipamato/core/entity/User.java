@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.core.auth.Role;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,14 +29,6 @@ public class User extends IdScipamatoEntity<Integer> {
 
     public static final User NO_USER = new User(-1, "noUser", "n.a", "n.a.", "n.a.", "n.a");
 
-    public static final String USER_NAME  = "userName";
-    public static final String FIRST_NAME = "firstName";
-    public static final String LAST_NAME  = "lastName";
-    public static final String EMAIL      = "email";
-    public static final String PASSWORD   = "password";
-    public static final String ENABLED    = "enabled";
-    public static final String ROLES      = "roles";
-
     @NotNull
     @Size(max = 30)
     private String userName;
@@ -55,6 +48,27 @@ public class User extends IdScipamatoEntity<Integer> {
     private boolean enabled;
 
     private final List<Role> roles = new ArrayList<>();
+
+    public enum UserFields implements FieldEnumType {
+        USER_NAME("userName"),
+        FIRST_NAME("firstName"),
+        LAST_NAME("lastName"),
+        EMAIL("email"),
+        PASSWORD("password"),
+        ENABLED("enabled"),
+        ROLES("roles");
+
+        private String name;
+
+        UserFields(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+    }
 
     public User(final int id, final String userName, final String firstName, final String lastName, final String email,
             final String password, final boolean enabled, final List<Role> roles) {

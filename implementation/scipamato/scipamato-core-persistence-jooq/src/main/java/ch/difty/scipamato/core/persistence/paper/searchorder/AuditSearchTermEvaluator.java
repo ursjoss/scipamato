@@ -2,6 +2,10 @@ package ch.difty.scipamato.core.persistence.paper.searchorder;
 
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.CREATED;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.CREATED_BY;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.LAST_MOD;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.LAST_MOD_BY;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -14,7 +18,7 @@ import org.jooq.SelectConditionStep;
 import org.jooq.impl.DSL;
 
 import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.core.entity.Paper;
+import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.MatchType;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.Token;
@@ -52,8 +56,11 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
     private void handleUserField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions,
             final Token token) {
         final String fieldName = searchTerm.getFieldName();
-        if (!(Paper.CREATED_BY.equals(fieldName) || Paper.LAST_MOD_BY.equals(fieldName))) {
-            checkFields(fieldName, "user", Paper.CREATED_BY, Paper.LAST_MOD_BY, "CONTAINS");
+        if (!(CREATED_BY.getName()
+            .equals(fieldName)
+                || LAST_MOD_BY.getName()
+                    .equals(fieldName))) {
+            checkFields(fieldName, "user", CREATED_BY, LAST_MOD_BY, "CONTAINS");
         }
         final Field<Object> field = DSL.field(fieldName);
         final String userName = "%" + token.getUserSqlData()
@@ -67,18 +74,22 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
         conditions.add(() -> PAPER.ID.in(step));
     }
 
-    private void checkFields(final String fieldName, String fieldType, String fld1, String fld2, String matchType) {
+    private void checkFields(final String fieldName, String fieldType, FieldEnumType fld1, FieldEnumType fld2,
+            String matchType) {
         final String msg = String.format(
             "Field %s is not one of the expected %s fields [%s, %s] entitled to use MatchType.%s", fieldName, fieldType,
-            fld1, fld2, matchType);
+            fld1.getName(), fld2.getName(), matchType);
         throw new IllegalArgumentException(msg);
     }
 
     private void handleDateField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions,
             final Token token) {
         final String fieldName = searchTerm.getFieldName();
-        if (!(Paper.CREATED.equals(fieldName) || Paper.LAST_MOD.equals(fieldName))) {
-            checkFields(fieldName, "date", Paper.CREATED, Paper.LAST_MOD, token.getType().matchType.name());
+        if (!(CREATED.getName()
+            .equals(fieldName)
+                || LAST_MOD.getName()
+                    .equals(fieldName))) {
+            checkFields(fieldName, "date", CREATED, LAST_MOD, token.getType().matchType.name());
         }
         if (token.getDateSqlData()
             .length() == DATE_RANGE_PATTERN_LENGTH) {

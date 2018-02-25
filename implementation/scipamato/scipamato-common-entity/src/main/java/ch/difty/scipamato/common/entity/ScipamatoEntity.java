@@ -17,13 +17,26 @@ public class ScipamatoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String CREATED  = "created";
-    public static final String MODIFIED = "lastModified";
-    public static final String VERSION  = "version";
-
     private LocalDateTime created;
     private LocalDateTime lastModified;
     private int           version;
+
+    public enum ScipamatoEntityFields implements FieldEnumType {
+        CREATED("created"),
+        MODIFIED("lastModified"),
+        VERSION("version");
+
+        private String name;
+
+        ScipamatoEntityFields(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+    }
 
     @Override
     public String toString() {

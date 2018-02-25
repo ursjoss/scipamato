@@ -2,6 +2,7 @@ package ch.difty.scipamato.publ.entity.filter;
 
 import java.util.List;
 
+import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.publ.entity.Code;
 import ch.difty.scipamato.publ.entity.PopulationCode;
@@ -14,24 +15,6 @@ import lombok.EqualsAndHashCode;
 public class PublicPaperFilter extends ScipamatoFilter {
 
     private static final long serialVersionUID = 1L;
-
-    public static final String NUMBER         = "number";
-    public static final String AUTHOR_MASK    = "authorMask";
-    public static final String METHODS_MASK   = "methodsMask";
-    public static final String PUB_YEAR_FROM  = "publicationYearFrom";
-    public static final String PUB_YEAR_UNTIL = "publicationYearUntil";
-
-    public static final String POPULATION_CODES   = "populationCodes";
-    public static final String STUDY_DESIGN_CODES = "studyDesignCodes";
-
-    public static final String CODES_OF_CLASS_1 = "codesOfClass1";
-    public static final String CODES_OF_CLASS_2 = "codesOfClass2";
-    public static final String CODES_OF_CLASS_3 = "codesOfClass3";
-    public static final String CODES_OF_CLASS_4 = "codesOfClass4";
-    public static final String CODES_OF_CLASS_5 = "codesOfClass5";
-    public static final String CODES_OF_CLASS_6 = "codesOfClass6";
-    public static final String CODES_OF_CLASS_7 = "codesOfClass7";
-    public static final String CODES_OF_CLASS_8 = "codesOfClass8";
 
     private Long                  number;
     private String                authorMask;
@@ -49,4 +32,32 @@ public class PublicPaperFilter extends ScipamatoFilter {
     private List<Code>            codesOfClass7;
     private List<Code>            codesOfClass8;
 
+    public enum PublicPaperFilterFields implements FieldEnumType {
+        NUMBER("number"),
+        AUTHOR_MASK("authorMask"),
+        METHODS_MASK("methodsMask"),
+        PUB_YEAR_FROM("publicationYearFrom"),
+        PUB_YEAR_UNTIL("publicationYearUntil"),
+        POPULATION_CODES("populationCodes"),
+        STUDY_DESIGN_CODES("studyDesignCodes"),
+        CODES_OF_CLASS_1("codesOfClass1"),
+        CODES_OF_CLASS_2("codesOfClass2"),
+        CODES_OF_CLASS_3("codesOfClass3"),
+        CODES_OF_CLASS_4("codesOfClass4"),
+        CODES_OF_CLASS_5("codesOfClass5"),
+        CODES_OF_CLASS_6("codesOfClass6"),
+        CODES_OF_CLASS_7("codesOfClass7"),
+        CODES_OF_CLASS_8("codesOfClass8");
+
+        private String name;
+
+        PublicPaperFilterFields(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+    }
 }

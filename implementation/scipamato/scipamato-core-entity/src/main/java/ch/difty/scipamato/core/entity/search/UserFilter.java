@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.entity.search;
 
 import java.io.Serializable;
 
+import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,12 +13,25 @@ public class UserFilter extends ScipamatoFilter implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String NAME_MASK  = "nameMask";
-    public static final String EMAIL_MASK = "emailMask";
-    public static final String ENABLED    = "enabled";
-
     private String  nameMask;
     private String  emailMask;
     private Boolean enabled;
+
+    public enum UserFilterFields implements FieldEnumType {
+        NAME_MASK("nameMask"),
+        EMAIL_MASK("emailMask"),
+        ENABLED("enabled");
+
+        private String name;
+
+        UserFilterFields(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+    }
 
 }

@@ -1,5 +1,35 @@
 package ch.difty.scipamato.core.web.paper.common;
 
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.AUTHORS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.COMMENT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.DOI;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_ASSESSMENT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_POLLUTANT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR_OVERRIDDEN;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.GOALS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.INTERN;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.LOCATION;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.MAIN_CODE_OF_CODECLASS1;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHODS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_CONFOUNDERS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_OUTCOME;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STATISTICS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STUDY_DESIGN;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.NUMBER;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.ORIGINAL_ABSTRACT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.PMID;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_DURATION;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PARTICIPANTS;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PLACE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.PUBL_YEAR;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EFFECT_ESTIMATE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EXPOSURE_RANGE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_MEASURED_OUTCOME;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.TITLE;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +66,15 @@ import org.apache.wicket.model.StringResourceModel;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeClassId;
+import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.CodeBoxAware;
 import ch.difty.scipamato.core.entity.CodeClass;
-import ch.difty.scipamato.core.entity.Paper;
+import ch.difty.scipamato.core.entity.CoreEntity;
+import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import ch.difty.scipamato.core.entity.PaperAttachment;
 import ch.difty.scipamato.core.web.common.BasePanel;
 import ch.difty.scipamato.core.web.common.SelfUpdateEvent;
@@ -67,8 +99,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
     private static final long serialVersionUID = 1L;
 
-    protected static final String TITLE  = "title";
-    private static final String   CHANGE = "change";
+    protected static final String TITLE_ATTR = "title";
+    private static final String   CHANGE     = "change";
 
     private ResourceLink<Void> summaryLink;
     private ResourceLink<Void> summaryShortLink;
@@ -145,8 +177,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
     }
 
     private void queueHeaderFields() {
-        queueAuthorComplex(Paper.AUTHORS, Paper.FIRST_AUTHOR, Paper.FIRST_AUTHOR_OVERRIDDEN);
-        title = new TextArea<>(Paper.TITLE);
+        queueAuthorComplex(AUTHORS.getName(), FIRST_AUTHOR.getName(), FIRST_AUTHOR_OVERRIDDEN.getName());
+        title = new TextArea<>(TITLE.getName());
 
         final ItemNavigator<Long> pm = getPaperIdManager();
         queue(newNavigationButton("previous", GlyphIconType.stepbackward, pm::hasPrevious, () -> {
@@ -159,20 +191,20 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         }));
 
         queueFieldAndLabel(title, new PropertyValidator<String>());
-        location = new TextField<>(Paper.LOCATION);
+        location = new TextField<>(LOCATION.getName());
         queueFieldAndLabel(location, new PropertyValidator<String>());
 
-        publicationYear = new TextField<>(Paper.PUBL_YEAR);
+        publicationYear = new TextField<>(PUBL_YEAR.getName());
         queueFieldAndLabel(publicationYear, new PropertyValidator<Integer>());
-        TextField<Object> pmId = new TextField<>(Paper.PMID);
+        TextField<Object> pmId = new TextField<>(PMID.getName());
         pmId.add(newPmIdChangeBehavior());
         queueFieldAndLabel(pmId);
-        doi = new TextField<>(Paper.DOI);
+        doi = new TextField<>(DOI.getName());
         queueFieldAndLabel(doi, new PropertyValidator<String>());
 
-        TextField<Integer> number = new TextField<>(Paper.NUMBER);
+        TextField<Integer> number = new TextField<>(NUMBER.getName());
         queueFieldAndLabel(number, new PropertyValidator<Integer>());
-        TextField<Integer> id = new TextField<Integer>(Paper.ID) {
+        TextField<Integer> id = new TextField<Integer>(IdScipamatoEntity.IdScipamatoEntityFields.ID.getName()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -189,7 +221,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         id.setEnabled(isSearchMode());
         queueFieldAndLabel(id);
 
-        TextField<String> created = new TextField<String>(Paper.CREATED_DV) {
+        TextField<String> created = new TextField<String>(CoreEntity.CoreEntityFields.CREATED_DV.getName()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -206,7 +238,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         created.setEnabled(isSearchMode());
         queueFieldAndLabel(created);
 
-        TextField<String> modified = new TextField<String>(Paper.MODIFIED_DV) {
+        TextField<String> modified = new TextField<String>(CoreEntity.CoreEntityFields.MODIFIED_DV.getName()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -354,7 +386,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             }
         };
         back.setDefaultFormProcessing(false);
-        back.add(new AttributeModifier(TITLE, new StringResourceModel("button.back.title", this, null).getString()));
+        back.add(
+            new AttributeModifier(TITLE_ATTR, new StringResourceModel("button.back.title", this, null).getString()));
         queue(back);
     }
 
@@ -417,7 +450,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
                     .getClass() == SelfUpdateEvent.class) {
                     if (isVisible()) {
                         setEnabled(false);
-                        add(new AttributeModifier(TITLE,
+                        add(new AttributeModifier(TITLE_ATTR,
                                 new StringResourceModel(button + id + ".title.disabled", this, null).getString()));
                         ((SelfUpdateEvent) event.getPayload()).getTarget()
                             .add(this);
@@ -430,7 +463,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         link.setOutputMarkupPlaceholderTag(true);
         link.setBody(new StringResourceModel(button + id + ".label"));
         link.setVisible(isEditMode());
-        link.add(new AttributeModifier(TITLE, new StringResourceModel(button + id + ".title", this, null).getString()));
+        link.add(
+            new AttributeModifier(TITLE_ATTR, new StringResourceModel(button + id + ".title", this, null).getString()));
         return link;
     }
 
@@ -446,19 +480,20 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             super(id, model);
         }
 
-        TextArea<String> queueTo(String id) {
-            return queueTo(id, false, null);
+        TextArea<String> queueTo(FieldEnumType fieldType) {
+            return queueTo(fieldType, false, null);
         }
 
-        void queueTo(String id, PropertyValidator<?> pv) {
-            queueTo(id, false, pv);
+        void queueTo(FieldEnumType fieldType, PropertyValidator<?> pv) {
+            queueTo(fieldType, false, pv);
         }
 
-        void queueNewFieldTo(String id) {
-            queueTo(id, true, null);
+        void queueNewFieldTo(FieldEnumType fieldType) {
+            queueTo(fieldType, true, null);
         }
 
-        TextArea<String> queueTo(String id, boolean newField, PropertyValidator<?> pv) {
+        TextArea<String> queueTo(FieldEnumType fieldType, boolean newField, PropertyValidator<?> pv) {
+            String id = fieldType.getName();
             TextArea<String> field = makeField(id, newField);
             field.setOutputMarkupId(true);
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
@@ -533,21 +568,21 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
             queue(tab1Form);
 
-            queueTo(Paper.GOALS, new PropertyValidator<String>());
-            queueTo(Paper.POPULATION);
-            queueTo(Paper.METHODS);
+            queueTo(GOALS, new PropertyValidator<String>());
+            queueTo(POPULATION);
+            queueTo(METHODS);
 
-            queueNewFieldTo(Paper.POPULATION_PLACE);
-            queueNewFieldTo(Paper.POPULATION_PARTICIPANTS);
-            queueNewFieldTo(Paper.POPULATION_DURATION);
+            queueNewFieldTo(POPULATION_PLACE);
+            queueNewFieldTo(POPULATION_PARTICIPANTS);
+            queueNewFieldTo(POPULATION_DURATION);
 
-            queueNewFieldTo(Paper.EXPOSURE_POLLUTANT);
-            queueNewFieldTo(Paper.EXPOSURE_ASSESSMENT);
+            queueNewFieldTo(EXPOSURE_POLLUTANT);
+            queueNewFieldTo(EXPOSURE_ASSESSMENT);
 
-            queueNewFieldTo(Paper.METHOD_STUDY_DESIGN);
-            queueNewFieldTo(Paper.METHOD_OUTCOME);
-            queueNewFieldTo(Paper.METHOD_STATISTICS);
-            queueNewFieldTo(Paper.METHOD_CONFOUNDERS);
+            queueNewFieldTo(METHOD_STUDY_DESIGN);
+            queueNewFieldTo(METHOD_OUTCOME);
+            queueNewFieldTo(METHOD_STATISTICS);
+            queueNewFieldTo(METHOD_CONFOUNDERS);
         }
     }
 
@@ -565,13 +600,13 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             Form<T> tab2Form = new Form<>("tab2Form");
             queue(tab2Form);
 
-            queueTo(Paper.RESULT);
-            queueTo(Paper.COMMENT);
-            queueTo(Paper.INTERN);
+            queueTo(RESULT);
+            queueTo(COMMENT);
+            queueTo(INTERN);
 
-            queueNewFieldTo(Paper.RESULT_MEASURED_OUTCOME);
-            queueNewFieldTo(Paper.RESULT_EXPOSURE_RANGE);
-            queueNewFieldTo(Paper.RESULT_EFFECT_ESTIMATE);
+            queueNewFieldTo(RESULT_MEASURED_OUTCOME);
+            queueNewFieldTo(RESULT_EXPOSURE_RANGE);
+            queueNewFieldTo(RESULT_EFFECT_ESTIMATE);
         }
     }
 
@@ -605,7 +640,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         }
 
         private void makeCodeClass1Complex(final List<CodeClass> codeClasses, Form<T> form) {
-            final TextField<String> mainCodeOfCodeClass1 = new TextField<>(Paper.MAIN_CODE_OF_CODECLASS1);
+            final TextField<String> mainCodeOfCodeClass1 = new TextField<>(MAIN_CODE_OF_CODECLASS1.getName());
             final BootstrapMultiSelect<Code> codeClass1 = makeCodeClassComplex(CodeClassId.CC1, codeClasses);
             addCodeClass1ChangeBehavior(mainCodeOfCodeClass1, codeClass1);
             addMainCodeOfClass1(mainCodeOfCodeClass1);
@@ -656,7 +691,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
                 }
             };
             final CodeModel choices = new CodeModel(codeClassId, getLocalization());
-            final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(Code.DISPLAY_VALUE, Code.CODE);
+            final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(
+                    CoreEntity.CoreEntityFields.DISPLAY_VALUE.getName(), Code.CodeFields.CODE.getName());
             final StringResourceModel noneSelectedModel = new StringResourceModel("codes.noneSelected", this, null);
             final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)
                 .withNoneSelectedText(noneSelectedModel.getObject())
@@ -683,21 +719,21 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             Form<T> tab4Form = new Form<>("tab4Form");
             queue(tab4Form);
 
-            queueNewFieldTo(Paper.METHOD_STUDY_DESIGN);
-            queueNewFieldTo(Paper.METHOD_OUTCOME);
+            queueNewFieldTo(METHOD_STUDY_DESIGN);
+            queueNewFieldTo(METHOD_OUTCOME);
 
-            queueNewFieldTo(Paper.POPULATION_PLACE);
-            queueNewFieldTo(Paper.POPULATION_PARTICIPANTS);
-            queueNewFieldTo(Paper.POPULATION_DURATION);
+            queueNewFieldTo(POPULATION_PLACE);
+            queueNewFieldTo(POPULATION_PARTICIPANTS);
+            queueNewFieldTo(POPULATION_DURATION);
 
-            queueNewFieldTo(Paper.EXPOSURE_POLLUTANT);
-            queueNewFieldTo(Paper.EXPOSURE_ASSESSMENT);
-            queueNewFieldTo(Paper.METHOD_STATISTICS);
-            queueNewFieldTo(Paper.METHOD_CONFOUNDERS);
+            queueNewFieldTo(EXPOSURE_POLLUTANT);
+            queueNewFieldTo(EXPOSURE_ASSESSMENT);
+            queueNewFieldTo(METHOD_STATISTICS);
+            queueNewFieldTo(METHOD_CONFOUNDERS);
 
-            queueNewFieldTo(Paper.RESULT_MEASURED_OUTCOME);
-            queueNewFieldTo(Paper.RESULT_EXPOSURE_RANGE);
-            queueNewFieldTo(Paper.RESULT_EFFECT_ESTIMATE);
+            queueNewFieldTo(RESULT_MEASURED_OUTCOME);
+            queueNewFieldTo(RESULT_EXPOSURE_RANGE);
+            queueNewFieldTo(RESULT_EFFECT_ESTIMATE);
         }
     }
 
@@ -715,7 +751,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             Form<T> tab5Form = new Form<>("tab5Form");
             queue(tab5Form);
 
-            originalAbstract = queueTo(Paper.ORIGINAL_ABSTRACT);
+            originalAbstract = queueTo(ORIGINAL_ABSTRACT);
         }
     }
 
@@ -806,11 +842,11 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
                 setVisible(isEditMode());
                 if (hasPubMedId()) {
                     setEnabled(true);
-                    add(new AttributeModifier(TITLE,
+                    add(new AttributeModifier(TITLE_ATTR,
                             new StringResourceModel("pubmedRetrieval.title", this, null).getString()));
                 } else {
                     setEnabled(false);
-                    add(new AttributeModifier(TITLE,
+                    add(new AttributeModifier(TITLE_ATTR,
                             new StringResourceModel("pubmedRetrieval.title.disabled", this, null).getString()));
                 }
             }
