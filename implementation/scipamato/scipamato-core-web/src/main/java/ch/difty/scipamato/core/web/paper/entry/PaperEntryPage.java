@@ -1,5 +1,8 @@
 package ch.difty.scipamato.core.web.paper.entry;
 
+import static ch.difty.scipamato.core.web.PageParameters.SEARCH_ORDER_ID;
+import static ch.difty.scipamato.core.web.PageParameters.SHOW_EXCLUDED;
+
 import org.apache.wicket.PageReference;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.head.CssHeaderItem;
@@ -17,7 +20,6 @@ import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.persistence.PaperService;
-import ch.difty.scipamato.core.web.PageParameterNames;
 import ch.difty.scipamato.core.web.common.SelfUpdatingPage;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
 import lombok.extern.slf4j.Slf4j;
@@ -135,12 +137,12 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
     }
 
     private Long searchOrderIdFromPageParameters() {
-        final StringValue sv = getPageParameters().get(PageParameterNames.SEARCH_ORDER_ID);
+        final StringValue sv = getPageParameters().get(SEARCH_ORDER_ID.getName());
         return sv.isNull() ? null : sv.toLong();
     }
 
     private boolean showExcludedFromPageParameters() {
-        final StringValue ieString = getPageParameters().get(PageParameterNames.SHOW_EXCLUDED);
+        final StringValue ieString = getPageParameters().get(SHOW_EXCLUDED.getName());
         final Boolean ie = ieString.isNull() ? null : ieString.toBoolean();
         return ie != null ? ie.booleanValue() : false;
     }

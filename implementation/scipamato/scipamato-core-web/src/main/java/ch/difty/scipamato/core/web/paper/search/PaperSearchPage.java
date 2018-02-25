@@ -1,5 +1,8 @@
 package ch.difty.scipamato.core.web.paper.search;
 
+import static ch.difty.scipamato.core.web.PageParameters.SEARCH_ORDER_ID;
+import static ch.difty.scipamato.core.web.PageParameters.SHOW_EXCLUDED;
+
 import java.util.Optional;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -25,7 +28,6 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
-import ch.difty.scipamato.core.web.PageParameterNames;
 import ch.difty.scipamato.core.web.common.BasePage;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.paper.PageFactory;
@@ -102,8 +104,8 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         AssertAs.notNull(searchOrder, "searchOrderModel.object");
         AssertAs.notNull(searchOrder.getId(), "searchOrderModel.object.id");
         getPageParameters().clearNamed();
-        getPageParameters().add(PageParameterNames.SEARCH_ORDER_ID, searchOrder.getId());
-        getPageParameters().add(PageParameterNames.SHOW_EXCLUDED, searchOrder.isShowExcluded());
+        getPageParameters().add(SEARCH_ORDER_ID.getName(), searchOrder.getId());
+        getPageParameters().add(SHOW_EXCLUDED.getName(), searchOrder.isShowExcluded());
     }
 
     private void trySettingSearchOrderModelFromDb() {
@@ -115,7 +117,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     }
 
     private Long searchOrderIdFromPageParameters() {
-        final StringValue sv = getPageParameters().get(PageParameterNames.SEARCH_ORDER_ID);
+        final StringValue sv = getPageParameters().get(SEARCH_ORDER_ID.getName());
         return sv.isNull() ? null : sv.toLong();
     }
 
@@ -124,7 +126,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     }
 
     private boolean showExcludedFromPageParameters() {
-        final StringValue ieString = getPageParameters().get(PageParameterNames.SHOW_EXCLUDED);
+        final StringValue ieString = getPageParameters().get(SHOW_EXCLUDED.getName());
         final Boolean ie = ieString.isNull() ? null : ieString.toBoolean();
         return ie != null ? ie.booleanValue() : false;
     }
@@ -297,8 +299,8 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             final SearchOrder persistedNewSearchOrder = searchOrderService.saveOrUpdate(newSearchOrder);
             setModelObject(persistedNewSearchOrder);
             final PageParameters pp = new PageParameters();
-            pp.add(PageParameterNames.SEARCH_ORDER_ID, persistedNewSearchOrder.getId());
-            pp.add(PageParameterNames.SHOW_EXCLUDED, false);
+            pp.add(SEARCH_ORDER_ID.getName(), persistedNewSearchOrder.getId());
+            pp.add(SHOW_EXCLUDED.getName(), false);
             pageFactory.setResponsePageToPaperSearchPageConsumer(this);
             setResponsePage(new PaperSearchPage(pp));
         } catch (OptimisticLockingException ole) {
@@ -320,7 +322,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private void setShowExcludedWhereRelevant() {
         final boolean oldValue = showExcludedFromPageParameters();
-        getPageParameters().set(PageParameterNames.SHOW_EXCLUDED, !oldValue);
+        getPageParameters().set(SHOW_EXCLUDED.getName(), !oldValue);
         dataProvider.setShowExcluded(!oldValue);
         getModelObject().setShowExcluded(!oldValue);
     }

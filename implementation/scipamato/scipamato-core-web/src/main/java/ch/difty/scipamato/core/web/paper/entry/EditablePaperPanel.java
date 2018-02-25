@@ -26,6 +26,8 @@ import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EXPOSURE_R
 import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_MEASURED_OUTCOME;
 import static ch.difty.scipamato.core.entity.Paper.PaperFields.TITLE;
 import static ch.difty.scipamato.core.entity.PaperAttachment.PaperAttachmentFields.NAME;
+import static ch.difty.scipamato.core.web.PageParameters.SEARCH_ORDER_ID;
+import static ch.difty.scipamato.core.web.PageParameters.SHOW_EXCLUDED;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -74,7 +76,6 @@ import ch.difty.scipamato.core.logic.parsing.AuthorParserFactory;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.PubmedArticleService;
-import ch.difty.scipamato.core.web.PageParameterNames;
 import ch.difty.scipamato.core.web.common.BasePage;
 import ch.difty.scipamato.core.web.paper.PageFactory;
 import ch.difty.scipamato.core.web.paper.PaperAttachmentProvider;
@@ -573,8 +574,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                     }
                 }
                 PageParameters pp = new PageParameters();
-                pp.add(PageParameterNames.SEARCH_ORDER_ID, searchOrderId);
-                pp.add(PageParameterNames.SHOW_EXCLUDED, showingExclusions);
+                pp.add(SEARCH_ORDER_ID.getName(), searchOrderId);
+                pp.add(SHOW_EXCLUDED.getName(), showingExclusions);
                 pageFactory.setResponsePageToPaperSearchPageConsumer(this)
                     .accept(pp);
             }
