@@ -51,4 +51,11 @@ public class CodeTest extends PublicEntityTest<Code> {
     public void displayValue() {
         assertThat(getEntity().getDisplayValue()).isEqualTo("name");
     }
+
+    @Test
+    public void assertEnumFields() {
+        assertThat(Code.CodeFields.values()).extracting("name")
+            .containsExactly("codeClassId", "code", "langCode", "name", "comment", "sort", "displayValue");
+    }
+
 }

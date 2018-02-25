@@ -4,6 +4,8 @@ import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFi
 import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.Test;
+
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 
@@ -41,4 +43,9 @@ public class CodeClassTest extends PublicEntityTest<CodeClass> {
             .verify();
     }
 
+    @Test
+    public void assertEnumFields() {
+        assertThat(CodeClass.CodeClassFields.values()).extracting("name")
+            .containsExactly("codeClassId", "langCode", "name", "description");
+    }
 }

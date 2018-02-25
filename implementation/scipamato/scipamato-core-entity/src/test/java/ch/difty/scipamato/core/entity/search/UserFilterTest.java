@@ -30,4 +30,11 @@ public class UserFilterTest {
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }
+
+    @Test
+    public void assertEnumFields() {
+        assertThat(UserFilter.UserFilterFields.values()).extracting("name")
+            .containsExactly("nameMask", "emailMask", "enabled");
+    }
+
 }

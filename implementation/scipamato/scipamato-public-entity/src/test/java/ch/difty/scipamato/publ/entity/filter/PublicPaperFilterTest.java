@@ -79,4 +79,11 @@ public class PublicPaperFilterTest {
             .verify();
     }
 
+    @Test
+    public void assertEnumFields() {
+        assertThat(PublicPaperFilter.PublicPaperFilterFields.values()).extracting("name")
+            .containsExactly("number", "authorMask", "methodsMask", "publicationYearFrom", "publicationYearUntil",
+                "populationCodes", "studyDesignCodes", "codesOfClass1", "codesOfClass2", "codesOfClass3",
+                "codesOfClass4", "codesOfClass5", "codesOfClass6", "codesOfClass7", "codesOfClass8");
+    }
 }

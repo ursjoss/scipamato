@@ -39,4 +39,11 @@ public class PaperFilterTest {
             .verify();
     }
 
+    @Test
+    public void assertEnumFields() {
+        assertThat(PaperFilter.PaperFilterFields.values()).extracting("name")
+            .containsExactly("number", "authorMask", "methodsMask", "searchMask", "publicationYearFrom",
+                "publicationYearUntil");
+    }
+
 }
