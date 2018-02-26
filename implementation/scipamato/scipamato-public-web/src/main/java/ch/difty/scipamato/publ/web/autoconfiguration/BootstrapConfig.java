@@ -9,9 +9,9 @@ import com.giffing.wicket.spring.boot.context.extensions.ApplicationInitExtensio
 import com.giffing.wicket.spring.boot.context.extensions.WicketApplicationInitConfiguration;
 
 import de.agilecoders.wicket.core.Bootstrap;
-import de.agilecoders.wicket.core.settings.ThemeProvider;
+import de.agilecoders.wicket.core.settings.SingleThemeProvider;
 import de.agilecoders.wicket.less.BootstrapLess;
-import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchThemeProvider;
+import de.agilecoders.wicket.themes.markup.html.google.GoogleTheme;
 
 @ApplicationInitExtension
 @ConditionalOnProperty(prefix = BootstrapProperties.PROPERTY_PREFIX, value = "enabled", matchIfMissing = true)
@@ -27,8 +27,8 @@ public class BootstrapConfig implements WicketApplicationInitConfiguration {
 
     @Override
     public void init(WebApplication webApplication) {
-        final ThemeProvider themeProvider = new BootswatchThemeProvider(prop.getTheme());
-        prop.setThemeProvider(themeProvider);
+        // TODO configurable solution to switch between bootswatch themes and google and own etc.
+        prop.setThemeProvider(new SingleThemeProvider(new GoogleTheme()));
 
         Bootstrap.install(webApplication, prop);
 
