@@ -12,6 +12,7 @@ import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.AbstractPage;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
+import ch.difty.scipamato.publ.web.CommercialFontResourceProvider;
 import ch.difty.scipamato.publ.web.resources.MainCssResourceReference;
 
 public abstract class BasePage<T> extends AbstractPage<T> {
@@ -19,9 +20,11 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     private static final long serialVersionUID = 1L;
 
     @SpringBean
-    private ApplicationProperties     applicationProperties;
+    private ApplicationProperties          applicationProperties;
     @SpringBean
-    private ScipamatoWebSessionFacade sessionFacade;
+    private ScipamatoWebSessionFacade      sessionFacade;
+    @SpringBean
+    private CommercialFontResourceProvider fontResourceProvider;
 
     public BasePage(final PageParameters parameters) {
         super(parameters);
@@ -40,6 +43,9 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
         response.render(CssHeaderItem.forReference(MainCssResourceReference.get()));
+
+        if (fontResourceProvider.isCommercialFontPresent())
+            response.render(CssHeaderItem.forReference(fontResourceProvider.getCssResourceReference()));
     }
 
     protected Authentication getAuthentication() {

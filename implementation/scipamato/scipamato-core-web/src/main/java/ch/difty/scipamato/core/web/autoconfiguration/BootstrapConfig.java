@@ -1,4 +1,4 @@
-package ch.difty.scipamato.common.web.autoconfiguration;
+package ch.difty.scipamato.core.web.autoconfiguration;
 
 import org.apache.wicket.protocol.http.WebApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

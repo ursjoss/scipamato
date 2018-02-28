@@ -8,12 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.publ.ScipamatoPublicApplication;
 
 /**
  * Note, this test class currently derives the configured values from
- * application.properties.
+ * <literal>application.properties</literal>.
  *
  * @author u.joss
  */
@@ -22,7 +21,7 @@ import ch.difty.scipamato.publ.ScipamatoPublicApplication;
 public class ScipamatoPublicPropertiesIntegrationTest {
 
     @Autowired
-    public ApplicationProperties appProperties;
+    public ApplicationPublicProperties appProperties;
 
     @Test
     public void gettingBuildVersion() {
@@ -43,4 +42,10 @@ public class ScipamatoPublicPropertiesIntegrationTest {
     public void assertPubmedBaseUrl() {
         assertThat(appProperties.getPubmedBaseUrl()).isEqualTo("https://www.ncbi.nlm.nih.gov/pubmed/");
     }
+
+    @Test
+    public void assertPresenceOfCommercialFont() {
+        assertThat(appProperties.isCommercialFontPresent()).isEqualTo(false);
+    }
+
 }

@@ -12,6 +12,8 @@ import lombok.Setter;
 @Setter
 public class ScipamatoProperties {
 
+    private static final String AUTHOR_PARSER_PROPERTY_KEY = "scipamato.author-parser";
+
     /**
      * Brand name of the application. Appears e.g. in the Navbar.
      */
@@ -53,7 +55,7 @@ public class ScipamatoProperties {
      * @return the author parser strategy used for interpreting the authors string.
      */
     public AuthorParserStrategy getAuthorParserStrategy() {
-        return AuthorParserStrategy.fromProperty(authorParser);
+        return AuthorParserStrategy.fromProperty(authorParser, AUTHOR_PARSER_PROPERTY_KEY);
     }
 
 }

@@ -14,8 +14,17 @@ public enum AuthorParserStrategy {
 
     private static final AuthorParserStrategy[] STRATEGIES = values();
 
-    public static AuthorParserStrategy fromProperty(final String propertyValue) {
-        return PropertyUtils.fromProperty(propertyValue, STRATEGIES, PUBMED,
-            ApplicationCoreProperties.AUTHOR_PARSER_FACTORY);
+    /**
+     * Converts the string based property value into the proper
+     * {@link AuthorParserStrategy} enum value.
+     *
+     * @param propertyValue
+     *            the property value as string
+     * @param propertyKey
+     *            the key name, used for log output only
+     * @return the property as enum value
+     */
+    public static AuthorParserStrategy fromProperty(final String propertyValue, final String propertyKey) {
+        return PropertyUtils.fromProperty(propertyValue, STRATEGIES, PUBMED, propertyKey);
     }
 }

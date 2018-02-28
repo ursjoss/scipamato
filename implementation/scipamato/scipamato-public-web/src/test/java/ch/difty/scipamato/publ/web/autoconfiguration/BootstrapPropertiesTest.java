@@ -1,4 +1,4 @@
-package ch.difty.scipamato.common.web.autoconfiguration;
+package ch.difty.scipamato.publ.web.autoconfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
