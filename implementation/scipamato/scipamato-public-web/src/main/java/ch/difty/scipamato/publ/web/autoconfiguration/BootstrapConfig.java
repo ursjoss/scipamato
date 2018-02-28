@@ -8,10 +8,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import com.giffing.wicket.spring.boot.context.extensions.ApplicationInitExtension;
 import com.giffing.wicket.spring.boot.context.extensions.WicketApplicationInitConfiguration;
 
+import ch.difty.scipamato.publ.web.themes.markup.html.publ.ScipamatoPublicTheme;
 import de.agilecoders.wicket.core.Bootstrap;
 import de.agilecoders.wicket.core.settings.SingleThemeProvider;
 import de.agilecoders.wicket.less.BootstrapLess;
-import de.agilecoders.wicket.themes.markup.html.google.GoogleTheme;
+import de.agilecoders.wicket.webjars.WicketWebjars;
 
 @ApplicationInitExtension
 @ConditionalOnProperty(prefix = BootstrapProperties.PROPERTY_PREFIX, value = "enabled", matchIfMissing = true)
@@ -27,8 +28,11 @@ public class BootstrapConfig implements WicketApplicationInitConfiguration {
 
     @Override
     public void init(WebApplication webApplication) {
-        // TODO configurable solution to switch between bootswatch themes and google and own etc.
-        prop.setThemeProvider(new SingleThemeProvider(new GoogleTheme()));
+        // TODO configurable solution to switch between bootswatch themes and google and
+        // own etc.
+        prop.setThemeProvider(new SingleThemeProvider(new ScipamatoPublicTheme()));
+
+        WicketWebjars.install(webApplication);
 
         Bootstrap.install(webApplication, prop);
 
