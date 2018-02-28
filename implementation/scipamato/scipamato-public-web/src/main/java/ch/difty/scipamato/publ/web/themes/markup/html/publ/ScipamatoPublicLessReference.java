@@ -28,6 +28,13 @@ public class ScipamatoPublicLessReference extends LessResourceReference {
     private static final long serialVersionUID = 1L;
 
     /**
+     * Private constructor.
+     */
+    private ScipamatoPublicLessReference() {
+        super(ScipamatoPublicLessReference.class, "less/__main.less");
+    }
+
+    /**
      * @return singleton instance of {@link ScipamatoPublicLessReference}
      */
     public static ScipamatoPublicLessReference instance() {
@@ -39,13 +46,6 @@ public class ScipamatoPublicLessReference extends LessResourceReference {
      */
     private static final class Holder {
         private static final ScipamatoPublicLessReference INSTANCE = new ScipamatoPublicLessReference();
-    }
-
-    /**
-     * Private constructor.
-     */
-    private ScipamatoPublicLessReference() {
-        super(ScipamatoPublicLessReference.class, "less/__main.less");
     }
 
     @Override

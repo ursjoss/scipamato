@@ -24,6 +24,13 @@ public class ScipamatoPublicCssReference extends CssResourceReference {
     private static final long serialVersionUID = 1L;
 
     /**
+     * Private constructor.
+     */
+    private ScipamatoPublicCssReference() {
+        super(ScipamatoPublicCssReference.class, "css/scipamato-public-bootstrap.min.css");
+    }
+
+    /**
      * @return singleton instance of {@link ScipamatoPublicCssReference}
      */
     public static ScipamatoPublicCssReference instance() {
@@ -35,13 +42,6 @@ public class ScipamatoPublicCssReference extends CssResourceReference {
      */
     private static final class Holder {
         private static final ScipamatoPublicCssReference INSTANCE = new ScipamatoPublicCssReference();
-    }
-
-    /**
-     * Private constructor.
-     */
-    private ScipamatoPublicCssReference() {
-        super(ScipamatoPublicCssReference.class, "css/scipamato-public-bootstrap.min.css");
     }
 
     @Override
