@@ -53,6 +53,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 - Added customized sonar quality profile used for SciPaMaTo
+- Added customized look and feel for scipamato-public based on todc-bootstrap. With Optinoal MetaOT-Font
+  which is commercial
 
 .Changed
 - Updated screenshots sonar + architecture
