@@ -31,7 +31,7 @@
 @text-color:            @gray-dark;
 
 //** Global textual link color.
-@link-color:            #15c;
+@link-color:            #488bb6;
 //** Link hover color set via `darken()` function.
 @link-hover-color:      #15c;
 //** Link hover decoration.
@@ -42,8 +42,9 @@
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-@font-family-sans-serif:  Arial, Helvetica, sans-serif;
-@font-family-serif:       Georgia, "Times New Roman", Times, serif;
+@font-family-sans-serif:  MetaOT-Book, Arial, Helvetica, sans-serif;
+@font-family-bold:        MetaOT-Bold, Arial, Helvetica, sans-serif;
+@font-family-serif:       MetaOT-BookIta, Georgia, "Times New Roman", Times, serif;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
 @font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
 @font-family-base:        @font-family-sans-serif;
@@ -66,7 +67,7 @@
 @line-height-computed:    floor((@font-size-base * @line-height-base)); // ~18px
 
 //** By default, this inherits from the `<body>`.
-@headings-font-family:    inherit;
+@headings-font-family:    @font-family-bold;
 @headings-font-weight:    bold;
 @headings-line-height:    1.15;
 @headings-color:          inherit;
@@ -133,7 +134,7 @@
 //** Background color used for `.table-striped`.
 @table-bg-accent:                    #f9f9f9; // for striping
 //** Background color used for `.table-hover`.
-@table-bg-hover:                     #ffffcc;
+@table-bg-hover:                     #efffff;
 @table-bg-active:                    #f5f5f5;
 
 //** Border color for table and cell borders.
@@ -144,7 +145,7 @@
 //
 //## For each of Bootstrap's buttons, define text, background and border color.
 
-@btn-font-weight:                bold;
+@btn-font-weight:                normal;
 
 @btn-default-color:              #333;
 @btn-default-bg:                 #f3f3f3;

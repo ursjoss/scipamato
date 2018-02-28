@@ -47,8 +47,9 @@ public class ScipamatoPublicTheme extends Theme {
     public List<HeaderItem> getDependencies() {
         // TODO using {@link ScipamatoPublicLessReference} during development. Replace
         // with {@link ScipamatoPublicCssReference} later
-        // TODO consider using a configuration based approach to switch between less and css reference
-        HeaderItem headerItem = CssHeaderItem.forReference(ScipamatoPublicLessReference.instance())
+        // TODO consider using a configuration based approach to switch between less and
+        // css reference
+        HeaderItem headerItem = CssHeaderItem.forReference(ScipamatoPublicCssReference.instance())
             .setId(BOOTSTRAP_THEME_MARKUP_ID);
         return Collections.singletonList(headerItem);
     }

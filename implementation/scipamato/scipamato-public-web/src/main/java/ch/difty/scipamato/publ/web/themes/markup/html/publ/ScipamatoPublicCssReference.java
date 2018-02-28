@@ -41,7 +41,7 @@ public class ScipamatoPublicCssReference extends CssResourceReference {
      * Private constructor.
      */
     private ScipamatoPublicCssReference() {
-        super(ScipamatoPublicCssReference.class, "css/scipamato-public-bootstrap.css");
+        super(ScipamatoPublicCssReference.class, "css/scipamato-public-bootstrap.min.css");
     }
 
     @Override
