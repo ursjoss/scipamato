@@ -36,11 +36,17 @@ public class ScipamatoProperties {
     /**
      * Indicates whether the commercial font MetaOT is present and can be used.
      * <p>
-     * The location where SciPaMaTo expectes the font is:
+     * SciPaMaTo expects to find the font in the following location:
      *
      * <pre>
      * src/main/resources/ch/difty/scipamato/publ/web/resources/MetaOT/
      * </pre>
      */
     private boolean commercialFontPresent;
+
+    /**
+     * Indicates whether SciPaMaTo should compile the LESS sources into CSS (if
+     * {@literal true}) or use the pre-compiled CSS classes (if {@literal false}).
+     */
+    private boolean lessUsedOverCss;
 }

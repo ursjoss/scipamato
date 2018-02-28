@@ -54,4 +54,9 @@ public class ScipamatoPublicProperties implements ApplicationPublicProperties {
         return scipamatoProperties.isCommercialFontPresent();
     }
 
+    @Override
+    public boolean isLessUsedOverCss() {
+        return scipamatoProperties.isLessUsedOverCss();
+    }
+
 }

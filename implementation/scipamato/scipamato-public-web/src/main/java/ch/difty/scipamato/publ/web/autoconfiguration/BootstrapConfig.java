@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import com.giffing.wicket.spring.boot.context.extensions.ApplicationInitExtension;
 import com.giffing.wicket.spring.boot.context.extensions.WicketApplicationInitConfiguration;
 
+import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
 import ch.difty.scipamato.publ.web.themes.markup.html.publ.ScipamatoPublicTheme;
 import de.agilecoders.wicket.core.Bootstrap;
 import de.agilecoders.wicket.core.settings.SingleThemeProvider;
@@ -22,15 +23,17 @@ public class BootstrapConfig implements WicketApplicationInitConfiguration {
 
     private final BootstrapProperties prop;
 
-    public BootstrapConfig(BootstrapProperties prop) {
+    private final ApplicationPublicProperties applicationProperties;
+
+    public BootstrapConfig(BootstrapProperties prop, ApplicationPublicProperties applicationProperties) {
         this.prop = prop;
+        this.applicationProperties = applicationProperties;
     }
 
     @Override
     public void init(WebApplication webApplication) {
-        // TODO configurable solution to switch between bootswatch themes and google and
-        // own etc.
-        prop.setThemeProvider(new SingleThemeProvider(new ScipamatoPublicTheme()));
+        prop.setThemeProvider(
+            new SingleThemeProvider(new ScipamatoPublicTheme(applicationProperties.isLessUsedOverCss())));
 
         WicketWebjars.install(webApplication);
 

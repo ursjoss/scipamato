@@ -85,4 +85,17 @@ public class ScipamatoPublicPropertiesTest {
         verify(mavenPropMock).getVersion();
     }
 
+    @Test
+    public void checkingLessOverCSS_ifTrue_delegatesToMavenProp() {
+        when(scipamatoPropMock.isLessUsedOverCss()).thenReturn(true);
+        assertThat(prop.isLessUsedOverCss()).isEqualTo(true);
+        verify(scipamatoPropMock).isLessUsedOverCss();
+    }
+
+    @Test
+    public void checkingLessOverCSS_ifNotPresent_delegatesToMavenProp() {
+        when(scipamatoPropMock.isLessUsedOverCss()).thenReturn(false);
+        assertThat(prop.isLessUsedOverCss()).isEqualTo(false);
+        verify(scipamatoPropMock).isLessUsedOverCss();
+    }
 }

@@ -9,12 +9,13 @@ import org.apache.wicket.markup.head.HeaderItem;
 import de.agilecoders.wicket.core.settings.Theme;
 
 /**
- * #### Description
- *
  * java representation of the SciPaMaTo-Public Theme. Is based on TODC Bootstrap
- * and the wicket-bootstrap implementation of Michael Haitz
- * <michael.haitz@agilecoders.de> in wicket-bootstrap.
- * 
+ * and the wicket-bootstrap implementation of Michael Haitz in wicket-bootstrap.
+ * <p>
+ * A flag passed into the constructor indicates whether the precompiled CSS
+ * classes will be used (preferable in production) or if the LESS files shall be
+ * dynamically compiled into CSS.
+ * <p>
  * This theme modifies bootstrap and therefore both files gets loaded
  * (`bootstrap.css` and `scipamato-public-bootstrap.css`).
  * <p>
@@ -29,28 +30,45 @@ import de.agilecoders.wicket.core.settings.Theme;
  */
 public class ScipamatoPublicTheme extends Theme {
 
+    private final boolean useLessOverCss;
+
     /**
-     * Construct.
+     * Instantiates a new ScipamatoPublicTheme instance.
+     *
+     * @param useLessOverCss
+     *            if true: SciPamaTo will dynamically compile the LESS files into
+     *            CSS. If false, the precompiled CSS is used.
+     * @param name
+     *            name for the theme
      */
-    public ScipamatoPublicTheme(final String name) {
+    public ScipamatoPublicTheme(final boolean useLessOverCss, final String name) {
         super(name);
+        this.useLessOverCss = useLessOverCss;
     }
 
     /**
-     * Construct using default theme name: `google`
+     * Instantiates a new ScipamatoPublicTheme instance with the default name
+     * {@literal scipamato-public}.
+     *
+     * @param useLessOverCss
+     *            if true: SciPamaTo will dynamically compile the LESS files into
+     *            CSS. If false, the precompiled CSS is used.
      */
-    public ScipamatoPublicTheme() {
-        this("scipamato-public");
+    public ScipamatoPublicTheme(final boolean useLessOverCss) {
+        this(useLessOverCss, "scipamato-public");
     }
 
     @Override
     public List<HeaderItem> getDependencies() {
-        // TODO using {@link ScipamatoPublicLessReference} during development. Replace
-        // with {@link ScipamatoPublicCssReference} later
-        // TODO consider using a configuration based approach to switch between less and
-        // css reference
-        HeaderItem headerItem = CssHeaderItem.forReference(ScipamatoPublicCssReference.instance())
-            .setId(BOOTSTRAP_THEME_MARKUP_ID);
-        return Collections.singletonList(headerItem);
+        return Collections.singletonList(makeHeaderItem());
+    }
+
+    private CssHeaderItem makeHeaderItem() {
+        if (useLessOverCss)
+            return CssHeaderItem.forReference(ScipamatoPublicLessReference.instance())
+                .setId(BOOTSTRAP_THEME_MARKUP_ID);
+        else
+            return CssHeaderItem.forReference(ScipamatoPublicCssReference.instance())
+                .setId(BOOTSTRAP_THEME_MARKUP_ID);
     }
 }
