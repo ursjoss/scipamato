@@ -49,4 +49,10 @@ public class ScipamatoProperties {
      * {@literal true}) or use the pre-compiled CSS classes (if {@literal false}).
      */
     private boolean lessUsedOverCss;
+
+    /**
+     * Indicates if the Navbar is visible by default. Can be overridden via page
+     * parameter.
+     */
+    private boolean navbarVisibleByDefault;
 }

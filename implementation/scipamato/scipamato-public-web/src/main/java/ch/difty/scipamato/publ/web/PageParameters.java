@@ -3,7 +3,8 @@ package ch.difty.scipamato.publ.web;
 public enum PageParameters {
 
     SEARCH_ORDER_ID("searchOrderId"),
-    SHOW_EXCLUDED("showExcluded");
+    SHOW_EXCLUDED("showExcluded"),
+    SHOW_NAVBAR("showNavbar");
 
     private final String name;
 

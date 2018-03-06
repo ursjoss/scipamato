@@ -28,4 +28,9 @@ public class TestAbstractPage extends AbstractPage<TestRecord> {
         return new TestApplicationProperties();
     }
 
+    @Override
+    protected boolean isNavbarVisible() {
+        return true;
+    }
+
 }

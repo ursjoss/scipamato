@@ -86,16 +86,23 @@ public class ScipamatoPublicPropertiesTest {
     }
 
     @Test
-    public void checkingLessOverCSS_ifTrue_delegatesToMavenProp() {
+    public void checkingLessOverCSS_ifTrue_delegatesToScipamatoProp() {
         when(scipamatoPropMock.isLessUsedOverCss()).thenReturn(true);
         assertThat(prop.isLessUsedOverCss()).isEqualTo(true);
         verify(scipamatoPropMock).isLessUsedOverCss();
     }
 
     @Test
-    public void checkingLessOverCSS_ifNotPresent_delegatesToMavenProp() {
+    public void checkingLessOverCSS_ifNotPresent_delegatesToScipamatoProp() {
         when(scipamatoPropMock.isLessUsedOverCss()).thenReturn(false);
         assertThat(prop.isLessUsedOverCss()).isEqualTo(false);
         verify(scipamatoPropMock).isLessUsedOverCss();
+    }
+
+    @Test
+    public void checkingNavbarDefaultVisibility_delegatesToScipamatoProp() {
+        when(scipamatoPropMock.isNavbarVisibleByDefault()).thenReturn(true);
+        assertThat(prop.isNavbarVisibleByDefault()).isEqualTo(true);
+        verify(scipamatoPropMock).isNavbarVisibleByDefault();
     }
 }
