@@ -22,7 +22,8 @@ import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.publ.persistence.api.CodeClassService;
 import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
 import ch.difty.scipamato.publ.web.common.BasePageTest;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
@@ -85,17 +86,32 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     private void assertSearchForm(String b) {
         getTester().assertComponent(b, Form.class);
 
-        assertLabeledTextField(b, "number");
-        assertLabeledTextField(b, "authorsSearch");
-        assertLabeledTextField(b, "methodsSearch");
-        assertLabeledTextField(b, "pubYearFrom");
-        assertLabeledTextField(b, "pubYearUntil");
-        assertLabeledCombo(b, "populationCodes");
-        assertLabeledCombo(b, "studyDesignCodes");
+        String bb = b + ":tabs";
+        getTester().assertComponent(bb, ClientSideBootstrapTabbedPanel.class);
+        bb += ":panelsContainer:panels:";
 
-        getTester().assertComponent(b + ":toggleExtendedSearch", BootstrapAjaxButton.class);
-        getTester().assertModelValue(b + ":toggleExtendedSearch:label", "Extended Search");
-        getTester().assertInvisible(b + ":extendedSearchContainer");
+        String bbb = bb + "1:tab1Form";
+        getTester().assertComponent(bbb, Form.class);
+        assertLabeledTextField(bbb, "methodsSearch");
+        assertLabeledTextField(bbb, "authorsSearch");
+        assertLabeledTextField(bbb, "pubYearFrom");
+        assertLabeledTextField(bbb, "pubYearUntil");
+        assertLabeledTextField(bbb, "number");
+        assertLabeledCombo(bbb, "populationCodes");
+        assertLabeledCombo(bbb, "studyDesignCodes");
+
+        bbb = bb + "3:tab2Form";
+        int i = 1;
+        assertCodeClass(bbb, i++);
+        assertCodeClass(bbb, i++);
+        assertCodeClass(bbb, i++);
+        assertCodeClass(bbb, i++);
+        assertCodeClass(bbb, i++);
+        assertCodeClass(bbb, i++);
+        assertCodeClass(bbb, i++);
+        assertCodeClass(bbb, i++);
+
+        getTester().assertComponent(b + ":query", BootstrapButton.class);
     }
 
     private void assertLabeledCombo(String b, String id) {
@@ -119,44 +135,6 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
             else
                 getTester().assertLabel(bb + ":" + i++ + ":cell:link:label", v);
         }
-    }
-
-    @Test
-    public void clickExtendedSearch() {
-        getTester().startPage(makePage());
-        getTester().assertRenderedPage(getPageClass());
-
-        final String b = "searchForm:";
-
-        final String tes = b + "toggleExtendedSearch";
-        final String esc = b + "extendedSearchContainer";
-
-        getTester().executeAjaxEvent(tes, "click");
-
-        getTester().assertModelValue(tes + ":label", "Simple Search");
-        getTester().assertVisible(esc);
-
-        int i = 1;
-        assertCodeClass(esc, i++);
-        assertCodeClass(esc, i++);
-        assertCodeClass(esc, i++);
-        assertCodeClass(esc, i++);
-        assertCodeClass(esc, i++);
-        assertCodeClass(esc, i++);
-        assertCodeClass(esc, i++);
-        assertCodeClass(esc, i++);
-
-        getTester().executeAjaxEvent(tes, "click");
-        getTester().assertModelValue(tes + ":label", "Extended Search");
-        getTester().assertInvisible(esc);
-
-        verify(serviceMock, times(3)).countByFilter(isA(PublicPaperFilter.class));
-        verify(serviceMock, times(3)).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
-        // used in navigateable
-        verify(serviceMock, times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
-            isA(PaginationContext.class));
-
-        verify(codeClassServiceMock).find("en_us");
     }
 
     private void assertCodeClass(final String esc, final int ccId) {

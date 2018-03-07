@@ -81,4 +81,9 @@ public abstract class AbstractLoginPage extends AbstractPage<Void> {
         return new BootstrapButton(id, new StringResourceModel(id + ".value", this, null), Buttons.Type.Default);
     }
 
+    @Override
+    protected boolean isNavbarVisible() {
+        return false;
+    }
+
 }

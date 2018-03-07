@@ -59,4 +59,9 @@ public class ScipamatoPublicProperties implements ApplicationPublicProperties {
         return scipamatoProperties.isLessUsedOverCss();
     }
 
+    @Override
+    public boolean isNavbarVisibleByDefault() {
+        return scipamatoProperties.isNavbarVisibleByDefault();
+    }
+
 }

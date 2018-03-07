@@ -34,6 +34,11 @@ public class AbstractPageTest extends WicketBaseTest {
             protected ApplicationProperties getProperties() {
                 return new TestApplicationProperties();
             }
+
+            @Override
+            protected boolean isNavbarVisible() {
+                return true;
+            }
         };
     }
 
@@ -69,6 +74,11 @@ public class AbstractPageTest extends WicketBaseTest {
             protected ApplicationProperties getProperties() {
                 return new TestApplicationProperties();
             }
+
+            @Override
+            protected boolean isNavbarVisible() {
+                return true;
+            }
         };
 
         getTester().startPage(page);
@@ -79,12 +89,12 @@ public class AbstractPageTest extends WicketBaseTest {
     public void assertPage() {
         getTester().startPage(new TestAbstractPage(Model.of(new TestRecord(1, "foo"))));
         getTester().assertRenderedPage(TestAbstractPage.class);
-        getTester().debugComponentTrees();
         assertComponents();
     }
 
     private void assertComponents() {
         getTester().assertComponent("_header_", HtmlHeaderContainer.class);
+        getTester().assertLabel("_header_:pageTitle", "SciPaMaTo");
 
         getTester().assertComponent("navbar", Navbar.class);
         getTester().assertComponent("navbar:container:collapse:extraItems", RepeatingView.class);

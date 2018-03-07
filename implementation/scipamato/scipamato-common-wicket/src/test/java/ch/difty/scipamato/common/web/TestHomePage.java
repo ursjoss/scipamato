@@ -24,4 +24,9 @@ public class TestHomePage extends AbstractPage<Void> {
         return new TestApplicationProperties();
     }
 
+    @Override
+    protected boolean isNavbarVisible() {
+        return true;
+    }
+
 }

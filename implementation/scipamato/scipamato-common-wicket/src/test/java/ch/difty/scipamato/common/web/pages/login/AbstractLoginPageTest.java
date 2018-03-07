@@ -12,7 +12,6 @@ import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.WicketBaseTest;
 import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
 public class AbstractLoginPageTest extends WicketBaseTest {
 
@@ -33,7 +32,7 @@ public class AbstractLoginPageTest extends WicketBaseTest {
         getTester().startPage(page);
         getTester().assertRenderedPage(AbstractLoginPage.class);
 
-        getTester().assertComponent("navbar", Navbar.class);
+        getTester().assertInvisible("navbar");
         getTester().assertComponent("feedback", NotificationPanel.class);
         getTester().assertComponent("form", StatelessForm.class);
         getTester().assertLabel("form:usernameLabel", "Username");

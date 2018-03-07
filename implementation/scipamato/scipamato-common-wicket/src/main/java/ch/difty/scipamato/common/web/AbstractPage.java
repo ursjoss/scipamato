@@ -62,9 +62,14 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     @Override
     protected void onInitialize() {
         super.onInitialize();
+        createAndAddTitle("pageTitle");
         createAndAddNavBar("navbar");
         createAndAddFeedbackPanel("feedback");
         createAndAddDebugBar("debug");
+    }
+
+    private void createAndAddTitle(String id) {
+        queue(new Label(id, getBrandName()));
     }
 
     private void createAndAddNavBar(String id) {
@@ -95,15 +100,30 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     }
 
     private Navbar newNavbar(String markupId) {
-        Navbar nb = new Navbar(markupId);
+        Navbar nb = new Navbar(markupId) {
+            private static final long serialVersionUID = 1L;
 
-        nb.setPosition(Navbar.Position.TOP);
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setVisible(isNavbarVisible());
+            }
+        };
+        nb.fluid();
+        nb.setPosition(Navbar.Position.STATIC_TOP);
         nb.setBrandName(getBrandName());
         nb.setInverted(true);
 
         addLinksTo(nb);
 
         return nb;
+    }
+
+    /**
+     * Override if you do not want to show the navbar or only conditionally.
+     */
+    protected boolean isNavbarVisible() {
+        return true;
     }
 
     private IModel<String> getBrandName() {

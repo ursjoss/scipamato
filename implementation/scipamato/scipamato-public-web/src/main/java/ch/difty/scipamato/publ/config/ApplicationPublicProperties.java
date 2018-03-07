@@ -14,4 +14,9 @@ public interface ApplicationPublicProperties extends ApplicationProperties {
      *         classes. This is useful for development.
      */
     boolean isLessUsedOverCss();
+
+    /**
+     * @return the default visibility of the Navbar.
+     */
+    boolean isNavbarVisibleByDefault();
 }

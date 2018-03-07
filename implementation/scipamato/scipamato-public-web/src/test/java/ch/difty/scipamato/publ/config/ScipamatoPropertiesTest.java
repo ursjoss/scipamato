@@ -37,4 +37,9 @@ public class ScipamatoPropertiesTest {
     public void isLessUsedOverCss() {
         assertThat(sp.isLessUsedOverCss()).isFalse();
     }
+
+    @Test
+    public void isNavbarVisibleByDefault() {
+        assertThat(sp.isNavbarVisibleByDefault()).isFalse();
+    }
 }

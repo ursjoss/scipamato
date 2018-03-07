@@ -48,4 +48,9 @@ public class ScipamatoPublicPropertiesIntegrationTest {
         assertThat(appProperties.isCommercialFontPresent()).isEqualTo(false);
     }
 
+    @Test
+    public void assertNavbarVisibleByDefault() {
+        assertThat(appProperties.isNavbarVisibleByDefault()).isEqualTo(false);
+    }
+
 }

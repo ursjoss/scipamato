@@ -10,7 +10,6 @@ import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.
 
 import ch.difty.scipamato.core.web.WicketTest;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
 public class LoginPageTest extends WicketTest {
 
@@ -58,7 +57,7 @@ public class LoginPageTest extends WicketTest {
 
     private void assertMenuEntries() {
         getTester().assertComponent("_header_", HtmlHeaderContainer.class);
-        getTester().assertComponent("navbar", Navbar.class);
+        getTester().assertInvisible("navbar");
     }
 
 }

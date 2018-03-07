@@ -60,6 +60,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Updated screenshots sonar + architecture
 - Updated dependencies: wicket, jOOQ, flyway, mockito, spring-cloud, equalsverifier, assertj
 - Improved some topics according to Effective Java, 3rd edition
+- Navbar in SciPaMaTo-Public: Do not show by default. Can be overridden via page parameter showNavbar.
+  Default state is configurable via property scipamato.navbar-visible-by-default
+- Navbar: Do not fix it to top (Position.STATIC-TOP)
+- Page Title: use brand instead of hardcoding it
 
 .Deprecated
 
