@@ -11,6 +11,8 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
+import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
+import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
@@ -18,6 +20,7 @@ import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -37,6 +40,7 @@ import ch.difty.scipamato.publ.entity.PopulationCode;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.entity.StudyDesignCode;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
+import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter.PublicPaperFilterFields;
 import ch.difty.scipamato.publ.web.common.BasePage;
 import ch.difty.scipamato.publ.web.model.CodeClassModel;
 import ch.difty.scipamato.publ.web.model.CodeModel;
@@ -44,6 +48,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButt
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
+import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
@@ -103,25 +108,95 @@ public class PublicPage extends BasePage<Void> {
             }
         };
         queue(filterForm);
+        addTabPanel(filterForm, "tabs");
 
-        queueFieldAndLabel(new TextField<String>("methodsSearch",
-                PropertyModel.of(filter, PublicPaperFilter.PublicPaperFilterFields.METHODS_MASK.getName())));
-        queueFieldAndLabel(new TextField<String>("authorsSearch",
-                PropertyModel.of(filter, PublicPaperFilter.PublicPaperFilterFields.AUTHOR_MASK.getName())));
-        queueFieldAndLabel(new TextField<String>("pubYearFrom",
-                PropertyModel.of(filter, PublicPaperFilter.PublicPaperFilterFields.PUB_YEAR_FROM.getName())));
-        queueFieldAndLabel(new TextField<String>("pubYearUntil",
-                PropertyModel.of(filter, PublicPaperFilter.PublicPaperFilterFields.PUB_YEAR_UNTIL.getName())));
-        queueFieldAndLabel(new TextField<String>("number",
-                PropertyModel.of(filter, PublicPaperFilter.PublicPaperFilterFields.NUMBER.getName())));
-
-        queuePopulationCodesComplex("populationCodes");
-        queueStudyDesignCodesComplex("studyDesignCodes");
+        // TODO continue
 
         queueExtendedSearchButton("toggleExtendedSearch");
         queueQueryButton("query", filterForm);
 
         queueExtendedSearchContainer("extendedSearchContainer");
+    }
+
+    private void addTabPanel(FilterForm<PublicPaperFilter> filterForm, String tabId) {
+        List<ITab> tabs = new ArrayList<>();
+        tabs.add(new AbstractTab(new StringResourceModel("tab1" + LABEL_RESOURCE_TAG, this, null)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Panel getPanel(String panelId) {
+                return new TabPanel1(panelId, Model.of(filter));
+            }
+
+        });
+        filterForm.add(new ClientSideBootstrapTabbedPanel<ITab>(tabId, tabs));
+    }
+
+    private class TabPanel1 extends AbstractTabPanel {
+        private static final long serialVersionUID = 1L;
+
+        public TabPanel1(String id, IModel<PublicPaperFilter> model) {
+            super(id, model);
+        }
+
+        @Override
+        protected void onInitialize() {
+            super.onInitialize();
+            Form<Object> form = new Form<>("tab1Form");
+            queue(form);
+
+            addTextFieldTo(form, "methodsSearch", PublicPaperFilter.PublicPaperFilterFields.METHODS_MASK);
+            addTextFieldTo(form, "authorsSearch", PublicPaperFilter.PublicPaperFilterFields.AUTHOR_MASK);
+            addTextFieldTo(form, "pubYearFrom", PublicPaperFilter.PublicPaperFilterFields.PUB_YEAR_FROM);
+            addTextFieldTo(form, "pubYearUntil", PublicPaperFilter.PublicPaperFilterFields.PUB_YEAR_UNTIL);
+            addTextFieldTo(form, "number", PublicPaperFilter.PublicPaperFilterFields.NUMBER);
+            queueCodesComplex(form, "populationCodes", PublicPaperFilter.PublicPaperFilterFields.POPULATION_CODES,
+                PopulationCode.values());
+            queueCodesComplex(form, "studyDesignCodes", PublicPaperFilter.PublicPaperFilterFields.STUDY_DESIGN_CODES,
+                StudyDesignCode.values());
+            // TODO continue
+        }
+
+    }
+
+    private abstract class AbstractTabPanel extends Panel {
+
+        private static final long serialVersionUID = 1L;
+
+        public AbstractTabPanel(String id) {
+            super(id);
+        }
+
+        public AbstractTabPanel(String id, IModel<?> model) {
+            super(id, model);
+        }
+
+        protected void addTextFieldTo(Form<Object> form, String id, PublicPaperFilterFields filterField) {
+            TextField<String> field = new TextField<String>(id, PropertyModel.of(filter, filterField.getName()));
+            StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
+            form.add(new Label(id + LABEL_TAG, labelModel));
+            field.setLabel(labelModel);
+            form.add(field);
+        }
+
+        protected <C extends Enum<C>> void queueCodesComplex(Form<Object> form, String id,
+                PublicPaperFilterFields filterField, C[] values) {
+            StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
+            form.add(new Label(id + LABEL_TAG, labelModel));
+
+            IModel<Collection<C>> model = PropertyModel.of(filter, filterField.getName());
+            List<? extends C> choices = Arrays.asList(values);
+            final IChoiceRenderer<C> choiceRenderer = new EnumChoiceRenderer<C>(this);
+            final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
+                    null);
+            final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)
+                .withLiveSearch(true)
+                .withNoneSelectedText(noneSelectedModel.getObject());
+            final BootstrapMultiSelect<C> multiSelect = new BootstrapMultiSelect<>(id, model, choices, choiceRenderer)
+                .with(config);
+            multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
+            form.add(multiSelect);
+        }
     }
 
     private void queueQueryButton(final String id, final FilterForm<PublicPaperFilter> filterForm) {
@@ -273,44 +348,6 @@ public class PublicPage extends BasePage<Void> {
         getPaperIdManager().setFocusToItem(m.getObject()
             .getId());
         setResponsePage(new PublicPaperDetailPage(m, getPage().getPageReference()));
-    }
-
-    private void queuePopulationCodesComplex(String id) {
-        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
-        queue(new Label(id + LABEL_TAG, labelModel));
-
-        IModel<Collection<PopulationCode>> model = PropertyModel.of(filter,
-            PublicPaperFilter.PublicPaperFilterFields.POPULATION_CODES.getName());
-        List<? extends PopulationCode> choices = Arrays.asList(PopulationCode.values());
-        final IChoiceRenderer<PopulationCode> choiceRenderer = new EnumChoiceRenderer<>(this);
-        final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
-                null);
-        final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)
-            .withLiveSearch(true)
-            .withNoneSelectedText(noneSelectedModel.getObject());
-        final BootstrapMultiSelect<PopulationCode> multiSelect = new BootstrapMultiSelect<>(id, model, choices,
-                choiceRenderer).with(config);
-        multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
-        queue(multiSelect);
-    }
-
-    private void queueStudyDesignCodesComplex(String id) {
-        StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
-        queue(new Label(id + LABEL_TAG, labelModel));
-
-        IModel<Collection<StudyDesignCode>> model = PropertyModel.of(filter,
-            PublicPaperFilter.PublicPaperFilterFields.STUDY_DESIGN_CODES.getName());
-        List<? extends StudyDesignCode> choices = Arrays.asList(StudyDesignCode.values());
-        final IChoiceRenderer<StudyDesignCode> choiceRenderer = new EnumChoiceRenderer<>(this);
-        final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
-                null);
-        final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)
-            .withLiveSearch(true)
-            .withNoneSelectedText(noneSelectedModel.getObject());
-        final BootstrapMultiSelect<StudyDesignCode> multiSelect = new BootstrapMultiSelect<>(id, model, choices,
-                choiceRenderer).with(config);
-        multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
-        queue(multiSelect);
     }
 
     /**
