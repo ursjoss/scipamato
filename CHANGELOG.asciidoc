@@ -55,6 +55,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 
+- Public: Increase base font size from 13 px to 15 px
+
 .Deprecated
 
 .Removed
