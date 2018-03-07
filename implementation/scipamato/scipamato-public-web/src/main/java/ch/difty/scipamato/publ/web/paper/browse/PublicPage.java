@@ -68,6 +68,8 @@ public class PublicPage extends BasePage<Void> {
     private PublicPaperFilter   filter;
     private PublicPaperProvider dataProvider;
 
+    private boolean queryingInitialized = false;
+
     private DataTable<PublicPaper, String> results;
 
     public PublicPage(PageParameters parameters) {
@@ -78,8 +80,10 @@ public class PublicPage extends BasePage<Void> {
     private void initFilterAndProvider() {
         filter = new PublicPaperFilter();
         dataProvider = new PublicPaperProvider(filter, RESULT_PAGE_SIZE);
+    }
 
-        updateNavigateable();
+    private boolean isQueryingInitialized() {
+        return queryingInitialized;
     }
 
     @Override
@@ -251,13 +255,30 @@ public class PublicPage extends BasePage<Void> {
 
     private void queueQueryButton(final String id, final FilterForm<PublicPaperFilter> filterForm) {
         final StringResourceModel labelModel = new StringResourceModel("button." + id + LABEL_RESOURCE_TAG, this, null);
-        BootstrapButton queryButton = new BootstrapButton(id, labelModel, Buttons.Type.Primary);
+        BootstrapButton queryButton = new BootstrapButton(id, labelModel, Buttons.Type.Primary) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onSubmit() {
+                super.onSubmit();
+                queryingInitialized = true;
+            }
+        };
         queue(queryButton);
         filterForm.setDefaultButton(queryButton);
     }
 
     private void makeAndQueueResultTable(String id) {
-        results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, dataProvider.getRowsPerPage());
+        results = new BootstrapDefaultDataTable<PublicPaper, String>(id, makeTableColumns(), dataProvider,
+                dataProvider.getRowsPerPage()) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setVisible(isQueryingInitialized());
+            }
+        };
         results.setOutputMarkupId(true);
         results.add(new TableBehavior().striped()
             .hover());

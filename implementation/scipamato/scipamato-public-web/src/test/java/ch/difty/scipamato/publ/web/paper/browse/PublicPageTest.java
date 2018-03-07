@@ -57,7 +57,8 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         verify(serviceMock).countByFilter(isA(PublicPaperFilter.class));
         verify(serviceMock).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
         // used in navigateable
-        verify(serviceMock).findPageOfNumbersByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
+        verify(serviceMock, times(1)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
+            isA(PaginationContext.class));
 
         verify(codeClassServiceMock).find("en_us");
     }
@@ -84,6 +85,8 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     }
 
     private void assertSearchForm(String b) {
+        getTester().newFormTester(b)
+            .submit("query");
         getTester().assertComponent(b, Form.class);
 
         String bb = b + ":tabs";
@@ -146,6 +149,8 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     public void clickingTitle_forwardsToDetailsPage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
+        getTester().newFormTester("searchForm")
+            .submit("query");
 
         getTester().clickLink("results:body:rows:1:cells:2:cell:link");
         getTester().assertRenderedPage(PublicPaperDetailPage.class);
