@@ -59,6 +59,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Removed
 
+- Public: Remove ability to search by id/number
+
 .Fixed
 
 .Security

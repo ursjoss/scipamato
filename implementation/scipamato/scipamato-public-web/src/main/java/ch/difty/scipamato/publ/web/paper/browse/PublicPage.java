@@ -147,7 +147,6 @@ public class PublicPage extends BasePage<Void> {
             addTextFieldTo(form, "authorsSearch", PublicPaperFilter.PublicPaperFilterFields.AUTHOR_MASK);
             addTextFieldTo(form, "pubYearFrom", PublicPaperFilter.PublicPaperFilterFields.PUB_YEAR_FROM);
             addTextFieldTo(form, "pubYearUntil", PublicPaperFilter.PublicPaperFilterFields.PUB_YEAR_UNTIL);
-            addTextFieldTo(form, "number", PublicPaperFilter.PublicPaperFilterFields.NUMBER);
             queueCodesComplex(form, "populationCodes", PublicPaperFilter.PublicPaperFilterFields.POPULATION_CODES,
                 PopulationCode.values());
             queueCodesComplex(form, "studyDesignCodes", PublicPaperFilter.PublicPaperFilterFields.STUDY_DESIGN_CODES,

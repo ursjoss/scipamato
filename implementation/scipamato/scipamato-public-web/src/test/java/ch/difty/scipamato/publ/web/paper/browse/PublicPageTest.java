@@ -96,7 +96,6 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         assertLabeledTextField(bbb, "authorsSearch");
         assertLabeledTextField(bbb, "pubYearFrom");
         assertLabeledTextField(bbb, "pubYearUntil");
-        assertLabeledTextField(bbb, "number");
         assertLabeledCombo(bbb, "populationCodes");
         assertLabeledCombo(bbb, "studyDesignCodes");
 
