@@ -48,4 +48,4 @@ logging:
       jooq: INFO
 scipamato:
   commercial-font-present: true
-  less-used-over-css: false
+  less-used-over-css: true
