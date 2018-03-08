@@ -2,32 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
     <form wicket:id="tab1Form">
-        <div class="row">
-            <div class="col-md-3">
-                <div wicket:id="methodsSearchLabel"></div>
-                <input wicket:id="methodsSearch" class="form-control"></input>
-            </div>
-            <div class="col-md-2">
-                <div wicket:id="authorsSearchLabel"></div>
-                <input wicket:id="authorsSearch" class="form-control"></input>
-            </div>
-            <div class="col-md-1">
-                <div wicket:id="pubYearFromLabel"></div>
-                <input wicket:id="pubYearFrom" class="form-control"></input>
-            </div>
-            <div class="col-md-1">
-                <div wicket:id="pubYearUntilLabel"></div>
-                <input wicket:id="pubYearUntil" class="form-control"></input>
-            </div>
-            <div class="col-md-1">
-                <div wicket:id="populationCodesLabel"></div>
-                <select wicket:id="populationCodes"></select>
-            </div>
-            <div class="col-md-1">
-                <div wicket:id="studyDesignCodesLabel"></div>
-                <select wicket:id="studyDesignCodes"></select>
-            </div>
-        </div>
+        <div wicket:id="simpleFilterPanel"></div>
     </form>
 </wicket:panel>
 </html>

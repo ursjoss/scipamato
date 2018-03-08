@@ -9,7 +9,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.junit.After;
@@ -95,12 +94,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
 
         String bbb = bb + "1:tab1Form";
         getTester().assertComponent(bbb, Form.class);
-        assertLabeledTextField(bbb, "methodsSearch");
-        assertLabeledTextField(bbb, "authorsSearch");
-        assertLabeledTextField(bbb, "pubYearFrom");
-        assertLabeledTextField(bbb, "pubYearUntil");
-        assertLabeledCombo(bbb, "populationCodes");
-        assertLabeledCombo(bbb, "studyDesignCodes");
+        getTester().assertComponent(bbb + ":simpleFilterPanel", SimpleFilterPanel.class);
 
         bbb = bb + "3:tab2Form";
         int i = 1;
@@ -114,12 +108,6 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         assertCodeClass(bbb, i++);
 
         getTester().assertComponent(b + ":query", BootstrapButton.class);
-    }
-
-    private void assertLabeledCombo(String b, String id) {
-        final String bb = b + ":" + id;
-        getTester().assertComponent(bb + "Label", Label.class);
-        getTester().assertComponent(bb, BootstrapMultiSelect.class);
     }
 
     private void assertResultsTable(String b) {
