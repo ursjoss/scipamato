@@ -155,6 +155,8 @@ public class PublicPage extends BasePage<Void> {
             Form<Object> form = new Form<>("tab2Form");
             queue(form);
 
+            queue(new SimpleFilterPanel("simpleFilterPanel", Model.of(filter)));
+
             CodeClassModel codeClassModel = new CodeClassModel(getLanguageCode());
             List<CodeClass> codeClasses = codeClassModel.getObject();
 

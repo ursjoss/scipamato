@@ -5,6 +5,10 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.event.Broadcast;
+import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
@@ -21,6 +25,13 @@ import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter.PublicPaperFilter
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 
+/**
+ * The SimpleFilterPanel is added to the PublicPage twice and should be kept
+ * synchronized. The fields are therefore change aware, i.e. send an event upon
+ * changes that let's the other fields instances
+ *
+ * @author Urs Joss
+ */
 public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
 
     private static final long serialVersionUID = 1L;
@@ -47,7 +58,29 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
     }
 
     private void addTextFieldTo(String id, PublicPaperFilterFields filterField) {
-        TextField<String> field = new TextField<String>(id, PropertyModel.of(getModel(), filterField.getName()));
+        TextField<String> field = new TextField<String>(id, PropertyModel.of(getModel(), filterField.getName())) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onEvent(IEvent<?> event) {
+                if (event.getPayload()
+                    .getClass() == SimpleFilterPanelChangeEvent.class) {
+                    ((SimpleFilterPanelChangeEvent) event.getPayload()).considerAddingToTarget(this);
+                    event.dontBroadcastDeeper();
+                }
+            }
+        };
+        field.add(new AjaxFormComponentUpdatingBehavior("change") {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                final String id = field.getId();
+                final String markupId = field.getMarkupId();
+                send(getPage(), Broadcast.BREADTH, new SimpleFilterPanelChangeEvent(target).withId(id)
+                    .withMarkupId(markupId));
+            }
+        });
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
@@ -66,8 +99,30 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
         final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)
             .withLiveSearch(true)
             .withNoneSelectedText(noneSelectedModel.getObject());
-        final BootstrapMultiSelect<C> multiSelect = new BootstrapMultiSelect<>(id, model, choices, choiceRenderer)
-            .with(config);
+        final BootstrapMultiSelect<C> multiSelect = new BootstrapMultiSelect<C>(id, model, choices, choiceRenderer) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onEvent(IEvent<?> event) {
+                if (event.getPayload()
+                    .getClass() == SimpleFilterPanelChangeEvent.class) {
+                    ((SimpleFilterPanelChangeEvent) event.getPayload()).considerAddingToTarget(this);
+                    event.dontBroadcastDeeper();
+                }
+            }
+        };
+        multiSelect.with(config);
+        multiSelect.add(new AjaxFormComponentUpdatingBehavior("change") {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                final String id = multiSelect.getId();
+                final String markupId = multiSelect.getMarkupId();
+                send(getPage(), Broadcast.BREADTH, new SimpleFilterPanelChangeEvent(target).withId(id)
+                    .withMarkupId(markupId));
+            }
+        });
         multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
         queue(multiSelect);
     }
