@@ -53,6 +53,22 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
+.Changed
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
+
+[[v0.7.7]]
+== [0.7.7] -- 2018-03-09
+
+.Added
+
 - 07/62 - Public: New Button to clear the search criteria
 
 .Changed
