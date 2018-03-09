@@ -16,7 +16,6 @@ public class SimpleFilterPanelTest extends PanelTest<SimpleFilterPanel> {
 
     @Override
     protected void assertSpecificComponents() {
-        getTester().debugComponentTrees();
         getTester().assertComponent(PANEL, SimpleFilterPanel.class);
 
         assertLabeledTextField(PANEL, "methodsSearch");
