@@ -1,8 +1,6 @@
 package ch.difty.scipamato.publ.web.paper.browse;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
@@ -14,10 +12,8 @@ import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
-import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -34,18 +30,15 @@ import ch.difty.scipamato.common.web.component.SerializableConsumer;
 import ch.difty.scipamato.common.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.scipamato.publ.entity.Code;
 import ch.difty.scipamato.publ.entity.CodeClass;
-import ch.difty.scipamato.publ.entity.PopulationCode;
 import ch.difty.scipamato.publ.entity.PublicPaper;
-import ch.difty.scipamato.publ.entity.StudyDesignCode;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
-import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter.PublicPaperFilterFields;
 import ch.difty.scipamato.publ.web.common.BasePage;
 import ch.difty.scipamato.publ.web.model.CodeClassModel;
 import ch.difty.scipamato.publ.web.model.CodeModel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
-import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
+import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
@@ -131,7 +124,7 @@ public class PublicPage extends BasePage<Void> {
             }
 
         });
-        filterForm.add(new ClientSideBootstrapTabbedPanel<ITab>(tabId, tabs));
+        filterForm.add(new BootstrapTabbedPanel<ITab>(tabId, tabs));
     }
 
     private class TabPanel1 extends AbstractTabPanel {
@@ -144,17 +137,8 @@ public class PublicPage extends BasePage<Void> {
         @Override
         protected void onInitialize() {
             super.onInitialize();
-            Form<Object> form = new Form<>("tab1Form");
-            queue(form);
-
-            addTextFieldTo(form, "methodsSearch", PublicPaperFilter.PublicPaperFilterFields.METHODS_MASK);
-            addTextFieldTo(form, "authorsSearch", PublicPaperFilter.PublicPaperFilterFields.AUTHOR_MASK);
-            addTextFieldTo(form, "pubYearFrom", PublicPaperFilter.PublicPaperFilterFields.PUB_YEAR_FROM);
-            addTextFieldTo(form, "pubYearUntil", PublicPaperFilter.PublicPaperFilterFields.PUB_YEAR_UNTIL);
-            queueCodesComplex(form, "populationCodes", PublicPaperFilter.PublicPaperFilterFields.POPULATION_CODES,
-                PopulationCode.values());
-            queueCodesComplex(form, "studyDesignCodes", PublicPaperFilter.PublicPaperFilterFields.STUDY_DESIGN_CODES,
-                StudyDesignCode.values());
+            queue(new Form<>("tab1Form"));
+            queue(new SimpleFilterPanel("simpleFilterPanel", Model.of(filter)));
         }
     }
 
@@ -170,6 +154,8 @@ public class PublicPage extends BasePage<Void> {
             super.onInitialize();
             Form<Object> form = new Form<>("tab2Form");
             queue(form);
+
+            queue(new SimpleFilterPanel("simpleFilterPanel", Model.of(filter)));
 
             CodeClassModel codeClassModel = new CodeClassModel(getLanguageCode());
             List<CodeClass> codeClasses = codeClassModel.getObject();
@@ -225,32 +211,6 @@ public class PublicPage extends BasePage<Void> {
             super(id, model);
         }
 
-        protected void addTextFieldTo(Form<Object> form, String id, PublicPaperFilterFields filterField) {
-            TextField<String> field = new TextField<String>(id, PropertyModel.of(filter, filterField.getName()));
-            StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
-            form.add(new Label(id + LABEL_TAG, labelModel));
-            field.setLabel(labelModel);
-            form.add(field);
-        }
-
-        protected <C extends Enum<C>> void queueCodesComplex(Form<Object> form, String id,
-                PublicPaperFilterFields filterField, C[] values) {
-            StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
-            form.add(new Label(id + LABEL_TAG, labelModel));
-
-            IModel<Collection<C>> model = PropertyModel.of(filter, filterField.getName());
-            List<? extends C> choices = Arrays.asList(values);
-            final IChoiceRenderer<C> choiceRenderer = new EnumChoiceRenderer<C>(this);
-            final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
-                    null);
-            final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)
-                .withLiveSearch(true)
-                .withNoneSelectedText(noneSelectedModel.getObject());
-            final BootstrapMultiSelect<C> multiSelect = new BootstrapMultiSelect<>(id, model, choices, choiceRenderer)
-                .with(config);
-            multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
-            form.add(multiSelect);
-        }
     }
 
     private void queueQueryButton(final String id, final FilterForm<PublicPaperFilter> filterForm) {
