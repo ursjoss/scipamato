@@ -53,6 +53,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
+- 07/62 - Public: New Button to clear the search criteria
+
 .Changed
 
 - 07/41 - Public: Increase base font size from 13 px to 15 px

@@ -79,6 +79,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         assertTabPanelWithFirstTabVisible(b + ":tabs");
 
         getTester().assertComponent(b + ":query", BootstrapButton.class);
+        getTester().assertComponent(b + ":clear", BootstrapButton.class);
 
         // query was not yet executed and results panel is still invisible
         getTester().assertInvisible("results");

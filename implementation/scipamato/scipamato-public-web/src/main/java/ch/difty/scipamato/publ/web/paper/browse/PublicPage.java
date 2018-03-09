@@ -102,6 +102,8 @@ public class PublicPage extends BasePage<Void> {
         addTabPanel(filterForm, "tabs");
 
         queueQueryButton("query", filterForm);
+
+        queueClearSearchButton("clear", filterForm);
     }
 
     private void addTabPanel(FilterForm<PublicPaperFilter> filterForm, String tabId) {
@@ -226,6 +228,22 @@ public class PublicPage extends BasePage<Void> {
         };
         queue(queryButton);
         filterForm.setDefaultButton(queryButton);
+    }
+
+    private void queueClearSearchButton(String id, FilterForm<PublicPaperFilter> filterForm) {
+        final StringResourceModel labelModel = new StringResourceModel("button." + id + LABEL_RESOURCE_TAG, this, null);
+        BootstrapButton button = new BootstrapButton(id, labelModel, Buttons.Type.Primary) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onSubmit() {
+                super.onSubmit();
+                setResponsePage(new PublicPage(getPageParameters()));
+            }
+        };
+        button.add(new AttributeModifier("title",
+                new StringResourceModel("button." + id + TITLE_RESOURCE_TAG, this, null).getString()));
+        queue(button);
     }
 
     private void makeAndQueueResultTable(String id) {
