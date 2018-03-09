@@ -93,7 +93,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
 
         IModel<Collection<C>> model = PropertyModel.of(getModel(), filterField.getName());
         List<? extends C> choices = Arrays.asList(values);
-        final IChoiceRenderer<C> choiceRenderer = new EnumChoiceRenderer<C>(this);
+        final IChoiceRenderer<C> choiceRenderer = new EnumChoiceRenderer<>(this);
         final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
                 null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)

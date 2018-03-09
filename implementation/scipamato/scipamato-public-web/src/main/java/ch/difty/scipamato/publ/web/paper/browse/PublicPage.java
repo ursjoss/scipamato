@@ -63,8 +63,6 @@ public class PublicPage extends BasePage<Void> {
 
     private boolean queryingInitialized = false;
 
-    private DataTable<PublicPaper, String> results;
-
     public PublicPage(PageParameters parameters) {
         super(parameters);
         initFilterAndProvider();
@@ -247,8 +245,8 @@ public class PublicPage extends BasePage<Void> {
     }
 
     private void makeAndQueueResultTable(String id) {
-        results = new BootstrapDefaultDataTable<PublicPaper, String>(id, makeTableColumns(), dataProvider,
-                dataProvider.getRowsPerPage()) {
+        DataTable<PublicPaper, String> results = new BootstrapDefaultDataTable<PublicPaper, String>(id,
+                makeTableColumns(), dataProvider, dataProvider.getRowsPerPage()) {
             private static final long serialVersionUID = 1L;
 
             @Override
