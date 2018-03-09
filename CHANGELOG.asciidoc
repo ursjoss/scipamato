@@ -59,6 +59,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 - 07/41 - Public: Increase base font size from 13 px to 15 px
 - 07/56 - Public: Repeat the simple search fields in Extended Search
+- 07/64 - Public: Provide possibilty to quote text search terms (e.g. authors)
 
 .Deprecated
 

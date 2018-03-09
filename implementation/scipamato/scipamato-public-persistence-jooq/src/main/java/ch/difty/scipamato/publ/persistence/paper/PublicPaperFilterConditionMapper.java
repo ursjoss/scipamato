@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.jooq.Condition;
@@ -25,6 +27,10 @@ import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 
 @FilterConditionMapper
 public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMapper<PublicPaperFilter> {
+
+    private static final String  RE_QUOTE           = "\"";
+    private static final Pattern QUOTED             = Pattern.compile(RE_QUOTE + "([^" + RE_QUOTE + "]+)" + RE_QUOTE);
+    private static final int     QUOTED_GROUP_INDEX = 1;
 
     @Override
     protected void map(final PublicPaperFilter filter, final List<Condition> conditions) {
@@ -77,13 +83,23 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
 
     private void addTokenizedConditions(final List<Condition> conditions, final String mask,
             final TableField<PaperRecord, String> field) {
-        if (!mask.contains(" ")) {
-            conditions.add(field.likeIgnoreCase("%" + mask + "%"));
-        } else {
-            for (final String t : mask.split(" ")) {
-                final String token = t.trim();
-                if (!token.isEmpty())
-                    conditions.add(field.likeIgnoreCase("%" + token + "%"));
+        final Matcher m = QUOTED.matcher(mask);
+
+        String term = null;
+        while (m.find()) {
+            term = m.group(QUOTED_GROUP_INDEX);
+            if (term != null)
+                conditions.add(field.likeIgnoreCase("%" + term + "%"));
+        }
+        if (term == null) {
+            if (!mask.contains(" ")) {
+                conditions.add(field.likeIgnoreCase("%" + mask + "%"));
+            } else {
+                for (final String t : mask.split(" ")) {
+                    final String token = t.trim();
+                    if (!token.isEmpty())
+                        conditions.add(field.likeIgnoreCase("%" + token + "%"));
+                }
             }
         }
     }

@@ -279,4 +279,19 @@ public class PublicPaperFilterConditionMapperTest
             .toString()).isEqualToIgnoringCase("1 = 1");
     }
 
+    @Test
+    public void creatingWhereCondition_withAuthorMaskHoldingMultipleQuotedAuthors_searchesForPapersWithBothAuthorsInAnyOrder() {
+        String pattern = "\"Last F\" \"Other S\"";
+        filter.setAuthorMask(pattern);
+        assertThat(mapper.map(filter)
+            .toString()).isEqualToIgnoringCase(
+        // @formatter:off
+                "(\n" +
+                "  lower(\"public\".\"paper\".\"authors\") like lower('%Last F%')\n" +
+                "  and lower(\"public\".\"paper\".\"authors\") like lower('%Other S%')\n" +
+                ")"
+        // @formatter:on
+        );
+    }
+
 }
