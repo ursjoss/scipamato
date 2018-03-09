@@ -55,13 +55,14 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 
-- Public: Increase base font size from 13 px to 15 px
+- 07/41 - Public: Increase base font size from 13 px to 15 px
+- 07/56 - Public: Repeat the simple search fields in Extended Search
 
 .Deprecated
 
 .Removed
 
-- Public: Remove ability to search by id/number
+- 07/04 - Public: Remove ability to search by id/number
 
 .Fixed
 

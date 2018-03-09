@@ -38,7 +38,7 @@ import ch.difty.scipamato.publ.web.model.CodeModel;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
-import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
+import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
@@ -124,7 +124,7 @@ public class PublicPage extends BasePage<Void> {
             }
 
         });
-        filterForm.add(new ClientSideBootstrapTabbedPanel<ITab>(tabId, tabs));
+        filterForm.add(new BootstrapTabbedPanel<ITab>(tabId, tabs));
     }
 
     private class TabPanel1 extends AbstractTabPanel {
