@@ -49,7 +49,6 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         when(serviceMock.countByFilter(isA(PublicPaperFilter.class))).thenReturn(papers.size());
         when(serviceMock.findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class)))
             .thenReturn(papers);
-
     }
 
     @Override
@@ -83,7 +82,6 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
 
         // query was not yet executed and results panel is still invisible
         getTester().assertInvisible("results");
-
     }
 
     private void assertTabPanelWithFirstTabVisible(String b) {

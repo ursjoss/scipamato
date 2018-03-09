@@ -56,6 +56,8 @@ public class PublicPage extends BasePage<Void> {
 
     private static final String CODES_NONE_SELECT_RESOURCE_TAG = "codes.noneSelected";
 
+    private static final String BUTTON_RESOURCE_PREFIX = "button.";
+
     private static final String AM_DATA_WIDTH = "data-width";
 
     private PublicPaperFilter   filter;
@@ -101,7 +103,7 @@ public class PublicPage extends BasePage<Void> {
 
         queueQueryButton("query", filterForm);
 
-        queueClearSearchButton("clear", filterForm);
+        queueClearSearchButton("clear");
     }
 
     private void addTabPanel(FilterForm<PublicPaperFilter> filterForm, String tabId) {
@@ -214,7 +216,8 @@ public class PublicPage extends BasePage<Void> {
     }
 
     private void queueQueryButton(final String id, final FilterForm<PublicPaperFilter> filterForm) {
-        final StringResourceModel labelModel = new StringResourceModel("button." + id + LABEL_RESOURCE_TAG, this, null);
+        final StringResourceModel labelModel = new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + LABEL_RESOURCE_TAG,
+                this, null);
         BootstrapButton queryButton = new BootstrapButton(id, labelModel, Buttons.Type.Primary) {
             private static final long serialVersionUID = 1L;
 
@@ -228,9 +231,10 @@ public class PublicPage extends BasePage<Void> {
         filterForm.setDefaultButton(queryButton);
     }
 
-    private void queueClearSearchButton(String id, FilterForm<PublicPaperFilter> filterForm) {
-        final StringResourceModel labelModel = new StringResourceModel("button." + id + LABEL_RESOURCE_TAG, this, null);
-        BootstrapButton button = new BootstrapButton(id, labelModel, Buttons.Type.Primary) {
+    private void queueClearSearchButton(String id) {
+        final StringResourceModel labelModel = new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + LABEL_RESOURCE_TAG,
+                this, null);
+        BootstrapButton button = new BootstrapButton(id, labelModel, Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -240,7 +244,7 @@ public class PublicPage extends BasePage<Void> {
             }
         };
         button.add(new AttributeModifier("title",
-                new StringResourceModel("button." + id + TITLE_RESOURCE_TAG, this, null).getString()));
+                new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
         queue(button);
     }
 

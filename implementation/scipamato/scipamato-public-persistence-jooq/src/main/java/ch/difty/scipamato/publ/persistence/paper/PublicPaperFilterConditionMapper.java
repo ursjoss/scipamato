@@ -81,25 +81,39 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
 
     }
 
+    /*
+     * Currently does not allow to mix quoted and unquoted terms. If this will
+     * become necessary we might have to implement a proper tokenization of the
+     * search term, as was done in core with the SearchTerm hierarchy.
+     */
     private void addTokenizedConditions(final List<Condition> conditions, final String mask,
             final TableField<PaperRecord, String> field) {
         final Matcher m = QUOTED.matcher(mask);
+        boolean done = tokenizeQuoted(field, m, conditions);
+        if (!done)
+            tokenizeUnquoted(mask, field, conditions);
+    }
 
+    private boolean tokenizeQuoted(final TableField<PaperRecord, String> field, final Matcher m,
+            final List<Condition> conditions) {
         String term = null;
         while (m.find()) {
             term = m.group(QUOTED_GROUP_INDEX);
             if (term != null)
                 conditions.add(field.likeIgnoreCase("%" + term + "%"));
         }
-        if (term == null) {
-            if (!mask.contains(" ")) {
-                conditions.add(field.likeIgnoreCase("%" + mask + "%"));
-            } else {
-                for (final String t : mask.split(" ")) {
-                    final String token = t.trim();
-                    if (!token.isEmpty())
-                        conditions.add(field.likeIgnoreCase("%" + token + "%"));
-                }
+        return term != null;
+    }
+
+    private void tokenizeUnquoted(final String mask, final TableField<PaperRecord, String> field,
+            final List<Condition> conditions) {
+        if (!mask.contains(" ")) {
+            conditions.add(field.likeIgnoreCase("%" + mask + "%"));
+        } else {
+            for (final String t : mask.split(" ")) {
+                final String token = t.trim();
+                if (!token.isEmpty())
+                    conditions.add(field.likeIgnoreCase("%" + token + "%"));
             }
         }
     }
