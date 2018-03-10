@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<local-project language="java" version="5.0.13248" xml-version="3" flavor="j2se">
+<local-project language="java" version="5.0.13294" xml-version="3" flavor="j2se">
   <property name="publish-architecture-artifacts" value="true" />
   <property name="force-classpath" value="false" />
   <property name="project-type" value="classpath" />
@@ -49,8 +49,49 @@
   </classpath>
   <pom-root-files />
   <modules>
+    <module name="bootstrap-parent" kind="ide-project" />
     <module name="scipamato" kind="ide-project" />
     <module name="scipamato-common-utils" kind="ide-project" />
+    <module name="wicket" kind="ide-project" />
+    <module name="wicket-archetype-quickstart" kind="ide-project" />
+    <module name="wicket-arquillian-testing" kind="ide-project" />
+    <module name="wicket-auth-roles" kind="ide-project" />
+    <module name="wicket-bean-validation" kind="ide-project" />
+    <module name="wicket-bootstrap-common-tests" kind="ide-project" />
+    <module name="wicket-bootstrap-core" kind="ide-project" />
+    <module name="wicket-bootstrap-extensions" kind="ide-project" />
+    <module name="wicket-bootstrap-less" kind="ide-project" />
+    <module name="wicket-bootstrap-samples" kind="ide-project" />
+    <module name="wicket-bootstrap-themes" kind="ide-project" />
+    <module name="wicket-cdi" kind="ide-project" />
+    <module name="wicket-cdi-1___1" kind="ide-project" />
+    <module name="wicket-common-tests" kind="ide-project" />
+    <module name="wicket-core" kind="ide-project" />
+    <module name="wicket-devutils" kind="ide-project" />
+    <module name="wicket-examples" kind="ide-project" />
+    <module name="wicket-experimental" kind="ide-project" />
+    <module name="wicket-extensions" kind="ide-project" />
+    <module name="wicket-guice" kind="ide-project" />
+    <module name="wicket-http2" kind="ide-project" />
+    <module name="wicket-http2-core" kind="ide-project" />
+    <module name="wicket-http2-jetty" kind="ide-project" />
+    <module name="wicket-http2-servlet4" kind="ide-project" />
+    <module name="wicket-http2-tomcat" kind="ide-project" />
+    <module name="wicket-http2-undertow" kind="ide-project" />
+    <module name="wicket-ioc" kind="ide-project" />
+    <module name="wicket-jmx" kind="ide-project" />
+    <module name="wicket-js-tests" kind="ide-project" />
+    <module name="wicket-metrics" kind="ide-project" />
+    <module name="wicket-native-websocket" kind="ide-project" />
+    <module name="wicket-native-websocket-core" kind="ide-project" />
+    <module name="wicket-native-websocket-javax" kind="ide-project" />
+    <module name="wicket-objectsizeof-agent" kind="ide-project" />
+    <module name="wicket-parent" kind="ide-project" />
+    <module name="wicket-request" kind="ide-project" />
+    <module name="wicket-spring" kind="ide-project" />
+    <module name="wicket-user-guide" kind="ide-project" />
+    <module name="wicket-util" kind="ide-project" />
+    <module name="wicket-velocity" kind="ide-project" />
     <module name="scipamato-common-entity" kind="ide-project">
       <requires name="scipamato-common-utils" kind="ide-project" />
     </module>
@@ -142,6 +183,7 @@
     </module>
   </modules>
   <modules-in-scope>
+    <module name="bootstrap-parent" />
     <module name="scipamato" />
     <module name="scipamato-common-entity" />
     <module name="scipamato-common-utils" />
@@ -158,6 +200,46 @@
     <module name="scipamato-public-entity" />
     <module name="scipamato-core-web" />
     <module name="scipamato-public-web" />
+    <module name="wicket" />
+    <module name="wicket-archetype-quickstart" />
+    <module name="wicket-arquillian-testing" />
+    <module name="wicket-auth-roles" />
+    <module name="wicket-bean-validation" />
+    <module name="wicket-bootstrap-common-tests" />
+    <module name="wicket-bootstrap-core" />
+    <module name="wicket-bootstrap-extensions" />
+    <module name="wicket-bootstrap-less" />
+    <module name="wicket-bootstrap-samples" />
+    <module name="wicket-bootstrap-themes" />
+    <module name="wicket-cdi" />
+    <module name="wicket-cdi-1___1" />
+    <module name="wicket-common-tests" />
+    <module name="wicket-core" />
+    <module name="wicket-devutils" />
+    <module name="wicket-examples" />
+    <module name="wicket-experimental" />
+    <module name="wicket-extensions" />
+    <module name="wicket-guice" />
+    <module name="wicket-http2" />
+    <module name="wicket-http2-core" />
+    <module name="wicket-http2-jetty" />
+    <module name="wicket-http2-servlet4" />
+    <module name="wicket-http2-tomcat" />
+    <module name="wicket-http2-undertow" />
+    <module name="wicket-ioc" />
+    <module name="wicket-jmx" />
+    <module name="wicket-js-tests" />
+    <module name="wicket-metrics" />
+    <module name="wicket-native-websocket" />
+    <module name="wicket-native-websocket-core" />
+    <module name="wicket-native-websocket-javax" />
+    <module name="wicket-objectsizeof-agent" />
+    <module name="wicket-parent" />
+    <module name="wicket-request" />
+    <module name="wicket-spring" />
+    <module name="wicket-user-guide" />
+    <module name="wicket-util" />
+    <module name="wicket-velocity" />
   </modules-in-scope>
   <excludes>
     <exclude expression="scipamato-core-persistence-jooq.ch.difty.scipamato.core.db.*" active="true" />
@@ -168,5 +250,5 @@
     <exclude expression="scipamato-core-web.ch.difty.scipamato.core.web.WicketTest" active="true" />
     <exclude expression="scipamato-core-pubmed-api.ch.difty.scipamato.core.pubmed.api.*" active="true" />
   </excludes>
-  <grid-set sep="." version="5.0.13248" />
+  <grid-set sep="." version="5.0.13294" />
 </local-project>
