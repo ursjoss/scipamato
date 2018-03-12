@@ -8,7 +8,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
@@ -16,6 +15,7 @@ import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
+import ch.difty.scipamato.publ.web.PageParameters;
 import ch.difty.scipamato.publ.web.common.BasePage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
@@ -29,7 +29,6 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String  PAGE_PARAM_NUMBER      = "number";
     private static final String LINK_RESOURCE_PREFIX   = "link.";
     private static final String BUTTON_RESOURCE_PREFIX = "button.";
     private static final String AM_TITLE               = "title";
@@ -39,7 +38,7 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
 
     private final PageReference callingPageRef;
 
-    public PublicPaperDetailPage(final PageParameters parameters) {
+    public PublicPaperDetailPage(final org.apache.wicket.request.mapper.parameter.PageParameters parameters) {
         this(parameters, null);
     }
 
@@ -53,7 +52,8 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
      *            PageReference that will be used to forward to if the user clicks
      *            the back button.
      */
-    public PublicPaperDetailPage(final PageParameters parameters, final PageReference callingPageRef) {
+    public PublicPaperDetailPage(final org.apache.wicket.request.mapper.parameter.PageParameters parameters,
+            final PageReference callingPageRef) {
         super(parameters);
         this.callingPageRef = callingPageRef;
 
@@ -69,15 +69,15 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
      * Try loading the record by ID. If not reasonable id is supplied, try by
      * number.
      */
-    private void tryLoadingRecord(final PageParameters parameters) {
-        final long number = parameters.get(PAGE_PARAM_NUMBER)
+    private void tryLoadingRecord(final org.apache.wicket.request.mapper.parameter.PageParameters parameters) {
+        final long number = parameters.get(PageParameters.NUMBER.getName())
             .toLong(0l);
         if (number > 0) {
             publicPaperService.findByNumber(number)
                 .ifPresent((p -> setModel(Model.of(p))));
         }
         if (getModelObject() == null) {
-            warn("Page parameter " + PAGE_PARAM_NUMBER + " was missing or invalid. No paper loaded.");
+            warn("Page parameter " + PageParameters.NUMBER.getName() + " was missing or invalid. No paper loaded.");
         }
     }
 
@@ -140,8 +140,8 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
             public void onSubmit() {
                 final Long number = idSupplier.get();
                 if (number != null) {
-                    PageParameters pp = getPageParameters();
-                    pp.set(PAGE_PARAM_NUMBER, number);
+                    org.apache.wicket.request.mapper.parameter.PageParameters pp = getPageParameters();
+                    pp.set(PageParameters.NUMBER.getName(), number);
                     setResponsePage(new PublicPaperDetailPage(pp, callingPageRef));
                 }
             }

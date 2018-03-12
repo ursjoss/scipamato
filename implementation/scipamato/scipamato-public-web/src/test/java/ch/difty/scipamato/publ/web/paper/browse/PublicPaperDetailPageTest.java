@@ -8,13 +8,13 @@ import java.util.Optional;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
+import ch.difty.scipamato.publ.web.PageParameters;
 import ch.difty.scipamato.publ.web.common.BasePageTest;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
@@ -50,8 +50,8 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
 
     @Override
     protected PublicPaperDetailPage makePage() {
-        PageParameters pp = new PageParameters();
-        pp.set(PublicPaperDetailPage.PAGE_PARAM_NUMBER, NUMBER);
+        org.apache.wicket.request.mapper.parameter.PageParameters pp = new org.apache.wicket.request.mapper.parameter.PageParameters();
+        pp.set(PageParameters.NUMBER.getName(), NUMBER);
         return new PublicPaperDetailPage(pp);
     }
 
