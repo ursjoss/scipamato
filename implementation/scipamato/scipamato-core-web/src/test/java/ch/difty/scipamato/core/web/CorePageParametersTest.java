@@ -1,16 +1,16 @@
 package ch.difty.scipamato.core.web;
 
-import static ch.difty.scipamato.core.web.PageParameters.SEARCH_ORDER_ID;
-import static ch.difty.scipamato.core.web.PageParameters.SHOW_EXCLUDED;
+import static ch.difty.scipamato.core.web.CorePageParameters.SEARCH_ORDER_ID;
+import static ch.difty.scipamato.core.web.CorePageParameters.SHOW_EXCLUDED;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-public class PageParametersTest {
+public class CorePageParametersTest {
 
     @Test
     public void values() {
-        assertThat(PageParameters.values()).containsExactly(SEARCH_ORDER_ID, SHOW_EXCLUDED);
+        assertThat(CorePageParameters.values()).containsExactly(SEARCH_ORDER_ID, SHOW_EXCLUDED);
     }
 
     @Test

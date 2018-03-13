@@ -26,8 +26,8 @@ import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EXPOSURE_R
 import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_MEASURED_OUTCOME;
 import static ch.difty.scipamato.core.entity.Paper.PaperFields.TITLE;
 import static ch.difty.scipamato.core.entity.PaperAttachment.PaperAttachmentFields.NAME;
-import static ch.difty.scipamato.core.web.PageParameters.SEARCH_ORDER_ID;
-import static ch.difty.scipamato.core.web.PageParameters.SHOW_EXCLUDED;
+import static ch.difty.scipamato.core.web.CorePageParameters.SEARCH_ORDER_ID;
+import static ch.difty.scipamato.core.web.CorePageParameters.SHOW_EXCLUDED;
 
 import java.util.ArrayList;
 import java.util.Collection;

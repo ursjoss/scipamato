@@ -1,13 +1,13 @@
 package ch.difty.scipamato.core.web;
 
-public enum PageParameters {
+public enum CorePageParameters {
 
     SEARCH_ORDER_ID("searchOrderId"),
     SHOW_EXCLUDED("showExcluded");
 
     private final String name;
 
-    PageParameters(final String name) {
+    CorePageParameters(final String name) {
         this.name = name;
     }
 

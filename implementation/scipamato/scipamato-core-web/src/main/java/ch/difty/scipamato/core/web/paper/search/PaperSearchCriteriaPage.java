@@ -9,7 +9,7 @@ import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
-import ch.difty.scipamato.core.web.PageParameters;
+import ch.difty.scipamato.core.web.CorePageParameters;
 import ch.difty.scipamato.core.web.common.BasePage;
 import ch.difty.scipamato.core.web.paper.PageFactory;
 import ch.difty.scipamato.core.web.paper.common.SearchablePaperPanel;
@@ -42,7 +42,7 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
 
     public PaperSearchCriteriaPage(final IModel<SearchCondition> searchConditionModel, final long searchOrderId) {
         super(searchConditionModel);
-        getPageParameters().add(PageParameters.SEARCH_ORDER_ID.getName(), searchOrderId);
+        getPageParameters().add(CorePageParameters.SEARCH_ORDER_ID.getName(), searchOrderId);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
     }
 
     private Long getSearchOrderId() {
-        final StringValue sv = getPageParameters().get(PageParameters.SEARCH_ORDER_ID.getName());
+        final StringValue sv = getPageParameters().get(CorePageParameters.SEARCH_ORDER_ID.getName());
         return sv.isNull() ? null : sv.toLong();
     }
 
