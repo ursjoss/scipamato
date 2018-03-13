@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.web.paper.entry;
 
-import static ch.difty.scipamato.core.web.PageParameters.SEARCH_ORDER_ID;
-import static ch.difty.scipamato.core.web.PageParameters.SHOW_EXCLUDED;
+import static ch.difty.scipamato.core.web.CorePageParameters.SEARCH_ORDER_ID;
+import static ch.difty.scipamato.core.web.CorePageParameters.SHOW_EXCLUDED;
 
 import org.apache.wicket.PageReference;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;

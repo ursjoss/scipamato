@@ -53,4 +53,14 @@ public class ScipamatoPublicPropertiesIntegrationTest {
         assertThat(appProperties.isNavbarVisibleByDefault()).isEqualTo(false);
     }
 
+    @Test
+    public void assertCmsUrlSearchPage() {
+        assertThat(appProperties.getCmsUrlSearchPage()).isEqualTo("https://localhost:8081/");
+    }
+
+    @Test
+    public void assertCmsUrlNewStudyPage() {
+        assertThat(appProperties.getCmsUrlNewStudyPage()).isEqualTo("https://localhost:8081/new-studies");
+    }
+
 }

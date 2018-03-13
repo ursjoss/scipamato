@@ -64,11 +64,22 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
         getTester().assertComponent("topics", ListView.class);
         getTester().debugComponentTrees();
 
-        getTester().assertLabel("topics:0:topicTitle", "Topic1");
-        getTester().assertLabel("topics:0:topicStudies:0:headline", "hl1");
-        getTester().assertLabel("topics:0:topicStudies:0:description", "descr1");
-        getTester().assertComponent("topics:0:topicStudies:0:reference", BookmarkablePageLink.class);
-        getTester().assertLabel("topics:0:topicStudies:0:reference:referenceLabel", "(Foo et al.; 2017)");
+        String topic = "topics:0:";
+        getTester().assertLabel(topic + "topicTitle", "Topic1");
+        assertNewStudy(topic, 0, "hl1", "descr1", "(Foo et al.; 2017)");
+        assertNewStudy(topic, 1, "hl2", "descr2", "(Bar et al.; 2017)");
+
+        topic = "topics:1:";
+        getTester().assertLabel(topic + "topicTitle", "Topic2");
+        assertNewStudy(topic, 0, "hl3", "descr3", "(Baz et al.; 2017)");
+    }
+
+    private void assertNewStudy(String base, int studyIndex, String headline, String description, String reference) {
+        final String path = base + "topicStudies:" + studyIndex + ":";
+        getTester().assertLabel(path + "headline", headline);
+        getTester().assertLabel(path + "description", description);
+        getTester().assertLabel(path + "reference:referenceLabel", reference);
+        getTester().assertComponent(path + "reference", BookmarkablePageLink.class);
     }
 
 }

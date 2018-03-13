@@ -36,7 +36,6 @@
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-web/target/test-classes" module="scipamato-core-web" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-persistence-jooq/target/test-classes" module="scipamato-core-persistence-jooq" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-entity/target/classes" module="scipamato-public-entity" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-persistence-api/target/test-classes" module="scipamato-public-persistence-api" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-persistence-api/target/classes" module="scipamato-common-persistence-api" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-utils/target/test-classes" module="scipamato-common-utils" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-web/target/test-classes" module="scipamato-public-web" />
