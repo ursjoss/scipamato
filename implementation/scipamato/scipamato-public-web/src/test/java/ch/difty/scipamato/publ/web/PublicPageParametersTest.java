@@ -1,18 +1,18 @@
 package ch.difty.scipamato.publ.web;
 
-import static ch.difty.scipamato.publ.web.PageParameters.NUMBER;
-import static ch.difty.scipamato.publ.web.PageParameters.SEARCH_ORDER_ID;
-import static ch.difty.scipamato.publ.web.PageParameters.SHOW_EXCLUDED;
-import static ch.difty.scipamato.publ.web.PageParameters.SHOW_NAVBAR;
+import static ch.difty.scipamato.publ.web.PublicPageParameters.NUMBER;
+import static ch.difty.scipamato.publ.web.PublicPageParameters.SEARCH_ORDER_ID;
+import static ch.difty.scipamato.publ.web.PublicPageParameters.SHOW_EXCLUDED;
+import static ch.difty.scipamato.publ.web.PublicPageParameters.SHOW_NAVBAR;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-public class PageParametersTest {
+public class PublicPageParametersTest {
 
     @Test
     public void assertParameters() {
-        assertThat(PageParameters.values()).containsExactly(SEARCH_ORDER_ID, SHOW_EXCLUDED, SHOW_NAVBAR, NUMBER);
+        assertThat(PublicPageParameters.values()).containsExactly(SEARCH_ORDER_ID, SHOW_EXCLUDED, SHOW_NAVBAR, NUMBER);
     }
 
     @Test

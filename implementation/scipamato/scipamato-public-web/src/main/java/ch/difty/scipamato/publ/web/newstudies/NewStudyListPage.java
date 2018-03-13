@@ -8,13 +8,14 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.publ.entity.NewStudy;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
 import ch.difty.scipamato.publ.persistence.api.NewStudyTopicService;
-import ch.difty.scipamato.publ.web.PageParameters;
+import ch.difty.scipamato.publ.web.PublicPageParameters;
 import ch.difty.scipamato.publ.web.common.BasePage;
 import ch.difty.scipamato.publ.web.paper.browse.PublicPaperDetailPage;
 
@@ -38,7 +39,7 @@ public class NewStudyListPage extends BasePage<Void> {
     @SpringBean
     private NewStudyTopicService newStudyTopicService;
 
-    public NewStudyListPage(final org.apache.wicket.request.mapper.parameter.PageParameters parameters) {
+    public NewStudyListPage(final PageParameters parameters) {
         super(parameters);
     }
 
@@ -98,8 +99,8 @@ public class NewStudyListPage extends BasePage<Void> {
      * @return the link
      */
     private Link<NewStudy> newLinkToStudy(final String id, final ListItem<NewStudy> study) {
-        org.apache.wicket.request.mapper.parameter.PageParameters pp = new org.apache.wicket.request.mapper.parameter.PageParameters();
-        pp.set(PageParameters.NUMBER.getName(), study.getModelObject()
+        PageParameters pp = new PageParameters();
+        pp.set(PublicPageParameters.NUMBER.getName(), study.getModelObject()
             .getNumber());
         Link<NewStudy> link = new BookmarkablePageLink<>(id, PublicPaperDetailPage.class, pp);
         link.add(new Label(id + "Label",
