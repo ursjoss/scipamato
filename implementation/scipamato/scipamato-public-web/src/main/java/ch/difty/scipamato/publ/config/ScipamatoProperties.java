@@ -55,4 +55,14 @@ public class ScipamatoProperties {
      * parameter.
      */
     private boolean navbarVisibleByDefault;
+
+    /**
+     * The URL of the CMS page that points to the paper search page
+     */
+    private String cmsUrlSearchPage;
+
+    /**
+     * The URL of the CMS page that points to the new study page
+     */
+    private String cmsUrlNewStudyPage;
 }

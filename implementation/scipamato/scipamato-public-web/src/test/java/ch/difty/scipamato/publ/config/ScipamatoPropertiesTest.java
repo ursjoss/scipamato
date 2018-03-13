@@ -42,4 +42,14 @@ public class ScipamatoPropertiesTest {
     public void isNavbarVisibleByDefault() {
         assertThat(sp.isNavbarVisibleByDefault()).isFalse();
     }
+
+    @Test
+    public void cmsUrlSearchPage() {
+        assertThat(sp.getCmsUrlSearchPage()).isNull();
+    }
+
+    @Test
+    public void cmsUrlNewStudyPage() {
+        assertThat(sp.getCmsUrlNewStudyPage()).isNull();
+    }
 }

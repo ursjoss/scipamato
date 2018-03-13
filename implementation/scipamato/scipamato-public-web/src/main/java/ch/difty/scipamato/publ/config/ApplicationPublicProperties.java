@@ -19,4 +19,14 @@ public interface ApplicationPublicProperties extends ApplicationProperties {
      * @return the default visibility of the Navbar.
      */
     boolean isNavbarVisibleByDefault();
+
+    /**
+     * @return the url pointing to the CMS page with the study search page
+     */
+    String getCmsUrlSearchPage();
+
+    /**
+     * @return the url pointing to the CMS page with the new-study page
+     */
+    String getCmsUrlNewStudyPage();
 }

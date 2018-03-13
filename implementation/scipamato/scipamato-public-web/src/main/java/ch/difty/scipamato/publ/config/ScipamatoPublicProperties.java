@@ -64,4 +64,14 @@ public class ScipamatoPublicProperties implements ApplicationPublicProperties {
         return scipamatoProperties.isNavbarVisibleByDefault();
     }
 
+    @Override
+    public String getCmsUrlSearchPage() {
+        return scipamatoProperties.getCmsUrlSearchPage();
+    }
+
+    @Override
+    public String getCmsUrlNewStudyPage() {
+        return scipamatoProperties.getCmsUrlNewStudyPage();
+    }
+
 }
