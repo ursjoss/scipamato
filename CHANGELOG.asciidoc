@@ -53,6 +53,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
+- 08/13 - Public: Add page with new study (with stubbed data for now)
+
 .Changed
 
 .Deprecated
