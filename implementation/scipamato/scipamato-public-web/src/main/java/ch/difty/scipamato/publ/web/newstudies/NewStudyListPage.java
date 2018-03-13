@@ -39,7 +39,7 @@ public class NewStudyListPage extends BasePage<Void> {
         queue(newLabel("introParagraph"));
         queue(newLink("dbLink", "http://ludok.swisstph.ch"));
 
-        queue(newNewStudyCollection("newStudyCollection"));
+        queue(newNewStudyCollection("topics"));
     }
 
     private Label newLabel(String id) {
@@ -50,8 +50,8 @@ public class NewStudyListPage extends BasePage<Void> {
         return new ExternalLink(id, href, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null).getString());
     }
 
-    private ListView<NewStudyTopic> newNewStudyCollection(String string) {
-        return new ListView<NewStudyTopic>("topics", newStudyTopicService.findMostRecentNewStudyTopics()) {
+    private ListView<NewStudyTopic> newNewStudyCollection(String id) {
+        return new ListView<NewStudyTopic>(id, newStudyTopicService.findMostRecentNewStudyTopics()) {
             private static final long serialVersionUID = 1L;
 
             @Override
