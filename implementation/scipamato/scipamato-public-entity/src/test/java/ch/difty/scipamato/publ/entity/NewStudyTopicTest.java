@@ -43,8 +43,8 @@ public class NewStudyTopicTest extends PublicEntityTest<NewStudyTopic> {
 
     @Test
     public void assertEnumFields() {
-        assertThat(NewStudy.NewStudyFields.values()).extracting("name")
-            .containsExactly("sort", "number", "reference", "headline", "description");
+        assertThat(NewStudyTopic.NewStudyTopicFields.values()).extracting("name")
+            .containsExactly("sort", "title", "studies");
     }
 
 }
