@@ -47,10 +47,13 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
         }
 
         if (filter.getPublicationYearFrom() != null) {
-            conditions.add(PAPER.PUBLICATION_YEAR.ge(filter.getPublicationYearFrom()));
-        }
-
-        if (filter.getPublicationYearUntil() != null) {
+            if (hasNoOrIdenticalPubYearUntil(filter)) {
+                conditions.add(PAPER.PUBLICATION_YEAR.eq(filter.getPublicationYearFrom()));
+            } else {
+                conditions.add(
+                    PAPER.PUBLICATION_YEAR.between(filter.getPublicationYearFrom(), filter.getPublicationYearUntil()));
+            }
+        } else if (filter.getPublicationYearUntil() != null) {
             conditions.add(PAPER.PUBLICATION_YEAR.le(filter.getPublicationYearUntil()));
         }
 
@@ -79,6 +82,12 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
                 conditions.add(codeCondition(allCodes));
         }
 
+    }
+
+    private boolean hasNoOrIdenticalPubYearUntil(final PublicPaperFilter filter) {
+        return filter.getPublicationYearUntil() == null || filter.getPublicationYearFrom()
+            .intValue() == filter.getPublicationYearUntil()
+                .intValue();
     }
 
     /*

@@ -95,14 +95,32 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
-    public void creatingWhereCondition_withPublicationYearFrom_searchesPublicationYear() {
+    public void creatingWhereCondition_withPublicationYearFrom_anBlankYearUntil_searchesExactPublicationYear() {
         filter.setPublicationYearFrom(2016);
+        assertThat(filter.getPublicationYearUntil()).isNull();
         assertThat(mapper.map(filter)
-            .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" >= 2016");
+            .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" = 2016");
     }
 
     @Test
-    public void creatingWhereCondition_withPublicationYearUntil_searchesPublicationYear() {
+    public void creatingWhereCondition_withPublicationYearFrom_andPublicationYearUntil_searchesRange() {
+        filter.setPublicationYearFrom(2016);
+        filter.setPublicationYearUntil(2017);
+        assertThat(mapper.map(filter)
+            .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" between 2016 and 2017");
+    }
+
+    @Test
+    public void creatingWhereCondition_withIdenticalPublicationYearFromAndTo_searchesExactPublicationYear() {
+        filter.setPublicationYearFrom(2016);
+        filter.setPublicationYearUntil(2016);
+        assertThat(mapper.map(filter)
+            .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" = 2016");
+    }
+
+    @Test
+    public void creatingWhereCondition_withPublicationYearUntil_searchesUpToPublicationYear() {
+        assertThat(filter.getPublicationYearFrom()).isNull();
         filter.setPublicationYearUntil(2016);
         assertThat(mapper.map(filter)
             .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" <= 2016");
