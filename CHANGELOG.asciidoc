@@ -68,6 +68,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 - 07/62 - Public: Adjust the german label/title for clearing the search on PublicPaperPage
 - 07/66 - Public: Fix jumping back from DetailPage to NewStudy Page if called from there
+- 08/16 - Wicket-Filestore issue probably due to same location for core and public
 
 .Security
 
