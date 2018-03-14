@@ -23,6 +23,11 @@ public class TestApplicationProperties implements ApplicationProperties {
     }
 
     @Override
+    public String getTitleOrBrand() {
+        return "SciPaMaTo";
+    }
+
+    @Override
     public String getPubmedBaseUrl() {
         return "http://pubmed/";
     }

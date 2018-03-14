@@ -40,6 +40,15 @@ public class ScipamatoPublicProperties implements ApplicationPublicProperties {
     }
 
     @Override
+    public String getTitleOrBrand() {
+        final String pageTitle = scipamatoProperties.getPageTitle();
+        if (pageTitle != null)
+            return pageTitle;
+        else
+            return getBrand();
+    }
+
+    @Override
     public String getPubmedBaseUrl() {
         return scipamatoProperties.getPubmedBaseUrl();
     }

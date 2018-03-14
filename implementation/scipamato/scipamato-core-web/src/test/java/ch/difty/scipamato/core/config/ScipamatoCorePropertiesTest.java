@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -46,6 +47,22 @@ public class ScipamatoCorePropertiesTest {
     @Test
     public void gettingBrand_delegatesToScipamatoProps() {
         assertThat(prop.getBrand()).isEqualTo("brand");
+        verify(scipamatoPropMock).getBrand();
+    }
+
+    @Test
+    public void gettingTitleOrBanrd_withPageTitleDefined_delegatesToScipamatoProps_andReturnsPageTitle() {
+        when(scipamatoPropMock.getPageTitle()).thenReturn("pt");
+        assertThat(prop.getTitleOrBrand()).isEqualTo("pt");
+        verify(scipamatoPropMock).getPageTitle();
+        verify(scipamatoPropMock, never()).getBrand();
+    }
+
+    @Test
+    public void gettingTitleOrBanrd_withPageTitleNotDefined_delegatesToScipamatoProps_andReturnsBrand() {
+        when(scipamatoPropMock.getPageTitle()).thenReturn(null);
+        assertThat(prop.getTitleOrBrand()).isEqualTo("brand");
+        verify(scipamatoPropMock).getPageTitle();
         verify(scipamatoPropMock).getBrand();
     }
 

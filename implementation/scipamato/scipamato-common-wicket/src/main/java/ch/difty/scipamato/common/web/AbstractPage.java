@@ -69,7 +69,11 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     }
 
     private void createAndAddTitle(String id) {
-        queue(new Label(id, getBrandName()));
+        queue(new Label(id, getTitle()));
+    }
+
+    private IModel<String> getTitle() {
+        return Model.of(getProperties().getTitleOrBrand());
     }
 
     private void createAndAddNavBar(String id) {

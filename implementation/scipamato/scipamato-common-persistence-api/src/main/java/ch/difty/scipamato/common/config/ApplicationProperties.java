@@ -23,6 +23,11 @@ public interface ApplicationProperties {
     String getBrand();
 
     /**
+     * @return the pageTitle if present - otherwise brand name
+     */
+    String getTitleOrBrand();
+
+    /**
      * @return The base url in PubMed to query by pm_id.
      */
     String getPubmedBaseUrl();

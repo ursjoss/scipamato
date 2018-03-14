@@ -20,6 +20,11 @@ public class ScipamatoProperties {
     private String brand = "SciPaMaTo-Core";
 
     /**
+     * Page Title of the application. Appears in the browser tab.
+     */
+    private String pageTitle;
+
+    /**
      * Default localization. Normally the browser locale is used.
      */
     private String defaultLocalization = "en";

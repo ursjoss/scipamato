@@ -45,6 +45,15 @@ public class ScipamatoCoreProperties implements ApplicationCoreProperties {
     }
 
     @Override
+    public String getTitleOrBrand() {
+        final String pageTitle = scipamatoProperties.getPageTitle();
+        if (pageTitle != null)
+            return pageTitle;
+        else
+            return getBrand();
+    }
+
+    @Override
     public long getMinimumPaperNumberToBeRecycled() {
         return scipamatoProperties.getPaperNumberMinimumToBeRecycled();
     }

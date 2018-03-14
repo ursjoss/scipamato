@@ -36,6 +36,11 @@ public class TestApplication {
             }
 
             @Override
+            public String getTitleOrBrand() {
+                return getBrand();
+            }
+
+            @Override
             public String getPubmedBaseUrl() {
                 return "http://pubmed/";
             }
