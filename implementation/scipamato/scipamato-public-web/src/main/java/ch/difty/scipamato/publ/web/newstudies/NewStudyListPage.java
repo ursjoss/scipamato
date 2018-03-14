@@ -1,7 +1,6 @@
 package ch.difty.scipamato.publ.web.newstudies;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -102,7 +101,14 @@ public class NewStudyListPage extends BasePage<Void> {
         PageParameters pp = new PageParameters();
         pp.set(PublicPageParameters.NUMBER.getName(), study.getModelObject()
             .getNumber());
-        Link<NewStudy> link = new BookmarkablePageLink<>(id, PublicPaperDetailPage.class, pp);
+        Link<NewStudy> link = new Link<NewStudy>(id) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick() {
+                setResponsePage(new PublicPaperDetailPage(pp, getPageReference()));
+            }
+        };
         link.add(new Label(id + "Label",
                 new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.REFERENCE.getName())));
         return link;

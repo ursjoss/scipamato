@@ -6,16 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.ExternalLink;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.publ.entity.NewStudy;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
 import ch.difty.scipamato.publ.persistence.api.NewStudyTopicService;
 import ch.difty.scipamato.publ.web.common.BasePageTest;
+import ch.difty.scipamato.publ.web.paper.browse.PublicPaperDetailPage;
 
 public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
 
@@ -79,7 +81,20 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
         getTester().assertLabel(path + "headline", headline);
         getTester().assertLabel(path + "description", description);
         getTester().assertLabel(path + "reference:referenceLabel", reference);
-        getTester().assertComponent(path + "reference", BookmarkablePageLink.class);
+        getTester().assertComponent(path + "reference", Link.class);
+    }
+
+    @Test
+    public void canAccessPublicPaperDetailPageForSpecificPaper_andReturnToNewStudyListPageFromThere() {
+        getTester().startPage(makePage());
+        getTester().assertRenderedPage(getPageClass());
+
+        getTester().clickLink("topics:1:topicStudies:0:reference");
+        getTester().assertRenderedPage(PublicPaperDetailPage.class);
+
+        getTester().newFormTester("form")
+            .submit("back");
+        getTester().assertRenderedPage(NewStudyListPage.class);
     }
 
 }

@@ -61,6 +61,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Fixed
 
+- 07/66 - Public: Fix jumping back from DetailPage to NewStudy Page if called from there
+
 .Security
 
 
