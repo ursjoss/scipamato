@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.config;
 
 import org.springframework.stereotype.Component;
 
+import ch.difty.scipamato.common.config.AbstractScipamatoProperties;
 import ch.difty.scipamato.common.config.MavenProperties;
 
 /**
@@ -14,58 +15,22 @@ import ch.difty.scipamato.common.config.MavenProperties;
  * @author u.joss
  */
 @Component
-public class ScipamatoCoreProperties implements ApplicationCoreProperties {
+public class ScipamatoCoreProperties extends AbstractScipamatoProperties<ScipamatoProperties>
+        implements ApplicationCoreProperties {
 
-    private final ScipamatoProperties scipamatoProperties;
-    private final MavenProperties     mavenProperties;
-
-    public ScipamatoCoreProperties(ScipamatoProperties scipamatoProperties, MavenProperties mavenProperties) {
-        this.scipamatoProperties = scipamatoProperties;
-        this.mavenProperties = mavenProperties;
-    }
-
-    @Override
-    public String getBuildVersion() {
-        return mavenProperties.getVersion();
-    }
-
-    @Override
-    public String getDefaultLocalization() {
-        return scipamatoProperties.getDefaultLocalization();
+    public ScipamatoCoreProperties(final ScipamatoProperties scipamatoProperties,
+            final MavenProperties mavenProperties) {
+        super(scipamatoProperties, mavenProperties);
     }
 
     @Override
     public AuthorParserStrategy getAuthorParserStrategy() {
-        return scipamatoProperties.getAuthorParserStrategy();
-    }
-
-    @Override
-    public String getBrand() {
-        return scipamatoProperties.getBrand();
-    }
-
-    @Override
-    public String getTitleOrBrand() {
-        final String pageTitle = scipamatoProperties.getPageTitle();
-        if (pageTitle != null)
-            return pageTitle;
-        else
-            return getBrand();
+        return getScipamatoProperties().getAuthorParserStrategy();
     }
 
     @Override
     public long getMinimumPaperNumberToBeRecycled() {
-        return scipamatoProperties.getPaperNumberMinimumToBeRecycled();
-    }
-
-    @Override
-    public String getPubmedBaseUrl() {
-        return scipamatoProperties.getPubmedBaseUrl();
-    }
-
-    @Override
-    public Integer getRedirectFromPort() {
-        return scipamatoProperties.getRedirectFromPort();
+        return getScipamatoProperties().getPaperNumberMinimumToBeRecycled();
     }
 
 }

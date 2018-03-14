@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import ch.difty.scipamato.common.config.ScipamatoBaseProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,7 @@ import lombok.Setter;
 @ConfigurationProperties(prefix = "scipamato")
 @Getter
 @Setter
-public class ScipamatoProperties {
+public class ScipamatoProperties implements ScipamatoBaseProperties {
 
     private static final String AUTHOR_PARSER_PROPERTY_KEY = "scipamato.author-parser";
 

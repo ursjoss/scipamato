@@ -2,6 +2,7 @@ package ch.difty.scipamato.publ.config;
 
 import org.springframework.stereotype.Component;
 
+import ch.difty.scipamato.common.config.AbstractScipamatoProperties;
 import ch.difty.scipamato.common.config.MavenProperties;
 
 /**
@@ -14,73 +15,36 @@ import ch.difty.scipamato.common.config.MavenProperties;
  * @author u.joss
  */
 @Component
-public class ScipamatoPublicProperties implements ApplicationPublicProperties {
-
-    private final ScipamatoProperties scipamatoProperties;
-    private final MavenProperties     mavenProperties;
+public class ScipamatoPublicProperties extends AbstractScipamatoProperties<ScipamatoProperties>
+        implements ApplicationPublicProperties {
 
     public ScipamatoPublicProperties(ScipamatoProperties scipamatoProperties, MavenProperties mavenProperties) {
-        this.scipamatoProperties = scipamatoProperties;
-        this.mavenProperties = mavenProperties;
-    }
-
-    @Override
-    public String getBuildVersion() {
-        return mavenProperties.getVersion();
-    }
-
-    @Override
-    public String getDefaultLocalization() {
-        return scipamatoProperties.getDefaultLocalization();
-    }
-
-    @Override
-    public String getBrand() {
-        return scipamatoProperties.getBrand();
-    }
-
-    @Override
-    public String getTitleOrBrand() {
-        final String pageTitle = scipamatoProperties.getPageTitle();
-        if (pageTitle != null)
-            return pageTitle;
-        else
-            return getBrand();
-    }
-
-    @Override
-    public String getPubmedBaseUrl() {
-        return scipamatoProperties.getPubmedBaseUrl();
-    }
-
-    @Override
-    public Integer getRedirectFromPort() {
-        return scipamatoProperties.getRedirectFromPort();
+        super(scipamatoProperties, mavenProperties);
     }
 
     @Override
     public boolean isCommercialFontPresent() {
-        return scipamatoProperties.isCommercialFontPresent();
+        return getScipamatoProperties().isCommercialFontPresent();
     }
 
     @Override
     public boolean isLessUsedOverCss() {
-        return scipamatoProperties.isLessUsedOverCss();
+        return getScipamatoProperties().isLessUsedOverCss();
     }
 
     @Override
     public boolean isNavbarVisibleByDefault() {
-        return scipamatoProperties.isNavbarVisibleByDefault();
+        return getScipamatoProperties().isNavbarVisibleByDefault();
     }
 
     @Override
     public String getCmsUrlSearchPage() {
-        return scipamatoProperties.getCmsUrlSearchPage();
+        return getScipamatoProperties().getCmsUrlSearchPage();
     }
 
     @Override
     public String getCmsUrlNewStudyPage() {
-        return scipamatoProperties.getCmsUrlNewStudyPage();
+        return getScipamatoProperties().getCmsUrlNewStudyPage();
     }
 
 }

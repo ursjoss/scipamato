@@ -35,6 +35,9 @@ public class ScipamatoPublicPropertiesTest {
         when(scipamatoPropMock.getRedirectFromPort()).thenReturn(5678);
 
         when(mavenPropMock.getVersion()).thenReturn("0.0.1-SNAPSHOT");
+
+        when(scipamatoPropMock.getCmsUrlSearchPage()).thenReturn("http://u.sp");
+        when(scipamatoPropMock.getCmsUrlNewStudyPage()).thenReturn("http://u.nsp");
     }
 
     @After
@@ -121,5 +124,17 @@ public class ScipamatoPublicPropertiesTest {
         when(scipamatoPropMock.isNavbarVisibleByDefault()).thenReturn(true);
         assertThat(prop.isNavbarVisibleByDefault()).isEqualTo(true);
         verify(scipamatoPropMock).isNavbarVisibleByDefault();
+    }
+
+    @Test
+    public void checkingCssUrlSearchPage_delegatesToScipamatoProp() {
+        assertThat(prop.getCmsUrlSearchPage()).isEqualTo("http://u.sp");
+        verify(scipamatoPropMock).getCmsUrlSearchPage();
+    }
+
+    @Test
+    public void checkingCssUrlNewStudyPage_delegatesToScipamatoProp() {
+        assertThat(prop.getCmsUrlNewStudyPage()).isEqualTo("http://u.nsp");
+        verify(scipamatoPropMock).getCmsUrlNewStudyPage();
     }
 }

@@ -3,6 +3,7 @@ package ch.difty.scipamato.publ.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import ch.difty.scipamato.common.config.ScipamatoBaseProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,7 @@ import lombok.Setter;
 @ConfigurationProperties(prefix = "scipamato")
 @Getter
 @Setter
-public class ScipamatoProperties {
+public class ScipamatoProperties implements ScipamatoBaseProperties {
 
     /**
      * Brand name of the application. Appears e.g. in the Navbar.
