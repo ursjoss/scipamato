@@ -55,6 +55,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 
+- 07/65 - Public: Searching with PubYearFrom w/o PubYearUntil only finds papers with the exact PubYear
+                  (not anymore PubYear >= PubYearFrom).
+                  PubYearUntil w/ empty PubYearFrom still finds papers with PubYear <= PubYearUntil
+
 .Deprecated
 
 .Removed

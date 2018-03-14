@@ -88,6 +88,7 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
     @Test
     public void findingPageOfNumbersByFilter() {
         filter.setPublicationYearFrom(2015);
+        filter.setPublicationYearUntil(2018);
         assertThat(repo.findPageOfNumbersByFilter(filter, allSorted)).isNotEmpty()
             .containsExactly(2l);
     }
