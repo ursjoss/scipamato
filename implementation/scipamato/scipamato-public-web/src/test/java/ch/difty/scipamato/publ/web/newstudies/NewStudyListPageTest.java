@@ -64,7 +64,6 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
         getTester().assertComponent("dbLink", ExternalLink.class);
 
         getTester().assertComponent("topics", ListView.class);
-        getTester().debugComponentTrees();
 
         String topic = "topics:0:";
         getTester().assertLabel(topic + "topicTitle", "Topic1");
