@@ -55,6 +55,22 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
+
+[[v0.8.1]]
+== [0.8.1] -- 2018-03-14
+
+.Added
+
+.Changed
+
 - 07/65 - Public: Searching with PubYearFrom w/o PubYearUntil only finds papers with the exact PubYear
                   (not anymore PubYear >= PubYearFrom).
                   PubYearUntil w/ empty PubYearFrom still finds papers with PubYear <= PubYearUntil
@@ -75,7 +91,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 [[v0.8.0]]
 == [0.8.0] -- 2018-03-13
-
 
 .Added
 
