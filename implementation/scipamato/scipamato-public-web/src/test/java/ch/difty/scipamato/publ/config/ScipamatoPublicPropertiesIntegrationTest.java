@@ -55,12 +55,12 @@ public class ScipamatoPublicPropertiesIntegrationTest {
 
     @Test
     public void assertCmsUrlSearchPage() {
-        assertThat(appProperties.getCmsUrlSearchPage()).isEqualTo("https://localhost:8081/");
+        assertThat(appProperties.getCmsUrlSearchPage()).isEqualTo("http://localhost:8081/");
     }
 
     @Test
     public void assertCmsUrlNewStudyPage() {
-        assertThat(appProperties.getCmsUrlNewStudyPage()).isEqualTo("https://localhost:8081/new-studies");
+        assertThat(appProperties.getCmsUrlNewStudyPage()).isEqualTo("http://localhost:8081/new-studies");
     }
 
 }
