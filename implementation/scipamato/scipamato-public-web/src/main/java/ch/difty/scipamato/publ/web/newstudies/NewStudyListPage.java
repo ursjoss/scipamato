@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ.web.newstudies;
 
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
@@ -59,7 +60,15 @@ public class NewStudyListPage extends BasePage<Void> {
     }
 
     private ExternalLink newLink(final String id, final String href) {
-        return new ExternalLink(id, href, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null).getString());
+        return new ExternalLink(id, href, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null).getString()) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onComponentTag(ComponentTag tag) {
+                super.onComponentTag(tag);
+                tag.put("target", "_blank");
+            }
+        };
     }
 
     private ListView<NewStudyTopic> newNewStudyCollection(final String id) {
