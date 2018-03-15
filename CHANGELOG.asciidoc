@@ -61,79 +61,55 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Fixed
 
+.Security
+
+
+[[v0.8.2]]
+== [0.8.2] -- 2018-03-15
+
+.Fixed
 - 08/17 - Public: Fix Internal Error when opening papers with Numbers that don't exist as IDs
 - 08/18 - Public: Link from NewStudyPage to PublicPage opens in new browser tab
-
-.Security
 
 
 [[v0.8.1]]
 == [0.8.1] -- 2018-03-14
 
-.Added
-
 .Changed
-
 - 07/65 - Public: Searching with PubYearFrom w/o PubYearUntil only finds papers with the exact PubYear
                   (not anymore PubYear >= PubYearFrom).
                   PubYearUntil w/ empty PubYearFrom still finds papers with PubYear <= PubYearUntil
 - Wiki Updates (Public Filtering)
 
-.Deprecated
-
-.Removed
-
 .Fixed
-
 - 07/62 - Public: Adjust the german label/title for clearing the search on PublicPaperPage
 - 07/66 - Public: Fix jumping back from DetailPage to NewStudy Page if called from there
 - 08/16 - Wicket-Filestore issue probably due to same location for core and public
-
-.Security
 
 
 [[v0.8.0]]
 == [0.8.0] -- 2018-03-13
 
 .Added
-
 - 08/13 - Public: Add page with new study (with stubbed data for now)
 
 .Changed
-
 - Dependency updates: wicket-bootstrap
-
-.Deprecated
-
-.Removed
-
-.Fixed
-
-.Security
 
 
 [[v0.7.7]]
 == [0.7.7] -- 2018-03-09
 
 .Added
-
 - 07/62 - Public: New Button to clear the search criteria
 
 .Changed
-
 - 07/41 - Public: Increase base font size from 13 px to 15 px
 - 07/56 - Public: Repeat the simple search fields in Extended Search
 - 07/64 - Public: Provide possibilty to quote text search terms (e.g. authors)
 
-.Deprecated
-
 .Removed
-
 - 07/04 - Public: Remove ability to search by id/number
-
-.Fixed
-
-.Security
 
 
 [[v0.7.6]]
@@ -153,14 +129,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Navbar: Do not fix it to top (Position.STATIC-TOP)
 - Page Title: use brand instead of hardcoding it
 
-.Deprecated
-
-.Removed
-
 .Fixed
 - Amend sonar quality profile and fix some issues highlighted by sonar (mostly serializable related)
-
-.Security
 
 
 [[v0.7.5]]
@@ -176,37 +146,28 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - renamed public packages from ch.difty.scipamato.public_ to ch.difty.scipamato.publ
 - updated spring-boot-starter-parnet, postgresql jdbc driver, spring-boot-admin
 
-.Deprecated
-
 .Removed
 - jOOQ related classes copied from spring-boot (https://github.com/spring-projects/spring-boot/issues/11324)
-
-.Fixed
-
-.Security
 
 
 [[v0.7.4]]
 == [0.7.4] -- 2018-01-19
 
 .Changed
-
 - Updated jOOQ, jasperreports, spring-cloud, flyway
 - 07/47: Correctly add the maven wrapper
 
 .Fixed
-
 - Fixed logging configuration to not write into /tmp
+
 
 [[v0.7.3]]
 == [0.7.3] -- 2018-01-14
-
 
 .Added
 - Test Coverage of untested parts of SciPaMaTo
 
 .Changed
-
 - Switched from GPLv3 to BSD3 license
 - CodeStyle: Adjusted code style based on review by Prof. Dierk König.
   Added Eclipse formatter to project.
@@ -220,7 +181,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Switched to mockito-2
 
 .Fixed
-
 - AuthorParser: Don't let streams escape their context. Based on review by Prof. Dierk König.
 - Do not run the data synchronization from core to public during the nightly build (profile-sonar)
 - A few minor so far non-surfacing bugs showing up when working on the test-coverage :-)
@@ -229,8 +189,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 [[v0.7.2]]
 == [0.7.2] -- 2017-12-22
-
-.Added
 
 .Changed
 - 07/44: Use @ConfigurationProperties to define custom properties
@@ -257,7 +215,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 - 07/30: Do not synchronize null int/long columns as 0 (PublicationYear, PM_ID...)
 - 07/25: Code-Synchronization: Don't synchronize internals, aggregate 5A/B/C to 5abc
-
 
 
 [[v0.7.0]]
