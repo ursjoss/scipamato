@@ -287,9 +287,12 @@ public class PublicPage extends BasePage<Void> {
                 propExpression, propExpression, consumer);
     }
 
+    /*
+     * Note: The PaperIdManger manages the number in scipamato-public, not the id
+     */
     private void onTitleClick(IModel<PublicPaper> m) {
         getPaperIdManager().setFocusToItem(m.getObject()
-            .getId());
+            .getNumber());
         setResponsePage(new PublicPaperDetailPage(m, getPage().getPageReference()));
     }
 
