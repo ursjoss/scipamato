@@ -61,6 +61,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Fixed
 
+- 08/17 - Public: Fix Internal Error when opening papers with Numbers that don't exist as IDs
+
 .Security
 
 

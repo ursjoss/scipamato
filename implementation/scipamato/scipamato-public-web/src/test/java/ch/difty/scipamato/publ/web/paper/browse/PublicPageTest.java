@@ -41,9 +41,9 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     protected void setUpHook() {
         super.setUpHook();
 
-        papers.add(new PublicPaper(1l, 1l, 1000, "authors1", "title1", "location1", 2016, "goals1", "methods1",
+        papers.add(new PublicPaper(1l, 10l, 1000, "authors1", "title1", "location1", 2016, "goals1", "methods1",
                 "population1", "result1", "comment1"));
-        papers.add(new PublicPaper(2l, 2l, 1002, "authors2", "title2", "location2", 2017, "goals2", "methods2",
+        papers.add(new PublicPaper(2l, 20l, 1002, "authors2", "title2", "location2", 2017, "goals2", "methods2",
                 "population2", "result2", "comment2"));
 
         when(serviceMock.countByFilter(isA(PublicPaperFilter.class))).thenReturn(papers.size());
@@ -207,4 +207,5 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         verify(serviceMock, times(1)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
             isA(PaginationContext.class));
     }
+
 }
