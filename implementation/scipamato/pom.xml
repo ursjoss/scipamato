@@ -84,7 +84,7 @@
         <!-- Web Specific versions - kept here to not maintain them in scipamato-common-wicket, scipamato-core-web and scipamato-public-web 
             redundantly -->
         <wicket.version>7.10.0</wicket.version>
-        <wicket-spring-boot-starter.version>1.0.10</wicket-spring-boot-starter.version>
+        <wicket-spring-boot-starter.version>1.0.11</wicket-spring-boot-starter.version>
         <wicket-bootstrap.version>0.10.17</wicket-bootstrap.version>
         <bootstrap.version>3.3.7-1</bootstrap.version>
         <jasperreports.version>6.5.1</jasperreports.version>
