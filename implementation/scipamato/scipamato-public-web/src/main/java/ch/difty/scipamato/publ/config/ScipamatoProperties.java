@@ -71,4 +71,11 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
      * The URL of the CMS page that points to the new study page
      */
     private String cmsUrlNewStudyPage;
+
+    /**
+     * The number of characters an abbreviated authors string will have at most. If
+     * set to 0: do not abbreviate at all, return full authors string.
+     */
+    private int authorsAbbreviatedMaxLength;
+
 }

@@ -63,4 +63,9 @@ public class ScipamatoPublicPropertiesIntegrationTest {
         assertThat(appProperties.getCmsUrlNewStudyPage()).isEqualTo("http://localhost:8081/new-studies");
     }
 
+    @Test
+    public void authorsAbbreviatedMaxLength() {
+        assertThat(appProperties.getAuthorsAbbreviatedMaxLength()).isEqualTo(60);
+    }
+
 }

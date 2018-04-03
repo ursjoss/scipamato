@@ -29,4 +29,10 @@ public interface ApplicationPublicProperties extends ApplicationProperties {
      * @return the url pointing to the CMS page with the new-study page
      */
     String getCmsUrlNewStudyPage();
+
+    /**
+     * @return the maximum number of characters the abbreviated authors string uses.
+     *         if 0: no abbreviation takes place at all, return full authors string.
+     */
+    int getAuthorsAbbreviatedMaxLength();
 }
