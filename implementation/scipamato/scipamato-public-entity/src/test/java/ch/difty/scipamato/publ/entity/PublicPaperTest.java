@@ -21,6 +21,7 @@ public class PublicPaperTest extends PublicEntityTest<PublicPaper> {
             .authorsAbbreviated("auths")
             .title("title")
             .location("location")
+            .journal("journal")
             .publicationYear(2016)
             .goals("goals")
             .methods("methods")
@@ -31,7 +32,7 @@ public class PublicPaperTest extends PublicEntityTest<PublicPaper> {
     }
 
     protected String getToString() {
-        return "PublicPaper(id=1, number=2, pmId=1000, authors=authors, authorsAbbreviated=auths, title=title, location=location, publicationYear=2016, goals=goals, methods=methods, population=population, result=result, comment=comment)";
+        return "PublicPaper(id=1, number=2, pmId=1000, authors=authors, authorsAbbreviated=auths, title=title, location=location, journal=journal, publicationYear=2016, goals=goals, methods=methods, population=population, result=result, comment=comment)";
     }
 
     @Override
@@ -43,6 +44,7 @@ public class PublicPaperTest extends PublicEntityTest<PublicPaper> {
         assertThat(getEntity().getAuthorsAbbreviated()).isEqualTo("auths");
         assertThat(getEntity().getTitle()).isEqualTo("title");
         assertThat(getEntity().getLocation()).isEqualTo("location");
+        assertThat(getEntity().getJournal()).isEqualTo("journal");
         assertThat(getEntity().getPublicationYear()).isEqualTo(2016);
         assertThat(getEntity().getGoals()).isEqualTo("goals");
         assertThat(getEntity().getMethods()).isEqualTo("methods");
@@ -63,7 +65,7 @@ public class PublicPaperTest extends PublicEntityTest<PublicPaper> {
     @Test
     public void assertEnumFields() {
         assertThat(PublicPaper.PublicPaperFields.values()).extracting("name")
-            .containsExactly("id", "number", "pmId", "authors", "authorsAbbreviated", "title", "location",
+            .containsExactly("id", "number", "pmId", "authors", "authorsAbbreviated", "title", "location", "journal",
                 "publicationYear", "goals", "methods", "population", "result", "comment");
     }
 }

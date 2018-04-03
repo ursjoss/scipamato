@@ -54,10 +54,10 @@ public class PublicPaperProviderTest {
         provider = new PublicPaperProvider(filterMock, 20);
         provider.setService(serviceMock);
 
-        papers.add(new PublicPaper(1l, 1l, 1000, "authors1", "auths", "title1", "location1", 2016, "goals1", "methods1",
-                "population1", "result1", "comment1"));
-        papers.add(new PublicPaper(2l, 2l, 1002, "authors2", "auths", "title2", "location2", 2017, "goals2", "methods2",
-                "population2", "result2", "comment2"));
+        papers.add(new PublicPaper(1l, 1l, 1000, "authors1", "auths", "title1", "location1", "journal1", 2016, "goals1",
+                "methods1", "population1", "result1", "comment1"));
+        papers.add(new PublicPaper(2l, 2l, 1002, "authors2", "auths", "title2", "location2", "journal2", 2017, "goals2",
+                "methods2", "population2", "result2", "comment2"));
 
         when(serviceMock.countByFilter(filterMock)).thenReturn(2);
         when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);

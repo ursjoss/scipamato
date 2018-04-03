@@ -21,6 +21,7 @@ public class PublicPaper extends PublicEntity {
     private String  authorsAbbreviated;
     private String  title;
     private String  location;
+    private String  journal;
     private Integer publicationYear;
 
     private String goals;
@@ -37,6 +38,7 @@ public class PublicPaper extends PublicEntity {
         AUTHORS_ABBREVIATED("authorsAbbreviated"),
         TITLE("title"),
         LOCATION("location"),
+        JOURNAL("journal"),
         PUBL_YEAR("publicationYear"),
         GOALS("goals"),
         METHODS("methods"),

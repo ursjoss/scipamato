@@ -33,10 +33,13 @@ public class JooqPublicPaperRepoTest {
     private PublicPaperFilterConditionMapper                filterConditionMapperMock;
     @Mock
     private AuthorsAbbreviator                              authorsAbbreviator;
+    @Mock
+    private JournalExtractor                                journalExtractor;
 
     @Before
     public void setUp() {
-        repo = new JooqPublicPaperRepo(dslMock, sortMapperMock, filterConditionMapperMock, authorsAbbreviator);
+        repo = new JooqPublicPaperRepo(dslMock, sortMapperMock, filterConditionMapperMock, authorsAbbreviator,
+                journalExtractor);
     }
 
     @After
@@ -71,5 +74,21 @@ public class JooqPublicPaperRepoTest {
         assertThat(pp.getAuthorsAbbreviated()).isEqualTo(authorsAbbr);
 
         verify(authorsAbbreviator).abbreviate(authors);
+    }
+
+    @Test
+    public void mapping_callsJournalExtractor_withLocation() {
+        final String location = "location";
+        final String journal = "journal";
+        PaperRecord pr = mock(PaperRecord.class);
+        when(pr.getLocation()).thenReturn(location);
+        when(journalExtractor.extractJournal(location)).thenReturn(journal);
+
+        PublicPaper pp = repo.map(pr);
+
+        assertThat(pp.getLocation()).isEqualTo(location);
+        assertThat(pp.getJournal()).isEqualTo(journal);
+
+        verify(journalExtractor).extractJournal(location);
     }
 }

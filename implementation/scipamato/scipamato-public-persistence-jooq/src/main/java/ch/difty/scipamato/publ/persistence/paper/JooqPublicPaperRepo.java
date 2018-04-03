@@ -31,13 +31,16 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     private final JooqSortMapper<PaperRecord, PublicPaper, Paper> sortMapper;
     private final PublicPaperFilterConditionMapper                filterConditionMapper;
     private final AuthorsAbbreviator                              authorsAbbreviator;
+    private final JournalExtractor                                journalExtractor;
 
     public JooqPublicPaperRepo(final DSLContext dsl, final JooqSortMapper<PaperRecord, PublicPaper, Paper> sortMapper,
-            final PublicPaperFilterConditionMapper filterConditionMapper, final AuthorsAbbreviator authorsAbbreviator) {
+            final PublicPaperFilterConditionMapper filterConditionMapper, final AuthorsAbbreviator authorsAbbreviator,
+            final JournalExtractor journalExtractor) {
         this.dsl = dsl;
         this.sortMapper = sortMapper;
         this.filterConditionMapper = filterConditionMapper;
         this.authorsAbbreviator = authorsAbbreviator;
+        this.journalExtractor = journalExtractor;
     }
 
     private DSLContext getDsl() {
@@ -93,6 +96,7 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
             .authorsAbbreviated(authorsAbbreviator.abbreviate(r.getAuthors()))
             .title(r.getTitle())
             .location(r.getLocation())
+            .journal(journalExtractor.extractJournal(r.getLocation()))
             .publicationYear(r.getPublicationYear())
             .goals(r.getGoals())
             .methods(r.getMethods())
