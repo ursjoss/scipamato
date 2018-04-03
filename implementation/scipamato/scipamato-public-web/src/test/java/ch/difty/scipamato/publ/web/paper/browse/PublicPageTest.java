@@ -133,8 +133,8 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     private void assertResultsTable(String b) {
         getTester().assertComponent(b, BootstrapDefaultDataTable.class);
 
-        assertTableRow(b + ":body:rows:1:cells", "authors1", "title1", "location1", "2016");
-        assertTableRow(b + ":body:rows:2:cells", "authors2", "title2", "location2", "2017");
+        assertTableRow(b + ":body:rows:1:cells", "auths1", "title1", "location1", "2016");
+        assertTableRow(b + ":body:rows:2:cells", "auths2", "title2", "location2", "2017");
     }
 
     private void assertTableRow(final String bb, final String... values) {
