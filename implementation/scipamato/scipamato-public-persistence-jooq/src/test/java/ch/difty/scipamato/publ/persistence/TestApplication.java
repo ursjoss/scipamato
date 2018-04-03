@@ -5,7 +5,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import ch.difty.scipamato.common.config.ApplicationProperties;
+import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "ch.difty.scipamato")
@@ -17,8 +17,8 @@ public class TestApplication {
     }
 
     @Bean
-    public ApplicationProperties applicationProperties() {
-        return new ApplicationProperties() {
+    public ApplicationPublicProperties applicationProperties() {
+        return new ApplicationPublicProperties() {
 
             @Override
             public String getBuildVersion() {
@@ -48,6 +48,36 @@ public class TestApplication {
             @Override
             public Integer getRedirectFromPort() {
                 return 8081;
+            }
+
+            @Override
+            public boolean isCommercialFontPresent() {
+                return false;
+            }
+
+            @Override
+            public boolean isLessUsedOverCss() {
+                return false;
+            }
+
+            @Override
+            public boolean isNavbarVisibleByDefault() {
+                return false;
+            }
+
+            @Override
+            public String getCmsUrlSearchPage() {
+                return null;
+            }
+
+            @Override
+            public String getCmsUrlNewStudyPage() {
+                return null;
+            }
+
+            @Override
+            public int getAuthorsAbbreviatedMaxLength() {
+                return 50;
             }
         };
     }

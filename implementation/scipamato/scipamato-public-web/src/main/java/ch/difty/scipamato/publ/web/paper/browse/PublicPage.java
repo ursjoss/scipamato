@@ -267,9 +267,9 @@ public class PublicPage extends BasePage<Void> {
 
     private List<IColumn<PublicPaper, String>> makeTableColumns() {
         final List<IColumn<PublicPaper, String>> columns = new ArrayList<>();
-        columns.add(makePropertyColumn(PublicPaper.PublicPaperFields.AUTHORS));
+        columns.add(makePropertyColumn(PublicPaper.PublicPaperFields.AUTHORS_ABBREVIATED));
         columns.add(makeClickableColumn(PublicPaper.PublicPaperFields.TITLE, this::onTitleClick));
-        columns.add(makePropertyColumn(PublicPaper.PublicPaperFields.LOCATION));
+        columns.add(makePropertyColumn(PublicPaper.PublicPaperFields.JOURNAL));
         columns.add(makePropertyColumn(PublicPaper.PublicPaperFields.PUBL_YEAR));
         return columns;
     }

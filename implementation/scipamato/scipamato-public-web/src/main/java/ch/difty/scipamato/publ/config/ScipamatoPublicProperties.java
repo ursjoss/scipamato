@@ -47,4 +47,9 @@ public class ScipamatoPublicProperties extends AbstractScipamatoProperties<Scipa
         return getScipamatoProperties().getCmsUrlNewStudyPage();
     }
 
+    @Override
+    public int getAuthorsAbbreviatedMaxLength() {
+        return getScipamatoProperties().getAuthorsAbbreviatedMaxLength();
+    }
+
 }

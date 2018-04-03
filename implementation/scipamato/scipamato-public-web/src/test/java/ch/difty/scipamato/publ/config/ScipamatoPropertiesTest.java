@@ -52,4 +52,9 @@ public class ScipamatoPropertiesTest {
     public void cmsUrlNewStudyPage() {
         assertThat(sp.getCmsUrlNewStudyPage()).isNull();
     }
+
+    @Test
+    public void authorsAbbreviatedMaxLength() {
+        assertThat(sp.getAuthorsAbbreviatedMaxLength()).isEqualTo(0);
+    }
 }

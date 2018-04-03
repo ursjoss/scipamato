@@ -38,6 +38,8 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
         assertThat(paper.getPmId()).isEqualTo(25395026);
         assertThat(paper.getAuthors()).isEqualTo(
             "Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.");
+        assertThat(paper.getLocation()).isEqualTo("Am J Epidemiol. 2014; 180 (12): 1145-1149.");
+        assertThat(paper.getJournal()).isEqualTo("Am J Epidemiol");
     }
 
     @Test

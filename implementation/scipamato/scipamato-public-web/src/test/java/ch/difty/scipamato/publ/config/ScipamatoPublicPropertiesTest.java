@@ -38,6 +38,8 @@ public class ScipamatoPublicPropertiesTest {
 
         when(scipamatoPropMock.getCmsUrlSearchPage()).thenReturn("http://u.sp");
         when(scipamatoPropMock.getCmsUrlNewStudyPage()).thenReturn("http://u.nsp");
+
+        when(scipamatoPropMock.getAuthorsAbbreviatedMaxLength()).thenReturn(70);
     }
 
     @After
@@ -136,5 +138,11 @@ public class ScipamatoPublicPropertiesTest {
     public void checkingCssUrlNewStudyPage_delegatesToScipamatoProp() {
         assertThat(prop.getCmsUrlNewStudyPage()).isEqualTo("http://u.nsp");
         verify(scipamatoPropMock).getCmsUrlNewStudyPage();
+    }
+
+    @Test
+    public void checkingAuthorsAbbreviatedMaxLength() {
+        assertThat(prop.getAuthorsAbbreviatedMaxLength()).isEqualTo(70);
+        verify(scipamatoPropMock).getAuthorsAbbreviatedMaxLength();
     }
 }
