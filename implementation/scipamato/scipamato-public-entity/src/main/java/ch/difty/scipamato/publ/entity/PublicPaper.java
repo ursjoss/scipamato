@@ -18,6 +18,7 @@ public class PublicPaper extends PublicEntity {
     private Long    number;
     private Integer pmId;
     private String  authors;
+    private String  authorsAbbreviated;
     private String  title;
     private String  location;
     private Integer publicationYear;
@@ -33,6 +34,7 @@ public class PublicPaper extends PublicEntity {
         NUMBER("number"),
         PMID("pmId"),
         AUTHORS("authors"),
+        AUTHORS_ABBREVIATED("authorsAbbreviated"),
         TITLE("title"),
         LOCATION("location"),
         PUBL_YEAR("publicationYear"),
@@ -53,4 +55,5 @@ public class PublicPaper extends PublicEntity {
             return name;
         }
     }
+
 }
