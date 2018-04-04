@@ -2,6 +2,7 @@ package ch.difty.scipamato.publ.web.common;
 
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -16,6 +17,7 @@ import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
 import ch.difty.scipamato.publ.web.CommercialFontResourceProvider;
 import ch.difty.scipamato.publ.web.PublicPageParameters;
 import ch.difty.scipamato.publ.web.resources.MainCssResourceReference;
+import ch.difty.scipamato.publ.web.resources.PymJavaScriptResourceReference;
 
 public abstract class BasePage<T> extends AbstractPage<T> {
 
@@ -58,6 +60,9 @@ public abstract class BasePage<T> extends AbstractPage<T> {
 
         if (fontResourceProvider.isCommercialFontPresent())
             response.render(CssHeaderItem.forReference(fontResourceProvider.getCssResourceReference()));
+
+        if (applicationProperties.isResponsiveIframeSupportEnabled())
+            response.render(JavaScriptHeaderItem.forReference(PymJavaScriptResourceReference.get()));
     }
 
     protected Authentication getAuthentication() {

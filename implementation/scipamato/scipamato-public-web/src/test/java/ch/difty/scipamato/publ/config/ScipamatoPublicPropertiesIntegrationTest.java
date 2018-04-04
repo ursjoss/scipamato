@@ -68,4 +68,9 @@ public class ScipamatoPublicPropertiesIntegrationTest {
         assertThat(appProperties.getAuthorsAbbreviatedMaxLength()).isEqualTo(60);
     }
 
+    @Test
+    public void isResponsiveIframeSupportEnabled() {
+        assertThat(appProperties.isResponsiveIframeSupportEnabled()).isFalse();
+    }
+
 }

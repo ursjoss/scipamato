@@ -57,4 +57,9 @@ public class ScipamatoPropertiesTest {
     public void authorsAbbreviatedMaxLength() {
         assertThat(sp.getAuthorsAbbreviatedMaxLength()).isEqualTo(0);
     }
+
+    @Test
+    public void responsiveIFrameSupport_isDisabledByDefault() {
+        assertThat(sp.isResponsiveIframeSupportEnabled()).isFalse();
+    }
 }

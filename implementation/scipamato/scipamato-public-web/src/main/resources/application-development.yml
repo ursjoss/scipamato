@@ -49,3 +49,4 @@ logging:
 scipamato:
   commercial-font-present: true
   less-used-over-css: true
+  responsive-iframe-support-enabled: true
