@@ -54,7 +54,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- dependency bumps: wicket-spring-boot, jOOQ, PostgreSQL JDBC Driver
+- dependency bumps: wicket-spring-boot, jOOQ, PostgreSQL JDBC Driver, spring-cloud
 - 08/20 - Public: reduce columns/column sizes in result view (abbreviated
   authors, journal instead of location)
 - 08/12 - Public: Add http://blog.apps.npr.org/pym.js/[pym.js] to support
