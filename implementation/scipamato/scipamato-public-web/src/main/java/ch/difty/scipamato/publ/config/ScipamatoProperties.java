@@ -78,4 +78,10 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
      */
     private int authorsAbbreviatedMaxLength;
 
+    /**
+     * set to true if SciPaMaTo-Public needs to add pym.js to its page headers. This
+     * allows embedding scipamato into responsive iframes.
+     */
+    private boolean responsiveIframeSupportEnabled;
+
 }

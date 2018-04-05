@@ -79,6 +79,11 @@ public class TestApplication {
             public int getAuthorsAbbreviatedMaxLength() {
                 return 50;
             }
+
+            @Override
+            public boolean isResponsiveIframeSupportEnabled() {
+                return false;
+            }
         };
     }
 }

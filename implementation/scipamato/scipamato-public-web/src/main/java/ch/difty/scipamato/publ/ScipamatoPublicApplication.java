@@ -1,6 +1,7 @@
 package ch.difty.scipamato.publ;
 
 import org.apache.wicket.Session;
+import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,6 +24,14 @@ public class ScipamatoPublicApplication extends WicketBootSecuredWebApplication 
     @Override
     public Session newSession(Request request, Response response) {
         return new ScipamatoPublicSession(request);
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+
+        // enable putting JavaScript into Footer Container
+        setHeaderResponseDecorator(r -> new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"));
     }
 
 }

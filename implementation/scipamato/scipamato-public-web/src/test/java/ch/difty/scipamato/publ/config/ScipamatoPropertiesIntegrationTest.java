@@ -32,4 +32,9 @@ public class ScipamatoPropertiesIntegrationTest {
         assertThat(sp.getPubmedBaseUrl()).isEqualTo("https://www.ncbi.nlm.nih.gov/pubmed/");
     }
 
+    @Test
+    public void responsiveIFrameSupport_isDisabled() {
+        assertThat(sp.isResponsiveIframeSupportEnabled()).isFalse();
+    }
+
 }

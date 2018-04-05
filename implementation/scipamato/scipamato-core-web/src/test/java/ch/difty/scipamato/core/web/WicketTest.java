@@ -4,6 +4,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Locale;
 
+import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
@@ -77,6 +78,9 @@ public abstract class WicketTest {
 
     @Before
     public final void setUp() {
+        application
+            .setHeaderResponseDecorator(r -> new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"));
+
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock);
         tester = new WicketTester(application);
         when(sessionFacadeMock.getPaperIdManager()).thenReturn(itemNavigatorMock);

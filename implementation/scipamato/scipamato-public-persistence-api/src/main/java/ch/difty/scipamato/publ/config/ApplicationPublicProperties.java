@@ -35,4 +35,11 @@ public interface ApplicationPublicProperties extends ApplicationProperties {
      *         if 0: no abbreviation takes place at all, return full authors string.
      */
     int getAuthorsAbbreviatedMaxLength();
+
+    /**
+     * If true, pym.js will be added to the pages to support responsive iframes
+     *
+     * @return true to support responive iframes, false to not support them.
+     */
+    boolean isResponsiveIframeSupportEnabled();
 }

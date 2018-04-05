@@ -52,4 +52,9 @@ public class ScipamatoPublicProperties extends AbstractScipamatoProperties<Scipa
         return getScipamatoProperties().getAuthorsAbbreviatedMaxLength();
     }
 
+    @Override
+    public boolean isResponsiveIframeSupportEnabled() {
+        return getScipamatoProperties().isResponsiveIframeSupportEnabled();
+    }
+
 }

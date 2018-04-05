@@ -4,6 +4,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.devutils.debugbar.DebugBar;
+import org.apache.wicket.markup.head.filter.HeaderResponseContainer;
 import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -66,6 +67,7 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
         createAndAddNavBar("navbar");
         createAndAddFeedbackPanel("feedback");
         createAndAddDebugBar("debug");
+        createAndAddFooterContainer("footer-container");
     }
 
     private void createAndAddTitle(String id) {
@@ -101,6 +103,10 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
         } else {
             queue(new EmptyPanel(label).setVisible(false));
         }
+    }
+
+    private void createAndAddFooterContainer(String id) {
+        queue(new HeaderResponseContainer(id, id));
     }
 
     private Navbar newNavbar(String markupId) {
