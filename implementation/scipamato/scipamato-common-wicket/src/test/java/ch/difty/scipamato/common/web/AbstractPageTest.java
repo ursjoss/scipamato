@@ -3,6 +3,7 @@ package ch.difty.scipamato.common.web;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
+import org.apache.wicket.markup.head.filter.HeaderResponseContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
@@ -103,6 +104,7 @@ public class AbstractPageTest extends WicketBaseTest {
         getTester().assertLabel("navbar:container:brandName:brandLabel", "SciPaMaTo");
 
         getTester().assertComponent("feedback", NotificationPanel.class);
+        getTester().assertComponent("footer-container", HeaderResponseContainer.class);
 
         getTester().assertInvisible("debug");
 
