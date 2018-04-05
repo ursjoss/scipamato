@@ -45,7 +45,7 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
      * SciPaMaTo expects to find the font in the following location:
      *
      * <pre>
-     * src/main/resources/ch/difty/scipamato/publ/web/resources/MetaOT/
+     * src/main/resources/ch/difty/scipamato/publ/web/resources/fonts/MetaOT/
      * </pre>
      */
     private boolean commercialFontPresent;

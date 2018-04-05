@@ -6,7 +6,7 @@ import org.apache.wicket.request.resource.CssResourceReference;
  * This resource reference relies on commercial fonts that are not present in
  * the open-source distribution of SciPaMaTo. Do not call get() on this class
  * unless those fonts are actually present in the resource folder (sub-folder
- * MetaOT).
+ * fonts/MetaOT).
  *
  * @author Urs Joss
  */
