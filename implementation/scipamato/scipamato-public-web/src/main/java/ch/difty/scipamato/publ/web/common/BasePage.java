@@ -2,6 +2,7 @@ package ch.difty.scipamato.publ.web.common;
 
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -61,8 +62,10 @@ public abstract class BasePage<T> extends AbstractPage<T> {
         if (fontResourceProvider.isCommercialFontPresent())
             response.render(CssHeaderItem.forReference(fontResourceProvider.getCssResourceReference()));
 
-        if (applicationProperties.isResponsiveIframeSupportEnabled())
+        if (applicationProperties.isResponsiveIframeSupportEnabled()) {
             response.render(JavaScriptHeaderItem.forReference(PymJavaScriptResourceReference.get()));
+            response.render(new JavaScriptContentHeaderItem("var pymChild = new pym.Child();", "pymChild", null));
+        }
     }
 
     protected Authentication getAuthentication() {
