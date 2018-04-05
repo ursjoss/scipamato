@@ -6,23 +6,23 @@ import org.springframework.stereotype.Component;
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
 import ch.difty.scipamato.publ.web.CommercialFontResourceProvider;
-import ch.difty.scipamato.publ.web.resources.MetaOTCssResourceReference;
+import ch.difty.scipamato.publ.web.resources.SimplonCssResourceReference;
 
 /**
- * This class guards calls to the MetaOT fonts based on the property values
+ * This class guards calls to the Simplon fonts based on the property values
  * {@literal scipamato.commercial-font-present}.
  *
  * @author Urs Joss
  */
 @Component
-public class MetaOTFontResourceProvider implements CommercialFontResourceProvider {
+public class SimplonFontResourceProvider implements CommercialFontResourceProvider {
 
     private final CssResourceReference cssResourceReference;
 
-    public MetaOTFontResourceProvider(final ApplicationPublicProperties applicationProperties) {
+    public SimplonFontResourceProvider(final ApplicationPublicProperties applicationProperties) {
         AssertAs.notNull(applicationProperties, "applicationProperties");
         if (applicationProperties.isCommercialFontPresent()) {
-            cssResourceReference = MetaOTCssResourceReference.get();
+            cssResourceReference = SimplonCssResourceReference.get();
         } else {
             cssResourceReference = null;
         }

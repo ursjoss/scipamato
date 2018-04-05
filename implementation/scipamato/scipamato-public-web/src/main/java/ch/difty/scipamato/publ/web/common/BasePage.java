@@ -27,11 +27,12 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     private final boolean showNavbar;
 
     @SpringBean
-    private ApplicationPublicProperties    applicationProperties;
+    private ApplicationPublicProperties applicationProperties;
     @SpringBean
-    private ScipamatoWebSessionFacade      sessionFacade;
-    @SpringBean
-    private CommercialFontResourceProvider fontResourceProvider;
+    private ScipamatoWebSessionFacade   sessionFacade;
+
+    @SpringBean(name = "metaOTFontResourceProvider")
+    private CommercialFontResourceProvider metaOtFontResourceProvider;
 
     public BasePage(final PageParameters parameters) {
         super(parameters);
@@ -59,13 +60,40 @@ public abstract class BasePage<T> extends AbstractPage<T> {
         super.renderHead(response);
         response.render(CssHeaderItem.forReference(MainCssResourceReference.get()));
 
-        if (fontResourceProvider.isCommercialFontPresent())
-            response.render(CssHeaderItem.forReference(fontResourceProvider.getCssResourceReference()));
+        if (applicationProperties.isCommercialFontPresent()) {
+            renderCommercialFonts(response);
+        }
 
         if (applicationProperties.isResponsiveIframeSupportEnabled()) {
-            response.render(JavaScriptHeaderItem.forReference(PymJavaScriptResourceReference.get()));
-            response.render(new JavaScriptContentHeaderItem("var pymChild = new pym.Child();", "pymChild", null));
+            renderPymForResponsiveIframe(response);
         }
+    }
+
+    private void renderCommercialFonts(final IHeaderResponse response) {
+        response.render(CssHeaderItem.forReference(metaOtFontResourceProvider.getCssResourceReference()));
+        renderAdditionalCommercialFonts(response);
+    }
+
+    /**
+     * Override to render page specific additional commercial fonts. Note: This code
+     * is only called if the property <code>commercial-font-present</code> is set to
+     * <literal>true</literal>.
+     *
+     * @param response
+     *            the response to render the css header item references on
+     */
+    protected void renderAdditionalCommercialFonts(final IHeaderResponse response) {
+    }
+
+    /**
+     * Adds pym.js to the page and instantiates the <code>pymChild</code>.
+     *
+     * @param response
+     *            the response to render the javascript for
+     */
+    private void renderPymForResponsiveIframe(final IHeaderResponse response) {
+        response.render(JavaScriptHeaderItem.forReference(PymJavaScriptResourceReference.get()));
+        response.render(new JavaScriptContentHeaderItem("var pymChild = new pym.Child();", "pymChild", null));
     }
 
     protected Authentication getAuthentication() {

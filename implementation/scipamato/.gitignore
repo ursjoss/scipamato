@@ -10,3 +10,4 @@ scipamato-public-web/keystore.p12
 scipamato-public-web/application.properties
 scipamato-core-web/application.properties
 scipamato-public-web/src/main/resources/ch/difty/scipamato/publ/web/resources/fonts/MetaOT/
+scipamato-public-web/src/main/resources/ch/difty/scipamato/publ/web/resources/fonts/Simplon/

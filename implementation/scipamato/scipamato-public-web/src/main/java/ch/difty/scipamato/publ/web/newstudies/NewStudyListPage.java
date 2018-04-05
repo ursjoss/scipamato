@@ -1,6 +1,8 @@
 package ch.difty.scipamato.publ.web.newstudies;
 
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
@@ -15,6 +17,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 import ch.difty.scipamato.publ.entity.NewStudy;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
 import ch.difty.scipamato.publ.persistence.api.NewStudyTopicService;
+import ch.difty.scipamato.publ.web.CommercialFontResourceProvider;
 import ch.difty.scipamato.publ.web.PublicPageParameters;
 import ch.difty.scipamato.publ.web.common.BasePage;
 import ch.difty.scipamato.publ.web.paper.browse.PublicPaperDetailPage;
@@ -39,8 +42,16 @@ public class NewStudyListPage extends BasePage<Void> {
     @SpringBean
     private NewStudyTopicService newStudyTopicService;
 
+    @SpringBean(name = "simplonFontResourceProvider")
+    private CommercialFontResourceProvider simplonFontResourceProvider;
+
     public NewStudyListPage(final PageParameters parameters) {
         super(parameters);
+    }
+
+    @Override
+    protected void renderAdditionalCommercialFonts(final IHeaderResponse response) {
+        response.render(CssHeaderItem.forReference(simplonFontResourceProvider.getCssResourceReference()));
     }
 
     @Override
