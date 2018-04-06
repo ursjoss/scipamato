@@ -11,6 +11,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
@@ -64,6 +65,13 @@ public class NewStudyListPage extends BasePage<Void> {
         queue(newLink("dbLink", getProperties().getCmsUrlSearchPage()));
 
         queue(newNewStudyCollection("topics"));
+    }
+
+    @Override
+    public void renderHead(IHeaderResponse response) {
+        super.renderHead(response);
+        response.render(
+            CssHeaderItem.forReference(new CssResourceReference(NewStudyListPage.class, "NewStudyListPage.css")));
     }
 
     private Label newLabel(final String id) {
