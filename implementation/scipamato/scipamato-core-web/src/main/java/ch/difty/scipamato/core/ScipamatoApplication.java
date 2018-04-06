@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core;
 
 import org.apache.wicket.Session;
+import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.apache.wicket.markup.html.IPackageResourceGuard;
 import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.request.Request;
@@ -27,6 +28,9 @@ public class ScipamatoApplication extends WicketBootSecuredWebApplication {
     @Override
     protected void init() {
         super.init();
+
+        // enable putting JavaScript into Footer Container
+        setHeaderResponseDecorator(r -> new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"));
 
         registerJasperJrxmlFilesWithPackageResourceGuard();
     }
