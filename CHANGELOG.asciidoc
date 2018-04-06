@@ -59,6 +59,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
   authors, journal instead of location)
 - 08/12 - Public: Add http://blog.apps.npr.org/pym.js/[pym.js] to support
   loading SciPaMaTo-Public within a responive iframe
+- 08/21 - Public: Styling of  NewStudy page
 
 .Deprecated
 
