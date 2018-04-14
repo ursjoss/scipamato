@@ -10,3 +10,4 @@ implementation/scipamato/scipamato.*.db
 CHANGELOG.html
 .idea/
 **/*.iml
+s101plugin.*
