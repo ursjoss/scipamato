@@ -120,7 +120,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
 
     /**
      * Excludes the given paperId from the results of the searchOrder with given
-     * searchOrderid.
+     * searchOrderId.
      *
      * @param searchOrderId
      *            the id of the search order
@@ -131,7 +131,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
 
     /**
      * Re-includes the previously excluded paperId into the results of the
-     * searchOrder with given searchOrderid.
+     * searchOrder with given searchOrderId.
      *
      * @param searchOrderId
      *            the id of the search order

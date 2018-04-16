@@ -90,7 +90,7 @@ public class PublicPaperProvider extends SortableDataProvider<PublicPaper, Strin
 
     /**
      * Applies the normal filter and the sort aspect of the pageable to return only
-     * the numbers (business key) of all papers (unpaged).
+     * the numbers (business key) of all papers (un-paged).
      *
      * @return list of all paper numbers
      */

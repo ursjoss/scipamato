@@ -29,7 +29,7 @@ public interface SearchOrderRepository extends EntityRepository<SearchOrder, Lon
      * Updates an already persisted but modified {@link SearchCondition}.
      *
      * @param searchCondition
-     *            the modifed search condition.
+     *            the modified search condition.
      * @param searchOrderId
      *            the id of the parent SearchOrder of the condition
      * @param languageCode

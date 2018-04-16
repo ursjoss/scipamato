@@ -30,7 +30,7 @@ public interface SearchTerm {
      *
      * @param id
      *            the database id
-     * @param searchTermType
+     * @param type
      *            {@link SearchTermType}
      * @param searchConditionId
      *            the database id of the associated search condition

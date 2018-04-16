@@ -13,7 +13,7 @@ public interface PubmedArticleFacade {
      *
      * @param pubmedArticleOrPubmedBookArticle
      *            and object that should either be an instance of
-     *            {@link PubmedArticle} or {@link PumbedBookArticle}
+     *            {@link PubmedArticle} or {@link PubmedBookArticle}
      * @return a derivative of {@link AbstractPubmedArticleFacade}
      * @throws IllegalArgumentException
      *             - if the parameter is of any other class than one of the two

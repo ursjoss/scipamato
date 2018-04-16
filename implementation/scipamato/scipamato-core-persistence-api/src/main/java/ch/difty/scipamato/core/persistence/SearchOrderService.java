@@ -16,8 +16,11 @@ public interface SearchOrderService extends EntityService<Long, SearchOrder, Sea
      * Persists the {@link SearchCondition} provided as parameter.
      *
      * @param searchCondition
+     *            the search condition to update
      * @param searchOrderId
+     *            the id of the search order the condition belongs to
      * @param languageCode
+     *            the language code that was used in the search condition
      * @return the saved search condition
      */
     SearchCondition saveOrUpdateSearchCondition(SearchCondition searchCondition, long searchOrderId,
@@ -27,6 +30,7 @@ public interface SearchOrderService extends EntityService<Long, SearchOrder, Sea
      * Remove SearchCondition from Database.
      *
      * @param searchConditionId
+     *            the id of the search condition that shall be removed
      */
     void removeSearchConditionWithId(Long searchConditionId);
 

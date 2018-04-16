@@ -40,6 +40,7 @@ interface NavigatedItems<T> extends Serializable {
      * Sets the current item
      *
      * @param item
+     *       the item to set toe focus to
      */
     void setFocusToItem(T item);
 

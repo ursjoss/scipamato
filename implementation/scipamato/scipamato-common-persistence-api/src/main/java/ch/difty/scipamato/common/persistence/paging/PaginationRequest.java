@@ -7,11 +7,11 @@ import lombok.Value;
  * The {@link PaginationRequest} serves to define both pagination and sorting
  * specifications and pass it on towards the persistence layer.
  * <p/>
- * It is currently only targeting offest pagination due to the limitations of
+ * It is currently only targeting offset pagination due to the limitations of
  * the presentation layer. It could be extended to hold information that could
  * be used for keyset pagination later on.
  * <p/>
- * This class was inspired by spring datas Pageable, however it only tracks
+ * This class was inspired by spring data's Pageable, however it only tracks
  * offset and pageSize together with the (optional) sortSpecification.
  *
  * @author u.joss
@@ -30,7 +30,7 @@ public class PaginationRequest implements PaginationContext {
      * providing 0 for {@code offset} will return the first page.
      *
      * @param offset
-     *            zero-based record index (over the entire unpaged set of records).
+     *            zero-based record index (over the entire un-paged set of records).
      * @param pageSize
      *            the page size
      */
@@ -42,7 +42,7 @@ public class PaginationRequest implements PaginationContext {
      * Creates a new {@link PaginationRequest} with sort parameters applied.
      *
      * @param offset
-     *            zero-based record index (over the entire unpaged set of records).
+     *            zero-based record index (over the entire un-paged set of records).
      * @param pageSize
      *            the page size
      * @param direction
@@ -74,7 +74,7 @@ public class PaginationRequest implements PaginationContext {
      * Creates a new {@link PaginationRequest}.
      *
      * @param offset
-     *            zero-based record index (over the entire unpaged set of records).
+     *            zero-based record index (over the entire un-paged set of records).
      * @param pageSize
      *            the page size
      * @param sort

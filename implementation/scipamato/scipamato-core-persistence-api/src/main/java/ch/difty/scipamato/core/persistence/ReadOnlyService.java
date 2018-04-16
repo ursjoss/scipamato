@@ -50,6 +50,7 @@ public interface ReadOnlyService<ID extends Number, T extends IdScipamatoEntity<
      * Counts the number of entities matching the specified filter.
      *
      * @param filter
+     *            of type {@code F}
      * @return entity count
      */
     int countByFilter(F filter);

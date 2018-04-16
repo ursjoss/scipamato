@@ -18,6 +18,7 @@ public interface CodeClassLikeRepository<T extends CodeClassLike> {
      * Find the localized CodeClasses of type {@code T}
      *
      * @param languageCode
+     *        the language code, e.g. 'en' or 'de'
      * @return a list of code classes implementing {@code CodeClassLike}
      */
     List<T> find(String languageCode);

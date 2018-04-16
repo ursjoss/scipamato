@@ -20,7 +20,9 @@ public interface CodeLikeRepository<T extends CodeLike> {
      * localized in language with the provided languageCode
      *
      * @param codeClassId
+     *        the id of the code class for which to find the codes
      * @param languageCode
+     *        the language code, e.g. 'en' or 'de'
      * @return a list of codes implementing {@code T}
      */
     List<T> findCodesOfClass(CodeClassId codeClassId, String languageCode);

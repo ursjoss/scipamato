@@ -367,7 +367,7 @@ public class JooqSearchOrderRepo extends
      *            identical persisted version for.
      * @param searchOrderId
      *            identifying the search order
-     * @return optional of the persisted version (if found - empty othewise)
+     * @return optional of the persisted version (if found - empty otherwise)
      */
     private Optional<SearchCondition> findEquivalentPersisted(final SearchCondition searchCondition,
             final long searchOrderId, final String languageCode) {

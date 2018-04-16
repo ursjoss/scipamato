@@ -38,6 +38,7 @@ public interface PublicPaperService {
      * Counts the number of entities matching the specified filter.
      *
      * @param filter
+     *            the filter specification
      * @return entity count
      */
     int countByFilter(PublicPaperFilter filter);
@@ -47,6 +48,7 @@ public interface PublicPaperService {
      * provided filter and pagination context.
      *
      * @param filter
+     *            the filter specification
      * @param paginationContext
      *            {@link PaginationContext}
      * @return list of the numbers of matching papers

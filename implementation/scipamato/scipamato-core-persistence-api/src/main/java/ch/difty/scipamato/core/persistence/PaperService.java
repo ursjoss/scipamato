@@ -25,6 +25,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * @param searchOrder
      *            {@link SearchOrder}
      * @param languageCode
+     *            the language code (e.g. 'en') to fetch the paper in
      * @return list of {@link Paper}s
      */
     List<Paper> findBySearchOrder(SearchOrder searchOrder, String languageCode);
@@ -38,6 +39,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * @param paginationContext
      *            context defining paging and sorting
      * @param languageCode
+     *            the language code (e.g. 'en') to fetch the paper in
      * @return paged list of papers
      */
     List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext,
@@ -83,6 +85,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * @param number
      *            - must not be null
      * @param languageCode
+     *            the language code (e.g. 'en') to fetch the paper in
      * @return Optional paper. Codes are enriched and attachments present (but
      *         without content)
      * @throws NullArgumentException
@@ -123,6 +126,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * Saves the attachment including its content.
      *
      * @param paperAttachment
+     *            the attachment to save into the paper
      * @return the paper for which the attachment was added
      */
     Paper saveAttachment(PaperAttachment paperAttachment);
