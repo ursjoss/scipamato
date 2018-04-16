@@ -44,7 +44,7 @@ public class AuditSearchTermsTest {
     }
 
     @Test
-    public void compareEmptySearchTerms_withDiffernetSearchTerms_dontMatch() {
+    public void compareEmptySearchTerms_withDifferentSearchTerms_doNotMatch() {
         st1.put(KEY, SearchTerm.newAuditSearchTerm(KEY, VALUE));
         assertInequalityBetween(st1, st2, 118234894, 1);
     }
@@ -58,7 +58,7 @@ public class AuditSearchTermsTest {
     }
 
     @Test
-    public void compareEmptySearchTerms_withDifferentSearchTermValues_dontMatch() {
+    public void compareEmptySearchTerms_withDifferentSearchTermValues_doNotMatch() {
         st1.put(KEY, SearchTerm.newAuditSearchTerm(KEY, VALUE));
         st2.put(KEY, SearchTerm.newAuditSearchTerm(KEY, "valueX"));
         assertInequalityBetween(st1, st2, 118234894, -817550684);

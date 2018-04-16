@@ -72,7 +72,7 @@ public class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Inte
     }
 
     @Test
-    public void buildingCondition_withRangeomparison() {
+    public void buildingCondition_withRangeComparison() {
         expectSearchTerm(MatchType.RANGE, 10, 15);
         Condition c = e.evaluate(stMock);
         assertThat(c.toString()).isEqualTo("field_x between 10 and 15");

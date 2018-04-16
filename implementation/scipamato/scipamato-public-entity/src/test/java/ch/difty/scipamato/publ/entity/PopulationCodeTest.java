@@ -11,7 +11,7 @@ import org.junit.Test;
 public class PopulationCodeTest {
 
     @Test
-    public void hasAllvalues() {
+    public void hasAllValues() {
         assertThat(values()).containsExactly(CHILDREN, ADULTS);
     }
 
@@ -26,7 +26,7 @@ public class PopulationCodeTest {
     }
 
     @Test
-    public void of_withNotExistingId_returnsEmptyOptioal() {
+    public void of_withNotExistingId_returnsEmptyOptional() {
         assertThat(PopulationCode.of((short) 0)).isEmpty();
     }
 

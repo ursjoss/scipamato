@@ -12,7 +12,7 @@ import org.junit.Test;
 public class StudyDesignCodeTest {
 
     @Test
-    public void hasAllvalues() {
+    public void hasAllValues() {
         assertThat(values()).containsExactly(EXPERIMENTAL, EPIODEMIOLOGICAL, OVERVIEW_METHODOLOGY);
     }
 
@@ -27,7 +27,7 @@ public class StudyDesignCodeTest {
     }
 
     @Test
-    public void of_withNotExistingId_returnsEmptyOptioal() {
+    public void of_withNotExistingId_returnsEmptyOptional() {
         assertThat(StudyDesignCode.of((short) 0)).isEmpty();
     }
 }

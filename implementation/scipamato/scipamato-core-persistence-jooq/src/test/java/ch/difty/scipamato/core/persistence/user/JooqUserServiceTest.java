@@ -146,7 +146,7 @@ public class JooqUserServiceTest {
     }
 
     @Test
-    public void deleting_withEntityWithNormald_delegatesToRepo() {
+    public void deleting_withEntityWithNormalId_delegatesToRepo() {
         when(userMock.getId()).thenReturn(3);
         when(userMock.getVersion()).thenReturn(2);
 

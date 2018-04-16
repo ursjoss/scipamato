@@ -55,7 +55,7 @@ public class PaperReviewTest extends JasperEntityTest {
     }
 
     @Test
-    public void instantiatingWithValidFieldsAndvalidLabels() {
+    public void instantiatingWithValidFieldsAndValidLabels() {
         pr = new PaperReview(p, rhf);
 
         assertFieldValues();

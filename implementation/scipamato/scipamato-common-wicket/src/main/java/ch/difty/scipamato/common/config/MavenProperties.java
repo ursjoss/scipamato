@@ -18,7 +18,7 @@ public class MavenProperties {
     private String version;
 
     /**
-     * The build timestamp suppplied by maven, typically {@code @timestamp@}
+     * The build timestamp supplied by maven, typically {@code @timestamp@}
      */
     private String timestamp;
 }

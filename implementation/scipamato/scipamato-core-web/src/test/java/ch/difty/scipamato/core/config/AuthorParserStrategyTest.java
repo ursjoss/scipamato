@@ -14,7 +14,7 @@ public class AuthorParserStrategyTest {
 
     @Test
     public void canParsePubmed() {
-        assertThat(AuthorParserStrategy.fromProperty("PUBMED", "whatever-key-for-loggin-only")).isEqualTo(PUBMED);
+        assertThat(AuthorParserStrategy.fromProperty("PUBMED", "whatever-key-for-logging-only")).isEqualTo(PUBMED);
     }
 
     @Test

@@ -303,7 +303,7 @@ public class StringSearchTermTest {
     }
 
     @Test
-    public void lexingEmptyString_resturnsRaw() {
+    public void lexingEmptyString_returnsRaw() {
         st = new StringSearchTerm(FIELD_NAME, "");
         assertSingleToken(TokenType.RAW, "", "", false);
     }

@@ -194,7 +194,7 @@ public class ScipamatoPubmedBookArticleTest {
     }
 
     @Test
-    public void invalidConstructionUsingOfWithForiegnObject() {
+    public void invalidConstructionUsingOfWithForeignObject() {
         try {
             PubmedArticleFacade.newPubmedArticleFrom(Integer.valueOf(1));
             fail("should have thrown exception");

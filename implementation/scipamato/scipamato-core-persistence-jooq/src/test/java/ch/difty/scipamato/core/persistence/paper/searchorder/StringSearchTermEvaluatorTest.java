@@ -173,7 +173,7 @@ public class StringSearchTermEvaluatorTest extends SearchTermEvaluatorTest<Strin
     }
 
     @Test
-    public void buildingConditionForNotQuoted_appliesInequal() {
+    public void buildingConditionForNotQuoted_appliesUnequal() {
         expectToken(TokenType.NOTQUOTED, "foo");
         assertThat(e.evaluate(stMock)
             .toString()).isEqualTo("lower(cast(field_x as varchar)) <> lower('foo')");

@@ -229,7 +229,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
     }
 
     @Test
-    public void equalsverify() {
+    public void equalsVerify() {
         EqualsVerifier.forClass(PaperSummaryShort.class)
             .withRedefinedSuperclass()
             .suppress(Warning.STRICT_INHERITANCE)

@@ -49,7 +49,7 @@ public class CodeClassLikeModelTest {
     }
 
     @Test
-    public void modelObject_gotCodeClasssesFromService() {
+    public void modelObject_gotCodeClassesFromService() {
         assertThat(model.getObject()).containsExactly(cclMock, cclMock);
         verify(serviceMock).find(LANG_CODE);
     }

@@ -29,7 +29,7 @@ public class ScipamatoPropertiesTest {
     }
 
     @Test
-    public void isCommercailFontPresent() {
+    public void isCommercialFontPresent() {
         assertThat(sp.isCommercialFontPresent()).isFalse();
     }
 
