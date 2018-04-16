@@ -42,7 +42,7 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
     private String doi;
     private String originalAbstract;
 
-    protected String getAuthorsFrom(final AuthorList authorList) {
+    String getAuthorsFrom(final AuthorList authorList) {
         final String individualAuthors = getIndividualAuthors(authorList);
         final String collectives = getCollectives(authorList);
         return combine(individualAuthors, collectives);
@@ -92,8 +92,6 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
         for (final java.lang.Object o : author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()) {
             if (o instanceof CollectiveName)
                 asb.append(((CollectiveName) o).getvalue());
-            else
-                continue;
         }
         return asb;
     }
@@ -111,7 +109,7 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
         return comb.toString();
     }
 
-    protected String getFirstAuthorFrom(final AuthorList authorList) {
+    String getFirstAuthorFrom(final AuthorList authorList) {
         return authorList.getAuthor()
             .stream()
             .map(Author::getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName)
@@ -131,7 +129,7 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
                 .orElse(""));
     }
 
-    protected String getDoiFromArticleIdList(final ArticleIdList articleIdList) {
+    String getDoiFromArticleIdList(final ArticleIdList articleIdList) {
         if (articleIdList != null) {
             return articleIdList.getArticleId()
                 .stream()
@@ -143,7 +141,7 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
         return null;
     }
 
-    protected String getAbstractFrom(final Abstract abstr) {
+    String getAbstractFrom(final Abstract abstr) {
         if (abstr == null)
             return null;
         return abstr.getAbstractText()

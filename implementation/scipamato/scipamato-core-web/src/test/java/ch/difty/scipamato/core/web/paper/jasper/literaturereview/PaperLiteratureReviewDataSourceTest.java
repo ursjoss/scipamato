@@ -5,7 +5,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Test;
 
@@ -20,15 +20,15 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
 
     private static final String FILE_NAME = "paper_literature_review.pdf";
 
-    private static final Long NUMBER = 5l;
+    private static final Long NUMBER = 5L;
 
     private static final String BRAND           = "brand";
     private static final String CAPTION         = "caption";
     private static final String NUMBER_LABEL    = "numberLabel";
     private static final String PUBMED_BASE_URL = "https://www.ncbi.nlm.nih.gov/pubmed/";
 
-    private PaperLiteratureReviewDataSource ds;
-    private ReportHeaderFields              rhf = newReportHeaderFields();
+    private PaperLiteratureReviewDataSource       ds;
+    private final ReportHeaderFields              rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
         return ReportHeaderFields.builder("", BRAND)
@@ -79,8 +79,8 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
 
     @Test
     public void instantiatingWithProvider_returnsPdfDataSourceWithOneRecord() throws JRException {
-        when(dataProviderMock.size()).thenReturn(1l);
-        when(dataProviderMock.findAllPapersByFilter()).thenReturn(Arrays.asList(paperMock));
+        when(dataProviderMock.size()).thenReturn(1L);
+        when(dataProviderMock.findAllPapersByFilter()).thenReturn(Collections.singletonList(paperMock));
 
         ds = new PaperLiteratureReviewDataSource(dataProviderMock, rhf, pdfExporterConfigMock);
         assertDataSource(FILE_NAME);

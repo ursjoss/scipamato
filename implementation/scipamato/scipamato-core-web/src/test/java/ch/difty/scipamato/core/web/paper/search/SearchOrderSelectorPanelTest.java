@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
@@ -36,7 +37,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 
 public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorPanel> {
 
-    private static final long   ID         = 17l;
+    private static final long   ID         = 17L;
     private static final String VALID_NAME = "soName";
     private static final int    OWNER_ID   = 2;
 
@@ -61,7 +62,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         super.setUpHook();
 
         searchOrders = Arrays.asList(searchOrderMock,
-            new SearchOrder(20l, "soName", OWNER_ID, true, searchConditions, null));
+            new SearchOrder(20L, "soName", OWNER_ID, true, searchConditions, null));
         when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class)))
             .thenReturn(searchOrders);
         when(searchOrderMock.getId()).thenReturn(ID);
@@ -99,7 +100,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
     @Test
     public void loadingPage_withSearchOrderWithOverrides_showsShowExcludedStuff() {
-        when(searchOrderMock.getExcludedPaperIds()).thenReturn(Arrays.asList(3l));
+        when(searchOrderMock.getExcludedPaperIds()).thenReturn(Collections.singletonList(3L));
         when(searchOrderMock.isShowExcluded()).thenReturn(false);
 
         getTester().startComponentInPage(makePanel());

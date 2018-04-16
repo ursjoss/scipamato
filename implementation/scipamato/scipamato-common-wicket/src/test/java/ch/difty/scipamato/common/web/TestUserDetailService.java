@@ -1,10 +1,6 @@
 package ch.difty.scipamato.common.web;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,8 +16,8 @@ import lombok.Getter;
 
 /**
  * This service has precedence over the productive implementations of
- * {@UserDetailsService}. It will not be instantiated on production as it is in
- * the test package, so the productive implementation will be the only one.
+ * {@link UserDetailsService}. It will not be instantiated on production as it
+ * is in the test package, so the productive implementation will be the only one.
  *
  * We're using two hard-coded users, ignoring the database entirely.
  *
@@ -40,7 +36,7 @@ public class TestUserDetailService implements UserDetailsService {
 
     public TestUserDetailService() {
         users.put(ADMIN, new User(ADMIN, PASSWORD, Arrays.asList(new Role("ROLE_ADMIN"), new Role("ROLE_USER"))));
-        users.put(USER, new User(USER, PASSWORD, Arrays.asList(new Role("ROLE_USER"))));
+        users.put(USER, new User(USER, PASSWORD, Collections.singletonList(new Role("ROLE_USER"))));
     }
 
     @Override
@@ -69,8 +65,7 @@ public class TestUserDetailService implements UserDetailsService {
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
             final String roleString = StringUtils.collectionToCommaDelimitedString(roles);
-            List<GrantedAuthority> list = AuthorityUtils.commaSeparatedStringToAuthorityList(roleString);
-            return list;
+            return AuthorityUtils.commaSeparatedStringToAuthorityList(roleString);
         }
     }
 

@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author u.joss
  */
 @Slf4j
-public final class PropertyUtils {
+final class PropertyUtils {
 
     private PropertyUtils() {
     }
@@ -30,8 +30,8 @@ public final class PropertyUtils {
      *            the property key, used only for logging purposes
      * @return enum of type {@code T}
      */
-    public static <T extends Enum<T>> T fromProperty(final String propertyValue, final T[] values, final T defaultValue,
-            final String propertyKey) {
+    static <T extends Enum<T>> T fromProperty(final String propertyValue, final T[] values, final T defaultValue,
+                                              final String propertyKey) {
         if (StringUtils.isNotBlank(propertyValue)) {
             for (final T s : values) {
                 if (propertyValue.equalsIgnoreCase(s.name())) {
@@ -60,8 +60,8 @@ public final class PropertyUtils {
      *            the property key, used only for logging purposes
      * @return the int value
      */
-    public static int parseInt(final String propertyValue, final String values, final int defaultValue,
-            final String propertyKey) {
+    static int parseInt(final String propertyValue, final String values, final int defaultValue,
+                        final String propertyKey) {
         int value = defaultValue;
         try {
             value = Integer.parseInt(propertyValue);

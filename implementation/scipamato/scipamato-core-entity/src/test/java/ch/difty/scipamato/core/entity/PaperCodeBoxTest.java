@@ -75,7 +75,7 @@ public class PaperCodeBoxTest {
     public void addingMultipleCodesWithNullOrEmptyList_leavesCodesAsIs() {
         codeBox.addCode(CODE_1F);
         codeBox.addCodes(null);
-        codeBox.addCodes(new ArrayList<Code>());
+        codeBox.addCodes(new ArrayList<>());
         assertThat(codeBox.getCodes()).containsOnly(CODE_1F);
     }
 

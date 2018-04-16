@@ -148,8 +148,8 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
     @Test
     public void makingEntity() throws SQLException {
-        when(rs.getLong(Paper.PAPER.ID.getName())).thenReturn(1l);
-        when(rs.getLong(Paper.PAPER.NUMBER.getName())).thenReturn(2l);
+        when(rs.getLong(Paper.PAPER.ID.getName())).thenReturn(1L);
+        when(rs.getLong(Paper.PAPER.NUMBER.getName())).thenReturn(2L);
         when(rs.getInt(Paper.PAPER.PM_ID.getName())).thenReturn(3);
         when(rs.getString(Paper.PAPER.AUTHORS.getName())).thenReturn("a");
         when(rs.getString(Paper.PAPER.TITLE.getName())).thenReturn("t");
@@ -161,7 +161,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         when(rs.getString(Paper.PAPER.RESULT.getName())).thenReturn("r");
         when(rs.getString(Paper.PAPER.COMMENT.getName())).thenReturn("c");
         when(rs.getArray("codes"))
-            .thenReturn(new MockArray<String>(SQLDialect.POSTGRES, new String[] { "1A", "2B" }, String[].class));
+            .thenReturn(new MockArray<>(SQLDialect.POSTGRES, new String[]{"1A", "2B"}, String[].class));
         when(rs.getInt(Paper.PAPER.VERSION.getName())).thenReturn(4);
         when(rs.getTimestamp(Paper.PAPER.CREATED.getName())).thenReturn(CREATED);
         when(rs.getTimestamp(Paper.PAPER.LAST_MODIFIED.getName())).thenReturn(MODIFIED);
@@ -172,8 +172,8 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
         PublicPaper pp = config.makeEntity(rs);
 
-        assertThat(pp.getId()).isEqualTo(1l);
-        assertThat(pp.getNumber()).isEqualTo(2l);
+        assertThat(pp.getId()).isEqualTo(1L);
+        assertThat(pp.getNumber()).isEqualTo(2L);
         assertThat(pp.getPmId()).isEqualTo(3);
         assertThat(pp.getAuthors()).isEqualTo("a");
         assertThat(pp.getTitle()).isEqualTo("t");
@@ -226,6 +226,12 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     @Test
     public void makingEntity_withNullValueInPM_ID() throws SQLException {
         final String fieldName = Paper.PAPER.PM_ID.getName();
+        validateNullableInteger(fieldName);
+        verify(rs).getInt(fieldName);
+        verifyCodeAggregator();
+    }
+
+    private void validateNullableInteger(String fieldName) throws SQLException {
         validateNullableIntColumn(() -> {
             try {
                 return rs.getInt(fieldName);
@@ -234,21 +240,12 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
             }
             return null;
         });
-        verify(rs).getInt(fieldName);
-        verifyCodeAggregator();
     }
 
     @Test
     public void makingEntity_withNullValueInPublicationYear() throws SQLException {
         final String fieldName = Paper.PAPER.PUBLICATION_YEAR.getName();
-        validateNullableIntColumn(() -> {
-            try {
-                return rs.getInt(fieldName);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return null;
-        });
+        validateNullableInteger(fieldName);
         verify(rs).getInt(fieldName);
         verifyCodeAggregator();
     }
@@ -271,18 +268,18 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
     private void validateNullableIntColumn(Supplier<Integer> suppl) throws SQLException {
         when(suppl.get()).thenReturn(0);
-        validateNullableNumberColumn(suppl);
+        validateNullableNumberColumn();
     }
 
     private void validateNullableLongColumn(Supplier<Long> suppl) throws SQLException {
-        when(suppl.get()).thenReturn(0l);
-        validateNullableNumberColumn(suppl);
+        when(suppl.get()).thenReturn(0L);
+        validateNullableNumberColumn();
     }
 
-    private void validateNullableNumberColumn(Supplier<? extends Number> suppl) throws SQLException {
+    private void validateNullableNumberColumn() throws SQLException {
         when(rs.wasNull()).thenReturn(true);
         when(rs.getArray("codes"))
-            .thenReturn(new MockArray<String>(SQLDialect.POSTGRES, new String[] { "1A", "2B" }, String[].class));
+            .thenReturn(new MockArray<>(SQLDialect.POSTGRES, new String[]{"1A", "2B"}, String[].class));
 
         PublicPaper pp = config.makeEntity(rs);
 

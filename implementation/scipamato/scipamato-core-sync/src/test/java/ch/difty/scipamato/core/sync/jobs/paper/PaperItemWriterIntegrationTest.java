@@ -14,8 +14,8 @@ import ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord;
 
 public class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<PublicPaper, PaperItemWriter> {
 
-    private static final long ID_EXISTING = 1l;
-    private static final long ID_NEW      = -1l;
+    private static final long ID_EXISTING = 1L;
+    private static final long ID_NEW      = -1L;
 
     private PublicPaper newPaper, existingPaper;
 
@@ -30,7 +30,7 @@ public class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegratio
 
         existingPaper = getExistingPaperFromDb(ID_EXISTING);
         assertThat(existingPaper.getNumber()).isEqualTo(existingPaper.getId());
-        existingPaper.setNumber(-2l);
+        existingPaper.setNumber(-2L);
         assertThat(existingPaper.getNumber()).isNotEqualTo(existingPaper.getId());
     }
 
@@ -75,7 +75,7 @@ public class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegratio
     @After
     public void tearDown() {
         dsl.deleteFrom(PAPER)
-            .where(PAPER.ID.lt(0l))
+            .where(PAPER.ID.lt(0L))
             .execute();
         dsl.update(PAPER)
             .set(PAPER.NUMBER, PAPER.ID)

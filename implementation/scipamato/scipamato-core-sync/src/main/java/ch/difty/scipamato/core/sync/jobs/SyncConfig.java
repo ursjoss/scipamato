@@ -19,7 +19,6 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.RowMapper;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.sync.houskeeping.HouseKeeper;
@@ -50,19 +49,19 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     private final int    chunkSize;
 
     protected SyncConfig(final String topic, final int chunkSize, DSLContext jooqCore, DSLContext jooqPublic,
-            DataSource scipoamatoCoreDataSource, JobBuilderFactory jobBuilderFactory,
+            DataSource scipamatoCoreDataSource, JobBuilderFactory jobBuilderFactory,
             StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
         this.topic = topic;
         this.chunkSize = chunkSize;
         this.jooqCore = jooqCore;
         this.jooqPublic = jooqPublic;
-        this.scipamatoCoreDataSource = scipoamatoCoreDataSource;
+        this.scipamatoCoreDataSource = scipamatoCoreDataSource;
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
         this.dateTimeService = dateTimeService;
     }
 
-    protected StepBuilderFactory getStepBuilderFactory() {
+    private StepBuilderFactory getStepBuilderFactory() {
         return stepBuilderFactory;
     }
 
@@ -74,7 +73,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
         return jooqPublic;
     }
 
-    protected DateTimeService getDateTimeService() {
+    private DateTimeService getDateTimeService() {
         return dateTimeService;
     }
 
@@ -110,12 +109,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
         final JdbcCursorItemReader<T> reader = new JdbcCursorItemReader<>();
         reader.setDataSource(scipamatoCoreDataSource);
         reader.setSql(selectSql());
-        reader.setRowMapper(new RowMapper<T>() {
-            @Override
-            public T mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-                return makeEntity(rs);
-            }
-        });
+        reader.setRowMapper((rs, rowNum) -> makeEntity(rs));
         return reader;
     }
 
@@ -138,7 +132,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
         final Timestamp cutOff = Timestamp.valueOf(getDateTimeService().getCurrentDateTime()
             .minusMinutes(graceTime));
         return stepBuilderFactory.get(topic + "PurgingStep")
-            .tasklet(new HouseKeeper<R>(getPurgeDcs(cutOff), graceTime))
+            .tasklet(new HouseKeeper<>(getPurgeDcs(cutOff), graceTime))
             .build();
     }
 

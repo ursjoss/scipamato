@@ -67,7 +67,7 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
 
     @Test
     public void findingById_withFoundEntity_returnsOptionalOfIt() {
-        Long id = 7l;
+        Long id = 7L;
         when(repoMock.findById(id)).thenReturn(paperSlimMock);
 
         Optional<PaperSlim> optPaper = service.findById(id);
@@ -81,7 +81,7 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
 
     @Test
     public void findingById_withNotFoundEntity_returnsOptionalEmpty() {
-        Long id = 7l;
+        Long id = 7L;
         when(repoMock.findById(id)).thenReturn(null);
 
         assertThat(service.findById(id)

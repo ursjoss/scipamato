@@ -787,17 +787,17 @@ public class SearchConditionTest {
         f2.setAuthors("foo");
         assertEquality(f1, f2);
 
-        f1.setSearchConditionId(3l);
+        f1.setSearchConditionId(3L);
         assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode());
         assertThat(f1.equals(f2)).isFalse();
         assertThat(f2.equals(f1)).isFalse();
 
-        f2.setSearchConditionId(4l);
+        f2.setSearchConditionId(4L);
         assertThat(f1.hashCode()).isNotEqualTo(f2.hashCode());
         assertThat(f1.equals(f2)).isFalse();
         assertThat(f2.equals(f1)).isFalse();
 
-        f2.setSearchConditionId(3l);
+        f2.setSearchConditionId(3L);
         assertEquality(f1, f2);
     }
 

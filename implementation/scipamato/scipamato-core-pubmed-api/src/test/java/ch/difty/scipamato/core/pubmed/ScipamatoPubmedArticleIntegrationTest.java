@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.pubmed;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +49,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
         assertArticle239026(sa);
     }
 
-    public static void assertArticle239026(PubmedArticleFacade sa) {
+    static void assertArticle239026(PubmedArticleFacade sa) {
         assertThat(sa.getPmId()).isEqualTo("25395026");
         assertThat(sa.getAuthors()).isEqualTo(
             "Turner MC, Cohen A, Jerrett M, Gapstur SM, Diver WR, Pope CA 3rd, Krewski D, Beckerman BS, Samet JM.");
@@ -249,7 +250,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
         List<String> authorNames = authorList.getAuthor()
             .stream()
             .map(Author::getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName)
-            .flatMap(n -> n.stream())
+            .flatMap(Collection::stream)
             .filter((o) -> o instanceof LastName)
             .map(lm -> ((LastName) lm).getvalue())
             .collect(Collectors.toList());

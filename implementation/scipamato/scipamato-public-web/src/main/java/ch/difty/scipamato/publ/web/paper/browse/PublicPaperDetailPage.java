@@ -39,7 +39,7 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
 
     private final PageReference callingPageRef;
 
-    public PublicPaperDetailPage(final PageParameters parameters) {
+    PublicPaperDetailPage(final PageParameters parameters) {
         this(parameters, null);
     }
 
@@ -49,6 +49,7 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
      * instead, the page will be loaded by number.
      *
      * @param parameters
+     *            page parameters
      * @param callingPageRef
      *            PageReference that will be used to forward to if the user clicks
      *            the back button.
@@ -60,7 +61,7 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         tryLoadingRecord(parameters);
     }
 
-    public PublicPaperDetailPage(final IModel<PublicPaper> paperModel, final PageReference callingPageRef) {
+    PublicPaperDetailPage(final IModel<PublicPaper> paperModel, final PageReference callingPageRef) {
         super(paperModel);
         this.callingPageRef = callingPageRef;
     }
@@ -71,7 +72,7 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
      */
     private void tryLoadingRecord(final PageParameters parameters) {
         final long number = parameters.get(PublicPageParameters.NUMBER.getName())
-            .toLong(0l);
+            .toLong(0L);
         if (number > 0) {
             publicPaperService.findByNumber(number)
                 .ifPresent((p -> setModel(Model.of(p))));
@@ -144,8 +145,8 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         }
     }
 
-    protected BootstrapButton newNavigationButton(String id, GlyphIconType icon,
-            SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
+    private BootstrapButton newNavigationButton(String id, GlyphIconType icon,
+                                                SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
         final BootstrapButton btn = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 

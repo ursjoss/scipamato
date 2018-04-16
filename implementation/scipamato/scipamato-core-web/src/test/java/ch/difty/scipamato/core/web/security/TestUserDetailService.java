@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.web.security;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,8 +17,8 @@ import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails;
 
 /**
  * This service has precedence over the productive implementations of
- * {@UserDetailsService}. It will not be instantiated on production as it is in
- * the test package, so the productive implementation will be the only one.
+ * {@link UserDetailsService}. It will not be instantiated on production as it
+ * is in the test package, so the productive implementation will be the only one.
  *
  * We're using two hard-coded users, ignoring the database entirely.
  *
@@ -36,7 +37,7 @@ public class TestUserDetailService implements UserDetailsService {
 
     public TestUserDetailService() {
         users.put(ADMIN, new User(1, ADMIN, "a", "a", "a", PASSWORD, true, Arrays.asList(Role.ADMIN, Role.USER)));
-        users.put(USER, new User(2, USER, "t", "u", "tu", PASSWORD, true, Arrays.asList(Role.USER)));
+        users.put(USER, new User(2, USER, "t", "u", "tu", PASSWORD, true, Collections.singletonList(Role.USER)));
     }
 
     @Override

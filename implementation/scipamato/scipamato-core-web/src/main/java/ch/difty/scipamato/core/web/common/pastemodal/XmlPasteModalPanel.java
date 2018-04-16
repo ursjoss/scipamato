@@ -43,7 +43,7 @@ public class XmlPasteModalPanel extends Panel {
     }
 
     private Form<Object> newForm(String id) {
-        form = new Form<>(id, new CompoundPropertyModel<Object>(this));
+        form = new Form<>(id, new CompoundPropertyModel<>(this));
         return form;
     }
 
@@ -53,7 +53,7 @@ public class XmlPasteModalPanel extends Panel {
         return contentField;
     }
 
-    protected DropZoneFileUpload newDropZoneFileUpload(String id) {
+    private DropZoneFileUpload newDropZoneFileUpload(String id) {
         DropZoneFileUpload upload = new DropZoneFileUpload(id) {
             private static final long serialVersionUID = 1L;
 

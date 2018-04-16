@@ -41,12 +41,12 @@ public class JooqPaperSlimBySearchOrderRepoTest {
 
     @Test
     public void findingBySearchOrder_withNullSearchOrder_throws() {
-        assertDegenerateSupplierParameter(() -> finder.findBySearchOrder((SearchOrder) null), "searchOrder");
+        assertDegenerateSupplierParameter(() -> finder.findBySearchOrder(null), "searchOrder");
     }
 
     @Test
     public void countingBySearchOrder_withNullSearchOrder_throws() {
-        assertDegenerateSupplierParameter(() -> finder.countBySearchOrder((SearchOrder) null), "searchOrder");
+        assertDegenerateSupplierParameter(() -> finder.countBySearchOrder(null), "searchOrder");
     }
 
     @Test
@@ -67,8 +67,8 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     @Test
     public void getConditions_withSearchOrderWithIntegerSearchTerm() {
         SearchOrder searchOrder = new SearchOrder();
-        SearchCondition sc1 = new SearchCondition(1l);
-        sc1.addSearchTerm(SearchTerm.newSearchTerm(2l, SearchTermType.INTEGER.getId(), 1, "publicationYear", ">2014"));
+        SearchCondition sc1 = new SearchCondition(1L);
+        sc1.addSearchTerm(SearchTerm.newSearchTerm(2L, SearchTermType.INTEGER.getId(), 1, "publicationYear", ">2014"));
         searchOrder.add(sc1);
 
         Condition cond = finder.getConditionsFrom(searchOrder);
@@ -78,8 +78,8 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     @Test
     public void getConditions_withSearchOrderWithAuditSearchTermForCreatedUser() {
         SearchOrder searchOrder = new SearchOrder();
-        SearchCondition sc1 = new SearchCondition(1l);
-        sc1.addSearchTerm(SearchTerm.newSearchTerm(2l, SearchTermType.AUDIT.getId(), 1, "paper.created_by", "mkj"));
+        SearchCondition sc1 = new SearchCondition(1L);
+        sc1.addSearchTerm(SearchTerm.newSearchTerm(2L, SearchTermType.AUDIT.getId(), 1, "paper.created_by", "mkj"));
         searchOrder.add(sc1);
 
         Condition cond = finder.getConditionsFrom(searchOrder);
@@ -98,8 +98,8 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     @Test
     public void getConditions_withSearchOrderWithAuditSearchTermForCreationTimeStamp() {
         SearchOrder searchOrder = new SearchOrder();
-        SearchCondition sc1 = new SearchCondition(1l);
-        SearchTerm st = SearchTerm.newSearchTerm(2l, SearchTermType.AUDIT.getId(), 1, "paper.created",
+        SearchCondition sc1 = new SearchCondition(1L);
+        SearchTerm st = SearchTerm.newSearchTerm(2L, SearchTermType.AUDIT.getId(), 1, "paper.created",
             ">=\"2017-02-01 23:55:12\"");
         sc1.addSearchTerm(st);
         searchOrder.add(sc1);
@@ -111,8 +111,8 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     @Test
     public void getConditions_withSearchOrderWithAuditSearchTermForLastModTimeStamp() {
         SearchOrder searchOrder = new SearchOrder();
-        SearchCondition sc1 = new SearchCondition(1l);
-        SearchTerm st = SearchTerm.newSearchTerm(2l, SearchTermType.AUDIT.getId(), 1, "paper.last_modified",
+        SearchCondition sc1 = new SearchCondition(1L);
+        SearchTerm st = SearchTerm.newSearchTerm(2L, SearchTermType.AUDIT.getId(), 1, "paper.last_modified",
             "<2017-02-01 23:55:12");
         sc1.addSearchTerm(st);
         searchOrder.add(sc1);
@@ -291,15 +291,15 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     private SearchOrder makeSearchOrderWithConditions() {
         SearchOrder searchOrder = new SearchOrder();
 
-        SearchCondition sc1 = new SearchCondition(1l);
-        sc1.addSearchTerm(SearchTerm.newSearchTerm(1l, SearchTermType.STRING.getId(), 1, "authors", "turner"));
+        SearchCondition sc1 = new SearchCondition(1L);
+        sc1.addSearchTerm(SearchTerm.newSearchTerm(1L, SearchTermType.STRING.getId(), 1, "authors", "turner"));
         sc1.addSearchTerm(
-            SearchTerm.newSearchTerm(2l, SearchTermType.INTEGER.getId(), 1, "publicationYear", "2014-2015"));
+            SearchTerm.newSearchTerm(2L, SearchTermType.INTEGER.getId(), 1, "publicationYear", "2014-2015"));
         searchOrder.add(sc1);
 
-        SearchCondition sc2 = new SearchCondition(2l);
+        SearchCondition sc2 = new SearchCondition(2L);
         sc2.addSearchTerm(
-            SearchTerm.newSearchTerm(3l, SearchTermType.BOOLEAN.getId(), 2, "firstAuthorOverridden", "false"));
+            SearchTerm.newSearchTerm(3L, SearchTermType.BOOLEAN.getId(), 2, "firstAuthorOverridden", "false"));
         sc2.addCode(new Code("1F", "C1F", "", false, 1, "CC1", "", 0));
         sc2.addCode(new Code("5S", "C5S", "", false, 5, "CC5", "", 1));
         searchOrder.add(sc2);

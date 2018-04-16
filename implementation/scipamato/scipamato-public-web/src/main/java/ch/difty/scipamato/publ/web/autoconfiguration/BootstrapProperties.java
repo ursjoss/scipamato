@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class BootstrapProperties extends BootstrapSettings {
 
-    public static final String PROPERTY_PREFIX = "wicket.external.agilcoders.bootstrap";
+    public static final String PROPERTY_PREFIX = "wicket.external.agilecoders.bootstrap";
 
     private boolean enabled = true;
 

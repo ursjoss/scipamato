@@ -21,13 +21,13 @@ public class ClickablePropertyColumnTest extends WicketBaseTest {
     @Mock
     private SerializableConsumer<IModel<String>> consumerMock;
 
-    private IModel<String> displayModel = new Model<String>("foo");
-    private String         property     = "prop";
+    private IModel<String> displayModel = new Model<>("foo");
 
     private String clickPerformed = null;
 
     @Test
     public void testOnClick() {
+        String property = "prop";
         ClickablePropertyColumn<String, String> c = new ClickablePropertyColumn<>(displayModel, property, consumerMock);
         Model<String> clickModel = Model.of("bar");
         c.onClick(clickModel);

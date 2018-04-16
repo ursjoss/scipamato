@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.jooq.TableField;
@@ -28,7 +29,7 @@ import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 public class JooqSearchOrderRepoTest extends
         JooqEntityRepoTest<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.core.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter> {
 
-    private static final Long   SAMPLE_ID = 3l;
+    private static final Long   SAMPLE_ID = 3L;
     private static final String LC        = "de";
 
     private JooqSearchOrderRepo repo;
@@ -219,7 +220,7 @@ public class JooqSearchOrderRepoTest extends
             @Override
             protected List<Long> fetchExcludedPaperIdsForSearchOrderWithId(long searchOrderId) {
                 if (searchOrderId == SAMPLE_ID) {
-                    return Arrays.asList(17l, 33l, 42l);
+                    return Arrays.asList(17L, 33L, 42L);
                 } else {
                     return new ArrayList<>();
                 }
@@ -228,7 +229,7 @@ public class JooqSearchOrderRepoTest extends
             @Override
             protected List<Code> fetchCodesForSearchConditionWithId(SearchCondition searchCondition,
                     String languageCode) {
-                return Arrays.asList(new Code("1F", "Code 1F", "", false, 1, "CC 1", "", 0));
+                return Collections.singletonList(new Code("1F", "Code 1F", "", false, 1, "CC 1", "", 0));
             }
 
             @Override
@@ -238,13 +239,13 @@ public class JooqSearchOrderRepoTest extends
 
             @Override
             public List<Long> findConditionIdsWithSearchTerms(Long searchOrderId) {
-                return new ArrayList<Long>();
+                return new ArrayList<>();
             }
 
             @Override
             protected List<SearchCondition> findTermLessConditions(Long searchOrderId,
                     List<Long> conditionIdsWithSearchTerms) {
-                return new ArrayList<SearchCondition>();
+                return new ArrayList<>();
             }
         };
     }
@@ -290,7 +291,7 @@ public class JooqSearchOrderRepoTest extends
         repoSpy.enrichAssociatedEntitiesOf(so, LC);
 
         assertThat(so.getExcludedPaperIds()).hasSize(3)
-            .containsExactly(17l, 33l, 42l);
+            .containsExactly(17L, 33L, 42L);
     }
 
     @Test

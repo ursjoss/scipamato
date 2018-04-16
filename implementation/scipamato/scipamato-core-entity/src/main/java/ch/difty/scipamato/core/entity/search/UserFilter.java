@@ -22,7 +22,7 @@ public class UserFilter extends ScipamatoFilter implements Serializable {
         EMAIL_MASK("emailMask"),
         ENABLED("enabled");
 
-        private String name;
+        private final String name;
 
         UserFilterFields(final String name) {
             this.name = name;

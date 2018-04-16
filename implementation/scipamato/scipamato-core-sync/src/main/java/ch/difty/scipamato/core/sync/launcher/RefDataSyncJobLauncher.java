@@ -39,7 +39,7 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
     private final Job           syncCodeClassJob;
     private final Job           syncCodeJob;
     private final Job           syncPaperJob;
-    protected final JobLauncher jobLauncher;
+    private final JobLauncher jobLauncher;
 
     public RefDataSyncJobLauncher(final JobLauncher jobLauncher,
             @Qualifier("syncCodeClassJob") final Job syncCodeClassJob, @Qualifier("syncCodeJob") final Job syncCodeJob,

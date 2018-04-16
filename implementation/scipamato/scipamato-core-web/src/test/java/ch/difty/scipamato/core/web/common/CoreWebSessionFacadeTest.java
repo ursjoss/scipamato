@@ -12,10 +12,10 @@ import ch.difty.scipamato.core.web.WicketTest;
 
 public class CoreWebSessionFacadeTest extends WicketTest {
 
-    private ScipamatoWebSessionFacade sessionFacade = new CoreWebSessionFacade();
+    private final ScipamatoWebSessionFacade sessionFacade = new CoreWebSessionFacade();
 
     @Test
-    public void gettingLanguageCode_withBritishLocale_returnsBritshCode() {
+    public void gettingLanguageCode_withBritishLocale_returnsBritishCode() {
         getTester().getSession()
             .setLocale(new Locale("en_GB"));
         assertThat(sessionFacade.getLanguageCode()).isEqualTo("en_gb");

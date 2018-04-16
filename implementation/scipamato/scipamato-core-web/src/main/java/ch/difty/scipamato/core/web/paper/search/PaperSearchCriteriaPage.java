@@ -40,7 +40,7 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
     @SpringBean
     private PageFactory pageFactory;
 
-    public PaperSearchCriteriaPage(final IModel<SearchCondition> searchConditionModel, final long searchOrderId) {
+    PaperSearchCriteriaPage(final IModel<SearchCondition> searchConditionModel, final long searchOrderId) {
         super(searchConditionModel);
         getPageParameters().add(CorePageParameters.SEARCH_ORDER_ID.getName(), searchOrderId);
     }
@@ -58,9 +58,11 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
 
             @Override
             protected void onFormSubmit() {
-                searchOrderService.saveOrUpdateSearchCondition(getModelObject(), getSearchOrderId(), getLanguageCode());
-                pageFactory.setResponsePageToPaperSearchPageConsumer(this)
-                    .accept(getPageParameters());
+                Long searchOrderId = getSearchOrderId();
+                if (searchOrderId != null) {
+                    searchOrderService.saveOrUpdateSearchCondition(getModelObject(), searchOrderId, getLanguageCode());
+                    pageFactory.setResponsePageToPaperSearchPageConsumer(this).accept(getPageParameters());
+                }
             }
         };
     }

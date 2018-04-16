@@ -1,9 +1,6 @@
 package ch.difty.scipamato.common.web.component.table.column;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -22,7 +19,7 @@ abstract class LinkIconColumnTestPanel extends Panel {
 
     private final IModel<String> titleModel;
 
-    public LinkIconColumnTestPanel(String id, IModel<String> titleModel) {
+    LinkIconColumnTestPanel(String id, IModel<String> titleModel) {
         super(id);
         this.titleModel = titleModel;
     }
@@ -32,10 +29,10 @@ abstract class LinkIconColumnTestPanel extends Panel {
         super.onInitialize();
 
         final List<IColumn<TestRecord, String>> columns = new ArrayList<>();
-        columns.add(new PropertyColumn<TestRecord, String>(Model.of("name"), "name", "name"));
+        columns.add(new PropertyColumn<>(Model.of("name"), "name", "name"));
         columns.add(makeLinkIconColumn("test"));
 
-        add(new DefaultDataTable<TestRecord, String>("table", columns, new TestDataProvider(), 10));
+        add(new DefaultDataTable<>("table", columns, new TestDataProvider(), 10));
     }
 
     private IColumn<TestRecord, String> makeLinkIconColumn(String id) {
@@ -68,7 +65,7 @@ abstract class LinkIconColumnTestPanel extends Panel {
 
         @Override
         public Iterator<TestRecord> iterator(long first, long count) {
-            return Arrays.asList(new TestRecord(1, "foo"))
+            return Collections.singletonList(new TestRecord(1, "foo"))
                 .iterator();
         }
 
@@ -82,5 +79,5 @@ abstract class LinkIconColumnTestPanel extends Panel {
             return Model.of(record);
         }
 
-    };
+    }
 }

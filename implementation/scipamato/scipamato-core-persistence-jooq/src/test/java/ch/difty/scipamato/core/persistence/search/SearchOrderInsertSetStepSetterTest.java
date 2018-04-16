@@ -109,7 +109,7 @@ public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<
 
     @Test
     public void resettingIdToEntity_withNonNullRecord_setsId() {
-        when(recordMock.getId()).thenReturn(3l);
+        when(recordMock.getId()).thenReturn(3L);
         getSetter().resetIdToEntity(entityMock, recordMock);
         verify(recordMock).getId();
         verify(entityMock).setId(anyLong());

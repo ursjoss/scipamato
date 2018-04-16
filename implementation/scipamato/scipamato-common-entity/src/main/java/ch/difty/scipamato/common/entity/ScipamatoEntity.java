@@ -26,7 +26,7 @@ public class ScipamatoEntity implements Serializable {
         MODIFIED("lastModified"),
         VERSION("version");
 
-        private String name;
+        private final String name;
 
         ScipamatoEntityFields(final String name) {
             this.name = name;

@@ -8,8 +8,8 @@ import ch.difty.scipamato.core.entity.Paper;
 
 public abstract class JasperEntityTest {
 
-    private static final long     ID               = 1l;
-    protected static final long   NUMBER           = 100l;
+    private static final long     ID               = 1L;
+    protected static final long   NUMBER           = 100L;
     protected static final String AUTHORS          = "authors";
     protected static final String TITLE            = "title";
     protected static final String LOCATION         = "location";
@@ -34,7 +34,7 @@ public abstract class JasperEntityTest {
     protected static final String METHOD_STUDY_DESIGN           = "methodStudyDesign";
     protected static final String METHOD_STATISTICS             = "methodStatistics";
     protected static final String METHOD_CONFOUNDERS            = "methodConfounders";
-    protected static final String EXPOSURE_POLLUTANT            = "exposurePolutant";
+    protected static final String EXPOSURE_POLLUTANT            = "exposurePollutant";
     protected static final String EXPOSURE_ASSESSMENT           = "exposureAssessment";
     protected static final String RESULT_MEASURED_OUTCOME       = "resultMeasuredOutcome";
     protected static final String RESULT_EXPOSURE_RANGE         = "resultExposureRange";
@@ -45,7 +45,7 @@ public abstract class JasperEntityTest {
     protected static final String POPULATION_PLACE_LABEL        = "populationPlaceLabel";
     protected static final String POPULATION_PARTICIPANTS_LABEL = "populationParticipantsLabel";
     protected static final String POPULATION_DURATION_LABEL     = "populationDurationLabel";
-    protected static final String EXPOSURE_POLLUTANT_LABEL      = "exposurePolutantLabel";
+    protected static final String EXPOSURE_POLLUTANT_LABEL      = "exposurePollutantLabel";
     protected static final String EXPOSURE_ASSESSMENT_LABEL     = "exposureAssessmentLabel";
     protected static final String RESULT_EXPOSURE_RANGE_LABEL   = "resultExposureRangeLabel";
     protected static final String METHOD_STATISTICS_LABEL       = "methodStatisticsLabel";
@@ -60,7 +60,7 @@ public abstract class JasperEntityTest {
     protected static final String FIRST_AUTHOR     = "firstAuthor";
     protected static final int    PUBLICATION_YEAR = 2017;
 
-    protected Paper p = new Paper();
+    protected final Paper p = new Paper();
 
     @Before
     public void setUp() {

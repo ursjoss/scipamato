@@ -33,14 +33,7 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
 
     @Override
     public String getDisplayValue() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append(firstAuthor)
-            .append(" (")
-            .append(publicationYear)
-            .append("): ");
-        sb.append(title)
-            .append(".");
-        return sb.toString();
+        return firstAuthor + " (" + publicationYear + "): " + title + ".";
     }
 
 }

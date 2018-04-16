@@ -50,14 +50,13 @@ public class SearchOrderModelTest extends ModelTest {
     protected class SearchOrderFilterMatcher implements ArgumentMatcher<SearchOrderFilter> {
         private int ownerIncludingGlobal;
 
-        public SearchOrderFilterMatcher(int ownerIncludingGlobal) {
+        SearchOrderFilterMatcher(int ownerIncludingGlobal) {
             this.ownerIncludingGlobal = ownerIncludingGlobal;
         }
 
         @Override
         public boolean matches(SearchOrderFilter f) {
-            return f != null && f.getOwnerIncludingGlobal() != null && f.getOwnerIncludingGlobal()
-                .intValue() == ownerIncludingGlobal && f.getNameMask() == null && f.getOwner() == null
+            return f != null && f.getOwnerIncludingGlobal() != null && f.getOwnerIncludingGlobal() == ownerIncludingGlobal && f.getNameMask() == null && f.getOwner() == null
                     && f.getGlobal() == null;
         }
     }
@@ -67,7 +66,7 @@ public class SearchOrderModelTest extends ModelTest {
 
         private int maxRows;
 
-        public PaginationRequestWithMaxRows(int maxRows) {
+        PaginationRequestWithMaxRows(int maxRows) {
             this.maxRows = maxRows;
         }
 

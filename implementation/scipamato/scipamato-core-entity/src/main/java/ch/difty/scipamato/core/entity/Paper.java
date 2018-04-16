@@ -75,10 +75,10 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
      * on this entity is a shortcut that only works as long as we only have a single
      * strategy.
      *
-     * @see PubmedAuthorParser
+     * See also PubmedAuthorParser
      */
-    private static final String AUTHOR_REGEX = "^" + RE_WW + "(" + RE_S_WW + "){0,}(," + RE_S_WW + "(" + RE_S_WW
-            + "){0,}){0,}(;" + RE_S_WW + "(" + RE_S_WW + "){0,}){0,1}\\.$";
+    private static final String AUTHOR_REGEX = "^" + RE_WW + "(" + RE_S_WW + ")*(," + RE_S_WW + "(" + RE_S_WW
+            + ")*)*(;" + RE_S_WW + "(" + RE_S_WW + ")*)?\\.$";
 
     /**
      * Regex to validate DOIs. Does not capture the full range of possible DOIs, but
@@ -99,7 +99,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
      * The validation pattern is simplified and seems to catch roughly 74.4M out of
      * 74.9M DOIs. The uncaught ones seem to be old and hopefully don't turn up
      * within SciPaMaTo. Otherwise additional regex patterns catching more of the
-     * remaining ones can be found in the blogpost (thanks to Andrew Gilmartin)
+     * remaining ones can be found in the blog post (thanks to Andrew Gilmartin)
      * referenced below:
      *
      * @see <a href=
@@ -145,7 +145,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
         LAST_MOD("paper.last_modified"),
         LAST_MOD_BY("paper.last_modified_by");
 
-        private String name;
+        private final String name;
 
         PaperFields(final String name) {
             this.name = name;
@@ -258,14 +258,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
 
     @Override
     public String getDisplayValue() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append(firstAuthor)
-            .append(" (")
-            .append(publicationYear)
-            .append("): ");
-        sb.append(title)
-            .append(".");
-        return sb.toString();
+        return firstAuthor + " (" + publicationYear + "): " + title + ".";
     }
 
 }

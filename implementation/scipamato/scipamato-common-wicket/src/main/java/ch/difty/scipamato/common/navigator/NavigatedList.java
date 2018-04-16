@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import ch.difty.scipamato.common.NullArgumentException;
@@ -23,7 +24,7 @@ class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
 
     private final List<T> items = new ArrayList<>();
 
-    private volatile int index = 0;
+    private volatile AtomicInteger index = new AtomicInteger();
 
     /**
      * Instantiate the {@link NavigatedList} with the provided collection of items.
@@ -31,7 +32,7 @@ class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
      * @param items
      *            collection of items, must not be null or empty.
      */
-    public NavigatedList(final Collection<? extends T> items) {
+    NavigatedList(final Collection<? extends T> items) {
         if (items == null)
             throw new NullArgumentException("items");
         if (items.isEmpty())
@@ -54,7 +55,7 @@ class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
 
     @Override
     public T getItemWithFocus() {
-        return items.get(index);
+        return items.get(index.get());
     }
 
     @Override
@@ -65,29 +66,29 @@ class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
         if (idx == -1)
             throw new IllegalArgumentException(
                     "Cannot set focus to item that is not part of the managed list (item " + item + ").");
-        this.index = idx;
+        this.index.set(idx);
     }
 
     @Override
     public void next() {
         if (hasNext())
-            index++;
+            index.incrementAndGet();
     }
 
     @Override
     public void previous() {
         if (hasPrevious())
-            index--;
+            index.decrementAndGet();
     }
 
     @Override
     public boolean hasNext() {
-        return index < items.size() - 1;
+        return index.get() < items.size() - 1;
     }
 
     @Override
     public boolean hasPrevious() {
-        return index > 0;
+        return index.get() > 0;
     }
 
 }

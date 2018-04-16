@@ -37,7 +37,7 @@ public class ScipamatoPdfResourceHandlerTest {
 
     @Test
     public void testWithExplicitConfig() {
-        ClusterablePdfExporterConfiguration c = new Builder("hp", 1l).withAuthor("a")
+        ClusterablePdfExporterConfiguration c = new Builder("hp", 1L).withAuthor("a")
             .build();
         ScipamatoPdfResourceHandler h = new ScipamatoPdfResourceHandler(c);
         validateDefaultConfig(h);

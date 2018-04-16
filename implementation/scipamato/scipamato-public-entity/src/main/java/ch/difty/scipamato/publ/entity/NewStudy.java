@@ -25,7 +25,7 @@ public class NewStudy extends PublicEntity {
         HEADLINE("headline"),
         DESCRIPTION("description");
 
-        private String name;
+        private final String name;
 
         NewStudyFields(final String name) {
             this.name = name;

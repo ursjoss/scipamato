@@ -42,7 +42,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
     @SpringBean
     private PageFactory pageFactory;
 
-    public SearchOrderPanel(String id, IModel<SearchOrder> model) {
+    SearchOrderPanel(String id, IModel<SearchOrder> model) {
         super(id, model);
     }
 
@@ -58,7 +58,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
         queueNewButton("addSearchCondition", pageFactory.newPaperSearchCriteriaPage(),
             () -> Model.of(new SearchCondition()));
 
-        SearchConditionProvider p = new SearchConditionProvider(new PropertyModel<List<SearchCondition>>(getModel(),
+        SearchConditionProvider p = new SearchConditionProvider(new PropertyModel<>(getModel(),
                 SearchOrder.SearchOrderFields.CONDITIONS.getName()));
         searchConditions = new BootstrapDefaultDataTable<>("searchConditions", makeTableColumns(), p, 10);
         searchConditions.setOutputMarkupId(true);
@@ -88,7 +88,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
         });
     }
 
-    protected boolean isSearchOrderIdDefined() {
+    boolean isSearchOrderIdDefined() {
         return getModelObject() != null && getModelObject().getId() != null;
     }
 

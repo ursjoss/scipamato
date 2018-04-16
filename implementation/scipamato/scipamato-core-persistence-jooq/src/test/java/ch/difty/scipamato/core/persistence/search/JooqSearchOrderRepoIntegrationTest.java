@@ -15,7 +15,7 @@ import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
 public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     private static final Integer RECORD_COUNT_PREPOPULATED = 4;
-    private static final Long    MAX_ID_PREPOPULATED       = 4l;
+    private static final Long    MAX_ID_PREPOPULATED       = 4L;
     private static final String  LC                        = "de";
 
     @Autowired
@@ -38,7 +38,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
 
     @Test
     public void findingById_withNonExistingId_returnsNull() {
-        assertThat(repo.findById(-1l)).isNull();
+        assertThat(repo.findById(-1L)).isNull();
     }
 
     @Test
@@ -47,7 +47,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         SearchCondition searchCondition = new SearchCondition();
         searchCondition.setAuthors("foo");
         so.add(searchCondition);
-        so.addExclusionOfPaperWithId(4l);
+        so.addExclusionOfPaperWithId(4L);
         assertThat(so.getId()).isNull();
         assertThat(so.getSearchConditions()
             .get(0)
@@ -68,7 +68,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         assertThat(saved.getSearchConditions()
             .get(0)
             .getSearchConditionId()).isNotNull()
-                .isGreaterThan(5l);
+                .isGreaterThan(5L);
         assertThat(saved.getSearchConditions()
             .get(0)
             .getStringSearchTerms()
@@ -76,7 +76,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
             .next()
             .getId()).isNotNull();
 
-        assertThat(saved.getExcludedPaperIds()).containsOnly(4l);
+        assertThat(saved.getExcludedPaperIds()).containsOnly(4L);
     }
 
     private SearchOrder makeMinimalSearchOrder() {
@@ -128,7 +128,7 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
     @Test
     public void enrichingAssociatedEntities_hasConditionsAndTerms() {
         final SearchOrder so = new SearchOrder();
-        so.setId(1l);
+        so.setId(1L);
         repo.enrichAssociatedEntitiesOf(so, LC);
 
         assertThat(so.getSearchConditions()
@@ -152,15 +152,15 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
     @Test
     public void enrichingAssociatedEntities_hasExcludedIds() {
         final SearchOrder so = new SearchOrder();
-        so.setId(4l);
+        so.setId(4L);
         repo.enrichAssociatedEntitiesOf(so, LC);
 
         assertThat(so.getExcludedPaperIds()).hasSize(1)
-            .containsExactly(1l);
+            .containsExactly(1L);
     }
 
     @Test
-    public void addAndModifiyAndDeleteSearchConditions() {
+    public void addAndModifyAndDeleteSearchConditions() {
         // make search order with single condition (string search term)
         SearchOrder initialSearchOrder = makeMinimalSearchOrder();
         initialSearchOrder.add(newConditionWithAuthors("foo"));

@@ -28,6 +28,7 @@ public class Sort implements Iterable<ch.difty.scipamato.common.persistence.pagi
      * Instantiate {@link Sort} with a predefined list of {@link SortProperty} items
      *
      * @param sortProperties
+     *     the sort specification
      */
     public Sort(final List<SortProperty> sortProperties) {
         checkPreconditionsFor(sortProperties);
@@ -69,7 +70,7 @@ public class Sort implements Iterable<ch.difty.scipamato.common.persistence.pagi
         return this.sortProperties.iterator();
     }
 
-    public SortProperty getSortPropertyFor(final String propertyName) {
+    SortProperty getSortPropertyFor(final String propertyName) {
         for (final SortProperty sortProperty : this.sortProperties)
             if (sortProperty.getName()
                 .equals(propertyName))

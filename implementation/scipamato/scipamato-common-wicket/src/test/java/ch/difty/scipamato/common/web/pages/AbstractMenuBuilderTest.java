@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
@@ -89,7 +88,7 @@ public class AbstractMenuBuilderTest {
         NavbarButton<Void> theLink = links.get(0);
 
         assertThat(theLink.getDefaultModelObjectAsString()).isEqualTo("");
-        assertThat(((Label) theLink.get("label")).getDefaultModelObject()).isEqualTo("foobar");
+        assertThat(theLink.get("label").getDefaultModelObject()).isEqualTo("foobar");
         assertThat(((Icon) theLink.get("icon")).getType()).isEqualTo(GlyphIconType.volumedown);
     }
 
@@ -115,7 +114,7 @@ public class AbstractMenuBuilderTest {
         NavbarExternalLink theLink = links.get(0);
 
         assertThat(theLink.getDefaultModelObjectAsString()).isEqualTo("http://test.com");
-        assertThat(((Label) theLink.get("label")).getDefaultModelObject()).isEqualTo("mylabel");
+        assertThat(theLink.get("label").getDefaultModelObject()).isEqualTo("mylabel");
         assertThat(((Icon) theLink.get("icon")).getType()).isEqualTo(GlyphIconType.adjust);
     }
 
@@ -129,14 +128,14 @@ public class AbstractMenuBuilderTest {
         NavbarExternalLink theLink = links.get(0);
 
         assertThat(theLink.getDefaultModelObjectAsString()).isEqualTo("http://foo.com");
-        assertThat(((Label) theLink.get("label")).getDefaultModelObject()).isEqualTo("otherlabel");
+        assertThat(theLink.get("label").getDefaultModelObject()).isEqualTo("otherlabel");
         Icon icon = (Icon) theLink.get("icon");
         assertThat(icon).isNotNull();
         assertThat(icon.getType()).isNull();
     }
 
     private static class TestMenuBuilder extends AbstractMenuBuilder {
-        protected TestMenuBuilder(ApplicationProperties applicationProperties) {
+        TestMenuBuilder(ApplicationProperties applicationProperties) {
             super(applicationProperties);
         }
 

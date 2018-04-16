@@ -3,10 +3,7 @@ package ch.difty.scipamato.core.web.paper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.model.IModel;
@@ -32,23 +29,23 @@ import ch.difty.scipamato.core.persistence.PaperSlimService;
 @SpringBootTest
 public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P extends AbstractPaperSlimProvider<F>> {
 
-    protected static final int PAGE_SIZE = 3;
+    static final int PAGE_SIZE = 3;
 
     @Autowired
     protected ScipamatoApplication application;
 
     @Mock
-    protected PaperSlimService serviceMock;
+    PaperSlimService serviceMock;
     @Mock
     protected PaperService     paperServiceMock;
     @Mock
-    protected PaperSlim        entityMock;
+    private PaperSlim        entityMock;
     @Mock
     protected Paper            paperMock;
 
     protected P               provider;
-    protected List<PaperSlim> pageOfSlimPapers;
-    protected List<Paper>     pageOfPapers;
+    List<PaperSlim> pageOfSlimPapers;
+    List<Paper>     pageOfPapers;
 
     protected abstract F getFilter();
 
@@ -93,7 +90,7 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     @Test
     public void iterating_withNoRecords_returnsNoRecords() {
         // reset the service mock
-        pageOfSlimPapers = Arrays.asList();
+        pageOfSlimPapers = Collections.emptyList();
         localFixture();
 
         Iterator<PaperSlim> it = provider.iterator(0, 3);

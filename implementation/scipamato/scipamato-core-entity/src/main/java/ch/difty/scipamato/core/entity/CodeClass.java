@@ -22,7 +22,7 @@ public class CodeClass extends IdScipamatoEntity<Integer> implements CodeClassLi
         NAME("name"),
         DESCRIPTION("description");
 
-        private String name;
+        private final String name;
 
         CodeClassFields(final String name) {
             this.name = name;
@@ -46,11 +46,7 @@ public class CodeClass extends IdScipamatoEntity<Integer> implements CodeClassLi
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("CodeClass[id=");
-        builder.append(getId());
-        builder.append("]");
-        return builder.toString();
+        return "CodeClass[id=" + getId() + "]";
     }
 
     @Override

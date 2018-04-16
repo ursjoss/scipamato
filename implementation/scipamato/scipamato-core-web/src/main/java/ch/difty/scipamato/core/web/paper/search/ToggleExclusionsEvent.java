@@ -9,9 +9,9 @@ import ch.difty.scipamato.common.web.event.WicketEvent;
  *
  * @author u.joss
  */
-public class ToggleExclusionsEvent extends WicketEvent {
+class ToggleExclusionsEvent extends WicketEvent {
 
-    public ToggleExclusionsEvent(final AjaxRequestTarget target) {
+    ToggleExclusionsEvent(final AjaxRequestTarget target) {
         super(target);
     }
 

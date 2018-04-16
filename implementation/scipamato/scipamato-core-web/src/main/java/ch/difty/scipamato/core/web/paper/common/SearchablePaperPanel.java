@@ -37,7 +37,7 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
 
     private static final long serialVersionUID = 1L;
 
-    public SearchablePaperPanel(String id, IModel<SearchCondition> model) {
+    protected SearchablePaperPanel(String id, IModel<SearchCondition> model) {
         super(id, model, Mode.SEARCH);
     }
 
@@ -88,7 +88,7 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
 
     @Override
     protected DataTable<PaperAttachment, String> newAttachmentTable(String id) {
-        PaperAttachmentProvider provider = new PaperAttachmentProvider(Model.ofList(new ArrayList<PaperAttachment>()));
+        PaperAttachmentProvider provider = new PaperAttachmentProvider(Model.ofList(new ArrayList<>()));
         DataTable<PaperAttachment, String> attachments = new BootstrapDefaultDataTable<>(id, new ArrayList<>(),
                 provider, 10);
         attachments.setVisible(false);

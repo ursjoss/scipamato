@@ -14,5 +14,5 @@ public interface SyncJobLauncher {
      *
      * @return {@link SyncJobResult}
      */
-    public SyncJobResult launch();
+    SyncJobResult launch();
 }

@@ -110,10 +110,10 @@ public class SortMapperTest {
     @Test
     public void mapping_withWrongFieldName_throwsInvalidDataAccessApiUsageException()
             throws NoSuchFieldException, SecurityException, IllegalAccessException {
-        sortProps.add(new SortProperty("inexistingField", Direction.ASC));
+        sortProps.add(new SortProperty("inexistentField", Direction.ASC));
         when(sortSpecMock.iterator()).thenReturn(sortProps.iterator());
         doThrow(new NoSuchFieldException()).when(mapperSpy)
-            .getTableFieldFor(tableMock, "INEXISTING_FIELD");
+            .getTableFieldFor(tableMock, "INEXISTENT_FIELD");
 
         try {
             mapperSpy.map(sortSpecMock, tableMock);
@@ -121,11 +121,11 @@ public class SortMapperTest {
         } catch (Exception ex) {
             assertThat(ex).isInstanceOf(InvalidDataAccessApiUsageException.class)
                 .hasMessage(
-                    "Could not find table field: inexistingField; nested exception is java.lang.NoSuchFieldException");
+                    "Could not find table field: inexistentField; nested exception is java.lang.NoSuchFieldException");
         }
 
         verify(sortSpecMock).iterator();
-        verify(mapperSpy).getTableFieldFor(tableMock, "INEXISTING_FIELD");
+        verify(mapperSpy).getTableFieldFor(tableMock, "INEXISTENT_FIELD");
     }
 
     @Test
@@ -150,7 +150,7 @@ public class SortMapperTest {
     }
 
     @Test
-    public void mapping_withNullTable_throws() throws NoSuchFieldException, SecurityException, IllegalAccessException {
+    public void mapping_withNullTable_throws() throws SecurityException {
         sortProps.add(new SortProperty("illegalField", Direction.ASC));
         when(sortSpecMock.iterator()).thenReturn(sortProps.iterator());
 

@@ -148,7 +148,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
     @Override
     public void onInitialize() {
         super.onInitialize();
-        form = new Form<T>("form", new CompoundPropertyModel<T>(getModel())) {
+        form = new Form<T>("form", new CompoundPropertyModel<>(getModel())) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -327,7 +327,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
                 return new TabPanel6(panelId, form.getModel());
             }
         });
-        queue(new ClientSideBootstrapTabbedPanel<ITab>(tabId, tabs));
+        queue(new ClientSideBootstrapTabbedPanel<>(tabId, tabs));
     }
 
     /*
@@ -476,7 +476,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             super(id);
         }
 
-        public AbstractTabPanel(String id, IModel<?> model) {
+        AbstractTabPanel(String id, IModel<?> model) {
             super(id, model);
         }
 
@@ -556,7 +556,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
     private class TabPanel1 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        public TabPanel1(String id, IModel<T> model) {
+        TabPanel1(String id, IModel<T> model) {
             super(id, model);
         }
 
@@ -589,7 +589,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
     private class TabPanel2 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        public TabPanel2(String id, IModel<T> model) {
+        TabPanel2(String id, IModel<T> model) {
             super(id, model);
         }
 
@@ -615,7 +615,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
         private static final String CODES_CLASS_BASE_NAME = "codesClass";
 
-        public TabPanel3(String id, IModel<T> model) {
+        TabPanel3(String id, IModel<T> model) {
             super(id, model);
         }
 
@@ -652,7 +652,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             String id = field.getId();
             StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
             queue(new Label(id + LABEL_TAG, labelModel));
-            field.add(new PropertyValidator<String>());
+            field.add(new PropertyValidator<>());
             field.setOutputMarkupId(true);
             field.setLabel(labelModel);
             field.setEnabled(isSearchMode());
@@ -697,7 +697,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)
                 .withNoneSelectedText(noneSelectedModel.getObject())
                 .withLiveSearch(true);
-            final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<Code>(CODES_CLASS_BASE_NAME + id,
+            final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<>(CODES_CLASS_BASE_NAME + id,
                     model, choices, choiceRenderer).with(config);
             multiSelect.add(new AttributeModifier("data-width", "fit"));
             queue(multiSelect);
@@ -708,7 +708,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
     private class TabPanel4 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        public TabPanel4(String id, IModel<T> model) {
+        TabPanel4(String id, IModel<T> model) {
             super(id, model);
         }
 
@@ -740,7 +740,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
     private class TabPanel5 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        public TabPanel5(String id, IModel<T> model) {
+        TabPanel5(String id, IModel<T> model) {
             super(id, model);
         }
 
@@ -758,7 +758,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
     private class TabPanel6 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        public TabPanel6(String id, IModel<T> model) {
+        TabPanel6(String id, IModel<T> model) {
             super(id, model);
         }
 

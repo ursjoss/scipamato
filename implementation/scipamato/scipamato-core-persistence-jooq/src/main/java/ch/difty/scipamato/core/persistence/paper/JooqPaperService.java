@@ -1,9 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -100,7 +97,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     @Override
     public Optional<Paper> findByNumber(final Long number, final String languageCode) {
-        final List<Paper> papers = getRepository().findByNumbers(Arrays.asList(number), languageCode);
+        final List<Paper> papers = getRepository().findByNumbers(Collections.singletonList(number), languageCode);
         if (!papers.isEmpty()) {
             final Paper paper = papers.get(0);
 

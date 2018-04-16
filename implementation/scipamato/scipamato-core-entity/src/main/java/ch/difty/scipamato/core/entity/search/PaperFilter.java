@@ -27,7 +27,7 @@ public class PaperFilter extends ScipamatoFilter implements PaperSlimFilter {
         PUB_YEAR_FROM("publicationYearFrom"),
         PUB_YEAR_UNTIL("publicationYearUntil");
 
-        private String name;
+        private final String name;
 
         PaperFilterFields(final String name) {
             this.name = name;

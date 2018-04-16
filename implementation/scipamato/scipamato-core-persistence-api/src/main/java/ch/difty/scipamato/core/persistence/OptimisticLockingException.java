@@ -22,7 +22,7 @@ public class OptimisticLockingException extends RuntimeException {
         sb.append("Record in table '")
             .append(tableName)
             .append("' has been modified prior to the ")
-            .append(type.descr)
+            .append(type.description)
             .append(" attempt. Aborting....");
         if (record != null)
             sb.append(" [")
@@ -43,10 +43,10 @@ public class OptimisticLockingException extends RuntimeException {
         UPDATE("update"),
         DELETE("delete");
 
-        private final String descr;
+        private final String description;
 
-        Type(final String descr) {
-            this.descr = descr;
+        Type(final String description) {
+            this.description = description;
         }
     }
 }

@@ -39,7 +39,7 @@ public class PaperAttachment extends IdScipamatoEntity<Integer> {
         SIZE("size"),
         SIZE_KB("sizeKiloBytes");
 
-        private String name;
+        private final String name;
 
         PaperAttachmentFields(final String name) {
             this.name = name;
@@ -92,15 +92,7 @@ public class PaperAttachment extends IdScipamatoEntity<Integer> {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("PaperAttachment[paperId=");
-        builder.append(paperId);
-        builder.append(",name=");
-        builder.append(name);
-        builder.append(",id=");
-        builder.append(getId());
-        builder.append("]");
-        return builder.toString();
+        return "PaperAttachment[paperId=" + paperId + ",name=" + name + ",id=" + getId() + "]";
     }
 
 }

@@ -145,7 +145,7 @@ public class PaperListPage extends BasePage<Void> {
 
     private void queueXmlPasteModalPanelAndLink(String modalId, String linkId) {
         queue(newXmlPasteModalPanel(modalId));
-        queue(newXmlPasteModealLink(linkId));
+        queue(newXmlPasteModalLink(linkId));
     }
 
     private ModalWindow newXmlPasteModalPanel(String modalId) {
@@ -166,7 +166,7 @@ public class PaperListPage extends BasePage<Void> {
         return xmlPasteModalWindow;
     }
 
-    private BootstrapAjaxLink<Void> newXmlPasteModealLink(String linkId) {
+    private BootstrapAjaxLink<Void> newXmlPasteModalLink(String linkId) {
         BootstrapAjaxLink<Void> link = new BootstrapAjaxLink<Void>(linkId, Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
@@ -189,8 +189,9 @@ public class PaperListPage extends BasePage<Void> {
      * @param pubmedContent
      *            the xml content as string
      * @param target
+     *            the AjaxRequestTarget
      */
-    protected void onXmlPasteModalPanelClose(final String pubmedContent, final AjaxRequestTarget target) {
+    void onXmlPasteModalPanelClose(final String pubmedContent, final AjaxRequestTarget target) {
         ServiceResult result = null;
         if (!Strings.isNullOrEmpty(pubmedContent)) {
             result = pubmedImportService.persistPubmedArticlesFromXml(pubmedContent);
@@ -203,8 +204,9 @@ public class PaperListPage extends BasePage<Void> {
 
     /**
      * @param result
-     * @param target,
-     *            can be null if called from constructor
+     *            the {@link ServiceResult} to be translated
+     * @param target
+     *            the AjaxRequestTarget, may be null if called from constructor
      */
     private void translateServiceResultMessagesToLocalizedUserMessages(final ServiceResult result,
             final AjaxRequestTarget target) {

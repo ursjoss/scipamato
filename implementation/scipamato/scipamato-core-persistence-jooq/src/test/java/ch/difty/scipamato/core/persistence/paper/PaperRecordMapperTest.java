@@ -11,8 +11,8 @@ import ch.difty.scipamato.core.persistence.RecordMapperTest;
 
 public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> {
 
-    public static final Long    ID                      = 1l;
-    public static final Long    NUMBER                  = 10l;
+    public static final Long    ID                      = 1L;
+    public static final Long    NUMBER                  = 10L;
     public static final int     PM_ID                   = 2;
     public static final String  DOI                     = "101000/1234";
     public static final String  AUTHORS                 = "authors";
@@ -28,7 +28,7 @@ public class PaperRecordMapperTest extends RecordMapperTest<PaperRecord, Paper> 
     public static final String  POPULATION_PARTICIPANTS = "population  participants";
     public static final String  POPULATION_DURATION     = "population duration";
     public static final String  EXPOSURE_POLLUTANT      = "exposure pollutant";
-    public static final String  EXPOSURE_ASSESSMENT     = "exporsure assessment";
+    public static final String  EXPOSURE_ASSESSMENT     = "exposure assessment";
     public static final String  METHOD_STUDY_DESIGN     = "method study design";
     public static final String  METHOD_OUTCOME          = "method outcome";
     public static final String  METHOD_STATISTICS       = "method statistics";

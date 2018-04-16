@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.Component;
@@ -52,7 +53,7 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
     private final List<Code>      codesOfClass8 = new ArrayList<>();
 
     // See https://issues.apache.org/jira/browse/WICKET-2790
-    protected void applyTestHackWithNstedMultiPartForms() {
+    protected void applyTestHackWithNestedMultiPartForms() {
         MockHttpServletRequest servletRequest = getTester().getRequest();
         servletRequest.setUseMultiPartContentType(true);
     }
@@ -122,7 +123,7 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
         verify(codeServiceMock, times(times)).findCodesOfClass(CodeClassId.CC8, LOCALE);
     }
 
-    protected void assertTextAreaWithLabel(String path, String modelValue, String labelText) {
+    private void assertTextAreaWithLabel(String path, String modelValue, String labelText) {
         assertComponentWithLabel(path, TextArea.class, modelValue, labelText);
     }
 
@@ -130,14 +131,14 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
         assertComponentWithLabel(path, TextField.class, modelValue, labelText);
     }
 
-    protected void assertMultiselectWithLabel(String path, Code modelValue, String labelText) {
+    private void assertMultiselectWithLabel(String path, Code modelValue, String labelText) {
         getTester().assertComponent(path, BootstrapMultiSelect.class);
-        getTester().assertModelValue(path, Arrays.asList(modelValue));
+        getTester().assertModelValue(path, Collections.singletonList(modelValue));
         getTester().assertLabel(path + "Label", labelText);
     }
 
-    protected void assertComponentWithLabel(String path, Class<? extends Component> componentClass, Object modelValue,
-            String labelText) {
+    private void assertComponentWithLabel(String path, Class<? extends Component> componentClass, Object modelValue,
+                                          String labelText) {
         getTester().assertComponent(path, componentClass);
         getTester().assertModelValue(path, modelValue);
         getTester().assertLabel(path + "Label", labelText);

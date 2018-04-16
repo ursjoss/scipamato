@@ -48,6 +48,7 @@ public class HidingInternalsCodeAggregatorTest {
             // filtering out internal codes
             new Object[] { new String[] {"1A", "1N", "3B", "3Z", "5B", "8Z"}, new String[] {"1A", "3B", "5abc"}},
         };
+        // @formatter:on
     }
 
     @Test
@@ -61,7 +62,7 @@ public class HidingInternalsCodeAggregatorTest {
 
     @SuppressWarnings("unused")
     private Object[] paramsCodePopulation() {
-        /**
+        /*
          * input            String[]: the code array to be loaded
          * codesPopulation   Short[]: the expected resulting array of code ids for codesPopulation
          */
@@ -82,8 +83,8 @@ public class HidingInternalsCodeAggregatorTest {
             new Object[] { new String[] { "3A", "3B", "3C" }, new Short[] { P1, P2 } },
             new Object[] { new String[] { "3A", "3C" }, new Short[] { P1, P2 } },
             new Object[] { new String[] { "3B", "3C" }, new Short[] { P1, P2 } }
-            // @formatter:on
         };
+        // @formatter:on
     }
 
     @Test
@@ -95,7 +96,7 @@ public class HidingInternalsCodeAggregatorTest {
 
     @SuppressWarnings("unused")
     private Object[] paramsCodeStudyDesign() {
-        /**
+        /*
          * input String[]: the code array to be loaded codesStudyDesign Short[]: the
          * expected resulting array of code ids for codesStudyDesign
          */
@@ -144,7 +145,7 @@ public class HidingInternalsCodeAggregatorTest {
 
     @SuppressWarnings("unused")
     private Object[] paramsAll() {
-        /**
+        /*
          * input String[]: the code array to be loaded codesPopulation Short[]: the
          * expected resulting array of code ids for codesPopulation aggregatedCodes
          * String[]: the expected resulting array of (partially) aggregated codes
@@ -163,16 +164,17 @@ public class HidingInternalsCodeAggregatorTest {
             new Object[] { new String[] {"5A"}, new String[] {"5abc"}, new Short[] {}, new Short[] {S1}},
             new Object[] { new String[] {"3A", "3B", "3C", "3Z", "5A", "5B", "5H", "5M"}, new String[] {"3A", "3B", "3C", "5H", "5M", "5abc"}, new Short[] {P1, P2}, new Short[] {S1, S2, S3}},
         };
+        // @formatter:on
     }
     
     @Test
     @Parameters(method = "paramsAll")
-    public void gettingAllCodeTypes(String[] input, String[] codes, Short[] codesPoupulation, Short[] codesStudyDesign) {
+    public void gettingAllCodeTypes(String[] input, String[] codes, Short[] codesPopulation, Short[] codesStudyDesign) {
         String[] internals = new String[] {"1N","1U","1Z","3U","3Z","4U","4X","4Y","4Z","5A","5B","5C","5D","5K","6P","6Z","7M","7Z","8Z"};
         ca.setInternalCodes(Arrays.asList(internals));
         ca.load(input);
         assertThat(ca.getAggregatedCodes()).isEqualTo(codes);
-        assertThat(ca.getCodesPopulation()).isEqualTo(codesPoupulation);
+        assertThat(ca.getCodesPopulation()).isEqualTo(codesPopulation);
         assertThat(ca.getCodesStudyDesign()).isEqualTo(codesStudyDesign);
     }
 }

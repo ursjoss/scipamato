@@ -300,15 +300,15 @@ public class JooqPaperRepo extends
         final ch.difty.scipamato.core.db.tables.Paper p = PAPER.as("p");
         final ch.difty.scipamato.core.db.tables.Paper pn = PAPER.as("pn");
 
-        final Long freeNumber = getDsl().select(p.NUMBER.plus(1l))
+        final Long freeNumber = getDsl().select(p.NUMBER.plus(1L))
             .from(p)
             .leftOuterJoin(pn)
-            .on(pn.NUMBER.eq(p.NUMBER.plus(1l)))
+            .on(pn.NUMBER.eq(p.NUMBER.plus(1L)))
             .where(pn.NUMBER.isNull()
                 .and(p.NUMBER.ge(minimumPaperNumberToBeRecycled)))
             .limit(1)
             .fetchOneInto(Long.class);
-        return freeNumber != null ? freeNumber.longValue() : minimumPaperNumberToBeRecycled;
+        return freeNumber != null ? freeNumber : minimumPaperNumberToBeRecycled;
     }
 
     @Override

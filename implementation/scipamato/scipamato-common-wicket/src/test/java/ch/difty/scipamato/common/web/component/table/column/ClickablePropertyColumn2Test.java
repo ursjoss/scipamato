@@ -22,16 +22,17 @@ public class ClickablePropertyColumn2Test {
     @Mock
     private SerializableSupplier<Integer>                   supplierMock;
 
-    private IModel<String> displayModel = new Model<String>("foo");
-    private String         sort         = "sort";
-    private String         property     = "prop";
+    private IModel<String> displayModel  = new Model<>("foo");
+    private String         property      = "prop";
+    private final int      suppliedValue = 5;
+    private Model<String>  clickModel    = Model.of("bar");
 
     private ClickablePropertyColumn2<String, String, Integer> c;
-    private final int                                         suppliedValue = 5;
-    Model<String>                                             clickModel    = Model.of("bar");
 
     @Test
     public void testOnClick_withSortProperty() {
+        String sort = "sort";
+
         when(supplierMock.get()).thenReturn(suppliedValue);
 
         c = new ClickablePropertyColumn2<>(displayModel, sort, property, biConsumerMock, supplierMock);

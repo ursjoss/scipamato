@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  * {@link MatchType} to apply the concrete search logic to the database.
  * <p>
  * Each token returned by the class offers the lexed {@code rawData}, an
- * sql-ized form of it already containing the wild-card indicator (%) as well as
+ * sqlized form of it already containing the wild-card indicator (%) as well as
  * an indication of whether the search applies positively (e.g.
  * {@code like 'foo%'}) or negatively ({@code not like 'foo%'}).
  * <p>
@@ -69,7 +69,7 @@ public class StringSearchTerm extends AbstractSearchTerm {
         this(null, fieldName, rawSearchTerm);
     }
 
-    StringSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+    private StringSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
         this(null, searchConditionId, fieldName, rawSearchTerm);
     }
 
@@ -89,12 +89,12 @@ public class StringSearchTerm extends AbstractSearchTerm {
         REGEX,
         LENGTH,
         NONE,
-        UNSUPPORTED;
+        UNSUPPORTED
     }
 
     public enum TokenType {
         // Token types must not have underscores. Otherwise the named capturing groups
-        // in the constructed regexes will break
+        // in the constructed regex terms will break
         NOTREGEX("-s/(.+)/", MatchType.REGEX, 2, false, false, true),
         REGEX("s/(.+)/", MatchType.REGEX, 4, false, false, false),
         WHITESPACE(RE_S + "+", MatchType.NONE, 5, false, false, false),
@@ -153,8 +153,8 @@ public class StringSearchTerm extends AbstractSearchTerm {
         private final boolean  wcRight;
         public final boolean   negate;
 
-        private TokenType(final String pattern, final MatchType matchType, final int group, final boolean wcLeft,
-                final boolean wcRight, final boolean negate) {
+        TokenType(final String pattern, final MatchType matchType, final int group, final boolean wcLeft,
+                  final boolean wcRight, final boolean negate) {
             this.pattern = pattern;
             this.group = group;
             this.matchType = matchType;
@@ -174,16 +174,17 @@ public class StringSearchTerm extends AbstractSearchTerm {
     }
 
     /**
-     * The token holds the raw and the sql-ized form of the search string. It also
+     * The token holds the raw and the sqlized form of the search string. It also
      * indicates whether the search should be inverted ({@code not})
      */
     public static class Token implements Serializable {
         private static final long serialVersionUID = 1L;
 
         public final TokenType type;
-        public final boolean   negate;
-        public final String    rawData;
         public final String    sqlData;
+
+        final boolean negate;
+        final String  rawData;
 
         public Token(final TokenType type, final String data) {
             this.type = type;

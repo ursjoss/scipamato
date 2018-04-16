@@ -6,7 +6,7 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -42,9 +42,9 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
     protected SearchOrderPanel makePanel() {
         SearchCondition sc = new SearchCondition();
         sc.addSearchTerm(SearchTerm.newSearchTerm(1, SearchTermType.STRING.getId(), 1, "authors", "foo"));
-        final List<SearchCondition> conditions = Arrays.asList(sc);
+        final List<SearchCondition> conditions = Collections.singletonList(sc);
         final SearchOrder searchOrder = new SearchOrder(conditions);
-        searchOrder.setId(5l);
+        searchOrder.setId(5L);
         return new SearchOrderPanel(PANEL_ID, Model.of(searchOrder));
     }
 

@@ -108,7 +108,7 @@ public class PaperReview extends JasperEntity {
     }
 
     private boolean isPubYearMissingOrPseudoMissing(final Integer pubYear) {
-        return pubYear == null || pubYear.intValue() == 0;
+        return pubYear == null || pubYear == 0;
     }
 
 }

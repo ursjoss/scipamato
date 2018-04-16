@@ -45,7 +45,7 @@ public class JooqDslTransactionIntegrationTest extends JooqBaseIntegrationTest {
             for (long i = 0; i < 2; i++)
                 dsl.insertInto(PAPER)
                     .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
-                    .set(PAPER.NUMBER, 1000l)
+                    .set(PAPER.NUMBER, 1000L)
                     .set(PAPER.AUTHORS, "authors")
                     .set(PAPER.FIRST_AUTHOR, "firstAuthor")
                     .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
@@ -107,7 +107,7 @@ public class JooqDslTransactionIntegrationTest extends JooqBaseIntegrationTest {
                 // The first insertion will work
                 dsl.insertInto(PAPER)
                     .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
-                    .set(PAPER.NUMBER, 1000l)
+                    .set(PAPER.NUMBER, 1000L)
                     .set(PAPER.AUTHORS, "authors")
                     .set(PAPER.FIRST_AUTHOR, "firstAuthor")
                     .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)
@@ -126,8 +126,8 @@ public class JooqDslTransactionIntegrationTest extends JooqBaseIntegrationTest {
                         // The second insertion shouldn't work
                         for (long i = 0; i < 2; i++)
                             dsl.insertInto(PAPER)
-                                .set(PAPER.ID, 3l)
-                                .set(PAPER.NUMBER, 1001l)
+                                .set(PAPER.ID, 3L)
+                                .set(PAPER.NUMBER, 1001L)
                                 .set(PAPER.AUTHORS, "authors")
                                 .set(PAPER.FIRST_AUTHOR, "firstAuthor")
                                 .set(PAPER.FIRST_AUTHOR_OVERRIDDEN, false)

@@ -30,7 +30,7 @@ public class ScipamatoUserDetailServiceTest {
 
     @Mock
     private UserService userServiceMock;
-    private User        user = new User(10, "un", "fn", "ln", "em", "pw");
+    private final User  user = new User(10, "un", "fn", "ln", "em", "pw");
 
     @Before
     public void setUp() {

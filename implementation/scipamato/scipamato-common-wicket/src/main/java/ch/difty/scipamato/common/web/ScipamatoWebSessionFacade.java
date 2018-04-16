@@ -12,11 +12,11 @@ public interface ScipamatoWebSessionFacade {
     /**
      * @return the language Code of the session's locale
      */
-    public String getLanguageCode();
+    String getLanguageCode();
 
     /**
      * @return the {@link ItemNavigator} for paper ids
      */
-    public ItemNavigator<Long> getPaperIdManager();
+    ItemNavigator<Long> getPaperIdManager();
 
 }

@@ -36,14 +36,14 @@ public class SearchOrderChangeEventTest {
 
     @Test
     public void usingWithExcludedPaperId_doesAddExclusionId() {
-        e = new SearchOrderChangeEvent(targetMock).withExcludedPaperId(5l);
-        assertThat(e.getExcludedId()).isEqualTo(5l);
+        e = new SearchOrderChangeEvent(targetMock).withExcludedPaperId(5L);
+        assertThat(e.getExcludedId()).isEqualTo(5L);
     }
 
     @Test
     public void usingWithDroppedConditionId_doesAddConditionId() {
-        e = new SearchOrderChangeEvent(targetMock).withDroppedConditionId(5l);
-        assertThat(e.getDroppedConditionId()).isEqualTo(5l);
+        e = new SearchOrderChangeEvent(targetMock).withDroppedConditionId(5L);
+        assertThat(e.getDroppedConditionId()).isEqualTo(5L);
     }
 
     @Test
@@ -54,17 +54,17 @@ public class SearchOrderChangeEventTest {
 
     @Test
     public void requestingNewSearchOrder_withExcludedPaperIdAndNewSearchOrderRequest_newSearchOrderRequestWins() {
-        e = new SearchOrderChangeEvent(targetMock).withExcludedPaperId(5l)
+        e = new SearchOrderChangeEvent(targetMock).withExcludedPaperId(5L)
             .requestingNewSearchOrder();
         assertThat(e.isNewSearchOrderRequested()).isTrue();
         assertThat(e.getExcludedId()).isNull();
     }
 
     @Test
-    public void requestingNewSearchOrder_withNewSearchOrderRequestAndthenExcludedPaperId_exclusionWins() {
+    public void requestingNewSearchOrder_withNewSearchOrderRequestAndThenExcludedPaperId_exclusionWins() {
         e = new SearchOrderChangeEvent(targetMock).requestingNewSearchOrder()
-            .withExcludedPaperId(5l);
-        assertThat(e.getExcludedId()).isEqualTo(5l);
+            .withExcludedPaperId(5L);
+        assertThat(e.getExcludedId()).isEqualTo(5L);
         assertThat(e.isNewSearchOrderRequested()).isFalse();
     }
 

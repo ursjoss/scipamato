@@ -10,7 +10,7 @@ import com.giffing.wicket.spring.boot.context.extensions.WicketApplicationInitCo
 import de.agilecoders.wicket.core.Bootstrap;
 
 @ApplicationInitExtension
-@ConditionalOnProperty(prefix = "wicket.external.agilcoders.bootstrap", value = "enabled", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "wicket.external.agilecoders.bootstrap", value = "enabled", matchIfMissing = true)
 @ConditionalOnClass(BootstrapConfig.class)
 public class BootstrapConfig implements WicketApplicationInitConfiguration {
 

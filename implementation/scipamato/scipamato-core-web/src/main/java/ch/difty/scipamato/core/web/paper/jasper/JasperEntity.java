@@ -23,7 +23,7 @@ public abstract class JasperEntity implements Serializable {
      *            label
      * @return label, never null
      */
-    protected String na(final String label, String value) {
+    String na(final String label, String value) {
         if (value == null || value.isEmpty())
             return "";
         else

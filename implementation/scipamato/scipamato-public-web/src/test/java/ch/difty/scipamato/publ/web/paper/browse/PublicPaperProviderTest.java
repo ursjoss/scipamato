@@ -46,7 +46,7 @@ public class PublicPaperProviderTest {
     @Autowired
     private ScipamatoPublicApplication application;
 
-    private List<PublicPaper> papers = new ArrayList<>();
+    private final List<PublicPaper> papers = new ArrayList<>();
 
     @Before
     public void setUp() {
@@ -54,9 +54,9 @@ public class PublicPaperProviderTest {
         provider = new PublicPaperProvider(filterMock, 20);
         provider.setService(serviceMock);
 
-        papers.add(new PublicPaper(1l, 1l, 1000, "authors1", "auths", "title1", "location1", "journal1", 2016, "goals1",
+        papers.add(new PublicPaper(1L, 1L, 1000, "authors1", "auths", "title1", "location1", "journal1", 2016, "goals1",
                 "methods1", "population1", "result1", "comment1"));
-        papers.add(new PublicPaper(2l, 2l, 1002, "authors2", "auths", "title2", "location2", "journal2", 2017, "goals2",
+        papers.add(new PublicPaper(2L, 2L, 1002, "authors2", "auths", "title2", "location2", "journal2", 2017, "goals2",
                 "methods2", "population2", "result2", "comment2"));
 
         when(serviceMock.countByFilter(filterMock)).thenReturn(2);
@@ -94,19 +94,19 @@ public class PublicPaperProviderTest {
     @Test
     public void newModel() {
         PublicPaper pp = PublicPaper.builder()
-            .id(5l)
+            .id(5L)
             .build();
         IModel<PublicPaper> model = provider.model(pp);
         assertThat(model).isNotNull();
         assertThat(model.getObject()).isNotNull()
             .isInstanceOf(PublicPaper.class);
         assertThat(model.getObject()
-            .getId()).isEqualTo(5l);
+            .getId()).isEqualTo(5L);
     }
 
     @Test
     public void gettingIterator() {
-        assertThat(provider.iterator(0l, 10l)).hasSize(2);
+        assertThat(provider.iterator(0L, 10L)).hasSize(2);
         verify(serviceMock).findPageByFilter(eq(filterMock), isA(PaginationContext.class));
     }
 
@@ -121,9 +121,9 @@ public class PublicPaperProviderTest {
         provider.setSort("title", SortOrder.DESCENDING);
         when(serviceMock.findPageOfNumbersByFilter(eq(filterMock),
             argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC"))))
-                .thenReturn(Arrays.asList(5l, 3l, 17l));
+                .thenReturn(Arrays.asList(5L, 3L, 17L));
         List<Long> ids = provider.findAllPaperNumbersByFilter();
-        assertThat(ids).containsExactly(5l, 3l, 17l);
+        assertThat(ids).containsExactly(5L, 3L, 17L);
         verify(serviceMock).findPageOfNumbersByFilter(eq(filterMock),
             argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")));
     }

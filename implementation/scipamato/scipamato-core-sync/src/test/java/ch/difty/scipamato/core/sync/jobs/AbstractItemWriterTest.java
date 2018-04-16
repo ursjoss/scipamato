@@ -29,7 +29,7 @@ public abstract class AbstractItemWriterTest<T, W extends ItemWriter<T>> {
 
     @Test
     public void writingEmptyList_doesNotInteractWithJooq() throws Exception {
-        writer.write(new ArrayList<T>());
+        writer.write(new ArrayList<>());
         verifyNoMoreInteractions(dslContextMock);
     }
 

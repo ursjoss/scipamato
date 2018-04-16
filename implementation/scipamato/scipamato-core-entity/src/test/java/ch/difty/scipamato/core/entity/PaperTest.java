@@ -41,8 +41,8 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void setUp() {
         super.setUp();
 
-        p.setId(1l);
-        p.setNumber(2l);
+        p.setId(1L);
+        p.setNumber(2L);
         p.setDoi(VALID_DOI);
         p.setPmId(1000);
         p.setAuthors(VALID_AUTHORS);
@@ -81,7 +81,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @Test
     public void validatingPaper_withNegativeNumber_fails() {
-        p.setNumber(-1l);
+        p.setNumber(-1L);
         validateAndAssertFailure(NUMBER, -1L, "{javax.validation.constraints.Min.message}");
     }
 
@@ -436,7 +436,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
                 Arrays.asList(new PaperAttachment(), new PaperAttachment()));
         p.setAttachments(attachments);
         assertThat(p.getAttachments()).hasSize(2);
-        p.setAttachments(new ArrayList<PaperAttachment>());
+        p.setAttachments(new ArrayList<>());
         assertThat(p.getAttachments()).isEmpty();
     }
 
@@ -446,20 +446,20 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     // delegation: Paper's hashCode method delegates to an abstract method' on codes
     public void equalityAndHashCode() {
         Paper p1 = new Paper();
-        p1.setId(1l);
+        p1.setId(1L);
 
         assertThat(p1.equals(p1)).isTrue();
         assertThat(p1.equals(null)).isFalse();
         assertThat(p1.equals(Integer.valueOf(1))).isFalse();
 
         Paper p2 = new Paper();
-        p2.setId(1l);
+        p2.setId(1L);
         assertThat(p1.equals(p2)).isTrue();
         assertThat(p1.hashCode()).isEqualTo(p2.hashCode());
-        p2.setId(2l);
+        p2.setId(2L);
         assertThat(p1.equals(p2)).isFalse();
         assertThat(p1.hashCode()).isNotEqualTo(p2.hashCode());
-        p2.setId(1l);
+        p2.setId(1L);
         p2.setPublicationYear(2017);
         assertThat(p1.equals(p2)).isFalse();
         assertThat(p1.hashCode()).isNotEqualTo(p2.hashCode());

@@ -21,7 +21,7 @@ public abstract class ScipamatoItemWriter<T> implements ItemWriter<T> {
     private final DSLContext dslContext;
     private final String     topic;
 
-    public ScipamatoItemWriter(final DSLContext jooqDslContextPublic, final String topic) {
+    protected ScipamatoItemWriter(final DSLContext jooqDslContextPublic, final String topic) {
         this.dslContext = AssertAs.notNull(jooqDslContextPublic, "jooqDslContextPublic");
         this.topic = AssertAs.notNull(topic, "topic");
     }
@@ -31,11 +31,11 @@ public abstract class ScipamatoItemWriter<T> implements ItemWriter<T> {
     }
 
     @Override
-    public void write(final List<? extends T> items) throws Exception {
+    public void write(final List<? extends T> items) {
         int changeCount = 0;
         for (final T i : items)
             changeCount += executeUpdate(i);
-        log.info("{}-sync: Sucessfully synched {} {}{}", topic, changeCount, topic, (changeCount == 1 ? "" : "s"));
+        log.info("{}-sync: Successfully synced {} {}{}", topic, changeCount, topic, (changeCount == 1 ? "" : "s"));
     }
 
     protected abstract int executeUpdate(T i);

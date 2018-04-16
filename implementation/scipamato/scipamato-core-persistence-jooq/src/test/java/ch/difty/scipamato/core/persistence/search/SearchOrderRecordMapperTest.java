@@ -11,7 +11,7 @@ import ch.difty.scipamato.core.persistence.RecordMapperTest;
 
 public class SearchOrderRecordMapperTest extends RecordMapperTest<SearchOrderRecord, SearchOrder> {
 
-    static final Long    ID     = 2l;
+    static final Long    ID     = 2L;
     static final String  NAME   = "soName";
     static final Integer OWNER  = 1;
     static final boolean GLOBAL = true;

@@ -170,8 +170,8 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
     public void clickingOnShowXmlPastePanelButton_opensModalWindow() {
         getTester().startPage(getPageClass());
 
-        String b = "searchForm:";
-        getTester().executeAjaxEvent("searchForm:showXmlPasteModalLink", "click");
+        String b = "searchForm";
+        getTester().executeAjaxEvent(b + ":showXmlPasteModalLink", "click");
 
         b = "xmlPasteModal";
         getTester().assertComponent(b, ModalWindow.class);
@@ -232,8 +232,8 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
     @Test
     public void clickingOnResultTitle_forwardsToPaperEntryPage() {
         final List<PaperSlim> list = new ArrayList<>();
-        long number = 10l;
-        list.add(new PaperSlim(1l, number, "author", 2018, "title"));
+        long number = 10L;
+        list.add(new PaperSlim(1L, number, "author", 2018, "title"));
         when(paperSlimServiceMock.countByFilter(isA(PaperFilter.class))).thenReturn(list.size());
         when(paperSlimServiceMock.findPageByFilter(isA(PaperFilter.class), isA(PaginationRequest.class)))
             .thenReturn(list);

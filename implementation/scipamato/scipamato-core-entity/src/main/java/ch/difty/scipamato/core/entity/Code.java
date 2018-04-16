@@ -38,7 +38,7 @@ public class Code extends CoreEntity implements CodeLike {
         INTERNAL("internal"),
         SORT("sort");
 
-        private String name;
+        private final String name;
 
         CodeFields(final String name) {
             this.name = name;
@@ -98,12 +98,7 @@ public class Code extends CoreEntity implements CodeLike {
 
     @Override
     public String getDisplayValue() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append(name);
-        sb.append(" (")
-            .append(code)
-            .append(")");
-        return sb.toString();
+        return name + " (" + code + ")";
     }
 
 }

@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
 
     private static final String FILE_NAME = "paper_review.pdf";
 
-    private static final Long NUMBER = 15l;
+    private static final Long NUMBER = 15L;
 
     private PaperReviewDataSource ds;
     private ReportHeaderFields    rhf = newReportHeaderFields();
@@ -109,8 +110,8 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
 
     @Test
     public void instantiatingWithProvider_returnsPdfDataSourceWithOneRecord() throws JRException {
-        when(dataProviderMock.size()).thenReturn(1l);
-        when(dataProviderMock.findAllPapersByFilter()).thenReturn(Arrays.asList(paperMock));
+        when(dataProviderMock.size()).thenReturn(1L);
+        when(dataProviderMock.findAllPapersByFilter()).thenReturn(Collections.singletonList(paperMock));
 
         ds = new PaperReviewDataSource(dataProviderMock, rhf, pdfExporterConfigMock);
         assertDataSource(FILE_NAME);

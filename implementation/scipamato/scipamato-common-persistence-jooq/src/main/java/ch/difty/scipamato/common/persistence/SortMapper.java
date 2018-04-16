@@ -44,11 +44,7 @@ public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends 
             return querySortFields;
         }
 
-        final Iterator<Sort.SortProperty> sortProperties = sortSpecification.iterator();
-
-        while (sortProperties.hasNext()) {
-            final Sort.SortProperty sortProperty = sortProperties.next();
-
+        for (final Sort.SortProperty sortProperty : sortSpecification) {
             final String propName = sortProperty.getName();
             final Sort.Direction sortDirection = sortProperty.getDirection();
 
@@ -63,23 +59,19 @@ public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends 
     private TableField<R, T> getTableField(final String fieldName, final TI table) {
         AssertAs.notNull(table, "table");
 
-        TableField<R, T> tableField = null;
         try {
-            final String columnName = deCamelCase(fieldName);
-            tableField = getTableFieldFor(table, columnName);
+            return getTableFieldFor(table, deCamelCase(fieldName));
         } catch (NoSuchFieldException | IllegalAccessException ex) {
             final String errorMessage = String.format("Could not find table field: %s", fieldName);
             throw new InvalidDataAccessApiUsageException(errorMessage, ex);
         }
-
-        return tableField;
     }
 
     /**
      * reflection based field extraction so we can stub it out in tests
      */
     @SuppressWarnings("unchecked")
-    protected TableField<R, T> getTableFieldFor(final TI table, final String columnName)
+    TableField<R, T> getTableFieldFor(final TI table, final String columnName)
             throws NoSuchFieldException, IllegalAccessException {
         return (TableField<R, T>) table.getClass()
             .getField(columnName)
