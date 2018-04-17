@@ -2,9 +2,8 @@ package ch.difty.scipamato.core.logic.parsing;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
-
 import nl.jqno.equalsverifier.EqualsVerifier;
+import org.junit.Test;
 
 public class AuthorTest {
 
@@ -22,7 +21,8 @@ public class AuthorTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(Author.class)
+        EqualsVerifier
+            .forClass(Author.class)
             .verify();
     }
 }

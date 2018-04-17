@@ -8,9 +8,9 @@ import ch.difty.scipamato.common.entity.CodeClassLike;
  * Generic service interface of code class like classes, i.e. for code classes
  * in core vs public.
  *
- * @author u.joss
  * @param <T>
- *            CodeClass like entities
+ *     CodeClass like entities
+ * @author u.joss
  */
 public interface CodeClassLikeService<T extends CodeClassLike> {
 
@@ -19,7 +19,7 @@ public interface CodeClassLikeService<T extends CodeClassLike> {
      * provided languageCode
      *
      * @param languageCode
-     *        language code, e.g. 'en' or 'de'
+     *     language code, e.g. 'en' or 'de'
      * @return a list of code classes of Type {@code T}
      */
     List<T> find(String languageCode);

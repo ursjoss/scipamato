@@ -1,8 +1,7 @@
 package ch.difty.scipamato.common.web.pages;
 
-import org.apache.wicket.Page;
-
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
+import org.apache.wicket.Page;
 
 /**
  * This MenuBuilder with the implementing class serves in breaking a dependency
@@ -25,10 +24,10 @@ public interface MenuBuilder {
      * Adds the menu items to the Navbar.
      *
      * @param navbar
-     *            navbar to add the menu items to
+     *     navbar to add the menu items to
      * @param page
-     *            the base page the navbar resides on. Also contains the property
-     *            definitions for the label string resource
+     *     the base page the navbar resides on. Also contains the property
+     *     definitions for the label string resource
      */
     void addMenuLinksTo(Navbar navbar, Page page);
 

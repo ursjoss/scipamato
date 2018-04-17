@@ -2,11 +2,7 @@ package ch.difty.scipamato.publ.persistence.paper;
 
 import static ch.difty.scipamato.publ.db.tables.Paper.PAPER;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -58,7 +54,8 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
         }
 
         if (filter.getPopulationCodes() != null) {
-            final Short[] ids = filter.getPopulationCodes()
+            final Short[] ids = filter
+                .getPopulationCodes()
                 .stream()
                 .map(PopulationCode::getId)
                 .toArray(Short[]::new);
@@ -66,7 +63,8 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
         }
 
         if (filter.getStudyDesignCodes() != null) {
-            final Short[] ids = filter.getStudyDesignCodes()
+            final Short[] ids = filter
+                .getStudyDesignCodes()
                 .stream()
                 .map(StudyDesignCode::getId)
                 .toArray(Short[]::new);
@@ -74,9 +72,9 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
         }
 
         if (filter.getCodesOfClass1() != null || filter.getCodesOfClass2() != null || filter.getCodesOfClass3() != null
-                || filter.getCodesOfClass4() != null || filter.getCodesOfClass5() != null
-                || filter.getCodesOfClass6() != null || filter.getCodesOfClass7() != null
-                || filter.getCodesOfClass8() != null) {
+            || filter.getCodesOfClass4() != null || filter.getCodesOfClass5() != null
+            || filter.getCodesOfClass6() != null || filter.getCodesOfClass7() != null
+            || filter.getCodesOfClass8() != null) {
             final List<String> allCodes = collectAllCodesFrom(filter);
             if (!allCodes.isEmpty())
                 conditions.add(codeCondition(allCodes));
@@ -85,9 +83,11 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
     }
 
     private boolean hasNoOrIdenticalPubYearUntil(final PublicPaperFilter filter) {
-        return filter.getPublicationYearUntil() == null || filter.getPublicationYearFrom()
-            .intValue() == filter.getPublicationYearUntil()
-                .intValue();
+        return filter.getPublicationYearUntil() == null || filter
+                                                               .getPublicationYearFrom()
+                                                               .intValue() == filter
+                                                               .getPublicationYearUntil()
+                                                               .intValue();
     }
 
     /*
@@ -96,7 +96,7 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
      * search term, as was done in core with the SearchTerm hierarchy.
      */
     private void addTokenizedConditions(final List<Condition> conditions, final String mask,
-            final TableField<PaperRecord, String> field) {
+        final TableField<PaperRecord, String> field) {
         final Matcher m = QUOTED.matcher(mask);
         boolean done = tokenizeQuoted(field, m, conditions);
         if (!done)
@@ -104,7 +104,7 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
     }
 
     private boolean tokenizeQuoted(final TableField<PaperRecord, String> field, final Matcher m,
-            final List<Condition> conditions) {
+        final List<Condition> conditions) {
         String term = null;
         while (m.find()) {
             term = m.group(QUOTED_GROUP_INDEX);
@@ -115,7 +115,7 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
     }
 
     private void tokenizeUnquoted(final String mask, final TableField<PaperRecord, String> field,
-            final List<Condition> conditions) {
+        final List<Condition> conditions) {
         if (!mask.contains(" ")) {
             conditions.add(field.likeIgnoreCase("%" + mask + "%"));
         } else {
@@ -144,7 +144,8 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
         if (codes == null)
             return Collections.emptyList();
         else {
-            return codes.stream()
+            return codes
+                .stream()
                 .filter(Objects::nonNull)
                 .map(Code::getCode)
                 .collect(Collectors.toList());
@@ -160,9 +161,11 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
      * </pre>
      */
     private Condition codeCondition(final List<String> codeCollection) {
-        final List<Field<String>> convCodes = codeCollection.stream()
+        final List<Field<String>> convCodes = codeCollection
+            .stream()
             .filter(Objects::nonNull)
-            .map(str -> DSL.val(str)
+            .map(str -> DSL
+                .val(str)
                 .cast(PostgresDataType.TEXT))
             .collect(Collectors.toList());
         return PAPER.CODES.contains(DSL.array(convCodes));

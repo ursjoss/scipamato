@@ -3,9 +3,7 @@ package ch.difty.scipamato.core.persistence.codeclass;
 import static ch.difty.scipamato.core.entity.CodeClass.CodeClassFields.NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;

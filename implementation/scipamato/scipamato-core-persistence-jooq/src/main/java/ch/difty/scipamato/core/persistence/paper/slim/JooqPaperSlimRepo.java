@@ -23,15 +23,15 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSear
 
 @Repository
 public class JooqPaperSlimRepo extends
-        JooqReadOnlyRepo<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter>
-        implements PaperSlimRepository {
+    JooqReadOnlyRepo<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter>
+    implements PaperSlimRepository {
 
     private final PaperSlimBackedSearchOrderRepository searchOrderRepository;
 
     public JooqPaperSlimRepo(@Qualifier("dslContext") DSLContext dsl, PaperSlimRecordMapper mapper,
-            JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapper,
-            GenericFilterConditionMapper<PaperFilter> filterConditionMapper,
-            PaperSlimBackedSearchOrderRepository searchOrderRepository, ApplicationProperties applicationProperties) {
+        JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapper,
+        GenericFilterConditionMapper<PaperFilter> filterConditionMapper,
+        PaperSlimBackedSearchOrderRepository searchOrderRepository, ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, applicationProperties);
         this.searchOrderRepository = AssertAs.notNull(searchOrderRepository, "searchOrderRepository");
     }

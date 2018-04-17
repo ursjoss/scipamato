@@ -12,20 +12,20 @@ public interface PubmedArticleFacade {
      * {@link PubmedBookArticle}.
      *
      * @param pubmedArticleOrPubmedBookArticle
-     *            and object that should either be an instance of
-     *            {@link PubmedArticle} or {@link PubmedBookArticle}
+     *     and object that should either be an instance of
+     *     {@link PubmedArticle} or {@link PubmedBookArticle}
      * @return a derivative of {@link AbstractPubmedArticleFacade}
      * @throws IllegalArgumentException
-     *             - if the parameter is of any other class than one of the two
-     *             managed ones.
+     *     - if the parameter is of any other class than one of the two
+     *     managed ones.
      */
     static PubmedArticleFacade newPubmedArticleFrom(final java.lang.Object pubmedArticleOrPubmedBookArticle) {
         if (pubmedArticleOrPubmedBookArticle instanceof PubmedArticle)
             return new ScipamatoPubmedArticle((PubmedArticle) pubmedArticleOrPubmedBookArticle);
         else if (pubmedArticleOrPubmedBookArticle instanceof PubmedBookArticle)
             return new ScipamatoPubmedBookArticle((PubmedBookArticle) pubmedArticleOrPubmedBookArticle);
-        throw new IllegalArgumentException("Cannot instantiate ScipamatoArticle from provided object "
-                + pubmedArticleOrPubmedBookArticle.toString());
+        throw new IllegalArgumentException(
+            "Cannot instantiate ScipamatoArticle from provided object " + pubmedArticleOrPubmedBookArticle.toString());
     }
 
     String getPmId();

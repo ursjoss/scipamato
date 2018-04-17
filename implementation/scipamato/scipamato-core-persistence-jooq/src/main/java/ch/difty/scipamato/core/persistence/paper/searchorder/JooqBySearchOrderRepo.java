@@ -7,11 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.jooq.Condition;
-import org.jooq.DSLContext;
-import org.jooq.Record1;
-import org.jooq.SelectConditionStep;
-import org.jooq.SortField;
+import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -22,12 +18,7 @@ import ch.difty.scipamato.core.db.Tables;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
-import ch.difty.scipamato.core.entity.search.AuditSearchTerm;
-import ch.difty.scipamato.core.entity.search.BooleanSearchTerm;
-import ch.difty.scipamato.core.entity.search.IntegerSearchTerm;
-import ch.difty.scipamato.core.entity.search.SearchCondition;
-import ch.difty.scipamato.core.entity.search.SearchOrder;
-import ch.difty.scipamato.core.entity.search.StringSearchTerm;
+import ch.difty.scipamato.core.entity.search.*;
 import ch.difty.scipamato.core.persistence.ConditionalSupplier;
 import ch.difty.scipamato.core.persistence.EntityRecordMapper;
 
@@ -35,17 +26,16 @@ import ch.difty.scipamato.core.persistence.EntityRecordMapper;
  * Common abstract base class for the paper or paperSlim specific repository
  * implementations to find those by {@link SearchOrder}.
  *
- * @author u.joss
- *
  * @param <T>
- *            derivatives of {@link IdScipamatoEntity}, should actually be Paper
- *            or PaperSlims
+ *     derivatives of {@link IdScipamatoEntity}, should actually be Paper
+ *     or PaperSlims
  * @param <M>
- *            derivatives of {@link EntityRecordMapper} specific to Papers or
- *            PaperSlims
+ *     derivatives of {@link EntityRecordMapper} specific to Papers or
+ *     PaperSlims
+ * @author u.joss
  */
 public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M extends EntityRecordMapper<PaperRecord, T>>
-        implements BySearchOrderRepository<T> {
+    implements BySearchOrderRepository<T> {
 
     private final IntegerSearchTermEvaluator integerSearchTermEvaluator = new IntegerSearchTermEvaluator();
     private final StringSearchTermEvaluator  stringSearchTermEvaluator  = new StringSearchTermEvaluator();
@@ -59,15 +49,15 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
 
     /**
      * @param dsl
-     *            the {@link DSLContext}
+     *     the {@link DSLContext}
      * @param mapper
-     *            derivatives of {@link EntityRecordMapper} specific to type
-     *            {@code Paper}s or {@code PaperSlim}s
+     *     derivatives of {@link EntityRecordMapper} specific to type
+     *     {@code Paper}s or {@code PaperSlim}s
      * @param sortMapper
-     *            paper or paperSlim specific {@link JooqSortMapper}
+     *     paper or paperSlim specific {@link JooqSortMapper}
      */
     public JooqBySearchOrderRepo(@Qualifier("dslContext") final DSLContext dsl, final M mapper,
-            final JooqSortMapper<PaperRecord, T, ch.difty.scipamato.core.db.tables.Paper> sortMapper) {
+        final JooqSortMapper<PaperRecord, T, ch.difty.scipamato.core.db.tables.Paper> sortMapper) {
         this.dsl = dsl;
         this.mapper = mapper;
         this.sortMapper = sortMapper;
@@ -94,11 +84,13 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
         AssertAs.notNull(searchOrder, "searchOrder");
 
         final Condition paperMatches = getConditionsFrom(searchOrder);
-        final List<PaperRecord> queryResults = getDsl().selectFrom(Tables.PAPER)
+        final List<PaperRecord> queryResults = getDsl()
+            .selectFrom(Tables.PAPER)
             .where(paperMatches)
             .fetchInto(getRecordClass());
 
-        return queryResults.stream()
+        return queryResults
+            .stream()
             .map(getMapper()::map)
             .collect(Collectors.toList());
     }
@@ -106,10 +98,10 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
     /**
      * Combines the search terms of different {@link SearchOrder} using OR
      * operators.
-     *
+     * <p>
      * Note: searchOrder must not be null. this is to be guarded from the public
      * entry methods.
-     *
+     * <p>
      * public for test purposes
      */
     public Condition getConditionsFrom(final SearchOrder searchOrder) {
@@ -120,8 +112,9 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
             for (final SearchCondition sc : searchOrder.getSearchConditions())
                 conditions.add(() -> getConditionFromSingleSearchCondition(sc));
             final Condition scConditions = conditions.combineWithOr();
-            if (searchOrder.getExcludedPaperIds()
-                .isEmpty() || "1 = 0".equals(scConditions.toString())) {
+            if (searchOrder
+                    .getExcludedPaperIds()
+                    .isEmpty() || "1 = 0".equals(scConditions.toString())) {
                 return scConditions;
             } else {
                 return scConditions.and(PAPER.ID.notIn(searchOrder.getExcludedPaperIds()));
@@ -143,7 +136,8 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
             conditions.add(() -> stringSearchTermEvaluator.evaluate(st));
         for (final AuditSearchTerm st : searchCondition.getAuditSearchTerms())
             conditions.add(() -> auditSearchTermEvaluator.evaluate(st));
-        if (!searchCondition.getCodes()
+        if (!searchCondition
+            .getCodes()
             .isEmpty()) {
             conditions.add(() -> codeConditions(searchCondition.getCodes()));
         }
@@ -152,13 +146,16 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
 
     private Condition codeConditions(final List<Code> codes) {
         final ConditionalSupplier codeConditions = new ConditionalSupplier();
-        for (final String code : codes.stream()
+        for (final String code : codes
+            .stream()
             .map(Code::getCode)
             .collect(Collectors.toList())) {
-            final SelectConditionStep<Record1<Integer>> step = DSL.selectOne()
+            final SelectConditionStep<Record1<Integer>> step = DSL
+                .selectOne()
                 .from(PAPER_CODE)
                 .where(PAPER_CODE.PAPER_ID.eq(PAPER.ID));
-            codeConditions.add(() -> DSL.exists(step.and(DSL.lower(PAPER_CODE.CODE)
+            codeConditions.add(() -> DSL.exists(step.and(DSL
+                .lower(PAPER_CODE.CODE)
                 .eq(code.toLowerCase()))));
         }
         return codeConditions.combineWithAnd();
@@ -168,13 +165,15 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
     public List<T> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext pc) {
         final Condition paperMatches = getConditionsFrom(searchOrder);
         final Collection<SortField<T>> sortCriteria = getSortMapper().map(pc.getSort(), PAPER);
-        final List<PaperRecord> tuples = getDsl().selectFrom(Tables.PAPER)
+        final List<PaperRecord> tuples = getDsl()
+            .selectFrom(Tables.PAPER)
             .where(paperMatches)
             .orderBy(sortCriteria)
             .limit(pc.getPageSize())
             .offset(pc.getOffset())
             .fetchInto(getRecordClass());
-        return tuples.stream()
+        return tuples
+            .stream()
             .map(getMapper()::map)
             .collect(Collectors.toList());
     }
@@ -184,7 +183,8 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
         AssertAs.notNull(searchOrder, "searchOrder");
 
         final Condition paperMatches = getConditionsFrom(searchOrder);
-        return getDsl().fetchCount(getDsl().selectOne()
+        return getDsl().fetchCount(getDsl()
+            .selectOne()
             .from(PAPER)
             .where(paperMatches));
     }
@@ -193,7 +193,8 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
     public List<Long> findPageOfIdsBySearchOrder(final SearchOrder searchOrder, final PaginationContext pc) {
         final Condition conditions = getConditionsFrom(searchOrder);
         final Collection<SortField<T>> sortCriteria = getSortMapper().map(pc.getSort(), PAPER);
-        return getDsl().select()
+        return getDsl()
+            .select()
             .from(Tables.PAPER)
             .where(conditions)
             .orderBy(sortCriteria)

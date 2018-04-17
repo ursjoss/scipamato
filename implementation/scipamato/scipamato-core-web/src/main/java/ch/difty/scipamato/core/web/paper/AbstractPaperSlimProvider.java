@@ -23,13 +23,12 @@ import ch.difty.scipamato.core.persistence.PaperSlimService;
  * Abstract base class for data providers providing the wicket components access
  * to the persisted paper data in the slim format.
  *
- * @author u.joss
- *
  * @param <F>
- *            the type of the filter state
+ *     the type of the filter state
+ * @author u.joss
  */
 public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
-        extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<F> {
+    extends SortableDataProvider<PaperSlim, String> implements IFilterStateLocator<F> {
 
     private static final long serialVersionUID = 1L;
 
@@ -159,8 +158,8 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
 
     /**
      * @return showExcluded flag, indicating if the search results are to be shown
-     *         (if false) or the excluded papers (true). False by default Override
-     *         if needed
+     *     (if false) or the excluded papers (true). False by default Override
+     *     if needed
      */
     public boolean isShowExcluded() {
         return false;

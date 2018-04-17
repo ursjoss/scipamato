@@ -1,13 +1,14 @@
 package ch.difty.scipamato.core.web.paper.jasper.summary;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Collections;
 
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignField;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
@@ -15,10 +16,6 @@ import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JRDesignField;
 
 public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
@@ -46,11 +43,12 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     private static final String FILE_NAME_SINGLE_FALLBACK = "paper_summary.pdf";
     private static final String FILE_NAME_MULTIPLE        = "paper_summaries.pdf";
 
-    private PaperSummaryDataSource       ds;
+    private       PaperSummaryDataSource ds;
     private final ReportHeaderFields     rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields.builder(HEADER_PART, BRAND)
+        return ReportHeaderFields
+            .builder(HEADER_PART, BRAND)
             .populationLabel(POPULATION_LABEL)
             .goalsLabel(GOALS_LABEL)
             .methodsLabel(METHODS_LABEL)
@@ -97,7 +95,8 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
     private void assertDataSource(String fileName) throws JRException {
         assertThat(ds.getConnectionProvider()).isNull();
-        assertThat(ds.getContentDisposition()
+        assertThat(ds
+            .getContentDisposition()
             .toString()).isEqualTo("ATTACHMENT");
         assertThat(ds.getContentType()).isEqualTo("application/pdf");
         assertThat(ds.getExtension()).isEqualTo("pdf");
@@ -185,7 +184,8 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0L);
         ds = new PaperSummaryDataSource(dataProviderMock, rhf, pdfExporterConfigMock);
-        assertThat(ds.getReportDataSource()
+        assertThat(ds
+            .getReportDataSource()
             .next()).isFalse();
         verify(dataProviderMock).size();
     }
@@ -196,7 +196,8 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
         try {
             new PaperSummaryDataSource(provider, rhf, pdfExporterConfigMock);
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage("dataProvider must not be null.");
         }
     }

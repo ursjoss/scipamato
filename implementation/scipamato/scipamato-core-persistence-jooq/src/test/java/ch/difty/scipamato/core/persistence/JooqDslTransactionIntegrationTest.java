@@ -29,7 +29,8 @@ public class JooqDslTransactionIntegrationTest extends JooqBaseIntegrationTest {
     @After
     public void teardown() {
         // Delete all books that were created in any test - just in case
-        dsl.delete(PAPER)
+        dsl
+            .delete(PAPER)
             .where(PAPER.ID.gt(MAX_ID_PREPOPULATED))
             .execute();
     }
@@ -43,7 +44,8 @@ public class JooqDslTransactionIntegrationTest extends JooqBaseIntegrationTest {
             // This is a "bug". The same book is created twice, resulting in a
             // constraint violation exception
             for (long i = 0; i < 2; i++)
-                dsl.insertInto(PAPER)
+                dsl
+                    .insertInto(PAPER)
                     .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
                     .set(PAPER.NUMBER, 1000L)
                     .set(PAPER.AUTHORS, "authors")
@@ -74,7 +76,8 @@ public class JooqDslTransactionIntegrationTest extends JooqBaseIntegrationTest {
                 // This is a "bug". The same book is created twice, resulting in a
                 // constraint violation exception
                 for (long i = 0; i < 2; i++)
-                    dsl.insertInto(PAPER)
+                    dsl
+                        .insertInto(PAPER)
                         .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
                         .set(PAPER.AUTHORS, "authors")
                         .set(PAPER.FIRST_AUTHOR, "firstAuthor")
@@ -105,7 +108,8 @@ public class JooqDslTransactionIntegrationTest extends JooqBaseIntegrationTest {
             dsl.transaction(c1 -> {
 
                 // The first insertion will work
-                dsl.insertInto(PAPER)
+                dsl
+                    .insertInto(PAPER)
                     .set(PAPER.ID, MAX_ID_PREPOPULATED + 1)
                     .set(PAPER.NUMBER, 1000L)
                     .set(PAPER.AUTHORS, "authors")
@@ -125,7 +129,8 @@ public class JooqDslTransactionIntegrationTest extends JooqBaseIntegrationTest {
 
                         // The second insertion shouldn't work
                         for (long i = 0; i < 2; i++)
-                            dsl.insertInto(PAPER)
+                            dsl
+                                .insertInto(PAPER)
                                 .set(PAPER.ID, 3L)
                                 .set(PAPER.NUMBER, 1001L)
                                 .set(PAPER.AUTHORS, "authors")
@@ -137,9 +142,7 @@ public class JooqDslTransactionIntegrationTest extends JooqBaseIntegrationTest {
                                 .execute();
                         Assert.fail();
                     });
-                }
-
-                catch (DataAccessException e) {
+                } catch (DataAccessException e) {
                     rollback1.set(true);
                 }
 

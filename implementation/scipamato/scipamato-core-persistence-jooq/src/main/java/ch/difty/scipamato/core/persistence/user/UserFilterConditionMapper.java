@@ -22,7 +22,8 @@ public class UserFilterConditionMapper extends AbstractFilterConditionMapper<Use
     public void map(final UserFilter filter, final List<Condition> conditions) {
         if (filter.getNameMask() != null) {
             final String likeExpression = "%" + filter.getNameMask() + "%";
-            conditions.add(SCIPAMATO_USER.USER_NAME.likeIgnoreCase(likeExpression)
+            conditions.add(SCIPAMATO_USER.USER_NAME
+                .likeIgnoreCase(likeExpression)
                 .or(SCIPAMATO_USER.FIRST_NAME.likeIgnoreCase(likeExpression))
                 .or(SCIPAMATO_USER.LAST_NAME.likeIgnoreCase(likeExpression)));
         }

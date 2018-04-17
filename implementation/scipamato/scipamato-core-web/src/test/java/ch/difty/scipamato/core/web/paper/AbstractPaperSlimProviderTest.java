@@ -37,13 +37,13 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     @Mock
     PaperSlimService serviceMock;
     @Mock
-    protected PaperService     paperServiceMock;
+    protected PaperService paperServiceMock;
     @Mock
-    private PaperSlim        entityMock;
+    private   PaperSlim    entityMock;
     @Mock
-    protected Paper            paperMock;
+    protected Paper        paperMock;
 
-    protected P               provider;
+    protected P provider;
     List<PaperSlim> pageOfSlimPapers;
     List<Paper>     pageOfPapers;
 
@@ -54,7 +54,8 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     @Before
     public final void setUp() {
         tester = new WicketTester(application);
-        tester.getSession()
+        tester
+            .getSession()
             .setLocale(new Locale("en"));
 
         provider = newProvider();

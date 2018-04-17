@@ -80,7 +80,7 @@ public abstract class BasePage<T> extends AbstractPage<T> {
      * <literal>true</literal>.
      *
      * @param response
-     *            the response to render the css header item references on
+     *     the response to render the css header item references on
      */
     protected void renderAdditionalCommercialFonts(final IHeaderResponse response) {
     }
@@ -89,7 +89,7 @@ public abstract class BasePage<T> extends AbstractPage<T> {
      * Adds pym.js to the page and instantiates the <code>pymChild</code>.
      *
      * @param response
-     *            the response to render the javascript for
+     *     the response to render the javascript for
      */
     private void renderPymForResponsiveIframe(final IHeaderResponse response) {
         response.render(JavaScriptHeaderItem.forReference(PymJavaScriptResourceReference.get()));
@@ -97,7 +97,8 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     }
 
     protected Authentication getAuthentication() {
-        return SecurityContextHolder.getContext()
+        return SecurityContextHolder
+            .getContext()
             .getAuthentication();
     }
 

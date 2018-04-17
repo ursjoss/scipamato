@@ -49,10 +49,12 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         so.add(searchCondition);
         so.addExclusionOfPaperWithId(4L);
         assertThat(so.getId()).isNull();
-        assertThat(so.getSearchConditions()
+        assertThat(so
+            .getSearchConditions()
             .get(0)
             .getId()).isNull();
-        assertThat(so.getSearchConditions()
+        assertThat(so
+            .getSearchConditions()
             .get(0)
             .getStringSearchTerms()
             .iterator()
@@ -62,14 +64,18 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         SearchOrder saved = repo.add(so);
 
         assertThat(saved).isNotNull();
-        assertThat(saved.getId()).isNotNull()
+        assertThat(saved.getId())
+            .isNotNull()
             .isGreaterThan(MAX_ID_PREPOPULATED);
         assertThat(saved.getOwner()).isEqualTo(10);
-        assertThat(saved.getSearchConditions()
+        assertThat(saved
+            .getSearchConditions()
             .get(0)
-            .getSearchConditionId()).isNotNull()
-                .isGreaterThan(5L);
-        assertThat(saved.getSearchConditions()
+            .getSearchConditionId())
+            .isNotNull()
+            .isGreaterThan(5L);
+        assertThat(saved
+            .getSearchConditions()
             .get(0)
             .getStringSearchTerms()
             .iterator()
@@ -91,7 +97,8 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
     public void updatingRecord() {
         SearchOrder searchOrder = repo.add(makeMinimalSearchOrder());
         assertThat(searchOrder).isNotNull();
-        assertThat(searchOrder.getId()).isNotNull()
+        assertThat(searchOrder.getId())
+            .isNotNull()
             .isGreaterThan(MAX_ID_PREPOPULATED);
         final long id = searchOrder.getId();
         assertThat(searchOrder.getOwner()).isEqualTo(10);
@@ -114,7 +121,8 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
     public void deletingRecord() {
         SearchOrder searchOrder = repo.add(makeMinimalSearchOrder());
         assertThat(searchOrder).isNotNull();
-        assertThat(searchOrder.getId()).isNotNull()
+        assertThat(searchOrder.getId())
+            .isNotNull()
             .isGreaterThan(MAX_ID_PREPOPULATED);
         final long id = searchOrder.getId();
         assertThat(searchOrder.getOwner()).isEqualTo(10);
@@ -131,16 +139,19 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         so.setId(1L);
         repo.enrichAssociatedEntitiesOf(so, LC);
 
-        assertThat(so.getSearchConditions()
+        assertThat(so
+            .getSearchConditions()
             .size()).isGreaterThanOrEqualTo(2);
 
-        SearchCondition so1 = so.getSearchConditions()
+        SearchCondition so1 = so
+            .getSearchConditions()
             .get(0);
         assertThat(so1).isNotNull();
         assertThat(so1.getAuthors()).isEqualTo("kutlar");
         assertThat(so1.getDisplayValue()).isEqualTo("kutlar");
 
-        SearchCondition so2 = so.getSearchConditions()
+        SearchCondition so2 = so
+            .getSearchConditions()
             .get(1);
         assertThat(so2).isNotNull();
         assertThat(so2.getAuthors()).isEqualTo("turner");
@@ -155,7 +166,8 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         so.setId(4L);
         repo.enrichAssociatedEntitiesOf(so, LC);
 
-        assertThat(so.getExcludedPaperIds()).hasSize(1)
+        assertThat(so.getExcludedPaperIds())
+            .hasSize(1)
             .containsExactly(1L);
     }
 
@@ -196,7 +208,8 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         SearchCondition modifiedCondition3 = repo.updateSearchCondition(savedCondition, searchOrderId, LC);
         assertSearchTermCount(1, 1, 1, 0, modifiedCondition3);
         assertThat(modifiedCondition3.getCodes()).hasSize(1);
-        assertThat(modifiedCondition3.getCodes()).extracting(Code.CodeFields.CODE.getName())
+        assertThat(modifiedCondition3.getCodes())
+            .extracting(Code.CodeFields.CODE.getName())
             .containsExactly("1A");
         assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(4);
 

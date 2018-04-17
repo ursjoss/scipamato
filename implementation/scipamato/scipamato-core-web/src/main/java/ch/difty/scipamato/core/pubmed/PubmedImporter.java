@@ -9,7 +9,7 @@ public interface PubmedImporter {
      * articles to DB.
      *
      * @param xml
-     *            XML as string must not be null.
+     *     XML as string must not be null.
      * @return {@link ServiceResult}
      */
     ServiceResult persistPubmedArticlesFromXml(String xml);

@@ -1,14 +1,15 @@
 package ch.difty.scipamato.publ.web.paper.browse;
 
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -22,10 +23,6 @@ import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.publ.persistence.api.CodeClassService;
 import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
 import ch.difty.scipamato.publ.web.common.BasePageTest;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 public class PublicPageTest extends BasePageTest<PublicPage> {
 
@@ -41,14 +38,16 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     protected void setUpHook() {
         super.setUpHook();
 
-        papers.add(new PublicPaper(1L, 10L, 1000, "authors1", "auths1", "title1", "location1", "journal1", 2016,
-                "goals1", "methods1", "population1", "result1", "comment1"));
-        papers.add(new PublicPaper(2L, 20L, 1002, "authors2", "auths2", "title2", "location2", "journal2", 2017,
-                "goals2", "methods2", "population2", "result2", "comment2"));
+        papers.add(
+            new PublicPaper(1L, 10L, 1000, "authors1", "auths1", "title1", "location1", "journal1", 2016, "goals1",
+                "methods1", "population1", "result1", "comment1"));
+        papers.add(
+            new PublicPaper(2L, 20L, 1002, "authors2", "auths2", "title2", "location2", "journal2", 2017, "goals2",
+                "methods2", "population2", "result2", "comment2"));
 
         when(serviceMock.countByFilter(isA(PublicPaperFilter.class))).thenReturn(papers.size());
-        when(serviceMock.findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class)))
-            .thenReturn(papers);
+        when(serviceMock.findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class))).thenReturn(
+            papers);
     }
 
     @Override
@@ -110,7 +109,8 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
 
         // trigger the roundtrip to get the data by clicking 'query'
         // this should make the result panel visible
-        getTester().newFormTester("searchForm")
+        getTester()
+            .newFormTester("searchForm")
             .submit("query");
 
         String b = "searchForm";
@@ -195,7 +195,8 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
     public void clickingTitle_forwardsToDetailsPage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
-        getTester().newFormTester("searchForm")
+        getTester()
+            .newFormTester("searchForm")
             .submit("query");
 
         getTester().clickLink("results:body:rows:1:cells:2:cell:link");

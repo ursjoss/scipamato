@@ -28,7 +28,8 @@ public class PaperItemWriter extends ScipamatoItemWriter<PublicPaper> {
 
     @Override
     protected int executeUpdate(final PublicPaper p) {
-        return getDslContext().insertInto(PAPER)
+        return getDslContext()
+            .insertInto(PAPER)
             .columns(PAPER.ID, PAPER.NUMBER, PAPER.PM_ID, PAPER.AUTHORS, PAPER.TITLE, PAPER.LOCATION,
                 PAPER.PUBLICATION_YEAR, PAPER.GOALS, PAPER.METHODS, PAPER.POPULATION, PAPER.RESULT, PAPER.COMMENT,
                 PAPER.CODES_POPULATION, PAPER.CODES_STUDY_DESIGN, PAPER.CODES, PAPER.VERSION, PAPER.CREATED,

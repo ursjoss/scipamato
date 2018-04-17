@@ -1,19 +1,15 @@
 package ch.difty.scipamato.core.entity;
 
+import lombok.*;
+
 import ch.difty.scipamato.common.entity.FieldEnumType;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * SciPaMaTo entity having a numeric id.
  *
- * @author u.joss
- *
  * @param <ID>
- *            type of the numeric id
+ *     type of the numeric id
+ * @author u.joss
  */
 @Setter
 @Getter

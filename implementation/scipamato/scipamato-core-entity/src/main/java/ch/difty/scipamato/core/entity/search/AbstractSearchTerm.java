@@ -1,16 +1,17 @@
 package ch.difty.scipamato.core.entity.search;
 
-import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import ch.difty.scipamato.common.AssertAs;
+import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 
 /**
  * Implementations of {@link AbstractSearchTerm} accept a {@code fieldName} as
  * key and a {@code rawSearchTerm} as value. The rawSearchTerm holds a
  * comparison specification holding a value and some meta information on how to
  * compare the field with the provided value.
- * <p>
+ *
  *
  * <b>Note:</b>Identity is based on {@code fieldName} and {@code rawSearchTerm}
  * only, thus ignoring {@code id} or {@code searchConditionId}. This might be an
@@ -30,7 +31,7 @@ public abstract class AbstractSearchTerm extends IdScipamatoEntity<Long> impleme
     private final String         rawSearchTerm;
 
     AbstractSearchTerm(final Long id, final SearchTermType type, final Long searchConditionId, final String fieldName,
-            final String rawSearchTerm) {
+        final String rawSearchTerm) {
         super(id);
         this.searchConditionId = searchConditionId;
         this.searchTermType = AssertAs.notNull(type);

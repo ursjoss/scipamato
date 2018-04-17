@@ -125,7 +125,8 @@ public class LongNavigatorTest {
             nm.setFocusToItem(100L);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Cannot set focus to item that is not part of the managed list (item 100).");
         }
     }

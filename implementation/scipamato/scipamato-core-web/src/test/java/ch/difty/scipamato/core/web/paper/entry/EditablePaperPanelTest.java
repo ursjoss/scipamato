@@ -2,14 +2,16 @@ package ch.difty.scipamato.core.web.paper.entry;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.feedback.ExactLevelFeedbackMessageFilter;
 import org.apache.wicket.feedback.FeedbackMessage;
@@ -30,10 +32,6 @@ import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.PubmedArticleService;
 import ch.difty.scipamato.core.web.paper.common.PaperPanelTest;
 import ch.difty.scipamato.core.web.paper.search.PaperSearchPage;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperPanel> {
 
@@ -383,7 +381,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     }
 
     private void fixPubmedRetrievalButtonClicked(String a, String fa, String t, String l, String py, String doi,
-            String oa) {
+        String oa) {
         when(pubmedArticleServiceMock.getPubmedArticleWithPmid(PMID)).thenReturn(Optional.of(pubmedArticleMock));
         when(pubmedArticleMock.getPmId()).thenReturn(String.valueOf(PMID));
         when(pubmedArticleMock.getAuthors()).thenReturn(a);
@@ -579,7 +577,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptAuthor_setsAuthor() {
         EditablePaperPanel panel = makePanel();
-        panel.getModelObject()
+        panel
+            .getModelObject()
             .setAuthors(null);
         testAndVerifySingleFieldSet(panel, "Authors");
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
@@ -588,7 +587,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptFirstAuthor_setsFirstAuthor() {
         EditablePaperPanel panel = makePanel();
-        panel.getModelObject()
+        panel
+            .getModelObject()
             .setFirstAuthor(null);
         testAndVerifySingleFieldSet(panel, "First Author");
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
@@ -597,7 +597,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptTitle_setsTitle() {
         EditablePaperPanel panel = makePanel();
-        panel.getModelObject()
+        panel
+            .getModelObject()
             .setTitle(null);
         testAndVerifySingleFieldSet(panel, "Title");
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
@@ -606,7 +607,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptLocation_setsLocation() {
         EditablePaperPanel panel = makePanel();
-        panel.getModelObject()
+        panel
+            .getModelObject()
             .setLocation(null);
         testAndVerifySingleFieldSet(panel, "Location");
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
@@ -615,7 +617,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptYear_setsYear() {
         EditablePaperPanel panel = makePanel();
-        panel.getModelObject()
+        panel
+            .getModelObject()
             .setPublicationYear(null);
         testAndVerifySingleFieldSet(panel, "Pub. Year");
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
@@ -624,7 +627,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptDoi_setsDoi() {
         EditablePaperPanel panel = makePanel();
-        panel.getModelObject()
+        panel
+            .getModelObject()
             .setDoi(null);
         testAndVerifySingleFieldSet(panel, "DOI");
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
@@ -633,7 +637,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetExceptOriginalAbstract_setsOriginalAbstract() {
         EditablePaperPanel panel = makePanel();
-        panel.getModelObject()
+        panel
+            .getModelObject()
             .setOriginalAbstract(null);
         testAndVerifySingleFieldSet(panel, "Original Abstract");
     }
@@ -674,7 +679,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     }
 
     private EditablePaperPanel makePanelWith(Integer pmId, PageReference callingPage, Long searchOrderId,
-                                             boolean showExcluded) {
+        boolean showExcluded) {
         Paper p = new Paper();
         p.setId(1L);
         p.setPmId(pmId);
@@ -746,7 +751,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     private void assertExcluded(boolean showingExclusion, String titleValue, String iconValue) {
         getTester().startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, showingExclusion));
 
-        String responseTxt = getTester().getLastResponse()
+        String responseTxt = getTester()
+            .getLastResponse()
             .getDocument();
         TagTester tagTester = TagTester.createTagByAttribute(responseTxt, "title", titleValue);
         assertThat(tagTester).isNotNull();

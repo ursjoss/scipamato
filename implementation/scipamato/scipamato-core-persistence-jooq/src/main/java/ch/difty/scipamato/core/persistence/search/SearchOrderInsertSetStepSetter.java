@@ -14,7 +14,7 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 
 /**
  * The insert step setter used for inserting new {@link SearchOrder}s.
- * <p>
+ *
  *
  * <b>Note:</b> the {@link SearchCondition}s are not inserted here.
  *
@@ -25,11 +25,12 @@ public class SearchOrderInsertSetStepSetter implements InsertSetStepSetter<Searc
 
     @Override
     public InsertSetMoreStep<SearchOrderRecord> setNonKeyFieldsFor(InsertSetStep<SearchOrderRecord> step,
-            SearchOrder e) {
+        SearchOrder e) {
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
 
-        return step.set(SEARCH_ORDER.NAME, e.getName())
+        return step
+            .set(SEARCH_ORDER.NAME, e.getName())
             .set(SEARCH_ORDER.OWNER, e.getOwner())
             .set(SEARCH_ORDER.GLOBAL, e.isGlobal())
 

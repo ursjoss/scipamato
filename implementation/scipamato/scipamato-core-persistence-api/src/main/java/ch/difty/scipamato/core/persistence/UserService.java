@@ -17,7 +17,7 @@ public interface UserService extends EntityService<Integer, User, UserFilter> {
      * Find {@link User} by username and return it as optional.
      *
      * @param userName
-     *            the name of the user to be found
+     *     the name of the user to be found
      * @return user optional of user
      */
     Optional<User> findByUserName(String userName);

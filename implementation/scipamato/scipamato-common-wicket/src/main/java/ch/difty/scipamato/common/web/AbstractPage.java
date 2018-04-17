@@ -1,5 +1,9 @@
 package ch.difty.scipamato.common.web;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
+import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.bean.validation.PropertyValidator;
@@ -20,10 +24,6 @@ import org.apache.wicket.util.string.Strings;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
-import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
 public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
@@ -97,7 +97,8 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     }
 
     private void createAndAddDebugBar(String label) {
-        if (getApplication().getDebugSettings()
+        if (getApplication()
+            .getDebugSettings()
             .isDevelopmentUtilitiesEnabled()) {
             queue(new DebugBar(label).positionBottom());
         } else {
@@ -165,7 +166,7 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
     protected void queueResponsePageButton(final String id, SerializableSupplier<AbstractPage<?>> responsePage) {
         BootstrapAjaxButton newButton = new BootstrapAjaxButton(id,
-                new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null), Type.Default) {
+            new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null), Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -182,17 +183,20 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     }
 
     protected boolean isSignedIn() {
-        return AuthenticatedWebSession.get()
+        return AuthenticatedWebSession
+            .get()
             .isSignedIn();
     }
 
     protected boolean signIn(String username, String password) {
-        return AuthenticatedWebSession.get()
+        return AuthenticatedWebSession
+            .get()
             .signIn(username, password);
     }
 
     protected void signOutAndInvalidate() {
-        AuthenticatedWebSession.get()
+        AuthenticatedWebSession
+            .get()
             .invalidate();
     }
 

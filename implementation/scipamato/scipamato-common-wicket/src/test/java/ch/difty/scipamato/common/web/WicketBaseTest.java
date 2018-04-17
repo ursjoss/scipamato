@@ -30,13 +30,14 @@ public abstract class WicketBaseTest {
 
     @Before
     public void setUp() {
-        wicketApplication
-            .setHeaderResponseDecorator(r -> new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"));
+        wicketApplication.setHeaderResponseDecorator(
+            r -> new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"));
 
         ReflectionTestUtils.setField(wicketApplication, "applicationContext", applicationContextMock);
         tester = new WicketTester(wicketApplication);
         Locale locale = new Locale("en_US");
-        tester.getSession()
+        tester
+            .getSession()
             .setLocale(locale);
         setUpHook();
     }

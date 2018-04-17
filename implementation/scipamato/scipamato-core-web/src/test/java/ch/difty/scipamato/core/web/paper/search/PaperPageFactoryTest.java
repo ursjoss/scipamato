@@ -28,8 +28,7 @@ public class PaperPageFactoryTest extends WicketTest {
 
     @Test
     public void assertingNewPaperSearchCriteriaPage() {
-        SerializableBiFunction<IModel<SearchCondition>, Long, GenericWebPage<SearchCondition>> function = factory
-            .newPaperSearchCriteriaPage();
+        SerializableBiFunction<IModel<SearchCondition>, Long, GenericWebPage<SearchCondition>> function = factory.newPaperSearchCriteriaPage();
 
         GenericWebPage<SearchCondition> page = function.apply(Model.of(sc), searchConditionId);
         assertThat(page).isInstanceOf(PaperSearchCriteriaPage.class);
@@ -37,8 +36,8 @@ public class PaperPageFactoryTest extends WicketTest {
 
     @Test
     public void settingResponsePageToPaperSearchCriteriaPageConsumer() {
-        SerializableBiConsumer<IModel<SearchCondition>, Long> consumer = factory
-            .setResponsePageToPaperSearchCriteriaPageConsumer(container);
+        SerializableBiConsumer<IModel<SearchCondition>, Long> consumer = factory.setResponsePageToPaperSearchCriteriaPageConsumer(
+            container);
         consumer.accept(Model.of(sc), searchConditionId);
         // TODO get test running
         // Mockito.verify(container)

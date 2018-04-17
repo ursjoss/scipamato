@@ -7,9 +7,8 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
  * responsive iframe.
  *
  * @author Urs Joss
- *
  * @see <a href=
- *      "http://blog.apps.npr.org/pym.js/">http://blog.apps.npr.org/pym.js/</a>
+ *     "http://blog.apps.npr.org/pym.js/">http://blog.apps.npr.org/pym.js/</a>
  */
 public class PymJavaScriptResourceReference extends JavaScriptResourceReference {
 

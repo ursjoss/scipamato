@@ -13,11 +13,10 @@ import ch.difty.scipamato.common.NullArgumentException;
 /**
  * List based implementation of the {@link NavigatedItems} interface.
  *
- * @author u.joss
- *
  * @param <T>
- *            type of the items that are managed. Must implement
- *            {@link Serializable}.
+ *     type of the items that are managed. Must implement
+ *     {@link Serializable}.
+ * @author u.joss
  */
 class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
     private static final long serialVersionUID = 1L;
@@ -30,14 +29,15 @@ class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
      * Instantiate the {@link NavigatedList} with the provided collection of items.
      *
      * @param items
-     *            collection of items, must not be null or empty.
+     *     collection of items, must not be null or empty.
      */
     NavigatedList(final Collection<? extends T> items) {
         if (items == null)
             throw new NullArgumentException("items");
         if (items.isEmpty())
             throw new IllegalArgumentException("items must not be empty");
-        this.items.addAll(items.stream()
+        this.items.addAll(items
+            .stream()
             .distinct()
             .filter(Objects::nonNull)
             .collect(Collectors.toList()));
@@ -65,7 +65,7 @@ class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
         final int idx = items.indexOf(item);
         if (idx == -1)
             throw new IllegalArgumentException(
-                    "Cannot set focus to item that is not part of the managed list (item " + item + ").");
+                "Cannot set focus to item that is not part of the managed list (item " + item + ").");
         this.index.set(idx);
     }
 

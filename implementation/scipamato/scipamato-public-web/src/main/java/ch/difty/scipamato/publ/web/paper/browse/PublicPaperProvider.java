@@ -26,18 +26,19 @@ import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
  * @author u.joss
  */
 public class PublicPaperProvider extends SortableDataProvider<PublicPaper, String>
-        implements ISortableDataProvider<PublicPaper, String>, IFilterStateLocator<PublicPaperFilter> {
+    implements ISortableDataProvider<PublicPaper, String>, IFilterStateLocator<PublicPaperFilter> {
 
     private static final long serialVersionUID = 1L;
 
-    private PublicPaperFilter paperFilter;
-    private final int         maxRowsPerPage;
+    private       PublicPaperFilter paperFilter;
+    private final int               maxRowsPerPage;
 
     @SpringBean
     private PublicPaperService service;
 
     public PublicPaperProvider(final PublicPaperFilter paperFilter, final int resultPageSize) {
-        Injector.get()
+        Injector
+            .get()
             .inject(this);
         this.paperFilter = paperFilter != null ? paperFilter : new PublicPaperFilter();
         this.maxRowsPerPage = resultPageSize;
@@ -64,7 +65,8 @@ public class PublicPaperProvider extends SortableDataProvider<PublicPaper, Strin
         Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         String sortProp = getSort().getProperty();
         PaginationContext pc = new PaginationRequest((int) offset, (int) count, dir, sortProp);
-        return service.findPageByFilter(paperFilter, pc)
+        return service
+            .findPageByFilter(paperFilter, pc)
             .iterator();
     }
 

@@ -10,7 +10,8 @@ public class PublicCodeClassTest extends PublicEntityTest {
 
     @Test
     public void canSetGet() {
-        PublicCodeClass pcc = PublicCodeClass.builder()
+        PublicCodeClass pcc = PublicCodeClass
+            .builder()
             .codeClassId(1)
             .langCode("lc")
             .name("name")

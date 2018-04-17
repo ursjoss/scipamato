@@ -22,7 +22,8 @@ public class JooqEntityDslIntegrationTest extends JooqTransactionalIntegrationTe
 
     @Test
     public void testPaperRecords() {
-        Result<PaperRecord> result = create.selectFrom(PAPER)
+        Result<PaperRecord> result = create
+            .selectFrom(PAPER)
             .orderBy(PAPER.ID)
             .fetch();
         assertThat(result).hasSize(TestDbConstants.RECORD_COUNT_PREPOPULATED);

@@ -8,16 +8,15 @@ import java.util.List;
  * items (nulls or duplicates are ignored). It maintains a reference to the
  * current item, which can be set but is on the first item by default.
  * <p>
- *
+ * <p>
  * Two methods {@code advance} and {@code retreat} allow navigating within the
  * list. Advancing beyond the last item leaves the current item on the last
  * item. Similarly, retreating beyond the first item leaves the current item on
  * the first item.
  *
- * @author u.joss
- *
  * @param <T>
- *            the type of the managed items
+ *     the type of the managed items
+ * @author u.joss
  */
 interface NavigatedItems<T> extends Serializable {
 
@@ -40,13 +39,13 @@ interface NavigatedItems<T> extends Serializable {
      * Sets the current item
      *
      * @param item
-     *       the item to set toe focus to
+     *     the item to set toe focus to
      */
     void setFocusToItem(T item);
 
     /**
      * @return true if can retreat, false otherwise (we're on the first record or
-     *         don't even have some data)
+     *     don't even have some data)
      */
     boolean hasPrevious();
 
@@ -58,7 +57,7 @@ interface NavigatedItems<T> extends Serializable {
 
     /**
      * @return true if can advance, false otherwise (we're on the last record or
-     *         don't even have some data)
+     *     don't even have some data)
      */
     boolean hasNext();
 

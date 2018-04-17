@@ -26,7 +26,8 @@ public class PaginationRequestTest {
         assertThat(pc.getPageSize()).isEqualTo(pageSize);
         if (fooSort != null) {
             final Sort s = pc.getSort();
-            assertThat(s.getSortPropertyFor("foo")
+            assertThat(s
+                .getSortPropertyFor("foo")
                 .toString()).isEqualTo(fooSort);
             assertThat(s.getSortPropertyFor("bar")).isNull();
         } else {

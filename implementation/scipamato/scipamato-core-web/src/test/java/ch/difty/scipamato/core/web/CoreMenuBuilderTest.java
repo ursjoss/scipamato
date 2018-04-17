@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.web;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import org.junit.Test;
 import org.mockito.Mock;
 
@@ -11,7 +12,6 @@ import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.pages.MenuBuilder;
 import ch.difty.scipamato.core.web.common.BasePage;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
 public class CoreMenuBuilderTest extends WicketTest {
 
@@ -40,7 +40,8 @@ public class CoreMenuBuilderTest extends WicketTest {
             menuBuilder.addMenuLinksTo(null, basePage);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage("navbar must not be null.");
         }
     }
@@ -51,7 +52,8 @@ public class CoreMenuBuilderTest extends WicketTest {
             menuBuilder.addMenuLinksTo(navbar, null);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage("page must not be null.");
         }
     }

@@ -2,10 +2,9 @@ package ch.difty.scipamato.core.web.resources.jasper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import net.sf.jasperreports.engine.JRException;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
 import org.junit.Test;
-
-import net.sf.jasperreports.engine.JRException;
 
 public class JasperReportExceptionTest {
 
@@ -22,8 +21,8 @@ public class JasperReportExceptionTest {
     public void makeJasperReportExceptionWithResourceStreamNotFoundException() {
         final ResourceStreamNotFoundException e = new ResourceStreamNotFoundException("foo");
         exception = new JasperReportException(e);
-        assertThat(exception.getMessage())
-            .isEqualTo("org.apache.wicket.util.resource.ResourceStreamNotFoundException: foo");
+        assertThat(exception.getMessage()).isEqualTo(
+            "org.apache.wicket.util.resource.ResourceStreamNotFoundException: foo");
     }
 
     @Test

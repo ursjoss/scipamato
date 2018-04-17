@@ -49,7 +49,8 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
      * Get the currently active user
      */
     protected User getActiveUser() {
-        Object principal = SecurityContextHolder.getContext()
+        Object principal = SecurityContextHolder
+            .getContext()
             .getAuthentication()
             .getPrincipal();
         return (User) principal;
@@ -59,7 +60,7 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
      * Retrieves the labels resource string.
      *
      * @param componentId
-     *            the wicket id of the component the label is assigned to.
+     *     the wicket id of the component the label is assigned to.
      * @return the label string, taken from the resource.
      */
     protected String getLabelResourceFor(final String componentId) {
@@ -70,7 +71,7 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
      * Retrieves the labels resource string (short form).
      *
      * @param componentId
-     *            the wicket id of the component the label is assigned to.
+     *     the wicket id of the component the label is assigned to.
      * @return the label string, taken from the resource.
      */
     protected String getShortLabelResourceFor(final String componentId) {

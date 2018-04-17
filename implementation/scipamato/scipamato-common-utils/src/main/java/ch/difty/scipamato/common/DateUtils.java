@@ -12,7 +12,7 @@ public final class DateUtils {
      * Converts a {@link LocalDateTime} into a {@link Timestamp}.
      *
      * @param ldt
-     *            the localDateTime to convert
+     *     the localDateTime to convert
      * @return the timestamp - or null if ldt is null
      */
     public static Timestamp tsOf(final LocalDateTime ldt) {

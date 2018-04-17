@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
@@ -22,8 +24,6 @@ import ch.difty.scipamato.publ.entity.PopulationCode;
 import ch.difty.scipamato.publ.entity.StudyDesignCode;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter.PublicPaperFilterFields;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 
 /**
  * The SimpleFilterPanel is added to the PublicPage twice and should be kept
@@ -63,8 +63,9 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
 
             @Override
             public void onEvent(IEvent<?> event) {
-                if (event.getPayload()
-                    .getClass() == SimpleFilterPanelChangeEvent.class) {
+                if (event
+                        .getPayload()
+                        .getClass() == SimpleFilterPanelChangeEvent.class) {
                     ((SimpleFilterPanelChangeEvent) event.getPayload()).considerAddingToTarget(this);
                     event.dontBroadcastDeeper();
                 }
@@ -77,7 +78,8 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
             protected void onUpdate(AjaxRequestTarget target) {
                 final String id = field.getId();
                 final String markupId = field.getMarkupId();
-                send(getPage(), Broadcast.BREADTH, new SimpleFilterPanelChangeEvent(target).withId(id)
+                send(getPage(), Broadcast.BREADTH, new SimpleFilterPanelChangeEvent(target)
+                    .withId(id)
                     .withMarkupId(markupId));
             }
         });
@@ -95,8 +97,9 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
         List<? extends C> choices = Arrays.asList(values);
         final IChoiceRenderer<C> choiceRenderer = new EnumChoiceRenderer<>(this);
         final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
-                null);
-        final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)
+            null);
+        final BootstrapSelectConfig config = new BootstrapSelectConfig()
+            .withMultiple(true)
             .withLiveSearch(true)
             .withNoneSelectedText(noneSelectedModel.getObject());
         final BootstrapMultiSelect<C> multiSelect = new BootstrapMultiSelect<C>(id, model, choices, choiceRenderer) {
@@ -104,8 +107,9 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
 
             @Override
             public void onEvent(IEvent<?> event) {
-                if (event.getPayload()
-                    .getClass() == SimpleFilterPanelChangeEvent.class) {
+                if (event
+                        .getPayload()
+                        .getClass() == SimpleFilterPanelChangeEvent.class) {
                     ((SimpleFilterPanelChangeEvent) event.getPayload()).considerAddingToTarget(this);
                     event.dontBroadcastDeeper();
                 }
@@ -119,7 +123,8 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
             protected void onUpdate(AjaxRequestTarget target) {
                 final String id = multiSelect.getId();
                 final String markupId = multiSelect.getMarkupId();
-                send(getPage(), Broadcast.BREADTH, new SimpleFilterPanelChangeEvent(target).withId(id)
+                send(getPage(), Broadcast.BREADTH, new SimpleFilterPanelChangeEvent(target)
+                    .withId(id)
                     .withMarkupId(markupId));
             }
         });

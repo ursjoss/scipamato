@@ -39,59 +39,67 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     @Test
     public void buildingConditionForGreaterOrEqual_applies() {
         expectToken(TokenType.GREATEROREQUAL, "2017-01-12 00:00:00", "paper.created");
-        assertThat(e.evaluate(stMock)
+        assertThat(e
+            .evaluate(stMock)
             .toString()).isEqualTo("paper.created >= timestamp '2017-01-12 00:00:00.0'");
     }
 
     @Test
     public void buildingConditionForGreaterThan_applies() {
         expectToken(TokenType.GREATERTHAN, "2017-01-12 00:00:00", "paper.created");
-        assertThat(e.evaluate(stMock)
+        assertThat(e
+            .evaluate(stMock)
             .toString()).isEqualTo("paper.created > timestamp '2017-01-12 00:00:00.0'");
     }
 
     @Test
     public void buildingConditionForExact_appliesRegex() {
         expectToken(TokenType.EXACT, "2017-01-12 00:00:00", "paper.created");
-        assertThat(e.evaluate(stMock)
+        assertThat(e
+            .evaluate(stMock)
             .toString()).isEqualTo("paper.created = timestamp '2017-01-12 00:00:00.0'");
     }
 
     @Test
     public void buildingConditionForLessThan_applies() {
         expectToken(TokenType.LESSTHAN, "2017-01-12 00:00:00", "paper.created");
-        assertThat(e.evaluate(stMock)
+        assertThat(e
+            .evaluate(stMock)
             .toString()).isEqualTo("paper.created < timestamp '2017-01-12 00:00:00.0'");
     }
 
     @Test
     public void buildingConditionForLessThanOrEqual_applies() {
         expectToken(TokenType.LESSOREQUAL, "2017-01-12 00:00:00", "paper.created");
-        assertThat(e.evaluate(stMock)
+        assertThat(e
+            .evaluate(stMock)
             .toString()).isEqualTo("paper.created <= timestamp '2017-01-12 00:00:00.0'");
     }
 
     @Test
     public void buildingConditionForDateRange_applies() {
         expectToken(TokenType.RANGEQUOTED, "2017-01-11 10:00:00-2017-01-12 15:14:13", "paper.created");
-        assertThat(e.evaluate(stMock)
+        assertThat(e
+            .evaluate(stMock)
             .toString()).isEqualTo(
-                "paper.created between timestamp '2017-01-11 10:00:00.0' and timestamp '2017-01-12 15:14:13.0'");
+            "paper.created between timestamp '2017-01-11 10:00:00.0' and timestamp '2017-01-12 15:14:13.0'");
     }
 
     @Test
     public void buildingConditionForWhitespace_appliesTrueCondition() {
         expectToken(TokenType.WHITESPACE, "   ", "paper.created");
-        assertThat(e.evaluate(stMock)
+        assertThat(e
+            .evaluate(stMock)
             .toString()).isEqualTo("1 = 1");
     }
 
     @Test
     public void buildingConditionForWord_appliesContains() {
         expectToken(TokenType.WORD, "foo", "paper.created_by");
-        assertThat(e.evaluate(stMock)
+        assertThat(e
+            .evaluate(stMock)
             .toString()).isEqualToIgnoringCase(concat(
-        // @formatter:off
+            // @formatter:off
               "\"public\".\"paper\".\"id\" in (",
               "  select \"public\".\"paper\".\"id\"",
               "  from \"public\".\"paper\"",
@@ -106,7 +114,8 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     @Test
     public void buildingConditionForRaw_appliesDummyTrue() {
         expectToken(TokenType.RAW, "foo", "paper.created");
-        assertThat(e.evaluate(stMock)
+        assertThat(e
+            .evaluate(stMock)
             .toString()).isEqualTo("1 = 1");
     }
 
@@ -129,7 +138,8 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
             e.evaluate(stMock);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(msg);
         }
     }

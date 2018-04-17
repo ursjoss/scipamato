@@ -7,27 +7,26 @@ import ch.difty.scipamato.core.entity.CoreEntity;
 /**
  * The generic repository interface for managing entities.
  *
- * @author u.joss
- *
  * @param <T>
- *            the type of the entity, extending {@link CoreEntity}
+ *     the type of the entity, extending {@link CoreEntity}
  * @param <ID>
- *            the type of the ID of the entity
+ *     the type of the ID of the entity
  * @param <F>
- *            the type of the filter extending {@link ScipamatoFilter}
+ *     the type of the filter extending {@link ScipamatoFilter}
+ * @author u.joss
  */
 public interface EntityRepository<T extends CoreEntity, ID, F extends ScipamatoFilter>
-        extends ReadOnlyRepository<T, ID, F> {
+    extends ReadOnlyRepository<T, ID, F> {
 
     /**
      * Add an entity {@code T} to the database.
      *
      * @param entity
-     *            - must not be null
+     *     - must not be null
      * @return the added entity, including the generated default values - or
-     *         {@code null} if it can't be added.
+     *     {@code null} if it can't be added.
      * @throws NullArgumentException
-     *             if the entity is null.
+     *     if the entity is null.
      */
     T add(T entity);
 
@@ -35,13 +34,13 @@ public interface EntityRepository<T extends CoreEntity, ID, F extends ScipamatoF
      * Add an entity {@code T} to the database.
      *
      * @param entity
-     *            - must not be null
+     *     - must not be null
      * @param languageCode
-     *            - must not be null
+     *     - must not be null
      * @return the added entity, including the generated default values - or
-     *         {@code null} if it can't be added.
+     *     {@code null} if it can't be added.
      * @throws NullArgumentException
-     *             if the entity is null.
+     *     if the entity is null.
      */
     T add(T entity, String languageCode);
 
@@ -49,14 +48,14 @@ public interface EntityRepository<T extends CoreEntity, ID, F extends ScipamatoF
      * Remove the persisted entity with the provided id.
      *
      * @param id
-     *            the database id - must not be null
+     *     the database id - must not be null
      * @param version
-     *            the record version - used for optimistic locking
+     *     the record version - used for optimistic locking
      * @return the deleted entity
      * @throws NullArgumentException
-     *             if the id is null.
+     *     if the id is null.
      * @throws OptimisticLockingException
-     *             if the record version has increased in the mean time
+     *     if the record version has increased in the mean time
      */
     T delete(ID id, int version);
 
@@ -65,12 +64,12 @@ public interface EntityRepository<T extends CoreEntity, ID, F extends ScipamatoF
      * values of the provided entity.
      *
      * @param entity
-     *            the entity with some changed values - must not be null.
+     *     the entity with some changed values - must not be null.
      * @return the modified persisted entity
      * @throws NullArgumentException
-     *             if the entity is null.
+     *     if the entity is null.
      * @throws OptimisticLockingException
-     *             if the record version has increased in the mean time
+     *     if the record version has increased in the mean time
      */
     T update(T entity);
 
@@ -79,14 +78,14 @@ public interface EntityRepository<T extends CoreEntity, ID, F extends ScipamatoF
      * values of the provided entity.
      *
      * @param entity
-     *            the entity with some changed values - must not be null.
+     *     the entity with some changed values - must not be null.
      * @param languageCode
-     *            the language code (e.g. 'en') - must not be null.
+     *     the language code (e.g. 'en') - must not be null.
      * @return the modified persisted entity
      * @throws NullArgumentException
-     *             if the entity or the language code is null.
+     *     if the entity or the language code is null.
      * @throws OptimisticLockingException
-     *             if the record version has increased in the mean time
+     *     if the record version has increased in the mean time
      */
     T update(T entity, String languageCode);
 

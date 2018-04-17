@@ -9,14 +9,13 @@ import java.util.List;
  * the focus to other items by explicitly setting it to any other existing item
  * or by advancing ({@link #next()}) or retreating ({@link #previous()}) item by
  * item.
- *
+ * <p>
  * If no items have been set initially, {@link #getItemWithFocus} returns null,
  * all other commands return false or are ignored.
  *
- * @author u.joss
- *
  * @param <T>
- *            type of managed items
+ *     type of managed items
+ * @author u.joss
  */
 public interface ItemNavigator<T> extends Serializable {
 
@@ -24,8 +23,8 @@ public interface ItemNavigator<T> extends Serializable {
      * Initializes a new set of managed items. Must have at least one item.
      *
      * @param items
-     *            list of items of type {@code T} or a subclass, must not be null
-     *            nor empty.
+     *     list of items of type {@code T} or a subclass, must not be null
+     *     nor empty.
      */
     void initialize(List<? extends T> items);
 
@@ -34,20 +33,20 @@ public interface ItemNavigator<T> extends Serializable {
      * initialized with at least one item.
      *
      * @param item
-     *       the item the focus is set to
+     *     the item the focus is set to
      */
     void setFocusToItem(T item);
 
     /**
      * @return the item with the focus (the first by default) or {@literal null} if
-     *         the navigator has not been initialized with at least one item.
+     *     the navigator has not been initialized with at least one item.
      */
     T getItemWithFocus();
 
     /**
      * @return true if you can retreat the current item by one position. False if
-     *         we're already on the first item or if the navigator has not been
-     *         initialized with at least one item.
+     *     we're already on the first item or if the navigator has not been
+     *     initialized with at least one item.
      */
     boolean hasPrevious();
 
@@ -58,8 +57,8 @@ public interface ItemNavigator<T> extends Serializable {
 
     /**
      * @return true if you can advance the current item by one position. False if
-     *         we're already on the last item or if the navigator has not been
-     *         initialized with at least one item.
+     *     we're already on the last item or if the navigator has not been
+     *     initialized with at least one item.
      */
     boolean hasNext();
 

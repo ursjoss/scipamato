@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core;
 
+import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.apache.wicket.markup.html.IPackageResourceGuard;
@@ -12,8 +13,6 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplication;
-
 @SpringBootApplication
 @EnableFeignClients
 @EnableCaching
@@ -21,7 +20,8 @@ import com.giffing.wicket.spring.boot.starter.app.WicketBootSecuredWebApplicatio
 public class ScipamatoApplication extends WicketBootSecuredWebApplication {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder().sources(ScipamatoApplication.class)
+        new SpringApplicationBuilder()
+            .sources(ScipamatoApplication.class)
             .run(args);
     }
 

@@ -17,23 +17,22 @@ import ch.difty.scipamato.common.persistence.paging.Sort;
 
 /**
  * Default implementation of the {@link JooqSortMapper} interface.
- *
+ * <p>
  * Sort properties are de-camel- and upper-cased; java property names are
  * therefore converted to table column names, e.g. {@code publicationYear} will
  * be translated to {@code PUBLICATION_YEAR}
  *
- * @author u.joss
- *
  * @param <R>
- *            the type of the record, extending {@link Record}
+ *     the type of the record, extending {@link Record}
  * @param <T>
- *            the type of the entity, extending {@link ScipamatoEntity}
+ *     the type of the entity, extending {@link ScipamatoEntity}
  * @param <TI>
- *            the type of the table implementation of record {@code R}
+ *     the type of the table implementation of record {@code R}
+ * @author u.joss
  */
 @Component
 public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends TableImpl<R>>
-        implements JooqSortMapper<R, T, TI> {
+    implements JooqSortMapper<R, T, TI> {
 
     @Override
     public Collection<SortField<T>> map(final Sort sortSpecification, final TI table) {
@@ -71,19 +70,21 @@ public class SortMapper<R extends Record, T extends ScipamatoEntity, TI extends 
      */
     @SuppressWarnings("unchecked")
     TableField<R, T> getTableFieldFor(final TI table, final String columnName)
-            throws NoSuchFieldException, IllegalAccessException {
-        return (TableField<R, T>) table.getClass()
+        throws NoSuchFieldException, IllegalAccessException {
+        return (TableField<R, T>) table
+            .getClass()
             .getField(columnName)
             .get(table);
     }
 
     private String deCamelCase(final String sortFieldName) {
-        return TranslationUtils.deCamelCase(sortFieldName)
+        return TranslationUtils
+            .deCamelCase(sortFieldName)
             .toUpperCase();
     }
 
     private SortField<T> convertTableFieldToSortField(final TableField<R, T> tableField,
-            final Sort.Direction sortDirection) {
+        final Sort.Direction sortDirection) {
         return sortDirection == Sort.Direction.ASC ? tableField.asc() : tableField.desc();
     }
 

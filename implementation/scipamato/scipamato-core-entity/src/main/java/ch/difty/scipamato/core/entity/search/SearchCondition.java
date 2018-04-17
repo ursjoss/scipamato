@@ -1,39 +1,7 @@
 package ch.difty.scipamato.core.entity.search;
 
 import static ch.difty.scipamato.core.entity.IdScipamatoEntity.IdScipamatoEntityFields.ID;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.AUTHORS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.COMMENT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.CREATED;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.CREATED_BY;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.DOI;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_ASSESSMENT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_POLLUTANT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR_OVERRIDDEN;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.GOALS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.INTERN;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.LAST_MOD;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.LAST_MOD_BY;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.LOCATION;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.MAIN_CODE_OF_CODECLASS1;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHODS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_CONFOUNDERS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_OUTCOME;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STATISTICS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STUDY_DESIGN;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.NUMBER;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.ORIGINAL_ABSTRACT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.PMID;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_DURATION;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PARTICIPANTS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PLACE;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.PUBL_YEAR;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EFFECT_ESTIMATE;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EXPOSURE_RANGE;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_MEASURED_OUTCOME;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.TITLE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.*;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -56,15 +24,15 @@ import ch.difty.scipamato.core.entity.Paper;
  * provides accessors for all fields present in the entity {@link Paper}, but
  * all in String form.
  * <p>
- *
+ * <p>
  * The provided String values may contain query specific meta information that
  * can be interpreted by the query infrastructure to specify e.g. ranges or
  * wildcards.
  * <p>
- *
+ * <p>
  * Internally it stores any of the fields that were explicitly set in Maps that
  * can be accessed to be evaluated by the query engine.
- * <p>
+ *
  *
  * <b>Note:</b> the actual ID of the {@link SearchCondition} is called
  * {@code searchConditionId} due to the name clash with its search condition id,
@@ -537,24 +505,29 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
 
     public String getDisplayValue() {
         final StringBuilder sb = new StringBuilder();
-        final String textString = stringSearchTerms.values()
+        final String textString = stringSearchTerms
+            .values()
             .stream()
             .map(StringSearchTerm::getDisplayValue)
             .collect(Collectors.joining(JOIN_DELIMITER));
-        final String intString = integerSearchTerms.values()
+        final String intString = integerSearchTerms
+            .values()
             .stream()
             .map(IntegerSearchTerm::getDisplayValue)
             .collect(Collectors.joining(JOIN_DELIMITER));
-        final String boolString = booleanSearchTerms.values()
+        final String boolString = booleanSearchTerms
+            .values()
             .stream()
             .map(BooleanSearchTerm::getDisplayValue)
             .collect(Collectors.joining(JOIN_DELIMITER));
-        final String auditString = auditSearchTerms.values()
+        final String auditString = auditSearchTerms
+            .values()
             .stream()
             .map(AuditSearchTerm::getDisplayValue)
             .distinct()
             .collect(Collectors.joining(JOIN_DELIMITER));
-        sb.append(Stream.of(textString, intString, boolString, auditString)
+        sb.append(Stream
+            .of(textString, intString, boolString, auditString)
             .filter((final String s) -> !s.isEmpty())
             .collect(Collectors.joining(JOIN_DELIMITER)));
         if (!codes.isEmpty()) {

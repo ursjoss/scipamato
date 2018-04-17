@@ -1,5 +1,10 @@
 package ch.difty.scipamato.common.web.config;
 
+import io.undertow.servlet.api.SecurityConstraint;
+import io.undertow.servlet.api.SecurityInfo;
+import io.undertow.servlet.api.TransportGuaranteeType;
+import io.undertow.servlet.api.WebResourceCollection;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
@@ -8,11 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
-import io.undertow.servlet.api.SecurityConstraint;
-import io.undertow.servlet.api.SecurityInfo;
-import io.undertow.servlet.api.TransportGuaranteeType;
-import io.undertow.servlet.api.WebResourceCollection;
-import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @Slf4j
@@ -43,10 +43,10 @@ public class UndertowConfig {
         final UndertowEmbeddedServletContainerFactory factory = new UndertowEmbeddedServletContainerFactory();
         factory.addBuilderCustomizers(builder -> builder.addHttpListener(redirectFromPort, "0.0.0.0"));
         factory.addDeploymentInfoCustomizers(deploymentInfo -> deploymentInfo
-            .addSecurityConstraint(
-                new SecurityConstraint().addWebResourceCollection(new WebResourceCollection().addUrlPattern("/*"))
-                    .setTransportGuaranteeType(TransportGuaranteeType.CONFIDENTIAL)
-                    .setEmptyRoleSemantic(SecurityInfo.EmptyRoleSemantic.PERMIT))
+            .addSecurityConstraint(new SecurityConstraint()
+                .addWebResourceCollection(new WebResourceCollection().addUrlPattern("/*"))
+                .setTransportGuaranteeType(TransportGuaranteeType.CONFIDENTIAL)
+                .setEmptyRoleSemantic(SecurityInfo.EmptyRoleSemantic.PERMIT))
             .setConfidentialPortManager(httpExchange -> confidentialPort));
         log.debug("UndertowEmbeddedServletContainerFactory configured.");
         return factory;

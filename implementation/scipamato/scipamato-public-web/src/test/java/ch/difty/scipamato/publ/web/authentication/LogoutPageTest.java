@@ -2,6 +2,7 @@ package ch.difty.scipamato.publ.web.authentication;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -11,8 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-
-import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 
 import ch.difty.scipamato.publ.web.WicketTest;
 import ch.difty.scipamato.publ.web.paper.browse.PublicPage;
@@ -75,7 +74,8 @@ public class LogoutPageTest extends WicketTest {
     @Test
     public void submitting_invalidatesSessionAndSendsToHomePage_whichForwardsToLoginPage() {
         getTester().startPage(makePage());
-        assertThat(getTester().getSession()
+        assertThat(getTester()
+            .getSession()
             .isSessionInvalidated()).isFalse();
         // TODO does not work in the test scenario, investigate
         // getTester().submitForm(FORM);

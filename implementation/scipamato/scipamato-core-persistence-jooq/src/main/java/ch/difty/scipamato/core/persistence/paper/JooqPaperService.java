@@ -1,6 +1,9 @@
 package ch.difty.scipamato.core.persistence.paper;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -11,11 +14,7 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
-import ch.difty.scipamato.core.persistence.DefaultServiceResult;
-import ch.difty.scipamato.core.persistence.JooqEntityService;
-import ch.difty.scipamato.core.persistence.PaperService;
-import ch.difty.scipamato.core.persistence.ServiceResult;
-import ch.difty.scipamato.core.persistence.UserRepository;
+import ch.difty.scipamato.core.persistence.*;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 
 /**
@@ -25,7 +24,7 @@ import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
  */
 @Service
 public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter, PaperRepository>
-        implements PaperService {
+    implements PaperService {
 
     protected JooqPaperService(final PaperRepository repo, final UserRepository userRepo) {
         super(repo, userRepo);
@@ -38,7 +37,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     @Override
     public List<Paper> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext paginationContext,
-            final String languageCode) {
+        final String languageCode) {
         return getRepository().findPageBySearchOrder(searchOrder, paginationContext, languageCode);
     }
 
@@ -51,17 +50,20 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     @Transactional(readOnly = false)
     public ServiceResult dumpPubmedArticlesToDb(final List<PubmedArticleFacade> articles, final long minimumNumber) {
         final ServiceResult sr = new DefaultServiceResult();
-        final List<Integer> pmIdCandidates = articles.stream()
+        final List<Integer> pmIdCandidates = articles
+            .stream()
             .map(PubmedArticleFacade::getPmId)
             .filter(Objects::nonNull)
             .map(Integer::valueOf)
             .collect(Collectors.toList());
         if (!pmIdCandidates.isEmpty()) {
-            final List<String> existingPmIds = getRepository().findExistingPmIdsOutOf(pmIdCandidates)
+            final List<String> existingPmIds = getRepository()
+                .findExistingPmIdsOutOf(pmIdCandidates)
                 .stream()
                 .map(String::valueOf)
                 .collect(Collectors.toList());
-            final List<Paper> savedPapers = articles.stream()
+            final List<Paper> savedPapers = articles
+                .stream()
                 .filter(a -> a.getPmId() != null && !existingPmIds.contains(a.getPmId()))
                 .map((final PubmedArticleFacade a) -> this.savePubmedArticle(a, minimumNumber))
                 .filter(Objects::nonNull)
@@ -86,11 +88,13 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     }
 
     private void fillServiceResultFrom(final List<Paper> newPapers, final List<String> existingPmIds,
-            final ServiceResult sr) {
-        existingPmIds.stream()
+        final ServiceResult sr) {
+        existingPmIds
+            .stream()
             .map(pmId -> "PMID " + pmId)
             .forEach(sr::addWarnMessage);
-        newPapers.stream()
+        newPapers
+            .stream()
             .map(p -> "PMID " + p.getPmId() + " (id " + p.getId() + ")")
             .forEach(sr::addInfoMessage);
     }
@@ -115,7 +119,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
 
     @Override
     public List<Long> findPageOfIdsBySearchOrder(final SearchOrder searchOrder,
-            final PaginationContext paginationContext) {
+        final PaginationContext paginationContext) {
         return getRepository().findPageOfIdsBySearchOrder(searchOrder, paginationContext);
     }
 

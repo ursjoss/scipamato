@@ -1,5 +1,7 @@
 package ch.difty.scipamato.common.web;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import org.apache.wicket.Page;
 import org.apache.wicket.model.StringResourceModel;
 import org.springframework.context.annotation.Primary;
@@ -7,8 +9,6 @@ import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.pages.AbstractMenuBuilder;
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
 @Primary
 @Component

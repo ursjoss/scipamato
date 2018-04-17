@@ -21,16 +21,19 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     }
 
     private void validateAndAssertFailure(final CodeClass cc, final FieldEnumType fieldType, final Object invalidValue,
-            final String msg) {
+        final String msg) {
         validate(cc);
 
-        assertThat(getViolations()).isNotEmpty()
+        assertThat(getViolations())
+            .isNotEmpty()
             .hasSize(1);
-        ConstraintViolation<CodeClass> violation = getViolations().iterator()
+        ConstraintViolation<CodeClass> violation = getViolations()
+            .iterator()
             .next();
         assertThat(violation.getMessageTemplate()).isEqualTo(msg);
         assertThat(violation.getInvalidValue()).isEqualTo(invalidValue);
-        assertThat(violation.getPropertyPath()
+        assertThat(violation
+            .getPropertyPath()
             .toString()).isEqualTo(fieldType.getName());
     }
 

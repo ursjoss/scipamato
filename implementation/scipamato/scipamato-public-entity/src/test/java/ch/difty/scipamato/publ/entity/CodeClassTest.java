@@ -4,16 +4,16 @@ import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFi
 import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
-
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import org.junit.Test;
 
 public class CodeClassTest extends PublicEntityTest<CodeClass> {
 
     @Override
     protected CodeClass newEntity() {
-        return CodeClass.builder()
+        return CodeClass
+            .builder()
             .codeClassId(1)
             .langCode("lc")
             .name("name")
@@ -36,7 +36,8 @@ public class CodeClassTest extends PublicEntityTest<CodeClass> {
 
     @Override
     protected void verifyEquals() {
-        EqualsVerifier.forClass(CodeClass.class)
+        EqualsVerifier
+            .forClass(CodeClass.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(CREATED.getName(), MODIFIED.getName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
@@ -45,7 +46,8 @@ public class CodeClassTest extends PublicEntityTest<CodeClass> {
 
     @Test
     public void assertEnumFields() {
-        assertThat(CodeClass.CodeClassFields.values()).extracting("name")
+        assertThat(CodeClass.CodeClassFields.values())
+            .extracting("name")
             .containsExactly("codeClassId", "langCode", "name", "description");
     }
 }

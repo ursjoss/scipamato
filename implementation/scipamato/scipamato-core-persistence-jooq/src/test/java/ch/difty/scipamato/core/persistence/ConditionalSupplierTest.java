@@ -21,7 +21,8 @@ public class ConditionalSupplierTest {
     @Test
     public void combiningWithAnd_withSingleConditionConsideredPresent_returnsSingleElementCondition() {
         boolean present = true;
-        cs.add(present, () -> DSL.field("baz")
+        cs.add(present, () -> DSL
+            .field("baz")
             .eq(DSL.value("boo")));
         c = cs.combineWithAnd();
         assertThat(c.toString()).isEqualTo("baz = 'boo'");
@@ -30,7 +31,8 @@ public class ConditionalSupplierTest {
     @Test
     public void combiningWithAnd_withSingleConditionNotConsideredPresent_returnsDummyTrueCondition() {
         boolean present = false;
-        cs.add(present, () -> DSL.field("foo")
+        cs.add(present, () -> DSL
+            .field("foo")
             .eq(DSL.value("bar")));
         c = cs.combineWithAnd();
         assertThat(c.toString()).isEqualTo("1 = 1");
@@ -38,7 +40,8 @@ public class ConditionalSupplierTest {
 
     @Test
     public void combiningWithAnd_withSingleCondition_returnsSingleElementCondition() {
-        cs.add(() -> DSL.field("foo")
+        cs.add(() -> DSL
+            .field("foo")
             .eq(DSL.value("bar")));
         c = cs.combineWithAnd();
         assertThat(c.toString()).isEqualTo("foo = 'bar'");
@@ -46,13 +49,15 @@ public class ConditionalSupplierTest {
 
     @Test
     public void combiningWithAnd_withTwoConditions_appliesDummyTermWithConditions() {
-        cs.add(() -> DSL.field("foo")
+        cs.add(() -> DSL
+            .field("foo")
             .eq(DSL.value("bar")));
-        cs.add(() -> DSL.field("baz")
+        cs.add(() -> DSL
+            .field("baz")
             .eq(DSL.value("boo")));
         c = cs.combineWithAnd();
         assertThat(c.toString()).isEqualTo(
-        // @formatter:off
+            // @formatter:off
             "(\n" +
             "  foo = 'bar'\n" +
             "  and baz = 'boo'\n" +
@@ -75,7 +80,8 @@ public class ConditionalSupplierTest {
 
     @Test
     public void combiningWithOr_withSingleConditions_appliesDummyTermWith() {
-        cs.add(() -> DSL.field("foo")
+        cs.add(() -> DSL
+            .field("foo")
             .eq(DSL.value("bar")));
         c = cs.combineWithOr();
         assertThat(c.toString()).isEqualTo("foo = 'bar'");
@@ -83,13 +89,15 @@ public class ConditionalSupplierTest {
 
     @Test
     public void combiningWithOr_withDoubleConditions() {
-        cs.add(() -> DSL.field("foo")
+        cs.add(() -> DSL
+            .field("foo")
             .eq(DSL.value("bar")));
-        cs.add(() -> DSL.field("baz")
+        cs.add(() -> DSL
+            .field("baz")
             .eq(DSL.value("boo")));
         c = cs.combineWithOr();
         assertThat(c.toString()).isEqualTo(
-        // @formatter:off
+            // @formatter:off
             "(\n" +
             "  foo = 'bar'\n" +
             "  or baz = 'boo'\n" +

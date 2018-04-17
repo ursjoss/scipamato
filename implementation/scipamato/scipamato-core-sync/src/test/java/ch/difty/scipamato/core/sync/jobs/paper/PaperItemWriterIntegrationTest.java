@@ -35,7 +35,8 @@ public class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegratio
     }
 
     private PublicPaper newPaper(long id) {
-        return PublicPaper.builder()
+        return PublicPaper
+            .builder()
             .id(id)
             .number(id)
             .codesPopulation(new Short[] { (short) 1, (short) 2 })
@@ -46,10 +47,12 @@ public class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegratio
     }
 
     private PublicPaper getExistingPaperFromDb(long id) {
-        final PaperRecord pr = dsl.selectFrom(PAPER)
+        final PaperRecord pr = dsl
+            .selectFrom(PAPER)
             .where(PAPER.ID.eq(id))
             .fetchOne();
-        return PublicPaper.builder()
+        return PublicPaper
+            .builder()
             .id(pr.getId())
             .number(pr.getNumber())
             .pmId(pr.getPmId())
@@ -74,10 +77,12 @@ public class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegratio
 
     @After
     public void tearDown() {
-        dsl.deleteFrom(PAPER)
+        dsl
+            .deleteFrom(PAPER)
             .where(PAPER.ID.lt(0L))
             .execute();
-        dsl.update(PAPER)
+        dsl
+            .update(PAPER)
             .set(PAPER.NUMBER, PAPER.ID)
             .where(PAPER.ID.eq(ID_EXISTING))
             .execute();
@@ -100,7 +105,8 @@ public class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegratio
     }
 
     private void assertRecordCountForId(long id, int size) {
-        assertThat(dsl.select(PAPER.NUMBER)
+        assertThat(dsl
+            .select(PAPER.NUMBER)
             .from(PAPER)
             .where(PAPER.ID.eq(id))
             .fetch()).hasSize(size);

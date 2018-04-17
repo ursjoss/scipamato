@@ -40,14 +40,16 @@ public class NavigatedListTest {
     @Test
     public void doesNotAcceptNullValues() {
         NavigatedList<Long> nav = new NavigatedList<>(Arrays.asList(13L, 2L, null, 5L));
-        assertThat(nav.getItems()).containsExactly(13L, 2L, 5L)
+        assertThat(nav.getItems())
+            .containsExactly(13L, 2L, 5L)
             .doesNotContain((Long) null);
     }
 
     @Test
     public void doesNotAcceptDuplicateValues() {
         NavigatedList<Long> nav = new NavigatedList<>(Arrays.asList(13L, 2L, 2L, 5L));
-        assertThat(nav.getItems()).hasSize(3)
+        assertThat(nav.getItems())
+            .hasSize(3)
             .containsExactly(13L, 2L, 5L);
     }
 
@@ -64,7 +66,8 @@ public class NavigatedListTest {
 
     @Test
     public void cannotModifyItemsOfResultSet() {
-        navigatedList.getItems()
+        navigatedList
+            .getItems()
             .add(100L);
         assertThat(navigatedList.getItems()).containsExactlyElementsOf(ids);
     }

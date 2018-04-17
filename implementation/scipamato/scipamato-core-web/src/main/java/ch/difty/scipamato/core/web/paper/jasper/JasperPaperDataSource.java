@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import org.apache.wicket.util.io.ByteArrayOutputStream;
 import org.wicketstuff.jasperreports.JRConcreteResource;
 
@@ -11,25 +15,16 @@ import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
-import net.sf.jasperreports.engine.JRAbstractExporter;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 /**
  * Common base class for Jasper paper data sources.
  *
- * @author u.joss
- *
  * @param <E>
- *            the type of the {@link JasperEntity}
+ *     the type of the {@link JasperEntity}
+ * @author u.joss
  */
 public abstract class JasperPaperDataSource<E extends JasperEntity>
-        extends JRConcreteResource<ScipamatoPdfResourceHandler> {
+    extends JRConcreteResource<ScipamatoPdfResourceHandler> {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,15 +36,15 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
      * Instantiation of the data source with a list of jasper entities.
      *
      * @param handler
-     *            the pdf resource handler used for exporting the pdf
+     *     the pdf resource handler used for exporting the pdf
      * @param baseName
-     *            the file name without the extension (.pdf)
+     *     the file name without the extension (.pdf)
      * @param jasperEntities
-     *            a collection of {@link JasperEntity} items that will be used for
-     *            populating the report.
+     *     a collection of {@link JasperEntity} items that will be used for
+     *     populating the report.
      */
     public JasperPaperDataSource(final ScipamatoPdfResourceHandler handler, final String baseName,
-            final Collection<E> jasperEntities) {
+        final Collection<E> jasperEntities) {
         super(handler);
         this.baseName = AssertAs.notNull(baseName, "baseName");
         this.jasperEntities.clear();
@@ -63,14 +58,14 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
      * fetching the records on its own).
      *
      * @param handler
-     *            the pdf resource handler used for exporting the pdf
+     *     the pdf resource handler used for exporting the pdf
      * @param baseName
-     *            the file name without the extension (.pdf)
+     *     the file name without the extension (.pdf)
      * @param dataProvider
-     *            a data provider deriving from {@link AbstractPaperSlimProvider}
+     *     a data provider deriving from {@link AbstractPaperSlimProvider}
      */
     public JasperPaperDataSource(final ScipamatoPdfResourceHandler handler, final String baseName,
-            final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
+        final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
         super(handler);
         this.baseName = AssertAs.notNull(baseName, "baseName");
         this.jasperEntities.clear();
@@ -106,7 +101,7 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
      * and additional information required to build it.
      *
      * @param p
-     *            the Paper
+     *     the Paper
      * @return the entity
      */
     protected abstract E makeEntity(final Paper p);

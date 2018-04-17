@@ -1,17 +1,17 @@
 package ch.difty.scipamato.core.web.paper;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import ch.difty.scipamato.common.web.event.WicketEvent;
 import ch.difty.scipamato.core.web.paper.search.SearchOrderPanel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 
 /**
  * The event indicates that there were changes in the search order deriving from
  * the {@link SearchOrderPanel} that will or may affect other child components
  * of the parent page container holding the {@link SearchOrderPanel}.
- *
+ * <p>
  * There are a couple of special options that can be achieved with the event:
  *
  * <ul>

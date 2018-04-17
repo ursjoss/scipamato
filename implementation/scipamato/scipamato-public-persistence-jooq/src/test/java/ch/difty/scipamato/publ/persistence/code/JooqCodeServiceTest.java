@@ -2,9 +2,7 @@ package ch.difty.scipamato.publ.persistence.code;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +33,8 @@ public class JooqCodeServiceTest {
         codes.add(new Code(1, "c2", "en", "Code2", null, 2));
         when(repoMock.findCodesOfClass(ccId, languageCode)).thenReturn(codes);
 
-        assertThat(extractProperty(Code.CodeFields.CODE.getName()).from(service.findCodesOfClass(ccId, languageCode)))
-            .containsOnly("c1", "c2");
+        assertThat(extractProperty(Code.CodeFields.CODE.getName()).from(
+            service.findCodesOfClass(ccId, languageCode))).containsOnly("c1", "c2");
 
         verify(repoMock).findCodesOfClass(ccId, languageCode);
 

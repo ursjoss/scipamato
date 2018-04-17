@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import org.apache.wicket.Page;
 import org.apache.wicket.model.StringResourceModel;
 import org.springframework.stereotype.Component;
@@ -11,8 +13,6 @@ import ch.difty.scipamato.core.web.authentication.LogoutPage;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 import ch.difty.scipamato.core.web.paper.search.PaperSearchPage;
 import ch.difty.scipamato.core.web.sync.RefDataSyncPage;
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
 /**
  * Adds the SciPaMaTo-Core menus to the navbar for the base page.
@@ -41,10 +41,9 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         addExternalLink(navbar, new StringResourceModel("menu.help.url", page, null).getString(),
             new StringResourceModel("menu.help", page, null).getString(), GlyphIconType.questionsign,
             Navbar.ComponentPosition.RIGHT);
-        addExternalLink(navbar,
-            new StringResourceModel("menu.changelog.url", page, null).setParameters(getVersionAnker())
-                .getString(),
-            getVersionLink(), GlyphIconType.briefcase, Navbar.ComponentPosition.RIGHT);
+        addExternalLink(navbar, new StringResourceModel("menu.changelog.url", page, null)
+            .setParameters(getVersionAnker())
+            .getString(), getVersionLink(), GlyphIconType.briefcase, Navbar.ComponentPosition.RIGHT);
         addPageLink(navbar, page, LogoutPage.class, "menu.logout", GlyphIconType.edit, Navbar.ComponentPosition.RIGHT);
     }
 

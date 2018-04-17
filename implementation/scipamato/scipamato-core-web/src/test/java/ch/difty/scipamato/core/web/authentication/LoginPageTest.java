@@ -1,15 +1,14 @@
 package ch.difty.scipamato.core.web.authentication;
 
+import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
 
-import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
-
 import ch.difty.scipamato.core.web.WicketTest;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 
 public class LoginPageTest extends WicketTest {
 

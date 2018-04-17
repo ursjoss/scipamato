@@ -4,16 +4,13 @@ import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParame
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
+import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import javax.xml.transform.stream.StreamSource;
 
 import org.junit.After;
 import org.junit.Before;
@@ -26,16 +23,7 @@ import org.springframework.oxm.XmlMappingException;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import ch.difty.scipamato.common.NullArgumentException;
-import ch.difty.scipamato.core.pubmed.api.Article;
-import ch.difty.scipamato.core.pubmed.api.ArticleTitle;
-import ch.difty.scipamato.core.pubmed.api.Journal;
-import ch.difty.scipamato.core.pubmed.api.JournalIssue;
-import ch.difty.scipamato.core.pubmed.api.MedlineCitation;
-import ch.difty.scipamato.core.pubmed.api.MedlineJournalInfo;
-import ch.difty.scipamato.core.pubmed.api.PMID;
-import ch.difty.scipamato.core.pubmed.api.PubDate;
-import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
-import ch.difty.scipamato.core.pubmed.api.PubmedArticleSet;
+import ch.difty.scipamato.core.pubmed.api.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PubmedXmlServiceTest {
@@ -102,7 +90,8 @@ public class PubmedXmlServiceTest {
             service.unmarshal(null);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage("xmlString must not be null.");
         }
     }
@@ -182,7 +171,8 @@ public class PubmedXmlServiceTest {
 
     public static PubmedArticleSet makeMinimalValidPubmedArticleSet() {
         PubmedArticleSet pubmedArticleSet = new PubmedArticleSet();
-        pubmedArticleSet.getPubmedArticleOrPubmedBookArticle()
+        pubmedArticleSet
+            .getPubmedArticleOrPubmedBookArticle()
             .add(ScipamatoPubmedArticleTest.makeMinimalValidPubmedArticle());
         return pubmedArticleSet;
     }
@@ -190,8 +180,8 @@ public class PubmedXmlServiceTest {
     @Test
     public void gettingPubmedArticleWithPmid_withNoNetwork_returnsEmptyOptional() {
         final int pmId = 25395026;
-        when(pubMedMock.articleWithId(String.valueOf(pmId)))
-            .thenThrow(new RuntimeException("The network is not reachable"));
+        when(pubMedMock.articleWithId(String.valueOf(pmId))).thenThrow(
+            new RuntimeException("The network is not reachable"));
 
         Optional<PubmedArticleFacade> pa = service.getPubmedArticleWithPmid(pmId);
         assertThat(pa.isPresent()).isFalse();

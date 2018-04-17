@@ -2,13 +2,13 @@ package ch.difty.scipamato.core.web.paper.jasper.summarytable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
 
 public class PaperSummaryTableTest extends JasperEntityTest {
 
@@ -36,7 +36,8 @@ public class PaperSummaryTableTest extends JasperEntityTest {
     }
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields.builder(HEADER_PART, BRAND)
+        return ReportHeaderFields
+            .builder(HEADER_PART, BRAND)
             .captionLabel(CAPTION)
             .methodsLabel(METHODS_LABEL)
             .numberLabel(NUMBER_LABEL)
@@ -89,7 +90,8 @@ public class PaperSummaryTableTest extends JasperEntityTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(PaperSummaryTable.class)
+        EqualsVerifier
+            .forClass(PaperSummaryTable.class)
             .withRedefinedSuperclass()
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();

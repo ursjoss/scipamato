@@ -36,7 +36,8 @@ public class CodeItemWriterIntegrationTest extends AbstractItemWriterIntegration
     }
 
     private PublicCode newCode(String code) {
-        return PublicCode.builder()
+        return PublicCode
+            .builder()
             .code(code)
             .langCode(LANG_CODE)
             .codeClassId(8)
@@ -47,11 +48,13 @@ public class CodeItemWriterIntegrationTest extends AbstractItemWriterIntegration
     }
 
     private PublicCode getExistingCodeFromDb(String code, String langCode) {
-        final CodeRecord cr = dsl.selectFrom(CODE)
+        final CodeRecord cr = dsl
+            .selectFrom(CODE)
             .where(CODE.CODE_.eq(code))
             .and(CODE.LANG_CODE.eq(langCode))
             .fetchOne();
-        return PublicCode.builder()
+        return PublicCode
+            .builder()
             .code(cr.getCode())
             .langCode(cr.getLangCode())
             .codeClassId(cr.getCodeClassId())
@@ -67,10 +70,12 @@ public class CodeItemWriterIntegrationTest extends AbstractItemWriterIntegration
 
     @After
     public void tearDown() {
-        dsl.deleteFrom(CODE)
+        dsl
+            .deleteFrom(CODE)
             .where(CODE.CODE_.eq(CODE_NEW))
             .execute();
-        dsl.update(CODE)
+        dsl
+            .update(CODE)
             .set(CODE.CODE_CLASS_ID, CODE_CLASS_EXISTING)
             .where(CODE.CODE_.eq(CODE_EXISTING))
             .and(CODE.LANG_CODE.eq(LANG_CODE))
@@ -94,7 +99,8 @@ public class CodeItemWriterIntegrationTest extends AbstractItemWriterIntegration
     }
 
     private void assertRecordCountForId(String code, String langCode, int size) {
-        assertThat(dsl.select(CODE.CODE_)
+        assertThat(dsl
+            .select(CODE.CODE_)
             .from(CODE)
             .where(CODE.CODE_.eq(code))
             .and(CODE.LANG_CODE.eq(langCode))

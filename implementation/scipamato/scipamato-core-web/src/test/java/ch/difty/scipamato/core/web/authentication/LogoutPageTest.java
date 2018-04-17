@@ -38,7 +38,8 @@ public class LogoutPageTest extends WicketTest {
     @Test
     public void submitting_invalidatesSessionAndSendsToHomePage_whichForwardsToLoginPage() {
         getTester().startPage(makePage());
-        assertThat(getTester().getSession()
+        assertThat(getTester()
+            .getSession()
             .isSessionInvalidated()).isFalse();
         // TODO does not work in the test scenario, investigate
         // getTester().submitForm(FORM);

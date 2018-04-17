@@ -1,18 +1,18 @@
 package ch.difty.scipamato.core.entity;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import ch.difty.scipamato.common.entity.FieldEnumType;
-import ch.difty.scipamato.core.auth.Role;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import ch.difty.scipamato.common.entity.FieldEnumType;
+import ch.difty.scipamato.core.auth.Role;
 
 /**
  * {@link User} entity. Holds a list of associated {@link Role}s
@@ -71,7 +71,7 @@ public class User extends IdScipamatoEntity<Integer> {
     }
 
     public User(final int id, final String userName, final String firstName, final String lastName, final String email,
-            final String password, final boolean enabled, final List<Role> roles) {
+        final String password, final boolean enabled, final List<Role> roles) {
         setId(id);
         this.userName = userName;
         this.firstName = firstName;
@@ -83,7 +83,7 @@ public class User extends IdScipamatoEntity<Integer> {
     }
 
     public User(final int id, final String userName, final String firstName, final String lastName, final String email,
-            final String password) {
+        final String password) {
         this(id, userName, firstName, lastName, email, password, false, null);
     }
 

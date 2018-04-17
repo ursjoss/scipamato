@@ -29,7 +29,8 @@ public abstract class SelfUpdatingPageTest<T extends BasePage<?>> extends BasePa
     @Test
     public void renderedPage_setsOutputMarkupIdToComponents() {
         getTester().startPage(makePage());
-        assertThat(getTester().getComponentFromLastRenderedPage("contentPanel:form:title")
+        assertThat(getTester()
+            .getComponentFromLastRenderedPage("contentPanel:form:title")
             .getOutputMarkupId()).isTrue();
     }
 

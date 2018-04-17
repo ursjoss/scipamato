@@ -2,14 +2,15 @@ package ch.difty.scipamato.core.web.paper.jasper.summarytable;
 
 import java.util.stream.Collectors;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntity;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * DTO to feed the PaperSummaryTableDataSource
@@ -41,9 +42,9 @@ public class PaperSummaryTable extends JasperEntity {
      * Instantiation with a {@link Paper} and the {@link ReportHeaderFields}
      *
      * @param p
-     *            the paper with the relevant fields
+     *     the paper with the relevant fields
      * @param rhf
-     *            the reportHeaderFields with the localized field headers
+     *     the reportHeaderFields with the localized field headers
      */
     public PaperSummaryTable(final Paper p, final ReportHeaderFields rhf, final boolean includeResults) {
         AssertAs.notNull(p, "p");
@@ -53,15 +54,18 @@ public class PaperSummaryTable extends JasperEntity {
         this.number = no != null ? String.valueOf(no) : "";
         this.firstAuthor = na(p.getFirstAuthor());
         this.publicationYear = p.getPublicationYear() != null ? String.valueOf(p.getPublicationYear()) : "";
-        this.codesOfClass1 = p.getCodesOf(CodeClassId.CC1)
+        this.codesOfClass1 = p
+            .getCodesOf(CodeClassId.CC1)
             .stream()
             .map(Code::getCode)
             .collect(Collectors.joining(CODE_DELIMITER));
-        this.codesOfClass4 = p.getCodesOf(CodeClassId.CC4)
+        this.codesOfClass4 = p
+            .getCodesOf(CodeClassId.CC4)
             .stream()
             .map(Code::getCode)
             .collect(Collectors.joining(CODE_DELIMITER));
-        this.codesOfClass7 = p.getCodesOf(CodeClassId.CC7)
+        this.codesOfClass7 = p
+            .getCodesOf(CodeClassId.CC7)
             .stream()
             .map(Code::getCode)
             .collect(Collectors.joining(CODE_DELIMITER));

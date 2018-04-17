@@ -1,9 +1,11 @@
 package ch.difty.scipamato.core.web.paper.search;
 
-import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.GLOBAL;
-import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.NAME;
-import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.SHOW_EXCLUDED;
+import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.*;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -27,10 +29,6 @@ import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.web.common.BasePanel;
 import ch.difty.scipamato.core.web.model.SearchOrderModel;
 import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 
 /**
  * Panel offering the user the option of:
@@ -41,7 +39,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
  * <li>changing whether excluded papers are excluded or selected</li>
  * <li>saving new or modified search orders</li>
  * </ul>
- *
+ * <p>
  * Once a modification has been issued, the panel will issue a
  * {@link SearchOrderChangeEvent} to the page. The page and other panels within
  * the page can then react to the new or modified selection.
@@ -91,7 +89,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
     private void makeAndQueueSearchOrderSelectBox(final String id) {
         final SearchOrderModel choices = new SearchOrderModel(getActiveUser().getId(), SEARCH_ORDER_MAX);
         final IChoiceRenderer<SearchOrder> choiceRenderer = new ChoiceRenderer<>(
-                SearchOrder.CoreEntityFields.DISPLAY_VALUE.getName(), SearchOrder.IdScipamatoEntityFields.ID.getName());
+            SearchOrder.CoreEntityFields.DISPLAY_VALUE.getName(), SearchOrder.IdScipamatoEntityFields.ID.getName());
         final StringResourceModel noneSelectedModel = new StringResourceModel(id + ".noneSelected", this, null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig()
             .withNoneSelectedText(noneSelectedModel.getObject())
@@ -156,7 +154,8 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
             }
         };
         global.setOutputMarkupId(true);
-        global.getConfig()
+        global
+            .getConfig()
             .withThreeState(false)
             .withUseNative(true);
         queueCheckBoxAndLabel(global);

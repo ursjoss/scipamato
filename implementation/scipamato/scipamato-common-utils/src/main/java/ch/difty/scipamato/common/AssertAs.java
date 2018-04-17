@@ -10,11 +10,12 @@ public final class AssertAs {
      * Returns the value otherwise.
      *
      * @param value
-     *            to validate
+     *     to validate
      * @param name
-     *            the name of the field
+     *     the name of the field
      * @return the non-null value of type {@code T}
-     * @throws NullArgumentException if the value is null
+     * @throws NullArgumentException
+     *     if the value is null
      */
     public static <T> T notNull(final T value, final String name) {
         if (value == null)
@@ -26,9 +27,10 @@ public final class AssertAs {
      * Checks if the field is null. If so, throws a {@link NullArgumentException}.
      *
      * @param value
-     *            to validate
+     *     to validate
      * @return the non-null value of type {@code T}
-     * @throws NullArgumentException if the value is null
+     * @throws NullArgumentException
+     *     if the value is null
      */
     public static <T> T notNull(final T value) {
         if (value == null)

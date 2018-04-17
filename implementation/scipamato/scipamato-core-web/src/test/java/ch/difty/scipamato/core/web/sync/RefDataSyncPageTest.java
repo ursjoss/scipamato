@@ -1,9 +1,8 @@
 package ch.difty.scipamato.core.web.sync;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.ladda.LaddaAjaxButton;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.junit.After;
@@ -13,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import ch.difty.scipamato.core.sync.launcher.SyncJobLauncher;
 import ch.difty.scipamato.core.sync.launcher.SyncJobResult;
 import ch.difty.scipamato.core.web.common.BasePageTest;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.ladda.LaddaAjaxButton;
 
 public class RefDataSyncPageTest extends BasePageTest<RefDataSyncPage> {
 

@@ -12,7 +12,8 @@ import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
 public class TestApplication {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder().sources(TestApplication.class)
+        new SpringApplicationBuilder()
+            .sources(TestApplication.class)
             .run(args);
     }
 

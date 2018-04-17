@@ -1,9 +1,8 @@
 package ch.difty.scipamato.common.web.event;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 
 @Data
 @AllArgsConstructor

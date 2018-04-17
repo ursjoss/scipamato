@@ -2,13 +2,14 @@ package ch.difty.scipamato.publ.entity.filter;
 
 import java.util.List;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.publ.entity.Code;
 import ch.difty.scipamato.publ.entity.PopulationCode;
 import ch.difty.scipamato.publ.entity.StudyDesignCode;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

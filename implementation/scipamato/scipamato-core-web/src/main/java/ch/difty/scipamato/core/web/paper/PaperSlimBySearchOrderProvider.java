@@ -28,19 +28,21 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
      * rows per page (pageSize)
      *
      * @param searchOrder
-     *            the search specification
+     *     the search specification
      * @param rowsPerPage
      */
     public PaperSlimBySearchOrderProvider(final SearchOrder searchOrder, final int rowsPerPage) {
         super(searchOrder != null ? searchOrder : new SearchOrder(), rowsPerPage);
-        Injector.get()
+        Injector
+            .get()
             .inject(this);
         setSort(Paper.IdScipamatoEntityFields.ID.getName(), SortOrder.DESCENDING);
     }
 
     @Override
     protected Iterator<PaperSlim> findPage(final PaginationContext pc) {
-        return getService().findPageBySearchOrder(getFilterState(), pc)
+        return getService()
+            .findPageBySearchOrder(getFilterState(), pc)
             .iterator();
     }
 

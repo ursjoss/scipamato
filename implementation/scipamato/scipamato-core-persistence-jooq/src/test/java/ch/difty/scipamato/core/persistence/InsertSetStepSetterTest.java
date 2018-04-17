@@ -3,9 +3,7 @@ package ch.difty.scipamato.core.persistence;
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
@@ -69,7 +67,7 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
      * Create the test fixture for set steps, continuing with getMoreStep(), e.g.
      *
      * <code>
-     * 
+     *
      * <pre>
      * when(getMoreStep().set(PAPER.CREATED, CREATED)).thenReturn(getMoreStep());
      * when(getMoreStep().set(PAPER.CREATED_BY, CREATED_BY)).thenReturn(getMoreStep());
@@ -77,7 +75,7 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
      * when(getMoreStep().set(PAPER.LAST_MODIFIED_BY, LAST_MOD_BY)).thenReturn(getMoreStep());
      * when(getMoreStep().set(PAPER.VERSION, VERSION)).thenReturn(getMoreStep());
      * </pre>
-     * 
+     * <p>
      * </code
      */
     protected abstract void setStepFixtureAudit();
@@ -139,7 +137,8 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
             getSetter().considerSettingKeyOf(null, getEntity());
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage("step must not be null.");
         }
     }
@@ -150,7 +149,8 @@ public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEn
             getSetter().considerSettingKeyOf(getMoreStep(), null);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage("entity must not be null.");
         }
     }

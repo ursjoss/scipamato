@@ -14,7 +14,6 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.BySearchOrderReposi
  * Repository to manage {@link Paper}s
  *
  * @author u.joss
- *
  */
 public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilter> {
 
@@ -31,7 +30,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      *
      * @param ids
      * @param languageCode
-     *            - must not be null
+     *     - must not be null
      * @return list of papers (attachments without content)
      */
     List<Paper> findWithCodesByIds(List<Long> ids, String languageCode);
@@ -42,9 +41,9 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * without the actual content.
      *
      * @param searchOrder
-     *            {@link SearchOrder} the search specification
+     *     {@link SearchOrder} the search specification
      * @param languageCode
-     *            - must not be null
+     *     - must not be null
      * @return list of entities (attachments without content)
      */
     List<Paper> findBySearchOrder(SearchOrder searchOrder, String languageCode);
@@ -60,7 +59,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * @return paged list of entities (attachments without content)
      */
     List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext,
-            String languageCode);
+        String languageCode);
 
     /**
      * {@link BySearchOrderRepository#countBySearchOrder(SearchOrder)}
@@ -73,7 +72,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * content.
      *
      * @param pmIds
-     *            list of pubmed ids
+     *     list of pubmed ids
      * @param languageCode
      * @return list of entities (codes enriched, attachments without content)
      */
@@ -84,7 +83,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * in persisted {@link Paper}s.
      *
      * @param pmIds
-     *            list of pubmed ids
+     *     list of pubmed ids
      * @return list of PMIDs
      */
     List<Integer> findExistingPmIdsOutOf(List<Integer> pmIds);
@@ -95,7 +94,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * content.
      *
      * @param numbers
-     *            list of numbers
+     *     list of numbers
      * @param languageCode
      * @return list of entities (codes enriched, attachments without content)
      */
@@ -107,9 +106,9 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * {@code minimumPaperNumberToBeRecycled}.
      *
      * @param minimumPaperNumberToBeRecycled
-     *            any gaps lower than this value will not be recycled
+     *     any gaps lower than this value will not be recycled
      * @return lowest free number ignoring any gaps below
-     *         {@code minimumPaperNumberToBeRecycled}
+     *     {@code minimumPaperNumberToBeRecycled}
      */
     long findLowestFreeNumberStartingFrom(long minimumPaperNumberToBeRecycled);
 
@@ -123,9 +122,9 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * searchOrderId.
      *
      * @param searchOrderId
-     *            the id of the search order
+     *     the id of the search order
      * @param paperId
-     *            the id of the paper
+     *     the id of the paper
      */
     void excludePaperFromSearchOrderResults(long searchOrderId, long paperId);
 
@@ -134,9 +133,9 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * searchOrder with given searchOrderId.
      *
      * @param searchOrderId
-     *            the id of the search order
+     *     the id of the search order
      * @param paperId
-     *            the id of the paper
+     *     the id of the paper
      */
     void reincludePaperIntoSearchOrderResults(long searchOrderId, long paperId);
 
@@ -152,7 +151,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * Loads the {@link PaperAttachment} with provided id including it's content
      *
      * @param id
-     *            the id of the paper attachment
+     *     the id of the paper attachment
      * @return the full attachment including the content.
      */
     PaperAttachment loadAttachmentWithContentBy(Integer id);
@@ -161,7 +160,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * Deletes the attachment with given id
      *
      * @param id
-     *            the id of the paper attachment to be deleted
+     *     the id of the paper attachment to be deleted
      * @return the paper for which the attachment has been deleted
      */
     Paper deleteAttachment(Integer id);

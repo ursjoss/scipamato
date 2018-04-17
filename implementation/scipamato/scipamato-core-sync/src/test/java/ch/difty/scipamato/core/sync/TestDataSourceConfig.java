@@ -32,7 +32,8 @@ public class TestDataSourceConfig {
     @Primary
     @ConfigurationProperties(prefix = "sync.source.datasource")
     public DataSource hikariSourceDataSource() {
-        return DataSourceBuilder.create()
+        return DataSourceBuilder
+            .create()
             .build();
     }
 

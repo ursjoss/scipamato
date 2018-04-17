@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * actually issues a call to PubMed over the internet. Thus this test fails if
  * the machine running the test is offline or cannot reach PubMed for some other
  * reason.
- *
+ * <p>
  * Also it's not polite to continuously
  *
  * @author u.joss

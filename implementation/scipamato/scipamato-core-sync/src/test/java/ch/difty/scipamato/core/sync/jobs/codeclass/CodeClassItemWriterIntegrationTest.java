@@ -13,7 +13,7 @@ import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord;
 
 public class CodeClassItemWriterIntegrationTest
-        extends AbstractItemWriterIntegrationTest<PublicCodeClass, CodeClassItemWriter> {
+    extends AbstractItemWriterIntegrationTest<PublicCodeClass, CodeClassItemWriter> {
 
     private static final int ID_EXISTING = 1;
     private static final int ID_NEW      = -1;
@@ -37,7 +37,8 @@ public class CodeClassItemWriterIntegrationTest
     }
 
     private PublicCodeClass newCodeClass(int id) {
-        return PublicCodeClass.builder()
+        return PublicCodeClass
+            .builder()
             .codeClassId(id)
             .langCode(LANG_CODE)
             .name("CC" + id)
@@ -47,11 +48,13 @@ public class CodeClassItemWriterIntegrationTest
     }
 
     private PublicCodeClass getExistingCodeFromDb(int id, String langCode) {
-        final CodeClassRecord ccr = dsl.selectFrom(CODE_CLASS)
+        final CodeClassRecord ccr = dsl
+            .selectFrom(CODE_CLASS)
             .where(CODE_CLASS.CODE_CLASS_ID.eq(id))
             .and(CODE_CLASS.LANG_CODE.eq(langCode))
             .fetchOne();
-        return PublicCodeClass.builder()
+        return PublicCodeClass
+            .builder()
             .codeClassId(ccr.getCodeClassId())
             .langCode(ccr.getLangCode())
             .name(ccr.getName())
@@ -65,10 +68,12 @@ public class CodeClassItemWriterIntegrationTest
 
     @After
     public void tearDown() {
-        dsl.deleteFrom(CODE_CLASS)
+        dsl
+            .deleteFrom(CODE_CLASS)
             .where(CODE_CLASS.CODE_CLASS_ID.eq(ID_NEW))
             .execute();
-        dsl.update(CODE_CLASS)
+        dsl
+            .update(CODE_CLASS)
             .set(CODE_CLASS.DESCRIPTION, "")
             .where(CODE_CLASS.CODE_CLASS_ID.eq(ID_EXISTING))
             .and(CODE_CLASS.LANG_CODE.eq(LANG_CODE))
@@ -92,7 +97,8 @@ public class CodeClassItemWriterIntegrationTest
     }
 
     private void assertRecordCountForId(int id, String langCode, int size) {
-        assertThat(dsl.select(CODE_CLASS.CODE_CLASS_ID)
+        assertThat(dsl
+            .select(CODE_CLASS.CODE_CLASS_ID)
             .from(CODE_CLASS)
             .where(CODE_CLASS.CODE_CLASS_ID.eq(id))
             .and(CODE_CLASS.LANG_CODE.eq(langCode))

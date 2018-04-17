@@ -1,28 +1,6 @@
 package ch.difty.scipamato.core.entity.search;
 
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.EMPTY;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTOPENLEFT;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTOPENLEFTQUOTED;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTOPENLEFTRIGHT;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTOPENLEFTRIGHTQUOTED;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTOPENRIGHT;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTOPENRIGHTQUOTED;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTQUOTED;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTREGEX;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.NOTWORD;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.OPENLEFT;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.OPENLEFTQUOTED;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.OPENLEFTRIGHT;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.OPENLEFTRIGHTQUOTED;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.OPENRIGHT;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.OPENRIGHTQUOTED;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.QUOTED;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.RAW;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.REGEX;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.SOME;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.UNSUPPORTED;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.WHITESPACE;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.WORD;
+import static ch.difty.scipamato.core.entity.search.StringSearchTerm.TokenType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
@@ -43,13 +21,17 @@ public class StringSearchTermTest {
     }
 
     private void assertToken(int idx, TokenType tt, String rawData, String data, boolean negate) {
-        assertThat(st.getTokens()
+        assertThat(st
+            .getTokens()
             .get(idx).rawData).isEqualTo(rawData);
-        assertThat(st.getTokens()
+        assertThat(st
+            .getTokens()
             .get(idx).sqlData).isEqualTo(data);
-        assertThat(st.getTokens()
+        assertThat(st
+            .getTokens()
             .get(idx).type).isEqualTo(tt);
-        assertThat(st.getTokens()
+        assertThat(st
+            .getTokens()
             .get(idx).negate).isEqualTo(negate);
     }
 
@@ -279,7 +261,8 @@ public class StringSearchTermTest {
     public void tokenToString_forUserField() {
         st = new StringSearchTerm(FIELD_NAME, "pm2.5");
         assertThat(st.getTokens()).hasSize(1);
-        assertThat(st.getTokens()
+        assertThat(st
+            .getTokens()
             .get(0)
             .toString()).isEqualTo("(WORD pm2.5)");
     }
@@ -288,16 +271,20 @@ public class StringSearchTermTest {
     public void differentInterpretationOfQuotedAndWord() {
         st = new StringSearchTerm(FIELD_NAME, "=\"foo\" \"foo\" foo =foo");
         assertThat(st.getTokens()).hasSize(4);
-        assertThat(st.getTokens()
+        assertThat(st
+            .getTokens()
             .get(0)
             .toString()).isEqualTo("(QUOTED foo)");
-        assertThat(st.getTokens()
+        assertThat(st
+            .getTokens()
             .get(1)
             .toString()).isEqualTo("(QUOTED foo)");
-        assertThat(st.getTokens()
+        assertThat(st
+            .getTokens()
             .get(2)
             .toString()).isEqualTo("(WORD foo)");
-        assertThat(st.getTokens()
+        assertThat(st
+            .getTokens()
             .get(3)
             .toString()).isEqualTo("(WORD foo)");
     }

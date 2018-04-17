@@ -15,7 +15,7 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 
 /**
  * The update step setter used for updating {@link Paper}s.
- * <p>
+ *
  *
  * <b>Note:</b> the {@link Code}s are not updated here.
  *
@@ -28,7 +28,8 @@ public class PaperUpdateSetStepSetter implements UpdateSetStepSetter<PaperRecord
     public UpdateSetMoreStep<PaperRecord> setFieldsFor(UpdateSetFirstStep<PaperRecord> step, Paper e) {
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
-        return step.set(PAPER.NUMBER, e.getNumber())
+        return step
+            .set(PAPER.NUMBER, e.getNumber())
             .set(PAPER.PM_ID, e.getPmId())
             .set(PAPER.DOI, e.getDoi())
             .set(PAPER.AUTHORS, e.getAuthors())

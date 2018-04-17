@@ -5,6 +5,8 @@ import static ch.difty.scipamato.core.web.CorePageParameters.SHOW_EXCLUDED;
 
 import java.util.Optional;
 
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.event.IEvent;
@@ -35,17 +37,15 @@ import ch.difty.scipamato.core.web.paper.PaperSlimBySearchOrderProvider;
 import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * The PaperSearchPage manages {@link SearchOrder}s by allowing the user to
  * select, create or modify them and see the result of the search in the result
  * panel.
- *
+ * <p>
  * The page forwards to the {@link PaperSearchCriteriaPage} in order to set up
  * or amend the SearchCondition contained within a {@link SearchOrder}.
- *
+ * <p>
  * You can either pass a model of a {@link SearchOrder} to the page constructor
  * or provide the {@code searchOrderId} through the {@link PageParameters}. If
  * it is valid, the page will load the search order from DB.
@@ -110,8 +110,8 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private void trySettingSearchOrderModelFromDb() {
         final Long searchOrderId = searchOrderIdFromPageParameters();
-        final Optional<SearchOrder> so = searchOrderId != null ? searchOrderService.findById(searchOrderId)
-                : Optional.empty();
+        final Optional<SearchOrder> so =
+            searchOrderId != null ? searchOrderService.findById(searchOrderId) : Optional.empty();
         so.ifPresent(this::setShowExcluded);
         setDefaultModel(Model.of(so.orElse(makeEmptyModelObject())));
     }
@@ -168,7 +168,8 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     }
 
     private void fixShowExcludedInCaseOfNoExclusionsPresent() {
-        if (getModelObject().isShowExcluded() && getModelObject().getExcludedPaperIds()
+        if (getModelObject().isShowExcluded() && getModelObject()
+            .getExcludedPaperIds()
             .isEmpty()) {
             getModelObject().setShowExcluded(false);
         }
@@ -197,7 +198,8 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                if (PaperSearchPage.this.getModelObject() != null && PaperSearchPage.this.getModelObject()
+                if (PaperSearchPage.this.getModelObject() != null && PaperSearchPage.this
+                    .getModelObject()
                     .isShowExcluded()) {
                     setDefaultModel(new StringResourceModel(id + "-excluded" + PANEL_HEADER_RESOURCE_TAG, this, null));
                 } else {
@@ -214,11 +216,13 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
             @Override
             protected PaperEntryPage getResponsePage(IModel<PaperSlim> m, String languageCode,
-                    PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
-                return new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject()
-                    .getNumber(), languageCode)
+                PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
+                return new PaperEntryPage(Model.of(paperService
+                    .findByNumber(m
+                        .getObject()
+                        .getNumber(), languageCode)
                     .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
-                        dataProvider.isShowExcluded());
+                    dataProvider.isShowExcluded());
             }
 
         };
@@ -228,11 +232,13 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     @Override
     public void onEvent(final IEvent<?> event) {
-        if (event.getPayload()
-            .getClass() == SearchOrderChangeEvent.class)
+        if (event
+                .getPayload()
+                .getClass() == SearchOrderChangeEvent.class)
             manageSearchOrderChange(event);
-        else if (event.getPayload()
-            .getClass() == ToggleExclusionsEvent.class)
+        else if (event
+                     .getPayload()
+                     .getClass() == ToggleExclusionsEvent.class)
             manageToggleExclusion(event);
     }
 
@@ -288,7 +294,8 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             }
         }
         dataProvider.setFilterState(getModelObject());
-        if (getModelObject() != null && getModelObject().getExcludedPaperIds()
+        if (getModelObject() != null && getModelObject()
+            .getExcludedPaperIds()
             .isEmpty())
             updateNavigateable();
     }

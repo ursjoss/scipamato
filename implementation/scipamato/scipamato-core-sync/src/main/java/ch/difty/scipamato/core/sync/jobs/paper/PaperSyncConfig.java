@@ -2,12 +2,11 @@ package ch.difty.scipamato.core.sync.jobs.paper;
 
 import static ch.difty.scipamato.core.db.public_.tables.Paper.PAPER;
 
+import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
-
-import javax.sql.DataSource;
 
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
@@ -42,7 +41,7 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
  */
 @Configuration
 public class PaperSyncConfig
-        extends SyncConfig<PublicPaper, ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord> {
+    extends SyncConfig<PublicPaper, ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord> {
 
     private static final String TOPIC      = "paper";
     private static final int    CHUNK_SIZE = 100;
@@ -69,11 +68,11 @@ public class PaperSyncConfig
     private final CodeAggregator codeAggregator;
 
     protected PaperSyncConfig(CodeAggregator codeAggregator, @Qualifier("dslContext") DSLContext jooqCore,
-            @Qualifier("publicDslContext") DSLContext jooqPublic,
-            @Qualifier("dataSource") DataSource scipamatoCoreDataSource, JobBuilderFactory jobBuilderFactory,
-            StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+        @Qualifier("publicDslContext") DSLContext jooqPublic,
+        @Qualifier("dataSource") DataSource scipamatoCoreDataSource, JobBuilderFactory jobBuilderFactory,
+        StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
         super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, scipamatoCoreDataSource, jobBuilderFactory, stepBuilderFactory,
-                dateTimeService);
+            dateTimeService);
         this.codeAggregator = codeAggregator;
         setInternalCodes();
     }
@@ -83,7 +82,8 @@ public class PaperSyncConfig
     }
 
     private List<String> fetchInternalCodesFromDb() {
-        return getJooqCore().select()
+        return getJooqCore()
+            .select()
             .from(Code.CODE)
             .where(Code.CODE.INTERNAL.isTrue())
             .fetch(Code.CODE.CODE_);
@@ -108,8 +108,8 @@ public class PaperSyncConfig
     protected String selectSql() {
         return getJooqCore()
             .select(C_ID, C_NUMBER, C_PM_ID, C_AUTHORS, C_TITLE, C_LOCATION, C_PUB_YEAR, C_GOALS, C_METHODS,
-                C_POPULATION, C_RESULT, C_COMMENT, C_VERSION, C_CREATED, C_LAST_MODIFIED,
-                DSL.arrayAgg(PaperCode.PAPER_CODE.CODE)
+                C_POPULATION, C_RESULT, C_COMMENT, C_VERSION, C_CREATED, C_LAST_MODIFIED, DSL
+                    .arrayAgg(PaperCode.PAPER_CODE.CODE)
                     .as(ALIAS_CODES))
             .from(Paper.PAPER)
             .innerJoin(PaperCode.PAPER_CODE)
@@ -123,7 +123,8 @@ public class PaperSyncConfig
 
     @Override
     protected PublicPaper makeEntity(final ResultSet rs) throws SQLException {
-        final PublicPaper paper = PublicPaper.builder()
+        final PublicPaper paper = PublicPaper
+            .builder()
             .id(getLong(C_ID, rs))
             .number(getLong(C_NUMBER, rs))
             .pmId(getInteger(C_PM_ID, rs))
@@ -150,14 +151,16 @@ public class PaperSyncConfig
     }
 
     private String[] extractCodes(final String alias, final ResultSet rs) throws SQLException {
-        return (String[]) rs.getArray(alias)
+        return (String[]) rs
+            .getArray(alias)
             .getArray();
     }
 
     @Override
     protected DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord> getPurgeDcs(
-            final Timestamp cutOff) {
-        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER)
+        final Timestamp cutOff) {
+        return getJooqPublic()
+            .delete(ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER)
             .where(ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(cutOff));
     }
 

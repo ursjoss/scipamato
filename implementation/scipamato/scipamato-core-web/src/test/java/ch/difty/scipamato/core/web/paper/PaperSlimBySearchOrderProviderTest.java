@@ -3,9 +3,7 @@ package ch.difty.scipamato.core.web.paper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +19,7 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 
 public class PaperSlimBySearchOrderProviderTest
-        extends AbstractPaperSlimProviderTest<SearchOrder, PaperSlimBySearchOrderProvider> {
+    extends AbstractPaperSlimProviderTest<SearchOrder, PaperSlimBySearchOrderProvider> {
 
     private static final String LC = "en";
 
@@ -30,8 +28,8 @@ public class PaperSlimBySearchOrderProviderTest
 
     @Override
     protected void localFixture() {
-        when(serviceMock.findPageBySearchOrder(eq(searchOrder), isA(PaginationContext.class)))
-            .thenReturn(pageOfSlimPapers);
+        when(serviceMock.findPageBySearchOrder(eq(searchOrder), isA(PaginationContext.class))).thenReturn(
+            pageOfSlimPapers);
     }
 
     @Override
@@ -82,8 +80,8 @@ public class PaperSlimBySearchOrderProviderTest
     public void gettingAllPapersByFilter() {
         provider.setSort("authors", SortOrder.ASCENDING);
         when(paperServiceMock.findPageBySearchOrder(eq(getFilter()),
-            Mockito.argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")), eq(LC)))
-                .thenReturn(pageOfPapers);
+            Mockito.argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")), eq(LC))).thenReturn(
+            pageOfPapers);
         List<Paper> papers = provider.findAllPapersByFilter();
         assertThat(papers).hasSize(5);
         assertThat(papers).containsOnly(paperMock);

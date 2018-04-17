@@ -9,12 +9,11 @@ import ch.difty.scipamato.core.entity.CoreEntity;
 /**
  * Sets the various fields from the entity into the InsertSetStep.
  *
- * @author u.joss
- *
  * @param <R>
- *            Record extending {@link Record}
+ *     Record extending {@link Record}
  * @param <T>
- *            Entity extending {@link CoreEntity}
+ *     Entity extending {@link CoreEntity}
+ * @author u.joss
  */
 public interface InsertSetStepSetter<R extends Record, T extends CoreEntity> {
 
@@ -22,9 +21,9 @@ public interface InsertSetStepSetter<R extends Record, T extends CoreEntity> {
      * Sets all the non-key fields of the provided entity into the setter.
      *
      * @param step
-     *            {@link InsertSetStep} to set the values into
+     *     {@link InsertSetStep} to set the values into
      * @param entity
-     *            the entity with the values to set
+     *     the entity with the values to set
      * @return {@link InsertSetMoreStep} for execution
      */
     InsertSetMoreStep<R> setNonKeyFieldsFor(InsertSetStep<R> step, T entity);
@@ -35,9 +34,9 @@ public interface InsertSetStepSetter<R extends Record, T extends CoreEntity> {
      * apply the default values from the sequences.
      *
      * @param step
-     *            {@link InsertSetMoreStep} to set the values into
+     *     {@link InsertSetMoreStep} to set the values into
      * @param entity
-     *            the entity with the values to set
+     *     the entity with the values to set
      */
     void considerSettingKeyOf(InsertSetMoreStep<R> step, T entity);
 
@@ -46,9 +45,9 @@ public interface InsertSetStepSetter<R extends Record, T extends CoreEntity> {
      * null).
      *
      * @param entity
-     *            still missing the id
+     *     still missing the id
      * @param saved
-     *            the record that has the id assigned from the db
+     *     the record that has the id assigned from the db
      */
     void resetIdToEntity(T entity, R saved);
 

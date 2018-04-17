@@ -1,10 +1,9 @@
 package ch.difty.scipamato.core.sync.jobs;
 
+import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-
-import javax.sql.DataSource;
 
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
@@ -26,12 +25,11 @@ import ch.difty.scipamato.core.sync.houskeeping.HouseKeeper;
 /**
  * Common abstract base class for Sync Configs
  *
- * @author u.joss
- *
  * @param <T>
- *            type of sync classes
+ *     type of sync classes
  * @param <R>
- *            related record implementation
+ *     related record implementation
+ * @author u.joss
  */
 public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
 
@@ -49,8 +47,8 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     private final int    chunkSize;
 
     protected SyncConfig(final String topic, final int chunkSize, DSLContext jooqCore, DSLContext jooqPublic,
-            DataSource scipamatoCoreDataSource, JobBuilderFactory jobBuilderFactory,
-            StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+        DataSource scipamatoCoreDataSource, JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
+        DateTimeService dateTimeService) {
         this.topic = topic;
         this.chunkSize = chunkSize;
         this.jooqCore = jooqCore;
@@ -78,7 +76,8 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     }
 
     protected final Job createJob() {
-        return jobBuilderFactory.get(getJobName())
+        return jobBuilderFactory
+            .get(getJobName())
             .incrementer(new RunIdIncrementer())
             .flow(insertingOrUpdatingStep())
             .next(purgingStep())
@@ -92,8 +91,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     protected abstract String getJobName();
 
     private Step insertingOrUpdatingStep() {
-        return getStepBuilderFactory().get(topic + "InsertingOrUpdatingStep")
-            .<T, T>chunk(chunkSize)
+        return getStepBuilderFactory().get(topic + "InsertingOrUpdatingStep").<T, T>chunk(chunkSize)
             .reader(coreReader())
             .writer(publicWriter())
             .build();
@@ -101,7 +99,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
 
     /**
      * @return implementation of the {@link ItemWriter} interface to insert/update
-     *         type {@literal T}
+     *     type {@literal T}
      */
     protected abstract ItemWriter<T> publicWriter();
 
@@ -122,16 +120,18 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
      * Translate the {@link ResultSet} into the entity {@literal T}
      *
      * @param rs
-     *            the recordset from scipamato-core
+     *     the recordset from scipamato-core
      * @return the entity of type {@literal T}
      * @throws SQLException
      */
     protected abstract T makeEntity(ResultSet rs) throws SQLException;
 
     private Step purgingStep() {
-        final Timestamp cutOff = Timestamp.valueOf(getDateTimeService().getCurrentDateTime()
+        final Timestamp cutOff = Timestamp.valueOf(getDateTimeService()
+            .getCurrentDateTime()
             .minusMinutes(graceTime));
-        return stepBuilderFactory.get(topic + "PurgingStep")
+        return stepBuilderFactory
+            .get(topic + "PurgingStep")
             .tasklet(new HouseKeeper<>(getPurgeDcs(cutOff), graceTime))
             .build();
     }
@@ -144,7 +144,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
 
     /**
      * @return returns null if the column was null, the boxed integer value
-     *         otherwise
+     *     otherwise
      */
     protected Integer getInteger(final TableField<?, Integer> field, final ResultSet rs) throws SQLException {
         final int val = rs.getInt(field.getName());

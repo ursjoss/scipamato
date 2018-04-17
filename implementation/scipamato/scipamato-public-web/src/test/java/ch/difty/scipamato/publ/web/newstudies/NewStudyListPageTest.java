@@ -91,7 +91,8 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
         getTester().clickLink("topics:1:topicStudies:0:reference");
         getTester().assertRenderedPage(PublicPaperDetailPage.class);
 
-        getTester().newFormTester("form")
+        getTester()
+            .newFormTester("form")
             .submit("back");
         getTester().assertRenderedPage(NewStudyListPage.class);
     }

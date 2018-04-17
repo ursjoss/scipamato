@@ -49,9 +49,8 @@ import java.util.regex.Pattern;
  * <p>
  *
  * @author u.joss
- *
  * @see <a href=
- *      "http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html">http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html</a>
+ *     "http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html">http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html</a>
  */
 public class StringSearchTerm extends AbstractSearchTerm {
     private static final long serialVersionUID = 1L;
@@ -100,39 +99,19 @@ public class StringSearchTerm extends AbstractSearchTerm {
         WHITESPACE(RE_S + "+", MatchType.NONE, 5, false, false, false),
         SOME(">\"\"", MatchType.LENGTH, 6, false, false, false),
         EMPTY("=\"\"", MatchType.LENGTH, 7, false, false, true),
-        NOTOPENLEFTRIGHTQUOTED(
-                RE_NOT + RE_QUOTE + RE_AST + "(" + RE_FOO2 + ")" + RE_AST + RE_QUOTE,
-                MatchType.LIKE,
-                9,
-                true,
-                true,
-                true),
-        OPENLEFTRIGHTQUOTED(
-                RE_QUOTE + RE_AST + "(" + RE_FOO2 + ")" + RE_AST + RE_QUOTE,
-                MatchType.LIKE,
-                11,
-                true,
-                true,
-                false),
+        NOTOPENLEFTRIGHTQUOTED(RE_NOT + RE_QUOTE + RE_AST + "(" + RE_FOO2 + ")" + RE_AST + RE_QUOTE, MatchType.LIKE, 9,
+            true, true, true),
+        OPENLEFTRIGHTQUOTED(RE_QUOTE + RE_AST + "(" + RE_FOO2 + ")" + RE_AST + RE_QUOTE, MatchType.LIKE, 11, true, true,
+            false),
         NOTOPENLEFTRIGHT(RE_NOT + RE_AST + "\\b(" + RE_FOO + ")\\b" + RE_AST, MatchType.LIKE, 13, true, true, true),
         OPENLEFTRIGHT(RE_AST + "\\b(" + RE_FOO + ")\\b" + RE_AST, MatchType.LIKE, 15, true, true, false),
-        NOTOPENRIGHTQUOTED(
-                RE_NOT + RE_QUOTE + "(" + RE_FOO2 + ")" + RE_AST + RE_QUOTE,
-                MatchType.LIKE,
-                17,
-                false,
-                true,
-                true),
+        NOTOPENRIGHTQUOTED(RE_NOT + RE_QUOTE + "(" + RE_FOO2 + ")" + RE_AST + RE_QUOTE, MatchType.LIKE, 17, false, true,
+            true),
         OPENRIGHTQUOTED(RE_QUOTE + "(" + RE_FOO2 + ")" + RE_AST + RE_QUOTE, MatchType.LIKE, 19, false, true, false),
         NOTOPENRIGHT(RE_NOT + "\\b(" + RE_FOO + ")\\b" + RE_AST, MatchType.LIKE, 21, false, true, true),
         OPENRIGHT("\\b(" + RE_FOO + ")\\b" + RE_AST, MatchType.LIKE, 23, false, true, false),
-        NOTOPENLEFTQUOTED(
-                RE_NOT + RE_QUOTE + RE_AST + "(" + RE_FOO2 + ")" + RE_QUOTE,
-                MatchType.LIKE,
-                25,
-                true,
-                false,
-                true),
+        NOTOPENLEFTQUOTED(RE_NOT + RE_QUOTE + RE_AST + "(" + RE_FOO2 + ")" + RE_QUOTE, MatchType.LIKE, 25, true, false,
+            true),
         OPENLEFTQUOTED(RE_QUOTE + RE_AST + "(" + RE_FOO2 + ")" + RE_QUOTE, MatchType.LIKE, 27, true, false, false),
         NOTOPENLEFT(RE_NOT + RE_AST + "\\b(" + RE_FOO + ")\\b", MatchType.LIKE, 29, true, false, true),
         OPENLEFT(RE_AST + "\\b(" + RE_FOO + ")\\b", MatchType.LIKE, 31, true, false, false),
@@ -146,15 +125,15 @@ public class StringSearchTerm extends AbstractSearchTerm {
         // cache values
         private static final TokenType[] TOKEN_TYPES = values();
 
-        public final String    pattern;
-        public final MatchType matchType;
-        private final int      group;
-        private final boolean  wcLeft;
-        private final boolean  wcRight;
-        public final boolean   negate;
+        public final  String    pattern;
+        public final  MatchType matchType;
+        private final int       group;
+        private final boolean   wcLeft;
+        private final boolean   wcRight;
+        public final  boolean   negate;
 
         TokenType(final String pattern, final MatchType matchType, final int group, final boolean wcLeft,
-                  final boolean wcRight, final boolean negate) {
+            final boolean wcRight, final boolean negate) {
             this.pattern = pattern;
             this.group = group;
             this.matchType = matchType;

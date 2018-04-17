@@ -21,7 +21,8 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configAuthentication(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailService)
+        auth
+            .userDetailsService(userDetailService)
             .passwordEncoder(passwordEncoder());
     }
 
@@ -32,7 +33,7 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-     // @formatter:off
+        // @formatter:off
         http.csrf().disable()
             .authorizeRequests()
                 .antMatchers("/**").permitAll()

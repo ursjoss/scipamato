@@ -9,7 +9,7 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-     // @formatter:off
+        // @formatter:off
         http.csrf().disable()
             .headers().frameOptions().disable()
             .and()

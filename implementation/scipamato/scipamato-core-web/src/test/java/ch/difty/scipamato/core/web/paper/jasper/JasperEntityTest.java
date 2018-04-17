@@ -8,7 +8,7 @@ import ch.difty.scipamato.core.entity.Paper;
 
 public abstract class JasperEntityTest {
 
-    private static final long     ID               = 1L;
+    private static final   long   ID               = 1L;
     protected static final long   NUMBER           = 100L;
     protected static final String AUTHORS          = "authors";
     protected static final String TITLE            = "title";

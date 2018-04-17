@@ -18,7 +18,8 @@ public class AssertAsTest extends FinalClassTest<AssertAs> {
             AssertAs.notNull(null, "myparam");
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage("myparam must not be null.");
         }
     }
@@ -34,7 +35,8 @@ public class AssertAsTest extends FinalClassTest<AssertAs> {
             AssertAs.notNull(null, null);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage("Argument must not be null.");
         }
     }
@@ -45,7 +47,8 @@ public class AssertAsTest extends FinalClassTest<AssertAs> {
             AssertAs.notNull(null);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage("Argument must not be null.");
         }
     }

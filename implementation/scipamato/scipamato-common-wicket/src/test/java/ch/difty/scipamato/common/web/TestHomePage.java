@@ -1,8 +1,7 @@
 package ch.difty.scipamato.common.web;
 
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
 

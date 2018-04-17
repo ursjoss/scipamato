@@ -1,15 +1,16 @@
 package ch.difty.scipamato.core.web.paper.common;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
@@ -27,10 +28,6 @@ import ch.difty.scipamato.core.entity.CodeClass;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.PanelTest;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 
 public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPanel<T>> extends PanelTest<P> {
 
@@ -60,8 +57,8 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
 
     @Override
     protected final void setUpHook() {
-        codeClasses
-            .addAll(Arrays.asList(newCC(1), newCC(2), newCC(3), newCC(4), newCC(5), newCC(6), newCC(7), newCC(8)));
+        codeClasses.addAll(
+            Arrays.asList(newCC(1), newCC(2), newCC(3), newCC(4), newCC(5), newCC(6), newCC(7), newCC(8)));
         when(codeClassServiceMock.find(LOCALE)).thenReturn(codeClasses);
 
         int ccId = 0;
@@ -138,7 +135,7 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
     }
 
     private void assertComponentWithLabel(String path, Class<? extends Component> componentClass, Object modelValue,
-                                          String labelText) {
+        String labelText) {
         getTester().assertComponent(path, componentClass);
         getTester().assertModelValue(path, modelValue);
         getTester().assertLabel(path + "Label", labelText);

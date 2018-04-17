@@ -10,7 +10,7 @@ import ch.difty.scipamato.core.persistence.EntityRecordMapper;
 
 /**
  * Mapper mapping {@link SearchOrderRecord}s into entity {@link SearchOrder}.
- * <p>
+ *
  *
  * <b>Note:</b> the mapper leaves the nested list of {@link SearchCondition}s
  * empty.
@@ -28,7 +28,7 @@ public class SearchOrderRecordMapper extends EntityRecordMapper<SearchOrderRecor
     @Override
     protected AuditFields getAuditFieldsOf(SearchOrderRecord r) {
         return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(),
-                r.getVersion());
+            r.getVersion());
     }
 
     @Override

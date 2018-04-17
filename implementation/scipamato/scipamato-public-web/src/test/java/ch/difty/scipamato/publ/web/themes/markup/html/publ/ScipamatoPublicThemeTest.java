@@ -24,7 +24,8 @@ public class ScipamatoPublicThemeTest {
     public void newTheme_notUsingLessOverCss_hasCssReference() {
         ScipamatoPublicTheme theme = new ScipamatoPublicTheme(false);
         assertThat(theme.getDependencies()).hasSize(1);
-        ResourceReference resourceReference = ((CssReferenceHeaderItem) theme.getDependencies()
+        ResourceReference resourceReference = ((CssReferenceHeaderItem) theme
+            .getDependencies()
             .get(0)).getReference();
         assertThat(resourceReference).isInstanceOf(ScipamatoPublicCssReference.class);
     }
@@ -33,7 +34,8 @@ public class ScipamatoPublicThemeTest {
     public void newTheme_usingLessOverCss_hasLessReference() {
         ScipamatoPublicTheme theme = new ScipamatoPublicTheme(true);
         assertThat(theme.getDependencies()).hasSize(1);
-        ResourceReference resourceReference = ((CssReferenceHeaderItem) theme.getDependencies()
+        ResourceReference resourceReference = ((CssReferenceHeaderItem) theme
+            .getDependencies()
             .get(0)).getReference();
         assertThat(resourceReference).isInstanceOf(ScipamatoPublicLessReference.class);
     }

@@ -1,15 +1,15 @@
 package ch.difty.scipamato.core.entity;
 
-import java.time.LocalDateTime;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDateTime;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeLike;
 import ch.difty.scipamato.common.entity.FieldEnumType;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
@@ -51,21 +51,21 @@ public class Code extends CoreEntity implements CodeLike {
     }
 
     public Code(final String code, final String name, final String comment, final boolean internal,
-            final Integer codeClassId, final String codeClassName, final String codeClassDescription, final int sort) {
+        final Integer codeClassId, final String codeClassName, final String codeClassDescription, final int sort) {
         this(code, name, comment, internal, codeClassId, codeClassName, codeClassDescription, sort, null, null, null,
-                null, null);
+            null, null);
     }
 
     public Code(final String code, final String name, final String comment, final boolean internal,
-            final Integer codeClassId, final String codeClassName, final String codeClassDescription, final int sort,
-            final LocalDateTime created, final Integer createdBy, final LocalDateTime lastModified,
-            final Integer lastModifiedBy, final Integer version) {
+        final Integer codeClassId, final String codeClassName, final String codeClassDescription, final int sort,
+        final LocalDateTime created, final Integer createdBy, final LocalDateTime lastModified,
+        final Integer lastModifiedBy, final Integer version) {
         this.code = AssertAs.notNull(code, "code");
         this.name = name;
         this.comment = comment;
         this.internal = internal;
         this.codeClass = new CodeClass(AssertAs.notNull(codeClassId, "codeClassId"), codeClassName,
-                codeClassDescription);
+            codeClassDescription);
         this.sort = sort;
         setCreated(created);
         setCreatedBy(createdBy);
@@ -76,13 +76,13 @@ public class Code extends CoreEntity implements CodeLike {
 
     public Code(final Code from) {
         this(from.code, from.name, from.comment, from.internal, new CodeClass(from.codeClass), from.sort,
-                from.getCreated(), from.getCreatedBy(), from.getLastModified(), from.getLastModifiedBy(),
-                from.getVersion());
+            from.getCreated(), from.getCreatedBy(), from.getLastModified(), from.getLastModifiedBy(),
+            from.getVersion());
     }
 
     private Code(final String code, final String name, final String comment, final boolean internal,
-            final CodeClass codeClass, final int sort, final LocalDateTime created, final Integer createdBy,
-            final LocalDateTime lastModified, final Integer lastModifiedBy, final Integer version) {
+        final CodeClass codeClass, final int sort, final LocalDateTime created, final Integer createdBy,
+        final LocalDateTime lastModified, final Integer lastModifiedBy, final Integer version) {
         this.code = AssertAs.notNull(code, CodeFields.CODE.getName());
         this.name = name;
         this.comment = comment;

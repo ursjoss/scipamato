@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.jooq.DSLContext;
 import org.jooq.InsertValuesStep4;
@@ -40,7 +41,6 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.core.persistence.JooqEntityRepo;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 import ch.difty.scipamato.core.persistence.paper.searchorder.PaperBackedSearchOrderRepository;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * The repository to manage {@link Paper}s - including the nested list of
@@ -51,22 +51,22 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @Slf4j
 public class JooqPaperRepo extends
-        JooqEntityRepo<PaperRecord, Paper, Long, ch.difty.scipamato.core.db.tables.Paper, PaperRecordMapper, PaperFilter>
-        implements PaperRepository {
+    JooqEntityRepo<PaperRecord, Paper, Long, ch.difty.scipamato.core.db.tables.Paper, PaperRecordMapper, PaperFilter>
+    implements PaperRepository {
 
     private static final String LANGUAGE_CODE = "languageCode";
 
     private final PaperBackedSearchOrderRepository searchOrderRepository;
 
     public JooqPaperRepo(@Qualifier("dslContext") final DSLContext dsl, final PaperRecordMapper mapper,
-            final JooqSortMapper<PaperRecord, Paper, ch.difty.scipamato.core.db.tables.Paper> sortMapper,
-            final GenericFilterConditionMapper<PaperFilter> filterConditionMapper,
-            final DateTimeService dateTimeService, final InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter,
-            final UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter,
-            final PaperBackedSearchOrderRepository searchOrderRepository,
-            final ApplicationProperties applicationProperties) {
+        final JooqSortMapper<PaperRecord, Paper, ch.difty.scipamato.core.db.tables.Paper> sortMapper,
+        final GenericFilterConditionMapper<PaperFilter> filterConditionMapper, final DateTimeService dateTimeService,
+        final InsertSetStepSetter<PaperRecord, Paper> insertSetStepSetter,
+        final UpdateSetStepSetter<PaperRecord, Paper> updateSetStepSetter,
+        final PaperBackedSearchOrderRepository searchOrderRepository,
+        final ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter,
-                applicationProperties);
+            applicationProperties);
         this.searchOrderRepository = AssertAs.notNull(searchOrderRepository, "searchOrderRepository");
     }
 
@@ -121,13 +121,15 @@ public class JooqPaperRepo extends
 
     private void enrichCodesOf(final Paper entity, final String languageCode) {
         final List<Code> codes = getDsl()
-            .select(CODE.CODE_.as("C_ID"), DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
-                .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"),
-                CODE_CLASS.ID.as("CC_ID"), DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
-                    .as("CC_NAME"),
-                DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
-                    .as("CC_DESCRIPTION"),
-                CODE.SORT, CODE.CREATED, CODE.CREATED_BY, CODE.LAST_MODIFIED, CODE.LAST_MODIFIED_BY, CODE.VERSION)
+            .select(CODE.CODE_.as("C_ID"), DSL
+                    .coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"),
+                CODE_CLASS.ID.as("CC_ID"), DSL
+                    .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .as("CC_NAME"), DSL
+                    .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
+                    .as("CC_DESCRIPTION"), CODE.SORT, CODE.CREATED, CODE.CREATED_BY, CODE.LAST_MODIFIED,
+                CODE.LAST_MODIFIED_BY, CODE.VERSION)
             .from(PAPER_CODE)
             .join(PAPER)
             .on(PAPER_CODE.PAPER_ID.equal(PAPER.ID))
@@ -136,10 +138,12 @@ public class JooqPaperRepo extends
             .join(CODE_CLASS)
             .on(CODE.CODE_CLASS_ID.equal(CODE_CLASS.ID))
             .leftOuterJoin(CODE_TR)
-            .on(CODE.CODE_.equal(CODE_TR.CODE)
+            .on(CODE.CODE_
+                .equal(CODE_TR.CODE)
                 .and(CODE_TR.LANG_CODE.equal(languageCode)))
             .leftOuterJoin(CODE_CLASS_TR)
-            .on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID)
+            .on(CODE_CLASS.ID
+                .equal(CODE_CLASS_TR.CODE_CLASS_ID)
                 .and(CODE_CLASS_TR.LANG_CODE.equal(languageCode)))
             .where(PAPER_CODE.PAPER_ID.equal(entity.getId()))
             .fetchInto(Code.class);
@@ -154,9 +158,11 @@ public class JooqPaperRepo extends
     }
 
     public List<ch.difty.scipamato.core.entity.PaperAttachment> loadSlimAttachment(final long paperId) {
-        return getDsl().select(PAPER_ATTACHMENT.ID, PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME,
-            PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE, PAPER_ATTACHMENT.CREATED_BY, PAPER_ATTACHMENT.CREATED,
-            PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.VERSION)
+        return getDsl()
+            .select(PAPER_ATTACHMENT.ID, PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME,
+                PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE, PAPER_ATTACHMENT.CREATED_BY,
+                PAPER_ATTACHMENT.CREATED, PAPER_ATTACHMENT.LAST_MODIFIED_BY, PAPER_ATTACHMENT.LAST_MODIFIED,
+                PAPER_ATTACHMENT.VERSION)
             .from(PAPER_ATTACHMENT)
             .where(PAPER_ATTACHMENT.PAPER_ID.eq(paperId))
             .orderBy(PAPER_ATTACHMENT.ID)
@@ -182,17 +188,21 @@ public class JooqPaperRepo extends
         for (final Code c : paper.getCodes()) {
             step = step.values(paperId, c.getCode(), userId, userId);
         }
-        step.onDuplicateKeyIgnore()
+        step
+            .onDuplicateKeyIgnore()
             .execute();
     }
 
     private void deleteObsoleteCodesFrom(final Paper paper) {
-        final List<String> codes = paper.getCodes()
+        final List<String> codes = paper
+            .getCodes()
             .stream()
             .map(Code::getCode)
             .collect(Collectors.toList());
-        getDsl().deleteFrom(PAPER_CODE)
-            .where(PAPER_CODE.PAPER_ID.equal(paper.getId())
+        getDsl()
+            .deleteFrom(PAPER_CODE)
+            .where(PAPER_CODE.PAPER_ID
+                .equal(paper.getId())
                 .and(PAPER_CODE.CODE.notIn(codes)))
             .execute();
     }
@@ -200,7 +210,8 @@ public class JooqPaperRepo extends
     @Override
     public List<Paper> findByIds(final List<Long> ids) {
         AssertAs.notNull(ids, "ids");
-        return getDsl().selectFrom(PAPER)
+        return getDsl()
+            .selectFrom(PAPER)
             .where(PAPER.ID.in(ids))
             .fetchInto(Paper.class);
     }
@@ -223,7 +234,7 @@ public class JooqPaperRepo extends
 
     @Override
     public List<Paper> findPageBySearchOrder(final SearchOrder searchOrder, final PaginationContext paginationContext,
-            final String languageCode) {
+        final String languageCode) {
         AssertAs.notNull(languageCode, LANGUAGE_CODE);
         final List<Paper> entities = searchOrderRepository.findPageBySearchOrder(searchOrder, paginationContext);
         enrichAssociatedEntitiesOfAll(entities, languageCode);
@@ -241,7 +252,8 @@ public class JooqPaperRepo extends
             return new ArrayList<>();
         } else {
             AssertAs.notNull(languageCode, LANGUAGE_CODE);
-            final List<Paper> papers = getDsl().selectFrom(PAPER)
+            final List<Paper> papers = getDsl()
+                .selectFrom(PAPER)
                 .where(PAPER.PM_ID.in(pmIds))
                 .fetchInto(Paper.class);
             enrichAssociatedEntitiesOfAll(papers, languageCode);
@@ -254,7 +266,8 @@ public class JooqPaperRepo extends
         if (CollectionUtils.isEmpty(pmIds)) {
             return new ArrayList<>();
         } else {
-            return getDsl().select(PAPER.PM_ID)
+            return getDsl()
+                .select(PAPER.PM_ID)
                 .from(PAPER)
                 .where(PAPER.PM_ID.in(pmIds))
                 .fetchInto(Integer.class);
@@ -267,7 +280,8 @@ public class JooqPaperRepo extends
             return new ArrayList<>();
         } else {
             AssertAs.notNull(languageCode, LANGUAGE_CODE);
-            final List<Paper> papers = getDsl().selectFrom(PAPER)
+            final List<Paper> papers = getDsl()
+                .selectFrom(PAPER)
                 .where(PAPER.NUMBER.in(numbers))
                 .fetchInto(Paper.class);
             enrichAssociatedEntitiesOfAll(papers, languageCode);
@@ -300,11 +314,13 @@ public class JooqPaperRepo extends
         final ch.difty.scipamato.core.db.tables.Paper p = PAPER.as("p");
         final ch.difty.scipamato.core.db.tables.Paper pn = PAPER.as("pn");
 
-        final Long freeNumber = getDsl().select(p.NUMBER.plus(1L))
+        final Long freeNumber = getDsl()
+            .select(p.NUMBER.plus(1L))
             .from(p)
             .leftOuterJoin(pn)
             .on(pn.NUMBER.eq(p.NUMBER.plus(1L)))
-            .where(pn.NUMBER.isNull()
+            .where(pn.NUMBER
+                .isNull()
                 .and(p.NUMBER.ge(minimumPaperNumberToBeRecycled)))
             .limit(1)
             .fetchOneInto(Long.class);
@@ -313,13 +329,14 @@ public class JooqPaperRepo extends
 
     @Override
     public List<Long> findPageOfIdsBySearchOrder(final SearchOrder searchOrder,
-            final PaginationContext paginationContext) {
+        final PaginationContext paginationContext) {
         return searchOrderRepository.findPageOfIdsBySearchOrder(searchOrder, paginationContext);
     }
 
     @Override
     public void excludePaperFromSearchOrderResults(final long searchOrderId, final long paperId) {
-        getDsl().insertInto(SEARCH_EXCLUSION)
+        getDsl()
+            .insertInto(SEARCH_EXCLUSION)
             .columns(SEARCH_EXCLUSION.SEARCH_ORDER_ID, SEARCH_EXCLUSION.PAPER_ID)
             .values(searchOrderId, paperId)
             .onConflictDoNothing()
@@ -328,15 +345,18 @@ public class JooqPaperRepo extends
 
     @Override
     public void reincludePaperIntoSearchOrderResults(final long searchOrderId, final long paperId) {
-        getDsl().deleteFrom(SEARCH_EXCLUSION)
-            .where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId)
+        getDsl()
+            .deleteFrom(SEARCH_EXCLUSION)
+            .where(SEARCH_EXCLUSION.SEARCH_ORDER_ID
+                .eq(searchOrderId)
                 .and(SEARCH_EXCLUSION.PAPER_ID.eq(paperId)))
             .execute();
     }
 
     @Override
     public Paper saveAttachment(final ch.difty.scipamato.core.entity.PaperAttachment pa) {
-        getDsl().insertInto(PAPER_ATTACHMENT)
+        getDsl()
+            .insertInto(PAPER_ATTACHMENT)
             .columns(PAPER_ATTACHMENT.PAPER_ID, PAPER_ATTACHMENT.NAME, PAPER_ATTACHMENT.CONTENT,
                 PAPER_ATTACHMENT.CONTENT_TYPE, PAPER_ATTACHMENT.SIZE, PAPER_ATTACHMENT.CREATED,
                 PAPER_ATTACHMENT.CREATED_BY, PAPER_ATTACHMENT.LAST_MODIFIED, PAPER_ATTACHMENT.LAST_MODIFIED_BY,
@@ -372,11 +392,13 @@ public class JooqPaperRepo extends
     @Override
     public Paper deleteAttachment(final Integer id) {
         if (id != null) {
-            final Long paperId = getDsl().select(PAPER_ATTACHMENT.PAPER_ID)
+            final Long paperId = getDsl()
+                .select(PAPER_ATTACHMENT.PAPER_ID)
                 .from(PAPER_ATTACHMENT)
                 .where(PAPER_ATTACHMENT.ID.eq(id))
                 .fetchOneInto(Long.class);
-            getDsl().deleteFrom(PAPER_ATTACHMENT)
+            getDsl()
+                .deleteFrom(PAPER_ATTACHMENT)
                 .where(PAPER_ATTACHMENT.ID.eq(id))
                 .execute();
             getLogger().info("Deleted attachment with id {}.", id);
@@ -387,7 +409,8 @@ public class JooqPaperRepo extends
 
     @Override
     public void delete(final List<Long> ids) {
-        getDsl().deleteFrom(PAPER)
+        getDsl()
+            .deleteFrom(PAPER)
             .where(PAPER.ID.in(ids))
             .execute();
     }

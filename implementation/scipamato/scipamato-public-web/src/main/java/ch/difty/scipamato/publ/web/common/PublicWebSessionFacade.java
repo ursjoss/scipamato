@@ -11,14 +11,16 @@ public class PublicWebSessionFacade implements ScipamatoWebSessionFacade {
 
     @Override
     public String getLanguageCode() {
-        return ScipamatoPublicSession.get()
+        return ScipamatoPublicSession
+            .get()
             .getLocale()
             .getLanguage();
     }
 
     @Override
     public ItemNavigator<Long> getPaperIdManager() {
-        return ScipamatoPublicSession.get()
+        return ScipamatoPublicSession
+            .get()
             .getPaperIdManager();
     }
 

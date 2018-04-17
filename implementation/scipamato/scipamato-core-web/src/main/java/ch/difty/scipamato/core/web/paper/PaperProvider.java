@@ -37,7 +37,8 @@ public class PaperProvider extends SortableDataProvider<Paper, String> implement
     }
 
     public PaperProvider(PaperFilter filter) {
-        Injector.get()
+        Injector
+            .get()
             .inject(this);
         this.filter = filter != null ? filter : new PaperFilter();
         setSort(Paper.PaperFields.AUTHORS.getName(), SortOrder.ASCENDING);
@@ -53,7 +54,8 @@ public class PaperProvider extends SortableDataProvider<Paper, String> implement
         Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         String sortProp = getSort().getProperty();
         PaginationContext pc = new PaginationRequest((int) offset, (int) size, dir, sortProp);
-        return service.findPageByFilter(filter, pc)
+        return service
+            .findPageByFilter(filter, pc)
             .iterator();
     }
 

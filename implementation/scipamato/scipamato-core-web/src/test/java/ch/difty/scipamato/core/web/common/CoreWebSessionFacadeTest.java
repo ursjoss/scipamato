@@ -16,14 +16,16 @@ public class CoreWebSessionFacadeTest extends WicketTest {
 
     @Test
     public void gettingLanguageCode_withBritishLocale_returnsBritishCode() {
-        getTester().getSession()
+        getTester()
+            .getSession()
             .setLocale(new Locale("en_GB"));
         assertThat(sessionFacade.getLanguageCode()).isEqualTo("en_gb");
     }
 
     @Test
     public void gettingLanguageCode_withFrenchLocale_returnsFrenchCode() {
-        getTester().getSession()
+        getTester()
+            .getSession()
             .setLocale(new Locale("fr"));
         assertThat(sessionFacade.getLanguageCode()).isEqualTo("fr");
     }

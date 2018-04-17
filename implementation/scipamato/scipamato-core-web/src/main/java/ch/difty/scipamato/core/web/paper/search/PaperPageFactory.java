@@ -17,13 +17,13 @@ public class PaperPageFactory implements PageFactory {
 
     @Override
     public SerializableBiConsumer<IModel<SearchCondition>, Long> setResponsePageToPaperSearchCriteriaPageConsumer(
-            final MarkupContainer container) {
+        final MarkupContainer container) {
         return (model, searchOrderId) -> container.setResponsePage(new PaperSearchCriteriaPage(model, searchOrderId));
     }
 
     @Override
     public SerializableConsumer<PageParameters> setResponsePageToPaperSearchPageConsumer(
-            final MarkupContainer container) {
+        final MarkupContainer container) {
         return pp -> container.setResponsePage(new PaperSearchPage(pp));
     }
 

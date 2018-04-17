@@ -75,7 +75,7 @@ public abstract class RecordMapperTest<R extends Record, E extends CoreEntity> {
      *  </pre></code>
      *
      * @param record
-     *            for which the audit fields are set into
+     *     for which the audit fields are set into
      */
     protected abstract void setAuditFieldsIn(R record);
 

@@ -1,12 +1,8 @@
 package ch.difty.scipamato.core.entity.search;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,9 +59,8 @@ import java.util.regex.Pattern;
  * <p>
  *
  * @author u.joss
- *
  * @see <a href=
- *      "http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html">http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html</a>
+ *     "http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html">http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html</a>
  */
 public class AuditSearchTerm extends AbstractSearchTerm {
 
@@ -94,7 +89,8 @@ public class AuditSearchTerm extends AbstractSearchTerm {
     }
 
     private boolean isUserTypeSearchTerm() {
-        return getFieldName().toUpperCase()
+        return getFieldName()
+            .toUpperCase()
             .endsWith(USER_FIELD_TAG);
     }
 
@@ -129,25 +125,16 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         WHITESPACE(RE_S + "+", MatchType.NONE, FieldType.NONE, 1),
 
         RANGEQUOTED(
-                "=?" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE + RE_RANGE_DIV + RE_QUOTE + "(" + RE_DATE + ")"
-                        + RE_QUOTE,
-                MatchType.RANGE,
-                FieldType.DATE,
-                3),
+            "=?" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE + RE_RANGE_DIV + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE,
+            MatchType.RANGE, FieldType.DATE, 3),
         RANGE("=?" + "(" + RE_DATE + ")" + RE_RANGE_DIV + "(" + RE_DATE + ")", MatchType.RANGE, FieldType.DATE, 6),
-        GREATEROREQUALQUOTED(
-                ">=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE,
-                MatchType.GREATER_OR_EQUAL,
-                FieldType.DATE,
-                9),
+        GREATEROREQUALQUOTED(">=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.GREATER_OR_EQUAL,
+            FieldType.DATE, 9),
         GREATEROREQUAL(">=" + "(" + RE_DATE + ")", MatchType.GREATER_OR_EQUAL, FieldType.DATE, 11),
         GREATERTHANQUOTED(">" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.GREATER_THAN, FieldType.DATE, 13),
         GREATERTHAN(">" + "(" + RE_DATE + ")", MatchType.GREATER_THAN, FieldType.DATE, 15),
-        LESSOREQUALQUOTED(
-                "<=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE,
-                MatchType.LESS_OR_EQUAL,
-                FieldType.DATE,
-                17),
+        LESSOREQUALQUOTED("<=" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.LESS_OR_EQUAL, FieldType.DATE,
+            17),
         LESSOREQUAL("<=" + "(" + RE_DATE + ")", MatchType.LESS_OR_EQUAL, FieldType.DATE, 19),
         LESSTHANQUOTED("<" + RE_QUOTE + "(" + RE_DATE + ")" + RE_QUOTE, MatchType.LESS_THAN, FieldType.DATE, 21),
         LESSTHAN("<" + "(" + RE_DATE + ")", MatchType.LESS_THAN, FieldType.DATE, 23),
@@ -161,10 +148,10 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         // cache values
         private static final TokenType[] TOKEN_TYPES = values();
 
-        public final String    pattern;
-        public final MatchType matchType;
-        public final FieldType fieldType;
-        private final int      group;
+        public final  String    pattern;
+        public final  MatchType matchType;
+        public final  FieldType fieldType;
+        private final int       group;
 
         TokenType(final String pattern, final MatchType matchType, final FieldType fieldType, final int group) {
             this.pattern = pattern;
@@ -235,7 +222,8 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         public String toString() {
             final StringBuilder sb = new StringBuilder();
             for (final Entry<FieldType, String> e : sqlDataMap.entrySet()) {
-                sb.append("(")
+                sb
+                    .append("(")
                     .append(e.getKey())
                     .append(" ")
                     .append(type.name())
@@ -260,12 +248,12 @@ public class AuditSearchTerm extends AbstractSearchTerm {
     }
 
     private static List<Token> tokenize(final String input, final Pattern pattern, final boolean isUserType,
-            final boolean isDateType) {
+        final boolean isDateType) {
         return processTokens(pattern.matcher(input), isUserType, isDateType);
     }
 
     private static List<Token> processTokens(final Matcher matcher, final boolean isUserType,
-            final boolean isDateType) {
+        final boolean isDateType) {
         final List<Token> tokens = new ArrayList<>();
         while (matcher.find())
             getNextToken(matcher, isUserType, isDateType).ifPresent(tokens::add);
@@ -273,7 +261,7 @@ public class AuditSearchTerm extends AbstractSearchTerm {
     }
 
     private static Optional<Token> getNextToken(final Matcher matcher, final boolean isUserType,
-            final boolean isDateType) {
+        final boolean isDateType) {
         for (final TokenType tk : TokenType.TOKEN_TYPES) {
             if (tk == TokenType.RAW || matcher.group(TokenType.WHITESPACE.name()) != null)
                 continue;
@@ -294,8 +282,8 @@ public class AuditSearchTerm extends AbstractSearchTerm {
     }
 
     private static String buildRange(final Matcher matcher, final TokenType tk) {
-        return completeDateTimeIfNecessary(matcher.group(tk.group), RangeElement.BEGIN) + "-" +
-                completeDateTimeIfNecessary(matcher.group(tk.group + 1), RangeElement.END);
+        return completeDateTimeIfNecessary(matcher.group(tk.group), RangeElement.BEGIN) + "-"
+               + completeDateTimeIfNecessary(matcher.group(tk.group + 1), RangeElement.END);
     }
 
     private static String completeDateTimeIfNecessary(final String data, final RangeElement rangeElement) {

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.SQLException;
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.jooq.Configuration;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DataSourceConnectionProvider;
@@ -15,8 +16,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.zaxxer.hikari.HikariDataSource;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -59,19 +58,22 @@ public class JooqConfigurationTest {
         assertThat(config.connectionProvider()).isInstanceOf(DataSourceConnectionProvider.class);
         DataSourceConnectionProvider dscp = (DataSourceConnectionProvider) config.connectionProvider();
         assertThat(dscp.dataSource()).isInstanceOf(TransactionAwareDataSourceProxy.class);
-        assertThat(dscp.dataSource()
+        assertThat(dscp
+            .dataSource()
             .isWrapperFor(HikariDataSource.class)).isTrue();
 
         // assert executeListenerProviders
         assertThat(config.executeListenerProviders()).hasSize(1);
         DefaultExecuteListenerProvider elp = (DefaultExecuteListenerProvider) config.executeListenerProviders()[0];
-        assertThat(elp.provide()
+        assertThat(elp
+            .provide()
             .getClass()
             .getName()).isEqualTo("org.springframework.boot.autoconfigure.jooq.JooqExceptionTranslator");
 
         // assert TransactionProvider
         assertThat(config.transactionProvider()).isNotNull();
-        assertThat(config.transactionProvider()
+        assertThat(config
+            .transactionProvider()
             .getClass()
             .getName()).isEqualTo("org.springframework.boot.autoconfigure.jooq.SpringTransactionProvider");
     }

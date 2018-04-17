@@ -4,11 +4,10 @@ package ch.difty.scipamato.common.config;
  * Common abstract base class for ScipamatoProperties in both the core and
  * public module.
  *
- * @author Urs Joss
- *
  * @param <SP>
- *            the concrete type of the ScipamatoProperties class (extending
- *            {@link ScipamatoBaseProperties}.
+ *     the concrete type of the ScipamatoProperties class (extending
+ *     {@link ScipamatoBaseProperties}.
+ * @author Urs Joss
  */
 public abstract class AbstractScipamatoProperties<SP extends ScipamatoBaseProperties> implements ApplicationProperties {
 

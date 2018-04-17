@@ -2,11 +2,9 @@ package ch.difty.scipamato.core.sync.jobs.paper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
+import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -15,16 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
-import javax.sql.DataSource;
-
-import org.jooq.DSLContext;
-import org.jooq.DeleteConditionStep;
-import org.jooq.DeleteWhereStep;
-import org.jooq.Record;
-import org.jooq.SQLDialect;
-import org.jooq.SelectConditionStep;
-import org.jooq.SelectJoinStep;
-import org.jooq.SelectSelectStep;
+import org.jooq.*;
 import org.jooq.tools.jdbc.MockArray;
 import org.junit.After;
 import org.junit.Before;
@@ -95,11 +84,12 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
         when(jooqPublic.delete(ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER)).thenReturn(deleteWhereStep);
         Timestamp ref = Timestamp.valueOf(LocalDateTime.parse("2016-12-09T05:32:13.0"));
-        when(deleteWhereStep.where(ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(ref)))
-            .thenReturn(deleteConditionStep);
+        when(deleteWhereStep.where(
+            ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(ref))).thenReturn(
+            deleteConditionStep);
 
         config = new PaperSyncConfig(codeAggregator, jooqCore, jooqPublic, scipamatoCoreDataSource, jobBuilderFactory,
-                stepBuilderFactory, dateTimeService);
+            stepBuilderFactory, dateTimeService);
     }
 
     @After
@@ -129,16 +119,17 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
     @Override
     protected String expectedSelectSql() {
-        return "select \"public\".\"paper\".\"id\", \"public\".\"paper\".\"number\", \"public\".\"paper\".\"pm_id\", \"public\".\"paper\".\"authors\", "
-                + "\"public\".\"paper\".\"title\", \"public\".\"paper\".\"location\", \"public\".\"paper\".\"publication_year\", \"public\".\"paper\".\"goals\", "
-                + "\"public\".\"paper\".\"methods\", \"public\".\"paper\".\"population\", \"public\".\"paper\".\"result\", \"public\".\"paper\".\"comment\", "
-                + "\"public\".\"paper\".\"version\", \"public\".\"paper\".\"created\", \"public\".\"paper\".\"last_modified\", array_agg(\"public\".\"paper_code\".\"code\") as \"codes\" "
-                + "from \"public\".\"paper\" join \"public\".\"paper_code\" on \"public\".\"paper\".\"id\" = \"public\".\"paper_code\".\"paper_id\" "
-                + "join \"public\".\"code\" on \"public\".\"paper_code\".\"code\" = \"public\".\"code\".\"code\" "
-                + "group by \"public\".\"paper\".\"id\", \"public\".\"paper\".\"number\", \"public\".\"paper\".\"pm_id\", \"public\".\"paper\".\"authors\", "
-                + "\"public\".\"paper\".\"title\", \"public\".\"paper\".\"location\", \"public\".\"paper\".\"publication_year\", \"public\".\"paper\".\"goals\", "
-                + "\"public\".\"paper\".\"methods\", \"public\".\"paper\".\"population\", \"public\".\"paper\".\"result\", \"public\".\"paper\".\"comment\", "
-                + "\"public\".\"paper\".\"version\", \"public\".\"paper\".\"created\", \"public\".\"paper\".\"last_modified\"";
+        return
+            "select \"public\".\"paper\".\"id\", \"public\".\"paper\".\"number\", \"public\".\"paper\".\"pm_id\", \"public\".\"paper\".\"authors\", "
+            + "\"public\".\"paper\".\"title\", \"public\".\"paper\".\"location\", \"public\".\"paper\".\"publication_year\", \"public\".\"paper\".\"goals\", "
+            + "\"public\".\"paper\".\"methods\", \"public\".\"paper\".\"population\", \"public\".\"paper\".\"result\", \"public\".\"paper\".\"comment\", "
+            + "\"public\".\"paper\".\"version\", \"public\".\"paper\".\"created\", \"public\".\"paper\".\"last_modified\", array_agg(\"public\".\"paper_code\".\"code\") as \"codes\" "
+            + "from \"public\".\"paper\" join \"public\".\"paper_code\" on \"public\".\"paper\".\"id\" = \"public\".\"paper_code\".\"paper_id\" "
+            + "join \"public\".\"code\" on \"public\".\"paper_code\".\"code\" = \"public\".\"code\".\"code\" "
+            + "group by \"public\".\"paper\".\"id\", \"public\".\"paper\".\"number\", \"public\".\"paper\".\"pm_id\", \"public\".\"paper\".\"authors\", "
+            + "\"public\".\"paper\".\"title\", \"public\".\"paper\".\"location\", \"public\".\"paper\".\"publication_year\", \"public\".\"paper\".\"goals\", "
+            + "\"public\".\"paper\".\"methods\", \"public\".\"paper\".\"population\", \"public\".\"paper\".\"result\", \"public\".\"paper\".\"comment\", "
+            + "\"public\".\"paper\".\"version\", \"public\".\"paper\".\"created\", \"public\".\"paper\".\"last_modified\"";
     }
 
     @Override
@@ -160,8 +151,8 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         when(rs.getString(Paper.PAPER.POPULATION.getName())).thenReturn("p");
         when(rs.getString(Paper.PAPER.RESULT.getName())).thenReturn("r");
         when(rs.getString(Paper.PAPER.COMMENT.getName())).thenReturn("c");
-        when(rs.getArray("codes"))
-            .thenReturn(new MockArray<>(SQLDialect.POSTGRES, new String[]{"1A", "2B"}, String[].class));
+        when(rs.getArray("codes")).thenReturn(
+            new MockArray<>(SQLDialect.POSTGRES, new String[] { "1A", "2B" }, String[].class));
         when(rs.getInt(Paper.PAPER.VERSION.getName())).thenReturn(4);
         when(rs.getTimestamp(Paper.PAPER.CREATED.getName())).thenReturn(CREATED);
         when(rs.getTimestamp(Paper.PAPER.LAST_MODIFIED.getName())).thenReturn(MODIFIED);
@@ -278,8 +269,8 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
     private void validateNullableNumberColumn() throws SQLException {
         when(rs.wasNull()).thenReturn(true);
-        when(rs.getArray("codes"))
-            .thenReturn(new MockArray<>(SQLDialect.POSTGRES, new String[]{"1A", "2B"}, String[].class));
+        when(rs.getArray("codes")).thenReturn(
+            new MockArray<>(SQLDialect.POSTGRES, new String[] { "1A", "2B" }, String[].class));
 
         PublicPaper pp = config.makeEntity(rs);
 

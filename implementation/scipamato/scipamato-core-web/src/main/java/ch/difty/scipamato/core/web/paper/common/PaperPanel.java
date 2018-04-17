@@ -1,38 +1,21 @@
 package ch.difty.scipamato.core.web.paper.common;
 
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.AUTHORS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.COMMENT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.DOI;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_ASSESSMENT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_POLLUTANT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR_OVERRIDDEN;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.GOALS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.INTERN;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.LOCATION;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.MAIN_CODE_OF_CODECLASS1;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHODS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_CONFOUNDERS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_OUTCOME;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STATISTICS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STUDY_DESIGN;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.NUMBER;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.ORIGINAL_ABSTRACT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.PMID;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_DURATION;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PARTICIPANTS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PLACE;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.PUBL_YEAR;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EFFECT_ESTIMATE;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EXPOSURE_RANGE;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_MEASURED_OUTCOME;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.TITLE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Size;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
+import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.PageReference;
@@ -47,22 +30,11 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
-import org.apache.wicket.markup.html.form.TextArea;
-import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.ChainingModel;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.model.*;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeClassId;
@@ -70,12 +42,7 @@ import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
-import ch.difty.scipamato.core.entity.Code;
-import ch.difty.scipamato.core.entity.CodeBoxAware;
-import ch.difty.scipamato.core.entity.CodeClass;
-import ch.difty.scipamato.core.entity.CoreEntity;
-import ch.difty.scipamato.core.entity.IdScipamatoEntity;
-import ch.difty.scipamato.core.entity.PaperAttachment;
+import ch.difty.scipamato.core.entity.*;
 import ch.difty.scipamato.core.web.common.BasePanel;
 import ch.difty.scipamato.core.web.common.SelfUpdateEvent;
 import ch.difty.scipamato.core.web.model.CodeClassModel;
@@ -83,38 +50,27 @@ import ch.difty.scipamato.core.web.model.CodeModel;
 import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Size;
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
-import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 
 public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
     private static final long serialVersionUID = 1L;
 
     protected static final String TITLE_ATTR = "title";
-    private static final String   CHANGE     = "change";
+    private static final   String CHANGE     = "change";
 
     private ResourceLink<Void> summaryLink;
     private ResourceLink<Void> summaryShortLink;
     private String             pubmedXml;
 
-    protected TextArea<String>                 authors;
-    protected TextField<String>                firstAuthor;
-    protected TextArea<Object>                 title;
-    protected TextField<Object>                location;
-    protected TextField<Object>                publicationYear;
-    protected TextField<Object>                doi;
-    protected TextArea<String>                 originalAbstract;
-    private BootstrapAjaxLink<Void>            pubmedRetrieval;
-    private DataTable<PaperAttachment, String> attachments;
+    protected TextArea<String>                   authors;
+    protected TextField<String>                  firstAuthor;
+    protected TextArea<Object>                   title;
+    protected TextField<Object>                  location;
+    protected TextField<Object>                  publicationYear;
+    protected TextField<Object>                  doi;
+    protected TextArea<String>                   originalAbstract;
+    private   BootstrapAjaxLink<Void>            pubmedRetrieval;
+    private   DataTable<PaperAttachment, String> attachments;
 
     private final PageReference callingPage;
 
@@ -210,9 +166,11 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             @Override
             public void onEvent(IEvent<?> event) {
                 super.onEvent(event);
-                if (event.getPayload()
-                    .getClass() == SelfUpdateEvent.class) {
-                    ((SelfUpdateEvent) event.getPayload()).getTarget()
+                if (event
+                        .getPayload()
+                        .getClass() == SelfUpdateEvent.class) {
+                    ((SelfUpdateEvent) event.getPayload())
+                        .getTarget()
                         .add(this);
                     event.dontBroadcastDeeper();
                 }
@@ -227,9 +185,11 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             @Override
             public void onEvent(IEvent<?> event) {
                 super.onEvent(event);
-                if (event.getPayload()
-                    .getClass() == SelfUpdateEvent.class) {
-                    ((SelfUpdateEvent) event.getPayload()).getTarget()
+                if (event
+                        .getPayload()
+                        .getClass() == SelfUpdateEvent.class) {
+                    ((SelfUpdateEvent) event.getPayload())
+                        .getTarget()
                         .add(this);
                     event.dontBroadcastDeeper();
                 }
@@ -244,9 +204,11 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             @Override
             public void onEvent(IEvent<?> event) {
                 super.onEvent(event);
-                if (event.getPayload()
-                    .getClass() == SelfUpdateEvent.class) {
-                    ((SelfUpdateEvent) event.getPayload()).getTarget()
+                if (event
+                        .getPayload()
+                        .getClass() == SelfUpdateEvent.class) {
+                    ((SelfUpdateEvent) event.getPayload())
+                        .getTarget()
                         .add(this);
                     event.dontBroadcastDeeper();
                 }
@@ -343,7 +305,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
         PropertyModel<Boolean> firstAuthorOverriddenModel = new PropertyModel<>(getModel(), firstAuthorOverriddenId);
         CheckBoxX firstAuthorOverridden = new CheckBoxX(firstAuthorOverriddenId, firstAuthorOverriddenModel);
-        firstAuthorOverridden.getConfig()
+        firstAuthorOverridden
+            .getConfig()
             .withThreeState(isSearchMode())
             .withUseNative(true);
         queueCheckBoxAndLabel(firstAuthorOverridden);
@@ -362,15 +325,15 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
     /** override if special behavior is required */
     protected void addAuthorBehavior(TextArea<String> authors, CheckBox firstAuthorOverridden,
-            TextField<String> firstAuthor) {
+        TextField<String> firstAuthor) {
     }
 
     protected abstract BootstrapButton newNavigationButton(String id, GlyphIconType icon,
-            SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier);
+        SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier);
 
     private void makeAndQueueBackButton(String id) {
         BootstrapButton back = new BootstrapButton(id, new StringResourceModel("button.back.label"),
-                Buttons.Type.Default) {
+            Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -395,7 +358,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
     private void makeAndQueueSubmitButton(String id) {
         BootstrapButton submit = new BootstrapButton(id, new StringResourceModel(getSubmitLinkResourceLabel()),
-                Buttons.Type.Default) {
+            Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             /**
@@ -438,7 +401,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             protected void onInitialize() {
                 super.onInitialize();
                 if (isVisible())
-                    add(new ButtonBehavior().setType(Buttons.Type.Info)
+                    add(new ButtonBehavior()
+                        .setType(Buttons.Type.Info)
                         .setBlock(true)
                         .setSize(Size.Large));
             }
@@ -446,13 +410,15 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             @Override
             public void onEvent(IEvent<?> event) {
                 super.onEvent(event);
-                if (event.getPayload()
-                    .getClass() == SelfUpdateEvent.class) {
+                if (event
+                        .getPayload()
+                        .getClass() == SelfUpdateEvent.class) {
                     if (isVisible()) {
                         setEnabled(false);
                         add(new AttributeModifier(TITLE_ATTR,
-                                new StringResourceModel(button + id + ".title.disabled", this, null).getString()));
-                        ((SelfUpdateEvent) event.getPayload()).getTarget()
+                            new StringResourceModel(button + id + ".title.disabled", this, null).getString()));
+                        ((SelfUpdateEvent) event.getPayload())
+                            .getTarget()
                             .add(this);
                     }
                     event.dontBroadcastDeeper();
@@ -522,8 +488,9 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
                     @Override
                     public void onEvent(IEvent<?> event) {
-                        if (event.getPayload()
-                            .getClass() == NewFieldChangeEvent.class) {
+                        if (event
+                                .getPayload()
+                                .getClass() == NewFieldChangeEvent.class) {
                             ((NewFieldChangeEvent) event.getPayload()).considerAddingToTarget(this);
                             event.dontBroadcastDeeper();
                         }
@@ -545,7 +512,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
                 protected void onUpdate(AjaxRequestTarget target) {
                     final String id = field.getId();
                     final String markupId = field.getMarkupId();
-                    send(getPage(), Broadcast.BREADTH, new NewFieldChangeEvent(target).withId(id)
+                    send(getPage(), Broadcast.BREADTH, new NewFieldChangeEvent(target)
+                        .withId(id)
                         .withMarkupId(markupId));
                 }
             });
@@ -660,9 +628,10 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         }
 
         private BootstrapMultiSelect<Code> makeCodeClassComplex(final CodeClassId codeClassId,
-                final List<CodeClass> codeClasses) {
+            final List<CodeClass> codeClasses) {
             final int id = codeClassId.getId();
-            final String className = codeClasses.stream()
+            final String className = codeClasses
+                .stream()
                 .filter(cc -> cc.getId() == id)
                 .map(CodeClass::getName)
                 .findFirst()
@@ -675,30 +644,34 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
                 @SuppressWarnings("unchecked")
                 @Override
                 public List<Code> getObject() {
-                    return ((IModel<CodeBoxAware>) getTarget()).getObject()
+                    return ((IModel<CodeBoxAware>) getTarget())
+                        .getObject()
                         .getCodesOf(codeClassId);
                 }
 
                 @SuppressWarnings("unchecked")
                 @Override
                 public void setObject(final List<Code> codes) {
-                    ((IModel<CodeBoxAware>) getTarget()).getObject()
+                    ((IModel<CodeBoxAware>) getTarget())
+                        .getObject()
                         .clearCodesOf(codeClassId);
                     if (CollectionUtils.isNotEmpty(codes)) {
-                        ((IModel<CodeBoxAware>) getTarget()).getObject()
+                        ((IModel<CodeBoxAware>) getTarget())
+                            .getObject()
                             .addCodes(codes);
                     }
                 }
             };
             final CodeModel choices = new CodeModel(codeClassId, getLocalization());
             final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(
-                    CoreEntity.CoreEntityFields.DISPLAY_VALUE.getName(), Code.CodeFields.CODE.getName());
+                CoreEntity.CoreEntityFields.DISPLAY_VALUE.getName(), Code.CodeFields.CODE.getName());
             final StringResourceModel noneSelectedModel = new StringResourceModel("codes.noneSelected", this, null);
-            final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)
+            final BootstrapSelectConfig config = new BootstrapSelectConfig()
+                .withMultiple(true)
                 .withNoneSelectedText(noneSelectedModel.getObject())
                 .withLiveSearch(true);
-            final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<>(CODES_CLASS_BASE_NAME + id,
-                    model, choices, choiceRenderer).with(config);
+            final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<>(CODES_CLASS_BASE_NAME + id, model,
+                choices, choiceRenderer).with(config);
             multiSelect.add(new AttributeModifier("data-width", "fit"));
             queue(multiSelect);
             return multiSelect;
@@ -785,7 +758,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
     /** override if needed */
     protected void addCodeClass1ChangeBehavior(final TextField<String> mainCodeOfCodeClass1,
-            final BootstrapMultiSelect<Code> codeClass1) {
+        final BootstrapMultiSelect<Code> codeClass1) {
     }
 
     static class CodeClass1ConsistencyValidator extends AbstractFormValidator {
@@ -795,7 +768,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         private final FormComponent<?>[] components;
 
         public CodeClass1ConsistencyValidator(BootstrapMultiSelect<Code> codeClass1,
-                TextField<String> mainCodeOfCodeClass1) {
+            TextField<String> mainCodeOfCodeClass1) {
             AssertAs.notNull(codeClass1);
             AssertAs.notNull(mainCodeOfCodeClass1);
             components = new FormComponent<?>[] { codeClass1, mainCodeOfCodeClass1 };
@@ -808,11 +781,11 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
 
         @Override
         public void validate(Form<?> form) {
-            @SuppressWarnings("unchecked")
-            final BootstrapMultiSelect<Code> codeClass1 = (BootstrapMultiSelect<Code>) components[0];
+            @SuppressWarnings("unchecked") final BootstrapMultiSelect<Code> codeClass1 = (BootstrapMultiSelect<Code>) components[0];
             final FormComponent<?> mainCode = components[1];
 
-            if (!codeClass1.getModelObject()
+            if (!codeClass1
+                .getModelObject()
                 .isEmpty() && mainCode.getModelObject() == null) {
                 String key = resourceKey();
                 error(mainCode, key + ".mainCodeOfCodeclass1Required");
@@ -827,7 +800,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             @Override
             protected void onInitialize() {
                 super.onInitialize();
-                add(new ButtonBehavior().setType(Buttons.Type.Info)
+                add(new ButtonBehavior()
+                    .setType(Buttons.Type.Info)
                     .setSize(Size.Medium));
             }
 
@@ -843,11 +817,11 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
                 if (hasPubMedId()) {
                     setEnabled(true);
                     add(new AttributeModifier(TITLE_ATTR,
-                            new StringResourceModel("pubmedRetrieval.title", this, null).getString()));
+                        new StringResourceModel("pubmedRetrieval.title", this, null).getString()));
                 } else {
                     setEnabled(false);
                     add(new AttributeModifier(TITLE_ATTR,
-                            new StringResourceModel("pubmedRetrieval.title.disabled", this, null).getString()));
+                        new StringResourceModel("pubmedRetrieval.title.disabled", this, null).getString()));
                 }
             }
         };

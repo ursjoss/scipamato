@@ -3,6 +3,10 @@ package ch.difty.scipamato.core.web.paper.search;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
+import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.event.Broadcast;
@@ -28,10 +32,6 @@ import ch.difty.scipamato.core.web.common.BasePanel;
 import ch.difty.scipamato.core.web.paper.PageFactory;
 import ch.difty.scipamato.core.web.paper.SearchConditionProvider;
 import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
-import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 public class SearchOrderPanel extends BasePanel<SearchOrder> {
 
@@ -58,18 +58,19 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
         queueNewButton("addSearchCondition", pageFactory.newPaperSearchCriteriaPage(),
             () -> Model.of(new SearchCondition()));
 
-        SearchConditionProvider p = new SearchConditionProvider(new PropertyModel<>(getModel(),
-                SearchOrder.SearchOrderFields.CONDITIONS.getName()));
+        SearchConditionProvider p = new SearchConditionProvider(
+            new PropertyModel<>(getModel(), SearchOrder.SearchOrderFields.CONDITIONS.getName()));
         searchConditions = new BootstrapDefaultDataTable<>("searchConditions", makeTableColumns(), p, 10);
         searchConditions.setOutputMarkupId(true);
-        searchConditions.add(new TableBehavior().striped()
+        searchConditions.add(new TableBehavior()
+            .striped()
             .hover());
         queue(searchConditions);
     }
 
     private void queueNewButton(String id,
-            SerializableBiFunction<IModel<SearchCondition>, Long, GenericWebPage<SearchCondition>> pageFunction,
-            SerializableSupplier<IModel<SearchCondition>> modelProvider) {
+        SerializableBiFunction<IModel<SearchCondition>, Long, GenericWebPage<SearchCondition>> pageFunction,
+        SerializableSupplier<IModel<SearchCondition>> modelProvider) {
         queue(new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null), Type.Default) {
             private static final long serialVersionUID = 1L;
 
@@ -82,7 +83,8 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                 super.onSubmit(target, form);
-                setResponsePage(pageFunction.apply(modelProvider.get(), SearchOrderPanel.this.getModelObject()
+                setResponsePage(pageFunction.apply(modelProvider.get(), SearchOrderPanel.this
+                    .getModelObject()
                     .getId()));
             }
         });
@@ -96,20 +98,20 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
         final List<IColumn<SearchCondition, String>> columns = new ArrayList<>();
         columns.add(makeClickableColumn("displayValue", null,
             pageFactory.setResponsePageToPaperSearchCriteriaPageConsumer(this), () -> getModelObject().getId()));
-        columns
-            .add(makeLinkIconColumn("remove", (IModel<SearchCondition> m) -> getModelObject().remove(m.getObject())));
+        columns.add(
+            makeLinkIconColumn("remove", (IModel<SearchCondition> m) -> getModelObject().remove(m.getObject())));
         return columns;
     }
 
     private ClickablePropertyColumn2<SearchCondition, String, Long> makeClickableColumn(String propExpression,
-            String sortProperty, SerializableBiConsumer<IModel<SearchCondition>, Long> consumer,
-            SerializableSupplier<Long> supplier) {
+        String sortProperty, SerializableBiConsumer<IModel<SearchCondition>, Long> consumer,
+        SerializableSupplier<Long> supplier) {
         final StringResourceModel displayModel = new StringResourceModel("column.header." + propExpression, this, null);
         return new ClickablePropertyColumn2<>(displayModel, sortProperty, propExpression, consumer, supplier);
     }
 
     private IColumn<SearchCondition, String> makeLinkIconColumn(String id,
-            SerializableConsumer<IModel<SearchCondition>> consumer) {
+        SerializableConsumer<IModel<SearchCondition>> consumer) {
         return new LinkIconColumn<SearchCondition>(new StringResourceModel("column.header." + id, this, null)) {
             private static final long serialVersionUID = 1L;
 
@@ -120,13 +122,14 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
 
             @Override
             protected void onClickPerformed(AjaxRequestTarget target, IModel<SearchCondition> rowModel,
-                    AjaxLink<Void> link) {
+                AjaxLink<Void> link) {
                 consumer.accept(rowModel);
                 target.add(searchConditions);
-                send(getPage(), Broadcast.BREADTH,
-                    new SearchOrderChangeEvent(target).withDroppedConditionId(rowModel.getObject()
-                        .getSearchConditionId()));
-                info("Removed " + rowModel.getObject()
+                send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).withDroppedConditionId(rowModel
+                    .getObject()
+                    .getSearchConditionId()));
+                info("Removed " + rowModel
+                    .getObject()
                     .getDisplayValue());
             }
         };

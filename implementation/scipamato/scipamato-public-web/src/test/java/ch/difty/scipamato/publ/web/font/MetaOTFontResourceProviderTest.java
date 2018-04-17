@@ -43,7 +43,8 @@ public class MetaOTFontResourceProviderTest {
         when(applicationProperties.isCommercialFontPresent()).thenReturn(true);
 
         provider = new MetaOTFontResourceProvider(applicationProperties);
-        assertThat(provider.getCssResourceReference()).isNotNull()
+        assertThat(provider.getCssResourceReference())
+            .isNotNull()
             .isInstanceOf(MetaOTCssResourceReference.class);
         assertThat(provider.isCommercialFontPresent()).isTrue();
 

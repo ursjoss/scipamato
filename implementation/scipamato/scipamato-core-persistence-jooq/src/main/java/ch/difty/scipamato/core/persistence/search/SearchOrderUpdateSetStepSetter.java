@@ -15,7 +15,7 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 
 /**
  * The update step setter used for updating {@link SearchOrder}s.
- * <p>
+ *
  *
  * <b>Note:</b> the {@link SearchCondition}s are not updated here.
  *
@@ -26,10 +26,11 @@ public class SearchOrderUpdateSetStepSetter implements UpdateSetStepSetter<Searc
 
     @Override
     public UpdateSetMoreStep<SearchOrderRecord> setFieldsFor(UpdateSetFirstStep<SearchOrderRecord> step,
-            SearchOrder e) {
+        SearchOrder e) {
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
-        return step.set(SEARCH_ORDER.NAME, e.getName())
+        return step
+            .set(SEARCH_ORDER.NAME, e.getName())
             .set(SEARCH_ORDER.OWNER, e.getOwner())
             .set(SEARCH_ORDER.GLOBAL, e.isGlobal())
 

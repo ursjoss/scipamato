@@ -1,20 +1,17 @@
 package ch.difty.scipamato.core.web.paper.search;
 
-import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.GLOBAL;
-import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.NAME;
-import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.SHOW_EXCLUDED;
+import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.markup.html.form.Form;
@@ -32,8 +29,6 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.web.common.PanelTest;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 
 public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorPanel> {
 
@@ -49,7 +44,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     @Mock
     private SearchOrder searchOrderMock2;
 
-    private List<SearchOrder>           searchOrders;
+    private       List<SearchOrder>     searchOrders;
     private final List<SearchCondition> searchConditions = new ArrayList<>();
 
     @Override
@@ -63,8 +58,8 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
         searchOrders = Arrays.asList(searchOrderMock,
             new SearchOrder(20L, "soName", OWNER_ID, true, searchConditions, null));
-        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class)))
-            .thenReturn(searchOrders);
+        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class),
+            isA(PaginationContext.class))).thenReturn(searchOrders);
         when(searchOrderMock.getId()).thenReturn(ID);
     }
 

@@ -26,7 +26,8 @@ public class LinkIconColumnTest extends WicketBaseTest {
 
             @Override
             protected void onClickPerformed(IModel<TestRecord> rowModel, AjaxLink<Void> link) {
-                clickPerformed = rowModel.getObject()
+                clickPerformed = rowModel
+                    .getObject()
                     .toString();
             }
         };
@@ -51,7 +52,8 @@ public class LinkIconColumnTest extends WicketBaseTest {
     }
 
     private void assertImageTitle() {
-        String responseTxt = getTester().getLastResponse()
+        String responseTxt = getTester()
+            .getLastResponse()
             .getDocument();
         TagTester tagTester = TagTester.createTagByName(responseTxt, "i");
         assertThat(tagTester).isNotNull();
@@ -67,7 +69,8 @@ public class LinkIconColumnTest extends WicketBaseTest {
     }
 
     private void assertNoImageTitle() {
-        String responseTxt = getTester().getLastResponse()
+        String responseTxt = getTester()
+            .getLastResponse()
             .getDocument();
         TagTester tagTester = TagTester.createTagByName(responseTxt, "i");
         assertThat(tagTester).isNotNull();
@@ -91,14 +94,16 @@ public class LinkIconColumnTest extends WicketBaseTest {
 
         @Override
         protected void onClickPerformed(AjaxRequestTarget target, IModel<TestRecord> rowModel, AjaxLink<Void> link) {
-            clickPerformed = rowModel.getObject()
+            clickPerformed = rowModel
+                .getObject()
                 .toString();
         }
     };
 
     @Test
     public void cssClassIsNull_canSetLater() {
-        assertThat(lc.getDisplayModel()
+        assertThat(lc
+            .getDisplayModel()
             .getObject()).isEqualTo("headerText");
     }
 

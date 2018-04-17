@@ -4,12 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.*;
 
@@ -25,15 +20,7 @@ import ch.difty.scipamato.core.persistence.AbstractServiceTest;
 import ch.difty.scipamato.core.persistence.ServiceResult;
 import ch.difty.scipamato.core.pubmed.AbstractPubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
-import ch.difty.scipamato.core.pubmed.api.Article;
-import ch.difty.scipamato.core.pubmed.api.ArticleTitle;
-import ch.difty.scipamato.core.pubmed.api.Journal;
-import ch.difty.scipamato.core.pubmed.api.JournalIssue;
-import ch.difty.scipamato.core.pubmed.api.MedlineCitation;
-import ch.difty.scipamato.core.pubmed.api.MedlineJournalInfo;
-import ch.difty.scipamato.core.pubmed.api.PMID;
-import ch.difty.scipamato.core.pubmed.api.PubDate;
-import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
+import ch.difty.scipamato.core.pubmed.api.*;
 
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
 
@@ -53,7 +40,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     @Mock
     private Paper             paperMock, paperMock2, paperMock3;
     @Mock
-    private PaperAttachment   attachmentMock;
+    private PaperAttachment attachmentMock;
 
     private final List<PubmedArticleFacade> articles = new ArrayList<>();
 
@@ -103,7 +90,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         Long id = 7L;
         when(repoMock.findById(id)).thenReturn(null);
 
-        assertThat(service.findById(id)
+        assertThat(service
+            .findById(id)
             .isPresent()).isFalse();
 
         verify(repoMock).findById(id);
@@ -209,12 +197,14 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         articles.add(PubmedArticleFacade.newPubmedArticleFrom(pa));
 
         // existing papers
-        when(repoMock.findExistingPmIdsOutOf(Collections.singletonList(pmIdValue))).thenReturn(Collections.singletonList(pmIdValue));
+        when(repoMock.findExistingPmIdsOutOf(Collections.singletonList(pmIdValue))).thenReturn(
+            Collections.singletonList(pmIdValue));
 
         ServiceResult sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER);
         assertThat(sr).isNotNull();
         assertThat(sr.getInfoMessages()).isEmpty();
-        assertThat(sr.getWarnMessages()).hasSize(1)
+        assertThat(sr.getWarnMessages())
+            .hasSize(1)
             .contains("PMID " + pmIdValue);
         assertThat(sr.getErrorMessages()).isEmpty();
 
@@ -226,7 +216,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         Integer pmIdValue = 23193287;
         PubmedArticle pa = newPubmedArticle(pmIdValue);
         articles.add(PubmedArticleFacade.newPubmedArticleFrom(pa));
-        assertThat(articles.get(0)
+        assertThat(articles
+            .get(0)
             .getPmId()).isNotNull();
 
         when(repoMock.findExistingPmIdsOutOf(Collections.singletonList(pmIdValue))).thenReturn(Collections.emptyList());
@@ -238,7 +229,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
         ServiceResult sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER);
         assertThat(sr).isNotNull();
-        assertThat(sr.getInfoMessages()).hasSize(1)
+        assertThat(sr.getInfoMessages())
+            .hasSize(1)
             .contains("PMID " + pmIdValue + " (id 27)");
         assertThat(sr.getWarnMessages()).isEmpty();
         assertThat(sr.getErrorMessages()).isEmpty();
@@ -272,7 +264,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         PubmedArticle pa1 = newPubmedArticle(pmIdValue);
         articles.add(PubmedArticleFacade.newPubmedArticleFrom(pa1));
         articles.add(PubmedArticleFacade.newPubmedArticleFrom(newPubmedArticle(0)));
-        assertThat(articles.get(1)
+        assertThat(articles
+            .get(1)
             .getPmId()).isEqualTo("0");
         ((AbstractPubmedArticleFacade) articles.get(1)).setPmId(null);
 
@@ -285,7 +278,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
         ServiceResult sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER);
         assertThat(sr).isNotNull();
-        assertThat(sr.getInfoMessages()).hasSize(1)
+        assertThat(sr.getInfoMessages())
+            .hasSize(1)
             .contains("PMID " + pmIdValue + " (id 27)");
         assertThat(sr.getWarnMessages()).isEmpty();
         assertThat(sr.getErrorMessages()).isEmpty();
@@ -329,7 +323,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Test
     public void findingByNumber_withSingleResultFromRepo_returnsThatAsOptional() {
-        when(repoMock.findByNumbers(Collections.singletonList(1L), LC)).thenReturn(Collections.singletonList(paperMock));
+        when(repoMock.findByNumbers(Collections.singletonList(1L), LC)).thenReturn(
+            Collections.singletonList(paperMock));
         testFindingByNumbers();
     }
 
@@ -353,7 +348,8 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Test
     public void findingByNumber_withMultipleRecordsFromRepo_returnsFirstAsOptional() {
-        when(repoMock.findByNumbers(Collections.singletonList(1L), LC)).thenReturn(Arrays.asList(paperMock, paperMock2));
+        when(repoMock.findByNumbers(Collections.singletonList(1L), LC)).thenReturn(
+            Arrays.asList(paperMock, paperMock2));
         testFindingByNumbers();
     }
 

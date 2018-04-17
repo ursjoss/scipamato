@@ -52,9 +52,11 @@ public class SearchTermTest {
         assertThat(sst.getFieldName()).isEqualTo("fn3");
         assertThat(sst.getRawSearchTerm()).isEqualTo("foo*");
         assertThat(sst.getTokens()).hasSize(1);
-        assertThat(sst.getTokens()
+        assertThat(sst
+            .getTokens()
             .get(0).sqlData).isEqualTo("foo%");
-        assertThat(sst.getTokens()
+        assertThat(sst
+            .getTokens()
             .get(0).negate).isFalse();
     }
 
@@ -72,7 +74,8 @@ public class SearchTermTest {
             SearchTerm.newSearchTerm(13, SearchTermType.UNSUPPORTED, 4L, "fn4", "whatever");
             fail("should have thrown exception");
         } catch (Error ex) {
-            assertThat(ex).isInstanceOf(AssertionError.class)
+            assertThat(ex)
+                .isInstanceOf(AssertionError.class)
                 .hasMessage("SearchTermType.UNSUPPORTED is not supported");
         }
     }
@@ -99,10 +102,12 @@ public class SearchTermTest {
         assertThat(ast.getFieldName()).isEqualTo(userFieldName);
         assertThat(ast.getRawSearchTerm()).isEqualTo("foo >=\"2017-02-01\"");
         assertThat(ast.getTokens()).hasSize(1);
-        assertThat(ast.getTokens()
+        assertThat(ast
+            .getTokens()
             .get(0)
             .getUserSqlData()).isEqualTo("foo");
-        assertThat(ast.getTokens()
+        assertThat(ast
+            .getTokens()
             .get(0)
             .getDateSqlData()).isNull();
     }
@@ -120,10 +125,12 @@ public class SearchTermTest {
         assertThat(ast.getFieldName()).isEqualTo(userFieldName);
         assertThat(ast.getRawSearchTerm()).isEqualTo("foo >=\"2017-02-01\"");
         assertThat(ast.getTokens()).hasSize(1);
-        assertThat(ast.getTokens()
+        assertThat(ast
+            .getTokens()
             .get(0)
             .getUserSqlData()).isNull();
-        assertThat(ast.getTokens()
+        assertThat(ast
+            .getTokens()
             .get(0)
             .getDateSqlData()).isEqualTo("2017-02-01 00:00:00");
     }

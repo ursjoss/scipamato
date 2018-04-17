@@ -126,7 +126,8 @@ public class IntegerSearchTermTest {
             new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, "2014a");
             fail("Should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NumberFormatException.class)
+            assertThat(ex)
+                .isInstanceOf(NumberFormatException.class)
                 .hasMessage("For input string: \"2014a\"");
         }
     }
@@ -137,7 +138,8 @@ public class IntegerSearchTermTest {
             new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, ">>2014");
             fail("Should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("For input string: \">2014\"");
         }
     }

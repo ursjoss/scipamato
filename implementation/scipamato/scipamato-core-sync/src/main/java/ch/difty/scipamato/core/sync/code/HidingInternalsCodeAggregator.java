@@ -1,10 +1,6 @@
 package ch.difty.scipamato.core.sync.code;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -80,10 +76,12 @@ public class HidingInternalsCodeAggregator implements CodeAggregator {
 
     private List<Short> gatherCodesPopulation() {
         final List<Short> pcs = new ArrayList<>();
-        if (codes.stream()
+        if (codes
+            .stream()
             .anyMatch(x -> "3A".equals(x) || "3B".equals(x)))
             pcs.add((short) 1);
-        if (codes.stream()
+        if (codes
+            .stream()
             .anyMatch("3C"::equals))
             pcs.add((short) 2);
         return pcs;
@@ -91,13 +89,16 @@ public class HidingInternalsCodeAggregator implements CodeAggregator {
 
     private List<Short> gatherCodesStudyDesign() {
         final List<Short> csds = new ArrayList<>();
-        if (codes.stream()
+        if (codes
+            .stream()
             .anyMatch("5abc"::equals))
             csds.add((short) 1);
-        if (codes.stream()
+        if (codes
+            .stream()
             .anyMatch(x -> "5E".equals(x) || "5F".equals(x) || "5G".equals(x) || "5H".equals(x) || "5I".equals(x)))
             csds.add((short) 2);
-        if (codes.stream()
+        if (codes
+            .stream()
             .anyMatch(x -> "5U".equals(x) || "5M".equals(x)))
             csds.add((short) 3);
         return csds;

@@ -1,9 +1,6 @@
 package ch.difty.scipamato.publ.entity;
 
-import static ch.difty.scipamato.publ.entity.StudyDesignCode.EPIODEMIOLOGICAL;
-import static ch.difty.scipamato.publ.entity.StudyDesignCode.EXPERIMENTAL;
-import static ch.difty.scipamato.publ.entity.StudyDesignCode.OVERVIEW_METHODOLOGY;
-import static ch.difty.scipamato.publ.entity.StudyDesignCode.values;
+import static ch.difty.scipamato.publ.entity.StudyDesignCode.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 

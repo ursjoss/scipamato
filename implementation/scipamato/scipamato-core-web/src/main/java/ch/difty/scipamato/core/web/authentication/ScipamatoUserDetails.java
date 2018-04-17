@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.web.authentication;
 import java.util.Collection;
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +11,6 @@ import org.springframework.util.StringUtils;
 
 import ch.difty.scipamato.core.auth.Role;
 import ch.difty.scipamato.core.entity.User;
-import lombok.EqualsAndHashCode;
 
 /**
  * Implementation of {@link UserDetails} working the the {@link User} entity.

@@ -12,15 +12,14 @@ import ch.difty.scipamato.common.persistence.CodeClassLikeService;
  * Model used in core/public wicket pages to load {@link CodeClassLike} code
  * class implementations
  *
- * @author u.joss
- *
  * @param <T>
- *            code class implementations of {@link CodeClassLike}
+ *     code class implementations of {@link CodeClassLike}
  * @param <S>
- *            service implementations of {@link CodeClassLikeService}
+ *     service implementations of {@link CodeClassLikeService}
+ * @author u.joss
  */
 public abstract class CodeClassLikeModel<T extends CodeClassLike, S extends CodeClassLikeService<T>>
-        extends InjectedLoadableDetachableModel<T> {
+    extends InjectedLoadableDetachableModel<T> {
 
     private static final long serialVersionUID = 1L;
 

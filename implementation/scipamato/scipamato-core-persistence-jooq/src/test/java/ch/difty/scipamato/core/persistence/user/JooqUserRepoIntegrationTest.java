@@ -1,8 +1,6 @@
 package ch.difty.scipamato.core.persistence.user;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.extractProperty;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 
@@ -26,13 +24,17 @@ public class JooqUserRepoIntegrationTest extends JooqTransactionalIntegrationTes
     public void findingAll() {
         List<User> users = repo.findAll();
         assertThat(users).hasSize(RECORD_COUNT_PREPOPULATED);
-        assertThat(users.get(0)
+        assertThat(users
+            .get(0)
             .getId()).isEqualTo(1);
-        assertThat(users.get(1)
+        assertThat(users
+            .get(1)
             .getId()).isEqualTo(2);
-        assertThat(users.get(2)
+        assertThat(users
+            .get(2)
             .getId()).isEqualTo(3);
-        assertThat(users.get(3)
+        assertThat(users
+            .get(3)
             .getId()).isEqualTo(4);
     }
 
@@ -57,7 +59,8 @@ public class JooqUserRepoIntegrationTest extends JooqTransactionalIntegrationTes
 
         User saved = repo.add(p);
         assertThat(saved).isNotNull();
-        assertThat(saved.getId()).isNotNull()
+        assertThat(saved.getId())
+            .isNotNull()
             .isGreaterThan(MAX_ID_PREPOPULATED);
         assertThat(saved.getUserName()).isEqualTo("a");
     }
@@ -76,7 +79,8 @@ public class JooqUserRepoIntegrationTest extends JooqTransactionalIntegrationTes
     public void updatingRecord() {
         User user = repo.add(makeMinimalUser());
         assertThat(user).isNotNull();
-        assertThat(user.getId()).isNotNull()
+        assertThat(user.getId())
+            .isNotNull()
             .isGreaterThan(MAX_ID_PREPOPULATED);
         final int id = user.getId();
         assertThat(user.getUserName()).isEqualTo("a");
@@ -95,7 +99,8 @@ public class JooqUserRepoIntegrationTest extends JooqTransactionalIntegrationTes
     public void deletingRecord() {
         User user = repo.add(makeMinimalUser());
         assertThat(user).isNotNull();
-        assertThat(user.getId()).isNotNull()
+        assertThat(user.getId())
+            .isNotNull()
             .isGreaterThan(MAX_ID_PREPOPULATED);
         final int id = user.getId();
         assertThat(user.getUserName()).isEqualTo("a");
@@ -198,7 +203,8 @@ public class JooqUserRepoIntegrationTest extends JooqTransactionalIntegrationTes
         User user = repo.add(makeMinimalUser());
         assertThat(user).isNotNull();
         assertThat(user.getVersion()).isEqualTo(1);
-        assertThat(user.getId()).isNotNull()
+        assertThat(user.getId())
+            .isNotNull()
             .isGreaterThan(MAX_ID_PREPOPULATED);
         return user;
     }

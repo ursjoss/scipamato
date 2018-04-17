@@ -28,7 +28,8 @@ public class CodeClassItemWriter extends ScipamatoItemWriter<PublicCodeClass> {
 
     @Override
     protected int executeUpdate(PublicCodeClass i) {
-        return getDslContext().insertInto(CODE_CLASS)
+        return getDslContext()
+            .insertInto(CODE_CLASS)
             .columns(CODE_CLASS.CODE_CLASS_ID, CODE_CLASS.LANG_CODE, CODE_CLASS.NAME, CODE_CLASS.DESCRIPTION,
                 CODE_CLASS.VERSION, CODE_CLASS.CREATED, CODE_CLASS.LAST_MODIFIED, CODE_CLASS.LAST_SYNCHED)
             .values(i.getCodeClassId(), i.getLangCode(), i.getName(), i.getDescription(), i.getVersion(),
@@ -41,7 +42,8 @@ public class CodeClassItemWriter extends ScipamatoItemWriter<PublicCodeClass> {
             .set(CODE_CLASS.CREATED, i.getCreated())
             .set(CODE_CLASS.LAST_MODIFIED, i.getLastModified())
             .set(CODE_CLASS.LAST_SYNCHED, i.getLastSynched())
-            .where(CODE_CLASS.CODE_CLASS_ID.eq(i.getCodeClassId())
+            .where(CODE_CLASS.CODE_CLASS_ID
+                .eq(i.getCodeClassId())
                 .and(CODE_CLASS.LANG_CODE.eq(i.getLangCode())))
             .execute();
     }

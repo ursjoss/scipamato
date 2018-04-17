@@ -20,16 +20,17 @@ public final class TestUtils {
      * value.
      *
      * @param supplier
-     *            function or constructor with null parameter
+     *     function or constructor with null parameter
      * @param fieldName
-     *            the name of the field receiving the null parameter
+     *     the name of the field receiving the null parameter
      */
     public static void assertDegenerateSupplierParameter(final Supplier<?> supplier, final String fieldName) {
         try {
             supplier.get();
             fail("should have thrown exception");
         } catch (final Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage(fieldName + " must not be null.");
         }
     }
@@ -39,11 +40,13 @@ public final class TestUtils {
      * string.
      *
      * @param fileName
-     *            the relative path of the file within the resources folder (e.g.
-     *            'xml/myfile.xml')
+     *     the relative path of the file within the resources folder (e.g.
+     *     'xml/myfile.xml')
      * @return file content as string.
-     * @throws NullPointerException if the fileName is null
-     * @throws IOException if an IO error occurs
+     * @throws NullPointerException
+     *     if the fileName is null
+     * @throws IOException
+     *     if an IO error occurs
      */
     public static String readFileAsString(final String fileName) throws IOException {
         return IOUtils.toString(ClassLoader.getSystemResourceAsStream(fileName), StandardCharsets.UTF_8);

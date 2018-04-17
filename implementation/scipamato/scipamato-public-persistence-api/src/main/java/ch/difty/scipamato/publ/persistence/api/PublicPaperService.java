@@ -15,10 +15,10 @@ public interface PublicPaperService {
      * optional of {@link PublicPaper}
      *
      * @param number
-     *            - must not be null
+     *     - must not be null
      * @return Optional
      * @throws NullArgumentException
-     *             if id is null
+     *     if id is null
      */
     Optional<PublicPaper> findByNumber(Long number);
 
@@ -27,9 +27,9 @@ public interface PublicPaperService {
      * pagination context.
      *
      * @param filter
-     *            the filter
+     *     the filter
      * @param paginationContext
-     *            context defining paging and sorting
+     *     context defining paging and sorting
      * @return a page of papers as list
      */
     List<PublicPaper> findPageByFilter(PublicPaperFilter filter, PaginationContext paginationContext);
@@ -38,7 +38,7 @@ public interface PublicPaperService {
      * Counts the number of entities matching the specified filter.
      *
      * @param filter
-     *            the filter specification
+     *     the filter specification
      * @return entity count
      */
     int countByFilter(PublicPaperFilter filter);
@@ -48,9 +48,9 @@ public interface PublicPaperService {
      * provided filter and pagination context.
      *
      * @param filter
-     *            the filter specification
+     *     the filter specification
      * @param paginationContext
-     *            {@link PaginationContext}
+     *     {@link PaginationContext}
      * @return list of the numbers of matching papers
      */
     List<Long> findPageOfNumbersByFilter(PublicPaperFilter filter, PaginationContext paginationContext);

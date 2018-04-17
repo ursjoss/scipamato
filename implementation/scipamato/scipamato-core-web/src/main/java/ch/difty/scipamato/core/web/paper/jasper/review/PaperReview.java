@@ -1,11 +1,12 @@
 package ch.difty.scipamato.core.web.paper.jasper.review;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntity;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * DTO to feed the PaperReviewDataSource
@@ -50,9 +51,9 @@ public class PaperReview extends JasperEntity {
      * Instantiation with a {@link Paper} and the {@link ReportHeaderFields}
      *
      * @param p
-     *            the paper with the relevant fields
+     *     the paper with the relevant fields
      * @param rhf
-     *            the reportHeaderFields with the localized field headers
+     *     the reportHeaderFields with the localized field headers
      */
     public PaperReview(final Paper p, final ReportHeaderFields rhf) {
         AssertAs.notNull(p, "p");

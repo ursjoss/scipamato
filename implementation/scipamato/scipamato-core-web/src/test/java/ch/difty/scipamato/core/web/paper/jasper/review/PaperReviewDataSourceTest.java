@@ -1,21 +1,18 @@
 package ch.difty.scipamato.core.web.paper.jasper.review;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-import java.util.Arrays;
 import java.util.Collections;
 
-import org.junit.Test;
-
-import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
-import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JRDesignField;
+import org.junit.Test;
+
+import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
+import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
 public class PaperReviewDataSourceTest extends PaperDataSourceTest {
 
@@ -27,7 +24,8 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
     private ReportHeaderFields    rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields.builder("", "b")
+        return ReportHeaderFields
+            .builder("", "b")
             .numberLabel("nl")
             .authorYearLabel("ayl")
             .populationPlaceLabel("ppl")
@@ -63,7 +61,8 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
 
     private void assertDataSource(String fileName) throws JRException {
         assertThat(ds.getConnectionProvider()).isNull();
-        assertThat(ds.getContentDisposition()
+        assertThat(ds
+            .getContentDisposition()
             .toString()).isEqualTo("ATTACHMENT");
         assertThat(ds.getContentType()).isEqualTo("application/pdf");
         assertThat(ds.getExtension()).isEqualTo("pdf");

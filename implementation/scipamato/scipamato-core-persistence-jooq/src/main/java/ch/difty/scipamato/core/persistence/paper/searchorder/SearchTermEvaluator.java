@@ -8,10 +8,9 @@ import ch.difty.scipamato.core.entity.search.SearchTerm;
  * Evaluates the {@link SearchTerm} implementation to build a concrete jOOQ
  * Condition
  *
- * @author u.joss
- *
  * @param <T>
- *            the {@link SearchTerm} implementation to be evaluated
+ *     the {@link SearchTerm} implementation to be evaluated
+ * @author u.joss
  */
 @FunctionalInterface
 public interface SearchTermEvaluator<T extends SearchTerm> {

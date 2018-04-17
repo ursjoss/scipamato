@@ -2,9 +2,7 @@ package ch.difty.scipamato.core.web.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -38,8 +36,8 @@ public class SearchOrderModelTest extends ModelTest {
     public void test() {
         final int owner = 1;
         final int maxRows = 10;
-        when(serviceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationRequest.class)))
-            .thenReturn(Arrays.asList(mockSearchOrder, mockSearchOrder));
+        when(serviceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationRequest.class))).thenReturn(
+            Arrays.asList(mockSearchOrder, mockSearchOrder));
         SearchOrderModel m = new SearchOrderModel(owner, maxRows);
         assertThat(m.load()).containsExactly(mockSearchOrder, mockSearchOrder);
 
@@ -56,8 +54,9 @@ public class SearchOrderModelTest extends ModelTest {
 
         @Override
         public boolean matches(SearchOrderFilter f) {
-            return f != null && f.getOwnerIncludingGlobal() != null && f.getOwnerIncludingGlobal() == ownerIncludingGlobal && f.getNameMask() == null && f.getOwner() == null
-                    && f.getGlobal() == null;
+            return f != null && f.getOwnerIncludingGlobal() != null
+                   && f.getOwnerIncludingGlobal() == ownerIncludingGlobal && f.getNameMask() == null
+                   && f.getOwner() == null && f.getGlobal() == null;
         }
     }
 
@@ -73,11 +72,13 @@ public class SearchOrderModelTest extends ModelTest {
         @Override
         public boolean matches(PaginationRequest pr) {
             if (pr != null && pr.getOffset() == 0 && pr.getPageSize() == maxRows) {
-                Iterator<SortProperty> it = pr.getSort()
+                Iterator<SortProperty> it = pr
+                    .getSort()
                     .iterator();
                 if (it.hasNext()) {
                     SortProperty sp = it.next();
-                    return GLOBAL.equals(sp.getName()) && sp.getDirection()
+                    return GLOBAL.equals(sp.getName()) && sp
+                        .getDirection()
                         .isAscending();
                 }
             }

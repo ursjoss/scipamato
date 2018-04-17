@@ -18,12 +18,12 @@ import ch.difty.scipamato.core.web.paper.common.SearchablePaperPanel;
  * Lookalike of the PaperEditPage that works with a {@link SearchCondition}
  * instead of a Paper entity, which can be used as a kind of Query by example
  * (QBE) functionality.
- *
+ * <p>
  * The page is instantiated with a model of a {@link SearchCondition} capturing
  * the specification from this form. If instantiated with a {@link SearchOrder}
  * as parameter, it will add the current query specification
  * {@link SearchCondition} to the search order.
- *
+ * <p>
  * Submitting the page will call the {@link PaperSearchPage} handing over the
  * updated {@link SearchOrder}.
  *
@@ -61,7 +61,9 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
                 Long searchOrderId = getSearchOrderId();
                 if (searchOrderId != null) {
                     searchOrderService.saveOrUpdateSearchCondition(getModelObject(), searchOrderId, getLanguageCode());
-                    pageFactory.setResponsePageToPaperSearchPageConsumer(this).accept(getPageParameters());
+                    pageFactory
+                        .setResponsePageToPaperSearchPageConsumer(this)
+                        .accept(getPageParameters());
                 }
             }
         };

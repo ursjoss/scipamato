@@ -1,8 +1,7 @@
 package ch.difty.scipamato.core.web.paper.jasper;
 
-import org.apache.wicket.util.io.IClusterable;
-
 import net.sf.jasperreports.export.PdfExporterConfiguration;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Custom {@link PdfExporterConfiguration} which is clusterable, and thus ready

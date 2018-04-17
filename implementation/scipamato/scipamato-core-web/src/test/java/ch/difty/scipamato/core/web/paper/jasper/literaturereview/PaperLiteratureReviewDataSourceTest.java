@@ -1,20 +1,18 @@
 package ch.difty.scipamato.core.web.paper.jasper.literaturereview;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Collections;
 
-import org.junit.Test;
-
-import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
-import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JRDesignField;
+import org.junit.Test;
+
+import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
+import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
 public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
 
@@ -27,11 +25,12 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
     private static final String NUMBER_LABEL    = "numberLabel";
     private static final String PUBMED_BASE_URL = "https://www.ncbi.nlm.nih.gov/pubmed/";
 
-    private PaperLiteratureReviewDataSource       ds;
+    private       PaperLiteratureReviewDataSource ds;
     private final ReportHeaderFields              rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields.builder("", BRAND)
+        return ReportHeaderFields
+            .builder("", BRAND)
             .numberLabel(NUMBER_LABEL)
             .captionLabel(CAPTION)
             .pubmedBaseUrl(PUBMED_BASE_URL)
@@ -50,7 +49,8 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
 
     private void assertDataSource(String fileName) throws JRException {
         assertThat(ds.getConnectionProvider()).isNull();
-        assertThat(ds.getContentDisposition()
+        assertThat(ds
+            .getContentDisposition()
             .toString()).isEqualTo("ATTACHMENT");
         assertThat(ds.getContentType()).isEqualTo("application/pdf");
         assertThat(ds.getExtension()).isEqualTo("pdf");

@@ -3,13 +3,13 @@ package ch.difty.scipamato.core.web.paper.jasper.literaturereview;
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
 
 public class PaperLiteratureReviewTest extends JasperEntityTest {
 
@@ -19,7 +19,8 @@ public class PaperLiteratureReviewTest extends JasperEntityTest {
     private ReportHeaderFields    rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields.builder(HEADER_PART, BRAND)
+        return ReportHeaderFields
+            .builder(HEADER_PART, BRAND)
             .numberLabel(NUMBER_LABEL)
             .captionLabel(CAPTION)
             .pubmedBaseUrl(PUBMED_BASE_URL)
@@ -38,7 +39,8 @@ public class PaperLiteratureReviewTest extends JasperEntityTest {
 
     @Test
     public void degenerateConstruction_withNullPubmedBaseUrl_throws() {
-        ReportHeaderFields rhf2 = ReportHeaderFields.builder(HEADER_PART, BRAND)
+        ReportHeaderFields rhf2 = ReportHeaderFields
+            .builder(HEADER_PART, BRAND)
             .numberLabel(NUMBER_LABEL)
             .captionLabel(CAPTION)
             .build();
@@ -89,7 +91,8 @@ public class PaperLiteratureReviewTest extends JasperEntityTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(PaperLiteratureReview.class)
+        EqualsVerifier
+            .forClass(PaperLiteratureReview.class)
             .withRedefinedSuperclass()
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();

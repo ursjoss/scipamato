@@ -28,7 +28,8 @@ public abstract class ModelTest {
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock);
         WicketTester tester = new WicketTester(application);
         Locale locale = new Locale("en_US");
-        tester.getSession()
+        tester
+            .getSession()
             .setLocale(locale);
         setUpLocal();
     }

@@ -1,8 +1,7 @@
 package ch.difty.scipamato.core.entity;
 
-import java.util.Set;
-
 import javax.validation.ConstraintViolation;
+import java.util.Set;
 
 import org.apache.bval.jsr.ApacheValidationProvider;
 import org.junit.Before;

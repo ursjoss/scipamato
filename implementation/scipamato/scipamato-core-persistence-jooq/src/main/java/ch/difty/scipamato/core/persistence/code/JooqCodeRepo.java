@@ -35,21 +35,25 @@ public class JooqCodeRepo implements CodeRepository {
         AssertAs.notNull(codeClassId, "codeClassId");
         final String lang = TranslationUtils.trimLanguageCode(languageCode);
         // skipping the audit fields
-        return dslContext.select(CODE.CODE_.as("C_ID"), DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
-            .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"), CODE_CLASS.ID.as("CC_ID"),
-            DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
-                .as("CC_NAME"),
-            DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
-                .as("CC_DESCRIPTION"),
-            CODE.SORT.as("C_SORT"))
+        return dslContext
+            .select(CODE.CODE_.as("C_ID"), DSL
+                    .coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"),
+                CODE_CLASS.ID.as("CC_ID"), DSL
+                    .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .as("CC_NAME"), DSL
+                    .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
+                    .as("CC_DESCRIPTION"), CODE.SORT.as("C_SORT"))
             .from(CODE)
             .join(CODE_CLASS)
             .on(CODE.CODE_CLASS_ID.equal(CODE_CLASS.ID))
             .leftOuterJoin(CODE_TR)
-            .on(CODE.CODE_.equal(CODE_TR.CODE)
+            .on(CODE.CODE_
+                .equal(CODE_TR.CODE)
                 .and(CODE_TR.LANG_CODE.equal(lang)))
             .leftOuterJoin(CODE_CLASS_TR)
-            .on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID)
+            .on(CODE_CLASS.ID
+                .equal(CODE_CLASS_TR.CODE_CLASS_ID)
                 .and(CODE_CLASS_TR.LANG_CODE.equal(lang)))
             .where(CODE.CODE_CLASS_ID.equal(codeClassId.getId()))
             .orderBy(CODE_CLASS.ID, CODE.SORT)

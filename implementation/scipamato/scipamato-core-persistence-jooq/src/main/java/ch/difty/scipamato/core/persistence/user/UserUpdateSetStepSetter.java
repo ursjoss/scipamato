@@ -15,7 +15,7 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 
 /**
  * The update step setter used for updating {@link User}s.
- * <p>
+ *
  *
  * <b>Note:</b> the {@link Role}s are not updated here.
  *
@@ -28,7 +28,8 @@ public class UserUpdateSetStepSetter implements UpdateSetStepSetter<ScipamatoUse
     public UpdateSetMoreStep<ScipamatoUserRecord> setFieldsFor(UpdateSetFirstStep<ScipamatoUserRecord> step, User e) {
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
-        return step.set(SCIPAMATO_USER.USER_NAME, e.getUserName())
+        return step
+            .set(SCIPAMATO_USER.USER_NAME, e.getUserName())
             .set(SCIPAMATO_USER.FIRST_NAME, e.getFirstName())
             .set(SCIPAMATO_USER.LAST_NAME, e.getLastName())
             .set(SCIPAMATO_USER.EMAIL, e.getEmail())

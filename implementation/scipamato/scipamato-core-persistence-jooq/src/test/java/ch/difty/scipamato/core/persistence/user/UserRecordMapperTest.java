@@ -41,7 +41,7 @@ public class UserRecordMapperTest extends RecordMapperTest<ScipamatoUserRecord, 
     @Override
     protected ScipamatoUserRecord makeRecord() {
         return new ScipamatoUserRecord(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, VERSION, CREATED,
-                CREATED_BY, LAST_MOD, LAST_MOD_BY);
+            CREATED_BY, LAST_MOD, LAST_MOD_BY);
     }
 
     @Override

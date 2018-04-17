@@ -10,19 +10,22 @@ public class FrozenDateTimeServiceTest {
 
     @Test
     public void gettingDateTime() {
-        assertThat(service.getCurrentDateTime()
+        assertThat(service
+            .getCurrentDateTime()
             .toString()).isEqualTo("2016-12-09T06:02:13");
     }
 
     @Test
     public void gettingTimestamp() {
-        assertThat(service.getCurrentTimestamp()
+        assertThat(service
+            .getCurrentTimestamp()
             .toString()).isEqualTo("2016-12-09 06:02:13.0");
     }
 
     @Test
     public void gettingCurrentDate() {
-        assertThat(service.getCurrentDate()
+        assertThat(service
+            .getCurrentDate()
             .toString()).isEqualTo("2016-12-09");
     }
 }

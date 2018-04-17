@@ -1,10 +1,9 @@
 package ch.difty.scipamato.publ.web.authentication;
 
-import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
-import org.springframework.stereotype.Service;
-
 import com.giffing.wicket.spring.boot.context.security.AuthenticatedWebSessionConfig;
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
+import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ScipamatoAuthenticatedWebSessionConfig implements AuthenticatedWebSessionConfig {

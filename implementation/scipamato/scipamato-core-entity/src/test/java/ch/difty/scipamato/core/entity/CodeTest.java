@@ -7,26 +7,25 @@ import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR
 import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import javax.validation.ConstraintViolation;
 import java.time.LocalDateTime;
 
-import javax.validation.ConstraintViolation;
-
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields;
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
 
 public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     private static final String        CODE1                                         = "code1";
     private static final String        JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE = "{javax.validation.constraints.NotNull.message}";
     private static final String        CODECLASS10                                   = "codeclass10";
-    private static final LocalDateTime CREATED                                       = LocalDateTime
-        .parse("2017-01-01T08:01:33.821");
-    private static final LocalDateTime LAST_MOD                                      = LocalDateTime
-        .parse("2017-02-02T08:01:33.821");
+    private static final LocalDateTime CREATED                                       = LocalDateTime.parse(
+        "2017-01-01T08:01:33.821");
+    private static final LocalDateTime LAST_MOD                                      = LocalDateTime.parse(
+        "2017-02-02T08:01:33.821");
 
     private final Code c = new Code("1A", CODE1, null, false, 1, "c1", "", 1);
 
@@ -36,16 +35,19 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     }
 
     private void validateAndAssertFailure(Code code, final FieldEnumType fieldType, final Object invalidValue,
-            final String msg) {
+        final String msg) {
         validate(code);
 
-        assertThat(getViolations()).isNotEmpty()
+        assertThat(getViolations())
+            .isNotEmpty()
             .hasSize(1);
-        ConstraintViolation<Code> violation = getViolations().iterator()
+        ConstraintViolation<Code> violation = getViolations()
+            .iterator()
             .next();
         assertThat(violation.getMessageTemplate()).isEqualTo(msg);
         assertThat(violation.getInvalidValue()).isEqualTo(invalidValue);
-        assertThat(violation.getPropertyPath()
+        assertThat(violation
+            .getPropertyPath()
             .toString()).isEqualTo(fieldType.getName());
     }
 
@@ -53,11 +55,14 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     public void constructing_withAllValues_populatesCodeClass() {
         Code c1 = new Code("C1", "c1", null, false, 10, "cc10", CODECLASS10, 2);
         assertThat(c1.getCodeClass()).isNotNull();
-        assertThat(c1.getCodeClass()
+        assertThat(c1
+            .getCodeClass()
             .getId()).isEqualTo(10);
-        assertThat(c1.getCodeClass()
+        assertThat(c1
+            .getCodeClass()
             .getName()).isEqualTo("cc10");
-        assertThat(c1.getCodeClass()
+        assertThat(c1
+            .getCodeClass()
             .getDescription()).isEqualTo(CODECLASS10);
     }
 
@@ -232,7 +237,8 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(Code.class)
+        EqualsVerifier
+            .forClass(Code.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(ScipamatoEntityFields.CREATED.getName(), CREATOR_ID.getName(),
                 ScipamatoEntityFields.MODIFIED.getName(), MODIFIER_ID.getName())

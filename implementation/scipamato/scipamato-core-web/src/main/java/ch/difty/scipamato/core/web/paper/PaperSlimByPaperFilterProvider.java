@@ -28,20 +28,22 @@ public class PaperSlimByPaperFilterProvider extends AbstractPaperSlimProvider<Pa
      * rows per page (pageSize)
      *
      * @param filter
-     *            the paper filter search specification
+     *     the paper filter search specification
      * @param rowsPerPage
-     *            the max numbers of rows per page
+     *     the max numbers of rows per page
      */
     public PaperSlimByPaperFilterProvider(final PaperFilter filter, final int rowsPerPage) {
         super(filter != null ? filter : new PaperFilter(), rowsPerPage);
-        Injector.get()
+        Injector
+            .get()
             .inject(this);
         setSort(Paper.IdScipamatoEntityFields.ID.getName(), SortOrder.DESCENDING);
     }
 
     @Override
     protected Iterator<PaperSlim> findPage(final PaginationContext pc) {
-        return getService().findPageByFilter(getFilterState(), pc)
+        return getService()
+            .findPageByFilter(getFilterState(), pc)
             .iterator();
     }
 

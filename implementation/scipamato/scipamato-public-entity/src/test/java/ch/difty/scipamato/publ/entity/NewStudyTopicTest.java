@@ -7,10 +7,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import org.junit.Test;
 
 public class NewStudyTopicTest extends PublicEntityTest<NewStudyTopic> {
 
@@ -34,7 +33,8 @@ public class NewStudyTopicTest extends PublicEntityTest<NewStudyTopic> {
 
     @Override
     protected void verifyEquals() {
-        EqualsVerifier.forClass(NewStudyTopic.class)
+        EqualsVerifier
+            .forClass(NewStudyTopic.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(CREATED.getName(), MODIFIED.getName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
@@ -43,7 +43,8 @@ public class NewStudyTopicTest extends PublicEntityTest<NewStudyTopic> {
 
     @Test
     public void assertEnumFields() {
-        assertThat(NewStudyTopic.NewStudyTopicFields.values()).extracting("name")
+        assertThat(NewStudyTopic.NewStudyTopicFields.values())
+            .extracting("name")
             .containsExactly("sort", "title", "studies");
     }
 

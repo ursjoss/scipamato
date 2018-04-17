@@ -3,6 +3,8 @@ package ch.difty.scipamato.core.web.paper.jasper.summary;
 import java.util.Collection;
 import java.util.Collections;
 
+import net.sf.jasperreports.engine.JasperReport;
+
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
@@ -14,11 +16,10 @@ import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfResourceHandler;
 import ch.difty.scipamato.core.web.resources.jasper.PaperSummaryReportResourceReference;
-import net.sf.jasperreports.engine.JasperReport;
 
 /**
  * DataSource for the PaperSummaryReport.
- *
+ * <p>
  * Can be instantiated in different ways, either by passing in
  *
  * <ul>
@@ -28,7 +29,7 @@ import net.sf.jasperreports.engine.JasperReport;
  * <li>an instance of a {@link AbstractPaperSlimProvider} + report header fields
  * + export config</li>
  * </ul>
- *
+ * <p>
  * The report header fields are not contained within a paper instance and make
  * up e.g. localized labels, the brand or part of the header.
  *
@@ -49,17 +50,17 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      * information not contained within the paper
      *
      * @param paper
-     *            an instance of {@link Paper} - must not be null.
+     *     an instance of {@link Paper} - must not be null.
      * @param reportHeaderFields
-     *            collection of localized labels for report fields
+     *     collection of localized labels for report fields
      * @param config
-     *            {@link ClusterablePdfExporterConfiguration}
+     *     {@link ClusterablePdfExporterConfiguration}
      */
     public PaperSummaryDataSource(final Paper paper, final ReportHeaderFields reportHeaderFields,
-            ClusterablePdfExporterConfiguration config) {
+        ClusterablePdfExporterConfiguration config) {
         this(Collections.singletonList(new PaperSummary(AssertAs.notNull(paper, "paper"),
-                        AssertAs.notNull(reportHeaderFields, "reportHeaderFields"))), config,
-                makeSinglePaperBaseName(paper.getNumber() != null ? String.valueOf(paper.getNumber()) : null));
+                AssertAs.notNull(reportHeaderFields, "reportHeaderFields"))), config,
+            makeSinglePaperBaseName(paper.getNumber() != null ? String.valueOf(paper.getNumber()) : null));
         this.reportHeaderFields = reportHeaderFields;
     }
 
@@ -68,13 +69,13 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      * name including the id of the paper.
      *
      * @param paperSummary
-     *            single {@link PaperSummary} - must not be null
+     *     single {@link PaperSummary} - must not be null
      * @param config
-     *            the {@link ClusterablePdfExporterConfiguration}
+     *     the {@link ClusterablePdfExporterConfiguration}
      */
     PaperSummaryDataSource(final PaperSummary paperSummary, ClusterablePdfExporterConfiguration config) {
         this(Collections.singletonList(AssertAs.notNull(paperSummary, "paperSummary")), config,
-                makeSinglePaperBaseName(paperSummary.getNumber()));
+            makeSinglePaperBaseName(paperSummary.getNumber()));
     }
 
     /**
@@ -82,14 +83,14 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      * using a specific file name including the id of the paper.
      *
      * @param paperSummaries
-     *            collection of {@link PaperSummary} instances
+     *     collection of {@link PaperSummary} instances
      * @param config
-     *            the {@link ClusterablePdfExporterConfiguration}
+     *     the {@link ClusterablePdfExporterConfiguration}
      * @param baseName
-     *            the file name without the extension (.pdf)
+     *     the file name without the extension (.pdf)
      */
     private PaperSummaryDataSource(final Collection<PaperSummary> paperSummaries,
-            ClusterablePdfExporterConfiguration config, String baseName) {
+        ClusterablePdfExporterConfiguration config, String baseName) {
         super(new ScipamatoPdfResourceHandler(config), baseName, paperSummaries);
     }
 
@@ -99,21 +100,22 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      * {@link PaperSlim}s that are used in the dataProvider.
      *
      * @param dataProvider
-     *            the {@link AbstractPaperSlimProvider} - must not be null
+     *     the {@link AbstractPaperSlimProvider} - must not be null
      * @param reportHeaderFields
-     *            collection of localized labels for the report fields
+     *     collection of localized labels for the report fields
      * @param config
-     *            {@link ClusterablePdfExporterConfiguration}
+     *     {@link ClusterablePdfExporterConfiguration}
      */
     public PaperSummaryDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
-            final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
+        final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), BASE_NAME_MULTIPLE, dataProvider);
         this.reportHeaderFields = reportHeaderFields;
     }
 
     @Override
     protected JasperReport getReport() {
-        return PaperSummaryReportResourceReference.get()
+        return PaperSummaryReportResourceReference
+            .get()
             .getReport();
     }
 

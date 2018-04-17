@@ -4,14 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Collections;
 import java.util.Optional;
 
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.markup.html.link.ResourceLink;
@@ -38,7 +36,6 @@ import ch.difty.scipamato.core.web.common.PanelTest;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.paper.PaperSlimBySearchOrderProvider;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 public class ResultPanelTest extends PanelTest<ResultPanel> {
 
@@ -62,11 +59,11 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     @Override
     protected void setUpHook() {
         when(paperSlimServiceMock.countBySearchOrder(searchOrderMock)).thenReturn(1);
-        when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class)))
-            .thenReturn(Collections.singletonList(paperSlim));
+        when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class))).thenReturn(
+            Collections.singletonList(paperSlim));
 
-        when(paperServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class), eq(LC)))
-            .thenReturn(Collections.singletonList(paperMock));
+        when(paperServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class),
+            eq(LC))).thenReturn(Collections.singletonList(paperMock));
     }
 
     @After
@@ -85,11 +82,13 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
             @Override
             protected GenericWebPage<Paper> getResponsePage(IModel<PaperSlim> m, String languageCode,
-                    PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
-                return new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject()
-                    .getNumber(), languageCode)
+                PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
+                return new PaperEntryPage(Model.of(paperService
+                    .findByNumber(m
+                        .getObject()
+                        .getNumber(), languageCode)
                     .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
-                        dataProvider.isShowExcluded());
+                    dataProvider.isShowExcluded());
             }
         };
     }
@@ -162,7 +161,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
      * Note, we're partially also testing the PaperSummaryDataSource and even the
      * Provider here in order to make sure the functionality is triggered. Not sure
      * how to verify the action otherwise.
-     * 
+     * <p>
      * Also, this is not really asserting anything, just verifying the methods have
      * been called. Bit of a workaround
      */
@@ -230,7 +229,8 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     private void assertExcludeIcon(String iconClass, String titleValue) {
         getTester().startComponentInPage(makePanel());
 
-        String responseTxt = getTester().getLastResponse()
+        String responseTxt = getTester()
+            .getLastResponse()
             .getDocument();
 
         TagTester iconTagTester = TagTester.createTagByAttribute(responseTxt, "class", iconClass);

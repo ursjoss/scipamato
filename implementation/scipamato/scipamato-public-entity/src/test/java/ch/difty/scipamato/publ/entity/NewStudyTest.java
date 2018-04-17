@@ -4,10 +4,9 @@ import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFi
 import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
-
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import org.junit.Test;
 
 public class NewStudyTest extends PublicEntityTest<NewStudy> {
 
@@ -32,7 +31,8 @@ public class NewStudyTest extends PublicEntityTest<NewStudy> {
 
     @Override
     protected void verifyEquals() {
-        EqualsVerifier.forClass(NewStudy.class)
+        EqualsVerifier
+            .forClass(NewStudy.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(CREATED.getName(), MODIFIED.getName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
@@ -41,7 +41,8 @@ public class NewStudyTest extends PublicEntityTest<NewStudy> {
 
     @Test
     public void assertEnumFields() {
-        assertThat(NewStudy.NewStudyFields.values()).extracting("name")
+        assertThat(NewStudy.NewStudyFields.values())
+            .extracting("name")
             .containsExactly("sort", "number", "reference", "headline", "description");
     }
 

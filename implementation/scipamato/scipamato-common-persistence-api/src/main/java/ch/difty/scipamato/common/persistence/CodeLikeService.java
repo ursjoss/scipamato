@@ -12,9 +12,9 @@ public interface CodeLikeService<T extends CodeLike> {
      * localized in language with the provided languageCode
      *
      * @param codeClassId
-     *          the id of the code class to find the codes for.
+     *     the id of the code class to find the codes for.
      * @param languageCode
-     *          the language code, e.g. 'en' or 'de'.
+     *     the language code, e.g. 'en' or 'de'.
      * @return a list of codes
      */
     List<T> findCodesOfClass(CodeClassId codeClassId, String languageCode);

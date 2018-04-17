@@ -1,11 +1,6 @@
 package ch.difty.scipamato.core.entity.search;
 
-import static ch.difty.scipamato.core.entity.search.SearchTermType.AUDIT;
-import static ch.difty.scipamato.core.entity.search.SearchTermType.BOOLEAN;
-import static ch.difty.scipamato.core.entity.search.SearchTermType.INTEGER;
-import static ch.difty.scipamato.core.entity.search.SearchTermType.STRING;
-import static ch.difty.scipamato.core.entity.search.SearchTermType.UNSUPPORTED;
-import static ch.difty.scipamato.core.entity.search.SearchTermType.values;
+import static ch.difty.scipamato.core.entity.search.SearchTermType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -41,21 +36,24 @@ public class SearchTermTypeTest {
             SearchTermType.byId(-2);
             fail("should have thrown");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("id -2 is not supported");
         }
         try {
             SearchTermType.byId(-1);
             fail("should have thrown");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("id -1 is not supported");
         }
         try {
             SearchTermType.byId(4);
             fail("should have thrown");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("id 4 is not supported");
         }
     }

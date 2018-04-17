@@ -1,13 +1,12 @@
 package ch.difty.scipamato.core.web.paper.jasper;
 
-import org.wicketstuff.jasperreports.handlers.PdfResourceHandler;
-
 import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporterContext;
 import net.sf.jasperreports.export.OutputStreamExporterOutput;
 import net.sf.jasperreports.export.PdfExporterConfiguration;
 import net.sf.jasperreports.export.PdfReportConfiguration;
+import org.wicketstuff.jasperreports.handlers.PdfResourceHandler;
 
 /**
  * Export configuration aware resource handler for PDF documents

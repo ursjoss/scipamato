@@ -17,10 +17,10 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.PaperBackedSearchOr
  */
 @Repository
 public class JooqPaperBySearchOrderRepo extends JooqBySearchOrderRepo<Paper, PaperRecordMapper>
-        implements PaperBackedSearchOrderRepository {
+    implements PaperBackedSearchOrderRepository {
 
     public JooqPaperBySearchOrderRepo(@Qualifier("dslContext") DSLContext dsl, PaperRecordMapper mapper,
-            JooqSortMapper<PaperRecord, Paper, ch.difty.scipamato.core.db.tables.Paper> sortMapper) {
+        JooqSortMapper<PaperRecord, Paper, ch.difty.scipamato.core.db.tables.Paper> sortMapper) {
         super(dsl, mapper, sortMapper);
     }
 

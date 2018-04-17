@@ -19,10 +19,11 @@ public class PubmedImportService implements PubmedImporter {
     private final long                 minimumNumber;
 
     public PubmedImportService(final PubmedArticleService pubmedArticleService, final PaperService paperService,
-            final ApplicationCoreProperties applicationProperties) {
+        final ApplicationCoreProperties applicationProperties) {
         this.pubmedArticleService = AssertAs.notNull(pubmedArticleService, "pubmedArticleService");
         this.paperService = AssertAs.notNull(paperService, "paperService");
-        this.minimumNumber = AssertAs.notNull(applicationProperties, "applicationProperties")
+        this.minimumNumber = AssertAs
+            .notNull(applicationProperties, "applicationProperties")
             .getMinimumPaperNumberToBeRecycled();
     }
 

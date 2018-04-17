@@ -22,7 +22,7 @@ import ch.difty.scipamato.core.persistence.ReadOnlyRepository;
 import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSearchOrderRepository;
 
 public class JooqPaperSlimRepoTest extends
-        JooqReadOnlyRepoTest<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter> {
+    JooqReadOnlyRepoTest<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter> {
 
     private static final Long SAMPLE_ID = 3L;
 
@@ -59,7 +59,7 @@ public class JooqPaperSlimRepoTest extends
     protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> getRepo() {
         if (repo == null) {
             repo = new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-                    searchOrderRepositoryMock, getApplicationProperties());
+                searchOrderRepositoryMock, getApplicationProperties());
         }
         return repo;
     }
@@ -67,7 +67,7 @@ public class JooqPaperSlimRepoTest extends
     @Override
     protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> makeRepoFindingEntityById(PaperSlim entity) {
         return new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-                searchOrderRepositoryMock, getApplicationProperties()) {
+            searchOrderRepositoryMock, getApplicationProperties()) {
             @Override
             public PaperSlim findById(Long id) {
                 return entity;

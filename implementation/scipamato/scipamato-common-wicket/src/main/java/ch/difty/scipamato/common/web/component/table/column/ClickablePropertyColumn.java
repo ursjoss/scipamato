@@ -8,13 +8,12 @@ import ch.difty.scipamato.common.web.component.SerializableConsumer;
  * ClickablePropertyColumn, a lambdified version of the one provided in
  * {@code Apache Wicket Cookbook} - thanks to Igor Vaynberg.
  *
- * @author u.joss
- *
  * @param <T>
- *            the type of the object that will be rendered in this column's
- *            cells
+ *     the type of the object that will be rendered in this column's
+ *     cells
  * @param <S>
- *            the type of the sort property
+ *     the type of the sort property
+ * @author u.joss
  */
 public class ClickablePropertyColumn<T, S> extends AbstractClickablePropertyColumn<T, S> {
     private static final long serialVersionUID = 1L;
@@ -22,12 +21,12 @@ public class ClickablePropertyColumn<T, S> extends AbstractClickablePropertyColu
     private final SerializableConsumer<IModel<T>> consumer;
 
     public ClickablePropertyColumn(final IModel<String> displayModel, final String property,
-            final SerializableConsumer<IModel<T>> consumer) {
+        final SerializableConsumer<IModel<T>> consumer) {
         this(displayModel, null, property, consumer);
     }
 
     public ClickablePropertyColumn(final IModel<String> displayModel, final S sort, final String property,
-            final SerializableConsumer<IModel<T>> consumer) {
+        final SerializableConsumer<IModel<T>> consumer) {
         super(displayModel, sort, property);
         this.consumer = consumer;
     }

@@ -18,12 +18,9 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.jooq.Condition;
-import org.jooq.DSLContext;
-import org.jooq.InsertValuesStep4;
-import org.jooq.InsertValuesStep6;
-import org.jooq.TableField;
+import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,18 +37,10 @@ import ch.difty.scipamato.core.db.tables.records.SearchConditionRecord;
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
 import ch.difty.scipamato.core.db.tables.records.SearchTermRecord;
 import ch.difty.scipamato.core.entity.Code;
-import ch.difty.scipamato.core.entity.search.AuditSearchTerm;
-import ch.difty.scipamato.core.entity.search.BooleanSearchTerm;
-import ch.difty.scipamato.core.entity.search.IntegerSearchTerm;
-import ch.difty.scipamato.core.entity.search.SearchCondition;
-import ch.difty.scipamato.core.entity.search.SearchOrder;
-import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
-import ch.difty.scipamato.core.entity.search.SearchTerm;
-import ch.difty.scipamato.core.entity.search.StringSearchTerm;
+import ch.difty.scipamato.core.entity.search.*;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.core.persistence.JooqEntityRepo;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * The repository to manage {@link SearchOrder}s - including the nested list of
@@ -62,17 +51,17 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @Slf4j
 public class JooqSearchOrderRepo extends
-        JooqEntityRepo<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.core.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter>
-        implements SearchOrderRepository {
+    JooqEntityRepo<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.core.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter>
+    implements SearchOrderRepository {
 
     public JooqSearchOrderRepo(@Qualifier("dslContext") DSLContext dsl, SearchOrderRecordMapper mapper,
-            JooqSortMapper<SearchOrderRecord, SearchOrder, ch.difty.scipamato.core.db.tables.SearchOrder> sortMapper,
-            GenericFilterConditionMapper<SearchOrderFilter> filterConditionMapper, DateTimeService dateTimeService,
-            InsertSetStepSetter<SearchOrderRecord, SearchOrder> insertSetStepSetter,
-            UpdateSetStepSetter<SearchOrderRecord, SearchOrder> updateSetStepSetter,
-            ApplicationProperties applicationProperties) {
+        JooqSortMapper<SearchOrderRecord, SearchOrder, ch.difty.scipamato.core.db.tables.SearchOrder> sortMapper,
+        GenericFilterConditionMapper<SearchOrderFilter> filterConditionMapper, DateTimeService dateTimeService,
+        InsertSetStepSetter<SearchOrderRecord, SearchOrder> insertSetStepSetter,
+        UpdateSetStepSetter<SearchOrderRecord, SearchOrder> updateSetStepSetter,
+        ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter,
-                applicationProperties);
+            applicationProperties);
     }
 
     @Override
@@ -130,7 +119,8 @@ public class JooqSearchOrderRepo extends
 
     private Map<Long, List<SearchTerm>> mapSearchTermsToSearchConditions(final SearchOrder searchOrder) {
         final List<SearchTerm> searchTerms = fetchSearchTermsForSearchOrderWithId(searchOrder.getId());
-        return searchTerms.stream()
+        return searchTerms
+            .stream()
             .collect(Collectors.groupingBy(SearchTerm::getSearchConditionId));
     }
 
@@ -165,7 +155,8 @@ public class JooqSearchOrderRepo extends
     private Map<Long, List<SearchTerm>> mapSearchTermsToSearchConditions(final SearchCondition searchCondition) {
         final List<SearchTerm> searchTerms = fetchSearchTermsForSearchConditionWithId(
             searchCondition.getSearchConditionId());
-        return searchTerms.stream()
+        return searchTerms
+            .stream()
             .collect(Collectors.groupingBy(SearchTerm::getSearchConditionId));
     }
 
@@ -191,7 +182,8 @@ public class JooqSearchOrderRepo extends
     }
 
     protected SearchCondition fetchSearchConditionWithId(final Long scId) {
-        return getDsl().selectFrom(SEARCH_CONDITION)
+        return getDsl()
+            .selectFrom(SEARCH_CONDITION)
             .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(scId))
             .fetchOneInto(SearchCondition.class);
     }
@@ -213,7 +205,8 @@ public class JooqSearchOrderRepo extends
     }
 
     public List<Long> findConditionIdsWithSearchTerms(final Long searchOrderId) {
-        return getDsl().select(SEARCH_TERM.SEARCH_CONDITION_ID)
+        return getDsl()
+            .select(SEARCH_TERM.SEARCH_CONDITION_ID)
             .from(SEARCH_TERM)
             .innerJoin(SEARCH_CONDITION)
             .on(SEARCH_TERM.SEARCH_CONDITION_ID.eq(SEARCH_CONDITION.SEARCH_CONDITION_ID))
@@ -222,8 +215,9 @@ public class JooqSearchOrderRepo extends
     }
 
     protected List<SearchCondition> findTermLessConditions(final Long searchOrderId,
-            final List<Long> conditionIdsWithSearchTerms) {
-        return getDsl().selectFrom(SEARCH_CONDITION)
+        final List<Long> conditionIdsWithSearchTerms) {
+        return getDsl()
+            .selectFrom(SEARCH_CONDITION)
             .where(SEARCH_CONDITION.SEARCH_ORDER_ID.eq(searchOrderId))
             .and(SEARCH_CONDITION.SEARCH_CONDITION_ID.notIn(conditionIdsWithSearchTerms))
             .fetchInto(SearchCondition.class);
@@ -235,7 +229,8 @@ public class JooqSearchOrderRepo extends
     }
 
     protected List<Long> fetchExcludedPaperIdsForSearchOrderWithId(final long searchOrderId) {
-        return getDsl().select(SEARCH_EXCLUSION.PAPER_ID)
+        return getDsl()
+            .select(SEARCH_EXCLUSION.PAPER_ID)
             .from(SEARCH_EXCLUSION)
             .where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.equal(searchOrderId))
             .fetch(r -> (Long) r.get(0));
@@ -271,26 +266,34 @@ public class JooqSearchOrderRepo extends
 
     private void updateSearchTerm(final SearchTerm st, final Long searchTermId, final Long searchConditionId) {
         final Condition idMatches = SEARCH_TERM.ID.eq(searchTermId);
-        getDsl().update(SEARCH_TERM)
+        getDsl()
+            .update(SEARCH_TERM)
             .set(row(SEARCH_TERM.SEARCH_CONDITION_ID, SEARCH_TERM.SEARCH_TERM_TYPE, SEARCH_TERM.FIELD_NAME,
                 SEARCH_TERM.RAW_VALUE, SEARCH_TERM.LAST_MODIFIED, SEARCH_TERM.LAST_MODIFIED_BY, SEARCH_TERM.VERSION),
-                row(searchConditionId, st.getSearchTermType()
-                    .getId(), st.getFieldName(), st.getRawSearchTerm(), getTs(), getUserId(),
-                    getDsl().select(SEARCH_TERM.VERSION)
-                        .from(SEARCH_TERM)
-                        .where(idMatches)
-                        .fetchOneInto(Integer.class) + 1))
+                row(searchConditionId, st
+                    .getSearchTermType()
+                    .getId(), st.getFieldName(), st.getRawSearchTerm(), getTs(), getUserId(), getDsl()
+                                                                                                  .select(
+                                                                                                      SEARCH_TERM.VERSION)
+                                                                                                  .from(SEARCH_TERM)
+                                                                                                  .where(idMatches)
+                                                                                                  .fetchOneInto(
+                                                                                                      Integer.class)
+                                                                                              + 1))
             .where(idMatches)
             .execute();
     }
 
     private void deleteObsoleteConditionsFrom(SearchOrder searchOrder) {
-        final List<Long> conditionIds = searchOrder.getSearchConditions()
+        final List<Long> conditionIds = searchOrder
+            .getSearchConditions()
             .stream()
             .map(SearchCondition::getSearchConditionId)
             .collect(Collectors.toList());
-        getDsl().deleteFrom(SEARCH_CONDITION)
-            .where(SEARCH_CONDITION.SEARCH_ORDER_ID.equal(searchOrder.getId())
+        getDsl()
+            .deleteFrom(SEARCH_CONDITION)
+            .where(SEARCH_CONDITION.SEARCH_ORDER_ID
+                .equal(searchOrder.getId())
                 .and(SEARCH_CONDITION.SEARCH_CONDITION_ID.notIn(conditionIds)))
             .execute();
         for (final SearchCondition sc : searchOrder.getSearchConditions()) {
@@ -305,7 +308,8 @@ public class JooqSearchOrderRepo extends
 
     private void storeExistingExclusionsOf(SearchOrder searchOrder) {
         final long searchOrderId = searchOrder.getId();
-        final List<Long> saved = getDsl().select(SEARCH_EXCLUSION.PAPER_ID)
+        final List<Long> saved = getDsl()
+            .select(SEARCH_EXCLUSION.PAPER_ID)
             .from(SEARCH_EXCLUSION)
             .where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrderId))
             .and(SEARCH_EXCLUSION.PAPER_ID.in(searchOrder.getExcludedPaperIds()))
@@ -323,7 +327,8 @@ public class JooqSearchOrderRepo extends
     }
 
     private void deleteObsoleteExclusionsOf(SearchOrder searchOrder) {
-        getDsl().deleteFrom(SEARCH_EXCLUSION)
+        getDsl()
+            .deleteFrom(SEARCH_EXCLUSION)
             .where(SEARCH_EXCLUSION.SEARCH_ORDER_ID.eq(searchOrder.getId()))
             .and(SEARCH_EXCLUSION.PAPER_ID.notIn(searchOrder.getExcludedPaperIds()))
             .execute();
@@ -331,7 +336,7 @@ public class JooqSearchOrderRepo extends
 
     @Override
     public SearchCondition addSearchCondition(SearchCondition searchCondition, long searchOrderId,
-            final String languageCode) {
+        final String languageCode) {
         AssertAs.notNull(languageCode, "languageCode");
         final Optional<SearchCondition> optionalPersisted = findEquivalentPersisted(searchCondition, searchOrderId,
             languageCode);
@@ -348,7 +353,8 @@ public class JooqSearchOrderRepo extends
                 .fetchOne();
             persistSearchTerms(searchCondition, searchConditionRecord.getSearchConditionId());
             persistCodes(searchCondition, searchConditionRecord.getSearchConditionId());
-            final SearchCondition persistedSearchCondition = getDsl().selectFrom(SEARCH_CONDITION)
+            final SearchCondition persistedSearchCondition = getDsl()
+                .selectFrom(SEARCH_CONDITION)
                 .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchConditionRecord.getSearchConditionId()))
                 .fetchOneInto(SearchCondition.class);
             fillSearchTermsInto(persistedSearchCondition, mapSearchTermsToSearchConditions(persistedSearchCondition));
@@ -363,15 +369,16 @@ public class JooqSearchOrderRepo extends
      * covering the same searchConditions.
      *
      * @param searchCondition
-     *            the search condition we're trying to find the semantically
-     *            identical persisted version for.
+     *     the search condition we're trying to find the semantically
+     *     identical persisted version for.
      * @param searchOrderId
-     *            identifying the search order
+     *     identifying the search order
      * @return optional of the persisted version (if found - empty otherwise)
      */
     private Optional<SearchCondition> findEquivalentPersisted(final SearchCondition searchCondition,
-            final long searchOrderId, final String languageCode) {
-        final List<SearchCondition> persisted = getDsl().selectFrom(SEARCH_CONDITION)
+        final long searchOrderId, final String languageCode) {
+        final List<SearchCondition> persisted = getDsl()
+            .selectFrom(SEARCH_CONDITION)
             .where(SEARCH_CONDITION.SEARCH_ORDER_ID.eq(searchOrderId))
             .fetchInto(SearchCondition.class);
         for (final SearchCondition sc : persisted) {
@@ -400,14 +407,16 @@ public class JooqSearchOrderRepo extends
     }
 
     protected List<Code> fetchCodesForSearchConditionWithId(final SearchCondition searchCondition,
-            String languageCode) {
-        return getDsl().select(CODE.CODE_.as("C_ID"), DSL.coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
-            .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"), CODE_CLASS.ID.as("CC_ID"),
-            DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
-                .as("CC_NAME"),
-            DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
-                .as("CC_DESCRIPTION"),
-            CODE.SORT)
+        String languageCode) {
+        return getDsl()
+            .select(CODE.CODE_.as("C_ID"), DSL
+                    .coalesce(CODE_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .as("C_NAME"), CODE_TR.COMMENT.as("C_COMMENT"), CODE.INTERNAL.as("C_INTERNAL"),
+                CODE_CLASS.ID.as("CC_ID"), DSL
+                    .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
+                    .as("CC_NAME"), DSL
+                    .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
+                    .as("CC_DESCRIPTION"), CODE.SORT)
             .from(SEARCH_CONDITION_CODE)
             .join(SEARCH_CONDITION)
             .on(SEARCH_CONDITION_CODE.SEARCH_CONDITION_ID.equal(SEARCH_CONDITION.SEARCH_CONDITION_ID))
@@ -416,23 +425,26 @@ public class JooqSearchOrderRepo extends
             .join(CODE_CLASS)
             .on(CODE.CODE_CLASS_ID.equal(CODE_CLASS.ID))
             .leftOuterJoin(CODE_TR)
-            .on(CODE.CODE_.equal(CODE_TR.CODE)
+            .on(CODE.CODE_
+                .equal(CODE_TR.CODE)
                 .and(CODE_TR.LANG_CODE.equal(languageCode)))
             .leftOuterJoin(CODE_CLASS_TR)
-            .on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID)
+            .on(CODE_CLASS.ID
+                .equal(CODE_CLASS_TR.CODE_CLASS_ID)
                 .and(CODE_CLASS_TR.LANG_CODE.equal(languageCode)))
             .where(SEARCH_CONDITION_CODE.SEARCH_CONDITION_ID.equal(searchCondition.getSearchConditionId()))
             .fetchInto(Code.class);
     }
 
     private void saveOrUpdateValidTerms(SearchCondition searchCondition, Long searchConditionId) {
-        InsertValuesStep6<SearchTermRecord, Long, Integer, String, String, Integer, Integer> insertStep = getDsl()
-            .insertInto(SEARCH_TERM, SEARCH_TERM.SEARCH_CONDITION_ID, SEARCH_TERM.SEARCH_TERM_TYPE,
-                SEARCH_TERM.FIELD_NAME, SEARCH_TERM.RAW_VALUE, SEARCH_TERM.CREATED_BY, SEARCH_TERM.LAST_MODIFIED_BY);
+        InsertValuesStep6<SearchTermRecord, Long, Integer, String, String, Integer, Integer> insertStep = getDsl().insertInto(
+            SEARCH_TERM, SEARCH_TERM.SEARCH_CONDITION_ID, SEARCH_TERM.SEARCH_TERM_TYPE, SEARCH_TERM.FIELD_NAME,
+            SEARCH_TERM.RAW_VALUE, SEARCH_TERM.CREATED_BY, SEARCH_TERM.LAST_MODIFIED_BY);
         final Integer userId = getUserId();
         boolean hasPendingInsert = false;
         for (final BooleanSearchTerm bst : searchCondition.getBooleanSearchTerms()) {
-            final int typeId = bst.getSearchTermType()
+            final int typeId = bst
+                .getSearchTermType()
                 .getId();
             final String fieldName = bst.getFieldName();
             final BooleanSearchTerm pbst = (BooleanSearchTerm) getPersistedTerm(searchConditionId, fieldName,
@@ -446,7 +458,8 @@ public class JooqSearchOrderRepo extends
             }
         }
         for (final IntegerSearchTerm ist : searchCondition.getIntegerSearchTerms()) {
-            final int typeId = ist.getSearchTermType()
+            final int typeId = ist
+                .getSearchTermType()
                 .getId();
             final String fieldName = ist.getFieldName();
             final IntegerSearchTerm pist = (IntegerSearchTerm) getPersistedTerm(searchConditionId, fieldName,
@@ -460,7 +473,8 @@ public class JooqSearchOrderRepo extends
             }
         }
         for (final StringSearchTerm sst : searchCondition.getStringSearchTerms()) {
-            final int typeId = sst.getSearchTermType()
+            final int typeId = sst
+                .getSearchTermType()
                 .getId();
             final String fieldName = sst.getFieldName();
             final StringSearchTerm psst = (StringSearchTerm) getPersistedTerm(searchConditionId, fieldName,
@@ -474,7 +488,8 @@ public class JooqSearchOrderRepo extends
             }
         }
         for (final AuditSearchTerm ast : searchCondition.getAuditSearchTerms()) {
-            final int typeId = ast.getSearchTermType()
+            final int typeId = ast
+                .getSearchTermType()
                 .getId();
             final String fieldName = ast.getFieldName();
             final AuditSearchTerm past = (AuditSearchTerm) getPersistedTerm(searchConditionId, fieldName,
@@ -492,7 +507,7 @@ public class JooqSearchOrderRepo extends
     }
 
     private SearchTerm getPersistedTerm(final Long searchConditionId, final String fieldName,
-            final Class<? extends SearchTerm> termClass, final int typeId) {
+        final Class<? extends SearchTerm> termClass, final int typeId) {
         return getDsl()
             .select(SEARCH_TERM.ID, SEARCH_TERM.SEARCH_CONDITION_ID, SEARCH_TERM.FIELD_NAME, SEARCH_TERM.RAW_VALUE)
             .from(SEARCH_TERM)
@@ -503,9 +518,11 @@ public class JooqSearchOrderRepo extends
     }
 
     private void removeObsoleteSearchTerms(SearchCondition searchCondition, Long searchConditionId) {
-        if (!searchCondition.getRemovedKeys()
+        if (!searchCondition
+            .getRemovedKeys()
             .isEmpty()) {
-            getDsl().deleteFrom(SEARCH_TERM)
+            getDsl()
+                .deleteFrom(SEARCH_TERM)
                 .where(SEARCH_TERM.SEARCH_CONDITION_ID.eq(searchConditionId))
                 .and(SEARCH_TERM.FIELD_NAME.in(searchCondition.getRemovedKeys()))
                 .execute();
@@ -527,36 +544,41 @@ public class JooqSearchOrderRepo extends
             for (final Code c : searchCondition.getCodes()) {
                 step = step.values(searchConditionId, c.getCode(), userId, userId);
             }
-            step.onDuplicateKeyIgnore()
+            step
+                .onDuplicateKeyIgnore()
                 .execute();
         }
     }
 
     private void removeObsoleteCodesFrom(SearchCondition searchCondition, Long searchConditionId) {
-        final List<String> codes = searchCondition.getCodes()
+        final List<String> codes = searchCondition
+            .getCodes()
             .stream()
             .map(Code::getCode)
             .collect(Collectors.toList());
-        getDsl().deleteFrom(SEARCH_CONDITION_CODE)
-            .where(SEARCH_CONDITION_CODE.SEARCH_CONDITION_ID.equal(searchConditionId)
+        getDsl()
+            .deleteFrom(SEARCH_CONDITION_CODE)
+            .where(SEARCH_CONDITION_CODE.SEARCH_CONDITION_ID
+                .equal(searchConditionId)
                 .and(SEARCH_CONDITION_CODE.CODE.notIn(codes)))
             .execute();
     }
 
     @Override
     public SearchCondition updateSearchCondition(SearchCondition searchCondition, long searchOrderId,
-            final String languageCode) {
+        final String languageCode) {
         AssertAs.notNull(languageCode, "languageCode");
         final Condition idMatches = SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchCondition.getSearchConditionId());
-        getDsl().update(SEARCH_CONDITION)
-            .set(
-                row(SEARCH_CONDITION.SEARCH_ORDER_ID, SEARCH_CONDITION.CREATED_TERM, SEARCH_CONDITION.MODIFIED_TERM,
-                    SEARCH_CONDITION.LAST_MODIFIED, SEARCH_CONDITION.LAST_MODIFIED_BY, SEARCH_CONDITION.VERSION),
+        getDsl()
+            .update(SEARCH_CONDITION)
+            .set(row(SEARCH_CONDITION.SEARCH_ORDER_ID, SEARCH_CONDITION.CREATED_TERM, SEARCH_CONDITION.MODIFIED_TERM,
+                SEARCH_CONDITION.LAST_MODIFIED, SEARCH_CONDITION.LAST_MODIFIED_BY, SEARCH_CONDITION.VERSION),
                 row(searchOrderId, searchCondition.getCreatedDisplayValue(), searchCondition.getModifiedDisplayValue(),
-                    getTs(), getUserId(), getDsl().select(SEARCH_CONDITION.VERSION)
-                        .from(SEARCH_CONDITION)
-                        .where(idMatches)
-                        .fetchOneInto(Integer.class) + 1))
+                    getTs(), getUserId(), getDsl()
+                                              .select(SEARCH_CONDITION.VERSION)
+                                              .from(SEARCH_CONDITION)
+                                              .where(idMatches)
+                                              .fetchOneInto(Integer.class) + 1))
             .where(idMatches)
             .execute();
         persistSearchTerms(searchCondition, searchCondition.getSearchConditionId());
@@ -569,7 +591,8 @@ public class JooqSearchOrderRepo extends
 
     @Override
     public void deleteSearchConditionWithId(long searchConditionId) {
-        getDsl().deleteFrom(SEARCH_CONDITION)
+        getDsl()
+            .deleteFrom(SEARCH_CONDITION)
             .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchConditionId))
             .execute();
     }

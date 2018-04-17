@@ -16,7 +16,7 @@ public interface AuthorParserFactory {
      * if the {@code authorString} is null or undefined.
      *
      * @param authorString
-     *            - valid, invalid or null
+     *     - valid, invalid or null
      * @return {@link AuthorParser}
      */
     AuthorParser createParser(String authorString);

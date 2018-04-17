@@ -1,18 +1,9 @@
 package ch.difty.scipamato.core.persistence.user;
 
 import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
-import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.EMAIL;
-import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.ENABLED;
-import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.FIRST_NAME;
-import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.ID;
-import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.LAST_NAME;
-import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.PASSWORD;
-import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.USER_NAME;
+import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.*;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 import org.mockito.Mock;
@@ -66,8 +57,8 @@ public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<Scipama
     @Override
     protected void setStepFixtureAudit() {
         when(getMoreStep().set(SCIPAMATO_USER.CREATED_BY, UserRecordMapperTest.CREATED_BY)).thenReturn(getMoreStep());
-        when(getMoreStep().set(SCIPAMATO_USER.LAST_MODIFIED_BY, UserRecordMapperTest.LAST_MOD_BY))
-            .thenReturn(getMoreStep());
+        when(getMoreStep().set(SCIPAMATO_USER.LAST_MODIFIED_BY, UserRecordMapperTest.LAST_MOD_BY)).thenReturn(
+            getMoreStep());
     }
 
     @Override

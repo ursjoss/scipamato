@@ -37,7 +37,8 @@ public class PubmedImportServiceIntegrationTest {
     @Test
     public void canReadXmlFile_whichHas3Studies() throws IOException {
         final String xml = TestUtils.readFileAsString(XML);
-        assertThat(xml).startsWith("<?xml version")
+        assertThat(xml)
+            .startsWith("<?xml version")
             .endsWith("</PubmedArticleSet>\n");
         assertThat(xml).contains("<PMID Version=\"1\">" + PMID1 + "</PMID>");
         assertThat(xml).contains("<PMID Version=\"1\">" + PMID2 + "</PMID>");
@@ -53,14 +54,16 @@ public class PubmedImportServiceIntegrationTest {
         assertThat(result.getErrorMessages()).isEmpty();
         assertThat(result.getWarnMessages()).isEmpty();
         assertThat(result.getInfoMessages()).hasSize(3);
-        final List<String> messagesWithoutId = result.getInfoMessages()
+        final List<String> messagesWithoutId = result
+            .getInfoMessages()
             .stream()
             .map((m) -> m.substring(0, m.indexOf("(") - 1))
             .collect(Collectors.toList());
         assertThat(messagesWithoutId).contains("PMID " + PMID1, "PMID " + PMID2, "PMID " + PMID3);
 
         // Delete created records
-        List<Long> ids = result.getInfoMessages()
+        List<Long> ids = result
+            .getInfoMessages()
             .stream()
             .map((m) -> m.substring(m.indexOf("(") + 4, m.length() - 1))
             .map(Long::valueOf)

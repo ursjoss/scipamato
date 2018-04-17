@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * {@link ItemNavigator} managing long items.
- *
+ * <p>
  * {@inheritDoc}
  *
  * @author u.joss

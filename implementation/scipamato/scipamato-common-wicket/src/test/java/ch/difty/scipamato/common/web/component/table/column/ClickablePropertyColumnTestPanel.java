@@ -1,6 +1,9 @@
 package ch.difty.scipamato.common.web.component.table.column;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
@@ -35,7 +38,7 @@ class ClickablePropertyColumnTestPanel extends Panel {
     }
 
     private IColumn<TestRecord, String> makeClickableColumn(String id,
-            SerializableConsumer<IModel<TestRecord>> consumer) {
+        SerializableConsumer<IModel<TestRecord>> consumer) {
         return new ClickablePropertyColumn<TestRecord, String>(Model.of(id), "name", consumer) {
             private static final long serialVersionUID = 1L;
         };
@@ -47,7 +50,8 @@ class ClickablePropertyColumnTestPanel extends Panel {
 
         @Override
         public Iterator<TestRecord> iterator(long first, long count) {
-            return Collections.singletonList(new TestRecord(1, "foo"))
+            return Collections
+                .singletonList(new TestRecord(1, "foo"))
                 .iterator();
         }
 

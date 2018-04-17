@@ -10,7 +10,7 @@ import ch.difty.scipamato.core.persistence.EntityRecordMapper;
 
 /**
  * Mapper mapping {@link PaperRecord}s into entity {@link Paper}.
- * <p>
+ *
  *
  * <b>Note:</b> the mapper leaves the {@link Code}s empty.
  *
@@ -27,7 +27,7 @@ public class PaperRecordMapper extends EntityRecordMapper<PaperRecord, Paper> {
     @Override
     protected AuditFields getAuditFieldsOf(PaperRecord r) {
         return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(),
-                r.getVersion());
+            r.getVersion());
     }
 
     @Override

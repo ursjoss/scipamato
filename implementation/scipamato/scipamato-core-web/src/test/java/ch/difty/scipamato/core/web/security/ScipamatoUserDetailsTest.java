@@ -9,13 +9,13 @@ import static org.assertj.core.api.Assertions.extractProperty;
 
 import java.util.Arrays;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 
 import ch.difty.scipamato.core.auth.Role;
 import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails;
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
 
 public class ScipamatoUserDetailsTest {
 
@@ -47,7 +47,8 @@ public class ScipamatoUserDetailsTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(User.class)
+        EqualsVerifier
+            .forClass(User.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(CREATED.getName(), CREATOR_ID.getName(), MODIFIED.getName(), MODIFIER_ID.getName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)

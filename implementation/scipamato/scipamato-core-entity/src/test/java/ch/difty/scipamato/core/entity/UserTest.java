@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.Before;
 import org.junit.Test;
 
 import ch.difty.scipamato.core.auth.Role;
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
 
 public class UserTest {
 
@@ -78,7 +78,8 @@ public class UserTest {
     public void constructingByUser2() {
         final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
         assertThat(u.isEnabled()).isFalse();
-        assertThat(u.getRoles()).isNotNull()
+        assertThat(u.getRoles())
+            .isNotNull()
             .isEmpty();
 
         u.setEnabled(true);
@@ -151,7 +152,8 @@ public class UserTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(User.class)
+        EqualsVerifier
+            .forClass(User.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(CREATED.getName(), CREATOR_ID.getName(), MODIFIED.getName(), MODIFIER_ID.getName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
@@ -166,7 +168,8 @@ public class UserTest {
 
     @Test
     public void assertEnumFields() {
-        assertThat(User.UserFields.values()).extracting("name")
+        assertThat(User.UserFields.values())
+            .extracting("name")
             .containsExactly("userName", "firstName", "lastName", "email", "password", "enabled", "roles");
     }
 

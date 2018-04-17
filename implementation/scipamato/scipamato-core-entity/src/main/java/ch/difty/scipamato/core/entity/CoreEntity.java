@@ -3,11 +3,12 @@ package ch.difty.scipamato.core.entity;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import ch.difty.scipamato.common.entity.FieldEnumType;
-import ch.difty.scipamato.common.entity.ScipamatoEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+
+import ch.difty.scipamato.common.entity.FieldEnumType;
+import ch.difty.scipamato.common.entity.ScipamatoEntity;
 
 @Getter
 @Setter
@@ -20,10 +21,10 @@ public abstract class CoreEntity extends ScipamatoEntity {
      * Regex extending the classical \w with non-ASCII characters. To be used within
      * a character class,
      * <p>
-     *
+     * <p>
      * e.g. {@literal [\\w\\u00C0-\\u024f]}
      * <p>
-     *
+     * <p>
      * Thanks to hqx5 for his answer to the following <a href=
      * "http://stackoverflow.com/questions/4043307/why-this-regex-is-not-working-for-german-words">stackoverflow
      * question </a>
@@ -106,7 +107,8 @@ public abstract class CoreEntity extends ScipamatoEntity {
                 sb.append(" (");
                 close = ")";
             }
-            sb.append(ldt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+            sb
+                .append(ldt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .append(close);
         }
         return sb.toString();

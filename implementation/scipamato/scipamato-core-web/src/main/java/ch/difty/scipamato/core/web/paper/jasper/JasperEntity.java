@@ -17,10 +17,10 @@ public abstract class JasperEntity implements Serializable {
      * null nor blank.
      *
      * @param label
-     *            the label to display (if it is non-null)
+     *     the label to display (if it is non-null)
      * @param value
-     *            the value to test against if it is null or blank to not show the
-     *            label
+     *     the value to test against if it is null or blank to not show the
+     *     label
      * @return label, never null
      */
     String na(final String label, String value) {
@@ -35,13 +35,13 @@ public abstract class JasperEntity implements Serializable {
      * blank.
      *
      * @param label
-     *            the label to display
+     *     the label to display
      * @param value
-     *            the value to test against if it is null or blank to not show the
-     *            label
-     * @throws NullArgumentException
-     *             in case of a null label
+     *     the value to test against if it is null or blank to not show the
+     *     label
      * @return label, never null
+     * @throws NullArgumentException
+     *     in case of a null label
      */
     protected String na2(final String label, String value) {
         if (label == null)

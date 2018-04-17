@@ -30,7 +30,7 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
     }
 
     private void addToConditions(final ConditionalSupplier cs, final Token tk, final Field<Object> field,
-            final Field<String> value) {
+        final Field<String> value) {
         final Field<String> fieldLowered = field.lower();
         final Field<String> valueLowered = value.lower();
         final boolean negate = tk.type.negate;
@@ -51,10 +51,13 @@ public class StringSearchTermEvaluator implements SearchTermEvaluator<StringSear
             break;
         case LENGTH:
             final Field<Integer> length = field.length();
-            cs.add(() -> negate ? field.isNull()
-                .or(length.equal(0))
-                    : field.isNotNull()
-                        .and(length.greaterThan(0)));
+            cs.add(() -> negate ?
+                field
+                    .isNull()
+                    .or(length.equal(0)) :
+                field
+                    .isNotNull()
+                    .and(length.greaterThan(0)));
             break;
         case UNSUPPORTED:
         default:

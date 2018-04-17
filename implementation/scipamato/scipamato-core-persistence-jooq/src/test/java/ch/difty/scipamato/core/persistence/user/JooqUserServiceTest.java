@@ -2,11 +2,7 @@ package ch.difty.scipamato.core.persistence.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,7 +67,8 @@ public class JooqUserServiceTest {
         Integer id = 7;
         when(repoMock.findById(id)).thenReturn(null);
 
-        assertThat(service.findById(id)
+        assertThat(service
+            .findById(id)
             .isPresent()).isFalse();
 
         verify(repoMock).findById(id);
@@ -111,7 +108,8 @@ public class JooqUserServiceTest {
 
     @Test
     public void findingByUserName_withNullName_returnsEmptyOptional() {
-        assertThat(service.findByUserName(null)
+        assertThat(service
+            .findByUserName(null)
             .isPresent()).isFalse();
     }
 

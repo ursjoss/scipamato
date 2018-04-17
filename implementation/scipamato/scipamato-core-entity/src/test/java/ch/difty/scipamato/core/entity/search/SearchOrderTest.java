@@ -12,13 +12,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SearchOrderTest {
@@ -87,7 +86,7 @@ public class SearchOrderTest {
         excludedIds.add(3L);
         excludedIds.add(5L);
         assertThat(new SearchOrder(10L, SO_NAME, 1, false, null, excludedIds).getExcludedPaperIds()).containsExactly(3L,
-                5L);
+            5L);
     }
 
     @Test
@@ -312,7 +311,8 @@ public class SearchOrderTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(SearchOrder.class)
+        EqualsVerifier
+            .forClass(SearchOrder.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(SHOW_EXCLUDED.getName(), CREATED.getName(), CREATOR_ID.getName(), MODIFIED.getName(),
                 MODIFIER_ID.getName())

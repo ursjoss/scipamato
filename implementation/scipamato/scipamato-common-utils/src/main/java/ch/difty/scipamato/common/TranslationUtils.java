@@ -11,7 +11,7 @@ public final class TranslationUtils {
      * Convert an extended language code (e.g. de_CH) into the main one (de)
      *
      * @param languageCode
-     *            the language code to trim
+     *     the language code to trim
      * @return trimmed languageCode
      */
     public static String trimLanguageCode(final String languageCode) {
@@ -26,7 +26,7 @@ public final class TranslationUtils {
      * {@literal ->} {@code foo_bar}
      *
      * @param original
-     *            the camel cased string
+     *     the camel cased string
      * @return de-camel-cased string (or null if original is null)
      */
     public static String deCamelCase(final String original) {
@@ -34,7 +34,8 @@ public final class TranslationUtils {
             return null;
         if (original.isEmpty())
             return original;
-        return original.replaceAll("(.)(\\p{Upper})", "$1_$2")
+        return original
+            .replaceAll("(.)(\\p{Upper})", "$1_$2")
             .toLowerCase();
     }
 }

@@ -22,14 +22,13 @@ import org.jooq.lambda.tuple.Tuple2;
  * <p>
  * Example of usage:
  * <p>
- * 
- * @see <a href=
- *      "https://gist.github.com/ggalmazor/93bdcf8b124304a19266#file-gistfile1-java">https://gist.github.com/ggalmazor/93bdcf8b124304a19266#file-gistfile1-java</a>
  *
  * @see <a href=
- *      "http://www.programania.net/diseno-de-software/functional-trick-to-compose-conditions-in-jooq/">http://www.programania.net/diseno-de-software/functional-trick-to-compose-conditions-in-jooq/</a>
+ *     "https://gist.github.com/ggalmazor/93bdcf8b124304a19266#file-gistfile1-java">https://gist.github.com/ggalmazor/93bdcf8b124304a19266#file-gistfile1-java</a>
  * @see <a href=
- *      "http://stackoverflow.com/questions/19803058/java-8-stream-getting-head-and-tail">http://stackoverflow.com/questions/19803058/java-8-stream-getting-head-and-tail</a>
+ *     "http://www.programania.net/diseno-de-software/functional-trick-to-compose-conditions-in-jooq/">http://www.programania.net/diseno-de-software/functional-trick-to-compose-conditions-in-jooq/</a>
+ * @see <a href=
+ *     "http://stackoverflow.com/questions/19803058/java-8-stream-getting-head-and-tail">http://stackoverflow.com/questions/19803058/java-8-stream-getting-head-and-tail</a>
  */
 public class ConditionalSupplier {
 
@@ -48,9 +47,9 @@ public class ConditionalSupplier {
      * conditionally decide whether to add or not from within the stream.
      *
      * @param isPresent
-     *            filter allowing to add or not add
+     *     filter allowing to add or not add
      * @param conditionSupplier
-     *            the supplier to add
+     *     the supplier to add
      * @return the resulting conditional supplier
      */
     public ConditionalSupplier add(final boolean isPresent, final Supplier<Condition> conditionSupplier) {
@@ -62,10 +61,12 @@ public class ConditionalSupplier {
     public Condition combineWithAnd() {
         final Tuple2<Optional<Supplier<Condition>>, Seq<Supplier<Condition>>> tuple = splitAtHead(
             conditionSuppliers.stream());
-        final Condition head = tuple.v1.orElse(DSL::trueCondition)
+        final Condition head = tuple.v1
+            .orElse(DSL::trueCondition)
             .get();
         final Seq<Supplier<Condition>> tail = tuple.v2;
-        return tail.stream()
+        return tail
+            .stream()
             .map(Supplier::get)
             .reduce(head, Condition::and);
     }
@@ -73,10 +74,12 @@ public class ConditionalSupplier {
     public Condition combineWithOr() {
         final Tuple2<Optional<Supplier<Condition>>, Seq<Supplier<Condition>>> t = splitAtHead(
             conditionSuppliers.stream());
-        final Condition head = t.v1.orElse(DSL::falseCondition)
+        final Condition head = t.v1
+            .orElse(DSL::falseCondition)
             .get();
         final Seq<Supplier<Condition>> tail = t.v2;
-        return tail.stream()
+        return tail
+            .stream()
             .map(Supplier::get)
             .reduce(head, Condition::or);
     }

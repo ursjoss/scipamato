@@ -8,22 +8,21 @@ import ch.difty.scipamato.common.web.component.SerializableSupplier;
 /**
  * ClickablePropertyColumn, a lambdified version of the one provided in
  * {@code Apache Wicket Cookbook} - thanks to Igor Vaynberg.
- *
+ * <p>
  * Adjusted to accept a BiConsumer instead of a Consumer, thus accepting two
  * arguments in the constructor of the referring page. In addition accepting a
  * supplier to provide the additional argument for the bi-consumer.
  *
- * @author u.joss
- *
  * @param <T>
- *            the type of the object that will be rendered in this column's
- *            cells
+ *     the type of the object that will be rendered in this column's
+ *     cells
  * @param <S>
- *            the type of the sort property. It will be passed into the
- *            constructor of this class and will be final.
+ *     the type of the sort property. It will be passed into the
+ *     constructor of this class and will be final.
  * @param <U>
- *            the type of an additional argument passed as supplier to the
- *            (bi)consumer
+ *     the type of an additional argument passed as supplier to the
+ *     (bi)consumer
+ * @author u.joss
  */
 public class ClickablePropertyColumn2<T, S, U> extends AbstractClickablePropertyColumn<T, S> {
     private static final long serialVersionUID = 1L;
@@ -32,12 +31,12 @@ public class ClickablePropertyColumn2<T, S, U> extends AbstractClickableProperty
     private final SerializableSupplier<U>              supplier;
 
     public ClickablePropertyColumn2(final IModel<String> displayModel, final String property,
-            final SerializableBiConsumer<IModel<T>, U> biConsumer, final SerializableSupplier<U> supplier) {
+        final SerializableBiConsumer<IModel<T>, U> biConsumer, final SerializableSupplier<U> supplier) {
         this(displayModel, null, property, biConsumer, supplier);
     }
 
     public ClickablePropertyColumn2(final IModel<String> displayModel, final S sort, final String property,
-            final SerializableBiConsumer<IModel<T>, U> biConsumer, final SerializableSupplier<U> supplier) {
+        final SerializableBiConsumer<IModel<T>, U> biConsumer, final SerializableSupplier<U> supplier) {
         super(displayModel, sort, property);
         this.biConsumer = biConsumer;
         this.supplier = supplier;

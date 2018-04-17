@@ -10,7 +10,8 @@ public class JooqSpringBootConfiguration {
 
     @Bean
     public Settings settings() {
-        return new DefaultConfiguration().settings()
+        return new DefaultConfiguration()
+            .settings()
             .withExecuteWithOptimisticLocking(true);
     }
 }

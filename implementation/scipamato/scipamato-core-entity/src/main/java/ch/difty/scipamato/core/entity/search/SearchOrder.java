@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ch.difty.scipamato.common.entity.FieldEnumType;
-import ch.difty.scipamato.core.entity.IdScipamatoEntity;
-import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+
+import ch.difty.scipamato.common.entity.FieldEnumType;
+import ch.difty.scipamato.core.entity.IdScipamatoEntity;
+import ch.difty.scipamato.core.entity.PaperSlimFilter;
 
 /**
  * The {@link SearchOrder} is the entry point for the entire (complex) search,
@@ -65,7 +66,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
     }
 
     public SearchOrder(final long id, final String name, final int owner, final boolean global,
-            final List<SearchCondition> searchConditions, final List<Long> excludedPaperIds) {
+        final List<SearchCondition> searchConditions, final List<Long> excludedPaperIds) {
         setId(id);
         setName(name);
         setOwner(owner);
@@ -85,7 +86,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
      * Add a new instance of a {@link SearchCondition}.
      *
      * @param searchCondition
-     *            to be added.
+     *     to be added.
      */
     public void add(final SearchCondition searchCondition) {
         if (searchCondition != null && !searchConditions.contains(searchCondition))
@@ -96,7 +97,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
      * Removes the specified {@link SearchCondition} - if not null and present.
      *
      * @param searchCondition
-     *            the condition to remove
+     *     the condition to remove
      */
     public void remove(final SearchCondition searchCondition) {
         if (searchCondition != null) {
@@ -119,7 +120,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
      * Add a new paper id for exclusion.
      *
      * @param paperId
-     *            paper id to be added to exclusions
+     *     paper id to be added to exclusions
      */
     public void addExclusionOfPaperWithId(final long paperId) {
         if (!excludedPaperIds.contains(paperId))
@@ -130,7 +131,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
      * Removes the specified paperId from the list of exclusions.
      *
      * @param paperId
-     *            the id to remove from exclusions
+     *     the id to remove from exclusions
      */
     public void removeExclusionOfPaperWithId(final long paperId) {
         excludedPaperIds.remove(paperId);
@@ -140,15 +141,18 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
     public String getDisplayValue() {
         final StringBuilder sb = new StringBuilder();
         if (getName() != null) {
-            sb.append(getName())
+            sb
+                .append(getName())
                 .append(": ");
         }
-        sb.append(searchConditions.stream()
+        sb.append(searchConditions
+            .stream()
             .map(SearchCondition::getDisplayValue)
             .collect(Collectors.joining(JOIN_DELIMITER)));
         if (sb.length() == 0)
             sb.append("--");
-        sb.append(" (")
+        sb
+            .append(" (")
             .append(getId())
             .append(")");
         if (isGlobal())

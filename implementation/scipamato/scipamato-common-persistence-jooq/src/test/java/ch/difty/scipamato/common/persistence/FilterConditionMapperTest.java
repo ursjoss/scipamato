@@ -15,10 +15,12 @@ public abstract class FilterConditionMapperTest<R extends Record, TI extends Tab
         final boolean withMultipleFields = fields > 1;
         final StringBuilder sb = new StringBuilder();
         if (withMultipleFields)
-            sb.append("(")
+            sb
+                .append("(")
                 .append("\n  ");
         for (final String fieldName : fieldNames) {
-            sb.append("lower(\"public\".\"")
+            sb
+                .append("lower(\"public\".\"")
                 .append(getTable().getName())
                 .append("\".\"")
                 .append(fieldName)
@@ -42,7 +44,8 @@ public abstract class FilterConditionMapperTest<R extends Record, TI extends Tab
 
     @Test
     public void mappingFilter_withNullFilter_returnsNoOpCondition() {
-        assertThat(getMapper().map(null)
+        assertThat(getMapper()
+            .map(null)
             .toString()).isEqualTo("1 = 1");
     }
 
@@ -50,7 +53,8 @@ public abstract class FilterConditionMapperTest<R extends Record, TI extends Tab
 
     @Test
     public void creatingWhereCondition_withNoFilterConditions_returnsNoOpCondition() {
-        assertThat(getMapper().map(getFilter())
+        assertThat(getMapper()
+            .map(getFilter())
             .toString()).isEqualTo("1 = 1");
     }
 

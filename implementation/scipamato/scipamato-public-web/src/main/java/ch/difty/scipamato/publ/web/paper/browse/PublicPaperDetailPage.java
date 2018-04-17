@@ -1,5 +1,11 @@
 package ch.difty.scipamato.publ.web.paper.browse;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink.Target;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.markup.html.basic.Label;
@@ -18,12 +24,6 @@ import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
 import ch.difty.scipamato.publ.web.PublicPageParameters;
 import ch.difty.scipamato.publ.web.common.BasePage;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink.Target;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 
 @MountPath("/paper/number/${number}")
 public class PublicPaperDetailPage extends BasePage<PublicPaper> {
@@ -49,10 +49,10 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
      * instead, the page will be loaded by number.
      *
      * @param parameters
-     *            page parameters
+     *     page parameters
      * @param callingPageRef
-     *            PageReference that will be used to forward to if the user clicks
-     *            the back button.
+     *     PageReference that will be used to forward to if the user clicks
+     *     the back button.
      */
     public PublicPaperDetailPage(final PageParameters parameters, final PageReference callingPageRef) {
         super(parameters);
@@ -71,15 +71,17 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
      * number.
      */
     private void tryLoadingRecord(final PageParameters parameters) {
-        final long number = parameters.get(PublicPageParameters.NUMBER.getName())
+        final long number = parameters
+            .get(PublicPageParameters.NUMBER.getName())
             .toLong(0L);
         if (number > 0) {
-            publicPaperService.findByNumber(number)
+            publicPaperService
+                .findByNumber(number)
                 .ifPresent((p -> setModel(Model.of(p))));
         }
         if (getModelObject() == null) {
             warn("Page parameter " + PublicPageParameters.NUMBER.getName()
-                    + " was missing or invalid. No paper loaded.");
+                 + " was missing or invalid. No paper loaded.");
         }
     }
 
@@ -130,7 +132,7 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
             link.setTarget(Target.blank);
             link.setLabel(new StringResourceModel(LINK_RESOURCE_PREFIX + id + LABEL_RESOURCE_TAG, this, null));
             link.add(new AttributeModifier(AM_TITLE,
-                    new StringResourceModel(LINK_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
+                new StringResourceModel(LINK_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
             queue(link);
         } else {
             queue(new BootstrapExternalLink(id, Model.of(""), Type.Default) {
@@ -145,8 +147,8 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         }
     }
 
-    private BootstrapButton newNavigationButton(String id, GlyphIconType icon,
-                                                SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
+    private BootstrapButton newNavigationButton(String id, GlyphIconType icon, SerializableSupplier<Boolean> isEnabled,
+        SerializableSupplier<Long> idSupplier) {
         final BootstrapButton btn = new BootstrapButton(id, Model.of(""), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
@@ -169,14 +171,14 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         btn.setDefaultFormProcessing(false);
         btn.setIconType(icon);
         btn.add(new AttributeModifier(AM_TITLE,
-                new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
+            new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
         btn.setType(Buttons.Type.Primary);
         return btn;
     }
 
     private void makeAndQueueBackButton(final String id) {
         BootstrapButton back = new BootstrapButton(id,
-                new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + LABEL_RESOURCE_TAG), Buttons.Type.Default) {
+            new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + LABEL_RESOURCE_TAG), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -189,7 +191,7 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         };
         back.setDefaultFormProcessing(false);
         back.add(new AttributeModifier(AM_TITLE,
-                new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
+            new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
         queue(back);
     }
 
@@ -212,12 +214,12 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
 
     private Label newLabel(final String idPart, IModel<?> parameterModel) {
         return new Label(idPart + LABEL_TAG,
-                new StringResourceModel(idPart + LABEL_RESOURCE_TAG, this, parameterModel).getString());
+            new StringResourceModel(idPart + LABEL_RESOURCE_TAG, this, parameterModel).getString());
     }
 
     private Label newLabel(final String idPart) {
         return new Label(idPart + LABEL_TAG,
-                new StringResourceModel(idPart + LABEL_RESOURCE_TAG, this, null).getString() + ":");
+            new StringResourceModel(idPart + LABEL_RESOURCE_TAG, this, null).getString() + ":");
     }
 
     private Label newField(final String id, final String property) {

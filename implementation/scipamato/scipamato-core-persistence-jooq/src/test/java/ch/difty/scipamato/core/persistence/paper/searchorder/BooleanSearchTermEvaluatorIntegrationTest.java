@@ -2,13 +2,13 @@ package ch.difty.scipamato.core.persistence.paper.searchorder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import junitparams.Parameters;
 import org.jooq.Condition;
 import org.junit.Test;
 
 import ch.difty.scipamato.core.entity.search.BooleanSearchTerm;
 import ch.difty.scipamato.core.entity.search.SearchTerm;
 import ch.difty.scipamato.core.entity.search.SearchTermType;
-import junitparams.Parameters;
 
 /**
  * Test class to integration test the search term and the search term evaluator.

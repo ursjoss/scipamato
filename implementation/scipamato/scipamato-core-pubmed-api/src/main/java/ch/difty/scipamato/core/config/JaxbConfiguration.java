@@ -1,5 +1,11 @@
 package ch.difty.scipamato.core.config;
 
+import feign.Feign;
+import feign.Logger;
+import feign.jaxb.JAXBContextFactory;
+import feign.jaxb.JAXBDecoder;
+import feign.okhttp.OkHttpClient;
+import feign.slf4j.Slf4jLogger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.Marshaller;
@@ -7,19 +13,14 @@ import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import ch.difty.scipamato.core.pubmed.PubMed;
-import feign.Feign;
-import feign.Logger;
-import feign.jaxb.JAXBContextFactory;
-import feign.jaxb.JAXBDecoder;
-import feign.okhttp.OkHttpClient;
-import feign.slf4j.Slf4jLogger;
 
 @Configuration
 public class JaxbConfiguration {
 
     private static final String PACKAGE = "ch.difty.scipamato.core.pubmed";
 
-    private final JAXBContextFactory jaxbFactory = new JAXBContextFactory.Builder().withMarshallerJAXBEncoding("UTF-8")
+    private final JAXBContextFactory jaxbFactory = new JAXBContextFactory.Builder()
+        .withMarshallerJAXBEncoding("UTF-8")
         .build();
 
     @Bean
@@ -39,7 +40,8 @@ public class JaxbConfiguration {
 
     @Bean
     public PubMed pubMed() {
-        return Feign.builder()
+        return Feign
+            .builder()
             .client(new OkHttpClient())
             .logger(new Slf4jLogger())
             .logLevel(Logger.Level.FULL)

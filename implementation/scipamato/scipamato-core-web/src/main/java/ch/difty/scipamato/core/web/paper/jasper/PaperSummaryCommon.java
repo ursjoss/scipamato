@@ -1,8 +1,9 @@
 package ch.difty.scipamato.core.web.paper.jasper;
 
-import ch.difty.scipamato.core.entity.Paper;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import ch.difty.scipamato.core.entity.Paper;
 
 /**
  * Common base class for PaperSummary entities.
@@ -35,21 +36,21 @@ public abstract class PaperSummaryCommon extends JasperEntity {
      * Instantiation with a {@link Paper} and the {@link ReportHeaderFields}
      *
      * @param p
-     *            the paper with the relevant fields
+     *     the paper with the relevant fields
      * @param rhf
-     *            the reportHeaderFields with the localized field headers
+     *     the reportHeaderFields with the localized field headers
      */
     protected PaperSummaryCommon(final Paper p, final ReportHeaderFields rhf) {
         this(p.getNumber(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(), p.getMethods(), p.getComment(),
-                rhf.getGoalsLabel(), rhf.getMethodsLabel(), rhf.getCommentLabel(), rhf.getHeaderPart(), rhf.getBrand(),
-                p.getCreatedByName());
+            rhf.getGoalsLabel(), rhf.getMethodsLabel(), rhf.getCommentLabel(), rhf.getHeaderPart(), rhf.getBrand(),
+            p.getCreatedByName());
     }
 
     // headerPart is expected not to be null (it can't in rhf)
     private PaperSummaryCommon(final Long number, final String authors, final String title, final String location,
-            final String goals, final String methods, final String comment, final String goalsLabel,
-            final String methodsLabel, final String commentLabel, final String headerPart, final String brand,
-            final String createdBy) {
+        final String goals, final String methods, final String comment, final String goalsLabel,
+        final String methodsLabel, final String commentLabel, final String headerPart, final String brand,
+        final String createdBy) {
 
         this.number = number != null ? String.valueOf(number) : "";
         this.authors = na(authors);

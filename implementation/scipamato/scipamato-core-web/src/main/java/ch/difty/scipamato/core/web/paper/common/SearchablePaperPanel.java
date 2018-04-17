@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
@@ -18,11 +23,6 @@ import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.web.paper.PaperAttachmentProvider;
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 /**
  * The {@link SearchablePaperPanel} offers a look-alike panel to the paper entry
@@ -58,7 +58,7 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
 
     @Override
     protected BootstrapButton newNavigationButton(String id, GlyphIconType icon,
-            SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
+        SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier) {
         final BootstrapButton btn = new BootstrapButton(id, Model.of(""), Buttons.Type.Default);
         btn.setVisible(false);
         return btn;
@@ -67,7 +67,7 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
     @Override
     protected BootstrapButton newExcludeButton(String id) {
         final BootstrapButton exclude = new BootstrapButton(id, new StringResourceModel("button.exclude.label"),
-                Buttons.Type.Default);
+            Buttons.Type.Default);
         exclude.setVisible(false);
         return exclude;
     }
@@ -90,7 +90,7 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
     protected DataTable<PaperAttachment, String> newAttachmentTable(String id) {
         PaperAttachmentProvider provider = new PaperAttachmentProvider(Model.ofList(new ArrayList<>()));
         DataTable<PaperAttachment, String> attachments = new BootstrapDefaultDataTable<>(id, new ArrayList<>(),
-                provider, 10);
+            provider, 10);
         attachments.setVisible(false);
         return attachments;
     }

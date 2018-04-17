@@ -1,8 +1,6 @@
 package ch.difty.scipamato.publ.entity;
 
-import static ch.difty.scipamato.publ.entity.PopulationCode.ADULTS;
-import static ch.difty.scipamato.publ.entity.PopulationCode.CHILDREN;
-import static ch.difty.scipamato.publ.entity.PopulationCode.values;
+import static ch.difty.scipamato.publ.entity.PopulationCode.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 

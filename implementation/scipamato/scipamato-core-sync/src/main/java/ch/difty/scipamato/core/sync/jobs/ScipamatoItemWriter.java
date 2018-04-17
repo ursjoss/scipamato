@@ -2,18 +2,17 @@ package ch.difty.scipamato.core.sync.jobs;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jooq.DSLContext;
 import org.springframework.batch.item.ItemWriter;
 
 import ch.difty.scipamato.common.AssertAs;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Base class for ItemWriter implementations.
  *
- * @author u.joss
- *
  * @param <T>
+ * @author u.joss
  */
 @Slf4j
 public abstract class ScipamatoItemWriter<T> implements ItemWriter<T> {

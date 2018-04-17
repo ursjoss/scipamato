@@ -18,7 +18,8 @@ public class PubmedAuthorParserTest {
             new PubmedAuthorParser(null);
             fail("Should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage("authorsString must not be null.");
         }
     }
@@ -32,7 +33,8 @@ public class PubmedAuthorParserTest {
 
     private void assertFirstAuthorOf(String input, String expected) {
         p = new PubmedAuthorParser(input);
-        assertThat(p.getFirstAuthor()
+        assertThat(p
+            .getFirstAuthor()
             .orElse("n.a.")).isEqualTo(expected);
     }
 
@@ -66,13 +68,16 @@ public class PubmedAuthorParserTest {
     @Test
     public void canParseNameWithCardinality() {
         p = new PubmedAuthorParser("Ln FN 1st, Ln FN 2nd, Ln FN 3rd, Ln FN 4th, Ln FN 5th, Ln FN 100th, Ln FN.");
-        assertThat(p.getFirstAuthor()
+        assertThat(p
+            .getFirstAuthor()
             .orElse("n.a.")).isEqualTo("Ln");
-        assertThat(p.getAuthors()
+        assertThat(p
+            .getAuthors()
             .stream()
             .map(Author::getLastName)
             .toArray()).containsOnly("Ln");
-        assertThat(p.getAuthors()
+        assertThat(p
+            .getAuthors()
             .stream()
             .map(Author::getFirstName)
             .toArray()).containsExactly("FN 1st", "FN 2nd", "FN 3rd", "FN 4th", "FN 5th", "FN 100th", "FN");
@@ -102,13 +107,15 @@ public class PubmedAuthorParserTest {
     @Test
     public void canReturnAuthors() {
         p = new PubmedAuthorParser(
-                "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Krewsky D, Beckermann BS, Samet JM.");
-        assertThat(p.getAuthors()
+            "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Krewsky D, Beckermann BS, Samet JM.");
+        assertThat(p
+            .getAuthors()
             .stream()
             .map(Author::getLastName)
             .collect(toList())).containsExactly("Turner", "Cohen", "Jerret", "Gapstur", "Driver", "Krewsky",
-                "Beckermann", "Samet");
-        assertThat(p.getAuthors()
+            "Beckermann", "Samet");
+        assertThat(p
+            .getAuthors()
             .stream()
             .map(Author::getFirstName)
             .collect(toList())).containsExactly("MC", "A", "M", "SM", "WR", "D", "BS", "JM");
@@ -117,11 +124,13 @@ public class PubmedAuthorParserTest {
     @Test
     public void canDoUmlaute() {
         p = new PubmedAuthorParser("Flückiger P, Bäni HU.");
-        assertThat(p.getAuthors()
+        assertThat(p
+            .getAuthors()
             .stream()
             .map(Author::getLastName)
             .collect(toList())).containsExactly("Flückiger", "Bäni");
-        assertThat(p.getAuthors()
+        assertThat(p
+            .getAuthors()
             .stream()
             .map(Author::getFirstName)
             .collect(toList())).containsExactly("P", "HU");

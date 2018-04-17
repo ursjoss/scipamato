@@ -3,6 +3,8 @@ package ch.difty.scipamato.common.web;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import org.apache.wicket.markup.head.filter.HeaderResponseContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -16,8 +18,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
-import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
 public class AbstractPageTest extends WicketBaseTest {
 
@@ -56,7 +56,8 @@ public class AbstractPageTest extends WicketBaseTest {
 
     @Test
     public void canGetDateTimeService() {
-        assertThat(page.getDateTimeService()).isNotNull()
+        assertThat(page.getDateTimeService())
+            .isNotNull()
             .isInstanceOf(DateTimeService.class);
     }
 

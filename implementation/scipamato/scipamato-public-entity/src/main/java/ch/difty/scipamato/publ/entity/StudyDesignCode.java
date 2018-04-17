@@ -21,7 +21,8 @@ public enum StudyDesignCode {
     EPIODEMIOLOGICAL((short) 2),
     OVERVIEW_METHODOLOGY((short) 3);
 
-    private static final Map<Short, StudyDesignCode> ID2CODE = Stream.of(values())
+    private static final Map<Short, StudyDesignCode> ID2CODE = Stream
+        .of(values())
         .collect(toMap(StudyDesignCode::getId, e -> e));
 
     private final short id;

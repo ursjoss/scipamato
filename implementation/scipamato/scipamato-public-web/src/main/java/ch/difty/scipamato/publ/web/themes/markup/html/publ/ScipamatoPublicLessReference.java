@@ -2,19 +2,18 @@ package ch.difty.scipamato.publ.web.themes.markup.html.publ;
 
 import java.util.List;
 
-import org.apache.wicket.markup.head.CssHeaderItem;
-import org.apache.wicket.markup.head.HeaderItem;
-
 import de.agilecoders.wicket.core.Bootstrap;
 import de.agilecoders.wicket.core.util.Dependencies;
 import de.agilecoders.wicket.less.LessResourceReference;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.HeaderItem;
 
 /**
  * less resource reference that references `scipamato-public-bootstrap.css`. Can
  * be used by the ScipamatoPublicTheme in the development process of the
  * less/css classes. Should not be used in production. Use
  * {@link ScipamatoPublicCssReference} instead.
- * <p>
+ *
  * <b>Usage<b/>
  *
  * <pre>
@@ -50,7 +49,8 @@ public class ScipamatoPublicLessReference extends LessResourceReference {
 
     @Override
     public List<HeaderItem> getDependencies() {
-        return Dependencies.combine(super.getDependencies(), CssHeaderItem.forReference(Bootstrap.getSettings()
+        return Dependencies.combine(super.getDependencies(), CssHeaderItem.forReference(Bootstrap
+            .getSettings()
             .getCssResourceReference()));
     }
 }

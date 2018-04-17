@@ -13,14 +13,13 @@ import ch.difty.scipamato.common.persistence.paging.Sort;
  * Implementations of this interface map sorting specifications into the jOOQ
  * specific {@link SortField}s.
  *
- * @author u.joss
- *
  * @param <R>
- *            the type of the record, extending {@link Record}
+ *     the type of the record, extending {@link Record}
  * @param <T>
- *            the type of the entity, extending {@link ScipamatoEntity}
+ *     the type of the entity, extending {@link ScipamatoEntity}
  * @param <TI>
- *            the type of the table implementation of record {@code R}
+ *     the type of the table implementation of record {@code R}
+ * @author u.joss
  */
 @FunctionalInterface
 public interface JooqSortMapper<R extends Record, T extends ScipamatoEntity, TI extends TableImpl<R>> {
@@ -30,9 +29,9 @@ public interface JooqSortMapper<R extends Record, T extends ScipamatoEntity, TI 
      * jOOQ specific {@link SortField}s.
      *
      * @param sortSpecification
-     *            the spring data {@link Sort}
+     *     the spring data {@link Sort}
      * @param table
-     *            {@code TI}
+     *     {@code TI}
      * @return collection of {@link SortField}s
      */
     Collection<SortField<T>> map(Sort sortSpecification, TI table);

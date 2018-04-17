@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * The {@link PaginationContext} serves as interface for pagination
  * specifications.
- *
+ * <p>
  * It is inspired by spring data's Pageable interface, but much simpler for the
  * use cases of scipamato.
  *
@@ -15,7 +15,7 @@ public interface PaginationContext extends Serializable {
 
     /**
      * @return zero based record offset relative to the index of the record in the
-     *         entire un-paged record-set.
+     *     entire un-paged record-set.
      */
     int getOffset();
 

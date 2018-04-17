@@ -23,9 +23,9 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * Find any paper matching the provided {@link SearchOrder}.
      *
      * @param searchOrder
-     *            {@link SearchOrder}
+     *     {@link SearchOrder}
      * @param languageCode
-     *            the language code (e.g. 'en') to fetch the paper in
+     *     the language code (e.g. 'en') to fetch the paper in
      * @return list of {@link Paper}s
      */
     List<Paper> findBySearchOrder(SearchOrder searchOrder, String languageCode);
@@ -35,24 +35,24 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * and {@link PaginationContext}.
      *
      * @param searchOrder
-     *            the filter
+     *     the filter
      * @param paginationContext
-     *            context defining paging and sorting
+     *     context defining paging and sorting
      * @param languageCode
-     *            the language code (e.g. 'en') to fetch the paper in
+     *     the language code (e.g. 'en') to fetch the paper in
      * @return paged list of papers
      */
     List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext,
-            String languageCode);
+        String languageCode);
 
     /**
      * Finds a page full of ids of papers as list matching the provided
      * {@link SearchOrder} and {@link PaginationContext}.
      *
      * @param searchOrder
-     *            the filter
+     *     the filter
      * @param paginationContext
-     *            context defining paging and sorting
+     *     context defining paging and sorting
      * @return paged list of paper ids
      */
     List<Long> findPageOfIdsBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
@@ -61,7 +61,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * Counts the number of entities matching the specified {@link SearchOrder}.
      *
      * @param searchOrder
-     *            {@link SearchOrder}
+     *     {@link SearchOrder}
      * @return paper count
      */
     int countBySearchOrder(SearchOrder searchOrder);
@@ -71,9 +71,9 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * from PubMed via the {@link PubmedArticleFacade} entities.
      *
      * @param articles
-     *            list of {@link PubmedArticleFacade}
+     *     list of {@link PubmedArticleFacade}
      * @param minimumNumber
-     *            The lowest number that could be recycled
+     *     The lowest number that could be recycled
      * @return {@link ServiceResult}
      */
     ServiceResult dumpPubmedArticlesToDb(List<PubmedArticleFacade> articles, long minimumNumber);
@@ -83,13 +83,13 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * {@code T}
      *
      * @param number
-     *            - must not be null
+     *     - must not be null
      * @param languageCode
-     *            the language code (e.g. 'en') to fetch the paper in
+     *     the language code (e.g. 'en') to fetch the paper in
      * @return Optional paper. Codes are enriched and attachments present (but
-     *         without content)
+     *     without content)
      * @throws NullArgumentException
-     *             if number is null
+     *     if number is null
      */
     Optional<Paper> findByNumber(Long number, String languageCode);
 
@@ -97,7 +97,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * Finds the lowest free number starting from the supplied value.
      *
      * @param minimumPaperNumberToBeRecycled
-     *            any gaps lower than this value will not be recycled
+     *     any gaps lower than this value will not be recycled
      */
     long findLowestFreeNumberStartingFrom(long minimumPaperNumberToBeRecycled);
 
@@ -105,9 +105,9 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * Exclude the paper from the result list of the specified search order id.
      *
      * @param searchOrderId
-     *            the id of the search order from which the paper is to be excluded
+     *     the id of the search order from which the paper is to be excluded
      * @param paperId
-     *            the id of the paper that shall be excluded
+     *     the id of the paper that shall be excluded
      */
     void excludeFromSearchOrder(long searchOrderId, long paperId);
 
@@ -115,10 +115,10 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * Re-include the paper into the result list of the specified search order id.
      *
      * @param searchOrderId
-     *            the id of the search order from which the paper is to be
-     *            re-included
+     *     the id of the search order from which the paper is to be
+     *     re-included
      * @param paperId
-     *            the id of the paper that shall be re-included
+     *     the id of the paper that shall be re-included
      */
     void reincludeIntoSearchOrder(long searchOrderId, long paperId);
 
@@ -126,7 +126,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * Saves the attachment including its content.
      *
      * @param paperAttachment
-     *            the attachment to save into the paper
+     *     the attachment to save into the paper
      * @return the paper for which the attachment was added
      */
     Paper saveAttachment(PaperAttachment paperAttachment);
@@ -136,7 +136,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * content
      *
      * @param id
-     *            the id of the paper attachment
+     *     the id of the paper attachment
      * @return paper attachment
      */
     PaperAttachment loadAttachmentWithContentBy(Integer id);
@@ -145,7 +145,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * Deletes the attachment with given id
      *
      * @param id
-     *            the id of the paper attachment to be deleted
+     *     the id of the paper attachment to be deleted
      * @return the paper for which the attachment was deleted
      */
     Paper deleteAttachment(Integer id);
@@ -154,7 +154,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * Deletes the papers with the provided ids.
      *
      * @param ids
-     *            ids of the papers to be deleted.
+     *     ids of the papers to be deleted.
      */
     void deletePapersWithIds(List<Long> ids);
 }

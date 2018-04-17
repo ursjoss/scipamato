@@ -7,20 +7,20 @@ public interface SearchTerm {
      * the various sub types.
      *
      * @param id
-     *            the database id
+     *     the database id
      * @param searchTermTypeId
-     *            one of the IDs as defined in enum {@link SearchTermType}
+     *     one of the IDs as defined in enum {@link SearchTermType}
      * @param searchConditionId
-     *            the database id of the associated search condition
+     *     the database id of the associated search condition
      * @param fieldName
-     *            the name of the field (in table paper) the search is to be
-     *            performed on
+     *     the name of the field (in table paper) the search is to be
+     *     performed on
      * @param rawSearchTerm
-     *            the search term definition
+     *     the search term definition
      * @return one of the implementations of {@link SearchTerm}
      */
     static SearchTerm newSearchTerm(final long id, final int searchTermTypeId, final long searchConditionId,
-            final String fieldName, final String rawSearchTerm) {
+        final String fieldName, final String rawSearchTerm) {
         return newSearchTerm(id, SearchTermType.byId(searchTermTypeId), searchConditionId, fieldName, rawSearchTerm);
     }
 
@@ -29,20 +29,20 @@ public interface SearchTerm {
      * the various sub types.
      *
      * @param id
-     *            the database id
+     *     the database id
      * @param type
-     *            {@link SearchTermType}
+     *     {@link SearchTermType}
      * @param searchConditionId
-     *            the database id of the associated search condition
+     *     the database id of the associated search condition
      * @param fieldName
-     *            the name of the field (in table paper) the search is to be
-     *            performed on
+     *     the name of the field (in table paper) the search is to be
+     *     performed on
      * @param rawSearchTerm
-     *            the search term definition
+     *     the search term definition
      * @return one of the implementations of {@link SearchTerm}
      */
     static SearchTerm newSearchTerm(final long id, final SearchTermType type, final long searchConditionId,
-            final String fieldName, final String rawSearchTerm) {
+        final String fieldName, final String rawSearchTerm) {
         switch (type) {
         case BOOLEAN:
             return new BooleanSearchTerm(id, searchConditionId, fieldName, rawSearchTerm);

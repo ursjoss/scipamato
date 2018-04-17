@@ -4,22 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.Data;
 import org.springframework.util.StringUtils;
 
-import ch.difty.scipamato.core.pubmed.api.Abstract;
-import ch.difty.scipamato.core.pubmed.api.AbstractText;
-import ch.difty.scipamato.core.pubmed.api.ArticleId;
-import ch.difty.scipamato.core.pubmed.api.ArticleIdList;
-import ch.difty.scipamato.core.pubmed.api.Author;
-import ch.difty.scipamato.core.pubmed.api.AuthorList;
-import ch.difty.scipamato.core.pubmed.api.CollectiveName;
-import ch.difty.scipamato.core.pubmed.api.ForeName;
-import ch.difty.scipamato.core.pubmed.api.Initials;
-import ch.difty.scipamato.core.pubmed.api.LastName;
-import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
-import ch.difty.scipamato.core.pubmed.api.PubmedBookArticle;
-import ch.difty.scipamato.core.pubmed.api.Suffix;
-import lombok.Data;
+import ch.difty.scipamato.core.pubmed.api.*;
 
 /**
  * Facade encapsulating both {@link PubmedArticle}s and
@@ -55,7 +43,8 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
             if (auth.length() > 0)
                 names.add(auth.toString());
         }
-        return names.stream()
+        return names
+            .stream()
             .collect(Collectors.joining(", ", "", ""));
     }
 
@@ -83,7 +72,8 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
             if (asb.length() > 0)
                 names.add(asb.toString());
         }
-        return names.stream()
+        return names
+            .stream()
             .collect(Collectors.joining(", ", "", ""));
     }
 
@@ -110,7 +100,8 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
     }
 
     String getFirstAuthorFrom(final AuthorList authorList) {
-        return authorList.getAuthor()
+        return authorList
+            .getAuthor()
             .stream()
             .map(Author::getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName)
             .flatMap(List<java.lang.Object>::stream)
@@ -118,7 +109,8 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
             .map(ln -> ((LastName) ln).getvalue())
             .limit(1)
             .findFirst()
-            .orElse(authorList.getAuthor()
+            .orElse(authorList
+                .getAuthor()
                 .stream()
                 .map(Author::getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName)
                 .flatMap(List<java.lang.Object>::stream)
@@ -131,7 +123,8 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
 
     String getDoiFromArticleIdList(final ArticleIdList articleIdList) {
         if (articleIdList != null) {
-            return articleIdList.getArticleId()
+            return articleIdList
+                .getArticleId()
                 .stream()
                 .filter(ai -> "doi".equals(ai.getIdType()))
                 .map(ArticleId::getvalue)
@@ -144,7 +137,8 @@ public abstract class AbstractPubmedArticleFacade implements PubmedArticleFacade
     String getAbstractFrom(final Abstract abstr) {
         if (abstr == null)
             return null;
-        return abstr.getAbstractText()
+        return abstr
+            .getAbstractText()
             .stream()
             .map(this::concatenateAbstract)
             .collect(Collectors.joining("\n"));

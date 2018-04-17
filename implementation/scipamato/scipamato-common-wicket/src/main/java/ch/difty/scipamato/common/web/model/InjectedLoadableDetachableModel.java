@@ -16,7 +16,8 @@ public abstract class InjectedLoadableDetachableModel<T> extends LoadableDetacha
      * protected for overriding to get wicket-free test stubbing
      */
     protected void injectThis() {
-        Injector.get()
+        Injector
+            .get()
             .inject(this);
     }
 }

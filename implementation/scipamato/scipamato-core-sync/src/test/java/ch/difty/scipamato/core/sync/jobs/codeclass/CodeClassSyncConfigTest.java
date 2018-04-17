@@ -1,10 +1,7 @@
 package ch.difty.scipamato.core.sync.jobs.codeclass;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -54,9 +51,10 @@ public class CodeClassSyncConfigTest extends SyncConfigTest<CodeClassRecord> {
 
     @Override
     protected String expectedSelectSql() {
-        return "select \"public\".\"code_class\".\"id\", \"public\".\"code_class_tr\".\"lang_code\", \"public\".\"code_class_tr\".\"name\", \"public\".\"code_class_tr\".\"description\", "
-                + "\"public\".\"code_class_tr\".\"version\", \"public\".\"code_class_tr\".\"created\", \"public\".\"code_class_tr\".\"last_modified\" "
-                + "from \"public\".\"code_class\" join \"public\".\"code_class_tr\" on \"public\".\"code_class\".\"id\" = \"public\".\"code_class_tr\".\"code_class_id\"";
+        return
+            "select \"public\".\"code_class\".\"id\", \"public\".\"code_class_tr\".\"lang_code\", \"public\".\"code_class_tr\".\"name\", \"public\".\"code_class_tr\".\"description\", "
+            + "\"public\".\"code_class_tr\".\"version\", \"public\".\"code_class_tr\".\"created\", \"public\".\"code_class_tr\".\"last_modified\" "
+            + "from \"public\".\"code_class\" join \"public\".\"code_class_tr\" on \"public\".\"code_class\".\"id\" = \"public\".\"code_class_tr\".\"code_class_id\"";
     }
 
     @Override

@@ -3,21 +3,11 @@ package ch.difty.scipamato.core.persistence.paper;
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.*;
 
-import org.jooq.DeleteConditionStep;
-import org.jooq.SelectConditionStep;
-import org.jooq.SelectForUpdateStep;
-import org.jooq.SelectSeekStepN;
-import org.jooq.SelectWhereStep;
-import org.jooq.SelectWithTiesStep;
-import org.jooq.SortField;
-import org.jooq.TableField;
+import org.jooq.*;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -36,7 +26,7 @@ import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 import ch.difty.scipamato.core.persistence.paper.searchorder.PaperBackedSearchOrderRepository;
 
 public class JooqPaperRepoTest extends
-        JooqEntityRepoTest<PaperRecord, Paper, Long, ch.difty.scipamato.core.db.tables.Paper, PaperRecordMapper, PaperFilter> {
+    JooqEntityRepoTest<PaperRecord, Paper, Long, ch.difty.scipamato.core.db.tables.Paper, PaperRecordMapper, PaperFilter> {
 
     private static final Long   SAMPLE_ID = 3L;
     private static final String LC        = "de";
@@ -89,8 +79,8 @@ public class JooqPaperRepoTest extends
     protected JooqPaperRepo getRepo() {
         if (repo == null) {
             repo = new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-                    getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
-                    getApplicationProperties());
+                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+                getApplicationProperties());
         }
         return repo;
     }
@@ -98,8 +88,8 @@ public class JooqPaperRepoTest extends
     @Override
     protected EntityRepository<Paper, Long, PaperFilter> makeRepoFindingEntityById(Paper paper) {
         return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
-                getApplicationProperties()) {
+            getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+            getApplicationProperties()) {
 
             @Override
             public Paper findById(Long id, int version) {
@@ -110,8 +100,8 @@ public class JooqPaperRepoTest extends
 
     protected PaperRepository makeRepoStubbingEnriching() {
         return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
-                getApplicationProperties()) {
+            getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+            getApplicationProperties()) {
 
             @Override
             protected void enrichAssociatedEntitiesOf(Paper entity, String language) {
@@ -196,42 +186,42 @@ public class JooqPaperRepoTest extends
 
     @Test
     public void degenerateConstruction() {
-        assertDegenerateSupplierParameter(() -> new JooqPaperRepo(null, getMapper(), getSortMapper(),
-                getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                searchOrderRepositoryMock, getApplicationProperties()),
-            "dsl");
-        assertDegenerateSupplierParameter(() -> new JooqPaperRepo(getDsl(), null, getSortMapper(),
-                getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                searchOrderRepositoryMock, getApplicationProperties()),
-            "mapper");
-        assertDegenerateSupplierParameter(() -> new JooqPaperRepo(getDsl(), getMapper(), null,
-                getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                searchOrderRepositoryMock, getApplicationProperties()),
-            "sortMapper");
-        assertDegenerateSupplierParameter(() -> new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), null,
+        assertDegenerateSupplierParameter(
+            () -> new JooqPaperRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(),
                 getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
-                getApplicationProperties()),
-            "filterConditionMapper");
-        assertDegenerateSupplierParameter(() -> new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(),
-                getFilterConditionMapper(), null, getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                searchOrderRepositoryMock, getApplicationProperties()),
-            "dateTimeService");
-        assertDegenerateSupplierParameter(() -> new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(),
-                getFilterConditionMapper(), getDateTimeService(), null, getUpdateSetStepSetter(),
-                searchOrderRepositoryMock, getApplicationProperties()),
-            "insertSetStepSetter");
-        assertDegenerateSupplierParameter(() -> new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(),
-                getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), null,
-                searchOrderRepositoryMock, getApplicationProperties()),
-            "updateSetStepSetter");
-        assertDegenerateSupplierParameter(() -> new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(),
-                getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                null, getApplicationProperties()),
-            "searchOrderRepository");
-        assertDegenerateSupplierParameter(() -> new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(),
-                getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                searchOrderRepositoryMock, null),
-            "applicationProperties");
+                getApplicationProperties()), "dsl");
+        assertDegenerateSupplierParameter(
+            () -> new JooqPaperRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(), getDateTimeService(),
+                getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+                getApplicationProperties()), "mapper");
+        assertDegenerateSupplierParameter(
+            () -> new JooqPaperRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getDateTimeService(),
+                getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+                getApplicationProperties()), "sortMapper");
+        assertDegenerateSupplierParameter(
+            () -> new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), null, getDateTimeService(),
+                getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+                getApplicationProperties()), "filterConditionMapper");
+        assertDegenerateSupplierParameter(
+            () -> new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null,
+                getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+                getApplicationProperties()), "dateTimeService");
+        assertDegenerateSupplierParameter(
+            () -> new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+                getDateTimeService(), null, getUpdateSetStepSetter(), searchOrderRepositoryMock,
+                getApplicationProperties()), "insertSetStepSetter");
+        assertDegenerateSupplierParameter(
+            () -> new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+                getDateTimeService(), getInsertSetStepSetter(), null, searchOrderRepositoryMock,
+                getApplicationProperties()), "updateSetStepSetter");
+        assertDegenerateSupplierParameter(
+            () -> new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null,
+                getApplicationProperties()), "searchOrderRepository");
+        assertDegenerateSupplierParameter(
+            () -> new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
+                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+                null), "applicationProperties");
     }
 
     @Test
@@ -273,7 +263,8 @@ public class JooqPaperRepoTest extends
         try {
             repo.findByIds(null);
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage("ids must not be null.");
         }
     }
@@ -296,10 +287,10 @@ public class JooqPaperRepoTest extends
 
     @Test
     public void findingPageBySearchOrder_delegatesToSearchOrderFinder() {
-        when(searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, paginationContextMock))
-            .thenReturn(papers);
-        assertThat(makeRepoStubbingEnriching().findPageBySearchOrder(searchOrderMock, paginationContextMock, LC))
-            .containsExactly(paperMock, paperMock);
+        when(searchOrderRepositoryMock.findPageBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(
+            papers);
+        assertThat(makeRepoStubbingEnriching().findPageBySearchOrder(searchOrderMock, paginationContextMock,
+            LC)).containsExactly(paperMock, paperMock);
         assertThat(enrichedEntities).containsExactly(paperMock, paperMock);
         verify(searchOrderRepositoryMock).findPageBySearchOrder(searchOrderMock, paginationContextMock);
     }
@@ -326,7 +317,8 @@ public class JooqPaperRepoTest extends
 
     @Test
     public void findingByNumber_withNoLanguageCode_throws() {
-        assertDegenerateSupplierParameter(() -> repo.findByNumbers(Collections.singletonList(1L), null), "languageCode");
+        assertDegenerateSupplierParameter(() -> repo.findByNumbers(Collections.singletonList(1L), null),
+            "languageCode");
     }
 
     @Test
@@ -432,10 +424,10 @@ public class JooqPaperRepoTest extends
 
     @Test
     public void findingPageOfIdsBySearchOrder() {
-        when(searchOrderRepositoryMock.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock))
-            .thenReturn(Arrays.asList(17L, 3L, 5L));
+        when(searchOrderRepositoryMock.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(
+            Arrays.asList(17L, 3L, 5L));
         assertThat(repo.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).containsExactly(17L, 3L,
-                5L);
+            5L);
         verify(searchOrderRepositoryMock).findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock);
     }
 
@@ -482,8 +474,8 @@ public class JooqPaperRepoTest extends
 
     protected JooqPaperRepo makeRepoStubbingAttachmentEnriching() {
         return new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
-                getApplicationProperties()) {
+            getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
+            getApplicationProperties()) {
 
             @Override
             public List<PaperAttachment> loadSlimAttachment(long paperId) {

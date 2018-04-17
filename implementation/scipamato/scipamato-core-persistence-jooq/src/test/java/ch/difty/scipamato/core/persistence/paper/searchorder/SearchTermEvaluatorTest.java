@@ -24,7 +24,8 @@ public abstract class SearchTermEvaluatorTest<T extends SearchTerm> {
     protected String concat(String... strings) {
         final StringBuilder sb = new StringBuilder();
         for (final String s : strings) {
-            sb.append(s)
+            sb
+                .append(s)
                 .append(NL);
         }
         if (sb.length() > NL.length()) {

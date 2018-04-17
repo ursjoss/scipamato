@@ -1,15 +1,14 @@
 package ch.difty.scipamato.core.web.paper.jasper;
 
-import org.apache.wicket.util.io.IClusterable;
-
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Context holder for localized jasper report captions. Uses builder pattern in
  * order to avoid having constructor with numerous String arguments.
- *
+ * <p>
  * This class can be used to serve various jasper reports with different needs
  * for localized labels. Consequently hardly any validation occurs in this
  * class. It is up to the DTOs that are passed into the reports to validate the
@@ -63,7 +62,8 @@ public class ReportHeaderFields implements IClusterable {
      * @return ReportHeaderFieldsBuilder
      */
     public static ReportHeaderFieldsBuilder builder(final String headerPart, final String brand) {
-        return hiddenBuilder().headerPart(headerPart)
+        return hiddenBuilder()
+            .headerPart(headerPart)
             .brand(brand);
     }
 

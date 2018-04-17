@@ -29,8 +29,8 @@ public class PaperSummaryShortReportResourceReference extends JasperReportResour
      * report.
      *
      * @param cacheReport
-     *            if {@code true} the compiled report is cached. If {@code false} it
-     *            will be recompiled every time the report is retrieved.
+     *     if {@code true} the compiled report is cached. If {@code false} it
+     *     will be recompiled every time the report is retrieved.
      */
     private PaperSummaryShortReportResourceReference(final boolean cacheReport) {
         super(PaperSummaryShortReportResourceReference.class, NAME, cacheReport);

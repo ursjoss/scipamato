@@ -5,16 +5,13 @@ import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
+import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -30,7 +27,6 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.core.persistence.JooqEntityRepo;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 import ch.difty.scipamato.core.persistence.UserRepository;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * The repository to manage {@link User}s - including the nested list of Roles.
@@ -41,19 +37,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @CacheConfig(cacheNames = "userByName")
 public class JooqUserRepo extends
-        JooqEntityRepo<ScipamatoUserRecord, User, Integer, ch.difty.scipamato.core.db.tables.ScipamatoUser, UserRecordMapper, UserFilter>
-        implements UserRepository {
+    JooqEntityRepo<ScipamatoUserRecord, User, Integer, ch.difty.scipamato.core.db.tables.ScipamatoUser, UserRecordMapper, UserFilter>
+    implements UserRepository {
 
     private final UserRoleRepository userRoleRepo;
 
     public JooqUserRepo(@Qualifier("dslContext") final DSLContext dsl, final UserRecordMapper mapper,
-            final JooqSortMapper<ScipamatoUserRecord, User, ch.difty.scipamato.core.db.tables.ScipamatoUser> sortMapper,
-            final GenericFilterConditionMapper<UserFilter> filterConditionMapper, final DateTimeService dateTimeService,
-            final InsertSetStepSetter<ScipamatoUserRecord, User> insertSetStepSetter,
-            final UpdateSetStepSetter<ScipamatoUserRecord, User> updateSetStepSetter,
-            final ApplicationProperties applicationProperties, final UserRoleRepository userRoleRepo) {
+        final JooqSortMapper<ScipamatoUserRecord, User, ch.difty.scipamato.core.db.tables.ScipamatoUser> sortMapper,
+        final GenericFilterConditionMapper<UserFilter> filterConditionMapper, final DateTimeService dateTimeService,
+        final InsertSetStepSetter<ScipamatoUserRecord, User> insertSetStepSetter,
+        final UpdateSetStepSetter<ScipamatoUserRecord, User> updateSetStepSetter,
+        final ApplicationProperties applicationProperties, final UserRoleRepository userRoleRepo) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter,
-                applicationProperties);
+            applicationProperties);
         this.userRoleRepo = AssertAs.notNull(userRoleRepo, "userRoleRepo");
     }
 
@@ -124,7 +120,8 @@ public class JooqUserRepo extends
 
     private void deleteObsoleteRolesFrom(final User user) {
         final Integer userId = user.getId();
-        final List<Integer> roleIds = user.getRoles()
+        final List<Integer> roleIds = user
+            .getRoles()
             .stream()
             .map(Role::getId)
             .collect(Collectors.toList());
@@ -134,7 +131,8 @@ public class JooqUserRepo extends
     @Override
     @Cacheable
     public User findByUserName(final String userName) {
-        final List<User> users = getDsl().selectFrom(SCIPAMATO_USER)
+        final List<User> users = getDsl()
+            .selectFrom(SCIPAMATO_USER)
             .where(SCIPAMATO_USER.USER_NAME.eq(userName))
             .fetchInto(User.class);
         if (users.isEmpty()) {
@@ -160,21 +158,21 @@ public class JooqUserRepo extends
 
     @Override
     @Caching(evict = { @CacheEvict(cacheNames = "userByName", allEntries = true),
-            @CacheEvict(cacheNames = "userRolesByUserId", allEntries = true) })
+        @CacheEvict(cacheNames = "userRolesByUserId", allEntries = true) })
     public User delete(final Integer id, final int version) {
         return super.delete(id, version);
     }
 
     @Override
     @Caching(put = { @CachePut(cacheNames = "userByName", key = "#user.userName") }, evict = {
-            @CacheEvict(cacheNames = "userRolesByUserId", key = "#user.id", beforeInvocation = true) })
+        @CacheEvict(cacheNames = "userRolesByUserId", key = "#user.id", beforeInvocation = true) })
     public User update(final User user) {
         return super.update(user);
     }
 
     @Override
     @Caching(put = { @CachePut(cacheNames = "userByName", key = "#user.userName") }, evict = {
-            @CacheEvict(cacheNames = "userRolesByUserId", key = "#user.id", beforeInvocation = true) })
+        @CacheEvict(cacheNames = "userRolesByUserId", key = "#user.id", beforeInvocation = true) })
     public User update(final User user, final String languageCode) {
         return super.update(user, languageCode);
     }

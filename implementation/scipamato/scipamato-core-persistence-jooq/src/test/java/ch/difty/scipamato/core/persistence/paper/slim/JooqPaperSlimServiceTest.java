@@ -1,9 +1,7 @@
 package ch.difty.scipamato.core.persistence.paper.slim;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +82,8 @@ public class JooqPaperSlimServiceTest extends AbstractServiceTest<Long, PaperSli
         Long id = 7L;
         when(repoMock.findById(id)).thenReturn(null);
 
-        assertThat(service.findById(id)
+        assertThat(service
+            .findById(id)
             .isPresent()).isFalse();
 
         verify(repoMock).findById(id);

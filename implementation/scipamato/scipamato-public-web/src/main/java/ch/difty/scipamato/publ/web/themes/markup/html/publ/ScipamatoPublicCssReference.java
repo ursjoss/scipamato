@@ -1,16 +1,16 @@
 package ch.difty.scipamato.publ.web.themes.markup.html.publ;
 
+import java.util.List;
+
 import de.agilecoders.wicket.core.Bootstrap;
 import de.agilecoders.wicket.core.util.Dependencies;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.request.resource.CssResourceReference;
 
-import java.util.List;
-
 /**
  * css resource reference that references `scipamato-public-bootstrap.css`.
- * <p>
+ *
  * <b>Usage:</b>
  *
  * <pre>
@@ -46,7 +46,8 @@ public class ScipamatoPublicCssReference extends CssResourceReference {
 
     @Override
     public List<HeaderItem> getDependencies() {
-        return Dependencies.combine(super.getDependencies(), CssHeaderItem.forReference(Bootstrap.getSettings()
+        return Dependencies.combine(super.getDependencies(), CssHeaderItem.forReference(Bootstrap
+            .getSettings()
             .getCssResourceReference()));
     }
 }

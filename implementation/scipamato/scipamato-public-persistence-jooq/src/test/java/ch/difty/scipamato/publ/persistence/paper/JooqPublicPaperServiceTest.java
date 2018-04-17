@@ -1,9 +1,7 @@
 package ch.difty.scipamato.publ.persistence.paper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,12 +44,14 @@ public class JooqPublicPaperServiceTest {
     public void setUp() {
         service = new JooqPublicPaperService(mockRepo);
 
-        publicPaper = PublicPaper.builder()
+        publicPaper = PublicPaper
+            .builder()
             .id(ID)
             .build();
 
         papers.add(publicPaper);
-        papers.add(PublicPaper.builder()
+        papers.add(PublicPaper
+            .builder()
             .id(ID + 1)
             .build());
     }
@@ -85,7 +85,8 @@ public class JooqPublicPaperServiceTest {
     @Test
     public void findingPageByFilter_delegatesToRepo() {
         when(mockRepo.findPageByFilter(filterMock, paginationContextMock)).thenReturn(papers);
-        assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isNotNull()
+        assertThat(service.findPageByFilter(filterMock, paginationContextMock))
+            .isNotNull()
             .isNotEmpty()
             .hasSize(2);
         verify(mockRepo).findPageByFilter(filterMock, paginationContextMock);

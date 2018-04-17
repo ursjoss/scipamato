@@ -1,13 +1,9 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder;
 
-import static ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.EXACT;
-import static ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.GREATER_OR_EQUAL;
-import static ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.GREATER_THAN;
-import static ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.LESS_OR_EQUAL;
-import static ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.LESS_THAN;
-import static ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.RANGE;
+import static ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import junitparams.Parameters;
 import org.jooq.Condition;
 import org.junit.Test;
 
@@ -15,7 +11,6 @@ import ch.difty.scipamato.core.entity.search.IntegerSearchTerm;
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType;
 import ch.difty.scipamato.core.entity.search.SearchTerm;
 import ch.difty.scipamato.core.entity.search.SearchTermType;
-import junitparams.Parameters;
 
 /**
  * Test class to integration test the search term and the search term evaluator.

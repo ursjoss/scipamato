@@ -14,7 +14,7 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 
 /**
  * The insert step setter used for inserting new {@link User}s.
- * <p>
+ *
  *
  * <b>Note:</b> the {@link Role}s are not inserted here.
  *
@@ -28,7 +28,8 @@ public class UserInsertSetStepSetter implements InsertSetStepSetter<ScipamatoUse
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
 
-        return step.set(SCIPAMATO_USER.USER_NAME, e.getUserName())
+        return step
+            .set(SCIPAMATO_USER.USER_NAME, e.getUserName())
             .set(SCIPAMATO_USER.FIRST_NAME, e.getFirstName())
             .set(SCIPAMATO_USER.LAST_NAME, e.getLastName())
             .set(SCIPAMATO_USER.EMAIL, e.getEmail())

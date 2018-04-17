@@ -1,11 +1,11 @@
 package ch.difty.scipamato.publ.web.paper.browse;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.FormComponent;
 
 import ch.difty.scipamato.common.web.event.WicketEvent;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 
 /**
  * The event indicates that one of the filter fields has changed that are
@@ -45,7 +45,7 @@ public class SimpleFilterPanelChangeEvent extends WicketEvent {
      * </ul>
      *
      * @param component
-     *            the candidate to be added to the target
+     *     the candidate to be added to the target
      */
     public void considerAddingToTarget(final FormComponent<?> component) {
         if (isValidTarget(component.getId(), component.getMarkupId())) {

@@ -3,6 +3,9 @@ package ch.difty.scipamato.core.web.paper.jasper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.design.JRDesignField;
 import org.junit.After;
 import org.mockito.Mock;
 
@@ -11,9 +14,6 @@ import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.web.WicketTest;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.design.JRDesignField;
 
 public abstract class PaperDataSourceTest extends WicketTest {
 
@@ -36,7 +36,7 @@ public abstract class PaperDataSourceTest extends WicketTest {
     }
 
     protected void assertFieldValue(String fieldName, String value, JRDesignField f, final JRDataSource jsds)
-            throws JRException {
+        throws JRException {
         f.setName(fieldName);
         assertThat(jsds.getFieldValue(f)).isEqualTo(value);
     }

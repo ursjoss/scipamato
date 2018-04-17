@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web.paper.jasper.summarytable;
 
+import net.sf.jasperreports.engine.JasperReport;
+
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
@@ -10,13 +12,12 @@ import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfResourceHandler;
 import ch.difty.scipamato.core.web.resources.jasper.PaperSummaryTableReportResourceReference;
-import net.sf.jasperreports.engine.JasperReport;
 
 /**
  * DataSource for the PaperSummaryTableReport.
- *
+ * <p>
  * Can be instantiated in different ways, either by passing in
- *
+ * <p>
  * The report header fields are not contained within a paper instance and make
  * up e.g. localized labels, the brand or part of the header.
  *
@@ -37,17 +38,17 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
      * {@link PaperSlim}s that are used in the dataProvider.
      *
      * @param dataProvider
-     *            the {@link AbstractPaperSlimProvider} - must not be null
+     *     the {@link AbstractPaperSlimProvider} - must not be null
      * @param reportHeaderFields
-     *            collection of localized labels for the report fields
+     *     collection of localized labels for the report fields
      * @param includeResults
-     *            true: show results in pdf, false: hide it
+     *     true: show results in pdf, false: hide it
      * @param config
-     *            {@link ClusterablePdfExporterConfiguration}
+     *     {@link ClusterablePdfExporterConfiguration}
      */
     public PaperSummaryTableDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
-            final ReportHeaderFields reportHeaderFields, final boolean includeResults,
-            ClusterablePdfExporterConfiguration config) {
+        final ReportHeaderFields reportHeaderFields, final boolean includeResults,
+        ClusterablePdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), FILE_NAME, dataProvider);
         this.reportHeaderFields = reportHeaderFields;
         this.includeResults = includeResults;
@@ -55,7 +56,8 @@ public class PaperSummaryTableDataSource extends JasperPaperDataSource<PaperSumm
 
     @Override
     protected JasperReport getReport() {
-        return PaperSummaryTableReportResourceReference.get()
+        return PaperSummaryTableReportResourceReference
+            .get()
             .getReport();
     }
 

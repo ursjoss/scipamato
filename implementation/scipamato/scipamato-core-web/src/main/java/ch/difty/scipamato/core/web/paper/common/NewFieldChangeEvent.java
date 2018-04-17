@@ -1,11 +1,11 @@
 package ch.difty.scipamato.core.web.paper.common;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.TextArea;
 
 import ch.difty.scipamato.common.web.event.WicketEvent;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 
 /**
  * The event indicates that one of the new fields has changed that are present
@@ -44,7 +44,7 @@ public class NewFieldChangeEvent extends WicketEvent {
      * </ul>
      *
      * @param component
-     *            the candidate to be added to the target
+     *     the candidate to be added to the target
      */
     public void considerAddingToTarget(final TextArea<?> component) {
         if (isValidTarget(component.getId(), component.getMarkupId())) {

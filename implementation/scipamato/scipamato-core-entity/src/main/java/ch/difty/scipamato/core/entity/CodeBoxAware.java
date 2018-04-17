@@ -19,7 +19,7 @@ public interface CodeBoxAware {
 
     /**
      * @param ccId
-     *            the code class id
+     *     the code class id
      * @return all {@link Code}s of a specific {@link CodeClassId} assigned
      */
     List<Code> getCodesOf(CodeClassId ccId);
@@ -33,7 +33,7 @@ public interface CodeBoxAware {
      * Clear all assigned codes of the specified {@link CodeClassId}
      *
      * @param ccId
-     *            the code class id
+     *     the code class id
      */
     void clearCodesOf(CodeClassId ccId);
 
@@ -41,7 +41,7 @@ public interface CodeBoxAware {
      * Add the specified {@link Code}
      *
      * @param code
-     *            to add
+     *     to add
      */
     void addCode(Code code);
 
@@ -49,7 +49,7 @@ public interface CodeBoxAware {
      * Add the entire list of {@link Code}s.
      *
      * @param codes
-     *            to add
+     *     to add
      */
     void addCodes(List<Code> codes);
 

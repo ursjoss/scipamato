@@ -12,7 +12,7 @@ import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 
 public class PaperFilterConditionMapperTest
-        extends FilterConditionMapperTest<PaperRecord, ch.difty.scipamato.core.db.tables.Paper, PaperFilter> {
+    extends FilterConditionMapperTest<PaperRecord, ch.difty.scipamato.core.db.tables.Paper, PaperFilter> {
 
     private final PaperFilterConditionMapper mapper = new PaperFilterConditionMapper();
 
@@ -37,7 +37,8 @@ public class PaperFilterConditionMapperTest
     public void creatingWhereCondition_withNumber_searchesNumber() {
         Long number = 17L;
         filter.setNumber(number);
-        assertThat(mapper.map(filter)
+        assertThat(mapper
+            .map(filter)
             .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"NUMBER\" = 17");
     }
 
@@ -45,7 +46,8 @@ public class PaperFilterConditionMapperTest
     public void creatingWhereCondition_withAuthorMask_searchesFirstAuthorAndAuthors() {
         String pattern = "am";
         filter.setAuthorMask(pattern);
-        assertThat(mapper.map(filter)
+        assertThat(mapper
+            .map(filter)
             .toString()).isEqualToIgnoringCase(makeWhereClause(pattern, "FIRST_AUTHOR", "AUTHORS"));
     }
 
@@ -94,14 +96,16 @@ public class PaperFilterConditionMapperTest
     @Test
     public void creatingWhereCondition_withPublicationYearFrom_searchesPublicationYear() {
         filter.setPublicationYearFrom(2016);
-        assertThat(mapper.map(filter)
+        assertThat(mapper
+            .map(filter)
             .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" >= 2016");
     }
 
     @Test
     public void creatingWhereCondition_withPublicationYearUntil_searchesPublicationYear() {
         filter.setPublicationYearUntil(2016);
-        assertThat(mapper.map(filter)
+        assertThat(mapper
+            .map(filter)
             .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" <= 2016");
     }
 

@@ -18,7 +18,8 @@ public class RefDataSyncJobLauncherAdHocTest {
     @Test
     public void run() {
         SyncJobResult result = launcher.launch();
-        result.getMessages()
+        result
+            .getMessages()
             .forEach(System.out::println);
         assertThat(result.isSuccessful()).isTrue();
     }

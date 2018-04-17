@@ -1,9 +1,6 @@
 package ch.difty.scipamato.core.persistence;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -78,7 +75,7 @@ public abstract class AbstractServiceTest<ID extends Number, T extends IdScipama
      * Call this method to verify the audit names have been set.
      *
      * @param times
-     *            number of times the methods have been called.
+     *     number of times the methods have been called.
      */
     protected void verifyAudit(final int times) {
         verify(getEntity(), times(times)).getCreatedBy();

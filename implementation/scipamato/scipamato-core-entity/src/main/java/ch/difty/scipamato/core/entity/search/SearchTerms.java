@@ -25,14 +25,15 @@ public abstract class SearchTerms<C extends Serializable> extends LinkedHashMap<
             return false;
         if (getClass() != obj.getClass())
             return false;
-        @SuppressWarnings("unchecked")
-        final LinkedHashMap<String, C> other = (LinkedHashMap<String, C>) obj;
-        if (values().size() != other.values()
+        @SuppressWarnings("unchecked") final LinkedHashMap<String, C> other = (LinkedHashMap<String, C>) obj;
+        if (values().size() != other
+            .values()
             .size())
             return false;
         else
             for (final C st : values())
-                if (!other.values()
+                if (!other
+                    .values()
                     .contains(st))
                     return false;
         return true;

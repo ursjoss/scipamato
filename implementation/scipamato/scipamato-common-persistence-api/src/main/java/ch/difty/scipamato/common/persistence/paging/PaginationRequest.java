@@ -1,7 +1,8 @@
 package ch.difty.scipamato.common.persistence.paging;
 
-import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
 import lombok.Value;
+
+import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
 
 /**
  * The {@link PaginationRequest} serves to define both pagination and sorting
@@ -30,9 +31,9 @@ public class PaginationRequest implements PaginationContext {
      * providing 0 for {@code offset} will return the first page.
      *
      * @param offset
-     *            zero-based record index (over the entire un-paged set of records).
+     *     zero-based record index (over the entire un-paged set of records).
      * @param pageSize
-     *            the page size
+     *     the page size
      */
     public PaginationRequest(final int offset, final int pageSize) {
         this(offset, pageSize, null);
@@ -42,17 +43,17 @@ public class PaginationRequest implements PaginationContext {
      * Creates a new {@link PaginationRequest} with sort parameters applied.
      *
      * @param offset
-     *            zero-based record index (over the entire un-paged set of records).
+     *     zero-based record index (over the entire un-paged set of records).
      * @param pageSize
-     *            the page size
+     *     the page size
      * @param direction
-     *            the direction of the {@link Sort} to be specified, can be
-     *            {@literal null}.
+     *     the direction of the {@link Sort} to be specified, can be
+     *     {@literal null}.
      * @param properties
-     *            the properties to sort by, must not be {@literal null} or empty.
+     *     the properties to sort by, must not be {@literal null} or empty.
      */
     public PaginationRequest(final int offset, final int pageSize, final Direction direction,
-            final String... properties) {
+        final String... properties) {
         this(offset, pageSize, new Sort(direction, properties));
     }
 
@@ -61,10 +62,10 @@ public class PaginationRequest implements PaginationContext {
      * all records (no paging).
      *
      * @param direction
-     *            the direction of the {@link Sort} to be specified, can be
-     *            {@literal null}.
+     *     the direction of the {@link Sort} to be specified, can be
+     *     {@literal null}.
      * @param properties
-     *            the properties to sort by, must not be {@literal null} or empty.
+     *     the properties to sort by, must not be {@literal null} or empty.
      */
     public PaginationRequest(final Direction direction, final String... properties) {
         this(0, Integer.MAX_VALUE, new Sort(direction, properties));
@@ -74,11 +75,11 @@ public class PaginationRequest implements PaginationContext {
      * Creates a new {@link PaginationRequest}.
      *
      * @param offset
-     *            zero-based record index (over the entire un-paged set of records).
+     *     zero-based record index (over the entire un-paged set of records).
      * @param pageSize
-     *            the page size
+     *     the page size
      * @param sort
-     *            - can be {@literal null}.
+     *     - can be {@literal null}.
      */
     public PaginationRequest(final int offset, final int pageSize, final Sort sort) {
         checkConstraints(offset, pageSize);

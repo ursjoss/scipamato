@@ -7,10 +7,9 @@ import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIE
 import static ch.difty.scipamato.core.entity.PaperAttachment.PaperAttachmentFields.CONTENT;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
-
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import org.junit.Test;
 
 public class PaperAttachmentTest {
 
@@ -52,7 +51,8 @@ public class PaperAttachmentTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(PaperAttachment.class)
+        EqualsVerifier
+            .forClass(PaperAttachment.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(CONTENT.getName(), CREATED.getName(), CREATOR_ID.getName(), MODIFIED.getName(),
                 MODIFIER_ID.getName())

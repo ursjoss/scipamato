@@ -2,14 +2,14 @@ package ch.difty.scipamato.core.web.paper.jasper.review;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
 
 public class PaperReviewTest extends JasperEntityTest {
 
@@ -17,7 +17,8 @@ public class PaperReviewTest extends JasperEntityTest {
     private ReportHeaderFields rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields.builder("", BRAND)
+        return ReportHeaderFields
+            .builder("", BRAND)
             .numberLabel(NUMBER_LABEL)
             .authorYearLabel(AUTHOR_YEAR_LABEL)
             .populationPlaceLabel(POPULATION_PLACE_LABEL)
@@ -39,7 +40,8 @@ public class PaperReviewTest extends JasperEntityTest {
         try {
             new PaperReview(null, rhf);
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage("p must not be null.");
         }
     }
@@ -49,7 +51,8 @@ public class PaperReviewTest extends JasperEntityTest {
         try {
             new PaperReview(new Paper(), null);
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage("rhf must not be null.");
         }
     }
@@ -162,7 +165,8 @@ public class PaperReviewTest extends JasperEntityTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(PaperReview.class)
+        EqualsVerifier
+            .forClass(PaperReview.class)
             .withRedefinedSuperclass()
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();

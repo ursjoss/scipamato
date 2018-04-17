@@ -13,9 +13,11 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 
 public abstract class SyncConfigTest<R extends UpdatableRecord<R>> {
 
-    protected static final Timestamp CREATED  = Timestamp.valueOf(LocalDateTime.now()
+    protected static final Timestamp CREATED  = Timestamp.valueOf(LocalDateTime
+        .now()
         .minusDays(2));
-    protected static final Timestamp MODIFIED = Timestamp.valueOf(LocalDateTime.now()
+    protected static final Timestamp MODIFIED = Timestamp.valueOf(LocalDateTime
+        .now()
         .minusDays(1));
 
     /**

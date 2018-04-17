@@ -2,10 +2,9 @@ package ch.difty.scipamato.core.entity.search;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
-
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import org.junit.Test;
 
 public class PaperFilterTest {
 
@@ -33,7 +32,8 @@ public class PaperFilterTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(PaperFilter.class)
+        EqualsVerifier
+            .forClass(PaperFilter.class)
             .withRedefinedSuperclass()
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
@@ -41,7 +41,8 @@ public class PaperFilterTest {
 
     @Test
     public void assertEnumFields() {
-        assertThat(PaperFilter.PaperFilterFields.values()).extracting("name")
+        assertThat(PaperFilter.PaperFilterFields.values())
+            .extracting("name")
             .containsExactly("number", "authorMask", "methodsMask", "searchMask", "publicationYearFrom",
                 "publicationYearUntil");
     }

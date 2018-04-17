@@ -19,7 +19,7 @@ import ch.difty.scipamato.core.persistence.UserRepository;
  */
 @Service
 public class JooqPaperSlimService extends JooqReadOnlyService<Long, PaperSlim, PaperFilter, PaperSlimRepository>
-        implements PaperSlimService {
+    implements PaperSlimService {
 
     protected JooqPaperSlimService(final PaperSlimRepository repo, final UserRepository userRepo) {
         super(repo, userRepo);

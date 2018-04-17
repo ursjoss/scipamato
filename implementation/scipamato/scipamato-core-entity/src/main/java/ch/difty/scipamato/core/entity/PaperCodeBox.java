@@ -1,6 +1,11 @@
 package ch.difty.scipamato.core.entity;
 
-import java.util.*;
+import static java.util.Comparator.comparing;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -10,8 +15,6 @@ import org.apache.commons.collections4.list.UnmodifiableList;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeClassId;
-
-import static java.util.Comparator.comparing;
 
 /**
  * The paper specific implementation of the {@link CodeBox} interface.
@@ -42,14 +45,16 @@ public class PaperCodeBox implements CodeBox {
     }
 
     private List<Code> collectBy(final CodeClassId ccId) {
-        return codes.stream()
+        return codes
+            .stream()
             .filter(isMatching(ccId))
             .collect(Collectors.toList());
     }
 
     private Predicate<? super Code> isMatching(final CodeClassId ccId) {
-        return c -> ccId.getId() == c.getCodeClass()
-                .getId();
+        return c -> ccId.getId() == c
+            .getCodeClass()
+            .getId();
     }
 
     @Override
@@ -75,7 +80,8 @@ public class PaperCodeBox implements CodeBox {
     @Override
     public void addCodes(final List<Code> newCodes) {
         if (!CollectionUtils.isEmpty(newCodes))
-            codes.addAll(newCodes.stream()
+            codes.addAll(newCodes
+                .stream()
                 .distinct()
                 .filter(this::isNewAndNonNull)
                 .collect(Collectors.toList()));
@@ -94,14 +100,17 @@ public class PaperCodeBox implements CodeBox {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        final Map<CodeClass, List<Code>> map = codes.stream()
+        final Map<CodeClass, List<Code>> map = codes
+            .stream()
             .collect(Collectors.groupingBy(Code::getCodeClass, LinkedHashMap::new, Collectors.toList()));
         String delimiter = "";
         builder.append("[");
         for (final Entry<CodeClass, List<Code>> e : map.entrySet()) {
-            builder.append(delimiter)
+            builder
+                .append(delimiter)
                 .append("codesOfClass")
-                .append(e.getKey()
+                .append(e
+                    .getKey()
                     .getId())
                 .append("=");
             builder.append(e.getValue());

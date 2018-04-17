@@ -11,7 +11,7 @@ public interface ApplicationPublicProperties extends ApplicationProperties {
 
     /**
      * @return if true, SciPaMaTo will dynamically compile the LESS files into CSS
-     *         classes. This is useful for development.
+     *     classes. This is useful for development.
      */
     boolean isLessUsedOverCss();
 
@@ -32,7 +32,7 @@ public interface ApplicationPublicProperties extends ApplicationProperties {
 
     /**
      * @return the maximum number of characters the abbreviated authors string uses.
-     *         if 0: no abbreviation takes place at all, return full authors string.
+     *     if 0: no abbreviation takes place at all, return full authors string.
      */
     int getAuthorsAbbreviatedMaxLength();
 

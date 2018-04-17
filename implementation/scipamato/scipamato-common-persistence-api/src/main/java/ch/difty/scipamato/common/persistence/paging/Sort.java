@@ -41,9 +41,9 @@ public class Sort implements Iterable<ch.difty.scipamato.common.persistence.pagi
      * same {@link Direction}
      *
      * @param direction
-     *            the sort direction
+     *     the sort direction
      * @param propertyNames
-     *            a list of property names to be sorted
+     *     a list of property names to be sorted
      */
     public Sort(final Direction direction, final String... propertyNames) {
         checkPreconditionsFor(propertyNames);
@@ -72,7 +72,8 @@ public class Sort implements Iterable<ch.difty.scipamato.common.persistence.pagi
 
     SortProperty getSortPropertyFor(final String propertyName) {
         for (final SortProperty sortProperty : this.sortProperties)
-            if (sortProperty.getName()
+            if (sortProperty
+                .getName()
                 .equals(propertyName))
                 return sortProperty;
         return null;

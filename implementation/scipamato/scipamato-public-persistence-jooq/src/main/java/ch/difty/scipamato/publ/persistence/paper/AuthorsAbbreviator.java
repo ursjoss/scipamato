@@ -11,7 +11,7 @@ public interface AuthorsAbbreviator {
 
     /**
      * @param authors
-     *            author string that may need to be truncated
+     *     author string that may need to be truncated
      * @return truncated authors string
      */
     String abbreviate(String authors);

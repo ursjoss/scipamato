@@ -25,10 +25,9 @@ import ch.difty.scipamato.core.config.ApplicationCoreProperties;
  * Requires the concrete page or it's panel to add a derivative of
  * {@link AbstractAjaxTimerBehavior} to trigger the auto-functionality.
  *
- * @author u.joss
- *
  * @param <T>
- *            the type of the entity the implementing pages use as the model.
+ *     the type of the entity the implementing pages use as the model.
+ * @author u.joss
  */
 public abstract class SelfUpdatingPage<T> extends BasePage<T> {
     private static final long serialVersionUID = 1L;

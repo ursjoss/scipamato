@@ -1,11 +1,12 @@
 package ch.difty.scipamato.core.web.paper.jasper.summary;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.web.paper.jasper.PaperSummaryCommon;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * DTO to feed the PaperSummaryDataSource
@@ -27,9 +28,9 @@ public class PaperSummary extends PaperSummaryCommon {
      * Instantiation with a {@link Paper} and the {@link ReportHeaderFields}
      *
      * @param p
-     *            the paper with the relevant fields
+     *     the paper with the relevant fields
      * @param rhf
-     *            the reportHeaderFields with the localized field headers
+     *     the reportHeaderFields with the localized field headers
      */
     public PaperSummary(final Paper p, final ReportHeaderFields rhf) {
         super(AssertAs.notNull(p, "p"), AssertAs.notNull(rhf, "rhf"));

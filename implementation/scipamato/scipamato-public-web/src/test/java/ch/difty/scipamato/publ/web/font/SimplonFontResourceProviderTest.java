@@ -43,7 +43,8 @@ public class SimplonFontResourceProviderTest {
         when(applicationProperties.isCommercialFontPresent()).thenReturn(true);
 
         provider = new SimplonFontResourceProvider(applicationProperties);
-        assertThat(provider.getCssResourceReference()).isNotNull()
+        assertThat(provider.getCssResourceReference())
+            .isNotNull()
             .isInstanceOf(SimplonCssResourceReference.class);
         assertThat(provider.isCommercialFontPresent()).isTrue();
 

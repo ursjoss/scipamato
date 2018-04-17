@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web.paper.jasper.review;
 
+import net.sf.jasperreports.engine.JasperReport;
+
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
@@ -11,11 +13,10 @@ import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfResourceHandler;
 import ch.difty.scipamato.core.web.resources.jasper.PaperReviewReportResourceReference;
-import net.sf.jasperreports.engine.JasperReport;
 
 /**
  * DataSource for the PaperReviewReport.
- *
+ * <p>
  * The meta fields are not contained within a paper instance and make up e.g.
  * localized labels, the brand or part of the header.
  *
@@ -35,22 +36,23 @@ public class PaperReviewDataSource extends JasperPaperDataSource<PaperReview> {
      * {@link PaperSlim}s that are used in the dataProvider.
      *
      * @param dataProvider
-     *            the {@link AbstractPaperSlimProvider} - must not be null
+     *     the {@link AbstractPaperSlimProvider} - must not be null
      * @param reportHeaderFields
-     *            collection of localized labels for the report fields - must not be
-     *            null
+     *     collection of localized labels for the report fields - must not be
+     *     null
      * @param config
-     *            {@link ClusterablePdfExporterConfiguration}
+     *     {@link ClusterablePdfExporterConfiguration}
      */
     public PaperReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
-            final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
+        final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), FILE_BASE_NAME, AssertAs.notNull(dataProvider, "dataProvider"));
         this.reportHeaderFields = AssertAs.notNull(reportHeaderFields, "reportHeaderFields");
     }
 
     @Override
     protected JasperReport getReport() {
-        return PaperReviewReportResourceReference.get()
+        return PaperReviewReportResourceReference
+            .get()
             .getReport();
     }
 

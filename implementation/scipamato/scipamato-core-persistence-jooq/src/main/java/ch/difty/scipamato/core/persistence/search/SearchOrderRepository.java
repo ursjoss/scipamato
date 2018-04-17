@@ -16,11 +16,11 @@ public interface SearchOrderRepository extends EntityRepository<SearchOrder, Lon
      * Add a new {@link SearchCondition} to the table.
      *
      * @param searchCondition
-     *            a new (yet unpersisted) search condition
+     *     a new (yet unpersisted) search condition
      * @param searchOrderId
-     *            the id of the parent SearchOrder of the condition
+     *     the id of the parent SearchOrder of the condition
      * @param languageCode
-     *            Must not be null.
+     *     Must not be null.
      * @return the updated search condition (including it's id
      */
     SearchCondition addSearchCondition(SearchCondition searchCondition, long searchOrderId, String languageCode);
@@ -29,11 +29,11 @@ public interface SearchOrderRepository extends EntityRepository<SearchOrder, Lon
      * Updates an already persisted but modified {@link SearchCondition}.
      *
      * @param searchCondition
-     *            the modified search condition.
+     *     the modified search condition.
      * @param searchOrderId
-     *            the id of the parent SearchOrder of the condition
+     *     the id of the parent SearchOrder of the condition
      * @param languageCode
-     *            Must not be null.
+     *     Must not be null.
      * @return the persisted search condition.
      */
     SearchCondition updateSearchCondition(SearchCondition searchCondition, long searchOrderId, String languageCode);

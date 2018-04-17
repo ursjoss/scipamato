@@ -1,12 +1,15 @@
 package ch.difty.scipamato.common.web.pages;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.List;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.Icon;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -24,11 +27,6 @@ import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.TestHomePage;
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.Icon;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -88,7 +86,9 @@ public class AbstractMenuBuilderTest {
         NavbarButton<Void> theLink = links.get(0);
 
         assertThat(theLink.getDefaultModelObjectAsString()).isEqualTo("");
-        assertThat(theLink.get("label").getDefaultModelObject()).isEqualTo("foobar");
+        assertThat(theLink
+            .get("label")
+            .getDefaultModelObject()).isEqualTo("foobar");
         assertThat(((Icon) theLink.get("icon")).getType()).isEqualTo(GlyphIconType.volumedown);
     }
 
@@ -114,7 +114,9 @@ public class AbstractMenuBuilderTest {
         NavbarExternalLink theLink = links.get(0);
 
         assertThat(theLink.getDefaultModelObjectAsString()).isEqualTo("http://test.com");
-        assertThat(theLink.get("label").getDefaultModelObject()).isEqualTo("mylabel");
+        assertThat(theLink
+            .get("label")
+            .getDefaultModelObject()).isEqualTo("mylabel");
         assertThat(((Icon) theLink.get("icon")).getType()).isEqualTo(GlyphIconType.adjust);
     }
 
@@ -128,7 +130,9 @@ public class AbstractMenuBuilderTest {
         NavbarExternalLink theLink = links.get(0);
 
         assertThat(theLink.getDefaultModelObjectAsString()).isEqualTo("http://foo.com");
-        assertThat(theLink.get("label").getDefaultModelObject()).isEqualTo("otherlabel");
+        assertThat(theLink
+            .get("label")
+            .getDefaultModelObject()).isEqualTo("otherlabel");
         Icon icon = (Icon) theLink.get("icon");
         assertThat(icon).isNotNull();
         assertThat(icon.getType()).isNull();

@@ -1,39 +1,12 @@
 package ch.difty.scipamato.core.web.paper.entry;
 
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.AUTHORS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.COMMENT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.DOI;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_ASSESSMENT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_POLLUTANT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR_OVERRIDDEN;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.GOALS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.INTERN;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.LOCATION;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.MAIN_CODE_OF_CODECLASS1;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHODS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_CONFOUNDERS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_OUTCOME;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STATISTICS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STUDY_DESIGN;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.NUMBER;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.ORIGINAL_ABSTRACT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.PMID;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_DURATION;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PARTICIPANTS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PLACE;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.PUBL_YEAR;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EFFECT_ESTIMATE;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EXPOSURE_RANGE;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_MEASURED_OUTCOME;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.TITLE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
@@ -52,7 +25,6 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException.Type;
 import ch.difty.scipamato.core.web.common.SelfUpdatingPageTest;
 import ch.difty.scipamato.core.web.paper.common.PaperPanel;
-import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 
 public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
@@ -199,8 +171,8 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
     @Test
     public void serviceThrowingOptimisticLockingException() {
-        when(paperServiceMock.saveOrUpdate(isA(Paper.class)))
-            .thenThrow(new OptimisticLockingException("paper", "rcd", Type.UPDATE));
+        when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenThrow(
+            new OptimisticLockingException("paper", "rcd", Type.UPDATE));
 
         getTester().startPage(makePage());
 

@@ -36,8 +36,8 @@ public class OptimisticLockingExceptionTest {
     @Test
     public void validateMessage_withoutRecordParameter() {
         OptimisticLockingException ole3 = new OptimisticLockingException("tablebar", Type.UPDATE);
-        assertThat(ole3.getMessage())
-            .isEqualTo("Record in table 'tablebar' has been modified prior to the update attempt. Aborting....");
+        assertThat(ole3.getMessage()).isEqualTo(
+            "Record in table 'tablebar' has been modified prior to the update attempt. Aborting....");
     }
 
 }

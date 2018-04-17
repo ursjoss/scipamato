@@ -1,6 +1,9 @@
 package ch.difty.scipamato.common.web.component.table.column;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -51,7 +54,7 @@ abstract class LinkIconColumnTestPanel extends Panel {
 
             @Override
             protected void onClickPerformed(AjaxRequestTarget target, IModel<TestRecord> rowModel,
-                    AjaxLink<Void> link) {
+                AjaxLink<Void> link) {
                 LinkIconColumnTestPanel.this.onClickPerformed(rowModel, link);
             }
         };
@@ -65,7 +68,8 @@ abstract class LinkIconColumnTestPanel extends Panel {
 
         @Override
         public Iterator<TestRecord> iterator(long first, long count) {
-            return Collections.singletonList(new TestRecord(1, "foo"))
+            return Collections
+                .singletonList(new TestRecord(1, "foo"))
                 .iterator();
         }
 

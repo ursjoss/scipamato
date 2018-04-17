@@ -26,12 +26,12 @@ public interface PageFactory {
      * specific search condition model and searchOrderId
      *
      * @param container
-     *            the page or panel to set the response page
+     *     the page or panel to set the response page
      * @return the SerializableBiConsumer you then can let accept the constructor
-     *         arguments of the PaperSearchCriteriaPage
+     *     arguments of the PaperSearchCriteriaPage
      */
     SerializableBiConsumer<IModel<SearchCondition>, Long> setResponsePageToPaperSearchCriteriaPageConsumer(
-            MarkupContainer container);
+        MarkupContainer container);
 
     /**
      * Returns a consumer that sets the responsePage of the provided container
@@ -39,9 +39,9 @@ public interface PageFactory {
      * instance of {@link PageParameters}.
      *
      * @param container
-     *            the page or panel to set the response page
+     *     the page or panel to set the response page
      * @return the SerializableConsumer you can then let accept the constructor
-     *         argument (pageParameters) of the PaperSearchPageWithPage
+     *     argument (pageParameters) of the PaperSearchPageWithPage
      */
     SerializableConsumer<PageParameters> setResponsePageToPaperSearchPageConsumer(MarkupContainer container);
 
@@ -51,7 +51,7 @@ public interface PageFactory {
      * model and searchOrderId to it.
      *
      * @return the SerializableBiFunction on which you can then apply the
-     *         constructor arguments of the PaperSearchCriteriaPage
+     *     constructor arguments of the PaperSearchCriteriaPage
      */
     SerializableBiFunction<IModel<SearchCondition>, Long, GenericWebPage<SearchCondition>> newPaperSearchCriteriaPage();
 

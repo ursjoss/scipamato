@@ -1,12 +1,11 @@
 package ch.difty.scipamato.core.web.paper.list;
 
-import static ch.difty.scipamato.core.entity.search.PaperFilter.PaperFilterFields.AUTHOR_MASK;
-import static ch.difty.scipamato.core.entity.search.PaperFilter.PaperFilterFields.METHODS_MASK;
-import static ch.difty.scipamato.core.entity.search.PaperFilter.PaperFilterFields.NUMBER;
-import static ch.difty.scipamato.core.entity.search.PaperFilter.PaperFilterFields.PUB_YEAR_FROM;
-import static ch.difty.scipamato.core.entity.search.PaperFilter.PaperFilterFields.PUB_YEAR_UNTIL;
-import static ch.difty.scipamato.core.entity.search.PaperFilter.PaperFilterFields.SEARCH_MASK;
+import static ch.difty.scipamato.core.entity.search.PaperFilter.PaperFilterFields.*;
 
+import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
+import com.google.common.base.Strings;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -22,9 +21,6 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
-import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
-import com.google.common.base.Strings;
-
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
@@ -39,8 +35,6 @@ import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.paper.PaperSlimByPaperFilterProvider;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 
 /**
  * Page to list all papers and apply simple filters to limit the results.
@@ -131,11 +125,13 @@ public class PaperListPage extends BasePage<Void> {
 
             @Override
             protected PaperEntryPage getResponsePage(IModel<PaperSlim> m, String languageCode,
-                    PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
-                return new PaperEntryPage(Model.of(paperService.findByNumber(m.getObject()
-                    .getNumber(), languageCode)
+                PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
+                return new PaperEntryPage(Model.of(paperService
+                    .findByNumber(m
+                        .getObject()
+                        .getNumber(), languageCode)
                     .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
-                        dataProvider.isShowExcluded());
+                    dataProvider.isShowExcluded());
             }
 
         };
@@ -161,8 +157,8 @@ public class PaperListPage extends BasePage<Void> {
         xmlPasteModalWindow.setMinimalHeight(500);
         xmlPasteModalWindow.setMaskType(MaskType.SEMI_TRANSPARENT);
         xmlPasteModalWindow.setCssClassName(ModalWindow.CSS_CLASS_BLUE);
-        xmlPasteModalWindow
-            .setWindowClosedCallback(target -> onXmlPasteModalPanelClose(panel.getPastedContent(), target));
+        xmlPasteModalWindow.setWindowClosedCallback(
+            target -> onXmlPasteModalPanelClose(panel.getPastedContent(), target));
         return xmlPasteModalWindow;
     }
 
@@ -187,9 +183,9 @@ public class PaperListPage extends BasePage<Void> {
      * Present the service result messages. Protected for test
      *
      * @param pubmedContent
-     *            the xml content as string
+     *     the xml content as string
      * @param target
-     *            the AjaxRequestTarget
+     *     the AjaxRequestTarget
      */
     void onXmlPasteModalPanelClose(final String pubmedContent, final AjaxRequestTarget target) {
         ServiceResult result = null;
@@ -204,24 +200,29 @@ public class PaperListPage extends BasePage<Void> {
 
     /**
      * @param result
-     *            the {@link ServiceResult} to be translated
+     *     the {@link ServiceResult} to be translated
      * @param target
-     *            the AjaxRequestTarget, may be null if called from constructor
+     *     the AjaxRequestTarget, may be null if called from constructor
      */
     private void translateServiceResultMessagesToLocalizedUserMessages(final ServiceResult result,
-            final AjaxRequestTarget target) {
-        result.getErrorMessages()
+        final AjaxRequestTarget target) {
+        result
+            .getErrorMessages()
             .stream()
             .map(msg -> new StringResourceModel("xmlPasteModal.xml.invalid", this, null).getString())
             .forEach(this::error);
-        result.getWarnMessages()
+        result
+            .getWarnMessages()
             .stream()
-            .map(msg -> new StringResourceModel("xmlPasteModal.exists", this, null).setParameters(msg)
+            .map(msg -> new StringResourceModel("xmlPasteModal.exists", this, null)
+                .setParameters(msg)
                 .getString())
             .forEach(this::warn);
-        result.getInfoMessages()
+        result
+            .getInfoMessages()
             .stream()
-            .map(msg -> new StringResourceModel("xmlPasteModal.saved", this, null).setParameters(msg)
+            .map(msg -> new StringResourceModel("xmlPasteModal.saved", this, null)
+                .setParameters(msg)
                 .getString())
             .forEach(this::info);
         if (target != null)

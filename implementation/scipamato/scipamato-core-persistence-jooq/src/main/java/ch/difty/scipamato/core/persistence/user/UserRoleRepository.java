@@ -10,7 +10,7 @@ public interface UserRoleRepository {
      * Finds all {@link Role}s assigned to user with the provided id.
      *
      * @param userId
-     *            the id of the user to find roles for
+     *     the id of the user to find roles for
      * @return list of {@link Role}s
      */
     List<Role> findRolesForUser(Integer userId);
@@ -22,9 +22,9 @@ public interface UserRoleRepository {
      * deleted and are also be returned in the returned list.
      *
      * @param userId
-     *            the id of the user to assign the {@link Role}s to.
+     *     the id of the user to assign the {@link Role}s to.
      * @param roles
-     *            the {@link Role}s that need to be assigned to the user.
+     *     the {@link Role}s that need to be assigned to the user.
      * @return a list of (all) roles assigned to the user
      */
     List<Role> addNewUserRolesOutOf(Integer userId, List<Role> roles);
@@ -34,9 +34,9 @@ public interface UserRoleRepository {
      * provided list.
      *
      * @param userId
-     *            the id of the user
+     *     the id of the user
      * @param roleIds
-     *            a list of role ids that shall *not* be deleted
+     *     a list of role ids that shall *not* be deleted
      */
     void deleteAllRolesExcept(Integer userId, List<Integer> roleIds);
 

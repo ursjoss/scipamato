@@ -1,9 +1,10 @@
 package ch.difty.scipamato.publ.entity;
 
-import ch.difty.scipamato.common.entity.FieldEnumType;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
+
+import ch.difty.scipamato.common.entity.FieldEnumType;
 
 @Value
 @AllArgsConstructor

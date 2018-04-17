@@ -2,26 +2,13 @@ package ch.difty.scipamato.core.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jooq.Condition;
-import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Record1;
-import org.jooq.RecordMapper;
-import org.jooq.SelectConditionStep;
-import org.jooq.SelectJoinStep;
-import org.jooq.SelectSeekStepN;
-import org.jooq.SelectSelectStep;
-import org.jooq.SelectWhereStep;
-import org.jooq.SortField;
-import org.jooq.TableField;
+import org.jooq.*;
 import org.jooq.impl.TableImpl;
 import org.junit.After;
 import org.junit.Before;
@@ -117,7 +104,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
      * {@code findById(ID id)}
      *
      * @param entity
-     *            the entity to be found.
+     *     the entity to be found.
      * @return the entity
      */
     protected abstract ReadOnlyRepository<T, ID, F> makeRepoFindingEntityById(T entity);

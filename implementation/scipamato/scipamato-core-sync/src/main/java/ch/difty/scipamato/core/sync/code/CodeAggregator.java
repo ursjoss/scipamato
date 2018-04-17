@@ -6,13 +6,13 @@ public interface CodeAggregator {
 
     /**
      * @param internalCodes
-     *            Sets the internal codes as list of strings ('1A', '1B'...)
+     *     Sets the internal codes as list of strings ('1A', '1B'...)
      */
     void setInternalCodes(List<String> internalCodes);
 
     /**
      * @param codes
-     *            loads the codes to be aggregated into the Bean
+     *     loads the codes to be aggregated into the Bean
      */
     void load(String[] codes);
 

@@ -2,10 +2,11 @@ package ch.difty.scipamato.core.entity.projection;
 
 import javax.validation.constraints.NotNull;
 
-import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 
 @Data
 @NoArgsConstructor

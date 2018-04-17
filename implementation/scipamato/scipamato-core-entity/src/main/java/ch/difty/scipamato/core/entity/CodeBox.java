@@ -23,7 +23,7 @@ public interface CodeBox extends Serializable {
      * returns all codes of the code class with the given id.
      *
      * @param codeClassId
-     *            the id of the code class to clear all codes for
+     *     the id of the code class to clear all codes for
      * @return a list of codes
      */
     List<Code> getCodesBy(CodeClassId codeClassId);
@@ -32,7 +32,7 @@ public interface CodeBox extends Serializable {
      * Add the code to the code box.
      *
      * @param code
-     *            the code to add
+     *     the code to add
      */
     void addCode(Code code);
 
@@ -40,7 +40,7 @@ public interface CodeBox extends Serializable {
      * Add all codes to the code box
      *
      * @param newCodes
-     *            the codes to add
+     *     the codes to add
      */
     void addCodes(List<Code> newCodes);
 
@@ -53,7 +53,7 @@ public interface CodeBox extends Serializable {
      * Clears all codes of a given code class
      *
      * @param codeClassId
-     *            the id of the code class to clear all codes for
+     *     the id of the code class to clear all codes for
      */
     void clearBy(CodeClassId codeClassId);
 

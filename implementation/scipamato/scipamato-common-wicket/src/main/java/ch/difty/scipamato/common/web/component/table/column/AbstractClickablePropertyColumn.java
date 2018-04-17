@@ -13,13 +13,12 @@ import org.apache.wicket.model.PropertyModel;
  * Abstract BaseClass for ClickablePropertyColumn implementations
  * {@code Apache Wicket Cookbook} - thanks to Igor Vaynberg.
  *
- * @author u.joss
- *
  * @param <T>
- *            the type of the object that will be rendered in this column's
- *            cells
+ *     the type of the object that will be rendered in this column's
+ *     cells
  * @param <S>
- *            the type of the sort property
+ *     the type of the sort property
+ * @author u.joss
  */
 public abstract class AbstractClickablePropertyColumn<T, S> extends AbstractColumn<T, S> {
     private static final long serialVersionUID = 1L;

@@ -14,7 +14,7 @@ import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 
 /**
  * The insert step setter used for inserting new {@link Paper}s.
- * <p>
+ *
  *
  * <b>Note:</b> the {@link Code}s are not inserted here.
  *
@@ -28,7 +28,8 @@ public class PaperInsertSetStepSetter implements InsertSetStepSetter<PaperRecord
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
 
-        return step.set(PAPER.NUMBER, e.getNumber())
+        return step
+            .set(PAPER.NUMBER, e.getNumber())
             .set(PAPER.PM_ID, e.getPmId())
             .set(PAPER.DOI, e.getDoi())
             .set(PAPER.AUTHORS, e.getAuthors())

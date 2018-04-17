@@ -17,7 +17,7 @@ public interface PubmedArticleService {
      * Retrieve the pubmed article with the provided pmID directly from PubMed.
      *
      * @param pmId
-     *            pubmedId
+     *     pubmedId
      * @return optional of {@link PubmedArticleFacade}
      */
     Optional<PubmedArticleFacade> getPubmedArticleWithPmid(int pmId);
@@ -27,11 +27,11 @@ public interface PubmedArticleService {
      * is the implementation that determines the type and format of the content.
      *
      * @param content
-     *            pubmed content, as String. Must not be null.
+     *     pubmed content, as String. Must not be null.
      * @return List of {@link PubmedArticleFacade} entries. Never null. Will be
-     *         empty if there are issues parsing the content.
+     *     empty if there are issues parsing the content.
      * @throws NullArgumentException
-     *             in case of null content.
+     *     in case of null content.
      */
     List<PubmedArticleFacade> extractArticlesFrom(String content);
 

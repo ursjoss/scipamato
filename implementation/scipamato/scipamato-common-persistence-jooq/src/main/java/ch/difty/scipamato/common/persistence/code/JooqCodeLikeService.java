@@ -9,15 +9,14 @@ import ch.difty.scipamato.common.persistence.CodeLikeService;
 /**
  * Generic implementation of the {@link CodeLikeService} interface.
  *
- * @author u.joss
- *
  * @param <T>
- *            code like classes extending {@link CodeLike}
+ *     code like classes extending {@link CodeLike}
  * @param <R>
- *            repositories implementing {@link CodeLikeRepository}
+ *     repositories implementing {@link CodeLikeRepository}
+ * @author u.joss
  */
 public abstract class JooqCodeLikeService<T extends CodeLike, R extends CodeLikeRepository<T>>
-        implements CodeLikeService<T> {
+    implements CodeLikeService<T> {
 
     private final R repo;
 

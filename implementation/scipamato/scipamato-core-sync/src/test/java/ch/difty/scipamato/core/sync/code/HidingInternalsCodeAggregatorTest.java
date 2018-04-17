@@ -4,11 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 @RunWith(JUnitParamsRunner.class)
 public class HidingInternalsCodeAggregatorTest {
@@ -54,7 +53,8 @@ public class HidingInternalsCodeAggregatorTest {
     @Test
     @Parameters(method = "paramsCodeAggregation")
     public void gettingAggregatedCodes(String[] input, String[] codes) {
-        String[] internals = new String[] {"1N","1U","1Z","3U","3Z","4U","4X","4Y","4Z","5A","5B","5C","5D","5K","6P","6Z","7M","7Z","8Z"};
+        String[] internals = new String[] { "1N", "1U", "1Z", "3U", "3Z", "4U", "4X", "4Y", "4Z", "5A", "5B", "5C",
+            "5D", "5K", "6P", "6Z", "7M", "7Z", "8Z" };
         ca.setInternalCodes(Arrays.asList(internals));
         ca.load(input);
         assertThat(ca.getAggregatedCodes()).isEqualTo(codes);
@@ -166,11 +166,12 @@ public class HidingInternalsCodeAggregatorTest {
         };
         // @formatter:on
     }
-    
+
     @Test
     @Parameters(method = "paramsAll")
     public void gettingAllCodeTypes(String[] input, String[] codes, Short[] codesPopulation, Short[] codesStudyDesign) {
-        String[] internals = new String[] {"1N","1U","1Z","3U","3Z","4U","4X","4Y","4Z","5A","5B","5C","5D","5K","6P","6Z","7M","7Z","8Z"};
+        String[] internals = new String[] { "1N", "1U", "1Z", "3U", "3Z", "4U", "4X", "4Y", "4Z", "5A", "5B", "5C",
+            "5D", "5K", "6P", "6Z", "7M", "7Z", "8Z" };
         ca.setInternalCodes(Arrays.asList(internals));
         ca.load(input);
         assertThat(ca.getAggregatedCodes()).isEqualTo(codes);

@@ -1,14 +1,16 @@
 package ch.difty.scipamato.core.web.paper.jasper.summarytable;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignField;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
@@ -16,10 +18,6 @@ import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JRDesignField;
 
 public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
 
@@ -46,7 +44,8 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     private ReportHeaderFields          rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields.builder("", BRAND)
+        return ReportHeaderFields
+            .builder("", BRAND)
             .numberLabel(NUMBER_LABEL)
             .captionLabel(CAPTION)
             .build();
@@ -73,7 +72,8 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
 
     private void assertDataSource(String fileName) throws JRException {
         assertThat(ds.getConnectionProvider()).isNull();
-        assertThat(ds.getContentDisposition()
+        assertThat(ds
+            .getContentDisposition()
             .toString()).isEqualTo("ATTACHMENT");
         assertThat(ds.getContentType()).isEqualTo("application/pdf");
         assertThat(ds.getExtension()).isEqualTo("pdf");
@@ -128,7 +128,8 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0L);
         ds = new PaperSummaryTableDataSource(dataProviderMock, rhf, true, pdfExporterConfigMock);
-        assertThat(ds.getReportDataSource()
+        assertThat(ds
+            .getReportDataSource()
             .next()).isFalse();
         verify(dataProviderMock).size();
     }
@@ -138,7 +139,8 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
         try {
             new PaperSummaryTableDataSource(null, rhf, true, pdfExporterConfigMock);
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage("dataProvider must not be null.");
         }
     }

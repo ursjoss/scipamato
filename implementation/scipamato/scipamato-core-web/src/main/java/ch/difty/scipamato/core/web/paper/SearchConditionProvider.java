@@ -32,14 +32,15 @@ public class SearchConditionProvider extends SortableDataProvider<SearchConditio
      * Returns paged {@link SearchCondition} iterator
      *
      * @param offset
-     *            skipping records
+     *     skipping records
      * @param size
-     *            page size
+     *     page size
      * @return iterator
      */
     @Override
     public Iterator<SearchCondition> iterator(final long offset, final long size) {
-        return searchConditionsModel.getObject()
+        return searchConditionsModel
+            .getObject()
             .stream()
             .skip(offset)
             .limit(size)
@@ -48,7 +49,8 @@ public class SearchConditionProvider extends SortableDataProvider<SearchConditio
 
     @Override
     public long size() {
-        return searchConditionsModel.getObject()
+        return searchConditionsModel
+            .getObject()
             .size();
     }
 

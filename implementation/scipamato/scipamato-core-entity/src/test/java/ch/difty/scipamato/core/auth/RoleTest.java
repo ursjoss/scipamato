@@ -1,11 +1,7 @@
 package ch.difty.scipamato.core.auth;
 
-import static ch.difty.scipamato.core.auth.Role.ADMIN;
-import static ch.difty.scipamato.core.auth.Role.USER;
-import static ch.difty.scipamato.core.auth.Role.VIEWER;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.extractProperty;
-import static org.assertj.core.api.Assertions.fail;
+import static ch.difty.scipamato.core.auth.Role.*;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
@@ -50,7 +46,8 @@ public class RoleTest {
             Role.of(0);
             fail("Should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("No matching type for id 0");
         }
     }

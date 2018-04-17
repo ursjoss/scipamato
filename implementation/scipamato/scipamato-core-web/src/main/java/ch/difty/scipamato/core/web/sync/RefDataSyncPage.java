@@ -1,5 +1,10 @@
 package ch.difty.scipamato.core.web.sync;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
+import de.agilecoders.wicket.core.markup.html.bootstrap.form.BootstrapForm;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.ladda.LaddaAjaxButton;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.ladda.LaddaBehavior.Effect;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.StringResourceModel;
@@ -9,11 +14,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import ch.difty.scipamato.core.sync.launcher.SyncJobLauncher;
 import ch.difty.scipamato.core.sync.launcher.SyncJobResult;
 import ch.difty.scipamato.core.web.common.BasePage;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
-import de.agilecoders.wicket.core.markup.html.bootstrap.form.BootstrapForm;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.ladda.LaddaAjaxButton;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.ladda.LaddaBehavior.Effect;
 
 public class RefDataSyncPage extends BasePage<Void> {
 

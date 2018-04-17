@@ -28,7 +28,8 @@ public class CurrentDateTimeServiceTest {
     @Test
     public void gettingCurrentTimeStamp() {
         LocalDateTime snapshot = LocalDateTime.now();
-        LocalDateTime ldt = dts.getCurrentTimestamp()
+        LocalDateTime ldt = dts
+            .getCurrentTimestamp()
             .toLocalDateTime();
         assertThat(ldt).isBetween(snapshot, snapshot.plusSeconds(1));
     }

@@ -6,11 +6,10 @@ import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR
 import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import org.junit.Before;
+import org.junit.Test;
 
 public class PaperSlimTest {
 
@@ -41,8 +40,8 @@ public class PaperSlimTest {
 
     @Test
     public void testingToString() {
-        assertThat(ps.toString())
-            .isEqualTo("PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title)");
+        assertThat(ps.toString()).isEqualTo(
+            "PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title)");
     }
 
     @Test
@@ -53,7 +52,8 @@ public class PaperSlimTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(PaperSlim.class)
+        EqualsVerifier
+            .forClass(PaperSlim.class)
             .withRedefinedSuperclass()
             .withIgnoredFields(CREATED.getName(), CREATOR_ID.getName(), MODIFIED.getName(), MODIFIER_ID.getName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)

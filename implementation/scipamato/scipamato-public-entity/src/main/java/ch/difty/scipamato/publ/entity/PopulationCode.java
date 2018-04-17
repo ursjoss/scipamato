@@ -19,7 +19,8 @@ public enum PopulationCode {
     CHILDREN((short) 1),
     ADULTS((short) 2);
 
-    private static final Map<Short, PopulationCode> ID2CODE = Stream.of(values())
+    private static final Map<Short, PopulationCode> ID2CODE = Stream
+        .of(values())
         .collect(toMap(PopulationCode::getId, e -> e));
 
     private final short id;

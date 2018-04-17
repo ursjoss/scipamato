@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.web.paper.jasper.literaturereview;
 
+import net.sf.jasperreports.engine.JasperReport;
+
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
@@ -11,11 +13,10 @@ import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfResourceHandler;
 import ch.difty.scipamato.core.web.resources.jasper.PaperLiteratureReviewReportResourceReference;
-import net.sf.jasperreports.engine.JasperReport;
 
 /**
  * DataSource for the PaperLiteratureReviewReport.
- *
+ * <p>
  * The meta fields are not contained within a paper instance and make up the
  * caption
  *
@@ -35,21 +36,22 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
      * {@link PaperSlim}s that are used in the dataProvider.
      *
      * @param dataProvider
-     *            the {@link AbstractPaperSlimProvider} - must not be null
+     *     the {@link AbstractPaperSlimProvider} - must not be null
      * @param reportHeaderFields
-     *            collection of localized labels for the report fields
+     *     collection of localized labels for the report fields
      * @param config
-     *            {@link ClusterablePdfExporterConfiguration}
+     *     {@link ClusterablePdfExporterConfiguration}
      */
     public PaperLiteratureReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
-            final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
+        final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), FILE_NAME, AssertAs.notNull(dataProvider, "dataProvider"));
         this.reportHeaderFields = AssertAs.notNull(reportHeaderFields, "reportHeaderFields");
     }
 
     @Override
     protected JasperReport getReport() {
-        return PaperLiteratureReviewReportResourceReference.get()
+        return PaperLiteratureReviewReportResourceReference
+            .get()
             .getReport();
     }
 

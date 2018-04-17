@@ -3,6 +3,14 @@ package ch.difty.scipamato.publ.web.paper.browse;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
+import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
@@ -22,8 +30,6 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.annotation.mount.MountPath;
 
-import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
-
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
@@ -35,13 +41,6 @@ import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.publ.web.common.BasePage;
 import ch.difty.scipamato.publ.web.model.CodeClassModel;
 import ch.difty.scipamato.publ.web.model.CodeModel;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
-import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
-import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 @MountPath("/")
 @WicketHomePage
@@ -173,10 +172,11 @@ public class PublicPage extends BasePage<Void> {
         }
 
         private BootstrapMultiSelect<Code> makeCodeClassComplex(Form<Object> form, final CodeClassId codeClassId,
-                final List<CodeClass> codeClasses) {
+            final List<CodeClass> codeClasses) {
             final int id = codeClassId.getId();
             final String componentId = CODES_CLASS_BASE_NAME + id;
-            final String className = codeClasses.stream()
+            final String className = codeClasses
+                .stream()
                 .filter(cc -> cc.getCodeClassId() == id)
                 .map(CodeClass::getName)
                 .findFirst()
@@ -185,16 +185,17 @@ public class PublicPage extends BasePage<Void> {
 
             final CodeModel choices = new CodeModel(codeClassId, getLanguageCode());
             final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(Code.CodeFields.DISPLAY_VALUE.getName(),
-                    Code.CodeFields.CODE.getName());
+                Code.CodeFields.CODE.getName());
             final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
-                    null);
-            final BootstrapSelectConfig config = new BootstrapSelectConfig().withMultiple(true)
+                null);
+            final BootstrapSelectConfig config = new BootstrapSelectConfig()
+                .withMultiple(true)
                 .withNoneSelectedText(noneSelectedModel.getObject())
                 .withLiveSearch(true);
 
             final PropertyModel<List<Code>> model = PropertyModel.of(filter, componentId);
             final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<>(componentId, model, choices,
-                    choiceRenderer).with(config);
+                choiceRenderer).with(config);
             multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
             form.add(multiSelect);
             return multiSelect;
@@ -217,7 +218,7 @@ public class PublicPage extends BasePage<Void> {
 
     private void queueQueryButton(final String id, final FilterForm<PublicPaperFilter> filterForm) {
         final StringResourceModel labelModel = new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + LABEL_RESOURCE_TAG,
-                this, null);
+            this, null);
         BootstrapButton queryButton = new BootstrapButton(id, labelModel, Buttons.Type.Primary) {
             private static final long serialVersionUID = 1L;
 
@@ -233,7 +234,7 @@ public class PublicPage extends BasePage<Void> {
 
     private void queueClearSearchButton(String id) {
         final StringResourceModel labelModel = new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + LABEL_RESOURCE_TAG,
-                this, null);
+            this, null);
         BootstrapButton button = new BootstrapButton(id, labelModel, Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
@@ -244,13 +245,13 @@ public class PublicPage extends BasePage<Void> {
             }
         };
         button.add(new AttributeModifier("title",
-                new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
+            new StringResourceModel(BUTTON_RESOURCE_PREFIX + id + TITLE_RESOURCE_TAG, this, null).getString()));
         queue(button);
     }
 
     private void makeAndQueueResultTable(String id) {
         DataTable<PublicPaper, String> results = new BootstrapDefaultDataTable<PublicPaper, String>(id,
-                makeTableColumns(), dataProvider, dataProvider.getRowsPerPage()) {
+            makeTableColumns(), dataProvider, dataProvider.getRowsPerPage()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -260,7 +261,8 @@ public class PublicPage extends BasePage<Void> {
             }
         };
         results.setOutputMarkupId(true);
-        results.add(new TableBehavior().striped()
+        results.add(new TableBehavior()
+            .striped()
             .hover());
         queue(results);
     }
@@ -277,21 +279,22 @@ public class PublicPage extends BasePage<Void> {
     private PropertyColumn<PublicPaper, String> makePropertyColumn(FieldEnumType fieldType) {
         final String propExpression = fieldType.getName();
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
-                propExpression);
+            propExpression);
     }
 
     private ClickablePropertyColumn<PublicPaper, String> makeClickableColumn(FieldEnumType fieldType,
-            SerializableConsumer<IModel<PublicPaper>> consumer) {
+        SerializableConsumer<IModel<PublicPaper>> consumer) {
         final String propExpression = fieldType.getName();
         return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null),
-                propExpression, propExpression, consumer);
+            propExpression, propExpression, consumer);
     }
 
     /*
      * Note: The PaperIdManger manages the number in scipamato-public, not the id
      */
     private void onTitleClick(IModel<PublicPaper> m) {
-        getPaperIdManager().setFocusToItem(m.getObject()
+        getPaperIdManager().setFocusToItem(m
+            .getObject()
             .getNumber());
         setResponsePage(new PublicPaperDetailPage(m, getPage().getPageReference()));
     }

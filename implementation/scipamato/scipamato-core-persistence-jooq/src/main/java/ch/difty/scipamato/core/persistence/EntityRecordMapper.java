@@ -8,18 +8,17 @@ import ch.difty.scipamato.core.entity.CoreEntity;
 
 /**
  * Abstract base class for entity to record mappers that have audit fields.
- * 
+ * <p>
  * We need this workaround in order to access the audit fields from the record,
  * a class which is generated, so we can't simply implement an interface that
  * offers the audit methods for the record. Hence the dto AuditFields class that
  * needs to provide those fields from the concrete class.
  *
- * @author u.joss
- *
  * @param <R>
- *            the type of the {@link Record}
+ *     the type of the {@link Record}
  * @param <T>
- *            the type of the {@link CoreEntity}
+ *     the type of the {@link CoreEntity}
+ * @author u.joss
  */
 public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity> implements RecordMapper<R, T> {
 
@@ -39,10 +38,10 @@ public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity>
 
     /**
      * @param record
-     *            the record to provide the audit fields for
+     *     the record to provide the audit fields for
      * @return an instance of the {@link AuditFields} dto
-     *
-     *         {@code return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion())}
+     *     <p>
+     *     {@code return new AuditFields(r.getCreated(), r.getCreatedBy(), r.getLastModified(), r.getLastModifiedBy(), r.getVersion())}
      */
     protected abstract AuditFields getAuditFieldsOf(R record);
 
@@ -51,9 +50,9 @@ public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity>
      * entity.
      *
      * @param from
-     *            the record to provide the fields from db
+     *     the record to provide the fields from db
      * @param to
-     *            the entity to fill the fields into
+     *     the entity to fill the fields into
      */
     protected abstract void mapFields(R from, T to);
 
@@ -61,9 +60,9 @@ public abstract class EntityRecordMapper<R extends Record, T extends CoreEntity>
      * Maps the audit fields form the record to the entity.
      *
      * @param from
-     *            the record to provide the audit fields from db
+     *     the record to provide the audit fields from db
      * @param to
-     *            the entity to fill the audit fields into
+     *     the entity to fill the audit fields into
      */
     private void mapAuditFields(final R from, final T to) {
         final AuditFields af = getAuditFieldsOf(from);

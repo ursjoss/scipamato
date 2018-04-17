@@ -23,7 +23,8 @@ public enum CodeClassId {
     CC7(7),
     CC8(8);
 
-    private static final Map<Integer, CodeClassId> ID2ENUM = Stream.of(values())
+    private static final Map<Integer, CodeClassId> ID2ENUM = Stream
+        .of(values())
         .collect(Collectors.toMap(CodeClassId::getId, e -> e));
 
     private final int id;

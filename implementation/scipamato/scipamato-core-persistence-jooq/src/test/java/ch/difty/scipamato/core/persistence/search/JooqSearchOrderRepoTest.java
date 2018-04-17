@@ -18,16 +18,12 @@ import org.mockito.Mock;
 import ch.difty.scipamato.core.db.tables.records.SearchOrderRecord;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.core.entity.search.SearchCondition;
-import ch.difty.scipamato.core.entity.search.SearchOrder;
-import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
-import ch.difty.scipamato.core.entity.search.SearchTerm;
-import ch.difty.scipamato.core.entity.search.SearchTermType;
+import ch.difty.scipamato.core.entity.search.*;
 import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 
 public class JooqSearchOrderRepoTest extends
-        JooqEntityRepoTest<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.core.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter> {
+    JooqEntityRepoTest<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.core.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter> {
 
     private static final Long   SAMPLE_ID = 3L;
     private static final String LC        = "de";
@@ -54,17 +50,16 @@ public class JooqSearchOrderRepoTest extends
     protected JooqSearchOrderRepo getRepo() {
         if (repo == null) {
             repo = new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-                    getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                    getApplicationProperties());
+                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties());
         }
         return repo;
     }
 
     @Override
     protected EntityRepository<SearchOrder, Long, SearchOrderFilter> makeRepoFindingEntityById(
-            SearchOrder searchOrder) {
+        SearchOrder searchOrder) {
         return new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
+            getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
 
             @Override
             public SearchOrder findById(Long id, int version) {
@@ -146,37 +141,35 @@ public class JooqSearchOrderRepoTest extends
 
     @Test
     public void degenerateConstruction() {
-        assertDegenerateSupplierParameter(() -> new JooqSearchOrderRepo(null, getMapper(), getSortMapper(),
-                getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                getApplicationProperties()),
+        assertDegenerateSupplierParameter(
+            () -> new JooqSearchOrderRepo(null, getMapper(), getSortMapper(), getFilterConditionMapper(),
+                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()),
             "dsl");
-        assertDegenerateSupplierParameter(() -> new JooqSearchOrderRepo(getDsl(), null, getSortMapper(),
-                getFilterConditionMapper(), getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(),
-                getApplicationProperties()),
+        assertDegenerateSupplierParameter(
+            () -> new JooqSearchOrderRepo(getDsl(), null, getSortMapper(), getFilterConditionMapper(),
+                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()),
             "mapper");
         assertDegenerateSupplierParameter(
             () -> new JooqSearchOrderRepo(getDsl(), getMapper(), null, getFilterConditionMapper(), getDateTimeService(),
-                    getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()),
-            "sortMapper");
+                getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()), "sortMapper");
         assertDegenerateSupplierParameter(
             () -> new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), null, getDateTimeService(),
-                    getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()),
+                getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()),
             "filterConditionMapper");
         assertDegenerateSupplierParameter(
             () -> new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(), null,
-                    getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()),
-            "dateTimeService");
+                getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()), "dateTimeService");
         assertDegenerateSupplierParameter(
             () -> new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-                    getDateTimeService(), null, getUpdateSetStepSetter(), getApplicationProperties()),
+                getDateTimeService(), null, getUpdateSetStepSetter(), getApplicationProperties()),
             "insertSetStepSetter");
         assertDegenerateSupplierParameter(
             () -> new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-                    getDateTimeService(), getInsertSetStepSetter(), null, getApplicationProperties()),
+                getDateTimeService(), getInsertSetStepSetter(), null, getApplicationProperties()),
             "updateSetStepSetter");
         assertDegenerateSupplierParameter(
             () -> new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-                    getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null),
+                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), null),
             "applicationProperties");
     }
 
@@ -197,7 +190,7 @@ public class JooqSearchOrderRepoTest extends
 
     private JooqSearchOrderRepo makeRepoFindingNestedEntities() {
         return new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
+            getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
 
             SearchTerm st1 = SearchTerm.newSearchTerm(1, SearchTermType.STRING.getId(), 3,
                 Paper.PaperFields.AUTHORS.getName(), "joss");
@@ -228,7 +221,7 @@ public class JooqSearchOrderRepoTest extends
 
             @Override
             protected List<Code> fetchCodesForSearchConditionWithId(SearchCondition searchCondition,
-                    String languageCode) {
+                String languageCode) {
                 return Collections.singletonList(new Code("1F", "Code 1F", "", false, 1, "CC 1", "", 0));
             }
 
@@ -244,7 +237,7 @@ public class JooqSearchOrderRepoTest extends
 
             @Override
             protected List<SearchCondition> findTermLessConditions(Long searchOrderId,
-                    List<Long> conditionIdsWithSearchTerms) {
+                List<Long> conditionIdsWithSearchTerms) {
                 return new ArrayList<>();
             }
         };
@@ -261,20 +254,23 @@ public class JooqSearchOrderRepoTest extends
 
         assertThat(so.getSearchConditions()).hasSize(3);
 
-        SearchCondition so1 = so.getSearchConditions()
+        SearchCondition so1 = so
+            .getSearchConditions()
             .get(0);
         assertThat(so1).isNotNull();
         assertThat(so1.getAuthors()).isEqualTo("joss");
         assertThat(so1.getPublicationYear()).isEqualTo("2014");
         assertThat(so1.getDisplayValue()).isEqualTo("joss AND 2014 AND 1F");
 
-        SearchCondition so2 = so.getSearchConditions()
+        SearchCondition so2 = so
+            .getSearchConditions()
             .get(1);
         assertThat(so2).isNotNull();
         assertThat(so2.getPublicationYear()).isEqualTo("2014-2016");
         assertThat(so2.getDisplayValue()).isEqualTo("2014-2016 AND 1F");
 
-        SearchCondition so3 = so.getSearchConditions()
+        SearchCondition so3 = so
+            .getSearchConditions()
             .get(2);
         assertThat(so3).isNotNull();
         assertThat(so3.getCreatedBy()).isEqualTo("mkj");
@@ -290,7 +286,8 @@ public class JooqSearchOrderRepoTest extends
 
         repoSpy.enrichAssociatedEntitiesOf(so, LC);
 
-        assertThat(so.getExcludedPaperIds()).hasSize(3)
+        assertThat(so.getExcludedPaperIds())
+            .hasSize(3)
             .containsExactly(17L, 33L, 42L);
     }
 

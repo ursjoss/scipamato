@@ -1,19 +1,19 @@
 package ch.difty.scipamato.core.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Pattern.Flag;
+import java.util.ArrayList;
+import java.util.List;
 
-import ch.difty.scipamato.common.entity.CodeClassId;
-import ch.difty.scipamato.common.entity.FieldEnumType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+
+import ch.difty.scipamato.common.entity.CodeClassId;
+import ch.difty.scipamato.common.entity.FieldEnumType;
 
 /**
  * The main entity of SciPaMaTo. A Paper is the representation of a scientific
@@ -64,21 +64,22 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
      * characters as normal authors, but separated by a semicolon
      * ({@literal ;})</li>
      * </ol>
-     *
+     * <p>
      * The resulting regex:
      * <p>
      * {@code ^[\w\u00C0-\u024f-']+(\s[\w\u00C0-\u024f-']+){0,}(,\s[\w\u00C0-\u024f-']+(\s[\w\u00C0-\u024f-']+){0,}){0,}(;\s[\w\u00C0-\u024f-']+(\s[\w\u00C0-\u024f-']+){0,}){0,1}\.$}
-     * <p>
+     *
      * <b>Beware:</b> The validation of the author field should actually be
      * functionally dependent on the selected configurable author parser strategy
      * (see ScipamatoCoreProperties#getAuthorParserStrategy()). Making this static
      * on this entity is a shortcut that only works as long as we only have a single
      * strategy.
-     *
+     * <p>
      * See also PubmedAuthorParser
      */
-    private static final String AUTHOR_REGEX = "^" + RE_WW + "(" + RE_S_WW + ")*(," + RE_S_WW + "(" + RE_S_WW
-            + ")*)*(;" + RE_S_WW + "(" + RE_S_WW + ")*)?\\.$";
+    private static final String AUTHOR_REGEX =
+        "^" + RE_WW + "(" + RE_S_WW + ")*(," + RE_S_WW + "(" + RE_S_WW + ")*)*(;" + RE_S_WW + "(" + RE_S_WW
+        + ")*)?\\.$";
 
     /**
      * Regex to validate DOIs. Does not capture the full range of possible DOIs, but
@@ -91,7 +92,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
      * <li>followed by one or more ASCII characters, numbers or special characters
      * ({@literal -._;()/:})</li>
      * </ol>
-     *
+     * <p>
      * The resulting regex:
      * <p>
      * {@code ^10\.\d{4,9}/[-._;()/:A-Z0-9]+$}
@@ -103,8 +104,8 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
      * referenced below:
      *
      * @see <a href=
-     *      "http://blog.crossref.org/2015/08/doi-regular-expressions.html">
-     *      http://blog.crossref.org/2015/08/doi-regular-expressions.html</a>
+     *     "http://blog.crossref.org/2015/08/doi-regular-expressions.html">
+     *     http://blog.crossref.org/2015/08/doi-regular-expressions.html</a>
      */
     private static final String DOI_REGEX = "^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$";
 
@@ -163,7 +164,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
 
     /**
      * Digital Object Identifier (see http://www.doi.org)
-     *
+     * <p>
      * /^10.\d{4,9}/[-._;()/:A-Z0-9]+$/i
      */
     @Pattern(regexp = DOI_REGEX, flags = { Flag.CASE_INSENSITIVE }, message = "{paper.invalidDOI}")

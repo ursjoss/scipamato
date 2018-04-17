@@ -34,7 +34,8 @@ public class JooqUserRoleRepo implements UserRoleRepository {
     @Override
     @Cacheable(key = "#userId")
     public List<Role> findRolesForUser(final Integer userId) {
-        return dsl.select(USER_ROLE.ROLE_ID)
+        return dsl
+            .select(USER_ROLE.ROLE_ID)
             .from(USER_ROLE)
             .where(USER_ROLE.USER_ID.eq(userId))
             .fetch()
@@ -48,7 +49,8 @@ public class JooqUserRoleRepo implements UserRoleRepository {
             USER_ROLE.ROLE_ID);
         for (final Role r : roles)
             step = step.values(userId, r.getId());
-        step.onDuplicateKeyIgnore()
+        step
+            .onDuplicateKeyIgnore()
             .execute();
         return findRolesForUser(userId);
     }
@@ -56,8 +58,10 @@ public class JooqUserRoleRepo implements UserRoleRepository {
     @Override
     @CacheEvict(key = "#userId")
     public void deleteAllRolesExcept(final Integer userId, final List<Integer> roleIds) {
-        dsl.deleteFrom(USER_ROLE)
-            .where(USER_ROLE.USER_ID.equal(userId)
+        dsl
+            .deleteFrom(USER_ROLE)
+            .where(USER_ROLE.USER_ID
+                .equal(userId)
                 .and(USER_ROLE.ROLE_ID.notIn(roleIds)))
             .execute();
     }

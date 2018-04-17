@@ -27,13 +27,15 @@ public class PaperFilterConditionMapper extends AbstractFilterConditionMapper<Pa
 
         if (filter.getAuthorMask() != null) {
             final String likeExpression = "%" + filter.getAuthorMask() + "%";
-            conditions.add(PAPER.FIRST_AUTHOR.likeIgnoreCase(likeExpression)
+            conditions.add(PAPER.FIRST_AUTHOR
+                .likeIgnoreCase(likeExpression)
                 .or(PAPER.AUTHORS.likeIgnoreCase(likeExpression)));
         }
 
         if (filter.getMethodsMask() != null) {
             final String likeExpression = "%" + filter.getMethodsMask() + "%";
-            conditions.add(PAPER.EXPOSURE_POLLUTANT.likeIgnoreCase(likeExpression)
+            conditions.add(PAPER.EXPOSURE_POLLUTANT
+                .likeIgnoreCase(likeExpression)
                 .or(PAPER.EXPOSURE_ASSESSMENT.likeIgnoreCase(likeExpression))
                 .or(PAPER.METHODS.likeIgnoreCase(likeExpression))
                 .or(PAPER.METHOD_STUDY_DESIGN.likeIgnoreCase(likeExpression))
@@ -44,7 +46,8 @@ public class PaperFilterConditionMapper extends AbstractFilterConditionMapper<Pa
 
         if (filter.getSearchMask() != null) {
             final String likeExpression = "%" + filter.getSearchMask() + "%";
-            conditions.add(PAPER.DOI.likeIgnoreCase(likeExpression)
+            conditions.add(PAPER.DOI
+                .likeIgnoreCase(likeExpression)
                 .or(PAPER.LOCATION.likeIgnoreCase(likeExpression))
                 .or(PAPER.TITLE.likeIgnoreCase(likeExpression))
                 .or(PAPER.GOALS.likeIgnoreCase(likeExpression))

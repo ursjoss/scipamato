@@ -2,12 +2,12 @@ package ch.difty.scipamato.core.web.paper.jasper.summary;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 
 import ch.difty.scipamato.core.web.paper.jasper.JasperEntityTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
 
 public class PaperSummaryTest extends JasperEntityTest {
 
@@ -15,7 +15,8 @@ public class PaperSummaryTest extends JasperEntityTest {
     private ReportHeaderFields rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
-        return ReportHeaderFields.builder(HEADER_PART, BRAND)
+        return ReportHeaderFields
+            .builder(HEADER_PART, BRAND)
             .populationLabel(POPULATION_LABEL)
             .goalsLabel(GOALS_LABEL)
             .methodsLabel(METHODS_LABEL)
@@ -101,7 +102,8 @@ public class PaperSummaryTest extends JasperEntityTest {
 
     @Test
     public void headerOnlyShowsIdIfHeaderPartIsBlank() {
-        rhf = ReportHeaderFields.builder("", BRAND)
+        rhf = ReportHeaderFields
+            .builder("", BRAND)
             .populationLabel(POPULATION_LABEL)
             .goalsLabel(GOALS_LABEL)
             .methodsLabel(METHODS_LABEL)
@@ -116,7 +118,8 @@ public class PaperSummaryTest extends JasperEntityTest {
 
     @Test
     public void equalsVerify() {
-        EqualsVerifier.forClass(PaperSummary.class)
+        EqualsVerifier
+            .forClass(PaperSummary.class)
             .withRedefinedSuperclass()
             .suppress(Warning.STRICT_INHERITANCE)
             .verify();

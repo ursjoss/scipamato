@@ -4,9 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -117,7 +115,8 @@ public class PaperProviderTest {
 
         @Override
         public boolean matches(PaginationContext p) {
-            return p != null && p.getPageSize() == pageSize && sort.equals(p.getSort()
+            return p != null && p.getPageSize() == pageSize && sort.equals(p
+                .getSort()
                 .toString());
         }
     }

@@ -1,8 +1,9 @@
 package ch.difty.scipamato.core.pubmed;
 
-import ch.difty.scipamato.core.pubmed.api.PubmedArticleSet;
 import feign.Param;
 import feign.RequestLine;
+
+import ch.difty.scipamato.core.pubmed.api.PubmedArticleSet;
 
 /**
  * Interface to PubMed via efetch

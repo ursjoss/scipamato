@@ -2,16 +2,16 @@ package ch.difty.scipamato.core.web.paper.jasper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
-
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import org.junit.Test;
 
 public class ReportHeaderFieldsTest {
 
     @Test
     public void equalsVerify() {
-        EqualsVerifier.forClass(ReportHeaderFields.class)
+        EqualsVerifier
+            .forClass(ReportHeaderFields.class)
             .withRedefinedSuperclass()
             .suppress(Warning.STRICT_INHERITANCE)
             .verify();
@@ -19,7 +19,8 @@ public class ReportHeaderFieldsTest {
 
     @Test
     public void makeMinimalReportHeaderFields() {
-        ReportHeaderFields rhf = ReportHeaderFields.builder("headerPart", "brand")
+        ReportHeaderFields rhf = ReportHeaderFields
+            .builder("headerPart", "brand")
             .build();
         assertThat(rhf.getHeaderPart()).isEqualTo("headerPart");
         assertThat(rhf.getBrand()).isEqualTo("brand");
@@ -27,7 +28,8 @@ public class ReportHeaderFieldsTest {
 
     @Test
     public void makeReportHeaderFields() {
-        ReportHeaderFields rhf = ReportHeaderFields.builder("headerPart1", "brand1")
+        ReportHeaderFields rhf = ReportHeaderFields
+            .builder("headerPart1", "brand1")
             .goalsLabel("g")
             .methodsLabel("m")
             .methodOutcomeLabel("mo")

@@ -18,10 +18,10 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSear
  */
 @Repository
 public class JooqPaperSlimBySearchOrderRepo extends JooqBySearchOrderRepo<PaperSlim, PaperSlimRecordMapper>
-        implements PaperSlimBackedSearchOrderRepository {
+    implements PaperSlimBackedSearchOrderRepository {
 
     public JooqPaperSlimBySearchOrderRepo(@Qualifier("dslContext") DSLContext dsl, PaperSlimRecordMapper mapper,
-            JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapper) {
+        JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapper) {
         super(dsl, mapper, sortMapper);
     }
 

@@ -4,9 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +19,7 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 
 public class PaperSlimByPaperFilterProviderTest
-        extends AbstractPaperSlimProviderTest<PaperFilter, PaperSlimByPaperFilterProvider> {
+    extends AbstractPaperSlimProviderTest<PaperFilter, PaperSlimByPaperFilterProvider> {
 
     @Mock
     private PaperFilter filterMock;
@@ -84,8 +82,8 @@ public class PaperSlimByPaperFilterProviderTest
     public void findingAllIdsByFilter() {
         provider.setSort("title", SortOrder.DESCENDING);
         when(paperServiceMock.findPageOfIdsByFilter(eq(getFilter()),
-            argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC"))))
-                .thenReturn(Arrays.asList(5L, 3L, 17L));
+            argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")))).thenReturn(
+            Arrays.asList(5L, 3L, 17L));
         List<Long> ids = provider.findAllPaperIdsByFilter();
         assertThat(ids).containsExactly(5L, 3L, 17L);
         verify(paperServiceMock).findPageOfIdsByFilter(eq(getFilter()),

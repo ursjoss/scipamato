@@ -14,10 +14,10 @@ public interface PublicPaperRepository {
      * key).
      *
      * @param number
-     *            - must not be null
+     *     - must not be null
      * @return the persisted {@link PublicPaper} or null if it can't be found.
      * @throws NullArgumentException
-     *             if the number is null.
+     *     if the number is null.
      */
     PublicPaper findByNumber(Long number);
 
@@ -26,9 +26,9 @@ public interface PublicPaperRepository {
      * pagination context.
      *
      * @param filter
-     *            {@link PublicPaperFilter}
+     *     {@link PublicPaperFilter}
      * @param paginationContext
-     *            {@link PaginationContext}
+     *     {@link PaginationContext}
      * @return list of all matching {@link PublicPaper}s
      */
     List<PublicPaper> findPageByFilter(PublicPaperFilter filter, PaginationContext paginationContext);
@@ -37,7 +37,7 @@ public interface PublicPaperRepository {
      * Counts all persisted {@link PublicPaper}s matching the provided filter.
      *
      * @param filter
-     *            {@link PublicPaper}s
+     *     {@link PublicPaper}s
      * @return list of all matching {@link PublicPaper}s
      */
     int countByFilter(PublicPaperFilter filter);
@@ -47,9 +47,9 @@ public interface PublicPaperRepository {
      * provided filter and pagination context.
      *
      * @param filter
-     *            of type {@code F}
+     *     of type {@code F}
      * @param paginationContext
-     *            {@link PaginationContext}
+     *     {@link PaginationContext}
      * @return list of the numbers of type {@code ID} of matching entities {@code T}
      */
     List<Long> findPageOfNumbersByFilter(PublicPaperFilter filter, PaginationContext paginationContext);

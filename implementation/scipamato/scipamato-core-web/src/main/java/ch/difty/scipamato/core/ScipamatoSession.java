@@ -1,16 +1,15 @@
 package ch.difty.scipamato.core;
 
+import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 import org.apache.wicket.Session;
 import org.apache.wicket.request.Request;
-
-import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.navigator.LongNavigator;
 
 /**
  * Scipamato specific Session
- *
+ * <p>
  * Holds an instance of {@link ItemNavigator} to manage the paper ids of the
  * latest search result. Both keeps track of the id of the currently
  * viewed/edited paper ('focus') and/or move the focus to the previous/next

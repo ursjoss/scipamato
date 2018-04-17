@@ -1,30 +1,12 @@
 package ch.difty.scipamato.core.web.paper.result;
 
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.COMMENT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_ASSESSMENT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.EXPOSURE_POLLUTANT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.FIRST_AUTHOR;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.GOALS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHODS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_CONFOUNDERS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_OUTCOME;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STATISTICS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.METHOD_STUDY_DESIGN;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.NUMBER;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_DURATION;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PARTICIPANTS;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.POPULATION_PLACE;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.PUBL_YEAR;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EFFECT_ESTIMATE;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EXPOSURE_RANGE;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_MEASURED_OUTCOME;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.TITLE;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -57,8 +39,6 @@ import ch.difty.scipamato.core.web.paper.jasper.review.PaperReviewDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summarytable.PaperSummaryTableDataSource;
-import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 /**
  * The result panel shows the results of searches (by filter or by search order)
@@ -86,10 +66,10 @@ public abstract class ResultPanel extends BasePanel<Void> {
      * Instantiate the panel.
      *
      * @param id
-     *            the id of the panel
+     *     the id of the panel
      * @param dataProvider
-     *            the data provider extending {@link AbstractPaperSlimProvider}
-     *            holding the filter specs
+     *     the data provider extending {@link AbstractPaperSlimProvider}
+     *     holding the filter specs
      */
     public ResultPanel(String id, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
         super(id);
@@ -112,7 +92,8 @@ public abstract class ResultPanel extends BasePanel<Void> {
     private void makeAndQueueTable(String id) {
         results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, dataProvider.getRowsPerPage());
         results.setOutputMarkupId(true);
-        results.add(new TableBehavior().striped()
+        results.add(new TableBehavior()
+            .striped()
             .hover());
         queue(results);
     }
@@ -129,23 +110,24 @@ public abstract class ResultPanel extends BasePanel<Void> {
     }
 
     private void onTitleClick(IModel<PaperSlim> m) {
-        getPaperIdManager().setFocusToItem(m.getObject()
+        getPaperIdManager().setFocusToItem(m
+            .getObject()
             .getId());
         setResponsePage(getResponsePage(m, getLocalization(), paperService, dataProvider));
     }
 
     protected abstract GenericWebPage<Paper> getResponsePage(IModel<PaperSlim> m, String languageCode,
-            PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider);
+        PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider);
 
     private PropertyColumn<PaperSlim, String> makePropertyColumn(String propExpression) {
         return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
-                propExpression);
+            propExpression);
     }
 
     private ClickablePropertyColumn<PaperSlim, String> makeClickableColumn(String propExpression,
-            SerializableConsumer<IModel<PaperSlim>> consumer) {
+        SerializableConsumer<IModel<PaperSlim>> consumer) {
         return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null),
-                propExpression, propExpression, consumer);
+            propExpression, propExpression, consumer);
     }
 
     private IColumn<PaperSlim, String> makeLinkIconColumn(String id) {
@@ -160,13 +142,14 @@ public abstract class ResultPanel extends BasePanel<Void> {
             @Override
             protected IModel<String> createTitleModel(IModel<PaperSlim> rowModel) {
                 return new StringResourceModel(
-                        dataProvider.isShowExcluded() ? "column.title.reinclude" : "column.title.exclude",
-                        ResultPanel.this, null);
+                    dataProvider.isShowExcluded() ? "column.title.reinclude" : "column.title.exclude", ResultPanel.this,
+                    null);
             }
 
             @Override
             protected void onClickPerformed(AjaxRequestTarget target, IModel<PaperSlim> rowModel, AjaxLink<Void> link) {
-                final Long excludedId = rowModel.getObject()
+                final Long excludedId = rowModel
+                    .getObject()
                     .getId();
                 target.add(results);
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).withExcludedPaperId(excludedId));
@@ -177,9 +160,10 @@ public abstract class ResultPanel extends BasePanel<Void> {
     private void makeAndQueuePdfSummaryLink(String id) {
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summary", this, null).getString();
-        final String pdfCaption = brand + "- "
-                + new StringResourceModel("paper_summary.titlePart", this, null).getString();
-        final ReportHeaderFields rhf = ReportHeaderFields.builder(headerPart, brand)
+        final String pdfCaption =
+            brand + "- " + new StringResourceModel("paper_summary.titlePart", this, null).getString();
+        final ReportHeaderFields rhf = ReportHeaderFields
+            .builder(headerPart, brand)
             .populationLabel(getLabelResourceFor(POPULATION.getName()))
             .goalsLabel(getLabelResourceFor(GOALS.getName()))
             .methodsLabel(getLabelResourceFor(METHODS.getName()))
@@ -197,11 +181,12 @@ public abstract class ResultPanel extends BasePanel<Void> {
 
     private void makeAndQueuePdfSummaryShortLink(String id) {
         final String brand = getProperties().getBrand();
-        final String headerPart = brand + "-"
-                + new StringResourceModel("headerPart.summaryShort", this, null).getString();
-        final String pdfCaption = brand + "- "
-                + new StringResourceModel("paper_summary.titlePart", this, null).getString();
-        final ReportHeaderFields rhf = ReportHeaderFields.builder(headerPart, brand)
+        final String headerPart =
+            brand + "-" + new StringResourceModel("headerPart.summaryShort", this, null).getString();
+        final String pdfCaption =
+            brand + "- " + new StringResourceModel("paper_summary.titlePart", this, null).getString();
+        final ReportHeaderFields rhf = ReportHeaderFields
+            .builder(headerPart, brand)
             .goalsLabel(getLabelResourceFor(GOALS.getName()))
             .methodsLabel(getLabelResourceFor(METHODS.getName()))
             .methodOutcomeLabel(getLabelResourceFor(METHOD_OUTCOME.getName()))
@@ -229,9 +214,10 @@ public abstract class ResultPanel extends BasePanel<Void> {
 
     private void makeAndQueuePdfReviewLink(String id) {
         final String brand = getProperties().getBrand();
-        final String pdfCaption = brand + "- "
-                + new StringResourceModel("paper_review.titlePart", this, null).getString();
-        final ReportHeaderFields rhf = ReportHeaderFields.builder("", brand)
+        final String pdfCaption =
+            brand + "- " + new StringResourceModel("paper_review.titlePart", this, null).getString();
+        final ReportHeaderFields rhf = ReportHeaderFields
+            .builder("", brand)
             .numberLabel(getLabelResourceFor(NUMBER.getName()))
             .authorYearLabel(getLabelResourceFor("authorYear"))
             .populationPlaceLabel(getShortLabelResourceFor(POPULATION_PLACE.getName()))
@@ -260,7 +246,8 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .setParameters(brand)
             .getString();
         final String url = getProperties().getPubmedBaseUrl();
-        final ReportHeaderFields rhf = ReportHeaderFields.builder("", brand)
+        final ReportHeaderFields rhf = ReportHeaderFields
+            .builder("", brand)
             .numberLabel(getLabelResourceFor(NUMBER.getName()))
             .captionLabel(pdfCaption)
             .pubmedBaseUrl(url)
@@ -283,10 +270,11 @@ public abstract class ResultPanel extends BasePanel<Void> {
     }
 
     private ResourceLink<Void> newPdfSummaryTable(final String id, final boolean includeResults,
-            final String resourceKeyPart) {
+        final String resourceKeyPart) {
         final String pdfCaption = new StringResourceModel("paper_summary_table.titlePart", this, null).getString();
         final String brand = getProperties().getBrand();
-        final ReportHeaderFields rhf = ReportHeaderFields.builder("", brand)
+        final ReportHeaderFields rhf = ReportHeaderFields
+            .builder("", brand)
             .numberLabel(getLabelResourceFor(NUMBER.getName()))
             .captionLabel(pdfCaption)
             .build();
@@ -300,15 +288,15 @@ public abstract class ResultPanel extends BasePanel<Void> {
     }
 
     private ResourceLink<Void> newResourceLink(String id, final String resourceKeyPart,
-            final JasperPaperDataSource<?> resource) {
+        final JasperPaperDataSource<?> resource) {
         final String bodyResourceKey = LINK_RESOURCE_PREFIX + resourceKeyPart + LABEL_RESOURCE_TAG;
         final String tileResourceKey = LINK_RESOURCE_PREFIX + resourceKeyPart + TITLE_RESOURCE_TAG;
 
         ResourceLink<Void> reviewLink = new ResourceLink<>(id, resource);
         reviewLink.setOutputMarkupId(true);
         reviewLink.setBody(new StringResourceModel(bodyResourceKey));
-        reviewLink
-            .add(new AttributeModifier(TITLE_ATTR, new StringResourceModel(tileResourceKey, this, null).getString()));
+        reviewLink.add(
+            new AttributeModifier(TITLE_ATTR, new StringResourceModel(tileResourceKey, this, null).getString()));
         return reviewLink;
     }
 

@@ -1,15 +1,11 @@
 package ch.difty.scipamato.core.persistence.paper.searchorder;
 
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.CONTAINS;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.EQUALS;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.LENGTH;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.LIKE;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.NONE;
-import static ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.REGEX;
+import static ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Collectors;
 
+import junitparams.Parameters;
 import org.jooq.Condition;
 import org.junit.Test;
 
@@ -18,7 +14,6 @@ import ch.difty.scipamato.core.entity.search.SearchTermType;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.MatchType;
 import ch.difty.scipamato.core.entity.search.StringSearchTerm.Token;
-import junitparams.Parameters;
 
 /**
  * Test class to integration test the search term and the search term evaluator.
@@ -115,12 +110,14 @@ public class StringSearchTermEvaluatorIntegrationTest extends SearchTermEvaluato
     @Parameters(method = "stringParameters")
     public void stringTest(String rawSearchTerm, String tokenString, String condition, MatchType type) {
         final StringSearchTerm st = makeSearchTerm(rawSearchTerm);
-        assertThat(st.getTokens()
+        assertThat(st
+            .getTokens()
             .stream()
             .map(Token::toString)
             .collect(Collectors.joining())).isEqualTo(tokenString);
 
-        assertThat(st.getTokens()
+        assertThat(st
+            .getTokens()
             .get(0).type.matchType).isEqualTo(type);
 
         final StringSearchTermEvaluator ste = getEvaluator();

@@ -33,7 +33,8 @@ public class DataSourceConfig {
     @Bean(destroyMethod = "close")
     @ConfigurationProperties(prefix = "sync.target.datasource")
     public DataSource hikariPublicDataSource() {
-        return DataSourceBuilder.create()
+        return DataSourceBuilder
+            .create()
             .build();
     }
 
@@ -48,7 +49,8 @@ public class DataSourceConfig {
     @Bean(destroyMethod = "close")
     @ConfigurationProperties(prefix = "sync.batch.datasource")
     public DataSource hikariBatchDataSource() {
-        return DataSourceBuilder.create()
+        return DataSourceBuilder
+            .create()
             .build();
     }
 

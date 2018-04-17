@@ -1,9 +1,6 @@
 package ch.difty.scipamato.publ.web;
 
-import static ch.difty.scipamato.publ.web.PublicPageParameters.NUMBER;
-import static ch.difty.scipamato.publ.web.PublicPageParameters.SEARCH_ORDER_ID;
-import static ch.difty.scipamato.publ.web.PublicPageParameters.SHOW_EXCLUDED;
-import static ch.difty.scipamato.publ.web.PublicPageParameters.SHOW_NAVBAR;
+import static ch.difty.scipamato.publ.web.PublicPageParameters.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;

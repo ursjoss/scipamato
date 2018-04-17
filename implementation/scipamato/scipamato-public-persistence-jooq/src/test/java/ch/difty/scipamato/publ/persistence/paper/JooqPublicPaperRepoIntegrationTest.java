@@ -91,14 +91,16 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
     public void findingPageOfNumbersByFilter() {
         filter.setPublicationYearFrom(2015);
         filter.setPublicationYearUntil(2018);
-        assertThat(repo.findPageOfNumbersByFilter(filter, allSorted)).isNotEmpty()
+        assertThat(repo.findPageOfNumbersByFilter(filter, allSorted))
+            .isNotEmpty()
             .containsExactly(2L);
     }
 
     private List<Code> newCodes(String... codes) {
         final List<Code> list = new ArrayList<>();
         for (String c : codes)
-            list.add(Code.builder()
+            list.add(Code
+                .builder()
                 .code(c)
                 .build());
         return list;
@@ -108,7 +110,8 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
     public void findingPageByFilter_withCodes1Fand5H_finds2() {
         filter.setCodesOfClass1(newCodes("1F"));
         filter.setCodesOfClass5(newCodes("5H"));
-        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty()
+        assertThat(repo.findPageByFilter(filter, allSorted))
+            .isNotEmpty()
             .extracting("number")
             .containsOnly(1L, 2L);
     }
@@ -117,7 +120,8 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
     public void findingPageByFilter_withCodes6Mand7L_finds3() {
         filter.setCodesOfClass6(newCodes("6M"));
         filter.setCodesOfClass7(newCodes("7L"));
-        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty()
+        assertThat(repo.findPageByFilter(filter, allSorted))
+            .isNotEmpty()
             .extracting("number")
             .containsOnly(1L, 2L, 3L);
     }
@@ -125,7 +129,8 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
     @Test
     public void findingPageByFilter_withCode2R_finds1() {
         filter.setCodesOfClass2(newCodes("2R"));
-        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty()
+        assertThat(repo.findPageByFilter(filter, allSorted))
+            .isNotEmpty()
             .extracting("number")
             .containsExactly(3L);
     }
@@ -133,9 +138,11 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
     @Test
     public void findingPageByFilter_withOriginallySetAndThenClearedFilter_findsAll() {
         filter.setCodesOfClass2(newCodes("2R"));
-        filter.getCodesOfClass2()
+        filter
+            .getCodesOfClass2()
             .clear();
-        assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty()
+        assertThat(repo.findPageByFilter(filter, allSorted))
+            .isNotEmpty()
             .extracting("number")
             .containsOnly(1L, 2L, 3L);
     }

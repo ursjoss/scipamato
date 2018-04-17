@@ -10,7 +10,8 @@ public class PublicPaperTest extends PublicEntityTest {
 
     @Test
     public void canSetGet() {
-        PublicPaper pp = PublicPaper.builder()
+        PublicPaper pp = PublicPaper
+            .builder()
             .id(1L)
             .number(2L)
             .pmId(10000)

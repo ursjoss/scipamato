@@ -31,13 +31,15 @@ public class JooqCodeClassRepo implements CodeClassRepository {
         final String lang = TranslationUtils.trimLanguageCode(languageCode);
         // skipping the audit fields
         return dslContext
-            .select(CODE_CLASS.ID.as("CC_ID"), DSL.coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
-                .as("CC_NAME"),
-                DSL.coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
-                    .as("CC_DESCRIPTION"))
+            .select(CODE_CLASS.ID.as("CC_ID"), DSL
+                .coalesce(CODE_CLASS_TR.NAME, TranslationUtils.NOT_TRANSL)
+                .as("CC_NAME"), DSL
+                .coalesce(CODE_CLASS_TR.DESCRIPTION, TranslationUtils.NOT_TRANSL)
+                .as("CC_DESCRIPTION"))
             .from(CODE_CLASS)
             .leftOuterJoin(CODE_CLASS_TR)
-            .on(CODE_CLASS.ID.equal(CODE_CLASS_TR.CODE_CLASS_ID)
+            .on(CODE_CLASS.ID
+                .equal(CODE_CLASS_TR.CODE_CLASS_ID)
                 .and(CODE_CLASS_TR.LANG_CODE.equal(lang)))
             .fetchInto(CodeClass.class);
     }

@@ -46,8 +46,8 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
     @Override
     protected void setUpHook() {
         when(searchOrderServiceMock.findById(SEARCH_ORDER_ID)).thenReturn(Optional.of(searchOrder));
-        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class)))
-            .thenReturn(Collections.singletonList(searchOrder));
+        when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class),
+            isA(PaginationContext.class))).thenReturn(Collections.singletonList(searchOrder));
     }
 
     @Override

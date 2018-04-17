@@ -3,6 +3,8 @@ package ch.difty.scipamato.core.web.paper.entry;
 import static ch.difty.scipamato.core.web.CorePageParameters.SEARCH_ORDER_ID;
 import static ch.difty.scipamato.core.web.CorePageParameters.SHOW_EXCLUDED;
 
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.head.CssHeaderItem;
@@ -21,8 +23,6 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.web.common.SelfUpdatingPage;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Page to add new papers or modify existing papers. The page implements the
@@ -48,12 +48,12 @@ import lombok.extern.slf4j.Slf4j;
  * has not yet been saved, the feedback messages are restricted to one message
  * at a time. If the paper has been persisted, several feedback messages would
  * be displayed to the user if the come up.
- *
+ * <p>
  * In order to fetch fields from PubMed, the default model now contains specific
  * 'n.a.' values for the fields that can't be null. In case PubMed import is
  * enabled, those will be replaced with real values (except for the goals field,
  * which is not available in the PubMed export).
- *
+ * <p>
  * In order to be able to jump back to the calling page (search or paper list
  * page), the page accepts the calling page as PageReference and passes it down
  * to the respective panels. Even more, if called from the search page, the page
@@ -83,9 +83,9 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      * jump back to the calling page.
      *
      * @param paperModel
-     *            model of the paper that shall be displayed.
+     *     model of the paper that shall be displayed.
      * @param callingPage
-     *            page reference to the page that called this page. Can be null.
+     *     page reference to the page that called this page. Can be null.
      */
     PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage) {
         this(paperModel, callingPage, null, false);
@@ -97,19 +97,19 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      * the search order where it was found.
      *
      * @param paperModel
-     *            model of the paper that shall be displayed.
+     *     model of the paper that shall be displayed.
      * @param callingPage
-     *            page reference to the page that called this page. Can be null.
+     *     page reference to the page that called this page. Can be null.
      * @param searchOrderId
-     *            the id of the search order that found this paper. Offers a button
-     *            to exclude the paper from the search order.
+     *     the id of the search order that found this paper. Offers a button
+     *     to exclude the paper from the search order.
      * @param showingExclusions
-     *            if false, the paper is part of the search result and can be
-     *            excluded from it. If true, the current paper has already been
-     *            excluded from the search order. You can re-include it.
+     *     if false, the paper is part of the search result and can be
+     *     excluded from it. If true, the current paper has already been
+     *     excluded from the search order. You can re-include it.
      */
     public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage, Long searchOrderId,
-            boolean showingExclusions) {
+        boolean showingExclusions) {
         super(paperModel);
         this.callingPage = callingPage;
         this.searchOrderId = searchOrderId;
@@ -124,9 +124,9 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      * showingExclusions)
      *
      * @param parameters
-     *            page parameters
+     *     page parameters
      * @param callingPage
-     *            page reference to the page that called this page. Can be null.
+     *     page reference to the page that called this page. Can be null.
      */
     public PaperEntryPage(PageParameters parameters, PageReference callingPage) {
         super(parameters);
@@ -175,7 +175,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
     @Override
     protected void implSpecificOnInitialize() {
         contentPanel = new EditablePaperPanel("contentPanel", getModel(), callingPage, searchOrderId,
-                showingExclusions) {
+            showingExclusions) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -204,7 +204,8 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
                 setModelObject(persisted);
                 resetFeedbackMessages();
             } else {
-                error(new StringResourceModel("save.error.hint", this, null).setParameters(getNullSafeId(), "")
+                error(new StringResourceModel("save.error.hint", this, null)
+                    .setParameters(getNullSafeId(), "")
                     .getString());
             }
         } catch (OptimisticLockingException ole) {

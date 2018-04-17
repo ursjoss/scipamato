@@ -34,8 +34,8 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     private final JournalExtractor                                journalExtractor;
 
     public JooqPublicPaperRepo(final DSLContext dsl, final JooqSortMapper<PaperRecord, PublicPaper, Paper> sortMapper,
-            final PublicPaperFilterConditionMapper filterConditionMapper, final AuthorsAbbreviator authorsAbbreviator,
-            final JournalExtractor journalExtractor) {
+        final PublicPaperFilterConditionMapper filterConditionMapper, final AuthorsAbbreviator authorsAbbreviator,
+        final JournalExtractor journalExtractor) {
         this.dsl = dsl;
         this.sortMapper = sortMapper;
         this.filterConditionMapper = filterConditionMapper;
@@ -62,7 +62,8 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     @Override
     public PublicPaper findByNumber(final Long number) {
         AssertAs.notNull(number, "number");
-        final PaperRecord tuple = getDsl().selectFrom(getTable())
+        final PaperRecord tuple = getDsl()
+            .selectFrom(getTable())
             .where(PAPER.NUMBER.equal(number))
             .fetchOneInto(getRecordClass());
         if (tuple != null)
@@ -75,20 +76,23 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     public List<PublicPaper> findPageByFilter(final PublicPaperFilter filter, final PaginationContext pc) {
         final Condition conditions = filterConditionMapper.map(filter);
         final Collection<SortField<PublicPaper>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
-        final List<PaperRecord> tuples = getDsl().selectFrom(getTable())
+        final List<PaperRecord> tuples = getDsl()
+            .selectFrom(getTable())
             .where(conditions)
             .orderBy(sortCriteria)
             .limit(pc.getPageSize())
             .offset(pc.getOffset())
             .fetchInto(getRecordClass());
-        return tuples.stream()
+        return tuples
+            .stream()
             .map(this::map)
             .collect(Collectors.toList());
     }
 
     /** package-private for test purposes */
     PublicPaper map(final PaperRecord r) {
-        final PublicPaper pp = PublicPaper.builder()
+        final PublicPaper pp = PublicPaper
+            .builder()
             .id(r.getId())
             .number(r.getNumber())
             .pmId(r.getPmId())
@@ -104,10 +108,16 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
             .result(r.getResult())
             .comment(r.getComment())
             .build();
-        pp.setCreated(r.getCreated() != null ? r.getCreated()
-            .toLocalDateTime() : null);
-        pp.setLastModified(r.getLastModified() != null ? r.getLastModified()
-            .toLocalDateTime() : null);
+        pp.setCreated(r.getCreated() != null ?
+            r
+                .getCreated()
+                .toLocalDateTime() :
+            null);
+        pp.setLastModified(r.getLastModified() != null ?
+            r
+                .getLastModified()
+                .toLocalDateTime() :
+            null);
         pp.setVersion(r.getVersion());
         return pp;
     }
@@ -115,7 +125,8 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     @Override
     public int countByFilter(final PublicPaperFilter filter) {
         final Condition conditions = filterConditionMapper.map(filter);
-        return getDsl().fetchCount(getDsl().selectOne()
+        return getDsl().fetchCount(getDsl()
+            .selectOne()
             .from(PAPER)
             .where(conditions));
     }
@@ -124,7 +135,8 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     public List<Long> findPageOfNumbersByFilter(final PublicPaperFilter filter, final PaginationContext pc) {
         final Condition conditions = filterConditionMapper.map(filter);
         final Collection<SortField<PublicPaper>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
-        return getDsl().select()
+        return getDsl()
+            .select()
             .from(getTable())
             .where(conditions)
             .orderBy(sortCriteria)

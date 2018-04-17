@@ -2,11 +2,11 @@ package ch.difty.scipamato.core.web.paper.jasper;
 
 import java.util.List;
 
+import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 import org.apache.commons.collections4.CollectionUtils;
 
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.User;
-import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 
 /**
  * Custom implementation of the {@link SimplePdfExporterConfiguration} which is
@@ -16,7 +16,7 @@ import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
  * @author u.joss
  */
 public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfiguration
-        implements ClusterablePdfExporterConfiguration {
+    implements ClusterablePdfExporterConfiguration {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,7 +45,8 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
         if (sb.length() > 0 && (builder.paperAuthor != null || builder.paperTitle != null))
             sb.append(" - ");
         if (builder.paperAuthor != null)
-            sb.append(builder.paperAuthor)
+            sb
+                .append(builder.paperAuthor)
                 .append(" et al.");
         if (builder.paperAuthor != null && builder.paperTitle != null)
             sb.append(": ");
@@ -57,14 +58,14 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
     public static class Builder {
         private static final String QUOTE = "\"";
 
-        private final String title;
-        private String       author;
-        private String       paperTitle;
-        private String       paperAuthor;
-        private String       subject;
-        private String       creator;
-        private String       keywords;
-        private boolean      compression = false;
+        private final String  title;
+        private       String  author;
+        private       String  paperTitle;
+        private       String  paperAuthor;
+        private       String  subject;
+        private       String  creator;
+        private       String  keywords;
+        private       boolean compression = false;
 
         /**
          * Derive the metadata title from headerPart and the paper number (if you also
@@ -72,7 +73,7 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
          *
          * @param headerPart
          * @param number
-         *            the unique number of the paper
+         *     the unique number of the paper
          */
         public Builder(final String headerPart, final Long number) {
             final StringBuilder sb = new StringBuilder();

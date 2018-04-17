@@ -3,35 +3,11 @@ package ch.difty.scipamato.core.pubmed;
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
-
-import ch.difty.scipamato.core.pubmed.api.Article;
-import ch.difty.scipamato.core.pubmed.api.ArticleId;
-import ch.difty.scipamato.core.pubmed.api.ArticleIdList;
-import ch.difty.scipamato.core.pubmed.api.ArticleTitle;
-import ch.difty.scipamato.core.pubmed.api.Author;
-import ch.difty.scipamato.core.pubmed.api.AuthorList;
-import ch.difty.scipamato.core.pubmed.api.CollectiveName;
-import ch.difty.scipamato.core.pubmed.api.ELocationID;
-import ch.difty.scipamato.core.pubmed.api.ForeName;
-import ch.difty.scipamato.core.pubmed.api.Initials;
-import ch.difty.scipamato.core.pubmed.api.Journal;
-import ch.difty.scipamato.core.pubmed.api.JournalIssue;
-import ch.difty.scipamato.core.pubmed.api.LastName;
-import ch.difty.scipamato.core.pubmed.api.MedlineCitation;
-import ch.difty.scipamato.core.pubmed.api.MedlineDate;
-import ch.difty.scipamato.core.pubmed.api.MedlineJournalInfo;
-import ch.difty.scipamato.core.pubmed.api.MedlinePgn;
-import ch.difty.scipamato.core.pubmed.api.Month;
-import ch.difty.scipamato.core.pubmed.api.PMID;
-import ch.difty.scipamato.core.pubmed.api.Pagination;
-import ch.difty.scipamato.core.pubmed.api.PubDate;
-import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
-import ch.difty.scipamato.core.pubmed.api.PubmedData;
-import ch.difty.scipamato.core.pubmed.api.Suffix;
-import ch.difty.scipamato.core.pubmed.api.Year;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import org.junit.Test;
+
+import ch.difty.scipamato.core.pubmed.api.*;
 
 public class ScipamatoPubmedArticleTest {
 
@@ -68,7 +44,8 @@ public class ScipamatoPubmedArticleTest {
 
     @Test
     public void degenerateConstruction_withNullArticle() {
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .setArticle(null);
         assertDegenerateSupplierParameter(() -> new ScipamatoPubmedArticle(pubmedArticle),
             "pubmedArticle.medlineCitation.article");
@@ -76,7 +53,8 @@ public class ScipamatoPubmedArticleTest {
 
     @Test
     public void degenerateConstruction_withNullJournal() {
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .setJournal(null);
         assertDegenerateSupplierParameter(() -> new ScipamatoPubmedArticle(pubmedArticle),
@@ -85,7 +63,8 @@ public class ScipamatoPubmedArticleTest {
 
     @Test
     public void degenerateConstruction_withNullPmid() {
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .setPMID(null);
         assertDegenerateSupplierParameter(() -> new ScipamatoPubmedArticle(pubmedArticle),
             "pubmedArticle.medlineCitation.pmid");
@@ -93,7 +72,8 @@ public class ScipamatoPubmedArticleTest {
 
     @Test
     public void degenerateConstruction_withNullJournalIssue() {
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getJournal()
             .setJournalIssue(null);
@@ -103,7 +83,8 @@ public class ScipamatoPubmedArticleTest {
 
     @Test
     public void degenerateConstruction_withNullPubDate() {
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getJournal()
             .getJournalIssue()
@@ -114,7 +95,8 @@ public class ScipamatoPubmedArticleTest {
 
     @Test
     public void degenerateConstruction_withNullMedlineJournalInfo() {
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .setMedlineJournalInfo(null);
         assertDegenerateSupplierParameter(() -> new ScipamatoPubmedArticle(pubmedArticle),
             "pubmedArticle.medlineCitation.medlineJournalInfo");
@@ -132,7 +114,8 @@ public class ScipamatoPubmedArticleTest {
 
     @Test
     public void extractingYearFromNeitherYearObjectNorMedlineDate_returnsYear0() {
-        assertThat(pubmedArticle.getMedlineCitation()
+        assertThat(pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getJournal()
             .getJournalIssue()
@@ -140,7 +123,8 @@ public class ScipamatoPubmedArticleTest {
             .getYearOrMonthOrDayOrSeasonOrMedlineDate()).isEmpty();
         Month month = new Month();
         month.setvalue("2016");
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getJournal()
             .getJournalIssue()
@@ -155,7 +139,8 @@ public class ScipamatoPubmedArticleTest {
     public void extractYearFromYearObject() {
         Year year = new Year();
         year.setvalue("2016");
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getJournal()
             .getJournalIssue()
@@ -170,7 +155,8 @@ public class ScipamatoPubmedArticleTest {
     public void extractYearFromMedlineDate() {
         MedlineDate md = new MedlineDate();
         md.setvalue("2016 Nov-Dec");
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getJournal()
             .getJournalIssue()
@@ -195,13 +181,17 @@ public class ScipamatoPubmedArticleTest {
     @Test
     public void authors_withoutCollectiveAuthor() {
         AuthorList authorList = new AuthorList();
-        authorList.getAuthor()
+        authorList
+            .getAuthor()
             .add(makeAuthor("Bond", "James", "J", null, null));
-        authorList.getAuthor()
+        authorList
+            .getAuthor()
             .add(makeAuthor("Kid", "Billy", "B", "Jr", null));
-        authorList.getAuthor()
+        authorList
+            .getAuthor()
             .add(makeAuthor("Joice", "James", "J", null, null));
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .setAuthorList(authorList);
         ScipamatoPubmedArticle spa = new ScipamatoPubmedArticle(pubmedArticle);
@@ -212,13 +202,17 @@ public class ScipamatoPubmedArticleTest {
     @Test
     public void authors_withCollectiveAuthor() {
         AuthorList authorList = new AuthorList();
-        authorList.getAuthor()
+        authorList
+            .getAuthor()
             .add(makeAuthor("Bond", "James", "J", null, null));
-        authorList.getAuthor()
+        authorList
+            .getAuthor()
             .add(makeAuthor("Kid", "Billy", "B", "Jr", null));
-        authorList.getAuthor()
+        authorList
+            .getAuthor()
             .add(makeAuthor(null, null, null, null, "Joice J"));
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .setAuthorList(authorList);
         ScipamatoPubmedArticle spa = new ScipamatoPubmedArticle(pubmedArticle);
@@ -229,9 +223,11 @@ public class ScipamatoPubmedArticleTest {
     @Test
     public void noAuthors_withCollectiveAuthor() {
         AuthorList authorList = new AuthorList();
-        authorList.getAuthor()
+        authorList
+            .getAuthor()
             .add(makeAuthor(null, null, null, null, "Joice J"));
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .setAuthorList(authorList);
         ScipamatoPubmedArticle spa = new ScipamatoPubmedArticle(pubmedArticle);
@@ -242,7 +238,8 @@ public class ScipamatoPubmedArticleTest {
     @Test
     public void noAuthors_noCollectiveAuthor() {
         AuthorList authorList = new AuthorList();
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .setAuthorList(authorList);
         ScipamatoPubmedArticle spa = new ScipamatoPubmedArticle(pubmedArticle);
@@ -252,24 +249,28 @@ public class ScipamatoPubmedArticleTest {
 
     @Test
     public void location_withMedlinePagination() {
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getMedlineJournalInfo()
             .setMedlineTA("Medline TA");
         Year year = new Year();
         year.setvalue("2016");
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getJournal()
             .getJournalIssue()
             .getPubDate()
             .getYearOrMonthOrDayOrSeasonOrMedlineDate()
             .add(year);
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getJournal()
             .getJournalIssue()
             .setVolume("6");
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getJournal()
             .getJournalIssue()
@@ -277,13 +278,16 @@ public class ScipamatoPubmedArticleTest {
         Pagination pagination = new Pagination();
         MedlinePgn medlinePgn = new MedlinePgn();
         medlinePgn.setvalue("1145-9");
-        pagination.getStartPageOrEndPageOrMedlinePgn()
+        pagination
+            .getStartPageOrEndPageOrMedlinePgn()
             .add(medlinePgn);
         MedlinePgn medlinePgn2 = new MedlinePgn();
         medlinePgn2.setvalue("3456-3458");
-        pagination.getStartPageOrEndPageOrMedlinePgn()
+        pagination
+            .getStartPageOrEndPageOrMedlinePgn()
             .add(medlinePgn2);
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getPaginationOrELocationID()
             .add(pagination);
@@ -293,24 +297,28 @@ public class ScipamatoPubmedArticleTest {
 
     @Test
     public void location_withMedlinePaginationWithoutPageRange() {
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getMedlineJournalInfo()
             .setMedlineTA("Medline TA");
         Year year = new Year();
         year.setvalue("2016");
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getJournal()
             .getJournalIssue()
             .getPubDate()
             .getYearOrMonthOrDayOrSeasonOrMedlineDate()
             .add(year);
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getJournal()
             .getJournalIssue()
             .setVolume("6");
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getJournal()
             .getJournalIssue()
@@ -318,9 +326,11 @@ public class ScipamatoPubmedArticleTest {
         Pagination pagination = new Pagination();
         MedlinePgn medlinePgn = new MedlinePgn();
         medlinePgn.setvalue("1145");
-        pagination.getStartPageOrEndPageOrMedlinePgn()
+        pagination
+            .getStartPageOrEndPageOrMedlinePgn()
             .add(medlinePgn);
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getPaginationOrELocationID()
             .add(pagination);
@@ -330,24 +340,28 @@ public class ScipamatoPubmedArticleTest {
 
     @Test
     public void location_withMedlineElocation() {
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getMedlineJournalInfo()
             .setMedlineTA("Medline TA");
         Year year = new Year();
         year.setvalue("2016");
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getJournal()
             .getJournalIssue()
             .getPubDate()
             .getYearOrMonthOrDayOrSeasonOrMedlineDate()
             .add(year);
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getJournal()
             .getJournalIssue()
             .setVolume("6");
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getJournal()
             .getJournalIssue()
@@ -358,11 +372,13 @@ public class ScipamatoPubmedArticleTest {
         ELocationID elocationId2 = new ELocationID();
         elocationId2.setEIdType("pii");
         elocationId2.setvalue("baz");
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getPaginationOrELocationID()
             .add(elocationId1);
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getPaginationOrELocationID()
             .add(elocationId2);
@@ -375,31 +391,36 @@ public class ScipamatoPubmedArticleTest {
         if (lastname != null) {
             LastName ln = new LastName();
             ln.setvalue(lastname);
-            author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()
+            author
+                .getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()
                 .add(ln);
         }
         if (forename != null) {
             ForeName fn = new ForeName();
             fn.setvalue(forename);
-            author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()
+            author
+                .getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()
                 .add(fn);
         }
         if (initials != null) {
             Initials i = new Initials();
             i.setvalue(initials);
-            author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()
+            author
+                .getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()
                 .add(i);
         }
         if (suffix != null) {
             Suffix s = new Suffix();
             s.setvalue(suffix);
-            author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()
+            author
+                .getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()
                 .add(s);
         }
         if (collectiveName != null) {
             CollectiveName cn = new CollectiveName();
             cn.setvalue(collectiveName);
-            author.getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()
+            author
+                .getLastNameOrForeNameOrInitialsOrSuffixOrCollectiveName()
                 .add(cn);
         }
         return author;
@@ -409,7 +430,8 @@ public class ScipamatoPubmedArticleTest {
     public void title() {
         ArticleTitle articleTitle = new ArticleTitle();
         articleTitle.setvalue("article title");
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .setArticleTitle(articleTitle);
         ScipamatoPubmedArticle spa = new ScipamatoPubmedArticle(pubmedArticle);
@@ -425,9 +447,11 @@ public class ScipamatoPubmedArticleTest {
         articleId2.setIdType("doi");
         articleId2.setvalue("10.0000012345");
         ArticleIdList articleIdList = new ArticleIdList();
-        articleIdList.getArticleId()
+        articleIdList
+            .getArticleId()
             .add(articleId1);
-        articleIdList.getArticleId()
+        articleIdList
+            .getArticleId()
             .add(articleId2);
         PubmedData pubmedData = new PubmedData();
         pubmedData.setArticleIdList(articleIdList);
@@ -440,7 +464,8 @@ public class ScipamatoPubmedArticleTest {
     public void doi_withoutArticleIdList_usesElocIfthere() {
         ELocationID elocationId = new ELocationID();
         elocationId.setvalue("eloc");
-        pubmedArticle.getMedlineCitation()
+        pubmedArticle
+            .getMedlineCitation()
             .getArticle()
             .getPaginationOrELocationID()
             .add(elocationId);
@@ -450,7 +475,8 @@ public class ScipamatoPubmedArticleTest {
 
     @Test
     public void equals() {
-        EqualsVerifier.forClass(ScipamatoPubmedArticle.class)
+        EqualsVerifier
+            .forClass(ScipamatoPubmedArticle.class)
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }

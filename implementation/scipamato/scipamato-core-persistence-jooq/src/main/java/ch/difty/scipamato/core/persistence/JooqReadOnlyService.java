@@ -16,20 +16,19 @@ import ch.difty.scipamato.core.entity.User;
  * Abstract base repository class providing the fundamental functionality of a
  * jooq read-only Service
  *
- * @author u.joss
- *
  * @param <ID>
- *            the type of the id in the {@link CoreEntity}
+ *     the type of the id in the {@link CoreEntity}
  * @param <T>
- *            the entity type, extending {@link CoreEntity}
+ *     the entity type, extending {@link CoreEntity}
  * @param <F>
- *            the filter, extending {@link ScipamatoFilter}
+ *     the filter, extending {@link ScipamatoFilter}
  * @param <REPO>
- *            the entity repository (extending {@link EntityRepository}
+ *     the entity repository (extending {@link EntityRepository}
+ * @author u.joss
  */
 @Transactional(readOnly = true)
 public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipamatoEntity<ID>, F extends ScipamatoFilter, REPO extends ReadOnlyRepository<T, ID, F>>
-        implements ReadOnlyService<ID, T, F> {
+    implements ReadOnlyService<ID, T, F> {
 
     private final REPO           repo;
     private final UserRepository userRepo;
@@ -63,14 +62,17 @@ public abstract class JooqReadOnlyService<ID extends Number, T extends IdScipama
 
     private void setCreatedMetaData(final T entity) {
         final Optional<User> user = getUserWithId(entity.getCreatedBy());
-        entity.setCreatedByName(user.map(User::getDisplayValue)
+        entity.setCreatedByName(user
+            .map(User::getDisplayValue)
             .orElse(null));
-        entity.setCreatedByFullName(user.map(User::getFullName)
+        entity.setCreatedByFullName(user
+            .map(User::getFullName)
             .orElse(null));
     }
 
     private void setModifiedMeta(final T entity) {
-        entity.setLastModifiedByName(getUserWithId(entity.getLastModifiedBy()).map(User::getDisplayValue)
+        entity.setLastModifiedByName(getUserWithId(entity.getLastModifiedBy())
+            .map(User::getDisplayValue)
             .orElse(null));
     }
 

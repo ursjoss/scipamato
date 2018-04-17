@@ -32,14 +32,15 @@ public class PaperAttachmentProvider extends SortableDataProvider<PaperAttachmen
      * Returns paged {@link PaperAttachment} iterator
      *
      * @param offset
-     *            skipping records
+     *     skipping records
      * @param size
-     *            page size
+     *     page size
      * @return iterator
      */
     @Override
     public Iterator<PaperAttachment> iterator(final long offset, final long size) {
-        return attachmentsModel.getObject()
+        return attachmentsModel
+            .getObject()
             .stream()
             .skip(offset)
             .limit(size)
@@ -48,7 +49,8 @@ public class PaperAttachmentProvider extends SortableDataProvider<PaperAttachmen
 
     @Override
     public long size() {
-        return attachmentsModel.getObject()
+        return attachmentsModel
+            .getObject()
             .size();
     }
 

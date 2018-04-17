@@ -2,10 +2,7 @@ package ch.difty.scipamato.core.persistence.paper.searchorder;
 
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.CREATED;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.CREATED_BY;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.LAST_MOD;
-import static ch.difty.scipamato.core.entity.Paper.PaperFields.LAST_MOD_BY;
+import static ch.difty.scipamato.core.entity.Paper.PaperFields.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -54,28 +51,32 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
     }
 
     private void handleUserField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions,
-            final Token token) {
+        final Token token) {
         final String fieldName = searchTerm.getFieldName();
-        if (!(CREATED_BY.getName()
-            .equals(fieldName)
-                || LAST_MOD_BY.getName()
-                    .equals(fieldName))) {
+        if (!(CREATED_BY
+                  .getName()
+                  .equals(fieldName) || LAST_MOD_BY
+                  .getName()
+                  .equals(fieldName))) {
             checkFields(fieldName, "user", CREATED_BY, LAST_MOD_BY, "CONTAINS");
         }
         final Field<Object> field = DSL.field(fieldName);
-        final String userName = "%" + token.getUserSqlData()
+        final String userName = "%" + token
+            .getUserSqlData()
             .toLowerCase() + "%";
-        final SelectConditionStep<Record1<Long>> step = DSL.select(PAPER.ID)
+        final SelectConditionStep<Record1<Long>> step = DSL
+            .select(PAPER.ID)
             .from(PAPER)
             .innerJoin(SCIPAMATO_USER)
             .on(field.eq(SCIPAMATO_USER.ID))
-            .where(SCIPAMATO_USER.USER_NAME.lower()
+            .where(SCIPAMATO_USER.USER_NAME
+                .lower()
                 .like(userName));
         conditions.add(() -> PAPER.ID.in(step));
     }
 
     private void checkFields(final String fieldName, String fieldType, FieldEnumType fld1, FieldEnumType fld2,
-            String matchType) {
+        String matchType) {
         final String msg = String.format(
             "Field %s is not one of the expected %s fields [%s, %s] entitled to use MatchType.%s", fieldName, fieldType,
             fld1.getName(), fld2.getName(), matchType);
@@ -83,19 +84,23 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
     }
 
     private void handleDateField(final AuditSearchTerm searchTerm, final ConditionalSupplier conditions,
-            final Token token) {
+        final Token token) {
         final String fieldName = searchTerm.getFieldName();
-        if (!(CREATED.getName()
-            .equals(fieldName)
-                || LAST_MOD.getName()
-                    .equals(fieldName))) {
+        if (!(CREATED
+                  .getName()
+                  .equals(fieldName) || LAST_MOD
+                  .getName()
+                  .equals(fieldName))) {
             checkFields(fieldName, "date", CREATED, LAST_MOD, token.getType().matchType.name());
         }
-        if (token.getDateSqlData()
-            .length() == DATE_RANGE_PATTERN_LENGTH) {
-            final LocalDateTime ldt1 = LocalDateTime.parse(token.getDateSqlData()
+        if (token
+                .getDateSqlData()
+                .length() == DATE_RANGE_PATTERN_LENGTH) {
+            final LocalDateTime ldt1 = LocalDateTime.parse(token
+                .getDateSqlData()
                 .substring(0, 19), DateTimeFormatter.ofPattern(DATE_FORMAT));
-            final LocalDateTime ldt2 = LocalDateTime.parse(token.getDateSqlData()
+            final LocalDateTime ldt2 = LocalDateTime.parse(token
+                .getDateSqlData()
                 .substring(20), DateTimeFormatter.ofPattern(DATE_FORMAT));
             addToConditions(token, DSL.field(fieldName), DSL.val(Timestamp.valueOf(ldt1)),
                 DSL.val(Timestamp.valueOf(ldt2)), conditions);
@@ -108,7 +113,7 @@ public class AuditSearchTermEvaluator implements SearchTermEvaluator<AuditSearch
     }
 
     private void addToConditions(final Token token, final Field<Object> field, final Field<Timestamp> value1,
-            final Field<Timestamp> value2, final ConditionalSupplier conditions) {
+        final Field<Timestamp> value2, final ConditionalSupplier conditions) {
         switch (token.getType().matchType) {
         case RANGE:
             conditions.add(() -> field.between(value1, value2));

@@ -3,10 +3,9 @@ package ch.difty.scipamato.publ.web.themes.markup.html.publ;
 import java.util.Collections;
 import java.util.List;
 
+import de.agilecoders.wicket.core.settings.Theme;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.HeaderItem;
-
-import de.agilecoders.wicket.core.settings.Theme;
 
 /**
  * java representation of the SciPaMaTo-Public Theme. Is based on TODC Bootstrap
@@ -18,7 +17,7 @@ import de.agilecoders.wicket.core.settings.Theme;
  * <p>
  * This theme modifies bootstrap and therefore both files gets loaded
  * (`bootstrap.css` and `scipamato-public-bootstrap.css`).
- * <p>
+ *
  * <b>Usage<b/>
  *
  * <pre>
@@ -36,10 +35,10 @@ public class ScipamatoPublicTheme extends Theme {
      * Instantiates a new ScipamatoPublicTheme instance.
      *
      * @param useLessOverCss
-     *            if true: SciPamaTo will dynamically compile the LESS files into
-     *            CSS. If false, the precompiled CSS is used.
+     *     if true: SciPamaTo will dynamically compile the LESS files into
+     *     CSS. If false, the precompiled CSS is used.
      * @param name
-     *            name for the theme
+     *     name for the theme
      */
     public ScipamatoPublicTheme(final boolean useLessOverCss, final String name) {
         super(name);
@@ -51,8 +50,8 @@ public class ScipamatoPublicTheme extends Theme {
      * {@literal scipamato-public}.
      *
      * @param useLessOverCss
-     *            if true: SciPamaTo will dynamically compile the LESS files into
-     *            CSS. If false, the precompiled CSS is used.
+     *     if true: SciPamaTo will dynamically compile the LESS files into
+     *     CSS. If false, the precompiled CSS is used.
      */
     public ScipamatoPublicTheme(final boolean useLessOverCss) {
         this(useLessOverCss, "scipamato-public");
@@ -65,10 +64,12 @@ public class ScipamatoPublicTheme extends Theme {
 
     private CssHeaderItem makeHeaderItem() {
         if (useLessOverCss)
-            return CssHeaderItem.forReference(ScipamatoPublicLessReference.instance())
+            return CssHeaderItem
+                .forReference(ScipamatoPublicLessReference.instance())
                 .setId(BOOTSTRAP_THEME_MARKUP_ID);
         else
-            return CssHeaderItem.forReference(ScipamatoPublicCssReference.instance())
+            return CssHeaderItem
+                .forReference(ScipamatoPublicCssReference.instance())
                 .setId(BOOTSTRAP_THEME_MARKUP_ID);
     }
 }

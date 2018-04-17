@@ -3,11 +3,10 @@ package ch.difty.scipamato.core.sync.jobs.codeclass;
 import static ch.difty.scipamato.core.db.public_.tables.CodeClass.CODE_CLASS;
 import static ch.difty.scipamato.core.db.public_.tables.CodeClassTr.CODE_CLASS_TR;
 
+import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-
-import javax.sql.DataSource;
 
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
@@ -40,7 +39,7 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
  */
 @Configuration
 public class CodeClassSyncConfig
-        extends SyncConfig<PublicCodeClass, ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord> {
+    extends SyncConfig<PublicCodeClass, ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord> {
 
     private static final String TOPIC      = "codeClass";
     private static final int    CHUNK_SIZE = 50;
@@ -55,11 +54,11 @@ public class CodeClassSyncConfig
     private static final TableField<CodeClassTrRecord, Timestamp> C_LAST_MODIFIED = CODE_CLASS_TR.LAST_MODIFIED;
 
     protected CodeClassSyncConfig(@Qualifier("dslContext") DSLContext jooqCore,
-            @Qualifier("publicDslContext") DSLContext jooqPublic,
-            @Qualifier("dataSource") DataSource scipamatoCoreDataSource, JobBuilderFactory jobBuilderFactory,
-            StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+        @Qualifier("publicDslContext") DSLContext jooqPublic,
+        @Qualifier("dataSource") DataSource scipamatoCoreDataSource, JobBuilderFactory jobBuilderFactory,
+        StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
         super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, scipamatoCoreDataSource, jobBuilderFactory, stepBuilderFactory,
-                dateTimeService);
+            dateTimeService);
     }
 
     @Bean
@@ -79,7 +78,8 @@ public class CodeClassSyncConfig
 
     @Override
     protected String selectSql() {
-        return getJooqCore().select(C_ID, C_LANG_CODE, C_NAME, C_DESCRIPTION, C_VERSION, C_CREATED, C_LAST_MODIFIED)
+        return getJooqCore()
+            .select(C_ID, C_LANG_CODE, C_NAME, C_DESCRIPTION, C_VERSION, C_CREATED, C_LAST_MODIFIED)
             .from(CodeClass.CODE_CLASS)
             .innerJoin(CodeClassTr.CODE_CLASS_TR)
             .on(C_ID.eq(CodeClassTr.CODE_CLASS_TR.CODE_CLASS_ID))
@@ -88,7 +88,8 @@ public class CodeClassSyncConfig
 
     @Override
     protected PublicCodeClass makeEntity(final ResultSet rs) throws SQLException {
-        return PublicCodeClass.builder()
+        return PublicCodeClass
+            .builder()
             .codeClassId(getInteger(C_ID, rs))
             .langCode(getString(C_LANG_CODE, rs))
             .name(getString(C_NAME, rs))
@@ -102,8 +103,9 @@ public class CodeClassSyncConfig
 
     @Override
     protected DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord> getPurgeDcs(
-            final Timestamp cutOff) {
-        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.CodeClass.CODE_CLASS)
+        final Timestamp cutOff) {
+        return getJooqPublic()
+            .delete(ch.difty.scipamato.publ.db.public_.tables.CodeClass.CODE_CLASS)
             .where(ch.difty.scipamato.publ.db.public_.tables.CodeClass.CODE_CLASS.LAST_SYNCHED.lessThan(cutOff));
     }
 

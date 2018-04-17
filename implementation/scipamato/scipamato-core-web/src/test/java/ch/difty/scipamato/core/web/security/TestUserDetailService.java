@@ -19,7 +19,7 @@ import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails;
  * This service has precedence over the productive implementations of
  * {@link UserDetailsService}. It will not be instantiated on production as it
  * is in the test package, so the productive implementation will be the only one.
- *
+ * <p>
  * We're using two hard-coded users, ignoring the database entirely.
  *
  * @author u.joss
@@ -28,8 +28,8 @@ import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails;
 @Primary
 public class TestUserDetailService implements UserDetailsService {
 
-    private static final String ADMIN = "testadmin";
-    private static final String USER  = "testuser";
+    private static final String ADMIN    = "testadmin";
+    private static final String USER     = "testuser";
     // BCrypt encrypted password 'secretpw' as defined in {@link WicketTest}
     private static final String PASSWORD = "$2a$08$O/YZvh/jf1RWaZkpLPzfUeCkVczIaGLV0.vTKDCbxb0qn37qpj.Je";
 

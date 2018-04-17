@@ -29,7 +29,8 @@ public class SyncJobResultTest {
         assertThat(result.isSuccessful()).isTrue();
         assertThat(result.isFailed()).isFalse();
         assertThat(result.getMessages()).hasSize(1);
-        assertThat(result.getMessages()
+        assertThat(result
+            .getMessages()
             .get(0)).isEqualTo("foo");
     }
 
@@ -39,7 +40,8 @@ public class SyncJobResultTest {
         assertThat(result.isSuccessful()).isFalse();
         assertThat(result.isFailed()).isTrue();
         assertThat(result.getMessages()).hasSize(1);
-        assertThat(result.getMessages()
+        assertThat(result
+            .getMessages()
             .get(0)).isEqualTo("bar");
     }
 }

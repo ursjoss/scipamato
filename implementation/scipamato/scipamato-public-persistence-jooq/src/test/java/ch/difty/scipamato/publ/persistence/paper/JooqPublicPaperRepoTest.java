@@ -2,10 +2,7 @@ package ch.difty.scipamato.publ.persistence.paper;
 
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import org.jooq.DSLContext;
 import org.junit.After;
@@ -39,7 +36,7 @@ public class JooqPublicPaperRepoTest {
     @Before
     public void setUp() {
         repo = new JooqPublicPaperRepo(dslMock, sortMapperMock, filterConditionMapperMock, authorsAbbreviator,
-                journalExtractor);
+            journalExtractor);
     }
 
     @After

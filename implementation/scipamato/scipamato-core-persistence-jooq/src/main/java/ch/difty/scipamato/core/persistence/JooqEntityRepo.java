@@ -3,12 +3,7 @@ package ch.difty.scipamato.core.persistence;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import org.jooq.DSLContext;
-import org.jooq.InsertSetMoreStep;
-import org.jooq.InsertSetStep;
-import org.jooq.Record;
-import org.jooq.RecordMapper;
-import org.jooq.UpdateSetStep;
+import org.jooq.*;
 import org.jooq.impl.TableImpl;
 import org.slf4j.Logger;
 import org.springframework.security.core.Authentication;
@@ -27,24 +22,23 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException.Type;
 /**
  * The generic jOOQ entity repository for manipulation of entities.
  *
- * @author u.joss
- *
  * @param <R>
- *            the type of the record, extending {@link Record}
+ *     the type of the record, extending {@link Record}
  * @param <T>
- *            the type of the entity, extending {@link CoreEntity}
+ *     the type of the entity, extending {@link CoreEntity}
  * @param <ID>
- *            the type of the ID of the entity {@code T}
+ *     the type of the ID of the entity {@code T}
  * @param <TI>
- *            the type of the table implementation of record {@code R}
+ *     the type of the table implementation of record {@code R}
  * @param <M>
- *            the type of the record mapper, mapping record {@code R} into
- *            entity {@code T}
+ *     the type of the record mapper, mapping record {@code R} into
+ *     entity {@code T}
  * @param <F>
- *            the type of the filter, extending {@link ScipamatoFilter}
+ *     the type of the filter, extending {@link ScipamatoFilter}
+ * @author u.joss
  */
 public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
-        extends JooqReadOnlyRepo<R, T, ID, TI, M, F> implements EntityRepository<T, ID, F> {
+    extends JooqReadOnlyRepo<R, T, ID, TI, M, F> implements EntityRepository<T, ID, F> {
 
     private final DateTimeService           dateTimeService;
     private final InsertSetStepSetter<R, T> insertSetStepSetter;
@@ -52,30 +46,30 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
 
     /**
      * @param dsl
-     *            the {@link DSLContext}
+     *     the {@link DSLContext}
      * @param mapper
-     *            record mapper mapping record {@code R} into entity {@code T}
+     *     record mapper mapping record {@code R} into entity {@code T}
      * @param sortMapper
-     *            {@link JooqSortMapper} mapping spring data sort specifications
-     *            into jOOQ specific sort specs
+     *     {@link JooqSortMapper} mapping spring data sort specifications
+     *     into jOOQ specific sort specs
      * @param filterConditionMapper
-     *            the {@link GenericFilterConditionMapper} mapping a derivative of
-     *            {@link ScipamatoFilter} into jOOC Condition
+     *     the {@link GenericFilterConditionMapper} mapping a derivative of
+     *     {@link ScipamatoFilter} into jOOC Condition
      * @param dateTimeService
-     *            the {@link DateTimeService} providing access to the system time
+     *     the {@link DateTimeService} providing access to the system time
      * @param insertSetStepSetter
-     *            {@link InsertSetStepSetter} mapping the entity fields into the
-     *            jOOQ {@link InsertSetStep}.
+     *     {@link InsertSetStepSetter} mapping the entity fields into the
+     *     jOOQ {@link InsertSetStep}.
      * @param updateSetStepSetter
-     *            {@link UpdateSetStepSetter} mapping the entity fields into the
-     *            jOOQ {@link UpdateSetStep}.
+     *     {@link UpdateSetStepSetter} mapping the entity fields into the
+     *     jOOQ {@link UpdateSetStep}.
      * @param applicationProperties
-     *            {@link ApplicationProperties}
+     *     {@link ApplicationProperties}
      */
     protected JooqEntityRepo(DSLContext dsl, M mapper, JooqSortMapper<R, T, TI> sortMapper,
-            GenericFilterConditionMapper<F> filterConditionMapper, DateTimeService dateTimeService,
-            InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter,
-            ApplicationProperties applicationProperties) {
+        GenericFilterConditionMapper<F> filterConditionMapper, DateTimeService dateTimeService,
+        InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter,
+        ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, applicationProperties);
         this.insertSetStepSetter = AssertAs.notNull(insertSetStepSetter, "insertSetStepSetter");
         this.updateSetStepSetter = AssertAs.notNull(updateSetStepSetter, "updateSetStepSetter");
@@ -93,14 +87,14 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
 
     /**
      * @param record
-     *            persisted record that now holds the ID from the database.
+     *     persisted record that now holds the ID from the database.
      * @return the id of type {@code ID}
      */
     protected abstract ID getIdFrom(R record);
 
     /**
      * @param entity
-     *            persisted entity that now holds the ID from the database.
+     *     persisted entity that now holds the ID from the database.
      * @return the id of type {@code ID}
      */
     protected abstract ID getIdFrom(T entity);
@@ -121,7 +115,8 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
         InsertSetMoreStep<R> step = insertSetStepSetter.setNonKeyFieldsFor(getDsl().insertInto(getTable()), entity);
         insertSetStepSetter.considerSettingKeyOf(step, entity);
 
-        R saved = step.returning()
+        R saved = step
+            .returning()
             .fetchOne();
         insertSetStepSetter.resetIdToEntity(entity, saved);
         saveAssociatedEntitiesOf(entity, languageCode);
@@ -152,7 +147,8 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
         final T toBeDeleted = findById(id, version);
         if (toBeDeleted != null) {
             deleteAssociatedEntitiesOf(toBeDeleted);
-            final int deleteCount = getDsl().delete(getTable())
+            final int deleteCount = getDsl()
+                .delete(getTable())
                 .where(getTableId().equal(id))
                 .and(getRecordVersion().eq(version))
                 .execute();
@@ -190,7 +186,8 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
         entity.setLastModified(now());
         entity.setLastModifiedBy(getUserId());
 
-        R updated = updateSetStepSetter.setFieldsFor(getDsl().update(getTable()), entity)
+        R updated = updateSetStepSetter
+            .setFieldsFor(getDsl().update(getTable()), entity)
             .where(getTableId().equal(id))
             .and(getRecordVersion().equal(entity.getVersion()))
             .returning()
@@ -219,7 +216,8 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      * @return the current {@link User}
      */
     protected User getActiveUser() {
-        final Authentication auth = SecurityContextHolder.getContext()
+        final Authentication auth = SecurityContextHolder
+            .getContext()
             .getAuthentication();
         if (auth != null) {
             return (User) auth.getPrincipal();

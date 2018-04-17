@@ -2,9 +2,7 @@ package ch.difty.scipamato.core.sync.houskeeping;
 
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import org.jooq.DeleteConditionStep;
 import org.junit.Before;
@@ -36,8 +34,8 @@ public class HouseKeeperTest {
 
     @Test
     public void degenerateConstruction_throws() {
-        assertDegenerateSupplierParameter(
-            () -> new HouseKeeper<>((DeleteConditionStep<CodeClassRecord>) null, 30), "deleteDdl");
+        assertDegenerateSupplierParameter(() -> new HouseKeeper<>((DeleteConditionStep<CodeClassRecord>) null, 30),
+            "deleteDdl");
     }
 
     @Test

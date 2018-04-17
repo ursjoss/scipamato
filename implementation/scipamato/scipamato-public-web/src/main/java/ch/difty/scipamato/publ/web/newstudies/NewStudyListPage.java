@@ -27,10 +27,10 @@ import ch.difty.scipamato.publ.web.paper.browse.PublicPaperDetailPage;
  * The page lists 'new studies', i.e. studies that were collected and flagged by
  * the SciPaMaTo-team as eligible for this page. By default, the newest
  * collection of new studies is presented.
- *
+ * <p>
  * With the use of page-parameters, an older collection of new studies can be
  * selected instead (TODO).
- *
+ * <p>
  * The page is typically shown in an iframe of a CMS.
  *
  * @author Urs Joss
@@ -96,18 +96,19 @@ public class NewStudyListPage extends BasePage<Void> {
 
             @Override
             protected void populateItem(ListItem<NewStudyTopic> topic) {
-                topic.add(new Label("topicTitle", new PropertyModel<String>(topic.getModel(),
-                        NewStudyTopic.NewStudyTopicFields.TITLE.getName())));
-                topic.add(new ListView<NewStudy>("topicStudies", topic.getModelObject()
+                topic.add(new Label("topicTitle",
+                    new PropertyModel<String>(topic.getModel(), NewStudyTopic.NewStudyTopicFields.TITLE.getName())));
+                topic.add(new ListView<NewStudy>("topicStudies", topic
+                    .getModelObject()
                     .getStudies()) {
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     protected void populateItem(ListItem<NewStudy> study) {
-                        study.add(new Label("headline", new PropertyModel<String>(study.getModel(),
-                                NewStudy.NewStudyFields.HEADLINE.getName())));
+                        study.add(new Label("headline",
+                            new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.HEADLINE.getName())));
                         study.add(new Label("description", new PropertyModel<String>(study.getModel(),
-                                NewStudy.NewStudyFields.DESCRIPTION.getName())));
+                            NewStudy.NewStudyFields.DESCRIPTION.getName())));
                         study.add(newLinkToStudy("reference", study));
                     }
                 });
@@ -119,15 +120,16 @@ public class NewStudyListPage extends BasePage<Void> {
      * Link pointing to the study detail page with the current study
      *
      * @param id
-     *            the id on the html page. Also expects a label with the same id +
-     *            tag 'Label'
+     *     the id on the html page. Also expects a label with the same id +
+     *     tag 'Label'
      * @param study
-     *            the current study as ListItem
+     *     the current study as ListItem
      * @return the link
      */
     private Link<NewStudy> newLinkToStudy(final String id, final ListItem<NewStudy> study) {
         PageParameters pp = new PageParameters();
-        pp.set(PublicPageParameters.NUMBER.getName(), study.getModelObject()
+        pp.set(PublicPageParameters.NUMBER.getName(), study
+            .getModelObject()
             .getNumber());
         Link<NewStudy> link = new Link<NewStudy>(id) {
             private static final long serialVersionUID = 1L;
@@ -138,7 +140,7 @@ public class NewStudyListPage extends BasePage<Void> {
             }
         };
         link.add(new Label(id + "Label",
-                new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.REFERENCE.getName())));
+            new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.REFERENCE.getName())));
         return link;
     }
 

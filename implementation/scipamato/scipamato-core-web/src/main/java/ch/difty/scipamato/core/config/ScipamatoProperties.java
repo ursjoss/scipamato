@@ -1,11 +1,11 @@
 package ch.difty.scipamato.core.config;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.config.ScipamatoBaseProperties;
-import lombok.Getter;
-import lombok.Setter;
 
 @Component
 @ConfigurationProperties(prefix = "scipamato")

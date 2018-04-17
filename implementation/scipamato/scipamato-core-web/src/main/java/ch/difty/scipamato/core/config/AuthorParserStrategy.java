@@ -19,9 +19,9 @@ public enum AuthorParserStrategy {
      * {@link AuthorParserStrategy} enum value.
      *
      * @param propertyValue
-     *            the property value as string
+     *     the property value as string
      * @param propertyKey
-     *            the key name, used for log output only
+     *     the key name, used for log output only
      * @return the property as enum value
      */
     public static AuthorParserStrategy fromProperty(final String propertyValue, final String propertyKey) {

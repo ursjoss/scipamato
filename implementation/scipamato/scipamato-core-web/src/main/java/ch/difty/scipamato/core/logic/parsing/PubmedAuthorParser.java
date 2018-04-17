@@ -14,9 +14,9 @@ import ch.difty.scipamato.core.entity.Paper;
  * Utility class to lex and parse Author strings in the PubMed format. From the
  * list of parsed authors it can return the first author.
  * <p>
- *
+ * <p>
  * An example of a typical PubMed author string is:
- *
+ * <p>
  * {@code Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.}
  *
  * <ul>
@@ -24,7 +24,7 @@ import ch.difty.scipamato.core.entity.Paper;
  * <li>One or more authors appear in a comma delimited list.
  * <li>The last character is a period.
  * </ul>
- * <p>
+ *
  * <b>Note:</b> The entity {@link Paper} currently has a static JSR303 bean
  * validation regex making sure the author string only contains an authors
  * format compliant with the PubmedAuthorParser. Once we have more than one
@@ -41,7 +41,8 @@ public class PubmedAuthorParser implements AuthorParser {
     private final List<Author> authors;
 
     public PubmedAuthorParser(final String authorsString) {
-        this.authorsString = AssertAs.notNull(authorsString, "authorsString")
+        this.authorsString = AssertAs
+            .notNull(authorsString, "authorsString")
             .trim();
 
         final String as = preprocess();
@@ -75,9 +76,11 @@ public class PubmedAuthorParser implements AuthorParser {
         final List<String> tokens = Arrays.asList(authorString.split(" +"));
         if (tokens.size() > 1) {
             final int i = getIndexOfFirstName(tokens);
-            firstName = String.join(" ", tokens.subList(i, tokens.size()))
+            firstName = String
+                .join(" ", tokens.subList(i, tokens.size()))
                 .trim();
-            lastName = String.join(" ", tokens.subList(0, i))
+            lastName = String
+                .join(" ", tokens.subList(0, i))
                 .trim();
         }
         return new Author(authorString, lastName, firstName);
@@ -94,7 +97,8 @@ public class PubmedAuthorParser implements AuthorParser {
 
     @Override
     public Optional<String> getFirstAuthor() {
-        return authors.stream()
+        return authors
+            .stream()
             .findFirst()
             .map(Author::getLastName);
     }

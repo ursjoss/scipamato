@@ -4,6 +4,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.Locale;
 
+import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -20,8 +23,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
-
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
@@ -30,8 +31,6 @@ import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.PaperSlimService;
 import ch.difty.scipamato.core.web.authentication.LoginPage;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -78,15 +77,16 @@ public abstract class WicketTest {
 
     @Before
     public final void setUp() {
-        application
-            .setHeaderResponseDecorator(r -> new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"));
+        application.setHeaderResponseDecorator(
+            r -> new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"));
 
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock);
         tester = new WicketTester(application);
         when(sessionFacadeMock.getPaperIdManager()).thenReturn(itemNavigatorMock);
         Locale locale = new Locale("en_US");
         when(sessionFacadeMock.getLanguageCode()).thenReturn(locale.getLanguage());
-        getTester().getSession()
+        getTester()
+            .getSession()
             .setLocale(locale);
         setUpHook();
         login(USERNAME, PASSWORD);

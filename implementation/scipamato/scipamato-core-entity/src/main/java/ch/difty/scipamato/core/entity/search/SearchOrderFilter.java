@@ -1,8 +1,9 @@
 package ch.difty.scipamato.core.entity.search;
 
-import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

@@ -31,7 +31,7 @@ public class JooqPublicPaperService implements PublicPaperService {
 
     @Override
     public List<PublicPaper> findPageByFilter(final PublicPaperFilter filter,
-            final PaginationContext paginationContext) {
+        final PaginationContext paginationContext) {
         return getRepository().findPageByFilter(filter, paginationContext);
     }
 

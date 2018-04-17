@@ -1,10 +1,11 @@
 package ch.difty.scipamato.core.entity.search;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

@@ -67,7 +67,8 @@ public class PaperCodeBoxTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void gettingCodes_andThenAlteringList_throws() {
-        codeBox.getCodes()
+        codeBox
+            .getCodes()
             .add(CODE_5H);
     }
 
@@ -115,7 +116,8 @@ public class PaperCodeBoxTest {
             codeBox.clearBy(null);
             fail("should have thrown exception");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(NullArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(NullArgumentException.class)
                 .hasMessage("codeClassId must not be null.");
         }
     }
@@ -154,7 +156,7 @@ public class PaperCodeBoxTest {
     public void assertingToString_withMembers() {
         codeBox.addCodes(Arrays.asList(CODE_1F, CODE_5H, CODE_5F));
         assertThat(codeBox.toString()).isEqualTo(
-        // @formatter:off
+            // @formatter:off
               "["
             +   "codesOfClass1=["
             +     "Code[code=1F,name=Code 1F,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=1,lastModifiedBy=2,created=2017-01-01T08:00:00.123,lastModified=2017-01-02T09:00:00.456,version=3]"

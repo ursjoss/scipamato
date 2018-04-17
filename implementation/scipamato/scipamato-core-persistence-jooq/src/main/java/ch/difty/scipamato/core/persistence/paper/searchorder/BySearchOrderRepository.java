@@ -10,11 +10,10 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
  * Repository to find Papers or PaperSlims by {@link SearchOrder}
  * specifications.
  *
- * @author u.joss
- *
  * @param <T>
- *            derivatives of {@link IdScipamatoEntity}, should actually be Paper
- *            or PaperSlim
+ *     derivatives of {@link IdScipamatoEntity}, should actually be Paper
+ *     or PaperSlim
+ * @author u.joss
  */
 public interface BySearchOrderRepository<T extends IdScipamatoEntity<Long>> {
 
@@ -23,7 +22,7 @@ public interface BySearchOrderRepository<T extends IdScipamatoEntity<Long>> {
      * {@link SearchOrder} specification.
      *
      * @param searchOrder
-     *            {@link SearchOrder} the search specification
+     *     {@link SearchOrder} the search specification
      * @return list of entities
      */
     List<T> findBySearchOrder(SearchOrder searchOrder);
@@ -32,9 +31,8 @@ public interface BySearchOrderRepository<T extends IdScipamatoEntity<Long>> {
      * Finds a single page of entities of type {@code T} matching the provided
      * {@link SearchOrder} and {@link PaginationContext}.
      *
-     * @see #findBySearchOrder(SearchOrder)
-     *
      * @return paged list of entities
+     * @see #findBySearchOrder(SearchOrder)
      */
     List<T> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
 
@@ -43,7 +41,7 @@ public interface BySearchOrderRepository<T extends IdScipamatoEntity<Long>> {
      * {@link SearchOrder} specification.
      *
      * @param searchOrder
-     *            the search specification
+     *     the search specification
      * @return T entity count
      */
     int countBySearchOrder(SearchOrder searchOrder);
@@ -52,9 +50,8 @@ public interface BySearchOrderRepository<T extends IdScipamatoEntity<Long>> {
      * Finds a single page of entity ids matching the provided {@link SearchOrder}
      * and {@link PaginationContext}.
      *
-     * @see #findBySearchOrder(SearchOrder)
-     *
      * @return paged list of entity ids
+     * @see #findBySearchOrder(SearchOrder)
      */
     List<Long> findPageOfIdsBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
 

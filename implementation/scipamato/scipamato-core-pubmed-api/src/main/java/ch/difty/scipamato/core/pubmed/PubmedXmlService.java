@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.pubmed;
 
+import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -7,15 +8,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.xml.transform.stream.StreamSource;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.pubmed.api.PubmedArticleSet;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Service handling PubMed content.
@@ -39,7 +38,8 @@ public class PubmedXmlService implements PubmedArticleService {
         try {
             final PubmedArticleSet set = pubMed.articleWithId(String.valueOf(pmId));
             final List<java.lang.Object> articles = set.getPubmedArticleOrPubmedBookArticle();
-            return articles.stream()
+            return articles
+                .stream()
                 .map(PubmedArticleFacade::newPubmedArticleFrom)
                 .findFirst();
         } catch (final Exception ex) {
@@ -64,7 +64,7 @@ public class PubmedXmlService implements PubmedArticleService {
     /**
      * Extracts PubMed articles and PubMed book articles from the source string
      * representing XML exported from PubMed.
-     *
+     * <p>
      * <p>
      * The XML string could be derived e.g. from
      * <ul>
@@ -75,11 +75,11 @@ public class PubmedXmlService implements PubmedArticleService {
      * </ul>
      *
      * @param xmlString
-     *            pubmed content in XML format, as String. Must not be null.
+     *     pubmed content in XML format, as String. Must not be null.
      * @return List of {@link PubmedArticleFacade} entries. Never null. Will be
-     *         empty if there are issues with the XML.
+     *     empty if there are issues with the XML.
      * @throws NullArgumentException
-     *             in case of null xmlString.
+     *     in case of null xmlString.
      */
     @Override
     public List<PubmedArticleFacade> extractArticlesFrom(final String xmlString) {
@@ -87,7 +87,8 @@ public class PubmedXmlService implements PubmedArticleService {
         try {
             final PubmedArticleSet set = unmarshal(xmlString);
             final List<java.lang.Object> aoba = set.getPubmedArticleOrPubmedBookArticle();
-            articles.addAll(aoba.stream()
+            articles.addAll(aoba
+                .stream()
                 .map(PubmedArticleFacade::newPubmedArticleFrom)
                 .collect(Collectors.toList()));
         } catch (final Exception e) {

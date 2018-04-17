@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.common;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.model.IModel;
@@ -15,7 +16,6 @@ import ch.difty.scipamato.common.web.pages.MenuBuilder;
 import ch.difty.scipamato.core.config.ApplicationCoreProperties;
 import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.web.resources.MainCssResourceReference;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 
 public abstract class BasePage<T> extends AbstractPage<T> {
 
@@ -53,7 +53,8 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     }
 
     protected Authentication getAuthentication() {
-        return SecurityContextHolder.getContext()
+        return SecurityContextHolder
+            .getContext()
             .getAuthentication();
     }
 

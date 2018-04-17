@@ -26,7 +26,8 @@ public class AbstractFilterConditionMapperTest {
 
     @Test
     public void mappingWithNullFilter_doesNotMap() {
-        assertThat(mapper.map(null)
+        assertThat(mapper
+            .map(null)
             .toString()).isEqualTo("1 = 1");
         assertThat(filterCalled).isFalse();
     }

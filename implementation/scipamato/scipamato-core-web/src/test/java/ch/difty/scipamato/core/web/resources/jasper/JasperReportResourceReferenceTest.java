@@ -18,7 +18,7 @@ public abstract class JasperReportResourceReferenceTest<E extends JasperReportRe
 
     /**
      * @return the base name (without extension) of the report as defined within the
-     *         jrxml file.
+     *     jrxml file.
      */
     protected abstract String getReportBaseName();
 
@@ -40,22 +40,28 @@ public abstract class JasperReportResourceReferenceTest<E extends JasperReportRe
     @Test
     public void testKey() {
         E ref = getResourceReference();
-        assertThat(ref.getKey()
+        assertThat(ref
+            .getKey()
             .getScope()).isEqualTo(getResourceReferencePath());
-        assertThat(ref.getKey()
+        assertThat(ref
+            .getKey()
             .getName()).isEqualTo(getReportBaseName() + DOTTAG);
-        assertThat(ref.getKey()
+        assertThat(ref
+            .getKey()
             .getLocale()).isNull();
-        assertThat(ref.getKey()
+        assertThat(ref
+            .getKey()
             .getStyle()).isNull();
-        assertThat(ref.getKey()
+        assertThat(ref
+            .getKey()
             .getVariation()).isNull();
     }
 
     @Test
     public void gettingReport() {
         E ref = getResourceReference();
-        assertThat(ref.getReport()
+        assertThat(ref
+            .getReport()
             .getName()).isEqualTo(getReportBaseName());
     }
 

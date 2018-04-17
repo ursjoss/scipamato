@@ -16,7 +16,8 @@ public class PaginationContextMatcher implements ArgumentMatcher<PaginationConte
 
     @Override
     public boolean matches(PaginationContext p) {
-        return p != null && p.getOffset() == offset && p.getPageSize() == pageSize && sort.equals(p.getSort()
+        return p != null && p.getOffset() == offset && p.getPageSize() == pageSize && sort.equals(p
+            .getSort()
             .toString());
     }
 

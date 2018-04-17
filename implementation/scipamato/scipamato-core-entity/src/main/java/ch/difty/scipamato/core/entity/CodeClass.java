@@ -2,10 +2,11 @@ package ch.difty.scipamato.core.entity;
 
 import javax.validation.constraints.NotNull;
 
-import ch.difty.scipamato.common.entity.CodeClassLike;
-import ch.difty.scipamato.common.entity.FieldEnumType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+
+import ch.difty.scipamato.common.entity.CodeClassLike;
+import ch.difty.scipamato.common.entity.FieldEnumType;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)

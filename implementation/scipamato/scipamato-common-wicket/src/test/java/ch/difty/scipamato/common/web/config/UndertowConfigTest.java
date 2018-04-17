@@ -7,6 +7,10 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import java.util.List;
 
+import io.undertow.Undertow;
+import io.undertow.Undertow.Builder;
+import io.undertow.Undertow.ListenerInfo;
+import io.undertow.servlet.api.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,14 +26,6 @@ import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServle
 import org.xnio.XnioWorker;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
-import io.undertow.Undertow;
-import io.undertow.Undertow.Builder;
-import io.undertow.Undertow.ListenerInfo;
-import io.undertow.servlet.api.DeploymentInfo;
-import io.undertow.servlet.api.SecurityConstraint;
-import io.undertow.servlet.api.SecurityInfo;
-import io.undertow.servlet.api.TransportGuaranteeType;
-import io.undertow.servlet.api.WebResourceCollection;
 
 /**
  * Some exploratory testing next to the actual configuration in UndertowConfig
@@ -83,8 +79,7 @@ public class UndertowConfigTest {
 
     @Test
     public void canStartAndStopUndertowServletContainer() {
-        UndertowEmbeddedServletContainer container = (UndertowEmbeddedServletContainer) factory
-            .getEmbeddedServletContainer();
+        UndertowEmbeddedServletContainer container = (UndertowEmbeddedServletContainer) factory.getEmbeddedServletContainer();
         assertThat(container.getPort()).isEqualTo(0);
 
         container.start();
@@ -99,7 +94,8 @@ public class UndertowConfigTest {
             undertow.getListenerInfo();
             fail("server is not started, should not succeed");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalStateException.class)
+            assertThat(ex)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("UT000138: Server not started");
         }
     }
@@ -115,7 +111,8 @@ public class UndertowConfigTest {
     @Test
     public void assertCustomizedUndertowBuilder() {
         assertThat(factory.getBuilderCustomizers()).hasSize(1);
-        final UndertowBuilderCustomizer bc = factory.getBuilderCustomizers()
+        final UndertowBuilderCustomizer bc = factory
+            .getBuilderCustomizers()
             .iterator()
             .next();
         bc.customize(undertowBuilder);
@@ -127,7 +124,8 @@ public class UndertowConfigTest {
             assertThat(listenerInfos).hasSize(1);
 
             final ListenerInfo li = listenerInfos.get(0);
-            assertThat(li.getAddress()
+            assertThat(li
+                .getAddress()
                 .toString()).startsWith("/0:0:0:0:0:0:0:0:");
             assertThat(li.getProtcol()).isEqualTo("http");
         }
@@ -137,7 +135,8 @@ public class UndertowConfigTest {
     @Test
     public void assertingWorkers() {
         assertThat(factory.getBuilderCustomizers()).hasSize(1);
-        final UndertowBuilderCustomizer bc = factory.getBuilderCustomizers()
+        final UndertowBuilderCustomizer bc = factory
+            .getBuilderCustomizers()
             .iterator()
             .next();
         bc.customize(undertowBuilder);
@@ -148,7 +147,8 @@ public class UndertowConfigTest {
             XnioWorker worker = undertow.getWorker();
             assertThat(worker).isNotNull();
             assertThat(worker.getName()).startsWith("XNIO-");
-            assertThat(worker.getXnio()
+            assertThat(worker
+                .getXnio()
                 .getName()).isEqualTo("nio");
         }
         undertow.stop();
@@ -162,24 +162,28 @@ public class UndertowConfigTest {
     @Test
     public void assertSecurityConstraints() {
         assertThat(factory.getDeploymentInfoCustomizers()).hasSize(1);
-        final UndertowDeploymentInfoCustomizer dic = factory.getDeploymentInfoCustomizers()
+        final UndertowDeploymentInfoCustomizer dic = factory
+            .getDeploymentInfoCustomizers()
             .iterator()
             .next();
 
         dic.customize(deploymentInfo);
 
         assertThat(deploymentInfo.getSecurityConstraints()).hasSize(1);
-        final SecurityConstraint sc = deploymentInfo.getSecurityConstraints()
+        final SecurityConstraint sc = deploymentInfo
+            .getSecurityConstraints()
             .iterator()
             .next();
 
         assertThat(sc.getWebResourceCollections()).hasSize(1);
 
-        final WebResourceCollection wrc = sc.getWebResourceCollections()
+        final WebResourceCollection wrc = sc
+            .getWebResourceCollections()
             .iterator()
             .next();
         assertThat(wrc.getUrlPatterns()).hasSize(1);
-        assertThat(wrc.getUrlPatterns()
+        assertThat(wrc
+            .getUrlPatterns()
             .iterator()
             .next()).isEqualTo("/*");
         assertThat(wrc.getHttpMethods()).isEmpty();
@@ -201,9 +205,11 @@ public class UndertowConfigTest {
         final JspServlet jspServlet = factory.getJspServlet();
         assertThat(jspServlet).isNotNull();
         assertThat(jspServlet.getClassName()).isEqualTo("org.apache.jasper.servlet.JspServlet");
-        assertThat(jspServlet.getInitParameters()
+        assertThat(jspServlet
+            .getInitParameters()
             .keySet()).containsExactly("development");
-        assertThat(jspServlet.getInitParameters()
+        assertThat(jspServlet
+            .getInitParameters()
             .get("development")).isEqualTo("false");
         assertThat(jspServlet.getRegistered()).isFalse();
     }

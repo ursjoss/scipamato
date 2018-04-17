@@ -15,45 +15,54 @@ public class AuditSearchTermTest {
     private AuditSearchTerm st;
 
     private void assertSingleToken(String fieldName, TokenType tt, String userRawData, String userData,
-            String dateRawData, String dateData) {
+        String dateRawData, String dateData) {
         assertThat(st.getFieldName()).isEqualTo(fieldName);
         assertThat(st.getTokens()).hasSize(1);
         assertToken(0, tt, userRawData, userData, dateRawData, dateData);
     }
 
     private void assertToken(int idx, TokenType tt, String userRawData, String userData, String dateRawData,
-            String dateData) {
+        String dateData) {
         if (userRawData != null) {
-            assertThat(st.getTokens()
+            assertThat(st
+                .getTokens()
                 .get(idx)
                 .getUserRawData()).isEqualTo(userRawData);
-            assertThat(st.getTokens()
+            assertThat(st
+                .getTokens()
                 .get(idx)
                 .getUserSqlData()).isEqualTo(userData);
         } else {
-            assertThat(st.getTokens()
+            assertThat(st
+                .getTokens()
                 .get(idx)
                 .getUserRawData()).isNull();
-            assertThat(st.getTokens()
+            assertThat(st
+                .getTokens()
                 .get(idx)
                 .getUserSqlData()).isNull();
         }
         if (dateRawData != null) {
-            assertThat(st.getTokens()
+            assertThat(st
+                .getTokens()
                 .get(idx)
                 .getDateRawData()).isEqualTo(dateRawData);
-            assertThat(st.getTokens()
+            assertThat(st
+                .getTokens()
                 .get(idx)
                 .getDateSqlData()).isEqualTo(dateData);
         } else {
-            assertThat(st.getTokens()
+            assertThat(st
+                .getTokens()
                 .get(idx)
                 .getDateRawData()).isNull();
-            assertThat(st.getTokens()
+            assertThat(st
+                .getTokens()
                 .get(idx)
                 .getDateSqlData()).isNull();
         }
-        assertThat(st.getTokens()
+        assertThat(st
+            .getTokens()
             .get(idx)
             .getType()).isEqualTo(tt);
     }
@@ -299,7 +308,8 @@ public class AuditSearchTermTest {
     public void tokenToString_forDateField() {
         st = new AuditSearchTerm(CREATED, "user =\"2017-12-01 23:15:13\"");
         assertThat(st.getTokens()).hasSize(1);
-        assertThat(st.getTokens()
+        assertThat(st
+            .getTokens()
             .get(0)
             .toString()).isEqualTo("(DATE EXACTQUOTED 2017-12-01 23:15:13)");
     }
@@ -308,7 +318,8 @@ public class AuditSearchTermTest {
     public void tokenToString_forUserField() {
         st = new AuditSearchTerm(CREATED_BY, "foo =\"2017-12-01 23:15:13\"");
         assertThat(st.getTokens()).hasSize(1);
-        assertThat(st.getTokens()
+        assertThat(st
+            .getTokens()
             .get(0)
             .toString()).isEqualTo("(USER WORD foo)");
     }
@@ -332,20 +343,20 @@ public class AuditSearchTermTest {
 
     @Test
     public void byMatchType_withValidMatchTypeGREATER_OR_EQUAL() {
-        assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.GREATER_OR_EQUAL))
-            .containsExactly(TokenType.GREATEROREQUALQUOTED, TokenType.GREATEROREQUAL);
+        assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.GREATER_OR_EQUAL)).containsExactly(
+            TokenType.GREATEROREQUALQUOTED, TokenType.GREATEROREQUAL);
     }
 
     @Test
     public void byMatchType_withValidMatchTypeGREATER_THAN() {
-        assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.GREATER_THAN))
-            .containsExactly(TokenType.GREATERTHANQUOTED, TokenType.GREATERTHAN);
+        assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.GREATER_THAN)).containsExactly(
+            TokenType.GREATERTHANQUOTED, TokenType.GREATERTHAN);
     }
 
     @Test
     public void byMatchType_withValidMatchTypeLESS_OR_EQUAL() {
-        assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.LESS_OR_EQUAL))
-            .containsExactly(TokenType.LESSOREQUALQUOTED, TokenType.LESSOREQUAL);
+        assertThat(AuditSearchTerm.TokenType.byMatchType(MatchType.LESS_OR_EQUAL)).containsExactly(
+            TokenType.LESSOREQUALQUOTED, TokenType.LESSOREQUAL);
     }
 
     @Test

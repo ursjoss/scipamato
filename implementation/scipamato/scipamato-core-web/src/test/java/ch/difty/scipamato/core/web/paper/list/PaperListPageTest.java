@@ -2,16 +2,17 @@ package ch.difty.scipamato.core.web.paper.list;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
@@ -37,12 +38,6 @@ import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.common.pastemodal.XmlPasteModalPanel;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 
 public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
@@ -129,9 +124,9 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
     }
 
     private void assertPageLinkButton(int index, String position, Class<? extends Component> expectedComponentClass,
-            String expectedLabelText) {
+        String expectedLabelText) {
         String path = "navbar:container:collapse:nav" + position + "ListEnclosure:nav" + position + "List:" + index
-                + ":component";
+                      + ":component";
         getTester().assertComponent(path, NavbarButton.class);
         getTester().assertLabel(path + ":label", expectedLabelText);
     }
@@ -235,8 +230,8 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         long number = 10L;
         list.add(new PaperSlim(1L, number, "author", 2018, "title"));
         when(paperSlimServiceMock.countByFilter(isA(PaperFilter.class))).thenReturn(list.size());
-        when(paperSlimServiceMock.findPageByFilter(isA(PaperFilter.class), isA(PaginationRequest.class)))
-            .thenReturn(list);
+        when(paperSlimServiceMock.findPageByFilter(isA(PaperFilter.class), isA(PaginationRequest.class))).thenReturn(
+            list);
 
         getTester().startPage(getPageClass());
 

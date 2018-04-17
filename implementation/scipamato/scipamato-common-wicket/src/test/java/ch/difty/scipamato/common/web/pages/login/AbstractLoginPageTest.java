@@ -1,5 +1,6 @@
 package ch.difty.scipamato.common.web.pages.login;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
@@ -11,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.WicketBaseTest;
-import de.agilecoders.wicket.core.markup.html.bootstrap.common.NotificationPanel;
 
 public class AbstractLoginPageTest extends WicketBaseTest {
 

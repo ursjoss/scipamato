@@ -49,7 +49,8 @@ public class ClickablePropertyColumnTest extends WicketBaseTest {
     }
 
     private void setVariable(IModel<TestRecord> trModel) {
-        clickPerformed = trModel.getObject()
+        clickPerformed = trModel
+            .getObject()
             .toString();
     }
 

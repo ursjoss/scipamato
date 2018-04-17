@@ -1,9 +1,8 @@
 package ch.difty.scipamato.publ;
 
+import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 import org.apache.wicket.Session;
 import org.apache.wicket.request.Request;
-
-import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.navigator.LongNavigator;

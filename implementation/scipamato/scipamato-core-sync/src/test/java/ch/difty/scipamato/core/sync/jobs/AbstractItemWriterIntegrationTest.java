@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import ch.difty.scipamato.core.sync.JooqTransactionalIntegrationTest;
 
 public abstract class AbstractItemWriterIntegrationTest<E, W extends ScipamatoItemWriter<E>>
-        extends JooqTransactionalIntegrationTest {
+    extends JooqTransactionalIntegrationTest {
 
     @Autowired
     @Qualifier("publicDslContext")
