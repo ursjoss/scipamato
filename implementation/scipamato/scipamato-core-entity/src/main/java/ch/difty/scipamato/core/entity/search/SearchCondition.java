@@ -35,7 +35,6 @@ import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_EXPOSURE_R
 import static ch.difty.scipamato.core.entity.Paper.PaperFields.RESULT_MEASURED_OUTCOME;
 import static ch.difty.scipamato.core.entity.Paper.PaperFields.TITLE;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;

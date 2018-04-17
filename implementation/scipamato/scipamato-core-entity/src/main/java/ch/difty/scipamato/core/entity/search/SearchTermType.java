@@ -29,7 +29,8 @@ public enum SearchTermType {
 
     public static SearchTermType byId(final int id) {
         for (final SearchTermType t : SEARCH_TERM_TYPES)
-            if (id > UNSUPPORTED.id && t.getId() == id) return t;
+            if (id > UNSUPPORTED.id && t.getId() == id)
+                return t;
         throw new IllegalArgumentException("id " + id + " is not supported");
     }
 }

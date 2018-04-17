@@ -2,7 +2,6 @@ package ch.difty.scipamato.common.persistence;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.jooq.Record;
 import org.jooq.SortField;
