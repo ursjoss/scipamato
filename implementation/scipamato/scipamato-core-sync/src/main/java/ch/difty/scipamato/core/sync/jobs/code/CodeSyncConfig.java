@@ -83,7 +83,7 @@ public class CodeSyncConfig
     }
 
     /**
-     * HARDCODED consider moving the aggregated code 5abc into some tyble in
+     * HARDCODED consider moving the aggregated code 5abc into some table in
      * scipamato-core. See also HidingInternalsCodeAggregator#filterAndEnrich
      */
     @Override

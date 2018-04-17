@@ -34,6 +34,7 @@ public interface ItemNavigator<T> extends Serializable {
      * initialized with at least one item.
      *
      * @param item
+     *       the item the focus is set to
      */
     void setFocusToItem(T item);
 

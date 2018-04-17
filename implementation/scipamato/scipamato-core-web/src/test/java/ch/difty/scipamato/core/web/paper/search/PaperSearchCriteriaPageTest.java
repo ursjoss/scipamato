@@ -4,7 +4,7 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 
 import org.apache.wicket.markup.html.form.CheckBox;
@@ -47,7 +47,7 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
     protected void setUpHook() {
         when(searchOrderServiceMock.findById(SEARCH_ORDER_ID)).thenReturn(Optional.of(searchOrder));
         when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class)))
-            .thenReturn(Arrays.asList(searchOrder));
+            .thenReturn(Collections.singletonList(searchOrder));
     }
 
     @Override

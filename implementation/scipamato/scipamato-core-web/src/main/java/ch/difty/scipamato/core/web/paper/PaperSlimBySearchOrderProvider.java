@@ -25,7 +25,7 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
 
     /**
      * Instantiate the provider with a {@link SearchOrder} and a specific number of
-     * rews per page (pageSize)
+     * rows per page (pageSize)
      *
      * @param searchOrder
      *            the search specification

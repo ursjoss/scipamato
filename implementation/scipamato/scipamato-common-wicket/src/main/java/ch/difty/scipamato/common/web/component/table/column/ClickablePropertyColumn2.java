@@ -11,7 +11,7 @@ import ch.difty.scipamato.common.web.component.SerializableSupplier;
  *
  * Adjusted to accept a BiConsumer instead of a Consumer, thus accepting two
  * arguments in the constructor of the referring page. In addition accepting a
- * supplier to provide the additional argument for the biconsumer.
+ * supplier to provide the additional argument for the bi-consumer.
  *
  * @author u.joss
  *

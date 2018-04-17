@@ -14,17 +14,17 @@ import nl.jqno.equalsverifier.Warning;
 
 public class PaperAttachmentTest {
 
-    private final PaperAttachment pa = new PaperAttachment(1, 2l, "pdf1", "content".getBytes(), "ct", 2048l);
+    private final PaperAttachment pa = new PaperAttachment(1, 2L, "pdf1", "content".getBytes(), "ct", 2048L);
 
     @Test
     public void test() {
         assertThat(pa.getId()).isEqualTo(1);
-        assertThat(pa.getPaperId()).isEqualTo(2l);
+        assertThat(pa.getPaperId()).isEqualTo(2L);
         assertThat(pa.getName()).isEqualTo("pdf1");
         assertThat(pa.getContent()).isEqualTo("content".getBytes());
         assertThat(pa.getContentType()).isEqualTo("ct");
-        assertThat(pa.getSize()).isEqualTo(2048l);
-        assertThat(pa.getSizeKiloBytes()).isEqualTo(2l);
+        assertThat(pa.getSize()).isEqualTo(2048L);
+        assertThat(pa.getSizeKiloBytes()).isEqualTo(2L);
     }
 
     @Test
@@ -34,10 +34,10 @@ public class PaperAttachmentTest {
 
     @Test
     public void sizeInKiloBytes_isRoundedUp() {
-        pa.setSize(2047l);
-        assertThat(pa.getSizeKiloBytes()).isEqualTo(2l);
-        pa.setSize(2050l);
-        assertThat(pa.getSizeKiloBytes()).isEqualTo(3l);
+        pa.setSize(2047L);
+        assertThat(pa.getSizeKiloBytes()).isEqualTo(2L);
+        pa.setSize(2050L);
+        assertThat(pa.getSizeKiloBytes()).isEqualTo(3L);
     }
 
     @Test

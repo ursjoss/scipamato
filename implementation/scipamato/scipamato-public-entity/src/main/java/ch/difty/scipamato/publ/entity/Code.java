@@ -35,7 +35,7 @@ public class Code extends PublicEntity implements CodeLike {
         SORT("sort"),
         DISPLAY_VALUE("displayValue");
 
-        private String name;
+        private final String name;
 
         CodeFields(final String name) {
             this.name = name;

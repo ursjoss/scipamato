@@ -21,7 +21,7 @@ import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 /**
- * Common bsae class for Jasper paper datasources.
+ * Common base class for Jasper paper data sources.
  *
  * @author u.joss
  *
@@ -80,7 +80,7 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
 
     private void init() {
         setJasperReport(getReport());
-        setReportParameters(new HashMap<String, Object>());
+        setReportParameters(new HashMap<>());
         setFileName(baseName + "." + getExtension());
     }
 
@@ -113,7 +113,7 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
 
     /**
      * Overriding in order to not use the deprecated and incompatible methods still
-     * used in JRResource (expoerter.setParameter)
+     * used in JRResource (exporter.setParameter)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override

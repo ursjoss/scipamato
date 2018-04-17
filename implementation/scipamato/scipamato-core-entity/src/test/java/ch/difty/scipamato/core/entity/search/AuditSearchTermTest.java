@@ -297,8 +297,7 @@ public class AuditSearchTermTest {
 
     @Test
     public void tokenToString_forDateField() {
-        String fieldName = CREATED;
-        st = new AuditSearchTerm(fieldName, "user =\"2017-12-01 23:15:13\"");
+        st = new AuditSearchTerm(CREATED, "user =\"2017-12-01 23:15:13\"");
         assertThat(st.getTokens()).hasSize(1);
         assertThat(st.getTokens()
             .get(0)
@@ -307,8 +306,7 @@ public class AuditSearchTermTest {
 
     @Test
     public void tokenToString_forUserField() {
-        String fieldName = CREATED_BY;
-        st = new AuditSearchTerm(fieldName, "foo =\"2017-12-01 23:15:13\"");
+        st = new AuditSearchTerm(CREATED_BY, "foo =\"2017-12-01 23:15:13\"");
         assertThat(st.getTokens()).hasSize(1);
         assertThat(st.getTokens()
             .get(0)

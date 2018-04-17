@@ -34,7 +34,7 @@ public class SearchOrderFilterConditionMapperTest extends
     }
 
     @Test
-    public void creatingWhereCondition_withNameMaskl_searchesForName() {
+    public void creatingWhereCondition_withNameMask_searchesForName() {
         filter.setNameMask("fOo");
         assertThat(mapper.map(filter)
             .toString()).isEqualToIgnoringCase(

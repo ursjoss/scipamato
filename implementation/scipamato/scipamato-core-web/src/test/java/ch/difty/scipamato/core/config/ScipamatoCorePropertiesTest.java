@@ -51,7 +51,7 @@ public class ScipamatoCorePropertiesTest {
     }
 
     @Test
-    public void gettingTitleOrBanrd_withPageTitleDefined_delegatesToScipamatoProps_andReturnsPageTitle() {
+    public void gettingTitleOrBrand_withPageTitleDefined_delegatesToScipamatoProps_andReturnsPageTitle() {
         when(scipamatoPropMock.getPageTitle()).thenReturn("pt");
         assertThat(prop.getTitleOrBrand()).isEqualTo("pt");
         verify(scipamatoPropMock).getPageTitle();
@@ -59,7 +59,7 @@ public class ScipamatoCorePropertiesTest {
     }
 
     @Test
-    public void gettingTitleOrBanrd_withPageTitleNotDefined_delegatesToScipamatoProps_andReturnsBrand() {
+    public void gettingTitleOrBrand_withPageTitleNotDefined_delegatesToScipamatoProps_andReturnsBrand() {
         when(scipamatoPropMock.getPageTitle()).thenReturn(null);
         assertThat(prop.getTitleOrBrand()).isEqualTo("brand");
         verify(scipamatoPropMock).getPageTitle();

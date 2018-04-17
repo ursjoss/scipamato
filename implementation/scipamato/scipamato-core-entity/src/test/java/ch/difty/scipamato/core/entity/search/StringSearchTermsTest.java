@@ -44,7 +44,7 @@ public class StringSearchTermsTest {
     }
 
     @Test
-    public void compareEmptySearchTerms_withDiffernetSearchTerms_dontMatch() {
+    public void compareEmptySearchTerms_withDifferentSearchTerms_dontMatch() {
         st1.put(KEY, SearchTerm.newStringSearchTerm(KEY, VALUE));
         assertInequalityBetween(st1, st2, 118234894, 1);
     }

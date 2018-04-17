@@ -25,15 +25,15 @@ public class SearchOrderTest {
 
     private static final String SO_NAME = "soName";
 
-    private final SearchOrder so = new SearchOrder(10l, SO_NAME, 1, false, null, null);
+    private final SearchOrder so = new SearchOrder(10L, SO_NAME, 1, false, null, null);
 
     @Mock
-    public SearchCondition mockCondition1;
+    private SearchCondition mockCondition1;
     @Mock
-    public SearchCondition mockCondition2;
+    private SearchCondition mockCondition2;
 
-    private List<SearchCondition> searchConditions = new ArrayList<>();
-    private List<Long>            excludedIds      = new ArrayList<>();
+    private final List<SearchCondition> searchConditions = new ArrayList<>();
+    private final List<Long>            excludedIds      = new ArrayList<>();
 
     @Test
     public void testGetters() {
@@ -45,7 +45,7 @@ public class SearchOrderTest {
 
     @Test
     public void testSetters() {
-        so.setId(11l);
+        so.setId(11L);
         so.setOwner(2);
         so.setName(SO_NAME);
         so.setGlobal(true);
@@ -72,7 +72,7 @@ public class SearchOrderTest {
     @Test
     public void whenInstantiating_withEmptyExclusionList_hasNoExclusions() {
         assertThat(excludedIds).isEmpty();
-        assertThat(new SearchOrder(10l, SO_NAME, 1, false, null, excludedIds).getExcludedPaperIds()).isEmpty();
+        assertThat(new SearchOrder(10L, SO_NAME, 1, false, null, excludedIds).getExcludedPaperIds()).isEmpty();
     }
 
     @Test
@@ -83,11 +83,11 @@ public class SearchOrderTest {
     }
 
     @Test
-    public void whenInstantiating_withNonEmptyExlusionList_hasHandedOverExclusions() {
-        excludedIds.add(3l);
-        excludedIds.add(5l);
-        assertThat(new SearchOrder(10l, SO_NAME, 1, false, null, excludedIds).getExcludedPaperIds()).containsExactly(3l,
-            5l);
+    public void whenInstantiating_withNonEmptyExclusionList_hasHandedOverExclusions() {
+        excludedIds.add(3L);
+        excludedIds.add(5L);
+        assertThat(new SearchOrder(10L, SO_NAME, 1, false, null, excludedIds).getExcludedPaperIds()).containsExactly(3L,
+                5L);
     }
 
     @Test
@@ -136,37 +136,37 @@ public class SearchOrderTest {
 
     @Test
     public void whenAddingExclusion_itIsGettingAdded() {
-        so.addExclusionOfPaperWithId(5l);
-        assertThat(so.getExcludedPaperIds()).containsExactly(5l);
+        so.addExclusionOfPaperWithId(5L);
+        assertThat(so.getExcludedPaperIds()).containsExactly(5L);
     }
 
     @Test
     public void whenAddingExclusion_withExclusionAlreadyPresent_doesNotAddItAnymore() {
-        so.addExclusionOfPaperWithId(5l);
-        assertThat(so.getExcludedPaperIds()).containsExactly(5l);
-        so.addExclusionOfPaperWithId(5l);
-        assertThat(so.getExcludedPaperIds()).containsExactly(5l);
+        so.addExclusionOfPaperWithId(5L);
+        assertThat(so.getExcludedPaperIds()).containsExactly(5L);
+        so.addExclusionOfPaperWithId(5L);
+        assertThat(so.getExcludedPaperIds()).containsExactly(5L);
     }
 
     @Test
     public void whenRemovingExclusion_whichWasExcluded_doesRemoveIt() {
-        so.addExclusionOfPaperWithId(5l);
-        so.addExclusionOfPaperWithId(8l);
-        assertThat(so.getExcludedPaperIds()).containsExactly(5l, 8l);
+        so.addExclusionOfPaperWithId(5L);
+        so.addExclusionOfPaperWithId(8L);
+        assertThat(so.getExcludedPaperIds()).containsExactly(5L, 8L);
 
-        so.removeExlusionOfPaperWithId(5l);
+        so.removeExclusionOfPaperWithId(5L);
 
-        assertThat(so.getExcludedPaperIds()).containsExactly(8l);
+        assertThat(so.getExcludedPaperIds()).containsExactly(8L);
     }
 
     @Test
     public void whenRemovingExclusion_whichWasNotExcluded_doesNothing() {
-        so.addExclusionOfPaperWithId(5l);
-        assertThat(so.getExcludedPaperIds()).containsExactly(5l);
+        so.addExclusionOfPaperWithId(5L);
+        assertThat(so.getExcludedPaperIds()).containsExactly(5L);
 
-        so.removeExlusionOfPaperWithId(8l);
+        so.removeExclusionOfPaperWithId(8L);
 
-        assertThat(so.getExcludedPaperIds()).containsExactly(5l);
+        assertThat(so.getExcludedPaperIds()).containsExactly(5L);
     }
 
     @Test
@@ -181,8 +181,8 @@ public class SearchOrderTest {
     public void testingToString_withConditionsAndExclusions() {
         so.add(mockCondition1);
         so.add(mockCondition2);
-        so.addExclusionOfPaperWithId(3l);
-        so.addExclusionOfPaperWithId(5l);
+        so.addExclusionOfPaperWithId(3L);
+        so.addExclusionOfPaperWithId(5L);
         assertThat(so.toString()).isEqualTo(
             "SearchOrder[name=soName,owner=1,global=false,searchConditions=[mockCondition1, mockCondition2],excludedPaperIds=[3, 5],showExcluded=false,id=10,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
     }
@@ -210,7 +210,7 @@ public class SearchOrderTest {
 
     @Test
     public void testingDisplayValue_withoutNameButWithSingleCondition_returnsIt() {
-        SearchOrder so1 = new SearchOrder(10l, null, 1, false, null, excludedIds);
+        SearchOrder so1 = new SearchOrder(10L, null, 1, false, null, excludedIds);
         so1.add(new SearchCondition() {
             private static final long serialVersionUID = 1L;
 
@@ -317,7 +317,7 @@ public class SearchOrderTest {
             .withIgnoredFields(SHOW_EXCLUDED.getName(), CREATED.getName(), CREATOR_ID.getName(), MODIFIED.getName(),
                 MODIFIER_ID.getName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
-            .withPrefabValues(SearchCondition.class, new SearchCondition(1l), new SearchCondition(2l))
+            .withPrefabValues(SearchCondition.class, new SearchCondition(1L), new SearchCondition(2L))
             .verify();
     }
 }

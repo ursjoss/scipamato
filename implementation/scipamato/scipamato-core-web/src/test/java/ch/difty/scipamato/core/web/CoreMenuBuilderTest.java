@@ -35,7 +35,7 @@ public class CoreMenuBuilderTest extends WicketTest {
     }
 
     @Test
-    public void degenereateMethodCall_withNullNavbar() {
+    public void degenerateMethodCall_withNullNavbar() {
         try {
             menuBuilder.addMenuLinksTo(null, basePage);
             fail("should have thrown exception");
@@ -46,7 +46,7 @@ public class CoreMenuBuilderTest extends WicketTest {
     }
 
     @Test
-    public void degenereateMethodCall_withNullPage() {
+    public void degenerateMethodCall_withNullPage() {
         try {
             menuBuilder.addMenuLinksTo(navbar, null);
             fail("should have thrown exception");

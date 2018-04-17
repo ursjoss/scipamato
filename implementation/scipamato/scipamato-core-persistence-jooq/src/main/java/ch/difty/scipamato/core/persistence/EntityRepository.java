@@ -81,9 +81,10 @@ public interface EntityRepository<T extends CoreEntity, ID, F extends ScipamatoF
      * @param entity
      *            the entity with some changed values - must not be null.
      * @param languageCode
+     *            the language code (e.g. 'en') - must not be null.
      * @return the modified persisted entity
      * @throws NullArgumentException
-     *             if the entity is null.
+     *             if the entity or the language code is null.
      * @throws OptimisticLockingException
      *             if the record version has increased in the mean time
      */

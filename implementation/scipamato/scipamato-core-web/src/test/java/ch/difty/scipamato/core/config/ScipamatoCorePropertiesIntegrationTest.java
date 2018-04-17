@@ -34,7 +34,7 @@ public class ScipamatoCorePropertiesIntegrationTest {
     }
 
     @Test
-    public void assertDefaultlocalization() {
+    public void assertDefaultLocalization() {
         assertThat(appProperties.getDefaultLocalization()).isEqualTo("de");
     }
 

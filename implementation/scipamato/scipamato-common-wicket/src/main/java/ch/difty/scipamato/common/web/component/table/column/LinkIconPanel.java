@@ -34,7 +34,7 @@ public abstract class LinkIconPanel extends Panel {
 
     private final IModel<String> titleModel;
 
-    public LinkIconPanel(String id, IModel<String> model, IModel<String> titleModel) {
+    protected LinkIconPanel(String id, IModel<String> model, IModel<String> titleModel) {
         super(id, model);
         this.titleModel = titleModel;
     }

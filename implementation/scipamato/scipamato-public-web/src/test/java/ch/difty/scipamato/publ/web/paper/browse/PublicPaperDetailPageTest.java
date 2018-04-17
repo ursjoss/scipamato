@@ -22,9 +22,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternal
 
 public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPage> {
 
-    private static final long NUMBER = 17l;
-
-    private PublicPaper paper;
+    private static final long NUMBER = 17L;
 
     @MockBean
     private PublicPaperService serviceMock;
@@ -33,7 +31,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
     protected void setUpHook() {
         super.setUpHook();
 
-        paper = new PublicPaper(1l, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017, "goals",
+        PublicPaper paper = new PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017, "goals",
                 "methods", "population", "result", "comment");
 
         when(serviceMock.findByNumber(NUMBER)).thenReturn(Optional.of(paper));
@@ -116,7 +114,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
 
     @Test
     public void withGoalsMissing_hideGoalsTopic() {
-        PublicPaper p = new PublicPaper(1l, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
+        PublicPaper p = new PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
                 null, "methods", "population", "result", "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
@@ -133,7 +131,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
 
     @Test
     public void withPopulationMissing_hidePopulationTopic() {
-        PublicPaper p = new PublicPaper(1l, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
+        PublicPaper p = new PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
                 "goals", "methods", null, "result", "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
@@ -150,7 +148,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
 
     @Test
     public void withMethodsMissing_hideMethodsTopic() {
-        PublicPaper p = new PublicPaper(1l, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
+        PublicPaper p = new PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
                 "goals", null, "population", "result", "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
@@ -167,7 +165,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
 
     @Test
     public void withResultMissing_hideResultTopic() {
-        PublicPaper p = new PublicPaper(1l, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
+        PublicPaper p = new PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
                 "goals", "methods", "population", null, "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
@@ -184,7 +182,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
 
     @Test
     public void withCommentMissing_hideCommentTopic() {
-        PublicPaper p = new PublicPaper(1l, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
+        PublicPaper p = new PublicPaper(1L, NUMBER, 10000, "authors", "auths", "title", "location", "journal", 2017,
                 "goals", "methods", "population", "result", null);
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 
@@ -201,7 +199,7 @@ public class PublicPaperDetailPageTest extends BasePageTest<PublicPaperDetailPag
 
     @Test
     public void withNullPmId_pubMedLinkIsInvisible() {
-        PublicPaper p = new PublicPaper(1l, NUMBER, null, "authors", "auths", "title", "location", "journal", 2017,
+        PublicPaper p = new PublicPaper(1L, NUMBER, null, "authors", "auths", "title", "location", "journal", 2017,
                 "goals", "methods", "population", "result", "comment");
         getTester().startPage(new PublicPaperDetailPage(Model.of(p), null));
 

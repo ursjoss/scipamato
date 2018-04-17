@@ -24,7 +24,7 @@ public interface EntityService<ID extends Number, T extends IdScipamatoEntity<ID
      * Update the provided entity.
      *
      * @param entity
-     *            the entity to persist
+     *             the entity to persist
      * @return the persisted entity
      * @throws OptimisticLockingException
      *             if the record version has increased in the mean time
@@ -35,6 +35,7 @@ public interface EntityService<ID extends Number, T extends IdScipamatoEntity<ID
      * Removes the provided entity.
      *
      * @param entity
+     *             the entity to remove from the database
      * @throws OptimisticLockingException
      *             if the record version has increased in the mean time
      */

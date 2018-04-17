@@ -46,7 +46,7 @@ public class PublicPaper extends PublicEntity {
         RESULT("result"),
         COMMENT("comment");
 
-        private String name;
+        private final String name;
 
         PublicPaperFields(final String name) {
             this.name = name;

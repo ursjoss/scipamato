@@ -49,7 +49,7 @@ public class HouseKeeper<R extends UpdatableRecordImpl<?>> implements Tasklet {
     }
 
     @Override
-    public RepeatStatus execute(final StepContribution contribution, final ChunkContext chunkContext) throws Exception {
+    public RepeatStatus execute(final StepContribution contribution, final ChunkContext chunkContext) {
         final int result = ddl.execute();
         if (result > 0)
             log.info("Successfully deleted {} code_class{} in scipamato-public", result, (result > 1 ? "es" : ""));

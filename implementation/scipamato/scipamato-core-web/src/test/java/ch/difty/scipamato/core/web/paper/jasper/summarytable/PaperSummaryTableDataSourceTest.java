@@ -6,7 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
@@ -23,7 +23,7 @@ import net.sf.jasperreports.engine.design.JRDesignField;
 
 public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
 
-    private static final Long   NUMBER           = 100l;
+    private static final Long   NUMBER           = 100L;
     private static final String FIRST_AUTHOR     = "firstAuthor";
     private static final int    PUBLICATION_YEAR = 2017;
     private static final String GOALS            = "goals";
@@ -104,8 +104,8 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
 
     @Test
     public void instantiatingWithProvider_returnsPdfDataSourceWithOneRecord() throws JRException {
-        when(dataProviderMock.size()).thenReturn(1l);
-        when(dataProviderMock.findAllPapersByFilter()).thenReturn(Arrays.asList(paperMock));
+        when(dataProviderMock.size()).thenReturn(1L);
+        when(dataProviderMock.findAllPapersByFilter()).thenReturn(Collections.singletonList(paperMock));
 
         ds = new PaperSummaryTableDataSource(dataProviderMock, rhf, true, pdfExporterConfigMock);
         assertDataSource(FILE_NAME);
@@ -126,7 +126,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
 
     @Test
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
-        when(dataProviderMock.size()).thenReturn(0l);
+        when(dataProviderMock.size()).thenReturn(0L);
         ds = new PaperSummaryTableDataSource(dataProviderMock, rhf, true, pdfExporterConfigMock);
         assertThat(ds.getReportDataSource()
             .next()).isFalse();
@@ -134,7 +134,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
     }
 
     @Test
-    public void instantiatingWithProvider_withNullProivder_throws() throws JRException {
+    public void instantiatingWithProvider_withNullProvider_throws() {
         try {
             new PaperSummaryTableDataSource(null, rhf, true, pdfExporterConfigMock);
         } catch (Exception ex) {

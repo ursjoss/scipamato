@@ -174,7 +174,7 @@ public class JooqUserRepoIntegrationTest extends JooqTransactionalIntegrationTes
     }
 
     @Test
-    public void canUpdateUser_thatHasBeenModifiedElswhereInTheMeanTime() {
+    public void canUpdateUser_thatHasBeenModifiedElsewhereInTheMeanTime() {
         User user = makeAndValidateNewUser();
         User secondReloaded = loadSameUserIndependentlyAndModifyAndUpdate(user);
 
@@ -213,7 +213,7 @@ public class JooqUserRepoIntegrationTest extends JooqTransactionalIntegrationTes
     }
 
     @Test
-    public void cannotDeleteUser_thatHasbeenModifiedElsewhereInTheMeanTime() {
+    public void cannotDeleteUser_thatHasBeenModifiedElsewhereInTheMeanTime() {
         User user = makeAndValidateNewUser();
         User secondReloaded = loadSameUserIndependentlyAndModifyAndUpdate(user);
         try {

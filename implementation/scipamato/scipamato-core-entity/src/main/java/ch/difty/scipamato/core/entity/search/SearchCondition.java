@@ -41,6 +41,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeClassId;
@@ -157,7 +158,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return auditSearchTerms.values();
     }
 
-    /** {@link Paper} specific accessors */
+    /* {@link Paper} specific accessors */
 
     /**
      * @return id
@@ -554,8 +555,7 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
             .map(AuditSearchTerm::getDisplayValue)
             .distinct()
             .collect(Collectors.joining(JOIN_DELIMITER));
-        sb.append(Arrays.asList(textString, intString, boolString, auditString)
-            .stream()
+        sb.append(Stream.of(textString, intString, boolString, auditString)
             .filter((final String s) -> !s.isEmpty())
             .collect(Collectors.joining(JOIN_DELIMITER)));
         if (!codes.isEmpty()) {

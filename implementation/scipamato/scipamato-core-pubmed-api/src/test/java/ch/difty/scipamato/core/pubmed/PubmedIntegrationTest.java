@@ -20,13 +20,13 @@ public abstract class PubmedIntegrationTest {
     @Autowired
     private PubmedXmlService service;
 
-    protected PubmedArticleSet getPubmedArticleSet(String fileName) throws IOException {
+    PubmedArticleSet getPubmedArticleSet(String fileName) throws IOException {
         String xml = TestUtils.readFileAsString(fileName);
         assertThat(xml).isNotNull();
         return service.unmarshal(xml);
     }
 
-    protected List<PubmedArticleFacade> getPubmedArticles(String fileName) throws IOException {
+    List<PubmedArticleFacade> getPubmedArticles(String fileName) throws IOException {
         String xml = TestUtils.readFileAsString(fileName);
         assertThat(xml).isNotNull();
         return service.extractArticlesFrom(xml);

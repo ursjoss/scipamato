@@ -43,17 +43,16 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
      *            if {@code true} the report is only compiled from xml when the
      *            report is requested for the first time.
      */
-    public JasperReportResourceReference(final Class<?> scope, final String name, final boolean cacheReport) {
+    JasperReportResourceReference(final Class<?> scope, final String name, final boolean cacheReport) {
         super(scope, name + ".jrxml");
         this.cacheReport = cacheReport;
     }
 
     /**
      * @return the compiled {@link JasperReport} object.
-     * @throws {@link
-     *             JasperReportException}, an unchecked runtime exception wrapping
-     *             two checked exceptions ({@link ResourceStreamNotFoundException}
-     *             and {@link JRException})
+     * @throws JasperReportException
+     *             an unchecked runtime exception wrapping two checked exceptions
+     *             ({@link ResourceStreamNotFoundException} and {@link JRException})
      */
     public JasperReport getReport() {
         if (!cacheReport || report == null) {
@@ -84,7 +83,7 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
         }
     }
 
-    public boolean isCacheReport() {
+    boolean isCacheReport() {
         return cacheReport;
     }
 }

@@ -87,7 +87,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      * @param callingPage
      *            page reference to the page that called this page. Can be null.
      */
-    public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage) {
+    PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage) {
         this(paperModel, callingPage, null, false);
     }
 
@@ -144,7 +144,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
     private boolean showExcludedFromPageParameters() {
         final StringValue ieString = getPageParameters().get(SHOW_EXCLUDED.getName());
         final Boolean ie = ieString.isNull() ? null : ieString.toBoolean();
-        return ie != null ? ie.booleanValue() : false;
+        return ie != null && ie;
     }
 
     @Override
@@ -193,11 +193,11 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         adaptFeedbackMessageCountBasedOnId();
     }
 
-    protected void doUpdate() {
+    private void doUpdate() {
         doUpdate(getModelObject());
     }
 
-    protected void doUpdate(Paper paper) {
+    private void doUpdate(Paper paper) {
         try {
             Paper persisted = service.saveOrUpdate(paper);
             if (persisted != null) {
@@ -223,8 +223,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
     }
 
     private long getNullSafeId() {
-        return getModelObject().getId() != null ? getModelObject().getId()
-            .longValue() : 0l;
+        return getModelObject().getId() != null ? getModelObject().getId() : 0L;
     }
 
     /**

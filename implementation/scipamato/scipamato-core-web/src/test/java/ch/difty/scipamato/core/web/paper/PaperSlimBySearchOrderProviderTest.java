@@ -93,7 +93,7 @@ public class PaperSlimBySearchOrderProviderTest
 
     @Test
     public void findingAllPaperIds() {
-        final List<Long> ids = Arrays.asList(3l, 18l, 6l);
+        final List<Long> ids = Arrays.asList(3L, 18L, 6L);
         provider.setSort("authors", SortOrder.ASCENDING);
         when(paperServiceMock.findPageOfIdsBySearchOrder(eq(getFilter()),
             Mockito.argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "authors: ASC")))).thenReturn(ids);
@@ -105,8 +105,8 @@ public class PaperSlimBySearchOrderProviderTest
 
     @Test
     public void gettingSearchOrderId_passesModelId() {
-        when(searchOrder.getId()).thenReturn(55l);
-        assertThat(provider.getSearchOrderId()).isEqualTo(55l);
+        when(searchOrder.getId()).thenReturn(55L);
+        assertThat(provider.getSearchOrderId()).isEqualTo(55L);
         verify(searchOrder).getId();
     }
 

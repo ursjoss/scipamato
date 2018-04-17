@@ -14,8 +14,8 @@ public class PublicPaperTest extends PublicEntityTest<PublicPaper> {
     @Override
     protected PublicPaper newEntity() {
         return PublicPaper.builder()
-            .id(1l)
-            .number(2l)
+            .id(1L)
+            .number(2L)
             .pmId(1000)
             .authors("authors")
             .authorsAbbreviated("auths")
@@ -37,8 +37,8 @@ public class PublicPaperTest extends PublicEntityTest<PublicPaper> {
 
     @Override
     protected void assertSpecificGetters() {
-        assertThat(getEntity().getId()).isEqualTo(1l);
-        assertThat(getEntity().getNumber()).isEqualTo(2l);
+        assertThat(getEntity().getId()).isEqualTo(1L);
+        assertThat(getEntity().getNumber()).isEqualTo(2L);
         assertThat(getEntity().getPmId()).isEqualTo(1000);
         assertThat(getEntity().getAuthors()).isEqualTo("authors");
         assertThat(getEntity().getAuthorsAbbreviated()).isEqualTo("auths");

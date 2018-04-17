@@ -49,7 +49,7 @@ public class PublicPaperFilter extends ScipamatoFilter {
         CODES_OF_CLASS_7("codesOfClass7"),
         CODES_OF_CLASS_8("codesOfClass8");
 
-        private String name;
+        private final String name;
 
         PublicPaperFilterFields(final String name) {
             this.name = name;

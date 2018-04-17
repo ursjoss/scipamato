@@ -23,11 +23,11 @@ public class LogoutPageTest extends WicketTest {
         getTester().assertNoInfoMessage();
     }
 
-    protected LogoutPage makePage() {
+    private LogoutPage makePage() {
         return new LogoutPage(new PageParameters());
     }
 
-    protected Class<LogoutPage> getPageClass() {
+    private Class<LogoutPage> getPageClass() {
         return LogoutPage.class;
     }
 

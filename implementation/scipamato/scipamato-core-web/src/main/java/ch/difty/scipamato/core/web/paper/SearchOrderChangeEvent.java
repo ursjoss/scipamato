@@ -17,7 +17,7 @@ import lombok.Getter;
  * <ul>
  * <li>if the excluded id is set, the sink will be requested to handle that id
  * an treat it as an excluded id.</li>
- * <li>if the newSearchOrderRequestd flag is set, the sink will need to take
+ * <li>if the newSearchOrderRequested flag is set, the sink will need to take
  * care of creating a new SearchOrder and set it as the model.</li>
  * </ul>
  *

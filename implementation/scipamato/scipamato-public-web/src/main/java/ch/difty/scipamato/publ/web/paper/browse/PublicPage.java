@@ -126,13 +126,13 @@ public class PublicPage extends BasePage<Void> {
             }
 
         });
-        filterForm.add(new BootstrapTabbedPanel<ITab>(tabId, tabs));
+        filterForm.add(new BootstrapTabbedPanel<>(tabId, tabs));
     }
 
     private class TabPanel1 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        public TabPanel1(String id, IModel<PublicPaperFilter> model) {
+        TabPanel1(String id, IModel<PublicPaperFilter> model) {
             super(id, model);
         }
 
@@ -147,7 +147,7 @@ public class PublicPage extends BasePage<Void> {
     private class TabPanel2 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
-        public TabPanel2(String id, IModel<PublicPaperFilter> model) {
+        TabPanel2(String id, IModel<PublicPaperFilter> model) {
             super(id, model);
         }
 
@@ -193,7 +193,7 @@ public class PublicPage extends BasePage<Void> {
                 .withLiveSearch(true);
 
             final PropertyModel<List<Code>> model = PropertyModel.of(filter, componentId);
-            final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<Code>(componentId, model, choices,
+            final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<>(componentId, model, choices,
                     choiceRenderer).with(config);
             multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
             form.add(multiSelect);
@@ -209,7 +209,7 @@ public class PublicPage extends BasePage<Void> {
             super(id);
         }
 
-        public AbstractTabPanel(String id, IModel<?> model) {
+        AbstractTabPanel(String id, IModel<?> model) {
             super(id, model);
         }
 

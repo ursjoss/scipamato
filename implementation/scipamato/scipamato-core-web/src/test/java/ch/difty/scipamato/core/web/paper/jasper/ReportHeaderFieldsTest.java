@@ -10,7 +10,7 @@ import nl.jqno.equalsverifier.Warning;
 public class ReportHeaderFieldsTest {
 
     @Test
-    public void equalsverify() {
+    public void equalsVerify() {
         EqualsVerifier.forClass(ReportHeaderFields.class)
             .withRedefinedSuperclass()
             .suppress(Warning.STRICT_INHERITANCE)

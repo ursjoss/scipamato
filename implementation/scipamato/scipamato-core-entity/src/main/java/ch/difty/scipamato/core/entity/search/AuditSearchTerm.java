@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  * {@link MatchType} to apply the concrete search logic to the database.
  * <p>
  * Each token returned by the class offers the lexed {@code rawData}, an
- * sql-ized form of it already containing the wild-card indicator (%) for
+ * sqlized form of it already containing the wild-card indicator (%) for
  * appropriate.
  * <p>
  * The tokens targeted for the user fields, could be of match type:
@@ -83,7 +83,7 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         this(null, fieldName, rawSearchTerm);
     }
 
-    AuditSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
+    private AuditSearchTerm(final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
         this(null, searchConditionId, fieldName, rawSearchTerm);
     }
 
@@ -93,12 +93,12 @@ public class AuditSearchTerm extends AbstractSearchTerm {
 
     }
 
-    protected boolean isUserTypeSearchTerm() {
+    private boolean isUserTypeSearchTerm() {
         return getFieldName().toUpperCase()
             .endsWith(USER_FIELD_TAG);
     }
 
-    protected boolean isDateTypeSearchTerm() {
+    private boolean isDateTypeSearchTerm() {
         return !isUserTypeSearchTerm();
     }
 
@@ -109,7 +109,7 @@ public class AuditSearchTerm extends AbstractSearchTerm {
     public enum FieldType {
         USER,
         DATE,
-        NONE;
+        NONE
     }
 
     public enum MatchType {
@@ -120,12 +120,12 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         RANGE,
         LESS_THAN,
         LESS_OR_EQUAL,
-        NONE;
+        NONE
     }
 
     public enum TokenType {
         // Token types must not have underscores. Otherwise the named capturing groups
-        // in the constructed regexes will break
+        // in the constructed regex terms will break
         WHITESPACE(RE_S + "+", MatchType.NONE, FieldType.NONE, 1),
 
         RANGEQUOTED(
@@ -166,7 +166,7 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         public final FieldType fieldType;
         private final int      group;
 
-        private TokenType(final String pattern, final MatchType matchType, final FieldType fieldType, final int group) {
+        TokenType(final String pattern, final MatchType matchType, final FieldType fieldType, final int group) {
             this.pattern = pattern;
             this.group = group;
             this.fieldType = fieldType;
@@ -215,11 +215,11 @@ public class AuditSearchTerm extends AbstractSearchTerm {
             return type;
         }
 
-        public String getUserRawData() {
+        String getUserRawData() {
             return rawDataMap.get(FieldType.USER);
         }
 
-        public String getDateRawData() {
+        String getDateRawData() {
             return rawDataMap.get(FieldType.DATE);
         }
 
@@ -247,7 +247,7 @@ public class AuditSearchTerm extends AbstractSearchTerm {
         }
     }
 
-    protected static List<Token> lex(final String input, final boolean isUserType, final boolean isDateType) {
+    private static List<Token> lex(final String input, final boolean isUserType, final boolean isDateType) {
         return tokenize(input, buildPattern(), isUserType, isDateType);
     }
 
@@ -294,11 +294,8 @@ public class AuditSearchTerm extends AbstractSearchTerm {
     }
 
     private static String buildRange(final Matcher matcher, final TokenType tk) {
-        final StringBuilder sb = new StringBuilder();
-        sb.append(completeDateTimeIfNecessary(matcher.group(tk.group), RangeElement.BEGIN));
-        sb.append("-");
-        sb.append(completeDateTimeIfNecessary(matcher.group(tk.group + 1), RangeElement.END));
-        return sb.toString();
+        return completeDateTimeIfNecessary(matcher.group(tk.group), RangeElement.BEGIN) + "-" +
+                completeDateTimeIfNecessary(matcher.group(tk.group + 1), RangeElement.END);
     }
 
     private static String completeDateTimeIfNecessary(final String data, final RangeElement rangeElement) {
@@ -337,6 +334,6 @@ public class AuditSearchTerm extends AbstractSearchTerm {
 
     private enum RangeElement {
         BEGIN,
-        END;
+        END
     }
 }

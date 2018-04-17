@@ -1,9 +1,6 @@
 package ch.difty.scipamato.core.entity;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -13,6 +10,8 @@ import org.apache.commons.collections4.list.UnmodifiableList;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeClassId;
+
+import static java.util.Comparator.comparing;
 
 /**
  * The paper specific implementation of the {@link CodeBox} interface.
@@ -50,8 +49,7 @@ public class PaperCodeBox implements CodeBox {
 
     private Predicate<? super Code> isMatching(final CodeClassId ccId) {
         return c -> ccId.getId() == c.getCodeClass()
-            .getId()
-            .intValue();
+                .getId();
     }
 
     @Override
@@ -98,16 +96,16 @@ public class PaperCodeBox implements CodeBox {
         final StringBuilder builder = new StringBuilder();
         final Map<CodeClass, List<Code>> map = codes.stream()
             .collect(Collectors.groupingBy(Code::getCodeClass, LinkedHashMap::new, Collectors.toList()));
-        String delim = "";
+        String delimiter = "";
         builder.append("[");
         for (final Entry<CodeClass, List<Code>> e : map.entrySet()) {
-            builder.append(delim)
+            builder.append(delimiter)
                 .append("codesOfClass")
                 .append(e.getKey()
                     .getId())
                 .append("=");
             builder.append(e.getValue());
-            delim = ",";
+            delimiter = ",";
         }
         builder.append("]");
         return builder.toString();
@@ -116,8 +114,7 @@ public class PaperCodeBox implements CodeBox {
     @Override
     public int hashCode() {
         final List<Code> sorted = new ArrayList<>(codes);
-        sorted.sort((c1, c2) -> c1.getCode()
-            .compareTo(c2.getCode()));
+        sorted.sort(comparing(Code::getCode));
         final int prime = 31;
         int result = 1;
         result = prime * result + sorted.hashCode();
@@ -133,12 +130,10 @@ public class PaperCodeBox implements CodeBox {
         if (getClass() != obj.getClass())
             return false;
         final List<Code> thisSorted = new ArrayList<>(codes);
-        thisSorted.sort((c1, c2) -> c1.getCode()
-            .compareTo(c2.getCode()));
+        thisSorted.sort(comparing(Code::getCode));
         final PaperCodeBox other = (PaperCodeBox) obj;
         final List<Code> otherSorted = new ArrayList<>(other.codes);
-        otherSorted.sort((c1, c2) -> c1.getCode()
-            .compareTo(c2.getCode()));
+        otherSorted.sort(comparing(Code::getCode));
         return thisSorted.equals(otherSorted);
     }
 

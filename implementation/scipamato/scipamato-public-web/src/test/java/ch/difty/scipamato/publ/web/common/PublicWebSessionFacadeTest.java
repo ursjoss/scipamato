@@ -15,7 +15,7 @@ public class PublicWebSessionFacadeTest extends WicketTest {
     private ScipamatoWebSessionFacade sessionFacade = new PublicWebSessionFacade();
 
     @Test
-    public void gettingLanguageCode_withBritishLocale_returnsBritshCode() {
+    public void gettingLanguageCode_withBritishLocale_returnsBritishCode() {
         getTester().getSession()
             .setLocale(new Locale("en_GB"));
         assertThat(sessionFacade.getLanguageCode()).isEqualTo("en_gb");

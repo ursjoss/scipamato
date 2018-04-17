@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -123,7 +124,7 @@ public class PaperProviderTest {
 
     @Test
     public void iterating_withNoRecords_returnsNoRecords() {
-        papers = Arrays.asList();
+        papers = Collections.emptyList();
         when(serviceMock.findPageByFilter(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
         Iterator<Paper> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();

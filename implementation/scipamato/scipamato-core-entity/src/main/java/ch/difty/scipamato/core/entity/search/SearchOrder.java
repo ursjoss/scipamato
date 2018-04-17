@@ -44,7 +44,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
         EXCLUDED_PAPER_IDS("excludedPaperIds"),
         SHOW_EXCLUDED("showExcluded");
 
-        private String name;
+        private final String name;
 
         SearchOrderFields(final String name) {
             this.name = name;
@@ -132,7 +132,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
      * @param paperId
      *            the id to remove from exclusions
      */
-    public void removeExlusionOfPaperWithId(final long paperId) {
+    public void removeExclusionOfPaperWithId(final long paperId) {
         excludedPaperIds.remove(paperId);
     }
 

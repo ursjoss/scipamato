@@ -55,7 +55,7 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
         return PAPER;
     }
 
-    protected Class<? extends PaperRecord> getRecordClass() {
+    private Class<? extends PaperRecord> getRecordClass() {
         return PaperRecord.class;
     }
 

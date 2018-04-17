@@ -118,8 +118,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     @SpringBean
     private PageFactory pageFactory;
 
-    public EditablePaperPanel(String id, IModel<Paper> model, PageReference previousPage, Long searchOrderId,
-            boolean showingExclusions) {
+    EditablePaperPanel(String id, IModel<Paper> model, PageReference previousPage, Long searchOrderId,
+                       boolean showingExclusions) {
         super(id, model, Mode.EDIT, previousPage);
         this.searchOrderId = searchOrderId;
         this.showingExclusions = showingExclusions;
@@ -140,7 +140,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 setEnabled(firstAuthorOverridden.getModelObject());
             }
         };
-        firstAuthor.add(new PropertyValidator<String>());
+        firstAuthor.add(new PropertyValidator<>());
         return firstAuthor;
     }
 
@@ -330,8 +330,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     }
 
     private class ProcessingRecord {
-        private List<String> modifiedFields  = new ArrayList<>();
-        private List<String> differingFields = new ArrayList<>();
+        private final List<String> modifiedFields  = new ArrayList<>();
+        private final List<String> differingFields = new ArrayList<>();
 
         void addChangedField(String name) {
             modifiedFields.add(name);
@@ -461,7 +461,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             final AjaxRequestTarget target, final FormComponent<?>... fcs) {
         final String localizedFieldName = getLabelResourceFor(fieldName);
         final Integer paperValue = getter.apply(p);
-        if (paperValue == null || Paper.NA_PUBL_YEAR == paperValue.intValue()) {
+        if (paperValue == null || Paper.NA_PUBL_YEAR == paperValue) {
             try {
                 final int articleValue = Integer.parseInt(rawArticleValue);
                 setPaperFieldFromArticleAndInform(localizedFieldName, articleValue, setter, p, pr, target, fcs);
@@ -509,8 +509,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      *            field from pubmed article
      * @param paperField
      *            field from scipamato paper
-     * @param ProcessingRecord
-     *            pr
+     * @param pr
+     *            ProcessingRecord
      */
     private void warnNonmatchingFields(String fieldName, String pmField, String paperField, ProcessingRecord pr) {
         if (pmField != null && !pmField.equals(paperField)) {
@@ -535,8 +535,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 final Long id = idSupplier.get();
                 if (id != null) {
                     final Optional<Paper> p = paperService.findById(id);
-                    if (p.isPresent())
-                        setResponsePage(getResponsePage(p.get(), searchOrderId, showingExclusions));
+                    p.ifPresent(paper -> setResponsePage(getResponsePage(paper, searchOrderId, showingExclusions)));
                 }
             }
 

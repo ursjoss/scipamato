@@ -39,7 +39,6 @@ import io.undertow.servlet.api.WebResourceCollection;
 @RunWith(MockitoJUnitRunner.class)
 public class UndertowConfigTest {
 
-    private UndertowConfig                          config;
     private UndertowEmbeddedServletContainerFactory factory;
 
     @Mock
@@ -52,7 +51,7 @@ public class UndertowConfigTest {
 
     @Before
     public void setUp() {
-        config = new UndertowConfig(serverPropsMock, scipamatoPropertiesMock);
+        UndertowConfig config = new UndertowConfig(serverPropsMock, scipamatoPropertiesMock);
         factory = (UndertowEmbeddedServletContainerFactory) config.undertow();
     }
 
@@ -106,7 +105,7 @@ public class UndertowConfigTest {
     }
 
     @Test
-    public void gettingListenerInfo_afterStartingServer_withNoBuilderCustomizers_hasNoListnerInfo() {
+    public void gettingListenerInfo_afterStartingServer_withNoBuilderCustomizers_hasNoListenerInfo() {
         final Undertow undertow = undertowBuilder.build();
         undertow.start();
         assertThat(undertow.getListenerInfo()).isEmpty();

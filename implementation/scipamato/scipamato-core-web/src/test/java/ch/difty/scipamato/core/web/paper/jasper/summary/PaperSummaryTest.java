@@ -108,14 +108,14 @@ public class PaperSummaryTest extends JasperEntityTest {
             .resultLabel(RESULT_LABEL)
             .commentLabel(COMMENT_LABEL)
             .build();
-        p.setNumber(5l);
+        p.setNumber(5L);
         ps = newPaperSummary();
 
         assertThat(ps.getHeader()).isEqualTo("5");
     }
 
     @Test
-    public void equalsverify() {
+    public void equalsVerify() {
         EqualsVerifier.forClass(PaperSummary.class)
             .withRedefinedSuperclass()
             .suppress(Warning.STRICT_INHERITANCE)

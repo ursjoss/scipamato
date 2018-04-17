@@ -41,7 +41,7 @@ public class PubmedImportServiceTest {
     @Before
     public void setUp() {
         pubmedArticles.add(pubmedArticleMock);
-        when(applicationPropertiesMock.getMinimumPaperNumberToBeRecycled()).thenReturn(7l);
+        when(applicationPropertiesMock.getMinimumPaperNumberToBeRecycled()).thenReturn(7L);
         pubmedImporter = new PubmedImportService(pubmedArticleServiceMock, paperServiceMock, applicationPropertiesMock);
     }
 
@@ -59,7 +59,7 @@ public class PubmedImportServiceTest {
     }
 
     @Test
-    public void degenerateConstruction_withNullSaperService_throws() {
+    public void degenerateConstruction_withNullPaperService_throws() {
         assertDegenerateSupplierParameter(
             () -> new PubmedImportService(pubmedArticleServiceMock, null, applicationPropertiesMock), "paperService");
         verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
@@ -81,7 +81,7 @@ public class PubmedImportServiceTest {
 
     @Test
     public void persistingPubmedArticlesFromXml_delegatesExtractionAndPersistingToNestedServices() {
-        final long minimumNumber = 7l;
+        final long minimumNumber = 7L;
         when(pubmedArticleServiceMock.extractArticlesFrom("content")).thenReturn(pubmedArticles);
         when(paperServiceMock.dumpPubmedArticlesToDb(pubmedArticles, minimumNumber)).thenReturn(serviceResultMock);
 

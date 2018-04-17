@@ -26,11 +26,11 @@ import ch.difty.scipamato.core.pubmed.api.Year;
  * 
  * @author u.joss
  */
-public class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
+class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
 
     private static final String PII = "pii";
 
-    protected ScipamatoPubmedArticle(final PubmedArticle pubmedArticle) {
+    ScipamatoPubmedArticle(final PubmedArticle pubmedArticle) {
         AssertAs.notNull(pubmedArticle, "pubmedArticle");
         final MedlineCitation medlineCitation = AssertAs.notNull(pubmedArticle.getMedlineCitation(),
             "pubmedArticle.medlineCitation");
@@ -61,13 +61,13 @@ public class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
             "pubmedArticle.medlineCitation.article.journal.journalIssue");
         final PubDate pubDate = AssertAs.notNull(journalIssue.getPubDate(),
             "pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate");
-        final List<java.lang.Object> datishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
-        return datishObjects.stream()
+        final List<java.lang.Object> dateishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
+        return dateishObjects.stream()
             .filter(o -> o instanceof Year)
             .map(o -> (Year) o)
             .map(Year::getvalue)
             .findFirst()
-            .orElseGet(() -> datishObjects.stream()
+            .orElseGet(() -> dateishObjects.stream()
                 .filter(o -> o instanceof MedlineDate)
                 .map(o -> (MedlineDate) o)
                 .map(MedlineDate::getvalue)
@@ -133,7 +133,7 @@ public class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
             sb.append(first)
                 .append(PAGE_SEPARATOR);
             if (first.length() > last.length())
-                sb.append(first.substring(0, first.length() - last.length()))
+                sb.append(first, 0, first.length() - last.length())
                     .append(last);
             else
                 sb.append(last);

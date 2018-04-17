@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 
 import org.apache.wicket.PageReference;
@@ -38,7 +38,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperPanel> {
 
     private static final int     PMID            = 1234;
-    private static final long    SEARCH_ORDER_ID = 5678l;
+    private static final long    SEARCH_ORDER_ID = 5678L;
     private static final boolean SHOW_EXCLUDED   = false;
 
     @MockBean
@@ -56,7 +56,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Override
     protected void setUpLocalHook() {
         // when referring to PaperSearchPage
-        when(searchOrderServiceMock.findById(5678l)).thenReturn(Optional.empty());
+        when(searchOrderServiceMock.findById(5678L)).thenReturn(Optional.empty());
     }
 
     @Override
@@ -67,8 +67,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Override
     protected EditablePaperPanel makePanel() {
         Paper p = new Paper();
-        p.setId(1l);
-        p.setNumber(100l);
+        p.setId(1L);
+        p.setNumber(100L);
         p.setAuthors("a");
         p.setFirstAuthor("fa");
         p.setFirstAuthorOverridden(false);
@@ -142,8 +142,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         assertCommonComponents(b);
 
         b += ":form";
-        assertTextFieldWithLabel(b + ":id", 1l, "ID");
-        assertTextFieldWithLabel(b + ":number", 100l, "No.");
+        assertTextFieldWithLabel(b + ":id", 1L, "ID");
+        assertTextFieldWithLabel(b + ":number", 100L, "No.");
         assertTextFieldWithLabel(b + ":publicationYear", 2017, "Pub. Year");
         assertTextFieldWithLabel(b + ":pmId", 1234, "PMID");
         getTester().assertLabel(b + ":submit:label", "Save");
@@ -205,7 +205,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void assertSubmit() {
         getTester().startComponentInPage(makePanel());
-        applyTestHackWithNstedMultiPartForms();
+        applyTestHackWithNestedMultiPartForms();
         getTester().submitForm("panel:form");
         verifyCodeAndCodeClassCalls(2);
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
@@ -273,7 +273,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
         String formId = "panel:form:tabs:panelsContainer:panels:5:tab3Form:";
         getTester().assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1");
-        getTester().assertModelValue(formId + "codesClass1", Arrays.asList(newC(1, "F")));
+        getTester().assertModelValue(formId + "codesClass1", Collections.singletonList(newC(1, "F")));
 
         FormTester formTester = getTester().newFormTester(formId);
         assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("mcocc1");
@@ -292,7 +292,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
         String formId = "panel:form:tabs:panelsContainer:panels:5:tab3Form:";
         getTester().assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1");
-        getTester().assertModelValue(formId + "codesClass1", Arrays.asList(newC(1, "F")));
+        getTester().assertModelValue(formId + "codesClass1", Collections.singletonList(newC(1, "F")));
 
         FormTester formTester = getTester().newFormTester(formId);
         assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("mcocc1");
@@ -314,7 +314,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
         String formId = "panel:form:tabs:panelsContainer:panels:5:tab3Form:";
         getTester().assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1");
-        getTester().assertModelValue(formId + "codesClass1", Arrays.asList(newC(1, "F")));
+        getTester().assertModelValue(formId + "codesClass1", Collections.singletonList(newC(1, "F")));
 
         FormTester formTester = getTester().newFormTester(formId);
         assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("mcocc1");
@@ -654,7 +654,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
-    protected EditablePaperPanel makePanelWithEmptyPaper(Integer pmId) {
+    private EditablePaperPanel makePanelWithEmptyPaper(Integer pmId) {
         Paper p = new Paper();
         p.setPmId(pmId);
         return new EditablePaperPanel(PANEL_ID, Model.of(p), null, null, SHOW_EXCLUDED) {
@@ -673,10 +673,10 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         };
     }
 
-    protected EditablePaperPanel makePanelWith(Integer pmId, PageReference callingPage, Long searchOrderId,
-            boolean showExcluded) {
+    private EditablePaperPanel makePanelWith(Integer pmId, PageReference callingPage, Long searchOrderId,
+                                             boolean showExcluded) {
         Paper p = new Paper();
-        p.setId(1l);
+        p.setId(1L);
         p.setPmId(pmId);
         return new EditablePaperPanel(PANEL_ID, Model.of(p), callingPage, searchOrderId, showExcluded) {
             private static final long serialVersionUID = 1L;
@@ -722,7 +722,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         formTester.submit("exclude");
         getTester().assertRenderedPage(PaperSearchPage.class);
 
-        verify(paperServiceMock).excludeFromSearchOrder(SEARCH_ORDER_ID, 1l);
+        verify(paperServiceMock).excludeFromSearchOrder(SEARCH_ORDER_ID, 1L);
         verifyCodeAndCodeClassCalls(2);
     }
 
@@ -734,7 +734,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         formTester.submit("exclude");
         getTester().assertRenderedPage(PaperSearchPage.class); // TODO consider not forwarding
 
-        verify(paperServiceMock).reincludeIntoSearchOrder(SEARCH_ORDER_ID, 1l);
+        verify(paperServiceMock).reincludeIntoSearchOrder(SEARCH_ORDER_ID, 1L);
         verifyCodeAndCodeClassCalls(2);
     }
 

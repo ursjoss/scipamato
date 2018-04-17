@@ -12,12 +12,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
-import ch.difty.scipamato.publ.persistence.paper.authors.EtAlAuthorsAbbreviator;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EtAlAuthorsAbbreviatorTest {
 
-    private int maxLength = 16;
+    private final int maxLength = 16;
 
     private EtAlAuthorsAbbreviator abbr16;
 
@@ -64,7 +63,7 @@ public class EtAlAuthorsAbbreviatorTest {
     }
 
     @Test
-    public void abbreviating_withSingleauthorLongerThanThreshold_returnsAbbreviatedAuthorWithEllipsis() {
+    public void abbreviating_withSingleAuthorLongerThanThreshold_returnsAbbreviatedAuthorWithEllipsis() {
         String authors = "12345678901234567890.";
         assertThat(authors.length()).isGreaterThan(maxLength);
 

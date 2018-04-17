@@ -19,6 +19,7 @@ public interface CodeClassLikeService<T extends CodeClassLike> {
      * provided languageCode
      *
      * @param languageCode
+     *        language code, e.g. 'en' or 'de'
      * @return a list of code classes of Type {@code T}
      */
     List<T> find(String languageCode);

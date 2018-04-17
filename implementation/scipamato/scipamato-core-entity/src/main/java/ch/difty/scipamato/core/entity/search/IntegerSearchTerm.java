@@ -37,7 +37,7 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
         LESS_OR_EQUAL,
         RANGE,
         MISSING,
-        PRESENT;
+        PRESENT
     }
 
     private final MatchType type;

@@ -128,7 +128,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     private boolean showExcludedFromPageParameters() {
         final StringValue ieString = getPageParameters().get(SHOW_EXCLUDED.getName());
         final Boolean ie = ieString.isNull() ? null : ieString.toBoolean();
-        return ie != null ? ie.booleanValue() : false;
+        return ie != null && ie;
     }
 
     private SearchOrder makeEmptyModelObject() {
@@ -261,7 +261,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             if (!getModelObject().isShowExcluded()) {
                 getModelObject().addExclusionOfPaperWithId(soce.getExcludedId());
             } else {
-                getModelObject().removeExlusionOfPaperWithId(soce.getExcludedId());
+                getModelObject().removeExclusionOfPaperWithId(soce.getExcludedId());
             }
         }
     }

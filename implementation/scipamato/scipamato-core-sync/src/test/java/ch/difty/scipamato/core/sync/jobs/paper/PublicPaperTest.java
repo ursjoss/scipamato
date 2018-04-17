@@ -11,8 +11,8 @@ public class PublicPaperTest extends PublicEntityTest {
     @Test
     public void canSetGet() {
         PublicPaper pp = PublicPaper.builder()
-            .id(1l)
-            .number(2l)
+            .id(1L)
+            .number(2L)
             .pmId(10000)
             .authors("authors")
             .title("title")
@@ -32,8 +32,8 @@ public class PublicPaperTest extends PublicEntityTest {
             .lastSynched(SYNCHED)
             .build();
 
-        assertThat(pp.getId()).isEqualTo(1l);
-        assertThat(pp.getNumber()).isEqualTo(2l);
+        assertThat(pp.getId()).isEqualTo(1L);
+        assertThat(pp.getNumber()).isEqualTo(2L);
         assertThat(pp.getPmId()).isEqualTo(10000);
         assertThat(pp.getAuthors()).isEqualTo("authors");
         assertThat(pp.getTitle()).isEqualTo("title");

@@ -85,9 +85,9 @@ public class PaperSlimByPaperFilterProviderTest
         provider.setSort("title", SortOrder.DESCENDING);
         when(paperServiceMock.findPageOfIdsByFilter(eq(getFilter()),
             argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC"))))
-                .thenReturn(Arrays.asList(5l, 3l, 17l));
+                .thenReturn(Arrays.asList(5L, 3L, 17L));
         List<Long> ids = provider.findAllPaperIdsByFilter();
-        assertThat(ids).containsExactly(5l, 3l, 17l);
+        assertThat(ids).containsExactly(5L, 3L, 17L);
         verify(paperServiceMock).findPageOfIdsByFilter(eq(getFilter()),
             argThat(new PaginationContextMatcher(0, Integer.MAX_VALUE, "title: DESC")));
     }

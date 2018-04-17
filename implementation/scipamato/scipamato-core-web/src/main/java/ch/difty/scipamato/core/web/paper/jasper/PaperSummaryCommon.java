@@ -45,7 +45,7 @@ public abstract class PaperSummaryCommon extends JasperEntity {
                 p.getCreatedByName());
     }
 
-    // headerPart is exected not to be null (it can't in rhf)
+    // headerPart is expected not to be null (it can't in rhf)
     private PaperSummaryCommon(final Long number, final String authors, final String title, final String location,
             final String goals, final String methods, final String comment, final String goalsLabel,
             final String methodsLabel, final String commentLabel, final String headerPart, final String brand,

@@ -84,7 +84,7 @@ public class HidingInternalsCodeAggregator implements CodeAggregator {
             .anyMatch(x -> "3A".equals(x) || "3B".equals(x)))
             pcs.add((short) 1);
         if (codes.stream()
-            .anyMatch(x -> "3C".equals(x)))
+            .anyMatch("3C"::equals))
             pcs.add((short) 2);
         return pcs;
     }
@@ -92,7 +92,7 @@ public class HidingInternalsCodeAggregator implements CodeAggregator {
     private List<Short> gatherCodesStudyDesign() {
         final List<Short> csds = new ArrayList<>();
         if (codes.stream()
-            .anyMatch(x -> "5abc".equals(x)))
+            .anyMatch("5abc"::equals))
             csds.add((short) 1);
         if (codes.stream()
             .anyMatch(x -> "5E".equals(x) || "5F".equals(x) || "5G".equals(x) || "5H".equals(x) || "5I".equals(x)))
@@ -105,17 +105,17 @@ public class HidingInternalsCodeAggregator implements CodeAggregator {
 
     @Override
     public String[] getAggregatedCodes() {
-        return codes.toArray(new String[codes.size()]);
+        return codes.toArray(new String[0]);
     }
 
     @Override
     public Short[] getCodesPopulation() {
-        return codesPopulation.toArray(new Short[codesPopulation.size()]);
+        return codesPopulation.toArray(new Short[0]);
     }
 
     @Override
     public Short[] getCodesStudyDesign() {
-        return codesStudyDesign.toArray(new Short[codesStudyDesign.size()]);
+        return codesStudyDesign.toArray(new Short[0]);
     }
 
 }

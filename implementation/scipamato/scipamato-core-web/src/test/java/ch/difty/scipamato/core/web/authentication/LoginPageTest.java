@@ -24,11 +24,11 @@ public class LoginPageTest extends WicketTest {
         getTester().assertNoInfoMessage();
     }
 
-    protected LoginPage makePage() {
+    private LoginPage makePage() {
         return new LoginPage(new PageParameters());
     }
 
-    protected Class<LoginPage> getPageClass() {
+    private Class<LoginPage> getPageClass() {
         return LoginPage.class;
     }
 

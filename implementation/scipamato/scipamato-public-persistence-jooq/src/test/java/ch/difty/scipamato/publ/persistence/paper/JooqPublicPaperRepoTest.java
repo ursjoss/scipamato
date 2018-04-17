@@ -63,7 +63,7 @@ public class JooqPublicPaperRepoTest {
     @Test
     public void mapping_callsAuthorsAbbreviator_withAuthors() {
         final String authors = "authors";
-        final String authorsAbbr = "auts";
+        final String authorsAbbr = "auths";
         PaperRecord pr = mock(PaperRecord.class);
         when(pr.getAuthors()).thenReturn(authors);
         when(authorsAbbreviator.abbreviate(authors)).thenReturn(authorsAbbr);

@@ -35,7 +35,7 @@ public class PaperFilterConditionMapperTest
 
     @Test
     public void creatingWhereCondition_withNumber_searchesNumber() {
-        Long number = 17l;
+        Long number = 17L;
         filter.setNumber(number);
         assertThat(mapper.map(filter)
             .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"NUMBER\" = 17");

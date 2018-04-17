@@ -145,7 +145,7 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
     @Test
     public void assertSubmit() {
         getTester().startComponentInPage(makePanel());
-        applyTestHackWithNstedMultiPartForms();
+        applyTestHackWithNestedMultiPartForms();
         getTester().submitForm("panel:form");
         verifyCodeAndCodeClassCalls(2);
     }

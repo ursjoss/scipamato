@@ -73,7 +73,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 08/20 - Public: reduce columns/column sizes in result view (abbreviated
   authors, journal instead of location)
 - 08/12 - Public: Add http://blog.apps.npr.org/pym.js/[pym.js] to support
-  loading SciPaMaTo-Public within a responive iframe
+  loading SciPaMaTo-Public within a responsive iframe
 - 08/21 - Public: Styling of  NewStudy page
 
 
@@ -119,7 +119,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Changed
 - 07/41 - Public: Increase base font size from 13 px to 15 px
 - 07/56 - Public: Repeat the simple search fields in Extended Search
-- 07/64 - Public: Provide possibilty to quote text search terms (e.g. authors)
+- 07/64 - Public: Provide possibility to quote text search terms (e.g. authors)
 
 .Removed
 - 07/04 - Public: Remove ability to search by id/number
@@ -130,12 +130,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 - Added customized sonar quality profile used for SciPaMaTo
-- Added customized look and feel for scipamato-public based on todc-bootstrap. With Optinoal MetaOT-Font
+- Added customized look and feel for scipamato-public based on todc-bootstrap. With optional MetaOT-Font
   which is commercial
 
 .Changed
 - Updated screenshots sonar + architecture
-- Updated dependencies: wicket, jOOQ, flyway, mockito, spring-cloud, equalsverifier, assertj
+- Updated dependencies: wicket, jOOQ, flyway, mockito, spring-cloud, equalsverifier, assertJ
 - Improved some topics according to Effective Java, 3rd edition
 - Navbar in SciPaMaTo-Public: Do not show by default. Can be overridden via page parameter showNavbar.
   Default state is configurable via property scipamato.navbar-visible-by-default
@@ -157,7 +157,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - keep generated pubmed-api classes strictly within scipamato-core-pubmed-api
 - have infinitest ignore integration tests
 - renamed public packages from ch.difty.scipamato.public_ to ch.difty.scipamato.publ
-- updated spring-boot-starter-parnet, postgresql jdbc driver, spring-boot-admin
+- updated spring-boot-starter-parent, postgresql jdbc driver, spring-boot-admin
 
 .Removed
 - jOOQ related classes copied from spring-boot (https://github.com/spring-projects/spring-boot/issues/11324)
@@ -190,7 +190,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Renamed DefaultAuthorParser to PubmedAuthorParser
 - Improved JavaDoc for author strings, highlighted dependency on author parser strategy
   and current limitation with JSR303 validation of author strings.
-- Updated jOOQ, flyway, lombok, jasperreports, assertj, jacoco-maven-plugin
+- Updated jOOQ, flyway, lombok, jasperreports, assertJ, jacoco-maven-plugin
 - Switched to mockito-2
 
 .Fixed
@@ -211,7 +211,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Explicitly manage the bootstrap version (3.3.7-1) that was overridden by spring-cloud-dependencies to 3.2.0
 
 .Security
-- Public 07/43: https configuration. Allow referencing SciPaMato-Public from iframe. Redirect from http
+- Public 07/43: https configuration. Allow referencing SciPaMaTo-Public from iframe. Redirect from http
 
 
 [[v0.7.1]]
@@ -223,7 +223,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Changed
 - Improved DeveloperInformation and Operations Wiki pages
 - Improved DataSource/HikariCP configuration and added tests
-- Switched to immplicit constructor injection as of spring 4.3
+- Switched to implicit constructor injection as of spring 4.3
 
 .Fixed
 - 07/30: Do not synchronize null int/long columns as 0 (PublicationYear, PM_ID...)
@@ -245,7 +245,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Core: 06/21+24: Open external links (to the ChangeLog or wiki pages) in new browser tab
-- Story 07/01: New maven modules scipamto-common-entity, scipamato-common-persistence-api, scipamato-common-persistence-jooq
+- Story 07/01: New maven modules scipamato-common-entity, scipamato-common-persistence-api, scipamato-common-persistence-jooq
 - Documentation updates
 - pom refactoring and cleanup
 - Small refactorings and improvements
@@ -258,7 +258,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 
 
 .Removed
-- obsolete jOOQ configuration classes. Simplified jOOQ configuration based on spring boot autoconfiguration
+- obsolete jOOQ configuration classes. Simplified jOOQ configuration based on spring boot auto-configuration
 
 .Fixed
 - Fixed and improved transaction handling in integration tests
@@ -271,7 +271,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 == [0.6.3] -- 2017-11-06
 
 .Changed
-- Updated jaxb-api, jasperrerports, spring-cloud-starter-feign, assertj, JUnitParams
+- Updated jaxb-api, jasper-reports, spring-cloud-starter-feign, assertJ, JUnitParams
 - pom refactoring
 
 .Fixed
@@ -309,12 +309,12 @@ the table in your database instances (`alter table schema_version rename to flyw
 - 6/17: Transformed the project to a maven multi-module project, allowing to reuse author parsing in the data migration project
 - pom cleanup
 - Introduced Project Lombok for Getters/Setters, Equals/HashCode and Builders
-- Rebased the databse creation scripts. Now not adding papers or searches anymore, only reference data
+- Rebased the database creation scripts. Now not adding papers or searches anymore, only reference data
 - switched from markdown to asciidoc for wiki pages
 - Created ChangeLog according to http://keepachangelog.com/en/1.0.0/[Keep a Changelog]
 - use OktHttp with feign
 - various improvements in wiki pages, javadoc, sonar suggested code changes
-- dependency updates: spring-boot-starter, wicket, wicket-spring-boot-starter, jOOQ, postgres-jdbc-driver, spring-boot-admin, assertj
+- dependency updates: spring-boot-starter, wicket, wicket-spring-boot-starter, jOOQ, postgres-jdbc-driver, spring-boot-admin, assertJ
 - Spring batch project for the migration of the legacy data into SciPaMaTo (separate project)
 
 .Fixed
@@ -344,7 +344,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 == [0.5.6] -- 2017-07-03
 
 .Added
-- 5/26: Optimstic locking
+- 5/26: Optimistic locking
 
 .Fixed
 - 5/41: fix internal error when clicking save
@@ -367,7 +367,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 == [0.5.4] -- 2017-06-28
 
 .Added
-- 5/36: Improved exclusion handling (exclud/re-include directly out of paper. Icon)
+- 5/36: Improved exclusion handling (exclude/re-include directly out of paper. Icon)
 
 .Changed
 - 5/37: do not switch the label when toggling searchExclusion checkbox
@@ -414,7 +414,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 == [0.5.1] -- 2017-06-15
 
 .Added
-- 5/28: Navigation through the differnt papers in the search result
+- 5/28: Navigation through the different papers in the search result
 
 .Changed
 - wiki page updates, javadoc fixes
@@ -467,7 +467,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 == [0.4.2] -- 2017-05-10
 
 .Added
-- new business id (Number), which is differnt from the sequence backed database id
+- new business id (Number), which is different from the sequence backed database id
 - Import data from pubmed with only the PmID entered
 - Paper Entry Page: Separate tab for 'new fields'
 - Make the PostgreSQL backend the first class member while currently still supporting the H2 backend (supporting the prototyping, not for support.)
@@ -489,7 +489,7 @@ the table in your database instances (`alter table schema_version rename to flyw
 == [0.4.1] -- 2017-03-11
 
 .Added
-- Addec License: GPLv3
+- Added License: GPLv3
 
 .Changed
 - refactorings and code cleanup
@@ -551,8 +551,8 @@ the table in your database instances (`alter table schema_version rename to flyw
 
 .Changed
 - Do not set the publication year in new papers
-- maintain users in the datbase
-- wiki page updates, layout improvemnts
+- maintain users in the database
+- wiki page updates, layout improvements
 - dependency updates: wicketstuff-annotation, wicket-spring-boot-starter,jOOQ
 
 .Fixed

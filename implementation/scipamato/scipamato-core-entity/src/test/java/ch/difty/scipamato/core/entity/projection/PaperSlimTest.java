@@ -18,8 +18,8 @@ public class PaperSlimTest {
 
     @Before
     public void setUp() {
-        ps.setId(1l);
-        ps.setNumber(10l);
+        ps.setId(1L);
+        ps.setNumber(10L);
         ps.setFirstAuthor("firstAuthor");
         ps.setTitle("title");
         ps.setPublicationYear(2016);
@@ -27,8 +27,8 @@ public class PaperSlimTest {
 
     @Test
     public void getting() {
-        assertThat(ps.getId()).isEqualTo(1l);
-        assertThat(ps.getNumber()).isEqualTo(10l);
+        assertThat(ps.getId()).isEqualTo(1L);
+        assertThat(ps.getNumber()).isEqualTo(10L);
         assertThat(ps.getPublicationYear()).isEqualTo(2016);
         assertThat(ps.getTitle()).isEqualTo("title");
         assertThat(ps.getFirstAuthor()).isEqualTo("firstAuthor");
@@ -47,7 +47,7 @@ public class PaperSlimTest {
 
     @Test
     public void alternativeConstructor() {
-        ps = new PaperSlim(1l, 10l, "firstAuthor", 2016, "title");
+        ps = new PaperSlim(1L, 10L, "firstAuthor", 2016, "title");
         getting();
     }
 

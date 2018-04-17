@@ -67,7 +67,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
     private AjaxCheckBox                 showExcluded;
     private Label                        showExcludedLabel;
 
-    public SearchOrderSelectorPanel(String id, IModel<SearchOrder> model) {
+    SearchOrderSelectorPanel(String id, IModel<SearchOrder> model) {
         super(id, model, Mode.EDIT);
     }
 
@@ -96,7 +96,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
         final BootstrapSelectConfig config = new BootstrapSelectConfig()
             .withNoneSelectedText(noneSelectedModel.getObject())
             .withLiveSearch(true);
-        searchOrder = new BootstrapSelect<SearchOrder>(id, getModel(), choices, choiceRenderer).with(config);
+        searchOrder = new BootstrapSelect<>(id, getModel(), choices, choiceRenderer).with(config);
         searchOrder.add(new AjaxFormComponentUpdatingBehavior(CHANGE) {
             private static final long serialVersionUID = 1L;
 
@@ -182,7 +182,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
         queue(newLink);
     }
 
-    protected void saveOrUpdate() {
+    private void saveOrUpdate() {
         SearchOrder so = searchOrderService.saveOrUpdate(getModelObject());
         if (so != null) {
             form.setDefaultModelObject(so);
@@ -190,15 +190,15 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
         modelChanged();
     }
 
-    protected boolean isModelSelected() {
+    private boolean isModelSelected() {
         return getModelObject() != null && getModelObject().getId() != null;
     }
 
-    protected boolean isUserEntitled() {
+    private boolean isUserEntitled() {
         return getModelObject() != null && getModelObject().getOwner() == getActiveUser().getId();
     }
 
-    protected boolean hasExclusions() {
+    private boolean hasExclusions() {
         return isModelSelected() && CollectionUtils.isNotEmpty(getModelObject().getExcludedPaperIds());
     }
 

@@ -9,7 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -42,7 +42,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 
 public class ResultPanelTest extends PanelTest<ResultPanel> {
 
-    private static final long   NUMBER        = 2l;
+    private static final long   NUMBER        = 2L;
     private static final int    ROWS_PER_PAGE = 12;
     private static final String LC            = "en_us";
 
@@ -54,7 +54,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     @Mock
     private SearchOrder searchOrderMock;
 
-    private final PaperSlim paperSlim = new PaperSlim(1l, NUMBER, "firstAuthor", 2016, "title");
+    private final PaperSlim paperSlim = new PaperSlim(1L, NUMBER, "firstAuthor", 2016, "title");
 
     @Mock
     private Paper paperMock;
@@ -63,10 +63,10 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     protected void setUpHook() {
         when(paperSlimServiceMock.countBySearchOrder(searchOrderMock)).thenReturn(1);
         when(paperSlimServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class)))
-            .thenReturn(Arrays.asList(paperSlim));
+            .thenReturn(Collections.singletonList(paperSlim));
 
         when(paperServiceMock.findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class), eq(LC)))
-            .thenReturn(Arrays.asList(paperMock));
+            .thenReturn(Collections.singletonList(paperMock));
     }
 
     @After

@@ -15,9 +15,9 @@ import ch.difty.scipamato.core.entity.CoreEntity;
 public abstract class RecordMapperTest<R extends Record, E extends CoreEntity> {
 
     public static final int       VERSION     = 1;
-    public static final Timestamp CREATED     = new Timestamp(1469999999999l);
+    public static final Timestamp CREATED     = new Timestamp(1469999999999L);
     public static final Integer   CREATED_BY  = 1;
-    public static final Timestamp LAST_MOD    = new Timestamp(1479999999999l);
+    public static final Timestamp LAST_MOD    = new Timestamp(1479999999999L);
     public static final Integer   LAST_MOD_BY = 2;
 
     private final RecordMapper<R, E> mapper = getMapper();
@@ -74,8 +74,8 @@ public abstract class RecordMapperTest<R extends Record, E extends CoreEntity> {
      *  record.setVersion(VERSION);
      *  </pre></code>
      *
-     * @param set
-     *            the audit fields into the record, typically as such:
+     * @param record
+     *            for which the audit fields are set into
      */
     protected abstract void setAuditFieldsIn(R record);
 

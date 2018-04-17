@@ -21,7 +21,7 @@ public class PaperPageFactoryTest extends WicketTest {
     private final PaperPageFactory factory = new PaperPageFactory();
 
     private final SearchCondition sc                = new SearchCondition();
-    private final Long            searchConditionId = 5l;
+    private final Long            searchConditionId = 5L;
 
     @Mock
     private MarkupContainer container;

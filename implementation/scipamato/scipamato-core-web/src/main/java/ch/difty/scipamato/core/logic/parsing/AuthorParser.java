@@ -20,7 +20,7 @@ public interface AuthorParser {
     Optional<String> getFirstAuthor();
 
     /**
-     * @return the original unparsed {@code authors string}
+     * @return the original un-parsed {@code authors string}
      */
     String getAuthorsString();
 

@@ -33,6 +33,6 @@ public class SyncJobResult {
     private enum JobResult {
         UNKNOWN,
         SUCCESS,
-        FAILURE;
+        FAILURE
     }
 }

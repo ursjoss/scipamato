@@ -1,18 +1,15 @@
 [[scipamato]]
-scipamato
----------
+== scipamato
 
 SciPaMaTo (Scientific Paper Management Tool)
 
 [[elevator-pitch]]
-Elevator Pitch
---------------
+== Elevator Pitch
 
 TODO
 
 [[technology-stack]]
-Technology Stack
-----------------
+== Technology Stack
 
 * Java 1.8
 * https://projects.spring.io/spring-boot/[Spring Boot] with
@@ -24,7 +21,7 @@ http://getbootstrap.com/[Bootstrap]
 ** https://github.com/MarcGiffing/wicket-spring-boot[wicket-spring-boot-starter]
 ** https://github.com/l0rdn1kk0n/wicket-bootstrap[wicket-bootstrap]
 ** http://community.jaspersoft.com/[JasperReport] for PDF generation
-** https://github.com/OpenFeign/feign[Feign] as HHTP client to PubMed
+** https://github.com/OpenFeign/feign[Feign] as HTTP client to PubMed
 ** jaxb for XML parsing
 * Persistence Layer
 ** https://www.jooq.org/[jOOQ]
@@ -36,8 +33,7 @@ http://getbootstrap.com/[Bootstrap]
 ** JCache with http://www.ehcache.org/[Ehcache3]
 
 [[architecture-documentation]]
-Architecture Documentation
---------------------------
+== Architecture Documentation
 
 I started using http://structure101.com/[Structure101] to assess and track the architecture of SciPaMaTo.
 Many thanks to the friendly people of Structure101 to provide a free license for SciPaMaTo as an open source project!
@@ -45,8 +41,7 @@ Many thanks to the friendly people of Structure101 to provide a free license for
 image:http://structure101.com/images/s101_170.png[Structure101]
 
 [[user-documentation]]
-User Documentation
-------------------
+== User Documentation
 
 [[user-docu-scipamato-core]]
 === SciPaMaTo-Core Documentation
@@ -61,15 +56,13 @@ User Documentation
 * https://github.com/ursjoss/scipamato/wiki/Filtering-Papers-Public[Filtering Papers]
 
 [[information-for-developers]]
-Information for Developers
---------------------------
+== Information for Developers
 
 Refer to the https://github.com/ursjoss/scipamato/wiki/QuickStart[Quick-Start Guide] to get the project up and running as quickly as possible.
 
 See https://github.com/ursjoss/scipamato/wiki/Developer-Information[Developer Wiki]
 
 [[information-for-operations]]
-Information for Operations
---------------------------
+== Information for Operations
 
 See https://github.com/ursjoss/scipamato/wiki/Operations[Operations Wiki]

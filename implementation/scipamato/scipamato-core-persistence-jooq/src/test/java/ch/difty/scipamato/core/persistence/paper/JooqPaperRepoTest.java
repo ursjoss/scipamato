@@ -8,10 +8,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import org.jooq.DeleteConditionStep;
 import org.jooq.SelectConditionStep;
@@ -41,7 +38,7 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.PaperBackedSearchOr
 public class JooqPaperRepoTest extends
         JooqEntityRepoTest<PaperRecord, Paper, Long, ch.difty.scipamato.core.db.tables.Paper, PaperRecordMapper, PaperFilter> {
 
-    private static final Long   SAMPLE_ID = 3l;
+    private static final Long   SAMPLE_ID = 3L;
     private static final String LC        = "de";
 
     private JooqPaperRepo repo;
@@ -71,7 +68,7 @@ public class JooqPaperRepoTest extends
 
     private final List<Paper> papers = new ArrayList<>();
 
-    private final List<Paper> enrichtedEntities = new ArrayList<>();
+    private final List<Paper> enrichedEntities = new ArrayList<>();
 
     @Override
     protected void testSpecificSetUp() {
@@ -118,7 +115,7 @@ public class JooqPaperRepoTest extends
 
             @Override
             protected void enrichAssociatedEntitiesOf(Paper entity, String language) {
-                enrichtedEntities.add(entity);
+                enrichedEntities.add(entity);
             }
         };
     }
@@ -259,15 +256,15 @@ public class JooqPaperRepoTest extends
 
     @Test
     public void gettingIdFromPaper() {
-        when(paperMock.getId()).thenReturn(17l);
-        assertThat(repo.getIdFrom(paperMock)).isEqualTo(17l);
+        when(paperMock.getId()).thenReturn(17L);
+        assertThat(repo.getIdFrom(paperMock)).isEqualTo(17L);
         verify(paperMock).getId();
     }
 
     @Test
     public void gettingIdFromPaperRecord() {
-        when(persistedRecord.getId()).thenReturn(17l);
-        assertThat(repo.getIdFrom(persistedRecord)).isEqualTo(17l);
+        when(persistedRecord.getId()).thenReturn(17L);
+        assertThat(repo.getIdFrom(persistedRecord)).isEqualTo(17L);
         verify(persistedRecord).getId();
     }
 
@@ -286,7 +283,7 @@ public class JooqPaperRepoTest extends
         when(searchOrderRepositoryMock.findBySearchOrder(searchOrderMock)).thenReturn(papers);
         assertThat(makeRepoStubbingEnriching().findBySearchOrder(searchOrderMock, LC)).containsExactly(paperMock,
             paperMock);
-        assertThat(enrichtedEntities).containsExactly(paperMock, paperMock);
+        assertThat(enrichedEntities).containsExactly(paperMock, paperMock);
         verify(searchOrderRepositoryMock).findBySearchOrder(searchOrderMock);
     }
 
@@ -303,13 +300,13 @@ public class JooqPaperRepoTest extends
             .thenReturn(papers);
         assertThat(makeRepoStubbingEnriching().findPageBySearchOrder(searchOrderMock, paginationContextMock, LC))
             .containsExactly(paperMock, paperMock);
-        assertThat(enrichtedEntities).containsExactly(paperMock, paperMock);
+        assertThat(enrichedEntities).containsExactly(paperMock, paperMock);
         verify(searchOrderRepositoryMock).findPageBySearchOrder(searchOrderMock, paginationContextMock);
     }
 
     @Test
     public void gettingPapersByPmIds_withNoPmIds_returnsEmptyList() {
-        assertThat(repo.findByPmIds(new ArrayList<Integer>(), LC)).isEmpty();
+        assertThat(repo.findByPmIds(new ArrayList<>(), LC)).isEmpty();
     }
 
     @Test
@@ -319,7 +316,7 @@ public class JooqPaperRepoTest extends
 
     @Test
     public void findingByNumbers_withNoNumbers_returnsEmptyList() {
-        assertThat(repo.findByNumbers(new ArrayList<Long>(), LC)).isEmpty();
+        assertThat(repo.findByNumbers(new ArrayList<>(), LC)).isEmpty();
     }
 
     @Test
@@ -329,12 +326,12 @@ public class JooqPaperRepoTest extends
 
     @Test
     public void findingByNumber_withNoLanguageCode_throws() {
-        assertDegenerateSupplierParameter(() -> repo.findByNumbers(Arrays.asList(1l), null), "languageCode");
+        assertDegenerateSupplierParameter(() -> repo.findByNumbers(Collections.singletonList(1L), null), "languageCode");
     }
 
     @Test
     public void findingExistingPmIdsOutOf_withNoPmIds_returnsEmptyList() {
-        assertThat(repo.findExistingPmIdsOutOf(new ArrayList<Integer>())).isEmpty();
+        assertThat(repo.findExistingPmIdsOutOf(new ArrayList<>())).isEmpty();
     }
 
     @Test
@@ -436,20 +433,20 @@ public class JooqPaperRepoTest extends
     @Test
     public void findingPageOfIdsBySearchOrder() {
         when(searchOrderRepositoryMock.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock))
-            .thenReturn(Arrays.asList(17l, 3l, 5l));
-        assertThat(repo.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).containsExactly(17l, 3l,
-            5l);
+            .thenReturn(Arrays.asList(17L, 3L, 5L));
+        assertThat(repo.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).containsExactly(17L, 3L,
+                5L);
         verify(searchOrderRepositoryMock).findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock);
     }
 
     @Test
-    public void deleteîngAttachment_withNullId_returnsNull() {
+    public void deletingAttachment_withNullId_returnsNull() {
         assertThat(getRepo().deleteAttachment(null)).isNull();
     }
 
     @Test
     public void deletingIds() {
-        List<Long> ids = Arrays.asList(3l, 5l, 7l);
+        List<Long> ids = Arrays.asList(3L, 5L, 7L);
         when(getDsl().deleteFrom(getTable())).thenReturn(deleteWhereStepMock);
         when(deleteWhereStepMock.where(PAPER.ID.in(ids))).thenReturn(deleteConditionStepMock);
 
@@ -476,11 +473,11 @@ public class JooqPaperRepoTest extends
 
     @Test
     public void enrichingAssociatedEntitiesOf_withNullLanguageCode_withPaperWithId_enrichesAttachments() {
-        when(paperMock.getId()).thenReturn(17l);
+        when(paperMock.getId()).thenReturn(17L);
         repo = makeRepoStubbingAttachmentEnriching();
         repo.enrichAssociatedEntitiesOf(paperMock, null);
         verify(paperMock).getId();
-        verify(paperMock).setAttachments(Arrays.asList(paperAttachmentMock));
+        verify(paperMock).setAttachments(Collections.singletonList(paperAttachmentMock));
     }
 
     protected JooqPaperRepo makeRepoStubbingAttachmentEnriching() {
@@ -490,7 +487,7 @@ public class JooqPaperRepoTest extends
 
             @Override
             public List<PaperAttachment> loadSlimAttachment(long paperId) {
-                return Arrays.asList(paperAttachmentMock);
+                return Collections.singletonList(paperAttachmentMock);
             }
         };
     }

@@ -21,7 +21,7 @@ public class ScipamatoEntityTest {
     private static final LocalDateTime LM = LocalDateTime.now()
         .plusDays(1);
 
-    ScipamatoEntity e = new ScipamatoEntity();
+    private final ScipamatoEntity e = new ScipamatoEntity();
 
     @Before
     public void setUp() {

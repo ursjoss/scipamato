@@ -63,7 +63,7 @@ public class PubmedImportServiceIntegrationTest {
         List<Long> ids = result.getInfoMessages()
             .stream()
             .map((m) -> m.substring(m.indexOf("(") + 4, m.length() - 1))
-            .map((id) -> Long.valueOf(id))
+            .map(Long::valueOf)
             .collect(Collectors.toList());
         paperService.deletePapersWithIds(ids);
     }

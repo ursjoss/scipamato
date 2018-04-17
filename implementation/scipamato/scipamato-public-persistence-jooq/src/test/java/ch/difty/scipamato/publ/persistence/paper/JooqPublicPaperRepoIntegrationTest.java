@@ -3,7 +3,7 @@ package ch.difty.scipamato.publ.persistence.paper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
@@ -44,7 +44,7 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
 
     @Test
     public void findingByNumber_withNonExistingNumber_returnsNull() {
-        assertThat(repo.findByNumber(-1l)).isNull();
+        assertThat(repo.findByNumber(-1L)).isNull();
     }
 
     @Test
@@ -77,13 +77,13 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
 
     @Test
     public void findingPageByFilter_adultsOnly() {
-        filter.setPopulationCodes(Arrays.asList(PopulationCode.ADULTS));
+        filter.setPopulationCodes(Collections.singletonList(PopulationCode.ADULTS));
         assertThat(repo.findPageByFilter(filter, pc)).hasSize(2);
     }
 
     @Test
     public void findingPageByFilter_overViewMethodologyOnly() {
-        filter.setStudyDesignCodes(Arrays.asList(StudyDesignCode.OVERVIEW_METHODOLOGY));
+        filter.setStudyDesignCodes(Collections.singletonList(StudyDesignCode.OVERVIEW_METHODOLOGY));
         assertThat(repo.findPageByFilter(filter, pc)).hasSize(1);
     }
 
@@ -92,7 +92,7 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
         filter.setPublicationYearFrom(2015);
         filter.setPublicationYearUntil(2018);
         assertThat(repo.findPageOfNumbersByFilter(filter, allSorted)).isNotEmpty()
-            .containsExactly(2l);
+            .containsExactly(2L);
     }
 
     private List<Code> newCodes(String... codes) {
@@ -110,7 +110,7 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
         filter.setCodesOfClass5(newCodes("5H"));
         assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty()
             .extracting("number")
-            .containsOnly(1l, 2l);
+            .containsOnly(1L, 2L);
     }
 
     @Test
@@ -119,7 +119,7 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
         filter.setCodesOfClass7(newCodes("7L"));
         assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty()
             .extracting("number")
-            .containsOnly(1l, 2l, 3l);
+            .containsOnly(1L, 2L, 3L);
     }
 
     @Test
@@ -127,7 +127,7 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
         filter.setCodesOfClass2(newCodes("2R"));
         assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty()
             .extracting("number")
-            .containsExactly(3l);
+            .containsExactly(3L);
     }
 
     @Test
@@ -137,6 +137,6 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
             .clear();
         assertThat(repo.findPageByFilter(filter, allSorted)).isNotEmpty()
             .extracting("number")
-            .containsOnly(1l, 2l, 3l);
+            .containsOnly(1L, 2L, 3L);
     }
 }

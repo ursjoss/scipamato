@@ -29,10 +29,12 @@ public abstract class AbstractFilterConditionMapper<F extends ScipamatoFilter>
     }
 
     /**
-     * Implement to map the actual filter attributes into the provided list of
-     * conditions.
+      * Maps the actual filter attributes into the provided list of conditions.
      *
+     * @param filter
+     *       provides the filter attributes to be mapped
      * @param conditions
+     *       receives of the {@link Condition}s derived from the filter attributes
      */
     protected abstract void map(F filter, List<Condition> conditions);
 

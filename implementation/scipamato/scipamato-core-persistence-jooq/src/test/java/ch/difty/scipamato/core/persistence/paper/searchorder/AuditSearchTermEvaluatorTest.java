@@ -37,7 +37,7 @@ public class AuditSearchTermEvaluatorTest extends SearchTermEvaluatorTest<AuditS
     }
 
     @Test
-    public void buildingConditionForGeraterOrEqual_applies() {
+    public void buildingConditionForGreaterOrEqual_applies() {
         expectToken(TokenType.GREATEROREQUAL, "2017-01-12 00:00:00", "paper.created");
         assertThat(e.evaluate(stMock)
             .toString()).isEqualTo("paper.created >= timestamp '2017-01-12 00:00:00.0'");

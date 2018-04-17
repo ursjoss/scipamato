@@ -42,7 +42,8 @@ public final class TestUtils {
      *            the relative path of the file within the resources folder (e.g.
      *            'xml/myfile.xml')
      * @return file content as string.
-     * @throws IOException
+     * @throws NullPointerException if the fileName is null
+     * @throws IOException if an IO error occurs
      */
     public static String readFileAsString(final String fileName) throws IOException {
         return IOUtils.toString(ClassLoader.getSystemResourceAsStream(fileName), StandardCharsets.UTF_8);

@@ -7,7 +7,7 @@ import ch.difty.scipamato.common.entity.CodeClassId;
 
 /**
  * A class implementing {@link CodeBox} is a container for {@link Code}s. It
- * allows to access all codes cumulated or only the codes of a given
+ * allows to access all codes accumulated or only the codes of a given
  * {@link CodeClass}.
  *
  * @author u.joss

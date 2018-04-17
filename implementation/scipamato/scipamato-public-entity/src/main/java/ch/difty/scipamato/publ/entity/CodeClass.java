@@ -26,7 +26,7 @@ public class CodeClass extends PublicEntity implements CodeClassLike {
         NAME("name"),
         DESCRIPTION("description");
 
-        private String name;
+        private final String name;
 
         CodeClassFields(final String name) {
             this.name = name;

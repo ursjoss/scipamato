@@ -111,7 +111,7 @@ public class PubmedXmlServiceTest {
     public void gettingPubmedArticleWithPmid_withValidId_returnsArticle() {
         final int pmId = 25395026;
         when(pubMedMock.articleWithId(String.valueOf(pmId))).thenReturn(pubmedArticleSetMock);
-        final List<java.lang.Object> objects = new ArrayList<java.lang.Object>();
+        final List<java.lang.Object> objects = new ArrayList<>();
         objects.add(pubmedArticleMock);
         when(pubmedArticleSetMock.getPubmedArticleOrPubmedBookArticle()).thenReturn(objects);
 
@@ -138,7 +138,7 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void gettingPubmedArticleWithPmid_withNullObjects_returnsEmptyOoptional() {
+    public void gettingPubmedArticleWithPmid_withNullObjects_returnsEmptyOptional() {
         final int pmId = 999999999;
         when(pubMedMock.articleWithId(String.valueOf(pmId))).thenReturn(pubmedArticleSetMock);
         when(pubmedArticleSetMock.getPubmedArticleOrPubmedBookArticle()).thenReturn(null);
@@ -157,14 +157,14 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void gettingArticles_withUnarshallerException_returnsEmptyList() {
+    public void gettingArticles_withUnmarshallerException_returnsEmptyList() {
         when(unmarshallerMock.unmarshal(isA(StreamSource.class))).thenThrow(new UnmarshallingFailureException("boom"));
         assertThat(service.extractArticlesFrom("some invalid xml")).isEmpty();
         verify(unmarshallerMock).unmarshal(isA(StreamSource.class));
     }
 
     @Test
-    public void gettingArticles_withPumbedArticleSetWithoutArticleCollection_returnsEmptyList() {
+    public void gettingArticles_withPubmedArticleSetWithoutArticleCollection_returnsEmptyList() {
         PubmedArticleSet pubmedArticleSet = new PubmedArticleSet();
         when(unmarshallerMock.unmarshal(isA(StreamSource.class))).thenReturn(pubmedArticleSet);
         assertThat(service.extractArticlesFrom("some valid xml")).isEmpty();
@@ -172,7 +172,7 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void gettingArticles_withPumbedArticleSetWithoutArticleCollectionx_returnsEmptyList() {
+    public void gettingArticles_withPubmedArticleSetWithoutArticleCollectionx_returnsEmptyList() {
         when(unmarshallerMock.unmarshal(isA(StreamSource.class))).thenReturn(makeMinimalValidPubmedArticleSet());
 
         assertThat(service.extractArticlesFrom("some valid xml")).isNotEmpty();

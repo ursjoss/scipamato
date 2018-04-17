@@ -12,7 +12,7 @@ import org.junit.Test;
 public class RoleTest {
 
     @Test
-    public void hasAllvalues() {
+    public void hasAllValues() {
         assertThat(Role.values()).containsExactly(ADMIN, USER, VIEWER);
     }
 

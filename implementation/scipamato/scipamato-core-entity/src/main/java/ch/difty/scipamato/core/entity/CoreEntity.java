@@ -79,7 +79,7 @@ public abstract class CoreEntity extends ScipamatoEntity {
         MODIFIER_ID("lastModifiedBy"),
         MODIFIER_NAME("lastModifiedByName");
 
-        private String name;
+        private final String name;
 
         CoreEntityFields(final String name) {
             this.name = name;

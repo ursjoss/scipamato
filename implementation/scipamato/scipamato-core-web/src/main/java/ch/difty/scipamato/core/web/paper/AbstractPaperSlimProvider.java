@@ -66,7 +66,7 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
         this.service = service;
     }
 
-    protected PaperService getPaperService() {
+    PaperService getPaperService() {
         return paperService;
     }
 
@@ -104,7 +104,7 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
 
     /**
      * Applies the normal filter and the sort aspect of the pageable to return only
-     * the ids of all papers (unpaged).
+     * the ids of all papers (un-paged).
      *
      * @return list of all paper ids
      */

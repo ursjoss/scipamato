@@ -29,7 +29,7 @@ public abstract class IdScipamatoEntity<ID extends Number> extends CoreEntity {
     public enum IdScipamatoEntityFields implements FieldEnumType {
         ID("id");
 
-        private String name;
+        private final String name;
 
         IdScipamatoEntityFields(final String name) {
             this.name = name;

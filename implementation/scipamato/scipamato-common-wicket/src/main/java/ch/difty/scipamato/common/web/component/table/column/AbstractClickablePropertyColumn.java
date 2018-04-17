@@ -26,7 +26,7 @@ public abstract class AbstractClickablePropertyColumn<T, S> extends AbstractColu
 
     private final String property;
 
-    public AbstractClickablePropertyColumn(IModel<String> displayModel, S sort, String property) {
+    AbstractClickablePropertyColumn(IModel<String> displayModel, S sort, String property) {
         super(displayModel, sort);
         this.property = property;
     }
@@ -37,7 +37,7 @@ public abstract class AbstractClickablePropertyColumn<T, S> extends AbstractColu
 
     @Override
     public void populateItem(Item<ICellPopulator<T>> cellItem, String componentId, IModel<T> rowModel) {
-        cellItem.add(new LinkPanel(componentId, rowModel, new PropertyModel<Object>(rowModel, getProperty())));
+        cellItem.add(new LinkPanel(componentId, rowModel, new PropertyModel<>(rowModel, getProperty())));
     }
 
     protected abstract void onClick(IModel<T> clicked);
@@ -45,7 +45,7 @@ public abstract class AbstractClickablePropertyColumn<T, S> extends AbstractColu
     private class LinkPanel extends Panel {
         private static final long serialVersionUID = 1L;
 
-        public LinkPanel(String id, IModel<T> rowModel, IModel<?> labelModel) {
+        LinkPanel(String id, IModel<T> rowModel, IModel<?> labelModel) {
             super(id);
             Link<T> link = new Link<T>("link", rowModel) {
                 private static final long serialVersionUID = 1L;

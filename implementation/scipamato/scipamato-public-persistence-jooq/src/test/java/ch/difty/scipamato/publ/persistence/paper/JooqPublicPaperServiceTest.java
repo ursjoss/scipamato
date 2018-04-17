@@ -100,7 +100,7 @@ public class JooqPublicPaperServiceTest {
 
     @Test
     public void findingPageOfIdsByFilter_delegatesToRepo() {
-        List<Long> idList = Arrays.asList(3l, 5l);
+        List<Long> idList = Arrays.asList(3L, 5L);
         when(mockRepo.findPageOfNumbersByFilter(filterMock, paginationContextMock)).thenReturn(idList);
         assertThat(service.findPageOfNumbersByFilter(filterMock, paginationContextMock)).isEqualTo(idList);
         verify(mockRepo).findPageOfNumbersByFilter(filterMock, paginationContextMock);

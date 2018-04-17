@@ -33,7 +33,7 @@ import org.jooq.lambda.tuple.Tuple2;
  */
 public class ConditionalSupplier {
 
-    final List<Supplier<Condition>> conditionSuppliers = new ArrayList<>();
+    private final List<Supplier<Condition>> conditionSuppliers = new ArrayList<>();
 
     /**
      * Adds the provided condition supplier.

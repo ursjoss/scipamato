@@ -150,7 +150,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
 
         getTester().startPage(makePage());
-        FormTester formTester = makeSaveablePaperTester();
+        FormTester formTester = makeSavablePaperTester();
         formTester.submit();
 
         getTester().assertNoInfoMessage();
@@ -161,14 +161,14 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     @Test
     public void paperFailingValidation_showsAllValidationMessages() {
         getTester().startPage(makePage());
-        applyTestHackWithNstedMultiPartForms();
+        applyTestHackWithNestedMultiPartForms();
         getTester().submitForm("contentPanel:form");
         getTester().assertErrorMessages("'Authors' is required.", "'Title' is required.", "'Location' is required.",
             "'Pub. Year' is required.", "'No.' is required.", "'Goals' is required.");
     }
 
     // See https://issues.apache.org/jira/browse/WICKET-2790
-    private void applyTestHackWithNstedMultiPartForms() {
+    private void applyTestHackWithNestedMultiPartForms() {
         MockHttpServletRequest servletRequest = getTester().getRequest();
         servletRequest.setUseMultiPartContentType(true);
     }
@@ -179,14 +179,14 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
         getTester().startPage(makePage());
 
-        FormTester formTester = makeSaveablePaperTester();
+        FormTester formTester = makeSavablePaperTester();
         formTester.submit();
 
         getTester().assertErrorMessages("An unexpected error occurred when trying to save Paper [id 0]: foo");
         verify(paperServiceMock).saveOrUpdate(isA(Paper.class));
     }
 
-    private FormTester makeSaveablePaperTester() {
+    private FormTester makeSavablePaperTester() {
         FormTester formTester = getTester().newFormTester("contentPanel:form");
         formTester.setValue("number", "100");
         formTester.setValue("authors", "Poe EA.");
@@ -204,7 +204,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
         getTester().startPage(makePage());
 
-        FormTester formTester = makeSaveablePaperTester();
+        FormTester formTester = makeSavablePaperTester();
         formTester.submit();
 
         getTester().assertErrorMessages(
@@ -217,7 +217,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenReturn(null);
 
         getTester().startPage(makePage());
-        FormTester formTester = makeSaveablePaperTester();
+        FormTester formTester = makeSavablePaperTester();
         formTester.submit();
 
         getTester().assertNoInfoMessage();
@@ -229,7 +229,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
     @Test
     public void defaultModel_containsNaValuesAndCanSubmitWithoutErrors() {
         when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
-        when(paperServiceMock.findLowestFreeNumberStartingFrom(7l)).thenReturn(19l);
+        when(paperServiceMock.findLowestFreeNumberStartingFrom(7L)).thenReturn(19L);
 
         getTester().startPage(new PaperEntryPage(new PageParameters(), null));
 
@@ -248,7 +248,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
         verify(paperServiceMock).saveOrUpdate(isA(Paper.class));
-        verify(paperServiceMock).findLowestFreeNumberStartingFrom(7l);
+        verify(paperServiceMock).findLowestFreeNumberStartingFrom(7L);
     }
 
 }

@@ -1,9 +1,6 @@
 package ch.difty.scipamato.common.web.component.table.column;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
@@ -21,7 +18,7 @@ class ClickablePropertyColumnTestPanel extends Panel {
 
     private final SerializableConsumer<IModel<TestRecord>> consumer;
 
-    public ClickablePropertyColumnTestPanel(String id, SerializableConsumer<IModel<TestRecord>> consumer) {
+    ClickablePropertyColumnTestPanel(String id, SerializableConsumer<IModel<TestRecord>> consumer) {
         super(id);
         this.consumer = consumer;
     }
@@ -31,15 +28,15 @@ class ClickablePropertyColumnTestPanel extends Panel {
         super.onInitialize();
 
         final List<IColumn<TestRecord, String>> columns = new ArrayList<>();
-        columns.add(new PropertyColumn<TestRecord, String>(Model.of("name"), "name", "name"));
+        columns.add(new PropertyColumn<>(Model.of("name"), "name", "name"));
         columns.add(makeClickableColumn("test", consumer));
 
-        add(new DefaultDataTable<TestRecord, String>("table", columns, new TestDataProvider(), 10));
+        add(new DefaultDataTable<>("table", columns, new TestDataProvider(), 10));
     }
 
     private IColumn<TestRecord, String> makeClickableColumn(String id,
             SerializableConsumer<IModel<TestRecord>> consumer) {
-        return new ClickablePropertyColumn<TestRecord, String>(Model.of("linkIconColumnLabel"), "name", consumer) {
+        return new ClickablePropertyColumn<TestRecord, String>(Model.of(id), "name", consumer) {
             private static final long serialVersionUID = 1L;
         };
     }
@@ -50,7 +47,7 @@ class ClickablePropertyColumnTestPanel extends Panel {
 
         @Override
         public Iterator<TestRecord> iterator(long first, long count) {
-            return Arrays.asList(new TestRecord(1, "foo"))
+            return Collections.singletonList(new TestRecord(1, "foo"))
                 .iterator();
         }
 
@@ -63,5 +60,5 @@ class ClickablePropertyColumnTestPanel extends Panel {
         public IModel<TestRecord> model(TestRecord record) {
             return Model.of(record);
         }
-    };
+    }
 }

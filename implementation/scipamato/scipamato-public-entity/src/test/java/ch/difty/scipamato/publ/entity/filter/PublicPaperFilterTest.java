@@ -3,6 +3,7 @@ package ch.difty.scipamato.publ.entity.filter;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Test;
 
@@ -17,13 +18,13 @@ public class PublicPaperFilterTest {
     @Test
     public void construct() {
         PublicPaperFilter filter = new PublicPaperFilter();
-        filter.setNumber(1l);
+        filter.setNumber(1L);
         filter.setAuthorMask("am");
         filter.setMethodsMask("mm");
         filter.setPublicationYearFrom(2000);
         filter.setPublicationYearUntil(3000);
         filter.setPopulationCodes(Arrays.asList(PopulationCode.CHILDREN, PopulationCode.ADULTS));
-        filter.setStudyDesignCodes(Arrays.asList(StudyDesignCode.EXPERIMENTAL));
+        filter.setStudyDesignCodes(Collections.singletonList(StudyDesignCode.EXPERIMENTAL));
         filter.setCodesOfClass1(Arrays.asList(newCode("1A"), newCode("1B")));
         filter.setCodesOfClass2(Arrays.asList(newCode("2A"), newCode("2B")));
         filter.setCodesOfClass3(Arrays.asList(newCode("3A"), newCode("3B")));
@@ -33,7 +34,7 @@ public class PublicPaperFilterTest {
         filter.setCodesOfClass7(Arrays.asList(newCode("7A"), newCode("7B")));
         filter.setCodesOfClass8(Arrays.asList(newCode("8A"), newCode("8B")));
 
-        assertThat(filter.getNumber()).isEqualTo(1l);
+        assertThat(filter.getNumber()).isEqualTo(1L);
         assertThat(filter.getAuthorMask()).isEqualTo("am");
         assertThat(filter.getMethodsMask()).isEqualTo("mm");
         assertThat(filter.getPublicationYearFrom()).isEqualTo(2000);

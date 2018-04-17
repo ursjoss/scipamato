@@ -24,7 +24,7 @@ import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSear
 public class JooqPaperSlimRepoTest extends
         JooqReadOnlyRepoTest<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter> {
 
-    private static final Long SAMPLE_ID = 3l;
+    private static final Long SAMPLE_ID = 3L;
 
     private JooqPaperSlimRepo repo;
 

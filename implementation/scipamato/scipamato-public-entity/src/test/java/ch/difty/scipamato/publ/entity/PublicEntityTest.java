@@ -9,8 +9,8 @@ import org.junit.Test;
 
 public abstract class PublicEntityTest<T extends PublicEntity> {
 
-    protected static final LocalDateTime CREATED_DATE = LocalDateTime.parse("2017-01-01T22:15:13.111");
-    protected static final LocalDateTime LASTMOD_DATE = LocalDateTime.parse("2017-01-10T22:15:13.111");
+    private static final LocalDateTime CREATED_DATE = LocalDateTime.parse("2017-01-01T22:15:13.111");
+    private static final LocalDateTime LASTMOD_DATE = LocalDateTime.parse("2017-01-10T22:15:13.111");
 
     private T entity;
 

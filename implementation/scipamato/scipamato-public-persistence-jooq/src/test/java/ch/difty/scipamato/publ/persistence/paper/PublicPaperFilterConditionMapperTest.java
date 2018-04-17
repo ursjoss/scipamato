@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Test;
 
@@ -41,7 +42,7 @@ public class PublicPaperFilterConditionMapperTest
 
     @Test
     public void creatingWhereCondition_withNumber_searchesNumber() {
-        Long number = 17l;
+        Long number = 17L;
         filter.setNumber(number);
         assertThat(mapper.map(filter)
             .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"NUMBER\" = 17");
@@ -128,7 +129,7 @@ public class PublicPaperFilterConditionMapperTest
 
     @Test
     public void creatingWhereCondition_withPopulationCodes_searchesPopulationCodes() {
-        filter.setPopulationCodes(Arrays.asList(PopulationCode.CHILDREN));
+        filter.setPopulationCodes(Collections.singletonList(PopulationCode.CHILDREN));
         assertThat(mapper.map(filter)
             .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"CODES_POPULATION\" @> array[1]");
     }
@@ -244,30 +245,30 @@ public class PublicPaperFilterConditionMapperTest
 
     @Test
     public void creatingWhereCondition_withCodesOfAllCodeClasses_searchesCodeClasses() {
-        filter.setCodesOfClass1(Arrays.asList(Code.builder()
-            .code("1A")
-            .build()));
-        filter.setCodesOfClass2(Arrays.asList(Code.builder()
-            .code("2B")
-            .build()));
-        filter.setCodesOfClass3(Arrays.asList(Code.builder()
-            .code("3C")
-            .build()));
-        filter.setCodesOfClass4(Arrays.asList(Code.builder()
-            .code("4D")
-            .build()));
-        filter.setCodesOfClass5(Arrays.asList(Code.builder()
-            .code("5E")
-            .build()));
-        filter.setCodesOfClass6(Arrays.asList(Code.builder()
-            .code("6F")
-            .build()));
-        filter.setCodesOfClass7(Arrays.asList(Code.builder()
-            .code("7G")
-            .build()));
-        filter.setCodesOfClass8(Arrays.asList(Code.builder()
-            .code("8H")
-            .build()));
+        filter.setCodesOfClass1(Collections.singletonList(Code.builder()
+                .code("1A")
+                .build()));
+        filter.setCodesOfClass2(Collections.singletonList(Code.builder()
+                .code("2B")
+                .build()));
+        filter.setCodesOfClass3(Collections.singletonList(Code.builder()
+                .code("3C")
+                .build()));
+        filter.setCodesOfClass4(Collections.singletonList(Code.builder()
+                .code("4D")
+                .build()));
+        filter.setCodesOfClass5(Collections.singletonList(Code.builder()
+                .code("5E")
+                .build()));
+        filter.setCodesOfClass6(Collections.singletonList(Code.builder()
+                .code("6F")
+                .build()));
+        filter.setCodesOfClass7(Collections.singletonList(Code.builder()
+                .code("7G")
+                .build()));
+        filter.setCodesOfClass8(Collections.singletonList(Code.builder()
+                .code("8H")
+                .build()));
         // Due to bug https://github.com/jOOQ/jOOQ/issues/4754
         // assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"CODES\"
         // @> array['1A', '2B', '3C', '4D', '5E', '6F', '7G', '8H']");
@@ -288,9 +289,9 @@ public class PublicPaperFilterConditionMapperTest
 
     @Test
     public void creatingWhereCondition_withSetButThenClearedCodes_doesNotFilterByCodes() {
-        filter.setCodesOfClass1(new ArrayList<>(Arrays.asList(Code.builder()
-            .code("1A")
-            .build())));
+        filter.setCodesOfClass1(new ArrayList<>(Collections.singletonList(Code.builder()
+                .code("1A")
+                .build())));
         filter.getCodesOfClass1()
             .clear();
         assertThat(mapper.map(filter)

@@ -9,13 +9,13 @@ public class SearchTermTest {
 
     @Test
     public void booleanSearchTerm() {
-        SearchTerm st = SearchTerm.newSearchTerm(10, SearchTermType.BOOLEAN.getId(), 1l, "fn", "true");
+        SearchTerm st = SearchTerm.newSearchTerm(10, SearchTermType.BOOLEAN.getId(), 1L, "fn", "true");
         assertThat(st).isInstanceOf(BooleanSearchTerm.class);
 
         BooleanSearchTerm bst = (BooleanSearchTerm) st;
         assertThat(bst.getId()).isEqualTo(10);
         assertThat(bst.getSearchTermType()).isEqualTo(SearchTermType.BOOLEAN);
-        assertThat(bst.getSearchConditionId()).isEqualTo(1l);
+        assertThat(bst.getSearchConditionId()).isEqualTo(1L);
         assertThat(bst.getFieldName()).isEqualTo("fn");
         assertThat(bst.getRawSearchTerm()).isEqualTo("true");
         assertThat(bst.getValue()).isTrue();
@@ -23,13 +23,13 @@ public class SearchTermTest {
 
     @Test
     public void integerSearchTerm() {
-        SearchTerm st = SearchTerm.newSearchTerm(11, SearchTermType.INTEGER.getId(), 2l, "fn2", "5-7");
+        SearchTerm st = SearchTerm.newSearchTerm(11, SearchTermType.INTEGER.getId(), 2L, "fn2", "5-7");
         assertThat(st).isInstanceOf(IntegerSearchTerm.class);
 
         IntegerSearchTerm ist = (IntegerSearchTerm) st;
         assertThat(ist.getId()).isEqualTo(11);
         assertThat(ist.getSearchTermType()).isEqualTo(SearchTermType.INTEGER);
-        assertThat(ist.getSearchConditionId()).isEqualTo(2l);
+        assertThat(ist.getSearchConditionId()).isEqualTo(2L);
         assertThat(ist.getFieldName()).isEqualTo("fn2");
         assertThat(ist.getRawSearchTerm()).isEqualTo("5-7");
         assertThat(ist.getValue()).isEqualTo(5);
@@ -38,7 +38,7 @@ public class SearchTermTest {
 
     @Test
     public void stringSearchTerm() {
-        SearchTerm st = SearchTerm.newSearchTerm(12, SearchTermType.STRING.getId(), 3l, "fn3", "foo*");
+        SearchTerm st = SearchTerm.newSearchTerm(12, SearchTermType.STRING.getId(), 3L, "fn3", "foo*");
         assertThat(st).isInstanceOf(StringSearchTerm.class);
 
         verify(st);
@@ -48,7 +48,7 @@ public class SearchTermTest {
         StringSearchTerm sst = (StringSearchTerm) st;
         assertThat(sst.getId()).isEqualTo(12);
         assertThat(sst.getSearchTermType()).isEqualTo(SearchTermType.STRING);
-        assertThat(sst.getSearchConditionId()).isEqualTo(3l);
+        assertThat(sst.getSearchConditionId()).isEqualTo(3L);
         assertThat(sst.getFieldName()).isEqualTo("fn3");
         assertThat(sst.getRawSearchTerm()).isEqualTo("foo*");
         assertThat(sst.getTokens()).hasSize(1);
@@ -60,7 +60,7 @@ public class SearchTermTest {
 
     @Test
     public void stringSearchTerm2() {
-        SearchTerm st = SearchTerm.newSearchTerm(12, SearchTermType.STRING, 3l, "fn3", "foo*");
+        SearchTerm st = SearchTerm.newSearchTerm(12, SearchTermType.STRING, 3L, "fn3", "foo*");
         assertThat(st).isInstanceOf(StringSearchTerm.class);
 
         verify(st);
@@ -69,7 +69,7 @@ public class SearchTermTest {
     @Test
     public void undefinedSearchTerm_throws() {
         try {
-            SearchTerm.newSearchTerm(13, SearchTermType.UNSUPPORTED, 4l, "fn4", "whatever");
+            SearchTerm.newSearchTerm(13, SearchTermType.UNSUPPORTED, 4L, "fn4", "whatever");
             fail("should have thrown exception");
         } catch (Error ex) {
             assertThat(ex).isInstanceOf(AssertionError.class)
@@ -89,13 +89,13 @@ public class SearchTermTest {
 
     private void assertUserFieldEndingWith(String userFieldTag) {
         String userFieldName = "fn4" + userFieldTag;
-        SearchTerm st = SearchTerm.newSearchTerm(13, 3, 4l, userFieldName, "foo >=\"2017-02-01\"");
+        SearchTerm st = SearchTerm.newSearchTerm(13, 3, 4L, userFieldName, "foo >=\"2017-02-01\"");
         assertThat(st).isInstanceOf(AuditSearchTerm.class);
 
         AuditSearchTerm ast = (AuditSearchTerm) st;
         assertThat(ast.getId()).isEqualTo(13);
         assertThat(ast.getSearchTermType()).isEqualTo(SearchTermType.AUDIT);
-        assertThat(ast.getSearchConditionId()).isEqualTo(4l);
+        assertThat(ast.getSearchConditionId()).isEqualTo(4L);
         assertThat(ast.getFieldName()).isEqualTo(userFieldName);
         assertThat(ast.getRawSearchTerm()).isEqualTo("foo >=\"2017-02-01\"");
         assertThat(ast.getTokens()).hasSize(1);
@@ -110,13 +110,13 @@ public class SearchTermTest {
     @Test
     public void auditSearchTerm_forFieldNotEndingWithUserTag_akaDateField_returnsDateTokenOnly() {
         String userFieldName = "fn4";
-        SearchTerm st = SearchTerm.newSearchTerm(13, 3, 4l, userFieldName, "foo >=\"2017-02-01\"");
+        SearchTerm st = SearchTerm.newSearchTerm(13, 3, 4L, userFieldName, "foo >=\"2017-02-01\"");
         assertThat(st).isInstanceOf(AuditSearchTerm.class);
 
         AuditSearchTerm ast = (AuditSearchTerm) st;
         assertThat(ast.getId()).isEqualTo(13);
         assertThat(ast.getSearchTermType()).isEqualTo(SearchTermType.AUDIT);
-        assertThat(ast.getSearchConditionId()).isEqualTo(4l);
+        assertThat(ast.getSearchConditionId()).isEqualTo(4L);
         assertThat(ast.getFieldName()).isEqualTo(userFieldName);
         assertThat(ast.getRawSearchTerm()).isEqualTo("foo >=\"2017-02-01\"");
         assertThat(ast.getTokens()).hasSize(1);

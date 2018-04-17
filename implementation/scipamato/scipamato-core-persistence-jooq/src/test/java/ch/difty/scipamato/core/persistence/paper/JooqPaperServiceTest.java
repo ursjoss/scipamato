@@ -11,10 +11,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.junit.Test;
 import org.mockito.Mock;
@@ -40,7 +37,7 @@ import ch.difty.scipamato.core.pubmed.api.PubmedArticle;
 
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
 
-    private static final long   MINIMUM_NUMBER = 7l;
+    private static final long   MINIMUM_NUMBER = 7L;
     private static final String LC             = "de";
 
     private JooqPaperService service;
@@ -89,7 +86,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Test
     public void findingById_withFoundEntity_returnsOptionalOfIt() {
-        Long id = 7l;
+        Long id = 7L;
         when(repoMock.findById(id)).thenReturn(paperMock);
 
         Optional<Paper> optPaper = service.findById(id);
@@ -103,7 +100,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Test
     public void findingById_withNotFoundEntity_returnsOptionalEmpty() {
-        Long id = 7l;
+        Long id = 7L;
         when(repoMock.findById(id)).thenReturn(null);
 
         assertThat(service.findById(id)
@@ -139,7 +136,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Test
     public void savingOrUpdating_withPaperWithNonNullId_hasRepoUpdateThePaper() {
-        when(paperMock.getId()).thenReturn(17l);
+        when(paperMock.getId()).thenReturn(17L);
         when(repoMock.update(paperMock)).thenReturn(paperMock);
         assertThat(service.saveOrUpdate(paperMock)).isEqualTo(paperMock);
         verify(repoMock).update(paperMock);
@@ -164,15 +161,15 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     }
 
     @Test
-    public void deleting_withEntityWithNormald_delegatesToRepo() {
-        when(paperMock.getId()).thenReturn(3l);
+    public void deleting_withEntityWithNormalId_delegatesToRepo() {
+        when(paperMock.getId()).thenReturn(3L);
         when(paperMock.getVersion()).thenReturn(17);
 
         service.remove(paperMock);
 
         verify(paperMock, times(2)).getId();
         verify(paperMock, times(1)).getVersion();
-        verify(repoMock, times(1)).delete(3l, 17);
+        verify(repoMock, times(1)).delete(3L, 17);
     }
 
     @Test
@@ -212,7 +209,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         articles.add(PubmedArticleFacade.newPubmedArticleFrom(pa));
 
         // existing papers
-        when(repoMock.findExistingPmIdsOutOf(Arrays.asList(pmIdValue))).thenReturn(Arrays.asList(pmIdValue));
+        when(repoMock.findExistingPmIdsOutOf(Collections.singletonList(pmIdValue))).thenReturn(Collections.singletonList(pmIdValue));
 
         ServiceResult sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER);
         assertThat(sr).isNotNull();
@@ -221,7 +218,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
             .contains("PMID " + pmIdValue);
         assertThat(sr.getErrorMessages()).isEmpty();
 
-        verify(repoMock).findExistingPmIdsOutOf(Arrays.asList(pmIdValue));
+        verify(repoMock).findExistingPmIdsOutOf(Collections.singletonList(pmIdValue));
     }
 
     @Test
@@ -232,11 +229,11 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         assertThat(articles.get(0)
             .getPmId()).isNotNull();
 
-        when(repoMock.findExistingPmIdsOutOf(Arrays.asList(pmIdValue))).thenReturn(Arrays.asList());
-        when(repoMock.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)).thenReturn(17l);
+        when(repoMock.findExistingPmIdsOutOf(Collections.singletonList(pmIdValue))).thenReturn(Collections.emptyList());
+        when(repoMock.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)).thenReturn(17L);
 
         when(repoMock.add(isA(Paper.class))).thenReturn(paperMock2);
-        when(paperMock2.getId()).thenReturn(27l);
+        when(paperMock2.getId()).thenReturn(27L);
         when(paperMock2.getPmId()).thenReturn(pmIdValue);
 
         ServiceResult sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER);
@@ -246,7 +243,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         assertThat(sr.getWarnMessages()).isEmpty();
         assertThat(sr.getErrorMessages()).isEmpty();
 
-        verify(repoMock).findExistingPmIdsOutOf(Arrays.asList(pmIdValue));
+        verify(repoMock).findExistingPmIdsOutOf(Collections.singletonList(pmIdValue));
         verify(repoMock).findLowestFreeNumberStartingFrom(MINIMUM_NUMBER);
         verify(repoMock).add(isA(Paper.class));
         verify(paperMock2).getId();
@@ -266,7 +263,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         assertThat(sr.getWarnMessages()).isEmpty();
         assertThat(sr.getErrorMessages()).isEmpty();
 
-        verify(repoMock, never()).findExistingPmIdsOutOf(Arrays.asList(pmIdValue));
+        verify(repoMock, never()).findExistingPmIdsOutOf(Collections.singletonList(pmIdValue));
     }
 
     @Test
@@ -279,11 +276,11 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
             .getPmId()).isEqualTo("0");
         ((AbstractPubmedArticleFacade) articles.get(1)).setPmId(null);
 
-        when(repoMock.findExistingPmIdsOutOf(Arrays.asList(pmIdValue))).thenReturn(Arrays.asList());
-        when(repoMock.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)).thenReturn(17l);
+        when(repoMock.findExistingPmIdsOutOf(Collections.singletonList(pmIdValue))).thenReturn(Collections.emptyList());
+        when(repoMock.findLowestFreeNumberStartingFrom(MINIMUM_NUMBER)).thenReturn(17L);
 
         when(repoMock.add(isA(Paper.class))).thenReturn(paperMock2);
-        when(paperMock2.getId()).thenReturn(27l);
+        when(paperMock2.getId()).thenReturn(27L);
         when(paperMock2.getPmId()).thenReturn(pmIdValue);
 
         ServiceResult sr = service.dumpPubmedArticlesToDb(articles, MINIMUM_NUMBER);
@@ -293,7 +290,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         assertThat(sr.getWarnMessages()).isEmpty();
         assertThat(sr.getErrorMessages()).isEmpty();
 
-        verify(repoMock).findExistingPmIdsOutOf(Arrays.asList(pmIdValue));
+        verify(repoMock).findExistingPmIdsOutOf(Collections.singletonList(pmIdValue));
         verify(repoMock).findLowestFreeNumberStartingFrom(MINIMUM_NUMBER);
         verify(repoMock).add(isA(Paper.class));
         verify(paperMock2).getId();
@@ -324,15 +321,15 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Test
     public void findingByNumber_withNoResult_returnsOptionalEmpty() {
-        when(repoMock.findByNumbers(Arrays.asList(1l), LC)).thenReturn(new ArrayList<>());
-        Optional<Paper> opt = service.findByNumber(1l, LC);
+        when(repoMock.findByNumbers(Collections.singletonList(1L), LC)).thenReturn(new ArrayList<>());
+        Optional<Paper> opt = service.findByNumber(1L, LC);
         assertThat(opt.isPresent()).isFalse();
-        verify(repoMock).findByNumbers(Arrays.asList(1l), LC);
+        verify(repoMock).findByNumbers(Collections.singletonList(1L), LC);
     }
 
     @Test
     public void findingByNumber_withSingleResultFromRepo_returnsThatAsOptional() {
-        when(repoMock.findByNumbers(Arrays.asList(1l), LC)).thenReturn(Arrays.asList(paperMock));
+        when(repoMock.findByNumbers(Collections.singletonList(1L), LC)).thenReturn(Collections.singletonList(paperMock));
         testFindingByNumbers();
     }
 
@@ -340,11 +337,11 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         when(userRepoMock.findById(CREATOR_ID)).thenReturn(creatorMock);
         when(userRepoMock.findById(MODIFIER_ID)).thenReturn(modifierMock);
 
-        Optional<Paper> opt = service.findByNumber(1l, LC);
+        Optional<Paper> opt = service.findByNumber(1L, LC);
         assertThat(opt.isPresent()).isTrue();
         assertThat(opt.get()).isEqualTo(paperMock);
 
-        verify(repoMock).findByNumbers(Arrays.asList(1l), LC);
+        verify(repoMock).findByNumbers(Collections.singletonList(1L), LC);
         verify(userRepoMock).findById(CREATOR_ID);
         verify(userRepoMock).findById(MODIFIER_ID);
         verify(paperMock).getCreatedBy();
@@ -356,21 +353,21 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Test
     public void findingByNumber_withMultipleRecordsFromRepo_returnsFirstAsOptional() {
-        when(repoMock.findByNumbers(Arrays.asList(1l), LC)).thenReturn(Arrays.asList(paperMock, paperMock2));
+        when(repoMock.findByNumbers(Collections.singletonList(1L), LC)).thenReturn(Arrays.asList(paperMock, paperMock2));
         testFindingByNumbers();
     }
 
     @Test
     public void findingLowestFreeNumberStartingFrom_delegatesToRepo() {
-        long minimum = 4l;
-        when(repoMock.findLowestFreeNumberStartingFrom(minimum)).thenReturn(17l);
-        assertThat(service.findLowestFreeNumberStartingFrom(minimum)).isEqualTo(17l);
+        long minimum = 4L;
+        when(repoMock.findLowestFreeNumberStartingFrom(minimum)).thenReturn(17L);
+        assertThat(service.findLowestFreeNumberStartingFrom(minimum)).isEqualTo(17L);
         verify(repoMock).findLowestFreeNumberStartingFrom(minimum);
     }
 
     @Test
     public void findingPageOfIdsByFilter() {
-        final List<Long> ids = Arrays.asList(3l, 17l, 5l);
+        final List<Long> ids = Arrays.asList(3L, 17L, 5L);
         when(repoMock.findPageOfIdsByFilter(filterMock, paginationContextMock)).thenReturn(ids);
         assertThat(service.findPageOfIdsByFilter(filterMock, paginationContextMock)).isEqualTo(ids);
         verify(repoMock).findPageOfIdsByFilter(filterMock, paginationContextMock);
@@ -378,7 +375,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Test
     public void findingPageOfIdsBySearchOrder() {
-        final List<Long> ids = Arrays.asList(3l, 17l, 5l);
+        final List<Long> ids = Arrays.asList(3L, 17L, 5L);
         when(repoMock.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).thenReturn(ids);
         assertThat(service.findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock)).isEqualTo(ids);
         verify(repoMock).findPageOfIdsBySearchOrder(searchOrderMock, paginationContextMock);
@@ -386,16 +383,16 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Test
     public void excludingFromSearchOrder_delegatesToRepo() {
-        long searchOrderId = 4l;
-        long paperId = 5l;
+        long searchOrderId = 4L;
+        long paperId = 5L;
         service.excludeFromSearchOrder(searchOrderId, paperId);
         verify(repoMock).excludePaperFromSearchOrderResults(searchOrderId, paperId);
     }
 
     @Test
     public void reincludingFromSearchOrder_delegatesToRepo() {
-        long searchOrderId = 4l;
-        long paperId = 5l;
+        long searchOrderId = 4L;
+        long paperId = 5L;
         service.reincludeIntoSearchOrder(searchOrderId, paperId);
         verify(repoMock).reincludePaperIntoSearchOrderResults(searchOrderId, paperId);
     }
@@ -425,7 +422,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Test
     public void deletingByIds_delegatesToRepo() {
-        List<Long> ids = Arrays.asList(5l, 7l, 9l);
+        List<Long> ids = Arrays.asList(5L, 7L, 9L);
         service.deletePapersWithIds(ids);
         verify(repoMock).delete(ids);
     }

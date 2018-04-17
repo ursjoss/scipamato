@@ -12,9 +12,9 @@ public abstract class FilterConditionMapperTest<R extends Record, TI extends Tab
 
     protected String makeWhereClause(String pattern, String... fieldNames) {
         int fields = fieldNames.length;
-        final boolean withMultiplefields = fields > 1;
+        final boolean withMultipleFields = fields > 1;
         final StringBuilder sb = new StringBuilder();
-        if (withMultiplefields)
+        if (withMultipleFields)
             sb.append("(")
                 .append("\n  ");
         for (final String fieldName : fieldNames) {
@@ -25,12 +25,12 @@ public abstract class FilterConditionMapperTest<R extends Record, TI extends Tab
                 .append("\") like lower('%")
                 .append(pattern)
                 .append("%')");
-            if (withMultiplefields)
+            if (withMultipleFields)
                 sb.append("\n");
             if (fields-- > 1)
                 sb.append("  or ");
         }
-        if (withMultiplefields)
+        if (withMultipleFields)
             sb.append(")");
         return sb.toString();
     }

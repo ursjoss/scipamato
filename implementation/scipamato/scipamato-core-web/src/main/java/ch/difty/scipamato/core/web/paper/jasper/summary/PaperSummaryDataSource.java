@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.web.paper.jasper.summary;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.core.entity.Paper;
@@ -57,8 +57,8 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      */
     public PaperSummaryDataSource(final Paper paper, final ReportHeaderFields reportHeaderFields,
             ClusterablePdfExporterConfiguration config) {
-        this(Arrays.asList(new PaperSummary(AssertAs.notNull(paper, "paper"),
-                AssertAs.notNull(reportHeaderFields, "reportHeaderFields"))), config,
+        this(Collections.singletonList(new PaperSummary(AssertAs.notNull(paper, "paper"),
+                        AssertAs.notNull(reportHeaderFields, "reportHeaderFields"))), config,
                 makeSinglePaperBaseName(paper.getNumber() != null ? String.valueOf(paper.getNumber()) : null));
         this.reportHeaderFields = reportHeaderFields;
     }
@@ -72,8 +72,8 @@ public class PaperSummaryDataSource extends JasperPaperDataSource<PaperSummary> 
      * @param config
      *            the {@link ClusterablePdfExporterConfiguration}
      */
-    public PaperSummaryDataSource(final PaperSummary paperSummary, ClusterablePdfExporterConfiguration config) {
-        this(Arrays.asList(AssertAs.notNull(paperSummary, "paperSummary")), config,
+    PaperSummaryDataSource(final PaperSummary paperSummary, ClusterablePdfExporterConfiguration config) {
+        this(Collections.singletonList(AssertAs.notNull(paperSummary, "paperSummary")), config,
                 makeSinglePaperBaseName(paperSummary.getNumber()));
     }
 

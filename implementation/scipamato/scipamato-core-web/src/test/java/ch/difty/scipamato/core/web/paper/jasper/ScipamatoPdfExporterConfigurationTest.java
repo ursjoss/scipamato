@@ -18,7 +18,7 @@ public class ScipamatoPdfExporterConfigurationTest {
 
     @Test
     public void minimalInstantiation_buildingTitleFromHeaderPartAndNumber_intoMetadataTitle() {
-        config = new ScipamatoPdfExporterConfiguration.Builder("headerpart:", 5l).build();
+        config = new ScipamatoPdfExporterConfiguration.Builder("headerpart:", 5L).build();
         assertingMinimalConfigWithTitle("headerpart: 5");
     }
 
@@ -36,7 +36,7 @@ public class ScipamatoPdfExporterConfigurationTest {
 
     @Test
     public void minimalInstantiation_buildingTitleFromNullHeaderPartAndNumber_intoMetadataTitle() {
-        config = new ScipamatoPdfExporterConfiguration.Builder(null, 3l).build();
+        config = new ScipamatoPdfExporterConfiguration.Builder(null, 3L).build();
         assertingMinimalConfigWithTitle("3");
     }
 
@@ -88,7 +88,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withPaperTitle_concatsTitleAndPaperTitleIntoMetadataTitle() {
+    public void withPaperTitle_concatenatesTitleAndPaperTitleIntoMetadataTitle() {
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE).withPaperTitle("papertitle")
             .build();
         assertThat(config.getMetadataCreator()).isNull();
@@ -115,7 +115,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     }
 
     @Test
-    public void withPaperTitle_concatsTitleAndPaperAuthorAndPaperTitleIntoMetadataTitle() {
+    public void withPaperTitle_concatenatesTitleAndPaperAuthorAndPaperTitleIntoMetadataTitle() {
         config = new ScipamatoPdfExporterConfiguration.Builder(TITLE).withPaperTitle("papertitle")
             .withPaperAuthor("paperAuthor")
             .build();
@@ -199,7 +199,7 @@ public class ScipamatoPdfExporterConfigurationTest {
     public void withAllAttributes() {
         codes.add(new Code("1A", "c1", null, false, 1, "c1", "", 1));
         codes.add(new Code("2B", "c2 with spaces", null, false, 2, "c2", "", 1));
-        config = new ScipamatoPdfExporterConfiguration.Builder("hp:", 10l).withAuthor("a")
+        config = new ScipamatoPdfExporterConfiguration.Builder("hp:", 10L).withAuthor("a")
             .withPaperTitle("pt")
             .withPaperAuthor("pa")
             .withSubject("s")

@@ -16,7 +16,7 @@ import lombok.experimental.Delegate;
  *
  * @author u.joss
  */
-public class PublicCode {
+class PublicCode {
 
     @Delegate
     private final Code delegate;

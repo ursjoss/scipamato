@@ -9,7 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class JooqNewStudyTopicServiceTest {
 
-    private JooqNewStudyTopicService service = new JooqNewStudyTopicService();
+    private final JooqNewStudyTopicService service = new JooqNewStudyTopicService();
 
     @Test
     public void findingMostRecentNewStudyTopics() {

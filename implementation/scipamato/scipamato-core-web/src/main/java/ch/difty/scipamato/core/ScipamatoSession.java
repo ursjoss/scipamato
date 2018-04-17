@@ -12,7 +12,7 @@ import ch.difty.scipamato.common.navigator.LongNavigator;
  * Scipamato specific Session
  *
  * Holds an instance of {@link ItemNavigator} to manage the paper ids of the
- * lastest search result. Both keeps track of the id of the currently
+ * latest search result. Both keeps track of the id of the currently
  * viewed/edited paper ('focus') and/or move the focus to the previous/next
  * paper in the list of managed ids.
  *
@@ -24,7 +24,7 @@ public final class ScipamatoSession extends SecureWebSession {
 
     private final ItemNavigator<Long> paperIdManager = new LongNavigator();
 
-    public ScipamatoSession(final Request request) {
+    ScipamatoSession(final Request request) {
         super(request);
     }
 
