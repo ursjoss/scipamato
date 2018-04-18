@@ -54,17 +54,27 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Upgraded dependencies: spring-boot-parent
 
 .Deprecated
 
 .Removed
 
 .Fixed
+
+.Security
+
+
+[[v0.8.4]]
+== [0.8.4] -- 2018-04-18
+
+.Changed
+- Upgraded dependencies: spring-boot-parent
+- Switched from Eclipse to IntelliJ IDEA as IDE. Fixed many issues warned about by the IDE
+
+.Fixed
 - 08/12 - Core: Fix startup of SciPaMaTo-Core (introduced in 0.7.3 - commit be8407bfbb4572ef6f3fdddaf024ab0116e7e07b)
 - 08/24 - Public: Fix sorting of result table
 
-.Security
 
 [[v0.8.3]]
 == [0.8.3] -- 2018-04-06
