@@ -269,16 +269,19 @@ public class PublicPage extends BasePage<Void> {
 
     private List<IColumn<PublicPaper, String>> makeTableColumns() {
         final List<IColumn<PublicPaper, String>> columns = new ArrayList<>();
-        columns.add(makePropertyColumn(PublicPaper.PublicPaperFields.AUTHORS_ABBREVIATED));
+        columns.add(makePropertyColumn(PublicPaper.PublicPaperFields.AUTHORS_ABBREVIATED,
+            PublicPaper.PublicPaperFields.AUTHORS));
         columns.add(makeClickableColumn(PublicPaper.PublicPaperFields.TITLE, this::onTitleClick));
-        columns.add(makePropertyColumn(PublicPaper.PublicPaperFields.JOURNAL));
-        columns.add(makePropertyColumn(PublicPaper.PublicPaperFields.PUBL_YEAR));
+        columns.add(makePropertyColumn(PublicPaper.PublicPaperFields.JOURNAL, PublicPaper.PublicPaperFields.LOCATION));
+        columns.add(
+            makePropertyColumn(PublicPaper.PublicPaperFields.PUBL_YEAR, PublicPaper.PublicPaperFields.PUBL_YEAR));
         return columns;
     }
 
-    private PropertyColumn<PublicPaper, String> makePropertyColumn(FieldEnumType fieldType) {
+    private PropertyColumn<PublicPaper, String> makePropertyColumn(FieldEnumType fieldType, FieldEnumType sortField) {
+        final String sortExpression = sortField.getName();
         final String propExpression = fieldType.getName();
-        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
+        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), sortExpression,
             propExpression);
     }
 

@@ -11,3 +11,4 @@ CHANGELOG.html
 .idea/
 **/*.iml
 s101plugin.*
+log/

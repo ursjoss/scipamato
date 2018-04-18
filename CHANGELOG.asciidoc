@@ -62,6 +62,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Fixed
 - 08/12 - Core: Fix startup of SciPaMaTo-Core (introduced in 0.7.3 - commit be8407bfbb4572ef6f3fdddaf024ab0116e7e07b)
+- 08/24 - Public: Fix sorting of result table
 
 .Security
 
