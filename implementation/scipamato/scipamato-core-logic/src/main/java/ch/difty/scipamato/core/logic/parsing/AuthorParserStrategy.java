@@ -1,4 +1,6 @@
-package ch.difty.scipamato.core.config;
+package ch.difty.scipamato.core.logic.parsing;
+
+import ch.difty.scipamato.common.PropertyUtils;
 
 /**
  * Parses a property value to define the AuthorParserStrategy to be used.

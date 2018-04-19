@@ -21,7 +21,15 @@
     <dependencies>
         <dependency>
             <groupId>ch.difty</groupId>
+            <artifactId>scipamato-common-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
             <artifactId>scipamato-core-entity</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-core-logic</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>

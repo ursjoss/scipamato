@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ch.difty</groupId>
@@ -147,6 +148,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>scipamato-core-pubmed-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>scipamato-core-logic</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -397,6 +403,7 @@
                 <module>scipamato-common-persistence-jooq</module>
                 <module>scipamato-common-wicket</module>
                 <module>scipamato-core-entity</module>
+                <module>scipamato-core-logic</module>
                 <module>scipamato-core-pubmed-api</module>
                 <module>scipamato-core-persistence-api</module>
                 <module>scipamato-core-persistence-jooq</module>
@@ -438,6 +445,7 @@
                 <module>scipamato-public-persistence-jooq</module>
                 <module>scipamato-public-web</module>
                 <module>scipamato-core-entity</module>
+                <module>scipamato-core-logic</module>
                 <module>scipamato-core-pubmed-api</module>
                 <module>scipamato-core-persistence-api</module>
                 <module>scipamato-core-persistence-jooq</module>

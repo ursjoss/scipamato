@@ -140,7 +140,7 @@ public class SortTest {
     }
 
     @Test
-    public void SortPropertyWithNullDirection_isAscending() {
+    public void sortPropertyWithNullDirection_isAscending() {
         assertThat(new SortProperty("foo", null).getDirection()).isEqualTo(Direction.ASC);
     }
 

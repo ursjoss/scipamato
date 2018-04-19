@@ -2,11 +2,10 @@ package ch.difty.scipamato.core.logic.parsing;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.common.NullArgumentException;
+import ch.difty.scipamato.common.TestUtils;
 
 public class PubmedAuthorParserTest {
 
@@ -14,14 +13,7 @@ public class PubmedAuthorParserTest {
 
     @Test
     public void degenerateConstruction() {
-        try {
-            new PubmedAuthorParser(null);
-            fail("Should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex)
-                .isInstanceOf(NullArgumentException.class)
-                .hasMessage("authorsString must not be null.");
-        }
+        TestUtils.assertDegenerateSupplierParameter(() -> new PubmedAuthorParser(null), "authorsString");
     }
 
     @Test

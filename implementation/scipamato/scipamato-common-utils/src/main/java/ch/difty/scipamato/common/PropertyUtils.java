@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.config;
+package ch.difty.scipamato.common;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
  * @author u.joss
  */
 @Slf4j
-final class PropertyUtils {
+public final class PropertyUtils {
 
     private PropertyUtils() {
     }
@@ -29,7 +29,7 @@ final class PropertyUtils {
      *     the property key, used only for logging purposes
      * @return enum of type {@code T}
      */
-    static <T extends Enum<T>> T fromProperty(final String propertyValue, final T[] values, final T defaultValue,
+    public static <T extends Enum<T>> T fromProperty(final String propertyValue, final T[] values, final T defaultValue,
         final String propertyKey) {
         if (StringUtils.isNotBlank(propertyValue)) {
             for (final T s : values) {
@@ -59,7 +59,7 @@ final class PropertyUtils {
      *     the property key, used only for logging purposes
      * @return the int value
      */
-    static int parseInt(final String propertyValue, final String values, final int defaultValue,
+    public static int parseInt(final String propertyValue, final String values, final int defaultValue,
         final String propertyKey) {
         int value = defaultValue;
         try {

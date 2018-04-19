@@ -1,10 +1,8 @@
-package ch.difty.scipamato.core.config;
+package ch.difty.scipamato.common;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
-
-import ch.difty.scipamato.common.FinalClassTest;
 
 public class PropertyUtilsTest extends FinalClassTest<PropertyUtils> {
 

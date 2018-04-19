@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.scipamato.core.ScipamatoApplication;
+import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 
 /**
  * Note, this test class currently derives the configured values from

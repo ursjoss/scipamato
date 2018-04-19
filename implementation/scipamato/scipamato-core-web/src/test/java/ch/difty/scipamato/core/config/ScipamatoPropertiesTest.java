@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
+import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
+
 public class ScipamatoPropertiesTest {
 
     private final ScipamatoProperties sp = new ScipamatoProperties();

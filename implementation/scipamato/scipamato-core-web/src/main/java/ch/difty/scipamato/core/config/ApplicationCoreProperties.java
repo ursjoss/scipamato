@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.config;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
+import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 
 /**
  * Extending the generic {@link ApplicationProperties} with SciPaMaTo-Core

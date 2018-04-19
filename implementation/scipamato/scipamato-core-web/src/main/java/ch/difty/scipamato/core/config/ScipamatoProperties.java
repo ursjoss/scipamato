@@ -6,6 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.config.ScipamatoBaseProperties;
+import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 
 @Component
 @ConfigurationProperties(prefix = "scipamato")

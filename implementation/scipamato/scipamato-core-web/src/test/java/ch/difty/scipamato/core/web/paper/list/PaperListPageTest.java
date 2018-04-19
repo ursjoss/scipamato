@@ -21,6 +21,7 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -29,6 +30,7 @@ import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.core.config.ApplicationCoreProperties;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
+import ch.difty.scipamato.core.logic.parsing.AuthorParserFactory;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.persistence.DefaultServiceResult;
@@ -51,6 +53,9 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
     private CodeClassService          codeClassServiceMock;
     @MockBean
     private ApplicationCoreProperties applicationPropertiesMock;
+
+    @MockBean
+    private AuthorParserFactory authorParserFactoryMock;
 
     @Override
     protected void setUpHook() {

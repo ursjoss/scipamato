@@ -33,14 +33,14 @@ import ch.difty.scipamato.core.entity.Paper;
  *
  * @author u.joss
  */
-public class PubmedAuthorParser implements AuthorParser {
+class PubmedAuthorParser implements AuthorParser {
 
     private static final Pattern CARDINALITY_PATTERN = Pattern.compile("(?:1st|2nd|3rd)|(?:\\d+th)|(?:Jr)");
 
     private final String       authorsString;
     private final List<Author> authors;
 
-    public PubmedAuthorParser(final String authorsString) {
+    PubmedAuthorParser(final String authorsString) {
         this.authorsString = AssertAs
             .notNull(authorsString, "authorsString")
             .trim();

@@ -4,8 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.springframework.util.StringUtils;
+import java.util.stream.Collectors;
 
 import ch.difty.scipamato.common.AssertAs;
 
@@ -100,7 +99,10 @@ public class Sort implements Iterable<ch.difty.scipamato.common.persistence.pagi
 
     @Override
     public String toString() {
-        return StringUtils.collectionToCommaDelimitedString(sortProperties);
+        return sortProperties
+            .stream()
+            .map(SortProperty::toString)
+            .collect(Collectors.joining(","));
     }
 
     /**

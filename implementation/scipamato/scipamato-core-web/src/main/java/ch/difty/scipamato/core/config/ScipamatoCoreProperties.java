@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.config.AbstractScipamatoProperties;
 import ch.difty.scipamato.common.config.MavenProperties;
+import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 
 /**
  * This bean is used to evaluate all environment properties used in the
