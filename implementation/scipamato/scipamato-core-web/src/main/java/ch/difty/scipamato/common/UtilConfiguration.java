@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class UtilTestConfiguration {
+public class UtilConfiguration {
 
     @Bean
     public DateTimeService dateTimeService() {
