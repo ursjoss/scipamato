@@ -8,7 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Primary;
 
+import ch.difty.scipamato.common.DateTimeService;
+import ch.difty.scipamato.common.FrozenDateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.PubmedArticleService;
@@ -74,5 +77,11 @@ public class TestApplication {
                 return new ArrayList<>();
             }
         };
+    }
+
+    @Bean
+    @Primary
+    public DateTimeService dateTimeService() {
+        return new FrozenDateTimeService();
     }
 }
