@@ -9,11 +9,12 @@ The friendly people from Structure101 have kindly provided a free license for th
 I am currently using
 
 * http://structure101.com/help/java/studio/[Structure101 Studio]
-* http://structure101.com/products/structure101-developer-overview/[Structure101 Workspace] within eclipse
+* https://plugins.jetbrains.com/plugin/7292-structure101-for-java[Structure101 Plugin for IntelliJ]
+* http://2018.structure101.com/products/structure101-developer-overview/[Structure101 Workspace] for IntelliJ
 
 mainly to
 
-* get and keep the project acyclic
+* get and keep the project (mostly) acyclic
 * visualisation and documentation
 * inspect and browse the project with architectural focus
 

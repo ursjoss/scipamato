@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<local-project language="java" version="5.0.13325" xml-version="3" flavor="j2se">
+<local-project language="java" associate="file:/home/urs/" version="5.0.13301" xml-version="3" flavor="j2se">
   <property name="publish-architecture-artifacts" value="true" />
   <property name="force-classpath" value="false" />
   <property name="project-type" value="classpath" />
@@ -9,45 +9,64 @@
   <property name="relative-to" value="const(THIS_FILE)" />
   <property name="action-set-mod" value="1" />
   <property name="detail-mode" value="true" />
-  <property name="restructuring-system-file" value="../../../../../eclipse-workspace/structure101-actions.xml" />
+  <property name="restructuring-system-file" value="../structure101-actions.xml" />
   <property name="hide-deprecated" value="false" />
   <property name="resolve-name-clashes" value="true" />
   <property name="project-excluded" />
   <property name="show-needs-to-compile" value="false" />
-  <property name="physical-layering-system-file" value="structure101-spec.xml" />
+  <property name="physical-layering-system-file" value="../structure101-spec.xml" />
   <classpath>
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-persistence-jooq/target/classes" module="scipamato-common-persistence-jooq" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-logic/target/classes" module="scipamato-core-logic" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-persistence-jooq/target/scipamato-public-persistence-jooq-0.8.5-SNAPSHOT.jar" module="scipamato-public-persistence-jooq" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-pubmed-api/target/scipamato-core-pubmed-api-0.8.5-SNAPSHOT.jar" module="scipamato-core-pubmed-api" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-persistence-api/target/classes" module="scipamato-public-persistence-api" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-persistence-jooq/target/scipamato-common-persistence-jooq-0.8.5-SNAPSHOT.jar" module="scipamato-common-persistence-jooq" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-entity/target/scipamato-common-entity-0.8.5-SNAPSHOT.jar" module="scipamato-common-entity" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-utils/target/scipamato-common-utils-0.8.5-SNAPSHOT.jar" module="scipamato-common-utils" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-wicket/target/classes" module="scipamato-common-wicket" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-persistence-jooq/target/test-classes" module="scipamato-common-persistence-jooq" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-web/target/classes" module="scipamato-core-web" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-persistence-api/target/scipamato-public-persistence-api-0.8.5-SNAPSHOT.jar" module="scipamato-public-persistence-api" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-persistence-jooq/target/classes" module="scipamato-core-persistence-jooq" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-entity/target/test-classes" module="scipamato-common-entity" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-persistence-jooq/target/classes" module="scipamato-public-persistence-jooq" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-web/target/classes" module="scipamato-public-web" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-persistence-jooq/target/test-classes" module="scipamato-public-persistence-jooq" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-wicket/target/scipamato-common-wicket-0.8.5-SNAPSHOT.jar" module="scipamato-common-wicket" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-entity/target/scipamato-core-entity-0.8.5-SNAPSHOT.jar" module="scipamato-core-entity" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-utils/target/classes" module="scipamato-common-utils" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-wicket/target/test-classes" module="scipamato-common-wicket" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-entity/target/classes" module="scipamato-common-entity" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-entity/target/test-classes" module="scipamato-public-entity" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-entity/target/classes" module="scipamato-common-entity" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-entity/target/test-classes" module="scipamato-core-entity" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-sync/target/test-classes" module="scipamato-core-sync" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-persistence-api/target/test-classes" module="scipamato-core-persistence-api" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-web/target/test-classes" module="scipamato-core-web" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-web/target/scipamato-public-web-0.8.5-SNAPSHOT.jar" module="scipamato-public-web" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-persistence-jooq/target/test-classes" module="scipamato-core-persistence-jooq" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-entity/target/classes" module="scipamato-public-entity" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-sync/target/scipamato-core-sync-0.8.5-SNAPSHOT.jar" module="scipamato-core-sync" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-persistence-api/target/classes" module="scipamato-common-persistence-api" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-persistence-api/target/scipamato-common-persistence-api-0.8.5-SNAPSHOT.jar" module="scipamato-common-persistence-api" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-utils/target/test-classes" module="scipamato-common-utils" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-logic/target/scipamato-core-logic-0.8.5-SNAPSHOT.jar" module="scipamato-core-logic" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-web/target/test-classes" module="scipamato-public-web" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-persistence-api/target/scipamato-core-persistence-api-0.8.5-SNAPSHOT.jar" module="scipamato-core-persistence-api" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-persistence-api/target/test-classes" module="scipamato-common-persistence-api" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-web/target/scipamato-core-web-0.8.5-SNAPSHOT.jar" module="scipamato-core-web" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-sync/target/classes" module="scipamato-core-sync" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-persistence-api/target/classes" module="scipamato-core-persistence-api" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-pubmed-api/target/test-classes" module="scipamato-core-pubmed-api" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-persistence-jooq/target/scipamato-core-persistence-jooq-0.8.5-SNAPSHOT.jar" module="scipamato-core-persistence-jooq" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-logic/target/test-classes" module="scipamato-core-logic" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-entity/target/scipamato-public-entity-0.8.5-SNAPSHOT.jar" module="scipamato-public-entity" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-entity/target/classes" module="scipamato-core-entity" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-pubmed-api/target/classes" module="scipamato-core-pubmed-api" />
   </classpath>
   <pom-root-files />
   <modules>
+    <module name="scipamato" kind="ide-project" />
     <module name="scipamato-common-utils" kind="ide-project" />
     <module name="scipamato-core-pubmed-api" kind="ide-project">
       <requires name="scipamato-common-utils" kind="ide-project" />
@@ -79,6 +98,11 @@
       <requires name="scipamato-common-entity" kind="ide-project" />
       <requires name="scipamato-core-entity" kind="ide-project" />
       <requires name="scipamato-core-pubmed-api" kind="ide-project" />
+    </module>
+    <module name="scipamato-core-logic" kind="ide-project">
+      <requires name="scipamato-common-utils" kind="ide-project" />
+      <requires name="scipamato-core-entity" kind="ide-project" />
+      <requires name="scipamato-common-entity" kind="ide-project" />
     </module>
     <module name="scipamato-common-wicket" kind="ide-project">
       <requires name="scipamato-common-utils" kind="ide-project" />
@@ -127,9 +151,10 @@
       <requires name="scipamato-common-entity" kind="ide-project" />
     </module>
     <module name="scipamato-core-web" kind="ide-project">
+      <requires name="scipamato-common-utils" kind="ide-project" />
       <requires name="scipamato-core-entity" kind="ide-project" />
       <requires name="scipamato-common-entity" kind="ide-project" />
-      <requires name="scipamato-common-utils" kind="ide-project" />
+      <requires name="scipamato-core-logic" kind="ide-project" />
       <requires name="scipamato-core-persistence-api" kind="ide-project" />
       <requires name="scipamato-common-persistence-api" kind="ide-project" />
       <requires name="scipamato-core-persistence-jooq" kind="ide-project" />
@@ -140,21 +165,23 @@
     </module>
   </modules>
   <modules-in-scope>
-    <module name="scipamato-common-entity" />
-    <module name="scipamato-common-utils" />
-    <module name="scipamato-common-persistence-api" />
-    <module name="scipamato-common-persistence-jooq" />
-    <module name="scipamato-common-wicket" />
+    <module name="scipamato" />
     <module name="scipamato-core-entity" />
+    <module name="scipamato-common-persistence-api" />
+    <module name="scipamato-common-utils" />
+    <module name="scipamato-common-entity" />
+    <module name="scipamato-common-persistence-jooq" />
+    <module name="scipamato-core-logic" />
     <module name="scipamato-core-persistence-api" />
     <module name="scipamato-core-pubmed-api" />
-    <module name="scipamato-core-persistence-jooq" />
     <module name="scipamato-core-sync" />
-    <module name="scipamato-public-persistence-jooq" />
-    <module name="scipamato-public-persistence-api" />
     <module name="scipamato-public-entity" />
-    <module name="scipamato-core-web" />
+    <module name="scipamato-public-persistence-api" />
+    <module name="scipamato-core-persistence-jooq" />
+    <module name="scipamato-public-persistence-jooq" />
     <module name="scipamato-public-web" />
+    <module name="scipamato-core-web" />
+    <module name="scipamato-common-wicket" />
   </modules-in-scope>
   <excludes>
     <exclude expression="scipamato-core-persistence-jooq.ch.difty.scipamato.core.db.*" active="true" />
@@ -165,5 +192,5 @@
     <exclude expression="scipamato-core-web.ch.difty.scipamato.core.web.WicketTest" active="true" />
     <exclude expression="scipamato-core-pubmed-api.ch.difty.scipamato.core.pubmed.api.*" active="true" />
   </excludes>
-  <grid-set sep="." version="5.0.13325" />
+  <grid-set sep="." version="5.0.13301" />
 </local-project>
