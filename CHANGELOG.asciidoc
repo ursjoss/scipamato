@@ -55,6 +55,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 
+- 08/23 - Core: Re-extracted scipamato-core-logic that is needed for the migration tool (not part of the open-source aspect of scipamato)
+
 .Deprecated
 
 .Removed

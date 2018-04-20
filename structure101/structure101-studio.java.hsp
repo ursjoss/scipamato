@@ -14,34 +14,36 @@
   <property name="project-excluded" />
   <property name="show-needs-to-compile" value="false" />
   <classpath>
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-persistence-jooq/target/scipamato-public-persistence-jooq-0.8.4-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-persistence-jooq/target/scipamato-public-persistence-jooq-0.8.5-SNAPSHOT.jar" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-persistence-jooq/target/test-classes" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-web/target/scipamato-public-web-0.8.4-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-web/target/scipamato-public-web-0.8.5-SNAPSHOT.jar" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-web/target/test-classes" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-entity/target/scipamato-public-entity-0.8.4-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-entity/target/scipamato-public-entity-0.8.5-SNAPSHOT.jar" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-entity/target/test-classes" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-persistence-api/target/scipamato-common-persistence-api-0.8.4-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-persistence-api/target/scipamato-common-persistence-api-0.8.5-SNAPSHOT.jar" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-persistence-api/target/test-classes" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-pubmed-api/target/scipamato-core-pubmed-api-0.8.4-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-pubmed-api/target/scipamato-core-pubmed-api-0.8.5-SNAPSHOT.jar" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-pubmed-api/target/test-classes" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-entity/target/scipamato-core-entity-0.8.4-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-entity/target/scipamato-core-entity-0.8.5-SNAPSHOT.jar" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-entity/target/test-classes" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-utils/target/scipamato-common-utils-0.8.4-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-utils/target/scipamato-common-utils-0.8.5-SNAPSHOT.jar" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-utils/target/test-classes" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-persistence-jooq/target/scipamato-core-persistence-jooq-0.8.4-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-persistence-jooq/target/scipamato-core-persistence-jooq-0.8.5-SNAPSHOT.jar" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-persistence-jooq/target/test-classes" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-persistence-jooq/target/scipamato-common-persistence-jooq-0.8.4-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-logic/target/scipamato-core-logic-0.8.5-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-logic/target/test-classes" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-persistence-jooq/target/scipamato-common-persistence-jooq-0.8.5-SNAPSHOT.jar" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-persistence-jooq/target/test-classes" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-persistence-api/target/scipamato-core-persistence-api-0.8.4-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-persistence-api/target/scipamato-core-persistence-api-0.8.5-SNAPSHOT.jar" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-persistence-api/target/test-classes" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-sync/target/scipamato-core-sync-0.8.4-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-sync/target/scipamato-core-sync-0.8.5-SNAPSHOT.jar" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-sync/target/test-classes" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-entity/target/scipamato-common-entity-0.8.4-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-entity/target/scipamato-common-entity-0.8.5-SNAPSHOT.jar" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-entity/target/test-classes" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-wicket/target/scipamato-common-wicket-0.8.4-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-wicket/target/scipamato-common-wicket-0.8.5-SNAPSHOT.jar" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-common-wicket/target/test-classes" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-persistence-api/target/scipamato-public-persistence-api-0.8.4-SNAPSHOT.jar" />
-    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-web/target/scipamato-core-web-0.8.4-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-public-persistence-api/target/scipamato-public-persistence-api-0.8.5-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-web/target/scipamato-core-web-0.8.5-SNAPSHOT.jar" />
     <classpathentry kind="lib" path="../implementation/scipamato/scipamato-core-web/target/test-classes" />
   </classpath>
   <pom-root-files>
@@ -137,6 +139,7 @@
     <pathentry type="file" path="/home/urs/work/git/priv/scipamato/implementation/scipamato/scipamato-core-entity/src/main/java" />
     <pathentry type="file" path="/home/urs/work/git/priv/scipamato/implementation/scipamato/scipamato-common-utils/src/main/java" />
     <pathentry type="file" path="/home/urs/work/git/priv/scipamato/implementation/scipamato/scipamato-core-persistence-jooq/src/main/java" />
+    <pathentry type="file" path="/home/urs/work/git/priv/scipamato/implementation/scipamato/scipamato-core-logic/src/main/java" />
     <pathentry type="file" path="/home/urs/work/git/priv/scipamato/implementation/scipamato/scipamato-common-persistence-jooq/src/main/java" />
     <pathentry type="file" path="/home/urs/work/git/priv/scipamato/implementation/scipamato/scipamato-core-persistence-api/src/main/java" />
     <pathentry type="file" path="/home/urs/work/git/priv/scipamato/implementation/scipamato/scipamato-core-sync/src/main/java" />
@@ -200,6 +203,15 @@
               </cell>
             </row>
             <row>
+              <cell name="Business Logic" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="scipamato-core-logic" pattern="scipamato.scipamato-core-logic.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="255,204,51" />
+                  </row>
+                </grid>
+              </cell>
+            </row>
+            <row>
               <cell name="Entity Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
                 <grid>
                   <row>
@@ -253,6 +265,9 @@
                   </row>
                 </grid>
               </cell>
+            </row>
+            <row>
+              <cell name="Business Logic" pattern="" vexpanded="false" illegal="false" visibility="public" drill="true" />
             </row>
             <row>
               <cell name="Entity Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
@@ -340,6 +355,25 @@
               </cell>
             </row>
             <row>
+              <cell name="Business Logic" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="scipamato-core-logic" pattern="scipamato.scipamato-core-logic.*" vexpanded="false" illegal="false" visibility="public" drill="true" bgcolor="255,204,0">
+                      <grid>
+                        <row>
+                          <cell name="test-classes" pattern="scipamato.scipamato-core-logic.test-classes.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                        </row>
+                        <row>
+                          <cell name="scipamato-core-logic-0_8_5-SNAPSHOT" pattern="scipamato.scipamato-core-logic.scipamato-core-logic-0_8_5-SNAPSHOT.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                        </row>
+                      </grid>
+                    </cell>
+                    <cell pattern="" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                  </row>
+                </grid>
+              </cell>
+            </row>
+            <row>
               <cell name="Entity Layer" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
                 <grid>
                   <row>
@@ -356,20 +390,38 @@
               <cell name="Pubmed" pattern="" vexpanded="true" illegal="false" visibility="public" drill="true">
                 <grid>
                   <row>
-                    <cell name="scipamato-core-pubmed-api" pattern="scipamato.scipamato-core-pubmed-api.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                    <cell name="scipamato-core-pubmed-api" pattern="scipamato.scipamato-core-pubmed-api.*" vexpanded="false" illegal="false" visibility="public" drill="true">
+                      <grid>
+                        <row>
+                          <cell name="test-classes" pattern="scipamato.scipamato-core-pubmed-api.test-classes.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                        </row>
+                        <row>
+                          <cell name="scipamato-core-pubmed-api-0_8_5-SNAPSHOT" pattern="scipamato.scipamato-core-pubmed-api.scipamato-core-pubmed-api-0_8_5-SNAPSHOT.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                        </row>
+                      </grid>
+                    </cell>
                   </row>
                 </grid>
               </cell>
               <cell pattern="" vexpanded="false" illegal="false" visibility="public" drill="true" />
             </row>
             <row>
-              <cell name="scipamato-common-utils" pattern="scipamato.scipamato-common-utils.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+              <cell name="scipamato-common-utils" pattern="scipamato.scipamato-common-utils.*" vexpanded="true" illegal="false" visibility="public" drill="true">
+                <grid>
+                  <row>
+                    <cell name="test-classes" pattern="scipamato.scipamato-common-utils.test-classes.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                  </row>
+                  <row>
+                    <cell name="scipamato-common-utils-0_8_5-SNAPSHOT" pattern="scipamato.scipamato-common-utils.scipamato-common-utils-0_8_5-SNAPSHOT.*" vexpanded="false" illegal="false" visibility="public" drill="true" />
+                  </row>
+                </grid>
+              </cell>
             </row>
           </grid>
         </cell>
       </row>
-      <override source="$GP0.0$GP0.0$GP0.0$GP1.0" target="$GP0.0$GP1.0$GP0.1$GP0.0" allowed="true" source_disp="scipamato-core-sync" target_disp="scipamato-public-persistence-jooq" synthetic="false" num-violations="0" num-violations-weighted="0" />
       <override source="$GP0.0$GP0.0$GP0.0$GP1.0" target="$GP0.0$GP1.0$GP0.0$GP0.0" allowed="true" source_disp="scipamato-core-sync" target_disp="scipamato-core-persistence-jooq" synthetic="false" num-violations="0" num-violations-weighted="0" />
+      <override source="$GP0.0$GP0.0$GP0.0$GP1.0" target="$GP0.0$GP1.0$GP0.1$GP0.0" allowed="true" source_disp="scipamato-core-sync" target_disp="scipamato-public-persistence-jooq" synthetic="false" num-violations="0" num-violations-weighted="0" />
       <description>Generated from LSM "Model 1"</description>
     </grid>
   </grid-set>
