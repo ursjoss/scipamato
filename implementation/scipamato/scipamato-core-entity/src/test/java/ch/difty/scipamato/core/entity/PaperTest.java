@@ -29,10 +29,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     private final Paper p = new Paper();
 
     @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-
+    protected void localSetUp() {
         p.setId(1L);
         p.setNumber(2L);
         p.setDoi(VALID_DOI);

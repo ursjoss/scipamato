@@ -29,6 +29,10 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     private final Code c = new Code("1A", CODE1, null, false, 1, "c1", "", 1);
 
+    @Override
+    protected void localSetUp() {
+    }
+
     private void verifySuccessfulValidation(Code code) {
         validate(code);
         assertThat(getViolations()).isEmpty();

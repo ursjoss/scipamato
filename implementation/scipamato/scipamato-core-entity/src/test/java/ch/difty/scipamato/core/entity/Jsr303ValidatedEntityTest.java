@@ -15,11 +15,17 @@ public abstract class Jsr303ValidatedEntityTest<T extends ScipamatoEntity> {
     private Set<ConstraintViolation<T>> violations;
 
     @Before
-    public void setUp() {
+    public final void setUp() {
         validatorFactoryBean = new LocalValidatorFactoryBean();
         validatorFactoryBean.setProviderClass(ApacheValidationProvider.class);
         validatorFactoryBean.afterPropertiesSet();
+        localSetUp();
     }
+
+    /**
+     * Local setup in the implementing test
+     */
+    protected abstract void localSetUp();
 
     protected void validate(T validatable) {
         violations = validatorFactoryBean.validate(validatable);
