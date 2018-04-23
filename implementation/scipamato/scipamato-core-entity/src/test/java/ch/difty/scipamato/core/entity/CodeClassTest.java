@@ -19,11 +19,6 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     protected void localSetUp() {
     }
 
-    private void verifySuccessfulValidation(final CodeClass cc) {
-        validate(cc);
-        assertThat(getViolations()).isEmpty();
-    }
-
     private void validateAndAssertFailure(final CodeClass cc, final FieldEnumType fieldType, final Object invalidValue,
         final String msg) {
         validate(cc);

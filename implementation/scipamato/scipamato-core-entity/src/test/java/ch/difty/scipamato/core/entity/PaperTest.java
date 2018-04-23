@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
@@ -52,14 +51,9 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         p.setVersion(10);
     }
 
-    private void verifySuccessfulValidation() {
-        validate(p);
-        assertThat(getViolations()).isEmpty();
-    }
-
     @Test
     public void validatingPaper_withMultipleAuthorsWithFirstname_withPeriod_succeeds() {
-        verifySuccessfulValidation();
+        verifySuccessfulValidation(p);
     }
 
     @Test
@@ -118,13 +112,13 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void validatingPaper_withSingleAuthorWithoutFirstname_withPeriod_succeeds() {
         final String validValue = "Turner.";
         p.setAuthors(validValue);
-        verifySuccessfulValidation();
+        verifySuccessfulValidation(p);
     }
 
     @Test
     public void validatingPaper_withAuthorsPlusCollectiveAuthor_succeeds() {
         p.setAuthors(VALID_AUTHORS_WITH_COLLECTIVE);
-        verifySuccessfulValidation();
+        verifySuccessfulValidation(p);
     }
 
     @Test
@@ -136,7 +130,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Test
     public void validatingPaper_withSingleAuthorWithFirstname_withPeriod_succeeds() {
         p.setAuthors("Turner MC.");
-        verifySuccessfulValidation();
+        verifySuccessfulValidation(p);
     }
 
     @Test
@@ -149,7 +143,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Test
     public void validatingPaper_withTwoAuthorsWithFirstname_withPeriod_succeeds() {
         p.setAuthors("Turner MC, Cohen A.");
-        verifySuccessfulValidation();
+        verifySuccessfulValidation(p);
     }
 
     @Test
@@ -168,13 +162,13 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Test
     public void validatingPaper_withAuthorWithDashInName_succeeds() {
         p.setAuthors("Alpha-Beta G.");
-        verifySuccessfulValidation();
+        verifySuccessfulValidation(p);
     }
 
     @Test
     public void validatingPaper_withAuthorWithTickInName_succeeds() {
         p.setAuthors("d'Alpha G.");
-        verifySuccessfulValidation();
+        verifySuccessfulValidation(p);
     }
 
     @Test
@@ -194,13 +188,13 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Test
     public void validatingPaper_withOkPublicationYear_succeeds() {
         p.setPublicationYear(1500);
-        verifySuccessfulValidation();
+        verifySuccessfulValidation(p);
 
         p.setPublicationYear(2016);
-        verifySuccessfulValidation();
+        verifySuccessfulValidation(p);
 
         p.setPublicationYear(2100);
-        verifySuccessfulValidation();
+        verifySuccessfulValidation(p);
     }
 
     @Test
@@ -229,7 +223,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void validatingPaper_withNonAsciiChars_passes() {
         final String valueWithUmlaut = "ÄäÖöÜüéèàêç A.";
         p.setAuthors(valueWithUmlaut);
-        verifySuccessfulValidation();
+        verifySuccessfulValidation(p);
     }
 
     @Test

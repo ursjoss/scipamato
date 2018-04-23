@@ -1,5 +1,7 @@
 package ch.difty.scipamato.core.entity;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import javax.validation.ConstraintViolation;
 import java.util.Set;
 
@@ -33,5 +35,17 @@ public abstract class Jsr303ValidatedEntityTest<T extends ScipamatoEntity> {
 
     protected Set<ConstraintViolation<T>> getViolations() {
         return violations;
+    }
+
+    /**
+     * Validates the passed in entity that is assumed to have no validation issues.
+     * Asserts there are no validations.
+     *
+     * @param validatable
+     *     the entity to validate
+     */
+    protected void verifySuccessfulValidation(T validatable) {
+        validate(validatable);
+        assertThat(getViolations()).isEmpty();
     }
 }

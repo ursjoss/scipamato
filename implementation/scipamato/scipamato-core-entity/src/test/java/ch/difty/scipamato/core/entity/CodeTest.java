@@ -33,11 +33,6 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     protected void localSetUp() {
     }
 
-    private void verifySuccessfulValidation(Code code) {
-        validate(code);
-        assertThat(getViolations()).isEmpty();
-    }
-
     private void validateAndAssertFailure(Code code, final FieldEnumType fieldType, final Object invalidValue,
         final String msg) {
         validate(code);
