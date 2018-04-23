@@ -85,4 +85,14 @@ public abstract class Jsr303ValidatedEntityTest<T extends ScipamatoEntity> {
             .toString()).isEqualTo(fieldType.getName());
     }
 
+    @Test
+    public void toString_isMinimal() {
+        final T entity = newValidEntity();
+        assertThat(entity.toString()).isEqualTo(getToString());
+    }
+
+    /**
+     * @return toString value of the valid entity
+     */
+    protected abstract String getToString();
 }

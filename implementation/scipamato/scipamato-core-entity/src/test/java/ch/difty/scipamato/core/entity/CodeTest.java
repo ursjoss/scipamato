@@ -27,7 +27,12 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Override
     protected Code newValidEntity() {
-        return new Code("1A", CODE1, null, false, 1, "c1", "", 1);
+        return new Code("1A", CODE1, null, false, 1, "c1", "", 1, CREATED, 10, LAST_MOD, 20, 3);
+    }
+
+    @Override
+    protected String getToString() {
+        return "Code[code=1A,name=code1,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T08:01:33.821,lastModified=2017-02-02T08:01:33.821,version=3]";
     }
 
     @Test
@@ -65,13 +70,6 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     public void validatingCode_withWrongCodeFormat_fails() {
         Code c1 = new Code("xyz", CODE1, null, false, 1, "c1", "", 1);
         validateAndAssertFailure(c1, CODE, "xyz", "{code.invalidCode}");
-    }
-
-    @Test
-    public void testingToString() {
-        final Code c1 = new Code("1A", CODE1, null, false, 1, "c1", "", 1, CREATED, 10, LAST_MOD, 20, 3);
-        assertThat(c1.toString()).isEqualTo(
-            "Code[code=1A,name=code1,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T08:01:33.821,lastModified=2017-02-02T08:01:33.821,version=3]");
     }
 
     @Test

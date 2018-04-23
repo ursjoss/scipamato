@@ -49,6 +49,16 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         return p;
     }
 
+    @Override
+    protected String getToString() {
+        return "Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000"
+               + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=Turner MC,firstAuthorOverridden=false"
+               + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
+               + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
+               + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,comment=<null>,intern=<null>,originalAbstract=<null>"
+               + ",mainCodeOfCodeclass1=<null>,attachments=[],codes=[],id=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111,version=10]";
+    }
+
     @Test
     public void validatingPaper_withMultipleAuthorsWithFirstname_withPeriod_succeeds() {
         final Paper p = newValidEntity();
@@ -226,17 +236,6 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         final Paper p = newValidEntity();
         p.setAuthors(valueWithUmlaut);
         verifySuccessfulValidation(p);
-    }
-
-    @Test
-    public void testingToString_withoutCodeClasses() {
-        final Paper p = newValidEntity();
-        assertThat(p.toString()).isEqualTo("Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000"
-                                           + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=Turner MC,firstAuthorOverridden=false"
-                                           + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
-                                           + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
-                                           + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,comment=<null>,intern=<null>,originalAbstract=<null>"
-                                           + ",mainCodeOfCodeclass1=<null>,attachments=[],codes=[],id=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111,version=10]");
     }
 
     @Test

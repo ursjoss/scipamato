@@ -16,6 +16,11 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
         return new CodeClass(1, "foo", "bar");
     }
 
+    @Override
+    protected String getToString() {
+        return "CodeClass[id=1]";
+    }
+
     @Test
     public void validatingCodeClass_beingValid_succeeds() {
         verifySuccessfulValidation(new CodeClass(1, "foo", "bar"));
@@ -31,12 +36,6 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     public void validatingCodeClass_withNullDescription_fails() {
         CodeClass cc = new CodeClass(1, "foo", null);
         validateAndAssertFailure(cc, DESCRIPTION, null, JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE);
-    }
-
-    @Test
-    public void testingToString() {
-        CodeClass cc = new CodeClass(1, "foo", "bar");
-        assertThat(cc.toString()).isEqualTo("CodeClass[id=1]");
     }
 
     @Test
