@@ -25,10 +25,9 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     private static final LocalDateTime LAST_MOD                                      = LocalDateTime.parse(
         "2017-02-02T08:01:33.821");
 
-    private final Code c = new Code("1A", CODE1, null, false, 1, "c1", "", 1);
-
     @Override
-    protected void localSetUp() {
+    protected Code newValidEntity() {
+        return new Code("1A", CODE1, null, false, 1, "c1", "", 1);
     }
 
     @Test
@@ -54,11 +53,6 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     @Test
     public void constructing_withNullCodeClassId_throws() {
         assertDegenerateSupplierParameter(() -> new Code("1A", CODE1, null, false, null, null, null, 1), "codeClassId");
-    }
-
-    @Test
-    public void validatingCode_beginValid_succeeds() {
-        verifySuccessfulValidation(c);
     }
 
     @Test
@@ -94,6 +88,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void sameValues_makeEquality() {
+        Code c = newValidEntity();
         Code c2 = new Code(c);
         assertThat(c.equals(c2)).isTrue();
         assertThat(c2.equals(c)).isTrue();
@@ -158,6 +153,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
     @SuppressWarnings("unlikely-arg-type")
     @Test
     public void equalingToSpecialCases() {
+        Code c = newValidEntity();
         assertThat(c.equals(c)).isTrue();
         assertThat(c.equals(null)).isFalse();
         assertThat(c.equals("")).isFalse();
@@ -165,6 +161,7 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Test
     public void displayValue() {
+        Code c = newValidEntity();
         assertThat(c.getDisplayValue()).isEqualTo("code1 (1A)");
     }
 

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.apache.bval.jsr.ApacheValidationProvider;
 import org.junit.Before;
+import org.junit.Test;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
@@ -22,31 +23,37 @@ public abstract class Jsr303ValidatedEntityTest<T extends ScipamatoEntity> {
         validatorFactoryBean = new LocalValidatorFactoryBean();
         validatorFactoryBean.setProviderClass(ApacheValidationProvider.class);
         validatorFactoryBean.afterPropertiesSet();
-        localSetUp();
+    }
+
+    @Test
+    public void assertCompleteEntityPassesValidation() {
+        verifySuccessfulValidation(newValidEntity());
     }
 
     /**
-     * Local setup in the implementing test
+     * Implement to return a fully valid entity of type T
+     *
+     * @return entity
      */
-    protected abstract void localSetUp();
+    protected abstract T newValidEntity();
 
-    protected void validate(T validatable) {
-        violations = validatorFactoryBean.validate(validatable);
+    private void validate(T validateable) {
+        violations = validatorFactoryBean.validate(validateable);
     }
 
-    protected Set<ConstraintViolation<T>> getViolations() {
+    private Set<ConstraintViolation<T>> getViolations() {
         return violations;
     }
 
     /**
-     * Validates the passed in entity that is assumed to have no validation issues.
-     * Asserts there are no validations.
+     * Validates the entity that is assumed to be complete and valid. Asserts there
+     * are not violations
      *
-     * @param validatable
+     * @param validateable
      *     the entity to validate
      */
-    protected void verifySuccessfulValidation(T validatable) {
-        validate(validatable);
+    protected void verifySuccessfulValidation(T validateable) {
+        validate(validateable);
         assertThat(getViolations()).isEmpty();
     }
 
@@ -54,7 +61,7 @@ public abstract class Jsr303ValidatedEntityTest<T extends ScipamatoEntity> {
      * Validates the passed in entity that is assumed to have exactly one validation
      * issue. Asserts the validation message.
      *
-     * @param validatable
+     * @param validateable
      *     the entity with issues to be validated
      * @param fieldType
      *     the field that breaks the validation
@@ -63,9 +70,9 @@ public abstract class Jsr303ValidatedEntityTest<T extends ScipamatoEntity> {
      * @param msg
      *     the validation message
      */
-    protected void validateAndAssertFailure(final T validatable, final FieldEnumType fieldType,
+    protected void validateAndAssertFailure(final T validateable, final FieldEnumType fieldType,
         final Object invalidValue, final String msg) {
-        validate(validatable);
+        validate(validateable);
 
         assertThat(getViolations()).isNotEmpty();
         ConstraintViolation<T> violation = getViolations()

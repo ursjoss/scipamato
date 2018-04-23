@@ -5,7 +5,6 @@ import static ch.difty.scipamato.core.entity.Paper.PaperFields.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 
-import javax.validation.ConstraintViolation;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +13,6 @@ import java.util.List;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
-import ch.difty.scipamato.common.entity.FieldEnumType;
 
 public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
@@ -25,10 +23,9 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     private static final String VALID_DOI                     = "10.1093/aje/kwu275";
     private static final String NON_NULL_STRING               = "foo";
 
-    private final Paper p = new Paper();
-
     @Override
-    protected void localSetUp() {
+    protected Paper newValidEntity() {
+        final Paper p = new Paper();
         p.setId(1L);
         p.setNumber(2L);
         p.setDoi(VALID_DOI);
@@ -49,86 +46,81 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         p.setLastModifiedBy(20);
         p.setLastModifiedByName("modifier");
         p.setVersion(10);
+        return p;
     }
 
     @Test
     public void validatingPaper_withMultipleAuthorsWithFirstname_withPeriod_succeeds() {
+        final Paper p = newValidEntity();
         verifySuccessfulValidation(p);
     }
 
     @Test
     public void validatingPaper_withNullNumber_fails() {
+        final Paper p = newValidEntity();
         p.setNumber(null);
-        validateAndAssertFailure(NUMBER, null, "{javax.validation.constraints.NotNull.message}");
+        validateAndAssertFailure(p, NUMBER, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingPaper_withNegativeNumber_fails() {
+        final Paper p = newValidEntity();
         p.setNumber(-1L);
-        validateAndAssertFailure(NUMBER, -1L, "{javax.validation.constraints.Min.message}");
+        validateAndAssertFailure(p, NUMBER, -1L, "{javax.validation.constraints.Min.message}");
     }
 
     @Test
     public void validatingPaper_withNullTitle_fails() {
+        final Paper p = newValidEntity();
         p.setTitle(null);
-        validateAndAssertFailure(TITLE, null, "{javax.validation.constraints.NotNull.message}");
+        validateAndAssertFailure(p, TITLE, null, "{javax.validation.constraints.NotNull.message}");
     }
 
-    private void validateAndAssertFailure(final FieldEnumType fieldType, final Object invalidValue, final String msg) {
-        validate(p);
-
-        assertThat(getViolations())
-            .isNotEmpty()
-            .hasSize(1);
-        ConstraintViolation<Paper> violation = getViolations()
-            .iterator()
-            .next();
-        assertThat(violation.getMessageTemplate()).isEqualTo(msg);
-        assertThat(violation.getInvalidValue()).isEqualTo(invalidValue);
-        assertThat(violation
-            .getPropertyPath()
-            .toString()).isEqualTo(fieldType.getName());
-    }
-
-    private void verifyFailedAuthorValidation(final String invalidValue) {
-        validateAndAssertFailure(AUTHORS, invalidValue, "{paper.invalidAuthor}");
+    private void verifyFailedAuthorValidation(final Paper p, final String invalidValue) {
+        validateAndAssertFailure(p, AUTHORS, invalidValue, "{paper.invalidAuthor}");
     }
 
     @Test
     public void validatingPaper_withBlankAuthor_fails() {
         final String invalidValue = "";
+        final Paper p = newValidEntity();
         p.setAuthors(invalidValue);
-        verifyFailedAuthorValidation(invalidValue);
+        verifyFailedAuthorValidation(p, invalidValue);
     }
 
     @Test
     public void validatingPaper_withSingleAuthorWithoutFirstname_withoutPeriod_fails() {
         final String invalidValue = "Turner";
+        final Paper p = newValidEntity();
         p.setAuthors(invalidValue);
-        verifyFailedAuthorValidation(invalidValue);
+        verifyFailedAuthorValidation(p, invalidValue);
     }
 
     @Test
     public void validatingPaper_withSingleAuthorWithoutFirstname_withPeriod_succeeds() {
         final String validValue = "Turner.";
+        final Paper p = newValidEntity();
         p.setAuthors(validValue);
         verifySuccessfulValidation(p);
     }
 
     @Test
     public void validatingPaper_withAuthorsPlusCollectiveAuthor_succeeds() {
+        final Paper p = newValidEntity();
         p.setAuthors(VALID_AUTHORS_WITH_COLLECTIVE);
         verifySuccessfulValidation(p);
     }
 
     @Test
     public void validatingPaper_withSingleAuthorWithFirstname_withoutPeriod_fails() {
+        final Paper p = newValidEntity();
         p.setAuthors("Turner MC");
-        verifyFailedAuthorValidation("Turner MC");
+        verifyFailedAuthorValidation(p, "Turner MC");
     }
 
     @Test
     public void validatingPaper_withSingleAuthorWithFirstname_withPeriod_succeeds() {
+        final Paper p = newValidEntity();
         p.setAuthors("Turner MC.");
         verifySuccessfulValidation(p);
     }
@@ -136,12 +128,14 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Test
     public void validatingPaper_withTwoAuthorsWithFirstnames_withoutPeriod_fails() {
         final String invalidValue = "Turner MC, Cohan A";
+        final Paper p = newValidEntity();
         p.setAuthors(invalidValue);
-        verifyFailedAuthorValidation(invalidValue);
+        verifyFailedAuthorValidation(p, invalidValue);
     }
 
     @Test
     public void validatingPaper_withTwoAuthorsWithFirstname_withPeriod_succeeds() {
+        final Paper p = newValidEntity();
         p.setAuthors("Turner MC, Cohen A.");
         verifySuccessfulValidation(p);
     }
@@ -149,44 +143,50 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Test
     public void validatingPaper_withMultipleAuthorsWithFirstnames_withoutMissingSpace_fails() {
         final String invalidValue = "Turner MC,Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.";
+        final Paper p = newValidEntity();
         p.setAuthors(invalidValue);
-        verifyFailedAuthorValidation(invalidValue);
+        verifyFailedAuthorValidation(p, invalidValue);
     }
 
     @Test
     public void validatingPaper_withNullFirstAuthor_fails() {
+        final Paper p = newValidEntity();
         p.setFirstAuthor(null);
-        validateAndAssertFailure(FIRST_AUTHOR, null, "{javax.validation.constraints.NotNull.message}");
+        validateAndAssertFailure(p, FIRST_AUTHOR, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingPaper_withAuthorWithDashInName_succeeds() {
+        final Paper p = newValidEntity();
         p.setAuthors("Alpha-Beta G.");
         verifySuccessfulValidation(p);
     }
 
     @Test
     public void validatingPaper_withAuthorWithTickInName_succeeds() {
+        final Paper p = newValidEntity();
         p.setAuthors("d'Alpha G.");
         verifySuccessfulValidation(p);
     }
 
     @Test
     public void validatingPaper_withNullLocation_fails() {
+        final Paper p = newValidEntity();
         p.setLocation(null);
-        validateAndAssertFailure(LOCATION, null, "{javax.validation.constraints.NotNull.message}");
+        validateAndAssertFailure(p, LOCATION, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingPaper_withTooSmallPublicationYear_fails() {
         final int tooEarly = 1499;
+        final Paper p = newValidEntity();
         p.setPublicationYear(tooEarly);
-        validate(p);
-        validateAndAssertFailure(PUBL_YEAR, tooEarly, "{paper.invalidPublicationYear}");
+        validateAndAssertFailure(p, PUBL_YEAR, tooEarly, "{paper.invalidPublicationYear}");
     }
 
     @Test
     public void validatingPaper_withOkPublicationYear_succeeds() {
+        final Paper p = newValidEntity();
         p.setPublicationYear(1500);
         verifySuccessfulValidation(p);
 
@@ -200,34 +200,37 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Test
     public void validatingPaper_withTooLargePublicationYear_fails() {
         final int tooLate = 2101;
+        final Paper p = newValidEntity();
         p.setPublicationYear(tooLate);
-        validate(p);
-        validateAndAssertFailure(PUBL_YEAR, tooLate, "{paper.invalidPublicationYear}");
+        validateAndAssertFailure(p, PUBL_YEAR, tooLate, "{paper.invalidPublicationYear}");
     }
 
     @Test
     public void validatingPaper_withInvalidDoi_fails() {
         final String invalidDoi = "abc";
+        final Paper p = newValidEntity();
         p.setDoi(invalidDoi);
-        validate(p);
-        validateAndAssertFailure(DOI, invalidDoi, "{paper.invalidDOI}");
+        validateAndAssertFailure(p, DOI, invalidDoi, "{paper.invalidDOI}");
     }
 
     @Test
     public void validatingPaper_withNullGoals_fails() {
+        final Paper p = newValidEntity();
         p.setGoals(null);
-        validateAndAssertFailure(GOALS, null, "{javax.validation.constraints.NotNull.message}");
+        validateAndAssertFailure(p, GOALS, null, "{javax.validation.constraints.NotNull.message}");
     }
 
     @Test
     public void validatingPaper_withNonAsciiChars_passes() {
         final String valueWithUmlaut = "ÄäÖöÜüéèàêç A.";
+        final Paper p = newValidEntity();
         p.setAuthors(valueWithUmlaut);
         verifySuccessfulValidation(p);
     }
 
     @Test
     public void testingToString_withoutCodeClasses() {
+        final Paper p = newValidEntity();
         assertThat(p.toString()).isEqualTo("Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000"
                                            + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=Turner MC,firstAuthorOverridden=false"
                                            + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
@@ -238,6 +241,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @Test
     public void testingToString_withCodeClassesAndMainCodeOfClass1() {
+        final Paper p = newValidEntity();
         p.addCode(makeCode(1, "D"));
         p.addCode(makeCode(1, "E"));
         p.addCode(makeCode(5, "A"));
@@ -263,6 +267,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         List<PaperAttachment> attachments = new ArrayList<>();
         attachments.add(newAttachment(1, 1, "p1"));
         attachments.add(newAttachment(2, 1, "p2"));
+        final Paper p = newValidEntity();
         p.setAttachments(attachments);
         assertThat(p.toString()).isEqualTo("Paper[number=2,doi=10.1093/aje/kwu275,pmId=1000"
                                            + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=Turner MC,firstAuthorOverridden=false"
@@ -286,6 +291,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @Test
     public void addingCode_addsItAndAllowsToRetrieveIt() {
+        final Paper p = newValidEntity();
         assertThat(p.getCodes())
             .isNotNull()
             .isEmpty();
@@ -298,6 +304,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @Test
     public void addingCodes() {
+        final Paper p = newValidEntity();
         p.addCode(makeCode(1, "C"));
         Code c1D = makeCode(1, "D");
         Code c2A = makeCode(2, "A");
@@ -317,6 +324,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         Code c2F = makeCode(2, "F");
         Code c2A = makeCode(2, "A");
 
+        final Paper p = newValidEntity();
         p.addCodes(Arrays.asList(c1D, c2F, c2A));
 
         assertThat(p.getCodesOf(CodeClassId.CC1)).containsExactly(c1D);
@@ -326,6 +334,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @Test
     public void clearingCode_delegatesClearingToCode() {
+        final Paper p = newValidEntity();
         assertThat(p.getCodes())
             .isNotNull()
             .isEmpty();
@@ -342,6 +351,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         Code c1D = makeCode(1, "D");
         Code c1E = makeCode(1, "E");
         Code c5A = makeCode(5, "A");
+        final Paper p = newValidEntity();
         p.addCodes(Arrays.asList(c1E, c1D, c5A));
         p.setMainCodeOfCodeclass1(c1E.getCode());
 
@@ -353,16 +363,19 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @Test
     public void displayValue() {
+        final Paper p = newValidEntity();
         assertThat(p.getDisplayValue()).isEqualTo("Turner MC (2016): Title.");
     }
 
     @Test
     public void createdDisplayValue() {
+        final Paper p = newValidEntity();
         assertThat(p.getCreatedDisplayValue()).isEqualTo("creator (2017-01-01 22:15:13)");
     }
 
     @Test
     public void modifiedDisplayValue() {
+        final Paper p = newValidEntity();
         assertThat(p.getModifiedDisplayValue()).isEqualTo("modifier (2017-01-10 22:15:13)");
     }
 
@@ -383,6 +396,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @Test
     public void newPaper_hasNonNullButEmptyAttachments() {
+        final Paper p = newValidEntity();
         assertThat(p.getAttachments())
             .isNotNull()
             .isEmpty();
@@ -390,6 +404,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @Test
     public void cannotAddAttachment_viaGetter() {
+        final Paper p = newValidEntity();
         p
             .getAttachments()
             .add(new PaperAttachment());
@@ -398,6 +413,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
     @Test
     public void canSetAttachments() {
+        final Paper p = newValidEntity();
         p.setAttachments(Arrays.asList(new PaperAttachment(), new PaperAttachment()));
         assertThat(p.getAttachments()).hasSize(2);
     }
@@ -406,6 +422,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void cannotModifyAttachmentsAfterSettig() {
         List<PaperAttachment> attachments = new ArrayList<>(
             Arrays.asList(new PaperAttachment(), new PaperAttachment()));
+        final Paper p = newValidEntity();
         p.setAttachments(attachments);
         attachments.add(new PaperAttachment());
         assertThat(p
@@ -417,6 +434,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void canUnsetAttachments_withNullParameter() {
         List<PaperAttachment> attachments = new ArrayList<>(
             Arrays.asList(new PaperAttachment(), new PaperAttachment()));
+        final Paper p = newValidEntity();
         p.setAttachments(attachments);
         assertThat(p.getAttachments()).hasSize(2);
         p.setAttachments(null);
@@ -427,6 +445,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     public void canUnsetAttachments_withEmptyListParameter() {
         List<PaperAttachment> attachments = new ArrayList<>(
             Arrays.asList(new PaperAttachment(), new PaperAttachment()));
+        final Paper p = newValidEntity();
         p.setAttachments(attachments);
         assertThat(p.getAttachments()).hasSize(2);
         p.setAttachments(new ArrayList<>());
@@ -438,14 +457,14 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     // Note: Did not get this to run with equalsverifier due to 'Abstract
     // delegation: Paper's hashCode method delegates to an abstract method' on codes
     public void equalityAndHashCode() {
-        Paper p1 = new Paper();
+        Paper p1 = newValidEntity();
         p1.setId(1L);
 
         assertThat(p1.equals(p1)).isTrue();
         assertThat(p1.equals(null)).isFalse();
         assertThat(p1.equals(Integer.valueOf(1))).isFalse();
 
-        Paper p2 = new Paper();
+        Paper p2 = newValidEntity();
         p2.setId(1L);
         assertThat(p1.equals(p2)).isTrue();
         assertThat(p1.hashCode()).isEqualTo(p2.hashCode());

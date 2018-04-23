@@ -12,7 +12,8 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     private static final String DESC                                          = "this is cc1";
 
     @Override
-    protected void localSetUp() {
+    protected CodeClass newValidEntity() {
+        return new CodeClass(1, "foo", "bar");
     }
 
     @Test
