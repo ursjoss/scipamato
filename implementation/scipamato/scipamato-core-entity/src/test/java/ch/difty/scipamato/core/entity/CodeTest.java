@@ -35,6 +35,11 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
         return "Code[code=1A,name=code1,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T08:01:33.821,lastModified=2017-02-02T08:01:33.821,version=3]";
     }
 
+    @Override
+    protected String getDisplayValue() {
+        return "code1 (1A)";
+    }
+
     @Test
     public void constructing_withAllValues_populatesCodeClass() {
         Code c1 = new Code("C1", "c1", null, false, 10, "cc10", CODECLASS10, 2);
@@ -155,12 +160,6 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
         assertThat(c.equals(c)).isTrue();
         assertThat(c.equals(null)).isFalse();
         assertThat(c.equals("")).isFalse();
-    }
-
-    @Test
-    public void displayValue() {
-        Code c = newValidEntity();
-        assertThat(c.getDisplayValue()).isEqualTo("code1 (1A)");
     }
 
     private void assertInequality(Code c1, Code c2) {

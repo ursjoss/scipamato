@@ -11,9 +11,8 @@ import org.junit.Test;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
-import ch.difty.scipamato.common.entity.ScipamatoEntity;
 
-public abstract class Jsr303ValidatedEntityTest<T extends ScipamatoEntity> {
+public abstract class Jsr303ValidatedEntityTest<T extends CoreEntity> {
 
     private LocalValidatorFactoryBean   validatorFactoryBean;
     private Set<ConstraintViolation<T>> violations;
@@ -95,4 +94,15 @@ public abstract class Jsr303ValidatedEntityTest<T extends ScipamatoEntity> {
      * @return toString value of the valid entity
      */
     protected abstract String getToString();
+
+    @Test
+    public void displayValue_isEqualTo() {
+        final T entity = newValidEntity();
+        assertThat(entity.getDisplayValue()).isEqualTo(getDisplayValue());
+    }
+
+    /**
+     * @return the display value of the entity
+     */
+    protected abstract String getDisplayValue();
 }

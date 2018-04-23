@@ -21,6 +21,11 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
         return "CodeClass[id=1]";
     }
 
+    @Override
+    protected String getDisplayValue() {
+        return newValidEntity().getName();
+    }
+
     @Test
     public void validatingCodeClass_beingValid_succeeds() {
         verifySuccessfulValidation(new CodeClass(1, "foo", "bar"));
@@ -88,12 +93,6 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
         assertThat(cc1.equals(cc1)).isTrue();
         assertThat(cc1.equals(null)).isFalse();
         assertThat(cc1.equals("")).isFalse();
-    }
-
-    @Test
-    public void displayValue() {
-        CodeClass cc1 = new CodeClass(1, "cc1", DESC);
-        assertThat(cc1.getDisplayValue()).isEqualTo("cc1");
     }
 
     @Test

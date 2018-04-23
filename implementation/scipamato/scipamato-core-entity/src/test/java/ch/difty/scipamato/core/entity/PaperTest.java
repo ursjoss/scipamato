@@ -59,6 +59,11 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
                + ",mainCodeOfCodeclass1=<null>,attachments=[],codes=[],id=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111,version=10]";
     }
 
+    @Override
+    protected String getDisplayValue() {
+        return "Turner MC (2016): Title.";
+    }
+
     @Test
     public void validatingPaper_withMultipleAuthorsWithFirstname_withPeriod_succeeds() {
         final Paper p = newValidEntity();
@@ -358,12 +363,6 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(p.getCodesOf(CodeClassId.CC2)).isEmpty();
         assertThat(p.getCodesOf(CodeClassId.CC5)).containsExactly(c5A);
         assertThat(p.getMainCodeOfCodeclass1()).isEqualTo("1E");
-    }
-
-    @Test
-    public void displayValue() {
-        final Paper p = newValidEntity();
-        assertThat(p.getDisplayValue()).isEqualTo("Turner MC (2016): Title.");
     }
 
     @Test
