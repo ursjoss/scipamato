@@ -1,10 +1,16 @@
 package ch.difty.scipamato.core.entity;
 
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.CREATED;
+import static ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields.MODIFIED;
+import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR_ID;
+import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.apache.bval.jsr.ApacheValidationProvider;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +20,14 @@ import ch.difty.scipamato.common.entity.FieldEnumType;
 
 public abstract class Jsr303ValidatedEntityTest<T extends CoreEntity> {
 
+    private final Class<T> clazz;
+
     private LocalValidatorFactoryBean   validatorFactoryBean;
     private Set<ConstraintViolation<T>> violations;
+
+    protected Jsr303ValidatedEntityTest(final Class<T> clazz) {
+        this.clazz = clazz;
+    }
 
     @Before
     public final void setUp() {
@@ -105,4 +117,14 @@ public abstract class Jsr303ValidatedEntityTest<T extends CoreEntity> {
      * @return the display value of the entity
      */
     protected abstract String getDisplayValue();
+
+    @Test
+    public void verifyEquals() {
+        EqualsVerifier
+            .forClass(clazz)
+            .withRedefinedSuperclass()
+            .withIgnoredFields(CREATED.getName(), CREATOR_ID.getName(), MODIFIED.getName(), MODIFIER_ID.getName())
+            .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+            .verify();
+    }
 }

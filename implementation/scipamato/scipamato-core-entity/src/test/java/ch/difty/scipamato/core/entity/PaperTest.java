@@ -23,6 +23,10 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     private static final String VALID_DOI                     = "10.1093/aje/kwu275";
     private static final String NON_NULL_STRING               = "foo";
 
+    public PaperTest() {
+        super(Paper.class);
+    }
+
     @Override
     protected Paper newValidEntity() {
         final Paper p = new Paper();
@@ -475,4 +479,8 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(p1.hashCode()).isNotEqualTo(p2.hashCode());
     }
 
+    @Override
+    public void verifyEquals() {
+        // no-op - see comment on previous test equalityAndHashCode
+    }
 }

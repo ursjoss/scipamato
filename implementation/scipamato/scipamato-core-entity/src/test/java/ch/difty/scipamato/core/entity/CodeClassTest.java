@@ -11,6 +11,10 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
     private static final String JAVAX_VALIDATION_CONSTRAINTS_NOT_NULL_MESSAGE = "{javax.validation.constraints.NotNull.message}";
     private static final String DESC                                          = "this is cc1";
 
+    public CodeClassTest() {
+        super(CodeClass.class);
+    }
+
     @Override
     protected CodeClass newValidEntity() {
         return new CodeClass(1, "foo", "bar");
