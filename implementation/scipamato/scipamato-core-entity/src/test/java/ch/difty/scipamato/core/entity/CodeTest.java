@@ -7,14 +7,12 @@ import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR
 import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import javax.validation.ConstraintViolation;
 import java.time.LocalDateTime;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 
-import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.ScipamatoEntity.ScipamatoEntityFields;
 
 public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
@@ -31,23 +29,6 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
 
     @Override
     protected void localSetUp() {
-    }
-
-    private void validateAndAssertFailure(Code code, final FieldEnumType fieldType, final Object invalidValue,
-        final String msg) {
-        validate(code);
-
-        assertThat(getViolations())
-            .isNotEmpty()
-            .hasSize(1);
-        ConstraintViolation<Code> violation = getViolations()
-            .iterator()
-            .next();
-        assertThat(violation.getMessageTemplate()).isEqualTo(msg);
-        assertThat(violation.getInvalidValue()).isEqualTo(invalidValue);
-        assertThat(violation
-            .getPropertyPath()
-            .toString()).isEqualTo(fieldType.getName());
     }
 
     @Test
