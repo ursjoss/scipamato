@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.persistence.user;
 
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -80,16 +79,6 @@ public class JooqUserRepoTest extends
     @Override
     protected UserRecordMapper getMapper() {
         return mapperMock;
-    }
-
-    @Override
-    protected Class<User> getEntityClass() {
-        return User.class;
-    }
-
-    @Override
-    protected Class<ScipamatoUserRecord> getRecordClass() {
-        return ScipamatoUserRecord.class;
     }
 
     @Override
@@ -176,8 +165,4 @@ public class JooqUserRepoTest extends
                 null), "userRoleRepo");
     }
 
-    @Test
-    public void gettingRecordClass() {
-        assertThat(repo.getRecordClass()).isEqualTo(getRecordClass());
-    }
 }

@@ -70,16 +70,6 @@ public class JooqSearchOrderRepo extends
     }
 
     @Override
-    protected Class<? extends SearchOrder> getEntityClass() {
-        return SearchOrder.class;
-    }
-
-    @Override
-    protected Class<? extends SearchOrderRecord> getRecordClass() {
-        return SearchOrderRecord.class;
-    }
-
-    @Override
     protected ch.difty.scipamato.core.db.tables.SearchOrder getTable() {
         return SEARCH_ORDER;
     }
@@ -160,7 +150,7 @@ public class JooqSearchOrderRepo extends
             .collect(Collectors.groupingBy(SearchTerm::getSearchConditionId));
     }
 
-    protected List<SearchTerm> fetchSearchTermsForSearchConditionWithId(final long searchConditionId) {
+    private List<SearchTerm> fetchSearchTermsForSearchConditionWithId(final long searchConditionId) {
         return getDsl()
             .select(SEARCH_TERM.ID.as("id"), SEARCH_TERM.SEARCH_TERM_TYPE.as("stt"),
                 SEARCH_TERM.SEARCH_CONDITION_ID.as("scid"), SEARCH_TERM.FIELD_NAME.as("fn"),
@@ -174,11 +164,9 @@ public class JooqSearchOrderRepo extends
     }
 
     private void fillSearchTermsInto(SearchCondition searchCondition, Map<Long, List<SearchTerm>> map) {
-        for (final Entry<Long, List<SearchTerm>> entry : map.entrySet()) {
-            for (final SearchTerm st : entry.getValue()) {
+        for (final Entry<Long, List<SearchTerm>> entry : map.entrySet())
+            for (final SearchTerm st : entry.getValue())
                 searchCondition.addSearchTerm(st);
-            }
-        }
     }
 
     protected SearchCondition fetchSearchConditionWithId(final Long scId) {
@@ -256,11 +244,10 @@ public class JooqSearchOrderRepo extends
         final Long searchOrderId = searchOrder.getId();
         for (final SearchCondition sc : searchOrder.getSearchConditions()) {
             Long searchConditionId = sc.getSearchConditionId();
-            if (searchConditionId == null) {
+            if (searchConditionId == null)
                 addSearchCondition(sc, searchOrderId, languageCode);
-            } else {
+            else
                 updateSearchCondition(sc, searchOrderId, languageCode);
-            }
         }
     }
 
@@ -296,9 +283,8 @@ public class JooqSearchOrderRepo extends
                 .equal(searchOrder.getId())
                 .and(SEARCH_CONDITION.SEARCH_CONDITION_ID.notIn(conditionIds)))
             .execute();
-        for (final SearchCondition sc : searchOrder.getSearchConditions()) {
+        for (final SearchCondition sc : searchOrder.getSearchConditions())
             removeObsoleteSearchTerms(sc, sc.getSearchConditionId());
-        }
     }
 
     private void storeExcludedIdsOf(SearchOrder searchOrder) {

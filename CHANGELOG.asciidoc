@@ -64,6 +64,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Fixed
 
+- JooqReadOnlyRepo implementations use the record to entity mappers also for the find methods
+
 .Security
 
 

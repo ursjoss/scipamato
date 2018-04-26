@@ -117,11 +117,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
 
     protected abstract M getMapper();
 
-    protected abstract Class<T> getEntityClass();
-
     protected abstract TI getTable();
-
-    protected abstract Class<R> getRecordClass();
 
     protected abstract TableField<R, ID> getTableId();
 

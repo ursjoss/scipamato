@@ -76,16 +76,6 @@ public class JooqPaperRepo extends
     }
 
     @Override
-    protected Class<? extends Paper> getEntityClass() {
-        return Paper.class;
-    }
-
-    @Override
-    protected Class<? extends PaperRecord> getRecordClass() {
-        return PaperRecord.class;
-    }
-
-    @Override
     protected ch.difty.scipamato.core.db.tables.Paper getTable() {
         return PAPER;
     }
@@ -185,9 +175,8 @@ public class JooqPaperRepo extends
             PAPER_CODE.PAPER_ID, PAPER_CODE.CODE, PAPER_CODE.CREATED_BY, PAPER_CODE.LAST_MODIFIED_BY);
         final Long paperId = paper.getId();
         final Integer userId = getUserId();
-        for (final Code c : paper.getCodes()) {
+        for (final Code c : paper.getCodes())
             step = step.values(paperId, c.getCode(), userId, userId);
-        }
         step
             .onDuplicateKeyIgnore()
             .execute();
@@ -213,7 +202,7 @@ public class JooqPaperRepo extends
         return getDsl()
             .selectFrom(PAPER)
             .where(PAPER.ID.in(ids))
-            .fetchInto(Paper.class);
+            .fetch(getMapper());
     }
 
     @Override
@@ -255,7 +244,7 @@ public class JooqPaperRepo extends
             final List<Paper> papers = getDsl()
                 .selectFrom(PAPER)
                 .where(PAPER.PM_ID.in(pmIds))
-                .fetchInto(Paper.class);
+                .fetch(getMapper());
             enrichAssociatedEntitiesOfAll(papers, languageCode);
             return papers;
         }
@@ -283,7 +272,7 @@ public class JooqPaperRepo extends
             final List<Paper> papers = getDsl()
                 .selectFrom(PAPER)
                 .where(PAPER.NUMBER.in(numbers))
-                .fetchInto(Paper.class);
+                .fetch(getMapper());
             enrichAssociatedEntitiesOfAll(papers, languageCode);
             return papers;
         }

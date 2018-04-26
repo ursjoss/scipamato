@@ -59,16 +59,6 @@ public class JooqUserRepo extends
     }
 
     @Override
-    protected Class<? extends User> getEntityClass() {
-        return User.class;
-    }
-
-    @Override
-    protected Class<? extends ScipamatoUserRecord> getRecordClass() {
-        return ScipamatoUserRecord.class;
-    }
-
-    @Override
     protected ch.difty.scipamato.core.db.tables.ScipamatoUser getTable() {
         return SCIPAMATO_USER;
     }
@@ -97,9 +87,8 @@ public class JooqUserRepo extends
     protected void enrichAssociatedEntitiesOf(final User entity, final String languageCode) {
         if (entity != null) {
             final List<Role> roles = userRoleRepo.findRolesForUser(entity.getId());
-            if (CollectionUtils.isNotEmpty(roles)) {
+            if (CollectionUtils.isNotEmpty(roles))
                 entity.setRoles(roles);
-            }
         }
     }
 
@@ -134,7 +123,7 @@ public class JooqUserRepo extends
         final List<User> users = getDsl()
             .selectFrom(SCIPAMATO_USER)
             .where(SCIPAMATO_USER.USER_NAME.eq(userName))
-            .fetchInto(User.class);
+            .fetch(getMapper());
         if (users.isEmpty()) {
             return null;
         } else {

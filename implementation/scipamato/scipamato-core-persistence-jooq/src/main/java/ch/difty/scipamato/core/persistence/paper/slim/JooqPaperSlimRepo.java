@@ -37,16 +37,6 @@ public class JooqPaperSlimRepo extends
     }
 
     @Override
-    protected Class<? extends PaperSlim> getEntityClass() {
-        return PaperSlim.class;
-    }
-
-    @Override
-    protected Class<? extends PaperRecord> getRecordClass() {
-        return PaperRecord.class;
-    }
-
-    @Override
     protected ch.difty.scipamato.core.db.tables.Paper getTable() {
         return PAPER;
     }
