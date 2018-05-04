@@ -79,7 +79,7 @@
 
         <lombok.version>1.16.20</lombok.version>
 
-        <mockito.version>2.15.0</mockito.version>
+        <mockito.version>2.18.3</mockito.version>
         <assertj.version>3.9.1</assertj.version>
 
         <!-- Web Specific versions - kept here to not maintain them in scipamato-common-wicket, scipamato-core-web and scipamato-public-web 
