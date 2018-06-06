@@ -164,7 +164,8 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
         }
     }
 
-    protected void queueResponsePageButton(final String id, SerializableSupplier<AbstractPage<?>> responsePage) {
+    protected BootstrapAjaxButton queueResponsePageButton(final String id,
+        SerializableSupplier<AbstractPage<?>> responsePage) {
         BootstrapAjaxButton newButton = new BootstrapAjaxButton(id,
             new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null), Type.Default) {
             private static final long serialVersionUID = 1L;
@@ -174,8 +175,30 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
                 super.onSubmit(target, form);
                 setResponsePage(responsePage.get());
             }
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setEnabled(AbstractPage.this.setResponsePageButtonEnabled());
+            }
         };
         queue(newButton);
+        return newButton;
+    }
+
+    /**
+     * Controls the enabled status of the response page button. Override if needed.
+     *
+     * @return true if response page button shall be enabled (default). false otherwise.
+     */
+    protected boolean setResponsePageButtonEnabled() {
+        return true;
+    }
+
+    /**
+     * Override if you need to apply some logic to the onConfigure method of the responsePageButton.
+     */
+    protected void onConfigureResponsePageButton() {
     }
 
     protected void queuePanelHeadingFor(String id) {

@@ -11,11 +11,14 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Size;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeIconType;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.PageReference;
@@ -42,16 +45,19 @@ import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
+import ch.difty.scipamato.core.NewsletterAware;
 import ch.difty.scipamato.core.entity.*;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.web.common.BasePanel;
 import ch.difty.scipamato.core.web.common.SelfUpdateEvent;
 import ch.difty.scipamato.core.web.model.CodeClassModel;
 import ch.difty.scipamato.core.web.model.CodeModel;
+import ch.difty.scipamato.core.web.model.NewsletterTopicModel;
 import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource;
 
-public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
+public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> extends BasePanel<T> {
 
     private static final long serialVersionUID = 1L;
 
@@ -71,6 +77,8 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
     protected TextArea<String>                   originalAbstract;
     private   BootstrapAjaxLink<Void>            pubmedRetrieval;
     private   DataTable<PaperAttachment, String> attachments;
+
+    private final NewsletterTopicModel newsletterTopicChoice = new NewsletterTopicModel(getLocalization());
 
     private final PageReference callingPage;
 
@@ -225,6 +233,54 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         form.addOrReplace(summaryLink);
         summaryShortLink = makeSummaryShortLink("summaryShort");
         form.addOrReplace(summaryShortLink);
+
+        BootstrapAjaxLink<Void> addRemoveNewsletter = new BootstrapAjaxLink<Void>("modAssociation",
+            Buttons.Type.Primary) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onInitialize() {
+                super.onInitialize();
+                add(new ButtonBehavior()
+                    .setType(Buttons.Type.Info)
+                    .setSize(Size.Large));
+            }
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                modifyNewsletterAssociation(target);
+            }
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setVisible(isEditMode() && (!isAssociatedWithNewsletter() || isAssociatedWithWipNewsletter()));
+                add(new AttributeModifier(TITLE_ATTR, getTitleModel()));
+                setIconType(getIconType());
+            }
+
+            private StringResourceModel getTitleModel() {
+                String key;
+                if (!isAssociatedWithNewsletter())
+                    key = "modNewsletterAssociation-add.label";
+                else if (isAssociatedWithWipNewsletter())
+                    key = "modNewsletterAssociation-del.label";
+                else
+                    key = "";
+                return new StringResourceModel(key, this, null);
+            }
+
+            private IconType getIconType() {
+                if (!isAssociatedWithNewsletter())
+                    return FontAwesomeIconType.plus_square;
+                else if (isAssociatedWithNewsletter())
+                    return FontAwesomeIconType.envelope_open_o;
+                else
+                    return FontAwesomeIconType.envelope_o;
+            }
+        };
+        addRemoveNewsletter.setOutputMarkupPlaceholderTag(true);
+        queue(addRemoveNewsletter);
     }
 
     private OnChangeAjaxBehavior newPmIdChangeBehavior() {
@@ -287,6 +343,14 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             @Override
             public Panel getPanel(String panelId) {
                 return new TabPanel6(panelId, form.getModel());
+            }
+        });
+        tabs.add(new AbstractTab(new StringResourceModel("tab7" + LABEL_RESOURCE_TAG, this, null)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Panel getPanel(String panelId) {
+                return new TabPanel7(panelId, form.getModel());
             }
         });
         queue(new ClientSideBootstrapTabbedPanel<>(tabId, tabs));
@@ -532,9 +596,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> tab1Form = new Form<>("tab1Form");
-
-            queue(tab1Form);
+            queue(new Form<T>("tab1Form"));
 
             queueTo(GOALS, new PropertyValidator<String>());
             queueTo(POPULATION);
@@ -565,8 +627,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> tab2Form = new Form<>("tab2Form");
-            queue(tab2Form);
+            queue(new Form<T>("tab2Form"));
 
             queueTo(RESULT);
             queueTo(COMMENT);
@@ -689,8 +750,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> tab4Form = new Form<>("tab4Form");
-            queue(tab4Form);
+            queue(new Form<T>("tab4Form"));
 
             queueNewFieldTo(METHOD_STUDY_DESIGN);
             queueNewFieldTo(METHOD_OUTCOME);
@@ -721,8 +781,7 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> tab5Form = new Form<>("tab5Form");
-            queue(tab5Form);
+            queue(new Form<T>("tab5Form"));
 
             originalAbstract = queueTo(ORIGINAL_ABSTRACT);
         }
@@ -751,6 +810,71 @@ public abstract class PaperPanel<T extends CodeBoxAware> extends BasePanel<T> {
             return tab6Form;
         }
     }
+
+    private class TabPanel7 extends AbstractTabPanel {
+        private static final long serialVersionUID = 1L;
+
+        TabPanel7(String id, IModel<T> model) {
+            super(id, model);
+        }
+
+        @Override
+        protected void onInitialize() {
+            super.onInitialize();
+
+            queue(new Form<>("tab7Form"));
+            queueTo(NEWSLETTER_HEAD_LINE);
+            makeAndQueuePublicationStatusSelectBox("newsletterTopic");
+        }
+
+        private void makeAndQueuePublicationStatusSelectBox(final String id) {
+            final ChainingModel<NewsletterTopic> model = new ChainingModel<NewsletterTopic>(getModel()) {
+                private static final long serialVersionUID = 1L;
+
+                private final List<NewsletterTopic> topics = newsletterTopicChoice.load();
+
+                @Override
+                public NewsletterTopic getObject() {
+                    final Integer topicId = ((IModel<NewsletterAware>) getTarget())
+                        .getObject()
+                        .getNewsletterTopicId();
+                    if (topicId == null)
+                        return null;
+                    return topics
+                        .stream()
+                        .filter(nt -> topicId.equals(nt.getId()))
+                        .findFirst()
+                        .orElse(null);
+                }
+
+                @Override
+                public void setObject(final NewsletterTopic topic) {
+                    ((IModel<NewsletterAware>) getTarget())
+                        .getObject()
+                        .setNewsletterTopic(topic);
+                }
+            };
+            final IChoiceRenderer<NewsletterTopic> choiceRenderer = new ChoiceRenderer<NewsletterTopic>(
+                NewsletterTopic.NewsletterTopicFields.TITLE.getName(),
+                NewsletterTopic.NewsletterTopicFields.ID.getName());
+
+            final StringResourceModel noneSelectedModel = new StringResourceModel(id + ".noneSelected", this, null);
+            final BootstrapSelectConfig config = new BootstrapSelectConfig()
+                .withNoneSelectedText(noneSelectedModel.getObject())
+                .withLiveSearch(true);
+            final BootstrapSelect<NewsletterTopic> topic = new BootstrapSelect<NewsletterTopic>(id, model,
+                newsletterTopicChoice, choiceRenderer).with(config);
+            topic.setNullValid(true);
+            queue(topic);
+            queue(new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null)));
+        }
+    }
+
+    protected abstract boolean isAssociatedWithNewsletter();
+
+    protected abstract boolean isAssociatedWithWipNewsletter();
+
+    protected abstract void modifyNewsletterAssociation(final AjaxRequestTarget target);
 
     protected abstract DataTable<PaperAttachment, String> newAttachmentTable(String id);
 

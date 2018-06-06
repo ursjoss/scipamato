@@ -14,10 +14,12 @@ import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
+import ch.difty.scipamato.core.NewsletterAware;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.CodeBox;
 import ch.difty.scipamato.core.entity.CodeBoxAware;
 import ch.difty.scipamato.core.entity.Paper;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 
 /**
  * The {@link SearchCondition} is an instance of {@link ScipamatoFilter} that
@@ -41,13 +43,15 @@ import ch.difty.scipamato.core.entity.Paper;
  *
  * @author u.joss
  */
-public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
+public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, NewsletterAware {
 
     private static final long serialVersionUID = 1L;
 
     private static final String JOIN_DELIMITER = " AND ";
 
-    private Long searchConditionId;
+    private Long    searchConditionId;
+    private String  newsletterHeadLine;
+    private Integer newsletterTopicId;
 
     private final StringSearchTerms  stringSearchTerms  = new StringSearchTerms();
     private final IntegerSearchTerms integerSearchTerms = new IntegerSearchTerms();
@@ -584,4 +588,26 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return codes.equals(other.codes);
     }
 
+    @Override
+    public Integer getNewsletterTopicId() {
+        return newsletterTopicId;
+    }
+
+    @Override
+    public void setNewsletterTopic(final NewsletterTopic newsletterTopic) {
+        if (newsletterTopic == null)
+            this.newsletterTopicId = null;
+        else
+            this.newsletterTopicId = newsletterTopic.getId();
+    }
+
+    @Override
+    public void setNewsletterHeadLine(final String newsletterHeadLine) {
+        this.newsletterHeadLine = newsletterHeadLine;
+    }
+
+    @Override
+    public String getNewsletterHeadLine() {
+        return newsletterHeadLine;
+    }
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<body>
+    <wicket:extend>
+        <div class="container-fluid">
+            <div class="row">
+                <form wicket:id="filterForm" role="form">
+                    <div class="col-md-4">
+                        <div wicket:id="issueLabel"></div>
+                        <input wicket:id="issue" class="form-control"></input>
+                    </div>
+                    <div class="col-md-2">
+                        <div wicket:id="publicationStatusLabel"></div>
+                        <select wicket:id="publicationStatus"/>
+                    </div>
+                    <div class="col-md-2" style="bottom: -20px;">
+                        <a wicket:id="newNewsletter">New Newsletter</a>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="dataview" wicket:id="results"></table>
+                </div>
+            </div>
+        </div>
+    </wicket:extend>
+</body>
+</html>

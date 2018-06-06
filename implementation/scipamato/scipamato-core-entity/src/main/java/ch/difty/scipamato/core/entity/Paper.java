@@ -5,15 +5,19 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Pattern.Flag;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Value;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.FieldEnumType;
+import ch.difty.scipamato.core.NewsletterAware;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 
 /**
  * The main entity of SciPaMaTo. A Paper is the representation of a scientific
@@ -31,7 +35,7 @@ import ch.difty.scipamato.common.entity.FieldEnumType;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
+public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, NewsletterAware {
 
     private static final long serialVersionUID = 1L;
 
@@ -141,6 +145,9 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
         ATTACHMENTS("attachments"),
         MAIN_CODE_OF_CODECLASS1("mainCodeOfCodeclass1"),
         CODES("codes"),
+        NEWSLETTER_Link("newsletterLink"),
+        NEWSLETTER_HEAD_LINE("newsletterHeadLine"),
+        NEWSLETTER_TOPIC_ID("newsletterTopicId"),
         CREATED("paper.created"),
         CREATED_BY("paper.created_by"),
         LAST_MOD("paper.last_modified"),
@@ -212,6 +219,8 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
     private String originalAbstract;
     private String mainCodeOfCodeclass1;
 
+    private NewsletterLink newsletterLink;
+
     // Note: Attachments are not persisted with the Paper in the repo
     private final List<PaperAttachment> attachments = new ArrayList<>();
 
@@ -260,6 +269,71 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware {
     @Override
     public String getDisplayValue() {
         return firstAuthor + " (" + publicationYear + "): " + title + ".";
+    }
+
+    @Value
+    public static class NewsletterLink implements Serializable {
+        private static final long serialVersionUID = 1L;
+
+        private Integer newsletterId;
+        private String  issue;
+        private Integer publicationStatusId;
+        private Integer topicId;
+        private String  topic;
+        private String  headLine;
+    }
+
+    @Override
+    public void setNewsletterTopic(final NewsletterTopic newsletterTopic) {
+        if (newsletterLink != null) {
+            final NewsletterLink nl = newsletterLink;
+            if (newsletterTopic == null)
+                setNewsletterLink(nl.getNewsletterId(), nl.getIssue(), nl.getPublicationStatusId(), null, null,
+                    nl.getHeadLine());
+            else
+                setNewsletterLink(nl.getNewsletterId(), nl.getIssue(), nl.getPublicationStatusId(),
+                    newsletterTopic.getId(), newsletterTopic.getTitle(), nl.getHeadLine());
+        }
+    }
+
+    @Override
+    public Integer getNewsletterTopicId() {
+        return newsletterLink != null ? newsletterLink.getTopicId() : null;
+    }
+
+    @Override
+    public void setNewsletterHeadLine(final String headLine) {
+        final NewsletterLink nl = newsletterLink;
+        if (nl != null)
+            setNewsletterLink(nl.getNewsletterId(), nl.getIssue(), nl.getPublicationStatusId(), nl.getTopicId(),
+                nl.getTopic(), headLine);
+    }
+
+    /**
+     * The application sets the entire link via repo method into the database. So we don't need to expose this method
+     * through the interface.
+     *
+     * @param newsletterId
+     *     the id of the Newsletter the paper is associated with
+     * @param issue
+     *     the issue of the newsletter the paper is associated with
+     * @param publicationStatusId
+     *     the publication status the newsletter is associated with
+     * @param topicId
+     *     the topic id of the paper newsletter association
+     * @param topic
+     *     the (localized) topic title of the paper newsletter association (functionally dependent on the topicId)
+     * @param headLine
+     *     the headline of the npaper newsletter association
+     */
+    public void setNewsletterLink(final Integer newsletterId, final String issue, final Integer publicationStatusId,
+        final Integer topicId, final String topic, final String headLine) {
+        this.newsletterLink = new NewsletterLink(newsletterId, issue, publicationStatusId, topicId, topic, headLine);
+    }
+
+    @Override
+    public String getNewsletterHeadLine() {
+        return newsletterLink != null ? newsletterLink.getHeadLine() : null;
     }
 
 }

@@ -13,6 +13,8 @@ import java.util.List;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
+import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
 
 public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
@@ -60,7 +62,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
                + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
                + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
                + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,comment=<null>,intern=<null>,originalAbstract=<null>"
-               + ",mainCodeOfCodeclass1=<null>,attachments=[],codes=[],id=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111,version=10]";
+               + ",mainCodeOfCodeclass1=<null>,newsletterLink=<null>,attachments=[],codes=[],id=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111,version=10]";
     }
 
     @Override
@@ -259,7 +261,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
                                            + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
                                            + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
                                            + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,comment=<null>,intern=<null>,originalAbstract=<null>"
-                                           + ",mainCodeOfCodeclass1=1D,attachments=[],codes=[codesOfClass1=[Code[code=1D,name=code 1D,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]]"
+                                           + ",mainCodeOfCodeclass1=1D,newsletterLink=<null>,attachments=[],codes=[codesOfClass1=[Code[code=1D,name=code 1D,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]]"
                                            + ",codesOfClass1=[Code[code=1E,name=code 1E,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]]"
                                            + ",codesOfClass5=[Code[code=5A,name=code 5A,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]]]"
                                            + ",id=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111,version=10]");
@@ -282,7 +284,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
                                            + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
                                            + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
                                            + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,comment=<null>,intern=<null>,originalAbstract=<null>"
-                                           + ",mainCodeOfCodeclass1=<null>,attachments=[PaperAttachment[paperId=1,name=p1,id=1], PaperAttachment[paperId=1,name=p2,id=2]"
+                                           + ",mainCodeOfCodeclass1=<null>,newsletterLink=<null>,attachments=[PaperAttachment[paperId=1,name=p1,id=1], PaperAttachment[paperId=1,name=p2,id=2]"
                                            + "],codes=[],id=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111,version=10]");
     }
 
@@ -482,5 +484,76 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Override
     public void verifyEquals() {
         // no-op - see comment on previous test equalityAndHashCode
+    }
+
+    @Test
+    public void canSetAndGetNewsletterLinkAsObject() {
+        Paper p = newValidEntity();
+        assertThat(p.getNewsletterLink()).isNull();
+
+        Paper.NewsletterLink nl = new Paper.NewsletterLink(1, "issue", 0, null, null, null);
+
+        p.setNewsletterLink(nl);
+
+        assertThat(p.getNewsletterLink()).isEqualTo(nl);
+    }
+
+    @Test
+    public void canSetAndGetNewsletterLinkAsFields() {
+        Paper p = newValidEntity();
+        assertThat(p.getNewsletterLink()).isNull();
+
+        p.setNewsletterLink(1, "issue", 0, null, null, null);
+
+        assertThat(p.getNewsletterLink()).isEqualTo(new Paper.NewsletterLink(1, "issue", 0, null, null, null));
+    }
+
+    @Test
+    public void settingNewsletterAssociation() {
+        Paper p = newValidEntity();
+        assertThat(p.getNewsletterLink()).isNull();
+
+        p.setNewsletterLink(
+            new Paper.NewsletterLink(1, "1806", PublicationStatus.WIP.getId(), 1, "mytopic", "headline"));
+
+        assertThat(p.getNewsletterLink()).isNotNull();
+        validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, 1, "mytopic", "headline");
+
+        p.setNewsletterHeadLine("otherHeadLine");
+        validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, 1, "mytopic", "otherHeadLine");
+
+        p.setNewsletterTopic(new NewsletterTopic(10, "someothertopic"));
+        validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, 10, "someothertopic",
+            "otherHeadLine");
+
+        p.setNewsletterTopic(null);
+        validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, null, null, "otherHeadLine");
+
+        p.setNewsletterHeadLine(null);
+        validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, null, null, null);
+    }
+
+    private void validateNewsletterLink(final Paper.NewsletterLink newsletterLink, final Integer newsletterId,
+        final String issue, final PublicationStatus status, final Integer topicId, final String topic,
+        final String headline) {
+        assertThat(newsletterLink.getNewsletterId()).isEqualTo(newsletterId);
+        assertThat(newsletterLink.getIssue()).isEqualTo(issue);
+        assertThat(newsletterLink.getPublicationStatusId()).isEqualTo(status.getId());
+        assertThat(newsletterLink.getTopicId()).isEqualTo(topicId);
+        assertThat(newsletterLink.getTopic()).isEqualTo(topic);
+        assertThat(newsletterLink.getHeadLine()).isEqualTo(headline);
+    }
+
+    @Test
+    public void settingNewsletterLinkFields_whileNewsletterLInkIsNull_doesNothing() {
+        Paper p = newValidEntity();
+        assertThat(p.getNewsletterLink()).isNull();
+
+        p.setNewsletterTopic(new NewsletterTopic(10, "someothertopic"));
+        p.setNewsletterHeadLine("foo");
+
+        assertThat(p.getNewsletterLink()).isNull();
+        assertThat(p.getNewsletterTopicId()).isNull();
+        assertThat(p.getNewsletterHeadLine()).isNull();
     }
 }

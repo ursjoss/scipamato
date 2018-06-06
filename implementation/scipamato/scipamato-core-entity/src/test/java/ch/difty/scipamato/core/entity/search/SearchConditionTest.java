@@ -14,6 +14,7 @@ import org.junit.Test;
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.core.entity.Code;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 
 public class SearchConditionTest {
 
@@ -1015,4 +1016,25 @@ public class SearchConditionTest {
         assertThat(sc2.getCodes()).isEmpty();
     }
 
+    @Test
+    public void settingAndResettingNewsletterHeadline() {
+        assertThat(sc1.getNewsletterHeadLine()).isNull();
+
+        sc1.setNewsletterHeadLine("foo");
+        assertThat(sc1.getNewsletterHeadLine()).isEqualTo("foo");
+
+        sc1.setNewsletterHeadLine(null);
+        assertThat(sc1.getNewsletterHeadLine()).isNull();
+    }
+
+    @Test
+    public void settingAndResettingNewsletterTopic() {
+        assertThat(sc1.getNewsletterTopicId()).isNull();
+
+        sc1.setNewsletterTopic(new NewsletterTopic(1, "tp1"));
+        assertThat(sc1.getNewsletterTopicId()).isEqualTo(1);
+
+        sc1.setNewsletterTopic(null);
+        assertThat(sc1.getNewsletterTopicId()).isNull();
+    }
 }

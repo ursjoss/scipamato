@@ -6,7 +6,7 @@ package ch.difty.scipamato.core.entity.newsletter;
  * @author Urs Joss
  */
 public enum PublicationStatus {
-    WIP(0, "work in progress"),
+    WIP(0, "in progress"),
     PUBLISHED(1, "published"),
     CANCELLED(-1, "cancelled");
 
@@ -34,6 +34,13 @@ public enum PublicationStatus {
             if (t.getId() == id)
                 return t;
         throw new IllegalArgumentException("id " + id + " is not supported");
+    }
+
+    /**
+     * Newsletters of only certain status are eligible for deletes or modifications.
+     */
+    public boolean isInProgress() {
+        return WIP == this;
     }
 
 }

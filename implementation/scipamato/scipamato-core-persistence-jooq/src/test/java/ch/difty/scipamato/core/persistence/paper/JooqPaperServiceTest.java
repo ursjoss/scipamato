@@ -14,10 +14,12 @@ import org.mockito.Mock;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
+import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.AbstractServiceTest;
 import ch.difty.scipamato.core.persistence.ServiceResult;
+import ch.difty.scipamato.core.persistence.newsletter.NewsletterRepository;
 import ch.difty.scipamato.core.pubmed.AbstractPubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.api.*;
@@ -30,15 +32,17 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     private JooqPaperService service;
 
     @Mock
-    private PaperRepository   repoMock;
+    private PaperRepository      repoMock;
     @Mock
-    private PaperFilter       filterMock;
+    private NewsletterRepository newsletterRepoMock;
     @Mock
-    private SearchOrder       searchOrderMock;
+    private PaperFilter          filterMock;
     @Mock
-    private PaginationContext paginationContextMock;
+    private SearchOrder          searchOrderMock;
     @Mock
-    private Paper             paperMock, paperMock2, paperMock3;
+    private PaginationContext    paginationContextMock;
+    @Mock
+    private Paper                paperMock, paperMock2, paperMock3;
     @Mock
     private PaperAttachment attachmentMock;
 
@@ -58,7 +62,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Override
     public void specificSetUp() {
-        service = new JooqPaperService(repoMock, userRepoMock);
+        service = new JooqPaperService(repoMock, newsletterRepoMock, userRepoMock);
 
         papers.add(paperMock);
         papers.add(paperMock);
@@ -436,5 +440,47 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         verify(paperMock3).setCreatedByName(null);
         verify(paperMock3).setCreatedByFullName(null);
         verify(paperMock3).setLastModifiedByName(null);
+    }
+
+    @Test
+    public void mergingPaperIntoNewsletter_withWipNewsletterPresent_delegatesToNewsletterRepo() {
+        final int newsletterId = 13;
+        final long paperId = 14;
+        final Integer topicId = 3;
+        final String langCode = "en";
+
+        Newsletter wipNewsletter = new Newsletter();
+        wipNewsletter.setId(newsletterId);
+
+        Paper.NewsletterLink nl = mock(Paper.NewsletterLink.class);
+        when(newsletterRepoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.of(wipNewsletter));
+        when(newsletterRepoMock.mergePaperIntoNewsletter(newsletterId, paperId, topicId, langCode)).thenReturn(
+            Optional.of(nl));
+        Optional<Paper.NewsletterLink> result = service.mergePaperIntoWipNewsletter(paperId, topicId, langCode);
+        assertThat(result).isPresent();
+        assertThat(result.get()).isEqualTo(nl);
+
+        verify(newsletterRepoMock).getNewsletterInStatusWorkInProgress();
+        verify(newsletterRepoMock).mergePaperIntoNewsletter(newsletterId, paperId, topicId, langCode);
+    }
+
+    @Test
+    public void mergingPaperIntoNewsletter_withNoWipNewsletterPresent_returns0() {
+        final long paperId = 14;
+        final Integer topicId = 3;
+        final String languageCode = "en";
+
+        when(newsletterRepoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.empty());
+        assertThat(service.mergePaperIntoWipNewsletter(paperId, topicId, languageCode)).isEqualTo(Optional.empty());
+        verify(newsletterRepoMock).getNewsletterInStatusWorkInProgress();
+    }
+
+    @Test
+    public void removingPaperFromNewsletter_delegatesToNewsletterRepo() {
+        final int newsletterId = 13;
+        final long paperId = 14;
+        when(newsletterRepoMock.removePaperFromNewsletter(newsletterId, paperId)).thenReturn(1);
+        assertThat(service.removePaperFromNewsletter(newsletterId, paperId)).isEqualTo(1);
+        verify(newsletterRepoMock).removePaperFromNewsletter(newsletterId, paperId);
     }
 }

@@ -18,6 +18,7 @@ public class PaperFilterTest {
         f.setSearchMask("searchMask");
         f.setPublicationYearFrom(2015);
         f.setPublicationYearUntil(2017);
+        f.setNewsletterId(2);
 
         assertThat(f.getNumber()).isEqualTo(1L);
         assertThat(f.getAuthorMask()).isEqualTo("authorMask");
@@ -25,9 +26,10 @@ public class PaperFilterTest {
         assertThat(f.getSearchMask()).isEqualTo("searchMask");
         assertThat(f.getPublicationYearFrom()).isEqualTo(2015);
         assertThat(f.getPublicationYearUntil()).isEqualTo(2017);
+        assertThat(f.getNewsletterId()).isEqualTo(2);
 
         assertThat(f.toString()).isEqualTo(
-            "PaperFilter(number=1, authorMask=authorMask, methodsMask=methodsMask, searchMask=searchMask, publicationYearFrom=2015, publicationYearUntil=2017)");
+            "PaperFilter(number=1, authorMask=authorMask, methodsMask=methodsMask, searchMask=searchMask, publicationYearFrom=2015, publicationYearUntil=2017, newsletterId=2)");
     }
 
     @Test
@@ -44,7 +46,7 @@ public class PaperFilterTest {
         assertThat(PaperFilter.PaperFilterFields.values())
             .extracting("name")
             .containsExactly("number", "authorMask", "methodsMask", "searchMask", "publicationYearFrom",
-                "publicationYearUntil");
+                "publicationYearUntil", "newsletterId");
     }
 
 }

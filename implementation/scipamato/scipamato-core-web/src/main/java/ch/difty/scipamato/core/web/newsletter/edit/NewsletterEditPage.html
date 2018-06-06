@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<body>
+    <wicket:extend>
+        <div class="container-fluid">
+            <form wicket:id="form">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div wicket:id="issueLabel"></div>
+                        <input wicket:id="issue" class="form-control"></input>
+                    </div>
+                    <div class="col-md-2">
+                        <div wicket:id="issueDateLegacyLabel"></div>
+                        <input wicket:id="issueDateLegacy" class="form-control"></input>
+                    </div>
+                    <div class="col-md-2">
+                        <div wicket:id="publicationStatusLabel"></div>
+                        <select wicket:id="publicationStatus"></select>
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <button type="submit" wicket:id="submit" class="btn btn-lg btn-primary"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div wicket:id="resultPanel"></div>
+            </div>
+        </div>
+    </wicket:extend>
+</body>
+</html>

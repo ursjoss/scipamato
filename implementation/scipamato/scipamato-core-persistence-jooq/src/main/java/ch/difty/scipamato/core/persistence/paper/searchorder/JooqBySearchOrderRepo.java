@@ -63,19 +63,19 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
         this.sortMapper = sortMapper;
     }
 
-    private DSLContext getDsl() {
+    protected DSLContext getDsl() {
         return dsl;
     }
 
-    private M getMapper() {
+    protected M getMapper() {
         return mapper;
     }
 
-    private JooqSortMapper<PaperRecord, T, ch.difty.scipamato.core.db.tables.Paper> getSortMapper() {
+    protected JooqSortMapper<PaperRecord, T, ch.difty.scipamato.core.db.tables.Paper> getSortMapper() {
         return sortMapper;
     }
 
-    private Class<? extends PaperRecord> getRecordClass() {
+    protected Class<? extends PaperRecord> getRecordClass() {
         return PaperRecord.class;
     }
 

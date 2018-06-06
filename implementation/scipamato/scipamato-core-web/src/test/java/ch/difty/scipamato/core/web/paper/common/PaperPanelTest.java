@@ -22,6 +22,7 @@ import org.junit.After;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
+import ch.difty.scipamato.core.NewsletterAware;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.CodeBoxAware;
 import ch.difty.scipamato.core.entity.CodeClass;
@@ -29,7 +30,7 @@ import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.PanelTest;
 
-public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPanel<T>> extends PanelTest<P> {
+public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P extends PaperPanel<T>> extends PanelTest<P> {
 
     private static final String LOCALE = "en_us";
 
@@ -222,12 +223,17 @@ public abstract class PaperPanelTest<T extends CodeBoxAware, P extends PaperPane
         bbb = bb + ":11:tab6Form";
         getTester().assertComponent(bbb, Form.class);
 
+        bbb = bb + ":13:tab7Form";
+        getTester().assertComponent(bbb, Form.class);
+
         bb = b + ":tabsContainer:tabs:";
         getTester().assertLabel(bb + "2:link:title", "Population, Goals, and Methods");
         getTester().assertLabel(bb + "4:link:title", "Results and Comments");
         getTester().assertLabel(bb + "6:link:title", "Codes and new Studies");
         getTester().assertLabel(bb + "8:link:title", "New Field Entry");
         getTester().assertLabel(bb + "10:link:title", "Original Abstract");
+        getTester().assertLabel(bb + "12:link:title", "Attachments");
+        getTester().assertLabel(bb + "14:link:title", "Newsletter");
 
         verifyCodeAndCodeClassCalls(1);
     }

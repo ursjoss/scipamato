@@ -119,9 +119,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName());
         getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName() + "Label");
 
-        // TODO how to assert the event was actually broadcast without issuing the test
-        // info message
-        getTester().assertInfoMessages("Sent SearchOrderChangeEvent");
+        // TODO how to assert the event was actually broadcast
     }
 
     @Test

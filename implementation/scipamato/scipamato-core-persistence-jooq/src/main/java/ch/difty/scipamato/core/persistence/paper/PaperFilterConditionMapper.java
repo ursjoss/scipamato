@@ -1,10 +1,12 @@
 package ch.difty.scipamato.core.persistence.paper;
 
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
+import static ch.difty.scipamato.core.db.tables.PaperNewsletter.PAPER_NEWSLETTER;
 
 import java.util.List;
 
 import org.jooq.Condition;
+import org.jooq.impl.DSL;
 
 import ch.difty.scipamato.common.persistence.AbstractFilterConditionMapper;
 import ch.difty.scipamato.common.persistence.FilterConditionMapper;
@@ -71,6 +73,14 @@ public class PaperFilterConditionMapper extends AbstractFilterConditionMapper<Pa
         if (filter.getPublicationYearUntil() != null) {
             conditions.add(PAPER.PUBLICATION_YEAR.le(filter.getPublicationYearUntil()));
         }
-    }
 
+        if (filter.getNewsletterId() != null) {
+            conditions.add(DSL.exists(DSL
+                .selectOne()
+                .from(PAPER_NEWSLETTER)
+                .where(PAPER_NEWSLETTER.PAPER_ID
+                    .eq(PAPER.ID)
+                    .and(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(filter.getNewsletterId())))));
+        }
+    }
 }

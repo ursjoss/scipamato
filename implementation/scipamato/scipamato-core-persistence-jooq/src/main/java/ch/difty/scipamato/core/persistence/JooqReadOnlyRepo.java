@@ -72,6 +72,10 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
         return mapper;
     }
 
+    protected GenericFilterConditionMapper<F> getFilterConditionMapper() {
+        return filterConditionMapper;
+    }
+
     protected JooqSortMapper<R, T, TI> getSortMapper() {
         return sortMapper;
     }

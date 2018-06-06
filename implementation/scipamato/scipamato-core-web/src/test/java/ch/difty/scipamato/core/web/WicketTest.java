@@ -27,8 +27,7 @@ import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.core.ScipamatoApplication;
-import ch.difty.scipamato.core.config.ApplicationCoreProperties;
-import ch.difty.scipamato.core.logic.parsing.AuthorParserFactory;
+import ch.difty.scipamato.core.persistence.NewsletterService;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.PaperSlimService;
 import ch.difty.scipamato.core.web.authentication.LoginPage;
@@ -56,12 +55,14 @@ public abstract class WicketTest {
     @MockBean
     private ItemNavigator<Long> itemNavigatorMock;
 
-    // The paper slim service and paper service are used in the home page
+    // The paper slim service, paper service and newsletter service are used in the home page
     // PaperListPage
     @MockBean
-    protected PaperSlimService paperSlimServiceMock;
+    protected PaperSlimService  paperSlimServiceMock;
     @MockBean
-    protected PaperService     paperServiceMock;
+    protected PaperService      paperServiceMock;
+    @MockBean
+    protected NewsletterService newsletterServiceMock;
 
     private WicketTester tester;
 

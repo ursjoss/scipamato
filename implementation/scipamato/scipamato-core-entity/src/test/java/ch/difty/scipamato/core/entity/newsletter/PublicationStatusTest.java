@@ -1,9 +1,6 @@
 package ch.difty.scipamato.core.entity.newsletter;
 
-import static ch.difty.scipamato.core.entity.newsletter.PublicationStatus.CANCELLED;
-import static ch.difty.scipamato.core.entity.newsletter.PublicationStatus.PUBLISHED;
-import static ch.difty.scipamato.core.entity.newsletter.PublicationStatus.WIP;
-import static ch.difty.scipamato.core.entity.newsletter.PublicationStatus.values;
+import static ch.difty.scipamato.core.entity.newsletter.PublicationStatus.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -32,8 +29,9 @@ public class PublicationStatusTest {
 
     @Test
     public void assertNames() {
-        assertThat(PublicationStatus.values()).extracting("name")
-            .containsExactly("work in progress", "published", "cancelled");
+        assertThat(PublicationStatus.values())
+            .extracting("name")
+            .containsExactly("in progress", "published", "cancelled");
     }
 
     @Test
@@ -42,16 +40,24 @@ public class PublicationStatusTest {
             PublicationStatus.byId(-2);
             fail("should have thrown");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("id -2 is not supported");
         }
         try {
             PublicationStatus.byId(2);
             fail("should have thrown");
         } catch (Exception ex) {
-            assertThat(ex).isInstanceOf(IllegalArgumentException.class)
+            assertThat(ex)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("id 2 is not supported");
         }
     }
 
+    @Test
+    public void assertIfIsInProgress() {
+        assertThat(PublicationStatus.WIP.isInProgress()).isTrue();
+        assertThat(PublicationStatus.PUBLISHED.isInProgress()).isFalse();
+        assertThat(PublicationStatus.CANCELLED.isInProgress()).isFalse();
+    }
 }

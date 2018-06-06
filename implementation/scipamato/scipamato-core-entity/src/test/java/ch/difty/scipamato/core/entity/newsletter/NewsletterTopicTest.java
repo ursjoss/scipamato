@@ -15,10 +15,7 @@ public class NewsletterTopicTest extends Jsr303ValidatedEntityTest<NewsletterTop
 
     @Override
     protected NewsletterTopic newValidEntity() {
-        final NewsletterTopic nt = new NewsletterTopic();
-        nt.setId(10);
-        nt.setTitle("sometopic");
-        return nt;
+        return new NewsletterTopic(10, "sometopic");
     }
 
     @Override

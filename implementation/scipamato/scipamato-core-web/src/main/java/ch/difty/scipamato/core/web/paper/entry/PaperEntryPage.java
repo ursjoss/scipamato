@@ -6,7 +6,9 @@ import static ch.difty.scipamato.core.web.CorePageParameters.SHOW_EXCLUDED;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.PageReference;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
@@ -23,6 +25,7 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.web.common.SelfUpdatingPage;
+import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
 
 /**
  * Page to add new papers or modify existing papers. The page implements the
@@ -180,7 +183,9 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
             @Override
             protected void onFormSubmit() {
+                log.info("Starting PaperEntryPage.onFormSubmit");
                 PaperEntryPage.this.doUpdate();
+                log.info("Finished PaperEntryPage.onFormSubmit");
             }
 
             @Override
@@ -188,6 +193,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
                 return new PaperEntryPage(Model.of(p), getCallingPage(), searchOrderId, showingExclusions);
             }
         };
+        contentPanel.setOutputMarkupId(true);
         queue(contentPanel);
 
         adaptFeedbackMessageCountBasedOnId();
@@ -224,7 +230,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
     }
 
     private long getNullSafeId() {
-        return getModelObject().getId() != null ? getModelObject().getId() : 0L;
+        return (getModelObject() != null && getModelObject().getId() != null) ? getModelObject().getId() : 0L;
     }
 
     /**
@@ -246,4 +252,17 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         return contentPanel.getForm();
     }
 
+    @Override
+    public void onEvent(final IEvent<?> event) {
+        if (event
+                .getPayload()
+                .getClass() == NewsletterChangeEvent.class) {
+            final AjaxRequestTarget target = ((NewsletterChangeEvent) event.getPayload()).getTarget();
+            if (target != null) {
+                target.add(contentPanel);
+                target.add(getFeedbackPanel());
+            }
+            event.dontBroadcastDeeper();
+        }
+    }
 }

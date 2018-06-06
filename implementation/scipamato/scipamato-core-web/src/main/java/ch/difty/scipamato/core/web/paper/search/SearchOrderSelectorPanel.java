@@ -106,7 +106,6 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
                 target.add(showExcluded);
                 target.add(showExcludedLabel);
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target));
-                info("Sent SearchOrderChangeEvent");
             }
         });
         searchOrder.add(new AttributeModifier("data-width", "fit"));

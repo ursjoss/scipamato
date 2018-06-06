@@ -23,6 +23,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.bean.validation.PropertyValidator;
+import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.GenericWebPage;
@@ -42,6 +43,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.web.Mode;
+import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
 import ch.difty.scipamato.common.web.component.table.column.ClickablePropertyColumn;
@@ -49,12 +51,14 @@ import ch.difty.scipamato.common.web.component.table.column.LinkIconColumn;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
+import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.logic.parsing.AuthorParser;
 import ch.difty.scipamato.core.logic.parsing.AuthorParserFactory;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.PubmedArticleService;
 import ch.difty.scipamato.core.web.common.BasePage;
+import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
 import ch.difty.scipamato.core.web.paper.PageFactory;
 import ch.difty.scipamato.core.web.paper.PaperAttachmentProvider;
 import ch.difty.scipamato.core.web.paper.common.PaperPanel;
@@ -89,6 +93,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @SpringBean
     private PageFactory pageFactory;
+
+    @SpringBean
+    private ScipamatoWebSessionFacade sessionFacade;
 
     EditablePaperPanel(String id, IModel<Paper> model, PageReference previousPage, Long searchOrderId,
         boolean showingExclusions) {
@@ -706,5 +713,34 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 target.add(getAttachments());
             }
         };
+    }
+
+    @Override
+    protected boolean isAssociatedWithNewsletter() {
+        return getModelObject().getNewsletterLink() != null;
+    }
+
+    @Override
+    protected boolean isAssociatedWithWipNewsletter() {
+        final Paper.NewsletterLink nl = getModelObject().getNewsletterLink();
+        return nl != null && PublicationStatus
+            .byId(nl.getPublicationStatusId())
+            .isInProgress();
+    }
+
+    @Override
+    protected void modifyNewsletterAssociation(final AjaxRequestTarget target) {
+        final Paper p = getModelObject();
+        if (!isAssociatedWithNewsletter()) {
+            final Optional<Paper.NewsletterLink> nlo = paperService.mergePaperIntoWipNewsletter(p.getId(), null,
+                sessionFacade.getLanguageCode());
+            if (nlo.isPresent())
+                getModelObject().setNewsletterLink(nlo.get());
+        } else if (isAssociatedWithWipNewsletter()) {
+            final Paper.NewsletterLink nl = p.getNewsletterLink();
+            paperService.removePaperFromNewsletter(nl.getNewsletterId(), p.getId());
+            getModelObject().setNewsletterLink(null);
+        }
+        send(getPage(), Broadcast.BREADTH, new NewsletterChangeEvent(target));
     }
 }
