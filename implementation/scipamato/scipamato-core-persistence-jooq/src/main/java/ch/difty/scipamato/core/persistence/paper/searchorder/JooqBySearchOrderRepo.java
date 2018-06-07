@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.persistence.paper.searchorder;
 
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static ch.difty.scipamato.core.db.tables.PaperCode.PAPER_CODE;
+import static ch.difty.scipamato.core.db.tables.PaperNewsletter.PAPER_NEWSLETTER;
 
 import java.util.Collection;
 import java.util.List;
@@ -127,6 +128,7 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
      * using AND operators
      */
     private Condition getConditionFromSingleSearchCondition(final SearchCondition searchCondition) {
+        // TODO evaluate the search conditions to find the newsletter stuff
         final ConditionalSupplier conditions = new ConditionalSupplier();
         for (final BooleanSearchTerm st : searchCondition.getBooleanSearchTerms())
             conditions.add(() -> booleanSearchTermEvaluator.evaluate(st));
@@ -140,6 +142,9 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
             .getCodes()
             .isEmpty()) {
             conditions.add(() -> codeConditions(searchCondition.getCodes()));
+        }
+        if (searchCondition.getNewsletterHeadline() != null || searchCondition.getNewsletterTopicId() != null) {
+            conditions.add(() -> newsletterConditions(searchCondition));
         }
         return conditions.combineWithAnd();
     }
@@ -159,6 +164,33 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
                 .eq(code.toLowerCase()))));
         }
         return codeConditions.combineWithAnd();
+    }
+
+    private Condition newsletterConditions(final SearchCondition sc) {
+        final ConditionalSupplier nlConditions = new ConditionalSupplier();
+        final SelectConditionStep<Record1<Integer>> step = DSL
+            .selectOne()
+            .from(PAPER_NEWSLETTER)
+            .where(PAPER_NEWSLETTER.PAPER_ID.eq(PAPER.ID));
+        final Condition topicCondition = PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.eq(sc.getNewsletterTopicId());
+        final LikeEscapeStep headlineCondition = PAPER_NEWSLETTER.HEADLINE.likeIgnoreCase(
+            "%" + sc.getNewsletterHeadline() + "%");
+        if (sc.getNewsletterTopicId() != null && sc.getNewsletterHeadline() != null) {
+            nlConditions.add(() -> {
+                return DSL.exists(step
+                    .and(topicCondition)
+                    .and(headlineCondition));
+            });
+        } else if (sc.getNewsletterTopicId() != null) {
+            nlConditions.add(() -> {
+                return DSL.exists(step.and(topicCondition));
+            });
+        } else {
+            nlConditions.add(() -> {
+                return DSL.exists(step.and(headlineCondition));
+            });
+        }
+        return nlConditions.combineWithAnd();
     }
 
     @Override

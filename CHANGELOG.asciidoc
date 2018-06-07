@@ -52,6 +52,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
+- 08/08 - Core: Add/Maintain Newsletter. Assign/remove papers to/from newsletter. Search by newsletter attributes
 
 .Changed
 
