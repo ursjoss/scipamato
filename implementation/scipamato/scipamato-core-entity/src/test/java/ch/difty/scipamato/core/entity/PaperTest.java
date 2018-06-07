@@ -519,17 +519,17 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(p.getNewsletterLink()).isNotNull();
         validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, 1, "mytopic", "headline");
 
-        p.setNewsletterHeadLine("otherHeadLine");
-        validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, 1, "mytopic", "otherHeadLine");
+        p.setNewsletterHeadline("otherHeadline");
+        validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, 1, "mytopic", "otherHeadline");
 
         p.setNewsletterTopic(new NewsletterTopic(10, "someothertopic"));
         validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, 10, "someothertopic",
-            "otherHeadLine");
+            "otherHeadline");
 
         p.setNewsletterTopic(null);
-        validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, null, null, "otherHeadLine");
+        validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, null, null, "otherHeadline");
 
-        p.setNewsletterHeadLine(null);
+        p.setNewsletterHeadline(null);
         validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, null, null, null);
     }
 
@@ -541,7 +541,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(newsletterLink.getPublicationStatusId()).isEqualTo(status.getId());
         assertThat(newsletterLink.getTopicId()).isEqualTo(topicId);
         assertThat(newsletterLink.getTopic()).isEqualTo(topic);
-        assertThat(newsletterLink.getHeadLine()).isEqualTo(headline);
+        assertThat(newsletterLink.getHeadline()).isEqualTo(headline);
     }
 
     @Test
@@ -550,10 +550,10 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(p.getNewsletterLink()).isNull();
 
         p.setNewsletterTopic(new NewsletterTopic(10, "someothertopic"));
-        p.setNewsletterHeadLine("foo");
+        p.setNewsletterHeadline("foo");
 
         assertThat(p.getNewsletterLink()).isNull();
         assertThat(p.getNewsletterTopicId()).isNull();
-        assertThat(p.getNewsletterHeadLine()).isNull();
+        assertThat(p.getNewsletterHeadline()).isNull();
     }
 }

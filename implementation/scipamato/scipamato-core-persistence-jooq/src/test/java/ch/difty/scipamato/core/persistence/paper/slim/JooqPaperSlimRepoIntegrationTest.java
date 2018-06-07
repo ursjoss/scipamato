@@ -93,6 +93,6 @@ public class JooqPaperSlimRepoIntegrationTest extends JooqTransactionalIntegrati
         assertThat(na).isNotNull();
         assertThat(na.getIssue()).isEqualTo("1802");
         assertThat(na.getPublicationStatusId()).isEqualTo(1);
-        assertThat(na.getHeadLine()).isEqualTo("some headline");
+        assertThat(na.getHeadline()).isEqualTo("some headline");
     }
 }

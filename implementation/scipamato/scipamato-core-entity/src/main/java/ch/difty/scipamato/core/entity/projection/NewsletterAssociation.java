@@ -20,13 +20,13 @@ public class NewsletterAssociation extends IdScipamatoEntity<Integer> {
     private String  issue;
     @NotNull
     private Integer publicationStatusId;
-    private String headLine;
+    private String  headline;
 
     public enum NewsletterSlimFields implements FieldEnumType {
         ID("id"),
         ISSUE("issue"),
         STATUS("publicationStatusId"),
-        HEAD_LINE("headLine");
+        HEADLINE("headline");
 
         private final String name;
 
@@ -40,11 +40,11 @@ public class NewsletterAssociation extends IdScipamatoEntity<Integer> {
         }
     }
 
-    public NewsletterAssociation(Integer id, String issue, Integer publicationStatusId, String headLine) {
+    public NewsletterAssociation(Integer id, String issue, Integer publicationStatusId, String headline) {
         setId(id);
         setIssue(issue);
         setPublicationStatusId(publicationStatusId);
-        setHeadLine(headLine);
+        setHeadline(headline);
     }
 
     @Override

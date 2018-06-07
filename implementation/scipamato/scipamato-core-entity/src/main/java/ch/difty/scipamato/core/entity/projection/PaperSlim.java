@@ -82,14 +82,16 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
      *     the database id of the newsletter
      * @param newsletterTitle
      *     the newsletter title - must not be null
-     * @param publicationtatusId
+     * @param publicationStatusId
      *     the newsletter publication status id
+     * @param headline
+     *     the headline of the newsletter association
      */
     public PaperSlim(Long id, Long number, String firstAuthor, Integer publicationYear, String title, int newsletterId,
-        String newsletterTitle, int publicationtatusId, String headLine) {
+        String newsletterTitle, int publicationStatusId, String headline) {
         this(id, number, firstAuthor, publicationYear, title,
             new NewsletterAssociation(newsletterId, AssertAs.notNull(newsletterTitle, "newsletterTitle"),
-                publicationtatusId, headLine));
+                publicationStatusId, headline));
     }
 
     /**
@@ -129,8 +131,8 @@ public class PaperSlim extends IdScipamatoEntity<Long> {
                + ", title=" + title + (newsletterAssociation != null ?
                                            ", newsletter=" + newsletterAssociation.getIssue() :
                                            "") + (
-                   newsletterAssociation != null && newsletterAssociation.getHeadLine() != null ?
-                       ", headLine=" + newsletterAssociation.getHeadLine() :
+                   newsletterAssociation != null && newsletterAssociation.getHeadline() != null ?
+                       ", headline=" + newsletterAssociation.getHeadline() :
                        "") + ")";
     }
 

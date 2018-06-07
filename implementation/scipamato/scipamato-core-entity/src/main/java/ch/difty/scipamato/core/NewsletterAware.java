@@ -22,14 +22,14 @@ public interface NewsletterAware {
     /**
      * Sets the newsletter headline
      *
-     * @param headLine
+     * @param headline
      *     the headline of the paper in the newsletter
      */
-    void setNewsletterHeadLine(String headLine);
+    void setNewsletterHeadline(String headline);
 
     /**
      * @return the headline of the paper in the newsletter
      */
-    String getNewsletterHeadLine();
+    String getNewsletterHeadline();
 
 }

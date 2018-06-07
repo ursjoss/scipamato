@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.core.entity.Code;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
@@ -228,6 +229,17 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
         SearchCondition modifiedCondition6 = repo.updateSearchCondition(savedCondition, searchOrderId, LC);
         assertSearchTermCount(1, 1, 1, 2, modifiedCondition6);
         assertThat(repo.findConditionIdsWithSearchTerms(searchOrderId)).hasSize(6);
+
+        // modify and verify newsletter fields (newsletterTopicId and newsletterHeadline)
+        assertThat(savedCondition.getNewsletterTopicId()).isNull();
+        savedCondition.setNewsletterTopic(new NewsletterTopic(1, "foo"));
+        SearchCondition modifiedCondition7 = repo.updateSearchCondition(savedCondition, searchOrderId, LC);
+        assertThat(modifiedCondition7.getNewsletterTopicId()).isEqualTo(1);
+
+        assertThat(savedCondition.getNewsletterHeadline()).isNull();
+        savedCondition.setNewsletterHeadline("some");
+        SearchCondition modifiedCondition8 = repo.updateSearchCondition(savedCondition, searchOrderId, LC);
+        assertThat(modifiedCondition8.getNewsletterHeadline()).isEqualTo("some");
 
         // remove the new search condition
         repo.deleteSearchConditionWithId(savedCondition.getSearchConditionId());

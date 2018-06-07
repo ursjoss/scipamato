@@ -823,7 +823,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             super.onInitialize();
 
             queue(new Form<>("tab7Form"));
-            queueTo(NEWSLETTER_HEAD_LINE);
+            queueTo(NEWSLETTER_HEADLINE);
             makeAndQueuePublicationStatusSelectBox("newsletterTopic");
         }
 

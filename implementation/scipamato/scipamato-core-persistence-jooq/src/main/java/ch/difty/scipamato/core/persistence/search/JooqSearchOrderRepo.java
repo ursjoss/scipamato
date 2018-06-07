@@ -170,6 +170,7 @@ public class JooqSearchOrderRepo extends
     }
 
     protected SearchCondition fetchSearchConditionWithId(final Long scId) {
+        // TODO headline nicht drin
         return getDsl()
             .selectFrom(SEARCH_CONDITION)
             .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(scId))
@@ -331,10 +332,11 @@ public class JooqSearchOrderRepo extends
         } else {
             final Integer userId = getUserId();
             final SearchConditionRecord searchConditionRecord = getDsl()
-                .insertInto(SEARCH_CONDITION, SEARCH_CONDITION.SEARCH_ORDER_ID, SEARCH_CONDITION.CREATED_TERM,
-                    SEARCH_CONDITION.MODIFIED_TERM, SEARCH_CONDITION.CREATED_BY, SEARCH_CONDITION.LAST_MODIFIED_BY)
-                .values(searchOrderId, searchCondition.getCreatedDisplayValue(),
-                    searchCondition.getModifiedDisplayValue(), userId, userId)
+                .insertInto(SEARCH_CONDITION, SEARCH_CONDITION.SEARCH_ORDER_ID, SEARCH_CONDITION.NEWSLETTER_TOPIC_ID,
+                    SEARCH_CONDITION.NEWSLETTER_HEADLINE, SEARCH_CONDITION.CREATED_TERM, SEARCH_CONDITION.MODIFIED_TERM,
+                    SEARCH_CONDITION.CREATED_BY, SEARCH_CONDITION.LAST_MODIFIED_BY)
+                .values(searchOrderId, searchCondition.getNewsletterTopicId(), searchCondition.getNewsletterHeadline(),
+                    searchCondition.getCreatedDisplayValue(), searchCondition.getModifiedDisplayValue(), userId, userId)
                 .returning()
                 .fetchOne();
             persistSearchTerms(searchCondition, searchConditionRecord.getSearchConditionId());
@@ -557,14 +559,19 @@ public class JooqSearchOrderRepo extends
         final Condition idMatches = SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(searchCondition.getSearchConditionId());
         getDsl()
             .update(SEARCH_CONDITION)
-            .set(row(SEARCH_CONDITION.SEARCH_ORDER_ID, SEARCH_CONDITION.CREATED_TERM, SEARCH_CONDITION.MODIFIED_TERM,
-                SEARCH_CONDITION.LAST_MODIFIED, SEARCH_CONDITION.LAST_MODIFIED_BY, SEARCH_CONDITION.VERSION),
-                row(searchOrderId, searchCondition.getCreatedDisplayValue(), searchCondition.getModifiedDisplayValue(),
-                    getTs(), getUserId(), getDsl()
-                                              .select(SEARCH_CONDITION.VERSION)
-                                              .from(SEARCH_CONDITION)
-                                              .where(idMatches)
-                                              .fetchOneInto(Integer.class) + 1))
+            .set(SEARCH_CONDITION.SEARCH_ORDER_ID, searchOrderId)
+            .set(SEARCH_CONDITION.NEWSLETTER_TOPIC_ID, searchCondition.getNewsletterTopicId())
+            .set(SEARCH_CONDITION.NEWSLETTER_HEADLINE, searchCondition.getNewsletterHeadline())
+            .set(SEARCH_CONDITION.CREATED_TERM, searchCondition.getCreatedDisplayValue())
+            .set(SEARCH_CONDITION.MODIFIED_TERM, searchCondition.getModifiedDisplayValue())
+            .set(SEARCH_CONDITION.LAST_MODIFIED, getTs())
+            .set(SEARCH_CONDITION.LAST_MODIFIED_BY, getUserId())
+            .set(SEARCH_CONDITION.VERSION, getDsl()
+                                               .select(SEARCH_CONDITION.VERSION)
+                                               .from(SEARCH_CONDITION)
+                                               .where(idMatches)
+                                               .fetchOneInto(Integer.class) + 1)
+
             .where(idMatches)
             .execute();
         persistSearchTerms(searchCondition, searchCondition.getSearchConditionId());

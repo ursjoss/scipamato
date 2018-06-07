@@ -238,10 +238,10 @@ public class JooqPaperRepo extends
                 .columns(PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.PAPER_ID,
                     PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, PAPER_NEWSLETTER.HEADLINE, PAPER_NEWSLETTER.CREATED,
                     PAPER_NEWSLETTER.CREATED_BY)
-                .values(nl.getNewsletterId(), paper.getId(), nl.getTopicId(), nl.getHeadLine(), getTs(), getUserId())
+                .values(nl.getNewsletterId(), paper.getId(), nl.getTopicId(), nl.getHeadline(), getTs(), getUserId())
                 .onDuplicateKeyUpdate()
                 .set(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, nl.getTopicId())
-                .set(PAPER_NEWSLETTER.HEADLINE, nl.getHeadLine())
+                .set(PAPER_NEWSLETTER.HEADLINE, nl.getHeadline())
                 .set(PAPER_NEWSLETTER.LAST_MODIFIED, getTs())
                 .set(PAPER_NEWSLETTER.LAST_MODIFIED_BY, getUserId())
                 .where(PAPER_NEWSLETTER.NEWSLETTER_ID

@@ -727,10 +727,35 @@ public class SearchConditionTest {
         assertThat(sc1.getDisplayValue()).isEqualTo("foobar AND 1F&5H");
     }
 
+    @Test
+    public void testDisplayValue_withNewsletterHeadlineOnly() {
+        sc1.setNewsletterHeadline("foo");
+        assertThat(sc1.getDisplayValue()).isEqualTo("headline=foo");
+    }
+
+    @Test
+    public void testDisplayValue_withNewsletterHeadlinePlusSomethingElse() {
+        sc1.setAuthors("foobar");
+        sc1.setNewsletterHeadline("foo");
+        assertThat(sc1.getDisplayValue()).isEqualTo("foobar AND headline=foo");
+    }
+
+    @Test
+    public void testDisplayValue_withNewsletterTopicnly() {
+        sc1.setNewsletterTopic(new NewsletterTopic(1, "t1"));
+        assertThat(sc1.getDisplayValue()).isEqualTo("topic=t1");
+    }
+
+    @Test
+    public void testDisplayValue_withNewsletterTopicPlusSomethingElse() {
+        sc1.setAuthors("foobar");
+        sc1.setNewsletterTopic(new NewsletterTopic(1, "t1"));
+        assertThat(sc1.getDisplayValue()).isEqualTo("foobar AND topic=t1");
+    }
+
     @SuppressWarnings("unlikely-arg-type")
     @Test
     public void equalsAndHash1_ofFieldSc() {
-        assertThat(sc1.hashCode()).isEqualTo(917087168);
         assertThat(sc1.equals(sc1)).isTrue();
         assertThat(sc1.equals(null)).isFalse();
         assertThat(sc1.equals("")).isFalse();
@@ -894,6 +919,24 @@ public class SearchConditionTest {
     }
 
     @Test
+    public void equalsAndHash11_withDifferentNewsletterTopics() {
+        SearchCondition f1 = new SearchCondition();
+        f1.setNewsletterTopic(new NewsletterTopic(1, "foo"));
+        SearchCondition f2 = new SearchCondition();
+        f2.setNewsletterTopic(new NewsletterTopic(2, "foo"));
+        assertInequality(f1, f2);
+    }
+
+    @Test
+    public void equalsAndHash11_withDifferentNewsletterHeadlines() {
+        SearchCondition f1 = new SearchCondition();
+        f1.setNewsletterHeadline("foo");
+        SearchCondition f2 = new SearchCondition();
+        f2.setNewsletterHeadline("bar");
+        assertInequality(f1, f2);
+    }
+
+    @Test
     public void newSearchCondition_hasEmptyRemovedKeys() {
         assertThat(new SearchCondition().getRemovedKeys()).isEmpty();
     }
@@ -927,7 +970,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void celaringRemovedKeys_removesAllPresent() {
+    public void claaringRemovedKeys_removesAllPresent() {
         sc1.setAuthors("foo");
         sc1.setAuthors(null);
         sc1.setPublicationYear("2014");
@@ -1018,13 +1061,13 @@ public class SearchConditionTest {
 
     @Test
     public void settingAndResettingNewsletterHeadline() {
-        assertThat(sc1.getNewsletterHeadLine()).isNull();
+        assertThat(sc1.getNewsletterHeadline()).isNull();
 
-        sc1.setNewsletterHeadLine("foo");
-        assertThat(sc1.getNewsletterHeadLine()).isEqualTo("foo");
+        sc1.setNewsletterHeadline("foo");
+        assertThat(sc1.getNewsletterHeadline()).isEqualTo("foo");
 
-        sc1.setNewsletterHeadLine(null);
-        assertThat(sc1.getNewsletterHeadLine()).isNull();
+        sc1.setNewsletterHeadline(null);
+        assertThat(sc1.getNewsletterHeadline()).isNull();
     }
 
     @Test

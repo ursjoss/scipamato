@@ -20,7 +20,7 @@ public class NewsletterAssociationTest {
         na.setId(1);
         na.setIssue("issue");
         na.setPublicationStatusId(2);
-        na.setHeadLine("hl");
+        na.setHeadline("hl");
     }
 
     @Test
@@ -28,7 +28,7 @@ public class NewsletterAssociationTest {
         assertThat(na.getId()).isEqualTo(1);
         assertThat(na.getIssue()).isEqualTo("issue");
         assertThat(na.getPublicationStatusId()).isEqualTo(2);
-        assertThat(na.getHeadLine()).isEqualTo("hl");
+        assertThat(na.getHeadline()).isEqualTo("hl");
     }
 
     @Test
@@ -38,7 +38,7 @@ public class NewsletterAssociationTest {
 
     @Test
     public void testingToString() {
-        assertThat(na.toString()).isEqualTo("NewsletterAssociation(issue=issue, publicationStatusId=2, headLine=hl)");
+        assertThat(na.toString()).isEqualTo("NewsletterAssociation(issue=issue, publicationStatusId=2, headline=hl)");
     }
 
     @Test

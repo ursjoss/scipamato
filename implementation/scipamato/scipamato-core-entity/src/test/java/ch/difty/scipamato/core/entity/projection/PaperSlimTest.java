@@ -35,7 +35,7 @@ public class PaperSlimTest {
         getting(null, null, null, null);
     }
 
-    private void getting(Integer nlId, String nlIssue, Integer nlStatus, String headLine) {
+    private void getting(Integer nlId, String nlIssue, Integer nlStatus, String headline) {
         assertThat(ps.getId()).isEqualTo(1L);
         assertThat(ps.getNumber()).isEqualTo(10L);
         assertThat(ps.getPublicationYear()).isEqualTo(2016);
@@ -64,7 +64,7 @@ public class PaperSlimTest {
     @Test
     public void testingToString() {
         assertThat(ps.toString()).isEqualTo(
-            "PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title, newsletter=nl, headLine=hl)");
+            "PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title, newsletter=nl, headline=hl)");
     }
 
     @Test
@@ -75,10 +75,10 @@ public class PaperSlimTest {
     }
 
     @Test
-    public void testingToString_withNoHeadLine() {
+    public void testingToString_withNoHeadline() {
         ps
             .getNewsletterAssociation()
-            .setHeadLine(null);
+            .setHeadline(null);
         assertThat(ps.toString()).isEqualTo(
             "PaperSlim(number=10, firstAuthor=firstAuthor, publicationYear=2016, title=title, newsletter=nl)");
     }
@@ -97,8 +97,8 @@ public class PaperSlimTest {
 
     @Test
     public void alternativeConstructor_withNewsletter() {
-        ps = new PaperSlim(1L, 10L, "firstAuthor", 2016, "title", new NewsletterAssociation(30, "t", 3, "headLine"));
-        getting(30, "t", 3, "headLine");
+        ps = new PaperSlim(1L, 10L, "firstAuthor", 2016, "title", new NewsletterAssociation(30, "t", 3, "headline"));
+        getting(30, "t", 3, "headline");
     }
 
     @Test

@@ -146,7 +146,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
         MAIN_CODE_OF_CODECLASS1("mainCodeOfCodeclass1"),
         CODES("codes"),
         NEWSLETTER_Link("newsletterLink"),
-        NEWSLETTER_HEAD_LINE("newsletterHeadLine"),
+        NEWSLETTER_HEADLINE("newsletterHeadline"),
         NEWSLETTER_TOPIC_ID("newsletterTopicId"),
         CREATED("paper.created"),
         CREATED_BY("paper.created_by"),
@@ -280,7 +280,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
         private Integer publicationStatusId;
         private Integer topicId;
         private String  topic;
-        private String  headLine;
+        private String  headline;
     }
 
     @Override
@@ -289,10 +289,10 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
             final NewsletterLink nl = newsletterLink;
             if (newsletterTopic == null)
                 setNewsletterLink(nl.getNewsletterId(), nl.getIssue(), nl.getPublicationStatusId(), null, null,
-                    nl.getHeadLine());
+                    nl.getHeadline());
             else
                 setNewsletterLink(nl.getNewsletterId(), nl.getIssue(), nl.getPublicationStatusId(),
-                    newsletterTopic.getId(), newsletterTopic.getTitle(), nl.getHeadLine());
+                    newsletterTopic.getId(), newsletterTopic.getTitle(), nl.getHeadline());
         }
     }
 
@@ -302,11 +302,11 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
     }
 
     @Override
-    public void setNewsletterHeadLine(final String headLine) {
+    public void setNewsletterHeadline(final String headline) {
         final NewsletterLink nl = newsletterLink;
         if (nl != null)
             setNewsletterLink(nl.getNewsletterId(), nl.getIssue(), nl.getPublicationStatusId(), nl.getTopicId(),
-                nl.getTopic(), headLine);
+                nl.getTopic(), headline);
     }
 
     /**
@@ -323,17 +323,17 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
      *     the topic id of the paper newsletter association
      * @param topic
      *     the (localized) topic title of the paper newsletter association (functionally dependent on the topicId)
-     * @param headLine
+     * @param headline
      *     the headline of the npaper newsletter association
      */
     public void setNewsletterLink(final Integer newsletterId, final String issue, final Integer publicationStatusId,
-        final Integer topicId, final String topic, final String headLine) {
-        this.newsletterLink = new NewsletterLink(newsletterId, issue, publicationStatusId, topicId, topic, headLine);
+        final Integer topicId, final String topic, final String headline) {
+        this.newsletterLink = new NewsletterLink(newsletterId, issue, publicationStatusId, topicId, topic, headline);
     }
 
     @Override
-    public String getNewsletterHeadLine() {
-        return newsletterLink != null ? newsletterLink.getHeadLine() : null;
+    public String getNewsletterHeadline() {
+        return newsletterLink != null ? newsletterLink.getHeadline() : null;
     }
 
 }

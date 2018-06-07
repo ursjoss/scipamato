@@ -602,7 +602,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     }
 
     private void assertNewsletterLink(final Paper paper, final String issue, final int statusId, final Integer topicId,
-        final String topic, final String headLine) {
+        final String topic, final String headline) {
         assertThat(paper
             .getNewsletterLink()
             .getIssue()).isEqualTo(issue);
@@ -617,6 +617,6 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
             .getTopic()).isEqualTo(topic);
         assertThat(paper
             .getNewsletterLink()
-            .getHeadLine()).isEqualTo(headLine);
+            .getHeadline()).isEqualTo(headline);
     }
 }
