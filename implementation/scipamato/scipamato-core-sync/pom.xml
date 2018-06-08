@@ -16,7 +16,7 @@
     <properties>
         <org.jooq.target.dir.core>target/generated-sources/jooq</org.jooq.target.dir.core>
         <org.jooq.target.dir.public>target/generated-sources/jooq/</org.jooq.target.dir.public>
-        <org.jooq.db-generator>org.jooq.util.postgres.PostgresDatabase</org.jooq.db-generator>
+        <org.jooq.db-generator>org.jooq.meta.postgres.PostgresDatabase</org.jooq.db-generator>
 
         <property-file>${basedir}/src/main/resources/application.properties</property-file>
     </properties>
