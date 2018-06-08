@@ -1,7 +1,5 @@
 package ch.difty.scipamato.core.persistence.newsletter;
 
-import java.util.Collections;
-
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.core.db.tables.records.NewsletterRecord;
