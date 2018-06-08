@@ -18,9 +18,6 @@ public class NewsletterTopic extends IdScipamatoEntity<Integer> {
         setTitle(title);
     }
 
-    @NotNull
-    private String title;
-
     public enum NewsletterTopicFields implements FieldEnumType {
         ID("id"),
         TITLE("title");
@@ -35,7 +32,11 @@ public class NewsletterTopic extends IdScipamatoEntity<Integer> {
         public String getName() {
             return name;
         }
+
     }
+
+    @NotNull
+    private String title;
 
     @Override
     public String getDisplayValue() {
