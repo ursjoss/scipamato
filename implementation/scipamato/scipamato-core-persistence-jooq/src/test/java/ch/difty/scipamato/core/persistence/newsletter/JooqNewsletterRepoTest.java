@@ -36,8 +36,6 @@ public class JooqNewsletterRepoTest extends
     private Newsletter             newsletterMock;
     @Mock
     private PaginationContext      pageableMock;
-    @Mock
-    private PaperSlimRecordMapper  paperSlimRecordMapperMock;
 
     @Override
     protected void testSpecificSetUp() {
@@ -55,8 +53,7 @@ public class JooqNewsletterRepoTest extends
     protected EntityRepository<Newsletter, Integer, NewsletterFilter> getRepo() {
         if (repo == null) {
             repo = new JooqNewsletterRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(),
-                paperSlimRecordMapperMock);
+                getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties());
         }
         return repo;
     }
@@ -65,8 +62,7 @@ public class JooqNewsletterRepoTest extends
     protected EntityRepository<Newsletter, Integer, NewsletterFilter> makeRepoFindingEntityById(
         final Newsletter entity) {
         return new JooqNewsletterRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-            getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties(),
-            paperSlimRecordMapperMock) {
+            getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
 
             @Override
             public Newsletter findById(Integer id, int version) {
