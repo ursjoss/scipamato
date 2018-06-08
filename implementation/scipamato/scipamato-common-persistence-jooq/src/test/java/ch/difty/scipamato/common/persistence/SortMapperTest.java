@@ -177,6 +177,8 @@ public class SortMapperTest {
         Field<?>[] parameters = new Field<?>[] { fieldMock };
         TableField<Record, String> tableFieldMock = mock(TableField.class);
 
+        when(name.qualified()).thenReturn(true);
+
         final TableImpl<Record> table = new TableImpl<Record>(name, schema, aliased, parameters) {
             private static final long serialVersionUID = 1L;
 

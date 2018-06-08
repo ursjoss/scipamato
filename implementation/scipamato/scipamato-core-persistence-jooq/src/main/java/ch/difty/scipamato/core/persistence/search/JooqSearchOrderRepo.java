@@ -9,7 +9,6 @@ import static ch.difty.scipamato.core.db.tables.SearchConditionCode.SEARCH_CONDI
 import static ch.difty.scipamato.core.db.tables.SearchExclusion.SEARCH_EXCLUSION;
 import static ch.difty.scipamato.core.db.tables.SearchOrder.SEARCH_ORDER;
 import static ch.difty.scipamato.core.db.tables.SearchTerm.SEARCH_TERM;
-import static org.jooq.impl.DSL.row;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -256,18 +255,19 @@ public class JooqSearchOrderRepo extends
         final Condition idMatches = SEARCH_TERM.ID.eq(searchTermId);
         getDsl()
             .update(SEARCH_TERM)
-            .set(row(SEARCH_TERM.SEARCH_CONDITION_ID, SEARCH_TERM.SEARCH_TERM_TYPE, SEARCH_TERM.FIELD_NAME,
-                SEARCH_TERM.RAW_VALUE, SEARCH_TERM.LAST_MODIFIED, SEARCH_TERM.LAST_MODIFIED_BY, SEARCH_TERM.VERSION),
-                row(searchConditionId, st
-                    .getSearchTermType()
-                    .getId(), st.getFieldName(), st.getRawSearchTerm(), getTs(), getUserId(), getDsl()
-                                                                                                  .select(
-                                                                                                      SEARCH_TERM.VERSION)
-                                                                                                  .from(SEARCH_TERM)
-                                                                                                  .where(idMatches)
-                                                                                                  .fetchOneInto(
-                                                                                                      Integer.class)
-                                                                                              + 1))
+            .set(SEARCH_TERM.SEARCH_CONDITION_ID, searchConditionId)
+            .set(SEARCH_TERM.SEARCH_TERM_TYPE, st
+                .getSearchTermType()
+                .getId())
+            .set(SEARCH_TERM.FIELD_NAME, st.getFieldName())
+            .set(SEARCH_TERM.RAW_VALUE, st.getRawSearchTerm())
+            .set(SEARCH_TERM.LAST_MODIFIED, getTs())
+            .set(SEARCH_TERM.LAST_MODIFIED_BY, getUserId())
+            .set(SEARCH_TERM.VERSION, getDsl()
+                                          .select(SEARCH_TERM.VERSION)
+                                          .from(SEARCH_TERM)
+                                          .where(idMatches)
+                                          .fetchOneInto(Integer.class) + 1)
             .where(idMatches)
             .execute();
     }

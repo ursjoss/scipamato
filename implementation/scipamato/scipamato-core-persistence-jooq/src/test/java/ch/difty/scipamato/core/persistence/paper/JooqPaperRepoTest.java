@@ -329,10 +329,10 @@ public class JooqPaperRepoTest extends
         when(selectWhereStepMock.where(getConditionMock())).thenReturn(selectConditionStepMock);
         SelectSeekStepN<PaperRecord> selectSeekStepNMock = mock(SelectSeekStepN.class);
         when(selectConditionStepMock.orderBy(sortFields)).thenReturn(selectSeekStepNMock);
-        SelectWithTiesStep<PaperRecord> selectWithTiesStepMock = mock(SelectWithTiesStep.class);
-        when(selectSeekStepNMock.limit(20)).thenReturn(selectWithTiesStepMock);
+        SelectLimitPercentStep<PaperRecord> selectLimitPercentStepMock = mock(SelectLimitPercentStep.class);
+        when(selectSeekStepNMock.limit(20)).thenReturn(selectLimitPercentStepMock);
         SelectForUpdateStep<PaperRecord> selectForUpdateStepMock = mock(SelectForUpdateStep.class);
-        when(selectWithTiesStepMock.offset(0)).thenReturn(selectForUpdateStepMock);
+        when(selectLimitPercentStepMock.offset(0)).thenReturn(selectForUpdateStepMock);
         // don't want to go into the enrichment test fixture, thus returning empty list
         when(selectForUpdateStepMock.fetch(getMapper())).thenReturn(Collections.emptyList());
 
@@ -349,7 +349,7 @@ public class JooqPaperRepoTest extends
         verify(selectWhereStepMock).where(getConditionMock());
         verify(selectConditionStepMock).orderBy(sortFields);
         verify(selectSeekStepNMock).limit(20);
-        verify(selectWithTiesStepMock).offset(0);
+        verify(selectLimitPercentStepMock).offset(0);
         verify(selectForUpdateStepMock).fetch(getMapper());
     }
 
@@ -373,10 +373,10 @@ public class JooqPaperRepoTest extends
         when(selectWhereStepMock.where(getConditionMock())).thenReturn(selectConditionStepMock);
         SelectSeekStepN<PaperRecord> selectSeekStepNMock = mock(SelectSeekStepN.class);
         when(selectConditionStepMock.orderBy(sortFields)).thenReturn(selectSeekStepNMock);
-        SelectWithTiesStep<PaperRecord> selectWithTiesStepMock = mock(SelectWithTiesStep.class);
-        when(selectSeekStepNMock.limit(20)).thenReturn(selectWithTiesStepMock);
+        SelectLimitPercentStep<PaperRecord> selectLimitPercentStepMock = mock(SelectLimitPercentStep.class);
+        when(selectSeekStepNMock.limit(20)).thenReturn(selectLimitPercentStepMock);
         SelectForUpdateStep<PaperRecord> selectForUpdateStepMock = mock(SelectForUpdateStep.class);
-        when(selectWithTiesStepMock.offset(0)).thenReturn(selectForUpdateStepMock);
+        when(selectLimitPercentStepMock.offset(0)).thenReturn(selectForUpdateStepMock);
         // don't want to go into the enrichment test fixture, thus returning empty list
         when(selectForUpdateStepMock.fetch(getMapper())).thenReturn(Collections.emptyList());
 
@@ -394,7 +394,7 @@ public class JooqPaperRepoTest extends
         verify(selectWhereStepMock).where(getConditionMock());
         verify(selectConditionStepMock).orderBy(sortFields);
         verify(selectSeekStepNMock).limit(20);
-        verify(selectWithTiesStepMock).offset(0);
+        verify(selectLimitPercentStepMock).offset(0);
         verify(selectForUpdateStepMock).fetch(getMapper());
     }
 
