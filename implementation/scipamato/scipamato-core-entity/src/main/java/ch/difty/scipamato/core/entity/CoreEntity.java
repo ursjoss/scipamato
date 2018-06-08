@@ -12,7 +12,8 @@ import ch.difty.scipamato.common.entity.ScipamatoEntity;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true, exclude = { "createdBy", "lastModifiedBy" })
+@EqualsAndHashCode(callSuper = true, exclude = { "createdBy", "createdByName", "createdByFullName", "lastModifiedBy",
+    "lastModifiedByName" })
 public abstract class CoreEntity extends ScipamatoEntity {
 
     private static final long serialVersionUID = 1L;
