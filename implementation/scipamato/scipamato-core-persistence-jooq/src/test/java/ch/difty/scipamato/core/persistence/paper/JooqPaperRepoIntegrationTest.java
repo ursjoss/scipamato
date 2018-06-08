@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.fail;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.jooq.DSLContext;
 import org.junit.Test;
@@ -48,7 +49,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
             + ",publicationYear=2014,goals=Neue Analyse der Daten der amerikanischen Krebspräventions-Kohertenstudie zur Untersuchung, wie gross das kombinierte Krebsrisiko durch Feinstaub ist."
             + ",population=429'406 Teilnehmer, Frauen und Männer aus 50 Staaten der USA, welche in den Jahren 1982/1983 im Alter von mindestens 30 Jahren für die Krebsvorsorgestudie der amerikanischen Kriegsgesellschaft (ACS) rekrutiert worden waren, in den Jahren 1984, 1986 und 1988 wieder kontaktiert worden waren, und seit 1989 mit dem nationalen Sterberegister auf ihr Überleben kontaktiert wurden. Nicht in diese Analyse einbezogen wurden Exrauchende und Pfeifen- oder Zigarrenraucher. USA.,populationPlace=,populationParticipants=,populationDuration=,exposurePollutant=,exposureAssessment=,methods=Da nur bis 1998 individuelle Informationen über das Rauchverhalten vorlagen, wurden nur die ersten 6 Studienjahre in diese Analyse einbzeogen. Die Abschätzung der Belastung mit Feinstaub wurde mit Landnutzungsmodellen für die geocodierten Adressen bei Studieneintritt vorgenommen, welche sich auf Monatsmittelwerte von PM2.5 der Jahre 1999-2004 von 1464 Messstationen abstützten, unter der Annahme, dass die Feinstaubbelastungen über die Jahre eng korreliert seien. Mit proportionalen Hazard-Modellen nach Cox, stratifiziert für Alter, Geschlecht und Rasse wurde das Überleben bzw. die Sterblichkeit an Lungenkrebs in den ersten 6 Jahren in Abhängigkeit der PM2.5-Belastung in verschiedenen Kategorien (über/unter der 50 Perzentile, über der 66. vs. unter der 33. Perzentile, sowie über der 75. vs. unter der 25. Perzentile) und in Abhängigkeit von Rauchen/nicht Rauchen modelliert. Einbezogen wurden folgende invidivuellen Faktoren: Schulbildung, Zivilstand, BMI, Passivrauchen, Ernährung, Alkoholkonsum und berufliche Belastung. Die Effektmodifikation bezüglich Lungenkrebsterblichkeit wurde mit drei Grössen untersucht: das relative zusätzliche Risiko durch die Interatkion (RERI), der der Interaktion anrechenbare Teil des Risikos (AP) und der Synergie-Index (SI). Lungenkrebs, Kohortenstudie, Statistik, epidemiologische Methoden. ACS-Studie. USA.,methodStudyDesign=,methodOutcome=,methodStatistics=,methodConfounders=,result=In 2'509'717 Personen-Jahren der Nachkontrolle ereigneten sich 1921 Todesfälle an Lungenkrebs. Die geschätzte Feinstaubbelastung lag im Durchschnitt bei 12.6 SD 2.85 µg PM2.5/m3, mit der 25. und 75. Perzentile bei 10.59 und 14.44 µg PM2.5/m3. Raucher hatten im Vergleich zu Nichtrauchern ein 13.5 fach erhöhtes Risiko (95%CI 10.2-17.9), an Lungenkrebs zu sterben, wenn ihre PM2.5-Belastung gering war, d.h. unter der 25. Perzentile lag. Nichtraucher hatten ein 1.28 faches Risiko (0.92-1.78), wenn ihre Belastung über der 75. Perzentile der PM2.5-Belastung lag, im Vergleich zu Nichtrauchern mit geringer Belastung. Raucher hatten ein 16 faches Risiko (12.1-21.1), an Lungenkrebs zu sterben, wenn ihre Feinstaubbelastung über der 75. Perzentile lag. Das zusätzliche relative Risiko durch die Interaktion (RERI) für die Kombination von Rauchen und schlechter Luft betrug 2.19 (-0.10;+4.83). Der Risikoanteil, der dem Kombinationseffekt angerechnet werden kann, betrug 14%, der Synergie-Index 1.17. Die Autoren schliessen daraus, dass die Folgen von Rauchen und Luftverschmutzung stärker zusammenwiren als nur additiv. Auch wenn die Lungenkrebfälle am stärksten durch einen Rückgang des Rauchens abnehmen, kann ein solcher Rückgang mit einer Verbesserung der Luftqualität stärker ausfallen als mit einer der beiden Massnahmen allein."
             + ",resultExposureRange=,resultEffectEstimate=,resultMeasuredOutcome=,comment=Kommentar von Panagiotou AO, Wacholder S: How Big Is That Interaction (in My Community)-and I. Which Direction? Am. J. Epidemiol. 2014 180: 1150-1158."
-            + ",intern=,originalAbstract=<null>,mainCodeOfCodeclass1=1F,attachments=[]";
+            + ",intern=,originalAbstract=<null>,mainCodeOfCodeclass1=1F,newsletterLink=<null>,attachments=[]";
     // @formatter:on
 
     @Autowired
@@ -235,7 +236,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     }
 
     @Test
-    public void gettingByIds_returnsRecordForEveryIdExisting() {
+    public void findingByIds_returnsRecordForEveryIdExisting() {
         List<Paper> papers = repo.findByIds(Arrays.asList(1L, 2L, 3L, 10L, -17L));
         assertThat(papers).hasSize(4);
         assertThat(papers)
@@ -249,12 +250,12 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     }
 
     @Test
-    public void gettingByIds_returnsEmptyListForEmptyIdList() {
+    public void findingByIds_returnsEmptyListForEmptyIdList() {
         assertThat(repo.findByIds(Collections.emptyList())).isEmpty();
     }
 
     @Test
-    public void gettingWithCodesByIds_returnsRecordForEveryIdExisting() {
+    public void findingWithCodesByIds_returnsRecordForEveryIdExisting() {
         List<Paper> papers = repo.findWithCodesByIds(Arrays.asList(1L, 2L, 3L, 10L, -17L), LC);
         assertThat(papers).hasSize(4);
         assertThat(papers)
@@ -564,5 +565,58 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
             assertThat(dae.getMessage()).startsWith("jOOQ; SQL [update \"public\".\"paper\" set \"number\" = ?");
         }
         assertThat(rollback).isTrue();
+    }
+
+    @Test
+    public void findingByFilter_filteringByNewsletterId() {
+        PaperFilter filter = new PaperFilter();
+        filter.setNewsletterId(1);
+        List<Paper> papers = repo.findPageByFilter(filter, new PaginationRequest(0, 10));
+        assertThat(papers).hasSize(5);
+        assertThat(papers
+            .stream()
+            .map(Paper::getId)
+            .collect(Collectors.toList())
+            .contains(31l));
+    }
+
+    @Test
+    public void findingById_populatesNewsLetterWithAllFields() {
+        Paper paper = repo.findById(31l, "en");
+        assertThat(paper.getNewsletterLink()).isNotNull();
+        assertNewsletterLink(paper, "1802", 1, 1, "Ultrafine Particles", "some headline");
+    }
+
+    @Test
+    public void findingById_populatesNewsLetterWithMostFields() {
+        Paper paper = repo.findById(20l, "en");
+        assertThat(paper.getNewsletterLink()).isNotNull();
+        assertNewsletterLink(paper, "1802", 1, 2, "Mortality", null);
+    }
+
+    @Test
+    public void findingById_populatesNewsLetterWithSomeFields() {
+        Paper paper = repo.findById(39l, "en");
+        assertThat(paper.getNewsletterLink()).isNotNull();
+        assertNewsletterLink(paper, "1804", 0, null, null, null);
+    }
+
+    private void assertNewsletterLink(final Paper paper, final String issue, final int statusId, final Integer topicId,
+        final String topic, final String headline) {
+        assertThat(paper
+            .getNewsletterLink()
+            .getIssue()).isEqualTo(issue);
+        assertThat(paper
+            .getNewsletterLink()
+            .getPublicationStatusId()).isEqualTo(statusId);
+        assertThat(paper
+            .getNewsletterLink()
+            .getTopicId()).isEqualTo(topicId);
+        assertThat(paper
+            .getNewsletterLink()
+            .getTopic()).isEqualTo(topic);
+        assertThat(paper
+            .getNewsletterLink()
+            .getHeadline()).isEqualTo(headline);
     }
 }

@@ -4,9 +4,13 @@ import static ch.difty.scipamato.core.db.tables.Code.CODE;
 import static ch.difty.scipamato.core.db.tables.CodeClass.CODE_CLASS;
 import static ch.difty.scipamato.core.db.tables.CodeClassTr.CODE_CLASS_TR;
 import static ch.difty.scipamato.core.db.tables.CodeTr.CODE_TR;
+import static ch.difty.scipamato.core.db.tables.Newsletter.NEWSLETTER;
+import static ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC;
+import static ch.difty.scipamato.core.db.tables.NewsletterTopicTr.NEWSLETTER_TOPIC_TR;
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static ch.difty.scipamato.core.db.tables.PaperAttachment.PAPER_ATTACHMENT;
 import static ch.difty.scipamato.core.db.tables.PaperCode.PAPER_CODE;
+import static ch.difty.scipamato.core.db.tables.PaperNewsletter.PAPER_NEWSLETTER;
 import static ch.difty.scipamato.core.db.tables.SearchExclusion.SEARCH_EXCLUSION;
 
 import java.util.ArrayList;
@@ -17,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.jooq.DSLContext;
 import org.jooq.InsertValuesStep4;
+import org.jooq.Record6;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
@@ -76,16 +81,6 @@ public class JooqPaperRepo extends
     }
 
     @Override
-    protected Class<? extends Paper> getEntityClass() {
-        return Paper.class;
-    }
-
-    @Override
-    protected Class<? extends PaperRecord> getRecordClass() {
-        return PaperRecord.class;
-    }
-
-    @Override
     protected ch.difty.scipamato.core.db.tables.Paper getTable() {
         return PAPER;
     }
@@ -113,8 +108,10 @@ public class JooqPaperRepo extends
     @Override
     protected void enrichAssociatedEntitiesOf(final Paper entity, final String languageCode) {
         if (entity != null) {
-            if (languageCode != null)
+            if (languageCode != null) {
                 enrichCodesOf(entity, languageCode);
+                enrichNewsletterAssocation(entity, languageCode);
+            }
             enrichAttachmentsOf(entity);
         }
     }
@@ -151,6 +148,27 @@ public class JooqPaperRepo extends
             entity.addCodes(codes);
     }
 
+    private void enrichNewsletterAssocation(final Paper entity, final String languageCode) {
+        Record6<Integer, String, Integer, Integer, String, String> r = getDsl()
+            .select(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.PUBLICATION_STATUS,
+                PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, NEWSLETTER_TOPIC_TR.TITLE, PAPER_NEWSLETTER.HEADLINE)
+            .from(NEWSLETTER)
+            .innerJoin(PAPER_NEWSLETTER)
+            .on(NEWSLETTER.ID.eq(PAPER_NEWSLETTER.NEWSLETTER_ID))
+            .leftOuterJoin(NEWSLETTER_TOPIC)
+            .on(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.eq(NEWSLETTER_TOPIC.ID))
+            .leftOuterJoin(NEWSLETTER_TOPIC_TR)
+            .on(NEWSLETTER_TOPIC.ID.eq(NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID))
+            .where(PAPER_NEWSLETTER.PAPER_ID
+                .eq(entity.getId())
+                .and(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID
+                    .isNull()
+                    .or(NEWSLETTER_TOPIC_TR.LANG_CODE.eq(languageCode))))
+            .fetchOne();
+        if (r != null)
+            entity.setNewsletterLink(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6());
+    }
+
     private void enrichAttachmentsOf(final Paper entity) {
         final Long id = entity.getId();
         if (id != null)
@@ -178,6 +196,7 @@ public class JooqPaperRepo extends
     protected void updateAssociatedEntities(final Paper paper, final String languageCode) {
         storeNewCodesOf(paper);
         deleteObsoleteCodesFrom(paper);
+        considerStoringNewsletterLinkOf(paper);
     }
 
     private void storeNewCodesOf(final Paper paper) {
@@ -185,9 +204,8 @@ public class JooqPaperRepo extends
             PAPER_CODE.PAPER_ID, PAPER_CODE.CODE, PAPER_CODE.CREATED_BY, PAPER_CODE.LAST_MODIFIED_BY);
         final Long paperId = paper.getId();
         final Integer userId = getUserId();
-        for (final Code c : paper.getCodes()) {
+        for (final Code c : paper.getCodes())
             step = step.values(paperId, c.getCode(), userId, userId);
-        }
         step
             .onDuplicateKeyIgnore()
             .execute();
@@ -207,13 +225,39 @@ public class JooqPaperRepo extends
             .execute();
     }
 
+    /**
+     * Insert or update the association between paper and newsletter.
+     *
+     * @param paper
+     */
+    private void considerStoringNewsletterLinkOf(final Paper paper) {
+        if (paper != null && paper.getNewsletterLink() != null) {
+            final Paper.NewsletterLink nl = paper.getNewsletterLink();
+            getDsl()
+                .insertInto(PAPER_NEWSLETTER)
+                .columns(PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.PAPER_ID,
+                    PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, PAPER_NEWSLETTER.HEADLINE, PAPER_NEWSLETTER.CREATED,
+                    PAPER_NEWSLETTER.CREATED_BY)
+                .values(nl.getNewsletterId(), paper.getId(), nl.getTopicId(), nl.getHeadline(), getTs(), getUserId())
+                .onDuplicateKeyUpdate()
+                .set(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, nl.getTopicId())
+                .set(PAPER_NEWSLETTER.HEADLINE, nl.getHeadline())
+                .set(PAPER_NEWSLETTER.LAST_MODIFIED, getTs())
+                .set(PAPER_NEWSLETTER.LAST_MODIFIED_BY, getUserId())
+                .where(PAPER_NEWSLETTER.NEWSLETTER_ID
+                    .eq(nl.getNewsletterId())
+                    .and(PAPER_NEWSLETTER.PAPER_ID.eq(paper.getId())))
+                .execute();
+        }
+    }
+
     @Override
     public List<Paper> findByIds(final List<Long> ids) {
         AssertAs.notNull(ids, "ids");
         return getDsl()
             .selectFrom(PAPER)
             .where(PAPER.ID.in(ids))
-            .fetchInto(Paper.class);
+            .fetch(getMapper());
     }
 
     @Override
@@ -255,7 +299,7 @@ public class JooqPaperRepo extends
             final List<Paper> papers = getDsl()
                 .selectFrom(PAPER)
                 .where(PAPER.PM_ID.in(pmIds))
-                .fetchInto(Paper.class);
+                .fetch(getMapper());
             enrichAssociatedEntitiesOfAll(papers, languageCode);
             return papers;
         }
@@ -283,7 +327,7 @@ public class JooqPaperRepo extends
             final List<Paper> papers = getDsl()
                 .selectFrom(PAPER)
                 .where(PAPER.NUMBER.in(numbers))
-                .fetchInto(Paper.class);
+                .fetch(getMapper());
             enrichAssociatedEntitiesOfAll(papers, languageCode);
             return papers;
         }

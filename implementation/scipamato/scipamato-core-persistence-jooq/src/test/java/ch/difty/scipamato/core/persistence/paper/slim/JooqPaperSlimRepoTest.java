@@ -96,18 +96,8 @@ public class JooqPaperSlimRepoTest extends
     }
 
     @Override
-    protected Class<PaperSlim> getEntityClass() {
-        return PaperSlim.class;
-    }
-
-    @Override
     protected ch.difty.scipamato.core.db.tables.Paper getTable() {
         return PAPER;
-    }
-
-    @Override
-    protected Class<PaperRecord> getRecordClass() {
-        return PaperRecord.class;
     }
 
     @Override
@@ -139,16 +129,6 @@ public class JooqPaperSlimRepoTest extends
     @Override
     protected PaperFilter getFilter() {
         return filterMock;
-    }
-
-    @Test
-    public void gettingEntityClass() {
-        assertThat(repo.getEntityClass()).isEqualTo(getEntityClass());
-    }
-
-    @Test
-    public void gettingRecordClass() {
-        assertThat(repo.getRecordClass()).isEqualTo(getRecordClass());
     }
 
     @Test

@@ -131,16 +131,6 @@ public class JooqPaperRepoTest extends
     }
 
     @Override
-    protected Class<Paper> getEntityClass() {
-        return Paper.class;
-    }
-
-    @Override
-    protected Class<PaperRecord> getRecordClass() {
-        return PaperRecord.class;
-    }
-
-    @Override
     protected ch.difty.scipamato.core.db.tables.Paper getTable() {
         return PAPER;
     }
@@ -222,16 +212,6 @@ public class JooqPaperRepoTest extends
             () -> new JooqPaperRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
                 getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), searchOrderRepositoryMock,
                 null), "applicationProperties");
-    }
-
-    @Test
-    public void gettingEntityClass() {
-        assertThat(repo.getEntityClass()).isEqualTo(getEntityClass());
-    }
-
-    @Test
-    public void gettingRecordClass() {
-        assertThat(repo.getRecordClass()).isEqualTo(getRecordClass());
     }
 
     @Test
@@ -334,7 +314,6 @@ public class JooqPaperRepoTest extends
     @SuppressWarnings("unchecked")
     @Test
     public void findingPageByFilter() {
-        // TODO actually return records, test mapping and enrichment also
         List<PaperRecord> paperRecords = new ArrayList<>();
         Collection<SortField<Paper>> sortFields = new ArrayList<>();
         Sort sort = new Sort(Direction.DESC, "id");
@@ -354,9 +333,8 @@ public class JooqPaperRepoTest extends
         when(selectSeekStepNMock.limit(20)).thenReturn(selectWithTiesStepMock);
         SelectForUpdateStep<PaperRecord> selectForUpdateStepMock = mock(SelectForUpdateStep.class);
         when(selectWithTiesStepMock.offset(0)).thenReturn(selectForUpdateStepMock);
-        when(selectForUpdateStepMock.fetchInto(getRecordClass())).thenReturn(paperRecords);
-
-        when(getMapper().map(persistedRecord)).thenReturn(paperMock);
+        // don't want to go into the enrichment test fixture, thus returning empty list
+        when(selectForUpdateStepMock.fetch(getMapper())).thenReturn(Collections.emptyList());
 
         final List<Paper> papers = repo.findPageByFilter(filterMock, paginationContextMock, LC);
         assertThat(papers).isEmpty();
@@ -372,13 +350,12 @@ public class JooqPaperRepoTest extends
         verify(selectConditionStepMock).orderBy(sortFields);
         verify(selectSeekStepNMock).limit(20);
         verify(selectWithTiesStepMock).offset(0);
-        verify(selectForUpdateStepMock).fetchInto(getRecordClass());
+        verify(selectForUpdateStepMock).fetch(getMapper());
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void findingPageByFilter_withNoExplicitLanguageCode() {
-        // TODO actually return records, test mapping and enrichment also
         when(getApplicationProperties().getDefaultLocalization()).thenReturn(LC);
 
         List<PaperRecord> paperRecords = new ArrayList<>();
@@ -400,9 +377,8 @@ public class JooqPaperRepoTest extends
         when(selectSeekStepNMock.limit(20)).thenReturn(selectWithTiesStepMock);
         SelectForUpdateStep<PaperRecord> selectForUpdateStepMock = mock(SelectForUpdateStep.class);
         when(selectWithTiesStepMock.offset(0)).thenReturn(selectForUpdateStepMock);
-        when(selectForUpdateStepMock.fetchInto(getRecordClass())).thenReturn(paperRecords);
-
-        when(getMapper().map(persistedRecord)).thenReturn(paperMock);
+        // don't want to go into the enrichment test fixture, thus returning empty list
+        when(selectForUpdateStepMock.fetch(getMapper())).thenReturn(Collections.emptyList());
 
         final List<Paper> papers = repo.findPageByFilter(filterMock, paginationContextMock);
         assertThat(papers).isEmpty();
@@ -419,7 +395,7 @@ public class JooqPaperRepoTest extends
         verify(selectConditionStepMock).orderBy(sortFields);
         verify(selectSeekStepNMock).limit(20);
         verify(selectWithTiesStepMock).offset(0);
-        verify(selectForUpdateStepMock).fetchInto(getRecordClass());
+        verify(selectForUpdateStepMock).fetch(getMapper());
     }
 
     @Test

@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ch.difty.scipamato.core.entity.projection.NewsletterAssociation;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
@@ -82,4 +83,16 @@ public class JooqPaperSlimRepoIntegrationTest extends JooqTransactionalIntegrati
         assertThat(repo.findBySearchOrder(so)).isEmpty();
     }
 
+    @Test
+    public void canQueryNewsletterFields() {
+        PaperSlim paper = repo.findById(31l, "en");
+
+        assertThat(paper).isNotNull();
+
+        NewsletterAssociation na = paper.getNewsletterAssociation();
+        assertThat(na).isNotNull();
+        assertThat(na.getIssue()).isEqualTo("1802");
+        assertThat(na.getPublicationStatusId()).isEqualTo(1);
+        assertThat(na.getHeadline()).isEqualTo("some headline");
+    }
 }

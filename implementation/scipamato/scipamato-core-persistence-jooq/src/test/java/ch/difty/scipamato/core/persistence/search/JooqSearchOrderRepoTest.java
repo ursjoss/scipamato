@@ -89,16 +89,6 @@ public class JooqSearchOrderRepoTest extends
     }
 
     @Override
-    protected Class<SearchOrder> getEntityClass() {
-        return SearchOrder.class;
-    }
-
-    @Override
-    protected Class<SearchOrderRecord> getRecordClass() {
-        return SearchOrderRecord.class;
-    }
-
-    @Override
     protected ch.difty.scipamato.core.db.tables.SearchOrder getTable() {
         return SEARCH_ORDER;
     }
@@ -291,8 +281,4 @@ public class JooqSearchOrderRepoTest extends
             .containsExactly(17L, 33L, 42L);
     }
 
-    @Test
-    public void gettingRecordClass() {
-        assertThat(repo.getRecordClass()).isEqualTo(getRecordClass());
-    }
 }

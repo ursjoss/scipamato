@@ -157,4 +157,30 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      *     ids of the papers to be deleted.
      */
     void deletePapersWithIds(List<Long> ids);
+
+    /**
+     * Assigns the paper to the newsletter with the given topic by either adding a new
+     * association or updating an existing one.
+     *
+     * @param paperId
+     *     the id of the paper to assign
+     * @param newsletterTopicId
+     *     the id of the newsletter topic, may be null.
+     * @param languageCode
+     *     the two digit language Code, e.g. 'en' or 'de'
+     * @return optional of NewsletterLink
+     */
+    Optional<Paper.NewsletterLink> mergePaperIntoWipNewsletter(long paperId, Integer newsletterTopicId,
+        String languageCode);
+
+    /**
+     * Removes the paper with the specified id from the newsletter with the given id.
+     *
+     * @param newsletterId
+     *     the id of the newsletter to assign the paper to
+     * @param paperId
+     *     the id of the paper to assign
+     * @return the count of records that were removed
+     */
+    int removePaperFromNewsletter(int newsletterId, long paperId);
 }

@@ -26,6 +26,8 @@ import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
+import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
+import ch.difty.scipamato.core.entity.projection.NewsletterAssociation;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
@@ -81,6 +83,11 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
             private static final long serialVersionUID = 1L;
 
             @Override
+            protected boolean isOfferingSearchComposition() {
+                return true;
+            }
+
+            @Override
             protected GenericWebPage<Paper> getResponsePage(IModel<PaperSlim> m, String languageCode,
                 PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
                 return new PaperEntryPage(Model.of(paperService
@@ -125,6 +132,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         getTester().assertLabel(bb + ":5:cell:link:label", "title");
         getTester().assertComponent(bb + ":6:cell:link", AjaxLink.class);
         getTester().assertLabel(bb + ":6:cell:link:image", "");
+        getTester().assertLabel(bb + ":7:cell:link:image", "");
     }
 
     @Test
@@ -244,6 +252,72 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
         verify(searchOrderMock, times(2)).isShowExcluded();
+    }
+
+    @Test
+    public void startingPage_inNonSearchContext_doesNotRenderExcludeFromSearchIcon() {
+        ResultPanel panel = newNonSearchRelevantResultPanel();
+        getTester().startComponentInPage(panel);
+
+        String responseTxt = getTester()
+            .getLastResponse()
+            .getDocument();
+
+        TagTester iconExcludeTagTester = TagTester.createTagByAttribute(responseTxt, "class", "fa fa-fw fa-ban");
+        assertThat(iconExcludeTagTester).isNull();
+
+        verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
+        verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
+    }
+
+    // with isOfferingSearchComposition = false
+    private ResultPanel newNonSearchRelevantResultPanel() {
+        return new ResultPanel(PANEL_ID, new PaperSlimBySearchOrderProvider(searchOrderMock, ROWS_PER_PAGE)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected boolean isOfferingSearchComposition() {
+                return false;
+            }
+
+            @Override
+            protected GenericWebPage<Paper> getResponsePage(IModel<PaperSlim> m, String languageCode,
+                PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
+                return null;
+            }
+        };
+    }
+
+    @Test
+    public void startingPage_withPaperWithNoNewsletter_rendersAddToNewsletterLink() {
+        assertThat(paperSlim.getNewsletterAssociation()).isNull();
+        assertNewsletterIcon("fa fa-fw fa-plus-square-o", "Add to current newsletter");
+    }
+
+    private void assertNewsletterIcon(String iconClass, String titleValue) {
+        getTester().startComponentInPage(newNonSearchRelevantResultPanel());
+
+        String responseTxt = getTester()
+            .getLastResponse()
+            .getDocument();
+
+        TagTester iconTagTester = TagTester.createTagByAttribute(responseTxt, "class", iconClass);
+        assertThat(iconTagTester).isNotNull();
+        assertThat(iconTagTester.getName()).isEqualTo("i");
+
+        TagTester titleTagTester = TagTester.createTagByAttribute(responseTxt, "title", titleValue);
+        assertThat(titleTagTester).isNotNull();
+        assertThat(titleTagTester.getName()).isEqualTo("i");
+
+        verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
+        verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
+    }
+
+    @Test
+    public void startingPage_withPaperWithNewsletter_rendersAddToNewsletterLink() {
+        NewsletterAssociation ns = new NewsletterAssociation(1, "1802", PublicationStatus.PUBLISHED.getId(), null);
+        paperSlim.setNewsletterAssociation(ns);
+        assertNewsletterIcon("fa fa-fw fa-envelope-o", "Newsletter 1802");
     }
 
 }

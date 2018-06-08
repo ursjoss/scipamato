@@ -95,4 +95,18 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
         return attachments;
     }
 
+    @Override
+    protected boolean isAssociatedWithNewsletter() {
+        return false;
+    }
+
+    @Override
+    protected boolean isAssociatedWithWipNewsletter() {
+        return false;
+    }
+
+    @Override
+    protected void modifyNewsletterAssociation(final AjaxRequestTarget target) {
+        // no-op
+    }
 }

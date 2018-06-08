@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.Code;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
@@ -306,4 +307,110 @@ public class JooqPaperSlimBySearchOrderRepoTest {
         return searchOrder;
     }
 
+    @Test
+    public void getConditions_withSearchOrderWithSingleConditionCoveringNewspaperTopicAndHeadline() {
+        SearchOrder searchOrder = new SearchOrder();
+
+        SearchCondition sc1 = new SearchCondition(1L);
+        sc1.setNewsletterHeadline("hl");
+        sc1.setNewsletterTopic(new NewsletterTopic(1, "nt1"));
+        searchOrder.add(sc1);
+
+        Condition cond = finder.getConditionsFrom(searchOrder);
+        assertThat(cond.toString()).isEqualToIgnoringCase(
+            // @formatter:off
+        "exists (\n" +
+        "  select 1 \"one\"\n" +
+        "  from \"public\".\"paper_newsletter\"\n" +
+        "  where (\n" +
+        "    \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+        "    and \"public\".\"paper_newsletter\".\"newsletter_topic_id\" = 1\n" +
+        "    and lower(\"public\".\"paper_newsletter\".\"headline\") like lower('%hl%')\n" +
+        "  )\n" +
+        ")"
+        // @formatter:on
+        );
+    }
+
+    @Test
+    public void getConditions_withSearchOrderWithSingleConditionCoveringNewspaperTopic() {
+        SearchOrder searchOrder = new SearchOrder();
+
+        SearchCondition sc1 = new SearchCondition(1L);
+        sc1.setNewsletterTopic(new NewsletterTopic(1, "nt1"));
+        searchOrder.add(sc1);
+
+        Condition cond = finder.getConditionsFrom(searchOrder);
+        assertThat(cond.toString()).isEqualToIgnoringCase(
+            // @formatter:off
+        "exists (\n" +
+        "  select 1 \"one\"\n" +
+        "  from \"public\".\"paper_newsletter\"\n" +
+        "  where (\n" +
+        "    \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+        "    and \"public\".\"paper_newsletter\".\"newsletter_topic_id\" = 1\n" +
+        "  )\n" +
+        ")"
+        // @formatter:on
+        );
+    }
+
+    @Test
+    public void getConditions_withSearchOrderWithSingleConditionCoveringNewspaperHeadline() {
+        SearchOrder searchOrder = new SearchOrder();
+
+        SearchCondition sc1 = new SearchCondition(1L);
+        sc1.setNewsletterHeadline("hl");
+        searchOrder.add(sc1);
+
+        Condition cond = finder.getConditionsFrom(searchOrder);
+        assertThat(cond.toString()).isEqualToIgnoringCase(
+            // @formatter:off
+        "exists (\n" +
+        "  select 1 \"one\"\n" +
+        "  from \"public\".\"paper_newsletter\"\n" +
+        "  where (\n" +
+        "    \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+        "    and lower(\"public\".\"paper_newsletter\".\"headline\") like lower('%hl%')\n" +
+        "  )\n" +
+        ")"
+        // @formatter:on
+        );
+    }
+
+    @Test
+    public void getConditions_withSearchOrderWithTwoonditionCoveringNewspaperTopicAndHeadline() {
+        SearchOrder searchOrder = new SearchOrder();
+
+        SearchCondition sc1 = new SearchCondition(1L);
+        sc1.setNewsletterHeadline("hl");
+        searchOrder.add(sc1);
+        SearchCondition sc2 = new SearchCondition(2L);
+        sc2.setNewsletterTopic(new NewsletterTopic(1, "nt1"));
+        searchOrder.add(sc2);
+
+        Condition cond = finder.getConditionsFrom(searchOrder);
+        assertThat(cond.toString()).isEqualToIgnoringCase(
+            // @formatter:off
+        "(\n" +
+        "  exists (\n" +
+        "    select 1 \"one\"\n" +
+        "    from \"public\".\"paper_newsletter\"\n" +
+        "    where (\n" +
+        "      \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+        "      and lower(\"public\".\"paper_newsletter\".\"headline\") like lower('%hl%')\n" +
+        "    )\n" +
+        "  )\n" +
+        "  or exists (\n" +
+        "    select 1 \"one\"\n" +
+        "    from \"public\".\"paper_newsletter\"\n" +
+        "    where (\n" +
+        "      \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+        "      and \"public\".\"paper_newsletter\".\"newsletter_topic_id\" = 1\n" +
+        "    )\n" +
+        "  )\n" +
+        ")"
+        // @formatter:on
+        );
+    }
 }

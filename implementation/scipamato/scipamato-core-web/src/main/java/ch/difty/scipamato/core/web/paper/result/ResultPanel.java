@@ -26,10 +26,13 @@ import ch.difty.scipamato.common.web.component.table.column.ClickablePropertyCol
 import ch.difty.scipamato.common.web.component.table.column.LinkIconColumn;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
+import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
+import ch.difty.scipamato.core.persistence.NewsletterService;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.web.common.BasePanel;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
+import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
 import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent;
 import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
@@ -57,6 +60,9 @@ public abstract class ResultPanel extends BasePanel<Void> {
 
     @SpringBean
     private PaperService paperService;
+
+    @SpringBean
+    private NewsletterService newsletterService;
 
     private final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider;
 
@@ -105,9 +111,17 @@ public abstract class ResultPanel extends BasePanel<Void> {
         columns.add(makePropertyColumn(FIRST_AUTHOR.getName()));
         columns.add(makePropertyColumn(PUBL_YEAR.getName()));
         columns.add(makeClickableColumn(TITLE.getName(), this::onTitleClick));
-        columns.add(makeLinkIconColumn("exclude"));
+        if (isOfferingSearchComposition())
+            columns.add(makeExcludeLinkIconColumn("exclude"));
+        columns.add(makeNewsletterLinkIconColumn("newsletter"));
         return columns;
     }
+
+    /**
+     * Determines if the result panel is embedded into a page that offers composing complex searches.
+     * If so, the table offers an icon column to exclude papers from searches. Otherwise it will not.
+     */
+    protected abstract boolean isOfferingSearchComposition();
 
     private void onTitleClick(IModel<PaperSlim> m) {
         getPaperIdManager().setFocusToItem(m
@@ -130,7 +144,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
             propExpression, propExpression, consumer);
     }
 
-    private IColumn<PaperSlim, String> makeLinkIconColumn(String id) {
+    private IColumn<PaperSlim, String> makeExcludeLinkIconColumn(String id) {
         return new LinkIconColumn<PaperSlim>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
             private static final long serialVersionUID = 1L;
 
@@ -153,6 +167,91 @@ public abstract class ResultPanel extends BasePanel<Void> {
                     .getId();
                 target.add(results);
                 send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).withExcludedPaperId(excludedId));
+            }
+        };
+    }
+
+    /**
+     * Icon indicating whether the paper
+     * <ul>
+     * <li>can be added to the current newsletter</li>
+     * <li>has been added to the current newsletter</li>
+     * <li>had been added previously to a newsletter that had been closed already</li>
+     * </ul>
+     * and providing the option of changing the association between paper and newsletter:
+     * <ul>
+     * <li>If the paper had been added to a newsletter, the association can only be removed if
+     * the newsletter in question is still in status work in progress. </li>
+     * <li>>Otherwise the association is read only.</li
+     * </ul>
+     */
+    private IColumn<PaperSlim, String> makeNewsletterLinkIconColumn(String id) {
+        return new LinkIconColumn<PaperSlim>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected IModel<String> createIconModel(final IModel<PaperSlim> rowModel) {
+                String icon;
+                final PaperSlim paper = rowModel.getObject();
+                if (!hasNewsletter(paper))
+                    icon = hasNewsletterInProgress() ? "fa fa-fw fa-plus-square-o" : "";
+                else if (isAssociatedNewsletterWorkInProgress(paper))
+                    icon = "fa fa-fw fa-envelope-open-o";
+                else
+                    icon = "fa fa-fw fa-envelope-o";
+                return Model.of(icon);
+            }
+
+            private boolean hasNewsletter(final PaperSlim paper) {
+                return paper.getNewsletterAssociation() != null;
+            }
+
+            private boolean hasNewsletterInProgress() {
+                return !newsletterService.canCreateNewsletterInProgress();
+            }
+
+            private boolean isAssociatedNewsletterWorkInProgress(final PaperSlim paper) {
+                return PublicationStatus
+                    .byId(paper
+                        .getNewsletterAssociation()
+                        .getPublicationStatusId())
+                    .isInProgress();
+            }
+
+            @Override
+            protected IModel<String> createTitleModel(final IModel<PaperSlim> rowModel) {
+                final PaperSlim paper = rowModel.getObject();
+                if (!hasNewsletter(paper)) {
+                    if (hasNewsletterInProgress())
+                        return new StringResourceModel("column.title.newsletter.add", ResultPanel.this, null);
+                    else
+                        return Model.of("");
+                } else if (isAssociatedNewsletterWorkInProgress(paper)) {
+                    return new StringResourceModel("column.title.newsletter.remove", ResultPanel.this, null);
+                } else {
+                    return new StringResourceModel("column.title.newsletter.closed", ResultPanel.this,
+                        Model.of(paper.getNewsletterAssociation()));
+                }
+            }
+
+            @Override
+            protected void onClickPerformed(final AjaxRequestTarget target, final IModel<PaperSlim> rowModel,
+                final AjaxLink<Void> link) {
+                final PaperSlim paper = rowModel.getObject();
+
+                if (!hasNewsletter(paper)) {
+                    if (hasNewsletterInProgress())
+                        newsletterService.mergePaperIntoWipNewsletter(paper.getId());
+                    else
+                        warn(new StringResourceModel("newsletter.noneInProgress", ResultPanel.this, null).getString());
+                } else if (isAssociatedNewsletterWorkInProgress(paper)) {
+                    newsletterService.removePaperFromWipNewsletter(paper.getId());
+                } else {
+                    warn(new StringResourceModel("newsletter.readonly", ResultPanel.this, Model.of(paper.getNewsletterAssociation())).getString());
+                }
+
+                target.add(results);
+                send(getPage(), Broadcast.BREADTH, new NewsletterChangeEvent(target));
             }
         };
     }

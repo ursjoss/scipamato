@@ -14,10 +14,12 @@ import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
+import ch.difty.scipamato.core.NewsletterAware;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.CodeBox;
 import ch.difty.scipamato.core.entity.CodeBoxAware;
 import ch.difty.scipamato.core.entity.Paper;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 
 /**
  * The {@link SearchCondition} is an instance of {@link ScipamatoFilter} that
@@ -41,13 +43,17 @@ import ch.difty.scipamato.core.entity.Paper;
  *
  * @author u.joss
  */
-public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
+public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, NewsletterAware {
 
     private static final long serialVersionUID = 1L;
 
     private static final String JOIN_DELIMITER = " AND ";
 
-    private Long searchConditionId;
+    private Long    searchConditionId;
+    private String  newsletterHeadline;
+    private Integer newsletterTopicId;
+    // only used for the display value - not identifying and therefore not used for equals or hashcode
+    private String  newsletterTopicTitle;
 
     private final StringSearchTerms  stringSearchTerms  = new StringSearchTerms();
     private final IntegerSearchTerms integerSearchTerms = new IntegerSearchTerms();
@@ -535,6 +541,20 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
                 sb.append(JOIN_DELIMITER);
             sb.append(codes.toString());
         }
+        if (newsletterHeadline != null) {
+            if (sb.length() > 0)
+                sb.append(JOIN_DELIMITER);
+            sb
+                .append("headline=")
+                .append(newsletterHeadline);
+        }
+        if (newsletterTopicId != null) {
+            if (sb.length() > 0)
+                sb.append(JOIN_DELIMITER);
+            sb
+                .append("topic=")
+                .append(newsletterTopicTitle != null ? newsletterTopicTitle : newsletterTopicId);
+        }
         return sb.toString();
     }
 
@@ -551,6 +571,8 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         final int prime = 31;
         int result = 1;
         result = prime * result + (searchConditionId == null ? 0 : searchConditionId.hashCode());
+        result = prime * result + (newsletterTopicId == null ? 0 : newsletterTopicId.hashCode());
+        result = prime * result + (newsletterHeadline == null ? 0 : newsletterHeadline.hashCode());
         result = prime * result + stringSearchTerms.hashCode();
         result = prime * result + integerSearchTerms.hashCode();
         result = prime * result + booleanSearchTerms.hashCode();
@@ -573,6 +595,16 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
                 return false;
         } else if (!searchConditionId.equals(other.searchConditionId))
             return false;
+        if (newsletterTopicId == null) {
+            if (other.newsletterTopicId != null)
+                return false;
+        } else if (!newsletterTopicId.equals(other.newsletterTopicId))
+            return false;
+        if (newsletterHeadline == null) {
+            if (other.newsletterHeadline != null)
+                return false;
+        } else if (!newsletterHeadline.equals(other.newsletterHeadline))
+            return false;
         if (!booleanSearchTerms.equals(other.booleanSearchTerms))
             return false;
         if (!integerSearchTerms.equals(other.integerSearchTerms))
@@ -584,4 +616,29 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware {
         return codes.equals(other.codes);
     }
 
+    @Override
+    public Integer getNewsletterTopicId() {
+        return newsletterTopicId;
+    }
+
+    @Override
+    public void setNewsletterTopic(final NewsletterTopic newsletterTopic) {
+        if (newsletterTopic == null) {
+            this.newsletterTopicId = null;
+            this.newsletterTopicTitle = null;
+        } else {
+            this.newsletterTopicId = newsletterTopic.getId();
+            this.newsletterTopicTitle = newsletterTopic.getTitle();
+        }
+    }
+
+    @Override
+    public void setNewsletterHeadline(final String newsletterHeadline) {
+        this.newsletterHeadline = newsletterHeadline;
+    }
+
+    @Override
+    public String getNewsletterHeadline() {
+        return newsletterHeadline;
+    }
 }

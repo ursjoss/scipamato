@@ -6,12 +6,16 @@ import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 import com.google.common.base.Strings;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.event.IEvent;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.MaskType;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -32,6 +36,7 @@ import ch.difty.scipamato.core.pubmed.PubmedImporter;
 import ch.difty.scipamato.core.web.common.BasePage;
 import ch.difty.scipamato.core.web.common.pastemodal.XmlPasteModalPanel;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
+import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
 import ch.difty.scipamato.core.web.paper.PaperSlimByPaperFilterProvider;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
@@ -88,6 +93,24 @@ public class PaperListPage extends BasePage<Void> {
         makeAndQueueResultPanel("resultPanel");
     }
 
+    @Override
+    public void renderHead(final IHeaderResponse response) {
+        super.renderHead(response);
+        response.render(CssHeaderItem.forReference(FontAwesomeCDNCSSReference.instance()));
+    }
+
+    @Override
+    public void onEvent(final IEvent<?> event) {
+        if (event
+                .getPayload()
+                .getClass() == NewsletterChangeEvent.class) {
+            final AjaxRequestTarget target = ((NewsletterChangeEvent) event.getPayload()).getTarget();
+            if (target != null)
+                target.add(getFeedbackPanel());
+            event.dontBroadcastDeeper();
+        }
+    }
+
     private void makeAndQueueFilterForm(final String id) {
         queue(new FilterForm<PaperFilter>(id, dataProvider) {
             private static final long serialVersionUID = 1L;
@@ -122,6 +145,11 @@ public class PaperListPage extends BasePage<Void> {
     private void makeAndQueueResultPanel(String id) {
         resultPanel = new ResultPanel(id, dataProvider) {
             private static final long serialVersionUID = 1L;
+
+            @Override
+            protected boolean isOfferingSearchComposition() {
+                return false;
+            }
 
             @Override
             protected PaperEntryPage getResponsePage(IModel<PaperSlim> m, String languageCode,

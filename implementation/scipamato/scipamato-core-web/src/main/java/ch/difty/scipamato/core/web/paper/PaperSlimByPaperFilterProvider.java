@@ -19,7 +19,7 @@ import ch.difty.scipamato.core.entity.search.PaperFilter;
  *
  * @author u.joss
  */
-public class PaperSlimByPaperFilterProvider extends AbstractPaperSlimProvider<PaperFilter> {
+public class  PaperSlimByPaperFilterProvider extends AbstractPaperSlimProvider<PaperFilter> {
 
     private static final long serialVersionUID = 1L;
 

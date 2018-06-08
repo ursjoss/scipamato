@@ -19,6 +19,7 @@ public class PaperFilter extends ScipamatoFilter implements PaperSlimFilter {
     private String  searchMask;
     private Integer publicationYearFrom;
     private Integer publicationYearUntil;
+    private Integer newsletterId;
 
     public enum PaperFilterFields implements FieldEnumType {
         NUMBER("number"),
@@ -26,7 +27,8 @@ public class PaperFilter extends ScipamatoFilter implements PaperSlimFilter {
         METHODS_MASK("methodsMask"),
         SEARCH_MASK("searchMask"),
         PUB_YEAR_FROM("publicationYearFrom"),
-        PUB_YEAR_UNTIL("publicationYearUntil");
+        PUB_YEAR_UNTIL("publicationYearUntil"),
+        NEWSLETTER_ID("newsletterId");
 
         private final String name;
 

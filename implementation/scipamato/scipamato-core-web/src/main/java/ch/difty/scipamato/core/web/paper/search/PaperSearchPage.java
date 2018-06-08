@@ -31,10 +31,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.web.common.BasePage;
-import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
-import ch.difty.scipamato.core.web.paper.PageFactory;
-import ch.difty.scipamato.core.web.paper.PaperSlimBySearchOrderProvider;
-import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent;
+import ch.difty.scipamato.core.web.paper.*;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 
@@ -215,6 +212,11 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             private static final long serialVersionUID = 1L;
 
             @Override
+            protected boolean isOfferingSearchComposition() {
+                return true;
+            }
+
+            @Override
             protected PaperEntryPage getResponsePage(IModel<PaperSlim> m, String languageCode,
                 PaperService paperService, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
                 return new PaperEntryPage(Model.of(paperService
@@ -240,6 +242,10 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
                      .getPayload()
                      .getClass() == ToggleExclusionsEvent.class)
             manageToggleExclusion(event);
+        else if (event
+                     .getPayload()
+                     .getClass() == NewsletterChangeEvent.class)
+            manageNewsletterChangeEvent(event);
     }
 
     private void manageSearchOrderChange(final IEvent<?> event) {
@@ -251,11 +257,16 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
 
     private void handleSearchOrderChangeEvent(final SearchOrderChangeEvent soce) {
         setExclusionIntoModel(soce);
-        if (soce.getDroppedConditionId() != null) {
+        if (soce.getDroppedConditionId() != null)
             searchOrderService.removeSearchConditionWithId(soce.getDroppedConditionId());
-        }
         resetAndSaveProviderModel(soce);
         addSubPanelsAsTarget(soce);
+    }
+
+    private void manageNewsletterChangeEvent(final IEvent<?> event) {
+        final AjaxRequestTarget target = ((NewsletterChangeEvent) event.getPayload()).getTarget();
+        target.add(getFeedbackPanel());
+        event.dontBroadcastDeeper();
     }
 
     /*

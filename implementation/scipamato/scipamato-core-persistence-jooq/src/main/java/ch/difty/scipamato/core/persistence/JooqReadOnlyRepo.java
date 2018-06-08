@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.persistence;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.jooq.*;
 import org.jooq.impl.TableImpl;
@@ -73,6 +72,10 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
         return mapper;
     }
 
+    protected GenericFilterConditionMapper<F> getFilterConditionMapper() {
+        return filterConditionMapper;
+    }
+
     protected JooqSortMapper<R, T, TI> getSortMapper() {
         return sortMapper;
     }
@@ -80,16 +83,6 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
     protected ApplicationProperties getApplicationProperties() {
         return applicationProperties;
     }
-
-    /**
-     * @return the entity class {@code T.class}
-     */
-    protected abstract Class<? extends T> getEntityClass();
-
-    /**
-     * @return the Record Class {@code R.class}
-     */
-    protected abstract Class<? extends R> getRecordClass();
 
     /**
      * @return the jOOQ generated table of type {@code T}
@@ -112,7 +105,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
     public List<T> findAll(String languageCode) {
         final List<T> entities = getDsl()
             .selectFrom(getTable())
-            .fetchInto(getEntityClass());
+            .fetch(getMapper());
         enrichAssociatedEntitiesOfAll(entities, languageCode);
         return entities;
     }
@@ -134,7 +127,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
         T entity = getDsl()
             .selectFrom(getTable())
             .where(getTableId().equal(id))
-            .fetchOneInto(getEntityClass());
+            .fetchOne(getMapper());
         enrichAssociatedEntitiesOf(entity, languageCode);
         return entity;
     }
@@ -151,7 +144,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
             .selectFrom(getTable())
             .where(getTableId().equal(id))
             .and(getRecordVersion().equal(version))
-            .fetchOneInto(getEntityClass());
+            .fetchOne(getMapper());
         enrichAssociatedEntitiesOf(entity, languageCode);
         return entity;
     }
@@ -184,18 +177,13 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
     public List<T> findPageByFilter(final F filter, final PaginationContext pc, final String languageCode) {
         final Condition conditions = filterConditionMapper.map(filter);
         final Collection<SortField<T>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
-        final List<R> tuples = getDsl()
+        final List<T> entities = getDsl()
             .selectFrom(getTable())
             .where(conditions)
             .orderBy(sortCriteria)
             .limit(pc.getPageSize())
             .offset(pc.getOffset())
-            .fetchInto(getRecordClass());
-
-        final List<T> entities = tuples
-            .stream()
-            .map(getMapper()::map)
-            .collect(Collectors.toList());
+            .fetch(getMapper());
 
         enrichAssociatedEntitiesOfAll(entities, languageCode);
 

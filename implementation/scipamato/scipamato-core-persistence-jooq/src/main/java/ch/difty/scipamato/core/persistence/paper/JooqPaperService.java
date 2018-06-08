@@ -12,9 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
+import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.*;
+import ch.difty.scipamato.core.persistence.newsletter.NewsletterRepository;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 
 /**
@@ -26,8 +28,12 @@ import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter, PaperRepository>
     implements PaperService {
 
-    protected JooqPaperService(final PaperRepository repo, final UserRepository userRepo) {
+    private final NewsletterRepository newsletterRepo;
+
+    protected JooqPaperService(final PaperRepository repo, final NewsletterRepository newsletterRepo,
+        final UserRepository userRepo) {
         super(repo, userRepo);
+        this.newsletterRepo = newsletterRepo;
     }
 
     @Override
@@ -156,6 +162,23 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     @Override
     public void deletePapersWithIds(final List<Long> ids) {
         getRepository().delete(ids);
+    }
+
+    @Override
+    public Optional<Paper.NewsletterLink> mergePaperIntoWipNewsletter(final long paperId,
+        final Integer newsletterTopicId, final String languageCode) {
+        final Optional<Newsletter> nlo = newsletterRepo.getNewsletterInStatusWorkInProgress();
+        if (nlo.isPresent())
+            return newsletterRepo.mergePaperIntoNewsletter(nlo
+                .get()
+                .getId(), paperId, newsletterTopicId, languageCode);
+        else
+            return Optional.empty();
+    }
+
+    @Override
+    public int removePaperFromNewsletter(final int newsletterId, final long paperId) {
+        return newsletterRepo.removePaperFromNewsletter(newsletterId, paperId);
     }
 
 }

@@ -109,4 +109,23 @@ public class PaperFilterConditionMapperTest
             .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"PUBLICATION_YEAR\" <= 2016");
     }
 
+    @Test
+    public void creatingWhereCondition_withNewsletterId() {
+        filter.setNewsletterId(10);
+        assertThat(mapper
+            .map(filter)
+            .toString()).isEqualToIgnoringCase(
+            //@formatter:off
+                "exists (\n" +
+                "  select 1 \"one\"\n" +
+                "  from \"public\".\"paper_newsletter\"\n" +
+                "  where (\n" +
+                "    \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"\n" +
+                "    and \"public\".\"paper_newsletter\".\"newsletter_id\" = 10\n" +
+                "  )\n" +
+                ")"
+            //@formatter:on
+        );
+    }
+
 }
