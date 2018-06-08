@@ -237,6 +237,7 @@
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jool</artifactId>
+                <!-- refraining from 0.9.13 for now: UnsupportedClassVersion errors with jdk 8 -->
                 <version>0.9.12</version>
             </dependency>
 
@@ -629,6 +630,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>jaxb2-maven-plugin</artifactId>
+                    <!-- Currently refraining from updating to 2.4: SAXParseException: External parsing is disabled. Cannot parse URI -->
                     <version>2.3.1</version>
                 </plugin>
                 <plugin>
