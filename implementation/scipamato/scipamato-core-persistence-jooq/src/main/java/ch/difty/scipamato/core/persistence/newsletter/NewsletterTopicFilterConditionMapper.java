@@ -19,6 +19,7 @@ public class NewsletterTopicFilterConditionMapper extends AbstractFilterConditio
 
     @Override
     public void map(final NewsletterTopicFilter filter, final List<Condition> conditions) {
+        // currently no fields to be handled
     }
 
 }
