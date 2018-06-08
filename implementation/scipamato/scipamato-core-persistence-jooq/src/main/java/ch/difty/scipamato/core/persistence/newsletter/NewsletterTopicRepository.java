@@ -3,8 +3,6 @@ package ch.difty.scipamato.core.persistence.newsletter;
 import java.util.List;
 
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
-import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
-import ch.difty.scipamato.core.persistence.EntityRepository;
 
 public interface NewsletterTopicRepository {
 
