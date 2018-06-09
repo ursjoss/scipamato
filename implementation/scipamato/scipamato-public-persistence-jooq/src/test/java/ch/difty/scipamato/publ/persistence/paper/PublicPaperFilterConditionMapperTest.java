@@ -172,8 +172,8 @@ public class PublicPaperFilterConditionMapperTest
         // @formatter:off
         assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
                 "\"public\".\"paper\".\"codes\" @> array[\n" +
-                "  cast('c1' as text), \n" +
-                "  cast('c2' as text)\n" +
+                "  cast('c1' as clob), \n" +
+                "  cast('c2' as clob)\n" +
                 "]");
         // @formatter:on
     }
@@ -302,14 +302,14 @@ public class PublicPaperFilterConditionMapperTest
         // @formatter:off
         assertThat(mapper.map(filter).toString()).isEqualToIgnoringCase(
                 "\"public\".\"paper\".\"codes\" @> array[\n" +
-                "  cast('1A' as text), \n" +
-                "  cast('2B' as text), \n" +
-                "  cast('3C' as text), \n" +
-                "  cast('4D' as text), \n" +
-                "  cast('5E' as text), \n" +
-                "  cast('6F' as text), \n" +
-                "  cast('7G' as text), \n" +
-                "  cast('8H' as text)\n" +
+                "  cast('1A' as clob), \n" +
+                "  cast('2B' as clob), \n" +
+                "  cast('3C' as clob), \n" +
+                "  cast('4D' as clob), \n" +
+                "  cast('5E' as clob), \n" +
+                "  cast('6F' as clob), \n" +
+                "  cast('7G' as clob), \n" +
+                "  cast('8H' as clob)\n" +
                 "]");
         // @formatter:on
     }
