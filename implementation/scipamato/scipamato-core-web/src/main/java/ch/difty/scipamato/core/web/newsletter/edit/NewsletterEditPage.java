@@ -52,8 +52,6 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
     @SpringBean
     private NewsletterService service;
 
-    private Form<Newsletter>               form;
-    private ResultPanel                    resultPanel;
     private PaperFilter                    filter;
     private PaperSlimByPaperFilterProvider dataProvider;
 
@@ -82,7 +80,7 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
     }
 
     private void initFilterAndProvider() {
-        filter = new PaperFilter();
+        PaperFilter filter = new PaperFilter();
         filter.setNewsletterId(getRelevantNewsletterId());
         dataProvider = new PaperSlimByPaperFilterProvider(filter, RESULT_PAGE_SIZE);
         updateNavigateable();
@@ -137,8 +135,8 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
         makeAndQueueResultPanel("resultPanel");
     }
 
-    private void queueForm(final String form) {
-        this.form = new Form<Newsletter>(form, new CompoundPropertyModel<>(getModel())) {
+    private void queueForm(final String id) {
+        Form<Newsletter> form = new Form<Newsletter>(id, new CompoundPropertyModel<>(getModel())) {
 
             @Override
             protected void onSubmit() {
@@ -146,7 +144,7 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
                 doUpdate();
             }
         };
-        queue(this.form);
+        queue(form);
     }
 
     private void makeAndQueuePublicationStatusSelectBox(final String id) {
@@ -194,7 +192,7 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
     }
 
     private void makeAndQueueResultPanel(String id) {
-        resultPanel = new ResultPanel(id, dataProvider) {
+        ResultPanel resultPanel = new ResultPanel(id, dataProvider) {
             private static final long serialVersionUID = 1L;
 
             @Override

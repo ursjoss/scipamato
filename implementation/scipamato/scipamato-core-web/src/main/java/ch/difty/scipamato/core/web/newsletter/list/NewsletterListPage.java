@@ -65,7 +65,6 @@ public class NewsletterListPage extends BasePage<Void> {
     private NewsletterFilter              filter;
     private NewsletterProvider            dataProvider;
     private DataTable<Newsletter, String> results;
-    private FilterForm<NewsletterFilter>  form;
     private BootstrapAjaxButton           newNewsletterButton;
 
     public NewsletterListPage(final PageParameters parameters) {
@@ -93,11 +92,11 @@ public class NewsletterListPage extends BasePage<Void> {
     }
 
     private void makeAndQueueFilterForm(final String id) {
-        queue(form = new FilterForm<NewsletterFilter>(id, dataProvider));
+        queue(new FilterForm<>(id, dataProvider));
 
         queueFieldAndLabel(new TextField<String>(ISSUE.getName(), PropertyModel.of(filter, ISSUE_MASK.getName())));
         queueBootstrapSelectAndLabel(PUBLICATION_STATUS.getName());
-        newNewsletterButton = queueResponsePageButton("newNewsletter", () -> new NewsletterEditPage());
+        newNewsletterButton = queueResponsePageButton("newNewsletter", NewsletterEditPage::new);
     }
 
     private void queueBootstrapSelectAndLabel(final String id) {
@@ -137,7 +136,7 @@ public class NewsletterListPage extends BasePage<Void> {
         final List<IColumn<Newsletter, String>> columns = new ArrayList<>();
         columns.add(makeClickableColumn(ISSUE.getName(), this::onTitleClick));
         columns.add(makePropertyColumn(ISSUE_DATE.getName()));
-        columns.add(makeEnumPropertyColumn(PUBLICATION_STATUS.getName(), "name"));
+        columns.add(makeEnumPropertyColumn(PUBLICATION_STATUS.getName()));
         columns.add(makeLinkIconColumn("remove"));
         return columns;
     }
@@ -160,7 +159,7 @@ public class NewsletterListPage extends BasePage<Void> {
     /**
      * provides the localized values for the publication status as defined in the properties files.
      */
-    private PropertyColumn<Newsletter, String> makeEnumPropertyColumn(String propExpression, String displayType) {
+    private PropertyColumn<Newsletter, String> makeEnumPropertyColumn(String propExpression) {
         return new PropertyColumn<Newsletter, String>(
             new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression) {
             @Override
