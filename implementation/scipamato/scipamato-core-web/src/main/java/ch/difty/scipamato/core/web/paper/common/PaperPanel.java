@@ -854,7 +854,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                         .setNewsletterTopic(topic);
                 }
             };
-            final IChoiceRenderer<NewsletterTopic> choiceRenderer = new ChoiceRenderer<NewsletterTopic>(
+            final IChoiceRenderer<NewsletterTopic> choiceRenderer = new ChoiceRenderer<>(
                 NewsletterTopic.NewsletterTopicFields.TITLE.getName(),
                 NewsletterTopic.NewsletterTopicFields.ID.getName());
 
@@ -862,8 +862,8 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             final BootstrapSelectConfig config = new BootstrapSelectConfig()
                 .withNoneSelectedText(noneSelectedModel.getObject())
                 .withLiveSearch(true);
-            final BootstrapSelect<NewsletterTopic> topic = new BootstrapSelect<NewsletterTopic>(id, model,
-                newsletterTopicChoice, choiceRenderer).with(config);
+            final BootstrapSelect<NewsletterTopic> topic = new BootstrapSelect<>(id, model, newsletterTopicChoice,
+                choiceRenderer).with(config);
             topic.setNullValid(true);
             queue(topic);
             queue(new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null)));

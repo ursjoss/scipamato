@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
@@ -29,7 +28,6 @@ import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.core.persistence.JooqEntityRepo;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
-import ch.difty.scipamato.core.persistence.paper.slim.PaperSlimRecordMapper;
 
 @Repository
 @Slf4j
@@ -37,18 +35,15 @@ public class JooqNewsletterRepo extends
     JooqEntityRepo<NewsletterRecord, Newsletter, Integer, ch.difty.scipamato.core.db.tables.Newsletter, NewsletterRecordMapper, NewsletterFilter>
     implements NewsletterRepository {
 
-    private final PaperSlimRecordMapper paperSlimRecordMapper;
-
     protected JooqNewsletterRepo(@Qualifier("dslContext") final DSLContext dsl, final NewsletterRecordMapper mapper,
         final JooqSortMapper<NewsletterRecord, Newsletter, ch.difty.scipamato.core.db.tables.Newsletter> sortMapper,
         final GenericFilterConditionMapper<NewsletterFilter> filterConditionMapper,
         final DateTimeService dateTimeService,
         final InsertSetStepSetter<NewsletterRecord, Newsletter> insertSetStepSetter,
         final UpdateSetStepSetter<NewsletterRecord, Newsletter> updateSetStepSetter,
-        final ApplicationProperties applicationProperties, final PaperSlimRecordMapper paperSlimRecordMapper) {
+        final ApplicationProperties applicationProperties) {
         super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, insertSetStepSetter, updateSetStepSetter,
             applicationProperties);
-        this.paperSlimRecordMapper = AssertAs.notNull(paperSlimRecordMapper, "paperSlimRecordMapper");
     }
 
     @Override

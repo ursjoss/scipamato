@@ -187,8 +187,7 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
         assertThat(nl.getPapers()).containsOnly(paper1, paper2);
         assertThat(nl
             .getPapersByTopic()
-            .get(null)
-            .contains(paper2));
+            .get(null)).contains(paper2);
 
         nl.addPaper(paper2, topic1);
 
@@ -196,7 +195,6 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
         assertThat(nl.getPapers()).containsOnly(paper1, paper2);
         assertThat(nl
             .getPapersByTopic()
-            .get(topic1)
-            .contains(paper2));
+            .get(topic1)).contains(paper2);
     }
 }

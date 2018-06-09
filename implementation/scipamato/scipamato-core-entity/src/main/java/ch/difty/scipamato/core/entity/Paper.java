@@ -145,7 +145,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
         ATTACHMENTS("attachments"),
         MAIN_CODE_OF_CODECLASS1("mainCodeOfCodeclass1"),
         CODES("codes"),
-        NEWSLETTER_Link("newsletterLink"),
+        NEWSLETTER_LINK("newsletterLink"),
         NEWSLETTER_HEADLINE("newsletterHeadline"),
         NEWSLETTER_TOPIC_ID("newsletterTopicId"),
         CREATED("paper.created"),

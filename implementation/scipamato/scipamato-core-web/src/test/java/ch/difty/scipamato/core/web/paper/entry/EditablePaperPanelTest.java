@@ -26,6 +26,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
+import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
@@ -764,6 +765,45 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     @Test
     public void startingPageShowingExclusions_adjustsIconAndTitleOfToggleInclusionsButton() {
         assertExcluded(true, "Re-include paper into current search", "glyphicon-ok-circle");
+    }
+
+    @Test
+    public void isAssociatedWithNewsletter_withNoNewsletterLink() {
+        EditablePaperPanel p = makePanel();
+        assertThat(p.isAssociatedWithNewsletter()).isFalse();
+    }
+
+    @Test
+    public void isAssociatedWithNewsletter_withNewsletterLink() {
+        EditablePaperPanel p = makePanel();
+        p
+            .getModelObject()
+            .setNewsletterLink(new Paper.NewsletterLink(1, "i1", 1, 1, "t1", "hl"));
+        assertThat(p.isAssociatedWithNewsletter()).isTrue();
+    }
+
+    @Test
+    public void isAssociatedWithWipNewsletter_withNoNewsletterLink_isFalse() {
+        EditablePaperPanel p = makePanel();
+        assertThat(p.isAssociatedWithWipNewsletter()).isFalse();
+    }
+
+    @Test
+    public void isAssociatedWithWipNewsletter_withNewsletterLinkInNonWipStatus_isFalse() {
+        EditablePaperPanel p = makePanel();
+        p
+            .getModelObject()
+            .setNewsletterLink(new Paper.NewsletterLink(1, "i1", PublicationStatus.PUBLISHED.getId(), 1, "t1", "hl"));
+        assertThat(p.isAssociatedWithWipNewsletter()).isFalse();
+    }
+
+    @Test
+    public void isAssociatedWithWipNewsletter_withNewsletterLinkInWipStatus_isTrue() {
+        EditablePaperPanel p = makePanel();
+        p
+            .getModelObject()
+            .setNewsletterLink(new Paper.NewsletterLink(1, "i1", PublicationStatus.WIP.getId(), 1, "t1", "hl"));
+        assertThat(p.isAssociatedWithWipNewsletter()).isTrue();
     }
 
 }

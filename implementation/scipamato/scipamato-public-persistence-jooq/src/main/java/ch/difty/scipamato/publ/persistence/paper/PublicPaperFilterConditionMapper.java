@@ -11,7 +11,7 @@ import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
-import org.jooq.util.postgres.PostgresDataType;
+import org.jooq.impl.SQLDataType;
 
 import ch.difty.scipamato.common.persistence.AbstractFilterConditionMapper;
 import ch.difty.scipamato.common.persistence.FilterConditionMapper;
@@ -159,6 +159,9 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
      * <pre>
      * return PAPER.CODES.contains(codeCollection.toArray(new String[codeCollection.size()]));
      * </pre>
+     * <p>
+     * While I originally casted to PostgresDataType.TEXT, I now need to cast to SQLDataType.CLOB
+     * due to https://github.com/jOOQ/jOOQ/issues/7375
      */
     private Condition codeCondition(final List<String> codeCollection) {
         final List<Field<String>> convCodes = codeCollection
@@ -166,7 +169,7 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
             .filter(Objects::nonNull)
             .map(str -> DSL
                 .val(str)
-                .cast(PostgresDataType.TEXT))
+                .cast(SQLDataType.CLOB))
             .collect(Collectors.toList());
         return PAPER.CODES.contains(DSL.array(convCodes));
     }

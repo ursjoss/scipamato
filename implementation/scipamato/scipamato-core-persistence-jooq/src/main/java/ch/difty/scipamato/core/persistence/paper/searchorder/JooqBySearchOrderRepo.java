@@ -128,7 +128,6 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
      * using AND operators
      */
     private Condition getConditionFromSingleSearchCondition(final SearchCondition searchCondition) {
-        // TODO evaluate the search conditions to find the newsletter stuff
         final ConditionalSupplier conditions = new ConditionalSupplier();
         for (final BooleanSearchTerm st : searchCondition.getBooleanSearchTerms())
             conditions.add(() -> booleanSearchTermEvaluator.evaluate(st));
@@ -176,19 +175,13 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
         final LikeEscapeStep headlineCondition = PAPER_NEWSLETTER.HEADLINE.likeIgnoreCase(
             "%" + sc.getNewsletterHeadline() + "%");
         if (sc.getNewsletterTopicId() != null && sc.getNewsletterHeadline() != null) {
-            nlConditions.add(() -> {
-                return DSL.exists(step
-                    .and(topicCondition)
-                    .and(headlineCondition));
-            });
+            nlConditions.add(() -> DSL.exists(step
+                .and(topicCondition)
+                .and(headlineCondition)));
         } else if (sc.getNewsletterTopicId() != null) {
-            nlConditions.add(() -> {
-                return DSL.exists(step.and(topicCondition));
-            });
+            nlConditions.add(() -> DSL.exists(step.and(topicCondition)));
         } else {
-            nlConditions.add(() -> {
-                return DSL.exists(step.and(headlineCondition));
-            });
+            nlConditions.add(() -> DSL.exists(step.and(headlineCondition)));
         }
         return nlConditions.combineWithAnd();
     }
