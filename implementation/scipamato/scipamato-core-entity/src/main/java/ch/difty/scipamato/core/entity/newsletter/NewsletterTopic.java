@@ -13,6 +13,9 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 public class NewsletterTopic extends IdScipamatoEntity<Integer> {
     private static final long serialVersionUID = 1L;
 
+    @NotNull
+    private String title;
+
     public NewsletterTopic(final Integer id, final String title) {
         setId(id);
         setTitle(title);
@@ -34,9 +37,6 @@ public class NewsletterTopic extends IdScipamatoEntity<Integer> {
         }
 
     }
-
-    @NotNull
-    private String title;
 
     @Override
     public String getDisplayValue() {
