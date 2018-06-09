@@ -576,8 +576,7 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(papers
             .stream()
             .map(Paper::getId)
-            .collect(Collectors.toList())
-            .contains(31l));
+            .collect(Collectors.toList())).contains(31l);
     }
 
     @Test
