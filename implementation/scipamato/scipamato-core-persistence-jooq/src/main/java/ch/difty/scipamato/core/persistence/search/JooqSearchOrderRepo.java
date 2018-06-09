@@ -169,7 +169,6 @@ public class JooqSearchOrderRepo extends
     }
 
     protected SearchCondition fetchSearchConditionWithId(final Long scId) {
-        // TODO headline nicht drin
         return getDsl()
             .selectFrom(SEARCH_CONDITION)
             .where(SEARCH_CONDITION.SEARCH_CONDITION_ID.eq(scId))
