@@ -128,7 +128,6 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
      * using AND operators
      */
     private Condition getConditionFromSingleSearchCondition(final SearchCondition searchCondition) {
-        // TODO evaluate the search conditions to find the newsletter stuff
         final ConditionalSupplier conditions = new ConditionalSupplier();
         for (final BooleanSearchTerm st : searchCondition.getBooleanSearchTerms())
             conditions.add(() -> booleanSearchTermEvaluator.evaluate(st));
