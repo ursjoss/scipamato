@@ -27,14 +27,6 @@ public class NewsletterTopicModel extends InjectedLoadableDetachableModel<Newsle
         this.languageCode = AssertAs.notNull(languageCode, "languageCode");
     }
 
-    /**
-     * Protected constructor for testing without wicket application.
-     */
-    protected NewsletterTopicModel(final String languageCode, final NewsletterTopicService service) {
-        this(languageCode);
-        this.service = service;
-    }
-
     public List<NewsletterTopic> load() {
         return service.findAll(languageCode);
     }
