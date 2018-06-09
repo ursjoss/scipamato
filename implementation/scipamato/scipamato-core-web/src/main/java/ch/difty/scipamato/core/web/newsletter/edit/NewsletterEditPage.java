@@ -52,7 +52,6 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
     @SpringBean
     private NewsletterService service;
 
-    private PaperFilter                    filter;
     private PaperSlimByPaperFilterProvider dataProvider;
 
     private boolean newNewsletter;
