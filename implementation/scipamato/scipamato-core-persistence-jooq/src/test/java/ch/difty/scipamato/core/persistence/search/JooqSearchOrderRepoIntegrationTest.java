@@ -144,21 +144,20 @@ public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegra
             .getSearchConditions()
             .size()).isGreaterThanOrEqualTo(2);
 
-        SearchCondition so1 = so
+        SearchCondition sc1 = so
             .getSearchConditions()
             .get(0);
-        assertThat(so1).isNotNull();
-        assertThat(so1.getAuthors()).isEqualTo("kutlar");
-        assertThat(so1.getDisplayValue()).isEqualTo("kutlar");
+        assertThat(sc1).isNotNull();
+        assertThat(sc1.getAuthors()).isEqualTo("kutlar");
+        assertThat(sc1.getDisplayValue()).isEqualTo("kutlar");
 
-        SearchCondition so2 = so
+        SearchCondition sc2 = so
             .getSearchConditions()
             .get(1);
-        assertThat(so2).isNotNull();
-        assertThat(so2.getAuthors()).isEqualTo("turner");
-        // TODO check why this is not set
-        // assertThat(so2.getPublicationYear()).isEqualTo("2014-2015");
-        assertThat(so2.getDisplayValue()).isEqualTo("turner AND 2014-2015");
+        assertThat(sc2).isNotNull();
+        assertThat(sc2.getAuthors()).isEqualTo("turner");
+        assertThat(sc2.getPublicationYear()).isEqualTo("2014-2015");
+        assertThat(sc2.getDisplayValue()).isEqualTo("turner AND 2014-2015");
     }
 
     @Test
