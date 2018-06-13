@@ -54,6 +54,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 - 08/08 - Core: Add/Maintain Newsletter. Assign/remove papers to/from newsletter. Search by newsletter attributes
 - 08/22 - Public: Added referential integrity constraints between codes and code_classes
+- 08/35 - Core/Public: New Studies: Manage newsletters in Core, assign papers with topics. Syncronize to Public (new studies)
 
 .Changed
 

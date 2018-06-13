@@ -209,6 +209,10 @@
                                         | code_tr
                                         | paper
                                         | paper_code
+                                        | newsletter
+                                        | newsletter_topic
+                                        | newsletter_topic_tr
+                                        | paper_newsletter
                                     </includes>
                                     <excludes />
                                     <inputSchema>${db.schema}</inputSchema>
@@ -246,6 +250,10 @@
                                         code_class
                                         | code
                                         | paper
+                                        | new_study
+                                        | new_study_topic
+                                        | newsletter
+                                        | newsletter_topic
                                     </includes>
                                     <excludes />
                                     <inputSchema>${db.schema}</inputSchema>

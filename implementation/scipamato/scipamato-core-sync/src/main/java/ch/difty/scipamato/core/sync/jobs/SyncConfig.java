@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.sync.jobs;
 
 import javax.sql.DataSource;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -123,6 +124,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
      *     the recordset from scipamato-core
      * @return the entity of type {@literal T}
      * @throws SQLException
+     *     in case the recordset cannot be evaluated properly
      */
     protected abstract T makeEntity(ResultSet rs) throws SQLException;
 
@@ -161,6 +163,10 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
 
     protected Timestamp getTimestamp(final TableField<?, Timestamp> field, final ResultSet rs) throws SQLException {
         return rs.getTimestamp(field.getName());
+    }
+
+    protected Date getDate(final TableField<?, Date> field, final ResultSet rs) throws SQLException {
+        return rs.getDate(field.getName());
     }
 
     protected Timestamp getNow() {

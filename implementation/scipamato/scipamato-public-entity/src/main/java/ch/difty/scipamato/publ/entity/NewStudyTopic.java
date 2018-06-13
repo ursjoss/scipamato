@@ -1,5 +1,6 @@
 package ch.difty.scipamato.publ.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -18,6 +19,10 @@ public class NewStudyTopic extends PublicEntity {
     private final int            sort;
     private final String         title;
     private final List<NewStudy> studies;
+
+    public NewStudyTopic(final int sort, final String title) {
+        this(sort, title, new ArrayList<>());
+    }
 
     public enum NewStudyTopicFields implements FieldEnumType {
         SORT("sort"),

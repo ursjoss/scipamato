@@ -12,21 +12,21 @@ public class NewStudyTest extends PublicEntityTest<NewStudy> {
 
     @Override
     protected NewStudy newEntity() {
-        return new NewStudy(1, 10, "ref", "hl", "descr");
+        return new NewStudy(1, 10, 2018, "authors", "hl", "descr");
     }
 
     @Override
     protected void assertSpecificGetters() {
         assertThat(getEntity().getSort()).isEqualTo(1);
         assertThat(getEntity().getNumber()).isEqualTo(10);
-        assertThat(getEntity().getReference()).isEqualTo("ref");
+        assertThat(getEntity().getReference()).isEqualTo("(authors; 2018)");
         assertThat(getEntity().getHeadline()).isEqualTo("hl");
         assertThat(getEntity().getDescription()).isEqualTo("descr");
     }
 
     @Override
     protected String getToString() {
-        return "NewStudy(sort=1, number=10, reference=ref, headline=hl, description=descr)";
+        return "NewStudy(sort=1, number=10, year=2018, authors=authors, headline=hl, description=descr)";
     }
 
     @Override
@@ -43,7 +43,7 @@ public class NewStudyTest extends PublicEntityTest<NewStudy> {
     public void assertEnumFields() {
         assertThat(NewStudy.NewStudyFields.values())
             .extracting("name")
-            .containsExactly("sort", "number", "reference", "headline", "description");
+            .containsExactly("sort", "number", "year", "authors", "reference", "headline", "description");
     }
 
 }
