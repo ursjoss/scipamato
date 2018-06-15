@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.sync.jobs.newsletter;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import lombok.Builder;
