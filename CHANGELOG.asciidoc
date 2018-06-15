@@ -32,7 +32,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 ////
 
 [[v0.0.0]]
-== [0.0.0] -- 2017-00-00
+== [0.0.0] -- 2018-00-00
 
 .Added
 
@@ -52,15 +52,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
-- 08/08 - Core: Add/Maintain Newsletter. Assign/remove papers to/from newsletter. Search by newsletter attributes
-- 08/22 - Public: Added referential integrity constraints between codes and code_classes
-- 08/35 - Core/Public: New Studies: Manage newsletters in Core, assign papers with topics. Syncronize to Public (new studies)
 
 .Changed
-
-- 08/23 - Core: Re-extracted scipamato-core-logic that is needed for the migration tool (not part of the open-source aspect of scipamato)
-- Bump dependencies: Spring Boot starter, jOOQ, lombok, flyway, jasperreports, mockito, assertj, equalsverifier, jacoco-maven-plugin
-- 08/36 - Public: Open paper detail page from new-study page in separate browser tab
 
 .Deprecated
 
@@ -68,9 +61,26 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Fixed
 
-- JooqReadOnlyRepo implementations use the record to entity mappers also for the find methods
-
 .Security
+
+
+[[v0.8.5]]
+== [0.8.5] -- 2018-06-15
+
+
+.Added
+- 08/08 - Core: Add/Maintain Newsletter. Assign/remove papers to/from newsletter. Search by newsletter attributes
+- 08/22 - Public: Added referential integrity constraints between codes and code_classes
+- 08/35 - Core/Public: New Studies: Manage newsletters in Core, assign papers with topics. Syncronize to Public (new studies)
+
+.Changed
+- 08/23 - Core: Re-extracted scipamato-core-logic that is needed for the migration tool (not part of the open-source aspect of scipamato)
+- Bump dependencies: Spring Boot starter, jOOQ, lombok, flyway, jasperreports, mockito, assertj, equalsverifier, jacoco-maven-plugin
+- 08/36 - Public: Open paper detail page from new-study page in separate browser tab
+
+
+.Fixed
+- JooqReadOnlyRepo implementations use the record to entity mappers also for the find methods
 
 
 [[v0.8.4]]
