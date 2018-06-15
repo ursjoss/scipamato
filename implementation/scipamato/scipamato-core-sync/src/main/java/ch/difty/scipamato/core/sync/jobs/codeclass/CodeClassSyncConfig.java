@@ -29,10 +29,9 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
 /**
  * Defines the code class synchronization job, applying two steps:
  * <ol>
- * <li>codeClassInsertingOrUpdating: inserts new records or updates if already
- * present</li>
- * <li>codeClassPurging: removes records that have not been touched by the first
- * step (within a defined grace time in minutes)</li>
+ * <li>insertingOrUpdating: inserts new records or updates if already present</li>
+ * <li>purging: removes records that have not been touched by the first step
+ * (within a defined grace time in minutes)</li>
  * </ol>
  *
  * @author u.joss

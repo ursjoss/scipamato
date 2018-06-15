@@ -107,7 +107,7 @@ public class NewsletterListPage extends BasePage<Void> {
             NewsletterFilterFields.PUBLICATION_STATUS.getName());
         final IModel<List<PublicationStatus>> choicesModel = Model.ofList(Arrays.asList(PublicationStatus.values()));
         BootstrapSelect<PublicationStatus> select = new BootstrapSelect<>(id, selectionModel, choicesModel,
-            new EnumChoiceRenderer(this));
+            new EnumChoiceRenderer<>(this));
         select.setNullValid(true);
         select.add(new AjaxFormComponentUpdatingBehavior("change") {
             @Override

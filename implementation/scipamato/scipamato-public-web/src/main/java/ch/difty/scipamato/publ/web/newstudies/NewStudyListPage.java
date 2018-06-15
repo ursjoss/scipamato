@@ -1,5 +1,7 @@
 package ch.difty.scipamato.publ.web.newstudies;
 
+import java.util.List;
+
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -13,6 +15,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.StringValue;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.publ.entity.NewStudy;
@@ -29,7 +32,7 @@ import ch.difty.scipamato.publ.web.paper.browse.PublicPaperDetailPage;
  * collection of new studies is presented.
  * <p>
  * With the use of page-parameters, an older collection of new studies can be
- * selected instead (TODO).
+ * selected instead.
  * <p>
  * The page is typically shown in an iframe of a CMS.
  *
@@ -91,7 +94,8 @@ public class NewStudyListPage extends BasePage<Void> {
     }
 
     private ListView<NewStudyTopic> newNewStudyCollection(final String id) {
-        return new ListView<NewStudyTopic>(id, newStudyTopicService.findMostRecentNewStudyTopics()) {
+        final List<NewStudyTopic> topics = retrieveStudyCollection();
+        return new ListView<NewStudyTopic>(id, topics) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -116,6 +120,14 @@ public class NewStudyListPage extends BasePage<Void> {
         };
     }
 
+    private List<NewStudyTopic> retrieveStudyCollection() {
+        final StringValue issue = getPageParameters().get("issue");
+        if (issue == null || issue.isNull() || issue.isEmpty())
+            return newStudyTopicService.findMostRecentNewStudyTopics(getLanguageCode());
+        else
+            return newStudyTopicService.findNewStudyTopicsForNewsletterIssue(issue.toString(), getLanguageCode());
+    }
+
     /**
      * Link pointing to the study detail page with the current study
      *
@@ -137,6 +149,12 @@ public class NewStudyListPage extends BasePage<Void> {
             @Override
             public void onClick() {
                 setResponsePage(new PublicPaperDetailPage(pp, getPageReference()));
+            }
+
+            @Override
+            protected void onComponentTag(ComponentTag tag) {
+                super.onComponentTag(tag);
+                tag.put("target", "_blank");
             }
         };
         link.add(new Label(id + "Label",

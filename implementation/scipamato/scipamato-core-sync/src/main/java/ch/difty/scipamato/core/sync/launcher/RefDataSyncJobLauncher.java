@@ -21,6 +21,10 @@ import org.springframework.stereotype.Component;
  * <li>codes</li>
  * <li>keywords TODO</li>
  * <li>papers</li>
+ * <li>newsletters</li>
+ * <li>newsletterTopics</li>
+ * <li>newStudies</li>
+ * <li>newStudyTopics</li>
  * </ol>
  *
  * @author u.joss
@@ -32,15 +36,26 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
     private final Job         syncCodeClassJob;
     private final Job         syncCodeJob;
     private final Job         syncPaperJob;
+    private final Job         syncNewsletterJob;
+    private final Job         syncNewsletterTopicJob;
+    private final Job         syncNewStudyJob;
+    private final Job         syncNewStudyTopicJob;
     private final JobLauncher jobLauncher;
 
     public RefDataSyncJobLauncher(final JobLauncher jobLauncher,
         @Qualifier("syncCodeClassJob") final Job syncCodeClassJob, @Qualifier("syncCodeJob") final Job syncCodeJob,
-        @Qualifier("syncPaperJob") final Job syncPaperJob) {
+        @Qualifier("syncPaperJob") final Job syncPaperJob, @Qualifier("syncNewsletterJob") final Job syncNewsletterJob,
+        @Qualifier("syncNewsletterTopicJob") final Job syncNewsletterTopicJob,
+        @Qualifier("syncNewStudyJob") final Job syncNewStudyJob,
+        @Qualifier("syncNewStudyTopicJob") final Job syncNewStudyTopicJob) {
         this.jobLauncher = jobLauncher;
         this.syncCodeClassJob = syncCodeClassJob;
         this.syncCodeJob = syncCodeJob;
         this.syncPaperJob = syncPaperJob;
+        this.syncNewsletterJob = syncNewsletterJob;
+        this.syncNewsletterTopicJob = syncNewsletterTopicJob;
+        this.syncNewStudyJob = syncNewStudyJob;
+        this.syncNewStudyTopicJob = syncNewStudyTopicJob;
     }
 
     @Override
@@ -57,6 +72,10 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
             runSingleJob("code_classes", syncCodeClassJob, result, jobParameters);
             runSingleJob("codes", syncCodeJob, result, jobParameters);
             runSingleJob("papers", syncPaperJob, result, jobParameters);
+            runSingleJob("newsletters", syncNewsletterJob, result, jobParameters);
+            runSingleJob("newsletterTopics", syncNewsletterTopicJob, result, jobParameters);
+            runSingleJob("syncNewStudyTopicJob", syncNewStudyTopicJob, result, jobParameters);
+            runSingleJob("newStudies", syncNewStudyJob, result, jobParameters);
             log.info("Job finished successfully.");
         } catch (final Exception ex) {
             log.error("Job terminated.", ex);
