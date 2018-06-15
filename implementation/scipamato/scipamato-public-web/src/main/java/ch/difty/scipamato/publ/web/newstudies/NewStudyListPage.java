@@ -150,6 +150,12 @@ public class NewStudyListPage extends BasePage<Void> {
             public void onClick() {
                 setResponsePage(new PublicPaperDetailPage(pp, getPageReference()));
             }
+
+            @Override
+            protected void onComponentTag(ComponentTag tag) {
+                super.onComponentTag(tag);
+                tag.put("target", "_blank");
+            }
         };
         link.add(new Label(id + "Label",
             new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.REFERENCE.getName())));
