@@ -54,6 +54,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
+- Bump dependencies: spring-boot-starter-parent, mockito
 
 .Deprecated
 
@@ -77,7 +78,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 08/23 - Core: Re-extracted scipamato-core-logic that is needed for the migration tool (not part of the open-source aspect of scipamato)
 - Bump dependencies: Spring Boot starter, jOOQ, lombok, flyway, jasperreports, mockito, assertj, equalsverifier, jacoco-maven-plugin
 - 08/36 - Public: Open paper detail page from new-study page in separate browser tab
-
 
 .Fixed
 - JooqReadOnlyRepo implementations use the record to entity mappers also for the find methods
