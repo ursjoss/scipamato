@@ -35,15 +35,25 @@ public class PubmedXmlService implements PubmedArticleService {
 
     @Override
     public Optional<PubmedArticleFacade> getPubmedArticleWithPmid(final int pmId) {
+        final Optional<PubmedArticleSet> set = retrievePubmedArticleSet(pmId);
+        if (set.isPresent()) {
+            final List<java.lang.Object> articles = set
+                .get()
+                .getPubmedArticleOrPubmedBookArticle();
+            if (articles != null)
+                return articles
+                    .stream()
+                    .map(PubmedArticleFacade::newPubmedArticleFrom)
+                    .findFirst();
+        }
+        return Optional.empty();
+    }
+
+    private Optional<PubmedArticleSet> retrievePubmedArticleSet(final int pmId) {
         try {
-            final PubmedArticleSet set = pubMed.articleWithId(String.valueOf(pmId));
-            final List<java.lang.Object> articles = set.getPubmedArticleOrPubmedBookArticle();
-            return articles
-                .stream()
-                .map(PubmedArticleFacade::newPubmedArticleFrom)
-                .findFirst();
+            return Optional.ofNullable(pubMed.articleWithId(String.valueOf(pmId)));
         } catch (final Exception ex) {
-            log.error("Unexpected error", ex);
+            log.error("Unexpected error: {}", ex.getMessage());
             return Optional.empty();
         }
     }
