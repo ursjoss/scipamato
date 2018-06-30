@@ -1,29 +1,34 @@
 package ch.difty.scipamato.common.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@EnableWebSecurity
-public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
+@Configuration
+public class TestWicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsService userDetailService;
-
-    public WicketWebSecurityConfig(final UserDetailsService userDetailService) {
-        this.userDetailService = userDetailService;
+    @Bean(name = "authenticationManager")
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
-    @Autowired
-    public void configAuthentication(final AuthenticationManagerBuilder auth) throws Exception {
+    @Override
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth
-            .userDetailsService(userDetailService)
+            .userDetailsService(userDetailsService())
             .passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new TestUserDetailsService();
     }
 
     @Bean
@@ -39,7 +44,7 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()
             .and()
                 .logout().permitAll();
-     // @formatter:on
+        // @formatter:on
     }
 
 }

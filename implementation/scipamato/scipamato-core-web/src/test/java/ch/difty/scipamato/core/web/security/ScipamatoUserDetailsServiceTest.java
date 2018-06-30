@@ -18,13 +18,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.persistence.UserService;
-import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetailService;
 import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails;
+import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetailsService;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ScipamatoUserDetailServiceTest {
+public class ScipamatoUserDetailsServiceTest {
 
-    private ScipamatoUserDetailService service;
+    private ScipamatoUserDetailsService service;
 
     @Mock
     private       UserService userServiceMock;
@@ -32,7 +32,7 @@ public class ScipamatoUserDetailServiceTest {
 
     @Before
     public void setUp() {
-        service = new ScipamatoUserDetailService(userServiceMock);
+        service = new ScipamatoUserDetailsService(userServiceMock);
     }
 
     @After

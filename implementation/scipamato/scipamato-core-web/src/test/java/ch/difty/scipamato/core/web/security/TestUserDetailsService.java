@@ -24,9 +24,9 @@ import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails;
  *
  * @author u.joss
  */
-@Service("testUserDetailService")
+@Service
 @Primary
-public class TestUserDetailService implements UserDetailsService {
+public class TestUserDetailsService implements UserDetailsService {
 
     private static final String ADMIN    = "testadmin";
     private static final String USER     = "testuser";
@@ -35,7 +35,7 @@ public class TestUserDetailService implements UserDetailsService {
 
     private final Map<String, User> users = new HashMap<>();
 
-    public TestUserDetailService() {
+    public TestUserDetailsService() {
         users.put(ADMIN, new User(1, ADMIN, "a", "a", "a", PASSWORD, true, Arrays.asList(Role.ADMIN, Role.USER)));
         users.put(USER, new User(2, USER, "t", "u", "tu", PASSWORD, true, Collections.singletonList(Role.USER)));
     }

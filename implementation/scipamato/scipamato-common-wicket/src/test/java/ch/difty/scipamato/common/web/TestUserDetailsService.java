@@ -4,13 +4,11 @@ import java.util.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 /**
@@ -22,9 +20,7 @@ import org.springframework.util.StringUtils;
  *
  * @author u.joss
  */
-@Service("testUserDetailService")
-@Primary
-public class TestUserDetailService implements UserDetailsService {
+public class TestUserDetailsService implements UserDetailsService {
 
     private static final String ADMIN    = "testadmin";
     private static final String USER     = "testuser";
@@ -33,7 +29,7 @@ public class TestUserDetailService implements UserDetailsService {
 
     private final Map<String, User> users = new HashMap<>();
 
-    public TestUserDetailService() {
+    public TestUserDetailsService() {
         users.put(ADMIN, new User(ADMIN, PASSWORD, Arrays.asList(new Role("ROLE_ADMIN"), new Role("ROLE_USER"))));
         users.put(USER, new User(USER, PASSWORD, Collections.singletonList(new Role("ROLE_USER"))));
     }

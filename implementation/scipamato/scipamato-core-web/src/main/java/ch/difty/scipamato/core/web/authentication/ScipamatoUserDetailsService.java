@@ -18,12 +18,12 @@ import ch.difty.scipamato.core.persistence.UserService;
  *
  * @author u.joss
  */
-@Service("scipamatoUserDetailService")
-public class ScipamatoUserDetailService implements UserDetailsService {
+@Service("userDetailsService")
+public class ScipamatoUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
 
-    public ScipamatoUserDetailService(final UserService userService) {
+    public ScipamatoUserDetailsService(final UserService userService) {
         this.userService = userService;
     }
 
@@ -31,11 +31,8 @@ public class ScipamatoUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(final String username) {
         final String un = AssertAs.notNull(username, "username");
         final Optional<User> userOption = userService.findByUserName(un);
-        if (!userOption.isPresent()) {
-            throw new UsernameNotFoundException("No user found with name " + un);
-        } else {
-            return new ScipamatoUserDetails(userOption.get());
-        }
+        final User user = userOption.orElseThrow(() -> new UsernameNotFoundException("No user found with name " + un));
+        return new ScipamatoUserDetails(user);
     }
 
 }
