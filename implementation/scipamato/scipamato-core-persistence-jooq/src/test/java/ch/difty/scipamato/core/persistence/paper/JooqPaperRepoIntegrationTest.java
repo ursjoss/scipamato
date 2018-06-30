@@ -39,7 +39,8 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     private static final String TEST_FILE_2   = "test file 2";
     private static final String LC            = "en_us";
 
-    private static final String ID_PART                = ",id=1,createdBy=1,lastModifiedBy=1,created=2016-12-14T14:47:29.431,lastModified=2016-12-14T14:47:29.431,version=1";
+    private static final String ID_PART = ",id=1,createdBy=1,lastModifiedBy=1,created=2016-12-14T14:47:29.431,lastModified=2016-12-14T14:47:29.431,version=1";
+
     // @formatter:off
     private static final String PAPER1_WO_CODE_CLASSES =
             "Paper[number=1,doi=10.1093/aje/kwu275,pmId=25395026"
