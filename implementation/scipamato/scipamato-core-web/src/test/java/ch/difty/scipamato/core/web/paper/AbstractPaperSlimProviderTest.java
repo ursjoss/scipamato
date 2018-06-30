@@ -32,22 +32,22 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     static final int PAGE_SIZE = 3;
 
     @Autowired
-    protected ScipamatoApplication application;
+    ScipamatoApplication application;
 
     @Mock
     PaperSlimService serviceMock;
     @Mock
-    protected PaperService paperServiceMock;
+    PaperService paperServiceMock;
     @Mock
     private   PaperSlim    entityMock;
     @Mock
     protected Paper        paperMock;
 
-    protected P provider;
+    P provider;
     List<PaperSlim> pageOfSlimPapers;
     List<Paper>     pageOfPapers;
 
-    protected abstract F getFilter();
+    abstract F getFilter();
 
     private WicketTester tester;
 
