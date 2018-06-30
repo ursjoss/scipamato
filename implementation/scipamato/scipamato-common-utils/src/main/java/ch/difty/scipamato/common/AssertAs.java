@@ -13,6 +13,8 @@ public final class AssertAs {
      *     to validate
      * @param name
      *     the name of the field
+     * @param <T>
+     *     Type of the variable begin checked
      * @return the non-null value of type {@code T}
      * @throws NullArgumentException
      *     if the value is null
@@ -28,6 +30,8 @@ public final class AssertAs {
      *
      * @param value
      *     to validate
+     * @param <T>
+     *     Type of the variable begin checked
      * @return the non-null value of type {@code T}
      * @throws NullArgumentException
      *     if the value is null

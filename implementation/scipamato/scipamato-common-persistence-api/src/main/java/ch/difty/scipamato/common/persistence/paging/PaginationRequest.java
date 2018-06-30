@@ -7,11 +7,11 @@ import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
 /**
  * The {@link PaginationRequest} serves to define both pagination and sorting
  * specifications and pass it on towards the persistence layer.
- * <p/>
+ * <p>
  * It is currently only targeting offset pagination due to the limitations of
  * the presentation layer. It could be extended to hold information that could
  * be used for keyset pagination later on.
- * <p/>
+ * <p>
  * This class was inspired by spring data's Pageable, however it only tracks
  * offset and pageSize together with the (optional) sortSpecification.
  *

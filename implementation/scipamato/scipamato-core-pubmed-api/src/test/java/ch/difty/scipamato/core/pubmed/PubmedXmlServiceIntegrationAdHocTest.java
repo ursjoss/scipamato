@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * the machine running the test is offline or cannot reach PubMed for some other
  * reason.
  * <p>
- * Also it's not polite to continuously
+ * Also it's not polite to continuously access the public service.
  *
  * @author u.joss
  */

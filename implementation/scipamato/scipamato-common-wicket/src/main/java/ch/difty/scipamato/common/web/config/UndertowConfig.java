@@ -32,6 +32,8 @@ public class UndertowConfig {
      * the confidential port used for https {@literal server.port}. The bean is only
      * instantiated if the property {@literal scipamato.redirect-from-port} is
      * defined.
+     *
+     * @return the configured EmbeddedServletContainerFactory
      */
     @Bean
     @ConditionalOnProperty(name = "scipamato.redirect-from-port", relaxedNames = true)

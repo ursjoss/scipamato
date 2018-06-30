@@ -145,8 +145,14 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     }
 
     /**
+     * @param field
+     *     the integer field to get the value from
+     * @param rs
+     *     the resultset providing the values
      * @return returns null if the column was null, the boxed integer value
      *     otherwise
+     * @throws SQLException
+     *     if the columnLabel is not valid; if a database access error occurs or this method is called on a closed result set
      */
     protected Integer getInteger(final TableField<?, Integer> field, final ResultSet rs) throws SQLException {
         final int val = rs.getInt(field.getName());
@@ -154,7 +160,13 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     }
 
     /**
+     * @param field
+     *     the long field to get the value from
+     * @param rs
+     *     the resultset providing the values
      * @return returns null if the column was null, the boxed long value otherwise
+     * @throws SQLException
+     *     if the columnLabel is not valid; if a database access error occurs or this method is called on a closed result set
      */
     protected Long getLong(final TableField<?, Long> field, final ResultSet rs) throws SQLException {
         final long val = rs.getLong(field.getName());

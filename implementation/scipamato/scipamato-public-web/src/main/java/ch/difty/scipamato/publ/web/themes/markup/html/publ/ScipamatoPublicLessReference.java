@@ -13,14 +13,14 @@ import org.apache.wicket.markup.head.HeaderItem;
  * be used by the ScipamatoPublicTheme in the development process of the
  * less/css classes. Should not be used in production. Use
  * {@link ScipamatoPublicCssReference} instead.
- *
- * <b>Usage<b/>
+ * <p>
+ * <strong>Usage</strong>
  *
  * <pre>
  * response.render(CssHeaderItem.forReference(ScipamatoPublicLessReference.instance()));
  * </pre>
  *
- * @author Michael Haitz <michael.haitz@agilecoders.de>
+ * @author <a href="mailto:michael.haitz@agilecoders.de">Michael Haitz</a>
  * @author Urs Joss
  */
 public class ScipamatoPublicLessReference extends LessResourceReference {

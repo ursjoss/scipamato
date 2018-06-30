@@ -27,6 +27,8 @@ public final class PropertyUtils {
      *     value does not explicitly match an enum value.
      * @param propertyKey
      *     the property key, used only for logging purposes
+     * @param <T>
+     *     Type of the property
      * @return enum of type {@code T}
      */
     public static <T extends Enum<T>> T fromProperty(final String propertyValue, final T[] values, final T defaultValue,

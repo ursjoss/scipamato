@@ -31,6 +31,10 @@ public interface BySearchOrderRepository<T extends IdScipamatoEntity<Long>> {
      * Finds a single page of entities of type {@code T} matching the provided
      * {@link SearchOrder} and {@link PaginationContext}.
      *
+     * @param searchOrder
+     *     the search specification
+     * @param paginationContext
+     *     the pagination specification
      * @return paged list of entities
      * @see #findBySearchOrder(SearchOrder)
      */
@@ -50,6 +54,10 @@ public interface BySearchOrderRepository<T extends IdScipamatoEntity<Long>> {
      * Finds a single page of entity ids matching the provided {@link SearchOrder}
      * and {@link PaginationContext}.
      *
+     * @param searchOrder
+     *     the search specification
+     * @param paginationContext
+     *     the pagination specification
      * @return paged list of entity ids
      * @see #findBySearchOrder(SearchOrder)
      */

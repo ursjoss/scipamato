@@ -27,7 +27,11 @@ public class ScipamatoPdfResourceHandler extends PdfResourceHandler {
     }
 
     /**
-     * Constructor accepting a {@link ClusterablePdfExporterConfiguration}
+     * Constructor accepting a {@link ClusterablePdfExporterConfiguration}. If null is passed as config,
+     * a default exporter config will apply.
+     *
+     * @param config
+     *     the {@link ClusterablePdfExporterConfiguration}
      */
     public ScipamatoPdfResourceHandler(final ClusterablePdfExporterConfiguration config) {
         if (config != null) {

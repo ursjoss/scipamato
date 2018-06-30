@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
  * The tokens targeted for the user fields, could be of match type:
  * <ul>
  * <li><b>CONTAINS:</b> search term contained within field, e.g.
- * {@code createdBy like '%foo%'} </code></li>
+ * {@code createdBy like '%foo%'} </li>
  * <li><b>NONE:</b> dummy category which will be ignored.</li>
  * </ul>
  * <p>

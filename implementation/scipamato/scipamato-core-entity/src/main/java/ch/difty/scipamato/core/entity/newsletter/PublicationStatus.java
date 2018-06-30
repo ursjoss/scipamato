@@ -38,6 +38,8 @@ public enum PublicationStatus {
 
     /**
      * Newsletters of only certain status are eligible for deletes or modifications.
+     *
+     * @return if the newsletter is in status WIP (work in progress)
      */
     public boolean isInProgress() {
         return WIP == this;

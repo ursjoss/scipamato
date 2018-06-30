@@ -35,8 +35,7 @@ public interface SearchTerm {
      * @param searchConditionId
      *     the database id of the associated search condition
      * @param fieldName
-     *     the name of the field (in table paper) the search is to be
-     *     performed on
+     *     the name of the field (in table paper) the search is to be performed on
      * @param rawSearchTerm
      *     the search term definition
      * @return one of the implementations of {@link SearchTerm}
@@ -63,7 +62,9 @@ public interface SearchTerm {
      * rawSearchTerm only
      *
      * @param fieldName
+     *     the name of the field (in table paper) the search is to be performed on
      * @param rawSearchTerm
+     *     the search term definition
      * @return the search term
      */
     static StringSearchTerm newStringSearchTerm(final String fieldName, final String rawSearchTerm) {
@@ -75,7 +76,9 @@ public interface SearchTerm {
      * rawSearchTerm only
      *
      * @param fieldName
+     *     the name of the field (in table paper) the search is to be performed on
      * @param rawSearchTerm
+     *     the search term definition
      * @return the search term
      */
     static IntegerSearchTerm newIntegerSearchTerm(final String fieldName, final String rawSearchTerm) {
@@ -87,7 +90,9 @@ public interface SearchTerm {
      * rawSearchTerm only
      *
      * @param fieldName
+     *     the name of the field (in table paper) the search is to be performed on
      * @param rawSearchTerm
+     *     the search term definition
      * @return the search term
      */
     static BooleanSearchTerm newBooleanSearchTerm(final String fieldName, final String rawSearchTerm) {
@@ -99,7 +104,9 @@ public interface SearchTerm {
      * rawSearchTerm only
      *
      * @param fieldName
+     *     the name of the field (in table paper) the search is to be performed on
      * @param rawSearchTerm
+     *     the raw search term string
      * @return the search term
      */
     static AuditSearchTerm newAuditSearchTerm(final String fieldName, final String rawSearchTerm) {

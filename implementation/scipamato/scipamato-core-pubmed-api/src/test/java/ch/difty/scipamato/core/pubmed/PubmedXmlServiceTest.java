@@ -163,9 +163,7 @@ public class PubmedXmlServiceTest {
     @Test
     public void gettingArticles_withPubmedArticleSetWithoutArticleCollectionx_returnsEmptyList() {
         when(unmarshallerMock.unmarshal(isA(StreamSource.class))).thenReturn(makeMinimalValidPubmedArticleSet());
-
         assertThat(service.extractArticlesFrom("some valid xml")).isNotEmpty();
-
         verify(unmarshallerMock).unmarshal(isA(StreamSource.class));
     }
 

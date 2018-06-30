@@ -82,6 +82,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
      * Applies the showExcluded flag from the page parameters if present
      *
      * @param parameters
+     *     the page parameters
      */
     public PaperSearchPage(final PageParameters parameters) {
         super(parameters);
@@ -93,6 +94,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
      * must have a valid id. Supplements the page parameters from the model
      *
      * @param searchOrderModel
+     *     the model of the searchOrder
      */
     public PaperSearchPage(final IModel<SearchOrder> searchOrderModel) {
         super(searchOrderModel);

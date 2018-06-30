@@ -63,6 +63,7 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
     /**
      * Returns the issue date as a legacy java.util.Date. Required for wicket DateTextField.
      *
+     * @return issue date as {@link java.util.Date}
      * @deprecated With Wicket8 - hopefully, DateTextFields will allow to use java.time.LocalDate directly
      */
     @Deprecated
@@ -78,6 +79,7 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
      * Sets the issue date as legacy java.util.Date. Required for wicket DateTextField.
      *
      * @param issueDate
+     *     the date the newsletter was issued
      * @deprecated With Wicket8 - hopefully, DateTextFields will allow to use java.time.LocalDate directly
      */
     @Deprecated

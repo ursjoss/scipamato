@@ -6,7 +6,6 @@ package ch.difty.scipamato.core.auth;
  * The keys are defined in an external interface, so they can be used for
  * authorization in pages, e.g.:
  * <p>
- * <p>
  * {@literal @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })}
  *
  * @author u.joss

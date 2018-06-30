@@ -12,7 +12,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 public interface NewsletterTopicService {
 
     /**
-     * Find the localized {@link }NewsletterTopic}s
+     * Find the localized {@link NewsletterTopic}s
      *
      * @param languageCode
      *     the language code, e.g. 'en' or 'de'

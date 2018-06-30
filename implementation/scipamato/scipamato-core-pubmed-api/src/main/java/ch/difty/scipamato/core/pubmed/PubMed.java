@@ -18,6 +18,7 @@ public interface PubMed {
      * Retrieve a pubmed article with the given PMID.
      *
      * @param pmid
+     *     the pubmed id identifiying the article
      * @return pubmedArticleSet
      */
     @RequestLine("GET efetch.fcgi?db=pubmed&id={pmid}&retmode=xml&version=2.0")

@@ -19,6 +19,7 @@ public interface SearchTermEvaluator<T extends SearchTerm> {
      * Evaluates the searchTerm {@code T} to build the {@link Condition}
      *
      * @param searchTerm
+     *     the search term to evaluate
      * @return a jOOQ conditions
      */
     Condition evaluate(T searchTerm);

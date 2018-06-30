@@ -70,6 +70,8 @@ public abstract class AbstractLoginPage extends AbstractPage<Void> {
 
     /**
      * Provide the response page
+     *
+     * @return the response page
      */
     protected abstract AbstractPage<?> getResponsePage();
 

@@ -53,8 +53,12 @@ public class PubmedXmlService implements PubmedArticleService {
      * {@link PubmedArticleSet}.
      *
      * @param xmlString
+     *     the raw xml string to unmarshal
      * @return {@link PubmedArticleSet}
      * @throws IOException
+     *     TODO describe conditions
+     * @throws org.springframework.oxm.XmlMappingException
+     *     TODO describe conditions
      */
     public PubmedArticleSet unmarshal(final String xmlString) throws IOException {
         final StringReader reader = new StringReader(AssertAs.notNull(xmlString, "xmlString"));
@@ -64,7 +68,6 @@ public class PubmedXmlService implements PubmedArticleService {
     /**
      * Extracts PubMed articles and PubMed book articles from the source string
      * representing XML exported from PubMed.
-     * <p>
      * <p>
      * The XML string could be derived e.g. from
      * <ul>

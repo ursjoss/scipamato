@@ -16,6 +16,9 @@ public interface NewsletterAware {
 
     /**
      * Sets the relevant fields of the NewsletterTopic.
+     *
+     * @param newsletterTopic
+     *     the topic of the newsletter
      */
     void setNewsletterTopic(NewsletterTopic newsletterTopic);
 

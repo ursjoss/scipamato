@@ -30,6 +30,7 @@ public class PaperSlimBySearchOrderProvider extends AbstractPaperSlimProvider<Se
      * @param searchOrder
      *     the search specification
      * @param rowsPerPage
+     *     number of rows to place on the page
      */
     public PaperSlimBySearchOrderProvider(final SearchOrder searchOrder, final int rowsPerPage) {
         super(searchOrder != null ? searchOrder : new SearchOrder(), rowsPerPage);

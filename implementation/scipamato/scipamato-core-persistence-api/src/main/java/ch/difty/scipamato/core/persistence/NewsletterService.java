@@ -48,6 +48,7 @@ public interface NewsletterService extends EntityService<Integer, Newsletter, Ne
      *
      * @param paperId
      *     the id of the paper to remove from the newsletter
+     * @return whether the removal succeeded or not
      */
     boolean removePaperFromWipNewsletter(final long paperId);
 }

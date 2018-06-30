@@ -8,7 +8,6 @@ import java.util.List;
  * items (nulls or duplicates are ignored). It maintains a reference to the
  * current item, which can be set but is on the first item by default.
  * <p>
- * <p>
  * Two methods {@code advance} and {@code retreat} allow navigating within the
  * list. Advancing beyond the last item leaves the current item on the last
  * item. Similarly, retreating beyond the first item leaves the current item on

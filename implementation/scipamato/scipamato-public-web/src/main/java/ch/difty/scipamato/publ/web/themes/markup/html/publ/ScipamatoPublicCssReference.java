@@ -10,14 +10,14 @@ import org.apache.wicket.request.resource.CssResourceReference;
 
 /**
  * css resource reference that references `scipamato-public-bootstrap.css`.
- *
- * <b>Usage:</b>
+ * <p>
+ * <strong>Usage:</strong>
  *
  * <pre>
  * response.render(CssHeaderItem.forReference(GoogleCssReference.instance()));
  * </pre>
  *
- * @author Michael Haitz <michael.haitz@agilecoders.de>
+ * @author <a href="mailto:michael.haitz@agilecoders.de">Michael Haitz</a>
  * @author Urs Joss
  */
 public class ScipamatoPublicCssReference extends CssResourceReference {

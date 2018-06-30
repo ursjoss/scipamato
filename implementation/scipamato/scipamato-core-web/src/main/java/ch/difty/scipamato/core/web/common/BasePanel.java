@@ -46,7 +46,7 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
     }
 
     /**
-     * Get the currently active user
+     * @return the currently active user
      */
     protected User getActiveUser() {
         Object principal = SecurityContextHolder

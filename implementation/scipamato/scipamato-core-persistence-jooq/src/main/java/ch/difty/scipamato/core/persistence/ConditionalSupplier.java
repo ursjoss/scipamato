@@ -36,6 +36,10 @@ public class ConditionalSupplier {
 
     /**
      * Adds the provided condition supplier.
+     *
+     * @param conditionSupplier
+     *     the supplier to add
+     * @return the resulting conditional supplier
      */
     public ConditionalSupplier add(final Supplier<Condition> conditionSupplier) {
         conditionSuppliers.add(conditionSupplier);

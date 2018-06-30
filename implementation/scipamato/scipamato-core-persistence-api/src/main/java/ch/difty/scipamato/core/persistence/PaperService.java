@@ -98,6 +98,7 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      *
      * @param minimumPaperNumberToBeRecycled
      *     any gaps lower than this value will not be recycled
+     * @return the lowest free number that was identified
      */
     long findLowestFreeNumberStartingFrom(long minimumPaperNumberToBeRecycled);
 

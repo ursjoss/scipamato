@@ -8,11 +8,9 @@ import ch.difty.scipamato.common.entity.FieldEnumType;
 /**
  * Attachment to a paper.
  * <p>
- * <p>
  * Note that typically, the paper repository will automatically load the
  * attachments with the paper, but not with the actual binary attachment
  * content. This will have to be loaded separately.
- * <p>
  * <p>
  * The repo will not save the attachments with the paper. They will have to be
  * saved separately too.

@@ -48,7 +48,7 @@ public abstract class AbstractLogoutPage extends AbstractPage<Void> {
     }
 
     /**
-     * Provide the response page
+     * @return the response page
      */
     protected abstract AbstractPage<?> getResponsePage();
 

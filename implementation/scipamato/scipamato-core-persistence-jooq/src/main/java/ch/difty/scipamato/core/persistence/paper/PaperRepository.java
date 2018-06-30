@@ -8,7 +8,6 @@ import ch.difty.scipamato.core.entity.PaperAttachment;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.EntityRepository;
-import ch.difty.scipamato.core.persistence.paper.searchorder.BySearchOrderRepository;
 
 /**
  * Repository to manage {@link Paper}s
@@ -21,6 +20,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * Find {@link Paper}s with the provided ids. The codes are not enriched.
      *
      * @param ids
+     *     the list of ids of the papers to be returned
      * @return list of papers (codes not available, attachments without content)
      */
     List<Paper> findByIds(List<Long> ids);
@@ -29,8 +29,9 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * Find {@link Paper}s (including codes) with the provided ids
      *
      * @param ids
+     *     the list of ids for which to find the codes
      * @param languageCode
-     *     - must not be null
+     *     the two character language code - must not be null
      * @return list of papers (attachments without content)
      */
     List<Paper> findWithCodesByIds(List<Long> ids, String languageCode);
@@ -54,15 +55,23 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * The attachments are present but without the actual content.
      *
      * @param searchOrder
+     *     the search order with the search specification
      * @param paginationContext
+     *     the pagination context
      * @param languageCode
+     *     the two character language code
      * @return paged list of entities (attachments without content)
      */
     List<Paper> findPageBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext,
         String languageCode);
 
     /**
-     * {@link BySearchOrderRepository#countBySearchOrder(SearchOrder)}
+     * Counts all persisted entities of type {@code T} matching the provided
+     * {@link SearchOrder} specification.
+     *
+     * @param searchOrder
+     *     the search specification
+     * @return T entity count
      */
     int countBySearchOrder(SearchOrder searchOrder);
 
@@ -74,6 +83,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * @param pmIds
      *     list of pubmed ids
      * @param languageCode
+     *     the two character language code
      * @return list of entities (codes enriched, attachments without content)
      */
     List<Paper> findByPmIds(List<Integer> pmIds, String languageCode);
@@ -96,6 +106,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * @param numbers
      *     list of numbers
      * @param languageCode
+     *     the two character language code
      * @return list of entities (codes enriched, attachments without content)
      */
     List<Paper> findByNumbers(List<Long> numbers, String languageCode);
@@ -113,7 +124,14 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
     long findLowestFreeNumberStartingFrom(long minimumPaperNumberToBeRecycled);
 
     /**
-     * {@link BySearchOrderRepository#findPageOfIdsBySearchOrder(SearchOrder, PaginationContext)}
+     * Finds a single page of entity ids matching the provided {@link SearchOrder}
+     * and {@link PaginationContext}.
+     *
+     * @param searchOrder
+     *     the search specification
+     * @param paginationContext
+     *     the pagination specification
+     * @return paged list of entity ids
      */
     List<Long> findPageOfIdsBySearchOrder(SearchOrder searchOrder, PaginationContext paginationContext);
 
@@ -143,6 +161,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * Saves the provided {@link PaperAttachment} including it's content.
      *
      * @param paperAttachment
+     *     the attachment to save for the paper
      * @return the paper for which the attachment has been added
      */
     Paper saveAttachment(PaperAttachment paperAttachment);
@@ -170,6 +189,7 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * internal usage!
      *
      * @param ids
+     *     the list of ids to delete
      */
     void delete(List<Long> ids);
 

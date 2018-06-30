@@ -22,9 +22,7 @@ public abstract class CoreEntity extends ScipamatoEntity {
      * Regex extending the classical \w with non-ASCII characters. To be used within
      * a character class,
      * <p>
-     * <p>
      * e.g. {@literal [\\w\\u00C0-\\u024f]}
-     * <p>
      * <p>
      * Thanks to hqx5 for his answer to the following <a href=
      * "http://stackoverflow.com/questions/4043307/why-this-regex-is-not-working-for-german-words">stackoverflow

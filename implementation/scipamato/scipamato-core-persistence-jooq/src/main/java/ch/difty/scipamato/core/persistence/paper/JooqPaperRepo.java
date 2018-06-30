@@ -340,7 +340,6 @@ public class JooqPaperRepo extends
      * range, the current implementation will not return any numbers of the same gap
      * range.
      * <p>
-     * <p>
      * Example:
      * <ul>
      * <li>assume the first gap to be in the range [5,9], the second gap is

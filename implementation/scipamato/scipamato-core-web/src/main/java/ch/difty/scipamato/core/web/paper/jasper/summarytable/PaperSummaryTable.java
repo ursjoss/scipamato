@@ -45,6 +45,8 @@ public class PaperSummaryTable extends JasperEntity {
      *     the paper with the relevant fields
      * @param rhf
      *     the reportHeaderFields with the localized field headers
+     * @param includeResults
+     *     whether to include the results field or not
      */
     public PaperSummaryTable(final Paper p, final ReportHeaderFields rhf, final boolean includeResults) {
         AssertAs.notNull(p, "p");

@@ -132,6 +132,8 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
     /**
      * Override if you do not want to show the navbar or only conditionally.
+     *
+     * @return whether to show the Navbar or not.
      */
     protected boolean isNavbarVisible() {
         return true;

@@ -135,7 +135,9 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      * Implement if associated entities need separate saving.
      *
      * @param entity
+     *     the entitiy to save the associated entities for
      * @param languageCode
+     *     the two character language code
      */
     protected void saveAssociatedEntitiesOf(T entity, String languageCode) {
     }
@@ -168,6 +170,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      * cascaded delete is set.
      *
      * @param entity
+     *     the entity to free from the associated sub entities
      */
     protected void deleteAssociatedEntitiesOf(T entity) {
     }
@@ -207,7 +210,9 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      * Implement updates associated entities need separate saving.
      *
      * @param entity
+     *     the entity to update
      * @param languageCode
+     *     the two character language code
      */
     protected void updateAssociatedEntities(final T entity, final String languageCode) {
     }

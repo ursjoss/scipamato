@@ -76,8 +76,8 @@ public abstract class BasePage<T> extends AbstractPage<T> {
 
     /**
      * Override to render page specific additional commercial fonts. Note: This code
-     * is only called if the property <code>commercial-font-present</code> is set to
-     * <literal>true</literal>.
+     * is only called if the property {@code commercial-font-present} is set to
+     * {@literal true}.
      *
      * @param response
      *     the response to render the css header item references on

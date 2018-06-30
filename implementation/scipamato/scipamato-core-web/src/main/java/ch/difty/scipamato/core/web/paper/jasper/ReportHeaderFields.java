@@ -58,7 +58,9 @@ public class ReportHeaderFields implements IClusterable {
      * constructor
      *
      * @param headerPart
+     *     the header part as string
      * @param brand
+     *     the application brand as string
      * @return ReportHeaderFieldsBuilder
      */
     public static ReportHeaderFieldsBuilder builder(final String headerPart, final String brand) {

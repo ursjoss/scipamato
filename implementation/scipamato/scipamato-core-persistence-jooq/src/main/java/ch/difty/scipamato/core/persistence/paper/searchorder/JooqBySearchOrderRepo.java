@@ -104,6 +104,10 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
      * entry methods.
      * <p>
      * public for test purposes
+     *
+     * @param searchOrder
+     *     the {@link SearchOrder} for which to return the conditions
+     * @return {@link Condition}
      */
     public Condition getConditionsFrom(final SearchOrder searchOrder) {
         final ConditionalSupplier conditions = new ConditionalSupplier();

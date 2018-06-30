@@ -35,6 +35,11 @@ public abstract class CodeClassLikeModel<T extends CodeClassLike, S extends Code
 
     /**
      * Protected constructor for testing without wicket application.
+     *
+     * @param languageCode
+     *     the two character language code, e.g. 'en' or 'de'
+     * @param service
+     *     the service to retrieve the code class like entities
      */
     protected CodeClassLikeModel(final String languageCode, final S service) {
         this(languageCode);

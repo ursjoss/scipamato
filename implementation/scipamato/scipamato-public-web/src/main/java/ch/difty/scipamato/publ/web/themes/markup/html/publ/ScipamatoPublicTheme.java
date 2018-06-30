@@ -18,13 +18,13 @@ import org.apache.wicket.markup.head.HeaderItem;
  * This theme modifies bootstrap and therefore both files gets loaded
  * (`bootstrap.css` and `scipamato-public-bootstrap.css`).
  *
- * <b>Usage<b/>
+ * <span class="strong">Usage</span>
  *
  * <pre>
  * settings.setThemeProvider(new SingleThemeProvider(new ScipamatoPublicTheme()));
  * </pre>
  *
- * @author Michael Haitz <michael.haitz@agilecoders.de>
+ * @author <a href="mailto:michael.haitz@agilecoders.de">Michael Haitz</a>
  * @author Urs Joss
  */
 public class ScipamatoPublicTheme extends Theme {

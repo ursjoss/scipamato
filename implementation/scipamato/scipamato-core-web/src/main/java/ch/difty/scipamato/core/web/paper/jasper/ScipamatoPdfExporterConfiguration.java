@@ -72,6 +72,7 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
          * set the paperTitle, it will be appended as well...)
          *
          * @param headerPart
+         *     the header part as string
          * @param number
          *     the unique number of the paper
          */
@@ -96,6 +97,7 @@ public class ScipamatoPdfExporterConfiguration extends SimplePdfExporterConfigur
          * appended as well...)
          *
          * @param title
+         *     the title
          */
         public Builder(final String title) {
             this.title = title;

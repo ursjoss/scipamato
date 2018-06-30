@@ -7,7 +7,7 @@ import ch.difty.scipamato.publ.entity.NewStudyTopic;
 public interface NewStudyTopicService {
 
     /**
-     * Finds the all {@NewStudyTopic}s associated with the newest newsletter.
+     * Finds the all {@link NewStudyTopic}s associated with the newest newsletter.
      * The Topics are translated into the language specified with the languageCode.
      *
      * @param languageCode
@@ -17,7 +17,7 @@ public interface NewStudyTopicService {
     List<NewStudyTopic> findMostRecentNewStudyTopics(String languageCode);
 
     /**
-     * Finds the all {@NewStudyTopic}s associated with the newsletter with the specified issue.
+     * Finds the all {@link NewStudyTopic}s associated with the newsletter with the specified issue.
      * The Topics are translated into the language specified with the languageCode.
      *
      * @param issue

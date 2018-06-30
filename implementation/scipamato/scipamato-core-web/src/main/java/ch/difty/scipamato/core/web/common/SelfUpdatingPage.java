@@ -82,6 +82,8 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
 
     /**
      * Override to provide the form
+     *
+     * @return Form of type {@code T}
      */
     protected abstract Form<T> getForm();
 

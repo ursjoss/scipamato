@@ -382,12 +382,29 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         addAuthorBehavior(authors, firstAuthorOverridden, firstAuthor);
     }
 
-    /** override if special behavior is required */
+    /**
+     * override if special behavior is required
+     *
+     * @param firstAuthorId
+     *     the firstAuthorId as string
+     * @param firstAuthorOverridden
+     *     the checkbox for firstAuthorOverridden
+     * @return the first author TextField
+     */
     protected TextField<String> makeFirstAuthor(final String firstAuthorId, final CheckBox firstAuthorOverridden) {
         return new TextField<>(firstAuthorId);
     }
 
-    /** override if special behavior is required */
+    /**
+     * override if special behavior is required
+     *
+     * @param authors
+     *     text area for the authors field
+     * @param firstAuthorOverridden
+     *     checkbox for firstAuthorOverridden
+     * @param firstAuthor
+     *     text field for firstAuthor
+     */
     protected void addAuthorBehavior(TextArea<String> authors, CheckBox firstAuthorOverridden,
         TextField<String> firstAuthor) {
     }
@@ -446,14 +463,18 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         return makePdfResourceLink(id, getSummaryDataSource());
     }
 
-    /** implement to return PaperSummaryDataSource */
+    /**
+     * @return {@link PaperSummaryDataSource}
+     */
     protected abstract PaperSummaryDataSource getSummaryDataSource();
 
     private ResourceLink<Void> makeSummaryShortLink(String id) {
         return makePdfResourceLink(id, getSummaryShortDataSource());
     }
 
-    /** implement to return PaperSummaryShortDataSource */
+    /**
+     * @return {@link PaperSummaryShortDataSource}
+     */
     protected abstract PaperSummaryShortDataSource getSummaryShortDataSource();
 
     private ResourceLink<Void> makePdfResourceLink(String id, JasperPaperDataSource<?> dataSource) {
@@ -880,7 +901,14 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
     protected abstract DropZoneFileUpload newDropZoneFileUpload();
 
-    /** override if needed */
+    /**
+     * override if needed
+     *
+     * @param mainCodeOfCodeClass1
+     *     textfield with mainCode of code class1
+     * @param codeClass1
+     *     bootstrap multiselect for the codes of code class 1
+     */
     protected void addCodeClass1ChangeBehavior(final TextField<String> mainCodeOfCodeClass1,
         final BootstrapMultiSelect<Code> codeClass1) {
     }
@@ -956,7 +984,12 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
     protected abstract boolean hasPubMedId();
 
-    /** override to do something with the pasted content */
+    /**
+     * override to do something with the pasted content
+     *
+     * @param target
+     *     the ajax request target
+     **/
     protected void getPubmedArticleAndCompare(AjaxRequestTarget target) {
     }
 

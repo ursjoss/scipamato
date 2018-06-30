@@ -120,6 +120,8 @@ public abstract class ResultPanel extends BasePanel<Void> {
     /**
      * Determines if the result panel is embedded into a page that offers composing complex searches.
      * If so, the table offers an icon column to exclude papers from searches. Otherwise it will not.
+     *
+     * @return whether search composition is to be offered or not
      */
     protected abstract boolean isOfferingSearchComposition();
 
@@ -247,7 +249,8 @@ public abstract class ResultPanel extends BasePanel<Void> {
                 } else if (isAssociatedNewsletterWorkInProgress(paper)) {
                     newsletterService.removePaperFromWipNewsletter(paper.getId());
                 } else {
-                    warn(new StringResourceModel("newsletter.readonly", ResultPanel.this, Model.of(paper.getNewsletterAssociation())).getString());
+                    warn(new StringResourceModel("newsletter.readonly", ResultPanel.this,
+                        Model.of(paper.getNewsletterAssociation())).getString());
                 }
 
                 target.add(results);

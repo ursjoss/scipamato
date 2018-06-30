@@ -26,16 +26,13 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
  * provides accessors for all fields present in the entity {@link Paper}, but
  * all in String form.
  * <p>
- * <p>
  * The provided String values may contain query specific meta information that
  * can be interpreted by the query infrastructure to specify e.g. ranges or
  * wildcards.
  * <p>
- * <p>
  * Internally it stores any of the fields that were explicitly set in Maps that
  * can be accessed to be evaluated by the query engine.
- *
- *
+ * <p>
  * <b>Note:</b> the actual ID of the {@link SearchCondition} is called
  * {@code searchConditionId} due to the name clash with its search condition id,
  * which holds the search term for the paper id.

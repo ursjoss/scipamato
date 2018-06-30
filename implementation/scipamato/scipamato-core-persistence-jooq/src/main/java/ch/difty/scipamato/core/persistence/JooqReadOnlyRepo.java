@@ -53,6 +53,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
      *     the {@link GenericFilterConditionMapper} mapping a derivative of
      *     {@link ScipamatoFilter} into jOOC {@link Condition}s
      * @param applicationProperties
+     *     the object providing the application properties
      */
     protected JooqReadOnlyRepo(final DSLContext dsl, final M mapper, final JooqSortMapper<R, T, TI> sortMapper,
         GenericFilterConditionMapper<F> filterConditionMapper, ApplicationProperties applicationProperties) {
@@ -155,6 +156,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
      * @param entity
      *     entity of type {@code T} with sub entities to be enriched.
      * @param languageCode
+     *     the two character langauge code
      */
     protected void enrichAssociatedEntitiesOf(final T entity, final String languageCode) {
     }

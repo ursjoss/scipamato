@@ -42,6 +42,7 @@ public interface SearchOrderRepository extends EntityRepository<SearchOrder, Lon
      * Remove SearchCondition from Database.
      *
      * @param searchConditionId
+     *     the id of the search condition to delete
      */
     void deleteSearchConditionWithId(long searchConditionId);
 

@@ -8,16 +8,18 @@ import org.springframework.stereotype.Component;
 /**
  * The {@link HidingInternalsCodeAggregator} has the purpose of
  * <ul>
- * <li>Providing aggregated codes by</li>
+ * <li>Providing aggregated codes by
  * <ul>
  * <li>Enriching codes with aggregated codes</li>
  * <li>Filtering out internal codes</li>
  * </ul>
- * <li>providing the aggregated</li>
+ * </li>
+ * <li>providing the aggregated
  * <ul>
  * <li>codesPopulation values</li>
  * <li>codesStudyDesign values</li>
  * </ul>
+ * </li>
  * </ul>
  *
  * @author u.joss

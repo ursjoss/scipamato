@@ -168,6 +168,10 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
     /**
      * Sets the flag whether to show search results (false) or papers excluded from
      * search (true) Override if needed
+     *
+     * @param showExcluded
+     *     whether to show the excluded ({@literal true}) results or the results
+     *     themselves ({@literal false})
      */
     public void setShowExcluded(final boolean showExcluded) {
     }

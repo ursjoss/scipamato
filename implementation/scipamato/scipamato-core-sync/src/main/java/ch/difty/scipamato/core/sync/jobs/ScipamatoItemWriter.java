@@ -12,6 +12,7 @@ import ch.difty.scipamato.common.AssertAs;
  * Base class for ItemWriter implementations.
  *
  * @param <T>
+ *     the type of the entity to be written
  * @author u.joss
  */
 @Slf4j
