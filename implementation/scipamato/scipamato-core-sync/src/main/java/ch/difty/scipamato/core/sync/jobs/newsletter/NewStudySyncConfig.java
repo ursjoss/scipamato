@@ -57,10 +57,9 @@ public class NewStudySyncConfig
     private static final TableField<PaperNewsletterRecord, Timestamp> PN_LAST_MODIFIED       = PAPER_NEWSLETTER.LAST_MODIFIED;
 
     protected NewStudySyncConfig(@Qualifier("dslContext") DSLContext jooqCore,
-        @Qualifier("publicDslContext") DSLContext jooqPublic,
-        @Qualifier("dataSource") DataSource scipamatoCoreDataSource, JobBuilderFactory jobBuilderFactory,
-        StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
-        super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, scipamatoCoreDataSource, jobBuilderFactory, stepBuilderFactory,
+        @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
+        JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+        super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory,
             dateTimeService);
     }
 

@@ -8,12 +8,13 @@ import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
 @EnableFeignClients
 @EnableCaching
 @ComponentScan(basePackages = "ch.difty.scipamato")

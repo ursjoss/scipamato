@@ -57,7 +57,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     @Mock
     private DSLContext jooqPublic;
     @Mock
-    private DataSource scipamatoCoreDataSource;
+    private DataSource coreDataSource;
 
     @Mock
     private SelectSelectStep<Record>    selectSelectStep;
@@ -88,13 +88,13 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
             ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(ref))).thenReturn(
             deleteConditionStep);
 
-        config = new PaperSyncConfig(codeAggregator, jooqCore, jooqPublic, scipamatoCoreDataSource, jobBuilderFactory,
+        config = new PaperSyncConfig(codeAggregator, jooqCore, jooqPublic, coreDataSource, jobBuilderFactory,
             stepBuilderFactory, dateTimeService);
     }
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(codeAggregator, jooqPublic, scipamatoCoreDataSource);
+        verifyNoMoreInteractions(codeAggregator, jooqPublic, coreDataSource);
     }
 
     @Override

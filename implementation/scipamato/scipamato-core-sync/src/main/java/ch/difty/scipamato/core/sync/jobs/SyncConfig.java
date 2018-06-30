@@ -18,6 +18,7 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 
 import ch.difty.scipamato.common.DateTimeService;
@@ -39,7 +40,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
 
     private final DSLContext         jooqCore;
     private final DSLContext         jooqPublic;
-    private final DataSource         scipamatoCoreDataSource;
+    private final DataSource         coreDataSource;
     private final JobBuilderFactory  jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final DateTimeService    dateTimeService;
@@ -47,14 +48,14 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     private final String topic;
     private final int    chunkSize;
 
-    protected SyncConfig(final String topic, final int chunkSize, DSLContext jooqCore, DSLContext jooqPublic,
-        DataSource scipamatoCoreDataSource, JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
-        DateTimeService dateTimeService) {
+    protected SyncConfig(final String topic, final int chunkSize, @Qualifier("dslContext") DSLContext jooqCore,
+        @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
+        JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
         this.topic = topic;
         this.chunkSize = chunkSize;
         this.jooqCore = jooqCore;
         this.jooqPublic = jooqPublic;
-        this.scipamatoCoreDataSource = scipamatoCoreDataSource;
+        this.coreDataSource = coreDataSource;
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
         this.dateTimeService = dateTimeService;
@@ -106,7 +107,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
 
     private ItemReader<? extends T> coreReader() {
         final JdbcCursorItemReader<T> reader = new JdbcCursorItemReader<>();
-        reader.setDataSource(scipamatoCoreDataSource);
+        reader.setDataSource(coreDataSource);
         reader.setSql(selectSql());
         reader.setRowMapper((rs, rowNum) -> makeEntity(rs));
         return reader;

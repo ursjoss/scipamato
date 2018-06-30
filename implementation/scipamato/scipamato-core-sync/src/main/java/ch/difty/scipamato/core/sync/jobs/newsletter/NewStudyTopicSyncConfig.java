@@ -51,10 +51,9 @@ public class NewStudyTopicSyncConfig
     private static final TableField<NewsletterTopicTrRecord, Timestamp> NTT_LAST_MODIFIED       = NEWSLETTER_TOPIC_TR.LAST_MODIFIED;
 
     protected NewStudyTopicSyncConfig(@Qualifier("dslContext") DSLContext jooqCore,
-        @Qualifier("publicDslContext") DSLContext jooqPublic,
-        @Qualifier("dataSource") DataSource scipamatoCoreDataSource, JobBuilderFactory jobBuilderFactory,
-        StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
-        super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, scipamatoCoreDataSource, jobBuilderFactory, stepBuilderFactory,
+        @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
+        JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory, DateTimeService dateTimeService) {
+        super(TOPIC, CHUNK_SIZE, jooqCore, jooqPublic, coreDataSource, jobBuilderFactory, stepBuilderFactory,
             dateTimeService);
     }
 

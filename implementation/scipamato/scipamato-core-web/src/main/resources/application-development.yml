@@ -4,7 +4,7 @@ wicket:
       general:
         configuration-type: development
       markup:
-        stripWicketTags: true
+        strip-wicket-tags: true
   stuff:
     htmlcompressor:
       enabled: false

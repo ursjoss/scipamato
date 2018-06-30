@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.web.config;
+package ch.difty.scipamato.core.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,15 +19,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class JooqConfigurationTest {
+public class JooqCoreConfigurationTest {
+
+    @Autowired
+    @Qualifier("coreConfiguration")
+    private Configuration jooqCoreConfig;
 
     @Autowired
     @Qualifier("publicConfiguration")
     private Configuration jooqPublicConfig;
-
-    @Autowired
-    @Qualifier("configuration")
-    private Configuration jooqCoreConfig;
 
     @Autowired
     @Qualifier("batchConfiguration")
@@ -52,6 +52,9 @@ public class JooqConfigurationTest {
         assertThat(config).isNotNull();
 
         assertThat(config.dialect()).isEqualTo(SQLDialect.POSTGRES);
+        assertThat(config
+            .settings()
+            .isExecuteWithOptimisticLocking()).isTrue();
 
         // assert Datasource Connection Provider
         assertThat(config.connectionProvider()).isNotNull();
