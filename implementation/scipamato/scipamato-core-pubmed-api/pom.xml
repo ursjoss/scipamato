@@ -23,12 +23,6 @@
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-common-utils</artifactId>
         </dependency>
-        <dependency>
-            <groupId>ch.difty</groupId>
-            <artifactId>scipamato-common-utils</artifactId>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -66,16 +60,10 @@
 
         <!-- Testing -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-common-utils</artifactId>
+            <type>test-jar</type>
             <scope>test</scope>
-            <exclusions>
-                <!-- avoiding clash with duplicate JSONObject.class on class-path -->
-                <exclusion>
-                    <groupId>org.skyscreamer</groupId>
-                    <artifactId>jsonassert</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 

@@ -35,26 +35,15 @@
 
         <!-- Testing -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-common-utils</artifactId>
+            <type>test-jar</type>
             <scope>test</scope>
-            <exclusions>
-                <!-- avoiding clash with duplicate JSONObject.class on class-path -->
-                <exclusion>
-                    <groupId>org.skyscreamer</groupId>
-                    <artifactId>jsonassert</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-common-persistence-jooq</artifactId>
             <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>pl.pragmatists</groupId>
-            <artifactId>JUnitParams</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

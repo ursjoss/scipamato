@@ -23,5 +23,13 @@
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-core-entity</artifactId>
         </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-common-utils</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

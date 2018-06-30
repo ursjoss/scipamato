@@ -52,12 +52,6 @@
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-core-sync</artifactId>
         </dependency>
-        <dependency>
-            <groupId>ch.difty</groupId>
-            <artifactId>scipamato-common-persistence-api</artifactId>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
 
         <!-- JSR 303 bean validation provider implementation -->
         <dependency>
@@ -125,20 +119,15 @@
 
         <!-- Testing -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-common-utils</artifactId>
+            <type>test-jar</type>
             <scope>test</scope>
-            <exclusions>
-                <!-- avoiding clash with duplicate JSONObject.class on class-path -->
-                <exclusion>
-                    <groupId>org.skyscreamer</groupId>
-                    <artifactId>jsonassert</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
-            <groupId>pl.pragmatists</groupId>
-            <artifactId>JUnitParams</artifactId>
+            <groupId>ch.difty</groupId>
+            <artifactId>scipamato-common-persistence-api</artifactId>
+            <type>test-jar</type>
             <scope>test</scope>
         </dependency>
     </dependencies>

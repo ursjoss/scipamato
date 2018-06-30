@@ -82,7 +82,7 @@
         <mockito.version>2.19.0</mockito.version>
         <assertj.version>3.10.0</assertj.version>
 
-        <!-- Web Specific versions - kept here to not maintain them in scipamato-common-wicket, scipamato-core-web and scipamato-public-web 
+        <!-- Web Specific versions - kept here to not maintain them in scipamato-common-wicket, scipamato-core-web and scipamato-public-web
             redundantly -->
         <wicket.version>7.10.0</wicket.version>
         <wicket-spring-boot-starter.version>1.0.12</wicket-spring-boot-starter.version>
@@ -105,6 +105,7 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>scipamato-common-utils</artifactId>
                 <type>test-jar</type>
+                <scope>test</scope>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -367,6 +368,18 @@
 
         <!-- Testing -->
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <!-- avoiding clash with duplicate JSONObject.class on class-path -->
+                <exclusion>
+                    <groupId>org.skyscreamer</groupId>
+                    <artifactId>jsonassert</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -385,6 +398,11 @@
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
             <version>2.4.6</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>pl.pragmatists</groupId>
+            <artifactId>JUnitParams</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
