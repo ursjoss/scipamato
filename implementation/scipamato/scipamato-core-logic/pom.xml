@@ -24,7 +24,7 @@
             <artifactId>scipamato-core-entity</artifactId>
         </dependency>
 
-        <!-- Testing -->
+        <!-- testing -->
         <dependency>
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-common-utils</artifactId>

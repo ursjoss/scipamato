@@ -174,32 +174,23 @@
     </dependencies>
 
     <build>
+        <!-- Copy the wicket resource files (html/properties) from src/{main,test} to make them available for the maven tests -->
         <resources>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/resources</directory>
-            </resource>
             <resource>
                 <filtering>false</filtering>
                 <directory>src/main/java</directory>
                 <includes>
-                    <include>**</include>
+                    <include>**/*.html</include>
+                    <include>**/*.properties</include>
                 </includes>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
             </resource>
-            <!-- TODO this is currently needed to run allow the test running from maven see the html/properties files -->
-            <!-- BUT: those files are also included in the resulting artifact (jar). Need to fix this. -->
             <resource>
                 <filtering>false</filtering>
                 <directory>src/test/java</directory>
                 <includes>
-                    <include>**</include>
+                    <include>**/*.html</include>
+                    <include>**/*.properties</include>
                 </includes>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
             </resource>
         </resources>
     </build>

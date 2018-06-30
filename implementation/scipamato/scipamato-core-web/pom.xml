@@ -135,21 +135,20 @@
     <build>
         <resources>
             <resource>
-                <filtering>true</filtering>
                 <directory>src/main/resources</directory>
+                <!-- build version -->
+                <filtering>true</filtering>
             </resource>
             <resource>
-                <filtering>false</filtering>
+                <!-- wicket resource files -->
                 <directory>src/main/java</directory>
+                <filtering>false</filtering>
                 <includes>
-                    <include>**</include>
+                    <include>**/*.html</include>
+                    <include>**/*.properties</include>
                 </includes>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
             </resource>
         </resources>
-
         <plugins>
             <!-- have actuator report the git version the project was built with (http://localhost:8080/actuator/info) -->
             <plugin>

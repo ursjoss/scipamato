@@ -76,7 +76,7 @@
             </exclusions>
         </dependency>
 
-        <!-- Testing -->
+        <!-- testing -->
         <dependency>
             <groupId>ch.difty</groupId>
             <artifactId>scipamato-common-utils</artifactId>
@@ -149,6 +149,21 @@
     </profiles>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <!-- wicket resource files -->
+                <directory>src/main/java</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.html</include>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

@@ -98,31 +98,20 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <!-- build version -->
                 <filtering>true</filtering>
             </resource>
             <resource>
+                <!-- wicket resource files -->
                 <directory>src/main/java</directory>
                 <filtering>false</filtering>
                 <includes>
-                    <include>**</include>
+                    <include>**/*.html</include>
+                    <include>**/*.properties</include>
                 </includes>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
             </resource>
         </resources>
-
         <plugins>
-            <!-- have actuator report the git version the project was built with (http://localhost:8080/actuator/info) -->
-            <plugin>
-                <groupId>pl.project13.maven</groupId>
-                <artifactId>git-commit-id-plugin</artifactId>
-                <configuration>
-                    <dotGitDirectory>${project.basedir}../../.git</dotGitDirectory>
-                    <verbose>true</verbose>
-                </configuration>
-            </plugin>
-
             <!-- spring-boot-maven-plugin - in case you're running mvn spring-boot:run -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -136,6 +125,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <configuration>
+                    <!-- Commercial Fonts -->
                     <nonFilteredFileExtensions>
                         <nonFilteredFileExtension>woff</nonFilteredFileExtension>
                         <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
