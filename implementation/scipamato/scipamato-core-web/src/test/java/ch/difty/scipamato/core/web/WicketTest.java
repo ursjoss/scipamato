@@ -27,7 +27,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
-import ch.difty.scipamato.core.ScipamatoApplication;
+import ch.difty.scipamato.core.ScipamatoCoreApplication;
 import ch.difty.scipamato.core.persistence.NewsletterService;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.PaperSlimService;
@@ -42,7 +42,7 @@ public abstract class WicketTest {
     private static final String PASSWORD = "secretpw";
 
     @Autowired
-    private ScipamatoApplication application;
+    private ScipamatoCoreApplication application;
 
     @Autowired
     private ApplicationContext applicationContextMock;

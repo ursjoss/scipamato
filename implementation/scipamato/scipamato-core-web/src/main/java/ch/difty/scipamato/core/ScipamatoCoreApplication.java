@@ -19,11 +19,11 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableFeignClients
 @EnableCaching
 @ComponentScan(basePackages = "ch.difty.scipamato")
-public class ScipamatoApplication extends WicketBootSecuredWebApplication {
+public class ScipamatoCoreApplication extends WicketBootSecuredWebApplication {
 
     public static void main(String[] args) {
         new SpringApplicationBuilder()
-            .sources(ScipamatoApplication.class)
+            .sources(ScipamatoCoreApplication.class)
             .run(args);
     }
 

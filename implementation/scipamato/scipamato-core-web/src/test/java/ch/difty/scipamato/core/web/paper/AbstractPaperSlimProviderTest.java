@@ -18,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContextMatcher;
-import ch.difty.scipamato.core.ScipamatoApplication;
+import ch.difty.scipamato.core.ScipamatoCoreApplication;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
@@ -32,7 +32,7 @@ public abstract class AbstractPaperSlimProviderTest<F extends PaperSlimFilter, P
     static final int PAGE_SIZE = 3;
 
     @Autowired
-    ScipamatoApplication application;
+    ScipamatoCoreApplication application;
 
     @Mock
     PaperSlimService serviceMock;

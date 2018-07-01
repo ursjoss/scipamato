@@ -60,6 +60,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Optimizd confguration of maven-resource-plugin
 - Avoided printing stack-trace to the log in case of missing network for Pubmed access
 - Explicit data source configuration in core web module
+- Renamed ScipamatoApplication to ScipamatoCoreApplication
 
 .Deprecated
 

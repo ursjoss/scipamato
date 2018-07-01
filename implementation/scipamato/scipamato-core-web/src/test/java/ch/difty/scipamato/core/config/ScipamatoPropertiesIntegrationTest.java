@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.difty.scipamato.core.ScipamatoApplication;
+import ch.difty.scipamato.core.ScipamatoCoreApplication;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ScipamatoApplication.class)
+@SpringBootTest(classes = ScipamatoCoreApplication.class)
 public class ScipamatoPropertiesIntegrationTest {
 
     @Autowired

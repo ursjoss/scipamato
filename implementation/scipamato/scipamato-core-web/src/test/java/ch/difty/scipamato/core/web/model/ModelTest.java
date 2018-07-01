@@ -11,14 +11,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import ch.difty.scipamato.core.ScipamatoApplication;
+import ch.difty.scipamato.core.ScipamatoCoreApplication;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public abstract class ModelTest {
 
     @Autowired
-    private ScipamatoApplication application;
+    private ScipamatoCoreApplication application;
 
     @Autowired
     private ApplicationContext applicationContextMock;
