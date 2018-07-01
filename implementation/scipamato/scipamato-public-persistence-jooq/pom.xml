@@ -377,9 +377,9 @@
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
                 <configuration>
-                    <url>${flyway.url}</url>
-                    <user>${flyway.user}</user>
-                    <password>${flyway.password}</password>
+                    <url>${spring.flyway.url}</url>
+                    <user>${spring.flyway.user}</user>
+                    <password>${spring.flyway.password}</password>
                 </configuration>
                 <!-- Execution of the Flyway plugin in the "generate-sources" phase allowing the jOOQ code generator to take over -->
                 <executions>

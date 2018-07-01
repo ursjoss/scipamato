@@ -25,7 +25,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
-import ch.difty.scipamato.core.ScipamatoApplication;
+import ch.difty.scipamato.core.ScipamatoCoreApplication;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.persistence.PaperService;
@@ -46,7 +46,7 @@ public class PaperProviderTest {
     private Paper entityMock;
 
     @Autowired
-    private ScipamatoApplication application;
+    private ScipamatoCoreApplication application;
 
     private List<Paper> papers;
 

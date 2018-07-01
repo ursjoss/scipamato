@@ -2,6 +2,7 @@ package ch.difty.scipamato.common.web;
 
 import java.util.Locale;
 
+import org.apache.wicket.markup.head.ResourceAggregator;
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTester;
@@ -31,7 +32,7 @@ public abstract class WicketBaseTest {
     @Before
     public void setUp() {
         wicketApplication.setHeaderResponseDecorator(
-            r -> new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"));
+            r -> new ResourceAggregator(new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container")));
 
         ReflectionTestUtils.setField(wicketApplication, "applicationContext", applicationContextMock);
         tester = new WicketTester(wicketApplication);

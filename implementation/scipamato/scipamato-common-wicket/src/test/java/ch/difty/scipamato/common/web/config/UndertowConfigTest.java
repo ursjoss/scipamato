@@ -18,11 +18,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.boot.context.embedded.JspServlet;
-import org.springframework.boot.context.embedded.undertow.UndertowBuilderCustomizer;
-import org.springframework.boot.context.embedded.undertow.UndertowDeploymentInfoCustomizer;
-import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainer;
-import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
+import org.springframework.boot.web.embedded.undertow.UndertowBuilderCustomizer;
+import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCustomizer;
+import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
+import org.springframework.boot.web.server.WebServer;
+import org.springframework.boot.web.servlet.server.Jsp;
+import org.springframework.boot.web.servlet.server.Session;
 import org.xnio.XnioWorker;
 
 import ch.difty.scipamato.common.config.ApplicationProperties;
@@ -35,7 +36,7 @@ import ch.difty.scipamato.common.config.ApplicationProperties;
 @RunWith(MockitoJUnitRunner.class)
 public class UndertowConfigTest {
 
-    private UndertowEmbeddedServletContainerFactory factory;
+    private UndertowServletWebServerFactory factory;
 
     @Mock
     private ServerProperties      serverPropsMock;
@@ -48,7 +49,7 @@ public class UndertowConfigTest {
     @Before
     public void setUp() {
         UndertowConfig config = new UndertowConfig(serverPropsMock, scipamatoPropertiesMock);
-        factory = (UndertowEmbeddedServletContainerFactory) config.undertow();
+        factory = (UndertowServletWebServerFactory) config.undertow();
     }
 
     @After
@@ -71,7 +72,12 @@ public class UndertowConfigTest {
         assertThat(factory.getLocaleCharsetMappings()).isEmpty();
         assertThat(factory.getPort()).isEqualTo(8080);
         assertThat(factory.getServerHeader()).isNull();
-        assertThat(factory.getSessionStoreDir()).isNull();
+        assertThat(factory.getSession())
+            .isNotNull()
+            .isInstanceOf(Session.class);
+        assertThat(factory
+            .getSession()
+            .getStoreDir()).isNull();
         assertThat(factory.getSsl()).isNull();
         assertThat(factory.getSslStoreProvider()).isNull();
 
@@ -79,12 +85,16 @@ public class UndertowConfigTest {
 
     @Test
     public void canStartAndStopUndertowServletContainer() {
-        UndertowEmbeddedServletContainer container = (UndertowEmbeddedServletContainer) factory.getEmbeddedServletContainer();
-        assertThat(container.getPort()).isEqualTo(0);
-
-        container.start();
-        assertThat(container.getPort()).isEqualTo(8080);
-        container.stop();
+        WebServer server = factory.getWebServer();
+        assertThat(server.getPort()).isEqualTo(0);
+        try {
+            server.start();
+            assertThat(server.getPort()).isEqualTo(8080);
+        } catch (Exception ex) {
+            fail("Did not start successfully: ", ex);
+        } finally {
+            server.stop();
+        }
     }
 
     @Test
@@ -202,7 +212,7 @@ public class UndertowConfigTest {
 
     @Test
     public void assertJspServlet() {
-        final JspServlet jspServlet = factory.getJspServlet();
+        final Jsp jspServlet = factory.getJsp();
         assertThat(jspServlet).isNotNull();
         assertThat(jspServlet.getClassName()).isEqualTo("org.apache.jasper.servlet.JspServlet");
         assertThat(jspServlet

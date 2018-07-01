@@ -7,6 +7,7 @@ import java.util.Locale;
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
+import org.apache.wicket.markup.head.ResourceAggregator;
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -26,7 +27,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
-import ch.difty.scipamato.core.ScipamatoApplication;
+import ch.difty.scipamato.core.ScipamatoCoreApplication;
 import ch.difty.scipamato.core.persistence.NewsletterService;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.PaperSlimService;
@@ -41,7 +42,7 @@ public abstract class WicketTest {
     private static final String PASSWORD = "secretpw";
 
     @Autowired
-    private ScipamatoApplication application;
+    private ScipamatoCoreApplication application;
 
     @Autowired
     private ApplicationContext applicationContextMock;
@@ -81,7 +82,7 @@ public abstract class WicketTest {
     @Before
     public final void setUp() {
         application.setHeaderResponseDecorator(
-            r -> new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"));
+            r -> new ResourceAggregator(new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container")));
 
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock);
         tester = new WicketTester(application);

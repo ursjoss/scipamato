@@ -84,4 +84,14 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
      */
     private boolean responsiveIframeSupportEnabled;
 
+    /**
+     * The user with which you can authenticate to see the actuator end points.
+     */
+    private String managementUserName = "admin";
+
+    /**
+     * The password of the user with which you can authenticate to see the actuator end points.
+     */
+    private String managementUserPassword;
+
 }

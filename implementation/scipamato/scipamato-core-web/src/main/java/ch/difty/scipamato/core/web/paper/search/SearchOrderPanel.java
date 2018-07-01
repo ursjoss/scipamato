@@ -81,8 +81,8 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
             }
 
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                super.onSubmit(target, form);
+            protected void onSubmit(AjaxRequestTarget target) {
+                super.onSubmit(target);
                 setResponsePage(pageFunction.apply(modelProvider.get(), SearchOrderPanel.this
                     .getModelObject()
                     .getId()));

@@ -37,6 +37,9 @@ public class ScipamatoPublicPropertiesTest {
         when(scipamatoPropMock.getCmsUrlNewStudyPage()).thenReturn("http://u.nsp");
 
         when(scipamatoPropMock.getAuthorsAbbreviatedMaxLength()).thenReturn(70);
+
+        when(scipamatoPropMock.getManagementUserName()).thenReturn("un");
+        when(scipamatoPropMock.getManagementUserPassword()).thenReturn("pw");
     }
 
     @After
@@ -142,4 +145,17 @@ public class ScipamatoPublicPropertiesTest {
         assertThat(prop.getAuthorsAbbreviatedMaxLength()).isEqualTo(70);
         verify(scipamatoPropMock).getAuthorsAbbreviatedMaxLength();
     }
+
+    @Test
+    public void checkingManagementUserName_delegatesToScipamatoProp() {
+        assertThat(prop.getManagementUserName()).isEqualTo("un");
+        verify(scipamatoPropMock).getManagementUserName();
+    }
+
+    @Test
+    public void checkingManagementPassword_delegatesToScipamatoProp() {
+        assertThat(prop.getManagementUserPassword()).isEqualTo("pw");
+        verify(scipamatoPropMock).getManagementUserPassword();
+    }
+
 }

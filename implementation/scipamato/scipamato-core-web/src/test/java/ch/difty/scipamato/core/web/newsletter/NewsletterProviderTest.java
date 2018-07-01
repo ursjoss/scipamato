@@ -25,7 +25,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
-import ch.difty.scipamato.core.ScipamatoApplication;
+import ch.difty.scipamato.core.ScipamatoCoreApplication;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
 import ch.difty.scipamato.core.persistence.NewsletterService;
@@ -46,7 +46,7 @@ public class NewsletterProviderTest {
     private Newsletter entityMock;
 
     @Autowired
-    private ScipamatoApplication application;
+    private ScipamatoCoreApplication application;
 
     private List<Newsletter> papers;
 

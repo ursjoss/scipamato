@@ -173,8 +173,8 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                super.onSubmit(target, form);
+            protected void onSubmit(final AjaxRequestTarget target) {
+                super.onSubmit(target);
                 setResponsePage(responsePage.get());
             }
 

@@ -37,8 +37,9 @@ wicket:
           enabled: true
       wicketsource:
         enabled: true
-flyway:
-  enabled: false
+spring:
+  flyway:
+    enabled: false
 logging:
   level:
     root: INFO
