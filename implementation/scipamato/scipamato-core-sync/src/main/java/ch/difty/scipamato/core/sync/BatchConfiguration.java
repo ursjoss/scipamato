@@ -4,7 +4,7 @@ import javax.sql.DataSource;
 
 import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.batch.BatchDatabaseInitializer;
+import org.springframework.boot.autoconfigure.batch.BatchDataSourceInitializer;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,9 +23,9 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public BatchDatabaseInitializer batchDatabaseInitializer(
+    public BatchDataSourceInitializer batchDataSourceInitializer(
         final @Qualifier("batchDataSource") DataSource dataSource, final ResourceLoader resourceLoader) {
-        return new BatchDatabaseInitializer(dataSource, resourceLoader, this.properties);
+        return new BatchDataSourceInitializer(dataSource, resourceLoader, this.properties);
     }
 
 }
