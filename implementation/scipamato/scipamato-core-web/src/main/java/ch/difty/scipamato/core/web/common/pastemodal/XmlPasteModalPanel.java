@@ -90,8 +90,8 @@ public class XmlPasteModalPanel extends Panel {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form) {
-                super.onAfterSubmit(target, form);
+            protected void onAfterSubmit(AjaxRequestTarget target) {
+                super.onAfterSubmit(target);
                 ModalWindow.closeCurrent(target);
             }
         };
@@ -103,15 +103,15 @@ public class XmlPasteModalPanel extends Panel {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                super.onSubmit(target, form);
+            protected void onSubmit(AjaxRequestTarget target) {
+                super.onSubmit(target);
                 content = null;
                 getFeedbackMessages().clear();
             }
 
             @Override
-            protected void onAfterSubmit(AjaxRequestTarget target, Form<?> form) {
-                super.onAfterSubmit(target, form);
+            protected void onAfterSubmit(AjaxRequestTarget target) {
+                super.onAfterSubmit(target);
                 ModalWindow.closeCurrent(target);
             }
         };

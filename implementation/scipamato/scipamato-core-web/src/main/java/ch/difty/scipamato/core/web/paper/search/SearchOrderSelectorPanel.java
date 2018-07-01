@@ -165,8 +165,8 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                super.onSubmit(target, form);
+            protected void onSubmit(AjaxRequestTarget target) {
+                super.onSubmit(target);
                 target.add(name);
                 target.add(global);
                 target.add(showExcluded);
@@ -212,8 +212,8 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
             }
 
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                super.onSubmit(target, form);
+            protected void onSubmit(AjaxRequestTarget target) {
+                super.onSubmit(target);
                 if (getModelObject() != null) {
                     searchOrderService.remove(getModelObject());
                     target.add(form);
