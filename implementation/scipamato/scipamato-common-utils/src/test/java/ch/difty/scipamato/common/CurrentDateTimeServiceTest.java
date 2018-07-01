@@ -31,7 +31,7 @@ public class CurrentDateTimeServiceTest {
         LocalDateTime ldt = dts
             .getCurrentTimestamp()
             .toLocalDateTime();
-        assertThat(ldt).isBetween(snapshot, snapshot.plusSeconds(1));
+        assertThat(ldt).isBetween(snapshot.minusSeconds(1), snapshot.plusSeconds(1));
     }
 
 }

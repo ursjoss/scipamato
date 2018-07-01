@@ -13,13 +13,17 @@
         <expiry>
             <ttl unit="hours">4</ttl>
         </expiry>
-        <heap unit="entries">100</heap>
+        <resources>
+            <heap unit="entries">100</heap>
+        </resources>
     </cache>
 
     <cache alias="codes">
         <expiry>
             <ttl unit="hours">4</ttl>
         </expiry>
-        <heap unit="entries">1000</heap>
+        <resources>
+            <heap unit="entries">1000</heap>
+        </resources>
     </cache>
 </config>
