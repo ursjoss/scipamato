@@ -42,4 +42,15 @@ public interface ApplicationPublicProperties extends ApplicationProperties {
      * @return true to support responive iframes, false to not support them.
      */
     boolean isResponsiveIframeSupportEnabled();
+
+    /**
+     * @return the user name that is eligible to see the protected actuator end points.
+     */
+    String getManagementUserName();
+
+    /**
+     * @return the password of the user that is eligible to see the protected actuator end points.
+     */
+    String getManagementUserPassword();
+
 }

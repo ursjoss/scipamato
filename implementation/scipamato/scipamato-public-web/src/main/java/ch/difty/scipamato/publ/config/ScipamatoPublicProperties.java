@@ -56,4 +56,14 @@ public class ScipamatoPublicProperties extends AbstractScipamatoProperties<Scipa
         return getScipamatoProperties().isResponsiveIframeSupportEnabled();
     }
 
+    @Override
+    public String getManagementUserName() {
+        return getScipamatoProperties().getManagementUserName();
+    }
+
+    @Override
+    public String getManagementUserPassword() {
+        return getScipamatoProperties().getManagementUserPassword();
+    }
+
 }

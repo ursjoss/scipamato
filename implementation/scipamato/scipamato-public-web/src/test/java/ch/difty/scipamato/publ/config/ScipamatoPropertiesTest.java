@@ -62,4 +62,15 @@ public class ScipamatoPropertiesTest {
     public void responsiveIFrameSupport_isDisabledByDefault() {
         assertThat(sp.isResponsiveIframeSupportEnabled()).isFalse();
     }
+
+    @Test
+    public void managementUserName_hasDefaultValue() {
+        assertThat(sp.getManagementUserName()).isEqualTo("admin");
+    }
+
+    @Test
+    public void managementUserPassword_isPresent() {
+        assertThat(sp.getManagementUserPassword()).isNull();
+    }
+
 }

@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.config;
 
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private static final String ADMIN_ROLE = "ADMIN";
 
     private final UserDetailsService userDetailsService;
 
@@ -42,6 +45,9 @@ public class WicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:off
         http.csrf().disable()
             .authorizeRequests()
+                .requestMatchers(EndpointRequest.to("health", "info")).permitAll()
+                .antMatchers("/actuator/").hasRole(ADMIN_ROLE)
+                    .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole(ADMIN_ROLE)
                 .antMatchers("/**").permitAll()
             .and()
                 .logout().permitAll();

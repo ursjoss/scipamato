@@ -88,6 +88,16 @@ public class TestApplication {
             public boolean isResponsiveIframeSupportEnabled() {
                 return false;
             }
+
+            @Override
+            public String getManagementUserName() {
+                return "admin";
+            }
+
+            @Override
+            public String getManagementUserPassword() {
+                return "admin";
+            }
         };
     }
 
