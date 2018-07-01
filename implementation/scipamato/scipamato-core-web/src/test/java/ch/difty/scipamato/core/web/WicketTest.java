@@ -7,6 +7,7 @@ import java.util.Locale;
 import com.giffing.wicket.spring.boot.starter.configuration.extensions.external.spring.security.SecureWebSession;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
+import org.apache.wicket.markup.head.ResourceAggregator;
 import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -81,7 +82,7 @@ public abstract class WicketTest {
     @Before
     public final void setUp() {
         application.setHeaderResponseDecorator(
-            r -> new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container"));
+            r -> new ResourceAggregator(new JavaScriptFilteredIntoFooterHeaderResponse(r, "footer-container")));
 
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock);
         tester = new WicketTester(application);
