@@ -38,6 +38,14 @@
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.activation</groupId>
+            <artifactId>javax.activation</artifactId>
+        </dependency>
 
         <!-- Feign for accessing PubMed - https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign -->
         <!-- TODO currently pulls in (and requires) commons-lang, have to live with it for now, excluding it does not work -->
@@ -69,28 +77,27 @@
 
     <build>
         <plugins>
-            <!-- jaxb2 maven plugin to generate the java classes from the Pubmed dtd -->
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jaxb2-maven-plugin</artifactId>
-                <configuration>
-                    <packageName>ch.difty.scipamato.core.pubmed.api</packageName>
-                    <sourceType>dtd</sourceType>
-                    <sources>
-                        <source>src/main/dtd</source>
-                    </sources>
-                    <outputDirectory>${org.jaxb.target.dir}</outputDirectory>
-                </configuration>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>xjc</id>
                         <goals>
-                            <goal>xjc</goal>
+                            <goal>generate</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <schemaDirectory>src/main/resources</schemaDirectory>
+                    <schemaIncludes>
+                        <include>pubmed_170101.dtd</include>
+                    </schemaIncludes>
+                    <generateDirectory>${org.jaxb.target.dir}</generateDirectory>
+                    <accessExternalDTD>true</accessExternalDTD>
+                    <generatePackage>ch.difty.scipamato.core.pubmed.api</generatePackage>
+                </configuration>
             </plugin>
-            <!-- Assist eclipse in recognizing the generates sources (from jOOQ and jaxb) as source files -->
+            <!-- Assist eclipse in recognizing the generates sources (from jaxb) as source files -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>

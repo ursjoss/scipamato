@@ -6,34 +6,42 @@
         http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.5.xsd">
 
     <service>
-        <jsr107:defaults enable-management="true" enable-statistics="true"/>
+        <jsr107:defaults enable-management="true" enable-statistics="true" />
     </service>
 
     <cache alias="codeClasses">
         <expiry>
             <ttl unit="hours">4</ttl>
         </expiry>
-        <heap unit="entries">100</heap>
+        <resources>
+            <heap unit="entries">100</heap>
+        </resources>
     </cache>
 
     <cache alias="codes">
         <expiry>
             <ttl unit="hours">4</ttl>
         </expiry>
-        <heap unit="entries">1000</heap>
+        <resources>
+            <heap unit="entries">1000</heap>
+        </resources>
     </cache>
 
     <cache alias="userByName">
         <expiry>
             <ttl unit="hours">4</ttl>
         </expiry>
-        <heap unit="entries">20</heap>
+        <resources>
+            <heap unit="entries">20</heap>
+        </resources>
     </cache>
 
     <cache alias="userRolesByUserId">
         <expiry>
             <ttl unit="hours">4</ttl>
         </expiry>
-        <heap unit="entries">100</heap>
+        <resources>
+            <heap unit="entries">100</heap>
+        </resources>
     </cache>
 </config>
