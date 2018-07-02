@@ -180,7 +180,7 @@
                         </configuration>
                         <executions>
                             <execution>
-                                <id>drop-database</id>
+                                <id>generate-sources</id>
                                 <!-- Need to guarantee order of execution -->
                                 <phase>generate-sources</phase>
                                 <goals>
@@ -253,7 +253,7 @@
                                 </goals>
                                 <configuration>
                                     <files>
-                                        <file>${property-file}</file>
+                                        <file>${property-file-it}</file>
                                     </files>
                                 </configuration>
                             </execution>

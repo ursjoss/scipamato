@@ -247,7 +247,7 @@
                                 </goals>
                                 <configuration>
                                     <files>
-                                        <file>${property-file}</file>
+                                        <file>${property-file-it}</file>
                                     </files>
                                 </configuration>
                             </execution>
