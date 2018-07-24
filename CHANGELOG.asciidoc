@@ -54,7 +54,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped dependencies: jOOQ
+- Bumped dependencies: jOOQ, Flyway, jOOL, equalsverifier, spring-boot-admin
 
 .Deprecated
 
