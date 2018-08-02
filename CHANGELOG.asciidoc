@@ -63,6 +63,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- Fix package name for wicketstuff annotation scan package name
 
 .Security
 
