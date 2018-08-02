@@ -266,7 +266,7 @@
             <!-- Lambda utilities -->
             <dependency>
                 <groupId>org.jooq</groupId>
-                <artifactId>jool</artifactId>
+                <artifactId>jool-java-8</artifactId>
                 <version>0.9.14</version>
             </dependency>
 

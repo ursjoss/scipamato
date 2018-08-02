@@ -55,6 +55,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bumped dependencies: jOOQ, Flyway, jOOL, equalsverifier, spring-boot-admin
+- Move from org.jooq.jool to org.jooq.jool-java-8
 
 .Deprecated
 
