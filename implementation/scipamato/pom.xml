@@ -78,7 +78,7 @@
         <jooq.version>3.11.3</jooq.version>
         <flyway.version>5.1.4</flyway.version>
 
-        <lombok.version>1.18.0</lombok.version>
+        <lombok.version>1.18.2</lombok.version>
 
         <!-- 2.20.0 breaks the build: cannot mock e.g. Sort -->
         <mockito.version>2.19.0</mockito.version>
