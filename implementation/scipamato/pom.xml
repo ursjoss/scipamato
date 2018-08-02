@@ -74,7 +74,7 @@
         <m2e-lifecycle-mapping.version>1.0.0</m2e-lifecycle-mapping.version>
 
         <!-- persistence layer -->
-        <postgresql.version>42.2.2</postgresql.version>
+        <postgresql.version>42.2.4</postgresql.version>
         <jooq.version>3.11.3</jooq.version>
         <flyway.version>5.1.4</flyway.version>
 
