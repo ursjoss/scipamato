@@ -54,7 +54,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped dependencies: spring-boot-starter-parent, jOOQ, Flyway, lombok, jOOL, equalsverifier, spring-boot-admin, postgres jdbc driver
+- Bumped dependencies: spring-boot-starter-parent, jOOQ, Flyway, lombok, jOOL, mockito,
+  equalsverifier, spring-boot-admin, postgres jdbc driver
 - Move from org.jooq.jool to org.jooq.jool-java-8
 
 .Deprecated
