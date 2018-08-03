@@ -122,6 +122,7 @@
                 <filtering>false</filtering>
                 <includes>
                     <include>**/*.html</include>
+                    <include>**/*.css</include>
                     <include>**/*.properties</include>
                 </includes>
             </resource>
