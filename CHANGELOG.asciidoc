@@ -54,21 +54,30 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped dependencies: spring-boot-starter-parent, jOOQ, Flyway, lombok, jOOL, mockito,
-  equalsverifier, spring-boot-admin, postgres jdbc driver, bytebuddy, commons-collections4
-- Move from org.jooq.jool to org.jooq.jool-java-8
 
 .Deprecated
 
 .Removed
 
 .Fixed
+
+.Security
+
+
+
+[[v0.8.7]]
+== [0.8.7] -- 2018-08-03
+
+.Changed
+- Bumped dependencies: spring-boot-starter-parent, jOOQ, Flyway, lombok, jOOL, mockito,
+  equalsverifier, spring-boot-admin, postgres jdbc driver, bytebuddy, commons-collections4
+- Move from org.jooq.jool to org.jooq.jool-java-8
+
+.Fixed
 - Fix package name for wicketstuff annotation scan package name
 - Fix commercial font usage: fix filtering of css resources
 - 08/43: Public: Fix loading public paper details by number, e.g. /paper/number/1234
 - Core: Sort Newsletter Topics alphabetically in Paper Editor
-
-.Security
 
 
 [[v0.8.6]]
