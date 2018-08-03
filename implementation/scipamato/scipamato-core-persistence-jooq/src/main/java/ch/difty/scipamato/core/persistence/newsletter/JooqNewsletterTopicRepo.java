@@ -37,6 +37,7 @@ public class JooqNewsletterTopicRepo implements NewsletterTopicRepository {
             .on(NEWSLETTER_TOPIC.ID
                 .equal(NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID)
                 .and(NEWSLETTER_TOPIC_TR.LANG_CODE.equal(lang)))
+            .orderBy(NEWSLETTER_TOPIC_TR.TITLE)
             .fetchInto(NewsletterTopic.class);
     }
 
