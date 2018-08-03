@@ -39,7 +39,15 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
 
     private final PageReference callingPageRef;
 
-    PublicPaperDetailPage(final PageParameters parameters) {
+    /**
+     * Loads the page with the record specified by the 'id' passed in via
+     * PageParameters. If the parameter 'no' contains a valid business key number
+     * instead, the page will be loaded by number.
+     *
+     * @param parameters
+     *     page parameters
+     */
+    public PublicPaperDetailPage(final PageParameters parameters) {
         this(parameters, null);
     }
 

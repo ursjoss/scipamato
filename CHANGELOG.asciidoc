@@ -65,6 +65,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 - Fix package name for wicketstuff annotation scan package name
 - Fix commercial font usage: fix filtering of css resources
+- 08/43: Public: Fix loading public paper details by number, e.g. /paper/number/1234
 
 .Security
 
