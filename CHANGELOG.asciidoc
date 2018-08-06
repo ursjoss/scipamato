@@ -60,10 +60,15 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
-- 08/47: Fix Layout of scipamato page to avoid a cut button in scipamato public when shown in an iframe
 
 .Security
 
+
+[[v0.8.8]]
+== [0.8.8] -- 2018-08-06
+
+.Fixed
+- 08/47: Fix Layout of scipamato page to avoid a cut button in scipamato public when shown in an iframe
 
 
 [[v0.8.7]]
