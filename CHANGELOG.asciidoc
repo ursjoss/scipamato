@@ -54,7 +54,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bump dependencies: jOOQ
+- Bump dependencies: jOOQ, spring-cloud
 
 .Deprecated
 

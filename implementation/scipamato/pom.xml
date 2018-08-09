@@ -91,7 +91,7 @@
         <bootstrap.version>3.3.7-1</bootstrap.version>
         <jasperreports.version>6.6.0</jasperreports.version>
 
-        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+        <spring-cloud.version>Finchley.SR1</spring-cloud.version>
     </properties>
 
     <dependencyManagement>
