@@ -21,7 +21,6 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -120,7 +119,8 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         assertPageLinkButton(0, "Left", NavbarButton.class, "Papers");
         assertPageLinkButton(1, "Left", NavbarButton.class, "Search");
         assertPageLinkButton(2, "Left", NavbarButton.class, "Newsletter");
-        assertPageLinkButton(3, "Left", NavbarButton.class, "Synchronize");
+        assertPageLinkButton(3, "Left", NavbarButton.class, "Newsletter Topics");
+        assertPageLinkButton(4, "Left", NavbarButton.class, "Synchronize");
 
         assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:0:component",
             "https://github.com/ursjoss/scipamato/wiki/");

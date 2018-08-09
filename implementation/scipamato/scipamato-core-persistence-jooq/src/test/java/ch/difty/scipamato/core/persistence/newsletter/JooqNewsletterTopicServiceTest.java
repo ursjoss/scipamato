@@ -15,6 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.persistence.UserRepository;
 
@@ -46,6 +47,11 @@ public class JooqNewsletterTopicServiceTest {
         return topicMock;
     }
 
+    private final List<NewsletterTopicDefinition> topicDefinitions = new ArrayList<>();
+
+    @Mock
+    private NewsletterTopicDefinition topicDefinitionMock;
+
     @Before
     public void setUp() {
         service = new JooqNewsletterTopicService(repoMock, userRepoMock);
@@ -53,12 +59,15 @@ public class JooqNewsletterTopicServiceTest {
         topics.add(topicMock);
         topics.add(topicMock);
 
-//        when(topicMock.getCreatedBy()).thenReturn(10);
+        topicDefinitions.add(topicDefinitionMock);
+        topicDefinitions.add(topicDefinitionMock);
+
+        //        when(topicMock.getCreatedBy()).thenReturn(10);
     }
 
     @After
     public void specificTearDown() {
-        verifyNoMoreInteractions(repoMock, filterMock, paginationContextMock, topicMock);
+        verifyNoMoreInteractions(repoMock, filterMock, paginationContextMock, topicMock, topicDefinitionMock);
     }
 
     @Test
@@ -157,4 +166,20 @@ public class JooqNewsletterTopicServiceTest {
     //        verify(topicMock, times(1)).getVersion();
     //        verify(repoMock, times(1)).delete(3, 17);
     //    }
+
+    @Test
+    public void findingPageOfNewsletterTopicDefinitions() {
+        when(repoMock.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)).thenReturn(
+            topicDefinitions);
+        assertThat(service.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)).isEqualTo(
+            topicDefinitions);
+        verify(repoMock).findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock);
+    }
+
+    @Test
+    public void countingNewsletterTopics() {
+        when(repoMock.countByFilter(filterMock)).thenReturn(3);
+        assertThat(service.countByFilter(filterMock)).isEqualTo(3);
+        verify(repoMock).countByFilter(filterMock);
+    }
 }
