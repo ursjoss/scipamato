@@ -69,7 +69,7 @@ public class JooqNewStudyRepo implements NewStudyRepository {
     }
 
     /*
-     * Walks through the recordset and extracts the NewStudyTopic with all assocated NewStudies
+     * Walks through the recordset and extracts the NewStudyTopic with all associated NewStudies
      */
     private List<NewStudyTopic> processDbRecords(
         final Map<Record, Result<Record13<Integer, String, Integer, Integer, Integer, Long, Integer, String, String, String, Integer, Timestamp, Timestamp>>> map,
