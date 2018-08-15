@@ -50,17 +50,17 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
     @Test
     public void findingPageByFilter_forPapersAsOf2017_findsOne_() {
         filter.setPublicationYearFrom(2016);
-        assertThat(repo.findPageByFilter(filter, pc)).hasSize(1);
-    }
-
-    @Test
-    public void findingPageByFilter_() {
         assertThat(repo.findPageByFilter(filter, pc)).hasSize(3);
     }
 
     @Test
+    public void findingPageByFilter_forAnyPaper() {
+        assertThat(repo.findPageByFilter(filter, pc)).hasSize(10);
+    }
+
+    @Test
     public void countingByFilter_withNoFilterCriteria_findsTwo() {
-        assertThat(repo.countByFilter(filter)).isEqualTo(3);
+        assertThat(repo.countByFilter(filter)).isEqualTo(13);
     }
 
     @Test
@@ -93,7 +93,7 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
         filter.setPublicationYearUntil(2018);
         assertThat(repo.findPageOfNumbersByFilter(filter, allSorted))
             .isNotEmpty()
-            .containsExactly(2L);
+            .containsOnly(8984L, 8934L, 8924L, 2L, 8933L, 8983L, 8993L, 8861L, 8916L, 8973L, 8897L);
     }
 
     private List<Code> newCodes(String... codes) {
@@ -144,6 +144,6 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
         assertThat(repo.findPageByFilter(filter, allSorted))
             .isNotEmpty()
             .extracting("number")
-            .containsOnly(1L, 2L, 3L);
+            .containsOnly(8984L, 8934L, 8924L, 2L, 8933L, 8983L, 8993L, 8861L, 8916L, 8973L, 1L, 3L, 8897L);
     }
 }

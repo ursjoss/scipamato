@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import org.junit.After;
 import org.junit.Test;
 
+import ch.difty.scipamato.core.db.public_.tables.Paper;
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyRecord;
 
@@ -100,8 +101,10 @@ public class NewStudyItemWriterIntegrationTest
         final int newsletterId = newNewStudy.getNewsletterId();
         final long paperNumber = newNewStudy.getPaperNumber();
         assertNewStudyDoesNotExistWith(newsletterId, paperNumber);
+        dsl.insertInto(Paper.PAPER).columns(Paper.PAPER.ID, Paper.PAPER.NUMBER, Paper.PAPER.PUBLICATION_YEAR).values(PAPER_NUMBER_NEW, PAPER_NUMBER_NEW, 2007).execute();
         assertThat(getWriter().executeUpdate(newNewStudy)).isEqualTo(1);
         assertNewStudyExistsWith(newsletterId, paperNumber);
+        dsl.deleteFrom(Paper.PAPER).where(Paper.PAPER.NUMBER.eq(PAPER_NUMBER_NEW)).execute();
     }
 
     private void assertNewStudyExistsWith(final int newsletterId, final long paperNumber) {

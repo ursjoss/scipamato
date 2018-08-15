@@ -52,6 +52,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
+- 08/50 - Public: Referential integrity constraints - where possible
 
 .Changed
 - Bump dependencies: jOOQ, spring-cloud
