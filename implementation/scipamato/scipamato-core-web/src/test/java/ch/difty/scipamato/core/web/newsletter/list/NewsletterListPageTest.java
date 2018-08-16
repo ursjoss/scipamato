@@ -72,7 +72,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
         assertFilterForm("filterForm");
 
         final String[] headers = { "Issue", "Issue Date", "Publication Status" };
-        final String[] values = { "1801", "2018-01-01", PublicationStatus.WIP.toString() };
+        final String[] values = { "1801", "2018-01-01", "In Progress" };
         assertResultTable("results", headers, values);
 
         verify(newsletterServiceMock).countByFilter(isA(NewsletterFilter.class));
@@ -89,7 +89,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     private void assertResultTable(final String b, final String[] labels, final String[] values) {
         getTester().assertComponent(b, BootstrapDefaultDataTable.class);
         assertHeaderColumns(b, labels);
-        assertTableValuesOfRow(b, 1, values);
+        assertTableValuesOfRow(b, 1, 1, values);
     }
 
     private void assertHeaderColumns(final String b, final String[] labels) {
@@ -99,13 +99,15 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
                 b + ":topToolbars:toolbars:2:headers:" + ++idx + ":header:orderByLink:header_body:label", label);
     }
 
-    private void assertTableValuesOfRow(final String b, final int rowIdx, final String[] labels) {
-        getTester().assertComponent(b + ":body:rows:" + rowIdx + ":cells:1:cell:link", Link.class);
-        getTester().assertLabel(b + ":body:rows:" + rowIdx + ":cells:1:cell:link:label", labels[0]);
-        int colIdx = 0;
-        for (final String label : labels)
-            if (colIdx > 0)
-                getTester().assertLabel(b + ":body:rows:" + rowIdx + ":cells:" + ++colIdx + ":cell", label);
+    private void assertTableValuesOfRow(final String b, final int rowIdx, final Integer colIdxAsLink,
+        final String[] values) {
+        if (colIdxAsLink != null)
+            getTester().assertComponent(b + ":body:rows:" + rowIdx + ":cells:" + colIdxAsLink + ":cell:link",
+                Link.class);
+        int colIdx = 1;
+        for (final String value : values)
+            getTester().assertLabel(b + ":body:rows:" + rowIdx + ":cells:" + colIdx + ":cell" + (
+                colIdxAsLink != null && colIdx++ == colIdxAsLink.intValue() ? ":link:label" : ""), value);
     }
 
     @Test
