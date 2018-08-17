@@ -18,11 +18,6 @@ public class NewsletterTopicDefinitionTest {
     private final NewsletterTopicTranslation ntt_fr = new NewsletterTopicTranslation(12, "fr", "sujet2");
 
     @Test
-    public void degenerateConstruction_withNullId_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new NewsletterTopicDefinition(null, "de"), "id");
-    }
-
-    @Test
     public void degenerateConstruction_withNullLanguageCode_throws() {
         TestUtils.assertDegenerateSupplierParameter(() -> new NewsletterTopicDefinition(1, null), "mainLanguageCode");
     }

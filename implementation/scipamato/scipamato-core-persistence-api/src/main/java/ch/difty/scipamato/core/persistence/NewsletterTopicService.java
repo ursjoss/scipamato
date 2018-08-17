@@ -44,4 +44,12 @@ public interface NewsletterTopicService {
      * @return entity count
      */
     int countByFilter(NewsletterTopicFilter filter);
+
+    /**
+     * Creates and returns an unpersisted instance of a NewsletterTopicDefinition
+     * with translations in all relevant languages but no values.
+     *
+     * @return the unpersisted entity
+     */
+    NewsletterTopicDefinition newUnpersistedNewsletterTopicDefinition();
 }

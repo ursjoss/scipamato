@@ -9,7 +9,6 @@ import java.util.Optional;
 
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
@@ -246,4 +245,5 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
 
         verify(repoMock).getNewsletterInStatusWorkInProgress();
     }
+
 }

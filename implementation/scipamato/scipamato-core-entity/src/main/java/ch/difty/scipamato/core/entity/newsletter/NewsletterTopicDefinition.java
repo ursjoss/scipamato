@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toMap;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 import lombok.Data;
@@ -37,17 +38,20 @@ public class NewsletterTopicDefinition extends NewsletterTopic {
      * @param translations
      *     translations for all relevant languages
      * @throws NullArgumentException
-     *     if the id or the mainLanguageCode is null
+     *     if the mainLanguageCode is null
      */
     public NewsletterTopicDefinition(final Integer id, final String mainLanguageCode,
         final NewsletterTopicTranslation... translations) {
-        super(AssertAs.notNull(id, "id"), Arrays
+        super(id, Arrays
             .stream(translations)
-            .filter(tr -> mainLanguageCode.equals(tr.getLangCode()))
+            .filter(tr -> AssertAs
+                .notNull(mainLanguageCode, "mainLanguageCode")
+                .equals(tr.getLangCode()))
             .map(NewsletterTopicTranslation::getTitle)
+            .filter(Objects::nonNull)
             .findFirst()
             .orElse("n.a."));
-        this.mainLanguageCode = AssertAs.notNull(mainLanguageCode, "mainLanguageCode");
+        this.mainLanguageCode = mainLanguageCode;
         this.translations = Arrays
             .stream(translations)
             .collect(toMap(NewsletterTopicTranslation::getLangCode, Function.identity()));

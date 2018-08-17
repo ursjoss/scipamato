@@ -3,12 +3,12 @@ package ch.difty.scipamato.core.persistence.newsletter;
 import static ch.difty.scipamato.core.db.tables.Language.LANGUAGE;
 import static ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC;
 import static ch.difty.scipamato.core.db.tables.NewsletterTopicTr.NEWSLETTER_TOPIC_TR;
+import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.*;
@@ -75,7 +75,7 @@ public class JooqNewsletterTopicRepo implements NewsletterTopicRepository {
             .stream()
             .skip((long) pc.getOffset())
             .limit((long) pc.getPageSize())
-            .collect(Collectors.toList());
+            .collect(toList());
     }
 
     private <R extends Record> SelectConditionStep<R> applyWhereCondition(final NewsletterTopicFilter filter,
@@ -111,19 +111,33 @@ public class JooqNewsletterTopicRepo implements NewsletterTopicRepository {
                 .stream()
                 .map(r -> new NewsletterTopicTranslation(r.getValue(NEWSLETTER_TOPIC_TR.ID), r.getValue(LANGUAGE.CODE),
                     r.getValue(NEWSLETTER_TOPIC_TR.TITLE)))
-                .collect(Collectors.toList());
+                .collect(toList());
             definitions.add(new NewsletterTopicDefinition(entry.getKey(), mainLanguage,
                 translations.toArray(new NewsletterTopicTranslation[translations.size()])));
         }
         return definitions;
     }
 
-    private String getMainLanguage() {
+    @Override
+    public String getMainLanguage() {
         return dslContext
             .select(LANGUAGE.CODE)
             .from(LANGUAGE)
             .where(LANGUAGE.MAIN_LANGUAGE.eq(true))
             .fetchOneInto(String.class);
+    }
+
+    @Override
+    public NewsletterTopicDefinition newUnpersistedNewsletterTopicDefinition() {
+        final List<NewsletterTopicTranslation> translations = dslContext
+            .select(LANGUAGE.CODE)
+            .from(LANGUAGE)
+            .fetchInto(String.class)
+            .stream()
+            .map(lc -> new NewsletterTopicTranslation(null, lc, null))
+            .collect(toList());
+        return new NewsletterTopicDefinition(null, getMainLanguage(),
+            translations.toArray(new NewsletterTopicTranslation[translations.size()]));
     }
 
     /**

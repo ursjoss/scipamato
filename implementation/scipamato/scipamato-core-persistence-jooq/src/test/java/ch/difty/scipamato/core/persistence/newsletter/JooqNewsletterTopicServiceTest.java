@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -76,6 +77,13 @@ public class JooqNewsletterTopicServiceTest {
         when(repoMock.findAll(langCode)).thenReturn(topics);
         assertThat(service.findAll(langCode)).isEqualTo(topics);
         verify(repoMock).findAll(langCode);
+    }
+
+    @Test
+    public void newUnpersistedNewsletterTopicDefinition_delegatesToRepo() {
+        when(repoMock.newUnpersistedNewsletterTopicDefinition()).thenReturn(topicDefinitionMock);
+        assertThat(service.newUnpersistedNewsletterTopicDefinition()).isEqualTo(topicDefinitionMock);
+        verify(repoMock).newUnpersistedNewsletterTopicDefinition();
     }
 
     //    @Test

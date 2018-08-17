@@ -40,4 +40,17 @@ public interface NewsletterTopicRepository {
      */
     int countByFilter(NewsletterTopicFilter filter);
 
+    /**
+     * @return the main language code as string
+     */
+    String getMainLanguage();
+
+    /**
+     * Creates and returns an unpersisted instance of a NewsletterTopicDefinition
+     * with translations in all relevant languages but no values.
+     *
+     * @return the unpersisted entity
+     */
+    NewsletterTopicDefinition newUnpersistedNewsletterTopicDefinition();
+
 }

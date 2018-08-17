@@ -12,12 +12,15 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import ch.difty.scipamato.common.web.component.SerializableConsumer;
+import ch.difty.scipamato.common.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
@@ -63,7 +66,7 @@ public class NewsletterTopicListPage extends BasePage<NewsletterTopic> {
 
         queueFieldAndLabel(new TextField<String>("title",
             PropertyModel.of(filter, NewsletterTopicFilter.NewsletterTopicFilterFields.TITLE_MASK.getName())));
-        //        newNewsletterButton = queueResponsePageButton("newNewsletter", NewsletterEditPage::new);
+        //        newNewsletterTopicButton = queueResponsePageButton("newNewsletterTopic", NewsletterTopicEditPage::new);
     }
 
     private void makeAndQueueTable(String id) {
@@ -77,14 +80,18 @@ public class NewsletterTopicListPage extends BasePage<NewsletterTopic> {
 
     private List<IColumn<NewsletterTopicDefinition, String>> makeTableColumns() {
         final List<IColumn<NewsletterTopicDefinition, String>> columns = new ArrayList<>();
-        //        columns.add(makeClickableColumn(ISSUE.getName(), this::onTitleClick));
-        columns.add(makePropertyColumn("title"));
+        columns.add(makeClickableColumn("translationsAsString", this::onTitleClick));
         //        columns.add(makeLinkIconColumn("remove"));
         return columns;
     }
 
-    private PropertyColumn<NewsletterTopicDefinition, String> makePropertyColumn(String propExpression) {
-        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
-            "translationsAsString");
+    private ClickablePropertyColumn<NewsletterTopicDefinition, String> makeClickableColumn(String propExpression,
+        SerializableConsumer<IModel<NewsletterTopicDefinition>> consumer) {
+        return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null),
+            propExpression, propExpression, consumer);
+    }
+
+    private void onTitleClick(final IModel<NewsletterTopicDefinition> newsletterTopicModel) {
+        setResponsePage(new NewsletterTopicEditPage(newsletterTopicModel));
     }
 }

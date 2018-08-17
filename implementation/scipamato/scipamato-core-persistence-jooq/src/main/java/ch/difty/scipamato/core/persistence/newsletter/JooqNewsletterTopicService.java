@@ -46,4 +46,9 @@ class JooqNewsletterTopicService implements NewsletterTopicService {
         return getRepo().countByFilter(filter);
     }
 
+    @Override
+    public NewsletterTopicDefinition newUnpersistedNewsletterTopicDefinition() {
+        return getRepo().newUnpersistedNewsletterTopicDefinition();
+    }
+
 }

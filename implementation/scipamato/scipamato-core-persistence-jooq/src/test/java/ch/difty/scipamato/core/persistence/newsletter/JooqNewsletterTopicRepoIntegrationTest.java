@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.persistence.newsletter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.Test;
@@ -11,6 +12,7 @@ import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
 import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
 
 public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalIntegrationTest {
@@ -178,5 +180,34 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
         final NewsletterTopicFilter filter = new NewsletterTopicFilter();
         filter.setTitleMask("foobar");
         assertThat(repo.countByFilter(filter)).isEqualTo(0);
+    }
+
+    @Test
+    public void gettingMainLanguage() {
+        assertThat(repo.getMainLanguage()).isEqualTo("de");
+    }
+
+    @Test
+    public void findingMainLanguage() {
+        NewsletterTopicDefinition ntd = repo.newUnpersistedNewsletterTopicDefinition();
+
+        assertThat(ntd.getId()).isNull();
+        assertThat(ntd.getMainLanguageCode()).isEqualTo("de");
+        assertThat(ntd.getTitle()).isEqualTo("n.a.");
+        assertThat(ntd.getTitleInLanguage("de")).isNull();
+        assertThat(ntd.getTranslations()).hasSize(3);
+
+        final Collection<NewsletterTopicTranslation> translations = ntd
+            .getTranslations()
+            .values();
+        assertThat(translations)
+            .extracting("langCode")
+            .containsOnly("de", "en", "fr");
+        assertThat(translations)
+            .extracting("id")
+            .containsExactly(null, null, null);
+        assertThat(translations)
+            .extracting("title")
+            .containsExactly(null, null, null);
     }
 }
