@@ -51,4 +51,14 @@ class JooqNewsletterTopicService implements NewsletterTopicService {
         return getRepo().newUnpersistedNewsletterTopicDefinition();
     }
 
+    @Override
+    public NewsletterTopicDefinition add(final NewsletterTopicDefinition entity) {
+        return getRepo().add(entity);
+    }
+
+    @Override
+    public NewsletterTopicDefinition update(final NewsletterTopicDefinition entity) {
+        return getRepo().update(entity);
+    }
+
 }

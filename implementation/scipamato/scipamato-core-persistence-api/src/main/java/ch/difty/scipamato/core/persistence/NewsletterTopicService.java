@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.persistence;
 
 import java.util.List;
 
+import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
@@ -52,4 +53,33 @@ public interface NewsletterTopicService {
      * @return the unpersisted entity
      */
     NewsletterTopicDefinition newUnpersistedNewsletterTopicDefinition();
+
+    /**
+     * Persist an unpersisted {@link NewsletterTopicDefinition} including its associated
+     * NewsletterTopicTranslations to the database.
+     *
+     * @param entity
+     *     - must not be null, id must be null
+     * @return the persisted entity, including the generated id and default values - or
+     *     {@code null} if it can't be added. Only the version field is populated out of
+     *     all the audit fields.
+     * @throws NullArgumentException
+     *     if the entity is null.
+     */
+    NewsletterTopicDefinition add(NewsletterTopicDefinition entity);
+
+    /**
+     * Update an already persisted {@link NewsletterTopicDefinition} including its associated
+     * NewsletterTopicTranslations in the database. Any associated translation will be updated
+     * if it exists in the database (id != null) or will be added if it is new (id == null).
+     *
+     * @param entity
+     *     - must not be null, id must not be null.
+     * @return the updated persisted entity, including the generated id and default values - or
+     *     {@code null} if it can't be added. Only the version field is populated out of
+     *     all the audit fields.
+     * @throws NullArgumentException
+     *     if the entity is null.
+     */
+    NewsletterTopicDefinition update(NewsletterTopicDefinition entity);
 }

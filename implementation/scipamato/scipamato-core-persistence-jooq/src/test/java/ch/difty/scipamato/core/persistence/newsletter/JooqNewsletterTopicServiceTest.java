@@ -5,7 +5,6 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -51,7 +50,7 @@ public class JooqNewsletterTopicServiceTest {
     private final List<NewsletterTopicDefinition> topicDefinitions = new ArrayList<>();
 
     @Mock
-    private NewsletterTopicDefinition topicDefinitionMock;
+    private NewsletterTopicDefinition topicDefinitionMock, persistendTopicDefinitionMock;
 
     @Before
     public void setUp() {
@@ -176,7 +175,7 @@ public class JooqNewsletterTopicServiceTest {
     //    }
 
     @Test
-    public void findingPageOfNewsletterTopicDefinitions() {
+    public void findingPageOfNewsletterTopicDefinitions_delegatesToRepo() {
         when(repoMock.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)).thenReturn(
             topicDefinitions);
         assertThat(service.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)).isEqualTo(
@@ -185,9 +184,23 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @Test
-    public void countingNewsletterTopics() {
+    public void countingNewsletterTopics_delegatesToRepo() {
         when(repoMock.countByFilter(filterMock)).thenReturn(3);
         assertThat(service.countByFilter(filterMock)).isEqualTo(3);
         verify(repoMock).countByFilter(filterMock);
+    }
+
+    @Test
+    public void addingNewsletterTopicDefinition_delegatesToRepo() {
+        when(repoMock.add(topicDefinitionMock)).thenReturn(persistendTopicDefinitionMock);
+        assertThat(service.add(topicDefinitionMock)).isEqualTo(persistendTopicDefinitionMock);
+        verify(repoMock).add(topicDefinitionMock);
+    }
+
+    @Test
+    public void updatingNewsletterTopicDefinition_delegatesToRepo() {
+        when(repoMock.update(topicDefinitionMock)).thenReturn(persistendTopicDefinitionMock);
+        assertThat(service.update(topicDefinitionMock)).isEqualTo(persistendTopicDefinitionMock);
+        verify(repoMock).update(topicDefinitionMock);
     }
 }

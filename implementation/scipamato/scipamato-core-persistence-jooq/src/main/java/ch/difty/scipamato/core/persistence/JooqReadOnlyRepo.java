@@ -7,6 +7,7 @@ import org.jooq.*;
 import org.jooq.impl.TableImpl;
 
 import ch.difty.scipamato.common.AssertAs;
+import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
@@ -33,9 +34,8 @@ import ch.difty.scipamato.core.entity.CoreEntity;
  * @author u.joss
  */
 public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
-    implements ReadOnlyRepository<T, ID, F> {
+    extends AbstractRepo implements ReadOnlyRepository<T, ID, F> {
 
-    private final DSLContext                      dsl;
     private final M                               mapper;
     private final JooqSortMapper<R, T, TI>        sortMapper;
     private final GenericFilterConditionMapper<F> filterConditionMapper;
@@ -52,21 +52,21 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
      * @param filterConditionMapper
      *     the {@link GenericFilterConditionMapper} mapping a derivative of
      *     {@link ScipamatoFilter} into jOOC {@link Condition}s
+     * @param dateTimeService
+     *     the {@link DateTimeService} providing access to the system time
      * @param applicationProperties
      *     the object providing the application properties
      */
     protected JooqReadOnlyRepo(final DSLContext dsl, final M mapper, final JooqSortMapper<R, T, TI> sortMapper,
-        GenericFilterConditionMapper<F> filterConditionMapper, ApplicationProperties applicationProperties) {
-        this.dsl = AssertAs.notNull(dsl, "dsl");
+        GenericFilterConditionMapper<F> filterConditionMapper, DateTimeService dateTimeService,
+        ApplicationProperties applicationProperties) {
+        super(dsl, dateTimeService);
+
         this.mapper = AssertAs.notNull(mapper, "mapper");
         this.sortMapper = AssertAs.notNull(sortMapper, "sortMapper");
         this.filterConditionMapper = AssertAs.notNull(filterConditionMapper, "filterConditionMapper");
         this.applicationProperties = AssertAs.notNull(applicationProperties, "applicationProperties");
 
-    }
-
-    protected DSLContext getDsl() {
-        return dsl;
     }
 
     protected M getMapper() {

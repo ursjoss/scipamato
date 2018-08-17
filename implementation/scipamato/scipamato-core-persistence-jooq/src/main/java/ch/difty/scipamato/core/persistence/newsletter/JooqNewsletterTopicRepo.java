@@ -16,29 +16,34 @@ import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import ch.difty.scipamato.common.AssertAs;
+import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.TranslationUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.Sort;
+import ch.difty.scipamato.core.db.tables.records.NewsletterTopicRecord;
+import ch.difty.scipamato.core.db.tables.records.NewsletterTopicTrRecord;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
+import ch.difty.scipamato.core.persistence.AbstractRepo;
+import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
 @Repository
 @Slf4j
-public class JooqNewsletterTopicRepo implements NewsletterTopicRepository {
+public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterTopicRepository {
 
-    private final DSLContext dslContext;
-
-    public JooqNewsletterTopicRepo(@Qualifier("dslContext") final DSLContext dslContext) {
-        this.dslContext = dslContext;
+    public JooqNewsletterTopicRepo(@Qualifier("dslContext") final DSLContext dslContext,
+        DateTimeService dateTimeService) {
+        super(dslContext, dateTimeService);
     }
 
     @Override
     public List<NewsletterTopic> findAll(final String languageCode) {
         final String lang = TranslationUtils.trimLanguageCode(languageCode);
         // skipping the audit fields
-        return dslContext
+        return getDsl()
             .select(NEWSLETTER_TOPIC.ID.as("NT_ID"), DSL
                 .coalesce(NEWSLETTER_TOPIC_TR.TITLE, TranslationUtils.NOT_TRANSL)
                 .as("NT_TITLE"))
@@ -54,7 +59,7 @@ public class JooqNewsletterTopicRepo implements NewsletterTopicRepository {
     @Override
     public List<NewsletterTopicDefinition> findPageOfNewsletterTopicDefinitions(final NewsletterTopicFilter filter,
         final PaginationContext pc) {
-        final SelectOnConditionStep<Record> selectStep = dslContext
+        final SelectOnConditionStep<Record> selectStep = getDsl()
             .select(NEWSLETTER_TOPIC.fields())
             .select(LANGUAGE.CODE)
             .select(NEWSLETTER_TOPIC_TR.fields())
@@ -112,21 +117,19 @@ public class JooqNewsletterTopicRepo implements NewsletterTopicRepository {
                 .map(r -> new NewsletterTopicTranslation(r.getValue(NEWSLETTER_TOPIC_TR.ID), r.getValue(LANGUAGE.CODE),
                     r.getValue(NEWSLETTER_TOPIC_TR.TITLE), r.getValue(NEWSLETTER_TOPIC_TR.VERSION)))
                 .collect(toList());
-            Record r = entry
+            final Record r = entry
                 .getValue()
                 .stream()
                 .findFirst()
                 .orElseThrow();
-            definitions.add(
-                new NewsletterTopicDefinition(entry.getKey(), mainLanguage, r.getValue(NEWSLETTER_TOPIC.VERSION),
-                    translations.toArray(new NewsletterTopicTranslation[translations.size()])));
+            definitions.add(toTopicDefinition(entry.getKey(), r.getValue(NEWSLETTER_TOPIC.VERSION), translations));
         }
         return definitions;
     }
 
     @Override
     public String getMainLanguage() {
-        return dslContext
+        return getDsl()
             .select(LANGUAGE.CODE)
             .from(LANGUAGE)
             .where(LANGUAGE.MAIN_LANGUAGE.eq(true))
@@ -135,15 +138,14 @@ public class JooqNewsletterTopicRepo implements NewsletterTopicRepository {
 
     @Override
     public NewsletterTopicDefinition newUnpersistedNewsletterTopicDefinition() {
-        final List<NewsletterTopicTranslation> translations = dslContext
+        final List<NewsletterTopicTranslation> translations = getDsl()
             .select(LANGUAGE.CODE)
             .from(LANGUAGE)
             .fetchInto(String.class)
             .stream()
             .map(lc -> new NewsletterTopicTranslation(null, lc, null, 0))
             .collect(toList());
-        return new NewsletterTopicDefinition(null, getMainLanguage(), 0,
-            translations.toArray(new NewsletterTopicTranslation[translations.size()]));
+        return toTopicDefinition(null, 0, translations);
     }
 
     /**
@@ -165,10 +167,146 @@ public class JooqNewsletterTopicRepo implements NewsletterTopicRepository {
 
     @Override
     public int countByFilter(final NewsletterTopicFilter filter) {
-        final SelectJoinStep<Record1<Integer>> selectStep = dslContext
+        final SelectJoinStep<Record1<Integer>> selectStep = getDsl()
             .selectCount()
             .from(NEWSLETTER_TOPIC);
         return applyWhereCondition(filter, selectStep).fetchOneInto(Integer.class);
+    }
+
+    @Override
+    public NewsletterTopicDefinition add(final NewsletterTopicDefinition entity) {
+        AssertAs.notNull(entity, "entity");
+        if (entity.getId() != null) {
+            throw new IllegalArgumentException("id must be null.");
+        }
+
+        final int userId = getUserId();
+
+        final NewsletterTopicRecord ntRecord = getDsl()
+            .insertInto(NEWSLETTER_TOPIC)
+            .set(NEWSLETTER_TOPIC.CREATED_BY, userId)
+            .set(NEWSLETTER_TOPIC.LAST_MODIFIED_BY, userId)
+            .returning()
+            .fetchOne();
+        final int ntId = ntRecord.get(NEWSLETTER_TOPIC.ID);
+
+        final List<NewsletterTopicTranslation> persistedTranslations = persistTranslations(entity, userId, ntId);
+        final NewsletterTopicDefinition persistedEntity = toTopicDefinition(ntId,
+            ntRecord.get(NEWSLETTER_TOPIC.VERSION), persistedTranslations);
+        log.info("Inserted 1 record: {} with id {}.", NEWSLETTER_TOPIC.getName(), ntId);
+        return persistedEntity;
+    }
+
+    private List<NewsletterTopicTranslation> persistTranslations(final NewsletterTopicDefinition entity,
+        final int userId, final int ntId) {
+        final List<NewsletterTopicTranslation> nttPersisted = new ArrayList<>();
+        for (final NewsletterTopicTranslation ntt : entity
+            .getTranslations()
+            .values()) {
+            final NewsletterTopicTrRecord nttRecord = insertAndGetNewsletterTopicTr(ntId, userId, ntt);
+            nttPersisted.add(toTopicTranslation(nttRecord));
+        }
+        return nttPersisted;
+    }
+
+    @Override
+    public NewsletterTopicDefinition update(final NewsletterTopicDefinition entity) {
+        AssertAs.notNull(entity, "entity");
+        AssertAs.notNull(entity.getId(), "entity.id");
+
+        final int userId = getUserId();
+        final int currentVersion = entity.getVersion();
+
+        final NewsletterTopicRecord record = updateAndLoadNewsletterTopicDefinition(entity, userId, currentVersion);
+        if (record != null) {
+            final List<NewsletterTopicTranslation> persistedTranslations = updateOrInsertAndLoadNewsletterTopicTranslations(
+                entity, userId);
+            final NewsletterTopicDefinition updatedEntity = toTopicDefinition(entity.getId(),
+                record.get(NEWSLETTER_TOPIC.VERSION), persistedTranslations);
+            log.info("Updated 1 record: {} with id {}.", NEWSLETTER_TOPIC.getName(), updatedEntity.getId());
+            return updatedEntity;
+        } else {
+            throw new OptimisticLockingException(NEWSLETTER_TOPIC.getName(), entity.toString(),
+                OptimisticLockingException.Type.UPDATE);
+        }
+    }
+
+    private NewsletterTopicDefinition toTopicDefinition(final Integer id, final int version,
+        final List<NewsletterTopicTranslation> persistedTranslations) {
+        return new NewsletterTopicDefinition(id, getMainLanguage(), version,
+            persistedTranslations.toArray(new NewsletterTopicTranslation[persistedTranslations.size()]));
+    }
+
+    private NewsletterTopicRecord updateAndLoadNewsletterTopicDefinition(final NewsletterTopicDefinition entity,
+        final int userId, final int currentVersion) {
+        return getDsl()
+            .update(NEWSLETTER_TOPIC)
+            .set(NEWSLETTER_TOPIC.VERSION, currentVersion + 1)
+            .set(NEWSLETTER_TOPIC.LAST_MODIFIED_BY, userId)
+            .set(NEWSLETTER_TOPIC.LAST_MODIFIED, getTs())
+            .where(NEWSLETTER_TOPIC.ID.eq(entity.getId()))
+            .and(NEWSLETTER_TOPIC.VERSION.eq(currentVersion))
+            .returning()
+            .fetchOne();
+    }
+
+    private List<NewsletterTopicTranslation> updateOrInsertAndLoadNewsletterTopicTranslations(
+        final NewsletterTopicDefinition entity, final int userId) {
+        final List<NewsletterTopicTranslation> nttPersisted = new ArrayList<>();
+        for (final NewsletterTopicTranslation ntt : entity
+            .getTranslations()
+            .values()) {
+            if (ntt.getId() != null) {
+                final int currentVersion = ntt.getVersion();
+                final NewsletterTopicTrRecord nttRecord = updateNewsletterTopicTr(entity, ntt, userId, currentVersion);
+                if (nttRecord != null) {
+                    nttPersisted.add(toTopicTranslation(nttRecord));
+                } else {
+                    throw new OptimisticLockingException(NEWSLETTER_TOPIC_TR.getName(), ntt.toString(),
+                        OptimisticLockingException.Type.UPDATE);
+                }
+            } else {
+                final NewsletterTopicTrRecord nttRecord = insertAndGetNewsletterTopicTr(entity.getId(), userId, ntt);
+                nttPersisted.add(toTopicTranslation(nttRecord));
+            }
+        }
+        return nttPersisted;
+    }
+
+    private NewsletterTopicTrRecord insertAndGetNewsletterTopicTr(final int topicId, final int userId,
+        final NewsletterTopicTranslation ntt) {
+        return getDsl()
+            .insertInto(NEWSLETTER_TOPIC_TR)
+            .set(NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID, topicId)
+            .set(NEWSLETTER_TOPIC_TR.LANG_CODE, ntt.getLangCode())
+            .set(NEWSLETTER_TOPIC_TR.TITLE, ntt.getTitle())
+            .set(NEWSLETTER_TOPIC_TR.CREATED_BY, userId)
+            .set(NEWSLETTER_TOPIC_TR.LAST_MODIFIED_BY, userId)
+            .returning()
+            .fetchOne();
+    }
+
+    private NewsletterTopicTrRecord updateNewsletterTopicTr(final NewsletterTopicDefinition entity,
+        final NewsletterTopicTranslation ntt, final int userId, final int currentNttVersion) {
+        final int topicId = entity.getId();
+        return getDsl()
+            .update(NEWSLETTER_TOPIC_TR)
+            .set(NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID, topicId)
+            .set(NEWSLETTER_TOPIC_TR.LANG_CODE, ntt.getLangCode())
+            .set(NEWSLETTER_TOPIC_TR.TITLE, ntt.getTitle())
+            .set(NEWSLETTER_TOPIC_TR.LAST_MODIFIED_BY, userId)
+            .set(NEWSLETTER_TOPIC_TR.LAST_MODIFIED, getTs())
+            .set(NEWSLETTER_TOPIC_TR.VERSION, currentNttVersion + 1)
+            .where(NEWSLETTER_TOPIC_TR.ID.eq(ntt.getId()))
+            .and(NEWSLETTER_TOPIC_TR.VERSION.eq(currentNttVersion))
+            .returning()
+            .fetchOne();
+    }
+
+    private NewsletterTopicTranslation toTopicTranslation(final NewsletterTopicTrRecord record) {
+        return new NewsletterTopicTranslation(record.get(NEWSLETTER_TOPIC_TR.ID),
+            record.get(NEWSLETTER_TOPIC_TR.LANG_CODE), record.get(NEWSLETTER_TOPIC_TR.TITLE),
+            record.get(NEWSLETTER_TOPIC_TR.VERSION));
     }
 
 }
