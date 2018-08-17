@@ -110,10 +110,16 @@ public class JooqNewsletterTopicRepo implements NewsletterTopicRepository {
                 .getValue()
                 .stream()
                 .map(r -> new NewsletterTopicTranslation(r.getValue(NEWSLETTER_TOPIC_TR.ID), r.getValue(LANGUAGE.CODE),
-                    r.getValue(NEWSLETTER_TOPIC_TR.TITLE)))
+                    r.getValue(NEWSLETTER_TOPIC_TR.TITLE), r.getValue(NEWSLETTER_TOPIC_TR.VERSION)))
                 .collect(toList());
-            definitions.add(new NewsletterTopicDefinition(entry.getKey(), mainLanguage,
-                translations.toArray(new NewsletterTopicTranslation[translations.size()])));
+            Record r = entry
+                .getValue()
+                .stream()
+                .findFirst()
+                .orElseThrow();
+            definitions.add(
+                new NewsletterTopicDefinition(entry.getKey(), mainLanguage, r.getValue(NEWSLETTER_TOPIC.VERSION),
+                    translations.toArray(new NewsletterTopicTranslation[translations.size()])));
         }
         return definitions;
     }
@@ -134,9 +140,9 @@ public class JooqNewsletterTopicRepo implements NewsletterTopicRepository {
             .from(LANGUAGE)
             .fetchInto(String.class)
             .stream()
-            .map(lc -> new NewsletterTopicTranslation(null, lc, null))
+            .map(lc -> new NewsletterTopicTranslation(null, lc, null, 0))
             .collect(toList());
-        return new NewsletterTopicDefinition(null, getMainLanguage(),
+        return new NewsletterTopicDefinition(null, getMainLanguage(), 0,
             translations.toArray(new NewsletterTopicTranslation[translations.size()]));
     }
 

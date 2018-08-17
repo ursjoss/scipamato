@@ -94,7 +94,7 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
     //    }
 
     @Test
-    public void findingNewsletterTopicDefinitions_withUnspecifiedFilter_findsAllDefintions() {
+    public void findingNewsletterTopicDefinitions_withUnspecifiedFilter_findsAllDefinitions() {
         final List<NewsletterTopicDefinition> ntds = repo.findPageOfNewsletterTopicDefinitions(
             new NewsletterTopicFilter(), new PaginationRequest(Sort.Direction.ASC, "title"));
 
@@ -137,6 +137,37 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
         assertThat(ntd.getTitleInLanguage("de")).isEqualTo("Ultrafeine Partikel");
         assertThat(ntd.getTitleInLanguage("en")).isEqualTo("Ultrafine Particles");
         assertThat(ntd.getTitleInLanguage("fr")).isNull();
+    }
+
+    @Test
+    public void findingNewsletterTopicDefinitions_haveVersionFieldsPopulated() {
+        final NewsletterTopicFilter filter = new NewsletterTopicFilter();
+        filter.setTitleMask("Partikel");
+        final List<NewsletterTopicDefinition> ntds = repo.findPageOfNewsletterTopicDefinitions(filter,
+            new PaginationRequest(Sort.Direction.ASC, "title"));
+
+        assertThat(ntds).hasSize(1);
+
+        NewsletterTopicDefinition ntd = ntds.get(0);
+
+        assertThat(ntd.getVersion()).isEqualTo(1);
+        assertThat(ntd.getCreated()).isNull();
+        assertThat(ntd.getCreatedBy()).isNull();
+        assertThat(ntd.getLastModified()).isNull();
+        assertThat(ntd.getLastModifiedBy()).isNull();
+
+        Collection<NewsletterTopicTranslation> translations = ntd
+            .getTranslations()
+            .values();
+        assertThat(translations).isNotEmpty();
+        NewsletterTopicTranslation tr = translations
+            .iterator()
+            .next();
+        assertThat(tr.getVersion()).isEqualTo(1);
+        assertThat(tr.getCreated()).isNull();
+        assertThat(tr.getCreatedBy()).isNull();
+        assertThat(tr.getLastModified()).isNull();
+        assertThat(tr.getLastModifiedBy()).isNull();
     }
 
     @Test

@@ -35,12 +35,14 @@ public class NewsletterTopicDefinition extends NewsletterTopic {
      *     the aggregate id
      * @param mainLanguageCode
      *     the languageCode of the main language
+     * @param version
+     *     audit field version
      * @param translations
      *     translations for all relevant languages
      * @throws NullArgumentException
      *     if the mainLanguageCode is null
      */
-    public NewsletterTopicDefinition(final Integer id, final String mainLanguageCode,
+    public NewsletterTopicDefinition(final Integer id, final String mainLanguageCode, final Integer version,
         final NewsletterTopicTranslation... translations) {
         super(id, Arrays
             .stream(translations)
@@ -51,10 +53,11 @@ public class NewsletterTopicDefinition extends NewsletterTopic {
             .filter(Objects::nonNull)
             .findFirst()
             .orElse("n.a."));
-        this.mainLanguageCode = mainLanguageCode;
+        this.mainLanguageCode = AssertAs.notNull(mainLanguageCode, "mainLanguageCode");
         this.translations = Arrays
             .stream(translations)
             .collect(toMap(NewsletterTopicTranslation::getLangCode, Function.identity()));
+        setVersion(version != null ? version.intValue() : 0);
     }
 
     /**
