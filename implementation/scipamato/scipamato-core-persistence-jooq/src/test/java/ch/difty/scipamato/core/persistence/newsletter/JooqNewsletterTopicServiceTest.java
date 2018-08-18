@@ -50,7 +50,7 @@ public class JooqNewsletterTopicServiceTest {
     private final List<NewsletterTopicDefinition> topicDefinitions = new ArrayList<>();
 
     @Mock
-    private NewsletterTopicDefinition topicDefinitionMock, persistendTopicDefinitionMock;
+    private NewsletterTopicDefinition topicDefinitionMock, persistedTopicDefinitionMock;
 
     @Before
     public void setUp() {
@@ -192,15 +192,24 @@ public class JooqNewsletterTopicServiceTest {
 
     @Test
     public void addingNewsletterTopicDefinition_delegatesToRepo() {
-        when(repoMock.add(topicDefinitionMock)).thenReturn(persistendTopicDefinitionMock);
-        assertThat(service.add(topicDefinitionMock)).isEqualTo(persistendTopicDefinitionMock);
+        when(repoMock.add(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock);
+        assertThat(service.add(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock);
         verify(repoMock).add(topicDefinitionMock);
     }
 
     @Test
     public void updatingNewsletterTopicDefinition_delegatesToRepo() {
-        when(repoMock.update(topicDefinitionMock)).thenReturn(persistendTopicDefinitionMock);
-        assertThat(service.update(topicDefinitionMock)).isEqualTo(persistendTopicDefinitionMock);
+        when(repoMock.update(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock);
+        assertThat(service.update(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock);
         verify(repoMock).update(topicDefinitionMock);
+    }
+
+    @Test
+    public void deletingNewsletterTopicDefinition_delegatesToRepo() {
+        int id = 11;
+        int version = 12;
+        when(repoMock.delete(id, version)).thenReturn(persistedTopicDefinitionMock);
+        assertThat(service.delete(id, version)).isEqualTo(persistedTopicDefinitionMock);
+        verify(repoMock).delete(id, version);
     }
 }

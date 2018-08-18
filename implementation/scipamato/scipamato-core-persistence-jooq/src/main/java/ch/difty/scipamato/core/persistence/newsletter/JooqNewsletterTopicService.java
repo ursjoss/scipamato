@@ -61,4 +61,8 @@ class JooqNewsletterTopicService implements NewsletterTopicService {
         return getRepo().update(entity);
     }
 
+    @Override
+    public NewsletterTopicDefinition delete(final int id, final int version) {
+        return getRepo().delete(id, version);
+    }
 }

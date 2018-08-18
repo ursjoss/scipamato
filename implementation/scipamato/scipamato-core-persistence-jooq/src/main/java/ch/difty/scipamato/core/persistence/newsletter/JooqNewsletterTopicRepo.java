@@ -174,6 +174,27 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     }
 
     @Override
+    public NewsletterTopicDefinition findNewsletterTopicDefinitionById(final int id) {
+        final Map<Integer, Result<Record>> records = getDsl()
+            .select(NEWSLETTER_TOPIC.fields())
+            .select(LANGUAGE.CODE)
+            .select(NEWSLETTER_TOPIC_TR.fields())
+            .from(NEWSLETTER_TOPIC)
+            .crossJoin(LANGUAGE)
+            .leftOuterJoin(NEWSLETTER_TOPIC_TR)
+            .on(NEWSLETTER_TOPIC.ID.eq(NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID))
+            .and(LANGUAGE.CODE.eq(NEWSLETTER_TOPIC_TR.LANG_CODE))
+            .where(NEWSLETTER_TOPIC.ID.eq(id))
+            .fetchGroups(NEWSLETTER_TOPIC.ID);
+        if (!records.isEmpty()) {
+            final List<NewsletterTopicDefinition> results = mapRawRecordsIntoNewsletterTopicDefinitions(records);
+            if (!results.isEmpty())
+                return results.get(0);
+        }
+        return null;
+    }
+
+    @Override
     public NewsletterTopicDefinition add(final NewsletterTopicDefinition entity) {
         AssertAs.notNull(entity, "entity");
         if (entity.getId() != null) {
@@ -307,6 +328,32 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
         return new NewsletterTopicTranslation(record.get(NEWSLETTER_TOPIC_TR.ID),
             record.get(NEWSLETTER_TOPIC_TR.LANG_CODE), record.get(NEWSLETTER_TOPIC_TR.TITLE),
             record.get(NEWSLETTER_TOPIC_TR.VERSION));
+    }
+
+    @Override
+    public NewsletterTopicDefinition delete(final Integer id, final int version) {
+        AssertAs.notNull(id, "id");
+
+        final NewsletterTopicDefinition toBeDeleted = findNewsletterTopicDefinitionById(id);
+        if (toBeDeleted != null) {
+            if (toBeDeleted.getVersion() == version) {
+                final int deleteCount = getDsl()
+                    .delete(NEWSLETTER_TOPIC)
+                    .where(NEWSLETTER_TOPIC.ID.equal(id))
+                    .and(NEWSLETTER_TOPIC.VERSION.eq(version))
+                    .execute();
+                if (deleteCount > 0) {
+                    log.info("Deleted {} record: {} with id {}.", deleteCount, NEWSLETTER_TOPIC.getName(), id);
+                } else {
+                    throw new OptimisticLockingException(NEWSLETTER_TOPIC.getName(), toBeDeleted.toString(),
+                        OptimisticLockingException.Type.DELETE);
+                }
+            } else {
+                throw new OptimisticLockingException(NEWSLETTER_TOPIC.getName(),
+                    OptimisticLockingException.Type.DELETE);
+            }
+        }
+        return toBeDeleted;
     }
 
 }

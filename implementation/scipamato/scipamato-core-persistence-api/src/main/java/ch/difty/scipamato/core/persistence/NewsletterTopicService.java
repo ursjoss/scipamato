@@ -82,4 +82,20 @@ public interface NewsletterTopicService {
      *     if the entity is null.
      */
     NewsletterTopicDefinition update(NewsletterTopicDefinition entity);
+
+    /**
+     * Remove the persisted entity with the provided id.
+     *
+     * @param id
+     *     the database id - must not be null
+     * @param version
+     *     the record version - used for optimistic locking
+     * @return the deleted entity
+     * @throws NullArgumentException
+     *     if the id is null.
+     * @throws OptimisticLockingException
+     *     if the record version has increased in the mean time
+     */
+    NewsletterTopicDefinition delete(int id, int version);
+
 }

@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.persistence.newsletter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Fail.fail;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,6 +15,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
 import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
+import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
 public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
@@ -175,6 +177,24 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
     }
 
     @Test
+    public void findingNewsletterTopicDefinition_withNonExistingId_returnsNull() {
+        assertThat(repo.findNewsletterTopicDefinitionById(-1)).isNull();
+    }
+
+    @Test
+    public void findingNewsletterTopicDefinition_withExistingId_loadsWithAllLanguages() {
+        final NewsletterTopicDefinition existing = repo.findNewsletterTopicDefinitionById(1);
+
+        assertThat(existing).isNotNull();
+        assertThat(existing.getId()).isEqualTo(1);
+        assertThat(existing.getTitle()).isEqualTo("Ultrafeine Partikel");
+        assertThat(existing.getTranslations()).hasSize(3);
+        assertThat(existing.getTitleInLanguage("de")).isEqualTo("Ultrafeine Partikel");
+        assertThat(existing.getTitleInLanguage("en")).isEqualTo("Ultrafine Particles");
+        assertThat(existing.getTitleInLanguage("fr")).isNull();
+    }
+
+    @Test
     public void addingRecord_savesRecordAndRefreshesId() {
         final NewsletterTopicTranslation ntt_de = new NewsletterTopicTranslation(null, "de", "foo_de", 0);
         final NewsletterTopicTranslation ntt_en = new NewsletterTopicTranslation(null, "en", "foo1_en", 0);
@@ -207,11 +227,7 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
 
     @Test
     public void updatingRecord() {
-        final NewsletterTopicFilter filter = new NewsletterTopicFilter();
-        filter.setTitleMask("Partikel");
-        final NewsletterTopicDefinition ntd = repo
-            .findPageOfNewsletterTopicDefinitions(filter, new PaginationRequest(Sort.Direction.ASC, "title"))
-            .get(0);
+        final NewsletterTopicDefinition ntd = repo.findNewsletterTopicDefinitionById(1);
 
         assertThat(ntd).isNotNull();
         assertThat(ntd.getId()).isEqualTo(1);
@@ -253,6 +269,42 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
             .getTranslations()
             .get("fr")
             .getVersion()).isEqualTo(1);
+    }
+
+    @Test
+    public void deleting_withNonExistingId_returnsNull() {
+        assertThat(repo.delete(-1, 1)).isNull();
+    }
+
+    @Test
+    public void deleting_withExistingId_butWrongVersion_throwsOptimisticLockingException() {
+        try {
+            repo.delete(1, -1);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex)
+                .isInstanceOf(OptimisticLockingException.class)
+                .hasMessage(
+                    "Record in table 'newsletter_topic' has been modified prior to the delete attempt. Aborting....");
+        }
+    }
+
+    @Test
+    public void deleting_withExistingIdAndVersion_deletes() {
+        // add new record to the database and verify it's there
+        NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(null, "de", null);
+        NewsletterTopicDefinition persisted = repo.add(ntd);
+        final int id = persisted.getId();
+        final int version = persisted.getVersion();
+        assertThat(repo.findNewsletterTopicDefinitionById(id)).isNotNull();
+
+        // delete the record
+        NewsletterTopicDefinition deleted = repo.delete(id, version);
+        assertThat(deleted).isNotNull();
+        assertThat(deleted.getId()).isEqualTo(id);
+
+        // verify the record is not there anymore
+        assertThat(repo.findNewsletterTopicDefinitionById(id)).isNull();
     }
 
 }

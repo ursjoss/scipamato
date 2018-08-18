@@ -7,6 +7,7 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
+import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
 public interface NewsletterTopicRepository {
 
@@ -18,6 +19,15 @@ public interface NewsletterTopicRepository {
      * @return a list of newsletterAssociation topics
      */
     List<NewsletterTopic> findAll(String languageCode);
+
+    /**
+     * Find the {@link NewsletterTopicDefinition} with the provided id
+     *
+     * @param id
+     *     the id of the record
+     * @return the {@link NewsletterTopicDefinition} or null if not found
+     */
+    NewsletterTopicDefinition findNewsletterTopicDefinitionById(int id);
 
     /**
      * Finds a page full of {@link NewsletterTopicDefinition} records matching the provided filter
@@ -83,6 +93,18 @@ public interface NewsletterTopicRepository {
      */
     NewsletterTopicDefinition update(NewsletterTopicDefinition entity);
 
-    // TODO delete
-
+    /**
+     * Remove the persisted entity with the provided id.
+     *
+     * @param id
+     *     the database id - must not be null
+     * @param version
+     *     the record version - used for optimistic locking
+     * @return the deleted entity
+     * @throws NullArgumentException
+     *     if the id is null.
+     * @throws OptimisticLockingException
+     *     if the record version has increased in the mean time
+     */
+    NewsletterTopicDefinition delete(Integer id, int version);
 }
