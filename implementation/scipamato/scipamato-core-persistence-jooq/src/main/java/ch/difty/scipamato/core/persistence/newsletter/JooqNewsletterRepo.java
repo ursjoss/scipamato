@@ -151,6 +151,8 @@ public class JooqNewsletterRepo extends
         return Optional.ofNullable(getDsl()
             .selectFrom(NEWSLETTER)
             .where(NEWSLETTER.PUBLICATION_STATUS.eq(PublicationStatus.WIP.getId()))
+            .orderBy(NEWSLETTER.ISSUE_DATE.desc())
+            .limit(1)
             .fetchOne(getMapper()));
     }
 

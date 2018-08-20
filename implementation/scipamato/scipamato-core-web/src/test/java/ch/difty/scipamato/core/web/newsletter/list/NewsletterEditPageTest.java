@@ -1,8 +1,7 @@
 package ch.difty.scipamato.core.web.newsletter.list;
 
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 
@@ -69,6 +68,8 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
 
     @Test
     public void submitting_callsService() {
+        when(newsletterServiceMock.canCreateNewsletterInProgress()).thenReturn(true);
+
         getTester().startPage(NewsletterEditPage.class);
 
         FormTester formTester = getTester().newFormTester("form");
@@ -76,6 +77,7 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
         formTester.submit("submit");
 
         verify(newsletterServiceMock).saveOrUpdate(isA(Newsletter.class));
+        verify(newsletterServiceMock, times(2)).canCreateNewsletterInProgress();
     }
 
     @Test
@@ -85,6 +87,7 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
 
         getTester().assertDisabled("form:publicationStatus");
 
+        verify(newsletterServiceMock).canCreateNewsletterInProgress();
         getTester().assertNoErrorMessage();
         getTester().assertNoInfoMessage();
     }
