@@ -37,9 +37,7 @@ public class CoreWebSessionFacade implements ScipamatoWebSessionFacade {
         if (authorizedRoles != null)
             return Arrays
                 .stream(roles)
-                .filter(r -> authorizedRoles.hasRole(r))
-                .findAny()
-                .isPresent();
+                .anyMatch(authorizedRoles::hasRole);
         return false;
     }
 
