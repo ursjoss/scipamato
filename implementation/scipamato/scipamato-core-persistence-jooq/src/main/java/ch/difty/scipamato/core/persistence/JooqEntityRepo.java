@@ -1,13 +1,8 @@
 package ch.difty.scipamato.core.persistence;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-
 import org.jooq.*;
 import org.jooq.impl.TableImpl;
 import org.slf4j.Logger;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.DateTimeService;
@@ -16,7 +11,6 @@ import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
 import ch.difty.scipamato.core.entity.CoreEntity;
-import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException.Type;
 
 /**
@@ -40,7 +34,6 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException.Type;
 public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
     extends JooqReadOnlyRepo<R, T, ID, TI, M, F> implements EntityRepository<T, ID, F> {
 
-    private final DateTimeService           dateTimeService;
     private final InsertSetStepSetter<R, T> insertSetStepSetter;
     private final UpdateSetStepSetter<R, T> updateSetStepSetter;
 
@@ -70,14 +63,9 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
         GenericFilterConditionMapper<F> filterConditionMapper, DateTimeService dateTimeService,
         InsertSetStepSetter<R, T> insertSetStepSetter, UpdateSetStepSetter<R, T> updateSetStepSetter,
         ApplicationProperties applicationProperties) {
-        super(dsl, mapper, sortMapper, filterConditionMapper, applicationProperties);
+        super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, applicationProperties);
         this.insertSetStepSetter = AssertAs.notNull(insertSetStepSetter, "insertSetStepSetter");
         this.updateSetStepSetter = AssertAs.notNull(updateSetStepSetter, "updateSetStepSetter");
-        this.dateTimeService = AssertAs.notNull(dateTimeService, "dateTimeService");
-    }
-
-    protected DateTimeService getDateTimeService() {
-        return dateTimeService;
     }
 
     /**
@@ -215,41 +203,6 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      *     the two character language code
      */
     protected void updateAssociatedEntities(final T entity, final String languageCode) {
-    }
-
-    /**
-     * @return the current {@link User}
-     */
-    protected User getActiveUser() {
-        final Authentication auth = SecurityContextHolder
-            .getContext()
-            .getAuthentication();
-        if (auth != null) {
-            return (User) auth.getPrincipal();
-        } else {
-            return User.NO_USER;
-        }
-    }
-
-    /**
-     * @return the id of the currently active {@link User}
-     */
-    protected Integer getUserId() {
-        return getActiveUser().getId();
-    }
-
-    /**
-     * @return the current date as {@link Timestamp}
-     */
-    protected Timestamp getTs() {
-        return getDateTimeService().getCurrentTimestamp();
-    }
-
-    /**
-     * @return the current date as {@link Timestamp}
-     */
-    protected LocalDateTime now() {
-        return getDateTimeService().getCurrentDateTime();
     }
 
 }

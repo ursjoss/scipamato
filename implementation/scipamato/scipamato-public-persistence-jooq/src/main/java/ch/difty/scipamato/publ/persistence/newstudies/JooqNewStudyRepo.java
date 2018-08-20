@@ -4,15 +4,12 @@ import static ch.difty.scipamato.publ.db.tables.NewStudy.NEW_STUDY;
 import static ch.difty.scipamato.publ.db.tables.NewStudyTopic.NEW_STUDY_TOPIC;
 import static ch.difty.scipamato.publ.db.tables.Newsletter.NEWSLETTER;
 import static ch.difty.scipamato.publ.db.tables.NewsletterTopic.NEWSLETTER_TOPIC;
+import static java.util.stream.Collectors.toList;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import org.jooq.*;
-import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -49,27 +46,25 @@ public class JooqNewStudyRepo implements NewStudyRepository {
                 newStudyTable.AUTHORS, newStudyTable.HEADLINE, newStudyTable.DESCRIPTION, newStudyTable.VERSION,
                 newStudyTable.CREATED, newStudyTable.LAST_MODIFIED)
             .from(newStudyTopicTable)
-            .leftOuterJoin(newsletterTopicTable)
+            .innerJoin(newsletterTopicTable)
             .on(newStudyTopicTable.NEWSLETTER_TOPIC_ID.eq(newsletterTopicTable.ID))
-            .leftOuterJoin(newStudyTable)
+            .innerJoin(newStudyTable)
             .on(newStudyTopicTable.NEWSLETTER_ID
                 .eq(newStudyTable.NEWSLETTER_ID)
                 .and(newStudyTopicTable.NEWSLETTER_TOPIC_ID.eq(newStudyTable.NEWSLETTER_TOPIC_ID)))
             .where(newStudyTopicTable.NEWSLETTER_ID.eq(newsletterId))
-            .and(DSL
-                .isnull(newsletterTopicTable.LANG_CODE, languageCode)
-                .eq(languageCode))
+            .and(newsletterTopicTable.LANG_CODE.eq(languageCode))
             .orderBy(newStudyTopicSortField, newsletterTopicTable.TITLE, newStudySortField, newStudyTable.DESCRIPTION)
             .fetch();
-        final Map<Record, Result<Record13<Integer, String, Integer, Integer, Integer, Long, Integer, String, String, String, Integer, Timestamp, Timestamp>>> resultSet = fetch
-            .intoGroups(new Field[] { newStudyTopicSortField, newsletterTopicTable.TITLE });
+        final Map<Record, Result<Record13<Integer, String, Integer, Integer, Integer, Long, Integer, String, String, String, Integer, Timestamp, Timestamp>>> resultSet = fetch.intoGroups(
+            new Field[] { newStudyTopicSortField, newsletterTopicTable.TITLE });
 
         return processDbRecords(resultSet, newsletterTopicTable, newStudyTopicSortField, newStudyTable,
             newStudySortField);
     }
 
     /*
-     * Walks through the recordset and extracts the NewStudyTopic with all assocated NewStudies
+     * Walks through the recordset and extracts the NewStudyTopic with all associated NewStudies
      */
     private List<NewStudyTopic> processDbRecords(
         final Map<Record, Result<Record13<Integer, String, Integer, Integer, Integer, Long, Integer, String, String, String, Integer, Timestamp, Timestamp>>> map,
@@ -103,10 +98,18 @@ public class JooqNewStudyRepo implements NewStudyRepository {
         final Result<Record13<Integer, String, Integer, Integer, Integer, Long, Integer, String, String, String, Integer, Timestamp, Timestamp>> newStudyRecords,
         final ch.difty.scipamato.publ.db.tables.NewStudy newStudyTable,
         final Field<Integer> aliasedNewsStudySortField) {
-        return new NewStudyTopic(newStudyTopicSortValue, newStudyTopicTitleValue, newStudyRecords.map(
-            r -> new NewStudy(r.getValue(aliasedNewsStudySortField), r.getValue(newStudyTable.PAPER_NUMBER),
-                r.getValue(newStudyTable.YEAR), r.getValue(newStudyTable.AUTHORS), r.getValue(newStudyTable.HEADLINE),
-                r.getValue(newStudyTable.DESCRIPTION))));
+        final List<NewStudy> map = newStudyRecords.map(r -> {
+            final Integer sort = r.getValue(aliasedNewsStudySortField);
+            return sort != null ?
+                new NewStudy(sort, r.getValue(newStudyTable.PAPER_NUMBER), r.getValue(newStudyTable.YEAR),
+                    r.getValue(newStudyTable.AUTHORS), r.getValue(newStudyTable.HEADLINE),
+                    r.getValue(newStudyTable.DESCRIPTION)) :
+                null;
+        });
+        return new NewStudyTopic(newStudyTopicSortValue, newStudyTopicTitleValue, map
+            .stream()
+            .filter(Objects::nonNull)
+            .collect(toList()));
     }
 
     @Override

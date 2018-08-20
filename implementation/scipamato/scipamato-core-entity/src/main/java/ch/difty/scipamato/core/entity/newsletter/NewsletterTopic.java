@@ -8,6 +8,10 @@ import lombok.EqualsAndHashCode;
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 
+/**
+ * The NewsletterTopic class represents the newsletter topic in one
+ * particular language only.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class NewsletterTopic extends IdScipamatoEntity<Integer> {
@@ -35,7 +39,6 @@ public class NewsletterTopic extends IdScipamatoEntity<Integer> {
         public String getName() {
             return name;
         }
-
     }
 
     @Override

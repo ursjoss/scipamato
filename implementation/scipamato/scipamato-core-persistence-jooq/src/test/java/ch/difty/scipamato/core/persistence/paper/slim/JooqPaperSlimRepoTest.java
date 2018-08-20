@@ -12,6 +12,7 @@ import org.jooq.TableField;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
@@ -46,6 +47,8 @@ public class JooqPaperSlimRepoTest extends
     private PaperSlim                            paperSlimMock;
     @Mock
     private PaginationContext                    pageableMock;
+    @Mock
+    private DateTimeService                      dateTimeServiceMock;
 
     private final List<PaperSlim> paperSlims = new ArrayList<>();
 
@@ -59,7 +62,7 @@ public class JooqPaperSlimRepoTest extends
     protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> getRepo() {
         if (repo == null) {
             repo = new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-                searchOrderRepositoryMock, getApplicationProperties());
+                searchOrderRepositoryMock, dateTimeServiceMock, getApplicationProperties());
         }
         return repo;
     }
@@ -67,7 +70,7 @@ public class JooqPaperSlimRepoTest extends
     @Override
     protected ReadOnlyRepository<PaperSlim, Long, PaperFilter> makeRepoFindingEntityById(PaperSlim entity) {
         return new JooqPaperSlimRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
-            searchOrderRepositoryMock, getApplicationProperties()) {
+            searchOrderRepositoryMock, dateTimeServiceMock, getApplicationProperties()) {
             @Override
             public PaperSlim findById(Long id) {
                 return entity;

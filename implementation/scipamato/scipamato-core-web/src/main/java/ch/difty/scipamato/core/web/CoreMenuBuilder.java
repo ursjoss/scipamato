@@ -11,6 +11,7 @@ import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.pages.AbstractMenuBuilder;
 import ch.difty.scipamato.core.web.authentication.LogoutPage;
 import ch.difty.scipamato.core.web.newsletter.list.NewsletterListPage;
+import ch.difty.scipamato.core.web.newsletter.topic.NewsletterTopicListPage;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 import ch.difty.scipamato.core.web.paper.search.PaperSearchPage;
 import ch.difty.scipamato.core.web.sync.RefDataSyncPage;
@@ -37,6 +38,8 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         addPageLink(navbar, page, PaperSearchPage.class, "menu.search", GlyphIconType.search,
             Navbar.ComponentPosition.LEFT);
         addPageLink(navbar, page, NewsletterListPage.class, "menu.newsletter", GlyphIconType.book,
+            Navbar.ComponentPosition.LEFT);
+        addPageLink(navbar, page, NewsletterTopicListPage.class, "menu.newsletter.topic", GlyphIconType.bookmark,
             Navbar.ComponentPosition.LEFT);
         addPageLink(navbar, page, RefDataSyncPage.class, "menu.sync", GlyphIconType.export,
             Navbar.ComponentPosition.LEFT);

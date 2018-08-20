@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<body>
+    <wicket:extend>
+        <div class="container-fluid">
+            <form wicket:id="form" class="border">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div wicket:id="translations" class="row">
+                            <div class="input-group mb-3">
+                                <span wicket:id="langCode" class="input-group-addon"
+                                      id="langCode-addOn">[langCode]</span>
+                                <input wicket:id="title" class="form-control" aria-describedby="langCode-addOn"></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" wicket:id="submit" class="btn btn-md btn-primary"></button>
+                        <button type="submit" wicket:id="delete" class="btn btn-md"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </wicket:extend>
+</body>
+</html>

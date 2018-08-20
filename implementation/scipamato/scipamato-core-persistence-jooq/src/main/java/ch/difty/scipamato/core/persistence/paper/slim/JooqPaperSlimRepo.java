@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.AssertAs;
+import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
@@ -34,8 +35,9 @@ public class JooqPaperSlimRepo extends
     public JooqPaperSlimRepo(@Qualifier("dslContext") DSLContext dsl, PaperSlimRecordMapper mapper,
         JooqSortMapper<PaperRecord, PaperSlim, ch.difty.scipamato.core.db.tables.Paper> sortMapper,
         GenericFilterConditionMapper<PaperFilter> filterConditionMapper,
-        PaperSlimBackedSearchOrderRepository searchOrderRepository, ApplicationProperties applicationProperties) {
-        super(dsl, mapper, sortMapper, filterConditionMapper, applicationProperties);
+        PaperSlimBackedSearchOrderRepository searchOrderRepository, DateTimeService dateTimeService,
+        ApplicationProperties applicationProperties) {
+        super(dsl, mapper, sortMapper, filterConditionMapper, dateTimeService, applicationProperties);
         this.searchOrderRepository = AssertAs.notNull(searchOrderRepository, "searchOrderRepository");
     }
 
