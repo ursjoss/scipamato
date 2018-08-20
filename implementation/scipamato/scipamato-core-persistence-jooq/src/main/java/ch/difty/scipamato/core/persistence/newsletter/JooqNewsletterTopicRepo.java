@@ -109,7 +109,6 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     private List<NewsletterTopicDefinition> mapRawRecordsIntoNewsletterTopicDefinitions(
         final Map<Integer, Result<Record>> rawRecords) {
         final List<NewsletterTopicDefinition> definitions = new ArrayList<>();
-        final String mainLanguage = getMainLanguage();
         for (final Map.Entry<Integer, Result<Record>> entry : rawRecords.entrySet()) {
             final List<NewsletterTopicTranslation> translations = entry
                 .getValue()

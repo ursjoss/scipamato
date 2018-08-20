@@ -38,10 +38,9 @@ public class NewsletterTopicListPage extends BasePage<NewsletterTopic> {
     private static final String COLUMN_HEADER = "column.header.";
 
     @SpringBean
-    private NewsletterTopicService                       service;
-    private NewsletterTopicFilter                        filter;
-    private NewsletterTopicDefinitionProvider            dataProvider;
-    private DataTable<NewsletterTopicDefinition, String> results;
+    private NewsletterTopicService            service;
+    private NewsletterTopicFilter             filter;
+    private NewsletterTopicDefinitionProvider dataProvider;
 
     public NewsletterTopicListPage(final PageParameters parameters) {
         super(parameters);
@@ -71,7 +70,8 @@ public class NewsletterTopicListPage extends BasePage<NewsletterTopic> {
     }
 
     private void makeAndQueueTable(String id) {
-        results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, ROWS_PER_PAGE);
+        DataTable<NewsletterTopicDefinition, String> results = new BootstrapDefaultDataTable<>(id, makeTableColumns(),
+            dataProvider, ROWS_PER_PAGE);
         results.setOutputMarkupId(true);
         results.add(new TableBehavior()
             .striped()
