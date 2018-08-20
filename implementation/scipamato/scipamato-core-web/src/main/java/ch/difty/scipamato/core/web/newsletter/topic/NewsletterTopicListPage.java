@@ -81,7 +81,6 @@ public class NewsletterTopicListPage extends BasePage<NewsletterTopic> {
     private List<IColumn<NewsletterTopicDefinition, String>> makeTableColumns() {
         final List<IColumn<NewsletterTopicDefinition, String>> columns = new ArrayList<>();
         columns.add(makeClickableColumn("translationsAsString", this::onTitleClick));
-        //        columns.add(makeLinkIconColumn("remove"));
         return columns;
     }
 

@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.confirmation.ConfirmationBehavior;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
@@ -45,8 +46,16 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
         queueForm("form");
     }
 
-    private void queueForm(final String id) {
-        queue(new Form<NewsletterTopicDefinition>(id, new CompoundPropertyModel<>(getModel())) {
+    private void queueForm(final String formId) {
+        queue(newForm(formId));
+        queue(newRefreshingView("translations"));
+        queue(newSubmitButton("submit"));
+        queue(newDeleteButton("delete"));
+
+    }
+
+    private Form<NewsletterTopicDefinition> newForm(final String id) {
+        return new Form<NewsletterTopicDefinition>(id, new CompoundPropertyModel<>(getModel())) {
             @Override
             protected void onSubmit() {
                 super.onSubmit();
@@ -76,9 +85,15 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
                     error(msg);
                 }
             }
-        });
-        RefreshingView<NewsletterTopicTranslation> translations = new RefreshingView<NewsletterTopicTranslation>(
-            "translations") {
+        };
+    }
+
+    private long getNullSafeId() {
+        return getModelObject().getId() != null ? getModelObject().getId() : 0L;
+    }
+
+    private RefreshingView<NewsletterTopicTranslation> newRefreshingView(final String id) {
+        RefreshingView<NewsletterTopicTranslation> translations = new RefreshingView<NewsletterTopicTranslation>(id) {
             @Override
             protected Iterator<IModel<NewsletterTopicTranslation>> getItemModels() {
                 Collection<NewsletterTopicTranslation> translations = getModelObject()
@@ -101,11 +116,62 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
             }
         };
         translations.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
-        queue(translations);
-        queue(new BootstrapButton("submit", new StringResourceModel("submit.label"), Buttons.Type.Default));
+        return translations;
     }
 
-    private long getNullSafeId() {
-        return getModelObject().getId() != null ? getModelObject().getId() : 0L;
+    private BootstrapButton newSubmitButton(String id) {
+        return new BootstrapButton(id, new StringResourceModel(id + ".label"), Buttons.Type.Primary);
+    }
+
+    private BootstrapButton newDeleteButton(final String id) {
+        final BootstrapButton db = new BootstrapButton(id, new StringResourceModel(id + ".label"),
+            Buttons.Type.Default) {
+            @Override
+            public void onSubmit() {
+                super.onSubmit();
+                try {
+                    final NewsletterTopicDefinition ntd = NewsletterTopicEditPage.this.getModelObject();
+                    if (ntd != null && ntd.getId() != null) {
+                        int id = ntd.getId();
+                        NewsletterTopicDefinition deleted = service.delete(id, ntd.getVersion());
+                        if (deleted != null) {
+                            setResponsePage(NewsletterTopicListPage.class);
+                            info(new StringResourceModel("delete.successful.hint", this, null)
+                                .setParameters(id, deleted.getTranslationsAsString())
+                                .getString());
+                        } else {
+                            error(new StringResourceModel("delete.unsuccessful.hint", this, null)
+                                .setParameters(id, "")
+                                .getString());
+                        }
+                    }
+                } catch (OptimisticLockingException ole) {
+                    final String msg = new StringResourceModel("delete.optimisticlockexception.hint", this, null)
+                        .setParameters(ole.getTableName(), getNullSafeId())
+                        .getString();
+                    log.error(msg);
+                    error(msg);
+                } catch (Exception ex) {
+                    if (ex
+                        .getMessage()
+                        .contains("is still referenced from table")) {
+                        String msg = new StringResourceModel("delete.refintegrity.hint", this, null)
+                            .setParameters(getNullSafeId())
+                            .getString();
+                        log.error(msg);
+                        error(msg);
+                    } else {
+                        String msg = new StringResourceModel("delete.error.hint", this, null)
+                            .setParameters(getNullSafeId(), ex.getMessage())
+                            .getString();
+                        log.error(msg);
+                        error(msg);
+                    }
+                }
+            }
+        };
+        db.setDefaultFormProcessing(false);
+        db.add(new ConfirmationBehavior());
+        return db;
     }
 }

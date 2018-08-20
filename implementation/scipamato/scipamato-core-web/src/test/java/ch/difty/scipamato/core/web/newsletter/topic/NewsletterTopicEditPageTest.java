@@ -64,6 +64,7 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
         assertTranslation(bb, 3, "fr", "sujet1");
 
         getTester().assertComponent(b + "submit", BootstrapButton.class);
+        getTester().assertComponent(b + "delete", BootstrapButton.class);
     }
 
     private void assertTranslation(final String bb, final int idx, final String langCode, final String title) {
@@ -113,8 +114,8 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
         runSubmitTest();
 
         getTester().assertNoInfoMessage();
-        getTester().assertErrorMessages(
-            "The tblName with id 1 has been modified concurrently by another user. Please reload it and apply your changes once more.");
+        getTester().assertErrorMessages("The tblName with id 1 has been modified concurrently "
+                                        + "by another user. Please reload it and apply your changes once more.");
     }
 
     @Test
