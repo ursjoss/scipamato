@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
@@ -116,6 +117,29 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @Test
+    public void savingOrUpdatingNewsletterTopicDefinition_withNullEntity_throws() {
+        TestUtils.assertDegenerateSupplierParameter(() -> service.saveOrUpdate(null), "entity");
+    }
+
+    @Test
+    public void savingOrUpdatingNewsletterTopicDefinition_withNullId_callsInsert() {
+        when(topicDefinitionMock.getId()).thenReturn(null);
+        when(repoMock.insert(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock);
+        assertThat(service.saveOrUpdate(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock);
+        verify(topicDefinitionMock).getId();
+        verify(repoMock).insert(topicDefinitionMock);
+    }
+
+    @Test
+    public void savingOrUpdatingNewsletterTopicDefinition_withNonNullId_callsUpdate() {
+        when(topicDefinitionMock.getId()).thenReturn(1);
+        when(repoMock.update(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock);
+        assertThat(service.saveOrUpdate(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock);
+        verify(topicDefinitionMock).getId();
+        verify(repoMock).update(topicDefinitionMock);
+    }
+
+    @Test
     public void deletingNewsletterTopicDefinition_delegatesToRepo() {
         int id = 11;
         int version = 12;
@@ -123,4 +147,5 @@ public class JooqNewsletterTopicServiceTest {
         assertThat(service.delete(id, version)).isEqualTo(persistedTopicDefinitionMock);
         verify(repoMock).delete(id, version);
     }
+
 }

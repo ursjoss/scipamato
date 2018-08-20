@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
@@ -59,6 +60,15 @@ class JooqNewsletterTopicService implements NewsletterTopicService {
     @Override
     public NewsletterTopicDefinition update(final NewsletterTopicDefinition entity) {
         return getRepo().update(entity);
+    }
+
+    @Override
+    public NewsletterTopicDefinition saveOrUpdate(final NewsletterTopicDefinition entity) {
+        AssertAs.notNull(entity, "entity");
+        if (entity.getId() == null)
+            return getRepo().insert(entity);
+        else
+            return getRepo().update(entity);
     }
 
     @Override

@@ -24,6 +24,7 @@ import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
 import ch.difty.scipamato.core.persistence.NewsletterTopicService;
+import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.web.common.BasePage;
 
 @MountPath("newsletter-topic/entry")
@@ -49,8 +50,31 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
             @Override
             protected void onSubmit() {
                 super.onSubmit();
-                log.info("submitted {}", getModelObject().getTranslationsAsString());
-                // TODO save object
+                try {
+                    NewsletterTopicDefinition persisted = service.saveOrUpdate(getModelObject());
+                    if (persisted != null) {
+                        setModelObject(persisted);
+                        info(new StringResourceModel("save.successful.hint", this, null)
+                            .setParameters(getNullSafeId(), getModelObject().getTranslationsAsString())
+                            .getString());
+                    } else {
+                        error(new StringResourceModel("save.unsuccessful.hint", this, null)
+                            .setParameters(getNullSafeId(), "")
+                            .getString());
+                    }
+                } catch (OptimisticLockingException ole) {
+                    final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null)
+                        .setParameters(ole.getTableName(), getNullSafeId())
+                        .getString();
+                    log.error(msg);
+                    error(msg);
+                } catch (Exception ex) {
+                    String msg = new StringResourceModel("save.error.hint", this, null)
+                        .setParameters(getNullSafeId(), ex.getMessage())
+                        .getString();
+                    log.error(msg);
+                    error(msg);
+                }
             }
         });
         RefreshingView<NewsletterTopicTranslation> translations = new RefreshingView<NewsletterTopicTranslation>(
@@ -81,4 +105,7 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
         queue(new BootstrapButton("submit", new StringResourceModel("submit.label"), Buttons.Type.Default));
     }
 
+    private long getNullSafeId() {
+        return getModelObject().getId() != null ? getModelObject().getId() : 0L;
+    }
 }

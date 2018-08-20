@@ -1,26 +1,23 @@
 package ch.difty.scipamato.core.web.newsletter.topic;
 
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.DateTextField;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
 import ch.difty.scipamato.core.persistence.NewsletterTopicService;
+import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.web.common.BasePageTest;
-import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 
 public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEditPage> {
 
@@ -58,31 +55,78 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
         String b = "form";
         getTester().assertComponent(b, Form.class);
 
-//        b += ":";
-//        getTester().assertLabel(b + "issueLabel", "Issue");
-//        getTester().assertComponent(b + "issue", TextField.class);
-//
-//        getTester().assertLabel(b + "issueDateLegacyLabel", "Issue Date");
-//        getTester().assertComponent(b + "issueDateLegacy", DateTextField.class);
-//
-//        getTester().assertLabel(b + "publicationStatusLabel", "Publication Status");
-//        getTester().assertComponent(b + "publicationStatus", BootstrapSelect.class);
-//        getTester().assertEnabled(b + "publicationStatus");
-//
-//        getTester().assertComponent(b + "submit", BootstrapButton.class);
-//
-//        getTester().assertComponent("resultPanel", ResultPanel.class);
+        b += ":";
+        String bb = b + "translations";
+        getTester().assertComponent(bb, RefreshingView.class);
+        bb += ":";
+        assertTranslation(bb, 1, "de", "thema1");
+        assertTranslation(bb, 2, "en", "topic1");
+        assertTranslation(bb, 3, "fr", "sujet1");
+
+        getTester().assertComponent(b + "submit", BootstrapButton.class);
     }
 
-//    @Test
-//    public void submitting_callsService() {
-//        getTester().startPage(NewsletterTopicEditPage.class);
-//
-//        FormTester formTester = getTester().newFormTester("form");
-//        formTester.setValue("issue", "1806");
-//        formTester.submit("submit");
-//
-//        verify(newsletterTopicServiceMock).saveOrUpdate(isA(Newsletter.class));
-//    }
+    private void assertTranslation(final String bb, final int idx, final String langCode, final String title) {
+        getTester().assertLabel(bb + idx + ":langCode", langCode);
+        getTester().assertComponent(bb + idx + ":title", TextField.class);
+        getTester().assertModelValue(bb + idx + ":title", title);
+    }
+
+    @Test
+    public void submitting_withSuccessfulServiceCall_addsInfoMsg() {
+        when(newsletterTopicServiceMock.saveOrUpdate(isA(NewsletterTopicDefinition.class))).thenReturn(ntd);
+
+        runSubmitTest();
+
+        getTester().assertInfoMessages(
+            "Successfully saved NewsletterTopic [id 1]: DE: '1806'; EN: 'topic1'; FR: 'sujet1'.");
+        getTester().assertNoErrorMessage();
+    }
+
+    private void runSubmitTest() {
+        getTester().startPage(new NewsletterTopicEditPage(Model.of(ntd)));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.setValue("translations:1:title", "1806");
+        assertTranslation("form:translations:", 1, "de", "thema1");
+        formTester.submit("submit");
+        assertTranslation("form:translations:", 4, "de", "1806");
+
+        verify(newsletterTopicServiceMock).saveOrUpdate(isA(NewsletterTopicDefinition.class));
+    }
+
+    @Test
+    public void submitting_withUnsuccessfulServiceCall_addsErrorMsg() {
+        when(newsletterTopicServiceMock.saveOrUpdate(isA(NewsletterTopicDefinition.class))).thenReturn(null);
+
+        runSubmitTest();
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("Could not save NewsletterTopic [id 1].");
+    }
+
+    @Test
+    public void submitting_withOptimisticLockingException_addsErrorMsg() {
+        when(newsletterTopicServiceMock.saveOrUpdate(isA(NewsletterTopicDefinition.class))).thenThrow(
+            new OptimisticLockingException("tblName", "rcd", OptimisticLockingException.Type.UPDATE));
+
+        runSubmitTest();
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages(
+            "The tblName with id 1 has been modified concurrently by another user. Please reload it and apply your changes once more.");
+    }
+
+    @Test
+    public void submitting_withOtherException_addsErrorMsg() {
+        when(newsletterTopicServiceMock.saveOrUpdate(isA(NewsletterTopicDefinition.class))).thenThrow(
+            new RuntimeException("fooMsg"));
+
+        runSubmitTest();
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages(
+            "An unexpected error occurred when trying to save NewsletterTopic [id 1]: fooMsg");
+    }
 
 }

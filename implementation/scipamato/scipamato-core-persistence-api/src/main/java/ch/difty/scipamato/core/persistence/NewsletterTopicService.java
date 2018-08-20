@@ -84,6 +84,16 @@ public interface NewsletterTopicService {
     NewsletterTopicDefinition update(NewsletterTopicDefinition entity);
 
     /**
+     * Persists the provided entity. Depending on the absence or presence of an ID, the
+     * entity will be added to the database or upadated.
+     *
+     * @param entity
+     *     the {@link NewsletterTopicDefinition} to be persisted
+     * @return the persisted entity.
+     */
+    NewsletterTopicDefinition saveOrUpdate(NewsletterTopicDefinition entity);
+
+    /**
      * Remove the persisted entity with the provided id.
      *
      * @param id
