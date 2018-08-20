@@ -27,7 +27,9 @@ public abstract class WicketBaseTest {
     private WebApplication wicketApplication;
 
     @Autowired
-    private ApplicationContext applicationContextMock;
+    private ApplicationContext        applicationContextMock;
+    @Autowired
+    private ScipamatoWebSessionFacade webSessionFacade;
 
     @Before
     public void setUp() {

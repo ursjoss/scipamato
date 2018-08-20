@@ -1,5 +1,7 @@
 package ch.difty.scipamato.common.web.pages;
 
+import java.io.Serializable;
+
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import org.apache.wicket.Page;
 
@@ -18,7 +20,7 @@ import org.apache.wicket.Page;
  *
  * @author u.joss
  */
-public interface MenuBuilder {
+public interface MenuBuilder extends Serializable {
 
     /**
      * Adds the menu items to the Navbar.

@@ -3,6 +3,7 @@ package ch.difty.scipamato.common.web.pages;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
@@ -12,12 +13,12 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
+import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,6 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.config.ApplicationProperties;
+import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.common.web.TestHomePage;
 
 @SpringBootTest
@@ -38,10 +40,11 @@ public class AbstractMenuBuilderTest {
     private WebApplication application;
 
     @MockBean
-    private DateTimeService dateTimeService;
-
-    @Mock
-    private ApplicationProperties applicationProperties;
+    private DateTimeService           dateTimeService;
+    @MockBean
+    private ApplicationProperties     applicationProperties;
+    @MockBean
+    private ScipamatoWebSessionFacade webSessionFacade;
 
     private Navbar navbar;
 
@@ -50,13 +53,20 @@ public class AbstractMenuBuilderTest {
         // instantiate the application, but we don't need the wicket tester
         new WicketTester(application);
 
-        menuBuilder = new TestMenuBuilder(applicationProperties);
+        menuBuilder = new TestMenuBuilder(applicationProperties, webSessionFacade);
         navbar = new Navbar("navbar");
     }
 
     @Test
-    public void degenerateConstruction() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new TestMenuBuilder(null), "applicationProperties");
+    public void degenerateConstruction_withNullApplicationProperties_throws() {
+        TestUtils.assertDegenerateSupplierParameter(() -> new TestMenuBuilder(null, webSessionFacade),
+            "applicationProperties");
+    }
+
+    @Test
+    public void degenerateConstruction_withNullWebSessionFacade_throws() {
+        TestUtils.assertDegenerateSupplierParameter(() -> new TestMenuBuilder(applicationProperties, null),
+            "webSessionFacade");
     }
 
     @Test
@@ -139,8 +149,8 @@ public class AbstractMenuBuilderTest {
     }
 
     private static class TestMenuBuilder extends AbstractMenuBuilder {
-        TestMenuBuilder(ApplicationProperties applicationProperties) {
-            super(applicationProperties);
+        TestMenuBuilder(ApplicationProperties applicationProperties, ScipamatoWebSessionFacade webSessionFacade) {
+            super(applicationProperties, webSessionFacade);
         }
 
         @Override
@@ -168,5 +178,20 @@ public class AbstractMenuBuilderTest {
         assertThat(menuBuilder.getVersionAnker()).isEqualTo("#v1.2.3");
         assertThat(menuBuilder.getVersionLink()).isEqualTo("version 1.2.3");
         verify(applicationProperties, times(2)).getBuildVersion();
+    }
+
+    @Test
+    public void addingEntryToMenu_withIcon() {
+        final List<AbstractLink> links = new ArrayList<>();
+        assertThat(links).isEmpty();
+
+        menuBuilder.addEntryToMenu("label.link", new TestHomePage(), TestHomePage.class, GlyphIconType.adjust, links);
+
+        assertThat(links).hasSize(1);
+        final AbstractLink link = links.get(0);
+        assertThat(link
+            .get("label")
+            .getDefaultModelObject()).isEqualTo("somelink");
+        assertThat(((Icon) link.get("icon")).getType()).isEqualTo(GlyphIconType.adjust);
     }
 }

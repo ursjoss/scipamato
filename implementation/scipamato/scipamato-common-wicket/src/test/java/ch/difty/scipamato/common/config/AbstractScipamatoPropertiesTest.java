@@ -23,6 +23,7 @@ public class AbstractScipamatoPropertiesTest {
     @Before
     public void setUp() {
         prop = new AbstractScipamatoProperties<ScipamatoBaseProperties>(scipamatoPropMock, mavenPropMock) {
+            private static final long serialVersionUID = 1L;
         };
 
         when(scipamatoPropMock.getBrand()).thenReturn("brand");

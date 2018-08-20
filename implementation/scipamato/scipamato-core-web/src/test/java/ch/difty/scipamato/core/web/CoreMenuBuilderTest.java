@@ -10,28 +10,38 @@ import org.mockito.Mock;
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.config.ApplicationProperties;
+import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.common.web.pages.MenuBuilder;
 import ch.difty.scipamato.core.web.common.BasePage;
 
 public class CoreMenuBuilderTest extends WicketTest {
 
     @Mock
-    private ApplicationProperties applicationProperties;
+    private ApplicationProperties     applicationProperties;
     @Mock
-    private Navbar                navbar;
+    private ScipamatoWebSessionFacade webSessionFacade;
     @Mock
-    private BasePage<?>           basePage;
+    private Navbar                    navbar;
+    @Mock
+    private BasePage<?>               basePage;
 
     private MenuBuilder menuBuilder;
 
     @Override
     public void setUpHook() {
-        menuBuilder = new CoreMenuBuilder(applicationProperties);
+        menuBuilder = new CoreMenuBuilder(applicationProperties, webSessionFacade);
     }
 
     @Test
     public void degenerateConstruction_withNullApplicationProperties() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new CoreMenuBuilder(null), "applicationProperties");
+        TestUtils.assertDegenerateSupplierParameter(() -> new CoreMenuBuilder(null, webSessionFacade),
+            "applicationProperties");
+    }
+
+    @Test
+    public void degenerateConstruction_withNullWebSessionFacade() {
+        TestUtils.assertDegenerateSupplierParameter(() -> new CoreMenuBuilder(applicationProperties, null),
+            "webSessionFacade");
     }
 
     @Test

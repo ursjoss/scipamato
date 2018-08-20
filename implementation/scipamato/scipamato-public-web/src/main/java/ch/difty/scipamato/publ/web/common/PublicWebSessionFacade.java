@@ -9,6 +9,8 @@ import ch.difty.scipamato.publ.ScipamatoPublicSession;
 @Component
 public class PublicWebSessionFacade implements ScipamatoWebSessionFacade {
 
+    private static final long serialVersionUID = 1L;
+
     @Override
     public String getLanguageCode() {
         return ScipamatoPublicSession
@@ -22,6 +24,11 @@ public class PublicWebSessionFacade implements ScipamatoWebSessionFacade {
         return ScipamatoPublicSession
             .get()
             .getPaperIdManager();
+    }
+
+    @Override
+    public boolean hasAtLeastOneRoleOutOf(final String... roles) {
+        return false;
     }
 
 }

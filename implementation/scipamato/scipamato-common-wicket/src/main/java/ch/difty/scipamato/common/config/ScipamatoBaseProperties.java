@@ -1,6 +1,8 @@
 package ch.difty.scipamato.common.config;
 
-public interface ScipamatoBaseProperties {
+import java.io.Serializable;
+
+public interface ScipamatoBaseProperties extends Serializable {
 
     String getBrand();
 

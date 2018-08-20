@@ -13,6 +13,8 @@ import ch.difty.scipamato.common.config.ScipamatoBaseProperties;
 @Setter
 public class ScipamatoProperties implements ScipamatoBaseProperties {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Brand name of the application. Appears e.g. in the Navbar.
      */

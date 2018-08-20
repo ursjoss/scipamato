@@ -18,6 +18,8 @@ import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 public class ScipamatoCoreProperties extends AbstractScipamatoProperties<ScipamatoProperties>
     implements ApplicationCoreProperties {
 
+    private static final long serialVersionUID = 1L;
+
     public ScipamatoCoreProperties(final ScipamatoProperties scipamatoProperties,
         final MavenProperties mavenProperties) {
         super(scipamatoProperties, mavenProperties);

@@ -17,6 +17,8 @@ import ch.difty.scipamato.common.config.MavenProperties;
 public class ScipamatoPublicProperties extends AbstractScipamatoProperties<ScipamatoProperties>
     implements ApplicationPublicProperties {
 
+    private static final long serialVersionUID = 1L;
+
     public ScipamatoPublicProperties(ScipamatoProperties scipamatoProperties, MavenProperties mavenProperties) {
         super(scipamatoProperties, mavenProperties);
     }

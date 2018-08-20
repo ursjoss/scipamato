@@ -57,6 +57,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Bump dependencies: jOOQ, spring-cloud
+- Core: Collapsible Menu entries with submenu items
 
 .Deprecated
 

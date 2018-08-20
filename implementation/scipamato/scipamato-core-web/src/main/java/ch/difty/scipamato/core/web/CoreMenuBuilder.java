@@ -1,14 +1,19 @@
 package ch.difty.scipamato.core.web;
 
+import java.util.List;
+
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import org.apache.wicket.Page;
+import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.model.StringResourceModel;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.config.ApplicationProperties;
+import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.common.web.pages.AbstractMenuBuilder;
+import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.web.authentication.LogoutPage;
 import ch.difty.scipamato.core.web.newsletter.list.NewsletterListPage;
 import ch.difty.scipamato.core.web.newsletter.topic.NewsletterTopicListPage;
@@ -24,8 +29,11 @@ import ch.difty.scipamato.core.web.sync.RefDataSyncPage;
 @Component
 public class CoreMenuBuilder extends AbstractMenuBuilder {
 
-    public CoreMenuBuilder(final ApplicationProperties applicationProperties) {
-        super(applicationProperties);
+    private static final long serialVersionUID = 1L;
+
+    public CoreMenuBuilder(final ApplicationProperties applicationProperties,
+        final ScipamatoWebSessionFacade webSessionFacade) {
+        super(applicationProperties, webSessionFacade);
     }
 
     @Override
@@ -33,16 +41,9 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         AssertAs.notNull(navbar, "navbar");
         AssertAs.notNull(page, "page");
 
-        addPageLink(navbar, page, PaperListPage.class, "menu.papers", GlyphIconType.list,
-            Navbar.ComponentPosition.LEFT);
-        addPageLink(navbar, page, PaperSearchPage.class, "menu.search", GlyphIconType.search,
-            Navbar.ComponentPosition.LEFT);
-        addPageLink(navbar, page, NewsletterListPage.class, "menu.newsletter", GlyphIconType.book,
-            Navbar.ComponentPosition.LEFT);
-        addPageLink(navbar, page, NewsletterTopicListPage.class, "menu.newsletter.topic", GlyphIconType.bookmark,
-            Navbar.ComponentPosition.LEFT);
-        addPageLink(navbar, page, RefDataSyncPage.class, "menu.sync", GlyphIconType.export,
-            Navbar.ComponentPosition.LEFT);
+        newMenu(navbar, page, "papers", GlyphIconType.paperclip, l -> addPaperMenuEntries(l, page));
+        newMenu(navbar, page, "newsletters", GlyphIconType.book, l -> addNewsletterMenuEntries(l, page));
+        newMenu(navbar, page, "sync", GlyphIconType.export, l -> addSyncMenuEntries(l, page));
 
         addExternalLink(navbar, new StringResourceModel("menu.help.url", page, null).getString(),
             new StringResourceModel("menu.help", page, null).getString(), GlyphIconType.questionsign,
@@ -51,6 +52,28 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
             .setParameters(getVersionAnker())
             .getString(), getVersionLink(), GlyphIconType.briefcase, Navbar.ComponentPosition.RIGHT);
         addPageLink(navbar, page, LogoutPage.class, "menu.logout", GlyphIconType.edit, Navbar.ComponentPosition.RIGHT);
+    }
+
+    private void addPaperMenuEntries(final List<AbstractLink> links, Page page) {
+        final String labelParent = "menu.papers.";
+        addEntryToMenu(labelParent + "paper", page, PaperListPage.class, GlyphIconType.list, links);
+        addEntryToMenu(labelParent + "search", page, PaperSearchPage.class, GlyphIconType.search, links);
+    }
+
+    private void addNewsletterMenuEntries(final List<AbstractLink> links, Page page) {
+        final String labelParent = "menu.newsletters.";
+        if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
+            addEntryToMenu(labelParent + "newsletter", page, NewsletterListPage.class, GlyphIconType.book, links);
+            addEntryToMenu(labelParent + "newslettertopic", page, NewsletterTopicListPage.class, GlyphIconType.bookmark,
+                links);
+        }
+    }
+
+    private void addSyncMenuEntries(final List<AbstractLink> links, Page page) {
+        final String labelParent = "menu.sync.";
+        if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
+            addEntryToMenu(labelParent + "sync", page, RefDataSyncPage.class, GlyphIconType.export, links);
+        }
     }
 
 }

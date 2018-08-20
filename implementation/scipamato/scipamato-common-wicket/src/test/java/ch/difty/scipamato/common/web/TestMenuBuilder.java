@@ -14,8 +14,9 @@ import ch.difty.scipamato.common.web.pages.AbstractMenuBuilder;
 @Component
 public class TestMenuBuilder extends AbstractMenuBuilder {
 
-    protected TestMenuBuilder(final ApplicationProperties applicationProperties) {
-        super(applicationProperties);
+    protected TestMenuBuilder(final ApplicationProperties applicationProperties,
+        final ScipamatoWebSessionFacade webSessionFacade) {
+        super(applicationProperties, webSessionFacade);
     }
 
     @Override

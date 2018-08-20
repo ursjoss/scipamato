@@ -1,11 +1,13 @@
 package ch.difty.scipamato.common.config;
 
+import java.io.Serializable;
+
 /**
  * Provides access to property based configuration parameters.
  *
  * @author u.joss
  */
-public interface ApplicationProperties {
+public interface ApplicationProperties extends Serializable {
 
     /**
      * @return the build version of the application.

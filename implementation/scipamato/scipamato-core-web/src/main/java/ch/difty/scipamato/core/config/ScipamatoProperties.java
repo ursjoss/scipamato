@@ -14,6 +14,8 @@ import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 @Setter
 public class ScipamatoProperties implements ScipamatoBaseProperties {
 
+    private static final long serialVersionUID = 1L;
+
     private static final String AUTHOR_PARSER_PROPERTY_KEY = "scipamato.author-parser";
 
     /**

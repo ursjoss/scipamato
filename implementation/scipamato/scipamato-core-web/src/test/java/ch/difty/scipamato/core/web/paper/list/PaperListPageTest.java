@@ -9,6 +9,7 @@ import java.util.List;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.dropdown.MenuBookmarkablePageLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink;
@@ -16,6 +17,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDef
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
@@ -116,11 +118,13 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
     private void assertMenuEntries() {
         getTester().assertComponent("_header_", HtmlHeaderContainer.class);
         getTester().assertComponent("navbar", Navbar.class);
-        assertPageLinkButton(0, "Left", NavbarButton.class, "Papers");
-        assertPageLinkButton(1, "Left", NavbarButton.class, "Search");
-        assertPageLinkButton(2, "Left", NavbarButton.class, "Newsletter");
-        assertPageLinkButton(3, "Left", NavbarButton.class, "Newsletter Topics");
-        assertPageLinkButton(4, "Left", NavbarButton.class, "Synchronize");
+
+        // Note: Only one menu is open - we're unable to see the other submenu items without clicking.
+        assertTopLevelMenu(0, "Left", "Papers");
+        assertNestedMenu(0, 0, "Left", NavbarButton.class, "Papers");
+        assertNestedMenu(0, 1, "Left", NavbarButton.class, "Search");
+        assertTopLevelMenu(1, "Left", "Newsletters");
+        assertTopLevelMenu(2, "Left", "Synchronize");
 
         assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:0:component",
             "https://github.com/ursjoss/scipamato/wiki/");
@@ -134,6 +138,22 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         String path = "navbar:container:collapse:nav" + position + "ListEnclosure:nav" + position + "List:" + index
                       + ":component";
         getTester().assertComponent(path, NavbarButton.class);
+        getTester().assertLabel(path + ":label", expectedLabelText);
+    }
+
+    private void assertTopLevelMenu(int index, String position, String expectedLabelText) {
+        String path = "navbar:container:collapse:nav" + position + "ListEnclosure:nav" + position + "List:" + index
+                      + ":component:btn";
+        getTester().assertComponent(path, WebMarkupContainer.class);
+        getTester().assertLabel(path + ":label", expectedLabelText);
+    }
+
+    private void assertNestedMenu(int topLevelIndex, int menuIndex, String position,
+        Class<? extends Component> expectedComponentClass, String expectedLabelText) {
+        String path =
+            "navbar:container:collapse:nav" + position + "ListEnclosure:nav" + position + "List:" + topLevelIndex
+            + ":component:dropdown-menu:buttons:" + menuIndex + ":button";
+        getTester().assertComponent(path, MenuBookmarkablePageLink.class);
         getTester().assertLabel(path + ":label", expectedLabelText);
     }
 

@@ -1,29 +1,41 @@
 package ch.difty.scipamato.common.web.pages;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink.Target;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.dropdown.MenuBookmarkablePageLink;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarComponents;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.wicket.Component;
 import org.apache.wicket.Page;
+import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.config.ApplicationProperties;
+import ch.difty.scipamato.common.web.AbstractPage;
+import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
+import ch.difty.scipamato.common.web.component.SerializableConsumer;
 
 public abstract class AbstractMenuBuilder implements MenuBuilder {
 
-    private final ApplicationProperties applicationProperties;
+    private final ApplicationProperties     applicationProperties;
+    private final ScipamatoWebSessionFacade webSessionFacade;
 
     /**
      * @param applicationProperties
-     *     must not be null. Injected through spring constructor injection.
+     *     must not be null. Injected through spring constructor injection. Must not be null.
+     * @param webSessionFacade
+     *     the webSessionFacade providing mockable access to the websession. Must not be null.
      */
-    protected AbstractMenuBuilder(final ApplicationProperties applicationProperties) {
+    protected AbstractMenuBuilder(final ApplicationProperties applicationProperties,
+        final ScipamatoWebSessionFacade webSessionFacade) {
         this.applicationProperties = AssertAs.notNull(applicationProperties, "applicationProperties");
+        this.webSessionFacade = AssertAs.notNull(webSessionFacade, "webSessionFacade");
     }
 
     public ApplicationProperties getApplicationProperties() {
@@ -49,6 +61,31 @@ public abstract class AbstractMenuBuilder implements MenuBuilder {
         navbar.addComponents(NavbarComponents.transform(position, link));
     }
 
+    protected void newMenu(final Navbar navbar, final Page page, final String labelResource,
+        final GlyphIconType iconType, final SerializableConsumer<List<AbstractLink>> consumer) {
+        final String label = new StringResourceModel("menu." + labelResource, page, null).getString();
+        navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.LEFT,
+            new NavbarDropDownButton(Model.of(label), Model.of((IconType) iconType)) {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected List<AbstractLink> newSubMenuButtons(String buttonMarkupId) {
+                    final List<AbstractLink> links = new ArrayList<>();
+                    consumer.accept(links);
+                    return links;
+                }
+            }));
+    }
+
+    protected <P extends AbstractPage<?>> void addEntryToMenu(final String label, Component component,
+        final Class<P> pageClass, final IconType iconType, final List<AbstractLink> links) {
+        StringResourceModel labelModel = new StringResourceModel(label, component, null);
+        MenuBookmarkablePageLink<Void> link = new MenuBookmarkablePageLink<>(pageClass, labelModel);
+        if (iconType != null)
+            link.setIconType(iconType);
+        links.add(link);
+    }
+
     protected String getVersionAnker() {
         final String buildVersion = getApplicationProperties().getBuildVersion();
         if (StringUtils.isEmpty(buildVersion))
@@ -61,4 +98,7 @@ public abstract class AbstractMenuBuilder implements MenuBuilder {
         return "version " + getApplicationProperties().getBuildVersion();
     }
 
+    protected boolean hasOneOfRoles(String... roles) {
+        return webSessionFacade.hasAtLeastOneRoleOutOf(roles);
+    }
 }

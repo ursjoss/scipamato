@@ -1,5 +1,7 @@
 package ch.difty.scipamato.common.config;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,7 +11,9 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "build")
 @Getter
 @Setter
-public class MavenProperties {
+public class MavenProperties implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * The project version supplied by maven, typically {@code @project.version@}
