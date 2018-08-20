@@ -53,6 +53,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 - 08/50 - Public: Referential integrity constraints - where possible
+- 08/45 - Core: Manage the Newsletter Topics
 
 .Changed
 - Bump dependencies: jOOQ, spring-cloud
