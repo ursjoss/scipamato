@@ -9,10 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -66,7 +66,8 @@ public class NewsletterTopicListPage extends BasePage<NewsletterTopic> {
 
         queueFieldAndLabel(new TextField<String>("title",
             PropertyModel.of(filter, NewsletterTopicFilter.NewsletterTopicFilterFields.TITLE_MASK.getName())));
-        //        newNewsletterTopicButton = queueResponsePageButton("newNewsletterTopic", NewsletterTopicEditPage::new);
+        queueResponsePageButton("newNewsletterTopic",
+            () -> new NewsletterTopicEditPage(Model.of(service.newUnpersistedNewsletterTopicDefinition())));
     }
 
     private void makeAndQueueTable(String id) {
