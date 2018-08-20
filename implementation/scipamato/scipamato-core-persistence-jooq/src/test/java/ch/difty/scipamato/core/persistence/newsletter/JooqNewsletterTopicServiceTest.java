@@ -85,95 +85,6 @@ public class JooqNewsletterTopicServiceTest {
         verify(repoMock).newUnpersistedNewsletterTopicDefinition();
     }
 
-    //    @Test
-    //    public void findingById_withFoundEntity_returnsOptionalOfIt() {
-    //        Integer id = 7;
-    //        when(repoMock.findById(id)).thenReturn(topicMock);
-    //
-    //        Optional<NewsletterTopic> optNl = service.findById(id);
-    //        assertThat(optNl.isPresent()).isTrue();
-    //        assertThat(optNl.get()).isEqualTo(topicMock);
-    //
-    //        verify(repoMock).findById(id);
-    //
-    //        verifyAudit(1);
-    //    }
-    //
-    //    @Test
-    //    public void findingById_withNotFoundEntity_returnsOptionalEmpty() {
-    //        Integer id = 7;
-    //        when(repoMock.findById(id)).thenReturn(null);
-    //
-    //        assertThat(service
-    //            .findById(id)
-    //            .isPresent()).isFalse();
-    //
-    //        verify(repoMock).findById(id);
-    //    }
-    //
-    //    @Test
-    //    public void findingByFilter_delegatesToRepo() {
-    //        when(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(topics);
-    //        assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(topics);
-    //        verify(repoMock).findPageByFilter(filterMock, paginationContextMock);
-    //        verifyAudit(2);
-    //    }
-    //
-    //    @Test
-    //    public void countingByFilter_delegatesToRepo() {
-    //        when(repoMock.countByFilter(filterMock)).thenReturn(3);
-    //        assertThat(service.countByFilter(filterMock)).isEqualTo(3);
-    //        verify(repoMock).countByFilter(filterMock);
-    //    }
-    //
-    //    @Test
-    //    public void savingOrUpdating_withPaperWithNullId_hasRepoAddThePaper() {
-    //        when(topicMock.getId()).thenReturn(null);
-    //        when(repoMock.add(topicMock)).thenReturn(topicMock);
-    //        assertThat(service.saveOrUpdate(topicMock)).isEqualTo(topicMock);
-    //        verify(repoMock).add(topicMock);
-    //        verify(topicMock).getId();
-    //        verifyAudit(1);
-    //    }
-    //
-    //    @Test
-    //    public void savingOrUpdating_withPaperWithNonNullId_hasRepoUpdateThePaper() {
-    //        when(topicMock.getId()).thenReturn(17);
-    //        when(repoMock.update(topicMock)).thenReturn(topicMock);
-    //        assertThat(service.saveOrUpdate(topicMock)).isEqualTo(topicMock);
-    //        verify(repoMock).update(topicMock);
-    //        verify(topicMock).getId();
-    //        verifyAudit(1);
-    //    }
-    //
-    //    @Test
-    //    public void deleting_withNullEntity_doesNothing() {
-    //        service.remove(null);
-    //        verify(repoMock, never()).delete(anyInt(), anyInt());
-    //    }
-    //
-    //    @Test
-    //    public void deleting_withEntityWithNullId_doesNothing() {
-    //        when(topicMock.getId()).thenReturn(null);
-    //
-    //        service.remove(topicMock);
-    //
-    //        verify(topicMock).getId();
-    //        verify(repoMock, never()).delete(anyInt(), anyInt());
-    //    }
-    //
-    //    @Test
-    //    public void deleting_withEntityWithNormalId_delegatesToRepo() {
-    //        when(topicMock.getId()).thenReturn(3);
-    //        when(topicMock.getVersion()).thenReturn(17);
-    //
-    //        service.remove(topicMock);
-    //
-    //        verify(topicMock, times(2)).getId();
-    //        verify(topicMock, times(1)).getVersion();
-    //        verify(repoMock, times(1)).delete(3, 17);
-    //    }
-
     @Test
     public void findingPageOfNewsletterTopicDefinitions_delegatesToRepo() {
         when(repoMock.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)).thenReturn(
@@ -191,10 +102,10 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @Test
-    public void addingNewsletterTopicDefinition_delegatesToRepo() {
-        when(repoMock.add(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock);
-        assertThat(service.add(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock);
-        verify(repoMock).add(topicDefinitionMock);
+    public void insertingNewsletterTopicDefinition_delegatesToRepo() {
+        when(repoMock.insert(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock);
+        assertThat(service.insert(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock);
+        verify(repoMock).insert(topicDefinitionMock);
     }
 
     @Test

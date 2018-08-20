@@ -195,7 +195,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     }
 
     @Override
-    public NewsletterTopicDefinition add(final NewsletterTopicDefinition entity) {
+    public NewsletterTopicDefinition insert(final NewsletterTopicDefinition entity) {
         AssertAs.notNull(entity, "entity");
         if (entity.getId() != null) {
             throw new IllegalArgumentException("id must be null.");

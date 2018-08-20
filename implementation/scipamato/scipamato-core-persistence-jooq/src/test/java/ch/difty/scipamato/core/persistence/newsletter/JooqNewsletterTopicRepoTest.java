@@ -35,15 +35,15 @@ public class JooqNewsletterTopicRepoTest {
     }
 
     @Test
-    public void addingNewsletterTopicDefinition_withNullArgument_throws() {
-        assertDegenerateSupplierParameter(() -> repo.add(null), "entity");
+    public void insertingNewsletterTopicDefinition_withNullArgument_throws() {
+        assertDegenerateSupplierParameter(() -> repo.insert(null), "entity");
     }
 
     @Test
-    public void addingNewsletterTopicDefinition_withEntityWithNonNullId_throws() {
+    public void insertingNewsletterTopicDefinition_withEntityWithNonNullId_throws() {
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(1, "de", 1);
         try {
-            repo.add(ntd);
+            repo.insert(ntd);
             fail("Should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex)

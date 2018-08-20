@@ -52,8 +52,8 @@ class JooqNewsletterTopicService implements NewsletterTopicService {
     }
 
     @Override
-    public NewsletterTopicDefinition add(final NewsletterTopicDefinition entity) {
-        return getRepo().add(entity);
+    public NewsletterTopicDefinition insert(final NewsletterTopicDefinition entity) {
+        return getRepo().insert(entity);
     }
 
     @Override
@@ -65,4 +65,5 @@ class JooqNewsletterTopicService implements NewsletterTopicService {
     public NewsletterTopicDefinition delete(final int id, final int version) {
         return getRepo().delete(id, version);
     }
+
 }

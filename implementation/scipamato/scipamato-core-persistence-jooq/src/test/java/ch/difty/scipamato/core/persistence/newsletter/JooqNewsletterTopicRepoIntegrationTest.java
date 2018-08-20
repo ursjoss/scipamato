@@ -195,7 +195,7 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
     }
 
     @Test
-    public void addingRecord_savesRecordAndRefreshesId() {
+    public void insertingRecord_savesRecordAndRefreshesId() {
         final NewsletterTopicTranslation ntt_de = new NewsletterTopicTranslation(null, "de", "foo_de", 0);
         final NewsletterTopicTranslation ntt_en = new NewsletterTopicTranslation(null, "en", "foo1_en", 0);
         final NewsletterTopicTranslation ntt_fr = new NewsletterTopicTranslation(null, "fr", "foo1_fr", 0);
@@ -208,7 +208,7 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
             .extracting("id")
             .containsExactly(null, null, null);
 
-        NewsletterTopicDefinition saved = repo.add(ntd);
+        NewsletterTopicDefinition saved = repo.insert(ntd);
 
         assertThat(saved).isNotNull();
         assertThat(saved.getId())
@@ -291,9 +291,9 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
 
     @Test
     public void deleting_withExistingIdAndVersion_deletes() {
-        // add new record to the database and verify it's there
+        // insert new record to the database and verify it's there
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(null, "de", null);
-        NewsletterTopicDefinition persisted = repo.add(ntd);
+        NewsletterTopicDefinition persisted = repo.insert(ntd);
         final int id = persisted.getId();
         final int version = persisted.getVersion();
         assertThat(repo.findNewsletterTopicDefinitionById(id)).isNotNull();

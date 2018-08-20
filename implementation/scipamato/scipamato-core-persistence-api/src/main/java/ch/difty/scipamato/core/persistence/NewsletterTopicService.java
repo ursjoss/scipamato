@@ -66,7 +66,7 @@ public interface NewsletterTopicService {
      * @throws NullArgumentException
      *     if the entity is null.
      */
-    NewsletterTopicDefinition add(NewsletterTopicDefinition entity);
+    NewsletterTopicDefinition insert(NewsletterTopicDefinition entity);
 
     /**
      * Update an already persisted {@link NewsletterTopicDefinition} including its associated

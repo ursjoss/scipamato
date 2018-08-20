@@ -76,7 +76,7 @@ public interface NewsletterTopicRepository {
      * @throws NullArgumentException
      *     if the entity is null.
      */
-    NewsletterTopicDefinition add(NewsletterTopicDefinition entity);
+    NewsletterTopicDefinition insert(NewsletterTopicDefinition entity);
 
     /**
      * Update an already persisted {@link NewsletterTopicDefinition} including its associated
@@ -90,6 +90,8 @@ public interface NewsletterTopicRepository {
      *     all the audit fields.
      * @throws NullArgumentException
      *     if the entity is null.
+     * @throws OptimisticLockingException
+     *     if the record version has increased in the mean time
      */
     NewsletterTopicDefinition update(NewsletterTopicDefinition entity);
 
