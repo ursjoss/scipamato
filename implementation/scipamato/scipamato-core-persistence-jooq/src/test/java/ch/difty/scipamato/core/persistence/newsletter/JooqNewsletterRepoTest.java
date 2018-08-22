@@ -1,10 +1,12 @@
 package ch.difty.scipamato.core.persistence.newsletter;
 
 import static ch.difty.scipamato.core.db.tables.Newsletter.NEWSLETTER;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.jooq.TableField;
+import org.junit.Test;
 import org.mockito.Mock;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -13,7 +15,6 @@ import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
 import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
-import ch.difty.scipamato.core.persistence.paper.slim.PaperSlimRecordMapper;
 
 public class JooqNewsletterRepoTest extends
     JooqEntityRepoTest<NewsletterRecord, Newsletter, Integer, ch.difty.scipamato.core.db.tables.Newsletter, NewsletterRecordMapper, NewsletterFilter> {
@@ -133,5 +134,10 @@ public class JooqNewsletterRepoTest extends
     @Override
     protected TableField<NewsletterRecord, Integer> getRecordVersion() {
         return NEWSLETTER.VERSION;
+    }
+
+    @Test
+    public void gettingNewsletterInStatusWorkInProgress() {
+        assertThat(repo.getNewsletterInStatusWorkInProgress()).isNotPresent();
     }
 }

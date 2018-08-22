@@ -34,4 +34,10 @@ public class CoreWebSessionFacadeTest extends WicketTest {
     public void gettingPaperIdManager_returnsMock() {
         assertThat(sessionFacade.getPaperIdManager()).isInstanceOf(LongNavigator.class);
     }
+
+    @Test
+    public void roleCheck() {
+        assertThat(sessionFacade.hasAtLeastOneRoleOutOf("admin", "user")).isFalse();
+        assertThat(sessionFacade.hasAtLeastOneRoleOutOf("viewer")).isTrue();
+    }
 }
