@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -206,5 +207,16 @@ public class JooqNewsletterRepoIntegrationTest extends JooqTransactionalIntegrat
 
         nl = repo.findById(newsletterId);
         assertThat(getIdsOfAssociatedPapers(nl)).doesNotContain(paperId);
+    }
+
+    @Test
+    public void gettingNewsletterInStatusWorkInProgress() {
+        final Optional<Newsletter> wipNl = repo.getNewsletterInStatusWorkInProgress();
+        AssertionsForClassTypes
+            .assertThat(wipNl)
+            .isPresent();
+        assertThat(wipNl
+            .get()
+            .getIssue()).isEqualTo("1804");
     }
 }

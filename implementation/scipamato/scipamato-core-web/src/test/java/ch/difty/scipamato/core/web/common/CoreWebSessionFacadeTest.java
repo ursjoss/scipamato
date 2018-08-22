@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import ch.difty.scipamato.common.navigator.LongNavigator;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
+import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.web.WicketTest;
 
 public class CoreWebSessionFacadeTest extends WicketTest {
@@ -37,7 +38,7 @@ public class CoreWebSessionFacadeTest extends WicketTest {
 
     @Test
     public void roleCheck() {
-        assertThat(sessionFacade.hasAtLeastOneRoleOutOf("admin", "user")).isFalse();
-        assertThat(sessionFacade.hasAtLeastOneRoleOutOf("viewer")).isTrue();
+        assertThat(sessionFacade.hasAtLeastOneRoleOutOf(Roles.VIEWER, Roles.ADMIN)).isFalse();
+        assertThat(sessionFacade.hasAtLeastOneRoleOutOf(Roles.USER)).isTrue();
     }
 }
