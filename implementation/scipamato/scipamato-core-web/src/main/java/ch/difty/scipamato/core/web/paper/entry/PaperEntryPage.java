@@ -183,9 +183,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
             @Override
             protected void onFormSubmit() {
-                log.info("Starting PaperEntryPage.onFormSubmit");
                 PaperEntryPage.this.doUpdate();
-                log.info("Finished PaperEntryPage.onFormSubmit");
             }
 
             @Override
