@@ -107,8 +107,15 @@ public class IntegerSearchTermTest {
     }
 
     @Test
-    public void hasNoValue() {
+    public void hasNoValue_usingEquals() {
         final String raw = "=\"\"";
+        st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
+        assertTerm(MatchType.MISSING, 0, 0, raw);
+    }
+
+    @Test
+    public void hasNoValue_skippingEquals() {
+        final String raw = "\"\"";
         st = new IntegerSearchTerm(CONDITION_ID, FIELD_NAME, raw);
         assertTerm(MatchType.MISSING, 0, 0, raw);
     }

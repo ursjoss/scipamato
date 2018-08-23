@@ -55,7 +55,7 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
     IntegerSearchTerm(final Long id, final Long searchConditionId, final String fieldName, final String rawSearchTerm) {
         super(id, SearchTermType.INTEGER, searchConditionId, fieldName, rawSearchTerm);
         final String rst = rawSearchTerm.trim();
-        if ("=\"\"".equals(rst)) {
+        if ("=\"\"".equals(rst) || "\"\"".equals(rst)) {
             this.type = MatchType.MISSING;
             this.value = 0;
             this.value2 = 0;

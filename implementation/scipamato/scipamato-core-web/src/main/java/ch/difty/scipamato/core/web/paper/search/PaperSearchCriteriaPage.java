@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.web.paper.search;
 
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
@@ -60,10 +61,17 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
             protected void onFormSubmit() {
                 Long searchOrderId = getSearchOrderId();
                 if (searchOrderId != null) {
-                    searchOrderService.saveOrUpdateSearchCondition(getModelObject(), searchOrderId, getLanguageCode());
-                    pageFactory
-                        .setResponsePageToPaperSearchPageConsumer(this)
-                        .accept(getPageParameters());
+                    try {
+                        searchOrderService.saveOrUpdateSearchCondition(getModelObject(), searchOrderId,
+                            getLanguageCode());
+                        pageFactory
+                            .setResponsePageToPaperSearchPageConsumer(this)
+                            .accept(getPageParameters());
+                    } catch (Exception ex) {
+                        error(new StringResourceModel("save.error.hint", this, null)
+                            .setParameters(getNullSafeId(), ex.getMessage())
+                            .getString());
+                    }
                 }
             }
         };
@@ -72,6 +80,10 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
     private Long getSearchOrderId() {
         final StringValue sv = getPageParameters().get(CorePageParameters.SEARCH_ORDER_ID.getName());
         return sv.isNull() ? null : sv.toLong();
+    }
+
+    private String getNullSafeId() {
+        return getModelObject().getId() != null ? getModelObject().getId() : "";
     }
 
 }

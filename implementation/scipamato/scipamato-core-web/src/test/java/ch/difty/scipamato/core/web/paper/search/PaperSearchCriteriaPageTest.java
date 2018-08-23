@@ -1,8 +1,7 @@
 package ch.difty.scipamato.core.web.paper.search;
 
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -80,9 +79,29 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
         formTester.submit();
 
         getTester().assertRenderedPage(PaperSearchPage.class);
+        getTester().assertNoErrorMessage();
 
         verify(searchOrderServiceMock).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID, "en_us");
         verify(searchOrderServiceMock).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
+    }
+
+    @Test
+    public void submittingForm_withErrorInService_addsErrorMessage() {
+        when(searchOrderServiceMock.saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID,
+            "en_us")).thenThrow(new RuntimeException("foo"));
+
+        getTester().startPage(makePage());
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("contentPanel:form");
+        formTester.submit();
+
+        getTester().assertErrorMessages("An unexpected error occurred when trying to save Search Order [id ]: foo");
+        getTester().assertRenderedPage(getPageClass());
+
+        verify(searchOrderServiceMock).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID, "en_us");
+        verify(searchOrderServiceMock, never()).findPageByFilter(isA(SearchOrderFilter.class),
+            isA(PaginationContext.class));
     }
 
 }
