@@ -1,6 +1,9 @@
 package ch.difty.scipamato.publ.web.common;
 
-import org.apache.wicket.markup.head.*;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -89,10 +92,8 @@ public abstract class BasePage<T> extends AbstractPage<T> {
      */
     private void renderPymForResponsiveIframe(final IHeaderResponse response) {
         response.render(JavaScriptHeaderItem.forReference(PymJavaScriptResourceReference.get()));
-//        response.render(CssHeaderItem.forCSS("html, body { width:auto; height:auto; }", "pymCSS"));
         response.render(
             new JavaScriptContentHeaderItem(PymScripts.INSTANTIATE.script, PymScripts.INSTANTIATE.id, null));
-//        response.render(OnLoadHeaderItem.forScript(PymScripts.RESIZE.script));
     }
 
     protected Authentication getAuthentication() {

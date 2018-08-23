@@ -7,11 +7,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.Component;
 import org.apache.wicket.PageReference;
-import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
@@ -28,7 +24,6 @@ import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
 import ch.difty.scipamato.publ.web.PublicPageParameters;
 import ch.difty.scipamato.publ.web.common.BasePage;
-import ch.difty.scipamato.publ.web.pym.PymScripts;
 
 @MountPath("/paper/number/${number}")
 public class PublicPaperDetailPage extends BasePage<PublicPaper> {
@@ -72,17 +67,6 @@ public class PublicPaperDetailPage extends BasePage<PublicPaper> {
         this.callingPageRef = callingPageRef;
 
         tryLoadingRecord(parameters);
-//
-//        add(new Behavior() {
-//            public boolean isTemporary(Component component) {
-//                return true;
-//            }
-//
-//            public void renderHead(Component component, IHeaderResponse response) {
-//                response.render(
-//                    JavaScriptHeaderItem.forScript(PymScripts.RESIZE.script, PymScripts.RESIZE.id));
-//            }
-//        });
     }
 
     PublicPaperDetailPage(final IModel<PublicPaper> paperModel, final PageReference callingPageRef) {
