@@ -43,6 +43,19 @@ public class ClickablePropertyColumn2Test {
     }
 
     @Test
+    public void testOnClick_inNewTab() {
+        String sort = "sort";
+
+        when(supplierMock.get()).thenReturn(suppliedValue);
+
+        c = new ClickablePropertyColumn2<>(displayModel, sort, property, biConsumerMock, supplierMock, true);
+        c.onClick(clickModel);
+
+        verify(supplierMock).get();
+        verify(biConsumerMock).accept(clickModel, suppliedValue);
+    }
+
+    @Test
     public void testOnClick_withoutSortProperty() {
         when(supplierMock.get()).thenReturn(suppliedValue);
 

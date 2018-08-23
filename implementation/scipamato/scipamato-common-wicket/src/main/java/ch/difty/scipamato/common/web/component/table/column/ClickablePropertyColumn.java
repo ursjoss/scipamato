@@ -22,12 +22,17 @@ public class ClickablePropertyColumn<T, S> extends AbstractClickablePropertyColu
 
     public ClickablePropertyColumn(final IModel<String> displayModel, final String property,
         final SerializableConsumer<IModel<T>> consumer) {
-        this(displayModel, null, property, consumer);
+        this(displayModel, null, property, consumer, false);
     }
 
     public ClickablePropertyColumn(final IModel<String> displayModel, final S sort, final String property,
         final SerializableConsumer<IModel<T>> consumer) {
-        super(displayModel, sort, property);
+        this(displayModel, sort, property, consumer, false);
+    }
+
+    public ClickablePropertyColumn(final IModel<String> displayModel, final S sort, final String property,
+        final SerializableConsumer<IModel<T>> consumer, final boolean inNewTab) {
+        super(displayModel, sort, property, inNewTab);
         this.consumer = consumer;
     }
 

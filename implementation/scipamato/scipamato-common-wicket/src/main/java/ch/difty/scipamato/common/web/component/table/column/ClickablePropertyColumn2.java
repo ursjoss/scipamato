@@ -32,12 +32,18 @@ public class ClickablePropertyColumn2<T, S, U> extends AbstractClickableProperty
 
     public ClickablePropertyColumn2(final IModel<String> displayModel, final String property,
         final SerializableBiConsumer<IModel<T>, U> biConsumer, final SerializableSupplier<U> supplier) {
-        this(displayModel, null, property, biConsumer, supplier);
+        this(displayModel, null, property, biConsumer, supplier, false);
     }
 
     public ClickablePropertyColumn2(final IModel<String> displayModel, final S sort, final String property,
         final SerializableBiConsumer<IModel<T>, U> biConsumer, final SerializableSupplier<U> supplier) {
-        super(displayModel, sort, property);
+        this(displayModel, sort, property, biConsumer, supplier, false);
+    }
+
+    public ClickablePropertyColumn2(final IModel<String> displayModel, final S sort, final String property,
+        final SerializableBiConsumer<IModel<T>, U> biConsumer, final SerializableSupplier<U> supplier,
+        final boolean inNewTab) {
+        super(displayModel, sort, property, inNewTab);
         this.biConsumer = biConsumer;
         this.supplier = supplier;
     }

@@ -35,15 +35,42 @@ public class ClickablePropertyColumnTest extends WicketBaseTest {
     }
 
     @Test
+    public void testOnClick_withSort() {
+        String property = "prop";
+        ClickablePropertyColumn<String, String> c = new ClickablePropertyColumn<>(displayModel, property, property,
+            consumerMock);
+        Model<String> clickModel = Model.of("bar");
+        c.onClick(clickModel);
+        verify(consumerMock).accept(clickModel);
+    }
+
+    @Test
+    public void testOnClick_inNewTab() {
+        String property = "prop";
+        ClickablePropertyColumn<String, String> c = new ClickablePropertyColumn<>(displayModel, property, property,
+            consumerMock, true);
+        Model<String> clickModel = Model.of("bar");
+        c.onClick(clickModel);
+        verify(consumerMock).accept(clickModel);
+    }
+
+    @Test
     public void testPanel() {
-        getTester().startComponentInPage(new ClickablePropertyColumnTestPanel("panel", this::setVariable));
+        getTester().startComponentInPage(new ClickablePropertyColumnTestPanel("panel", this::setVariable, false));
         assertComponents();
         assertThat(clickPerformed).isNull();
     }
 
     @Test
     public void clickLink() {
-        getTester().startComponentInPage(new ClickablePropertyColumnTestPanel("panel", this::setVariable));
+        getTester().startComponentInPage(new ClickablePropertyColumnTestPanel("panel", this::setVariable, false));
+        getTester().clickLink("panel:table:body:rows:1:cells:2:cell:link");
+        assertThat(clickPerformed).isEqualTo("TestRecord(1, foo)");
+    }
+
+    @Test
+    public void clickLink_inNewTab() {
+        getTester().startComponentInPage(new ClickablePropertyColumnTestPanel("panel", this::setVariable, true));
         getTester().clickLink("panel:table:body:rows:1:cells:2:cell:link");
         assertThat(clickPerformed).isEqualTo("TestRecord(1, foo)");
     }
