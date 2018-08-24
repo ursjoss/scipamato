@@ -64,6 +64,18 @@ public class PaperSyncConfig
     private static final TableField<PaperRecord, Timestamp> C_CREATED       = PAPER.CREATED;
     private static final TableField<PaperRecord, Timestamp> C_LAST_MODIFIED = PAPER.LAST_MODIFIED;
 
+    // short fields (Kurzerfassung)
+    private static final TableField<PaperRecord, String> C_METHOD_STUDY_DESIGN     = PAPER.METHOD_STUDY_DESIGN;
+    private static final TableField<PaperRecord, String> C_METHOD_OUTCOME          = PAPER.METHOD_OUTCOME;
+    private static final TableField<PaperRecord, String> C_METHOD_STATISTICS       = PAPER.METHOD_STATISTICS;
+    private static final TableField<PaperRecord, String> C_METHOD_CONFOUNDERS      = PAPER.METHOD_CONFOUNDERS;
+    private static final TableField<PaperRecord, String> C_POPULATION_PLACE        = PAPER.POPULATION_PLACE;
+    private static final TableField<PaperRecord, String> C_POPULATION_PARTICIPANTS = PAPER.POPULATION_PARTICIPANTS;
+    private static final TableField<PaperRecord, String> C_POPULATION_DURATION     = PAPER.POPULATION_DURATION;
+    private static final TableField<PaperRecord, String> C_RESULT_EXPOSURE_RANGE   = PAPER.RESULT_EXPOSURE_RANGE;
+    private static final TableField<PaperRecord, String> C_RESULT_EFFECT_ESTIMATE  = PAPER.RESULT_EFFECT_ESTIMATE;
+    private static final TableField<PaperRecord, String> C_RESULT_MEASURED_OUTCOME = PAPER.RESULT_MEASURED_OUTCOME;
+
     private final CodeAggregator codeAggregator;
 
     protected PaperSyncConfig(CodeAggregator codeAggregator, @Qualifier("dslContext") DSLContext jooqCore,
@@ -108,14 +120,19 @@ public class PaperSyncConfig
             .select(C_ID, C_NUMBER, C_PM_ID, C_AUTHORS, C_TITLE, C_LOCATION, C_PUB_YEAR, C_GOALS, C_METHODS,
                 C_POPULATION, C_RESULT, C_COMMENT, C_VERSION, C_CREATED, C_LAST_MODIFIED, DSL
                     .arrayAgg(PaperCode.PAPER_CODE.CODE)
-                    .as(ALIAS_CODES))
+                    .as(ALIAS_CODES), C_METHOD_STUDY_DESIGN, C_METHOD_OUTCOME, C_METHOD_STATISTICS,
+                C_METHOD_CONFOUNDERS, C_POPULATION_PLACE, C_POPULATION_PARTICIPANTS, C_POPULATION_DURATION,
+                C_RESULT_EXPOSURE_RANGE, C_RESULT_EFFECT_ESTIMATE, C_RESULT_MEASURED_OUTCOME)
             .from(Paper.PAPER)
             .innerJoin(PaperCode.PAPER_CODE)
             .on(Paper.PAPER.ID.eq(PaperCode.PAPER_CODE.PAPER_ID))
             .innerJoin(Code.CODE)
             .on(PaperCode.PAPER_CODE.CODE.eq(Code.CODE.CODE_))
             .groupBy(C_ID, C_NUMBER, C_PM_ID, C_AUTHORS, C_TITLE, C_LOCATION, C_PUB_YEAR, C_GOALS, C_METHODS,
-                C_POPULATION, C_RESULT, C_COMMENT, C_VERSION, C_CREATED, C_LAST_MODIFIED)
+                C_POPULATION, C_RESULT, C_COMMENT, C_VERSION, C_CREATED, C_LAST_MODIFIED, C_METHOD_STUDY_DESIGN,
+                C_METHOD_OUTCOME, C_METHOD_STATISTICS, C_METHOD_CONFOUNDERS, C_POPULATION_PLACE,
+                C_POPULATION_PARTICIPANTS, C_POPULATION_DURATION, C_RESULT_EXPOSURE_RANGE, C_RESULT_EFFECT_ESTIMATE,
+                C_RESULT_MEASURED_OUTCOME)
             .getSQL();
     }
 
@@ -132,8 +149,18 @@ public class PaperSyncConfig
             .publicationYear(getInteger(C_PUB_YEAR, rs))
             .goals(getString(C_GOALS, rs))
             .methods(getString(C_METHODS, rs))
+            .methodStudyDesign(getString(C_METHOD_STUDY_DESIGN, rs))
+            .methodOutcome(getString(C_METHOD_OUTCOME, rs))
+            .methodStatistics(getString(C_METHOD_STATISTICS, rs))
+            .methodConfounders(getString(C_METHOD_CONFOUNDERS, rs))
             .population(getString(C_POPULATION, rs))
+            .populationPlace(getString(C_POPULATION_PLACE, rs))
+            .populationParticipants(getString(C_POPULATION_PARTICIPANTS, rs))
+            .populationDuration(getString(C_POPULATION_DURATION, rs))
             .result(getString(C_RESULT, rs))
+            .resultExposureRange(getString(C_RESULT_EXPOSURE_RANGE, rs))
+            .resultEffectEstimate(getString(C_RESULT_EFFECT_ESTIMATE, rs))
+            .resultMeasuredOutcome(getString(C_RESULT_MEASURED_OUTCOME, rs))
             .comment(getString(C_COMMENT, rs))
             .codes(extractCodes(ALIAS_CODES, rs))
             .version(getInteger(C_VERSION, rs))

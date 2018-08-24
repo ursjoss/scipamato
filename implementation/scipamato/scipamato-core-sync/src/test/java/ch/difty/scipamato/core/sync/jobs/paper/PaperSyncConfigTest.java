@@ -123,13 +123,21 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
             "select \"public\".\"paper\".\"id\", \"public\".\"paper\".\"number\", \"public\".\"paper\".\"pm_id\", \"public\".\"paper\".\"authors\", "
             + "\"public\".\"paper\".\"title\", \"public\".\"paper\".\"location\", \"public\".\"paper\".\"publication_year\", \"public\".\"paper\".\"goals\", "
             + "\"public\".\"paper\".\"methods\", \"public\".\"paper\".\"population\", \"public\".\"paper\".\"result\", \"public\".\"paper\".\"comment\", "
-            + "\"public\".\"paper\".\"version\", \"public\".\"paper\".\"created\", \"public\".\"paper\".\"last_modified\", array_agg(\"public\".\"paper_code\".\"code\") as \"codes\" "
+            + "\"public\".\"paper\".\"version\", \"public\".\"paper\".\"created\", \"public\".\"paper\".\"last_modified\", "
+            + "array_agg(\"public\".\"paper_code\".\"code\") as \"codes\", \"public\".\"paper\".\"method_study_design\", "
+            + "\"public\".\"paper\".\"method_outcome\", \"public\".\"paper\".\"method_statistics\", \"public\".\"paper\".\"method_confounders\", "
+            + "\"public\".\"paper\".\"population_place\", \"public\".\"paper\".\"population_participants\", \"public\".\"paper\".\"population_duration\", "
+            + "\"public\".\"paper\".\"result_exposure_range\", \"public\".\"paper\".\"result_effect_estimate\", \"public\".\"paper\".\"result_measured_outcome\" "
             + "from \"public\".\"paper\" join \"public\".\"paper_code\" on \"public\".\"paper\".\"id\" = \"public\".\"paper_code\".\"paper_id\" "
             + "join \"public\".\"code\" on \"public\".\"paper_code\".\"code\" = \"public\".\"code\".\"code\" "
             + "group by \"public\".\"paper\".\"id\", \"public\".\"paper\".\"number\", \"public\".\"paper\".\"pm_id\", \"public\".\"paper\".\"authors\", "
             + "\"public\".\"paper\".\"title\", \"public\".\"paper\".\"location\", \"public\".\"paper\".\"publication_year\", \"public\".\"paper\".\"goals\", "
             + "\"public\".\"paper\".\"methods\", \"public\".\"paper\".\"population\", \"public\".\"paper\".\"result\", \"public\".\"paper\".\"comment\", "
-            + "\"public\".\"paper\".\"version\", \"public\".\"paper\".\"created\", \"public\".\"paper\".\"last_modified\"";
+            + "\"public\".\"paper\".\"version\", \"public\".\"paper\".\"created\", \"public\".\"paper\".\"last_modified\", "
+            + "\"public\".\"paper\".\"method_study_design\", \"public\".\"paper\".\"method_outcome\", \"public\".\"paper\".\"method_statistics\", "
+            + "\"public\".\"paper\".\"method_confounders\", \"public\".\"paper\".\"population_place\", \"public\".\"paper\".\"population_participants\", "
+            + "\"public\".\"paper\".\"population_duration\", \"public\".\"paper\".\"result_exposure_range\", \"public\".\"paper\".\"result_effect_estimate\", "
+            + "\"public\".\"paper\".\"result_measured_outcome\"";
     }
 
     @Override
@@ -192,8 +200,18 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         verify(rs).getInt(Paper.PAPER.PUBLICATION_YEAR.getName());
         verify(rs).getString(Paper.PAPER.GOALS.getName());
         verify(rs).getString(Paper.PAPER.METHODS.getName());
+        verify(rs).getString(Paper.PAPER.METHOD_STUDY_DESIGN.getName());
+        verify(rs).getString(Paper.PAPER.METHOD_OUTCOME.getName());
+        verify(rs).getString(Paper.PAPER.METHOD_STATISTICS.getName());
+        verify(rs).getString(Paper.PAPER.METHOD_CONFOUNDERS.getName());
         verify(rs).getString(Paper.PAPER.POPULATION.getName());
+        verify(rs).getString(Paper.PAPER.POPULATION_PLACE.getName());
+        verify(rs).getString(Paper.PAPER.POPULATION_PARTICIPANTS.getName());
+        verify(rs).getString(Paper.PAPER.POPULATION_DURATION.getName());
         verify(rs).getString(Paper.PAPER.RESULT.getName());
+        verify(rs).getString(Paper.PAPER.RESULT_EXPOSURE_RANGE.getName());
+        verify(rs).getString(Paper.PAPER.RESULT_EFFECT_ESTIMATE.getName());
+        verify(rs).getString(Paper.PAPER.RESULT_MEASURED_OUTCOME.getName());
         verify(rs).getString(Paper.PAPER.COMMENT.getName());
         verify(rs).getArray("codes");
         verify(rs).getInt(Paper.PAPER.VERSION.getName());
