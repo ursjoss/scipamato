@@ -37,8 +37,8 @@ public class HikariDatasourceProductionSettingsTest {
         assertThat(ds.getUsername()).isEqualTo("scipamadmin");
         assertThat(ds.getPassword()).isEqualTo("scipamadmin");
         assertThat(ds.getConnectionTimeout()).isEqualTo(10000);
-        assertThat(ds.getIdleTimeout()).isEqualTo(10000);
-        assertThat(ds.getMaxLifetime()).isEqualTo(10000);
+        assertThat(ds.getIdleTimeout()).isEqualTo(600000);
+        assertThat(ds.getMaxLifetime()).isEqualTo(1800000);
         assertThat(ds.getMinimumIdle()).isEqualTo(-1);
         assertThat(ds.getMaximumPoolSize()).isEqualTo(3);
         assertThat(ds.getPoolName()).isEqualTo("SciPaMaTo-Batch-HikariCP");
@@ -54,8 +54,8 @@ public class HikariDatasourceProductionSettingsTest {
         assertThat(ds.getUsername()).isEqualTo("scipamadminpub");
         assertThat(ds.getPassword()).isEqualTo("scipamadminpub");
         assertThat(ds.getConnectionTimeout()).isEqualTo(10000);
-        assertThat(ds.getIdleTimeout()).isEqualTo(10000);
-        assertThat(ds.getMaxLifetime()).isEqualTo(10000);
+        assertThat(ds.getIdleTimeout()).isEqualTo(600000);
+        assertThat(ds.getMaxLifetime()).isEqualTo(1800000);
         assertThat(ds.getMinimumIdle()).isEqualTo(-1);
         assertThat(ds.getMaximumPoolSize()).isEqualTo(3);
         assertThat(ds.getPoolName()).isEqualTo("SciPaMaTo-Target-HikariCP");
@@ -70,7 +70,7 @@ public class HikariDatasourceProductionSettingsTest {
         assertThat(ds.getJdbcUrl()).isEqualTo("jdbc:postgresql://localhost:5432/scipamato");
         assertThat(ds.getUsername()).isEqualTo("scipamato");
         assertThat(ds.getPassword()).isEqualTo("scipamato");
-        assertThat(ds.getConnectionTimeout()).isEqualTo(1000);
+        assertThat(ds.getConnectionTimeout()).isEqualTo(10000);
         assertThat(ds.getIdleTimeout()).isEqualTo(600000);
         assertThat(ds.getMaxLifetime()).isEqualTo(1800000);
         assertThat(ds.getMinimumIdle()).isEqualTo(5);
