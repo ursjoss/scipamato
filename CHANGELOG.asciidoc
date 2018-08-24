@@ -58,7 +58,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Changed
 - Bump dependencies: jOOQ, spring-cloud
 - Core: Collapsible Menu entries with submenu items
-- 08/52 - Core: Raise default session timeout from 30 to 60 minutes
+- 08/52 - Core: Raise default session timeout from 30 to 60 minutes. Separate cookie names
 
 .Deprecated
 
