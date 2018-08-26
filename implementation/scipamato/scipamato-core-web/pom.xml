@@ -52,6 +52,15 @@
             <artifactId>scipamato-core-sync</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.googlecode.wicket-jquery-ui</groupId>
+            <artifactId>wicket-jquery-ui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.wicket-jquery-ui</groupId>
+            <artifactId>wicket-jquery-ui-theme-uilightness</artifactId>
+        </dependency>
+
         <!-- JSR 303 bean validation provider implementation -->
         <dependency>
             <groupId>org.apache.bval</groupId>

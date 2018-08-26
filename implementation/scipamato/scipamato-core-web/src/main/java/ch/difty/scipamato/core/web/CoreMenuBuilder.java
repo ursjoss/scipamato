@@ -16,6 +16,7 @@ import ch.difty.scipamato.common.web.pages.AbstractMenuBuilder;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.web.authentication.LogoutPage;
 import ch.difty.scipamato.core.web.newsletter.list.NewsletterListPage;
+import ch.difty.scipamato.core.web.newsletter.topic.DefaultSortablePage;
 import ch.difty.scipamato.core.web.newsletter.topic.NewsletterTopicListPage;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 import ch.difty.scipamato.core.web.paper.search.PaperSearchPage;
@@ -66,6 +67,7 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
             addEntryToMenu(labelParent + "newsletter", page, NewsletterListPage.class, GlyphIconType.book, links);
             addEntryToMenu(labelParent + "newslettertopic", page, NewsletterTopicListPage.class, GlyphIconType.bookmark,
                 links);
+            addEntryToMenu(labelParent + "sortable", page, DefaultSortablePage.class, GlyphIconType.bookmark, links);
         }
     }
 
