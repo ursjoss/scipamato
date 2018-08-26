@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.sync.houskeeping.HouseKeeper;
+import ch.difty.scipamato.core.sync.houskeeping.PseudoForeignKeyConstraintEnforcer;
 
 /**
  * Common abstract base class for Sync Configs
@@ -140,6 +141,35 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     }
 
     protected abstract DeleteConditionStep<R> getPurgeDcs(final Timestamp cutOff);
+
+    private Step pseudoForeignKeyConstraintStep() {
+        return stepBuilderFactory
+            .get(topic + "PseudoForeignKeyStep")
+            .tasklet(new PseudoForeignKeyConstraintEnforcer<>(getPseudoFkDcs(), topic, getPlural()))
+            .build();
+    }
+
+    protected String getPlural() {
+        return "s";
+    }
+
+    /**
+     * Override if some pseudo-foreign key constraint needs to be implemented.
+     * In SciPaMaTo-Public, we have some tables that purpously lack proper normalisation, which has the
+     * benefit of simplicity but the disadvantage that normal referential integrity rules on db level do
+     * not apply. E.g. code classes have the same code_class_id (from scipamato-core) more than once, each
+     * with a different language flag, once for each language. Therefore code_class_id in table code_class
+     * is not a unique id but only part of a composite key. It's not possible to use code_class_id as foreign
+     * key on db_level with a delete cascade property. We therefore may need to explicitly delete codes that
+     * belong to a code class that does not exist anymore in table code_class. That's what I here call a
+     * pseudo-foreign key constraint.
+     *
+     * @return the deleteConditionStep or null if no such envorcment is required. The latter will result in a
+     *     no-op operation in the tasklet running the task.
+     */
+    public DeleteConditionStep<R> getPseudoFkDcs() {
+        return null;
+    }
 
     protected String getString(final TableField<?, String> field, final ResultSet rs) throws SQLException {
         return rs.getString(field.getName());

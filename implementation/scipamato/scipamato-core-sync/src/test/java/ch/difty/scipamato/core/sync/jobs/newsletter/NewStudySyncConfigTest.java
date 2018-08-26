@@ -45,6 +45,11 @@ public class NewStudySyncConfigTest extends SyncConfigTest<NewStudyRecord> {
     }
 
     @Override
+    protected DeleteConditionStep<NewStudyRecord> getPseudoFkDcs() {
+        return config.getPseudoFkDcs();
+    }
+
+    @Override
     protected String expectedJobName() {
         return "syncNewStudyJob";
     }
@@ -67,6 +72,12 @@ public class NewStudySyncConfigTest extends SyncConfigTest<NewStudyRecord> {
     @Override
     protected String expectedPurgeSql() {
         return "delete from \"public\".\"new_study\" where \"public\".\"new_study\".\"last_synched\" < cast(? as timestamp)";
+    }
+
+    @Override
+    public String expectedPseudoFkSql() {
+        return "delete from \"public\".\"new_study\" where \"public\".\"new_study\".\"newsletter_topic_id\" not in "
+               + "(select distinct \"public\".\"newsletter_topic\".\"id\" from \"public\".\"newsletter_topic\")";
     }
 
     @Test

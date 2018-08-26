@@ -55,6 +55,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 08/50 - Public: Referential integrity constraints - where possible
 - 08/45 - Core: Manage the Newsletter Topics
 - 08/56: Synchronize languages from core to public
+- 08/56: Implement pseudo-foreign-key-constraint logic for composite keys in SciPaMaTo-Public
 
 .Changed
 - Bump dependencies: jOOQ, spring-cloud

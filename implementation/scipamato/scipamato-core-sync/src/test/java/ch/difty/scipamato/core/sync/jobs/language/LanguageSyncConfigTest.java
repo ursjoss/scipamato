@@ -44,6 +44,11 @@ public class LanguageSyncConfigTest extends SyncConfigTest<LanguageRecord> {
     }
 
     @Override
+    protected DeleteConditionStep<LanguageRecord> getPseudoFkDcs() {
+        return config.getPseudoFkDcs();
+    }
+
+    @Override
     protected String expectedJobName() {
         return "syncLanguageJob";
     }

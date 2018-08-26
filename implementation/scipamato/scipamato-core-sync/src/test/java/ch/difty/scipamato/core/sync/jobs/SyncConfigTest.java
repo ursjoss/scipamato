@@ -36,6 +36,11 @@ public abstract class SyncConfigTest<R extends UpdatableRecord<R>> {
     protected abstract DeleteConditionStep<R> purgeDeleteConditionStep();
 
     /**
+     * @return the pseudo foreign key ref data integrity enforcement stop from the SysConfig - or null if none applies.
+     */
+    protected abstract DeleteConditionStep<R> getPseudoFkDcs();
+
+    /**
      * @return the expected job name
      */
     protected abstract String expectedJobName();
@@ -49,6 +54,13 @@ public abstract class SyncConfigTest<R extends UpdatableRecord<R>> {
      * @return the expected SQL string for purging obsolete entries
      */
     protected abstract String expectedPurgeSql();
+
+    /**
+     * @return the expected SQL string for purging obsolete entries - or null if none applies
+     */
+    public String expectedPseudoFkSql() {
+        return null;
+    }
 
     @Test
     public void assertingJobIncrementer_toBeRunIdIncrementer() {
@@ -75,4 +87,12 @@ public abstract class SyncConfigTest<R extends UpdatableRecord<R>> {
         assertThat(purgeDeleteConditionStep().getSQL()).isEqualTo(expectedPurgeSql());
     }
 
+    @Test
+    public void assertingPseudoRefDataEnforcementDdl() {
+        final DeleteConditionStep<R> dcs = getPseudoFkDcs();
+        if (dcs != null)
+            assertThat(dcs.getSQL()).isEqualTo(expectedPseudoFkSql());
+        else
+            assertThat(expectedPseudoFkSql()).isNull();
+    }
 }
