@@ -259,6 +259,7 @@
                                         | code_class_tr
                                         | code
                                         | code_tr
+                                        | language
                                         | paper
                                         | paper_code
                                         | newsletter
@@ -301,6 +302,7 @@
                                     <includes>
                                         code_class
                                         | code
+                                        | language
                                         | paper
                                         | new_study
                                         | new_study_topic

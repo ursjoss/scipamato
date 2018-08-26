@@ -113,6 +113,11 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     }
 
     @Override
+    protected DeleteConditionStep<PaperRecord> getPseudoFkDcs() {
+        return config.getPseudoFkDcs();
+    }
+
+    @Override
     protected String expectedJobName() {
         return "syncPaperJob";
     }
@@ -331,6 +336,18 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     public void assertingSql() {
         assertThat(selectSql()).isEqualTo(expectedSelectSql());
         verify(codeAggregator).setInternalCodes(internalCodes);
+    }
+
+    @Test
+    @Override
+    public void assertingPseudoRefDataEnforcementDdl() {
+        final DeleteConditionStep<PaperRecord> dcs = getPseudoFkDcs();
+        if (dcs != null)
+            assertThat(dcs.getSQL()).isEqualTo(expectedPseudoFkSql());
+        else
+            assertThat(expectedPseudoFkSql()).isNull();
+        verify(codeAggregator).setInternalCodes(internalCodes);
+        verifyNoMoreInteractions(jooqPublic);
     }
 
 }

@@ -45,6 +45,11 @@ public class NewsletterSyncConfigTest extends SyncConfigTest<NewsletterRecord> {
     }
 
     @Override
+    protected DeleteConditionStep<NewsletterRecord> getPseudoFkDcs() {
+        return config.getPseudoFkDcs();
+    }
+
+    @Override
     protected String expectedJobName() {
         return "syncNewsletterJob";
     }

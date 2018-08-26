@@ -14,45 +14,47 @@ import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.repeat.RepeatStatus;
 
-import ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord;
+import ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord;
 
 @RunWith(MockitoJUnitRunner.class)
-public class HouseKeeperTest {
+public class PseudoForeignKeyConstraintEnforcerTest {
 
-    private HouseKeeper<CodeClassRecord> hk;
+    private PseudoForeignKeyConstraintEnforcer<CodeRecord> fkce;
 
     @Mock
-    private DeleteConditionStep<CodeClassRecord> stepMock;
+    private DeleteConditionStep<CodeRecord> stepMock;
     @Mock
-    private StepContribution                     contributionMock;
+    private StepContribution                contributionMock;
     @Mock
-    private ChunkContext                         chunkContextMock;
+    private ChunkContext                    chunkContextMock;
 
     @Before
     public void setUp() {
-        hk = new HouseKeeper<>(stepMock, 30, "code_class");
+        fkce = new PseudoForeignKeyConstraintEnforcer<>(stepMock, "code", "s");
     }
 
     @Test
-    public void degenerateConstruction_withNullStep_throws() {
-        assertDegenerateSupplierParameter(
-            () -> new HouseKeeper<>((DeleteConditionStep<CodeClassRecord>) null, 30, "code_class"), "deleteDdl");
+    public void executing_withNullStep_doesNotThrow() {
+        fkce = new PseudoForeignKeyConstraintEnforcer<>((DeleteConditionStep<CodeRecord>) null, "code", "s");
+        assertThat(fkce.execute(contributionMock, chunkContextMock)).isEqualTo(RepeatStatus.FINISHED);
     }
 
     @Test
     public void degenerateConstruction_withNullEntityName_throws() {
-        assertDegenerateSupplierParameter(() -> new HouseKeeper<>(stepMock, 30, null), "entityName");
+        assertDegenerateSupplierParameter(() -> new PseudoForeignKeyConstraintEnforcer<>(stepMock, null, "s"),
+            "entityName");
     }
 
     @Test
     public void executing_returnsFinishedStatus() {
-        assertThat(hk.execute(contributionMock, chunkContextMock)).isEqualTo(RepeatStatus.FINISHED);
+        assertThat(fkce.execute(contributionMock, chunkContextMock)).isEqualTo(RepeatStatus.FINISHED);
+        verify(stepMock).execute();
     }
 
     @Test
     public void executing_withSingleModifications_logs() {
         when(stepMock.execute()).thenReturn(1);
-        hk.execute(contributionMock, chunkContextMock);
+        fkce.execute(contributionMock, chunkContextMock);
         verify(stepMock).execute();
         // log un-asserted, log format different from the one in the next test (visual
         // assertion)
@@ -61,7 +63,7 @@ public class HouseKeeperTest {
     @Test
     public void executing_withMultipleModifications_logs() {
         when(stepMock.execute()).thenReturn(2);
-        hk.execute(contributionMock, chunkContextMock);
+        fkce.execute(contributionMock, chunkContextMock);
         verify(stepMock).execute();
         // log un-asserted, log format different form that in the previous test (visual
         // assertion)
@@ -70,20 +72,20 @@ public class HouseKeeperTest {
     @Test
     public void executing_withoutModifications_skipsLog() {
         when(stepMock.execute()).thenReturn(0);
-        hk.execute(contributionMock, chunkContextMock);
+        fkce.execute(contributionMock, chunkContextMock);
         verify(stepMock).execute();
         // missing log un-asserted (visual assertion)
     }
 
     @Test
     public void executing_ignoresContributionMock() {
-        hk.execute(contributionMock, chunkContextMock);
+        fkce.execute(contributionMock, chunkContextMock);
         verifyNoMoreInteractions(contributionMock);
     }
 
     @Test
     public void executing_ignoresChunkContextMock() {
-        hk.execute(contributionMock, chunkContextMock);
+        fkce.execute(contributionMock, chunkContextMock);
         verifyNoMoreInteractions(chunkContextMock);
     }
 }

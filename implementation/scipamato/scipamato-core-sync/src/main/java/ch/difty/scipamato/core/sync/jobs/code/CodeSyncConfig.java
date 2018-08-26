@@ -28,6 +28,7 @@ import ch.difty.scipamato.core.db.public_.tables.CodeTr;
 import ch.difty.scipamato.core.db.public_.tables.records.CodeRecord;
 import ch.difty.scipamato.core.db.public_.tables.records.CodeTrRecord;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
+import ch.difty.scipamato.publ.db.public_.tables.CodeClass;
 
 /**
  * Defines the code synchronization job, applying two steps:
@@ -130,4 +131,12 @@ public class CodeSyncConfig
             .where(ch.difty.scipamato.publ.db.public_.tables.Code.CODE.LAST_SYNCHED.lessThan(cutOff));
     }
 
+    @Override
+    public DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord> getPseudoFkDcs() {
+        return getJooqPublic()
+            .delete(ch.difty.scipamato.publ.db.public_.tables.Code.CODE)
+            .where(ch.difty.scipamato.publ.db.public_.tables.Code.CODE.CODE_CLASS_ID.notIn(getJooqPublic()
+                .selectDistinct(CodeClass.CODE_CLASS.CODE_CLASS_ID)
+                .from(CodeClass.CODE_CLASS)));
+    }
 }

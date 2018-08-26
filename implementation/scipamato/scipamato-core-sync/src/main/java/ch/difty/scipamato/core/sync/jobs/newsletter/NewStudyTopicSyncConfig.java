@@ -25,6 +25,7 @@ import ch.difty.scipamato.core.db.public_.tables.records.NewsletterTopicTrRecord
 import ch.difty.scipamato.core.db.public_.tables.records.PaperNewsletterRecord;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
 import ch.difty.scipamato.publ.db.public_.tables.NewStudyTopic;
+import ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic;
 
 /**
  * Defines the newStudyTopic synchronization job, applying two steps:
@@ -104,6 +105,15 @@ public class NewStudyTopicSyncConfig
         return getJooqPublic()
             .delete(NewStudyTopic.NEW_STUDY_TOPIC)
             .where(NewStudyTopic.NEW_STUDY_TOPIC.LAST_SYNCHED.lessThan(cutOff));
+    }
+
+    @Override
+    public DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.NewStudyTopicRecord> getPseudoFkDcs() {
+        return getJooqPublic()
+            .delete(NewStudyTopic.NEW_STUDY_TOPIC)
+            .where(NewStudyTopic.NEW_STUDY_TOPIC.NEWSLETTER_TOPIC_ID.notIn(getJooqPublic()
+                .selectDistinct(NewsletterTopic.NEWSLETTER_TOPIC.ID)
+                .from(NewsletterTopic.NEWSLETTER_TOPIC)));
     }
 
 }

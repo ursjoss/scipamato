@@ -17,7 +17,8 @@ import org.springframework.stereotype.Component;
  * Launcher for the reference dat sync job. Comprises of the following
  * synchronization jobs:
  * <ol>
- * <li>code_class</li>
+ * <li>languages</li>
+ * <li>code_classes</li>
  * <li>codes</li>
  * <li>keywords TODO</li>
  * <li>papers</li>
@@ -33,6 +34,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RefDataSyncJobLauncher implements SyncJobLauncher {
 
+    private final Job         syncLanguageJob;
     private final Job         syncCodeClassJob;
     private final Job         syncCodeJob;
     private final Job         syncPaperJob;
@@ -43,12 +45,14 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
     private final JobLauncher jobLauncher;
 
     public RefDataSyncJobLauncher(final JobLauncher jobLauncher,
+        @Qualifier("syncLanguageJob") final Job syncLanguageJob,
         @Qualifier("syncCodeClassJob") final Job syncCodeClassJob, @Qualifier("syncCodeJob") final Job syncCodeJob,
         @Qualifier("syncPaperJob") final Job syncPaperJob, @Qualifier("syncNewsletterJob") final Job syncNewsletterJob,
         @Qualifier("syncNewsletterTopicJob") final Job syncNewsletterTopicJob,
         @Qualifier("syncNewStudyJob") final Job syncNewStudyJob,
         @Qualifier("syncNewStudyTopicJob") final Job syncNewStudyTopicJob) {
         this.jobLauncher = jobLauncher;
+        this.syncLanguageJob = syncLanguageJob;
         this.syncCodeClassJob = syncCodeClassJob;
         this.syncCodeJob = syncCodeJob;
         this.syncPaperJob = syncPaperJob;
@@ -69,6 +73,7 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
                 .toInstant()), true)
             .toJobParameters();
         try {
+            runSingleJob("languages", syncLanguageJob, result, jobParameters);
             runSingleJob("code_classes", syncCodeClassJob, result, jobParameters);
             runSingleJob("codes", syncCodeJob, result, jobParameters);
             runSingleJob("papers", syncPaperJob, result, jobParameters);

@@ -45,6 +45,11 @@ public class CodeClassSyncConfigTest extends SyncConfigTest<CodeClassRecord> {
     }
 
     @Override
+    protected DeleteConditionStep<CodeClassRecord> getPseudoFkDcs() {
+        return config.getPseudoFkDcs();
+    }
+
+    @Override
     protected String expectedJobName() {
         return "syncCodeClassJob";
     }

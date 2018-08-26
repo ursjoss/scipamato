@@ -33,6 +33,7 @@ import ch.difty.scipamato.common.AssertAs;
 public class HouseKeeper<R extends UpdatableRecordImpl<?>> implements Tasklet {
 
     private final DeleteConditionStep<R> ddl;
+    private final String                 entityName;
 
     /**
      * @param deleteDdl
@@ -41,17 +42,20 @@ public class HouseKeeper<R extends UpdatableRecordImpl<?>> implements Tasklet {
      * @param graceTimeInMinutes
      *     records that were touched during synchronization within that many
      *     minutes will be excluded from purging
+     * @param entityName
+     *     the name of the managed entity
      */
-    public HouseKeeper(final DeleteConditionStep<R> deleteDdl, final int graceTimeInMinutes) {
+    public HouseKeeper(final DeleteConditionStep<R> deleteDdl, final int graceTimeInMinutes, final String entityName) {
         this.ddl = AssertAs.notNull(deleteDdl, "deleteDdl");
-        log.debug("Purging code_classes that have not been synched in the last {} minutes...", graceTimeInMinutes);
+        this.entityName = AssertAs.notNull(entityName, "entityName");
+        log.debug("Purging {}es that have not been synched in the last {} minutes...", entityName, graceTimeInMinutes);
     }
 
     @Override
     public RepeatStatus execute(final StepContribution contribution, final ChunkContext chunkContext) {
         final int result = ddl.execute();
         if (result > 0)
-            log.info("Successfully deleted {} code_class{} in scipamato-public", result, (result > 1 ? "es" : ""));
+            log.info("Successfully deleted {} {}{} in scipamato-public", result, entityName, (result > 1 ? "es" : ""));
         return RepeatStatus.FINISHED;
     }
 

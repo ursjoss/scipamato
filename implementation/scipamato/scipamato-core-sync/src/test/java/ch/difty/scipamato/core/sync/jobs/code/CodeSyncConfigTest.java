@@ -45,6 +45,11 @@ public class CodeSyncConfigTest extends SyncConfigTest<CodeRecord> {
     }
 
     @Override
+    protected DeleteConditionStep<CodeRecord> getPseudoFkDcs() {
+        return config.getPseudoFkDcs();
+    }
+
+    @Override
     protected String expectedJobName() {
         return "syncCodeJob";
     }
@@ -71,6 +76,12 @@ public class CodeSyncConfigTest extends SyncConfigTest<CodeRecord> {
     @Override
     protected String expectedPurgeSql() {
         return "delete from \"public\".\"code\" where \"public\".\"code\".\"last_synched\" < cast(? as timestamp)";
+    }
+
+    @Override
+    public String expectedPseudoFkSql() {
+        return "delete from \"public\".\"code\" where \"public\".\"code\".\"code_class_id\" not in "
+               + "(select distinct \"public\".\"code_class\".\"code_class_id\" from \"public\".\"code_class\")";
     }
 
     @Test
