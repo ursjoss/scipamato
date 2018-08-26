@@ -19,7 +19,8 @@ import ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord;
 @RunWith(MockitoJUnitRunner.class)
 public class HouseKeeperTest {
 
-    private HouseKeeper<CodeClassRecord>         hk;
+    private HouseKeeper<CodeClassRecord> hk;
+
     @Mock
     private DeleteConditionStep<CodeClassRecord> stepMock;
     @Mock
@@ -29,13 +30,18 @@ public class HouseKeeperTest {
 
     @Before
     public void setUp() {
-        hk = new HouseKeeper<>(stepMock, 30);
+        hk = new HouseKeeper<>(stepMock, 30, "code_class");
     }
 
     @Test
-    public void degenerateConstruction_throws() {
-        assertDegenerateSupplierParameter(() -> new HouseKeeper<>((DeleteConditionStep<CodeClassRecord>) null, 30),
-            "deleteDdl");
+    public void degenerateConstruction_withNullStep_throws() {
+        assertDegenerateSupplierParameter(
+            () -> new HouseKeeper<>((DeleteConditionStep<CodeClassRecord>) null, 30, "code_class"), "deleteDdl");
+    }
+
+    @Test
+    public void degenerateConstruction_withNullEntityName_throws() {
+        assertDegenerateSupplierParameter(() -> new HouseKeeper<>(stepMock, 30, null), "entityName");
     }
 
     @Test

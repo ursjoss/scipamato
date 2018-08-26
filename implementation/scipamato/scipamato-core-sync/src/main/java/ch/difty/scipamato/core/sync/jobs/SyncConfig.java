@@ -135,7 +135,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
             .minusMinutes(graceTime));
         return stepBuilderFactory
             .get(topic + "PurgingStep")
-            .tasklet(new HouseKeeper<>(getPurgeDcs(cutOff), graceTime))
+            .tasklet(new HouseKeeper<>(getPurgeDcs(cutOff), graceTime, topic))
             .build();
     }
 

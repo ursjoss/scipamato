@@ -70,6 +70,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 08/49 - Core: Do not allow two newsletters in status WIP
 - 08/59 - Core: Allow searching for missing years w/ or w/o equal sign (="" or "")
 - Wiki: Implemented review suggestions by Zoë Roth
+- Core to Public Sync: Fix logging of Housekeeper Job
 
 .Security
 
