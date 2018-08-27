@@ -43,7 +43,7 @@ public class PaperSyncConfig
     extends SyncConfig<PublicPaper, ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord> {
 
     private static final String TOPIC      = "paper";
-    private static final int    CHUNK_SIZE = 100;
+    private static final int    CHUNK_SIZE = 500;
 
     private static final String ALIAS_CODES = "codes";
 

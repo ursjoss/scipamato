@@ -1,11 +1,12 @@
 package ch.difty.scipamato.core.persistence.newsletter;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.assertj.core.util.Lists;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
@@ -148,4 +150,125 @@ public class JooqNewsletterTopicServiceTest {
         verify(repoMock).delete(id, version);
     }
 
+    @Test
+    public void gettingSortedNewsletterTopicsForNewsletter_withNoAssignedTopics_isEmpty() {
+        final int newsletterId = 12;
+
+        when(repoMock.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(
+            Lists.emptyList());
+        when(repoMock.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(Lists.emptyList());
+
+        assertThat(service.getSortedNewsletterTopicsForNewsletter(newsletterId)).isEmpty();
+
+        verify(repoMock).findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId);
+        verify(repoMock).findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId);
+    }
+
+    @Test
+    public void gettingSortedNewsletterTopicsForNewsletter_withNoPersistedTopics_resortsAllUnpersisted() {
+        final int newsletterId = 12;
+        final List<NewsletterNewsletterTopic> persisted = Lists.emptyList();
+        final List<NewsletterNewsletterTopic> all = List.of(
+            new NewsletterNewsletterTopic(newsletterId, 1, Integer.MAX_VALUE, "topic1"),
+            new NewsletterNewsletterTopic(newsletterId, 2, Integer.MAX_VALUE, "topic2"));
+
+        when(repoMock.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(persisted);
+        when(repoMock.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(all);
+
+        final List<NewsletterNewsletterTopic> topics = service.getSortedNewsletterTopicsForNewsletter(newsletterId);
+
+        assertThat(topics).hasSize(2);
+        assertThat(topics)
+            .extracting("newsletterTopicId")
+            .containsExactly(1, 2);
+        assertThat(topics)
+            .extracting("sort")
+            .containsExactly(0, 1);
+        assertThat(topics)
+            .extracting("title")
+            .containsExactly("topic1", "topic2");
+
+        verify(repoMock).findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId);
+        verify(repoMock).findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId);
+    }
+
+    @Test
+    public void gettingSortedNewsletterTopicsForNewsletter_withAllPersistedTopics_returnsThoseOnly() {
+        final int newsletterId = 12;
+        final List<NewsletterNewsletterTopic> persisted = List.of(
+            new NewsletterNewsletterTopic(newsletterId, 1, 0, "topic1"),
+            new NewsletterNewsletterTopic(newsletterId, 2, 1, "topic2"));
+        final List<NewsletterNewsletterTopic> all = new ArrayList<>(persisted);
+
+        when(repoMock.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(persisted);
+        when(repoMock.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(all);
+
+        final List<NewsletterNewsletterTopic> topics = service.getSortedNewsletterTopicsForNewsletter(newsletterId);
+
+        assertThat(topics).hasSize(2);
+        assertThat(topics)
+            .extracting("newsletterTopicId")
+            .containsExactly(1, 2);
+        assertThat(topics)
+            .extracting("sort")
+            .containsExactly(0, 1);
+        assertThat(topics)
+            .extracting("title")
+            .containsExactly("topic1", "topic2");
+
+        verify(repoMock).findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId);
+        verify(repoMock).findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId);
+    }
+
+    @Test
+    public void gettingSortedNewsletterTopicsForNewsletter_withPersistedAndUnpersistedTopics_returnsMergedLists() {
+        final int newsletterId = 12;
+        final List<NewsletterNewsletterTopic> persisted = List.of(
+            new NewsletterNewsletterTopic(newsletterId, 1, 0, "topic1"),
+            new NewsletterNewsletterTopic(newsletterId, 2, 1, "topic2"));
+        final List<NewsletterNewsletterTopic> all = List.of(
+            new NewsletterNewsletterTopic(newsletterId, 1, Integer.MAX_VALUE, "topic1"),
+            new NewsletterNewsletterTopic(newsletterId, 2, Integer.MAX_VALUE, "topic2"),
+            new NewsletterNewsletterTopic(newsletterId, 3, Integer.MAX_VALUE, "topic3"));
+
+        when(repoMock.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(persisted);
+        when(repoMock.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)).thenReturn(all);
+
+        final List<NewsletterNewsletterTopic> topics = service.getSortedNewsletterTopicsForNewsletter(newsletterId);
+
+        assertThat(topics).hasSize(3);
+        assertThat(topics)
+            .extracting("newsletterTopicId")
+            .containsExactly(1, 2, 3);
+        assertThat(topics)
+            .extracting("sort")
+            .containsExactly(0, 1, 2);
+        assertThat(topics)
+            .extracting("title")
+            .containsExactly("topic1", "topic2", "topic3");
+
+        verify(repoMock).findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId);
+        verify(repoMock).findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId);
+    }
+
+    @Test
+    public void savingSortedNewsletterTopics_withTopics_delegatesSaveToRepo() {
+        final int newsletterId = 1;
+        final List<NewsletterNewsletterTopic> sortedTopics = List.of(
+            new NewsletterNewsletterTopic(newsletterId, 1, 0, "topic1"),
+            new NewsletterNewsletterTopic(newsletterId, 2, 1, "topic2"));
+        service.saveSortedNewsletterTopics(newsletterId, sortedTopics);
+
+        verify(repoMock).saveSortedNewsletterTopics(newsletterId, sortedTopics);
+    }
+
+    @Test
+    public void savingSortedNewsletterTopics_withNoTopics_skipsSaving() {
+        service.saveSortedNewsletterTopics(1, Lists.emptyList());
+    }
+
+    @Test
+    public void savingSortedNewsletterTopics_withNullTopics_skipsSaving() {
+        service.saveSortedNewsletterTopics(1, null);
+    }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ch.difty</groupId>
@@ -82,12 +83,13 @@
         <mockito.version>2.21.0</mockito.version>
         <assertj.version>3.10.0</assertj.version>
 
-	<!-- Web Specific versions - kept here to not maintain them in
-            scipamato-common-wicket, scipamato-core-web and scipamato-public-web redundantly -->
+        <!-- Web Specific versions - kept here to not maintain them in
+                scipamato-common-wicket, scipamato-core-web and scipamato-public-web redundantly -->
         <wicket.version>8.0.0</wicket.version>
         <wicket-spring-boot-starter.version>2.1.1</wicket-spring-boot-starter.version>
         <wicket-bootstrap.version>2.0.2</wicket-bootstrap.version>
         <bootstrap.version>3.3.7-1</bootstrap.version>
+        <wicket-jquery-ui.version>8.0.0</wicket-jquery-ui.version>
         <jasperreports.version>6.6.0</jasperreports.version>
 
         <spring-cloud.version>Finchley.SR1</spring-cloud.version>
@@ -345,6 +347,17 @@
                 <groupId>org.apache.wicket</groupId>
                 <artifactId>wicket-devutils</artifactId>
                 <version>${wicket.version}</version>
+            </dependency>
+            <!-- wicket-jquery-ui -->
+            <dependency>
+                <groupId>com.googlecode.wicket-jquery-ui</groupId>
+                <artifactId>wicket-jquery-ui</artifactId>
+                <version>${wicket-jquery-ui.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.googlecode.wicket-jquery-ui</groupId>
+                <artifactId>wicket-jquery-ui-theme-uilightness</artifactId>
+                <version>${wicket-jquery-ui.version}</version>
             </dependency>
 
             <dependency>

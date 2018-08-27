@@ -46,7 +46,7 @@ public class CodeSyncConfig
     extends SyncConfig<PublicCode, ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord> {
 
     private static final String TOPIC      = "code";
-    private static final int    CHUNK_SIZE = 50;
+    private static final int    CHUNK_SIZE = 100;
 
     // relevant fields of the core Code class record
     private static final TableField<CodeRecord, String>      C_CODE          = CODE.CODE_;

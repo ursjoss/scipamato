@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+    <wicket:head>
+        <title>Newsletter Topic Sort Order</title>
+        <style type="text/css">
+            .sortable {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                width: 60%;
+            }
+
+            .sortable li {
+                margin: 0.3em;
+                padding: 0.3em;
+                x-padding-left: 1.5em;
+                font-size: 1.1em;
+                background-color: #fff;
+            }
+        </style>
+    </wicket:head>
+</head>
+<body>
+    <wicket:extend>
+        <div class="container-fluid">
+            <h2 wicket:id="header"></h2>
+            <form wicket:id="form" class="border">
+                <ul wicket:id="sortable" class="sortable">
+                    <li wicket:id="items">
+                        <span wicket:id="icon">[icon]</span>
+                        <span wicket:id="item" class="item">[label]</span>
+                    </li>
+                </ul>
+                <br/>
+                <div>
+                    <a wicket:id="submit">Submit</a>
+                    <a wicket:id="cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </wicket:extend>
+</body>
+</html>

@@ -137,7 +137,8 @@ public class NewsletterListPage extends BasePage<Void> {
         columns.add(makeClickableColumn(ISSUE.getName(), this::onTitleClick));
         columns.add(makePropertyColumn(ISSUE_DATE.getName()));
         columns.add(makeEnumPropertyColumn(PUBLICATION_STATUS.getName()));
-        columns.add(makeLinkIconColumn("remove"));
+        columns.add(makeSortTopicLinkColumn("sortTopics"));
+        columns.add(makeRemoveLinkColumn("remove"));
         return columns;
     }
 
@@ -171,7 +172,29 @@ public class NewsletterListPage extends BasePage<Void> {
         };
     }
 
-    private IColumn<Newsletter, String> makeLinkIconColumn(String id) {
+    private IColumn<Newsletter, String> makeSortTopicLinkColumn(String id) {
+        return new LinkIconColumn<Newsletter>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected IModel<String> createIconModel(final IModel<Newsletter> rowModel) {
+                return Model.of("fa fa-fw fa-random");
+            }
+
+            @Override
+            protected IModel<String> createTitleModel(IModel<Newsletter> rowModel) {
+                return new StringResourceModel("column.title." + id, NewsletterListPage.this, rowModel);
+            }
+
+            @Override
+            protected void onClickPerformed(AjaxRequestTarget target, IModel<Newsletter> rowModel,
+                AjaxLink<Void> link) {
+                setResponsePage(new NewsletterTopicSortPage(rowModel, getPageReference()));
+            }
+        };
+    }
+
+    private IColumn<Newsletter, String> makeRemoveLinkColumn(String id) {
         return new LinkIconColumn<Newsletter>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
             private static final long serialVersionUID = 1L;
 
@@ -185,7 +208,7 @@ public class NewsletterListPage extends BasePage<Void> {
 
             @Override
             protected IModel<String> createTitleModel(IModel<Newsletter> rowModel) {
-                return new StringResourceModel("column.title.remove", NewsletterListPage.this, rowModel);
+                return new StringResourceModel("column.title." + id, NewsletterListPage.this, rowModel);
             }
 
             @Override

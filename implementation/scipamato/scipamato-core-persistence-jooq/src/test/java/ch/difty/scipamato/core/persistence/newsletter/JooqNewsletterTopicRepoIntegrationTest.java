@@ -307,4 +307,13 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
         assertThat(repo.findNewsletterTopicDefinitionById(id)).isNull();
     }
 
+    @Test
+    public void findingPersistedSortedNewsletterTopicsForNewsletterWithId() {
+        assertThat(repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(1)).isEmpty();
+    }
+
+    @Test
+    public void findingAllSortedNewsletterTopicsForNewsletterWithId() {
+        assertThat(repo.findAllSortedNewsletterTopicsForNewsletterWithId(1)).hasSize(3);
+    }
 }

@@ -161,11 +161,25 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
     }
 
     @Test
-    public void clickingRemoveIcon__forNewsletterInProgress_delegatesRemovalToServiceAndRefreshesResultPanel() {
+    public void clickingSortTopicsIcon_forwardsToSortTopicsPage() {
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
 
         getTester().clickLink("results:body:rows:1:cells:4:cell:link");
+
+        getTester().assertRenderedPage(NewsletterTopicSortPage.class);
+
+        verify(newsletterServiceMock).countByFilter(isA(NewsletterFilter.class));
+        verify(newsletterServiceMock).findPageByFilter(isA(NewsletterFilter.class), isA(PaginationRequest.class));
+        verify(newsletterServiceMock).canCreateNewsletterInProgress();
+    }
+
+    @Test
+    public void clickingRemoveIcon__forNewsletterInProgress_delegatesRemovalToServiceAndRefreshesResultPanel() {
+        getTester().startPage(getPageClass());
+        getTester().assertRenderedPage(getPageClass());
+
+        getTester().clickLink("results:body:rows:1:cells:5:cell:link");
 
         getTester().assertComponentOnAjaxResponse("filterForm:newNewsletter");
         getTester().assertComponentOnAjaxResponse("results");
@@ -185,7 +199,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
 
-        getTester().clickLink("results:body:rows:2:cells:4:cell:link");
+        getTester().clickLink("results:body:rows:2:cells:5:cell:link");
 
         verify(newsletterServiceMock).countByFilter(isA(NewsletterFilter.class));
         verify(newsletterServiceMock).findPageByFilter(isA(NewsletterFilter.class), isA(PaginationRequest.class));
@@ -210,7 +224,8 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
         String bodyRow = "results:body:rows:" + row + ":cells:";
         getTester().assertLabel(bodyRow + "3:cell", status);
         getTester().assertComponent(bodyRow + "4:cell", LinkIconPanel.class);
-        getTester().assertModelValue(bodyRow + "4:cell", value);
+        getTester().assertModelValue(bodyRow + "4:cell", "fa fa-fw fa-random");
+        getTester().assertComponent(bodyRow + "5:cell", LinkIconPanel.class);
+        getTester().assertModelValue(bodyRow + "5:cell", value);
     }
-
 }

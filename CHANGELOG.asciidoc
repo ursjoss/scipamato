@@ -56,12 +56,14 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 08/45 - Core: Manage the Newsletter Topics
 - 08/56: Synchronize languages from core to public
 - 08/56: Implement pseudo-foreign-key-constraint logic for composite keys in SciPaMaTo-Public
+- 08/58: Core: Added ability to sort the newsletter topics + synchronize to SciPaMaTo-Public
 
 .Changed
 - Bump dependencies: jOOQ, spring-cloud
 - Core: Collapsible Menu entries with submenu items
 - 08/52 - Core: Raise default session timeout from 30 to 60 minutes. Separate cookie names
 - 08/54: When synching from Core to Public: Use Kurzerfassungs-fields if main fields are missing
+- Core -> Public: Increased the chunk sizes of some sync jobs
 
 .Deprecated
 
