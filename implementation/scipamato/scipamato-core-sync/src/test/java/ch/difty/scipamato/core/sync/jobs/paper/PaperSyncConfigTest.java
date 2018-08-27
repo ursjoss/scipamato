@@ -130,7 +130,8 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
             + "\"public\".\"paper\".\"methods\", \"public\".\"paper\".\"population\", \"public\".\"paper\".\"result\", \"public\".\"paper\".\"comment\", "
             + "\"public\".\"paper\".\"version\", \"public\".\"paper\".\"created\", \"public\".\"paper\".\"last_modified\", "
             + "array_agg(\"public\".\"paper_code\".\"code\") as \"codes\", \"public\".\"paper\".\"method_study_design\", "
-            + "\"public\".\"paper\".\"method_outcome\", \"public\".\"paper\".\"method_statistics\", \"public\".\"paper\".\"method_confounders\", "
+            + "\"public\".\"paper\".\"method_outcome\", \"public\".\"paper\".\"exposure_pollutant\", \"public\".\"paper\".\"exposure_assessment\", "
+            + "\"public\".\"paper\".\"method_statistics\", \"public\".\"paper\".\"method_confounders\", "
             + "\"public\".\"paper\".\"population_place\", \"public\".\"paper\".\"population_participants\", \"public\".\"paper\".\"population_duration\", "
             + "\"public\".\"paper\".\"result_exposure_range\", \"public\".\"paper\".\"result_effect_estimate\", \"public\".\"paper\".\"result_measured_outcome\" "
             + "from \"public\".\"paper\" join \"public\".\"paper_code\" on \"public\".\"paper\".\"id\" = \"public\".\"paper_code\".\"paper_id\" "
@@ -139,7 +140,8 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
             + "\"public\".\"paper\".\"title\", \"public\".\"paper\".\"location\", \"public\".\"paper\".\"publication_year\", \"public\".\"paper\".\"goals\", "
             + "\"public\".\"paper\".\"methods\", \"public\".\"paper\".\"population\", \"public\".\"paper\".\"result\", \"public\".\"paper\".\"comment\", "
             + "\"public\".\"paper\".\"version\", \"public\".\"paper\".\"created\", \"public\".\"paper\".\"last_modified\", "
-            + "\"public\".\"paper\".\"method_study_design\", \"public\".\"paper\".\"method_outcome\", \"public\".\"paper\".\"method_statistics\", "
+            + "\"public\".\"paper\".\"method_study_design\", \"public\".\"paper\".\"method_outcome\", \"public\".\"paper\".\"exposure_pollutant\", "
+            + "\"public\".\"paper\".\"exposure_assessment\", \"public\".\"paper\".\"method_statistics\", "
             + "\"public\".\"paper\".\"method_confounders\", \"public\".\"paper\".\"population_place\", \"public\".\"paper\".\"population_participants\", "
             + "\"public\".\"paper\".\"population_duration\", \"public\".\"paper\".\"result_exposure_range\", \"public\".\"paper\".\"result_effect_estimate\", "
             + "\"public\".\"paper\".\"result_measured_outcome\"";
@@ -207,6 +209,8 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         verify(rs).getString(Paper.PAPER.METHODS.getName());
         verify(rs).getString(Paper.PAPER.METHOD_STUDY_DESIGN.getName());
         verify(rs).getString(Paper.PAPER.METHOD_OUTCOME.getName());
+        verify(rs).getString(Paper.PAPER.EXPOSURE_POLLUTANT.getName());
+        verify(rs).getString(Paper.PAPER.EXPOSURE_ASSESSMENT.getName());
         verify(rs).getString(Paper.PAPER.METHOD_STATISTICS.getName());
         verify(rs).getString(Paper.PAPER.METHOD_CONFOUNDERS.getName());
         verify(rs).getString(Paper.PAPER.POPULATION.getName());

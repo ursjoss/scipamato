@@ -31,9 +31,10 @@ public class PublicPaper extends Paper {
         final String population, final String result, final String comment, final Short[] codesPopulation,
         final Short[] codesStudyDesign, final String[] codes, final Integer version, final Timestamp created,
         final Timestamp lastModified, final Timestamp lastSynched, final String methodStudyDesign,
-        final String methodOutcome, final String methodStatistics, final String methodConfounders,
-        final String populationPlace, final String populationParticipants, final String populationDuration,
-        final String resultExposureRange, final String resultEffectEstimate, final String resultMeasuredOutcome) {
+        final String methodOutcome, final String exposurePollutant, final String exposureAssessment,
+        final String methodStatistics, final String methodConfounders, final String populationPlace,
+        final String populationParticipants, final String populationDuration, final String resultExposureRange,
+        final String resultEffectEstimate, final String resultMeasuredOutcome) {
         delegate = new Paper();
         delegate.setId(id);
         delegate.setNumber(number);
@@ -44,7 +45,8 @@ public class PublicPaper extends Paper {
         delegate.setPublicationYear(publicationYear);
         delegate.setGoals(goals);
         delegate.setMethods(
-            determineAppropriate(methods, methodStudyDesign, methodOutcome, methodStatistics, methodConfounders));
+            determineAppropriate(methods, methodStudyDesign, methodOutcome, exposurePollutant, exposureAssessment,
+                methodStatistics, methodConfounders));
         delegate.setPopulation(
             determineAppropriate(population, populationPlace, populationParticipants, populationDuration));
         delegate.setResult(

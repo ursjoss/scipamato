@@ -67,6 +67,8 @@ public class PaperSyncConfig
     // short fields (Kurzerfassung)
     private static final TableField<PaperRecord, String> C_METHOD_STUDY_DESIGN     = PAPER.METHOD_STUDY_DESIGN;
     private static final TableField<PaperRecord, String> C_METHOD_OUTCOME          = PAPER.METHOD_OUTCOME;
+    private static final TableField<PaperRecord, String> C_EXPOSURE_POLLUTANT      = PAPER.EXPOSURE_POLLUTANT;
+    private static final TableField<PaperRecord, String> C_EXPOSURE_ASSESSMENT     = PAPER.EXPOSURE_ASSESSMENT;
     private static final TableField<PaperRecord, String> C_METHOD_STATISTICS       = PAPER.METHOD_STATISTICS;
     private static final TableField<PaperRecord, String> C_METHOD_CONFOUNDERS      = PAPER.METHOD_CONFOUNDERS;
     private static final TableField<PaperRecord, String> C_POPULATION_PLACE        = PAPER.POPULATION_PLACE;
@@ -120,9 +122,10 @@ public class PaperSyncConfig
             .select(C_ID, C_NUMBER, C_PM_ID, C_AUTHORS, C_TITLE, C_LOCATION, C_PUB_YEAR, C_GOALS, C_METHODS,
                 C_POPULATION, C_RESULT, C_COMMENT, C_VERSION, C_CREATED, C_LAST_MODIFIED, DSL
                     .arrayAgg(PaperCode.PAPER_CODE.CODE)
-                    .as(ALIAS_CODES), C_METHOD_STUDY_DESIGN, C_METHOD_OUTCOME, C_METHOD_STATISTICS,
-                C_METHOD_CONFOUNDERS, C_POPULATION_PLACE, C_POPULATION_PARTICIPANTS, C_POPULATION_DURATION,
-                C_RESULT_EXPOSURE_RANGE, C_RESULT_EFFECT_ESTIMATE, C_RESULT_MEASURED_OUTCOME)
+                    .as(ALIAS_CODES), C_METHOD_STUDY_DESIGN, C_METHOD_OUTCOME, C_EXPOSURE_POLLUTANT,
+                C_EXPOSURE_ASSESSMENT, C_METHOD_STATISTICS, C_METHOD_CONFOUNDERS, C_POPULATION_PLACE,
+                C_POPULATION_PARTICIPANTS, C_POPULATION_DURATION, C_RESULT_EXPOSURE_RANGE, C_RESULT_EFFECT_ESTIMATE,
+                C_RESULT_MEASURED_OUTCOME)
             .from(Paper.PAPER)
             .innerJoin(PaperCode.PAPER_CODE)
             .on(Paper.PAPER.ID.eq(PaperCode.PAPER_CODE.PAPER_ID))
@@ -130,9 +133,9 @@ public class PaperSyncConfig
             .on(PaperCode.PAPER_CODE.CODE.eq(Code.CODE.CODE_))
             .groupBy(C_ID, C_NUMBER, C_PM_ID, C_AUTHORS, C_TITLE, C_LOCATION, C_PUB_YEAR, C_GOALS, C_METHODS,
                 C_POPULATION, C_RESULT, C_COMMENT, C_VERSION, C_CREATED, C_LAST_MODIFIED, C_METHOD_STUDY_DESIGN,
-                C_METHOD_OUTCOME, C_METHOD_STATISTICS, C_METHOD_CONFOUNDERS, C_POPULATION_PLACE,
-                C_POPULATION_PARTICIPANTS, C_POPULATION_DURATION, C_RESULT_EXPOSURE_RANGE, C_RESULT_EFFECT_ESTIMATE,
-                C_RESULT_MEASURED_OUTCOME)
+                C_METHOD_OUTCOME, C_EXPOSURE_POLLUTANT, C_EXPOSURE_ASSESSMENT, C_METHOD_STATISTICS,
+                C_METHOD_CONFOUNDERS, C_POPULATION_PLACE, C_POPULATION_PARTICIPANTS, C_POPULATION_DURATION,
+                C_RESULT_EXPOSURE_RANGE, C_RESULT_EFFECT_ESTIMATE, C_RESULT_MEASURED_OUTCOME)
             .getSQL();
     }
 
@@ -151,6 +154,8 @@ public class PaperSyncConfig
             .methods(getString(C_METHODS, rs))
             .methodStudyDesign(getString(C_METHOD_STUDY_DESIGN, rs))
             .methodOutcome(getString(C_METHOD_OUTCOME, rs))
+            .exposurePollutant(getString(C_EXPOSURE_POLLUTANT, rs))
+            .exposureAssessment(getString(C_EXPOSURE_ASSESSMENT, rs))
             .methodStatistics(getString(C_METHOD_STATISTICS, rs))
             .methodConfounders(getString(C_METHOD_CONFOUNDERS, rs))
             .population(getString(C_POPULATION, rs))

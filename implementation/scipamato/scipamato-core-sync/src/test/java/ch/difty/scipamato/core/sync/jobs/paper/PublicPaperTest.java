@@ -60,6 +60,8 @@ public class PublicPaperTest extends PublicEntityTest {
             .builder()
             .methodStudyDesign("methodStudyDesign")
             .methodOutcome("methodOutcome")
+            .exposurePollutant("exposurePollutant")
+            .exposureAssessment("exposureAssessment")
             .methodStatistics("methodStatistics")
             .methodConfounders("methodConfounders")
             .populationPlace("populationPlace")
@@ -71,7 +73,7 @@ public class PublicPaperTest extends PublicEntityTest {
             .build();
 
         assertThat(pp.getMethods()).isEqualTo(
-            "methodStudyDesign - methodOutcome - methodStatistics - methodConfounders");
+            "methodStudyDesign - methodOutcome - exposurePollutant - exposureAssessment - methodStatistics - methodConfounders");
         assertThat(pp.getPopulation()).isEqualTo("populationPlace - populationParticipants - populationDuration");
         assertThat(pp.getResult()).isEqualTo("resultExposureRange - resultEffectEstimate - resultMeasuredOutcome");
     }
@@ -98,6 +100,8 @@ public class PublicPaperTest extends PublicEntityTest {
         PublicPaper pp = PublicPaper
             .builder()
             .methods("methods")
+            .exposurePollutant("exposurePollutant")
+            .exposureAssessment("exposureAssessment")
             .methodStudyDesign("methodStudyDesign")
             .methodStatistics("methodStatistics")
             .population("population")
