@@ -73,7 +73,7 @@ public class PublicPaperTest extends PublicEntityTest {
             .build();
 
         assertThat(pp.getMethods()).isEqualTo(
-            "Study Design: methodStudyDesign / Outcome: methodOutcome / Pollutant: exposurePollutant / Exposure Assessment: exposureAssessment / Statistical Method: methodStatistics / Confounders: methodConfounders");
+            "Study Design: methodStudyDesign / Outcome: methodOutcome / Place/Country: populationPlace / Pollutant: exposurePollutant / Exposure Assessment: exposureAssessment / Statistical Method: methodStatistics / Confounders: methodConfounders");
         assertThat(pp.getPopulation()).isEqualTo(
             "Place/Country: populationPlace / Participants: populationParticipants / Study Duration: populationDuration");
         assertThat(pp.getResult()).isEqualTo(
