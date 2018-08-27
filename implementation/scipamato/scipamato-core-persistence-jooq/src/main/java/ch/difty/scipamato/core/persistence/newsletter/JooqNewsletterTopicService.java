@@ -6,6 +6,7 @@ import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -101,6 +102,12 @@ class JooqNewsletterTopicService implements NewsletterTopicService {
             }
         }
         return results;
+    }
+
+    @Override
+    public void saveSortedNewsletterTopics(final int newsletterId, final List<NewsletterNewsletterTopic> topics) {
+        if (CollectionUtils.isNotEmpty(topics))
+            repo.saveSortedNewsletterTopics(newsletterId, topics);
     }
 
 }

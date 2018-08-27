@@ -251,4 +251,24 @@ public class JooqNewsletterTopicServiceTest {
         verify(repoMock).findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId);
     }
 
+    @Test
+    public void savingSortedNewsletterTopics_withTopics_delegatesSaveToRepo() {
+        final int newsletterId = 1;
+        final List<NewsletterNewsletterTopic> sortedTopics = List.of(
+            new NewsletterNewsletterTopic(newsletterId, 1, 0, "topic1"),
+            new NewsletterNewsletterTopic(newsletterId, 2, 1, "topic2"));
+        service.saveSortedNewsletterTopics(newsletterId, sortedTopics);
+
+        verify(repoMock).saveSortedNewsletterTopics(newsletterId, sortedTopics);
+    }
+
+    @Test
+    public void savingSortedNewsletterTopics_withNoTopics_skipsSaving() {
+        service.saveSortedNewsletterTopics(1, Lists.emptyList());
+    }
+
+    @Test
+    public void savingSortedNewsletterTopics_withNullTopics_skipsSaving() {
+        service.saveSortedNewsletterTopics(1, null);
+    }
 }

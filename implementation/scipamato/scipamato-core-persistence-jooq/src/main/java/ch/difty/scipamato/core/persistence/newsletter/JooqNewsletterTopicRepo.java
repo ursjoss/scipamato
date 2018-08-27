@@ -7,6 +7,7 @@ import static ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC
 import static ch.difty.scipamato.core.db.tables.NewsletterTopicTr.NEWSLETTER_TOPIC_TR;
 import static java.util.stream.Collectors.toList;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -370,11 +371,10 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     }
 
     @Override
-    public List<NewsletterNewsletterTopic> findAllSortedNewsletterTopicsForNewsletterWithId(
-        final int newsletterId) {
+    public List<NewsletterNewsletterTopic> findAllSortedNewsletterTopicsForNewsletterWithId(final int newsletterId) {
         return getDsl()
-            .selectDistinct(PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, DSL.value(Integer.MAX_VALUE),
-                NEWSLETTER_TOPIC_TR.TITLE)
+            .selectDistinct(PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID,
+                DSL.value(Integer.MAX_VALUE), NEWSLETTER_TOPIC_TR.TITLE)
             .from(PAPER_NEWSLETTER)
             .innerJoin(NEWSLETTER_TOPIC_TR)
             .on(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.eq(NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID))
@@ -382,6 +382,26 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
             .and(NEWSLETTER_TOPIC_TR.LANG_CODE.eq(getMainLanguage()))
             .orderBy(NEWSLETTER_TOPIC_TR.TITLE)
             .fetchInto(NewsletterNewsletterTopic.class);
+    }
+
+    @Override
+    public void saveSortedNewsletterTopics(final int newsletterId, final List<NewsletterNewsletterTopic> topics) {
+        final Timestamp ts = getDateTimeService().getCurrentTimestamp();
+        topics
+            .stream()
+            .filter(t -> newsletterId == t.getNewsletterId())
+            .forEach(t -> getDsl()
+                .insertInto(NEWSLETTER_NEWSLETTER_TOPIC)
+                .columns(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID, NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID,
+                    NEWSLETTER_NEWSLETTER_TOPIC.SORT, NEWSLETTER_NEWSLETTER_TOPIC.VERSION,
+                    NEWSLETTER_NEWSLETTER_TOPIC.CREATED, NEWSLETTER_NEWSLETTER_TOPIC.CREATED_BY)
+                .values(t.getNewsletterId(), t.getNewsletterTopicId(), t.getSort(), 1, ts, getUserId())
+                .onDuplicateKeyUpdate()
+                .set(NEWSLETTER_NEWSLETTER_TOPIC.SORT, t.getSort())
+                .set(NEWSLETTER_NEWSLETTER_TOPIC.VERSION, t.getVersion() + 1)
+                .set(NEWSLETTER_NEWSLETTER_TOPIC.LAST_MODIFIED, ts)
+                .set(NEWSLETTER_NEWSLETTER_TOPIC.LAST_MODIFIED_BY, getUserId())
+                .execute());
     }
 
 }

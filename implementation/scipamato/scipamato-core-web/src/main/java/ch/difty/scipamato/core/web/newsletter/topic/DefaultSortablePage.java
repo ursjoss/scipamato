@@ -79,14 +79,6 @@ public class DefaultSortablePage extends BasePage<Newsletter> {
                 IModel<List<NewsletterNewsletterTopic>> model) {
                 return DefaultSortablePage.newListView("items", model);
             }
-
-            @Override
-            public void onUpdate(AjaxRequestTarget target, NewsletterNewsletterTopic item, int index) {
-                // Will update the model object with the new order
-                // Remove the call to super if you do not want your model to be updated (or you use a LDM)
-                super.onUpdate(target, item, index);
-                //                target.add(getFeedbackPanel());
-            }
         };
     }
 
@@ -116,8 +108,8 @@ public class DefaultSortablePage extends BasePage<Newsletter> {
             protected void onSubmit(final AjaxRequestTarget target) {
                 super.onSubmit(target);
                 alignSortToIndex(topics);
-                this.info("The list order is now: " + topics);
-                target.add(getFeedbackPanel());
+                service.saveSortedNewsletterTopics(newsletterId, topics);
+                setResponsePage(NewsletterTopicListPage.class);
             }
         };
     }
