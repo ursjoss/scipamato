@@ -29,7 +29,7 @@ public class DefaultSortablePage extends BasePage<Newsletter> {
     private static final long serialVersionUID = 1L;
 
     private List<NewsletterNewsletterTopic> topics;
-    private int                             newsletterId = 1;
+    private int                             newsletterId = 51;
 
     @SpringBean
     private NewsletterTopicService service;
@@ -41,7 +41,7 @@ public class DefaultSortablePage extends BasePage<Newsletter> {
 
     private Model<Newsletter> newDefaultModel() {
         final Newsletter nl = new Newsletter("1806", LocalDate.now(), PublicationStatus.WIP);
-        nl.setId(1);
+        nl.setId(newsletterId);
         return Model.of(nl);
     }
 
@@ -49,7 +49,7 @@ public class DefaultSortablePage extends BasePage<Newsletter> {
     protected void onInitialize() {
         super.onInitialize();
 
-        topics = service.getSortableNewsletterTopicsForNewsletter(newsletterId);
+        topics = service.getSortedNewsletterTopicsForNewsletter(newsletterId);
 
         queue(newHeader("header"));
         queue(new Form<Void>("form"));

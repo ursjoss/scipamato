@@ -117,6 +117,6 @@ public interface NewsletterTopicService {
      *     the id of the newslettr
      * @return a sorted list of {@link NewsletterNewsletterTopic}s.
      */
-    List<NewsletterNewsletterTopic> getSortableNewsletterTopicsForNewsletter(int newsletterId);
+    List<NewsletterNewsletterTopic> getSortedNewsletterTopicsForNewsletter(int newsletterId);
 
 }

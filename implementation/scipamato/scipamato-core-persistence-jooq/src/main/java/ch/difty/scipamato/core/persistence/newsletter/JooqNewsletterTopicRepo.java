@@ -1,6 +1,8 @@
 package ch.difty.scipamato.core.persistence.newsletter;
 
+import static ch.difty.scipamato.core.db.Tables.PAPER_NEWSLETTER;
 import static ch.difty.scipamato.core.db.tables.Language.LANGUAGE;
+import static ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC;
 import static ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC;
 import static ch.difty.scipamato.core.db.tables.NewsletterTopicTr.NEWSLETTER_TOPIC_TR;
 import static java.util.stream.Collectors.toList;
@@ -23,10 +25,7 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.Sort;
 import ch.difty.scipamato.core.db.tables.records.NewsletterTopicRecord;
 import ch.difty.scipamato.core.db.tables.records.NewsletterTopicTrRecord;
-import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
-import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
-import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
-import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
+import ch.difty.scipamato.core.entity.newsletter.*;
 import ch.difty.scipamato.core.persistence.AbstractRepo;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 
@@ -353,6 +352,36 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
             }
         }
         return toBeDeleted;
+    }
+
+    @Override
+    public List<NewsletterNewsletterTopic> findPersistedSortedNewsletterTopicsForNewsletterWithId(
+        final int newsletterId) {
+        return getDsl()
+            .select(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID, NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID,
+                NEWSLETTER_NEWSLETTER_TOPIC.SORT, NEWSLETTER_TOPIC_TR.TITLE)
+            .from(NEWSLETTER_NEWSLETTER_TOPIC)
+            .innerJoin(NEWSLETTER_TOPIC_TR)
+            .on(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID.eq(NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID))
+            .where(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID.eq(newsletterId))
+            .and(NEWSLETTER_TOPIC_TR.LANG_CODE.eq(getMainLanguage()))
+            .orderBy(NEWSLETTER_NEWSLETTER_TOPIC.SORT, NEWSLETTER_TOPIC_TR.TITLE)
+            .fetchInto(NewsletterNewsletterTopic.class);
+    }
+
+    @Override
+    public List<NewsletterNewsletterTopic> findAllSortedNewsletterTopicsForNewsletterWithId(
+        final int newsletterId) {
+        return getDsl()
+            .selectDistinct(PAPER_NEWSLETTER.NEWSLETTER_ID, PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, DSL.value(Integer.MAX_VALUE),
+                NEWSLETTER_TOPIC_TR.TITLE)
+            .from(PAPER_NEWSLETTER)
+            .innerJoin(NEWSLETTER_TOPIC_TR)
+            .on(PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.eq(NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID))
+            .where(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(newsletterId))
+            .and(NEWSLETTER_TOPIC_TR.LANG_CODE.eq(getMainLanguage()))
+            .orderBy(NEWSLETTER_TOPIC_TR.TITLE)
+            .fetchInto(NewsletterNewsletterTopic.class);
     }
 
 }

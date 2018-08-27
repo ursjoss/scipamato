@@ -2,6 +2,9 @@ package ch.difty.scipamato.core.persistence.newsletter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalInt;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -79,14 +82,24 @@ class JooqNewsletterTopicService implements NewsletterTopicService {
     }
 
     @Override
-    public List<NewsletterNewsletterTopic> getSortableNewsletterTopicsForNewsletter(final int newsletterId) {
-        // TODO implement using repo
-        List<NewsletterNewsletterTopic> results = new ArrayList<>();
-        results.add(new NewsletterNewsletterTopic(1, 1, 1, "topic A"));
-        results.add(new NewsletterNewsletterTopic(1, 2, 2, "topic B"));
-        results.add(new NewsletterNewsletterTopic(1, 3, 3, "topic C"));
-        results.add(new NewsletterNewsletterTopic(1, 4, 4, "topic D"));
-        results.add(new NewsletterNewsletterTopic(1, 5, 5, "topic E"));
+    public List<NewsletterNewsletterTopic> getSortedNewsletterTopicsForNewsletter(final int newsletterId) {
+        final List<NewsletterNewsletterTopic> results = new ArrayList<>(
+            repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId));
+        final Set<Integer> persistedTopics = results
+            .stream()
+            .map(NewsletterNewsletterTopic::getNewsletterTopicId)
+            .collect(Collectors.toSet());
+        final OptionalInt maxSort = results
+            .stream()
+            .mapToInt(NewsletterNewsletterTopic::getSort)
+            .max();
+        int sort = maxSort.orElse(-1) + 1;
+        for (final NewsletterNewsletterTopic nt : repo.findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId)) {
+            if (!persistedTopics.contains(nt.getNewsletterTopicId())) {
+                nt.setSort(sort++);
+                results.add(nt);
+            }
+        }
         return results;
     }
 

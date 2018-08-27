@@ -4,6 +4,7 @@ import java.util.List;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
@@ -109,4 +110,26 @@ public interface NewsletterTopicRepository {
      *     if the record version has increased in the mean time
      */
     NewsletterTopicDefinition delete(Integer id, int version);
+
+    /**
+     * Finds the persisted sorted newsletter topics for the newsletter with given id.
+     * There may be more topics assigned to the newsletter that have not yet been saved
+     * in a sorted order. This method only retrieves those topics that have been assigned
+     * an order.
+     *
+     * @param newsletterId
+     *     the id of the newsletter for which to retrieve the sorted topics
+     * @return the list of explicitly sorted topics
+     */
+    List<NewsletterNewsletterTopic> findPersistedSortedNewsletterTopicsForNewsletterWithId(int newsletterId);
+
+    /**
+     * Finds the sorted newsletter topics for the newsletter with given id for which the
+     * sort order has not been persisted yet..
+     *
+     * @param newsletterId
+     *     the id of the newsletter for which to retrieve the sorted topics
+     * @return the list of not yet persisted sorted topics
+     */
+    List<NewsletterNewsletterTopic> findAllSortedNewsletterTopicsForNewsletterWithId(int newsletterId);
 }
