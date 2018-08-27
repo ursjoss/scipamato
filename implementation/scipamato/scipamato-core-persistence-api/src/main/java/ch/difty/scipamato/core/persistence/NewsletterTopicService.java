@@ -4,6 +4,7 @@ import java.util.List;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
@@ -107,5 +108,15 @@ public interface NewsletterTopicService {
      *     if the record version has increased in the mean time
      */
     NewsletterTopicDefinition delete(int id, int version);
+
+    /**
+     * Fetches all newsletter topics associated with the current newsletter and places them
+     * into an order - either as explicitly saved in db or sorted alphabetically by title.
+     *
+     * @param newsletterId
+     *     the id of the newslettr
+     * @return a sorted list of {@link NewsletterNewsletterTopic}s.
+     */
+    List<NewsletterNewsletterTopic> getSortableNewsletterTopicsForNewsletter(int newsletterId);
 
 }
