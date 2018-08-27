@@ -73,9 +73,11 @@ public class PublicPaperTest extends PublicEntityTest {
             .build();
 
         assertThat(pp.getMethods()).isEqualTo(
-            "methodStudyDesign - methodOutcome - exposurePollutant - exposureAssessment - methodStatistics - methodConfounders");
-        assertThat(pp.getPopulation()).isEqualTo("populationPlace - populationParticipants - populationDuration");
-        assertThat(pp.getResult()).isEqualTo("resultExposureRange - resultEffectEstimate - resultMeasuredOutcome");
+            "Study Design: methodStudyDesign / Outcome: methodOutcome / Pollutant: exposurePollutant / Exposure Assessment: exposureAssessment / Statistical Method: methodStatistics / Confounders: methodConfounders");
+        assertThat(pp.getPopulation()).isEqualTo(
+            "Place/Country: populationPlace / Participants: populationParticipants / Study Duration: populationDuration");
+        assertThat(pp.getResult()).isEqualTo(
+            "Exposure (Range): resultExposureRange / Effect Estimate: resultEffectEstimate / Measured Outcome: resultMeasuredOutcome");
     }
 
     @Test
@@ -90,9 +92,11 @@ public class PublicPaperTest extends PublicEntityTest {
             .resultEffectEstimate("resultEffectEstimate")
             .build();
 
-        assertThat(pp.getMethods()).isEqualTo("methodStudyDesign - methodStatistics");
-        assertThat(pp.getPopulation()).isEqualTo("populationParticipants - populationDuration");
-        assertThat(pp.getResult()).isEqualTo("resultExposureRange - resultEffectEstimate");
+        assertThat(pp.getMethods()).isEqualTo("Study Design: methodStudyDesign / Statistical Method: methodStatistics");
+        assertThat(pp.getPopulation()).isEqualTo(
+            "Participants: populationParticipants / Study Duration: populationDuration");
+        assertThat(pp.getResult()).isEqualTo(
+            "Exposure (Range): resultExposureRange / Effect Estimate: resultEffectEstimate");
     }
 
     @Test
