@@ -1,6 +1,6 @@
-package ch.difty.scipamato.core.web.newsletter.topic;
+package ch.difty.scipamato.core.web.newsletter.list;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
@@ -8,53 +8,52 @@ import com.googlecode.wicket.jquery.ui.interaction.sortable.Sortable;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic;
-import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.web.common.BasePage;
+import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 
-public class DefaultSortablePage extends BasePage<Newsletter> {
+public class NewsletterTopicSortPage extends BasePage<Newsletter> {
     private static final long serialVersionUID = 1L;
 
-    private List<NewsletterNewsletterTopic> topics;
-    private int                             newsletterId = 51;
+    private       List<NewsletterNewsletterTopic> topics = new ArrayList<>();
+    private final PageReference                   previousPageRef;
 
     @SpringBean
     private NewsletterTopicService service;
 
-    public DefaultSortablePage(final PageParameters parameters) {
-        super(parameters);
-        setModel(newDefaultModel());
+    public NewsletterTopicSortPage(final IModel<Newsletter> model) {
+        this(model, null);
     }
 
-    private Model<Newsletter> newDefaultModel() {
-        final Newsletter nl = new Newsletter("1806", LocalDate.now(), PublicationStatus.WIP);
-        nl.setId(newsletterId);
-        return Model.of(nl);
+    public NewsletterTopicSortPage(final IModel<Newsletter> model, final PageReference previous) {
+        super(model);
+        this.previousPageRef = previous;
     }
 
     @Override
     protected void onInitialize() {
         super.onInitialize();
 
-        topics = service.getSortedNewsletterTopicsForNewsletter(newsletterId);
+        if (getModelObject() != null)
+            topics = service.getSortedNewsletterTopicsForNewsletter(getModelObject().getId());
 
         queue(newHeader("header"));
         queue(new Form<Void>("form"));
         queue(newSortable("sortable", topics));
         queue(newSubmitButton("submit"));
+        queue(newCancelButton("cancel"));
     }
 
     private Label newHeader(final String id) {
@@ -77,7 +76,7 @@ public class DefaultSortablePage extends BasePage<Newsletter> {
             @Override
             protected HashListView<NewsletterNewsletterTopic> newListView(
                 IModel<List<NewsletterNewsletterTopic>> model) {
-                return DefaultSortablePage.newListView("items", model);
+                return NewsletterTopicSortPage.newListView("items", model);
             }
         };
     }
@@ -108,8 +107,33 @@ public class DefaultSortablePage extends BasePage<Newsletter> {
             protected void onSubmit(final AjaxRequestTarget target) {
                 super.onSubmit(target);
                 alignSortToIndex(topics);
-                service.saveSortedNewsletterTopics(newsletterId, topics);
-                setResponsePage(NewsletterTopicListPage.class);
+
+                try {
+                    service.saveSortedNewsletterTopics(NewsletterTopicSortPage.this
+                        .getModelObject()
+                        .getId(), topics);
+                } catch (Exception ex) {
+                    error("Unexpected error: " + ex.getMessage());
+                }
+
+                if (previousPageRef != null)
+                    setResponsePage(previousPageRef.getPage());
+                else
+                    setResponsePage(PaperListPage.class);
+            }
+        };
+    }
+
+    private BootstrapAjaxButton newCancelButton(final String id) {
+        return new BootstrapAjaxButton(id, new StringResourceModel(id + ".label", this, null), Buttons.Type.Default) {
+
+            @Override
+            protected void onSubmit(final AjaxRequestTarget target) {
+                super.onSubmit(target);
+                if (previousPageRef != null)
+                    setResponsePage(previousPageRef.getPage());
+                else
+                    setResponsePage(PaperListPage.class);
             }
         };
     }
