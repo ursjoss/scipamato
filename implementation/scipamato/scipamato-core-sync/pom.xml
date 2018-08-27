@@ -265,6 +265,7 @@
                                         | newsletter
                                         | newsletter_topic
                                         | newsletter_topic_tr
+                                        | newsletter_newsletter_topic
                                         | paper_newsletter
                                     </includes>
                                     <excludes />

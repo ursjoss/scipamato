@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import ch.difty.scipamato.core.db.public_.tables.NewsletterNewsletterTopic;
 import ch.difty.scipamato.core.db.public_.tables.NewsletterTopicTr;
 import ch.difty.scipamato.core.db.public_.tables.PaperNewsletter;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
@@ -59,12 +60,16 @@ public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRec
         // @formatter:off
         return
             "select \"public\".\"paper_newsletter\".\"newsletter_id\", \"public\".\"newsletter_topic_tr\".\"newsletter_topic_id\", "
-            + "\"public\".\"newsletter_topic_tr\".\"version\", \"public\".\"newsletter_topic_tr\".\"created\", "
-            + "\"public\".\"newsletter_topic_tr\".\"last_modified\" "
-            + "from \"public\".\"paper_newsletter\" join \"public\".\"newsletter_topic\" "
-            + "on \"public\".\"paper_newsletter\".\"newsletter_topic_id\" = \"public\".\"newsletter_topic\".\"id\" "
-            + "join \"public\".\"newsletter_topic_tr\" on \"public\".\"newsletter_topic\".\"id\" = "
-            + "\"public\".\"newsletter_topic_tr\".\"newsletter_topic_id\"";
+                + "\"public\".\"newsletter_topic_tr\".\"version\", \"public\".\"newsletter_topic_tr\".\"created\", "
+                + "\"public\".\"newsletter_topic_tr\".\"last_modified\", \"public\".\"newsletter_newsletter_topic\".\"sort\", "
+                + "\"public\".\"newsletter_newsletter_topic\".\"last_modified\" " + "from \"public\".\"paper_newsletter\" "
+            + "join \"public\".\"newsletter_topic\" "
+                + "on \"public\".\"paper_newsletter\".\"newsletter_topic_id\" = \"public\".\"newsletter_topic\".\"id\" "
+            + "join \"public\".\"newsletter_topic_tr\" "
+                + "on \"public\".\"newsletter_topic\".\"id\" = \"public\".\"newsletter_topic_tr\".\"newsletter_topic_id\" "
+            + "left outer join \"public\".\"newsletter_newsletter_topic\" "
+                + "on (\"public\".\"paper_newsletter\".\"newsletter_id\" = \"public\".\"newsletter_newsletter_topic\".\"newsletter_id\" "
+                    + "and \"public\".\"newsletter_topic\".\"id\" = \"public\".\"newsletter_newsletter_topic\".\"newsletter_topic_id\")";
         // @formatter:on
     }
 
@@ -85,7 +90,7 @@ public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRec
         ResultSet rs = Mockito.mock(ResultSet.class);
         when(rs.getInt(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_ID.getName())).thenReturn(1);
         when(rs.getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID.getName())).thenReturn(2);
-        // when(rs.getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.SORT.getName())).thenReturn(3);
+        when(rs.getInt(NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.SORT.getName())).thenReturn(3);
         when(rs.getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION.getName())).thenReturn(4);
         when(rs.getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.CREATED.getName())).thenReturn(CREATED);
         when(rs.getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LAST_MODIFIED.getName())).thenReturn(MODIFIED);
@@ -94,7 +99,7 @@ public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRec
 
         assertThat(pns.getNewsletterId()).isEqualTo(1);
         assertThat(pns.getNewsletterTopicId()).isEqualTo(2);
-        assertThat(pns.getSort()).isEqualTo(1); // TODO make dynamic
+        assertThat(pns.getSort()).isEqualTo(3);
         assertThat(pns.getVersion()).isEqualTo(4);
         assertThat(pns.getCreated()).isEqualTo(CREATED);
         assertThat(pns.getLastModified()).isEqualTo(MODIFIED);
@@ -104,9 +109,12 @@ public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRec
         verify(rs).getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.NEWSLETTER_TOPIC_ID.getName());
         //verify(rs).getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.SORT.getName());
         verify(rs).getInt(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.VERSION.getName());
+        verify(rs).getInt(NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.SORT.getName());
         verify(rs).getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.CREATED.getName());
-        verify(rs).getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LAST_MODIFIED.getName());
-        verify(rs, times(3)).wasNull();
+        verify(rs, times(2)).getTimestamp(NewsletterTopicTr.NEWSLETTER_TOPIC_TR.LAST_MODIFIED.getName());
+        verify(rs, times(2)).getTimestamp(
+            NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC.LAST_MODIFIED.getName());
+        verify(rs, times(4)).wasNull();
 
         verifyNoMoreInteractions(rs);
     }
