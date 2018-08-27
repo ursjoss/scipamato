@@ -44,7 +44,7 @@ public class NewStudyTopicSyncConfig
     extends SyncConfig<PublicNewStudyTopic, ch.difty.scipamato.publ.db.public_.tables.records.NewStudyTopicRecord> {
 
     private static final String TOPIC      = "newStudyTopic";
-    private static final int    CHUNK_SIZE = 50;
+    private static final int    CHUNK_SIZE = 100;
 
     // relevant fields of the core paperNewsletter as well as newsletter_topic and newsletter_topic_tr records
     private static final TableField<PaperNewsletterRecord, Integer>             PN_NEWSLETTER_ID        = PAPER_NEWSLETTER.NEWSLETTER_ID;
