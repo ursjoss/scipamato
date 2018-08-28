@@ -60,7 +60,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 08/61 - Core: Added validator checking for existing records with DOI or PM_ID assigned
 
 .Changed
-- Bump dependencies: jOOQ, spring-cloud
+- Bump dependencies: jOOQ, spring-cloud, assertj, jasperreports, asm, byte-buddy, commons-lang3
+  maven-compiler-plugin, jacoco-maven-plugin
 - Core: Collapsible Menu entries with submenu items
 - 08/52 - Core: Raise default session timeout from 30 to 60 minutes. Separate cookie names
 - 08/54: When synching from Core to Public: Use Kurzerfassungs-fields if main fields are missing

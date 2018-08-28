@@ -81,7 +81,7 @@
         <lombok.version>1.18.2</lombok.version>
 
         <mockito.version>2.21.0</mockito.version>
-        <assertj.version>3.10.0</assertj.version>
+        <assertj.version>3.11.1</assertj.version>
 
         <!-- Web Specific versions - kept here to not maintain them in
                 scipamato-common-wicket, scipamato-core-web and scipamato-public-web redundantly -->
@@ -90,9 +90,10 @@
         <wicket-bootstrap.version>2.0.2</wicket-bootstrap.version>
         <bootstrap.version>3.3.7-1</bootstrap.version>
         <wicket-jquery-ui.version>8.0.0</wicket-jquery-ui.version>
-        <jasperreports.version>6.6.0</jasperreports.version>
+        <jasperreports.version>6.7.0</jasperreports.version>
 
         <spring-cloud.version>Finchley.SR1</spring-cloud.version>
+        <asm.version>6.2.1</asm.version>
     </properties>
 
     <dependencyManagement>
@@ -205,13 +206,13 @@
             <dependency>
                 <groupId>net.bytebuddy</groupId>
                 <artifactId>byte-buddy</artifactId>
-                <version>1.8.15</version>
+                <version>1.8.18</version>
             </dependency>
 
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>3.7</version>
+                <version>3.8</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -639,7 +640,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.7.0</version>
+                    <version>3.8.0</version>
                     <configuration>
                         <release>${java.version}</release>
                     </configuration>
@@ -647,7 +648,7 @@
                         <dependency>
                             <groupId>org.ow2.asm</groupId>
                             <artifactId>asm</artifactId>
-                            <version>6.2</version>
+                            <version>${asm.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -668,14 +669,14 @@
                         <dependency>
                             <groupId>org.ow2.asm</groupId>
                             <artifactId>asm</artifactId>
-                            <version>6.2</version>
+                            <version>${asm.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.1</version>
+                    <version>0.8.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>
