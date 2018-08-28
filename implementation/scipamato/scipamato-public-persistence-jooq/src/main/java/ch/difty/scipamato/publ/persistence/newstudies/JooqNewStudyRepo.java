@@ -135,4 +135,15 @@ public class JooqNewStudyRepo implements NewStudyRepository {
             .where(NEWSLETTER.ISSUE.eq(issue))
             .fetchOneInto(Integer.class));
     }
+
+    @Override
+    public List<ch.difty.scipamato.publ.entity.Newsletter> findArchivedNewsletters(final String languageCode) {
+        AssertAs.notNull(languageCode, "languageCode");
+        return dsl
+            .select(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.ISSUE_DATE)
+            .from(NEWSLETTER)
+            .orderBy(NEWSLETTER.ISSUE_DATE.desc())
+            .limit(14)
+            .fetchInto(ch.difty.scipamato.publ.entity.Newsletter.class);
+    }
 }

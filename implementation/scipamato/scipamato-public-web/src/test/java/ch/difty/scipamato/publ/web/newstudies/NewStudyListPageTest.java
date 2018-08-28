@@ -59,6 +59,11 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
     protected void assertSpecificComponents() {
         super.assertSpecificComponents();
 
+        assertStudySection();
+        assertArchiveSection();
+    }
+
+    private void assertStudySection() {
         getTester().assertLabel("h1Title", "New Studies");
 
         getTester().assertComponent("introParagraph", Label.class);
@@ -74,6 +79,10 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
         topic = "topics:1:";
         getTester().assertLabel(topic + "topicTitle", "Topic2");
         assertNewStudy(topic, 0, "hl3", "descr3", "(Baz et al.; 2017)");
+    }
+
+    private void assertArchiveSection() {
+        getTester().assertLabel("h1ArchiveTitle", "Archive");
     }
 
     private void assertNewStudy(String base, int studyIndex, String headline, String description, String reference) {

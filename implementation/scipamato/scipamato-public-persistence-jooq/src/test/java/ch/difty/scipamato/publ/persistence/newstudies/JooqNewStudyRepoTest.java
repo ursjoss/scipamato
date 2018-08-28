@@ -25,8 +25,12 @@ public class JooqNewStudyRepoTest {
     }
 
     @Test
-    public void findIdOfNewsletterWithIssue_withNullIssue() {
+    public void findingIdOfNewsletterWithIssue_withNullIssue() {
         assertDegenerateSupplierParameter(() -> repo.findIdOfNewsletterWithIssue(null), "issue");
     }
 
+    @Test
+    public void findingArchivedNewsletters_withNullLanguageCode() {
+        assertDegenerateSupplierParameter(() -> repo.findArchivedNewsletters(null), "languageCode");
+    }
 }

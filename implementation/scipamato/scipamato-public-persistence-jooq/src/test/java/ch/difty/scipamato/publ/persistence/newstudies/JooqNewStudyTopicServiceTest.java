@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
+import ch.difty.scipamato.publ.entity.Newsletter;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JooqNewStudyTopicServiceTest {
@@ -80,5 +82,16 @@ public class JooqNewStudyTopicServiceTest {
 
         verify(repoMock).findIdOfNewsletterWithIssue("2018/06");
         verify(repoMock).findNewStudyTopicsForNewsletter(NL_ID, "en");
+    }
+
+    @Test
+    public void findingArchivedNewsletters_delegatesToRepo() {
+        when(repoMock.findArchivedNewsletters("de")).thenReturn(
+            List.of(new Newsletter(2, "2018/06", LocalDate.of(2018, 06, 10)),
+                new Newsletter(1, "2018/04", LocalDate.of(2018, 04, 10))));
+
+        assertThat(repoMock.findArchivedNewsletters("de")).hasSize(2);
+
+        verify(repoMock).findArchivedNewsletters("de");
     }
 }

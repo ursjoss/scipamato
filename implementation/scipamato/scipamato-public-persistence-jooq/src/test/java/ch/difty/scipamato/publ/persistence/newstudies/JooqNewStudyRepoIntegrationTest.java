@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.publ.entity.NewStudy;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
+import ch.difty.scipamato.publ.entity.Newsletter;
 import ch.difty.scipamato.publ.persistence.JooqTransactionalIntegrationTest;
 
 public class JooqNewStudyRepoIntegrationTest extends JooqTransactionalIntegrationTest {
@@ -92,5 +93,21 @@ public class JooqNewStudyRepoIntegrationTest extends JooqTransactionalIntegratio
         assertThat(repo.findMostRecentNewsletterId())
             .isPresent()
             .hasValue(2);
+    }
+
+    @Test
+    public void findingArchivedNewsletters() {
+        final List<Newsletter> results = repo.findArchivedNewsletters("en");
+
+        assertThat(results).hasSize(2);
+        assertThat(results)
+            .extracting(n -> n.getMonthName("en"))
+            .containsExactly("June 2018", "April 2018");
+        assertThat(results)
+            .extracting(n -> n.getMonthName("fr"))
+            .containsExactly("juin 2018", "avril 2018");
+        assertThat(results)
+            .extracting(n -> n.getMonthName("de"))
+            .containsExactly("Juni 2018", "April 2018");
     }
 }

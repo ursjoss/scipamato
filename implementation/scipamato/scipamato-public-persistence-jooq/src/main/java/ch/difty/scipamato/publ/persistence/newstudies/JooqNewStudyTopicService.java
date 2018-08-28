@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
+import ch.difty.scipamato.publ.entity.Newsletter;
 import ch.difty.scipamato.publ.persistence.api.NewStudyTopicService;
 
 /**
@@ -40,6 +41,11 @@ public class JooqNewStudyTopicService implements NewStudyTopicService {
             .findIdOfNewsletterWithIssue(issue)
             .map(id -> repo.findNewStudyTopicsForNewsletter(id, languageCode))
             .orElse(Collections.emptyList());
+    }
+
+    @Override
+    public List<Newsletter> findArchivedNewsletters(final String languageCode) {
+        return repo.findArchivedNewsletters(languageCode);
     }
 
 }

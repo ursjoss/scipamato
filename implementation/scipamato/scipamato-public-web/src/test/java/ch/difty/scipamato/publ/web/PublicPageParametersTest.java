@@ -9,7 +9,8 @@ public class PublicPageParametersTest {
 
     @Test
     public void assertParameters() {
-        assertThat(PublicPageParameters.values()).containsExactly(SEARCH_ORDER_ID, SHOW_EXCLUDED, SHOW_NAVBAR, NUMBER);
+        assertThat(PublicPageParameters.values()).containsExactly(SEARCH_ORDER_ID, SHOW_EXCLUDED, SHOW_NAVBAR, NUMBER,
+            ISSUE);
     }
 
     @Test
@@ -18,6 +19,7 @@ public class PublicPageParametersTest {
         assertThat(SHOW_EXCLUDED.getName()).isEqualTo("showExcluded");
         assertThat(SHOW_NAVBAR.getName()).isEqualTo("showNavbar");
         assertThat(NUMBER.getName()).isEqualTo("number");
+        assertThat(ISSUE.getName()).isEqualTo("issue");
     }
 
 }
