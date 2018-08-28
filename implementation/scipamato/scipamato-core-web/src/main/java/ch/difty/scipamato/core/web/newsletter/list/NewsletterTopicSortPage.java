@@ -25,7 +25,10 @@ import ch.difty.scipamato.core.web.common.BasePage;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 
 public class NewsletterTopicSortPage extends BasePage<Newsletter> {
+
     private static final long serialVersionUID = 1L;
+
+    private static final String LABEL = ".label";
 
     private       List<NewsletterNewsletterTopic> topics = new ArrayList<>();
     private final PageReference                   previousPageRef;
@@ -57,7 +60,7 @@ public class NewsletterTopicSortPage extends BasePage<Newsletter> {
     }
 
     private Label newHeader(final String id) {
-        final StringResourceModel model = new StringResourceModel(id + ".label", this, getModel());
+        final StringResourceModel model = new StringResourceModel(id + LABEL, this, getModel());
         return new Label(id, model);
     }
 
@@ -101,7 +104,7 @@ public class NewsletterTopicSortPage extends BasePage<Newsletter> {
     }
 
     private BootstrapAjaxButton newSubmitButton(final String id) {
-        return new BootstrapAjaxButton(id, new StringResourceModel(id + ".label", this, null), Buttons.Type.Primary) {
+        return new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL, this, null), Buttons.Type.Primary) {
 
             @Override
             protected void onSubmit(final AjaxRequestTarget target) {
@@ -125,7 +128,7 @@ public class NewsletterTopicSortPage extends BasePage<Newsletter> {
     }
 
     private BootstrapAjaxButton newCancelButton(final String id) {
-        return new BootstrapAjaxButton(id, new StringResourceModel(id + ".label", this, null), Buttons.Type.Default) {
+        return new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL, this, null), Buttons.Type.Default) {
 
             @Override
             protected void onSubmit(final AjaxRequestTarget target) {
