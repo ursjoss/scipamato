@@ -10,10 +10,10 @@ import java.sql.Timestamp;
 import java.util.*;
 
 import org.jooq.*;
+import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.publ.db.tables.NewsletterTopic;
 import ch.difty.scipamato.publ.entity.NewStudy;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
 
@@ -36,31 +36,35 @@ public class JooqNewStudyRepo implements NewStudyRepository {
         final ch.difty.scipamato.publ.db.tables.NewStudy newStudyTable = NEW_STUDY.as("ns");
 
         // References to aliased table fields (to avoid ambiguous field names
-        final Field<Integer> newStudyTopicSortField = newStudyTopicTable.SORT.as("nstSort");
+        final Field<Integer> newStudyTopicSortField = DSL
+            .coalesce(newStudyTopicTable.SORT, -1)
+            .as("nstSort");
         final Field<Integer> newStudySortField = newStudyTable.SORT.as("nsSort");
+        final Field<String> titleOrBlankField = DSL.coalesce(newsletterTopicTable.TITLE, "");
 
         // Fetch the result set (Grouped NewStudyTopics with associated NewStudies)
         final Result<Record13<Integer, String, Integer, Integer, Integer, Long, Integer, String, String, String, Integer, Timestamp, Timestamp>> fetch = dsl
-            .select(newStudyTopicSortField, newsletterTopicTable.TITLE, newStudyTable.NEWSLETTER_ID,
+            .select(newStudyTopicSortField, titleOrBlankField, newStudyTable.NEWSLETTER_ID,
                 newStudyTable.NEWSLETTER_TOPIC_ID, newStudySortField, newStudyTable.PAPER_NUMBER, newStudyTable.YEAR,
                 newStudyTable.AUTHORS, newStudyTable.HEADLINE, newStudyTable.DESCRIPTION, newStudyTable.VERSION,
                 newStudyTable.CREATED, newStudyTable.LAST_MODIFIED)
-            .from(newStudyTopicTable)
-            .innerJoin(newsletterTopicTable)
+            .from(newStudyTable)
+            .leftOuterJoin(newStudyTopicTable)
+            .on(newStudyTable.NEWSLETTER_ID
+                .eq(newStudyTopicTable.NEWSLETTER_ID)
+                .and(newStudyTable.NEWSLETTER_TOPIC_ID.eq(newStudyTopicTable.NEWSLETTER_TOPIC_ID)))
+            .leftOuterJoin(newsletterTopicTable)
             .on(newStudyTopicTable.NEWSLETTER_TOPIC_ID.eq(newsletterTopicTable.ID))
-            .innerJoin(newStudyTable)
-            .on(newStudyTopicTable.NEWSLETTER_ID
-                .eq(newStudyTable.NEWSLETTER_ID)
-                .and(newStudyTopicTable.NEWSLETTER_TOPIC_ID.eq(newStudyTable.NEWSLETTER_TOPIC_ID)))
-            .where(newStudyTopicTable.NEWSLETTER_ID.eq(newsletterId))
-            .and(newsletterTopicTable.LANG_CODE.eq(languageCode))
-            .orderBy(newStudyTopicSortField, newsletterTopicTable.TITLE, newStudySortField, newStudyTable.DESCRIPTION)
+            .where(newStudyTable.NEWSLETTER_ID.eq(newsletterId))
+            .and(DSL
+                .coalesce(newsletterTopicTable.LANG_CODE, languageCode)
+                .eq(languageCode))
+            .orderBy(newStudyTopicSortField, titleOrBlankField, newStudySortField, newStudyTable.DESCRIPTION)
             .fetch();
         final Map<Record, Result<Record13<Integer, String, Integer, Integer, Integer, Long, Integer, String, String, String, Integer, Timestamp, Timestamp>>> resultSet = fetch.intoGroups(
-            new Field[] { newStudyTopicSortField, newsletterTopicTable.TITLE });
+            new Field[] { newStudyTopicSortField, titleOrBlankField });
 
-        return processDbRecords(resultSet, newsletterTopicTable, newStudyTopicSortField, newStudyTable,
-            newStudySortField);
+        return processDbRecords(resultSet, titleOrBlankField, newStudyTopicSortField, newStudyTable, newStudySortField);
     }
 
     /*
@@ -68,13 +72,13 @@ public class JooqNewStudyRepo implements NewStudyRepository {
      */
     private List<NewStudyTopic> processDbRecords(
         final Map<Record, Result<Record13<Integer, String, Integer, Integer, Integer, Long, Integer, String, String, String, Integer, Timestamp, Timestamp>>> map,
-        final NewsletterTopic nt, final Field<Integer> nstSort, final ch.difty.scipamato.publ.db.tables.NewStudy ns,
-        final Field<Integer> nsSort) {
+        final Field<String> titleOrBlankField, final Field<Integer> nstSort,
+        final ch.difty.scipamato.publ.db.tables.NewStudy ns, final Field<Integer> nsSort) {
 
         final List<NewStudyTopic> topics = new ArrayList<>();
         for (final Map.Entry<Record, Result<Record13<Integer, String, Integer, Integer, Integer, Long, Integer, String, String, String, Integer, Timestamp, Timestamp>>> entry : map.entrySet()) {
             final Record r = entry.getKey();
-            topics.add(newNewStudyTopic(r.get(nstSort), r.get(nt.TITLE), entry.getValue(), ns, nsSort));
+            topics.add(newNewStudyTopic(r.get(nstSort), r.get(titleOrBlankField), entry.getValue(), ns, nsSort));
         }
         return topics;
     }
