@@ -458,16 +458,27 @@ public class JooqPaperRepo extends
     }
 
     @Override
-    public Optional<String> isDoiAlreadyAssigned(final String doi, final long idOfCurrentPaper) {
+    public Optional<String> isDoiAlreadyAssigned(final String doi, final Long idOfCurrentPaper) {
         AssertAs.notNull(doi, "doi");
-        final Record1<Long[]> numbers = getDsl()
+        return evaluateNumbers(fetchRecords(idOfCurrentPaper, PAPER.DOI.eq(doi)));
+    }
+
+    private Record1<Long[]> fetchRecords(final Long idOfCurrentPaper, final Condition condition) {
+        final Condition matchingCondition = determineCondition(idOfCurrentPaper, condition);
+        return getDsl()
             .select(DSL.arrayAgg(PAPER.NUMBER))
             .from(PAPER)
-            .where(PAPER.DOI
-                .eq(doi)
-                .and(PAPER.ID.ne(idOfCurrentPaper)))
+            .where(matchingCondition)
             .fetchOne();
-        return evaluateNumbers(numbers);
+    }
+
+    private Condition determineCondition(final Long idOfCurrentPaper, final Condition condition) {
+        Condition matchingCondition;
+        if (idOfCurrentPaper != null)
+            matchingCondition = condition.and(PAPER.ID.ne(idOfCurrentPaper));
+        else
+            matchingCondition = condition;
+        return matchingCondition;
     }
 
     private Optional<String> evaluateNumbers(final Record1<Long[]> numbers) {
@@ -480,15 +491,8 @@ public class JooqPaperRepo extends
     }
 
     @Override
-    public Optional<String> isPmIdAlreadyAssigned(final int pmId, final long idOfCurrentPaper) {
-        final Record1<Long[]> numbers = getDsl()
-            .select(DSL.arrayAgg(PAPER.NUMBER))
-            .from(PAPER)
-            .where(PAPER.PM_ID
-                .eq(pmId)
-                .and(PAPER.ID.ne(idOfCurrentPaper)))
-            .fetchOne();
-        return evaluateNumbers(numbers);
+    public Optional<String> isPmIdAlreadyAssigned(final int pmId, final Long idOfCurrentPaper) {
+        return evaluateNumbers(fetchRecords(idOfCurrentPaper, PAPER.PM_ID.eq(pmId)));
     }
 
 }

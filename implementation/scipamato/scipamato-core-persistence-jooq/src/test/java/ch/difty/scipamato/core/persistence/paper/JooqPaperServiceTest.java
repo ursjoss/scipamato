@@ -553,4 +553,16 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         verify(repoMock, never()).isDoiAlreadyAssigned(anyString(), eq(id));
     }
 
+    @Test
+    public void hasDuplicateFieldNextToCurrent_withNullId_withNoOtherStudyMatchingPmId() {
+        final String fieldName = "pmId";
+        final int fieldValue = 10;
+
+        when(repoMock.isPmIdAlreadyAssigned(fieldValue, null)).thenReturn(Optional.empty());
+
+        assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, null)).isNotPresent();
+
+        verify(repoMock).isPmIdAlreadyAssigned(fieldValue, null);
+    }
+
 }

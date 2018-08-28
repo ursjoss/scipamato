@@ -463,7 +463,7 @@ public class JooqPaperRepoTest extends
 
     @Test
     public void isDoiAlreadyAssigned_withNullDoi_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> repo.isDoiAlreadyAssigned(null, 1), "doi");
+        TestUtils.assertDegenerateSupplierParameter(() -> repo.isDoiAlreadyAssigned(null, 1l), "doi");
     }
 
 }

@@ -201,12 +201,13 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * @param doi
      *     the doi which might be assigned to another paper. Must not be null
      * @param idOfCurrentPaper
-     *     the id of the current paper which should not count as duplicate
+     *     the id of the current paper which should not count as duplicate. Can be
+     *     null for new Studies that have not been saved yet.
      * @return optional with numbers of violated papers - if found
      * @throws ch.difty.scipamato.common.NullArgumentException
      *     if doi is null.
      */
-    Optional<String> isDoiAlreadyAssigned(String doi, long idOfCurrentPaper);
+    Optional<String> isDoiAlreadyAssigned(String doi, Long idOfCurrentPaper);
 
     /**
      * Checks if another (different id from idOfCurrentPaper) paper has the
@@ -215,8 +216,9 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      * @param pmId
      *     the pmId which might be assigned to another paper
      * @param idOfCurrentPaper
-     *     the id of the current paper which should not count as duplicate
+     *     the id of the current paper which should not count as duplicate. Can be
+     *     null for new Studies that have not been saved yet.
      * @return optional with numbers of violated papers - if found
      */
-    Optional<String> isPmIdAlreadyAssigned(int pmId, long idOfCurrentPaper);
+    Optional<String> isPmIdAlreadyAssigned(int pmId, Long idOfCurrentPaper);
 }
