@@ -27,10 +27,8 @@ import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.GenericWebPage;
-import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.TextArea;
-import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -41,6 +39,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.ByteArrayResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
@@ -742,5 +741,45 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             getModelObject().setNewsletterLink(null);
         }
         send(getPage(), Broadcast.BREADTH, new NewsletterChangeEvent(target));
+    }
+
+    @Override
+    protected void considerAddingMoreValidation() {
+        if (isEditMode()) {
+            getForm().add(new TextFieldValueMustBeUniqueValidator("doi", doi));
+            getForm().add(new TextFieldValueMustBeUniqueValidator("pmId", pmId));
+        }
+    }
+
+    class TextFieldValueMustBeUniqueValidator extends AbstractFormValidator {
+
+        private static final long serialVersionUID = 1L;
+
+        private final String             label;
+        private final FormComponent<?>[] components;
+
+        public TextFieldValueMustBeUniqueValidator(final String label, final TextField<Object> field) {
+            this.label = label;
+            this.components = new FormComponent<?>[] { AssertAs.notNull(field, "field") };
+        }
+
+        @Override
+        public FormComponent<?>[] getDependentFormComponents() {
+            return components;
+        }
+
+        @Override
+        public void validate(final Form<?> form) {
+            final TextField<String> field = (TextField<String>) components[0];
+            final Object value = field.getConvertedInput();
+            final Long id = EditablePaperPanel.this
+                .getModelObject()
+                .getId();
+            final Optional<String> violatedPaperNumber = paperService.hasDuplicateFieldNextToCurrent(label, value, id);
+            if (violatedPaperNumber.isPresent()) {
+                final Map<String, Object> vars = Map.of("input", value, "numbers", violatedPaperNumber.get());
+                error(field, resourceKey() + "." + label + "MustBeUnique", vars);
+            }
+        }
     }
 }

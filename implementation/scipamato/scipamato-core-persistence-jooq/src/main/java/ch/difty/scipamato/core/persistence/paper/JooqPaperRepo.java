@@ -14,15 +14,14 @@ import static ch.difty.scipamato.core.db.tables.PaperNewsletter.PAPER_NEWSLETTER
 import static ch.difty.scipamato.core.db.tables.SearchExclusion.SEARCH_EXCLUSION;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.jooq.DSLContext;
-import org.jooq.InsertValuesStep4;
-import org.jooq.Record6;
-import org.jooq.TableField;
+import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -456,6 +455,40 @@ public class JooqPaperRepo extends
             .deleteFrom(PAPER)
             .where(PAPER.ID.in(ids))
             .execute();
+    }
+
+    @Override
+    public Optional<String> isDoiAlreadyAssigned(final String doi, final long idOfCurrentPaper) {
+        AssertAs.notNull(doi, "doi");
+        final Record1<Long[]> numbers = getDsl()
+            .select(DSL.arrayAgg(PAPER.NUMBER))
+            .from(PAPER)
+            .where(PAPER.DOI
+                .eq(doi)
+                .and(PAPER.ID.ne(idOfCurrentPaper)))
+            .fetchOne();
+        return evaluateNumbers(numbers);
+    }
+
+    private Optional<String> evaluateNumbers(final Record1<Long[]> numbers) {
+        if (numbers == null || numbers.value1() == null || numbers.value1().length == 0)
+            return Optional.empty();
+        return Optional.of(Arrays
+            .stream(numbers.value1())
+            .map(String::valueOf)
+            .collect(Collectors.joining(",")));
+    }
+
+    @Override
+    public Optional<String> isPmIdAlreadyAssigned(final int pmId, final long idOfCurrentPaper) {
+        final Record1<Long[]> numbers = getDsl()
+            .select(DSL.arrayAgg(PAPER.NUMBER))
+            .from(PAPER)
+            .where(PAPER.PM_ID
+                .eq(pmId)
+                .and(PAPER.ID.ne(idOfCurrentPaper)))
+            .fetchOne();
+        return evaluateNumbers(numbers);
     }
 
 }

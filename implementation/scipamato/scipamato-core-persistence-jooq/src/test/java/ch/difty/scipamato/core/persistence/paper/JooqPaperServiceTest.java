@@ -1,9 +1,12 @@
 package ch.difty.scipamato.core.persistence.paper;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.*;
 
 import java.util.*;
@@ -11,6 +14,7 @@ import java.util.*;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
@@ -483,4 +487,70 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
         assertThat(service.removePaperFromNewsletter(newsletterId, paperId)).isEqualTo(1);
         verify(newsletterRepoMock).removePaperFromNewsletter(newsletterId, paperId);
     }
+
+    @Test
+    public void hasDuplicateFieldNextToCurrent_withDegenerateConstruction_nullFieldName_throws() {
+        TestUtils.assertDegenerateSupplierParameter(() -> service.hasDuplicateFieldNextToCurrent(null, "fw", 1l),
+            "fieldName");
+    }
+
+    @Test
+    public void hasDuplicateFieldNextToCurrent_withInvalidFieldNameFails() {
+        try {
+            service.hasDuplicateFieldNextToCurrent("foo", "fw", 1l);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Field 'foo' is not supported by this validator.");
+        }
+    }
+
+    @Test
+    public void hasDuplicateFieldNextToCurrent_withPmIdValidated_withNoDuplicate() {
+        final String fieldName = "pmId";
+        final int fieldValue = 11;
+        final Long id = 1l;
+        when(repoMock.isPmIdAlreadyAssigned(fieldValue, id)).thenReturn(Optional.empty());
+
+        assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, id)).isNotPresent();
+
+        verify(repoMock).isPmIdAlreadyAssigned(fieldValue, id);
+    }
+
+    @Test
+    public void hasDuplicateFieldNextToCurrent_withPmIdValidated_withDuplicate() {
+        final String fieldName = "pmId";
+        final int fieldValue = 10;
+        final Long id = 1l;
+        when(repoMock.isPmIdAlreadyAssigned(fieldValue, id)).thenReturn(Optional.of("2"));
+
+        assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, id)).hasValue("2");
+
+        verify(repoMock).isPmIdAlreadyAssigned(fieldValue, id);
+    }
+
+    @Test
+    public void hasDuplicateFieldNextToCurrent_withDoiValidated_withNoDuplicate() {
+        final String fieldName = "doi";
+        final String fieldValue = "fw";
+        final Long id = 1l;
+        when(repoMock.isDoiAlreadyAssigned(fieldValue, id)).thenReturn(Optional.empty());
+
+        assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, id)).isNotPresent();
+
+        verify(repoMock).isDoiAlreadyAssigned(fieldValue, id);
+    }
+
+    @Test
+    public void hasDuplicateFieldNextToCurrent_withNullFieldValue_isAlwaysFalse() {
+        final String fieldName = "doi";
+        final Long id = 1l;
+
+        assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, null, id)).isNotPresent();
+
+        verify(repoMock, never()).isPmIdAlreadyAssigned(anyInt(), eq(id));
+        verify(repoMock, never()).isDoiAlreadyAssigned(anyString(), eq(id));
+    }
+
 }

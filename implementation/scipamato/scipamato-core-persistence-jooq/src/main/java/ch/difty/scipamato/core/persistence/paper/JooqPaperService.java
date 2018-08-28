@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
@@ -179,6 +180,21 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     @Override
     public int removePaperFromNewsletter(final int newsletterId, final long paperId) {
         return newsletterRepo.removePaperFromNewsletter(newsletterId, paperId);
+    }
+
+    @Override
+    public Optional<String> hasDuplicateFieldNextToCurrent(final String fieldName, final Object fieldValue,
+        final Long idOfCurrentPaper) {
+        if (fieldValue == null)
+            return Optional.empty();
+        switch (AssertAs.notNull(fieldName, "fieldName")) {
+        case "doi":
+            return getRepository().isDoiAlreadyAssigned((String) fieldValue, idOfCurrentPaper);
+        case "pmId":
+            return getRepository().isPmIdAlreadyAssigned((Integer) fieldValue, idOfCurrentPaper);
+        default:
+            throw new IllegalArgumentException("Field '" + fieldName + "' is not supported by this validator.");
+        }
     }
 
 }

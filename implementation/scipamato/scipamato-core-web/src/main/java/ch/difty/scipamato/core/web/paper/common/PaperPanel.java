@@ -73,6 +73,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     protected TextArea<Object>                   title;
     protected TextField<Object>                  location;
     protected TextField<Object>                  publicationYear;
+    protected TextField<Object>                  pmId;
     protected TextField<Object>                  doi;
     protected TextArea<String>                   originalAbstract;
     private   BootstrapAjaxLink<Void>            pubmedRetrieval;
@@ -160,7 +161,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
         publicationYear = new TextField<>(PUBL_YEAR.getName());
         queueFieldAndLabel(publicationYear, new PropertyValidator<Integer>());
-        TextField<Object> pmId = new TextField<>(PMID.getName());
+        pmId = new TextField<>(PMID.getName());
         pmId.add(newPmIdChangeBehavior());
         queueFieldAndLabel(pmId);
         doi = new TextField<>(DOI.getName());
@@ -234,6 +235,8 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         summaryShortLink = makeSummaryShortLink("summaryShort");
         form.addOrReplace(summaryShortLink);
 
+        considerAddingMoreValidation();
+
         BootstrapAjaxLink<Void> addRemoveNewsletter = new BootstrapAjaxLink<Void>("modAssociation",
             Buttons.Type.Primary) {
             private static final long serialVersionUID = 1L;
@@ -281,6 +284,12 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         };
         addRemoveNewsletter.setOutputMarkupPlaceholderTag(true);
         queue(addRemoveNewsletter);
+    }
+
+    /**
+     * If more validators are required, override this
+     */
+    protected void considerAddingMoreValidation() {
     }
 
     private OnChangeAjaxBehavior newPmIdChangeBehavior() {

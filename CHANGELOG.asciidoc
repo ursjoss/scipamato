@@ -56,7 +56,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 08/45 - Core: Manage the Newsletter Topics
 - 08/56: Synchronize languages from core to public
 - 08/56: Implement pseudo-foreign-key-constraint logic for composite keys in SciPaMaTo-Public
-- 08/58: Core: Added ability to sort the newsletter topics + synchronize to SciPaMaTo-Public
+- 08/58 - Core: Added ability to sort the newsletter topics + synchronize to SciPaMaTo-Public
+- 08/61 - Core: Added validator checking for existing records with DOI or PM_ID assigned
 
 .Changed
 - Bump dependencies: jOOQ, spring-cloud

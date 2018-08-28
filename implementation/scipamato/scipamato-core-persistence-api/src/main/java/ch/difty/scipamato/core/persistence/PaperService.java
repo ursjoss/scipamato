@@ -184,4 +184,20 @@ public interface PaperService extends EntityService<Long, Paper, PaperFilter> {
      * @return the count of records that were removed
      */
     int removePaperFromNewsletter(int newsletterId, long paperId);
+
+    /**
+     * Used for validation purposes: Checks if (besides the paper record with the current id)
+     * another record has the same value in the field specified with the provided name. If it finds
+     * any violated papers that already have the currently validated fieldValue, those other papers
+     * numbers are reported as string.
+     *
+     * @param fieldName
+     *     the field name that will be checked. Currently supported: pmId, doi
+     * @param fieldValue
+     *     the field value that should not occur in other papers
+     * @param idOfCurrentPaper
+     *     the id of the current paper
+     * @return optional of numbers of violated papers
+     */
+    Optional<String> hasDuplicateFieldNextToCurrent(String fieldName, Object fieldValue, Long idOfCurrentPaper);
 }

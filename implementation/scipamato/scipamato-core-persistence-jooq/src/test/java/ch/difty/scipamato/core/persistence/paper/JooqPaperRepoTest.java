@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import ch.difty.scipamato.common.NullArgumentException;
+import ch.difty.scipamato.common.TestUtils;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.Sort;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
@@ -458,6 +459,11 @@ public class JooqPaperRepoTest extends
                 return Collections.singletonList(paperAttachmentMock);
             }
         };
+    }
+
+    @Test
+    public void isDoiAlreadyAssigned_withNullDoi_throws() {
+        TestUtils.assertDegenerateSupplierParameter(() -> repo.isDoiAlreadyAssigned(null, 1), "doi");
     }
 
 }

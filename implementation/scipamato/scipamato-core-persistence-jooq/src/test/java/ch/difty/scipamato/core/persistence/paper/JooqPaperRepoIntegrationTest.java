@@ -619,4 +619,36 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
             .getNewsletterLink()
             .getHeadline()).isEqualTo(headline);
     }
+
+    @Test
+    public void isDoiAlreadyAssigned_withDoiInDb_countsOtherPaperAsDuplicate() {
+        // it's id 1 that has that doi
+        assertThat(repo.isDoiAlreadyAssigned("10.1093/aje/kwu275", 2l)).hasValue("1");
+    }
+
+    @Test
+    public void isDoiAlreadyAssigned_withDoiInDb_doesNotCountCurrentPaperAsDuplicate() {
+        assertThat(repo.isDoiAlreadyAssigned("10.1093/aje/kwu275", 1l)).isNotPresent();
+    }
+
+    @Test
+    public void isDoiAlreadyAssigned_withDoiNotInDb_reportsNoDuplicate() {
+        assertThat(repo.isDoiAlreadyAssigned("foobar", 1l)).isNotPresent();
+    }
+
+    @Test
+    public void isPmIdAlreadyAssigned_withDoiInDb_countsOtherPaperAsDuplicate() {
+        // it's id 1 that has that pmId
+        assertThat(repo.isPmIdAlreadyAssigned(25395026, 2l)).hasValue("1");
+    }
+
+    @Test
+    public void isPmIdAlreadyAssigned_withDoiInDb_doesNotCountCurrentPaperAsDuplicate() {
+        assertThat(repo.isPmIdAlreadyAssigned(25395026, 1l)).isNotPresent();
+    }
+
+    @Test
+    public void isPmIdAlreadyAssigned_withDoiNotInDb_reportsNoDuplicate() {
+        assertThat(repo.isPmIdAlreadyAssigned(-1, 1l)).isNotPresent();
+    }
 }

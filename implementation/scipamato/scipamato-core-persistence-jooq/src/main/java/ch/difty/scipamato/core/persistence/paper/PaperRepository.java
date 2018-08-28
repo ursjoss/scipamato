@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.persistence.paper;
 
 import java.util.List;
+import java.util.Optional;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.Paper;
@@ -193,4 +194,29 @@ public interface PaperRepository extends EntityRepository<Paper, Long, PaperFilt
      */
     void delete(List<Long> ids);
 
+    /**
+     * Checks if another (different id from idOfCurrentPaper) paper has the
+     * specified doi assigned. If found, reports its/their number(s) as string.
+     *
+     * @param doi
+     *     the doi which might be assigned to another paper. Must not be null
+     * @param idOfCurrentPaper
+     *     the id of the current paper which should not count as duplicate
+     * @return optional with numbers of violated papers - if found
+     * @throws ch.difty.scipamato.common.NullArgumentException
+     *     if doi is null.
+     */
+    Optional<String> isDoiAlreadyAssigned(String doi, long idOfCurrentPaper);
+
+    /**
+     * Checks if another (different id from idOfCurrentPaper) paper has the
+     * specified pmId assigned.
+     *
+     * @param pmId
+     *     the pmId which might be assigned to another paper
+     * @param idOfCurrentPaper
+     *     the id of the current paper which should not count as duplicate
+     * @return optional with numbers of violated papers - if found
+     */
+    Optional<String> isPmIdAlreadyAssigned(int pmId, long idOfCurrentPaper);
 }
