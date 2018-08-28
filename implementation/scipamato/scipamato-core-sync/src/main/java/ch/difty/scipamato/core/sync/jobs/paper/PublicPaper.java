@@ -52,12 +52,11 @@ public class PublicPaper extends Paper {
         delegate.setPublicationYear(publicationYear);
         delegate.setGoals(goals);
         delegate.setMethods(determineAppropriate(new Tuple(null, methods), new Tuple("Study Design", methodStudyDesign),
-            new Tuple("Outcome", methodOutcome), new Tuple("Place/Country", populationPlace),
+            new Tuple("Outcome", methodOutcome), new Tuple("Place", populationPlace),
             new Tuple("Pollutant", exposurePollutant), new Tuple("Exposure Assessment", exposureAssessment),
             new Tuple("Statistical Method", methodStatistics), new Tuple("Confounders", methodConfounders)));
-        delegate.setPopulation(
-            determineAppropriate(new Tuple(null, population), new Tuple("Place/Country", populationPlace),
-                new Tuple("Participants", populationParticipants), new Tuple("Study Duration", populationDuration)));
+        delegate.setPopulation(determineAppropriate(new Tuple(null, population), new Tuple("Place", populationPlace),
+            new Tuple("Participants", populationParticipants), new Tuple("Study Duration", populationDuration)));
         delegate.setResult(
             determineAppropriate(new Tuple(null, result), new Tuple("Exposure (Range)", resultExposureRange),
                 new Tuple("Effect Estimate", resultEffectEstimate),
