@@ -96,7 +96,7 @@ public class NewStudySyncConfig
             .builder()
             .newsletterId(getInteger(PN_NEWSLETTER_ID, rs))
             .newsletterTopicId(getInteger(PN_NEWSLETTER_TOPIC_ID, rs))
-            .sort(1) // TODO
+            .sort(1) // change this if the users will request to be able to sort the studies within the topics
             .paperNumber(getLong(P_NUMBER, rs))
             .year(getInteger(P_YEAR, rs))
             .authors(getAuthors(P_FIRST_AUTHOR, P_AUTHORS, rs))
