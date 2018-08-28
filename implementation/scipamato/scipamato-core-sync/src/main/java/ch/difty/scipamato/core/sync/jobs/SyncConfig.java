@@ -84,6 +84,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
             .incrementer(new RunIdIncrementer())
             .flow(insertingOrUpdatingStep())
             .next(purgingStep())
+            .next(pseudoForeignKeyConstraintStep())
             .end()
             .build();
     }
