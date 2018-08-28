@@ -648,6 +648,11 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     }
 
     @Test
+    public void isPmIdAlreadyAssigned_withDoiInDb_andWithNewEntityWithNullId_countsAnyRecordFoudnWithPmId() {
+        assertThat(repo.isPmIdAlreadyAssigned(25395026, null)).isPresent();
+    }
+
+    @Test
     public void isPmIdAlreadyAssigned_withDoiNotInDb_reportsNoDuplicate() {
         assertThat(repo.isPmIdAlreadyAssigned(-1, 1l)).isNotPresent();
     }

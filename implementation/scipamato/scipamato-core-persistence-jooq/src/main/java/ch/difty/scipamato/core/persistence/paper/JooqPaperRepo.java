@@ -473,12 +473,10 @@ public class JooqPaperRepo extends
     }
 
     private Condition determineCondition(final Long idOfCurrentPaper, final Condition condition) {
-        Condition matchingCondition;
         if (idOfCurrentPaper != null)
-            matchingCondition = condition.and(PAPER.ID.ne(idOfCurrentPaper));
+            return condition.and(PAPER.ID.ne(idOfCurrentPaper));
         else
-            matchingCondition = condition;
-        return matchingCondition;
+            return condition;
     }
 
     private Optional<String> evaluateNumbers(final Record1<Long[]> numbers) {
