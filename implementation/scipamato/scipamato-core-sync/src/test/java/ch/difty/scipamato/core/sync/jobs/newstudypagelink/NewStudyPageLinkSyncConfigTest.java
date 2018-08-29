@@ -1,0 +1,90 @@
+package ch.difty.scipamato.core.sync.jobs.newstudypagelink;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
+import org.jooq.DeleteConditionStep;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.springframework.batch.core.Job;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import ch.difty.scipamato.core.db.public_.tables.NewStudyPageLink;
+import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
+import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyPageLinkRecord;
+
+@SpringBootTest
+@RunWith(SpringRunner.class)
+public class NewStudyPageLinkSyncConfigTest extends SyncConfigTest<NewStudyPageLinkRecord> {
+
+    @Autowired
+    private NewStudyPageLinkSyncConfig config;
+
+    @Override
+    protected Job getJob() {
+        return config.syncNewStudyPageLinkJob();
+    }
+
+    @Override
+    protected String selectSql() {
+        return config.selectSql();
+    }
+
+    @Override
+    protected DeleteConditionStep<NewStudyPageLinkRecord> purgeDeleteConditionStep() {
+        return config.getPurgeDcs(Timestamp.valueOf(LocalDateTime.now()));
+    }
+
+    @Override
+    protected DeleteConditionStep<NewStudyPageLinkRecord> getPseudoFkDcs() {
+        return config.getPseudoFkDcs();
+    }
+
+    @Override
+    protected String expectedJobName() {
+        return "syncNewStudyPageLinkJob";
+    }
+
+    @Override
+    protected String expectedSelectSql() {
+        return "select \"public\".\"new_study_page_link\".\"lang_code\", \"public\".\"new_study_page_link\".\"sort\", \"public\".\"new_study_page_link\".\"title\", \"public\".\"new_study_page_link\".\"url\" from \"public\".\"new_study_page_link\"";
+    }
+
+    @Override
+    protected String expectedPurgeSql() {
+        return "delete from \"public\".\"new_study_page_link\" where \"public\".\"new_study_page_link\".\"last_synched\" < cast(? as timestamp)";
+    }
+
+    @Test
+    public void makingEntity() throws SQLException {
+        ResultSet rs = Mockito.mock(ResultSet.class);
+        when(rs.getString(NewStudyPageLink.NEW_STUDY_PAGE_LINK.LANG_CODE.getName())).thenReturn("de");
+        when(rs.getInt(NewStudyPageLink.NEW_STUDY_PAGE_LINK.SORT.getName())).thenReturn(1);
+        when(rs.getString(NewStudyPageLink.NEW_STUDY_PAGE_LINK.TITLE.getName())).thenReturn("title");
+        when(rs.getString(NewStudyPageLink.NEW_STUDY_PAGE_LINK.URL.getName())).thenReturn("url");
+
+        PublicNewStudyPageLink pl = config.makeEntity(rs);
+
+        assertThat(pl.getLangCode()).isEqualTo("de");
+        assertThat(pl.getSort()).isEqualTo(1);
+        assertThat(pl.getTitle()).isEqualTo("title");
+        assertThat(pl.getUrl()).isEqualTo("url");
+        assertThat(pl.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
+
+        verify(rs).getString(NewStudyPageLink.NEW_STUDY_PAGE_LINK.LANG_CODE.getName());
+        verify(rs).getInt(NewStudyPageLink.NEW_STUDY_PAGE_LINK.SORT.getName());
+        verify(rs).wasNull();
+        verify(rs).getString(NewStudyPageLink.NEW_STUDY_PAGE_LINK.TITLE.getName());
+        verify(rs).getString(NewStudyPageLink.NEW_STUDY_PAGE_LINK.URL.getName());
+
+        verifyNoMoreInteractions(rs);
+    }
+}

@@ -35,6 +35,7 @@ import org.springframework.stereotype.Component;
 public class RefDataSyncJobLauncher implements SyncJobLauncher {
 
     private final Job         syncLanguageJob;
+    private final Job         syncNewStudyPageLinkJob;
     private final Job         syncCodeClassJob;
     private final Job         syncCodeJob;
     private final Job         syncPaperJob;
@@ -46,12 +47,14 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
 
     public RefDataSyncJobLauncher(final JobLauncher jobLauncher,
         @Qualifier("syncLanguageJob") final Job syncLanguageJob,
+        @Qualifier("syncNewStudyPageLinkJob") final Job syncNewStudyPageLinkJob,
         @Qualifier("syncCodeClassJob") final Job syncCodeClassJob, @Qualifier("syncCodeJob") final Job syncCodeJob,
         @Qualifier("syncPaperJob") final Job syncPaperJob, @Qualifier("syncNewsletterJob") final Job syncNewsletterJob,
         @Qualifier("syncNewsletterTopicJob") final Job syncNewsletterTopicJob,
         @Qualifier("syncNewStudyJob") final Job syncNewStudyJob,
         @Qualifier("syncNewStudyTopicJob") final Job syncNewStudyTopicJob) {
         this.jobLauncher = jobLauncher;
+        this.syncNewStudyPageLinkJob = syncNewStudyPageLinkJob;
         this.syncLanguageJob = syncLanguageJob;
         this.syncCodeClassJob = syncCodeClassJob;
         this.syncCodeJob = syncCodeJob;
@@ -74,12 +77,13 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
             .toJobParameters();
         try {
             runSingleJob("languages", syncLanguageJob, result, jobParameters);
+            runSingleJob("newStudyPage_links", syncNewStudyPageLinkJob, result, jobParameters);
             runSingleJob("code_classes", syncCodeClassJob, result, jobParameters);
             runSingleJob("codes", syncCodeJob, result, jobParameters);
             runSingleJob("papers", syncPaperJob, result, jobParameters);
             runSingleJob("newsletters", syncNewsletterJob, result, jobParameters);
             runSingleJob("newsletterTopics", syncNewsletterTopicJob, result, jobParameters);
-            runSingleJob("syncNewStudyTopicJob", syncNewStudyTopicJob, result, jobParameters);
+            runSingleJob("newStudyTopics", syncNewStudyTopicJob, result, jobParameters);
             runSingleJob("newStudies", syncNewStudyJob, result, jobParameters);
             log.info("Job finished successfully.");
         } catch (final Exception ex) {

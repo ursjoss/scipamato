@@ -267,6 +267,7 @@
                                         | newsletter_topic_tr
                                         | newsletter_newsletter_topic
                                         | paper_newsletter
+                                        | new_study_page_link
                                     </includes>
                                     <excludes />
                                     <inputSchema>${db.schema}</inputSchema>
@@ -309,6 +310,7 @@
                                         | new_study_topic
                                         | newsletter
                                         | newsletter_topic
+                                        | new_study_page_link
                                     </includes>
                                     <excludes />
                                     <inputSchema>${db.schema}</inputSchema>
