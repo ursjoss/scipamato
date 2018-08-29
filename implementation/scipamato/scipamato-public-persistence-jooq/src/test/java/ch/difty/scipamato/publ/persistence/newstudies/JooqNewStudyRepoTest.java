@@ -33,4 +33,9 @@ public class JooqNewStudyRepoTest {
     public void findingArchivedNewsletters_withNullLanguageCode() {
         assertDegenerateSupplierParameter(() -> repo.findArchivedNewsletters(null), "languageCode");
     }
+
+    @Test
+    public void findingNewStudyPageLinks_withNullLanguageCode() {
+        assertDegenerateSupplierParameter(() -> repo.findNewStudyPageLinks(null), "languageCode");
+    }
 }

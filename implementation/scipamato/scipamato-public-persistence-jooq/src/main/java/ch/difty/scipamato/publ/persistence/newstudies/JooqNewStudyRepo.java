@@ -1,6 +1,7 @@
 package ch.difty.scipamato.publ.persistence.newstudies;
 
 import static ch.difty.scipamato.publ.db.tables.NewStudy.NEW_STUDY;
+import static ch.difty.scipamato.publ.db.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK;
 import static ch.difty.scipamato.publ.db.tables.NewStudyTopic.NEW_STUDY_TOPIC;
 import static ch.difty.scipamato.publ.db.tables.Newsletter.NEWSLETTER;
 import static ch.difty.scipamato.publ.db.tables.NewsletterTopic.NEWSLETTER_TOPIC;
@@ -145,5 +146,17 @@ public class JooqNewStudyRepo implements NewStudyRepository {
             .orderBy(NEWSLETTER.ISSUE_DATE.desc())
             .limit(14)
             .fetchInto(ch.difty.scipamato.publ.entity.Newsletter.class);
+    }
+
+    @Override
+    public List<ch.difty.scipamato.publ.entity.NewStudyPageLink> findNewStudyPageLinks(final String languageCode) {
+        AssertAs.notNull(languageCode, "languageCode");
+        return dsl
+            .select(NEW_STUDY_PAGE_LINK.LANG_CODE, NEW_STUDY_PAGE_LINK.SORT, NEW_STUDY_PAGE_LINK.TITLE,
+                NEW_STUDY_PAGE_LINK.URL)
+            .from(NEW_STUDY_PAGE_LINK)
+            .where(NEW_STUDY_PAGE_LINK.LANG_CODE.eq(languageCode))
+            .orderBy(NEW_STUDY_PAGE_LINK.SORT, NEW_STUDY_PAGE_LINK.TITLE)
+            .fetchInto(ch.difty.scipamato.publ.entity.NewStudyPageLink.class);
     }
 }

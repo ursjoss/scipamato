@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.common.AssertAs;
+import ch.difty.scipamato.publ.entity.NewStudyPageLink;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
 import ch.difty.scipamato.publ.entity.Newsletter;
 import ch.difty.scipamato.publ.persistence.api.NewStudyTopicService;
@@ -46,6 +47,11 @@ public class JooqNewStudyTopicService implements NewStudyTopicService {
     @Override
     public List<Newsletter> findArchivedNewsletters(final String languageCode) {
         return repo.findArchivedNewsletters(languageCode);
+    }
+
+    @Override
+    public List<NewStudyPageLink> findNewStudyPageLinks(final String languageCode) {
+        return repo.findNewStudyPageLinks(languageCode);
     }
 
 }

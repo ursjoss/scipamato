@@ -2,6 +2,7 @@ package ch.difty.scipamato.publ.web.newstudies;
 
 import java.util.List;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -10,6 +11,8 @@ import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -19,6 +22,7 @@ import org.apache.wicket.util.string.StringValue;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.publ.entity.NewStudy;
+import ch.difty.scipamato.publ.entity.NewStudyPageLink;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
 import ch.difty.scipamato.publ.entity.Newsletter;
 import ch.difty.scipamato.publ.persistence.api.NewStudyTopicService;
@@ -71,6 +75,8 @@ public class NewStudyListPage extends BasePage<Void> {
         queue(newNewStudyCollection("topics"));
 
         queue(newLabel("h2ArchiveTitle"));
+
+        queue(newLinkList("links"));
 
         queue(newNewsletterArchive("archive"));
     }
@@ -164,6 +170,35 @@ public class NewStudyListPage extends BasePage<Void> {
         };
         link.add(new Label(id + "Label",
             new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.REFERENCE.getName())));
+        return link;
+    }
+
+    private ListView<NewStudyPageLink> newLinkList(final String id) {
+        final List<NewStudyPageLink> links = newStudyTopicService.findNewStudyPageLinks(getLanguageCode());
+        return new ListView<NewStudyPageLink>(id, links) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void populateItem(ListItem<NewStudyPageLink> link) {
+                link.add(newLink("link", link));
+            }
+        };
+    }
+
+    private BootstrapExternalLink newLink(final String id, final ListItem<NewStudyPageLink> linkItem) {
+        final IModel<String> href = Model.of(linkItem
+            .getModelObject()
+            .getUrl());
+        final BootstrapExternalLink link = new BootstrapExternalLink(id, href) {
+            private static final long serialVersionUID = 1L;
+        };
+        //        link.setTarget(BootstrapExternalLink.Target.blank);
+        link.setLabel(Model.of(linkItem
+            .getModelObject()
+            .getTitle()));
+        link.add(new Label(id + "Label", Model.of(linkItem
+            .getModelObject()
+            .getTitle())));
         return link;
     }
 

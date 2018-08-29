@@ -17,6 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.TestUtils;
+import ch.difty.scipamato.publ.entity.NewStudyPageLink;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
 import ch.difty.scipamato.publ.entity.Newsletter;
 
@@ -93,5 +94,15 @@ public class JooqNewStudyTopicServiceTest {
         assertThat(repoMock.findArchivedNewsletters("de")).hasSize(2);
 
         verify(repoMock).findArchivedNewsletters("de");
+    }
+
+    @Test
+    public void findingNewStudyPageLinks_delegatesToRepo() {
+        when(repoMock.findNewStudyPageLinks("de")).thenReturn(
+            List.of(new NewStudyPageLink("en", 1, "title1", "url1"), new NewStudyPageLink("en", 2, "title2", "url2")));
+
+        assertThat(repoMock.findNewStudyPageLinks("de")).hasSize(2);
+
+        verify(repoMock).findNewStudyPageLinks("de");
     }
 }

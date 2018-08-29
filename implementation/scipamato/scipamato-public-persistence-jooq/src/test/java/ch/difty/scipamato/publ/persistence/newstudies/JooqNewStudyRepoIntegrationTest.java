@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.publ.entity.NewStudy;
+import ch.difty.scipamato.publ.entity.NewStudyPageLink;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
 import ch.difty.scipamato.publ.entity.Newsletter;
 import ch.difty.scipamato.publ.persistence.JooqTransactionalIntegrationTest;
@@ -109,5 +110,37 @@ public class JooqNewStudyRepoIntegrationTest extends JooqTransactionalIntegratio
         assertThat(results)
             .extracting(n -> n.getMonthName("de"))
             .containsExactly("Juni 2018", "April 2018");
+    }
+
+    @Test
+    public void findingNewStudyPageLinks_withEnglish() {
+        final List<NewStudyPageLink> results = repo.findNewStudyPageLinks("en");
+
+        assertThat(results).hasSize(2);
+        assertThat(results)
+            .extracting(NewStudyPageLink.NewProjectPageLinkFields.LANG_CODE.getName())
+            .containsOnly("en");
+        assertThat(results)
+            .extracting(NewStudyPageLink.NewProjectPageLinkFields.SORT.getName())
+            .containsExactly(1, 2);
+        assertThat(results)
+            .extracting(NewStudyPageLink.NewProjectPageLinkFields.TITLE.getName())
+            .containsExactly("Search", "Project Repository");
+        assertThat(results)
+            .extracting(NewStudyPageLink.NewProjectPageLinkFields.URL.getName())
+            .containsExactly("https://duckduckgo.com/", "https://github.com/ursjoss/scipamato");
+    }
+
+    @Test
+    public void findingNewStudyPageLinks_withGerman() {
+        final List<NewStudyPageLink> results = repo.findNewStudyPageLinks("de");
+
+        assertThat(results).hasSize(2);
+        assertThat(results)
+            .extracting(NewStudyPageLink.NewProjectPageLinkFields.LANG_CODE.getName())
+            .containsOnly("de");
+        assertThat(results)
+            .extracting(NewStudyPageLink.NewProjectPageLinkFields.TITLE.getName())
+            .containsExactly("Web Suche", "Projekt Code");
     }
 }
