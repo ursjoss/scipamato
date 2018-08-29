@@ -70,7 +70,7 @@ public class NewStudyListPage extends BasePage<Void> {
 
         queue(newNewStudyCollection("topics"));
 
-        queue(newLabel("h1ArchiveTitle"));
+        queue(newLabel("h2ArchiveTitle"));
 
         queue(newNewsletterArchive("archive"));
     }
