@@ -48,6 +48,10 @@ public class NewStudyListPage extends BasePage<Void> {
 
     private static final long serialVersionUID = 1L;
 
+    private static final String TARGET = "target";
+    private static final String BLANK  = "_blank";
+    private static final String LABEL  = "Label";
+
     @SpringBean
     private NewStudyTopicService newStudyTopicService;
 
@@ -99,7 +103,7 @@ public class NewStudyListPage extends BasePage<Void> {
             @Override
             protected void onComponentTag(ComponentTag tag) {
                 super.onComponentTag(tag);
-                tag.put("target", "_blank");
+                tag.put(TARGET, BLANK);
             }
         };
     }
@@ -165,10 +169,10 @@ public class NewStudyListPage extends BasePage<Void> {
             @Override
             protected void onComponentTag(ComponentTag tag) {
                 super.onComponentTag(tag);
-                tag.put("target", "_blank");
+                tag.put(TARGET, BLANK);
             }
         };
-        link.add(new Label(id + "Label",
+        link.add(new Label(id + LABEL,
             new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.REFERENCE.getName())));
         return link;
     }
@@ -192,11 +196,10 @@ public class NewStudyListPage extends BasePage<Void> {
         final BootstrapExternalLink link = new BootstrapExternalLink(id, href) {
             private static final long serialVersionUID = 1L;
         };
-        //        link.setTarget(BootstrapExternalLink.Target.blank);
         link.setLabel(Model.of(linkItem
             .getModelObject()
             .getTitle()));
-        link.add(new Label(id + "Label", Model.of(linkItem
+        link.add(new Label(id + LABEL, Model.of(linkItem
             .getModelObject()
             .getTitle())));
         return link;
@@ -230,10 +233,10 @@ public class NewStudyListPage extends BasePage<Void> {
             @Override
             protected void onComponentTag(ComponentTag tag) {
                 super.onComponentTag(tag);
-                tag.put("target", "_blank");
+                tag.put(TARGET, BLANK);
             }
         };
-        link.add(new Label(id + "Label", newsletter
+        link.add(new Label(id + LABEL, newsletter
             .getModelObject()
             .getMonthName(getLanguageCode())));
         return link;
