@@ -1,5 +1,7 @@
 package ch.difty.scipamato.publ.web.newstudies;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.List;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
@@ -117,7 +119,10 @@ public class NewStudyListPage extends BasePage<Void> {
 
     private ListView<NewStudyTopic> newNewStudyCollection(final String id) {
         final List<NewStudyTopic> topics = retrieveStudyCollection();
-        return new ListView<NewStudyTopic>(id, topics) {
+
+        getPaperIdManager().initialize(extractPaperNumbersFrom(topics));
+
+        return new ListView<>(id, topics) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -150,6 +155,15 @@ public class NewStudyListPage extends BasePage<Void> {
             return newStudyTopicService.findNewStudyTopicsForNewsletterIssue(issue.toString(), getLanguageCode());
     }
 
+    private List<? extends Long> extractPaperNumbersFrom(final List<NewStudyTopic> topics) {
+        return topics
+            .stream()
+            .map(NewStudyTopic::getStudies)
+            .flatMap(ns -> ns.stream())
+            .map(NewStudy::getNumber)
+            .collect(toList());
+    }
+
     /**
      * Link pointing to the study detail page with the current study
      *
@@ -170,6 +184,9 @@ public class NewStudyListPage extends BasePage<Void> {
 
             @Override
             public void onClick() {
+                getPaperIdManager().setFocusToItem(study
+                    .getModelObject()
+                    .getNumber());
                 setResponsePage(new PublicPaperDetailPage(pp, getPageReference()));
             }
         };
@@ -188,7 +205,7 @@ public class NewStudyListPage extends BasePage<Void> {
 
     private ListView<NewStudyPageLink> newLinkList(final String id) {
         final List<NewStudyPageLink> links = newStudyTopicService.findNewStudyPageLinks(getLanguageCode());
-        return new ListView<NewStudyPageLink>(id, links) {
+        return new ListView<>(id, links) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -236,7 +253,7 @@ public class NewStudyListPage extends BasePage<Void> {
         final int newsletterCount = getProperties().getNumberOfPreviousNewslettersInArchive();
         final List<Newsletter> newsletters = newStudyTopicService.findArchivedNewsletters(newsletterCount,
             getLanguageCode());
-        return new ListView<Newsletter>(id, newsletters) {
+        return new ListView<>(id, newsletters) {
             private static final long serialVersionUID = 1L;
 
             @Override
