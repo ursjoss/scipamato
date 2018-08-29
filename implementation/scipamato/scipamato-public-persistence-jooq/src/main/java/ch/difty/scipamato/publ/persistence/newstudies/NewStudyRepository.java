@@ -39,11 +39,13 @@ public interface NewStudyRepository {
     /**
      * Returns a list with the most recent newsletters.
      *
+     * @param newsletterCount
+     *     the number of newsletters to return
      * @param languageCode
      *     the two character languageCode (e.g. 'en')
      * @return a list of {@link Newsletter}s
      */
-    List<Newsletter> findArchivedNewsletters(String languageCode);
+    List<Newsletter> findArchivedNewsletters(final int newsletterCount, String languageCode);
 
     /**
      * Returns a list with links to display on the new study page.

@@ -97,8 +97,8 @@ public class JooqNewStudyRepoIntegrationTest extends JooqTransactionalIntegratio
     }
 
     @Test
-    public void findingArchivedNewsletters() {
-        final List<Newsletter> results = repo.findArchivedNewsletters("en");
+    public void findingArchivedNewsletters_with14ToFind_returnsUpTo14() {
+        final List<Newsletter> results = repo.findArchivedNewsletters(14, "en");
 
         assertThat(results).hasSize(2);
         assertThat(results)
@@ -110,6 +110,22 @@ public class JooqNewStudyRepoIntegrationTest extends JooqTransactionalIntegratio
         assertThat(results)
             .extracting(n -> n.getMonthName("de"))
             .containsExactly("Juni 2018", "April 2018");
+    }
+
+    @Test
+    public void findingArchivedNewsletters_withOneToFind_returnsOne() {
+        final List<Newsletter> results = repo.findArchivedNewsletters(1, "en");
+
+        assertThat(results).hasSize(1);
+        assertThat(results)
+            .extracting(n -> n.getMonthName("en"))
+            .containsExactly("June 2018");
+        assertThat(results)
+            .extracting(n -> n.getMonthName("fr"))
+            .containsExactly("juin 2018");
+        assertThat(results)
+            .extracting(n -> n.getMonthName("de"))
+            .containsExactly("Juni 2018");
     }
 
     @Test

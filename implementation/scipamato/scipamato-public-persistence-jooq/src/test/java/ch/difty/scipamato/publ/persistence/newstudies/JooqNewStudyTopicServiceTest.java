@@ -87,13 +87,13 @@ public class JooqNewStudyTopicServiceTest {
 
     @Test
     public void findingArchivedNewsletters_delegatesToRepo() {
-        when(repoMock.findArchivedNewsletters("de")).thenReturn(
+        when(repoMock.findArchivedNewsletters(14, "de")).thenReturn(
             List.of(new Newsletter(2, "2018/06", LocalDate.of(2018, 06, 10)),
                 new Newsletter(1, "2018/04", LocalDate.of(2018, 04, 10))));
 
-        assertThat(repoMock.findArchivedNewsletters("de")).hasSize(2);
+        assertThat(service.findArchivedNewsletters(14, "de")).hasSize(2);
 
-        verify(repoMock).findArchivedNewsletters("de");
+        verify(repoMock).findArchivedNewsletters(14, "de");
     }
 
     @Test
@@ -101,7 +101,7 @@ public class JooqNewStudyTopicServiceTest {
         when(repoMock.findNewStudyPageLinks("de")).thenReturn(
             List.of(new NewStudyPageLink("en", 1, "title1", "url1"), new NewStudyPageLink("en", 2, "title2", "url2")));
 
-        assertThat(repoMock.findNewStudyPageLinks("de")).hasSize(2);
+        assertThat(service.findNewStudyPageLinks("de")).hasSize(2);
 
         verify(repoMock).findNewStudyPageLinks("de");
     }

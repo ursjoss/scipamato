@@ -206,7 +206,8 @@ public class NewStudyListPage extends BasePage<Void> {
     }
 
     private ListView<Newsletter> newNewsletterArchive(final String id) {
-        final List<Newsletter> newsletters = newStudyTopicService.findArchivedNewsletters(getLanguageCode());
+        // TODO extract newsletterCount into Properties
+        final List<Newsletter> newsletters = newStudyTopicService.findArchivedNewsletters(14, getLanguageCode());
         return new ListView<Newsletter>(id, newsletters) {
             private static final long serialVersionUID = 1L;
 
