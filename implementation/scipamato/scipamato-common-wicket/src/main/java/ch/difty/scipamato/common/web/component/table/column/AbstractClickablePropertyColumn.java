@@ -2,6 +2,7 @@ package ch.difty.scipamato.common.web.component.table.column;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -23,11 +24,13 @@ import org.apache.wicket.model.PropertyModel;
 public abstract class AbstractClickablePropertyColumn<T, S> extends AbstractColumn<T, S> {
     private static final long serialVersionUID = 1L;
 
-    private final String property;
+    private final String  property;
+    private final boolean inNewTab;
 
-    AbstractClickablePropertyColumn(IModel<String> displayModel, S sort, String property) {
+    AbstractClickablePropertyColumn(IModel<String> displayModel, S sort, String property, boolean inNewTab) {
         super(displayModel, sort);
         this.property = property;
+        this.inNewTab = inNewTab;
     }
 
     protected String getProperty() {
@@ -52,6 +55,13 @@ public abstract class AbstractClickablePropertyColumn<T, S> extends AbstractColu
                 @Override
                 public void onClick() {
                     AbstractClickablePropertyColumn.this.onClick(getModel());
+                }
+
+                @Override
+                protected void onComponentTag(final ComponentTag tag) {
+                    super.onComponentTag(tag);
+                    if (inNewTab)
+                        tag.put("target", "_blank");
                 }
             };
             add(link);

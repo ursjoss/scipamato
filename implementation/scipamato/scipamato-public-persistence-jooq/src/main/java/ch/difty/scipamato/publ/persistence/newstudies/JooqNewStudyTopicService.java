@@ -45,8 +45,8 @@ public class JooqNewStudyTopicService implements NewStudyTopicService {
     }
 
     @Override
-    public List<Newsletter> findArchivedNewsletters(final String languageCode) {
-        return repo.findArchivedNewsletters(languageCode);
+    public List<Newsletter> findArchivedNewsletters(final int newsletterCount, final String languageCode) {
+        return repo.findArchivedNewsletters(newsletterCount, languageCode);
     }
 
     @Override

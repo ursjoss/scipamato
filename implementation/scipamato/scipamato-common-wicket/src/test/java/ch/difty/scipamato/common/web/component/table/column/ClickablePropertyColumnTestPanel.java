@@ -20,10 +20,12 @@ class ClickablePropertyColumnTestPanel extends Panel {
     private static final long serialVersionUID = 1L;
 
     private final SerializableConsumer<IModel<TestRecord>> consumer;
+    private final boolean                                  inNewTab;
 
-    ClickablePropertyColumnTestPanel(String id, SerializableConsumer<IModel<TestRecord>> consumer) {
+    ClickablePropertyColumnTestPanel(String id, SerializableConsumer<IModel<TestRecord>> consumer, boolean inNewTab) {
         super(id);
         this.consumer = consumer;
+        this.inNewTab = inNewTab;
     }
 
     @Override
@@ -39,7 +41,7 @@ class ClickablePropertyColumnTestPanel extends Panel {
 
     private IColumn<TestRecord, String> makeClickableColumn(String id,
         SerializableConsumer<IModel<TestRecord>> consumer) {
-        return new ClickablePropertyColumn<TestRecord, String>(Model.of(id), "name", consumer) {
+        return new ClickablePropertyColumn<TestRecord, String>(Model.of(id), null, "name", consumer, inNewTab) {
             private static final long serialVersionUID = 1L;
         };
     }

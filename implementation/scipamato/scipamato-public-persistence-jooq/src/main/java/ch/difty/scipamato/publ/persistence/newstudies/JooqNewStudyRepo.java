@@ -140,13 +140,14 @@ public class JooqNewStudyRepo implements NewStudyRepository {
     }
 
     @Override
-    public List<ch.difty.scipamato.publ.entity.Newsletter> findArchivedNewsletters(final String languageCode) {
+    public List<ch.difty.scipamato.publ.entity.Newsletter> findArchivedNewsletters(final int newsletterCount,
+        final String languageCode) {
         AssertAs.notNull(languageCode, LANGUAGE_CODE);
         return dsl
             .select(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.ISSUE_DATE)
             .from(NEWSLETTER)
             .orderBy(NEWSLETTER.ISSUE_DATE.desc())
-            .limit(14)
+            .limit(newsletterCount)
             .fetchInto(ch.difty.scipamato.publ.entity.Newsletter.class);
     }
 

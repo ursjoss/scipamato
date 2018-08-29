@@ -55,7 +55,7 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
 
         archived.add(new Newsletter(10, "2018/02", LocalDate.of(2018, 02, 10)));
         archived.add(new Newsletter(9, "2017/12", LocalDate.of(2017, 12, 12)));
-        when(serviceMock.findArchivedNewsletters(Mockito.anyString())).thenReturn(archived);
+        when(serviceMock.findArchivedNewsletters(Mockito.anyInt(), Mockito.anyString())).thenReturn(archived);
     }
 
     @Override

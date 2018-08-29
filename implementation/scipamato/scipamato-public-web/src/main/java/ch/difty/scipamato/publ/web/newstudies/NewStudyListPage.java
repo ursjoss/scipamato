@@ -68,35 +68,33 @@ public class NewStudyListPage extends BasePage<Void> {
     }
 
     @Override
-    protected void onInitialize() {
-        super.onInitialize();
-
-        queue(newLabel("h1Title"));
-
-        queue(newLabel("introParagraph"));
-        queue(newLink("dbLink", getProperties().getCmsUrlSearchPage()));
-
-        queue(newNewStudyCollection("topics"));
-
-        queue(newLabel("h2ArchiveTitle"));
-
-        queue(newLinkList("links"));
-
-        queue(newNewsletterArchive("archive"));
-    }
-
-    @Override
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
         response.render(
             CssHeaderItem.forReference(new CssResourceReference(NewStudyListPage.class, "NewStudyListPage.css")));
     }
 
-    private Label newLabel(final String id) {
-        return new Label(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null).getString());
+    @Override
+    protected void onInitialize() {
+        super.onInitialize();
+
+        newIntroSection();
+        newNewsletterSection();
+
+        newExternalLinkSection();
+        newArchiveSectionWithPreviousNewsletters();
     }
 
-    private ExternalLink newLink(final String id, final String href) {
+    /**
+     * Introductory paragraph
+     */
+    private void newIntroSection() {
+        queue(newLabel("h1Title"));
+        queue(newLabel("introParagraph"));
+        queue(newDbSearchLink("dbLink", getProperties().getCmsUrlSearchPage()));
+    }
+
+    private ExternalLink newDbSearchLink(final String id, final String href) {
         return new ExternalLink(id, href, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null).getString()) {
             private static final long serialVersionUID = 1L;
 
@@ -106,6 +104,13 @@ public class NewStudyListPage extends BasePage<Void> {
                 tag.put(TARGET, BLANK);
             }
         };
+    }
+
+    /**
+     * The actual newsletter/new study list part with topics and nested studies
+     */
+    private void newNewsletterSection() {
+        queue(newNewStudyCollection("topics"));
     }
 
     private ListView<NewStudyTopic> newNewStudyCollection(final String id) {
@@ -165,16 +170,18 @@ public class NewStudyListPage extends BasePage<Void> {
             public void onClick() {
                 setResponsePage(new PublicPaperDetailPage(pp, getPageReference()));
             }
-
-            @Override
-            protected void onComponentTag(ComponentTag tag) {
-                super.onComponentTag(tag);
-                tag.put(TARGET, BLANK);
-            }
         };
         link.add(new Label(id + LABEL,
             new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.REFERENCE.getName())));
         return link;
+    }
+
+    /**
+     * Any links configured in database table new_study_page_links
+     * will be published in this section.
+     */
+    private void newExternalLinkSection() {
+        queue(newLinkList("links"));
     }
 
     private ListView<NewStudyPageLink> newLinkList(final String id) {
@@ -184,17 +191,23 @@ public class NewStudyListPage extends BasePage<Void> {
 
             @Override
             protected void populateItem(ListItem<NewStudyPageLink> link) {
-                link.add(newLink("link", link));
+                link.add(newExternalLink("link", link));
             }
         };
     }
 
-    private BootstrapExternalLink newLink(final String id, final ListItem<NewStudyPageLink> linkItem) {
+    private BootstrapExternalLink newExternalLink(final String id, final ListItem<NewStudyPageLink> linkItem) {
         final IModel<String> href = Model.of(linkItem
             .getModelObject()
             .getUrl());
         final BootstrapExternalLink link = new BootstrapExternalLink(id, href) {
             private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onComponentTag(ComponentTag tag) {
+                super.onComponentTag(tag);
+                tag.put(TARGET, BLANK);
+            }
         };
         link.setLabel(Model.of(linkItem
             .getModelObject()
@@ -205,19 +218,33 @@ public class NewStudyListPage extends BasePage<Void> {
         return link;
     }
 
+    /**
+     * The archive section lists links pointing to previous newsletters with their studies.
+     */
+    private void newArchiveSectionWithPreviousNewsletters() {
+        queue(newLabel("h2ArchiveTitle"));
+        queue(newNewsletterArchive("archive"));
+    }
+
+    private Label newLabel(final String id) {
+        return new Label(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null).getString());
+    }
+
     private ListView<Newsletter> newNewsletterArchive(final String id) {
-        final List<Newsletter> newsletters = newStudyTopicService.findArchivedNewsletters(getLanguageCode());
+        final int newsletterCount = getProperties().getNumberOfPreviousNewslettersInArchive();
+        final List<Newsletter> newsletters = newStudyTopicService.findArchivedNewsletters(newsletterCount,
+            getLanguageCode());
         return new ListView<Newsletter>(id, newsletters) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void populateItem(ListItem<Newsletter> nl) {
-                nl.add(newLinkToNewsletter("monthName", nl));
+                nl.add(newLinkToArchivedNewsletter("monthName", nl));
             }
         };
     }
 
-    private Link<Newsletter> newLinkToNewsletter(final String id, final ListItem<Newsletter> newsletter) {
+    private Link<Newsletter> newLinkToArchivedNewsletter(final String id, final ListItem<Newsletter> newsletter) {
         final PageParameters pp = new PageParameters();
         pp.set(PublicPageParameters.ISSUE.getName(), newsletter
             .getModelObject()
@@ -229,16 +256,11 @@ public class NewStudyListPage extends BasePage<Void> {
             public void onClick() {
                 setResponsePage(new NewStudyListPage(pp));
             }
-
-            @Override
-            protected void onComponentTag(ComponentTag tag) {
-                super.onComponentTag(tag);
-                tag.put(TARGET, BLANK);
-            }
         };
         link.add(new Label(id + LABEL, newsletter
             .getModelObject()
             .getMonthName(getLanguageCode())));
         return link;
     }
+
 }

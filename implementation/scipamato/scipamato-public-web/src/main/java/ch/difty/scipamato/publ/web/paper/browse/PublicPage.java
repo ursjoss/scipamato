@@ -289,7 +289,7 @@ public class PublicPage extends BasePage<Void> {
         SerializableConsumer<IModel<PublicPaper>> consumer) {
         final String propExpression = fieldType.getName();
         return new ClickablePropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null),
-            propExpression, propExpression, consumer);
+            propExpression, propExpression, consumer, true);
     }
 
     /*

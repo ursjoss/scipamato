@@ -53,4 +53,10 @@ public interface ApplicationPublicProperties extends ApplicationProperties {
      */
     String getManagementUserPassword();
 
+    /**
+     * @return the number of previous newsletters to be listed in the archive section
+     *     of the new study list page.
+     */
+    int getNumberOfPreviousNewslettersInArchive();
+
 }
