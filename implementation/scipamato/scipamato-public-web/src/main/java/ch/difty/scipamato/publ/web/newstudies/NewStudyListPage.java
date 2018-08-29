@@ -2,6 +2,7 @@ package ch.difty.scipamato.publ.web.newstudies;
 
 import static java.util.stream.Collectors.toList;
 
+import java.util.Collection;
 import java.util.List;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
@@ -159,7 +160,7 @@ public class NewStudyListPage extends BasePage<Void> {
         return topics
             .stream()
             .map(NewStudyTopic::getStudies)
-            .flatMap(ns -> ns.stream())
+            .flatMap(Collection::stream)
             .map(NewStudy::getNumber)
             .collect(toList());
     }
