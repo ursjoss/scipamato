@@ -96,4 +96,8 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
      */
     private String managementUserPassword;
 
+    /**
+     * The new study page will list that many newsletters in the archive section (default: 14)
+     */
+    private int numberOfPreviousNewslettersInArchive = 14;
 }

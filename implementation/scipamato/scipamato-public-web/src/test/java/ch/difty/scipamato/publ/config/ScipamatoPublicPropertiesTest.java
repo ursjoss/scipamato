@@ -40,6 +40,8 @@ public class ScipamatoPublicPropertiesTest {
 
         when(scipamatoPropMock.getManagementUserName()).thenReturn("un");
         when(scipamatoPropMock.getManagementUserPassword()).thenReturn("pw");
+
+        when(scipamatoPropMock.getNumberOfPreviousNewslettersInArchive()).thenReturn(14);
     }
 
     @After
@@ -156,6 +158,12 @@ public class ScipamatoPublicPropertiesTest {
     public void checkingManagementPassword_delegatesToScipamatoProp() {
         assertThat(prop.getManagementUserPassword()).isEqualTo("pw");
         verify(scipamatoPropMock).getManagementUserPassword();
+    }
+
+    @Test
+    public void checkingNumberOfPreviousNewslettersInArchive() {
+        assertThat(prop.getNumberOfPreviousNewslettersInArchive()).isEqualTo(14);
+        verify(scipamatoPropMock).getNumberOfPreviousNewslettersInArchive();
     }
 
 }

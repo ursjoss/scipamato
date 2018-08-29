@@ -98,6 +98,11 @@ public class TestApplication {
             public String getManagementUserPassword() {
                 return "admin";
             }
+
+            @Override
+            public int getNumberOfPreviousNewslettersInArchive() {
+                return 14;
+            }
         };
     }
 

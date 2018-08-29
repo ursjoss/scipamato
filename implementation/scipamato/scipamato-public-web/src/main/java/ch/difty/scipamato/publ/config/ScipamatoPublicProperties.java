@@ -68,4 +68,9 @@ public class ScipamatoPublicProperties extends AbstractScipamatoProperties<Scipa
         return getScipamatoProperties().getManagementUserPassword();
     }
 
+    @Override
+    public int getNumberOfPreviousNewslettersInArchive() {
+        return getScipamatoProperties().getNumberOfPreviousNewslettersInArchive();
+    }
+
 }

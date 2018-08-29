@@ -73,4 +73,9 @@ public class ScipamatoPublicPropertiesIntegrationTest {
         assertThat(appProperties.isResponsiveIframeSupportEnabled()).isFalse();
     }
 
+    @Test
+    public void numberOfPreviousNewslettersInArchive() {
+        assertThat(appProperties.getNumberOfPreviousNewslettersInArchive()).isEqualTo(14);
+    }
+
 }
