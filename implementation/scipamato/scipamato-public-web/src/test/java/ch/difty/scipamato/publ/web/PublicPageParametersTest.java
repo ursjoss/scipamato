@@ -10,7 +10,7 @@ public class PublicPageParametersTest {
     @Test
     public void assertParameters() {
         assertThat(PublicPageParameters.values()).containsExactly(SEARCH_ORDER_ID, SHOW_EXCLUDED, SHOW_NAVBAR, NUMBER,
-            ISSUE);
+            ISSUE, PARENT_URL);
     }
 
     @Test
@@ -20,6 +20,7 @@ public class PublicPageParametersTest {
         assertThat(SHOW_NAVBAR.getName()).isEqualTo("showNavbar");
         assertThat(NUMBER.getName()).isEqualTo("number");
         assertThat(ISSUE.getName()).isEqualTo("issue");
+        assertThat(PARENT_URL.getName()).isEqualTo("parentUrl");
     }
 
 }

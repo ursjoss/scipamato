@@ -68,6 +68,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 08/52 - Core: Raise default session timeout from 30 to 60 minutes. Separate cookie names
 - 08/54: When synching from Core to Public: Use Kurzerfassungs-fields if main fields are missing
 - Core -> Public: Increased the chunk sizes of some sync jobs
+- 08/62: Enable switching locale of SciPaMaTo-Public from CMS when shown in iframe
 
 .Deprecated
 

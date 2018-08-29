@@ -3,6 +3,7 @@ package ch.difty.scipamato.publ.web.newstudies;
 import java.util.List;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -44,6 +45,7 @@ import ch.difty.scipamato.publ.web.paper.browse.PublicPaperDetailPage;
  * @author Urs Joss
  */
 @MountPath("new-studies")
+@Slf4j
 public class NewStudyListPage extends BasePage<Void> {
 
     private static final long serialVersionUID = 1L;

@@ -1,5 +1,8 @@
 package ch.difty.scipamato.publ.web.common;
 
+import java.util.Locale;
+
+import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
@@ -15,12 +18,14 @@ import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.AbstractPage;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.publ.config.ApplicationPublicProperties;
+import ch.difty.scipamato.publ.misc.LocaleExtractor;
 import ch.difty.scipamato.publ.web.CommercialFontResourceProvider;
 import ch.difty.scipamato.publ.web.PublicPageParameters;
 import ch.difty.scipamato.publ.web.pym.PymScripts;
 import ch.difty.scipamato.publ.web.resources.MainCssResourceReference;
 import ch.difty.scipamato.publ.web.resources.PymJavaScriptResourceReference;
 
+@Slf4j
 public abstract class BasePage<T> extends AbstractPage<T> {
 
     private static final long serialVersionUID = 1L;
@@ -31,6 +36,8 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     private ApplicationPublicProperties applicationProperties;
     @SpringBean
     private ScipamatoWebSessionFacade   sessionFacade;
+    @SpringBean(name = "parentUrlLocaleExtractor")
+    private LocaleExtractor             localeExtractor;
 
     @SpringBean(name = "metaOTFontResourceProvider")
     private CommercialFontResourceProvider metaOtFontResourceProvider;
@@ -39,11 +46,21 @@ public abstract class BasePage<T> extends AbstractPage<T> {
         super(parameters);
         final StringValue showNavbarValue = parameters.get(PublicPageParameters.SHOW_NAVBAR.getName());
         this.showNavbar = showNavbarValue.toBoolean(applicationProperties.isNavbarVisibleByDefault());
+        considerSettingLocaleFromParentUrl(parameters);
     }
 
     public BasePage(final IModel<T> model) {
         super(model);
         this.showNavbar = applicationProperties.isNavbarVisibleByDefault();
+    }
+
+    private void considerSettingLocaleFromParentUrl(final PageParameters parameters) {
+        final StringValue puValue = parameters.get(PublicPageParameters.PARENT_URL.getName());
+        if (!puValue.isNull()) {
+            final Locale locale = localeExtractor.extractLocaleFrom(puValue.toString());
+            log.info("Switching Locale to {}", locale.getLanguage());
+            getSession().setLocale(locale);
+        }
     }
 
     @Override

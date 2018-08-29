@@ -6,7 +6,8 @@ public enum PublicPageParameters {
     SHOW_EXCLUDED("showExcluded"),
     SHOW_NAVBAR("showNavbar"),
     NUMBER("number"),
-    ISSUE("issue");
+    ISSUE("issue"),
+    PARENT_URL("parentUrl");
 
     private final String name;
 
