@@ -52,6 +52,22 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
+
+.Changed
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
+
+[[v0.8.9]]
+== [0.8.9] -- 2018-08-30
+
+.Added
 - 08/50 - Public: Referential integrity constraints - where possible
 - 08/45 - Core: Manage the Newsletter Topics
 - 08/56: Synchronize languages from core to public
@@ -71,18 +87,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Core -> Public: Increased the chunk sizes of some sync jobs
 - 08/62: Enable switching locale of SciPaMaTo-Public from CMS when shown in iframe
 
-
-.Deprecated
-
-.Removed
-
 .Fixed
 - 08/49 - Core: Do not allow two newsletters in status WIP
 - 08/59 - Core: Allow searching for missing years w/ or w/o equal sign (="" or "")
 - Wiki: Implemented review suggestions by Zoë Roth
 - Core to Public Sync: Fix logging of Housekeeper Job
-
-.Security
 
 
 [[v0.8.8]]
