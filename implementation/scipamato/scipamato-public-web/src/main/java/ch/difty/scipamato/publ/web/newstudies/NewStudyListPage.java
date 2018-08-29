@@ -2,6 +2,7 @@ package ch.difty.scipamato.publ.web.newstudies;
 
 import java.util.List;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -10,6 +11,8 @@ import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -19,7 +22,9 @@ import org.apache.wicket.util.string.StringValue;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.publ.entity.NewStudy;
+import ch.difty.scipamato.publ.entity.NewStudyPageLink;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
+import ch.difty.scipamato.publ.entity.Newsletter;
 import ch.difty.scipamato.publ.persistence.api.NewStudyTopicService;
 import ch.difty.scipamato.publ.web.CommercialFontResourceProvider;
 import ch.difty.scipamato.publ.web.PublicPageParameters;
@@ -68,6 +73,12 @@ public class NewStudyListPage extends BasePage<Void> {
         queue(newLink("dbLink", getProperties().getCmsUrlSearchPage()));
 
         queue(newNewStudyCollection("topics"));
+
+        queue(newLabel("h2ArchiveTitle"));
+
+        queue(newLinkList("links"));
+
+        queue(newNewsletterArchive("archive"));
     }
 
     @Override
@@ -121,7 +132,7 @@ public class NewStudyListPage extends BasePage<Void> {
     }
 
     private List<NewStudyTopic> retrieveStudyCollection() {
-        final StringValue issue = getPageParameters().get("issue");
+        final StringValue issue = getPageParameters().get(PublicPageParameters.ISSUE.getName());
         if (issue == null || issue.isNull() || issue.isEmpty())
             return newStudyTopicService.findMostRecentNewStudyTopics(getLanguageCode());
         else
@@ -162,4 +173,69 @@ public class NewStudyListPage extends BasePage<Void> {
         return link;
     }
 
+    private ListView<NewStudyPageLink> newLinkList(final String id) {
+        final List<NewStudyPageLink> links = newStudyTopicService.findNewStudyPageLinks(getLanguageCode());
+        return new ListView<NewStudyPageLink>(id, links) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void populateItem(ListItem<NewStudyPageLink> link) {
+                link.add(newLink("link", link));
+            }
+        };
+    }
+
+    private BootstrapExternalLink newLink(final String id, final ListItem<NewStudyPageLink> linkItem) {
+        final IModel<String> href = Model.of(linkItem
+            .getModelObject()
+            .getUrl());
+        final BootstrapExternalLink link = new BootstrapExternalLink(id, href) {
+            private static final long serialVersionUID = 1L;
+        };
+        //        link.setTarget(BootstrapExternalLink.Target.blank);
+        link.setLabel(Model.of(linkItem
+            .getModelObject()
+            .getTitle()));
+        link.add(new Label(id + "Label", Model.of(linkItem
+            .getModelObject()
+            .getTitle())));
+        return link;
+    }
+
+    private ListView<Newsletter> newNewsletterArchive(final String id) {
+        final List<Newsletter> newsletters = newStudyTopicService.findArchivedNewsletters(getLanguageCode());
+        return new ListView<Newsletter>(id, newsletters) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void populateItem(ListItem<Newsletter> nl) {
+                nl.add(newLinkToNewsletter("monthName", nl));
+            }
+        };
+    }
+
+    private Link<Newsletter> newLinkToNewsletter(final String id, final ListItem<Newsletter> newsletter) {
+        final PageParameters pp = new PageParameters();
+        pp.set(PublicPageParameters.ISSUE.getName(), newsletter
+            .getModelObject()
+            .getIssue());
+        final Link<Newsletter> link = new Link<>(id) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick() {
+                setResponsePage(new NewStudyListPage(pp));
+            }
+
+            @Override
+            protected void onComponentTag(ComponentTag tag) {
+                super.onComponentTag(tag);
+                tag.put("target", "_blank");
+            }
+        };
+        link.add(new Label(id + "Label", newsletter
+            .getModelObject()
+            .getMonthName(getLanguageCode())));
+        return link;
+    }
 }

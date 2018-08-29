@@ -5,7 +5,8 @@ public enum PublicPageParameters {
     SEARCH_ORDER_ID("searchOrderId"),
     SHOW_EXCLUDED("showExcluded"),
     SHOW_NAVBAR("showNavbar"),
-    NUMBER("number");
+    NUMBER("number"),
+    ISSUE("issue");
 
     private final String name;
 

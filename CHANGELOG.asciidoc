@@ -58,6 +58,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 08/56: Implement pseudo-foreign-key-constraint logic for composite keys in SciPaMaTo-Public
 - 08/58 - Core: Added ability to sort the newsletter topics + synchronize to SciPaMaTo-Public
 - 08/61 - Core: Added validator checking for existing records with DOI or PM_ID assigned
+- 08/60 - Public: List of new studies from previous newsletters on NewStudyListPage
 
 .Changed
 - Bump dependencies: jOOQ, spring-cloud, assertj, jasperreports, asm, byte-buddy, commons-lang3

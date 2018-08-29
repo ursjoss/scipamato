@@ -2,20 +2,53 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <body>
     <wicket:extend>
-        <h1 wicket:id="h1Title"></h1>
-        <p>
-            <span wicket:id="introParagraph"></span><a wicket:id="dbLink">database search</a>.
-        </p>
-        <div wicket:id="topics">
-            <h2 wicket:id="topicTitle"></h2>
-            <div wicket:id="topicStudies">
-                <h3 wicket:id="headline"></h3>
-                <p>
-                    <span wicket:id="description"></span> <a wicket:id="reference">
-                    <wicket:container
-                            wicket:id="referenceLabel"/>
-                </a>
-                </p>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 wicket:id="h1Title"></h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <p>
+                        <span wicket:id="introParagraph"></span><a wicket:id="dbLink">database search</a>.
+                    </p>
+                    <div wicket:id="topics">
+                        <h2 wicket:id="topicTitle"></h2>
+                        <div wicket:id="topicStudies">
+                            <h3 wicket:id="headline"></h3>
+                            <p>
+                                <span wicket:id="description"></span> <a wicket:id="reference">
+                                <wicket:container
+                                        wicket:id="referenceLabel"/>
+                            </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12 list-group">
+                            <div wicket:id="links" class="list-group-item">
+                                <i class="glyphicon glyphicon-arrow-right"></i><a wicket:id="link">
+                                <wicket:container
+                                        wicket:id="linkLabel"/>
+                            </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 wicket:id="h2ArchiveTitle"></h2>
+                            <div wicket:id="archive">
+                                <i class="glyphicon glyphicon-link"></i><a wicket:id="monthName">
+                                <wicket:container
+                                        wicket:id="monthNameLabel"/>
+                            </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </wicket:extend>

@@ -2,7 +2,9 @@ package ch.difty.scipamato.publ.persistence.api;
 
 import java.util.List;
 
+import ch.difty.scipamato.publ.entity.NewStudyPageLink;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
+import ch.difty.scipamato.publ.entity.Newsletter;
 
 public interface NewStudyTopicService {
 
@@ -27,4 +29,22 @@ public interface NewStudyTopicService {
      * @return list of new study topics, will not be null
      */
     List<NewStudyTopic> findNewStudyTopicsForNewsletterIssue(String issue, String languageCode);
+
+    /**
+     * Returns a list with the most recent newsletters.
+     *
+     * @param languageCode
+     *     the two character languageCode (e.g. 'en')
+     * @return a list of {@link Newsletter}s
+     */
+    List<Newsletter> findArchivedNewsletters(String languageCode);
+
+    /**
+     * Returns a list with links to display on the new study page.
+     *
+     * @param languageCode
+     *     the two character languageCode (e.g. 'en')
+     * @return a list of {@link NewStudyPageLink}s
+     */
+    List<NewStudyPageLink> findNewStudyPageLinks(String languageCode);
 }

@@ -2,9 +2,11 @@ package ch.difty.scipamato.publ.web.newstudies;
 
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
@@ -15,7 +17,9 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.publ.entity.NewStudy;
+import ch.difty.scipamato.publ.entity.NewStudyPageLink;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
+import ch.difty.scipamato.publ.entity.Newsletter;
 import ch.difty.scipamato.publ.persistence.api.NewStudyTopicService;
 import ch.difty.scipamato.publ.web.common.BasePageTest;
 import ch.difty.scipamato.publ.web.paper.browse.PublicPaperDetailPage;
@@ -25,7 +29,9 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
     @MockBean
     private NewStudyTopicService serviceMock;
 
-    private final List<NewStudyTopic> topics = new ArrayList<>();
+    private final List<NewStudyTopic>    topics   = new ArrayList<>();
+    private final List<NewStudyPageLink> links    = new ArrayList<>();
+    private final List<Newsletter>       archived = new ArrayList<>();
 
     @Override
     protected void setUpHook() {
@@ -41,8 +47,15 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
         studyIndex = 0;
         newStudies2.add(new NewStudy(studyIndex, 8973, 2017, "Baz et al.", "hl3", "descr3"));
         topics.add(new NewStudyTopic(topicIndex, "Topic2", newStudies2));
-
         when(serviceMock.findMostRecentNewStudyTopics(Mockito.anyString())).thenReturn(topics);
+
+        links.add(new NewStudyPageLink("en", 1, "linkTitle1", "linkUrl1"));
+        links.add(new NewStudyPageLink("en", 2, "linkTitle2", "linkUrl2"));
+        when(serviceMock.findNewStudyPageLinks(Mockito.anyString())).thenReturn(links);
+
+        archived.add(new Newsletter(10, "2018/02", LocalDate.of(2018, 02, 10)));
+        archived.add(new Newsletter(9, "2017/12", LocalDate.of(2017, 12, 12)));
+        when(serviceMock.findArchivedNewsletters(Mockito.anyString())).thenReturn(archived);
     }
 
     @Override
@@ -59,6 +72,12 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
     protected void assertSpecificComponents() {
         super.assertSpecificComponents();
 
+        assertStudySection();
+        assertLinkSection();
+        assertArchiveSection();
+    }
+
+    private void assertStudySection() {
         getTester().assertLabel("h1Title", "New Studies");
 
         getTester().assertComponent("introParagraph", Label.class);
@@ -74,6 +93,28 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
         topic = "topics:1:";
         getTester().assertLabel(topic + "topicTitle", "Topic2");
         assertNewStudy(topic, 0, "hl3", "descr3", "(Baz et al.; 2017)");
+    }
+
+    private void assertLinkSection() {
+        getTester().assertComponent("links", ListView.class);
+        int index = 0;
+        assertLink(index++, "linkTitle1", "linkUrl1");
+        assertLink(index++, "linkTitle2", "linkUrl2");
+    }
+
+    private void assertLink(final int index, final String title, final String url) {
+        String path = "links:" + index + ":link";
+        getTester().assertComponent(path, BootstrapExternalLink.class);
+        getTester().assertModelValue(path, url);
+        getTester().assertLabel(path + ":label", title);
+    }
+
+    private void assertArchiveSection() {
+        getTester().assertLabel("h2ArchiveTitle", "Archive");
+        getTester().assertComponent("archive", ListView.class);
+
+        getTester().assertLabel("archive:0:monthName:monthNameLabel", "Feb 2018");
+        getTester().assertLabel("archive:1:monthName:monthNameLabel", "Dec 2017");
     }
 
     private void assertNewStudy(String base, int studyIndex, String headline, String description, String reference) {
