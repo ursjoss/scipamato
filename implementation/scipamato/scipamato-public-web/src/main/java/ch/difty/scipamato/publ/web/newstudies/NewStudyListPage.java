@@ -6,6 +6,10 @@ import java.util.Collection;
 import java.util.List;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapExternalLink;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapLink;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.CssHeaderItem;
@@ -34,6 +38,7 @@ import ch.difty.scipamato.publ.web.CommercialFontResourceProvider;
 import ch.difty.scipamato.publ.web.PublicPageParameters;
 import ch.difty.scipamato.publ.web.common.BasePage;
 import ch.difty.scipamato.publ.web.paper.browse.PublicPaperDetailPage;
+import ch.difty.scipamato.publ.web.resources.IcoMoonIconType;
 
 /**
  * The page lists 'new studies', i.e. studies that were collected and flagged by
@@ -47,6 +52,7 @@ import ch.difty.scipamato.publ.web.paper.browse.PublicPaperDetailPage;
  *
  * @author Urs Joss
  */
+@SuppressWarnings("SameParameterValue")
 @MountPath("new-studies")
 @Slf4j
 public class NewStudyListPage extends BasePage<Void> {
@@ -55,7 +61,6 @@ public class NewStudyListPage extends BasePage<Void> {
 
     private static final String TARGET = "target";
     private static final String BLANK  = "_blank";
-    private static final String LABEL  = "Label";
 
     @SpringBean
     private NewStudyTopicService newStudyTopicService;
@@ -63,6 +68,10 @@ public class NewStudyListPage extends BasePage<Void> {
     @SpringBean(name = "simplonFontResourceProvider")
     private CommercialFontResourceProvider simplonFontResourceProvider;
 
+    @SpringBean(name = "icoMoonFontResourceProvider")
+    private CommercialFontResourceProvider icoMoonFontResourceProvider;
+
+    @SuppressWarnings("WeakerAccess")
     public NewStudyListPage(final PageParameters parameters) {
         super(parameters);
     }
@@ -70,6 +79,8 @@ public class NewStudyListPage extends BasePage<Void> {
     @Override
     protected void renderAdditionalCommercialFonts(final IHeaderResponse response) {
         response.render(CssHeaderItem.forReference(simplonFontResourceProvider.getCssResourceReference()));
+        response.render(CssHeaderItem.forReference(icoMoonFontResourceProvider.getCssResourceReference()));
+        response.render(CssHeaderItem.forReference(icoMoonFontResourceProvider.getCssResourceReference()));
     }
 
     @Override
@@ -180,7 +191,7 @@ public class NewStudyListPage extends BasePage<Void> {
         pp.set(PublicPageParameters.NUMBER.getName(), study
             .getModelObject()
             .getNumber());
-        Link<NewStudy> link = new Link<>(id) {
+        BootstrapLink<NewStudy> link = new BootstrapLink<>(id, Buttons.Type.Link) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -191,8 +202,7 @@ public class NewStudyListPage extends BasePage<Void> {
                 setResponsePage(new PublicPaperDetailPage(pp, getPageReference()));
             }
         };
-        link.add(new Label(id + LABEL,
-            new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.REFERENCE.getName())));
+        link.setLabel(new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.REFERENCE.getName()));
         return link;
     }
 
@@ -222,20 +232,20 @@ public class NewStudyListPage extends BasePage<Void> {
             .getUrl());
         final BootstrapExternalLink link = new BootstrapExternalLink(id, href) {
             private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onComponentTag(ComponentTag tag) {
-                super.onComponentTag(tag);
-                tag.put(TARGET, BLANK);
-            }
         };
+        link.setTarget(BootstrapExternalLink.Target.blank);
+        link.setIconType(chooseIcon(GlyphIconType.arrowright, IcoMoonIconType.arrow_right));
         link.setLabel(Model.of(linkItem
             .getModelObject()
             .getTitle()));
-        link.add(new Label(id + LABEL, Model.of(linkItem
-            .getModelObject()
-            .getTitle())));
         return link;
+    }
+
+    private IconType chooseIcon(IconType free, IconType commercial) {
+        if (getProperties().isCommercialFontPresent())
+            return commercial;
+        else
+            return free;
     }
 
     /**
@@ -269,7 +279,10 @@ public class NewStudyListPage extends BasePage<Void> {
         pp.set(PublicPageParameters.ISSUE.getName(), newsletter
             .getModelObject()
             .getIssue());
-        final Link<Newsletter> link = new Link<>(id) {
+        final String monthName = newsletter
+            .getModelObject()
+            .getMonthName(getLanguageCode());
+        final BootstrapLink<Newsletter> link = new BootstrapLink<>(id, Buttons.Type.Link) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -277,9 +290,8 @@ public class NewStudyListPage extends BasePage<Void> {
                 setResponsePage(new NewStudyListPage(pp));
             }
         };
-        link.add(new Label(id + LABEL, newsletter
-            .getModelObject()
-            .getMonthName(getLanguageCode())));
+        link.setLabel(Model.of(monthName));
+        link.setIconType(chooseIcon(GlyphIconType.link, IcoMoonIconType.link));
         return link;
     }
 

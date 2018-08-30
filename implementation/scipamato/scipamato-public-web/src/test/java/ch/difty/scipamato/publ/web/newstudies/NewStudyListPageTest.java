@@ -113,15 +113,15 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
         getTester().assertLabel("h2ArchiveTitle", "Archive");
         getTester().assertComponent("archive", ListView.class);
 
-        getTester().assertLabel("archive:0:monthName:monthNameLabel", "Feb 2018");
-        getTester().assertLabel("archive:1:monthName:monthNameLabel", "Dec 2017");
+        getTester().assertLabel("archive:0:monthName:label", "Feb 2018");
+        getTester().assertLabel("archive:1:monthName:label", "Dec 2017");
     }
 
     private void assertNewStudy(String base, int studyIndex, String headline, String description, String reference) {
         final String path = base + "topicStudies:" + studyIndex + ":";
         getTester().assertLabel(path + "headline", headline);
         getTester().assertLabel(path + "description", description);
-        getTester().assertLabel(path + "reference:referenceLabel", reference);
+        getTester().assertLabel(path + "reference:label", reference);
         getTester().assertComponent(path + "reference", Link.class);
     }
 
