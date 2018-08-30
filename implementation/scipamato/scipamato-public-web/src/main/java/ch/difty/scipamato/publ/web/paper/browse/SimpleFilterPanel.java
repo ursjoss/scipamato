@@ -98,10 +98,15 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
         final IChoiceRenderer<C> choiceRenderer = new EnumChoiceRenderer<>(this);
         final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
             null);
+        final StringResourceModel selectAllModel = new StringResourceModel(SELECT_ALL_RESOURCE_TAG, this, null);
+        final StringResourceModel deselectAllModel = new StringResourceModel(DESELECT_ALL_RESOURCE_TAG, this, null);
         final BootstrapSelectConfig config = new BootstrapSelectConfig()
             .withMultiple(true)
             .withLiveSearch(true)
-            .withNoneSelectedText(noneSelectedModel.getObject());
+            .withActionsBox(true)
+            .withSelectAllText(selectAllModel.getString())
+            .withDeselectAllText(deselectAllModel.getString())
+            .withNoneSelectedText(noneSelectedModel.getString());
         final BootstrapMultiSelect<C> multiSelect = new BootstrapMultiSelect<>(id, model, choices, choiceRenderer) {
             private static final long serialVersionUID = 1L;
 

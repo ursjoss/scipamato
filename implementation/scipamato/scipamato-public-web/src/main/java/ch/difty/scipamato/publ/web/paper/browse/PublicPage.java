@@ -188,9 +188,14 @@ public class PublicPage extends BasePage<Void> {
                 Code.CodeFields.CODE.getName());
             final StringResourceModel noneSelectedModel = new StringResourceModel(CODES_NONE_SELECT_RESOURCE_TAG, this,
                 null);
+            final StringResourceModel selectAllModel = new StringResourceModel(SELECT_ALL_RESOURCE_TAG, this, null);
+            final StringResourceModel deselectAllModel = new StringResourceModel(DESELECT_ALL_RESOURCE_TAG, this, null);
             final BootstrapSelectConfig config = new BootstrapSelectConfig()
                 .withMultiple(true)
-                .withNoneSelectedText(noneSelectedModel.getObject())
+                .withActionsBox(true)
+                .withSelectAllText(selectAllModel.getString())
+                .withDeselectAllText(deselectAllModel.getString())
+                .withNoneSelectedText(noneSelectedModel.getString())
                 .withLiveSearch(true);
 
             final PropertyModel<List<Code>> model = PropertyModel.of(filter, componentId);

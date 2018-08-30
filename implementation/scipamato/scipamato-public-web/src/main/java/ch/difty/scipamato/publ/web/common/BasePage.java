@@ -30,6 +30,9 @@ public abstract class BasePage<T> extends AbstractPage<T> {
 
     private static final long serialVersionUID = 1L;
 
+    protected static final String SELECT_ALL_RESOURCE_TAG   = "multiselect.selectAll";
+    protected static final String DESELECT_ALL_RESOURCE_TAG = "multiselect.deselectAll";
+
     private final boolean showNavbar;
 
     @SpringBean
