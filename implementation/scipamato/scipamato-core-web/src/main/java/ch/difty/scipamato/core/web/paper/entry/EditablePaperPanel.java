@@ -8,7 +8,6 @@ import static ch.difty.scipamato.core.web.CorePageParameters.SHOW_EXCLUDED;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
@@ -109,7 +108,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      */
     @Override
     protected TextField<String> makeFirstAuthor(String firstAuthorId, CheckBox firstAuthorOverridden) {
-        TextField<String> firstAuthor = new TextField<String>(firstAuthorId) {
+        TextField<String> firstAuthor = new TextField<>(firstAuthorId) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -337,9 +336,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         }
 
         String getModifiedFieldString() {
-            return modifiedFields
-                .stream()
-                .collect(Collectors.joining(", "));
+            return String.join(", ", modifiedFields);
         }
 
     }
@@ -444,6 +441,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      *     the form components that need to be added to the AjaxTargetRequest
      *     in case of changed values
      */
+    @SuppressWarnings("SameParameterValue")
     private void processIntegerField(final String fieldName, final String rawArticleValue,
         final Function<Paper, Integer> getter, final BiConsumer<Paper, Integer> setter,
         final String conversionResourceString, final Paper p, final ProcessingRecord pr, final AjaxRequestTarget target,
@@ -646,8 +644,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     protected DataTable<PaperAttachment, String> newAttachmentTable(String id) {
         PropertyModel<List<PaperAttachment>> model = new PropertyModel<>(getModel(), ATTACHMENTS.getName());
         PaperAttachmentProvider provider = new PaperAttachmentProvider(model);
-        BootstrapDefaultDataTable<PaperAttachment, String> table = new BootstrapDefaultDataTable<PaperAttachment, String>(
-            id, makeTableColumns(), provider, 10) {
+        BootstrapDefaultDataTable<PaperAttachment, String> table = new BootstrapDefaultDataTable<>(id,
+            makeTableColumns(), provider, 10) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -678,6 +676,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         getRequestCycle().scheduleRequestHandlerAfterCurrent(new ResourceRequestHandler(r, new PageParameters()));
     }
 
+    @SuppressWarnings("SameParameterValue")
     private ClickablePropertyColumn<PaperAttachment, String> makeClickableColumn(FieldEnumType propExpression,
         SerializableConsumer<IModel<PaperAttachment>> consumer) {
         return new ClickablePropertyColumn<>(
@@ -685,8 +684,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             propExpression.getName(), consumer);
     }
 
+    @SuppressWarnings("SameParameterValue")
     private IColumn<PaperAttachment, String> makeLinkIconColumn(String id) {
-        return new LinkIconColumn<PaperAttachment>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
+        return new LinkIconColumn<>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -733,8 +733,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         if (!isAssociatedWithNewsletter()) {
             final Optional<Paper.NewsletterLink> nlo = paperService.mergePaperIntoWipNewsletter(p.getId(), null,
                 sessionFacade.getLanguageCode());
-            if (nlo.isPresent())
-                getModelObject().setNewsletterLink(nlo.get());
+            nlo.ifPresent(getModelObject()::setNewsletterLink);
         } else if (isAssociatedWithWipNewsletter()) {
             final Paper.NewsletterLink nl = p.getNewsletterLink();
             paperService.removePaperFromNewsletter(nl.getNewsletterId(), p.getId());
@@ -768,6 +767,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             return components;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public void validate(final Form<?> form) {
             final TextField<String> field = (TextField<String>) components[0];

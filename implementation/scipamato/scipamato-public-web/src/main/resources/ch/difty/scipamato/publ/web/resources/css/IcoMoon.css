@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+@import url('../fonts/IcoMoon/icomoon.css');
+
+[class^="icon-"], [class*=" icon-"] {
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-link:before {
+    content: "\e60c";
+}
+
+.icon-arrow-right:before {
+    content: "\e602"
+}
