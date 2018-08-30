@@ -87,7 +87,7 @@ public class PublicPage extends BasePage<Void> {
     }
 
     private void makeAndQueueFilterForm(final String id) {
-        FilterForm<PublicPaperFilter> filterForm = new FilterForm<PublicPaperFilter>(id, dataProvider) {
+        FilterForm<PublicPaperFilter> filterForm = new FilterForm<>(id, dataProvider) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -203,17 +203,11 @@ public class PublicPage extends BasePage<Void> {
     }
 
     private abstract class AbstractTabPanel extends Panel {
-
         private static final long serialVersionUID = 1L;
-
-        public AbstractTabPanel(String id) {
-            super(id);
-        }
 
         AbstractTabPanel(String id, IModel<?> model) {
             super(id, model);
         }
-
     }
 
     private void queueQueryButton(final String id, final FilterForm<PublicPaperFilter> filterForm) {
@@ -250,8 +244,8 @@ public class PublicPage extends BasePage<Void> {
     }
 
     private void makeAndQueueResultTable(String id) {
-        DataTable<PublicPaper, String> results = new BootstrapDefaultDataTable<PublicPaper, String>(id,
-            makeTableColumns(), dataProvider, dataProvider.getRowsPerPage()) {
+        DataTable<PublicPaper, String> results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider,
+            dataProvider.getRowsPerPage()) {
             private static final long serialVersionUID = 1L;
 
             @Override

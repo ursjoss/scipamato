@@ -36,7 +36,7 @@ public class PublicPaperProvider extends SortableDataProvider<PublicPaper, Strin
     @SpringBean
     private PublicPaperService service;
 
-    public PublicPaperProvider(final PublicPaperFilter paperFilter, final int resultPageSize) {
+    PublicPaperProvider(final PublicPaperFilter paperFilter, final int resultPageSize) {
         Injector
             .get()
             .inject(this);
@@ -56,7 +56,7 @@ public class PublicPaperProvider extends SortableDataProvider<PublicPaper, Strin
      *
      * @return rows per page
      */
-    public int getRowsPerPage() {
+    int getRowsPerPage() {
         return maxRowsPerPage;
     }
 
@@ -96,7 +96,7 @@ public class PublicPaperProvider extends SortableDataProvider<PublicPaper, Strin
      *
      * @return list of all paper numbers
      */
-    public List<Long> findAllPaperNumbersByFilter() {
+    List<Long> findAllPaperNumbersByFilter() {
         final Direction dir = getSort().isAscending() ? Direction.ASC : Direction.DESC;
         final String sortProp = getSort().getProperty();
         return service.findPageOfNumbersByFilter(getFilterState(), new PaginationRequest(dir, sortProp));

@@ -39,7 +39,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
     private static final String CODES_NONE_SELECT_RESOURCE_TAG = "codes.noneSelected";
     private static final String AM_DATA_WIDTH                  = "data-width";
 
-    public SimpleFilterPanel(String id, IModel<PublicPaperFilter> model) {
+    SimpleFilterPanel(String id, IModel<PublicPaperFilter> model) {
         super(id, model);
     }
 
@@ -58,7 +58,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
     }
 
     private void addTextFieldTo(String id, PublicPaperFilterFields filterField) {
-        TextField<String> field = new TextField<String>(id, PropertyModel.of(getModel(), filterField.getName())) {
+        TextField<String> field = new TextField<>(id, PropertyModel.of(getModel(), filterField.getName())) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -102,7 +102,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
             .withMultiple(true)
             .withLiveSearch(true)
             .withNoneSelectedText(noneSelectedModel.getObject());
-        final BootstrapMultiSelect<C> multiSelect = new BootstrapMultiSelect<C>(id, model, choices, choiceRenderer) {
+        final BootstrapMultiSelect<C> multiSelect = new BootstrapMultiSelect<>(id, model, choices, choiceRenderer) {
             private static final long serialVersionUID = 1L;
 
             @Override

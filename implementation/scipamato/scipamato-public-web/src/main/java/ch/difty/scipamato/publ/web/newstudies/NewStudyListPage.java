@@ -130,7 +130,7 @@ public class NewStudyListPage extends BasePage<Void> {
             protected void populateItem(ListItem<NewStudyTopic> topic) {
                 topic.add(new Label("topicTitle",
                     new PropertyModel<String>(topic.getModel(), NewStudyTopic.NewStudyTopicFields.TITLE.getName())));
-                topic.add(new ListView<NewStudy>("topicStudies", topic
+                topic.add(new ListView<>("topicStudies", topic
                     .getModelObject()
                     .getStudies()) {
                     private static final long serialVersionUID = 1L;
@@ -180,7 +180,7 @@ public class NewStudyListPage extends BasePage<Void> {
         pp.set(PublicPageParameters.NUMBER.getName(), study
             .getModelObject()
             .getNumber());
-        Link<NewStudy> link = new Link<NewStudy>(id) {
+        Link<NewStudy> link = new Link<>(id) {
             private static final long serialVersionUID = 1L;
 
             @Override

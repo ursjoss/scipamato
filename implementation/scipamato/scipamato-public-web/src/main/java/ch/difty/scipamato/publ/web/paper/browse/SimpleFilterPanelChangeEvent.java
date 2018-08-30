@@ -16,21 +16,21 @@ import ch.difty.scipamato.common.web.event.WicketEvent;
  */
 @Getter
 @EqualsAndHashCode(callSuper = true)
-public class SimpleFilterPanelChangeEvent extends WicketEvent {
+class SimpleFilterPanelChangeEvent extends WicketEvent {
 
     private String id;
     private String markupId;
 
-    public SimpleFilterPanelChangeEvent(AjaxRequestTarget target) {
+    SimpleFilterPanelChangeEvent(AjaxRequestTarget target) {
         super(target);
     }
 
-    public SimpleFilterPanelChangeEvent withId(String id) {
+    SimpleFilterPanelChangeEvent withId(String id) {
         this.id = id;
         return this;
     }
 
-    public SimpleFilterPanelChangeEvent withMarkupId(String markupId) {
+    SimpleFilterPanelChangeEvent withMarkupId(String markupId) {
         this.markupId = markupId;
         return this;
     }
@@ -47,7 +47,7 @@ public class SimpleFilterPanelChangeEvent extends WicketEvent {
      * @param component
      *     the candidate to be added to the target
      */
-    public void considerAddingToTarget(final FormComponent<?> component) {
+    void considerAddingToTarget(final FormComponent<?> component) {
         if (isValidTarget(component.getId(), component.getMarkupId())) {
             getTarget().add(component);
         }
