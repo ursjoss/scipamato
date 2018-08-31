@@ -8,6 +8,9 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.devutils.debugbar.DebugBar;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.MetaDataHeaderItem;
+import org.apache.wicket.markup.head.PriorityHeaderItem;
 import org.apache.wicket.markup.head.filter.HeaderResponseContainer;
 import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -24,6 +27,7 @@ import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
 
+@SuppressWarnings("SameParameterValue")
 public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
     private static final long serialVersionUID = 1L;
@@ -57,6 +61,18 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
     public NotificationPanel getFeedbackPanel() {
         return feedbackPanel;
+    }
+
+    @Override
+    public void renderHead(IHeaderResponse response) {
+        super.renderHead(response);
+
+        response.render(new PriorityHeaderItem(MetaDataHeaderItem.forMetaTag("charset", "utf-8")));
+        response.render(new PriorityHeaderItem(MetaDataHeaderItem.forMetaTag("X-UA-Compatible", "IE=edge")));
+        response.render(
+            new PriorityHeaderItem(MetaDataHeaderItem.forMetaTag("viewport", "width=device-width, initial-scale=1")));
+        response.render(
+            new PriorityHeaderItem(MetaDataHeaderItem.forMetaTag("Content-Type", "text/html; charset=UTF-8")));
     }
 
     @Override
@@ -194,12 +210,6 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
      */
     protected boolean setResponsePageButtonEnabled() {
         return true;
-    }
-
-    /**
-     * Override if you need to apply some logic to the onConfigure method of the responsePageButton.
-     */
-    protected void onConfigureResponsePageButton() {
     }
 
     protected void queuePanelHeadingFor(String id) {

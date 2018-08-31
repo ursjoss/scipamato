@@ -14,6 +14,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.AbstractPage;
 
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 public abstract class AbstractLoginPage extends AbstractPage<Void> {
 
     private static final long serialVersionUID = 1L;
@@ -45,7 +46,7 @@ public abstract class AbstractLoginPage extends AbstractPage<Void> {
     }
 
     private StatelessForm<Void> newLoginForm(String id) {
-        StatelessForm<Void> form = new StatelessForm<Void>(id) {
+        StatelessForm<Void> form = new StatelessForm<>(id) {
             private static final long serialVersionUID = 1L;
 
             @Override

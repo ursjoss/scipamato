@@ -42,13 +42,15 @@ import ch.difty.scipamato.publ.web.common.BasePage;
 import ch.difty.scipamato.publ.web.model.CodeClassModel;
 import ch.difty.scipamato.publ.web.model.CodeModel;
 
+@SuppressWarnings("SameParameterValue")
 @MountPath("/")
 @WicketHomePage
 public class PublicPage extends BasePage<Void> {
 
     private static final long serialVersionUID = 1L;
 
-    private static final int RESULT_PAGE_SIZE = 20;
+    private static final int RESULT_PAGE_SIZE             = 20;
+    private static final int MAX_COUNT_WITHOUT_ACTION_BOX = 4;
 
     private static final String COLUMN_HEADER         = "column.header.";
     private static final String CODES_CLASS_BASE_NAME = "codesOfClass";
@@ -56,8 +58,6 @@ public class PublicPage extends BasePage<Void> {
     private static final String CODES_NONE_SELECT_RESOURCE_TAG = "codes.noneSelected";
 
     private static final String BUTTON_RESOURCE_PREFIX = "button.";
-
-    private static final String AM_DATA_WIDTH = "data-width";
 
     private PublicPaperFilter   filter;
     private PublicPaperProvider dataProvider;
@@ -171,7 +171,7 @@ public class PublicPage extends BasePage<Void> {
             makeCodeClassComplex(form, CodeClassId.CC8, codeClasses);
         }
 
-        private BootstrapMultiSelect<Code> makeCodeClassComplex(Form<Object> form, final CodeClassId codeClassId,
+        private void makeCodeClassComplex(Form<Object> form, final CodeClassId codeClassId,
             final List<CodeClass> codeClasses) {
             final int id = codeClassId.getId();
             final String componentId = CODES_CLASS_BASE_NAME + id;
@@ -192,7 +192,9 @@ public class PublicPage extends BasePage<Void> {
             final StringResourceModel deselectAllModel = new StringResourceModel(DESELECT_ALL_RESOURCE_TAG, this, null);
             final BootstrapSelectConfig config = new BootstrapSelectConfig()
                 .withMultiple(true)
-                .withActionsBox(true)
+                .withActionsBox(choices
+                                    .getObject()
+                                    .size() > MAX_COUNT_WITHOUT_ACTION_BOX)
                 .withSelectAllText(selectAllModel.getString())
                 .withDeselectAllText(deselectAllModel.getString())
                 .withNoneSelectedText(noneSelectedModel.getString())
@@ -201,9 +203,7 @@ public class PublicPage extends BasePage<Void> {
             final PropertyModel<List<Code>> model = PropertyModel.of(filter, componentId);
             final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<>(componentId, model, choices,
                 choiceRenderer).with(config);
-            multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
             form.add(multiSelect);
-            return multiSelect;
         }
     }
 
