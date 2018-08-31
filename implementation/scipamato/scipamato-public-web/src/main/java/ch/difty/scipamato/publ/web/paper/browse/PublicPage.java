@@ -42,6 +42,7 @@ import ch.difty.scipamato.publ.web.common.BasePage;
 import ch.difty.scipamato.publ.web.model.CodeClassModel;
 import ch.difty.scipamato.publ.web.model.CodeModel;
 
+@SuppressWarnings("SameParameterValue")
 @MountPath("/")
 @WicketHomePage
 public class PublicPage extends BasePage<Void> {
@@ -171,7 +172,7 @@ public class PublicPage extends BasePage<Void> {
             makeCodeClassComplex(form, CodeClassId.CC8, codeClasses);
         }
 
-        private BootstrapMultiSelect<Code> makeCodeClassComplex(Form<Object> form, final CodeClassId codeClassId,
+        private void makeCodeClassComplex(Form<Object> form, final CodeClassId codeClassId,
             final List<CodeClass> codeClasses) {
             final int id = codeClassId.getId();
             final String componentId = CODES_CLASS_BASE_NAME + id;
@@ -203,7 +204,6 @@ public class PublicPage extends BasePage<Void> {
                 choiceRenderer).with(config);
             multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
             form.add(multiSelect);
-            return multiSelect;
         }
     }
 

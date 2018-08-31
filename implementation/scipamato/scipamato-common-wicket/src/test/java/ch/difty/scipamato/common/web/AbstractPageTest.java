@@ -28,7 +28,7 @@ public class AbstractPageTest extends WicketBaseTest {
 
     @Override
     protected void setUpHook() {
-        page = new AbstractPage<TestRecord>(Model.of(new TestRecord(1, "foo"))) {
+        page = new AbstractPage<>(Model.of(new TestRecord(1, "foo"))) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -69,7 +69,7 @@ public class AbstractPageTest extends WicketBaseTest {
 
     @Test
     public void test_withPageParametersConstructor() {
-        AbstractPage<TestRecord> page = new AbstractPage<TestRecord>(new PageParameters()) {
+        AbstractPage<TestRecord> page = new AbstractPage<>(new PageParameters()) {
             private static final long serialVersionUID = 1L;
 
             @Override

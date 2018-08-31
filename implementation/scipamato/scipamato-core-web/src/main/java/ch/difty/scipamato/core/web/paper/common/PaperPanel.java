@@ -57,6 +57,7 @@ import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource;
 
+@SuppressWarnings({ "WicketForgeJavaIdInspection", "SameParameterValue" })
 public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> extends BasePanel<T> {
 
     private static final long serialVersionUID = 1L;
@@ -66,7 +67,6 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
     private ResourceLink<Void> summaryLink;
     private ResourceLink<Void> summaryShortLink;
-    private String             pubmedXml;
 
     protected TextArea<String>                   authors;
     protected TextField<String>                  firstAuthor;
@@ -85,15 +85,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
     private Form<T> form;
 
-    public PaperPanel(String id) {
-        this(id, null);
-    }
-
-    public PaperPanel(String id, IModel<T> model) {
-        this(id, model, null);
-    }
-
-    public PaperPanel(String id, IModel<T> model, Mode mode) {
+    PaperPanel(String id, IModel<T> model, Mode mode) {
         this(id, model, mode, null);
     }
 
@@ -113,7 +105,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     @Override
     public void onInitialize() {
         super.onInitialize();
-        form = new Form<T>("form", new CompoundPropertyModel<>(getModel())) {
+        form = new Form<>("form", new CompoundPropertyModel<>(getModel())) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -132,10 +124,6 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     }
 
     protected abstract void onFormSubmit();
-
-    protected String getPubmedXml() {
-        return pubmedXml;
-    }
 
     public Form<T> getForm() {
         return form;
@@ -169,7 +157,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
         TextField<Integer> number = new TextField<>(NUMBER.getName());
         queueFieldAndLabel(number, new PropertyValidator<Integer>());
-        TextField<Integer> id = new TextField<Integer>(IdScipamatoEntity.IdScipamatoEntityFields.ID.getName()) {
+        TextField<Integer> id = new TextField<>(IdScipamatoEntity.IdScipamatoEntityFields.ID.getName()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -188,7 +176,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         id.setEnabled(isSearchMode());
         queueFieldAndLabel(id);
 
-        TextField<String> created = new TextField<String>(CoreEntity.CoreEntityFields.CREATED_DV.getName()) {
+        TextField<String> created = new TextField<>(CoreEntity.CoreEntityFields.CREATED_DV.getName()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -207,7 +195,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         created.setEnabled(isSearchMode());
         queueFieldAndLabel(created);
 
-        TextField<String> modified = new TextField<String>(CoreEntity.CoreEntityFields.MODIFIED_DV.getName()) {
+        TextField<String> modified = new TextField<>(CoreEntity.CoreEntityFields.MODIFIED_DV.getName()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -237,8 +225,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
         considerAddingMoreValidation();
 
-        BootstrapAjaxLink<Void> addRemoveNewsletter = new BootstrapAjaxLink<Void>("modAssociation",
-            Buttons.Type.Primary) {
+        BootstrapAjaxLink<Void> addRemoveNewsletter = new BootstrapAjaxLink<>("modAssociation", Buttons.Type.Primary) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -488,7 +475,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
     private ResourceLink<Void> makePdfResourceLink(String id, JasperPaperDataSource<?> dataSource) {
         final String button = "button.";
-        ResourceLink<Void> link = new ResourceLink<Void>(id, dataSource) {
+        ResourceLink<Void> link = new ResourceLink<>(id, dataSource) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -532,10 +519,6 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
         private static final long serialVersionUID = 1L;
 
-        public AbstractTabPanel(String id) {
-            super(id);
-        }
-
         AbstractTabPanel(String id, IModel<?> model) {
             super(id, model);
         }
@@ -577,7 +560,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             if (!newField) {
                 return new TextArea<>(id);
             } else {
-                return new TextArea<String>(id) {
+                return new TextArea<>(id) {
                     private static final long serialVersionUID = 1L;
 
                     @Override
@@ -729,7 +712,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                 .orElse(codeClassId.name());
             queue(new Label(CODES_CLASS_BASE_NAME + id + "Label", Model.of(className)));
 
-            final ChainingModel<List<Code>> model = new ChainingModel<List<Code>>(getModel()) {
+            final ChainingModel<List<Code>> model = new ChainingModel<>(getModel()) {
                 private static final long serialVersionUID = 1L;
 
                 @SuppressWarnings("unchecked")
@@ -800,6 +783,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         }
     }
 
+    @SuppressWarnings("WicketForgeJavaIdInspection")
     private class TabPanel5 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
@@ -841,6 +825,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         }
     }
 
+    @SuppressWarnings("unchecked")
     private class TabPanel7 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
@@ -858,7 +843,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         }
 
         private void makeAndQueuePublicationStatusSelectBox(final String id) {
-            final ChainingModel<NewsletterTopic> model = new ChainingModel<NewsletterTopic>(getModel()) {
+            final ChainingModel<NewsletterTopic> model = new ChainingModel<>(getModel()) {
                 private static final long serialVersionUID = 1L;
 
                 private final List<NewsletterTopic> topics = newsletterTopicChoice.load();
@@ -922,6 +907,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         final BootstrapMultiSelect<Code> codeClass1) {
     }
 
+    @SuppressWarnings("unchecked")
     static class CodeClass1ConsistencyValidator extends AbstractFormValidator {
 
         private static final long serialVersionUID = 1L;
@@ -942,7 +928,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
         @Override
         public void validate(Form<?> form) {
-            @SuppressWarnings("unchecked") final BootstrapMultiSelect<Code> codeClass1 = (BootstrapMultiSelect<Code>) components[0];
+            final BootstrapMultiSelect<Code> codeClass1 = (BootstrapMultiSelect<Code>) components[0];
             final FormComponent<?> mainCode = components[1];
 
             if (!codeClass1
@@ -955,7 +941,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     }
 
     private void queuePubmedRetrievalLink(String linkId) {
-        pubmedRetrieval = new BootstrapAjaxLink<Void>(linkId, Buttons.Type.Primary) {
+        pubmedRetrieval = new BootstrapAjaxLink<>(linkId, Buttons.Type.Primary) {
             private static final long serialVersionUID = 1L;
 
             @Override

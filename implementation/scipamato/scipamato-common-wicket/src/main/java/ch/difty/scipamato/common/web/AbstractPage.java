@@ -27,6 +27,7 @@ import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
 
+@SuppressWarnings("SameParameterValue")
 public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
     private static final long serialVersionUID = 1L;
@@ -209,12 +210,6 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
      */
     protected boolean setResponsePageButtonEnabled() {
         return true;
-    }
-
-    /**
-     * Override if you need to apply some logic to the onConfigure method of the responsePageButton.
-     */
-    protected void onConfigureResponsePageButton() {
     }
 
     protected void queuePanelHeadingFor(String id) {
