@@ -37,7 +37,8 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
     private static final long serialVersionUID = 1L;
 
     private static final String CODES_NONE_SELECT_RESOURCE_TAG = "codes.noneSelected";
-    private static final String AM_DATA_WIDTH                  = "data-width";
+
+    private static final String AM_DATA_WIDTH = "data-width";
 
     SimpleFilterPanel(String id, IModel<PublicPaperFilter> model) {
         super(id, model);
@@ -52,9 +53,9 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
         addTextFieldTo("pubYearFrom", PublicPaperFilter.PublicPaperFilterFields.PUB_YEAR_FROM);
         addTextFieldTo("pubYearUntil", PublicPaperFilter.PublicPaperFilterFields.PUB_YEAR_UNTIL);
         addCodesComplex("populationCodes", PublicPaperFilter.PublicPaperFilterFields.POPULATION_CODES,
-            PopulationCode.values());
+            PopulationCode.values(), "160px");
         addCodesComplex("studyDesignCodes", PublicPaperFilter.PublicPaperFilterFields.STUDY_DESIGN_CODES,
-            StudyDesignCode.values());
+            StudyDesignCode.values(), "220px");
     }
 
     private void addTextFieldTo(String id, PublicPaperFilterFields filterField) {
@@ -89,7 +90,8 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
         queue(field);
     }
 
-    private <C extends Enum<C>> void addCodesComplex(String id, PublicPaperFilterFields filterField, C[] values) {
+    private <C extends Enum<C>> void addCodesComplex(String id, PublicPaperFilterFields filterField, C[] values,
+        String width) {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
 
@@ -103,7 +105,6 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
         final BootstrapSelectConfig config = new BootstrapSelectConfig()
             .withMultiple(true)
             .withLiveSearch(true)
-            .withActionsBox(true)
             .withSelectAllText(selectAllModel.getString())
             .withDeselectAllText(deselectAllModel.getString())
             .withNoneSelectedText(noneSelectedModel.getString());
@@ -133,7 +134,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
                     .withMarkupId(markupId));
             }
         });
-        multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
+        multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, width));
         queue(multiSelect);
     }
 
