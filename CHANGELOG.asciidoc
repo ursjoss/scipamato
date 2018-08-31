@@ -55,6 +55,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 09/41 - Public: Include configuration for commercial font IcoMoon
 
 .Changed
+- Bumped wicket-spring-boot-starter
 
 .Deprecated
 
