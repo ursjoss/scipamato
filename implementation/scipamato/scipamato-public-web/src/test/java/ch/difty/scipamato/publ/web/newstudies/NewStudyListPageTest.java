@@ -53,7 +53,7 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
         links.add(new NewStudyPageLink("en", 2, "linkTitle2", "linkUrl2"));
         when(serviceMock.findNewStudyPageLinks(Mockito.anyString())).thenReturn(links);
 
-        archived.add(new Newsletter(10, "2018/02", LocalDate.of(2018, 02, 10)));
+        archived.add(new Newsletter(10, "2018/02", LocalDate.of(2018, 2, 10)));
         archived.add(new Newsletter(9, "2017/12", LocalDate.of(2017, 12, 12)));
         when(serviceMock.findArchivedNewsletters(Mockito.anyInt(), Mockito.anyString())).thenReturn(archived);
     }
@@ -99,7 +99,7 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
         getTester().assertComponent("links", ListView.class);
         int index = 0;
         assertLink(index++, "linkTitle1", "linkUrl1");
-        assertLink(index++, "linkTitle2", "linkUrl2");
+        assertLink(index, "linkTitle2", "linkUrl2");
     }
 
     private void assertLink(final int index, final String title, final String url) {
@@ -121,7 +121,7 @@ public class NewStudyListPageTest extends BasePageTest<NewStudyListPage> {
         final String path = base + "topicStudies:" + studyIndex + ":";
         getTester().assertLabel(path + "headline", headline);
         getTester().assertLabel(path + "description", description);
-        getTester().assertLabel(path + "reference:label", reference);
+        getTester().assertLabel(path + "reference:referenceLabel", reference);
         getTester().assertComponent(path + "reference", Link.class);
     }
 

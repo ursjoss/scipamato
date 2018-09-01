@@ -191,7 +191,7 @@ public class NewStudyListPage extends BasePage<Void> {
         pp.set(PublicPageParameters.NUMBER.getName(), study
             .getModelObject()
             .getNumber());
-        BootstrapLink<NewStudy> link = new BootstrapLink<>(id, Buttons.Type.Link) {
+        Link<NewStudy> link = new Link<>(id) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -202,7 +202,8 @@ public class NewStudyListPage extends BasePage<Void> {
                 setResponsePage(new PublicPaperDetailPage(pp, getPageReference()));
             }
         };
-        link.setLabel(new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.REFERENCE.getName()));
+        link.add(new Label(id + "Label",
+            new PropertyModel<String>(study.getModel(), NewStudy.NewStudyFields.REFERENCE.getName())));
         return link;
     }
 
