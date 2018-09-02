@@ -20,6 +20,7 @@ import ch.difty.scipamato.core.web.newsletter.topic.NewsletterTopicListPage;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 import ch.difty.scipamato.core.web.paper.search.PaperSearchPage;
 import ch.difty.scipamato.core.web.sync.RefDataSyncPage;
+import ch.difty.scipamato.core.web.user.UserEditPage;
 
 /**
  * Adds the SciPaMaTo-Core menus to the navbar for the base page.
@@ -44,6 +45,7 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         newMenu(navbar, page, "papers", GlyphIconType.paperclip, l -> addPaperMenuEntries(l, page));
         newMenu(navbar, page, "newsletters", GlyphIconType.book, l -> addNewsletterMenuEntries(l, page));
         newMenu(navbar, page, "sync", GlyphIconType.export, l -> addSyncMenuEntries(l, page));
+        newMenu(navbar, page, "preferences", GlyphIconType.user, l -> addPreferencesMenuEntries(l, page));
 
         addExternalLink(navbar, new StringResourceModel("menu.help.url", page, null).getString(),
             new StringResourceModel("menu.help", page, null).getString(), GlyphIconType.questionsign,
@@ -73,6 +75,13 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         final String labelParent = "menu.sync.";
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
             addEntryToMenu(labelParent + "sync", page, RefDataSyncPage.class, GlyphIconType.export, links);
+        }
+    }
+
+    private void addPreferencesMenuEntries(final List<AbstractLink> links, Page page) {
+        final String labelParent = "menu.preferences.";
+        if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
+            addEntryToMenu(labelParent + "profile", page, UserEditPage.class, GlyphIconType.user, links);
         }
     }
 

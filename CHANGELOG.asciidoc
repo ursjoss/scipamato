@@ -53,6 +53,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 - 09/41 - Public: Include configuration for commercial font IcoMoon
+- 09/43 - Core: Allow users to modify their user record including password
 
 .Changed
 - Bumped wicket-spring-boot-starter, wicket-bootstrap

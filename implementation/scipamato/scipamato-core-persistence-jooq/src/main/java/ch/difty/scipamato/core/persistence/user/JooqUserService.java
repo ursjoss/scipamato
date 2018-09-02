@@ -3,6 +3,8 @@ package ch.difty.scipamato.core.persistence.user;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -24,18 +26,26 @@ public class JooqUserService implements UserService {
 
     private final UserRepository repo;
 
-    public JooqUserService(final UserRepository repo) {
+    private final PasswordEncoder passwordEncoder;
+
+    public JooqUserService(final UserRepository repo, @Lazy final PasswordEncoder passwordEncoder) {
         this.repo = repo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public Optional<User> findById(Integer id) {
-        return Optional.ofNullable(repo.findById(id));
+        final User user = repo.findById(id);
+        if (user != null)
+            user.setPassword(null);
+        return Optional.ofNullable(user);
     }
 
     @Override
     public List<User> findPageByFilter(UserFilter filter, PaginationContext paginationContext) {
-        return repo.findPageByFilter(filter, paginationContext);
+        final List<User> users = repo.findPageByFilter(filter, paginationContext);
+        users.forEach(u -> u.setPassword(null));
+        return users;
     }
 
     @Override
@@ -45,6 +55,11 @@ public class JooqUserService implements UserService {
 
     @Override
     public User saveOrUpdate(User user) {
+        if (user == null)
+            return null;
+        final String password = user.getPassword();
+        if (password != null)
+            user.setPassword(passwordEncoder.encode(password));
         if (user.getId() == null)
             return repo.add(user);
         else

@@ -42,7 +42,7 @@ public class ScipamatoUserDetailsTest {
         assertThat(sud.isCredentialsNonExpired()).isTrue();
 
         assertThat(sud.toString()).isEqualTo(
-            "ScipamatoUserDetails[roles=[ROLE_ADMIN, ROLE_USER],userName=un,firstName=fn,lastName=ln,email=em,password=pw,enabled=true,roles=[ROLE_ADMIN, ROLE_USER],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
+            "ScipamatoUserDetails[roles=[ROLE_ADMIN, ROLE_USER],userName=un,firstName=fn,lastName=ln,email=em,password=pw,password2=<null>,enabled=true,roles=[ROLE_ADMIN, ROLE_USER],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
     }
 
     @Test

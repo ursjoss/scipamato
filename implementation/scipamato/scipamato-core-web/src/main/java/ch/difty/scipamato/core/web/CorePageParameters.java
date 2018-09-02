@@ -3,7 +3,8 @@ package ch.difty.scipamato.core.web;
 public enum CorePageParameters {
 
     SEARCH_ORDER_ID("searchOrderId"),
-    SHOW_EXCLUDED("showExcluded");
+    SHOW_EXCLUDED("showExcluded"),
+    USER_ID("userId");
 
     private final String name;
 
