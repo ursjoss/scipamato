@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.web.newsletter.list;
+package ch.difty.scipamato.core.web.newsletter.edit;
 
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
@@ -18,7 +18,6 @@ import org.junit.Test;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.web.common.BasePageTest;
-import ch.difty.scipamato.core.web.newsletter.edit.NewsletterEditPage;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 
 public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
