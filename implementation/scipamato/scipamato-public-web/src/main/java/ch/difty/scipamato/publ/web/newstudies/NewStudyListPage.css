@@ -36,6 +36,7 @@ h3 {
 p {
     margin: 0 0 11px;
     line-height: 1.6;
+    font-size: 15px;
 }
 
 i {
@@ -49,4 +50,10 @@ i {
     border-radius: 0 !important;
     margin-bottom: 0;
     border-bottom: 1px solid #ebebeb;
+}
+
+a.btn-link {
+    font-size: 15px;
+    line-height: 24px;
+    color: #488bb6;
 }
