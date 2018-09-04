@@ -163,14 +163,14 @@ public class UserTest {
     @Test
     public void testingToString() {
         assertThat(user.toString()).isEqualTo(
-            "User[userName=username,firstName=firstname,lastName=lastname,email=email,password=password,password2=<null>,enabled=false,roles=[],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
+            "User[userName=username,firstName=firstname,lastName=lastname,email=email,password=password,enabled=false,roles=[],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
     }
 
     @Test
     public void assertEnumFields() {
         assertThat(User.UserFields.values())
             .extracting("name")
-            .containsExactly("userName", "firstName", "lastName", "email", "password", "password2", "enabled", "roles");
+            .containsExactly("userName", "firstName", "lastName", "email", "password", "enabled", "roles");
     }
 
 }

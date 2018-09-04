@@ -16,9 +16,6 @@ import ch.difty.scipamato.core.auth.Role;
 
 /**
  * {@link User} entity. Holds a list of associated {@link Role}s
- * <p>
- * Note: After loading a user from Database, the password field will be cleared (null).
- * If the user is saved, the password field will not be touched in case the value is null.
  *
  * @author u.joss
  */
@@ -47,9 +44,6 @@ public class User extends IdScipamatoEntity<Integer> {
 
     private String password;
 
-    // Only used for password validation. Is not persisted
-    private String password2;
-
     private boolean enabled;
 
     private final List<Role> roles = new ArrayList<>();
@@ -60,7 +54,6 @@ public class User extends IdScipamatoEntity<Integer> {
         LAST_NAME("lastName"),
         EMAIL("email"),
         PASSWORD("password"),
-        PASSWORD2("password2"),
         ENABLED("enabled"),
         ROLES("roles");
 

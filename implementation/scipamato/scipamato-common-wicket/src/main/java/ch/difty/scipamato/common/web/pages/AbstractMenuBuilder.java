@@ -14,6 +14,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.config.ApplicationProperties;
@@ -78,12 +79,18 @@ public abstract class AbstractMenuBuilder implements MenuBuilder {
     }
 
     protected <P extends AbstractPage<?>> void addEntryToMenu(final String label, Component component,
-        final Class<P> pageClass, final IconType iconType, final List<AbstractLink> links) {
+        final Class<P> pageClass, final IconType iconType, final List<AbstractLink> links,
+        final PageParameters pageParameters) {
         StringResourceModel labelModel = new StringResourceModel(label, component, null);
-        MenuBookmarkablePageLink<Void> link = new MenuBookmarkablePageLink<>(pageClass, labelModel);
+        MenuBookmarkablePageLink<Void> link = new MenuBookmarkablePageLink<>(pageClass, pageParameters, labelModel);
         if (iconType != null)
             link.setIconType(iconType);
         links.add(link);
+    }
+
+    protected <P extends AbstractPage<?>> void addEntryToMenu(final String label, Component component,
+        final Class<P> pageClass, final IconType iconType, final List<AbstractLink> links) {
+        addEntryToMenu(label, component, pageClass, iconType, links, new PageParameters());
     }
 
     protected String getVersionAnker() {

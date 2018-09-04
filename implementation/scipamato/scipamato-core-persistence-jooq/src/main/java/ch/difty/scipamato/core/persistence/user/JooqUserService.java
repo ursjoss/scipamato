@@ -35,17 +35,12 @@ public class JooqUserService implements UserService {
 
     @Override
     public Optional<User> findById(Integer id) {
-        final User user = repo.findById(id);
-        if (user != null)
-            user.setPassword(null);
-        return Optional.ofNullable(user);
+        return Optional.ofNullable(repo.findById(id));
     }
 
     @Override
     public List<User> findPageByFilter(UserFilter filter, PaginationContext paginationContext) {
-        final List<User> users = repo.findPageByFilter(filter, paginationContext);
-        users.forEach(u -> u.setPassword(null));
-        return users;
+        return repo.findPageByFilter(filter, paginationContext);
     }
 
     @Override

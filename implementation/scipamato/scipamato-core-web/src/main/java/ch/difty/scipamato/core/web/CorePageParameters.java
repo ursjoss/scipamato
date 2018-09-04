@@ -4,7 +4,8 @@ public enum CorePageParameters {
 
     SEARCH_ORDER_ID("searchOrderId"),
     SHOW_EXCLUDED("showExcluded"),
-    USER_ID("userId");
+    USER_ID("userId"),
+    MODE("mode");
 
     private final String name;
 

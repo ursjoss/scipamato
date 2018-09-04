@@ -7,6 +7,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -81,7 +82,14 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
     private void addPreferencesMenuEntries(final List<AbstractLink> links, Page page) {
         final String labelParent = "menu.preferences.";
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
-            addEntryToMenu(labelParent + "profile", page, UserEditPage.class, GlyphIconType.user, links);
+            final PageParameters pp = new PageParameters();
+            pp.add("mode", UserEditPage.Mode.EDIT);
+            addEntryToMenu(labelParent + "profile", page, UserEditPage.class, GlyphIconType.user, links, pp);
+
+            final PageParameters pp2 = new PageParameters();
+            pp2.add("mode", UserEditPage.Mode.CHANGE_PASSWORD);
+            addEntryToMenu(labelParent + "password", page, UserEditPage.class, GlyphIconType.user, links, pp2);
+
         }
     }
 

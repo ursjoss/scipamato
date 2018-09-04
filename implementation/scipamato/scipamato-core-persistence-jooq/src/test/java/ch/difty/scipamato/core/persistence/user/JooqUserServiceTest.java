@@ -63,7 +63,6 @@ public class JooqUserServiceTest {
         assertThat(optUser.get()).isEqualTo(userMock);
 
         verify(repoMock).findById(id);
-        verify(userMock).setPassword(null);
     }
 
     @Test
@@ -83,7 +82,6 @@ public class JooqUserServiceTest {
         when(repoMock.findPageByFilter(filterMock, paginationContextMock)).thenReturn(users);
         assertThat(service.findPageByFilter(filterMock, paginationContextMock)).isEqualTo(users);
         verify(repoMock).findPageByFilter(filterMock, paginationContextMock);
-        verify(userMock, times(2)).setPassword(null);
     }
 
     @Test

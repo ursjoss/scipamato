@@ -9,7 +9,7 @@ public class CorePageParametersTest {
 
     @Test
     public void values() {
-        assertThat(CorePageParameters.values()).containsExactly(SEARCH_ORDER_ID, SHOW_EXCLUDED, USER_ID);
+        assertThat(CorePageParameters.values()).containsExactly(SEARCH_ORDER_ID, SHOW_EXCLUDED, USER_ID, MODE);
     }
 
     @Test
@@ -17,6 +17,7 @@ public class CorePageParametersTest {
         assertThat(SEARCH_ORDER_ID.getName()).isEqualTo("searchOrderId");
         assertThat(SHOW_EXCLUDED.getName()).isEqualTo("showExcluded");
         assertThat(USER_ID.getName()).isEqualTo("userId");
+        assertThat(MODE.getName()).isEqualTo("mode");
     }
 
 }
