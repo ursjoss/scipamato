@@ -55,7 +55,10 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 09/41 - Public: Include configuration for commercial font IcoMoon
 
 .Changed
-- Bumped wicket-spring-boot-starter
+- Bumped wicket-spring-boot-starter, wicket-bootstrap
+- 09/45 - Public: BootstrapMultiselect configurable to switch from 'contains'
+                  to 'startsWith/begins' search strategy (wicket-bootstrap-2.0.3)
+- Use LocalDateTextField now bundled with wicket-bootstrap-2.0.3
 
 .Deprecated
 

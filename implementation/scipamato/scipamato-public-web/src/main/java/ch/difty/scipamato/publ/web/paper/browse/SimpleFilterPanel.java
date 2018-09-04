@@ -105,6 +105,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
         final BootstrapSelectConfig config = new BootstrapSelectConfig()
             .withMultiple(true)
             .withLiveSearch(true)
+            .withLiveSearchStyle("startsWith")
             .withSelectAllText(selectAllModel.getString())
             .withDeselectAllText(deselectAllModel.getString())
             .withNoneSelectedText(noneSelectedModel.getString());

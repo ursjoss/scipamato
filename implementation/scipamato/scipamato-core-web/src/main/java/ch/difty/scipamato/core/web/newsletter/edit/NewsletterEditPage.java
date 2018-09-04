@@ -2,12 +2,12 @@ package ch.difty.scipamato.core.web.newsletter.edit;
 
 import static ch.difty.scipamato.core.entity.newsletter.Newsletter.NewsletterFields.*;
 
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.DateTextField;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.LocalDateTextField;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
 import lombok.extern.slf4j.Slf4j;
@@ -129,8 +129,8 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
         super.onInitialize();
         queueForm("form");
         queueFieldAndLabel(new TextField<String>(ISSUE.getName()), new PropertyValidator<String>());
-        queueFieldAndLabel(new DateTextField(ISSUE_DATE_LEGACY.getName(),
-            new StringResourceModel("date.format", this, null).getString()), new PropertyValidator<Date>());
+        queueFieldAndLabel(new LocalDateTextField(ISSUE_DATE.getName(),
+            new StringResourceModel("date.format", this, null).getString()), new PropertyValidator<LocalDate>());
         makeAndQueuePublicationStatusSelectBox(PUBLICATION_STATUS.getName());
         submitButton = new BootstrapButton("submit", new StringResourceModel("submit.label"), Buttons.Type.Default) {
             @Override

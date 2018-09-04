@@ -1,10 +1,11 @@
 package ch.difty.scipamato.core.entity.newsletter;
 
 import javax.validation.constraints.NotNull;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import lombok.*;
@@ -38,7 +39,6 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
         ID("id"),
         ISSUE("issue"),
         ISSUE_DATE("issueDate"),
-        ISSUE_DATE_LEGACY("issueDateLegacy"),
         PUBLICATION_STATUS("publicationStatus"),
         PAPERS("papers"),
         TOPICS("topics");
@@ -58,38 +58,6 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
     @Override
     public String getDisplayValue() {
         return getIssue();
-    }
-
-    /**
-     * Returns the issue date as a legacy java.util.Date. Required for wicket DateTextField.
-     *
-     * @return issue date as {@link java.util.Date}
-     * @deprecated With Wicket8 - hopefully, DateTextFields will allow to use java.time.LocalDate directly
-     */
-    @Deprecated
-    public Date getIssueDateLegacy() {
-        return issueDate == null ?
-            null :
-            Date.from(issueDate
-                .atStartOfDay(ZoneId.systemDefault())
-                .toInstant());
-    }
-
-    /**
-     * Sets the issue date as legacy java.util.Date. Required for wicket DateTextField.
-     *
-     * @param issueDate
-     *     the date the newsletter was issued
-     * @deprecated With Wicket8 - hopefully, DateTextFields will allow to use java.time.LocalDate directly
-     */
-    @Deprecated
-    public void setIssueDateLegacy(final Date issueDate) {
-        this.issueDate = issueDate == null ?
-            null :
-            Instant
-                .ofEpochMilli(issueDate.getTime())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
     }
 
     /**

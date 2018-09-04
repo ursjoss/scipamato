@@ -4,7 +4,6 @@ import static ch.difty.scipamato.core.entity.newsletter.Newsletter.NewsletterFie
 import static ch.difty.scipamato.core.entity.newsletter.Newsletter.NewsletterFields.PUBLICATION_STATUS;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 import org.assertj.core.api.Assertions;
@@ -67,34 +66,6 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
         assertThat(nl.getTopics())
             .hasSize(2)
             .containsOnly(topic1, null);
-    }
-
-    @Test
-    public void canGetIssueDateLegacy() {
-        Newsletter nl = newValidEntity();
-        assertThat(nl.getIssueDateLegacy()).isEqualTo(Date.valueOf("2018-03-26"));
-    }
-
-    @Test
-    public void canChangeIssueDateViaLegacyDate() {
-        Newsletter nl = newValidEntity();
-        nl.setIssueDateLegacy(Date.valueOf("2018-04-01"));
-        assertThat(nl.getIssueDateLegacy()).isEqualTo(Date.valueOf("2018-04-01"));
-        assertThat(nl.getIssueDate()).isEqualTo(LocalDate.parse("2018-04-01"));
-    }
-
-    @Test
-    public void canGetIssueDateLegacy_withUninitializedDate() {
-        Newsletter nl = new Newsletter();
-        assertThat(nl.getIssueDate()).isNull();
-        assertThat(nl.getIssueDateLegacy()).isNull();
-    }
-
-    @Test
-    public void canSetIssueDateLegacyToNull() {
-        Newsletter nl = new Newsletter();
-        nl.setIssueDateLegacy(null);
-        assertThat(nl.getIssueDate()).isNull();
     }
 
     @Test

@@ -198,7 +198,8 @@ public class PublicPage extends BasePage<Void> {
                 .withSelectAllText(selectAllModel.getString())
                 .withDeselectAllText(deselectAllModel.getString())
                 .withNoneSelectedText(noneSelectedModel.getString())
-                .withLiveSearch(true);
+                .withLiveSearch(true)
+                .withLiveSearchStyle("startsWith");
 
             final PropertyModel<List<Code>> model = PropertyModel.of(filter, componentId);
             final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<>(componentId, model, choices,

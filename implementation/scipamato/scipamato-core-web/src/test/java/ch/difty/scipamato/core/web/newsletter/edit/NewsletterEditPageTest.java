@@ -6,7 +6,7 @@ import static org.mockito.Mockito.*;
 import java.time.LocalDate;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.DateTextField;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.LocalDateTextField;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -53,8 +53,8 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
         getTester().assertLabel(b + "issueLabel", "Issue");
         getTester().assertComponent(b + "issue", TextField.class);
 
-        getTester().assertLabel(b + "issueDateLegacyLabel", "Issue Date");
-        getTester().assertComponent(b + "issueDateLegacy", DateTextField.class);
+        getTester().assertLabel(b + "issueDateLabel", "Issue Date");
+        getTester().assertComponent(b + "issueDate", LocalDateTextField.class);
 
         getTester().assertLabel(b + "publicationStatusLabel", "Publication Status");
         getTester().assertComponent(b + "publicationStatus", BootstrapSelect.class);
