@@ -65,6 +65,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- 09/49: Core: Fix Summary Report - reset swapped fields
 
 .Security
 

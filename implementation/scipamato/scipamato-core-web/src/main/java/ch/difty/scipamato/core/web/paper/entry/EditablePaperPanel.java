@@ -163,7 +163,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         final String brand = getProperties().getBrand();
         final String headerPart = brand + "-" + new StringResourceModel("headerPart.summary", this, null).getString();
         final ReportHeaderFields rhf = ReportHeaderFields
-            .builder(brand, headerPart)
+            .builder(headerPart, brand)
             .populationLabel(getLabelResourceFor(POPULATION.getName()))
             .goalsLabel(getLabelResourceFor(GOALS.getName()))
             .methodsLabel(getLabelResourceFor(METHODS.getName()))
