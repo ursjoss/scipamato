@@ -20,6 +20,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
     private static final String XML_27214671 = "xml/pubmed_result_27214671.xml";
     private static final String XML_27224452 = "xml/pubmed_result_27224452.xml";
     private static final String XML_27258721 = "xml/pubmed_result_27258721.xml";
+    private static final String XML_30124840 = "xml/pubmed_result_30124840.xml";
 
     @Test
     public void feedIntoScipamatoArticle_25395026() throws XmlMappingException, IOException {
@@ -282,4 +283,21 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
         assertThat(keywordList).hasSize(1);
     }
 
+
+    @Test
+    public void feedIntoScipamatoArticle_30124840() throws XmlMappingException, IOException {
+        List<PubmedArticleFacade> articles = getPubmedArticles(XML_30124840);
+        assertThat(articles).hasSize(1);
+        PubmedArticleFacade sa = articles.get(0);
+
+        assertThat(sa.getPmId()).isEqualTo("30124840");
+        assertThat(sa.getAuthors()).isEqualTo(
+            "Münzel T, Gori T, Al-Kindi S, Deanfield J, Lelieveld J, Daiber A, Rajagopalan S.");
+        assertThat(sa.getFirstAuthor()).isEqualTo("Münzel");
+        assertThat(sa.getPublicationYear()).isEqualTo("2018");
+        assertThat(sa.getLocation()).isEqualTo("Eur Heart J. 2018 Aug 14. doi: 10.1093/eurheartj/ehy481. [Epub ahead of print]");
+        assertThat(sa.getTitle()).isEqualTo(
+            "Effects of gaseous and solid constituents of air pollution on endothelial function.");
+        assertThat(sa.getDoi()).isEqualTo("10.1093/eurheartj/ehy481");
+    }
 }

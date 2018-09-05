@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st June 2018//EN" "https://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_180601.dtd">
+<PubmedArticleSet>
+
+<PubmedArticle>
+    <MedlineCitation Status="Publisher" Owner="NLM">
+        <PMID Version="1">30124840</PMID>
+        <DateRevised>
+            <Year>2018</Year>
+            <Month>08</Month>
+            <Day>20</Day>
+        </DateRevised>
+        <Article PubModel="Print-Electronic">
+            <Journal>
+                <ISSN IssnType="Electronic">1522-9645</ISSN>
+                <JournalIssue CitedMedium="Internet">
+                    <PubDate>
+                        <Year>2018</Year>
+                        <Month>Aug</Month>
+                        <Day>14</Day>
+                    </PubDate>
+                </JournalIssue>
+                <Title>European heart journal</Title>
+                <ISOAbbreviation>Eur. Heart J.</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>Effects of gaseous and solid constituents of air pollution on endothelial function.</ArticleTitle>
+            <ELocationID EIdType="doi" ValidYN="Y">10.1093/eurheartj/ehy481</ELocationID>
+            <Abstract>
+                <AbstractText>Ambient air pollution is a leading cause of non-communicable disease globally. The largest proportion of deaths and morbidity due to air pollution is now known to be due to cardiovascular disorders. Several particulate and gaseous air pollutants can trigger acute events (e.g. myocardial infarction, stroke, heart failure). While the mechanisms by which air pollutants cause cardiovascular events is undergoing continual refinement, the preponderant evidence support rapid effects of a diversity of pollutants including all particulate pollutants (e.g. course, fine, ultrafine particles) and gaseous pollutants such as ozone, on vascular function. Indeed alterations in endothelial function seem to be critically important in transducing signals and eventually promoting cardiovascular disorders such as hypertension, diabetes, and atherosclerosis. Here, we provide an updated overview of the impact of particulate and gaseous pollutants on endothelial function from human and animal studies. The evidence for causal mechanistic pathways from both animal and human studies that support various hypothesized general pathways and their individual and collective impact on vascular function is highlighted. We also discuss current gaps in knowledge and evidence from trials evaluating the impact of personal-level strategies to reduce exposure to fine particulate matter (PM2.5) and impact on vascular function, given the current lack of definitive randomized evidence using hard endpoints. We conclude by an exhortation for formal inclusion of air pollution as a major risk factor in societal guidelines and provision of formal recommendations to prevent adverse cardiovascular effects attributable to air pollution.</AbstractText>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Münzel</LastName>
+                    <ForeName>Thomas</ForeName>
+                    <Initials>T</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Center for Cardiology, Cardiology I, Angiology and Intensive Care Medicine, University Medical Center of the Johannes Gutenberg University, Langenbeckstrasse 1, Mainz, Germany.</Affiliation>
+                    </AffiliationInfo>
+                    <AffiliationInfo>
+                        <Affiliation>German Center for Cardiovascular Research (DZHK), Partner Site Rhine-Main, Langenbeckstr. 1, Mainz, Germany.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Gori</LastName>
+                    <ForeName>Tommaso</ForeName>
+                    <Initials>T</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Center for Cardiology, Cardiology I, Angiology and Intensive Care Medicine, University Medical Center of the Johannes Gutenberg University, Langenbeckstrasse 1, Mainz, Germany.</Affiliation>
+                    </AffiliationInfo>
+                    <AffiliationInfo>
+                        <Affiliation>German Center for Cardiovascular Research (DZHK), Partner Site Rhine-Main, Langenbeckstr. 1, Mainz, Germany.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Al-Kindi</LastName>
+                    <ForeName>Sadeer</ForeName>
+                    <Initials>S</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Division of Cardiovascular Medicine, Harrington Heart and Vascular Institute, Case Western Reserve School of Medicine, 11100 Euclid Ave, Cleveland, OH, USA.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Deanfield</LastName>
+                    <ForeName>John</ForeName>
+                    <Initials>J</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>UCL Institute of Cardiovascular Science, 170 Tottenham Court Road, W1T 7HA London, UK.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Lelieveld</LastName>
+                    <ForeName>Jos</ForeName>
+                    <Initials>J</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Atmospheric Chemistry Department, Max Planck Institute for Chemistry, Hahn-Meitner-Weg 1, Mainz, Germany.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Daiber</LastName>
+                    <ForeName>Andreas</ForeName>
+                    <Initials>A</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Center for Cardiology, Cardiology I, Angiology and Intensive Care Medicine, University Medical Center of the Johannes Gutenberg University, Langenbeckstrasse 1, Mainz, Germany.</Affiliation>
+                    </AffiliationInfo>
+                    <AffiliationInfo>
+                        <Affiliation>German Center for Cardiovascular Research (DZHK), Partner Site Rhine-Main, Langenbeckstr. 1, Mainz, Germany.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Rajagopalan</LastName>
+                    <ForeName>Sanjay</ForeName>
+                    <Initials>S</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Division of Cardiovascular Medicine, Harrington Heart and Vascular Institute, Case Western Reserve School of Medicine, 11100 Euclid Ave, Cleveland, OH, USA.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType UI="D016428">Journal Article</PublicationType>
+            </PublicationTypeList>
+            <ArticleDate DateType="Electronic">
+                <Year>2018</Year>
+                <Month>08</Month>
+                <Day>14</Day>
+            </ArticleDate>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>England</Country>
+            <MedlineTA>Eur Heart J</MedlineTA>
+            <NlmUniqueID>8006263</NlmUniqueID>
+            <ISSNLinking>0195-668X</ISSNLinking>
+        </MedlineJournalInfo>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="received">
+                <Year>2018</Year>
+                <Month>04</Month>
+                <Day>24</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="accepted">
+                <Year>2018</Year>
+                <Month>07</Month>
+                <Day>25</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>2018</Year>
+                <Month>8</Month>
+                <Day>21</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2018</Year>
+                <Month>8</Month>
+                <Day>21</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2018</Year>
+                <Month>8</Month>
+                <Day>21</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>aheadofprint</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pubmed">30124840</ArticleId>
+            <ArticleId IdType="pii">5074161</ArticleId>
+            <ArticleId IdType="doi">10.1093/eurheartj/ehy481</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+</PubmedArticleSet>

@@ -65,7 +65,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
-- 09/49: Core: Fix Summary Report - reset swapped fields
+- 09/49 - Core: Fix Summary Report - reset swapped fields
+- 09/50 - Core: Fix parsing of location of aheadOfPrint Pubmed studies
 
 .Security
 

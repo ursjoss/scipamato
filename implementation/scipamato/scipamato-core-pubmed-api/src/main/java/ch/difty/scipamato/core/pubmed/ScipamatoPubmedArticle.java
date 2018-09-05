@@ -33,13 +33,18 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
             setAuthors(getAuthorsFrom(authorList));
             setFirstAuthor(getFirstAuthorFrom(authorList));
         }
+        final boolean isAheadOfPrint = "aheadofprint".equals(pubmedArticle.getPubmedData() != null ?
+            pubmedArticle
+                .getPubmedData()
+                .getPublicationStatus() :
+            "");
         setPublicationYear(getPublicationYearFrom(journal));
+        setDoi(getDoiFrom(pubmedArticle));
         setLocation(makeLocationFrom(medlineCitation.getMedlineJournalInfo(), journal.getJournalIssue(),
-            article.getPaginationOrELocationID()));
+            article.getPaginationOrELocationID(), isAheadOfPrint));
         setTitle(AssertAs
             .notNull(article.getArticleTitle(), "pubmedArticle.medlineCitation.article.articleTitle")
             .getvalue());
-        setDoi(getDoiFrom(pubmedArticle));
         setOriginalAbstract(getAbstractFrom(article.getAbstract()));
     }
 
@@ -69,15 +74,20 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
     }
 
     private String makeLocationFrom(final MedlineJournalInfo medlineJournalInfo, final JournalIssue journalIssue,
-        final List<java.lang.Object> paginationElocation) {
+        final List<java.lang.Object> paginationElocation, boolean aheadOfPrint) {
         final StringBuilder sb = new StringBuilder();
         AssertAs.notNull(medlineJournalInfo, "pubmedArticle.medlineCitation.medlineJournalInfo");
         sb
             .append(medlineJournalInfo.getMedlineTA())
             .append(". ");
-        sb
-            .append(getPublicationYear())
-            .append(";");
+        if (!aheadOfPrint)
+            sb
+                .append(getPublicationYear())
+                .append(";");
+        else
+            sb
+                .append(getPublicationDateFrom(journalIssue))
+                .append(".");
         final String volume = journalIssue.getVolume();
         if (!StringUtils.isEmpty(volume)) {
             sb
@@ -114,6 +124,35 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
                 sb
                     .append(pages)
                     .append(".");
+        }
+        if (aheadOfPrint) {
+            sb
+                .append(" doi: ")
+                .append(getDoi());
+            sb.append(". [Epub ahead of print]");
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Get the year from {@link Year} - otherwise from {@link MedlineDate}
+     */
+    private String getPublicationDateFrom(final JournalIssue journalIssue) {
+        final PubDate pubDate = AssertAs.notNull(journalIssue.getPubDate(),
+            "pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate");
+        final List<java.lang.Object> dateishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
+        final StringBuilder sb = new StringBuilder();
+        for (final java.lang.Object o : dateishObjects) {
+            if (o instanceof Year)
+                sb
+                    .append(((Year) o).getvalue())
+                    .append(" ");
+            else if (o instanceof Month)
+                sb
+                    .append(((Month) o).getvalue())
+                    .append(" ");
+            else if (o instanceof Day)
+                sb.append(((Day) o).getvalue());
         }
         return sb.toString();
     }
