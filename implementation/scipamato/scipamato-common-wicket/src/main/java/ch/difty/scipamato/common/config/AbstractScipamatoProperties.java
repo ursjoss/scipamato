@@ -61,4 +61,8 @@ public abstract class AbstractScipamatoProperties<SP extends ScipamatoBaseProper
         return getScipamatoProperties().getRedirectFromPort();
     }
 
+    @Override
+    public int getMultiSelectBoxActionBoxWithMoreEntriesThan() {
+        return getScipamatoProperties().getMultiSelectBoxActionBoxWithMoreEntriesThan();
+    }
 }

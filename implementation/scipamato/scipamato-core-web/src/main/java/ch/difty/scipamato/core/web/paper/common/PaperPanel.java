@@ -740,10 +740,18 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             final IChoiceRenderer<Code> choiceRenderer = new ChoiceRenderer<>(
                 CoreEntity.CoreEntityFields.DISPLAY_VALUE.getName(), Code.CodeFields.CODE.getName());
             final StringResourceModel noneSelectedModel = new StringResourceModel("codes.noneSelected", this, null);
+            final StringResourceModel selectAllModel = new StringResourceModel(SELECT_ALL_RESOURCE_TAG, this, null);
+            final StringResourceModel deselectAllModel = new StringResourceModel(DESELECT_ALL_RESOURCE_TAG, this, null);
             final BootstrapSelectConfig config = new BootstrapSelectConfig()
                 .withMultiple(true)
+                .withActionsBox(choices
+                                    .getObject()
+                                    .size() > getProperties().getMultiSelectBoxActionBoxWithMoreEntriesThan())
+                .withSelectAllText(selectAllModel.getString())
+                .withDeselectAllText(deselectAllModel.getString())
                 .withNoneSelectedText(noneSelectedModel.getObject())
-                .withLiveSearch(true);
+                .withLiveSearch(true)
+                .withLiveSearchStyle("contains");
             final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<>(CODES_CLASS_BASE_NAME + id, model,
                 choices, choiceRenderer).with(config);
             multiSelect.add(new AttributeModifier("data-width", "fit"));

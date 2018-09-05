@@ -47,4 +47,9 @@ public class ScipamatoPropertiesIntegrationTest {
         assertThat(sp.getDbSchema()).isEqualTo("public");
     }
 
+    @Test
+    public void gettingMultiSelectBoxActionBoxWithMoreEntriesThan_hasDefaultValue4() {
+        assertThat(sp.getMultiSelectBoxActionBoxWithMoreEntriesThan()).isEqualTo(4);
+    }
+
 }

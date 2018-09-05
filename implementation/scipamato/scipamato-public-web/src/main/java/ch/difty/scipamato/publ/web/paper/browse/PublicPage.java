@@ -194,7 +194,7 @@ public class PublicPage extends BasePage<Void> {
                 .withMultiple(true)
                 .withActionsBox(choices
                                     .getObject()
-                                    .size() > MAX_COUNT_WITHOUT_ACTION_BOX)
+                                    .size() > getProperties().getMultiSelectBoxActionBoxWithMoreEntriesThan())
                 .withSelectAllText(selectAllModel.getString())
                 .withDeselectAllText(deselectAllModel.getString())
                 .withNoneSelectedText(noneSelectedModel.getString())

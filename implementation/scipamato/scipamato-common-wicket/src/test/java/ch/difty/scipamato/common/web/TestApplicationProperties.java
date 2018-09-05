@@ -37,4 +37,9 @@ public class TestApplicationProperties implements ApplicationProperties {
         return 8080;
     }
 
+    @Override
+    public int getMultiSelectBoxActionBoxWithMoreEntriesThan() {
+        return 4;
+    }
+
 }

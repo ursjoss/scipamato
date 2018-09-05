@@ -100,4 +100,9 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
      * The new study page will list that many newsletters in the archive section (default: 14)
      */
     private int numberOfPreviousNewslettersInArchive = 14;
+
+    /**
+     * The threshold above which the multiselect box may activate the actionBox (all/none buttons)
+     */
+    int multiSelectBoxActionBoxWithMoreEntriesThan = 4;
 }

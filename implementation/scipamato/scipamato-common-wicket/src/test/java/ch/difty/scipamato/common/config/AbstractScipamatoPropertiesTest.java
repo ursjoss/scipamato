@@ -84,4 +84,11 @@ public class AbstractScipamatoPropertiesTest {
         assertThat(prop.getRedirectFromPort()).isEqualTo(5678);
         verify(scipamatoPropMock).getRedirectFromPort();
     }
+
+    @Test
+    public void getintgMultiSelectBoxActionBoxWithMoreEntriesThan_delegatesToScipamatoProps() {
+        when(scipamatoPropMock.getMultiSelectBoxActionBoxWithMoreEntriesThan()).thenReturn(4);
+        assertThat(prop.getMultiSelectBoxActionBoxWithMoreEntriesThan()).isEqualTo(4);
+        verify(scipamatoPropMock).getMultiSelectBoxActionBoxWithMoreEntriesThan();
+    }
 }

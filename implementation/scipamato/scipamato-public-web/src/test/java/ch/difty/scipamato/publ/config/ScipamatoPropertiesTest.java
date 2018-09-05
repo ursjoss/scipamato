@@ -73,4 +73,9 @@ public class ScipamatoPropertiesTest {
         assertThat(sp.getManagementUserPassword()).isNull();
     }
 
+    @Test
+    public void multiSelectBoxActionBoxWithMoreEntriesThan_hasDefaultValue() {
+        assertThat(sp.getMultiSelectBoxActionBoxWithMoreEntriesThan()).isEqualTo(4);
+    }
+
 }

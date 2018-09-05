@@ -37,4 +37,8 @@ public class ScipamatoPropertiesIntegrationTest {
         assertThat(sp.isResponsiveIframeSupportEnabled()).isFalse();
     }
 
+    @Test
+    public void multiSelectBoxActionBoxWithMoreEntriesThan_hasDefault4() {
+        assertThat(sp.getMultiSelectBoxActionBoxWithMoreEntriesThan()).isEqualTo(4);
+    }
 }

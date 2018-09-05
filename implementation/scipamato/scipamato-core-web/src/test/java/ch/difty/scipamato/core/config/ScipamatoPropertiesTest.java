@@ -50,4 +50,8 @@ public class ScipamatoPropertiesTest {
         assertThat(sp.getRedirectFromPort()).isNull();
     }
 
+    @Test
+    public void gettingMultiSelectBoxActionBoxWithMoreEntriesThan_hasDefaultValue() {
+        assertThat(sp.getMultiSelectBoxActionBoxWithMoreEntriesThan()).isEqualTo(4);
+    }
 }

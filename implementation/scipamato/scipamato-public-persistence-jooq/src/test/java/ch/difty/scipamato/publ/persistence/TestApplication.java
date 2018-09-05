@@ -55,6 +55,11 @@ public class TestApplication {
             }
 
             @Override
+            public int getMultiSelectBoxActionBoxWithMoreEntriesThan() {
+                return 4;
+            }
+
+            @Override
             public boolean isCommercialFontPresent() {
                 return false;
             }

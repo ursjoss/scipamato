@@ -14,4 +14,6 @@ public interface ScipamatoBaseProperties extends Serializable {
 
     Integer getRedirectFromPort();
 
+    int getMultiSelectBoxActionBoxWithMoreEntriesThan();
+
 }

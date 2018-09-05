@@ -67,4 +67,5 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
         return AuthorParserStrategy.fromProperty(authorParser, AUTHOR_PARSER_PROPERTY_KEY);
     }
 
+    private int MultiSelectBoxActionBoxWithMoreEntriesThan = 4;
 }
