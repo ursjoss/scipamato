@@ -120,7 +120,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
 
         getTester().assertComponent(b + ":query", BootstrapButton.class);
 
-        assertResultsTable("results");
+        assertResultsTable();
 
         verify(serviceMock).countByFilter(isA(PublicPaperFilter.class));
         verify(serviceMock).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
@@ -130,11 +130,11 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
 
     }
 
-    private void assertResultsTable(String b) {
-        getTester().assertComponent(b, BootstrapDefaultDataTable.class);
+    private void assertResultsTable() {
+        getTester().assertComponent("results", BootstrapDefaultDataTable.class);
 
-        assertTableRow(b + ":body:rows:1:cells", "auths1", "title1", "journal1", "2016");
-        assertTableRow(b + ":body:rows:2:cells", "auths2", "title2", "journal2", "2017");
+        assertTableRow("results:body:rows:1:cells", "auths1", "title1", "journal1", "2016");
+        assertTableRow("results:body:rows:2:cells", "auths2", "title2", "journal2", "2017");
     }
 
     private void assertTableRow(final String bb, final String... values) {

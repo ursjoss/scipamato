@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.pubmed;
 
-import java.lang.Object;
 import java.util.List;
 
 import org.springframework.util.CollectionUtils;
@@ -122,7 +121,7 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         }
     }
 
-    private void appendPagination(final List<Object> paginationElocation, final StringBuilder sb) {
+    private void appendPagination(final List<java.lang.Object> paginationElocation, final StringBuilder sb) {
         if (!CollectionUtils.isEmpty(paginationElocation)) {
             final String pages = paginationElocation
                 .stream()

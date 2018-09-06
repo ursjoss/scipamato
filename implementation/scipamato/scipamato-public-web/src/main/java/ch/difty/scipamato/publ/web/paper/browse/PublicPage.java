@@ -42,15 +42,14 @@ import ch.difty.scipamato.publ.web.common.BasePage;
 import ch.difty.scipamato.publ.web.model.CodeClassModel;
 import ch.difty.scipamato.publ.web.model.CodeModel;
 
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 @MountPath("/")
 @WicketHomePage
 public class PublicPage extends BasePage<Void> {
 
     private static final long serialVersionUID = 1L;
 
-    private static final int RESULT_PAGE_SIZE             = 20;
-    private static final int MAX_COUNT_WITHOUT_ACTION_BOX = 4;
+    private static final int RESULT_PAGE_SIZE = 20;
 
     private static final String COLUMN_HEADER         = "column.header.";
     private static final String CODES_CLASS_BASE_NAME = "codesOfClass";
