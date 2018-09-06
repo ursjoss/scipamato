@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.pubmed;
 
+import java.lang.Object;
 import java.util.List;
 
 import org.springframework.util.CollectionUtils;
@@ -75,32 +76,53 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
 
     private String makeLocationFrom(final MedlineJournalInfo medlineJournalInfo, final JournalIssue journalIssue,
         final List<java.lang.Object> paginationElocation, boolean aheadOfPrint) {
-        final StringBuilder sb = new StringBuilder();
         AssertAs.notNull(medlineJournalInfo, "pubmedArticle.medlineCitation.medlineJournalInfo");
-        sb
-            .append(medlineJournalInfo.getMedlineTA())
-            .append(". ");
-        if (!aheadOfPrint)
-            sb
-                .append(getPublicationYear())
-                .append(";");
-        else
-            sb
-                .append(getPublicationDateFrom(journalIssue))
-                .append(".");
+        final StringBuilder sb = new StringBuilder();
+        appendMedlineTa(medlineJournalInfo, sb);
+        appendPublicationYearOrDate(journalIssue, aheadOfPrint, sb);
+        appendVolume(journalIssue, sb);
+        appendIssue(journalIssue, sb);
+        appendPagination(paginationElocation, sb);
+        if (aheadOfPrint) {
+            appendAdditionalInfoForAheadOfPrint(sb);
+        }
+        return sb.toString();
+    }
+
+    private void appendMedlineTa(final MedlineJournalInfo medlineJournalInfo, final StringBuilder sb) {
+        sb.append(medlineJournalInfo.getMedlineTA());
+        sb.append(". ");
+    }
+
+    private void appendPublicationYearOrDate(final JournalIssue journalIssue, final boolean aheadOfPrint,
+        final StringBuilder sb) {
+        if (!aheadOfPrint) {
+            sb.append(getPublicationYear());
+            sb.append(";");
+        } else {
+            sb.append(getAheadOfPrintDateFromArticleDate(journalIssue));
+            sb.append(".");
+        }
+    }
+
+    private void appendVolume(final JournalIssue journalIssue, final StringBuilder sb) {
         final String volume = journalIssue.getVolume();
         if (!StringUtils.isEmpty(volume)) {
-            sb
-                .append(" ")
-                .append(volume);
+            sb.append(" ");
+            sb.append(volume);
         }
+    }
+
+    private void appendIssue(final JournalIssue journalIssue, final StringBuilder sb) {
         final String issue = journalIssue.getIssue();
         if (!StringUtils.isEmpty(issue)) {
-            sb
-                .append(" (")
-                .append(issue)
-                .append(")");
+            sb.append(" (");
+            sb.append(issue);
+            sb.append(")");
         }
+    }
+
+    private void appendPagination(final List<Object> paginationElocation, final StringBuilder sb) {
         if (!CollectionUtils.isEmpty(paginationElocation)) {
             final String pages = paginationElocation
                 .stream()
@@ -120,39 +142,37 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
                     .map(eli -> ". " + eli.getEIdType() + ": " + eli.getvalue())
                     .findFirst()
                     .orElse(null));
-            if (pages != null)
-                sb
-                    .append(pages)
-                    .append(".");
+            if (pages != null) {
+                sb.append(pages);
+                sb.append(".");
+            }
         }
-        if (aheadOfPrint) {
-            sb
-                .append(" doi: ")
-                .append(getDoi());
-            sb.append(". [Epub ahead of print]");
-        }
-        return sb.toString();
+    }
+
+    private void appendAdditionalInfoForAheadOfPrint(final StringBuilder sb) {
+        sb.append(" doi: ");
+        sb.append(getDoi());
+        sb.append(". [Epub ahead of print]");
     }
 
     /**
-     * Get the year from {@link Year} - otherwise from {@link MedlineDate}
+     * For aheadOfPrint papers: Concatenate the Date as {@code Year Month Day} from e.g. the ArticleDate
      */
-    private String getPublicationDateFrom(final JournalIssue journalIssue) {
+    private String getAheadOfPrintDateFromArticleDate(final JournalIssue journalIssue) {
         final PubDate pubDate = AssertAs.notNull(journalIssue.getPubDate(),
             "pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate");
         final List<java.lang.Object> dateishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
         final StringBuilder sb = new StringBuilder();
         for (final java.lang.Object o : dateishObjects) {
-            if (o instanceof Year)
-                sb
-                    .append(((Year) o).getvalue())
-                    .append(" ");
-            else if (o instanceof Month)
-                sb
-                    .append(((Month) o).getvalue())
-                    .append(" ");
-            else if (o instanceof Day)
+            if (o instanceof Year) {
+                sb.append(((Year) o).getvalue());
+                sb.append(" ");
+            } else if (o instanceof Month) {
+                sb.append(((Month) o).getvalue());
+                sb.append(" ");
+            } else if (o instanceof Day) {
                 sb.append(((Day) o).getvalue());
+            }
         }
         return sb.toString();
     }
@@ -167,17 +187,16 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
         final int psPos = pages.indexOf(PAGE_SEPARATOR);
         if (psPos > -1) {
             final String first = pages.substring(0, psPos);
-            final String last = pages.substring(psPos + 1, pages.length());
+            final String last = pages.substring(psPos + 1);
             final StringBuilder sb = new StringBuilder();
-            sb
-                .append(first)
-                .append(PAGE_SEPARATOR);
-            if (first.length() > last.length())
-                sb
-                    .append(first, 0, first.length() - last.length())
-                    .append(last);
-            else
+            sb.append(first);
+            sb.append(PAGE_SEPARATOR);
+            if (first.length() > last.length()) {
+                sb.append(first, 0, first.length() - last.length());
                 sb.append(last);
+            } else {
+                sb.append(last);
+            }
             return sb.toString();
         } else {
             return pages;
