@@ -6,9 +6,10 @@ import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.CREATOR
 import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIER_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
@@ -27,9 +28,9 @@ public class UserTest {
     private static final String  PASSWORD   = "password";
     private static final boolean ENABLED    = true;
 
-    final User user = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+    private final User user = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
 
-    private final List<Role> roles = new ArrayList<>();
+    private final Set<Role> roles = new HashSet<>();
 
     private final Role role1 = Role.ADMIN;
     private final Role role2 = Role.USER;
@@ -63,7 +64,7 @@ public class UserTest {
         assertThat(u.getEmail()).isEqualTo(EMAIL);
         assertThat(u.getPassword()).isEqualTo(PASSWORD);
         assertThat(u.isEnabled()).isEqualTo(ENABLED);
-        assertThat(u.getRoles()).containsExactly(role1, role2);
+        assertThat(u.getRoles()).containsExactlyInAnyOrder(role1, role2);
         assertThat(u.getFullName()).isEqualTo(FIRST_NAME + " " + LAST_NAME);
     }
 
@@ -109,11 +110,11 @@ public class UserTest {
     @Test
     public void settingRoles_reSetsRoles() {
         final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles);
-        assertThat(u.getRoles()).containsExactly(role1, role2);
+        assertThat(u.getRoles()).containsExactlyInAnyOrder(role1, role2);
 
-        u.setRoles(Arrays.asList(role3, role1));
+        u.setRoles(Set.of(role3, role1));
 
-        assertThat(u.getRoles()).containsExactly(role3, role1);
+        assertThat(u.getRoles()).containsExactlyInAnyOrder(role3, role1);
     }
 
     @Test
@@ -126,7 +127,7 @@ public class UserTest {
     @Test
     public void settingRole_withBlankList_clearsList() {
         final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles);
-        u.setRoles(new ArrayList<>());
+        u.setRoles(Collections.emptySet());
         assertThat(u.getRoles()).isEmpty();
     }
 
@@ -141,7 +142,7 @@ public class UserTest {
     public void removingUnassignedRole_doesNothing() {
         final User u = new User(ID, USER_NAME, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ENABLED, roles);
         u.removeRole(role3);
-        assertThat(u.getRoles()).containsExactly(role1, role2);
+        assertThat(u.getRoles()).containsExactlyInAnyOrder(role1, role2);
     }
 
     @Test

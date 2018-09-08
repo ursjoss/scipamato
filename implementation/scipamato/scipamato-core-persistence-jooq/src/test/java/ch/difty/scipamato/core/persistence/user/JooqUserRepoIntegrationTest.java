@@ -44,7 +44,7 @@ public class JooqUserRepoIntegrationTest extends JooqTransactionalIntegrationTes
         assertThat(user.getId()).isEqualTo(4);
 
         assertThat(user.getRoles()).hasSize(2);
-        assertThat(extractProperty("id").from(user.getRoles())).containsExactly(1, 2);
+        assertThat(extractProperty("id").from(user.getRoles())).containsExactlyInAnyOrder(1, 2);
     }
 
     @Test

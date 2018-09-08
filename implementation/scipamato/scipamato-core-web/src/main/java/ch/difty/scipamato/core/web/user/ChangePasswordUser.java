@@ -1,7 +1,7 @@
 package ch.difty.scipamato.core.web.user;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -112,11 +112,11 @@ public class ChangePasswordUser implements Serializable {
         user.setEnabled(value);
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return user.getRoles();
     }
 
-    public void setRoles(final List<Role> roles) {
+    public void setRoles(final Set<Role> roles) {
         user.setRoles(roles);
     }
 
@@ -157,6 +157,7 @@ public class ChangePasswordUser implements Serializable {
             .getRoles()
             .stream()
             .map(Enum::name)
+            .sorted()
             .collect(Collectors.joining(", "));
     }
 }

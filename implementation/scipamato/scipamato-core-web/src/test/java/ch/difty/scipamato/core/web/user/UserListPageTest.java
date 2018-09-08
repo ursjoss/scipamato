@@ -7,6 +7,7 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
@@ -27,7 +28,7 @@ import ch.difty.scipamato.core.web.common.BasePageTest;
 @SuppressWarnings("SameParameterValue")
 public class UserListPageTest extends BasePageTest<UserListPage> {
 
-    private User user = new User(1, "user", "first", "last", "foo@bar.baz", "pw", true, List.of(Role.ADMIN, Role.USER));
+    private User user = new User(1, "user", "first", "last", "foo@bar.baz", "pw", true, Set.of(Role.ADMIN, Role.USER));
 
     private final List<User> results = new ArrayList<>();
 

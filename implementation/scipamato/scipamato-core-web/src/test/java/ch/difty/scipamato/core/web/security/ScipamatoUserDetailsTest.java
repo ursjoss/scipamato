@@ -7,7 +7,7 @@ import static ch.difty.scipamato.core.entity.CoreEntity.CoreEntityFields.MODIFIE
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.extractProperty;
 
-import java.util.Arrays;
+import java.util.Set;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
@@ -21,7 +21,7 @@ public class ScipamatoUserDetailsTest {
 
     @Test
     public void test() {
-        User user = new User(1, "un", "fn", "ln", "em", "pw", true, Arrays.asList(Role.ADMIN, Role.USER));
+        User user = new User(1, "un", "fn", "ln", "em", "pw", true, Set.of(Role.ADMIN, Role.USER));
         ScipamatoUserDetails sud = new ScipamatoUserDetails(user);
 
         assertThat(sud.getId()).isEqualTo(1);
@@ -31,18 +31,29 @@ public class ScipamatoUserDetailsTest {
         assertThat(sud.getEmail()).isEqualTo("em");
         assertThat(sud.getPassword()).isEqualTo("pw");
         assertThat(sud.isEnabled()).isEqualTo(true);
-        assertThat(extractProperty("key").from(sud.getRoles())).containsExactly("ROLE_ADMIN", "ROLE_USER");
+        assertThat(extractProperty("key").from(sud.getRoles())).containsExactlyInAnyOrder("ROLE_ADMIN", "ROLE_USER");
 
-        assertThat(extractProperty("authority").from(sud.getAuthorities())).containsExactly("ROLE_ADMIN", "ROLE_USER");
+        assertThat(extractProperty("authority").from(sud.getAuthorities())).containsExactlyInAnyOrder("ROLE_ADMIN",
+            "ROLE_USER");
         assertThat(sud.getUsername()).isEqualTo("un");
 
         // statically set
         assertThat(sud.isAccountNonExpired()).isTrue();
         assertThat(sud.isAccountNonLocked()).isTrue();
         assertThat(sud.isCredentialsNonExpired()).isTrue();
+    }
 
-        assertThat(sud.toString()).isEqualTo(
-            "ScipamatoUserDetails[roles=[ROLE_ADMIN, ROLE_USER],userName=un,firstName=fn,lastName=ln,email=em,password=pw,enabled=true,roles=[ROLE_ADMIN, ROLE_USER],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
+    @Test
+    public void testToString() {
+        User user = new User(1, "un", "fn", "ln", "em", "pw", true, Set.of(Role.ADMIN, Role.USER));
+        ScipamatoUserDetails sud = new ScipamatoUserDetails(user);
+        final String ts = sud.toString();
+        assertThat(ts).contains("ROLE_ADMIN", "ROLE_USER");
+        assertThat(ts).startsWith("ScipamatoUserDetails[roles=[ROLE_");
+        assertThat(ts).contains(
+            "],userName=un,firstName=fn,lastName=ln,email=em,password=pw,enabled=true,roles=[ROLE_");
+        assertThat(ts).endsWith(
+            "],id=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]");
     }
 
     @Test

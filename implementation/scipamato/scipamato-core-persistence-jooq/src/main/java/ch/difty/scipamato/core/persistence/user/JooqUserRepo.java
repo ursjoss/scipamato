@@ -1,9 +1,10 @@
 package ch.difty.scipamato.core.persistence.user;
 
 import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
+import static java.util.stream.Collectors.toSet;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -88,7 +89,7 @@ public class JooqUserRepo extends
     @Override
     protected void enrichAssociatedEntitiesOf(final User entity, final String languageCode) {
         if (entity != null) {
-            final List<Role> roles = userRoleRepo.findRolesForUser(entity.getId());
+            final Set<Role> roles = userRoleRepo.findRolesForUser(entity.getId());
             if (CollectionUtils.isNotEmpty(roles))
                 entity.setRoles(roles);
         }
@@ -111,11 +112,11 @@ public class JooqUserRepo extends
 
     private void deleteObsoleteRolesFrom(final User user) {
         final Integer userId = user.getId();
-        final List<Integer> roleIds = user
+        final Set<Integer> roleIds = user
             .getRoles()
             .stream()
             .map(Role::getId)
-            .collect(Collectors.toList());
+            .collect(toSet());
         userRoleRepo.deleteAllRolesExcept(userId, roleIds);
     }
 

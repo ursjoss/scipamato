@@ -3,8 +3,8 @@ package ch.difty.scipamato.core.web.user;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import org.apache.wicket.markup.html.basic.Label;
@@ -32,10 +32,10 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     private static final String PW2__HASH = "$2a$04$w6dFZqhgYL8tm/P2iNCPMOftTdwlU6aBxNZDaXHpfpn5HdBc7V3Bq";
 
     private User user = new User(1, "user", "first", "last", "foo@bar.baz", PW1__HASH, true,
-        List.of(Role.ADMIN, Role.USER));
+        Set.of(Role.ADMIN, Role.USER));
 
     private User user_saved = new User(1, "user", "first", "last", "foo@bar.baz", PW2__HASH, true,
-        List.of(Role.ADMIN, Role.USER));
+        Set.of(Role.ADMIN, Role.USER));
 
     @MockBean
     private UserService userServiceMock;

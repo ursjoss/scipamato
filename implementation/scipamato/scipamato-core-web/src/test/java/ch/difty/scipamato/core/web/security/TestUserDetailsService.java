@@ -1,9 +1,8 @@
 package ch.difty.scipamato.core.web.security;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,8 +35,8 @@ public class TestUserDetailsService implements UserDetailsService {
     private final Map<String, User> users = new HashMap<>();
 
     public TestUserDetailsService() {
-        users.put(ADMIN, new User(1, ADMIN, "a", "a", "a", PASSWORD, true, Arrays.asList(Role.ADMIN, Role.USER)));
-        users.put(USER, new User(2, USER, "t", "u", "tu", PASSWORD, true, Collections.singletonList(Role.USER)));
+        users.put(ADMIN, new User(1, ADMIN, "a", "a", "a", PASSWORD, true, Set.of(Role.ADMIN, Role.USER)));
+        users.put(USER, new User(2, USER, "t", "u", "tu", PASSWORD, true, Set.of(Role.USER)));
     }
 
     @Override
