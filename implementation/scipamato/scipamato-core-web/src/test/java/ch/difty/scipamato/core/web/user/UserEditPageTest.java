@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -89,6 +90,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
         assertVisibleTextFieldAndLabel(b + "firstName", "first", "First Name", true);
         assertVisibleTextFieldAndLabel(b + "lastName", "last", "Last Name", true);
         assertVisibleEmailFieldAndLabel(b + "email", "foo@bar.baz", "Email", true);
+        assertMultiselect(b + "roles", true);
         assertInvisible(b + "rolesString");
         assertVisibleCheckBoxAndLabel(b + "enabled", true, "Enabled", true);
         assertInvisible(b + "currentPassword");
@@ -98,6 +100,47 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
         getTester().assertComponent(b + "submit", BootstrapButton.class);
 
         verify(userServiceMock).findById(1);
+    }
+
+    private void assertMultiselect(final String bb, boolean visible) {
+        if (visible) {
+            getTester().assertComponent(bb, BootstrapMultiSelect.class);
+            getTester().assertEnabled(bb);
+            getTester().assertLabel(bb + "Label", "Roles");
+            getTester().assertVisible(bb + "Label");
+            getTester().assertVisible(bb);
+        } else {
+            getTester().assertInvisible(bb + "Label");
+            getTester().assertInvisible(bb);
+        }
+    }
+
+    @Test
+    public void assertUserEditPage_inCreateMode() {
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.CREATE));
+        getTester().assertRenderedPage(getPageClass());
+
+        String b = "form";
+        getTester().assertComponent(b, Form.class);
+
+        b += ":";
+        assertVisibleTextFieldAndLabel(b + "userName", null, "User Name", true);
+        assertVisibleTextFieldAndLabel(b + "firstName", null, "First Name", true);
+        assertVisibleTextFieldAndLabel(b + "lastName", null, "Last Name", true);
+        assertVisibleEmailFieldAndLabel(b + "email", null, "Email", true);
+        assertMultiselect(b + "roles", true);
+        assertInvisible(b + "rolesString");
+        assertVisibleCheckBoxAndLabel(b + "enabled", false, "Enabled", true);
+        assertInvisible(b + "currentPassword");
+        assertVisiblePasswordFieldAndLabel(b + "password", null, "New Password", true);
+        assertVisiblePasswordFieldAndLabel(b + "password2", null, "Confirm Password", true);
+
+        getTester().assertComponent(b + "submit", BootstrapButton.class);
+
+        verify(userServiceMock, never()).findById(1);
+
+        getTester().assertNoErrorMessage();
+        getTester().assertNoInfoMessage();
     }
 
     @Test
@@ -113,6 +156,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
         assertVisibleTextFieldAndLabel(b + "firstName", "first", "First Name", false);
         assertVisibleTextFieldAndLabel(b + "lastName", "last", "Last Name", false);
         assertVisibleEmailFieldAndLabel(b + "email", "foo@bar.baz", "Email", false);
+        assertMultiselect(b + "roles", false);
         assertVisibleLabelAndLabel(b + "rolesString", "ADMIN, USER", "Roles", true);
         assertVisibleCheckBoxAndLabel(b + "enabled", true, "Enabled", false);
         assertVisiblePasswordFieldAndLabel(b + "currentPassword", null, "Current Password", true);
@@ -140,6 +184,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
         assertVisibleTextFieldAndLabel(b + "firstName", "first", "First Name", true);
         assertVisibleTextFieldAndLabel(b + "lastName", "last", "Last Name", true);
         assertVisibleEmailFieldAndLabel(b + "email", "foo@bar.baz", "Email", true);
+        assertMultiselect(b + "roles", false);
         assertVisibleLabelAndLabel(b + "rolesString", "ADMIN, USER", "Roles", true);
         assertVisibleCheckBoxAndLabel(b + "enabled", true, "Enabled", false);
         assertInvisible(b + "currentPassword");

@@ -2,11 +2,15 @@ package ch.difty.scipamato.core.web.user;
 
 import static ch.difty.scipamato.core.entity.User.UserFields.*;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.markup.html.basic.Label;
@@ -14,6 +18,7 @@ import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -48,7 +53,7 @@ import ch.difty.scipamato.core.web.common.BasePage;
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 public class UserEditPage extends BasePage<ChangePasswordUser> {
 
-    // TODO Manage Roles
+    private static final String AM_DATA_WIDTH = "data-width";
 
     private final Mode mode;
 
@@ -157,6 +162,22 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
         final CheckBox enabledField = new CheckBox(ENABLED.getName());
         enabledField.setEnabled(isInAdminMode());
         queueFieldAndLabel(enabledField);
+
+        final Label rolesLabel = new Label(ROLES.getName() + LABEL_TAG,
+            new StringResourceModel(ROLES.getName() + LABEL_RESOURCE_TAG, this, null));
+        rolesLabel.setVisible(isInAdminMode());
+        queue(rolesLabel);
+
+        final BootstrapMultiSelect<Role> rolesMultiSelect = new BootstrapMultiSelect<>(ROLES.getName(),
+            PropertyModel.of(getModel(), ROLES.getName()), Arrays.asList(Role.values()),
+            new EnumChoiceRenderer<>(this));
+        rolesMultiSelect.with(new BootstrapSelectConfig()
+            .withMultiple(true)
+            .withLiveSearch(true)
+            .withLiveSearchStyle("startsWith"));
+        rolesMultiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "auto"));
+        rolesMultiSelect.setVisible(isInAdminMode());
+        queue(rolesMultiSelect);
 
         final Label rolesStringLabel = new Label("rolesStringLabel",
             new StringResourceModel("rolesString.label", this, null));
