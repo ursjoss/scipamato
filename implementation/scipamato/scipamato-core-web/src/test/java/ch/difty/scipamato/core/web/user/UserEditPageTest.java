@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.web.user;
 
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
@@ -9,8 +10,10 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
+import org.mockito.ArgumentMatcher;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.core.auth.Role;
@@ -22,7 +25,17 @@ import ch.difty.scipamato.core.web.common.BasePageTest;
 @SuppressWarnings("ALL")
 public class UserEditPageTest extends BasePageTest<UserEditPage> {
 
-    private User user = new User(1, "user", "first", "last", "foo@bar.baz", "pw", true, List.of(Role.ADMIN, Role.USER));
+    private static final String PASSWORD1 = "pw";
+    private static final String PW1__HASH = "$2a$04$8r4NZRvT24ggS1TfOqov3eEb0bUN6xwx6zdUFz3XANEQl60M.EFDi";
+
+    private static final String PASSWORD2 = "pw2";
+    private static final String PW2__HASH = "$2a$04$w6dFZqhgYL8tm/P2iNCPMOftTdwlU6aBxNZDaXHpfpn5HdBc7V3Bq";
+
+    private User user = new User(1, "user", "first", "last", "foo@bar.baz", PW1__HASH, true,
+        List.of(Role.ADMIN, Role.USER));
+
+    private User user_saved = new User(1, "user", "first", "last", "foo@bar.baz", PW2__HASH, true,
+        List.of(Role.ADMIN, Role.USER));
 
     @MockBean
     private UserService userServiceMock;
@@ -33,6 +46,11 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
         when(userServiceMock.findById(1)).thenReturn(Optional.of(user));
     }
 
+    @Override
+    protected String getUserName() {
+        return "testadmin";
+    }
+
     @After
     public void tearDown() {
         verifyNoMoreInteractions(userServiceMock);
@@ -40,12 +58,17 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
 
     @Override
     protected UserEditPage makePage() {
-        return newUserEditPageForUserWithId(UserEditPage.Mode.MANAGE);
+        return newUserEditPageInMode(UserEditPage.Mode.MANAGE);
     }
 
-    private UserEditPage newUserEditPageForUserWithId(final UserEditPage.Mode mode) {
+    private UserEditPage newUserEditPageInMode(final UserEditPage.Mode mode) {
+        return newUserEditPageInMode(mode, 1);
+    }
+
+    private UserEditPage newUserEditPageInMode(final UserEditPage.Mode mode, final Integer userId) {
         final PageParameters pp = new PageParameters();
-        pp.add(CorePageParameters.USER_ID.getName(), 1);
+        if (userId != null)
+            pp.add(CorePageParameters.USER_ID.getName(), userId);
         pp.add(CorePageParameters.MODE.getName(), mode);
         return new UserEditPage(pp);
     }
@@ -78,8 +101,8 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void testUserEditPage_inPasswordChangeMode() {
-        getTester().startPage(newUserEditPageForUserWithId(UserEditPage.Mode.CHANGE_PASSWORD));
+    public void assertUserEditPage_inPasswordChangeMode() {
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD));
         getTester().assertRenderedPage(getPageClass());
 
         String b = "form";
@@ -105,8 +128,8 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
     }
 
     @Test
-    public void testUserEditPage_inEditMode() {
-        getTester().startPage(newUserEditPageForUserWithId(UserEditPage.Mode.EDIT));
+    public void assertUserEditPage_inEditMode() {
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.EDIT));
         getTester().assertRenderedPage(getPageClass());
 
         String b = "form";
@@ -178,4 +201,162 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
         getTester().assertInvisible(bb + "Label");
     }
 
+    private class UserMatcher implements ArgumentMatcher<User> {
+
+        private final String pw;
+
+        UserMatcher(final String password) {
+            this.pw = password;
+        }
+
+        @Override
+        public boolean matches(final User u) {
+            return pw == null ? (u.getPassword() == null) : pw.equals(u.getPassword());
+        }
+    }
+
+    @Test
+    public void submitting_inEditMode_delegatesUserSaveWithoutPasswordToService() {
+        when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(null)))).thenReturn(user_saved);
+
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.EDIT));
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("submit");
+
+        getTester().assertInfoMessages("Successfully saved User [id 1]: user).");
+        getTester().assertNoErrorMessage();
+
+        verify(userServiceMock).saveOrUpdate(argThat(new UserMatcher(null)));
+        verify(userServiceMock).findById(1);
+    }
+
+    @Test
+    public void submitting_inPWChangeMode_withCurrentPasswordCorrectAndTwoMatchingPasswords_delegatesToService() {
+        when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(PASSWORD2)))).thenReturn(user_saved);
+
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD));
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.setValue("currentPassword", PASSWORD1);
+        formTester.setValue("password", PASSWORD2);
+        formTester.setValue("password2", PASSWORD2);
+        formTester.submit("submit");
+
+        getTester().assertInfoMessages("The password for user user was changed successfully.");
+        getTester().assertNoErrorMessage();
+
+        verify(userServiceMock).saveOrUpdate(argThat(new UserMatcher(PASSWORD2)));
+        verify(userServiceMock).findById(1);
+    }
+
+    @Test
+    public void submitting_inPWChangeMode_withCurrentPasswordWrong_fails() {
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD));
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.setValue("currentPassword", PASSWORD1 + "X");
+        formTester.setValue("password", PASSWORD2);
+        formTester.setValue("password2", PASSWORD2);
+        formTester.submit("submit");
+
+        getTester().assertErrorMessages("The current password is not correct.");
+
+        verify(userServiceMock).findById(1);
+    }
+
+    @Test
+    public void submitting_inPWChangeMode_withCurrentPasswordCorrectButNonMatchingNewPasswords_fails() {
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD));
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.setValue("currentPassword", PASSWORD1);
+        formTester.setValue("password", PASSWORD2);
+        formTester.setValue("password2", PASSWORD2 + "X");
+        formTester.submit("submit");
+
+        getTester().assertErrorMessages("New Password and Confirm Password must be equal.");
+
+        verify(userServiceMock).findById(1);
+    }
+
+    @Test
+    public void submitting_inManageMode_withNoPasswordsSet_delegatesToService() {
+        when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(null)))).thenReturn(user_saved);
+
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE));
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("submit");
+
+        getTester().assertInfoMessages("Successfully saved User [id 1]: user).");
+        getTester().assertNoErrorMessage();
+
+        verify(userServiceMock).saveOrUpdate(argThat(new UserMatcher(null)));
+        verify(userServiceMock).findById(1);
+    }
+
+    @Test
+    public void submitting_inManageMode_withPasswordsSetWithMismatch_fails() {
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE));
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.setValue("password", PASSWORD2);
+        formTester.setValue("password2", PASSWORD2 + "X");
+        formTester.submit("submit");
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("New Password and Confirm Password must be equal.");
+
+        verify(userServiceMock).findById(1);
+    }
+
+    @Test
+    public void submitting_inManageMode_withPasswordsSetIdentically_delegatesToService() {
+        when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(PASSWORD2)))).thenReturn(user_saved);
+
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE));
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.setValue("password", PASSWORD2);
+        formTester.setValue("password2", PASSWORD2);
+        formTester.submit("submit");
+
+        getTester().assertInfoMessages("Successfully saved User [id 1]: user).");
+        getTester().assertNoErrorMessage();
+
+        verify(userServiceMock).saveOrUpdate(argThat(new UserMatcher(PASSWORD2)));
+        verify(userServiceMock).findById(1);
+    }
+
+    @Test
+    public void submitting_inCreateMode_delegatesCreateToService() {
+        when(userServiceMock.saveOrUpdate(argThat(new UserMatcher(PASSWORD2)))).thenReturn(user_saved);
+
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.CREATE, null));
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.setValue("userName", user.getUserName());
+        formTester.setValue("firstName", user.getFirstName());
+        formTester.setValue("lastName", user.getLastName());
+        formTester.setValue("email", user.getEmail());
+        formTester.setValue("enabled", user.isEnabled());
+        formTester.setValue("password", PASSWORD2);
+        formTester.setValue("password2", PASSWORD2);
+        formTester.submit("submit");
+
+        getTester().assertInfoMessages("Successfully saved User [id 1]: user).");
+        getTester().assertNoErrorMessage();
+
+        verify(userServiceMock).saveOrUpdate(argThat(new UserMatcher(PASSWORD2)));
+        verify(userServiceMock, never()).findById(1);
+    }
 }

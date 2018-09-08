@@ -93,7 +93,17 @@ public abstract class WicketTest {
             .getSession()
             .setLocale(locale);
         setUpHook();
-        login(USERNAME, PASSWORD);
+        login(getUserName(), getPassword());
+    }
+
+    // override if necessary
+    protected String getUserName() {
+        return USERNAME;
+    }
+
+    // override if necessary
+    protected String getPassword() {
+        return PASSWORD;
     }
 
     /**

@@ -36,6 +36,7 @@ public class CurrentPasswordMatchesValidatorTest {
         validatable = new Validatable<>(PW_ADMIN);
         v.validate(validatable);
         assertThat(validatable.isValid()).isTrue();
+        assertThat(validatable.getErrors()).isEmpty();
     }
 
     @Test
@@ -43,5 +44,6 @@ public class CurrentPasswordMatchesValidatorTest {
         validatable = new Validatable<>(PW_ADMIN + "X");
         v.validate(validatable);
         assertThat(validatable.isValid()).isFalse();
+        assertThat(validatable.getErrors()).hasSize(1);
     }
 }

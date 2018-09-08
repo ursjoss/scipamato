@@ -26,8 +26,10 @@ public class CurrentPasswordMatchesValidator implements IValidator<String> {
     public void validate(final IValidatable<String> validatable) {
         final String pwCandidate = validatable.getValue();
         if (!passwordEncoder.matches(pwCandidate, currentPasswordHashPersisted)) {
-            final ValidationError error = new ValidationError(this);
+            ValidationError error = new ValidationError();
+            error.addKey(getClass().getSimpleName() + "." + "not-matching");
             validatable.error(error);
         }
     }
+
 }

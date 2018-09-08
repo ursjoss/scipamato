@@ -22,6 +22,7 @@ import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 import ch.difty.scipamato.core.web.paper.search.PaperSearchPage;
 import ch.difty.scipamato.core.web.sync.RefDataSyncPage;
 import ch.difty.scipamato.core.web.user.UserEditPage;
+import ch.difty.scipamato.core.web.user.UserListPage;
 
 /**
  * Adds the SciPaMaTo-Core menus to the navbar for the base page.
@@ -81,6 +82,9 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
 
     private void addPreferencesMenuEntries(final List<AbstractLink> links, Page page) {
         final String labelParent = "menu.preferences.";
+        if (hasOneOfRoles(Roles.ADMIN)) {
+            addEntryToMenu(labelParent + "users", page, UserListPage.class, GlyphIconType.paperclip, links);
+        }
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
             final PageParameters pp = new PageParameters();
             pp.add("mode", UserEditPage.Mode.EDIT);
@@ -88,7 +92,7 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
 
             final PageParameters pp2 = new PageParameters();
             pp2.add("mode", UserEditPage.Mode.CHANGE_PASSWORD);
-            addEntryToMenu(labelParent + "password", page, UserEditPage.class, GlyphIconType.user, links, pp2);
+            addEntryToMenu(labelParent + "password", page, UserEditPage.class, GlyphIconType.pencil, links, pp2);
 
         }
     }

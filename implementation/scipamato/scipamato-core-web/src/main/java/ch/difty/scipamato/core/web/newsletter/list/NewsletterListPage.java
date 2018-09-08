@@ -49,10 +49,11 @@ import ch.difty.scipamato.core.web.newsletter.edit.NewsletterEditPage;
 /**
  * Page to list all newsletters and apply simple filters to limit the results.
  * <p>
- * Offers the option to create a new neesletter.
+ * Offers the option to create a new newsletter.
  *
  * @author u.joss
  */
+@SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 @MountPath("/newsletters")
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 public class NewsletterListPage extends BasePage<Void> {
@@ -161,10 +162,10 @@ public class NewsletterListPage extends BasePage<Void> {
      * provides the localized values for the publication status as defined in the properties files.
      */
     private PropertyColumn<Newsletter, String> makeEnumPropertyColumn(String propExpression) {
-        return new PropertyColumn<Newsletter, String>(
-            new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression, propExpression) {
+        return new PropertyColumn<>(new StringResourceModel(COLUMN_HEADER + propExpression, this, null), propExpression,
+            propExpression) {
             @Override
-            public IModel<String> getDataModel(final IModel rowModel) {
+            public IModel<String> getDataModel(final IModel<Newsletter> rowModel) {
                 IModel dataModel = super.getDataModel(rowModel);
                 PublicationStatus ps = (PublicationStatus) dataModel.getObject();
                 return new StringResourceModel("PublicationStatus." + ps.name(), NewsletterListPage.this, null);
@@ -173,7 +174,7 @@ public class NewsletterListPage extends BasePage<Void> {
     }
 
     private IColumn<Newsletter, String> makeSortTopicLinkColumn(String id) {
-        return new LinkIconColumn<Newsletter>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
+        return new LinkIconColumn<>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -195,7 +196,7 @@ public class NewsletterListPage extends BasePage<Void> {
     }
 
     private IColumn<Newsletter, String> makeRemoveLinkColumn(String id) {
-        return new LinkIconColumn<Newsletter>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
+        return new LinkIconColumn<>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override

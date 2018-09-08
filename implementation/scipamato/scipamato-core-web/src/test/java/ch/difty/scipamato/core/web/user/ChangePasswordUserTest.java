@@ -35,11 +35,23 @@ public class ChangePasswordUserTest {
     }
 
     @Test
-    public void fromUser() {
+    public void fromUser_withoutResettingPassword_hasThePasswordButNoCurrentPasswordNorPassword2() {
         cpu = new ChangePasswordUser(user);
 
         assertUserBackedFields(cpu);
 
+        assertThat(cpu.getPassword()).isEqualTo("pw");
+        assertThat(cpu.getCurrentPassword()).isNull();
+        assertThat(cpu.getPassword2()).isNull();
+    }
+
+    @Test
+    public void fromUser_withResettingPassword_hasNoneOfThePasswords() {
+        cpu = new ChangePasswordUser(user, true);
+
+        assertUserBackedFields(cpu);
+
+        assertThat(cpu.getPassword()).isNull();
         assertThat(cpu.getCurrentPassword()).isNull();
         assertThat(cpu.getPassword2()).isNull();
     }
@@ -50,7 +62,7 @@ public class ChangePasswordUserTest {
         assertThat(u.getFirstName()).isEqualTo("fn");
         assertThat(u.getLastName()).isEqualTo("ln");
         assertThat(u.getEmail()).isEqualTo("em");
-        assertThat(u.getPassword()).isEqualTo("pw");
+
         assertThat(u.isEnabled()).isEqualTo(true);
         assertThat(u.getRoles()).contains(Role.ADMIN, Role.USER);
 

@@ -23,12 +23,33 @@ public class ChangePasswordUser implements Serializable {
     private String currentPassword;
     private String password2;
 
+    /**
+     * Instantiates an empty {@link ChangePasswordUser}.
+     */
     public ChangePasswordUser() {
-        this(new User());
+        this(new User(), false);
     }
 
+    /**
+     * Instantiates a {@link ChangePasswordUser} from the provided {@link User}
+     */
     public ChangePasswordUser(final User user) {
+        this(user, false);
+    }
+
+    /**
+     * Instantiates a {@link ChangePasswordUser} from the provided {@link User}.
+     * If {@code clearPassword} is true, it will set the password to null.
+     *
+     * @param user
+     *     the user to populate the fields from
+     * @param clearPassword
+     *     if true: password will be set to null.
+     */
+    public ChangePasswordUser(final User user, final boolean clearPassword) {
         this.user = AssertAs.notNull(user, "user");
+        if (clearPassword)
+            this.user.setPassword(null);
     }
 
     public User toUser() {
