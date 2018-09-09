@@ -11,6 +11,7 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.authorization.UnauthorizedInstantiationException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.markup.html.basic.Label;
@@ -81,10 +82,11 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
         if (isInAdminMode() && !activeUser
             .getRoles()
             .contains(Role.ADMIN)) {
-            final String msg =
-                "User " + activeUser.getUserName() + " is not entitled to open UserEditPage in MANAGE mode.";
+            final String msg = new StringResourceModel("page.access-forbidden", this, null)
+                .setParameters(activeUser.getUserName(), this.getClass())
+                .getString();
             log.warn(msg);
-            throw new SecurityException(msg);
+            throw new UnauthorizedInstantiationException(getPageClass());
         }
     }
 
@@ -163,14 +165,13 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
         enabledField.setEnabled(isInAdminMode());
         queueFieldAndLabel(enabledField);
 
-        final Label rolesLabel = new Label(ROLES.getName() + LABEL_TAG,
-            new StringResourceModel(ROLES.getName() + LABEL_RESOURCE_TAG, this, null));
+        final Label rolesLabel = new Label("roles" + LABEL_TAG,
+            new StringResourceModel("roles" + LABEL_RESOURCE_TAG, this, null));
         rolesLabel.setVisible(isInAdminMode());
         queue(rolesLabel);
 
-        final BootstrapMultiSelect<Role> rolesMultiSelect = new BootstrapMultiSelect<>(ROLES.getName(),
-            PropertyModel.of(getModel(), ROLES.getName()), Arrays.asList(Role.values()),
-            new EnumChoiceRenderer<>(this));
+        final BootstrapMultiSelect<Role> rolesMultiSelect = new BootstrapMultiSelect<>("roles",
+            new PropertyModel<>(getModel(), "roles"), Arrays.asList(Role.values()), new EnumChoiceRenderer<>(this));
         rolesMultiSelect.with(new BootstrapSelectConfig()
             .withMultiple(true)
             .withLiveSearch(true)
@@ -218,9 +219,7 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
 
     private void doOnSubmit() {
         try {
-            final User unsaved = UserEditPage.this
-                .getModelObject()
-                .toUser();
+            final User unsaved = getModelObject().toUser();
             if (!canSetPasswords())
                 unsaved.setPassword(null);
             User user = userService.saveOrUpdate(unsaved);

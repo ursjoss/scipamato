@@ -96,8 +96,10 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     private ScipamatoWebSessionFacade sessionFacade;
 
     EditablePaperPanel(String id, IModel<Paper> model, PageReference previousPage, Long searchOrderId,
-        boolean showingExclusions) {
-        super(id, model, Mode.EDIT, previousPage);
+        boolean showingExclusions, Mode mode) {
+        super(id, model, mode, previousPage);
+        if (!(mode == Mode.EDIT || mode == Mode.VIEW))
+            throw new IllegalArgumentException("Mode " + mode + " is not enabled in " + getClass());
         this.searchOrderId = searchOrderId;
         this.showingExclusions = showingExclusions;
     }
@@ -782,4 +784,5 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             }
         }
     }
+
 }

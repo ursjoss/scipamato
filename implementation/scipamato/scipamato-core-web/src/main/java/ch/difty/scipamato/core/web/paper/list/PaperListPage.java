@@ -53,7 +53,7 @@ import ch.difty.scipamato.core.web.paper.result.ResultPanel;
  */
 @MountPath("/")
 @WicketHomePage
-@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
+@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
 public class PaperListPage extends BasePage<Void> {
 
     private static final long serialVersionUID = 1L;

@@ -88,9 +88,14 @@ public class UserListPage extends BasePage<Void> {
         queueFieldAndLabel(new TextField<String>(USER_NAME.getName(),
             PropertyModel.of(filter, UserFilter.UserFilterFields.NAME_MASK.getName())));
         queueResponsePageButton("newUser", () -> {
-            final PageParameters pp = new PageParameters();
-            pp.set(CorePageParameters.MODE.getName(), UserEditPage.Mode.CREATE);
-            return new UserEditPage(pp);
+            try {
+                final PageParameters pp = new PageParameters();
+                pp.set(CorePageParameters.MODE.getName(), UserEditPage.Mode.CREATE);
+                return new UserEditPage(pp);
+            } catch (Exception ex) {
+                error(ex.getMessage());
+                return null;
+            }
         });
     }
 

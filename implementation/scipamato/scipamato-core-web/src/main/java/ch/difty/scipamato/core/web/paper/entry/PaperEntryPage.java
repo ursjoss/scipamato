@@ -20,6 +20,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
@@ -65,9 +66,10 @@ import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
  *
  * @author u.joss
  */
+@SuppressWarnings("WicketForgeJavaIdInspection")
 @MountPath("entry")
 @Slf4j
-@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
+@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
 public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
     private static final long serialVersionUID = 1L;
@@ -77,6 +79,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
     private EditablePaperPanel contentPanel;
 
+    private final Mode          mode;
     private final PageReference callingPage;
     private final Long          searchOrderId;
     private final boolean       showingExclusions;
@@ -117,6 +120,11 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         this.callingPage = callingPage;
         this.searchOrderId = searchOrderId;
         this.showingExclusions = showingExclusions;
+        this.mode = evaluateMode();
+    }
+
+    private Mode evaluateMode() {
+        return hasOneOfRoles(Roles.USER, Roles.ADMIN) ? Mode.EDIT : Mode.VIEW;
     }
 
     /**
@@ -137,6 +145,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         this.callingPage = callingPage;
         this.searchOrderId = searchOrderIdFromPageParameters();
         this.showingExclusions = showExcludedFromPageParameters();
+        this.mode = evaluateMode();
     }
 
     private Long searchOrderIdFromPageParameters() {
@@ -177,8 +186,8 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
     @Override
     protected void implSpecificOnInitialize() {
-        contentPanel = new EditablePaperPanel("contentPanel", getModel(), callingPage, searchOrderId,
-            showingExclusions) {
+        contentPanel = new EditablePaperPanel("contentPanel", getModel(), callingPage, searchOrderId, showingExclusions,
+            mode) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -203,14 +212,16 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
     private void doUpdate(Paper paper) {
         try {
-            Paper persisted = service.saveOrUpdate(paper);
-            if (persisted != null) {
-                setModelObject(persisted);
-                resetFeedbackMessages();
-            } else {
-                error(new StringResourceModel("save.error.hint", this, null)
-                    .setParameters(getNullSafeId(), "")
-                    .getString());
+            if (mode == Mode.EDIT) {
+                Paper persisted = service.saveOrUpdate(paper);
+                if (persisted != null) {
+                    setModelObject(persisted);
+                    resetFeedbackMessages();
+                } else {
+                    error(new StringResourceModel("save.error.hint", this, null)
+                        .setParameters(getNullSafeId(), "")
+                        .getString());
+                }
             }
         } catch (OptimisticLockingException ole) {
             final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null)
@@ -263,4 +274,5 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
             event.dontBroadcastDeeper();
         }
     }
+
 }

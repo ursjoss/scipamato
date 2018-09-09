@@ -1,7 +1,9 @@
 package ch.difty.scipamato.core.web.user;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -112,12 +114,12 @@ public class ChangePasswordUser implements Serializable {
         user.setEnabled(value);
     }
 
-    public Set<Role> getRoles() {
-        return user.getRoles();
+    public List<Role> getRoles() {
+        return new ArrayList<>(user.getRoles());
     }
 
-    public void setRoles(final Set<Role> roles) {
-        user.setRoles(roles);
+    public void setRoles(final List<Role> roles) {
+        user.setRoles(new HashSet<>(roles));
     }
 
     public void addRole(final Role role) {

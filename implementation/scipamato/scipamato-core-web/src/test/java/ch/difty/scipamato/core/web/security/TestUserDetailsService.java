@@ -27,16 +27,19 @@ import ch.difty.scipamato.core.web.authentication.ScipamatoUserDetails;
 @Primary
 public class TestUserDetailsService implements UserDetailsService {
 
-    private static final String ADMIN    = "testadmin";
-    private static final String USER     = "testuser";
+    public static final String USER_ADMIN  = "testadmin";
+    public static final String USER_USER   = "testuser";
+    public static final String USER_VIEWER = "testviewer";
+
     // BCrypt encrypted password 'secretpw' as defined in {@link WicketTest}
     private static final String PASSWORD = "$2a$08$O/YZvh/jf1RWaZkpLPzfUeCkVczIaGLV0.vTKDCbxb0qn37qpj.Je";
 
     private final Map<String, User> users = new HashMap<>();
 
     public TestUserDetailsService() {
-        users.put(ADMIN, new User(1, ADMIN, "a", "a", "a", PASSWORD, true, Set.of(Role.ADMIN, Role.USER)));
-        users.put(USER, new User(2, USER, "t", "u", "tu", PASSWORD, true, Set.of(Role.USER)));
+        users.put(USER_ADMIN, new User(1, USER_ADMIN, "a", "a", "a", PASSWORD, true, Set.of(Role.ADMIN, Role.USER)));
+        users.put(USER_USER, new User(2, USER_USER, "t", "u", "tu", PASSWORD, true, Set.of(Role.USER)));
+        users.put(USER_VIEWER, new User(3, USER_VIEWER, "v", "v", "vv", PASSWORD, true, Set.of(Role.VIEWER)));
     }
 
     @Override

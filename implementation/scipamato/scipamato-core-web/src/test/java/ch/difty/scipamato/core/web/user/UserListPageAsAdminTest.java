@@ -26,7 +26,7 @@ import ch.difty.scipamato.core.persistence.UserService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
 @SuppressWarnings("SameParameterValue")
-public class UserListPageTest extends BasePageTest<UserListPage> {
+public class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
 
     private User user = new User(1, "user", "first", "last", "foo@bar.baz", "pw", true, Set.of(Role.ADMIN, Role.USER));
 

@@ -54,6 +54,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 - 09/41 - Public: Include configuration for commercial font IcoMoon
 - 09/43 - Core: Allow users to modify their user record including password
+- 09/43 - Core: Allow admins to manage user accounts and their roles
 
 .Changed
 - Bumped wicket-spring-boot-starter, wicket-bootstrap
@@ -70,7 +71,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 09/50 - Core: Fix parsing of location of aheadOfPrint Pubmed studies
 
 .Security
-
+- Viewers to access only PaperListPage/PaperEditPage
 
 [[v0.8.9]]
 == [0.8.9] -- 2018-08-30

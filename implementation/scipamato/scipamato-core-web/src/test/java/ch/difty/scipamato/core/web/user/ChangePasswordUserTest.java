@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.web.user;
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
@@ -82,7 +83,7 @@ public class ChangePasswordUserTest {
         cpu.setPassword2("pw2");
         cpu.setCurrentPassword("cpw");
         cpu.setEnabled(true);
-        cpu.setRoles(Set.of(Role.ADMIN, Role.USER));
+        cpu.setRoles(List.of(Role.ADMIN, Role.USER));
 
         assertUserBackedFields(cpu);
 
@@ -94,14 +95,14 @@ public class ChangePasswordUserTest {
     public void canAddRole() {
         cpu = new ChangePasswordUser(user);
         cpu.addRole(Role.VIEWER);
-        cpu.setRoles(Set.of(Role.ADMIN, Role.USER, Role.VIEWER));
+        cpu.setRoles(List.of(Role.ADMIN, Role.USER, Role.VIEWER));
     }
 
     @Test
     public void canRemoveRole() {
         cpu = new ChangePasswordUser(user);
         cpu.removeRole(Role.USER);
-        cpu.setRoles(Set.of(Role.ADMIN));
+        cpu.setRoles(List.of(Role.ADMIN));
     }
 
     @Test
@@ -114,5 +115,14 @@ public class ChangePasswordUserTest {
     public void canGetRolesString() {
         cpu = new ChangePasswordUser(user);
         assertThat(cpu.getRolesString()).isEqualTo("ADMIN, USER");
+    }
+
+    @Test
+    public void canGetRoles() {
+        cpu = new ChangePasswordUser(user);
+        assertThat(cpu.getRoles()).containsExactlyInAnyOrder(Role.ADMIN, Role.USER);
+
+        cpu.setRoles(List.of(Role.VIEWER, Role.USER));
+        assertThat(cpu.getRoles()).containsExactlyInAnyOrder(Role.VIEWER, Role.USER);
     }
 }

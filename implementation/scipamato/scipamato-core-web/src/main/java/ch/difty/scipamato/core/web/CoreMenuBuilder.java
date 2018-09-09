@@ -45,9 +45,11 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         AssertAs.notNull(page, "page");
 
         newMenu(navbar, page, "papers", GlyphIconType.paperclip, l -> addPaperMenuEntries(l, page));
-        newMenu(navbar, page, "newsletters", GlyphIconType.book, l -> addNewsletterMenuEntries(l, page));
-        newMenu(navbar, page, "sync", GlyphIconType.export, l -> addSyncMenuEntries(l, page));
-        newMenu(navbar, page, "preferences", GlyphIconType.user, l -> addPreferencesMenuEntries(l, page));
+        if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
+            newMenu(navbar, page, "newsletters", GlyphIconType.book, l -> addNewsletterMenuEntries(l, page));
+            newMenu(navbar, page, "sync", GlyphIconType.export, l -> addSyncMenuEntries(l, page));
+            newMenu(navbar, page, "preferences", GlyphIconType.user, l -> addPreferencesMenuEntries(l, page));
+        }
 
         addExternalLink(navbar, new StringResourceModel("menu.help.url", page, null).getString(),
             new StringResourceModel("menu.help", page, null).getString(), GlyphIconType.questionsign,
@@ -61,7 +63,8 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
     private void addPaperMenuEntries(final List<AbstractLink> links, Page page) {
         final String labelParent = "menu.papers.";
         addEntryToMenu(labelParent + "paper", page, PaperListPage.class, GlyphIconType.list, links);
-        addEntryToMenu(labelParent + "search", page, PaperSearchPage.class, GlyphIconType.search, links);
+        if (hasOneOfRoles(Roles.ADMIN, Roles.USER))
+            addEntryToMenu(labelParent + "search", page, PaperSearchPage.class, GlyphIconType.search, links);
     }
 
     private void addNewsletterMenuEntries(final List<AbstractLink> links, Page page) {
