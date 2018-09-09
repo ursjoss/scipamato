@@ -52,6 +52,21 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
+
+.Changed
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
+[[v0.9.0]]
+== [0.9.0] -- 2018-09-09
+
+.Added
 - 09/41 - Public: Include configuration for commercial font IcoMoon
 - 09/43 - Core: Allow users to modify their user record including password
 - 09/43 - Core: Allow admins to manage user accounts and their roles
@@ -61,10 +76,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 09/45 - Public: BootstrapMultiselect configurable to switch from 'contains'
                   to 'startsWith/begins' search strategy (wicket-bootstrap-2.0.3)
 - Use LocalDateTextField now bundled with wicket-bootstrap-2.0.3
-
-.Deprecated
-
-.Removed
 
 .Fixed
 - 09/49 - Core: Fix Summary Report - reset swapped fields
