@@ -1,9 +1,10 @@
 package ch.difty.scipamato.core.persistence.user;
 
 import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
+import static java.util.stream.Collectors.toSet;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -11,7 +12,10 @@ import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.annotation.*;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -35,7 +39,6 @@ import ch.difty.scipamato.core.persistence.UserRepository;
  */
 @Repository
 @Slf4j
-@CacheConfig(cacheNames = "userByName")
 public class JooqUserRepo extends
     JooqEntityRepo<ScipamatoUserRecord, User, Integer, ch.difty.scipamato.core.db.tables.ScipamatoUser, UserRecordMapper, UserFilter>
     implements UserRepository {
@@ -86,7 +89,7 @@ public class JooqUserRepo extends
     @Override
     protected void enrichAssociatedEntitiesOf(final User entity, final String languageCode) {
         if (entity != null) {
-            final List<Role> roles = userRoleRepo.findRolesForUser(entity.getId());
+            final Set<Role> roles = userRoleRepo.findRolesForUser(entity.getId());
             if (CollectionUtils.isNotEmpty(roles))
                 entity.setRoles(roles);
         }
@@ -109,16 +112,16 @@ public class JooqUserRepo extends
 
     private void deleteObsoleteRolesFrom(final User user) {
         final Integer userId = user.getId();
-        final List<Integer> roleIds = user
+        final Set<Integer> roleIds = user
             .getRoles()
             .stream()
             .map(Role::getId)
-            .collect(Collectors.toList());
+            .collect(toSet());
         userRoleRepo.deleteAllRolesExcept(userId, roleIds);
     }
 
     @Override
-    @Cacheable
+    @Cacheable(value = "userByName")
     public User findByUserName(final String userName) {
         final List<User> users = getDsl()
             .selectFrom(SCIPAMATO_USER)
@@ -134,13 +137,15 @@ public class JooqUserRepo extends
     }
 
     @Override
-    @CachePut(cacheNames = "userByName", key = "#user.userName")
+    @Caching(put = { @CachePut(cacheNames = "userByName", key = "#user.userName"),
+        @CachePut(cacheNames = "userRolesByUserId", key = "#user.id") })
     public User add(final User user) {
         return super.add(user);
     }
 
     @Override
-    @CachePut(cacheNames = "userByName", key = "#user.userName")
+    @Caching(put = { @CachePut(cacheNames = "userByName", key = "#user.userName"),
+        @CachePut(cacheNames = "userRolesByUserId", key = "#user.id") })
     public User add(final User user, final String languageCode) {
         return super.add(user, languageCode);
     }
@@ -153,15 +158,15 @@ public class JooqUserRepo extends
     }
 
     @Override
-    @Caching(put = { @CachePut(cacheNames = "userByName", key = "#user.userName") }, evict = {
-        @CacheEvict(cacheNames = "userRolesByUserId", key = "#user.id", beforeInvocation = true) })
+    @Caching(evict = { @CacheEvict(cacheNames = "userByName", allEntries = true),
+        @CacheEvict(cacheNames = "userRolesByUserId", allEntries = true) })
     public User update(final User user) {
         return super.update(user);
     }
 
     @Override
-    @Caching(put = { @CachePut(cacheNames = "userByName", key = "#user.userName") }, evict = {
-        @CacheEvict(cacheNames = "userRolesByUserId", key = "#user.id", beforeInvocation = true) })
+    @Caching(evict = { @CacheEvict(cacheNames = "userByName", allEntries = true),
+        @CacheEvict(cacheNames = "userRolesByUserId", allEntries = true) })
     public User update(final User user, final String languageCode) {
         return super.update(user, languageCode);
     }

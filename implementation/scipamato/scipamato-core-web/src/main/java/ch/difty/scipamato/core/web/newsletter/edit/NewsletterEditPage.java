@@ -46,6 +46,7 @@ import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 @MountPath("newsletters/entry")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
+@SuppressWarnings({ "WicketForgeJavaIdInspection", "SameParameterValue" })
 public class NewsletterEditPage extends BasePage<Newsletter> {
 
     private static final int RESULT_PAGE_SIZE = 12;
@@ -114,6 +115,7 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
 
     @Override
     public void onEvent(final IEvent<?> event) {
+        super.onEvent(event);
         if (event
                 .getPayload()
                 .getClass() == NewsletterChangeEvent.class) {
@@ -149,7 +151,7 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
     }
 
     private void queueForm(final String id) {
-        Form<Newsletter> form = new Form<Newsletter>(id, new CompoundPropertyModel<>(getModel())) {
+        Form<Newsletter> form = new Form<>(id, new CompoundPropertyModel<>(getModel())) {
 
             @Override
             protected void onSubmit() {
@@ -161,8 +163,8 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
     }
 
     private void makeAndQueuePublicationStatusSelectBox(final String id) {
-        BootstrapSelect<PublicationStatus> publicationStatus = new BootstrapSelect<PublicationStatus>(id,
-            new PropertyModel(getModel(), PUBLICATION_STATUS.getName()), Arrays.asList(PublicationStatus.values()),
+        BootstrapSelect<PublicationStatus> publicationStatus = new BootstrapSelect<>(id,
+            new PropertyModel<>(getModel(), PUBLICATION_STATUS.getName()), Arrays.asList(PublicationStatus.values()),
             new EnumChoiceRenderer<>(this)) {
 
             @Override

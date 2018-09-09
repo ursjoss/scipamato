@@ -24,6 +24,7 @@ public class TestUserDetailsService implements UserDetailsService {
 
     private static final String ADMIN    = "testadmin";
     private static final String USER     = "testuser";
+    private static final String VIEWER   = "testviewer";
     // BCrypt encrypted password 'secretpw' as defined in {@link WicketTest}
     private static final String PASSWORD = "$2a$08$O/YZvh/jf1RWaZkpLPzfUeCkVczIaGLV0.vTKDCbxb0qn37qpj.Je";
 
@@ -32,6 +33,7 @@ public class TestUserDetailsService implements UserDetailsService {
     public TestUserDetailsService() {
         users.put(ADMIN, new User(ADMIN, PASSWORD, Arrays.asList(new Role("ROLE_ADMIN"), new Role("ROLE_USER"))));
         users.put(USER, new User(USER, PASSWORD, Collections.singletonList(new Role("ROLE_USER"))));
+        users.put(VIEWER, new User(VIEWER, PASSWORD, Collections.singletonList(new Role("ROLE_VIEWER"))));
     }
 
     @Override

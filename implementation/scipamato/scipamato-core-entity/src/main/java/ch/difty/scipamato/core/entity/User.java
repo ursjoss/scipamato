@@ -2,9 +2,9 @@ package ch.difty.scipamato.core.entity;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -42,12 +42,11 @@ public class User extends IdScipamatoEntity<Integer> {
     @NotNull
     private String email;
 
-    @NotNull
     private String password;
 
     private boolean enabled;
 
-    private final List<Role> roles = new ArrayList<>();
+    private final Set<Role> roles = new HashSet<>();
 
     public enum UserFields implements FieldEnumType {
         USER_NAME("userName"),
@@ -71,7 +70,7 @@ public class User extends IdScipamatoEntity<Integer> {
     }
 
     public User(final int id, final String userName, final String firstName, final String lastName, final String email,
-        final String password, final boolean enabled, final List<Role> roles) {
+        final String password, final boolean enabled, final Set<Role> roles) {
         setId(id);
         this.userName = userName;
         this.firstName = firstName;
@@ -98,7 +97,7 @@ public class User extends IdScipamatoEntity<Integer> {
         setRoles(user.getRoles());
     }
 
-    public void setRoles(final List<Role> roles) {
+    public void setRoles(final Set<Role> roles) {
         this.roles.clear();
         if (roles != null)
             this.roles.addAll(roles);

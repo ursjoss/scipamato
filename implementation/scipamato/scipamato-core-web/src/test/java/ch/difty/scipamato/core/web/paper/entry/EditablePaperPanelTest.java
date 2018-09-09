@@ -25,6 +25,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
+import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
@@ -116,7 +117,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
         p.setOriginalAbstract("oa");
 
-        return new EditablePaperPanel(PANEL_ID, Model.of(p), callingPageMock, SEARCH_ORDER_ID, SHOW_EXCLUDED) {
+        return new EditablePaperPanel(PANEL_ID, Model.of(p), callingPageMock, SEARCH_ORDER_ID, SHOW_EXCLUDED,
+            Mode.EDIT) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -320,7 +322,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
         // first choice selected -> keep mainCode as is
         int[] indices = new int[2];
-        indices[0] = 0;
         formTester.selectMultiple("codesClass1", indices, true);
         getTester().executeAjaxEvent(formId + "codesClass1", "change");
         assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("1F");
@@ -663,7 +664,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     private EditablePaperPanel makePanelWithEmptyPaper(Integer pmId) {
         Paper p = new Paper();
         p.setPmId(pmId);
-        return new EditablePaperPanel(PANEL_ID, Model.of(p), null, null, SHOW_EXCLUDED) {
+        return new EditablePaperPanel(PANEL_ID, Model.of(p), null, null, SHOW_EXCLUDED, Mode.EDIT) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -679,12 +680,13 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         };
     }
 
+    @SuppressWarnings("SameParameterValue")
     private EditablePaperPanel makePanelWith(Integer pmId, PageReference callingPage, Long searchOrderId,
         boolean showExcluded) {
         Paper p = new Paper();
         p.setId(1L);
         p.setPmId(pmId);
-        return new EditablePaperPanel(PANEL_ID, Model.of(p), callingPage, searchOrderId, showExcluded) {
+        return new EditablePaperPanel(PANEL_ID, Model.of(p), callingPage, searchOrderId, showExcluded, Mode.EDIT) {
             private static final long serialVersionUID = 1L;
 
             @Override

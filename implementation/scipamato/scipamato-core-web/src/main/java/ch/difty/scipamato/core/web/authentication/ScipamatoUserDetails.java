@@ -1,9 +1,10 @@
 package ch.difty.scipamato.core.web.authentication;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +21,7 @@ public class ScipamatoUserDetails extends User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    private final List<Role> roles;
+    private final Set<Role> roles;
 
     public ScipamatoUserDetails(final User user) {
         super(user);

@@ -27,7 +27,7 @@ import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.component.SerializableSupplier;
 
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 public abstract class AbstractPage<T> extends GenericWebPage<T> {
 
     private static final long serialVersionUID = 1L;
@@ -173,12 +173,14 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     protected void queueFieldAndLabel(FormComponent<?> field, PropertyValidator<?> pv) {
         String id = field.getId();
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
-        queue(new Label(id + LABEL_TAG, labelModel));
+        final Label label = new Label(id + LABEL_TAG, labelModel);
+        queue(label);
         field.setLabel(labelModel);
         queue(field);
         if (pv != null) {
             field.add(pv);
         }
+        label.setVisible(field.isVisible());
     }
 
     protected BootstrapAjaxButton queueResponsePageButton(final String id,

@@ -28,12 +28,15 @@ public class UserUpdateSetStepSetter implements UpdateSetStepSetter<ScipamatoUse
     public UpdateSetMoreStep<ScipamatoUserRecord> setFieldsFor(UpdateSetFirstStep<ScipamatoUserRecord> step, User e) {
         AssertAs.notNull(step, "step");
         AssertAs.notNull(e, "entity");
-        return step
+        final UpdateSetMoreStep<ScipamatoUserRecord> step1 = step
             .set(SCIPAMATO_USER.USER_NAME, e.getUserName())
             .set(SCIPAMATO_USER.FIRST_NAME, e.getFirstName())
             .set(SCIPAMATO_USER.LAST_NAME, e.getLastName())
-            .set(SCIPAMATO_USER.EMAIL, e.getEmail())
-            .set(SCIPAMATO_USER.PASSWORD, e.getPassword())
+            .set(SCIPAMATO_USER.EMAIL, e.getEmail());
+        final String password = e.getPassword();
+        final UpdateSetMoreStep<ScipamatoUserRecord> step2 =
+            password != null ? step1.set(SCIPAMATO_USER.PASSWORD, password) : step1;
+        return step2
             .set(SCIPAMATO_USER.ENABLED, e.isEnabled())
 
             .set(SCIPAMATO_USER.CREATED, DateUtils.tsOf(e.getCreated()))

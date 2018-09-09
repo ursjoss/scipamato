@@ -7,6 +7,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.springframework.stereotype.Component;
 
 import ch.difty.scipamato.common.AssertAs;
@@ -20,6 +21,8 @@ import ch.difty.scipamato.core.web.newsletter.topic.NewsletterTopicListPage;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 import ch.difty.scipamato.core.web.paper.search.PaperSearchPage;
 import ch.difty.scipamato.core.web.sync.RefDataSyncPage;
+import ch.difty.scipamato.core.web.user.UserEditPage;
+import ch.difty.scipamato.core.web.user.UserListPage;
 
 /**
  * Adds the SciPaMaTo-Core menus to the navbar for the base page.
@@ -42,8 +45,11 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         AssertAs.notNull(page, "page");
 
         newMenu(navbar, page, "papers", GlyphIconType.paperclip, l -> addPaperMenuEntries(l, page));
-        newMenu(navbar, page, "newsletters", GlyphIconType.book, l -> addNewsletterMenuEntries(l, page));
-        newMenu(navbar, page, "sync", GlyphIconType.export, l -> addSyncMenuEntries(l, page));
+        if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
+            newMenu(navbar, page, "newsletters", GlyphIconType.book, l -> addNewsletterMenuEntries(l, page));
+            newMenu(navbar, page, "sync", GlyphIconType.export, l -> addSyncMenuEntries(l, page));
+            newMenu(navbar, page, "preferences", GlyphIconType.user, l -> addPreferencesMenuEntries(l, page));
+        }
 
         addExternalLink(navbar, new StringResourceModel("menu.help.url", page, null).getString(),
             new StringResourceModel("menu.help", page, null).getString(), GlyphIconType.questionsign,
@@ -57,7 +63,8 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
     private void addPaperMenuEntries(final List<AbstractLink> links, Page page) {
         final String labelParent = "menu.papers.";
         addEntryToMenu(labelParent + "paper", page, PaperListPage.class, GlyphIconType.list, links);
-        addEntryToMenu(labelParent + "search", page, PaperSearchPage.class, GlyphIconType.search, links);
+        if (hasOneOfRoles(Roles.ADMIN, Roles.USER))
+            addEntryToMenu(labelParent + "search", page, PaperSearchPage.class, GlyphIconType.search, links);
     }
 
     private void addNewsletterMenuEntries(final List<AbstractLink> links, Page page) {
@@ -73,6 +80,23 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         final String labelParent = "menu.sync.";
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
             addEntryToMenu(labelParent + "sync", page, RefDataSyncPage.class, GlyphIconType.export, links);
+        }
+    }
+
+    private void addPreferencesMenuEntries(final List<AbstractLink> links, Page page) {
+        final String labelParent = "menu.preferences.";
+        if (hasOneOfRoles(Roles.ADMIN)) {
+            addEntryToMenu(labelParent + "users", page, UserListPage.class, GlyphIconType.paperclip, links);
+        }
+        if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
+            final PageParameters pp = new PageParameters();
+            pp.add("mode", UserEditPage.Mode.EDIT);
+            addEntryToMenu(labelParent + "profile", page, UserEditPage.class, GlyphIconType.user, links, pp);
+
+            final PageParameters pp2 = new PageParameters();
+            pp2.add("mode", UserEditPage.Mode.CHANGE_PASSWORD);
+            addEntryToMenu(labelParent + "password", page, UserEditPage.class, GlyphIconType.pencil, links, pp2);
+
         }
     }
 

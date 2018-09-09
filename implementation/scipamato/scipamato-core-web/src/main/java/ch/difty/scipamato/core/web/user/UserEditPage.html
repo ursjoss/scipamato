@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<body>
+    <wicket:extend>
+        <div class="container-fluid">
+            <form wicket:id="form">
+                <div class="form-group">
+                    <div wicket:id="userNameLabel">[User Name]</div>
+                    <input wicket:id="userName" class="form-control"></input>
+                </div>
+                <div class="form-group">
+                    <div wicket:id="firstNameLabel">[First Name]</div>
+                    <input wicket:id="firstName" class="form-control"></input>
+                </div>
+                <div class="form-group">
+                    <div wicket:id="lastNameLabel">[Last Name]</div>
+                    <input wicket:id="lastName" class="form-control"></input>
+                </div>
+                <div class="form-group">
+                    <div wicket:id="emailLabel">[Email]</div>
+                    <input type="email" wicket:id="email" class="form-control"></input>
+                </div>
+                <div class="form-group">
+                    <div wicket:id="rolesLabel"></div>
+                    <select wicket:id="roles"></select>
+                </div>
+                <div class="form-group">
+                    <div wicket:id="rolesStringLabel">[Roles]</div>
+                    <div wicket:id="rolesString" class="form-control"
+                         style="background-color: #eeeeee; opacity: 1;"></div>
+                </div>
+                <div class="form-group">
+                    <div wicket:id="enabledLabel">[Enabled]</div>
+                    <input type="checkbox" wicket:id="enabled"></input>
+                </div>
+                <div class="form-group">
+                    <div wicket:id="currentPasswordLabel">[Current Password]</div>
+                    <input type="password" wicket:id="currentPassword" class="form-control"></input>
+                </div>
+                <div class="form-group">
+                    <div wicket:id="passwordLabel">[New Password]</div>
+                    <input type="password" wicket:id="password" class="form-control"></input>
+                </div>
+                <div class="form-group">
+                    <div wicket:id="password2Label">[New Password Confirmed]</div>
+                    <input type="password" wicket:id="password2" class="form-control"></input>
+                </div>
+                <button wicket:id="submit" type="submit" class="btn btn-primary">[Submit]</button>
+            </form>
+        </div>
+    </wicket:extend>
+</body>
+</html>

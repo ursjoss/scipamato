@@ -28,11 +28,13 @@ import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.core.ScipamatoCoreApplication;
+import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.persistence.NewsletterService;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.persistence.PaperSlimService;
 import ch.difty.scipamato.core.web.authentication.LoginPage;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
+import ch.difty.scipamato.core.web.security.TestUserDetailsService;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -89,11 +91,47 @@ public abstract class WicketTest {
         when(sessionFacadeMock.getPaperIdManager()).thenReturn(itemNavigatorMock);
         Locale locale = new Locale("en_US");
         when(sessionFacadeMock.getLanguageCode()).thenReturn(locale.getLanguage());
+        when(sessionFacadeMock.hasAtLeastOneRoleOutOf(Roles.ADMIN)).thenReturn(currentUserIsAnyOf(Roles.ADMIN));
+        when(sessionFacadeMock.hasAtLeastOneRoleOutOf(Roles.USER)).thenReturn(currentUserIsAnyOf(Roles.USER));
+        when(sessionFacadeMock.hasAtLeastOneRoleOutOf(Roles.VIEWER)).thenReturn(currentUserIsAnyOf(Roles.VIEWER));
+        when(sessionFacadeMock.hasAtLeastOneRoleOutOf(Roles.ADMIN, Roles.USER)).thenReturn(
+            currentUserIsAnyOf(Roles.ADMIN, Roles.USER));
+        when(sessionFacadeMock.hasAtLeastOneRoleOutOf(Roles.USER, Roles.VIEWER)).thenReturn(
+            currentUserIsAnyOf(Roles.USER, Roles.VIEWER));
+        when(sessionFacadeMock.hasAtLeastOneRoleOutOf(Roles.ADMIN, Roles.VIEWER)).thenReturn(
+            currentUserIsAnyOf(Roles.ADMIN, Roles.VIEWER));
+        when(sessionFacadeMock.hasAtLeastOneRoleOutOf(Roles.ADMIN, Roles.USER, Roles.VIEWER)).thenReturn(
+            currentUserIsAnyOf(Roles.ADMIN, Roles.USER, Roles.VIEWER));
         getTester()
             .getSession()
             .setLocale(locale);
         setUpHook();
-        login(USERNAME, PASSWORD);
+        login(getUserName(), PASSWORD);
+    }
+
+    private boolean currentUserIsAnyOf(String... roles) {
+        for (final String role : roles) {
+            switch (getUserName()) {
+            case TestUserDetailsService.USER_ADMIN:
+                if (Roles.ADMIN.equals(role))
+                    return true;
+                break;
+            case TestUserDetailsService.USER_USER:
+                if (Roles.USER.equals(role))
+                    return true;
+                break;
+            case TestUserDetailsService.USER_VIEWER:
+                if (Roles.VIEWER.equals(role))
+                    return true;
+                break;
+            }
+        }
+        return false;
+    }
+
+    // override if necessary
+    protected String getUserName() {
+        return USERNAME;
     }
 
     /**

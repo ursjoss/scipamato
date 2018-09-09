@@ -1,6 +1,6 @@
 package ch.difty.scipamato.core.persistence.user;
 
-import java.util.List;
+import java.util.Set;
 
 import ch.difty.scipamato.core.auth.Role;
 
@@ -13,7 +13,7 @@ public interface UserRoleRepository {
      *     the id of the user to find roles for
      * @return list of {@link Role}s
      */
-    List<Role> findRolesForUser(Integer userId);
+    Set<Role> findRolesForUser(Integer userId);
 
     /**
      * Adds all {@link Role}s to the user with the provided id. If any {@link Role}
@@ -25,9 +25,9 @@ public interface UserRoleRepository {
      *     the id of the user to assign the {@link Role}s to.
      * @param roles
      *     the {@link Role}s that need to be assigned to the user.
-     * @return a list of (all) roles assigned to the user
+     * @return all roles assigned to the user
      */
-    List<Role> addNewUserRolesOutOf(Integer userId, List<Role> roles);
+    Set<Role> addNewUserRolesOutOf(Integer userId, Set<Role> roles);
 
     /**
      * Deletes any {@link Role}s the user might have assigned *except* those in the
@@ -36,8 +36,8 @@ public interface UserRoleRepository {
      * @param userId
      *     the id of the user
      * @param roleIds
-     *     a list of role ids that shall *not* be deleted
+     *     the role ids that shall *not* be deleted
      */
-    void deleteAllRolesExcept(Integer userId, List<Integer> roleIds);
+    void deleteAllRolesExcept(Integer userId, Set<Integer> roleIds);
 
 }

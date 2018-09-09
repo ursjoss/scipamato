@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.User;
@@ -29,6 +30,8 @@ public class JooqUserServiceTest {
     @Mock
     private UserRepository    repoMock;
     @Mock
+    private PasswordEncoder   passwordEncoderMock;
+    @Mock
     private UserFilter        filterMock;
     @Mock
     private PaginationContext paginationContextMock;
@@ -39,7 +42,7 @@ public class JooqUserServiceTest {
 
     @Before
     public void setUp() {
-        service = new JooqUserService(repoMock);
+        service = new JooqUserService(repoMock, passwordEncoderMock);
 
         users.add(userMock);
         users.add(userMock);
@@ -47,7 +50,7 @@ public class JooqUserServiceTest {
 
     @After
     public void tearDown() {
-        verifyNoMoreInteractions(repoMock, filterMock, paginationContextMock, userMock);
+        verifyNoMoreInteractions(repoMock, passwordEncoderMock, filterMock, paginationContextMock, userMock);
     }
 
     @Test
@@ -95,6 +98,8 @@ public class JooqUserServiceTest {
         assertThat(service.saveOrUpdate(userMock)).isEqualTo(userMock);
         verify(repoMock).add(userMock);
         verify(userMock).getId();
+        verify(userMock).getPassword();
+        verify(userMock, never()).setPassword(anyString());
     }
 
     @Test
@@ -104,6 +109,40 @@ public class JooqUserServiceTest {
         assertThat(service.saveOrUpdate(userMock)).isEqualTo(userMock);
         verify(repoMock).update(userMock);
         verify(userMock).getId();
+        verify(userMock).getPassword();
+        verify(userMock, never()).setPassword(anyString());
+    }
+
+    @Test
+    public void savingOrUpdating_withUserWithNullId_withPassword_hasRepoAddTheUserAfterEncodingThePassword() {
+        when(userMock.getId()).thenReturn(null);
+        when(userMock.getPassword()).thenReturn("foo");
+        when(passwordEncoderMock.encode("foo")).thenReturn("bar");
+        when(repoMock.add(userMock)).thenReturn(userMock);
+
+        assertThat(service.saveOrUpdate(userMock)).isEqualTo(userMock);
+
+        verify(repoMock).add(userMock);
+        verify(passwordEncoderMock).encode("foo");
+        verify(userMock).getId();
+        verify(userMock).getPassword();
+        verify(userMock).setPassword("bar");
+    }
+
+    @Test
+    public void savingOrUpdating_withUserWithNonNullId_withPassword_hasRepoUpdateTheUserAfterEncodingThePassword() {
+        when(userMock.getId()).thenReturn(17);
+        when(userMock.getPassword()).thenReturn("foo");
+        when(passwordEncoderMock.encode("foo")).thenReturn("bar");
+        when(repoMock.update(userMock)).thenReturn(userMock);
+
+        assertThat(service.saveOrUpdate(userMock)).isEqualTo(userMock);
+
+        verify(repoMock).update(userMock);
+        verify(passwordEncoderMock).encode("foo");
+        verify(userMock).getId();
+        verify(userMock).getPassword();
+        verify(userMock).setPassword("bar");
     }
 
     @Test
