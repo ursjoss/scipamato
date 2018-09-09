@@ -55,6 +55,8 @@ import ch.difty.scipamato.core.web.common.BasePage;
 public class UserEditPage extends BasePage<ChangePasswordUser> {
 
     private static final String AM_DATA_WIDTH = "data-width";
+    private static final String ROLES         = "roles";
+    private static final String ROLES_STRING  = "rolesString";
 
     private final Mode mode;
 
@@ -165,13 +167,13 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
         enabledField.setEnabled(isInAdminMode());
         queueFieldAndLabel(enabledField);
 
-        final Label rolesLabel = new Label("roles" + LABEL_TAG,
-            new StringResourceModel("roles" + LABEL_RESOURCE_TAG, this, null));
+        final Label rolesLabel = new Label(ROLES + LABEL_TAG,
+            new StringResourceModel(ROLES + LABEL_RESOURCE_TAG, this, null));
         rolesLabel.setVisible(isInAdminMode());
         queue(rolesLabel);
 
-        final BootstrapMultiSelect<Role> rolesMultiSelect = new BootstrapMultiSelect<>("roles",
-            new PropertyModel<>(getModel(), "roles"), Arrays.asList(Role.values()), new EnumChoiceRenderer<>(this));
+        final BootstrapMultiSelect<Role> rolesMultiSelect = new BootstrapMultiSelect<>(ROLES,
+            new PropertyModel<>(getModel(), ROLES), Arrays.asList(Role.values()), new EnumChoiceRenderer<>(this));
         rolesMultiSelect.with(new BootstrapSelectConfig()
             .withMultiple(true)
             .withLiveSearch(true)
@@ -180,11 +182,11 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
         rolesMultiSelect.setVisible(isInAdminMode());
         queue(rolesMultiSelect);
 
-        final Label rolesStringLabel = new Label("rolesStringLabel",
-            new StringResourceModel("rolesString.label", this, null));
+        final Label rolesStringLabel = new Label(ROLES_STRING + LABEL_TAG,
+            new StringResourceModel(ROLES_STRING + LABEL_RESOURCE_TAG, this, null));
         rolesStringLabel.setVisible(isInUserOwnedMode());
         queue(rolesStringLabel);
-        final Label rolesString = new Label("rolesString", getModelObject().getRolesString());
+        final Label rolesString = new Label(ROLES_STRING, getModelObject().getRolesString());
         rolesString.setVisible(isInUserOwnedMode());
         queue(rolesString);
 
@@ -222,15 +224,14 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
             final User unsaved = getModelObject().toUser();
             if (!canSetPasswords())
                 unsaved.setPassword(null);
-            User user = userService.saveOrUpdate(unsaved);
+            final User user = userService.saveOrUpdate(unsaved);
             if (user != null) {
                 UserEditPage.this.setModelObject(new ChangePasswordUser(user));
-                switch (mode) {
-                case CHANGE_PASSWORD:
+                if (mode == Mode.CHANGE_PASSWORD) {
                     info(new StringResourceModel("password.changed.hint", this,
                         UserEditPage.this.getModel()).getString());
-                    break;
-                default:
+
+                } else {
                     info(new StringResourceModel("save.successful.hint", this, null)
                         .setParameters(getNullSafeId(), user.getUserName())
                         .getString());

@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Set;
 
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
