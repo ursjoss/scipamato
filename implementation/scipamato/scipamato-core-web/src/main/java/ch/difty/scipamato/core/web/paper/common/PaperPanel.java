@@ -233,7 +233,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                 super.onInitialize();
                 add(new ButtonBehavior()
                     .setType(Buttons.Type.Info)
-                    .setSize(Size.Large));
+                    .setSize(Size.Medium));
             }
 
             @Override
@@ -485,7 +485,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                     add(new ButtonBehavior()
                         .setType(Buttons.Type.Info)
                         .setBlock(true)
-                        .setSize(Size.Large));
+                        .setSize(Size.Medium));
             }
 
             @Override
