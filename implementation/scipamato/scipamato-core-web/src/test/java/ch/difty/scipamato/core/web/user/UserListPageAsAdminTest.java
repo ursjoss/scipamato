@@ -66,8 +66,8 @@ public class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
     protected void assertSpecificComponents() {
         assertFilterForm("filterForm");
 
-        final String[] headers = { "User Name", "First Name", "Last Name", "Email" };
-        final String[] values = { "user", "first", "last", "foo@bar.baz" };
+        final String[] headers = { "User Name", "First Name", "Last Name", "Email", "Enabled" };
+        final String[] values = { "user", "first", "last", "foo@bar.baz", "Enabled" };
         assertResultTable("results", headers, values);
 
         verify(userServiceMock).countByFilter(isA(UserFilter.class));
@@ -140,21 +140,4 @@ public class UserListPageAsAdminTest extends BasePageTest<UserListPage> {
         verify(userServiceMock).findPageByFilter(isA(UserFilter.class), isA(PaginationRequest.class));
     }
 
-    @Test
-    public void clickingRemoveIcon_delegatesRemovalToServiceAndRefreshesResultPanel() {
-        getTester().startPage(getPageClass());
-        getTester().assertRenderedPage(getPageClass());
-
-        getTester().clickLink("results:body:rows:1:cells:5:cell:link");
-
-        getTester().assertComponentOnAjaxResponse("results");
-        getTester().assertComponentOnAjaxResponse("feedback");
-
-        getTester().assertInfoMessages("User user was deleted successfully.");
-
-        verify(userServiceMock).remove(user);
-
-        verify(userServiceMock, times(2)).countByFilter(isA(UserFilter.class));
-        verify(userServiceMock, times(2)).findPageByFilter(isA(UserFilter.class), isA(PaginationRequest.class));
-    }
 }

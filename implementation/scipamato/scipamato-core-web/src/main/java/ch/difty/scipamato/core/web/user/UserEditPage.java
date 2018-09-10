@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.confirmation.ConfirmationBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -217,6 +218,18 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
                 doOnSubmit();
             }
         });
+
+        final BootstrapButton deleteButton = new BootstrapButton("delete", new StringResourceModel("delete.label"),
+            Buttons.Type.Default) {
+            @Override
+            public void onSubmit() {
+                super.onSubmit();
+                doOnDelete();
+            }
+        };
+        deleteButton.add(new ConfirmationBehavior());
+        queue(deleteButton);
+
     }
 
     private void doOnSubmit() {
@@ -253,6 +266,24 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
                 .getString();
             log.error(msg);
             error(msg);
+        }
+    }
+
+    private void doOnDelete() {
+        final User user = getModelObject().toUser();
+        if (user != null) {
+            final String userName = user.getUserName();
+            try {
+                userService.remove(user);
+                info(new StringResourceModel("delete.successful.hint", this, null).setParameters(userName));
+                setResponsePage(UserListPage.class);
+            } catch (Exception ex) {
+                String msg = new StringResourceModel("delete.error.hint", this, null)
+                    .setParameters(userName, ex.getMessage())
+                    .getString();
+                log.error(msg);
+                error(msg);
+            }
         }
     }
 

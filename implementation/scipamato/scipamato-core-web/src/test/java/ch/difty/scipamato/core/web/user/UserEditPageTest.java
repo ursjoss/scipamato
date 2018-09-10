@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.core.auth.Role;
 import ch.difty.scipamato.core.entity.User;
+import ch.difty.scipamato.core.entity.search.UserFilter;
 import ch.difty.scipamato.core.persistence.UserService;
 import ch.difty.scipamato.core.web.CorePageParameters;
 import ch.difty.scipamato.core.web.common.BasePageTest;
@@ -98,6 +99,7 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
         assertVisiblePasswordFieldAndLabel(b + "password2", null, "Confirm Password", true);
 
         getTester().assertComponent(b + "submit", BootstrapButton.class);
+        getTester().assertComponent(b + "delete", BootstrapButton.class);
 
         verify(userServiceMock).findById(1);
     }
@@ -403,5 +405,43 @@ public class UserEditPageTest extends BasePageTest<UserEditPage> {
 
         verify(userServiceMock).saveOrUpdate(argThat(new UserMatcher(PASSWORD2)));
         verify(userServiceMock, never()).findById(1);
+    }
+
+    @Test
+    public void deleting_delegatesToService() {
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE));
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("delete");
+
+        getTester().assertRenderedPage(UserListPage.class);
+
+        getTester().assertNoErrorMessage();
+
+        verify(userServiceMock).findById(1);
+        verify(userServiceMock).remove(user);
+        // by UserListPage
+        verify(userServiceMock).countByFilter(isA(UserFilter.class));
+    }
+
+    @Test
+    public void deleting_withExceptionWhileremoving_delegatesToService() {
+        doThrow(new RuntimeException("foo"))
+            .when(userServiceMock)
+            .remove(user);
+
+        getTester().startPage(newUserEditPageInMode(UserEditPage.Mode.MANAGE));
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("delete");
+
+        getTester().assertRenderedPage(UserEditPage.class);
+
+        getTester().assertErrorMessages("There was an unexpected issue while deleting user user: foo");
+
+        verify(userServiceMock).findById(1);
+        verify(userServiceMock).remove(user);
     }
 }
