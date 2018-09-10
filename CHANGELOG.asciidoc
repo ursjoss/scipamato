@@ -60,6 +60,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- 09/43 - Core: Fix caching behavior for user role cache. Fixes internal error after adding user.
 
 .Security
 

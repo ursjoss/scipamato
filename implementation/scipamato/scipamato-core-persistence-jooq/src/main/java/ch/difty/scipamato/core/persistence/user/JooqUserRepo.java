@@ -137,15 +137,15 @@ public class JooqUserRepo extends
     }
 
     @Override
-    @Caching(put = { @CachePut(cacheNames = "userByName", key = "#user.userName"),
-        @CachePut(cacheNames = "userRolesByUserId", key = "#user.id") })
+    @Caching(put = { @CachePut(cacheNames = "userByName", key = "#user.userName") }, evict = {
+        @CacheEvict(cacheNames = "userRolesByUserId", allEntries = true) })
     public User add(final User user) {
         return super.add(user);
     }
 
     @Override
-    @Caching(put = { @CachePut(cacheNames = "userByName", key = "#user.userName"),
-        @CachePut(cacheNames = "userRolesByUserId", key = "#user.id") })
+    @Caching(put = { @CachePut(cacheNames = "userByName", key = "#user.userName") }, evict = {
+        @CacheEvict(cacheNames = "userRolesByUserId", allEntries = true) })
     public User add(final User user, final String languageCode) {
         return super.add(user, languageCode);
     }
