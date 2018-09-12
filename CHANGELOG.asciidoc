@@ -55,6 +55,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Public: French translation of the PupblicPaperDetailPage
 
 .Changed
+- Bumped dependency versions: spring-boot-starter, mockito, byte-buddy, equalsverifier, sonar-maven-plugin
 
 .Deprecated
 
