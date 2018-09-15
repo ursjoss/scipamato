@@ -24,6 +24,7 @@ import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.newsletter.edit.NewsletterEditPage;
 
+@SuppressWarnings("SameParameterValue")
 public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
 
     private Newsletter newsletterInProgress = Newsletter
@@ -107,7 +108,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
         int colIdx = 1;
         for (final String value : values)
             getTester().assertLabel(b + ":body:rows:" + rowIdx + ":cells:" + colIdx + ":cell" + (
-                colIdxAsLink != null && colIdx++ == colIdxAsLink.intValue() ? ":link:label" : ""), value);
+                colIdxAsLink != null && colIdx++ == colIdxAsLink ? ":link:label" : ""), value);
     }
 
     @Test

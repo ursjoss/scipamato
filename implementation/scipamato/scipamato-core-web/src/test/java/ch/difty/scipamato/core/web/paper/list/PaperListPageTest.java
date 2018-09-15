@@ -14,7 +14,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarExternalLink;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -43,6 +42,7 @@ import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 import ch.difty.scipamato.core.web.security.TestUserDetailsService;
 
+@SuppressWarnings("SameParameterValue")
 public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
     private static final String LC = "en_us";
@@ -94,7 +94,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         assertMenuEntries();
 
         verify(paperSlimServiceMock, times(2)).countByFilter(isA(PaperFilter.class));
-        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     private void assertSearchForm(String b) {
@@ -127,8 +127,8 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
         // Note: Only one menu is open - we're unable to see the other submenu items without clicking.
         assertTopLevelMenu(0, "Left", "Papers");
-        assertNestedMenu(0, 0, "Left", NavbarButton.class, "Papers");
-        assertNestedMenu(0, 1, "Left", NavbarButton.class, "Search");
+        assertNestedMenu(0, 0, "Left", "Papers");
+        assertNestedMenu(0, 1, "Left", "Search");
         // TODO check how to get the test evaluate with user admin - showing all menu entries
         // assertTopLevelMenu(1, "Left", "Newsletters");
         // assertTopLevelMenu(2, "Left", "Synchronize");
@@ -137,11 +137,10 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
             "https://github.com/ursjoss/scipamato/wiki/");
         assertExternalLink("navbar:container:collapse:navRightListEnclosure:navRightList:1:component",
             "https://github.com/ursjoss/scipamato/blob/master/CHANGELOG.asciidoc");
-        assertPageLinkButton(2, "Right", NavbarButton.class, "Logout");
+        assertPageLinkButton(2, "Right", "Logout");
     }
 
-    private void assertPageLinkButton(int index, String position, Class<? extends Component> expectedComponentClass,
-        String expectedLabelText) {
+    private void assertPageLinkButton(int index, String position, String expectedLabelText) {
         String path = "navbar:container:collapse:nav" + position + "ListEnclosure:nav" + position + "List:" + index
                       + ":component";
         getTester().assertComponent(path, NavbarButton.class);
@@ -155,8 +154,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         getTester().assertLabel(path + ":label", expectedLabelText);
     }
 
-    private void assertNestedMenu(int topLevelIndex, int menuIndex, String position,
-        Class<? extends Component> expectedComponentClass, String expectedLabelText) {
+    private void assertNestedMenu(int topLevelIndex, int menuIndex, String position, String expectedLabelText) {
         String path =
             "navbar:container:collapse:nav" + position + "ListEnclosure:nav" + position + "List:" + topLevelIndex
             + ":component:dropdown-menu:buttons:" + menuIndex + ":button";
@@ -191,7 +189,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         verify(codeClassServiceMock).find(LC);
         for (CodeClassId ccid : CodeClassId.values())
             verify(codeServiceMock).findCodesOfClass(ccid, LC);
-        verify(paperServiceMock, times(3)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(5)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -212,17 +210,16 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         getTester().assertComponent(b + ":submit", BootstrapAjaxButton.class);
 
         verify(paperSlimServiceMock, times(2)).countByFilter(isA(PaperFilter.class));
-        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     @Test
     public void onXmlPasteModalPanelClose_withNullContent_doesNotPersists() {
-        String content = null;
-        makePage().onXmlPasteModalPanelClose(content, mock(AjaxRequestTarget.class));
+        makePage().onXmlPasteModalPanelClose(null, mock(AjaxRequestTarget.class));
 
         verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
-        verify(paperServiceMock, times(3)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -232,7 +229,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
         verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
-        verify(paperServiceMock, times(3)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -246,7 +243,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
         // The third call to findPageOfIds... is to update the Navigateable, the fourth
         // one because of the page redirect
-        verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(5)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     private ServiceResult makeServiceResult() {
@@ -273,7 +270,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
         verify(paperSlimServiceMock, times(2)).countByFilter(isA(PaperFilter.class));
         verify(paperSlimServiceMock).findPageByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
-        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
         verify(paperServiceMock).findByNumber(number, LC);
         verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
         // from PaperEntryPage

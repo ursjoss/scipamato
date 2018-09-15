@@ -49,7 +49,9 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
      * Instantiate the provider with the filter and the number of rows per page.
      *
      * @param filterState
+     *     the filter providing the creteria
      * @param rowsPerPage
+     *     number of rows to show in the table
      */
     AbstractPaperSlimProvider(final F filterState, final Integer rowsPerPage) {
         this.filterState = filterState;
