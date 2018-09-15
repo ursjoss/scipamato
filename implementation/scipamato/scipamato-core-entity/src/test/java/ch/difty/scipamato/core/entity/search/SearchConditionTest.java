@@ -1081,4 +1081,9 @@ public class SearchConditionTest {
         sc1.setNewsletterTopic(null);
         assertThat(sc1.getNewsletterTopicId()).isNull();
     }
+
+    @Test
+    public void getNewsletterIssue_returnsNull() {
+        assertThat(sc1.getNewsletterIssue()).isNull();
+    }
 }

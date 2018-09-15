@@ -244,26 +244,39 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                setVisible(isEditMode() && (!isAssociatedWithNewsletter() || isAssociatedWithWipNewsletter()));
-                add(new AttributeModifier(TITLE_ATTR, getTitleModel()));
+                setVisible(shallBeVisible());
+                setEnabled(shallBeEnabled());
+                add(new AttributeModifier(TITLE_ATTR, getTitleResourceModel()));
                 setIconType(getIconType());
             }
 
-            private StringResourceModel getTitleModel() {
-                String key;
-                if (!isAssociatedWithNewsletter())
-                    key = "modNewsletterAssociation-add.label";
-                else if (isAssociatedWithWipNewsletter())
-                    key = "modNewsletterAssociation-del.label";
-                else
-                    key = "";
-                return new StringResourceModel(key, this, null);
+            // Hide if in SearchMode.
+            // Otherwise show if we have an open newsletter or if it is already assigned to a (closed) newsletter
+            private boolean shallBeVisible() {
+                return !isSearchMode() && (isaNewsletterInStatusWip() || isAssociatedWithNewsletter());
             }
 
+            private boolean shallBeEnabled() {
+                return !isAssociatedWithNewsletter() || isAssociatedWithWipNewsletter();
+            }
+
+            private StringResourceModel getTitleResourceModel() {
+                return new StringResourceModel("modNewsletterAssociation-" + getTitleKey() + ".title", this,
+                    PaperPanel.this.getModel());
+            }
+
+            private String getTitleKey() {
+                if (!isAssociatedWithNewsletter())
+                    return "add";
+                return isAssociatedWithWipNewsletter() ? "del" : "closed";
+            }
+
+            // Show the + icon if not assigned to a newsletter yet
+            // Ohterwise: Show the open envelope if assigned to current, closed envelope if assigned to closed nl.
             private IconType getIconType() {
                 if (!isAssociatedWithNewsletter())
                     return FontAwesomeIconType.plus_square;
-                else if (isAssociatedWithNewsletter())
+                else if (isAssociatedWithWipNewsletter())
                     return FontAwesomeIconType.envelope_open_o;
                 else
                     return FontAwesomeIconType.envelope_o;
@@ -896,6 +909,8 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     protected abstract boolean isAssociatedWithNewsletter();
 
     protected abstract boolean isAssociatedWithWipNewsletter();
+
+    protected abstract boolean isaNewsletterInStatusWip();
 
     protected abstract void modifyNewsletterAssociation(final AjaxRequestTarget target);
 

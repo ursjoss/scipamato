@@ -52,6 +52,7 @@ import ch.difty.scipamato.core.entity.PaperAttachment;
 import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.logic.parsing.AuthorParser;
 import ch.difty.scipamato.core.logic.parsing.AuthorParserFactory;
+import ch.difty.scipamato.core.persistence.NewsletterService;
 import ch.difty.scipamato.core.persistence.PaperService;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.PubmedArticleService;
@@ -91,6 +92,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @SpringBean
     private PageFactory pageFactory;
+
+    @SpringBean
+    private NewsletterService newsletterService;
 
     @SpringBean
     private ScipamatoWebSessionFacade sessionFacade;
@@ -785,4 +789,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         }
     }
 
+    @Override
+    protected boolean isaNewsletterInStatusWip() {
+        return !newsletterService.canCreateNewsletterInProgress();
+    }
 }

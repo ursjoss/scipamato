@@ -35,4 +35,9 @@ public interface NewsletterAware {
      */
     String getNewsletterHeadline();
 
+    /**
+     * @return the issue of the newsletter assigned to the paper
+     */
+    String getNewsletterIssue();
+
 }

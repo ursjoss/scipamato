@@ -75,7 +75,6 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
         formTester.submit("submit");
 
         verify(newsletterServiceMock).saveOrUpdate(isA(Newsletter.class));
-        verify(newsletterServiceMock, times(2)).canCreateNewsletterInProgress();
     }
 
     @Test
@@ -85,7 +84,6 @@ public class NewsletterEditPageTest extends BasePageTest<NewsletterEditPage> {
 
         getTester().assertDisabled("form:publicationStatus");
 
-        verify(newsletterServiceMock).canCreateNewsletterInProgress();
         getTester().assertNoErrorMessage();
         getTester().assertNoInfoMessage();
     }

@@ -639,4 +639,9 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, Ne
     public String getNewsletterHeadline() {
         return newsletterHeadline;
     }
+
+    @Override
+    public String getNewsletterIssue() {
+        return null;
+    }
 }

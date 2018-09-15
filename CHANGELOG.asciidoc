@@ -65,6 +65,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 09/43 - Core: Fix caching behavior for user role cache. Fixes internal error after adding user.
 - 09/46 - Core: Improve layout of PaperEntryPage and ResultPanel
 - 09/47 - Core/Public: Fix sort order of papers when paging through the paper detail pages
+- Fixed adding/removing papers from newsletters
 
 .Security
 

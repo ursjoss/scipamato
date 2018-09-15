@@ -109,4 +109,9 @@ public abstract class SearchablePaperPanel extends PaperPanel<SearchCondition> {
     protected void modifyNewsletterAssociation(final AjaxRequestTarget target) {
         // no-op
     }
+
+    @Override
+    protected boolean isaNewsletterInStatusWip() {
+        return false;
+    }
 }

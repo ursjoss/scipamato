@@ -27,31 +27,44 @@ class JooqNewsletterService extends JooqEntityService<Integer, Newsletter, Newsl
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional()
     public void mergePaperIntoWipNewsletter(final long paperId) {
         mergePaperIntoWipNewsletter(paperId, null);
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional()
     public void mergePaperIntoWipNewsletter(final long paperId, final Integer newsletterTopicId) {
         final Optional<Newsletter> opt = getRepository().getNewsletterInStatusWorkInProgress();
-        if (opt.isPresent())
-            getRepository().mergePaperIntoNewsletter(opt
-                .get()
-                .getId(), paperId, newsletterTopicId, "en");
+        opt.ifPresent(
+            newsletter -> getRepository().mergePaperIntoNewsletter(newsletter.getId(), paperId, newsletterTopicId,
+                "en"));
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional()
     public boolean removePaperFromWipNewsletter(final long paperId) {
         final Optional<Newsletter> opt = getRepository().getNewsletterInStatusWorkInProgress();
-        if (!opt.isPresent())
-            return false;
-        else
-            return getRepository().removePaperFromNewsletter(opt
-                .get()
-                .getId(), paperId) > 0;
+        return opt
+            .filter(newsletter -> getRepository().removePaperFromNewsletter(newsletter.getId(), paperId) > 0)
+            .isPresent();
     }
 
+    @Override
+    public Newsletter saveOrUpdate(final Newsletter entity) {
+        if (entity
+            .getPublicationStatus()
+            .isInProgress()) {
+            final Optional<Newsletter> wipOption = getRepository().getNewsletterInStatusWorkInProgress();
+            if (wipOption.isPresent()) {
+                final int savedWipId = wipOption
+                    .get()
+                    .getId();
+                if ((entity.getId() == null) || (entity.getId() != savedWipId)) {
+                    throw new IllegalArgumentException("newsletter.onlyOneInStatusWipAllowed");
+                }
+            }
+        }
+        return super.saveOrUpdate(entity);
+    }
 }

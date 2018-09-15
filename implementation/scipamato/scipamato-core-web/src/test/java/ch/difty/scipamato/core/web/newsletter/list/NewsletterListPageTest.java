@@ -123,7 +123,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
 
         verify(newsletterServiceMock).countByFilter(isA(NewsletterFilter.class));
         verify(newsletterServiceMock).findPageByFilter(isA(NewsletterFilter.class), isA(PaginationRequest.class));
-        verify(newsletterServiceMock, times(2)).canCreateNewsletterInProgress();
+        verify(newsletterServiceMock).canCreateNewsletterInProgress();
     }
 
     @Test
@@ -144,7 +144,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
 
         verify(newsletterServiceMock).countByFilter(isA(NewsletterFilter.class));
         verify(newsletterServiceMock).findPageByFilter(isA(NewsletterFilter.class), isA(PaginationRequest.class));
-        verify(newsletterServiceMock, times(2)).canCreateNewsletterInProgress();
+        verify(newsletterServiceMock).canCreateNewsletterInProgress();
     }
 
     @Test

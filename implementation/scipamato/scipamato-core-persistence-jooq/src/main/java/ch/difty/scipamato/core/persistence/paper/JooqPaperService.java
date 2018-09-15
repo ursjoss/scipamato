@@ -165,6 +165,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         getRepository().delete(ids);
     }
 
+    @Transactional(readOnly = false)
     @Override
     public Optional<Paper.NewsletterLink> mergePaperIntoWipNewsletter(final long paperId,
         final Integer newsletterTopicId, final String languageCode) {
@@ -177,6 +178,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
             return Optional.empty();
     }
 
+    @Transactional(readOnly = false)
     @Override
     public int removePaperFromNewsletter(final int newsletterId, final long paperId) {
         return newsletterRepo.removePaperFromNewsletter(newsletterId, paperId);

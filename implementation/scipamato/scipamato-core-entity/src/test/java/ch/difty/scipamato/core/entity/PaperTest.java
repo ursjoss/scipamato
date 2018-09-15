@@ -533,6 +533,8 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
         p.setNewsletterHeadline(null);
         validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, null, null, null);
+
+        assertThat(p.getNewsletterIssue()).isEqualTo("1806");
     }
 
     private void validateNewsletterLink(final Paper.NewsletterLink newsletterLink, final Integer newsletterId,
