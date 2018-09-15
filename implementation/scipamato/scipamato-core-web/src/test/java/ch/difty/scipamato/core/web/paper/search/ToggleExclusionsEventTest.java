@@ -11,14 +11,12 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class ToggleExclusionsEventTest {
 
-    private ToggleExclusionsEvent e;
-
     @Mock
     private AjaxRequestTarget targetMock;
 
     @Test
     public void canRetrieveTarget() {
-        e = new ToggleExclusionsEvent(targetMock);
+        final ToggleExclusionsEvent e = new ToggleExclusionsEvent(targetMock);
         assertThat(e.getTarget()).isEqualTo(targetMock);
     }
 }

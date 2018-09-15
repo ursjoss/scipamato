@@ -32,6 +32,7 @@ import ch.difty.scipamato.core.web.newsletter.NewsletterTopicDefinitionProvider;
 @MountPath("newsletter/topics")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection", "WeakerAccess" })
 public class NewsletterTopicListPage extends BasePage<NewsletterTopic> {
 
     private static final int    ROWS_PER_PAGE = 10;

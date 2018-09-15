@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.newsletter.edit;
 
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;

@@ -4,8 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
-import ch.difty.scipamato.core.config.ApplicationCoreProperties;
-
 @Configuration
 public class TestAuthorParserConfiguration {
 

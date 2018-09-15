@@ -31,11 +31,11 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     @SpringBean
     private ScipamatoWebSessionFacade sessionFacade;
 
-    public BasePage(final PageParameters parameters) {
+    protected BasePage(final PageParameters parameters) {
         super(parameters);
     }
 
-    public BasePage(final IModel<T> model) {
+    protected BasePage(final IModel<T> model) {
         super(model);
     }
 
@@ -55,7 +55,7 @@ public abstract class BasePage<T> extends AbstractPage<T> {
         menuBuilder.addMenuLinksTo(nb, this);
     }
 
-    protected Authentication getAuthentication() {
+    private Authentication getAuthentication() {
         return SecurityContextHolder
             .getContext()
             .getAuthentication();

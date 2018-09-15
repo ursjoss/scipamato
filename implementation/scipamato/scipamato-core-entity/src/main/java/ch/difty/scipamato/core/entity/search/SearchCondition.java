@@ -40,6 +40,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
  *
  * @author u.joss
  */
+@SuppressWarnings({ "WeakerAccess", "SameParameterValue" })
 public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, NewsletterAware {
 
     private static final long serialVersionUID = 1L;

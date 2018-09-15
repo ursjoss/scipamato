@@ -1,8 +1,6 @@
 package ch.difty.scipamato.core.web.paper.search;
 
 import static ch.difty.scipamato.core.web.CorePageParameters.SEARCH_ORDER_ID;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.*;

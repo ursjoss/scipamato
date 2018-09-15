@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.paper.search;
 
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.Collections;
@@ -65,6 +64,7 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
         assertForm("contentPanel:form");
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void assertForm(String b) {
         getTester().assertComponent(b, Form.class);
         getTester().assertComponent(b + ":firstAuthorOverridden", CheckBox.class);

@@ -24,6 +24,7 @@ import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.web.common.BasePage;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 
+@SuppressWarnings({ "WicketForgeJavaIdInspection", "SameParameterValue" })
 public class NewsletterTopicSortPage extends BasePage<Newsletter> {
 
     private static final long serialVersionUID = 1L;
@@ -36,11 +37,7 @@ public class NewsletterTopicSortPage extends BasePage<Newsletter> {
     @SpringBean
     private NewsletterTopicService service;
 
-    public NewsletterTopicSortPage(final IModel<Newsletter> model) {
-        this(model, null);
-    }
-
-    public NewsletterTopicSortPage(final IModel<Newsletter> model, final PageReference previous) {
+    NewsletterTopicSortPage(final IModel<Newsletter> model, final PageReference previous) {
         super(model);
         this.previousPageRef = previous;
     }
@@ -84,9 +81,9 @@ public class NewsletterTopicSortPage extends BasePage<Newsletter> {
         };
     }
 
-    protected static Sortable.HashListView<NewsletterNewsletterTopic> newListView(String id,
+    private static Sortable.HashListView<NewsletterNewsletterTopic> newListView(String id,
         IModel<List<NewsletterNewsletterTopic>> model) {
-        return new Sortable.HashListView<NewsletterNewsletterTopic>(id, model) {
+        return new Sortable.HashListView<>(id, model) {
 
             private static final long serialVersionUID = 1L;
 

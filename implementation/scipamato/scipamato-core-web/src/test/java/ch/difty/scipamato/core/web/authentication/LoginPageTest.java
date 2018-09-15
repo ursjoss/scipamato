@@ -31,7 +31,7 @@ public class LoginPageTest extends WicketTest {
         return LoginPage.class;
     }
 
-    protected void assertSpecificComponents() {
+    private void assertSpecificComponents() {
         String b = "form";
         getTester().assertComponent(b, Form.class);
         assertLabeledTextField(b, "username");

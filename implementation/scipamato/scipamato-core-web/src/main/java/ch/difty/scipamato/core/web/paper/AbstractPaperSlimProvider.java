@@ -58,7 +58,7 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
         this.maxRowsPerPage = rowsPerPage;
     }
 
-    protected PaperSlimService getService() {
+    PaperSlimService getService() {
         return service;
     }
 
@@ -178,7 +178,7 @@ public abstract class AbstractPaperSlimProvider<F extends PaperSlimFilter>
     public void setShowExcluded(final boolean showExcluded) {
     }
 
-    protected String getLanguageCode() {
+    String getLanguageCode() {
         return webSessionFacade.getLanguageCode();
     }
 }

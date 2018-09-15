@@ -13,6 +13,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ch.difty.scipamato.common.config.MavenProperties;
 import ch.difty.scipamato.core.logic.parsing.AuthorParserStrategy;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 @RunWith(MockitoJUnitRunner.class)
 public class ScipamatoCorePropertiesTest {
 

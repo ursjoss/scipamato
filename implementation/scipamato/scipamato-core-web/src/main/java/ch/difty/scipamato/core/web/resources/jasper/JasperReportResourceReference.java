@@ -36,8 +36,9 @@ public abstract class JasperReportResourceReference extends PackageResourceRefer
      * definition.
      *
      * @param scope
+     *     part of the generated URL
      * @param name
-     *     the name of the report (without the extension .jrxml
+     *     part of the generated URL - the name of the report (without the extension .jrxml
      * @param cacheReport
      *     if {@code true} the report is only compiled from xml when the
      *     report is requested for the first time.

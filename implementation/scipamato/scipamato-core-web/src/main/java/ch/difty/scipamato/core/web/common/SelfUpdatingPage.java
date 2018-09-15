@@ -35,11 +35,11 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
     @SpringBean
     private ApplicationCoreProperties applicationProperties;
 
-    public SelfUpdatingPage(PageParameters parameters) {
+    protected SelfUpdatingPage(PageParameters parameters) {
         super(parameters);
     }
 
-    public SelfUpdatingPage(IModel<T> model) {
+    protected SelfUpdatingPage(IModel<T> model) {
         super(model);
     }
 

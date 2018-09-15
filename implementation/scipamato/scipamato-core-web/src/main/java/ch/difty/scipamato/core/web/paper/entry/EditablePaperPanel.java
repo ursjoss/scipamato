@@ -759,7 +759,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         private final String             label;
         private final FormComponent<?>[] components;
 
-        public TextFieldValueMustBeUniqueValidator(final String label, final TextField<Object> field) {
+        TextFieldValueMustBeUniqueValidator(final String label, final TextField<Object> field) {
             this.label = label;
             this.components = new FormComponent<?>[] { AssertAs.notNull(field, "field") };
         }

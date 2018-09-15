@@ -10,6 +10,7 @@ import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 
 @MountPath("login")
 @WicketSignInPage
+@SuppressWarnings("WeakerAccess")
 public class LoginPage extends AbstractLoginPage {
 
     private static final long serialVersionUID = 1L;

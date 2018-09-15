@@ -1,9 +1,6 @@
 package ch.difty.scipamato.core.web.paper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
@@ -30,7 +27,7 @@ public class PaperSlimByPaperFilterProviderTest
     }
 
     @Override
-    protected PaperFilter getFilter() {
+    PaperFilter getFilter() {
         return filterMock;
     }
 

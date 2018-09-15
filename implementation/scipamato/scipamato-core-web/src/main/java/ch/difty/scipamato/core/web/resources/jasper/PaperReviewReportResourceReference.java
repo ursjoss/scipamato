@@ -32,6 +32,7 @@ public class PaperReviewReportResourceReference extends JasperReportResourceRefe
      *     if {@code true} the compiled report is cached. If {@code false} it
      *     will be recompiled every time the report is retrieved.
      */
+    @SuppressWarnings("SameParameterValue")
     private PaperReviewReportResourceReference(final boolean cacheReport) {
         super(PaperReviewReportResourceReference.class, NAME, cacheReport);
     }

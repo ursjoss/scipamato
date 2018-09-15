@@ -5,6 +5,7 @@ package ch.difty.scipamato.core.web.config;
  *
  * @author u.joss
  */
+@SuppressWarnings("SameParameterValue")
 public enum Cookie {
     PAPER_LIST_PAGE_MODAL_WINDOW("xmlPasteModal-1");
 

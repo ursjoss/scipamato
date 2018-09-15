@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.user;
 
-import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 
 import java.util.Optional;

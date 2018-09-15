@@ -12,7 +12,7 @@ import ch.difty.scipamato.common.web.event.WicketEvent;
  */
 public class SelfUpdateEvent extends WicketEvent {
 
-    public SelfUpdateEvent(AjaxRequestTarget target) {
+    SelfUpdateEvent(AjaxRequestTarget target) {
         super(target);
     }
 

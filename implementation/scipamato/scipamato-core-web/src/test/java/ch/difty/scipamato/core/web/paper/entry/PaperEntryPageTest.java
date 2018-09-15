@@ -98,6 +98,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         }
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void assertTabPanelFieldsOfTab3(int panelId, String b, String... fields) {
         assertTabPanel(panelId, b);
         final String bb = b + ":" + panelId + ":tab3Form";

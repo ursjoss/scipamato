@@ -53,6 +53,7 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
         queue(makeSearchablePanel("contentPanel"));
     }
 
+    @SuppressWarnings("SameParameterValue")
     private SearchablePaperPanel makeSearchablePanel(String id) {
         return new SearchablePaperPanel(id, getModel()) {
             private static final long serialVersionUID = 1L;

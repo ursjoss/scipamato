@@ -753,7 +753,8 @@ public class SearchConditionTest {
         assertThat(sc1.getDisplayValue()).isEqualTo("foobar AND topic=t1");
     }
 
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({ "unlikely-arg-type", "EqualsWithItself", "ConstantConditions", "ObjectEqualsCanBeEquality",
+        "EqualsBetweenInconvertibleTypes" })
     @Test
     public void equalsAndHash1_ofFieldSc() {
         assertThat(sc1.equals(sc1)).isTrue();

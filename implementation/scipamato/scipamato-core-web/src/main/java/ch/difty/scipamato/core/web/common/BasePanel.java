@@ -21,15 +21,15 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
     @SpringBean
     private ScipamatoWebSessionFacade webSessionFacade;
 
-    public BasePanel(final String id) {
+    protected BasePanel(final String id) {
         this(id, null, Mode.VIEW);
     }
 
-    public BasePanel(final String id, IModel<T> model) {
+    protected BasePanel(final String id, IModel<T> model) {
         this(id, model, Mode.VIEW);
     }
 
-    public BasePanel(final String id, IModel<T> model, Mode mode) {
+    protected BasePanel(final String id, IModel<T> model, Mode mode) {
         super(id, model, mode);
     }
 
@@ -64,7 +64,7 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
      * @return the label string, taken from the resource.
      */
     protected String getLabelResourceFor(final String componentId) {
-        return getResourceFor(componentId, LABEL_RESOURCE_TAG);
+        return getResourceFor(componentId);
     }
 
     /**
@@ -75,11 +75,11 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
      * @return the label string, taken from the resource.
      */
     protected String getShortLabelResourceFor(final String componentId) {
-        return getResourceFor(componentId, LABEL_RESOURCE_TAG);
+        return getResourceFor(componentId);
     }
 
-    private String getResourceFor(final String componentId, final String tag) {
-        return new StringResourceModel(componentId + tag, this, null).getString();
+    private String getResourceFor(final String componentId) {
+        return new StringResourceModel(componentId + AbstractPanel.LABEL_RESOURCE_TAG, this, null).getString();
     }
 
 }

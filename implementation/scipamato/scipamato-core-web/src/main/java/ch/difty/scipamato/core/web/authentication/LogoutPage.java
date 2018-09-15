@@ -9,6 +9,7 @@ import ch.difty.scipamato.common.web.pages.login.AbstractLogoutPage;
 
 @MountPath("logout")
 @AuthorizeInstantiation({ "ROLE_USER", "ROLE_ADMIN" })
+@SuppressWarnings("WeakerAccess")
 public class LogoutPage extends AbstractLogoutPage {
 
     private static final long serialVersionUID = 1L;

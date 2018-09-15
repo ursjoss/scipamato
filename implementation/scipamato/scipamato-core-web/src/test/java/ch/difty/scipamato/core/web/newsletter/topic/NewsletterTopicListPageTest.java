@@ -1,29 +1,29 @@
 package ch.difty.scipamato.core.web.newsletter.topic;
 
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
+import ch.difty.scipamato.common.web.component.table.column.LinkIconPanel;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
 import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 
+@SuppressWarnings("SameParameterValue")
 public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicListPage> {
-
-    private NewsletterTopicDefinition ntd1, ntd2;
-    private NewsletterTopicTranslation ntt1_de, ntt1_en, ntt1_fr, ntt2_de, ntt2_en, ntt2_fr;
 
     private final List<NewsletterTopicDefinition> results = new ArrayList<>();
 
@@ -32,15 +32,15 @@ public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicLis
 
     @Override
     protected void setUpHook() {
-        ntt1_de = new NewsletterTopicTranslation(1, "de", "thema1", 1);
-        ntt1_en = new NewsletterTopicTranslation(2, "en", "topic1", 1);
-        ntt1_fr = new NewsletterTopicTranslation(3, "fr", "theme1", 1);
-        ntd1 = new NewsletterTopicDefinition(1, "de", 1, ntt1_de, ntt1_en, ntt1_fr);
+        final NewsletterTopicTranslation ntt1_de = new NewsletterTopicTranslation(1, "de", "thema1", 1);
+        final NewsletterTopicTranslation ntt1_en = new NewsletterTopicTranslation(2, "en", "topic1", 1);
+        final NewsletterTopicTranslation ntt1_fr = new NewsletterTopicTranslation(3, "fr", "theme1", 1);
+        final NewsletterTopicDefinition ntd1 = new NewsletterTopicDefinition(1, "de", 1, ntt1_de, ntt1_en, ntt1_fr);
 
-        ntt2_de = new NewsletterTopicTranslation(4, "de", "thema2", 1);
-        ntt2_en = new NewsletterTopicTranslation(5, "en", "topic2", 1);
-        ntt2_fr = new NewsletterTopicTranslation(6, "fr", "theme2", 1);
-        ntd2 = new NewsletterTopicDefinition(2, "de", 1, ntt2_de, ntt2_en, ntt2_fr);
+        final NewsletterTopicTranslation ntt2_de = new NewsletterTopicTranslation(4, "de", "thema2", 1);
+        final NewsletterTopicTranslation ntt2_en = new NewsletterTopicTranslation(5, "en", "topic2", 1);
+        final NewsletterTopicTranslation ntt2_fr = new NewsletterTopicTranslation(6, "fr", "theme2", 1);
+        final NewsletterTopicDefinition ntd2 = new NewsletterTopicDefinition(2, "de", 1, ntt2_de, ntt2_en, ntt2_fr);
 
         results.addAll(List.of(ntd1, ntd2));
 
@@ -79,7 +79,7 @@ public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicLis
     private void assertFilterForm(final String b) {
         getTester().assertComponent(b, Form.class);
         assertLabeledTextField(b, "title");
-        //        getTester().assertComponent(b + ":newNewsletter", BootstrapAjaxButton.class);
+        getTester().assertComponent(b + ":newNewsletterTopic", BootstrapAjaxButton.class);
     }
 
     private void assertResultTable(final String b, final String[] labels, final String[] values) {
@@ -103,7 +103,7 @@ public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicLis
         int colIdx = 1;
         for (final String value : values)
             getTester().assertLabel(b + ":body:rows:" + rowIdx + ":cells:" + colIdx + ":cell" + (
-                colIdxAsLink != null && colIdx++ == colIdxAsLink.intValue() ? ":link:label" : ""), value);
+                colIdxAsLink != null && colIdx++ == colIdxAsLink ? ":link:label" : ""), value);
     }
 
     @Test
@@ -122,32 +122,34 @@ public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicLis
         verify(newsletterTopicServiceMock).findPageOfNewsletterTopicDefinitions(isA(NewsletterTopicFilter.class),
             isA(PaginationRequest.class));
     }
-    //
-    //    @Test
-    //    public void clickingNewNewslettterTopic_forwardsToNewsletterTopicEditPage() {
-    //        when(newsletterTopicServiceMock.canCreateNewsletterInProgress()).thenReturn(true);
-    //        getTester().startPage(getPageClass());
-    //        getTester().assertRenderedPage(getPageClass());
-    //
-    //        getTester().assertEnabled("filterForm:newNewsletterTopic");
-    //        FormTester formTester = getTester().newFormTester("filterForm");
-    //        formTester.submit("newNewsletterTopic");
-    //
-    //        getTester().assertRenderedPage(NewsletterTopicEditPage.class);
-    //
-    //        // verify we have a blank newsletter in the target page
-    //        FormTester targetFormTester = getTester().newFormTester("form");
-    //        assertThat(targetFormTester.getTextComponentValue("issue")).isBlank();
-    //
-    //        verify(newsletterTopicServiceMock).countByFilter(isA(NewsletterTopicFilter.class));
-    //        verify(newsletterTopicServiceMock).findPageByFilter(isA(NewsletterTopicFilter.class), isA(PaginationRequest.class));
-    //    }
-    //
-    //    private void validateLinkIconColumn(final int row, final String status, final String value) {
-    //        String bodyRow = "results:body:rows:" + row + ":cells:";
-    //        getTester().assertLabel(bodyRow + "3:cell", status);
-    //        getTester().assertComponent(bodyRow + "4:cell", LinkIconPanel.class);
-    //        getTester().assertModelValue(bodyRow + "4:cell", value);
-    //    }
+
+    @Test
+    public void clickingNewNewslettterTopic_forwardsToNewsletterTopicEditPage() {
+        NewsletterTopicTranslation ntt_en = new NewsletterTopicTranslation(1, "en", "ntt_en", 1);
+        NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(1, "en", 1, ntt_en);
+        when(newsletterTopicServiceMock.newUnpersistedNewsletterTopicDefinition()).thenReturn(ntd);
+
+        getTester().startPage(getPageClass());
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("filterForm");
+        formTester.submit("newNewsletterTopic");
+
+        getTester().assertRenderedPage(NewsletterTopicEditPage.class);
+
+        FormTester targetFormTester = getTester().newFormTester("form");
+
+        verify(newsletterTopicServiceMock).countByFilter(isA(NewsletterTopicFilter.class));
+        verify(newsletterTopicServiceMock).findPageOfNewsletterTopicDefinitions(isA(NewsletterTopicFilter.class),
+            isA(PaginationRequest.class));
+        verify(newsletterTopicServiceMock).newUnpersistedNewsletterTopicDefinition();
+    }
+
+    private void validateLinkIconColumn(final int row, final String status, final String value) {
+        String bodyRow = "results:body:rows:" + row + ":cells:";
+        getTester().assertLabel(bodyRow + "3:cell", status);
+        getTester().assertComponent(bodyRow + "4:cell", LinkIconPanel.class);
+        getTester().assertModelValue(bodyRow + "4:cell", value);
+    }
 
 }

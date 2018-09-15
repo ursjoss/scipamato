@@ -1,7 +1,5 @@
 package ch.difty.scipamato.core.web.paper.list;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;

@@ -10,6 +10,7 @@ import org.junit.Test;
 import ch.difty.scipamato.core.web.CorePageParameters;
 import ch.difty.scipamato.core.web.WicketTest;
 
+@SuppressWarnings("SameParameterValue")
 public class UserEditPageAsViewerTest extends WicketTest {
 
     @Override
@@ -37,7 +38,7 @@ public class UserEditPageAsViewerTest extends WicketTest {
         assertCannotAccessUserEditPageInMode(UserEditPage.Mode.CHANGE_PASSWORD);
     }
 
-    protected void assertCannotAccessUserEditPageInMode(UserEditPage.Mode mode) {
+    void assertCannotAccessUserEditPageInMode(UserEditPage.Mode mode) {
         try {
             getTester().startPage(newUserEditPageInMode(mode));
             fail("should have thrown exception");
