@@ -167,7 +167,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertComponent(bb + ":attachments", BootstrapDefaultDataTable.class);
         getTester().assertComponent(bb, Form.class);
 
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -178,7 +178,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().isDisabled("panel:form:createdDisplayValue");
         getTester().isDisabled("panel:form:modifiedDisplayValue");
         verifyCodeAndCodeClassCalls(1);
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -189,7 +189,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertVisible(path);
         getTester().assertEnabled(path);
         verifyCodeAndCodeClassCalls(1);
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -200,7 +200,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertVisible(path);
         getTester().assertEnabled(path);
         verifyCodeAndCodeClassCalls(1);
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -209,7 +209,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         applyTestHackWithNestedMultiPartForms();
         getTester().submitForm("panel:form");
         verifyCodeAndCodeClassCalls(2);
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -226,7 +226,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertRequired(b + "tabs:panelsContainer:panels:1:tab1Form:goals");
 
         verifyCodeAndCodeClassCalls(1);
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -243,7 +243,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         assertThat(formTester.getTextComponentValue("firstAuthor")).isEqualTo("fa");
 
         verifyCodeAndCodeClassCalls(2);
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -265,7 +265,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertComponentOnAjaxResponse(formId + "firstAuthor");
 
         verifyCodeAndCodeClassCalls(2);
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -284,7 +284,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("1F");
 
         verifyCodeAndCodeClassCalls(2, 3);
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -306,7 +306,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("");
 
         verifyCodeAndCodeClassCalls(2, 3);
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -349,7 +349,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertComponentOnAjaxResponse(formId + "mainCodeOfCodeclass1");
 
         verifyCodeAndCodeClassCalls(2, 5);
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -364,7 +364,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         verify(pubmedArticleServiceMock).getPubmedArticleWithPmid(PMID);
 
         verifyCodeAndCodeClassCalls(1);
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -379,7 +379,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertNoErrorMessage();
 
         verifyPubmedRetrievalButtonClicked();
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     private void fixPubmedRetrievalButtonClicked(String a, String fa, String t, String l, String py, String doi,
@@ -407,6 +406,8 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         verify(pubmedArticleMock).getOriginalAbstract();
 
         verifyCodeAndCodeClassCalls(1);
+
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -422,7 +423,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertNoErrorMessage();
 
         verifyPubmedRetrievalButtonClicked();
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -438,7 +438,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertNoErrorMessage();
 
         verifyPubmedRetrievalButtonClicked();
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -454,7 +453,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertNoErrorMessage();
 
         verifyPubmedRetrievalButtonClicked();
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -470,7 +468,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertNoErrorMessage();
 
         verifyPubmedRetrievalButtonClicked();
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -486,7 +483,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertNoErrorMessage();
 
         verifyPubmedRetrievalButtonClicked();
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -502,7 +498,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertNoErrorMessage();
 
         verifyPubmedRetrievalButtonClicked();
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -517,7 +512,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertNoErrorMessage();
 
         verifyPubmedRetrievalButtonClicked();
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -534,7 +528,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertNoErrorMessage();
 
         verifyPubmedRetrievalButtonClicked();
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -542,7 +535,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().startComponentInPage(makePanelWithEmptyPaper(null));
         getTester().assertDisabled(PANEL_ID + ":form:pubmedRetrieval");
         verifyCodeAndCodeClassCalls(1);
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -558,7 +551,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertNoErrorMessage();
 
         verifyPubmedRetrievalButtonClicked();
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     private void testAndVerifySingleFieldSet(EditablePaperPanel panel, String field) {
@@ -573,7 +565,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertNoErrorMessage();
 
         verifyPubmedRetrievalButtonClicked();
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -583,7 +574,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
             .getModelObject()
             .setAuthors(null);
         testAndVerifySingleFieldSet(panel, "Authors");
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -593,7 +583,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
             .getModelObject()
             .setFirstAuthor(null);
         testAndVerifySingleFieldSet(panel, "First Author");
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -603,7 +592,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
             .getModelObject()
             .setTitle(null);
         testAndVerifySingleFieldSet(panel, "Title");
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -613,7 +601,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
             .getModelObject()
             .setLocation(null);
         testAndVerifySingleFieldSet(panel, "Location");
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -623,7 +610,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
             .getModelObject()
             .setPublicationYear(null);
         testAndVerifySingleFieldSet(panel, "Pub. Year");
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -633,7 +619,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
             .getModelObject()
             .setDoi(null);
         testAndVerifySingleFieldSet(panel, "DOI");
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -658,7 +643,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertErrorMessages("Unable to parse the year 'invalid'");
 
         verifyPubmedRetrievalButtonClicked();
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     private EditablePaperPanel makePanelWithEmptyPaper(Integer pmId) {
@@ -709,7 +693,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertInvisible(PANEL_ID + ":form:back");
 
         verifyCodeAndCodeClassCalls(1);
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test
@@ -719,7 +703,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().assertInvisible(PANEL_ID + ":form:exclude");
 
         verifyCodeAndCodeClassCalls(1);
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     @Test

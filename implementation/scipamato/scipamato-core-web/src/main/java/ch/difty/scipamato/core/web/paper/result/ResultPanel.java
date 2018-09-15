@@ -96,7 +96,13 @@ public abstract class ResultPanel extends BasePanel<Void> {
     }
 
     private void makeAndQueueTable(String id) {
-        results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, dataProvider.getRowsPerPage());
+        results = new BootstrapDefaultDataTable<>(id, makeTableColumns(), dataProvider, dataProvider.getRowsPerPage()) {
+            @Override
+            protected void onAfterRender() {
+                super.onAfterRender();
+                getPaperIdManager().initialize(dataProvider.findAllPaperIdsByFilter());
+            }
+        };
         results.setOutputMarkupId(true);
         results.add(new TableBehavior()
             .striped()

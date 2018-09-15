@@ -72,7 +72,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     public void tearDown() {
         // after the login
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
         verifyNoMoreInteractions(paperSlimServiceMock, paperServiceMock, codeClassServiceMock, codeServiceMock,
             searchOrderMock);
     }
@@ -122,6 +122,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
         verify(searchOrderMock, times(2)).isShowExcluded();
+        verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
     private void assertTableRow(String bb) {
@@ -152,6 +153,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(codeServiceMock, times(8)).findCodesOfClass(isA(CodeClassId.class), anyString());
         verify(searchOrderMock).getId();
         verify(searchOrderMock, times(3)).isShowExcluded();
+        verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -163,6 +165,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock, times(2)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
         verify(searchOrderMock, times(4)).isShowExcluded();
+        verify(paperServiceMock, times(2)).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
     /**
@@ -178,6 +181,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
         verify(paperServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class), eq(LC));
         verify(searchOrderMock, times(2)).isShowExcluded();
+        verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -252,6 +256,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
         verify(searchOrderMock, times(2)).isShowExcluded();
+        verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -268,6 +273,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
         verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
+        verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
     // with isOfferingSearchComposition = false
@@ -311,6 +317,7 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
         verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
+        verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
     @Test

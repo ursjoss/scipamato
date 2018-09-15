@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.web.paper.common;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
@@ -78,7 +79,7 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
 
     @Override
     protected void tearDownLocalHook() {
-        verify(paperServiceMock).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
         verifyNoMoreInteractions(paperServiceMock);
     }
 

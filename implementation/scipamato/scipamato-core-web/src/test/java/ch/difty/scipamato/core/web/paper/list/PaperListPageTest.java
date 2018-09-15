@@ -94,7 +94,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         assertMenuEntries();
 
         verify(paperSlimServiceMock, times(2)).countByFilter(isA(PaperFilter.class));
-        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     private void assertSearchForm(String b) {
@@ -191,7 +191,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         verify(codeClassServiceMock).find(LC);
         for (CodeClassId ccid : CodeClassId.values())
             verify(codeServiceMock).findCodesOfClass(ccid, LC);
-        verify(paperServiceMock, times(3)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(5)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -212,7 +212,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         getTester().assertComponent(b + ":submit", BootstrapAjaxButton.class);
 
         verify(paperSlimServiceMock, times(2)).countByFilter(isA(PaperFilter.class));
-        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -222,7 +222,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
         verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
-        verify(paperServiceMock, times(3)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -232,7 +232,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
         verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
-        verify(paperServiceMock, times(3)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -246,7 +246,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
         verify(paperSlimServiceMock).countByFilter(isA(PaperFilter.class));
         // The third call to findPageOfIds... is to update the Navigateable, the fourth
         // one because of the page redirect
-        verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(5)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 
     private ServiceResult makeServiceResult() {
@@ -273,7 +273,7 @@ public class PaperListPageTest extends BasePageTest<PaperListPage> {
 
         verify(paperSlimServiceMock, times(2)).countByFilter(isA(PaperFilter.class));
         verify(paperSlimServiceMock).findPageByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
-        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
+        verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
         verify(paperServiceMock).findByNumber(number, LC);
         verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
         // from PaperEntryPage
