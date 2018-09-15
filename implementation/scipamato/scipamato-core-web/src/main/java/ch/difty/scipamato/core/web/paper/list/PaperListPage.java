@@ -51,6 +51,7 @@ import ch.difty.scipamato.core.web.paper.result.ResultPanel;
  *
  * @author u.joss
  */
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 @MountPath("/")
 @WicketHomePage
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
@@ -73,7 +74,7 @@ public class PaperListPage extends BasePage<Void> {
         initFilterAndProvider();
     }
 
-    public PaperListPage(PageParameters parameters, ServiceResult result) {
+    private PaperListPage(PageParameters parameters, ServiceResult result) {
         this(parameters);
         if (result != null)
             translateServiceResultMessagesToLocalizedUserMessages(result, null);
@@ -112,7 +113,7 @@ public class PaperListPage extends BasePage<Void> {
     }
 
     private void makeAndQueueFilterForm(final String id) {
-        queue(new FilterForm<PaperFilter>(id, dataProvider) {
+        queue(new FilterForm<>(id, dataProvider) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -191,7 +192,7 @@ public class PaperListPage extends BasePage<Void> {
     }
 
     private BootstrapAjaxLink<Void> newXmlPasteModalLink(String linkId) {
-        BootstrapAjaxLink<Void> link = new BootstrapAjaxLink<Void>(linkId, Buttons.Type.Default) {
+        BootstrapAjaxLink<Void> link = new BootstrapAjaxLink<>(linkId, Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override

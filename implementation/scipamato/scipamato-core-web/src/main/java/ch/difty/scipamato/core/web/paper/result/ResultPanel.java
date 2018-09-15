@@ -50,6 +50,7 @@ import ch.difty.scipamato.core.web.paper.jasper.summarytable.PaperSummaryTableDa
  *
  * @author u.joss
  */
+@SuppressWarnings("SameParameterValue")
 public abstract class ResultPanel extends BasePanel<Void> {
 
     private static final long serialVersionUID = 1L;
@@ -77,7 +78,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
      *     the data provider extending {@link AbstractPaperSlimProvider}
      *     holding the filter specs
      */
-    public ResultPanel(String id, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
+    protected ResultPanel(String id, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
         super(id);
         this.dataProvider = dataProvider;
     }
@@ -153,7 +154,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
     }
 
     private IColumn<PaperSlim, String> makeExcludeLinkIconColumn(String id) {
-        return new LinkIconColumn<PaperSlim>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
+        return new LinkIconColumn<>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -194,14 +195,14 @@ public abstract class ResultPanel extends BasePanel<Void> {
      * </ul>
      */
     private IColumn<PaperSlim, String> makeNewsletterLinkIconColumn(String id) {
-        return new LinkIconColumn<PaperSlim>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
+        return new LinkIconColumn<>(new StringResourceModel(COLUMN_HEADER + id, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected IModel<String> createIconModel(final IModel<PaperSlim> rowModel) {
                 String icon;
                 final PaperSlim paper = rowModel.getObject();
-                if (!hasNewsletter(paper))
+                if (hasNoNewsletter(paper))
                     icon = hasNewsletterInProgress() ? "fa fa-fw fa-plus-square-o" : "";
                 else if (isAssociatedNewsletterWorkInProgress(paper))
                     icon = "fa fa-fw fa-envelope-open-o";
@@ -210,8 +211,8 @@ public abstract class ResultPanel extends BasePanel<Void> {
                 return Model.of(icon);
             }
 
-            private boolean hasNewsletter(final PaperSlim paper) {
-                return paper.getNewsletterAssociation() != null;
+            private boolean hasNoNewsletter(final PaperSlim paper) {
+                return paper.getNewsletterAssociation() == null;
             }
 
             private boolean hasNewsletterInProgress() {
@@ -229,7 +230,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
             @Override
             protected IModel<String> createTitleModel(final IModel<PaperSlim> rowModel) {
                 final PaperSlim paper = rowModel.getObject();
-                if (!hasNewsletter(paper)) {
+                if (hasNoNewsletter(paper)) {
                     if (hasNewsletterInProgress())
                         return new StringResourceModel("column.title.newsletter.add", ResultPanel.this, null);
                     else
@@ -247,7 +248,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
                 final AjaxLink<Void> link) {
                 final PaperSlim paper = rowModel.getObject();
 
-                if (!hasNewsletter(paper)) {
+                if (hasNoNewsletter(paper)) {
                     if (hasNewsletterInProgress())
                         newsletterService.mergePaperIntoWipNewsletter(paper.getId());
                     else

@@ -39,6 +39,7 @@ import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.paper.PaperSlimBySearchOrderProvider;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class ResultPanelTest extends PanelTest<ResultPanel> {
 
     private static final long   NUMBER        = 2L;
