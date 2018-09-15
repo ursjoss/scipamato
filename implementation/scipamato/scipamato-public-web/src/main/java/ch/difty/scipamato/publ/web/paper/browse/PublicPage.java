@@ -258,6 +258,12 @@ public class PublicPage extends BasePage<Void> {
                 super.onConfigure();
                 setVisible(isQueryingInitialized());
             }
+
+            @Override
+            protected void onAfterRender() {
+                super.onAfterRender();
+                getPaperIdManager().initialize(dataProvider.findAllPaperNumbersByFilter());
+            }
         };
         results.setOutputMarkupId(true);
         results.add(new TableBehavior()

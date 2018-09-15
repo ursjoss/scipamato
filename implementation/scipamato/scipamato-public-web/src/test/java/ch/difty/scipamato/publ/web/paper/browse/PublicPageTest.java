@@ -81,6 +81,8 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
 
         // query was not yet executed and results panel is still invisible
         getTester().assertInvisible("results");
+
+        verify(serviceMock).findPageOfNumbersByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
     }
 
     private void assertTabPanelWithFirstTabVisible(String b) {
@@ -125,7 +127,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         verify(serviceMock).countByFilter(isA(PublicPaperFilter.class));
         verify(serviceMock).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
         // used in navigateable
-        verify(serviceMock, times(1)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
+        verify(serviceMock, times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
             isA(PaginationContext.class));
 
     }
@@ -160,6 +162,8 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         assertTabPanelWithSecondTabVisible(bb);
 
         verify(codeClassServiceMock).find("en_us");
+        verify(serviceMock, times(2)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
+            isA(PaginationContext.class));
     }
 
     private void assertTabPanelWithSecondTabVisible(String b) {
@@ -205,7 +209,7 @@ public class PublicPageTest extends BasePageTest<PublicPage> {
         verify(serviceMock, times(1)).countByFilter(isA(PublicPaperFilter.class));
         verify(serviceMock, times(1)).findPageByFilter(isA(PublicPaperFilter.class), isA(PaginationContext.class));
         // used in navigateable
-        verify(serviceMock, times(1)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
+        verify(serviceMock, times(3)).findPageOfNumbersByFilter(isA(PublicPaperFilter.class),
             isA(PaginationContext.class));
     }
 
