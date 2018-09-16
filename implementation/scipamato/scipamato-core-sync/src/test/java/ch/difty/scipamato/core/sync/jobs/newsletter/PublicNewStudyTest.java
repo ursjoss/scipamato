@@ -19,7 +19,7 @@ public class PublicNewStudyTest extends PublicEntityTest {
             .newsletterId(1)
             .newsletterTopicId(2)
             .sort(3)
-            .paperNumber(4l)
+            .paperNumber(4L)
             .year(2018)
             .authors("a")
             .headline("hl")

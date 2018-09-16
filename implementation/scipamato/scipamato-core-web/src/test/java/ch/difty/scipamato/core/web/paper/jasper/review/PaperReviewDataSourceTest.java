@@ -14,6 +14,7 @@ import org.junit.Test;
 import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class PaperReviewDataSourceTest extends PaperDataSourceTest {
 
     private static final String FILE_NAME = "paper_review.pdf";
@@ -59,6 +60,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         when(paperMock.getCreatedByName()).thenReturn("cb");
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void assertDataSource(String fileName) throws JRException {
         assertThat(ds.getConnectionProvider()).isNull();
         assertThat(ds

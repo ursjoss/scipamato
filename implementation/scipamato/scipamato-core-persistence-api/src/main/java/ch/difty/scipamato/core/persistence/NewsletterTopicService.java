@@ -86,7 +86,7 @@ public interface NewsletterTopicService {
 
     /**
      * Persists the provided entity. Depending on the absence or presence of an ID, the
-     * entity will be added to the database or upadated.
+     * entity will be added to the database or updated.
      *
      * @param entity
      *     the {@link NewsletterTopicDefinition} to be persisted
@@ -114,13 +114,13 @@ public interface NewsletterTopicService {
      * into an order - either as explicitly saved in db or sorted alphabetically by title.
      *
      * @param newsletterId
-     *     the id of the newslettr
+     *     the id of the newsletter
      * @return a sorted list of {@link NewsletterNewsletterTopic}s.
      */
     List<NewsletterNewsletterTopic> getSortedNewsletterTopicsForNewsletter(int newsletterId);
 
     /**
-     * Saveds the sort order to the database for the newsletter with given id.
+     * Saves the sort order to the database for the newsletter with given id.
      *
      * @param newsletterId
      *     id of the newsletter to store the sorted topics for

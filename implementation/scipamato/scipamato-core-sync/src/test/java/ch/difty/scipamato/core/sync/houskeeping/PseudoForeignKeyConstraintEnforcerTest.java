@@ -35,7 +35,7 @@ public class PseudoForeignKeyConstraintEnforcerTest {
 
     @Test
     public void executing_withNullStep_doesNotThrow() {
-        fkce = new PseudoForeignKeyConstraintEnforcer<>((DeleteConditionStep<CodeRecord>) null, "code", "s");
+        fkce = new PseudoForeignKeyConstraintEnforcer<>(null, "code", "s");
         assertThat(fkce.execute(contributionMock, chunkContextMock)).isEqualTo(RepeatStatus.FINISHED);
     }
 

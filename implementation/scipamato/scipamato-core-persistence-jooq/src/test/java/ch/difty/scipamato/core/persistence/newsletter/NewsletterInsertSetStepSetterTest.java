@@ -14,6 +14,7 @@ import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetterTest;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class NewsletterInsertSetStepSetterTest extends InsertSetStepSetterTest<NewsletterRecord, Newsletter> {
 
     private final InsertSetStepSetter<NewsletterRecord, Newsletter> setter = new NewsletterInsertSetStepSetter();

@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.web.paper.search;
 
 import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -30,6 +29,7 @@ import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.web.common.PanelTest;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorPanel> {
 
     private static final long   ID         = 17L;
@@ -41,10 +41,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
 
     @Mock
     private SearchOrder searchOrderMock;
-    @Mock
-    private SearchOrder searchOrderMock2;
 
-    private       List<SearchOrder>     searchOrders;
     private final List<SearchCondition> searchConditions = new ArrayList<>();
 
     @Override
@@ -56,7 +53,7 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     protected void setUpHook() {
         super.setUpHook();
 
-        searchOrders = Arrays.asList(searchOrderMock,
+        final List<SearchOrder> searchOrders = Arrays.asList(searchOrderMock,
             new SearchOrder(20L, "soName", OWNER_ID, true, searchConditions, null));
         when(searchOrderServiceMock.findPageByFilter(isA(SearchOrderFilter.class),
             isA(PaginationContext.class))).thenReturn(searchOrders);

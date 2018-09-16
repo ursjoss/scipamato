@@ -36,6 +36,7 @@ import ch.difty.scipamato.core.web.authentication.LoginPage;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
 import ch.difty.scipamato.core.web.security.TestUserDetailsService;
 
+@SuppressWarnings("SameParameterValue")
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public abstract class WicketTest {

@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.web.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
@@ -45,7 +44,8 @@ public class SearchOrderModelTest extends ModelTest {
             Mockito.argThat(new PaginationRequestWithMaxRows(maxRows)));
     }
 
-    protected class SearchOrderFilterMatcher implements ArgumentMatcher<SearchOrderFilter> {
+    @SuppressWarnings("SameParameterValue")
+    class SearchOrderFilterMatcher implements ArgumentMatcher<SearchOrderFilter> {
         private int ownerIncludingGlobal;
 
         SearchOrderFilterMatcher(int ownerIncludingGlobal) {
@@ -60,7 +60,7 @@ public class SearchOrderModelTest extends ModelTest {
         }
     }
 
-    protected class PaginationRequestWithMaxRows implements ArgumentMatcher<PaginationRequest> {
+    class PaginationRequestWithMaxRows implements ArgumentMatcher<PaginationRequest> {
         private static final String GLOBAL = "global";
 
         private int maxRows;

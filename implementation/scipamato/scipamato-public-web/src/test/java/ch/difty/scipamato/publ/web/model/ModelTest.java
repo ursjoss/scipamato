@@ -15,6 +15,7 @@ import ch.difty.scipamato.publ.ScipamatoPublicApplication;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@SuppressWarnings("WeakerAccess")
 public abstract class ModelTest {
 
     @Autowired

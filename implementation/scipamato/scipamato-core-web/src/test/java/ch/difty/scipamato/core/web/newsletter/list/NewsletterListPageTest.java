@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.web.newsletter.list;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
@@ -124,7 +123,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
 
         verify(newsletterServiceMock).countByFilter(isA(NewsletterFilter.class));
         verify(newsletterServiceMock).findPageByFilter(isA(NewsletterFilter.class), isA(PaginationRequest.class));
-        verify(newsletterServiceMock, times(2)).canCreateNewsletterInProgress();
+        verify(newsletterServiceMock).canCreateNewsletterInProgress();
     }
 
     @Test
@@ -145,7 +144,7 @@ public class NewsletterListPageTest extends BasePageTest<NewsletterListPage> {
 
         verify(newsletterServiceMock).countByFilter(isA(NewsletterFilter.class));
         verify(newsletterServiceMock).findPageByFilter(isA(NewsletterFilter.class), isA(PaginationRequest.class));
-        verify(newsletterServiceMock, times(2)).canCreateNewsletterInProgress();
+        verify(newsletterServiceMock).canCreateNewsletterInProgress();
     }
 
     @Test

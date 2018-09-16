@@ -1,11 +1,6 @@
 package ch.difty.scipamato.core.persistence.search;
 
 import static ch.difty.scipamato.core.db.tables.SearchOrder.SEARCH_ORDER;
-import static ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED;
-import static ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED_BY;
-import static ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD;
-import static ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY;
-import static ch.difty.scipamato.core.persistence.RecordMapperTest.VERSION;
 import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.*;
 import static org.mockito.Mockito.*;
 
@@ -16,6 +11,7 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class SearchOrderUpdateSetStepSetterTest extends UpdateSetStepSetterTest<SearchOrderRecord, SearchOrder> {
 
     private final UpdateSetStepSetter<SearchOrderRecord, SearchOrder> setter = new SearchOrderUpdateSetStepSetter();

@@ -1,8 +1,6 @@
 package ch.difty.scipamato.core.web.paper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
@@ -18,6 +16,7 @@ import ch.difty.scipamato.common.persistence.paging.PaginationContextMatcher;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class PaperSlimBySearchOrderProviderTest
     extends AbstractPaperSlimProviderTest<SearchOrder, PaperSlimBySearchOrderProvider> {
 
@@ -33,7 +32,7 @@ public class PaperSlimBySearchOrderProviderTest
     }
 
     @Override
-    protected SearchOrder getFilter() {
+    SearchOrder getFilter() {
         return searchOrder;
     }
 

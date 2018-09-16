@@ -23,6 +23,7 @@ public abstract class AbstractScipamatoProperties<SP extends ScipamatoBaseProper
         return scipamatoProperties;
     }
 
+    @SuppressWarnings("WeakerAccess")
     MavenProperties getMavenProperties() {
         return mavenProperties;
     }

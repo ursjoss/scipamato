@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -27,6 +26,7 @@ import ch.difty.scipamato.common.persistence.paging.Sort;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("WeakerAccess")
 public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipamatoEntity<ID>, ID extends Number, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter> {
 
     private ReadOnlyRepository<T, ID, F> repo;
@@ -68,7 +68,7 @@ public abstract class JooqReadOnlyRepoTest<R extends Record, T extends IdScipama
     @Mock
     private ApplicationProperties applicationPropertiesMock;
 
-    private F filterMock = getFilter();
+    private final F filterMock = getFilter();
 
     protected DSLContext getDsl() {
         return dslMock;

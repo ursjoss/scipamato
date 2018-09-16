@@ -16,14 +16,15 @@ import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
 
+@SuppressWarnings("SameParameterValue")
 public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
-    private static final String VALID_AUTHORS                 = "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.";
-    private static final String VALID_AUTHORS_WITH_COLLECTIVE = "Mehta AJ, Thun GA, Imboden M, Ferrarotti I, Keidel D, Künzli N, Kromhout H, Miedinger D, Phuleria H, Rochat T, Russi EW, Schindler C, Schwartz J, Vermeulen R, Luisetti M, Probst-Hensch N; SAPALDIA team.";
-    private static final String VALID_FIRST_AUTHOR            = "Turner MC";
-    private static final String VALID_TITLE                   = "Title";
-    private static final String VALID_DOI                     = "10.1093/aje/kwu275";
-    private static final String NON_NULL_STRING               = "foo";
+    private static final String VALID_AUTHORS      = "Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.";
+    private static final String VALID_COLLECTIVE   = "Mehta AJ, Thun GA, Imboden M, Ferrarotti I, Keidel D, Künzli N, Kromhout H, Miedinger D, Phuleria H, Rochat T, Russi EW, Schindler C, Schwartz J, Vermeulen R, Luisetti M, Probst-Hensch N; SAPALDIA team.";
+    private static final String VALID_FIRST_AUTHOR = "Turner MC";
+    private static final String VALID_TITLE        = "Title";
+    private static final String VALID_DOI          = "10.1093/aje/kwu275";
+    private static final String NON_NULL_STRING    = "foo";
 
     public PaperTest() {
         super(Paper.class);
@@ -128,7 +129,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
     @Test
     public void validatingPaper_withAuthorsPlusCollectiveAuthor_succeeds() {
         final Paper p = newValidEntity();
-        p.setAuthors(VALID_AUTHORS_WITH_COLLECTIVE);
+        p.setAuthors(VALID_COLLECTIVE);
         verifySuccessfulValidation(p);
     }
 
@@ -456,7 +457,8 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(p.getAttachments()).isEmpty();
     }
 
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({ "unlikely-arg-type", "EqualsBetweenInconvertibleTypes", "ConstantConditions",
+        "EqualsWithItself", "UnnecessaryBoxing" })
     @Test
     // Note: Did not get this to run with equalsverifier due to 'Abstract
     // delegation: Paper's hashCode method delegates to an abstract method' on codes
@@ -531,6 +533,8 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
 
         p.setNewsletterHeadline(null);
         validateNewsletterLink(p.getNewsletterLink(), 1, "1806", PublicationStatus.WIP, null, null, null);
+
+        assertThat(p.getNewsletterIssue()).isEqualTo("1806");
     }
 
     private void validateNewsletterLink(final Paper.NewsletterLink newsletterLink, final Integer newsletterId,

@@ -12,7 +12,6 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.Bootst
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.event.IEvent;
@@ -55,8 +54,6 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
     private NewsletterService service;
 
     private PaperSlimByPaperFilterProvider dataProvider;
-
-    private BootstrapButton submitButton;
 
     private boolean newNewsletter;
 
@@ -134,18 +131,7 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
         queueFieldAndLabel(new LocalDateTextField(ISSUE_DATE.getName(),
             new StringResourceModel("date.format", this, null).getString()), new PropertyValidator<LocalDate>());
         makeAndQueuePublicationStatusSelectBox(PUBLICATION_STATUS.getName());
-        submitButton = new BootstrapButton("submit", new StringResourceModel("submit.label"), Buttons.Type.Default) {
-            @Override
-            protected void onConfigure() {
-                super.onConfigure();
-                // only set enabled if the newsleter is *not* in progress - or if it is the only one being in progress.
-                setEnabled(!NewsletterEditPage.this
-                    .getModelObject()
-                    .getPublicationStatus()
-                    .isInProgress() || service.canCreateNewsletterInProgress());
-            }
-        };
-        queue(submitButton);
+        queue(new BootstrapButton("submit", new StringResourceModel("submit.label"), Buttons.Type.Default));
 
         makeAndQueueResultPanel("resultPanel");
     }
@@ -173,13 +159,6 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
                 this.setEnabled(!newNewsletter);
             }
         };
-        publicationStatus.add(new AjaxFormComponentUpdatingBehavior("change") {
-
-            @Override
-            protected void onUpdate(final AjaxRequestTarget target) {
-                target.add(submitButton);
-            }
-        });
         queue(publicationStatus);
         queue(new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null)));
     }
@@ -202,6 +181,9 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
                 .setParameters(ole.getTableName(), getNullSafeId())
                 .getString();
             log.error(msg);
+            error(msg);
+        } catch (IllegalArgumentException iae) {
+            String msg = new StringResourceModel(iae.getMessage(), this, null).getString();
             error(msg);
         } catch (Exception ex) {
             String msg = new StringResourceModel("save.error.hint", this, null)

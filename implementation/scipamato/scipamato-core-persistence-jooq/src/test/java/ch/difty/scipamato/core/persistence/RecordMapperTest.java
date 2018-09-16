@@ -12,6 +12,7 @@ import org.junit.Test;
 import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.entity.CoreEntity;
 
+@SuppressWarnings("WeakerAccess")
 public abstract class RecordMapperTest<R extends Record, E extends CoreEntity> {
 
     public static final int       VERSION     = 1;
@@ -28,6 +29,7 @@ public abstract class RecordMapperTest<R extends Record, E extends CoreEntity> {
      * Test fixture for the entity mock audit fields.
      *
      * @param entityMock
+     *     the mocked entity
      */
     protected static void auditFixtureFor(CoreEntity entityMock) {
         when(entityMock.getCreatedBy()).thenReturn(CREATED_BY);
@@ -38,6 +40,7 @@ public abstract class RecordMapperTest<R extends Record, E extends CoreEntity> {
      * Test fixture for the entity mock audit fields.
      *
      * @param entityMock
+     *     the mocked entity
      */
     protected static void auditExtendedFixtureFor(CoreEntity entityMock) {
         when(entityMock.getCreated()).thenReturn(CREATED.toLocalDateTime());
@@ -83,6 +86,7 @@ public abstract class RecordMapperTest<R extends Record, E extends CoreEntity> {
      * Assert non-audit fields of entity (audit fields are asserted separately)
      *
      * @param entity
+     *     the entity to assert the non-audit fields for
      */
     protected abstract void assertEntity(E entity);
 

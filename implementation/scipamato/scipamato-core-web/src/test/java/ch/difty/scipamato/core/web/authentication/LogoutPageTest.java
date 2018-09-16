@@ -31,7 +31,7 @@ public class LogoutPageTest extends WicketTest {
         return LogoutPage.class;
     }
 
-    protected void assertSpecificComponents() {
+    private void assertSpecificComponents() {
         getTester().assertComponent(FORM, Form.class);
     }
 

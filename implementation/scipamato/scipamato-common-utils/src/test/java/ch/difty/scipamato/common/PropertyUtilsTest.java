@@ -18,7 +18,7 @@ public class PropertyUtilsTest extends FinalClassTest<PropertyUtils> {
         }
     }
 
-    private PropertyTestEnum[] values = { PropertyTestEnum.VAL1, PropertyTestEnum.VAL2, PropertyTestEnum.DEFAULT };
+    private final PropertyTestEnum[] values = { PropertyTestEnum.VAL1, PropertyTestEnum.VAL2, PropertyTestEnum.DEFAULT };
 
     @Test
     public void fromProperty_withNullProperty_resortsToDefaultValue() {

@@ -29,7 +29,7 @@ public class NewsletterTopic extends IdScipamatoEntity<Integer> {
         ID("id"),
         TITLE("title");
 
-        private String name;
+        private final String name;
 
         NewsletterTopicFields(final String name) {
             this.name = name;

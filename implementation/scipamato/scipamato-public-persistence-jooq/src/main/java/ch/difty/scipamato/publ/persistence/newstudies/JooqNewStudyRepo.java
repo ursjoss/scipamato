@@ -19,6 +19,7 @@ import ch.difty.scipamato.publ.entity.NewStudy;
 import ch.difty.scipamato.publ.entity.NewStudyTopic;
 
 @Repository
+@SuppressWarnings("WeakerAccess")
 public class JooqNewStudyRepo implements NewStudyRepository {
 
     public static final String LANGUAGE_CODE = "languageCode";

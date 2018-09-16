@@ -19,6 +19,7 @@ import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.persistence.UserRepository;
 
 @Service
+@SuppressWarnings("WeakerAccess")
 class JooqNewsletterTopicService implements NewsletterTopicService {
 
     private final NewsletterTopicRepository repo;

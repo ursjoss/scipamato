@@ -179,7 +179,7 @@ public class SortMapperTest {
 
         when(name.qualified()).thenReturn(true);
 
-        final TableImpl<Record> table = new TableImpl<Record>(name, schema, aliased, parameters) {
+        final TableImpl<Record> table = new TableImpl<>(name, schema, aliased, parameters) {
             private static final long serialVersionUID = 1L;
 
             @SuppressWarnings("unused")

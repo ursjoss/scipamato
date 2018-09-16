@@ -25,7 +25,7 @@ public class JooqSearchOrderService
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public SearchCondition saveOrUpdateSearchCondition(final SearchCondition searchCondition, final long searchOrderId,
         final String languageCode) {
         if (searchCondition.getSearchConditionId() == null)
@@ -35,7 +35,7 @@ public class JooqSearchOrderService
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public void removeSearchConditionWithId(Long searchConditionId) {
         if (searchConditionId != null)
             getRepository().deleteSearchConditionWithId(searchConditionId);

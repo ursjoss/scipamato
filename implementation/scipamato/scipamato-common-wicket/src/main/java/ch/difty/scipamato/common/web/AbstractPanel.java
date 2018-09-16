@@ -8,13 +8,13 @@ import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 
+@SuppressWarnings({ "WeakerAccess", "SameParameterValue" })
 public abstract class AbstractPanel<T> extends GenericPanel<T> {
 
     private static final long serialVersionUID = 1L;
 
     protected static final String LABEL_TAG                 = WicketUtils.LABEL_TAG;
     protected static final String LABEL_RESOURCE_TAG        = WicketUtils.LABEL_RESOURCE_TAG;
-    protected static final String SHORT_LABEL_RESOURCE_TAG  = WicketUtils.SHORT_LABEL_RESOURCE_TAG;
     protected static final String TITLE_RESOURCE_TAG        = WicketUtils.TITLE_RESOURCE_TAG;
     protected static final String SELECT_ALL_RESOURCE_TAG   = "multiselect.selectAll";
     protected static final String DESELECT_ALL_RESOURCE_TAG = "multiselect.deselectAll";
@@ -22,7 +22,7 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
     private final Mode   mode;
     private final String submitLinkResourceLabel;
 
-    public AbstractPanel(final String id) {
+    protected AbstractPanel(final String id) {
         this(id, null, Mode.VIEW);
     }
 
@@ -77,9 +77,8 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
         field.setLabel(labelModel);
         field.setOutputMarkupId(true);
         queue(field);
-        if (pv != null && isEditMode()) {
+        if (pv != null && isEditMode())
             field.add(pv);
-        }
     }
 
     protected void queueCheckBoxAndLabel(CheckBoxX field) {

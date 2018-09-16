@@ -43,7 +43,7 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
      *     a collection of {@link JasperEntity} items that will be used for
      *     populating the report.
      */
-    public JasperPaperDataSource(final ScipamatoPdfResourceHandler handler, final String baseName,
+    protected JasperPaperDataSource(final ScipamatoPdfResourceHandler handler, final String baseName,
         final Collection<E> jasperEntities) {
         super(handler);
         this.baseName = AssertAs.notNull(baseName, "baseName");
@@ -64,7 +64,7 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
      * @param dataProvider
      *     a data provider deriving from {@link AbstractPaperSlimProvider}
      */
-    public JasperPaperDataSource(final ScipamatoPdfResourceHandler handler, final String baseName,
+    protected JasperPaperDataSource(final ScipamatoPdfResourceHandler handler, final String baseName,
         final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
         super(handler);
         this.baseName = AssertAs.notNull(baseName, "baseName");

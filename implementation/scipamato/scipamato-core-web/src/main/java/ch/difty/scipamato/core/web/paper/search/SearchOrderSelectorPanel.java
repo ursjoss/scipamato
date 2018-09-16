@@ -46,6 +46,7 @@ import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent;
  *
  * @author u.joss
  */
+@SuppressWarnings("SameParameterValue")
 public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
     private static final long serialVersionUID = 1L;
 

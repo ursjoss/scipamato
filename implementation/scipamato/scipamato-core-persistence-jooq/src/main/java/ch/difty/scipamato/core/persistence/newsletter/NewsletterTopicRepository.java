@@ -134,7 +134,7 @@ public interface NewsletterTopicRepository {
     List<NewsletterNewsletterTopic> findAllSortedNewsletterTopicsForNewsletterWithId(int newsletterId);
 
     /**
-     * Saveds the sort order to the database for the newsletter with given id.
+     * Saves the sort order to the database for the newsletter with given id.
      *
      * @param newsletterId
      *     id of the newsletter to store the sorted topics for

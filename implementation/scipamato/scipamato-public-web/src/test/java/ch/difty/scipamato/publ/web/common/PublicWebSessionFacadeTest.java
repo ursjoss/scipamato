@@ -12,7 +12,7 @@ import ch.difty.scipamato.publ.web.WicketTest;
 
 public class PublicWebSessionFacadeTest extends WicketTest {
 
-    private ScipamatoWebSessionFacade sessionFacade = new PublicWebSessionFacade();
+    private final ScipamatoWebSessionFacade sessionFacade = new PublicWebSessionFacade();
 
     @Test
     public void gettingLanguageCode_withBritishLocale_returnsBritishCode() {

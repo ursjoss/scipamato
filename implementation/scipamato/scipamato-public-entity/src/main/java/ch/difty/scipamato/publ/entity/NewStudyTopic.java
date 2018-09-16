@@ -29,7 +29,7 @@ public class NewStudyTopic extends PublicEntity {
         TITLE("title"),
         STUDIES("studies");
 
-        private String name;
+        private final String name;
 
         NewStudyTopicFields(final String name) {
             this.name = name;

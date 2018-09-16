@@ -57,29 +57,29 @@ public class JooqNewStudyRepoIntegrationTest extends JooqTransactionalIntegratio
             .get(0)
             .getStudies())
             .extracting("number")
-            .containsExactly(8924l, 8993l);
+            .containsExactly(8924L, 8993L);
         assertThat(result
             .get(1)
             .getStudies())
             .extracting("number")
-            .containsExactly(8973l, 8983l, 8984l);
+            .containsExactly(8973L, 8983L, 8984L);
         assertThat(result
             .get(2)
             .getStudies())
             .extracting("number")
-            .containsExactly(8933l, 8897l, 8861l);
+            .containsExactly(8933L, 8897L, 8861L);
         assertThat(result
             .get(3)
             .getStudies())
             .extracting("number")
-            .containsExactly(8916l, 8934l);
+            .containsExactly(8916L, 8934L);
 
         NewStudy ns = result
             .get(0)
             .getStudies()
             .get(0);
         assertThat(ns.getSort()).isEqualTo(1);
-        assertThat(ns.getNumber()).isEqualTo(8924l);
+        assertThat(ns.getNumber()).isEqualTo(8924L);
         assertThat(ns.getYear()).isEqualTo(2017);
         assertThat(ns.getAuthors()).isEqualTo("Di et al.");
         assertThat(ns.getReference()).isEqualTo("(Di et al.; 2017)");

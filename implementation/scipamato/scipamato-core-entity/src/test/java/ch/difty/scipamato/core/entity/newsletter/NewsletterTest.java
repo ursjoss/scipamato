@@ -31,11 +31,11 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
         nl.setIssueDate(LocalDate.parse("2018-03-26"));
         nl.setPublicationStatus(PublicationStatus.WIP);
 
-        paper1.setId(1l);
+        paper1.setId(1L);
         paper1.setTitle("somepaper");
         nl.addPaper(paper1, topic1);
 
-        paper2.setId(2l);
+        paper2.setId(2L);
         paper2.setTitle("otherpaper");
         nl.addPaper(paper2, null);
         return nl;
@@ -83,7 +83,7 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
     @Test
     public void validatingNewsletter_withNullPublicationStatus_fails() {
         Newsletter nl = newValidEntity();
-        nl.setPublicationStatus((PublicationStatus) null);
+        nl.setPublicationStatus(null);
         validateAndAssertFailure(nl, PUBLICATION_STATUS, null, "{javax.validation.constraints.NotNull.message}");
     }
 
@@ -125,7 +125,7 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
         assertThat(nl.getPapers()).containsOnly(paper1, paper2);
 
         PaperSlim oneMore = new PaperSlim();
-        oneMore.setId(10l);
+        oneMore.setId(10L);
         oneMore.setTitle("foo");
         nl.addPaper(oneMore, topic1);
 
@@ -143,7 +143,7 @@ public class NewsletterTest extends Jsr303ValidatedEntityTest<Newsletter> {
         oneMoreTopic.setTitle("anotherTopic");
 
         PaperSlim oneMore = new PaperSlim();
-        oneMore.setId(10l);
+        oneMore.setId(10L);
         oneMore.setTitle("foo");
         nl.addPaper(oneMore, oneMoreTopic);
 

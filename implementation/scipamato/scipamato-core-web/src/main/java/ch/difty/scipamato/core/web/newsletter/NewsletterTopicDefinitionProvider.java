@@ -28,7 +28,7 @@ public class NewsletterTopicDefinitionProvider extends SortableDataProvider<News
 
     private NewsletterTopicFilter filter;
 
-    public NewsletterTopicDefinitionProvider() {
+    NewsletterTopicDefinitionProvider() {
         this(null);
     }
 

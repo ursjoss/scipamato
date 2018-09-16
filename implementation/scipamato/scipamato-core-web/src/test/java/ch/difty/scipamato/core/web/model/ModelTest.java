@@ -23,12 +23,10 @@ public abstract class ModelTest {
     @Autowired
     private ApplicationContext applicationContextMock;
 
-    private WicketTester tester;
-
     @Before
     public final void setUp() {
         ReflectionTestUtils.setField(application, "applicationContext", applicationContextMock);
-        tester = new WicketTester(application);
+        final WicketTester tester = new WicketTester(application);
         Locale locale = new Locale("en_US");
         tester
             .getSession()
@@ -39,6 +37,7 @@ public abstract class ModelTest {
     /**
      * Override if the actual test class needs a setUp
      */
+    @SuppressWarnings("WeakerAccess")
     protected void setUpLocal() {
     }
 

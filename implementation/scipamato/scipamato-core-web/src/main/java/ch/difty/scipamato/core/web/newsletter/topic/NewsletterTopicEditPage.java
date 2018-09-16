@@ -31,12 +31,13 @@ import ch.difty.scipamato.core.web.common.BasePage;
 @MountPath("newsletter-topic/entry")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition> {
 
     @SpringBean
     private NewsletterTopicService service;
 
-    public NewsletterTopicEditPage(final IModel<NewsletterTopicDefinition> model) {
+    NewsletterTopicEditPage(final IModel<NewsletterTopicDefinition> model) {
         super(model);
     }
 
@@ -55,7 +56,7 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
     }
 
     private Form<NewsletterTopicDefinition> newForm(final String id) {
-        return new Form<NewsletterTopicDefinition>(id, new CompoundPropertyModel<>(getModel())) {
+        return new Form<>(id, new CompoundPropertyModel<>(getModel())) {
             @Override
             protected void onSubmit() {
                 super.onSubmit();
@@ -93,14 +94,14 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
     }
 
     private RefreshingView<NewsletterTopicTranslation> newRefreshingView(final String id) {
-        RefreshingView<NewsletterTopicTranslation> translations = new RefreshingView<NewsletterTopicTranslation>(id) {
+        RefreshingView<NewsletterTopicTranslation> translations = new RefreshingView<>(id) {
             @Override
             protected Iterator<IModel<NewsletterTopicTranslation>> getItemModels() {
                 Collection<NewsletterTopicTranslation> translations = getModelObject()
                     .getTranslations()
                     .values();
 
-                return new ModelIteratorAdapter<NewsletterTopicTranslation>(translations) {
+                return new ModelIteratorAdapter<>(translations) {
                     @Override
                     protected IModel<NewsletterTopicTranslation> model(
                         final NewsletterTopicTranslation newsletterTopicTranslation) {

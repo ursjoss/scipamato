@@ -14,7 +14,7 @@ public class NewsletterTest extends PublicEntityTest<Newsletter> {
 
     @Override
     protected Newsletter newEntity() {
-        return new Newsletter(1, "2018/04", LocalDate.of(2018, 04, 10));
+        return new Newsletter(1, "2018/04", LocalDate.of(2018, 4, 10));
     }
 
     @Override

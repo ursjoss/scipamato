@@ -379,7 +379,7 @@ public class JooqPaperSlimBySearchOrderRepoTest {
     }
 
     @Test
-    public void getConditions_withSearchOrderWithTwoonditionCoveringNewspaperTopicAndHeadline() {
+    public void getConditions_withSearchOrderWithTwoConditionsCoveringNewspaperTopicAndHeadline() {
         SearchOrder searchOrder = new SearchOrder();
 
         SearchCondition sc1 = new SearchCondition(1L);

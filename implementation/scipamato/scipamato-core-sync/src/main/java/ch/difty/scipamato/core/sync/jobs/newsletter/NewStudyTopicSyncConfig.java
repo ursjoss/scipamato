@@ -40,6 +40,7 @@ import ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic;
  * @author u.joss
  */
 @Configuration
+@SuppressWarnings("SameParameterValue")
 public class NewStudyTopicSyncConfig
     extends SyncConfig<PublicNewStudyTopic, ch.difty.scipamato.publ.db.public_.tables.records.NewStudyTopicRecord> {
 
@@ -109,7 +110,7 @@ public class NewStudyTopicSyncConfig
 
     private int getSortOrMaxIntFrom(final ResultSet rs) throws SQLException {
         final Integer sort = getInteger(NNT_SORT, rs);
-        return sort != null ? sort.intValue() : Integer.MAX_VALUE;
+        return sort != null ? sort : Integer.MAX_VALUE;
     }
 
     private Timestamp getLaterTimeStampFrom(final TableField<NewsletterTopicTrRecord, Timestamp> nttLastModified,

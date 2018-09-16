@@ -96,7 +96,7 @@ public class JooqNewsletterRepo extends
      *     the id of the newsletter
      * @param languageCode
      *     the language code, e.g. 'de' or 'en'
-     * @return record comgining paper, paper_newsletter and (left joined) newsletter_topic
+     * @return record containing paper, paper_newsletter and (left joined) newsletter_topic
      */
     private Result<Record7<Long, Long, String, Integer, String, Integer, String>> loadNewsletterPaperTopicRecords(
         final int newsletterId, final String languageCode) {

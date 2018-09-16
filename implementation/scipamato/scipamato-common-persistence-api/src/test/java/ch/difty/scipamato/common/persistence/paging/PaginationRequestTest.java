@@ -82,13 +82,14 @@ public class PaginationRequestTest {
         assertThat(pr1.hashCode()).isEqualTo(pr2.hashCode());
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Test
     public void inequality_ofNull() {
         pr = new PaginationRequest(5, 5);
         assertThat(pr.equals(null)).isFalse();
     }
 
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({ "unlikely-arg-type", "EqualsBetweenInconvertibleTypes" })
     @Test
     public void inequality_ofDifferentClass() {
         pr = new PaginationRequest(5, 5);
@@ -143,11 +144,11 @@ public class PaginationRequestTest {
         assertEquality(pr, pr2);
     }
 
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({ "unlikely-arg-type", "RedundantStringConstructorCall", "EqualsBetweenInconvertibleTypes" })
     @Test
     public void inequality_ofPaginationRequestWithNonPaginationRequest() {
         pr = new PaginationRequest(5, 6);
-        String pr2 = new String();
+        String pr2 = "";
         assertThat(pr.equals(pr2)).isFalse();
         assertThat(pr.hashCode()).isNotEqualTo(pr2.hashCode());
     }

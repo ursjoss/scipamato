@@ -66,31 +66,31 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
         } else if (rst.length() > 2 && rst.startsWith(">=")) {
             this.type = MatchType.GREATER_OR_EQUAL;
             this.value = Integer.parseInt(rst
-                .substring(2, rst.length())
+                .substring(2)
                 .trim());
             this.value2 = this.value;
         } else if (rst.length() > 1 && rst.startsWith(">")) {
             this.type = MatchType.GREATER_THAN;
             this.value = Integer.parseInt(rst
-                .substring(1, rst.length())
+                .substring(1)
                 .trim());
             this.value2 = this.value;
         } else if (rst.length() > 2 && rst.startsWith("<=")) {
             this.type = MatchType.LESS_OR_EQUAL;
             this.value = Integer.parseInt(rst
-                .substring(2, rst.length())
+                .substring(2)
                 .trim());
             this.value2 = this.value;
         } else if (rst.length() > 1 && rst.startsWith("<")) {
             this.type = MatchType.LESS_THAN;
             this.value = Integer.parseInt(rst
-                .substring(1, rst.length())
+                .substring(1)
                 .trim());
             this.value2 = this.value;
         } else if (rst.length() > 1 && rst.startsWith("=")) {
             this.type = MatchType.EXACT;
             this.value = Integer.parseInt(rst
-                .substring(1, rst.length())
+                .substring(1)
                 .trim());
             this.value2 = this.value;
         } else if (rst.length() > 1 && rst.contains("-")) {
@@ -99,7 +99,7 @@ public class IntegerSearchTerm extends AbstractSearchTerm {
                 .substring(0, rst.indexOf('-'))
                 .trim());
             this.value2 = Integer.parseInt(rst
-                .substring(rst.indexOf('-') + 1, rst.length())
+                .substring(rst.indexOf('-') + 1)
                 .trim());
         } else {
             this.type = MatchType.EXACT;

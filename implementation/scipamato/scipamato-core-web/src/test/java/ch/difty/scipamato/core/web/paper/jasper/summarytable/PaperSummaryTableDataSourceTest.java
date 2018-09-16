@@ -19,6 +19,7 @@ import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
 
     private static final Long   NUMBER           = 100L;
@@ -70,6 +71,7 @@ public class PaperSummaryTableDataSourceTest extends PaperDataSourceTest {
         when(paperMock.getCodesOf(CodeClassId.CC7)).thenReturn(codesOfCodeClass7);
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void assertDataSource(String fileName) throws JRException {
         assertThat(ds.getConnectionProvider()).isNull();
         assertThat(ds

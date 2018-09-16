@@ -2,11 +2,6 @@ package ch.difty.scipamato.core.persistence.paper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.*;
 
 import java.util.*;
@@ -28,6 +23,7 @@ import ch.difty.scipamato.core.pubmed.AbstractPubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
 import ch.difty.scipamato.core.pubmed.api.*;
 
+@SuppressWarnings({ "ResultOfMethodCallIgnored", "OptionalGetWithoutIsPresent" })
 public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, PaperRepository> {
 
     private static final long   MINIMUM_NUMBER = 7L;
@@ -490,14 +486,14 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
 
     @Test
     public void hasDuplicateFieldNextToCurrent_withDegenerateConstruction_nullFieldName_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> service.hasDuplicateFieldNextToCurrent(null, "fw", 1l),
+        TestUtils.assertDegenerateSupplierParameter(() -> service.hasDuplicateFieldNextToCurrent(null, "fw", 1L),
             "fieldName");
     }
 
     @Test
     public void hasDuplicateFieldNextToCurrent_withInvalidFieldNameFails() {
         try {
-            service.hasDuplicateFieldNextToCurrent("foo", "fw", 1l);
+            service.hasDuplicateFieldNextToCurrent("foo", "fw", 1L);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex)
@@ -510,7 +506,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void hasDuplicateFieldNextToCurrent_withPmIdValidated_withNoDuplicate() {
         final String fieldName = "pmId";
         final int fieldValue = 11;
-        final Long id = 1l;
+        final Long id = 1L;
         when(repoMock.isPmIdAlreadyAssigned(fieldValue, id)).thenReturn(Optional.empty());
 
         assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, id)).isNotPresent();
@@ -522,7 +518,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void hasDuplicateFieldNextToCurrent_withPmIdValidated_withDuplicate() {
         final String fieldName = "pmId";
         final int fieldValue = 10;
-        final Long id = 1l;
+        final Long id = 1L;
         when(repoMock.isPmIdAlreadyAssigned(fieldValue, id)).thenReturn(Optional.of("2"));
 
         assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, id)).hasValue("2");
@@ -534,7 +530,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     public void hasDuplicateFieldNextToCurrent_withDoiValidated_withNoDuplicate() {
         final String fieldName = "doi";
         final String fieldValue = "fw";
-        final Long id = 1l;
+        final Long id = 1L;
         when(repoMock.isDoiAlreadyAssigned(fieldValue, id)).thenReturn(Optional.empty());
 
         assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, fieldValue, id)).isNotPresent();
@@ -545,7 +541,7 @@ public class JooqPaperServiceTest extends AbstractServiceTest<Long, Paper, Paper
     @Test
     public void hasDuplicateFieldNextToCurrent_withNullFieldValue_isAlwaysFalse() {
         final String fieldName = "doi";
-        final Long id = 1l;
+        final Long id = 1L;
 
         assertThat(service.hasDuplicateFieldNextToCurrent(fieldName, null, id)).isNotPresent();
 

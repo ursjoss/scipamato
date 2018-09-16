@@ -88,8 +88,8 @@ public class JooqNewStudyTopicServiceTest {
     @Test
     public void findingArchivedNewsletters_delegatesToRepo() {
         when(repoMock.findArchivedNewsletters(14, "de")).thenReturn(
-            List.of(new Newsletter(2, "2018/06", LocalDate.of(2018, 06, 10)),
-                new Newsletter(1, "2018/04", LocalDate.of(2018, 04, 10))));
+            List.of(new Newsletter(2, "2018/06", LocalDate.of(2018, 6, 10)),
+                new Newsletter(1, "2018/04", LocalDate.of(2018, 4, 10))));
 
         assertThat(service.findArchivedNewsletters(14, "de")).hasSize(2);
 

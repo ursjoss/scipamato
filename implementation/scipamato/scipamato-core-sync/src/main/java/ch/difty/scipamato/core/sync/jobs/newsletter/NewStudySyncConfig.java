@@ -36,6 +36,7 @@ import ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic;
  *
  * @author u.joss
  */
+@SuppressWarnings("SameParameterValue")
 @Configuration
 public class NewStudySyncConfig
     extends SyncConfig<PublicNewStudy, ch.difty.scipamato.publ.db.public_.tables.records.NewStudyRecord> {

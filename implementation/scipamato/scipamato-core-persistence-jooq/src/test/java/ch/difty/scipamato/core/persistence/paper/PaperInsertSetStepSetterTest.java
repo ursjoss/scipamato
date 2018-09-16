@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.persistence.paper;
 
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
 import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.*;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;
@@ -13,6 +12,7 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetterTest;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperRecord, Paper> {
 
     private final InsertSetStepSetter<PaperRecord, Paper> setter = new PaperInsertSetStepSetter();

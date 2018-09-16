@@ -54,7 +54,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public ServiceResult dumpPubmedArticlesToDb(final List<PubmedArticleFacade> articles, final long minimumNumber) {
         final ServiceResult sr = new DefaultServiceResult();
         final List<Integer> pmIdCandidates = articles
@@ -130,19 +130,19 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         return getRepository().findPageOfIdsBySearchOrder(searchOrder, paginationContext);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     @Override
     public void excludeFromSearchOrder(final long searchOrderId, final long paperId) {
         getRepository().excludePaperFromSearchOrderResults(searchOrderId, paperId);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     @Override
     public void reincludeIntoSearchOrder(final long searchOrderId, final long paperId) {
         getRepository().reincludePaperIntoSearchOrderResults(searchOrderId, paperId);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     @Override
     public Paper saveAttachment(final PaperAttachment paperAttachment) {
         return getRepository().saveAttachment(paperAttachment);
@@ -153,18 +153,19 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
         return getRepository().loadAttachmentWithContentBy(id);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     @Override
     public Paper deleteAttachment(final Integer id) {
         return getRepository().deleteAttachment(id);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     @Override
     public void deletePapersWithIds(final List<Long> ids) {
         getRepository().delete(ids);
     }
 
+    @Transactional
     @Override
     public Optional<Paper.NewsletterLink> mergePaperIntoWipNewsletter(final long paperId,
         final Integer newsletterTopicId, final String languageCode) {
@@ -177,6 +178,7 @@ public class JooqPaperService extends JooqEntityService<Long, Paper, PaperFilter
             return Optional.empty();
     }
 
+    @Transactional
     @Override
     public int removePaperFromNewsletter(final int newsletterId, final long paperId) {
         return newsletterRepo.removePaperFromNewsletter(newsletterId, paperId);

@@ -27,7 +27,7 @@ public class NewsletterProvider extends SortableDataProvider<Newsletter, String>
 
     private NewsletterFilter filter;
 
-    public NewsletterProvider() {
+    NewsletterProvider() {
         this(null);
     }
 

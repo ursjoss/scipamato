@@ -86,7 +86,7 @@ public class NewStudySyncConfigTest extends SyncConfigTest<NewStudyRecord> {
         when(rs.getInt(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_ID.getName())).thenReturn(1);
         when(rs.getInt(PaperNewsletter.PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.getName())).thenReturn(2);
         // when(rs.getInt(PaperNewsletter.PAPER_NEWSLETTER.SORT.getName())).thenReturn(3);
-        when(rs.getLong(Paper.PAPER.NUMBER.getName())).thenReturn(4l);
+        when(rs.getLong(Paper.PAPER.NUMBER.getName())).thenReturn(4L);
         when(rs.getInt(Paper.PAPER.PUBLICATION_YEAR.getName())).thenReturn(5);
         when(rs.getString(Paper.PAPER.AUTHORS.getName())).thenReturn("Yano E, Nishii S, Yokoyama Y.");
         when(rs.getString(Paper.PAPER.FIRST_AUTHOR.getName())).thenReturn("Yano");
@@ -101,7 +101,7 @@ public class NewStudySyncConfigTest extends SyncConfigTest<NewStudyRecord> {
         assertThat(pns.getNewsletterId()).isEqualTo(1);
         assertThat(pns.getNewsletterTopicId()).isEqualTo(2);
         assertThat(pns.getSort()).isEqualTo(1); // TODO make dynamic
-        assertThat(pns.getPaperNumber()).isEqualTo(4l);
+        assertThat(pns.getPaperNumber()).isEqualTo(4L);
         assertThat(pns.getYear()).isEqualTo(5);
         assertThat(pns.getAuthors()).isEqualTo("Yano et al.");
         assertThat(pns.getHeadline()).isEqualTo("hl");

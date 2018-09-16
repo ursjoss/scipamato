@@ -33,6 +33,7 @@ import ch.difty.scipamato.core.web.paper.PageFactory;
 import ch.difty.scipamato.core.web.paper.SearchConditionProvider;
 import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent;
 
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 public class SearchOrderPanel extends BasePanel<SearchOrder> {
 
     private static final long serialVersionUID = 1L;
@@ -112,7 +113,7 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
 
     private IColumn<SearchCondition, String> makeLinkIconColumn(String id,
         SerializableConsumer<IModel<SearchCondition>> consumer) {
-        return new LinkIconColumn<SearchCondition>(new StringResourceModel("column.header." + id, this, null)) {
+        return new LinkIconColumn<>(new StringResourceModel("column.header." + id, this, null)) {
             private static final long serialVersionUID = 1L;
 
             @Override

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort;
+import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
@@ -21,6 +22,7 @@ import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
 
+@SuppressWarnings({ "SameParameterValue", "OptionalGetWithoutIsPresent" })
 public class JooqNewsletterRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     @Autowired
@@ -125,7 +127,7 @@ public class JooqNewsletterRepoIntegrationTest extends JooqTransactionalIntegrat
     @Test
     public void mergingPaperIntoNewsletter_withNewAssociation() {
         int newsletterId = 2;
-        long paperId = 30l;
+        long paperId = 30L;
         String languCode = "en";
 
         Newsletter nl = repo.findById(newsletterId);
@@ -145,14 +147,14 @@ public class JooqNewsletterRepoIntegrationTest extends JooqTransactionalIntegrat
         return nl
             .getPapers()
             .stream()
-            .map(p -> p.getId())
+            .map(IdScipamatoEntity::getId)
             .collect(Collectors.toList());
     }
 
     @Test
     public void mergingPaperIntoNewsletter_withExistingAssociationToUpdate() {
         final int newsletterId = 2;
-        final long paperId = 39l;
+        final long paperId = 39L;
         final String languageCode = "en";
 
         Newsletter nl = repo.findById(newsletterId);
@@ -184,7 +186,7 @@ public class JooqNewsletterRepoIntegrationTest extends JooqTransactionalIntegrat
     @Test
     public void deletingPaperFromNewsletter_withExistingAssociation_managesToDeleteIt() {
         final int newsletterId = 2;
-        final long paperId = 39l;
+        final long paperId = 39L;
         Newsletter nl = repo.findById(newsletterId);
         assertThat(getIdsOfAssociatedPapers(nl)).contains(paperId);
 
@@ -198,7 +200,7 @@ public class JooqNewsletterRepoIntegrationTest extends JooqTransactionalIntegrat
     @Test
     public void deletingPaperFromNewsletter_withNonExistingRelation() {
         final int newsletterId = 2;
-        final long paperId = -1l;
+        final long paperId = -1L;
         Newsletter nl = repo.findById(newsletterId);
         assertThat(getIdsOfAssociatedPapers(nl)).doesNotContain(paperId);
 

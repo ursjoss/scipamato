@@ -3,7 +3,6 @@ package ch.difty.scipamato.core.pubmed;
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import javax.xml.transform.stream.StreamSource;
@@ -26,6 +25,7 @@ import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.pubmed.api.*;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 public class PubmedXmlServiceTest {
 
     private PubmedXmlService service;
@@ -161,7 +161,7 @@ public class PubmedXmlServiceTest {
     }
 
     @Test
-    public void gettingArticles_withPubmedArticleSetWithoutArticleCollectionx_returnsEmptyList() {
+    public void gettingArticles_withPubmedArticleSetWithoutArticleCollection2_returnsEmptyList() {
         when(unmarshallerMock.unmarshal(isA(StreamSource.class))).thenReturn(makeMinimalValidPubmedArticleSet());
         assertThat(service.extractArticlesFrom("some valid xml")).isNotEmpty();
         verify(unmarshallerMock).unmarshal(isA(StreamSource.class));

@@ -39,7 +39,7 @@ public interface ApplicationPublicProperties extends ApplicationProperties {
     /**
      * If true, pym.js will be added to the pages to support responsive iframes
      *
-     * @return true to support responive iframes, false to not support them.
+     * @return true to support responsive iframes, false to not support them.
      */
     boolean isResponsiveIframeSupportEnabled();
 

@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.persistence.newsletter;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.fail;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
 import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.persistence.AbstractServiceTest;
 
+@SuppressWarnings({ "ResultOfMethodCallIgnored", "OptionalGetWithoutIsPresent" })
 public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, Newsletter, NewsletterRepository> {
 
     private JooqNewsletterService service;
@@ -31,6 +33,9 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
 
     @Mock
     private Newsletter newsletterMock;
+
+    @Mock
+    private Newsletter newsletterWipMock;
 
     private final List<Newsletter> newsletters = new ArrayList<>();
 
@@ -101,22 +106,70 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
     }
 
     @Test
+    public void savingOrUpdating_withUnsavedEntityAndOtherNewsletterInStatusWIP_throws() {
+        when(newsletterMock.getId()).thenReturn(null);
+        when(newsletterMock.getPublicationStatus()).thenReturn(PublicationStatus.WIP);
+        when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.of(newsletterWipMock));
+        when(newsletterWipMock.getId()).thenReturn(1);
+
+        try {
+            service.saveOrUpdate(newsletterMock);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("newsletter.onlyOneInStatusWipAllowed");
+        }
+
+        verify(newsletterMock).getPublicationStatus();
+        verify(newsletterMock).getId();
+        verify(repoMock).getNewsletterInStatusWorkInProgress();
+        verify(newsletterWipMock).getId();
+    }
+
+    @Test
+    public void savingOrUpdating_withSavedEntity_butOtherNewsletterInWipStatus_throws() {
+        when(newsletterMock.getId()).thenReturn(2);
+        when(newsletterMock.getPublicationStatus()).thenReturn(PublicationStatus.WIP);
+        when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.of(newsletterWipMock));
+        when(newsletterWipMock.getId()).thenReturn(1);
+
+        try {
+            service.saveOrUpdate(newsletterMock);
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("newsletter.onlyOneInStatusWipAllowed");
+        }
+
+        verify(newsletterMock).getPublicationStatus();
+        verify(newsletterMock, times(2)).getId();
+        verify(repoMock).getNewsletterInStatusWorkInProgress();
+        verify(newsletterWipMock).getId();
+    }
+
+    @Test
     public void savingOrUpdating_withPaperWithNullId_hasRepoAddThePaper() {
         when(newsletterMock.getId()).thenReturn(null);
+        when(newsletterMock.getPublicationStatus()).thenReturn(PublicationStatus.PUBLISHED);
         when(repoMock.add(newsletterMock)).thenReturn(newsletterMock);
         assertThat(service.saveOrUpdate(newsletterMock)).isEqualTo(newsletterMock);
         verify(repoMock).add(newsletterMock);
         verify(newsletterMock).getId();
+        verify(newsletterMock).getPublicationStatus();
         verifyAudit(1);
     }
 
     @Test
     public void savingOrUpdating_withPaperWithNonNullId_hasRepoUpdateThePaper() {
         when(newsletterMock.getId()).thenReturn(17);
+        when(newsletterMock.getPublicationStatus()).thenReturn(PublicationStatus.PUBLISHED);
         when(repoMock.update(newsletterMock)).thenReturn(newsletterMock);
         assertThat(service.saveOrUpdate(newsletterMock)).isEqualTo(newsletterMock);
         verify(repoMock).update(newsletterMock);
         verify(newsletterMock).getId();
+        verify(newsletterMock).getPublicationStatus();
         verifyAudit(1);
     }
 
@@ -160,13 +213,6 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
         when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.of(new Newsletter()));
         assertThat(service.canCreateNewsletterInProgress()).isFalse();
         verify(repoMock).getNewsletterInStatusWorkInProgress();
-    }
-
-    private NewsletterFilter fixtureWithNewNewsletterCount(final int count) {
-        NewsletterFilter filter = new NewsletterFilter();
-        filter.setPublicationStatus(PublicationStatus.WIP);
-        when(repoMock.countByFilter(filter)).thenReturn(count);
-        return filter;
     }
 
     @Test

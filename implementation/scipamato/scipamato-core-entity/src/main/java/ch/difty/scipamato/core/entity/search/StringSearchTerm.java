@@ -52,6 +52,7 @@ import java.util.regex.Pattern;
  * @see <a href=
  *     "http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html">http://giocc.com/writing-a-lexer-in-java-1-7-using-regex-named-capturing-groups.html</a>
  */
+@SuppressWarnings("SameParameterValue")
 public class StringSearchTerm extends AbstractSearchTerm {
     private static final long serialVersionUID = 1L;
 
@@ -125,7 +126,7 @@ public class StringSearchTerm extends AbstractSearchTerm {
         // cache values
         private static final TokenType[] TOKEN_TYPES = values();
 
-        public final  String    pattern;
+        final  String    pattern;
         public final  MatchType matchType;
         private final int       group;
         private final boolean   wcLeft;

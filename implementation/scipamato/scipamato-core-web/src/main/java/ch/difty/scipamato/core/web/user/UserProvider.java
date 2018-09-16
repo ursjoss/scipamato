@@ -26,11 +26,11 @@ public class UserProvider extends SortableDataProvider<User, String> implements 
 
     private UserFilter filter;
 
-    public UserProvider() {
+    UserProvider() {
         this(null);
     }
 
-    public UserProvider(UserFilter filter) {
+    UserProvider(UserFilter filter) {
         Injector
             .get()
             .inject(this);

@@ -33,7 +33,7 @@ public class Newsletter extends PublicEntity {
         ISSUE_DATE("issueDate"),
         MONTH_NAME("monthName");
 
-        private String name;
+        private final String name;
 
         NewsletterFields(final String name) {
             this.name = name;

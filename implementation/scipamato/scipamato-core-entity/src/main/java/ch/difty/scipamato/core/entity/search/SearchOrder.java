@@ -75,7 +75,7 @@ public class SearchOrder extends IdScipamatoEntity<Long> implements PaperSlimFil
         setExcludedPaperIds(excludedPaperIds);
     }
 
-    public void setSearchConditions(final List<SearchCondition> searchConditions) {
+    private void setSearchConditions(final List<SearchCondition> searchConditions) {
         if (searchConditions != null) {
             this.searchConditions.clear();
             this.searchConditions.addAll(searchConditions);

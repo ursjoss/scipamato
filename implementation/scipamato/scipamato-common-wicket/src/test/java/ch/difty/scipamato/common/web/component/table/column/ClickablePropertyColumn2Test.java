@@ -22,10 +22,10 @@ public class ClickablePropertyColumn2Test {
     @Mock
     private SerializableSupplier<Integer>                   supplierMock;
 
-    private       IModel<String> displayModel  = new Model<>("foo");
-    private       String         property      = "prop";
+    private final IModel<String> displayModel  = new Model<>("foo");
+    private final String         property      = "prop";
     private final int            suppliedValue = 5;
-    private       Model<String>  clickModel    = Model.of("bar");
+    private final Model<String>  clickModel    = Model.of("bar");
 
     private ClickablePropertyColumn2<String, String, Integer> c;
 

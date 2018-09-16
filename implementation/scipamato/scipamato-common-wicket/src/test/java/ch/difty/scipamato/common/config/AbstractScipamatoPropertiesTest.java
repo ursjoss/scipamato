@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class AbstractScipamatoPropertiesTest {
 
     private AbstractScipamatoProperties<ScipamatoBaseProperties> prop;
@@ -22,7 +23,7 @@ public class AbstractScipamatoPropertiesTest {
 
     @Before
     public void setUp() {
-        prop = new AbstractScipamatoProperties<ScipamatoBaseProperties>(scipamatoPropMock, mavenPropMock) {
+        prop = new AbstractScipamatoProperties<>(scipamatoPropMock, mavenPropMock) {
             private static final long serialVersionUID = 1L;
         };
 
@@ -86,7 +87,7 @@ public class AbstractScipamatoPropertiesTest {
     }
 
     @Test
-    public void getintgMultiSelectBoxActionBoxWithMoreEntriesThan_delegatesToScipamatoProps() {
+    public void gettingMultiSelectBoxActionBoxWithMoreEntriesThan_delegatesToScipamatoProps() {
         when(scipamatoPropMock.getMultiSelectBoxActionBoxWithMoreEntriesThan()).thenReturn(4);
         assertThat(prop.getMultiSelectBoxActionBoxWithMoreEntriesThan()).isEqualTo(4);
         verify(scipamatoPropMock).getMultiSelectBoxActionBoxWithMoreEntriesThan();

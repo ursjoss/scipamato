@@ -1,7 +1,6 @@
 package ch.difty.scipamato.common.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
@@ -16,21 +15,21 @@ public class AbstractPanelTest extends WicketBaseTest {
 
     @Test
     public void testViewMode_withOneArgConstructor() {
-        assertViewMode(new AbstractPanel<TestRecord>("panel") {
+        assertViewMode(new AbstractPanel<>("panel") {
             private static final long serialVersionUID = 1L;
         });
     }
 
     @Test
     public void testViewMode_withTwoArgConstructor() {
-        assertViewMode(new AbstractPanel<TestRecord>("panel", Model.of(new TestRecord(1, "foo"))) {
+        assertViewMode(new AbstractPanel<>("panel", Model.of(new TestRecord(1, "foo"))) {
             private static final long serialVersionUID = 1L;
         });
     }
 
     @Test
     public void testViewMode_withThreeArgConstructor() {
-        assertViewMode(new AbstractPanel<TestRecord>("id", Model.of(new TestRecord(1, "foo")), Mode.VIEW) {
+        assertViewMode(new AbstractPanel<>("id", Model.of(new TestRecord(1, "foo")), Mode.VIEW) {
             private static final long serialVersionUID = 1L;
         });
     }
@@ -45,7 +44,7 @@ public class AbstractPanelTest extends WicketBaseTest {
 
     @Test
     public void testEditMode() {
-        assertEditMode(new AbstractPanel<TestRecord>("panel", Model.of(new TestRecord(1, "foo")), Mode.EDIT) {
+        assertEditMode(new AbstractPanel<>("panel", Model.of(new TestRecord(1, "foo")), Mode.EDIT) {
             private static final long serialVersionUID = 1L;
         });
     }
@@ -60,7 +59,7 @@ public class AbstractPanelTest extends WicketBaseTest {
 
     @Test
     public void testSearchMode() {
-        assertSearchMode(new AbstractPanel<TestRecord>("panel", Model.of(new TestRecord(1, "foo")), Mode.SEARCH) {
+        assertSearchMode(new AbstractPanel<>("panel", Model.of(new TestRecord(1, "foo")), Mode.SEARCH) {
             private static final long serialVersionUID = 1L;
         });
     }

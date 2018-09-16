@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import ch.difty.scipamato.common.config.ApplicationProperties;
 
 @Component
+@SuppressWarnings("ALL")
 public class TestApplicationProperties implements ApplicationProperties {
 
     @Override

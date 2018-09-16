@@ -35,6 +35,7 @@ import ch.difty.scipamato.core.persistence.EntityRecordMapper;
  *     PaperSlims
  * @author u.joss
  */
+@SuppressWarnings("WeakerAccess")
 public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M extends EntityRecordMapper<PaperRecord, T>>
     implements BySearchOrderRepository<T> {
 

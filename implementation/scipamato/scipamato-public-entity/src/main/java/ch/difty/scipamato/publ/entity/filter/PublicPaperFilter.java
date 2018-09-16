@@ -12,7 +12,7 @@ import ch.difty.scipamato.publ.entity.PopulationCode;
 import ch.difty.scipamato.publ.entity.StudyDesignCode;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode()
 public class PublicPaperFilter extends ScipamatoFilter {
 
     private static final long serialVersionUID = 1L;

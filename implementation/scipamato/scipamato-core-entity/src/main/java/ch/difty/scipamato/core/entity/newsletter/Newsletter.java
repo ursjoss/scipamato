@@ -43,7 +43,7 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
         PAPERS("papers"),
         TOPICS("topics");
 
-        private String name;
+        private final String name;
 
         NewsletterFields(final String name) {
             this.name = name;
@@ -104,7 +104,7 @@ public class Newsletter extends IdScipamatoEntity<Integer> {
         for (final Map.Entry<NewsletterTopic, List<PaperSlim>> topicWithPapers : papersByTopic.entrySet()) {
             final NewsletterTopic currentTopic = topicWithPapers.getKey();
             final List<PaperSlim> assignedPapers = topicWithPapers.getValue();
-            if (topicsDiffer(topicToKeep, currentTopic) && assignedPapers.contains(paper))
+            if (topicsDiffer(topicToKeep, currentTopic))
                 assignedPapers.remove(paper);
         }
     }

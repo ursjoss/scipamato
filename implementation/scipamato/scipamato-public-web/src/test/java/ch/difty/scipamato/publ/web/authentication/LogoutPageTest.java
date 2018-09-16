@@ -16,6 +16,7 @@ import org.springframework.security.core.AuthenticationException;
 import ch.difty.scipamato.publ.web.WicketTest;
 import ch.difty.scipamato.publ.web.paper.browse.PublicPage;
 
+@SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 public class LogoutPageTest extends WicketTest {
 
     private static final String FORM = "form";

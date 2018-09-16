@@ -21,7 +21,7 @@ public class ClickablePropertyColumnTest extends WicketBaseTest {
     @Mock
     private SerializableConsumer<IModel<String>> consumerMock;
 
-    private IModel<String> displayModel = new Model<>("foo");
+    private final IModel<String> displayModel = new Model<>("foo");
 
     private String clickPerformed = null;
 

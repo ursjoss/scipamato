@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  */
 public enum StudyDesignCode {
     EXPERIMENTAL((short) 1),
-    EPIODEMIOLOGICAL((short) 2),
+    EPIDEMIOLOGICAL((short) 2),
     OVERVIEW_METHODOLOGY((short) 3);
 
     private static final Map<Short, StudyDesignCode> ID2CODE = Stream

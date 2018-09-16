@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.junit.Test;
 
@@ -48,11 +47,8 @@ public class NewsletterTopicDefinitionTest {
         assertThat(trs)
             .extracting(NewsletterTopicTranslation.NewsletterTopicTranslationFields.TITLE.getName())
             .containsOnly("thema2", "topic2", "sujet2");
-        final Iterator<NewsletterTopicTranslation> it = trs.iterator();
-        while (it.hasNext())
-            assertThat(it
-                .next()
-                .getLastModified()).isNull();
+        for (final NewsletterTopicTranslation tr : trs)
+            assertThat(tr.getLastModified()).isNull();
     }
 
     @Test

@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.persistence.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -23,6 +22,7 @@ import ch.difty.scipamato.core.entity.search.UserFilter;
 import ch.difty.scipamato.core.persistence.UserRepository;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings({ "ResultOfMethodCallIgnored", "OptionalGetWithoutIsPresent" })
 public class JooqUserServiceTest {
 
     private JooqUserService service;
@@ -155,7 +155,7 @@ public class JooqUserServiceTest {
     @Test
     public void findingByUserName_whenFindingUser_delegatesToRepoAndReturnsOptionalOfFoundUser() {
         when(repoMock.findByUserName("foo")).thenReturn(userMock);
-        assertThat(service.findByUserName("foo")).isEqualTo(Optional.ofNullable(userMock));
+        assertThat(service.findByUserName("foo")).isEqualTo(Optional.of(userMock));
         verify(repoMock).findByUserName("foo");
     }
 

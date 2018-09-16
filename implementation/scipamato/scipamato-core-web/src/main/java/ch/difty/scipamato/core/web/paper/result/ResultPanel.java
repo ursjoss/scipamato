@@ -203,8 +203,8 @@ public abstract class ResultPanel extends BasePanel<Void> {
                 String icon;
                 final PaperSlim paper = rowModel.getObject();
                 if (hasNoNewsletter(paper))
-                    icon = hasNewsletterInProgress() ? "fa fa-fw fa-plus-square-o" : "";
-                else if (isAssociatedNewsletterWorkInProgress(paper))
+                    icon = isThereOneNewsletterInStatusWip() ? "fa fa-fw fa-plus-square-o" : "";
+                else if (hasNewsletterWip(paper))
                     icon = "fa fa-fw fa-envelope-open-o";
                 else
                     icon = "fa fa-fw fa-envelope-o";
@@ -215,11 +215,11 @@ public abstract class ResultPanel extends BasePanel<Void> {
                 return paper.getNewsletterAssociation() == null;
             }
 
-            private boolean hasNewsletterInProgress() {
+            private boolean isThereOneNewsletterInStatusWip() {
                 return !newsletterService.canCreateNewsletterInProgress();
             }
 
-            private boolean isAssociatedNewsletterWorkInProgress(final PaperSlim paper) {
+            private boolean hasNewsletterWip(final PaperSlim paper) {
                 return PublicationStatus
                     .byId(paper
                         .getNewsletterAssociation()
@@ -231,11 +231,11 @@ public abstract class ResultPanel extends BasePanel<Void> {
             protected IModel<String> createTitleModel(final IModel<PaperSlim> rowModel) {
                 final PaperSlim paper = rowModel.getObject();
                 if (hasNoNewsletter(paper)) {
-                    if (hasNewsletterInProgress())
+                    if (isThereOneNewsletterInStatusWip())
                         return new StringResourceModel("column.title.newsletter.add", ResultPanel.this, null);
                     else
                         return Model.of("");
-                } else if (isAssociatedNewsletterWorkInProgress(paper)) {
+                } else if (hasNewsletterWip(paper)) {
                     return new StringResourceModel("column.title.newsletter.remove", ResultPanel.this, null);
                 } else {
                     return new StringResourceModel("column.title.newsletter.closed", ResultPanel.this,
@@ -249,11 +249,11 @@ public abstract class ResultPanel extends BasePanel<Void> {
                 final PaperSlim paper = rowModel.getObject();
 
                 if (hasNoNewsletter(paper)) {
-                    if (hasNewsletterInProgress())
+                    if (isThereOneNewsletterInStatusWip())
                         newsletterService.mergePaperIntoWipNewsletter(paper.getId());
                     else
                         warn(new StringResourceModel("newsletter.noneInProgress", ResultPanel.this, null).getString());
-                } else if (isAssociatedNewsletterWorkInProgress(paper)) {
+                } else if (hasNewsletterWip(paper)) {
                     newsletterService.removePaperFromWipNewsletter(paper.getId());
                 } else {
                     warn(new StringResourceModel("newsletter.readonly", ResultPanel.this,

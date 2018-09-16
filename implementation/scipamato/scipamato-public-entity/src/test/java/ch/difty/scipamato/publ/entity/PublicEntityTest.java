@@ -14,7 +14,7 @@ public abstract class PublicEntityTest<T extends PublicEntity> {
 
     private T entity;
 
-    protected T getEntity() {
+    T getEntity() {
         return entity;
     }
 

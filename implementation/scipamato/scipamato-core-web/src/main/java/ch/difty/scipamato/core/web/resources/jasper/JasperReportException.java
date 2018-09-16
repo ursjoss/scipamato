@@ -6,15 +6,15 @@ package ch.difty.scipamato.core.web.resources.jasper;
  *
  * @author u.joss
  */
-public class JasperReportException extends RuntimeException {
+class JasperReportException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public JasperReportException(final Exception ex) {
+    JasperReportException(final Exception ex) {
         super(ex);
     }
 
-    public JasperReportException(final String msg) {
+    JasperReportException(final String msg) {
         super(msg);
     }
 

@@ -20,6 +20,7 @@ import org.springframework.util.StringUtils;
  *
  * @author u.joss
  */
+@SuppressWarnings("ALL")
 public class TestUserDetailsService implements UserDetailsService {
 
     private static final String ADMIN    = "testadmin";
@@ -30,6 +31,7 @@ public class TestUserDetailsService implements UserDetailsService {
 
     private final Map<String, User> users = new HashMap<>();
 
+    @SuppressWarnings("WeakerAccess")
     public TestUserDetailsService() {
         users.put(ADMIN, new User(ADMIN, PASSWORD, Arrays.asList(new Role("ROLE_ADMIN"), new Role("ROLE_USER"))));
         users.put(USER, new User(USER, PASSWORD, Collections.singletonList(new Role("ROLE_USER"))));

@@ -7,6 +7,7 @@ import ch.difty.scipamato.common.web.AbstractPanel;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 
+@SuppressWarnings("WeakerAccess")
 public abstract class BasePanel<T> extends AbstractPanel<T> {
 
     private static final long serialVersionUID = 1L;

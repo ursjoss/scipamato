@@ -27,7 +27,7 @@ public class JooqDslTransactionIntegrationTest extends JooqBaseIntegrationTest {
     private DataSourceTransactionManager txMgr;
 
     @After
-    public void teardown() {
+    public void tearDown() {
         // Delete all books that were created in any test - just in case
         dsl
             .delete(PAPER)

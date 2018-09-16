@@ -19,6 +19,7 @@ import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.core.entity.CoreEntity;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public abstract class InsertSetStepSetterTest<R extends Record, E extends CoreEntity> {
 
     @Mock

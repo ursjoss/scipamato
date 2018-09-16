@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.newsletter.topic;
 
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
@@ -21,17 +20,16 @@ import ch.difty.scipamato.core.web.common.BasePageTest;
 
 public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEditPage> {
 
-    private NewsletterTopicDefinition  ntd;
-    private NewsletterTopicTranslation ntt_de, ntt_en, ntt_fr;
+    private NewsletterTopicDefinition ntd;
 
     @MockBean
     private NewsletterTopicService newsletterTopicServiceMock;
 
     @Override
     public void setUpHook() {
-        ntt_de = new NewsletterTopicTranslation(1, "de", "thema1", 1);
-        ntt_en = new NewsletterTopicTranslation(2, "en", "topic1", 1);
-        ntt_fr = new NewsletterTopicTranslation(3, "fr", "sujet1", 1);
+        final NewsletterTopicTranslation ntt_de = new NewsletterTopicTranslation(1, "de", "thema1", 1);
+        final NewsletterTopicTranslation ntt_en = new NewsletterTopicTranslation(2, "en", "topic1", 1);
+        final NewsletterTopicTranslation ntt_fr = new NewsletterTopicTranslation(3, "fr", "sujet1", 1);
         ntd = new NewsletterTopicDefinition(1, "de", 1, ntt_de, ntt_en, ntt_fr);
     }
 

@@ -13,6 +13,7 @@ import ch.difty.scipamato.core.db.public_.tables.Paper;
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyRecord;
 
+@SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 public class NewStudyItemWriterIntegrationTest
     extends AbstractItemWriterIntegrationTest<PublicNewStudy, NewStudyItemWriter> {
 

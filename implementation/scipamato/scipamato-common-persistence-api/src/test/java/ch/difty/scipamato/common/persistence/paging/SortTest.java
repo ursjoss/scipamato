@@ -56,7 +56,7 @@ public class SortTest {
     @Test
     public void degenerateConstruction_withEmptyPropertyNames_throws() {
         try {
-            new Sort(Direction.ASC, new String[] {});
+            new Sort(Direction.ASC);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex)
@@ -70,12 +70,8 @@ public class SortTest {
 
         assertThat(sort.iterator()).hasSize(propertyNames.length);
 
-        final Iterator<SortProperty> it = sort.iterator();
-
-        while (it.hasNext()) {
-            final SortProperty sp = it.next();
+        for (final SortProperty sp : sort)
             assertThat(sp.getDirection()).isEqualTo(dir);
-        }
     }
 
     @Test
@@ -149,33 +145,35 @@ public class SortTest {
         assertThat(sort.toString()).isEqualTo("a: ASC,b: DESC,c: DESC,d: ASC");
     }
 
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({ "unlikely-arg-type", "ConstantConditions", "RedundantStringConstructorCall", "EqualsWithItself",
+        "EqualsBetweenInconvertibleTypes" })
     @Test
     public void sortEqualityTests() {
         assertThat(sort.equals(null)).isFalse();
-        assertThat(sort.equals(new String())).isFalse();
+        assertThat(sort.equals("")).isFalse();
         assertThat(sort.equals(sort)).isTrue();
         assertThat(sort.equals(new Sort(sortProperties))).isTrue();
 
-        List<SortProperty> sortPropertys2 = new ArrayList<>();
-        sortPropertys2.add(new SortProperty("a", Direction.ASC));
-        sortPropertys2.add(new SortProperty("b", Direction.DESC));
-        sortPropertys2.add(new SortProperty("c", Direction.DESC));
-        assertThat(sort.equals(new Sort(sortPropertys2))).isFalse();
-        assertThat(sort.hashCode()).isNotEqualTo(new Sort(sortPropertys2).hashCode());
+        List<SortProperty> sortProperties2 = new ArrayList<>();
+        sortProperties2.add(new SortProperty("a", Direction.ASC));
+        sortProperties2.add(new SortProperty("b", Direction.DESC));
+        sortProperties2.add(new SortProperty("c", Direction.DESC));
+        assertThat(sort.equals(new Sort(sortProperties2))).isFalse();
+        assertThat(sort.hashCode()).isNotEqualTo(new Sort(sortProperties2).hashCode());
 
-        sortPropertys2.add(new SortProperty("d", Direction.ASC));
-        assertThat(sort.equals(new Sort(sortPropertys2))).isTrue();
-        assertThat(sort.hashCode()).isEqualTo(new Sort(sortPropertys2).hashCode());
+        sortProperties2.add(new SortProperty("d", Direction.ASC));
+        assertThat(sort.equals(new Sort(sortProperties2))).isTrue();
+        assertThat(sort.hashCode()).isEqualTo(new Sort(sortProperties2).hashCode());
     }
 
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({ "unlikely-arg-type", "ConstantConditions", "RedundantStringConstructorCall", "EqualsWithItself",
+        "EqualsBetweenInconvertibleTypes" })
     @Test
     public void sortPropertyEqualityTests() {
         SortProperty sf1 = new SortProperty("foo", Direction.DESC);
 
         assertThat(sf1.equals(null)).isFalse();
-        assertThat(sf1.equals(new String())).isFalse();
+        assertThat(sf1.equals("")).isFalse();
         assertThat(sf1.equals(sf1)).isTrue();
         assertThat(sf1.equals(new SortProperty("foo", Direction.DESC))).isTrue();
         assertThat(sf1.equals(new SortProperty("foo", Direction.ASC))).isFalse();

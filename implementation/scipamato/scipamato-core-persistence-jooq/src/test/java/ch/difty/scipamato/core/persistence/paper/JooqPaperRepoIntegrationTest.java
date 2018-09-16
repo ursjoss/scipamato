@@ -32,6 +32,7 @@ import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
 
+@SuppressWarnings("SameParameterValue")
 public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     private static final long   TEST_PAPER_ID = 1L;
@@ -577,26 +578,26 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
         assertThat(papers
             .stream()
             .map(Paper::getId)
-            .collect(Collectors.toList())).contains(31l);
+            .collect(Collectors.toList())).contains(31L);
     }
 
     @Test
     public void findingById_populatesNewsLetterWithAllFields() {
-        Paper paper = repo.findById(31l, "en");
+        Paper paper = repo.findById(31L, "en");
         assertThat(paper.getNewsletterLink()).isNotNull();
         assertNewsletterLink(paper, "1802", 1, 1, "Ultrafine Particles", "some headline");
     }
 
     @Test
     public void findingById_populatesNewsLetterWithMostFields() {
-        Paper paper = repo.findById(20l, "en");
+        Paper paper = repo.findById(20L, "en");
         assertThat(paper.getNewsletterLink()).isNotNull();
         assertNewsletterLink(paper, "1802", 1, 2, "Mortality", null);
     }
 
     @Test
     public void findingById_populatesNewsLetterWithSomeFields() {
-        Paper paper = repo.findById(39l, "en");
+        Paper paper = repo.findById(39L, "en");
         assertThat(paper.getNewsletterLink()).isNotNull();
         assertNewsletterLink(paper, "1804", 0, null, null, null);
     }
@@ -623,28 +624,28 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     @Test
     public void isDoiAlreadyAssigned_withDoiInDb_countsOtherPaperAsDuplicate() {
         // it's id 1 that has that doi
-        assertThat(repo.isDoiAlreadyAssigned("10.1093/aje/kwu275", 2l)).hasValue("1");
+        assertThat(repo.isDoiAlreadyAssigned("10.1093/aje/kwu275", 2L)).hasValue("1");
     }
 
     @Test
     public void isDoiAlreadyAssigned_withDoiInDb_doesNotCountCurrentPaperAsDuplicate() {
-        assertThat(repo.isDoiAlreadyAssigned("10.1093/aje/kwu275", 1l)).isNotPresent();
+        assertThat(repo.isDoiAlreadyAssigned("10.1093/aje/kwu275", 1L)).isNotPresent();
     }
 
     @Test
     public void isDoiAlreadyAssigned_withDoiNotInDb_reportsNoDuplicate() {
-        assertThat(repo.isDoiAlreadyAssigned("foobar", 1l)).isNotPresent();
+        assertThat(repo.isDoiAlreadyAssigned("foobar", 1L)).isNotPresent();
     }
 
     @Test
     public void isPmIdAlreadyAssigned_withDoiInDb_countsOtherPaperAsDuplicate() {
         // it's id 1 that has that pmId
-        assertThat(repo.isPmIdAlreadyAssigned(25395026, 2l)).hasValue("1");
+        assertThat(repo.isPmIdAlreadyAssigned(25395026, 2L)).hasValue("1");
     }
 
     @Test
     public void isPmIdAlreadyAssigned_withDoiInDb_doesNotCountCurrentPaperAsDuplicate() {
-        assertThat(repo.isPmIdAlreadyAssigned(25395026, 1l)).isNotPresent();
+        assertThat(repo.isPmIdAlreadyAssigned(25395026, 1L)).isNotPresent();
     }
 
     @Test
@@ -654,6 +655,6 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
 
     @Test
     public void isPmIdAlreadyAssigned_withDoiNotInDb_reportsNoDuplicate() {
-        assertThat(repo.isPmIdAlreadyAssigned(-1, 1l)).isNotPresent();
+        assertThat(repo.isPmIdAlreadyAssigned(-1, 1L)).isNotPresent();
     }
 }

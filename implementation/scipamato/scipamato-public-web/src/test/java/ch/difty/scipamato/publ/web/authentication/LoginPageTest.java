@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import ch.difty.scipamato.publ.web.WicketTest;
 
+@SuppressWarnings("WeakerAccess")
 public class LoginPageTest extends WicketTest {
 
     @Test

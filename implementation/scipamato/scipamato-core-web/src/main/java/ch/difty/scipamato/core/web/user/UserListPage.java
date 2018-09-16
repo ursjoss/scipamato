@@ -40,9 +40,9 @@ import ch.difty.scipamato.core.web.common.BasePage;
  *
  * @author u.joss
  */
-@SuppressWarnings("SameParameterValue")
 @MountPath("/users")
 @AuthorizeInstantiation({ Roles.ADMIN })
+@SuppressWarnings("SameParameterValue")
 public class UserListPage extends BasePage<Void> {
 
     private static final String COLUMN_HEADER = "column.header.";

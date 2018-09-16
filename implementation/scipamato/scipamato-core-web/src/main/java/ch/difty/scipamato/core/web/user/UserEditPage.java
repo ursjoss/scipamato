@@ -49,10 +49,10 @@ import ch.difty.scipamato.core.web.common.BasePage;
  * <li><b>CHANGE_PASSWORD:</b> The (active) user can change the password but no other aspects of his/her profile</li>
  * </ul>
  */
-@SuppressWarnings("WicketForgeJavaIdInspection")
 @MountPath("user")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
+@SuppressWarnings({ "WicketForgeJavaIdInspection", "WeakerAccess" })
 public class UserEditPage extends BasePage<ChangePasswordUser> {
 
     private static final String AM_DATA_WIDTH = "data-width";
@@ -67,7 +67,6 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
     @SpringBean
     private UserService userService;
 
-    @SuppressWarnings("WeakerAccess")
     public UserEditPage(final PageParameters pp) {
         super(pp);
         this.mode = getModeFrom(pp);

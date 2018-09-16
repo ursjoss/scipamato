@@ -11,7 +11,7 @@ import ch.difty.scipamato.common.AssertAs;
  * Validator to verify if the text field contains a password that matches
  * the password hash passed into the constructor.
  */
-public class CurrentPasswordMatchesValidator implements IValidator<String> {
+class CurrentPasswordMatchesValidator implements IValidator<String> {
 
     private final PasswordEncoder passwordEncoder;
     private final String          currentPasswordHashPersisted;

@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.persistence.user;
 
 import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
 import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.*;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;
@@ -13,6 +12,7 @@ import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetterTest;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class UserInsertSetStepSetterTest extends InsertSetStepSetterTest<ScipamatoUserRecord, User> {
 
     private final InsertSetStepSetter<ScipamatoUserRecord, User> setter = new UserInsertSetStepSetter();

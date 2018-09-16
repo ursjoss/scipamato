@@ -13,6 +13,7 @@ import org.junit.Test;
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.NewsletterRecord;
 
+@SuppressWarnings("SameParameterValue")
 public class NewsletterItemWriterIntegrationTest
     extends AbstractItemWriterIntegrationTest<PublicNewsletter, NewsletterItemWriter> {
 

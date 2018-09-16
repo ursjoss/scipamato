@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
+@SuppressWarnings("SameParameterValue")
 public class AuditSearchTermsTest {
 
     private static final String KEY   = "key";
@@ -64,7 +65,8 @@ public class AuditSearchTermsTest {
         assertInequalityBetween(st1, st2, 118234894, -817550684);
     }
 
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({ "unlikely-arg-type", "EqualsWithItself", "ConstantConditions",
+        "EqualsBetweenInconvertibleTypes" })
     @Test
     public void compareWithNullSelfOrDifferentClass() {
         assertThat(st1.equals(null)).isFalse();
