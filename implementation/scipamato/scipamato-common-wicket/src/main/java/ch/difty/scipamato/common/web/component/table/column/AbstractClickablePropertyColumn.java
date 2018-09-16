@@ -21,6 +21,7 @@ import org.apache.wicket.model.PropertyModel;
  *     the type of the sort property
  * @author u.joss
  */
+@SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 public abstract class AbstractClickablePropertyColumn<T, S> extends AbstractColumn<T, S> {
     private static final long serialVersionUID = 1L;
 
@@ -49,7 +50,7 @@ public abstract class AbstractClickablePropertyColumn<T, S> extends AbstractColu
 
         LinkPanel(String id, IModel<T> rowModel, IModel<?> labelModel) {
             super(id);
-            Link<T> link = new Link<T>("link", rowModel) {
+            Link<T> link = new Link<>("link", rowModel) {
                 private static final long serialVersionUID = 1L;
 
                 @Override

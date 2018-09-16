@@ -14,6 +14,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
 import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class JooqNewsletterRepoTest extends
     JooqEntityRepoTest<NewsletterRecord, Newsletter, Integer, ch.difty.scipamato.core.db.tables.Newsletter, NewsletterRecordMapper, NewsletterFilter> {
 

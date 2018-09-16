@@ -25,6 +25,7 @@ import org.apache.wicket.model.IModel;
 /**
  * @author Viliam Repan (lazyman)
  */
+@SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 public abstract class LinkIconPanel extends Panel {
 
     private static final long serialVersionUID = 1L;
@@ -46,7 +47,7 @@ public abstract class LinkIconPanel extends Panel {
     }
 
     private AjaxLink<Void> makeLink() {
-        AjaxLink<Void> link = new AjaxLink<Void>(ID_LINK) {
+        AjaxLink<Void> link = new AjaxLink<>(ID_LINK) {
             private static final long serialVersionUID = 1L;
 
             @Override

@@ -85,7 +85,7 @@ public class JooqPaperSlimRepoIntegrationTest extends JooqTransactionalIntegrati
 
     @Test
     public void canQueryNewsletterFields() {
-        PaperSlim paper = repo.findById(31l, "en");
+        PaperSlim paper = repo.findById(31L, "en");
 
         assertThat(paper).isNotNull();
 

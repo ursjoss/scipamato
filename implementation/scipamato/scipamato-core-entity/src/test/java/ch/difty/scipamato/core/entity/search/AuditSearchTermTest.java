@@ -7,6 +7,7 @@ import org.junit.Test;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.MatchType;
 import ch.difty.scipamato.core.entity.search.AuditSearchTerm.TokenType;
 
+@SuppressWarnings("SameParameterValue")
 public class AuditSearchTermTest {
 
     private static final String CREATED    = "CREATED";

@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class NewsletterFilterTest {
 
-    private NewsletterFilter f = new NewsletterFilter();
+    private final NewsletterFilter f = new NewsletterFilter();
 
     @Test
     public void getAndSet() {

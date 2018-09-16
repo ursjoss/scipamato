@@ -29,6 +29,7 @@ public abstract class FinalClassTest<C> {
         @SuppressWarnings("unchecked") Class<C> clazz = (Class<C>) GenericTypeResolver.resolveTypeArgument(getClass(),
             FinalClassTest.class);
         Constructor<C> constructor = clazz.getDeclaredConstructor();
+        assertThat(constructor).isNotNull();
         assertThat(Modifier.isPrivate(constructor.getModifiers())).isTrue();
         constructor.setAccessible(true);
         constructor.newInstance();

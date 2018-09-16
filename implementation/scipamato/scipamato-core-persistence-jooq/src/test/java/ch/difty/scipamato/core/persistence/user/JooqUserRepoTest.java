@@ -15,6 +15,7 @@ import ch.difty.scipamato.core.entity.search.UserFilter;
 import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class JooqUserRepoTest extends
     JooqEntityRepoTest<ScipamatoUserRecord, User, Integer, ch.difty.scipamato.core.db.tables.ScipamatoUser, UserRecordMapper, UserFilter> {
 

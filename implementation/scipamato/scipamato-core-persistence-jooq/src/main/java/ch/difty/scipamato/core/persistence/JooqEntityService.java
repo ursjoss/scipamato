@@ -27,7 +27,7 @@ public abstract class JooqEntityService<ID extends Number, T extends IdScipamato
         super(repo, userRepo);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     @Override
     public T saveOrUpdate(T entity) {
         if (entity.getId() == null) {
@@ -42,7 +42,7 @@ public abstract class JooqEntityService<ID extends Number, T extends IdScipamato
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public void remove(T entity) {
         if (entity != null && entity.getId() != null) {
             getRepository().delete(entity.getId(), entity.getVersion());

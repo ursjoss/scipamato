@@ -16,6 +16,7 @@ import org.apache.wicket.model.Model;
 import ch.difty.scipamato.common.web.TestRecord;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
 
+@SuppressWarnings("SameParameterValue")
 class ClickablePropertyColumnTestPanel extends Panel {
     private static final long serialVersionUID = 1L;
 
@@ -41,7 +42,7 @@ class ClickablePropertyColumnTestPanel extends Panel {
 
     private IColumn<TestRecord, String> makeClickableColumn(String id,
         SerializableConsumer<IModel<TestRecord>> consumer) {
-        return new ClickablePropertyColumn<TestRecord, String>(Model.of(id), null, "name", consumer, inNewTab) {
+        return new ClickablePropertyColumn<>(Model.of(id), null, "name", consumer, inNewTab) {
             private static final long serialVersionUID = 1L;
         };
     }

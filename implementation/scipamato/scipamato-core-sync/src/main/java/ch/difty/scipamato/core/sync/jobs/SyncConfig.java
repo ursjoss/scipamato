@@ -34,6 +34,7 @@ import ch.difty.scipamato.core.sync.houskeeping.PseudoForeignKeyConstraintEnforc
  *     related record implementation
  * @author u.joss
  */
+@SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
 
     @Value("${purge_grace_time_in_minutes:30}")

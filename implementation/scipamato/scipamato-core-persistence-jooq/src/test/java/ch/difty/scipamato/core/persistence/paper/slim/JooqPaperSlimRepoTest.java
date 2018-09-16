@@ -22,6 +22,7 @@ import ch.difty.scipamato.core.persistence.JooqReadOnlyRepoTest;
 import ch.difty.scipamato.core.persistence.ReadOnlyRepository;
 import ch.difty.scipamato.core.persistence.paper.searchorder.PaperSlimBackedSearchOrderRepository;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class JooqPaperSlimRepoTest extends
     JooqReadOnlyRepoTest<PaperRecord, PaperSlim, Long, ch.difty.scipamato.core.db.tables.Paper, PaperSlimRecordMapper, PaperFilter> {
 

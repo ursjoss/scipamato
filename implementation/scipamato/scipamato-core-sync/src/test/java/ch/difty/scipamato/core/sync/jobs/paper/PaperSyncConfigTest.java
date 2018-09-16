@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.sync.jobs.paper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
 import javax.sql.DataSource;

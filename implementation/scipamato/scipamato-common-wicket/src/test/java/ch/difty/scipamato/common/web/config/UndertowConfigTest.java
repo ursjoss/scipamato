@@ -43,8 +43,8 @@ public class UndertowConfigTest {
     @Mock
     private ApplicationProperties scipamatoPropertiesMock;
 
-    private Builder        undertowBuilder = Undertow.builder();
-    private DeploymentInfo deploymentInfo  = new DeploymentInfo();
+    private final Builder        undertowBuilder = Undertow.builder();
+    private final DeploymentInfo deploymentInfo  = new DeploymentInfo();
 
     @Before
     public void setUp() {

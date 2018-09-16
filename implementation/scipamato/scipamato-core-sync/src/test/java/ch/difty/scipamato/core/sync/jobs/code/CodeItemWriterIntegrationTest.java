@@ -12,6 +12,7 @@ import org.junit.Test;
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord;
 
+@SuppressWarnings("SameParameterValue")
 public class CodeItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<PublicCode, CodeItemWriter> {
 
     private static final String CODE_EXISTING       = "1F";

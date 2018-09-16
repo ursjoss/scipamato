@@ -22,6 +22,7 @@ import ch.difty.scipamato.core.entity.search.*;
 import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class JooqSearchOrderRepoTest extends
     JooqEntityRepoTest<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.core.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter> {
 
@@ -182,13 +183,13 @@ public class JooqSearchOrderRepoTest extends
         return new JooqSearchOrderRepo(getDsl(), getMapper(), getSortMapper(), getFilterConditionMapper(),
             getDateTimeService(), getInsertSetStepSetter(), getUpdateSetStepSetter(), getApplicationProperties()) {
 
-            SearchTerm st1 = SearchTerm.newSearchTerm(1, SearchTermType.STRING.getId(), 3,
+            final SearchTerm st1 = SearchTerm.newSearchTerm(1, SearchTermType.STRING.getId(), 3,
                 Paper.PaperFields.AUTHORS.getName(), "joss");
-            SearchTerm st2 = SearchTerm.newSearchTerm(2, SearchTermType.INTEGER.getId(), 3,
+            final SearchTerm st2 = SearchTerm.newSearchTerm(2, SearchTermType.INTEGER.getId(), 3,
                 Paper.PaperFields.PUBL_YEAR.getName(), "2014");
-            SearchTerm st3 = SearchTerm.newSearchTerm(3, SearchTermType.INTEGER.getId(), 4,
+            final SearchTerm st3 = SearchTerm.newSearchTerm(3, SearchTermType.INTEGER.getId(), 4,
                 Paper.PaperFields.PUBL_YEAR.getName(), "2014-2016");
-            SearchTerm st4 = SearchTerm.newSearchTerm(4, SearchTermType.AUDIT.getId(), 5,
+            final SearchTerm st4 = SearchTerm.newSearchTerm(4, SearchTermType.AUDIT.getId(), 5,
                 Paper.PaperFields.CREATED_BY.getName(), "mkj");
 
             @Override

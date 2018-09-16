@@ -1,5 +1,6 @@
 package ch.difty.scipamato.common.web;
 
+@SuppressWarnings("WeakerAccess")
 public final class WicketUtils {
 
     public static final String LABEL_TAG                 = "Label";

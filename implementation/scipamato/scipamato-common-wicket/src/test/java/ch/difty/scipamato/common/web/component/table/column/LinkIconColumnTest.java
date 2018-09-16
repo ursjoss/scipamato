@@ -84,7 +84,7 @@ public class LinkIconColumnTest extends WicketBaseTest {
         assertThat(clickPerformed).isEqualTo("TestRecord(1, foo)");
     }
 
-    private final LinkIconColumn<TestRecord> lc = new LinkIconColumn<TestRecord>(Model.of("headerText")) {
+    private final LinkIconColumn<TestRecord> lc = new LinkIconColumn<>(Model.of("headerText")) {
         private static final long serialVersionUID = 1L;
 
         @Override

@@ -18,6 +18,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
 import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.persistence.AbstractServiceTest;
 
+@SuppressWarnings({ "ResultOfMethodCallIgnored", "OptionalGetWithoutIsPresent" })
 public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, Newsletter, NewsletterRepository> {
 
     private JooqNewsletterService service;
@@ -212,13 +213,6 @@ public class JooqNewsletterServiceTest extends AbstractServiceTest<Integer, News
         when(repoMock.getNewsletterInStatusWorkInProgress()).thenReturn(Optional.of(new Newsletter()));
         assertThat(service.canCreateNewsletterInProgress()).isFalse();
         verify(repoMock).getNewsletterInStatusWorkInProgress();
-    }
-
-    private NewsletterFilter fixtureWithNewNewsletterCount(final int count) {
-        NewsletterFilter filter = new NewsletterFilter();
-        filter.setPublicationStatus(PublicationStatus.WIP);
-        when(repoMock.countByFilter(filter)).thenReturn(count);
-        return filter;
     }
 
     @Test

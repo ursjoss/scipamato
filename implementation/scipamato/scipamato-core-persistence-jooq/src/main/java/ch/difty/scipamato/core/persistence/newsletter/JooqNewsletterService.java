@@ -27,13 +27,13 @@ class JooqNewsletterService extends JooqEntityService<Integer, Newsletter, Newsl
     }
 
     @Override
-    @Transactional()
+    @Transactional
     public void mergePaperIntoWipNewsletter(final long paperId) {
         mergePaperIntoWipNewsletter(paperId, null);
     }
 
     @Override
-    @Transactional()
+    @Transactional
     public void mergePaperIntoWipNewsletter(final long paperId, final Integer newsletterTopicId) {
         final Optional<Newsletter> opt = getRepository().getNewsletterInStatusWorkInProgress();
         opt.ifPresent(
@@ -42,7 +42,7 @@ class JooqNewsletterService extends JooqEntityService<Integer, Newsletter, Newsl
     }
 
     @Override
-    @Transactional()
+    @Transactional
     public boolean removePaperFromWipNewsletter(final long paperId) {
         final Optional<Newsletter> opt = getRepository().getNewsletterInStatusWorkInProgress();
         return opt

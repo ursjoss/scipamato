@@ -17,7 +17,7 @@ public class AbstractFilterConditionMapperTest {
         private static final long serialVersionUID = 1L;
     }
 
-    private final AbstractFilterConditionMapper<DummyFilter> mapper = new AbstractFilterConditionMapper<DummyFilter>() {
+    private final AbstractFilterConditionMapper<DummyFilter> mapper = new AbstractFilterConditionMapper<>() {
         @Override
         protected void map(DummyFilter filter, List<Condition> conditions) {
             filterCalled = true;

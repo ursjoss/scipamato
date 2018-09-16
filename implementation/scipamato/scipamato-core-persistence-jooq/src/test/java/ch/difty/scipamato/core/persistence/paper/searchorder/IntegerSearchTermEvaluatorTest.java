@@ -13,6 +13,7 @@ import ch.difty.scipamato.core.entity.search.IntegerSearchTerm;
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("SameParameterValue")
 public class IntegerSearchTermEvaluatorTest extends SearchTermEvaluatorTest<IntegerSearchTerm> {
 
     private final IntegerSearchTermEvaluator e = new IntegerSearchTermEvaluator();

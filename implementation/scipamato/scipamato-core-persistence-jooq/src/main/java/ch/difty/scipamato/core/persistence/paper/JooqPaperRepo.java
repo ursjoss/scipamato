@@ -109,7 +109,7 @@ public class JooqPaperRepo extends
         if (entity != null) {
             if (languageCode != null) {
                 enrichCodesOf(entity, languageCode);
-                enrichNewsletterAssocation(entity, languageCode);
+                enrichNewsletterAssociation(entity, languageCode);
             }
             enrichAttachmentsOf(entity);
         }
@@ -147,7 +147,7 @@ public class JooqPaperRepo extends
             entity.addCodes(codes);
     }
 
-    private void enrichNewsletterAssocation(final Paper entity, final String languageCode) {
+    private void enrichNewsletterAssociation(final Paper entity, final String languageCode) {
         Record6<Integer, String, Integer, Integer, String, String> r = getDsl()
             .select(NEWSLETTER.ID, NEWSLETTER.ISSUE, NEWSLETTER.PUBLICATION_STATUS,
                 PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID, NEWSLETTER_TOPIC_TR.TITLE, PAPER_NEWSLETTER.HEADLINE)
@@ -228,6 +228,7 @@ public class JooqPaperRepo extends
      * Insert or update the association between paper and newsletter.
      *
      * @param paper
+     *     the paper to store the newsletterlink
      */
     private void considerStoringNewsletterLinkOf(final Paper paper) {
         if (paper != null && paper.getNewsletterLink() != null) {

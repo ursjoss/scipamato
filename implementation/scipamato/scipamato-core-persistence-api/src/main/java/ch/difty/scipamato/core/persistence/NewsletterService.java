@@ -32,7 +32,7 @@ public interface NewsletterService extends EntityService<Integer, Newsletter, Ne
     void mergePaperIntoWipNewsletter(final long paperId, final Integer newsletterTopicId);
 
     /**
-     * Ensures the specified paper is associated with the (single) nesletter that is in status 'work in progress'.
+     * Ensures the specified paper is associated with the (single) newsletter that is in status 'work in progress'.
      * It will be assigned without a topic.
      * <p>
      * If the paper had previously been assigned to the same newsletter with a different topic,

@@ -23,6 +23,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.persistence.UserRepository;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class JooqNewsletterTopicServiceTest {
 
     private JooqNewsletterTopicService service;

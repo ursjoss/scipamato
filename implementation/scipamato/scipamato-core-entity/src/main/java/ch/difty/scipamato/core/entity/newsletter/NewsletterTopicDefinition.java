@@ -57,7 +57,7 @@ public class NewsletterTopicDefinition extends NewsletterTopic {
         this.translations = Arrays
             .stream(translations)
             .collect(toMap(NewsletterTopicTranslation::getLangCode, Function.identity()));
-        setVersion(version != null ? version.intValue() : 0);
+        setVersion(version != null ? version : 0);
     }
 
     /**

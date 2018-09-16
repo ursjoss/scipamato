@@ -15,6 +15,7 @@ public class TestWicketWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean(name = "authenticationManager")
     @Override
+    @SuppressWarnings("EmptyMethod")
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }

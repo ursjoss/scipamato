@@ -20,7 +20,7 @@ public class NewsletterTopicTranslation extends NewsletterTopic {
         final Integer version) {
         super(id, title);
         this.langCode = AssertAs.notNull(langCode, "langCode");
-        setVersion(version != null ? version.intValue() : 0);
+        setVersion(version != null ? version : 0);
     }
 
     public enum NewsletterTopicTranslationFields implements FieldEnumType {
@@ -28,7 +28,7 @@ public class NewsletterTopicTranslation extends NewsletterTopic {
         LANG_CODE("langCode"),
         TITLE("title");
 
-        private String name;
+        private final String name;
 
         NewsletterTopicTranslationFields(final String name) {
             this.name = name;

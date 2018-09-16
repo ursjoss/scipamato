@@ -102,6 +102,7 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
     /**
      * Override if you need to extend the {@link Navbar}
      */
+    @SuppressWarnings("EmptyMethod")
     protected void extendNavBar() {
     }
 

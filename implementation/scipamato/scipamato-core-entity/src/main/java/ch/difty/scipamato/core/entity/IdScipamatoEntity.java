@@ -16,6 +16,7 @@ import ch.difty.scipamato.common.entity.FieldEnumType;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("SameParameterValue")
 public abstract class IdScipamatoEntity<ID extends Number> extends CoreEntity {
 
     private static final long serialVersionUID = 1L;

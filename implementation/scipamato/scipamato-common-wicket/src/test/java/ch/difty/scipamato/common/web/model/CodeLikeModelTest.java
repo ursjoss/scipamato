@@ -35,7 +35,7 @@ public class CodeLikeModelTest {
 
     @Before
     public void setUp() {
-        model = new CodeLikeModel<CodeLike, CodeLikeService<CodeLike>>(CC_ID, LANG_CODE, serviceMock) {
+        model = new CodeLikeModel<>(CC_ID, LANG_CODE, serviceMock) {
             private static final long serialVersionUID = 1L;
 
             @Override

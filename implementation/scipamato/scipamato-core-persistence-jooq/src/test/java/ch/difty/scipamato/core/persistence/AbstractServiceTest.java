@@ -12,6 +12,7 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
 import ch.difty.scipamato.core.entity.User;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings({ "ResultOfMethodCallIgnored", "WeakerAccess" })
 public abstract class AbstractServiceTest<ID extends Number, T extends IdScipamatoEntity<ID>, R extends ReadOnlyRepository<T, ID, ?>> {
 
     protected static final int CREATOR_ID  = 10;

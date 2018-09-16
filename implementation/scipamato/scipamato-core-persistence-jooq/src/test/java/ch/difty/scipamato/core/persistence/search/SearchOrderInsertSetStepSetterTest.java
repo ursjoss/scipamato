@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.persistence.search;
 
 import static ch.difty.scipamato.core.db.tables.SearchOrder.SEARCH_ORDER;
 import static ch.difty.scipamato.core.persistence.search.SearchOrderRecordMapperTest.*;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;
@@ -13,6 +12,7 @@ import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetter;
 import ch.difty.scipamato.core.persistence.InsertSetStepSetterTest;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class SearchOrderInsertSetStepSetterTest extends InsertSetStepSetterTest<SearchOrderRecord, SearchOrder> {
 
     private final InsertSetStepSetter<SearchOrderRecord, SearchOrder> setter = new SearchOrderInsertSetStepSetter();

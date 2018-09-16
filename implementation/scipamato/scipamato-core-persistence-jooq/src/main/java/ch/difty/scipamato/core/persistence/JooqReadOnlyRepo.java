@@ -33,6 +33,7 @@ import ch.difty.scipamato.core.entity.CoreEntity;
  *     the type of the filter, extending {@link ScipamatoFilter}
  * @author u.joss
  */
+@SuppressWarnings("WeakerAccess")
 public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
     extends AbstractRepo implements ReadOnlyRepository<T, ID, F> {
 
@@ -156,7 +157,7 @@ public abstract class JooqReadOnlyRepo<R extends Record, T extends CoreEntity, I
      * @param entity
      *     entity of type {@code T} with sub entities to be enriched.
      * @param languageCode
-     *     the two character langauge code
+     *     the two character language code
      */
     protected void enrichAssociatedEntitiesOf(final T entity, final String languageCode) {
     }

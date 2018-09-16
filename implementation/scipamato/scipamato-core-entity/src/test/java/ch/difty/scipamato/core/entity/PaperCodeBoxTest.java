@@ -199,7 +199,8 @@ public class PaperCodeBoxTest {
         assertEqualityOf(cb1, cb2);
     }
 
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({ "unlikely-arg-type", "EqualsWithItself", "ConstantConditions",
+        "EqualsBetweenInconvertibleTypes" })
     private void assertEqualityOf(CodeBox cb1, CodeBox cb2) {
         assertThat(cb1.equals(cb1)).isTrue();
         assertThat(cb2.equals(cb2)).isTrue();

@@ -3,8 +3,6 @@ package ch.difty.scipamato.core.persistence;
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -37,6 +35,7 @@ import ch.difty.scipamato.core.entity.IdScipamatoEntity;
  * pressure of sonarqube :-) )
  */
 @RunWith(SpringRunner.class)
+@SuppressWarnings("WeakerAccess")
 public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamatoEntity<ID>, ID extends Number, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
     extends JooqReadOnlyRepoTest<R, T, ID, TI, M, F> {
 
@@ -158,6 +157,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     /**
      * Hook for concrete tests to inject their specific tear down instructions.
      */
+    @SuppressWarnings("EmptyMethod")
     protected void testSpecificTearDown() {
     }
 
@@ -172,6 +172,7 @@ public abstract class JooqEntityRepoTest<R extends Record, T extends IdScipamato
     /**
      * Hook for concrete tests to inject their specific null checks
      */
+    @SuppressWarnings("EmptyMethod")
     protected void testSpecificNullCheck() {
     }
 

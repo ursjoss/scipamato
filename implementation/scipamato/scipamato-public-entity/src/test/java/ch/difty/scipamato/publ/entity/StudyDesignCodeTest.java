@@ -10,7 +10,7 @@ public class StudyDesignCodeTest {
 
     @Test
     public void hasAllValues() {
-        assertThat(values()).containsExactly(EXPERIMENTAL, EPIODEMIOLOGICAL, OVERVIEW_METHODOLOGY);
+        assertThat(values()).containsExactly(EXPERIMENTAL, EPIDEMIOLOGICAL, OVERVIEW_METHODOLOGY);
     }
 
     @Test

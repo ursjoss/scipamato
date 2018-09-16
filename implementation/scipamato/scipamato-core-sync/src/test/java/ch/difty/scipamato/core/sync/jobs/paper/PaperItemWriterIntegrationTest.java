@@ -12,6 +12,7 @@ import org.junit.Test;
 import ch.difty.scipamato.core.sync.jobs.AbstractItemWriterIntegrationTest;
 import ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord;
 
+@SuppressWarnings("SameParameterValue")
 public class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<PublicPaper, PaperItemWriter> {
 
     private static final long ID_EXISTING = 1L;

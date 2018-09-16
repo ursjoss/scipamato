@@ -38,6 +38,7 @@ import ch.difty.scipamato.core.sync.jobs.SyncConfig;
  *
  * @author u.joss
  */
+@SuppressWarnings("SameParameterValue")
 @Configuration
 public class PaperSyncConfig
     extends SyncConfig<PublicPaper, ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord> {

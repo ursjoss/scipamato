@@ -17,6 +17,7 @@ import org.apache.wicket.model.Model;
 
 import ch.difty.scipamato.common.web.TestRecord;
 
+@SuppressWarnings("SameParameterValue")
 abstract class LinkIconColumnTestPanel extends Panel {
     private static final long serialVersionUID = 1L;
 
@@ -33,13 +34,13 @@ abstract class LinkIconColumnTestPanel extends Panel {
 
         final List<IColumn<TestRecord, String>> columns = new ArrayList<>();
         columns.add(new PropertyColumn<>(Model.of("name"), "name", "name"));
-        columns.add(makeLinkIconColumn("test"));
+        columns.add(makeLinkIconColumn());
 
         add(new DefaultDataTable<>("table", columns, new TestDataProvider(), 10));
     }
 
-    private IColumn<TestRecord, String> makeLinkIconColumn(String id) {
-        return new LinkIconColumn<TestRecord>(Model.of("linkIconColumnLabel")) {
+    private IColumn<TestRecord, String> makeLinkIconColumn() {
+        return new LinkIconColumn<>(Model.of("linkIconColumnLabel")) {
             private static final long serialVersionUID = 1L;
 
             @Override

@@ -24,7 +24,7 @@ public class NewStudyPageLink extends PublicEntity {
         TITLE("title"),
         URL("url");
 
-        private String name;
+        private final String name;
 
         NewProjectPageLinkFields(final String name) {
             this.name = name;

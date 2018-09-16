@@ -49,6 +49,7 @@ import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
  */
 @Repository
 @Slf4j
+@SuppressWarnings("WeakerAccess")
 public class JooqSearchOrderRepo extends
     JooqEntityRepo<SearchOrderRecord, SearchOrder, Long, ch.difty.scipamato.core.db.tables.SearchOrder, SearchOrderRecordMapper, SearchOrderFilter>
     implements SearchOrderRepository {
@@ -375,7 +376,7 @@ public class JooqSearchOrderRepo extends
             sc.setSearchConditionId(null);
             if (searchCondition.equals(sc)) {
                 sc.setSearchConditionId(searchConditionId);
-                return Optional.ofNullable(sc);
+                return Optional.of(sc);
             }
         }
         return Optional.empty();

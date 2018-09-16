@@ -10,7 +10,7 @@ import ch.difty.scipamato.publ.entity.Newsletter;
 public interface NewStudyRepository {
 
     /**
-     * Find all {@link NewStudyTopic} entries for the newsletter with theprovided id.
+     * Find all {@link NewStudyTopic} entries for the newsletter with the provided id.
      *
      * @param newsletterId
      *     the id of the newsletter

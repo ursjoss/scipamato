@@ -61,7 +61,8 @@ public class AbstractSearchTermTest {
         assertThat(st1.hashCode()).isNotEqualTo(st2.hashCode());
     }
 
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({ "unlikely-arg-type", "EqualsWithItself", "ConstantConditions",
+        "EqualsBetweenInconvertibleTypes" })
     @Test
     public void equality_withSpecialCases() {
         SearchTerm st1 = SearchTerm.newSearchTerm(12, 2, 3L, "fn3", "foo*");

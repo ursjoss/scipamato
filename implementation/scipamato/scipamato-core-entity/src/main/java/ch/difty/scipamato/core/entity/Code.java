@@ -74,6 +74,7 @@ public class Code extends CoreEntity implements CodeLike {
         setVersion(version != null ? version : 0);
     }
 
+    @SuppressWarnings("CopyConstructorMissesField")
     public Code(final Code from) {
         this(from.code, from.name, from.comment, from.internal, new CodeClass(from.codeClass), from.sort,
             from.getCreated(), from.getCreatedBy(), from.getLastModified(), from.getLastModifiedBy(),

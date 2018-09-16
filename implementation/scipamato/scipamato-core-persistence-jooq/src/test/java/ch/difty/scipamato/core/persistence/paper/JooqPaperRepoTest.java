@@ -26,6 +26,7 @@ import ch.difty.scipamato.core.persistence.EntityRepository;
 import ch.difty.scipamato.core.persistence.JooqEntityRepoTest;
 import ch.difty.scipamato.core.persistence.paper.searchorder.PaperBackedSearchOrderRepository;
 
+@SuppressWarnings({ "WeakerAccess", "ResultOfMethodCallIgnored" })
 public class JooqPaperRepoTest extends
     JooqEntityRepoTest<PaperRecord, Paper, Long, ch.difty.scipamato.core.db.tables.Paper, PaperRecordMapper, PaperFilter> {
 
@@ -463,7 +464,7 @@ public class JooqPaperRepoTest extends
 
     @Test
     public void isDoiAlreadyAssigned_withNullDoi_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> repo.isDoiAlreadyAssigned(null, 1l), "doi");
+        TestUtils.assertDegenerateSupplierParameter(() -> repo.isDoiAlreadyAssigned(null, 1L), "doi");
     }
 
 }

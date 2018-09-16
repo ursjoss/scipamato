@@ -32,7 +32,7 @@ public class JooqCodeClassLikeServiceTest {
 
     @Before
     public void setUp() {
-        service = new JooqCodeClassLikeService<CodeClassLike, CodeClassLikeRepository<CodeClassLike>>(repoMock) {
+        service = new JooqCodeClassLikeService<>(repoMock) {
         };
 
         codeClasses.add(cclMock);

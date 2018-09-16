@@ -1,11 +1,6 @@
 package ch.difty.scipamato.core.persistence.user;
 
 import static ch.difty.scipamato.core.db.tables.ScipamatoUser.SCIPAMATO_USER;
-import static ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED;
-import static ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED_BY;
-import static ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD;
-import static ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY;
-import static ch.difty.scipamato.core.persistence.RecordMapperTest.VERSION;
 import static ch.difty.scipamato.core.persistence.user.UserRecordMapperTest.*;
 import static org.mockito.Mockito.*;
 
@@ -16,6 +11,7 @@ import ch.difty.scipamato.core.entity.User;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class UserUpdateSetStepSetterTest extends UpdateSetStepSetterTest<ScipamatoUserRecord, User> {
 
     private final UpdateSetStepSetter<ScipamatoUserRecord, User> setter = new UserUpdateSetStepSetter();

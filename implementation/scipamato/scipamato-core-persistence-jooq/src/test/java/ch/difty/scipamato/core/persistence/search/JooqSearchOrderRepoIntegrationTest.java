@@ -13,6 +13,7 @@ import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
 
+@SuppressWarnings("SameParameterValue")
 public class JooqSearchOrderRepoIntegrationTest extends JooqTransactionalIntegrationTest {
 
     private static final Integer RECORD_COUNT_PREPOPULATED = 4;

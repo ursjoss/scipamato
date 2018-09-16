@@ -21,6 +21,7 @@ public abstract class SearchTermEvaluatorTest<T extends SearchTerm> {
         assertDegenerateSupplierParameter(() -> getEvaluator().evaluate(null), "searchTerm");
     }
 
+    @SuppressWarnings("WeakerAccess")
     protected String concat(String... strings) {
         final StringBuilder sb = new StringBuilder();
         for (final String s : strings) {

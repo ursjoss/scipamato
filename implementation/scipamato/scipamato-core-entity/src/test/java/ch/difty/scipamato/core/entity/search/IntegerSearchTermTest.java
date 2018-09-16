@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import ch.difty.scipamato.core.entity.search.IntegerSearchTerm.MatchType;
 
+@SuppressWarnings("SameParameterValue")
 public class IntegerSearchTermTest {
 
     private static final long   CONDITION_ID = 7;

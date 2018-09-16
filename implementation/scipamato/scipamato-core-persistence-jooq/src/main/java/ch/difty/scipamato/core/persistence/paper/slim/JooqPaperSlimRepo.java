@@ -82,9 +82,7 @@ public class JooqPaperSlimRepo extends
 
     private int getStatusId(
         final Record9<Long, Long, String, Integer, String, Integer, String, Integer, String> record) {
-        return record
-            .get(NEWSLETTER.PUBLICATION_STATUS.getName(), Integer.class)
-            .intValue();
+        return record.get(NEWSLETTER.PUBLICATION_STATUS.getName(), Integer.class);
     }
 
     @Override

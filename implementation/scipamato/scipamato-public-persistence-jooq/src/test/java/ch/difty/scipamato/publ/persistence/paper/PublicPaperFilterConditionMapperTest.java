@@ -147,7 +147,7 @@ public class PublicPaperFilterConditionMapperTest
     @Test
     public void creatingWhereCondition_withMethodStudyDesignCodes_searchesStudyDesignCodes() {
         filter.setStudyDesignCodes(
-            Arrays.asList(StudyDesignCode.EPIODEMIOLOGICAL, StudyDesignCode.OVERVIEW_METHODOLOGY));
+            Arrays.asList(StudyDesignCode.EPIDEMIOLOGICAL, StudyDesignCode.OVERVIEW_METHODOLOGY));
         assertThat(mapper
             .map(filter)
             .toString()).isEqualToIgnoringCase("\"PUBLIC\".\"PAPER\".\"CODES_STUDY_DESIGN\" @> array[2, 3]");

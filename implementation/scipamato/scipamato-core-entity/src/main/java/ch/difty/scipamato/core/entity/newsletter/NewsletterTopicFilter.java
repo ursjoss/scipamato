@@ -8,6 +8,7 @@ import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
+@SuppressWarnings("SameParameterValue")
 public class NewsletterTopicFilter extends ScipamatoFilter {
     private static final long serialVersionUID = 1L;
 

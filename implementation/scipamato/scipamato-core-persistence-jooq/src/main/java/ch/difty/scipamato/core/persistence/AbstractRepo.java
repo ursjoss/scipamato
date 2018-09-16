@@ -14,6 +14,7 @@ import ch.difty.scipamato.core.entity.User;
 /**
  * Generic base class for Repositories, providing protected accessor methods for the dslContext and the dateTimeService.
  */
+@SuppressWarnings("WeakerAccess")
 public abstract class AbstractRepo {
 
     private final DSLContext      dsl;

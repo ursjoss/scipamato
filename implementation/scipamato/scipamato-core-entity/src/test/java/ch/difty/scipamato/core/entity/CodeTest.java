@@ -150,7 +150,8 @@ public class CodeTest extends Jsr303ValidatedEntityTest<Code> {
         assertThat(c6.hashCode()).isNotEqualTo(c7.hashCode());
     }
 
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({ "unlikely-arg-type", "EqualsWithItself", "ConstantConditions",
+        "EqualsBetweenInconvertibleTypes" })
     @Test
     public void equalingToSpecialCases() {
         Code c = newValidEntity();

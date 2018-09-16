@@ -29,6 +29,7 @@ import ch.difty.scipamato.publ.ScipamatoPublicApplication;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@SuppressWarnings("SameParameterValue")
 public abstract class WicketTest {
 
     @Autowired

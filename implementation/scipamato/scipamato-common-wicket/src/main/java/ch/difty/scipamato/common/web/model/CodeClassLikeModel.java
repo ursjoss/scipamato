@@ -41,6 +41,7 @@ public abstract class CodeClassLikeModel<T extends CodeClassLike, S extends Code
      * @param service
      *     the service to retrieve the code class like entities
      */
+    @SuppressWarnings("WeakerAccess")
     protected CodeClassLikeModel(final String languageCode, final S service) {
         this(languageCode);
         this.service = service;

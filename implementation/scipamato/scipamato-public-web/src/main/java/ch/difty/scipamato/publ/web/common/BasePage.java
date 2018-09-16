@@ -26,6 +26,7 @@ import ch.difty.scipamato.publ.web.resources.MainCssResourceReference;
 import ch.difty.scipamato.publ.web.resources.PymJavaScriptResourceReference;
 
 @Slf4j
+@SuppressWarnings("WeakerAccess")
 public abstract class BasePage<T> extends AbstractPage<T> {
 
     private static final long serialVersionUID = 1L;
@@ -45,14 +46,14 @@ public abstract class BasePage<T> extends AbstractPage<T> {
     @SpringBean(name = "metaOTFontResourceProvider")
     private CommercialFontResourceProvider metaOtFontResourceProvider;
 
-    public BasePage(final PageParameters parameters) {
+    protected BasePage(final PageParameters parameters) {
         super(parameters);
         final StringValue showNavbarValue = parameters.get(PublicPageParameters.SHOW_NAVBAR.getName());
         this.showNavbar = showNavbarValue.toBoolean(applicationProperties.isNavbarVisibleByDefault());
         considerSettingLocaleFromParentUrl(parameters);
     }
 
-    public BasePage(final IModel<T> model) {
+    protected BasePage(final IModel<T> model) {
         super(model);
         this.showNavbar = applicationProperties.isNavbarVisibleByDefault();
     }

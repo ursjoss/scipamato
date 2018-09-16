@@ -17,6 +17,7 @@ import ch.difty.scipamato.core.pubmed.api.PubmedArticleSet;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
+@SuppressWarnings("SameParameterValue")
 public abstract class PubmedIntegrationTest {
 
     @Autowired

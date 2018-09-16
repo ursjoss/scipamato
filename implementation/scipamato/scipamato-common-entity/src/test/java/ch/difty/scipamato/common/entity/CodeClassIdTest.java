@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 public class CodeClassIdTest {
 
     @Test

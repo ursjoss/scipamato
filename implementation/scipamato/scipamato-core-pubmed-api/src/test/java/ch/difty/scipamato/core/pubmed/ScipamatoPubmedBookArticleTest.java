@@ -196,7 +196,7 @@ public class ScipamatoPubmedBookArticleTest {
     @Test
     public void invalidConstructionUsingOfWithForeignObject() {
         try {
-            PubmedArticleFacade.newPubmedArticleFrom(Integer.valueOf(1));
+            PubmedArticleFacade.newPubmedArticleFrom(1);
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex)

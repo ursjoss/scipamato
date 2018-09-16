@@ -1,11 +1,6 @@
 package ch.difty.scipamato.core.persistence.paper;
 
 import static ch.difty.scipamato.core.db.tables.Paper.PAPER;
-import static ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED;
-import static ch.difty.scipamato.core.persistence.RecordMapperTest.CREATED_BY;
-import static ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD;
-import static ch.difty.scipamato.core.persistence.RecordMapperTest.LAST_MOD_BY;
-import static ch.difty.scipamato.core.persistence.RecordMapperTest.VERSION;
 import static ch.difty.scipamato.core.persistence.paper.PaperRecordMapperTest.*;
 import static org.mockito.Mockito.*;
 
@@ -16,6 +11,7 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetter;
 import ch.difty.scipamato.core.persistence.UpdateSetStepSetterTest;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class PaperUpdateSetStepSetterTest extends UpdateSetStepSetterTest<PaperRecord, Paper> {
 
     private final UpdateSetStepSetter<PaperRecord, Paper> setter = new PaperUpdateSetStepSetter();

@@ -9,6 +9,7 @@ import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.web.AbstractPage;
 
 @MountPath("logout")
+@SuppressWarnings("SameParameterValue")
 public abstract class AbstractLogoutPage extends AbstractPage<Void> {
 
     private static final long serialVersionUID = 1L;
@@ -33,7 +34,7 @@ public abstract class AbstractLogoutPage extends AbstractPage<Void> {
     }
 
     private StatelessForm<Void> newForm(String id) {
-        return new StatelessForm<Void>(id) {
+        return new StatelessForm<>(id) {
 
             private static final long serialVersionUID = 1L;
 

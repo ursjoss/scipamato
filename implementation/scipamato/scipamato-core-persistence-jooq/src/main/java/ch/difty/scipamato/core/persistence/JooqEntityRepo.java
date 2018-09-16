@@ -31,6 +31,7 @@ import ch.difty.scipamato.core.persistence.OptimisticLockingException.Type;
  *     the type of the filter, extending {@link ScipamatoFilter}
  * @author u.joss
  */
+@SuppressWarnings("WeakerAccess")
 public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID, TI extends TableImpl<R>, M extends RecordMapper<R, T>, F extends ScipamatoFilter>
     extends JooqReadOnlyRepo<R, T, ID, TI, M, F> implements EntityRepository<T, ID, F> {
 
@@ -123,7 +124,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      * Implement if associated entities need separate saving.
      *
      * @param entity
-     *     the entitiy to save the associated entities for
+     *     the entity to save the associated entities for
      * @param languageCode
      *     the two character language code
      */
@@ -160,6 +161,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      * @param entity
      *     the entity to free from the associated sub entities
      */
+    @SuppressWarnings("EmptyMethod")
     protected void deleteAssociatedEntitiesOf(T entity) {
     }
 
