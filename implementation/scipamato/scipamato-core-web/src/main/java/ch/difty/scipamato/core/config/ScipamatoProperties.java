@@ -72,4 +72,11 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
      *     action box providing the select all/select none buttons
      */
     private int multiSelectBoxActionBoxWithMoreEntriesThan = 4;
+
+    /**
+     * The API Key used for accessing pubmed papers.
+     *
+     * https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/
+     */
+    private String pubmedApiKey;
 }

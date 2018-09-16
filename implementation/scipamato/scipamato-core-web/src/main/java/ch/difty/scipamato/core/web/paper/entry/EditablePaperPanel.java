@@ -299,12 +299,15 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     @SuppressWarnings("unchecked")
     @Override
     protected void getPubmedArticleAndCompare(AjaxRequestTarget target) {
-        Paper paper = getModelObject();
-        Integer pmId = paper.getPmId();
+        final Paper paper = getModelObject();
+        final Integer pmId = paper.getPmId();
+        final String apiKey = getProperties().getPubmedApiKey();
         if (pmId != null) {
-            Optional<PubmedArticleFacade> pao = pubmedArticleService.getPubmedArticleWithPmid(pmId);
+            final Optional<PubmedArticleFacade> pao = (apiKey == null) ?
+                pubmedArticleService.getPubmedArticleWithPmid(pmId) :
+                pubmedArticleService.getPubmedArticleWithPmidAndApiKey(pmId, apiKey);
             if (pao.isPresent()) {
-                PubmedArticleFacade pa = pao.get();
+                final PubmedArticleFacade pa = pao.get();
                 if (String
                     .valueOf(pmId)
                     .equals(pa.getPmId())) {

@@ -46,4 +46,13 @@ public class PubmedXmlServiceIntegrationAdHocTest {
         assertThat(article.isPresent()).isFalse();
     }
 
+    // https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?api_key=xxx,db=pubmed&id=25395026&retmode=xml&version=2.0
+    @Test
+    public void gettingArticleFromPubmed_withValidPmIdButInvalidApiKey_returnsNoting() {
+        final int pmId = 25395026;
+        final String apiKey="xxx";
+
+        final Optional<PubmedArticleFacade> article = service.getPubmedArticleWithPmidAndApiKey(pmId, apiKey);
+        assertThat(article.isPresent()).isFalse();
+    }
 }

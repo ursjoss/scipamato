@@ -35,9 +35,18 @@ public class PubmedXmlService implements PubmedArticleService {
 
     @Override
     public Optional<PubmedArticleFacade> getPubmedArticleWithPmid(final int pmId) {
-        final Optional<PubmedArticleSet> set = retrievePubmedArticleSet(pmId);
+        return processArticles(retrievePubmedArticleSet(pmId));
+    }
+
+    @Override
+    public Optional<PubmedArticleFacade> getPubmedArticleWithPmidAndApiKey(final int pmId, final String apiKey) {
+        AssertAs.notNull(apiKey, "apiKey");
+        return processArticles(retrievePubmedArticleSet(pmId, apiKey));
+    }
+
+    private Optional<PubmedArticleFacade> processArticles(final Optional<PubmedArticleSet> set) {
         if (set.isPresent()) {
-            final List<java.lang.Object> articles = set
+            final List<Object> articles = set
                 .get()
                 .getPubmedArticleOrPubmedBookArticle();
             if (articles != null)
@@ -52,6 +61,15 @@ public class PubmedXmlService implements PubmedArticleService {
     private Optional<PubmedArticleSet> retrievePubmedArticleSet(final int pmId) {
         try {
             return Optional.ofNullable(pubMed.articleWithId(String.valueOf(pmId)));
+        } catch (final Exception ex) {
+            log.error("Unexpected error: {}", ex.getMessage());
+            return Optional.empty();
+        }
+    }
+
+    private Optional<PubmedArticleSet> retrievePubmedArticleSet(final int pmId, final String apiKey) {
+        try {
+            return Optional.ofNullable(pubMed.articleWithId(String.valueOf(pmId), apiKey));
         } catch (final Exception ex) {
             log.error("Unexpected error: {}", ex.getMessage());
             return Optional.empty();

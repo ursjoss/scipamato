@@ -20,4 +20,10 @@ public interface ApplicationCoreProperties extends ApplicationProperties {
      * @return the lowest paper.number that can be recycled in case of gaps
      */
     long getMinimumPaperNumberToBeRecycled();
+
+    /**
+     * @return the pubmed api_key or null if none is defined
+     */
+    String getPubmedApiKey();
+
 }

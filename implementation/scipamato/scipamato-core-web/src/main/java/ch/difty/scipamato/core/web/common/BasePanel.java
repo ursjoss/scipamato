@@ -5,11 +5,11 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import ch.difty.scipamato.common.config.ApplicationProperties;
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.AbstractPanel;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
+import ch.difty.scipamato.core.config.ApplicationCoreProperties;
 import ch.difty.scipamato.core.entity.User;
 
 public abstract class BasePanel<T> extends AbstractPanel<T> {
@@ -17,7 +17,7 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
     private static final long serialVersionUID = 1L;
 
     @SpringBean
-    private ApplicationProperties     properties;
+    private ApplicationCoreProperties properties;
     @SpringBean
     private ScipamatoWebSessionFacade webSessionFacade;
 
@@ -33,7 +33,7 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
         super(id, model, mode);
     }
 
-    protected ApplicationProperties getProperties() {
+    protected ApplicationCoreProperties getProperties() {
         return properties;
     }
 

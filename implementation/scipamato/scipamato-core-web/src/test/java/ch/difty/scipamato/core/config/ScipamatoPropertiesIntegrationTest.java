@@ -52,4 +52,8 @@ public class ScipamatoPropertiesIntegrationTest {
         assertThat(sp.getMultiSelectBoxActionBoxWithMoreEntriesThan()).isEqualTo(4);
     }
 
+    @Test
+    public void gettingPubmedApiKey_hasNoDefaultValue() {
+        assertThat(sp.getPubmedApiKey()).isNull();
+    }
 }

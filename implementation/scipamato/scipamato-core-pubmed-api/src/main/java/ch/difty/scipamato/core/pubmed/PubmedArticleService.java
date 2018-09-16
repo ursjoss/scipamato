@@ -23,6 +23,18 @@ public interface PubmedArticleService {
     Optional<PubmedArticleFacade> getPubmedArticleWithPmid(int pmId);
 
     /**
+     * Retrieve the pubmed article with the provided pmID directly from PubMed, using
+     * the provided apiKey.
+     *
+     * @param pmId
+     *     pubmedId
+     * @param apiKey
+     *     the PubmedApi Key - must not be null
+     * @return optional of {@link PubmedArticleFacade}
+     */
+    Optional<PubmedArticleFacade> getPubmedArticleWithPmidAndApiKey(int pmId, String apiKey);
+
+    /**
      * Extracts pubmed articles and pubmed book articles from a a source string. It
      * is the implementation that determines the type and format of the content.
      *

@@ -43,7 +43,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
         assertThat(sa.getDoi()).isEqualTo("10.1093/aje/kwu275");
         assertThat(sa.getOriginalAbstract()).startsWith(
             "The International Agency for Research on Cancer recently classified outdoor air pollution");
-        assertThat(sa.getOriginalAbstract()).endsWith("based on reducing exposure to either risk factor alone.");
+        assertThat(sa.getOriginalAbstract().trim()).endsWith("based on reducing exposure to either risk factor alone.");
     }
 
     @Test

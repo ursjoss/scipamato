@@ -35,4 +35,9 @@ public class ScipamatoCoreProperties extends AbstractScipamatoProperties<Scipama
         return getScipamatoProperties().getPaperNumberMinimumToBeRecycled();
     }
 
+    @Override
+    public String getPubmedApiKey() {
+        return getScipamatoProperties().getPubmedApiKey();
+    }
+
 }

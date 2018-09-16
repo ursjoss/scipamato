@@ -54,4 +54,9 @@ public class ScipamatoPropertiesTest {
     public void gettingMultiSelectBoxActionBoxWithMoreEntriesThan_hasDefaultValue() {
         assertThat(sp.getMultiSelectBoxActionBoxWithMoreEntriesThan()).isEqualTo(4);
     }
+
+    @Test
+    public void gettingPubmedApiKey_hasNoDefaultValue() {
+        assertThat(sp.getPubmedApiKey()).isNull();
+    }
 }

@@ -101,4 +101,11 @@ public class ScipamatoCorePropertiesTest {
         verify(scipamatoPropMock).getRedirectFromPort();
     }
 
+    @Test
+    public void gettingPubmedApiKey_() {
+        when(scipamatoPropMock.getPubmedApiKey()).thenReturn("ak");
+        assertThat(prop.getPubmedApiKey()).isEqualTo("ak");
+        verify(scipamatoPropMock).getPubmedApiKey();
+    }
+
 }

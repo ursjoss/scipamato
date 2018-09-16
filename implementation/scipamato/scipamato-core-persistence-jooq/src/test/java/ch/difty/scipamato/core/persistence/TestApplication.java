@@ -77,6 +77,12 @@ public class TestApplication {
             }
 
             @Override
+            public Optional<PubmedArticleFacade> getPubmedArticleWithPmidAndApiKey(final int pmId,
+                final String apiKey) {
+                return Optional.empty();
+            }
+
+            @Override
             public List<PubmedArticleFacade> extractArticlesFrom(String content) {
                 return new ArrayList<>();
             }
