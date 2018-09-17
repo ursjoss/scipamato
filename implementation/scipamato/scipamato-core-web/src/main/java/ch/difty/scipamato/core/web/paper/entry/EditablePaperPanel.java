@@ -15,6 +15,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.PageReference;
@@ -72,6 +73,7 @@ import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDa
  *
  * @author u.joss
  */
+@Slf4j
 public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     private static final long serialVersionUID = 1L;
@@ -606,8 +608,14 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             protected void onUpload(AjaxRequestTarget target, Map<String, List<FileItem>> fileMap) {
                 if (fileMap != null && fileMap.containsKey("file")) {
                     Paper p = null;
-                    for (final FileItem file : fileMap.get("file"))
-                        p = paperService.saveAttachment(convertToPaperAttachment(file));
+                    for (final FileItem file : fileMap.get("file")) {
+                        try {
+                            p = paperService.saveAttachment(convertToPaperAttachment(file));
+                        } catch (Exception ex) {
+                            log.error("Unexpected error when uploading file {}: {}", file.getName(), ex.getMessage());
+                            error("Unexpected error: " + ex.getMessage());
+                        }
+                    }
                     if (p != null) {
                         EditablePaperPanel.this.setModelObject(p);
                         target.add(getAttachments());
