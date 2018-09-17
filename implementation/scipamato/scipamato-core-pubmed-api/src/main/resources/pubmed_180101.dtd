@@ -1,28 +1,17 @@
-<!--    
-	2016-10-31
+<!--
 
-	Additions/Changes since 160101 DTDs: This new DTD supports both the E-Utilities 
-	and ftp service data dissemination methods. It is based on 
-	https://www.ncbi.nlm.nih.gov/corehtml/query/DTD/pubmed_160101.dtd
+2017-10-06
 
-	1.  Added optional Conflict of Interest tagging to MedlineCitation as CoiStatement.
-	2.  Added @IndexingMethod to MedlineCitation.
-	3.  Added @EqualContrib to Author.
-	4.  Added @RefType for expression of concern linking to CommentsCorrections.
-	5.  Deleted the Partial Retraction linking from @RefType on CommentsCorrections.
-	6.  Deleted MedlineCitationSet.
-	7.  @Type on AuthorList and HTML formatting elements in some text areas (AbstractText,
-		Affiliation, ArticleTitle, CollectiveName, Keyword, Suffix, VernacularTitle) were
-		available in the pubmed_160101.dtd, but these may be perceived as additions to 
-		users of the nlmmedlindecitationset_160101.dtd.
-	8.  Users accustomed to the nlmcitationset DTDs will also notice "new" elements that 
-		support the dissemination of the book citations from PubMed while using E-Utilities.  
-		The ftp server dissemination method provides only journal citations.
-	9. @Type on AuthorList changed to #IMPLIED.
-	10. Added InvestigatorList to Book and BookDocument.
+This DTD supports both the E-utilities and ftp service data dissemination methods. 
+It is based on http://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_170101.dtd
+
+Additions/Changes since 170101 DTD: 
+
+	1.  Added Organism to the allowed values for SupplMeshName @Type
+	2.  Deleted DateCreated
 
 	NOTE:  The use of "Medline" in a DTD or element name does not mean the record
-	represents a citation from a Medline-selected journal.  When the NLM DTDs and
+	represents a citation from a MEDLINE-selected journal.  When the NLM DTDs and
 	XML elements were first created, MEDLINE records were the only data exported.
 	Now NLM exports citations other than MEDLINE records using these tools. To
 	minimize unnecessary disruption to users of the data and tools, NLM has
@@ -73,7 +62,7 @@
 
 
 <!--  =============== Sub-Document wrapper elements =====================-->
-<!ELEMENT	MedlineCitation (PMID, DateCreated, DateCompleted?, DateRevised?, Article, 
+<!ELEMENT	MedlineCitation (PMID, DateCompleted?, DateRevised?, Article, 
                              MedlineJournalInfo, ChemicalList?, SupplMeshList?,CitationSubset*, 
                              CommentsCorrectionsList?, GeneSymbolList?, MeshHeadingList?, 
                              NumberOfReferences?, PersonalNameSubjectList?, OtherID*, OtherAbstract*, 
@@ -199,8 +188,6 @@
 <!ELEMENT	DataBankName (#PCDATA) >
 
 <!ELEMENT	DateCompleted (Year,Month,Day) >
-
-<!ELEMENT	DateCreated (Year, Month, Day) >
 
 <!ELEMENT	DateRevised (Year,Month,Day) >
 
@@ -417,7 +404,7 @@
 
 <!ELEMENT	SupplMeshName (#PCDATA) >
 <!ATTLIST	SupplMeshName 
-		    Type (Disease | Protocol) #REQUIRED
+		    Type (Disease | Protocol | Organism) #REQUIRED
 		    UI CDATA #REQUIRED >
 		    
 <!ELEMENT	Title (#PCDATA) >

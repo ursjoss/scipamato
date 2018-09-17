@@ -83,14 +83,23 @@ public class PubmedXmlService implements PubmedArticleService {
      * @param xmlString
      *     the raw xml string to unmarshal
      * @return {@link PubmedArticleSet}
-     * @throws IOException
-     *     TODO describe conditions
-     * @throws org.springframework.oxm.XmlMappingException
-     *     TODO describe conditions
      */
     public PubmedArticleSet unmarshal(final String xmlString) throws IOException {
-        final StringReader reader = new StringReader(AssertAs.notNull(xmlString, "xmlString"));
+        final String cleansedXmlString = cleanse(AssertAs.notNull(xmlString, "xmlString"));
+        final StringReader reader = new StringReader(cleansedXmlString);
         return (PubmedArticleSet) unmarshaller.unmarshal(new StreamSource(reader));
+    }
+
+    private String cleanse(final String xmlString) {
+        return xmlString
+            .replace("<sup>", "")
+            .replace("</sup>", "")
+            .replace("<sub>", "")
+            .replace("</sub>", "")
+            .replace("<i>", "")
+            .replace("</i>", "")
+            .replace("<b>", "")
+            .replace("</b>", "");
     }
 
     /**

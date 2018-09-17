@@ -21,6 +21,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
     private static final String XML_27224452 = "xml/pubmed_result_27224452.xml";
     private static final String XML_27258721 = "xml/pubmed_result_27258721.xml";
     private static final String XML_30124840 = "xml/pubmed_result_30124840.xml";
+    private static final String XML_29144419 = "xml/pubmed_result_29144419.xml";
 
     @Test
     public void feedIntoScipamatoArticle_25395026() throws XmlMappingException, IOException {
@@ -43,7 +44,9 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
         assertThat(sa.getDoi()).isEqualTo("10.1093/aje/kwu275");
         assertThat(sa.getOriginalAbstract()).startsWith(
             "The International Agency for Research on Cancer recently classified outdoor air pollution");
-        assertThat(sa.getOriginalAbstract().trim()).endsWith("based on reducing exposure to either risk factor alone.");
+        assertThat(sa
+            .getOriginalAbstract()
+            .trim()).endsWith("based on reducing exposure to either risk factor alone.");
     }
 
     @Test
@@ -283,7 +286,6 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
         assertThat(keywordList).hasSize(1);
     }
 
-
     @Test
     public void feedIntoScipamatoArticle_30124840() throws XmlMappingException, IOException {
         List<PubmedArticleFacade> articles = getPubmedArticles(XML_30124840);
@@ -295,9 +297,31 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
             "Münzel T, Gori T, Al-Kindi S, Deanfield J, Lelieveld J, Daiber A, Rajagopalan S.");
         assertThat(sa.getFirstAuthor()).isEqualTo("Münzel");
         assertThat(sa.getPublicationYear()).isEqualTo("2018");
-        assertThat(sa.getLocation()).isEqualTo("Eur Heart J. 2018 Aug 14. doi: 10.1093/eurheartj/ehy481. [Epub ahead of print]");
+        assertThat(sa.getLocation()).isEqualTo(
+            "Eur Heart J. 2018 Aug 14. doi: 10.1093/eurheartj/ehy481. [Epub ahead of print]");
         assertThat(sa.getTitle()).isEqualTo(
             "Effects of gaseous and solid constituents of air pollution on endothelial function.");
         assertThat(sa.getDoi()).isEqualTo("10.1093/eurheartj/ehy481");
+    }
+
+    @Test
+    public void feedIntoScipamatoArticle_29144419() throws XmlMappingException, IOException {
+        List<PubmedArticleFacade> articles = getPubmedArticles(XML_29144419);
+        assertThat(articles).hasSize(1);
+        PubmedArticleFacade sa = articles.get(0);
+
+        assertThat(sa.getPmId()).isEqualTo("29144419");
+        assertThat(sa.getAuthors()).isEqualTo("Oudin A, Bråbäck L, Oudin Åström D, Forsberg B.");
+        assertThat(sa.getFirstAuthor()).isEqualTo("Oudin");
+        assertThat(sa.getPublicationYear()).isEqualTo("2017");
+        assertThat(sa.getLocation()).isEqualTo("Int J Environ Res Public Health. 2017; 14 (11). pii: E1392.");
+        assertThat(sa.getTitle()).isEqualTo(
+            "Air Pollution and Dispensed Medications for Asthma, and Possible Effect Modifiers Related to Mental Health and Socio-Economy: A Longitudinal Cohort Study of Swedish Children and Adolescents.");
+        assertThat(sa.getDoi()).isEqualTo("10.3390/ijerph14111392");
+        assertThat(sa.getOriginalAbstract()).startsWith(
+            "It has been suggested that children that are exposed to a stressful environment at home have an increased susceptibility for air pollution-related asthma.");
+        assertThat(sa.getOriginalAbstract()).endsWith(
+            "We did not observe support for our hypothesis that stressors linked to socio-economy or mental health problems would increase susceptibility to the effects of air pollution on the development of asthma.");
+        assertThat(sa.getOriginalAbstract()).hasSize(1844);
     }
 }

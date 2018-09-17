@@ -89,7 +89,7 @@
                 <configuration>
                     <schemaDirectory>src/main/resources</schemaDirectory>
                     <schemaIncludes>
-                        <include>pubmed_170101.dtd</include>
+                        <include>pubmed_180101.dtd</include>
                     </schemaIncludes>
                     <generateDirectory>${org.jaxb.target.dir}</generateDirectory>
                     <accessExternalDTD>true</accessExternalDTD>

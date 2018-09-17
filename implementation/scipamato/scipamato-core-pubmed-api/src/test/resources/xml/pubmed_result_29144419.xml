@@ -1,0 +1,398 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st June 2018//EN" "https://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_180601.dtd">
+<PubmedArticleSet>
+
+<PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+        <PMID Version="1">29144419</PMID>
+        <DateCompleted>
+            <Year>2018</Year>
+            <Month>04</Month>
+            <Day>23</Day>
+        </DateCompleted>
+        <DateRevised>
+            <Year>2018</Year>
+            <Month>05</Month>
+            <Day>03</Day>
+        </DateRevised>
+        <Article PubModel="Electronic">
+            <Journal>
+                <ISSN IssnType="Electronic">1660-4601</ISSN>
+                <JournalIssue CitedMedium="Internet">
+                    <Volume>14</Volume>
+                    <Issue>11</Issue>
+                    <PubDate>
+                        <Year>2017</Year>
+                        <Month>11</Month>
+                        <Day>16</Day>
+                    </PubDate>
+                </JournalIssue>
+                <Title>International journal of environmental research and public health</Title>
+                <ISOAbbreviation>Int J Environ Res Public Health</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>Air Pollution and Dispensed Medications for Asthma, and Possible Effect Modifiers Related to Mental Health and Socio-Economy: A Longitudinal Cohort Study of Swedish Children and Adolescents.</ArticleTitle>
+            <ELocationID EIdType="pii" ValidYN="Y">E1392</ELocationID>
+            <ELocationID EIdType="doi" ValidYN="Y">10.3390/ijerph14111392</ELocationID>
+            <Abstract>
+                <AbstractText>It has been suggested that children that are exposed to a stressful environment at home have an increased susceptibility for air pollution-related asthma. The aim here was to investigate the association between air pollution exposure and asthma, and effect modification by mental health and by socio-economic status (as markers of a stressful environment). All individuals under 18 years of age in four Swedish counties during 2007 to 2010 (1.2 million people) were included. The outcome was defined as dispensing at least two asthma medications during follow up. We linked data on NO₂ from an empirical land use regression to data from national registers on outcome and potential confounders. Data was analyzed with logistic regression. There was an odds ratio (OR) of 1.02 (95% Confidence Interval (CI: 1.01-1.03) for asthma associated with a 10 µg·m<sup>-3</sup> increase in NO₂. The association only seemed to be present in areas where NO₂ was higher than 15 µg·m<sup>-3</sup> with an OR of 1.09 (95% CI: 1.07-1.12), and the association seemed stronger in children with parents with a high education, OR = 1.05 (95% CI: 1.02-1.09) and OR = 1.04 (95% CI: 1.01-1.07) in children to mothers and father with a high education, respectively. The association did not seem to depend on medication history of psychiatric disorders. There was weak evidence for the association between air pollution and asthma to be stronger in neighborhoods with higher education levels. In conclusion, air pollution was associated with dispensed asthma medications, especially in areas with comparatively higher levels of air pollution, and in children to parents with high education. We did not observe support for our hypothesis that stressors linked to socio-economy or mental health problems would increase susceptibility to the effects of air pollution on the development of asthma.</AbstractText>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Oudin</LastName>
+                    <ForeName>Anna</ForeName>
+                    <Initials>A</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Occupational and Environmental Medicine, Umeå University, 90187 Umeå, Sweden. anna.oudin@umu.se.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Bråbäck</LastName>
+                    <ForeName>Lennart</ForeName>
+                    <Initials>L</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Occupational and Environmental Medicine, Umeå University, 90187 Umeå, Sweden. Lennart.Braback@umu.se.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Oudin Åström</LastName>
+                    <ForeName>Daniel</ForeName>
+                    <Initials>D</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Occupational and Environmental Medicine, Umeå University, 90187 Umeå, Sweden. Daniel.oudin_astrom@med.lu.se.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Forsberg</LastName>
+                    <ForeName>Bertil</ForeName>
+                    <Initials>B</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Occupational and Environmental Medicine, Umeå University, 90187 Umeå, Sweden. bertil.forsberg@umu.se.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType UI="D016428">Journal Article</PublicationType>
+                <PublicationType UI="D013485">Research Support, Non-U.S. Gov't</PublicationType>
+            </PublicationTypeList>
+            <ArticleDate DateType="Electronic">
+                <Year>2017</Year>
+                <Month>11</Month>
+                <Day>16</Day>
+            </ArticleDate>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>Switzerland</Country>
+            <MedlineTA>Int J Environ Res Public Health</MedlineTA>
+            <NlmUniqueID>101238455</NlmUniqueID>
+            <ISSNLinking>1660-4601</ISSNLinking>
+        </MedlineJournalInfo>
+        <ChemicalList>
+            <Chemical>
+                <RegistryNumber>0</RegistryNumber>
+                <NameOfSubstance UI="D000393">Air Pollutants</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>0</RegistryNumber>
+                <NameOfSubstance UI="D018927">Anti-Asthmatic Agents</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>S7G510RUBH</RegistryNumber>
+                <NameOfSubstance UI="D009585">Nitrogen Dioxide</NameOfSubstance>
+            </Chemical>
+        </ChemicalList>
+        <CitationSubset>IM</CitationSubset>
+        <CommentsCorrectionsList>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Neurotoxicology. 2016 Sep;56:235-253</RefSource>
+                <PMID Version="1">27328897</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>PLoS One. 2015 Feb 04;10(2):e0117253</RefSource>
+                <PMID Version="1">25651521</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>J Epidemiol Community Health. 2010 Jul;64(7):561-2</RefSource>
+                <PMID Version="1">20547697</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Acta Paediatr. 2003;92(1):27-33</RefSource>
+                <PMID Version="1">12650295</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Eur Respir J. 2015 Mar;45(3):610-24</RefSource>
+                <PMID Version="1">25323237</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Proc Natl Acad Sci U S A. 2009 Jul 28;106(30):12406-11</RefSource>
+                <PMID Version="1">19620729</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>BMC Public Health. 2016 May 24;16:428</RefSource>
+                <PMID Version="1">27220514</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Allergy. 2015 Mar;70(3):245-56</RefSource>
+                <PMID Version="1">25495759</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>J Epidemiol Community Health. 2013 May;67(5):412-8</RefSource>
+                <PMID Version="1">23386671</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Pediatrics. 2012 Apr;129(4):735-44</RefSource>
+                <PMID Version="1">22430451</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Swiss Med Wkly. 2012 Jan 03;141:w13322</RefSource>
+                <PMID Version="1">22252905</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Popul Health Metr. 2012 Jun 09;10(1):10</RefSource>
+                <PMID Version="1">22681784</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Pediatr Pulmonol. 2015 Apr;50(4):353-62</RefSource>
+                <PMID Version="1">24648197</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>J Toxicol. 2012;2012:782462</RefSource>
+                <PMID Version="1">22523490</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Epidemiology. 2008 May;19(3):401-8</RefSource>
+                <PMID Version="1">18379426</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Schizophr Bull. 2005 Oct;31(4):795-9</RefSource>
+                <PMID Version="1">16150958</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health. 2009 Apr 16;8:17</RefSource>
+                <PMID Version="1">19371435</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Acta Psychiatr Scand. 2010 Feb;121(2):84-93</RefSource>
+                <PMID Version="1">19624573</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>PLoS Med. 2015 Mar 03;12(3):e1001792</RefSource>
+                <PMID Version="1">25734425</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Clin Exp Allergy. 2011 Aug;41(8):1108-15</RefSource>
+                <PMID Version="1">21481023</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Pediatrics. 1999 Dec;104(6):1274-80</RefSource>
+                <PMID Version="1">10585977</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2013 Jun;121(6):731-6</RefSource>
+                <PMID Version="1">23694812</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Allergy. 2011 Sep;66(9):1224-30</RefSource>
+                <PMID Version="1">21599704</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Res. 2012 Feb;113:33-9</RefSource>
+                <PMID Version="1">22264878</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>JAMA Psychiatry. 2013 Jan;70(1):71-7</RefSource>
+                <PMID Version="1">23404082</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>N Engl J Med. 1998 Jan 15;338(3):171-9</RefSource>
+                <PMID Version="1">9428819</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Am J Respir Crit Care Med. 2014 Feb 15;189(4):401-7</RefSource>
+                <PMID Version="1">24251622</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2016 Apr;124(4):529-35</RefSource>
+                <PMID Version="1">26241036</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2013 Nov-Dec;121(11-12):1357-64</RefSource>
+                <PMID Version="1">24076757</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Lancet. 2017 Feb 18;389(10070):718-726</RefSource>
+                <PMID Version="1">28063597</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Proc Natl Acad Sci U S A. 2006 Apr 4;103(14):5496-501</RefSource>
+                <PMID Version="1">16567656</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2016 Mar;124(3):306-12</RefSource>
+                <PMID Version="1">26305859</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Respir Med. 2014 Nov;108(11):1594-600</RefSource>
+                <PMID Version="1">25282543</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Psychosom Med. 2003 Nov-Dec;65(6):984-92</RefSource>
+                <PMID Version="1">14645776</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Nature. 2011 Jun 22;474(7352):498-501</RefSource>
+                <PMID Version="1">21697947</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Curr Opin Allergy Clin Immunol. 2011 Oct;11(5):400-6</RefSource>
+                <PMID Version="1">21772139</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Lancet. 2000 Sep 16;356(9234):982-7</RefSource>
+                <PMID Version="1">11041399</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Int J Epidemiol. 2016 Aug;45(4):1075-1075g</RefSource>
+                <PMID Version="1">27170765</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>BMJ Open. 2016 Jun 03;6(6):e010004</RefSource>
+                <PMID Version="1">27259522</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>J Allergy Clin Immunol. 2006 May;117(5):1014-20</RefSource>
+                <PMID Version="1">16675327</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2008 Jul;116(7):970-5</RefSource>
+                <PMID Version="1">18629323</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Environ Health Perspect. 2013 Mar;121(3):380-6</RefSource>
+                <PMID Version="1">23249813</PMID>
+            </CommentsCorrections>
+        </CommentsCorrectionsList>
+        <MeshHeadingList>
+            <MeshHeading>
+                <DescriptorName UI="D000293" MajorTopicYN="N">Adolescent</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D000393" MajorTopicYN="N">Air Pollutants</DescriptorName>
+                <QualifierName UI="Q000032" MajorTopicYN="N">analysis</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D000397" MajorTopicYN="N">Air Pollution</DescriptorName>
+                <QualifierName UI="Q000032" MajorTopicYN="Y">analysis</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D018927" MajorTopicYN="N">Anti-Asthmatic Agents</DescriptorName>
+                <QualifierName UI="Q000627" MajorTopicYN="Y">therapeutic use</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D001249" MajorTopicYN="N">Asthma</DescriptorName>
+                <QualifierName UI="Q000188" MajorTopicYN="Y">drug therapy</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D002648" MajorTopicYN="N">Child</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D002675" MajorTopicYN="N">Child, Preschool</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D015331" MajorTopicYN="N">Cohort Studies</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D005260" MajorTopicYN="N">Female</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D006801" MajorTopicYN="N">Humans</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D016015" MajorTopicYN="N">Logistic Models</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D008137" MajorTopicYN="N">Longitudinal Studies</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D008297" MajorTopicYN="N">Male</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D008603" MajorTopicYN="Y">Mental Health</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D009585" MajorTopicYN="N">Nitrogen Dioxide</DescriptorName>
+                <QualifierName UI="Q000032" MajorTopicYN="N">analysis</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D016017" MajorTopicYN="N">Odds Ratio</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D012923" MajorTopicYN="N">Social Class</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D012959" MajorTopicYN="N">Socioeconomic Factors</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName UI="D013548" MajorTopicYN="N">Sweden</DescriptorName>
+            </MeshHeading>
+        </MeshHeadingList>
+        <KeywordList Owner="NOTNLM">
+            <Keyword MajorTopicYN="Y">air pollution</Keyword>
+            <Keyword MajorTopicYN="Y">asthma</Keyword>
+            <Keyword MajorTopicYN="Y">childhood asthma</Keyword>
+            <Keyword MajorTopicYN="Y">mental health</Keyword>
+            <Keyword MajorTopicYN="Y">socio-economy</Keyword>
+            <Keyword MajorTopicYN="Y">stress</Keyword>
+        </KeywordList>
+        <CoiStatement>The authors declare no conflict of interest.</CoiStatement>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="received">
+                <Year>2017</Year>
+                <Month>09</Month>
+                <Day>22</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="revised">
+                <Year>2017</Year>
+                <Month>11</Month>
+                <Day>09</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="accepted">
+                <Year>2017</Year>
+                <Month>11</Month>
+                <Day>11</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>2017</Year>
+                <Month>11</Month>
+                <Day>17</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2017</Year>
+                <Month>11</Month>
+                <Day>17</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2018</Year>
+                <Month>4</Month>
+                <Day>24</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>epublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pubmed">29144419</ArticleId>
+            <ArticleId IdType="pii">ijerph14111392</ArticleId>
+            <ArticleId IdType="doi">10.3390/ijerph14111392</ArticleId>
+            <ArticleId IdType="pmc">PMC5708031</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+</PubmedArticleSet>
