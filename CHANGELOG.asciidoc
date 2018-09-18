@@ -54,6 +54,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
+- Updated dependencies wicket, wicketstuff
 
 .Deprecated
 
