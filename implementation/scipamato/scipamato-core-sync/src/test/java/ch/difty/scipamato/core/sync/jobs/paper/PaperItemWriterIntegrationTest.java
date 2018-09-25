@@ -15,8 +15,8 @@ import ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord;
 @SuppressWarnings("SameParameterValue")
 public class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegrationTest<PublicPaper, PaperItemWriter> {
 
-    private static final long ID_EXISTING = 1L;
-    private static final long ID_NEW      = -1L;
+    private static final long NUMBER_EXISTING = 1L;
+    private static final long NUMBER_NEW      = -10L;
 
     private PublicPaper newPaper, existingPaper;
 
@@ -27,19 +27,19 @@ public class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegratio
 
     @Override
     public void setUpEntities() {
-        newPaper = newPaper(ID_NEW);
+        newPaper = newPaperWithNumber(NUMBER_NEW);
 
-        existingPaper = getExistingPaperFromDb(ID_EXISTING);
+        existingPaper = getExistingPaperFromDb(NUMBER_EXISTING);
         assertThat(existingPaper.getNumber()).isEqualTo(existingPaper.getId());
-        existingPaper.setNumber(-2L);
+        existingPaper.setId(-2L);
         assertThat(existingPaper.getNumber()).isNotEqualTo(existingPaper.getId());
     }
 
-    private PublicPaper newPaper(long id) {
+    private PublicPaper newPaperWithNumber(long number) {
         return PublicPaper
             .builder()
-            .id(id)
-            .number(id)
+            .id(number)
+            .number(number)
             .codesPopulation(new Short[] { (short) 1, (short) 2 })
             .codesStudyDesign(new Short[] {})
             .codes(new String[] { "F1" })
@@ -47,10 +47,10 @@ public class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegratio
             .build();
     }
 
-    private PublicPaper getExistingPaperFromDb(long id) {
+    private PublicPaper getExistingPaperFromDb(long number) {
         final PaperRecord pr = dsl
             .selectFrom(PAPER)
-            .where(PAPER.ID.eq(id))
+            .where(PAPER.NUMBER.eq(number))
             .fetchOne();
         return PublicPaper
             .builder()
@@ -80,36 +80,36 @@ public class PaperItemWriterIntegrationTest extends AbstractItemWriterIntegratio
     public void tearDown() {
         dsl
             .deleteFrom(PAPER)
-            .where(PAPER.ID.lt(0L))
+            .where(PAPER.NUMBER.lt(0L))
             .execute();
         dsl
             .update(PAPER)
-            .set(PAPER.NUMBER, PAPER.ID)
-            .where(PAPER.ID.eq(ID_EXISTING))
+            .set(PAPER.ID, PAPER.NUMBER)
+            .where(PAPER.NUMBER.eq(NUMBER_EXISTING))
             .execute();
     }
 
     @Test
     public void insertingNewPaper_succeeds() {
-        long id = newPaper.getId();
-        assertPaperDoesNotExistWith(id);
+        long number = newPaper.getNumber();
+        assertPaperDoesNotExistWith(number);
         assertThat(getWriter().executeUpdate(newPaper)).isEqualTo(1);
-        assertPaperExistsWith(id);
+        assertPaperExistsWith(number);
     }
 
     private void assertPaperExistsWith(long id) {
-        assertRecordCountForId(id, 1);
+        assertRecordCountForNumber(id, 1);
     }
 
-    private void assertPaperDoesNotExistWith(long id) {
-        assertRecordCountForId(id, 0);
+    private void assertPaperDoesNotExistWith(long number) {
+        assertRecordCountForNumber(number, 0);
     }
 
-    private void assertRecordCountForId(long id, int size) {
+    private void assertRecordCountForNumber(long number, int size) {
         assertThat(dsl
             .select(PAPER.NUMBER)
             .from(PAPER)
-            .where(PAPER.ID.eq(id))
+            .where(PAPER.NUMBER.eq(number))
             .fetch()).hasSize(size);
     }
 

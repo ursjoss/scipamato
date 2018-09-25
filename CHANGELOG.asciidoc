@@ -64,6 +64,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Maximum Upload File Size correctly reset to 10M
 - 09/57 - Core: Fix Pubmed import from file for certain html tags in text
                 Not fixed for direct import from pubmed! (new dtd can't be parsed by jaxb)
+- 09/59 - Core -> Public: Make sync more resilient by basing the sync on number instead of id
 
 .Security
 

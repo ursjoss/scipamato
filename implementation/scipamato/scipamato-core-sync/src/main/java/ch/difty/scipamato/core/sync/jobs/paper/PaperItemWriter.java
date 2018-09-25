@@ -38,9 +38,9 @@ public class PaperItemWriter extends ScipamatoItemWriter<PublicPaper> {
                 p.getPublicationYear(), p.getGoals(), p.getMethods(), p.getPopulation(), p.getResult(), p.getComment(),
                 p.getCodesPopulation(), p.getCodesStudyDesign(), p.getCodes(), p.getVersion(), p.getCreated(),
                 p.getLastModified(), p.getLastSynched())
-            .onConflict(PAPER.ID)
+            .onConflict(PAPER.NUMBER)
             .doUpdate()
-            .set(PAPER.NUMBER, p.getNumber())
+            .set(PAPER.ID, p.getId())
             .set(PAPER.PM_ID, p.getPmId())
             .set(PAPER.AUTHORS, p.getAuthors())
             .set(PAPER.TITLE, p.getTitle())
@@ -58,7 +58,7 @@ public class PaperItemWriter extends ScipamatoItemWriter<PublicPaper> {
             .set(PAPER.CREATED, p.getCreated())
             .set(PAPER.LAST_MODIFIED, p.getLastModified())
             .set(PAPER.LAST_SYNCHED, p.getLastSynched())
-            .where(PAPER.ID.eq(p.getId()))
+            .where(PAPER.NUMBER.eq(p.getNumber()))
             .execute();
     }
 
