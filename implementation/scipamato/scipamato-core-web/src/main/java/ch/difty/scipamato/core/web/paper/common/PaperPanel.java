@@ -155,8 +155,8 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         doi = new TextField<>(DOI.getName());
         queueFieldAndLabel(doi, new PropertyValidator<String>());
 
-        TextField<Integer> number = new TextField<>(NUMBER.getName());
-        queueFieldAndLabel(number, new PropertyValidator<Integer>());
+        queueNumberField(NUMBER.getName());
+
         TextField<Integer> id = new TextField<>(IdScipamatoEntity.IdScipamatoEntityFields.ID.getName()) {
             private static final long serialVersionUID = 1L;
 
@@ -284,6 +284,27 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         };
         addRemoveNewsletter.setOutputMarkupPlaceholderTag(true);
         queue(addRemoveNewsletter);
+    }
+
+    private void queueNumberField(String id) {
+        final IModel labelModel = Model.of(
+            firstWordOfBrand() + " " + new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null).getString());
+        TextField<Integer> number = new TextField<>(id);
+        queue(new Label(id + LABEL_TAG, labelModel));
+        number.setLabel(labelModel);
+        number.setOutputMarkupId(true);
+        queue(number);
+        if (isEditMode())
+            number.add(new PropertyValidator<>());
+    }
+
+    private String firstWordOfBrand() {
+        final String brand = getProperties().getBrand();
+        final String divider = " ";
+        if (brand.contains(divider))
+            return brand.substring(0, brand.indexOf(divider));
+        else
+            return brand;
     }
 
     /**

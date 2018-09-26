@@ -92,7 +92,7 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
 
         b += ":form";
         assertTextFieldWithLabel(b + ":id", "1", "ID");
-        assertTextFieldWithLabel(b + ":number", "100", "No.");
+        assertTextFieldWithLabel(b + ":number", "100", "SciPaMaTo No.");
         assertTextFieldWithLabel(b + ":publicationYear", "2017", "Pub. Year");
         assertTextFieldWithLabel(b + ":pmId", "pmid", "PMID");
         getTester().assertLabel(b + ":submit:label", "Search");

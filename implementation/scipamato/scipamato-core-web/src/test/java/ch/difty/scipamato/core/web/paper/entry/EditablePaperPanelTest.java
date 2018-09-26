@@ -144,7 +144,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
 
         b += ":form";
         assertTextFieldWithLabel(b + ":id", 1L, "ID");
-        assertTextFieldWithLabel(b + ":number", 100L, "No.");
+        assertTextFieldWithLabel(b + ":number", 100L, "SciPaMaTo No.");
         assertTextFieldWithLabel(b + ":publicationYear", 2017, "Pub. Year");
         assertTextFieldWithLabel(b + ":pmId", 1234, "PMID");
         getTester().assertLabel(b + ":submit:label", "Save");

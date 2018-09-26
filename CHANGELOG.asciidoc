@@ -55,6 +55,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - Updated dependencies wicket, wicketstuff, wicket-bootstrap
+- 09/64 - Core: Prepend the first word of the brand to the number label in the edit page
 
 .Deprecated
 
