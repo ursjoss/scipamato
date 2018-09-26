@@ -110,7 +110,8 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
         insertSetStepSetter.resetIdToEntity(entity, saved);
         saveAssociatedEntitiesOf(entity, languageCode);
         if (saved != null) {
-            getLogger().info("Inserted 1 record: {} with id {}.", getTable().getName(), getIdFrom(saved));
+            getLogger().info("{} inserted 1 record: {} with id {}.", getActiveUser().getUserName(),
+                getTable().getName(), getIdFrom(saved));
             T savedEntity = getMapper().map(saved);
             enrichAssociatedEntitiesOf(savedEntity, languageCode);
             return savedEntity;
@@ -144,7 +145,8 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
                 .and(getRecordVersion().eq(version))
                 .execute();
             if (deleteCount > 0) {
-                getLogger().info("Deleted {} record: {} with id {}.", deleteCount, getTable().getName(), id);
+                getLogger().info("{} deleted {} record{}: {} with id {}.", getActiveUser().getUserName(), deleteCount,
+                    (deleteCount != 1 ? "s" : ""), getTable().getName(), id);
             } else {
                 throw new OptimisticLockingException(getTable().getName(), toBeDeleted.toString(), Type.DELETE);
             }
@@ -189,7 +191,8 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
             updateAssociatedEntities(entity, languageCode);
             T savedEntity = findById(id);
             enrichAssociatedEntitiesOf(savedEntity, languageCode);
-            getLogger().info("Updated 1 record: {} with id {}.", getTable().getName(), id);
+            getLogger().info("{} updated 1 record: {} with id {}.", getActiveUser().getUserName(), getTable().getName(),
+                id);
             return savedEntity;
         } else {
             throw new OptimisticLockingException(getTable().getName(), entity.toString(), Type.UPDATE);

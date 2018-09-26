@@ -416,7 +416,8 @@ public class JooqPaperRepo extends
             .set(PAPER_ATTACHMENT.LAST_MODIFIED_BY, getUserId())
             .set(PAPER_ATTACHMENT.VERSION, PAPER_ATTACHMENT.VERSION.plus(1))
             .execute();
-        getLogger().info("Saved attachment '{}' for paper with id {}.", pa.getName(), pa.getPaperId());
+        getLogger().info("{} saved attachment '{}' for paper with id {}.", getActiveUser().getUserName(), pa.getName(),
+            pa.getPaperId());
         return findById(pa.getPaperId());
     }
 
@@ -444,7 +445,8 @@ public class JooqPaperRepo extends
                 .deleteFrom(PAPER_ATTACHMENT)
                 .where(PAPER_ATTACHMENT.ID.eq(id))
                 .execute();
-            getLogger().info("Deleted attachment with id {}.", id);
+            getLogger().info("{} deleted attachment with id {} (Paper with id {}).", getActiveUser().getUserName(), id,
+                paperId);
             return findById(paperId);
         }
         return null;

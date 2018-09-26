@@ -213,7 +213,8 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
         final List<NewsletterTopicTranslation> persistedTranslations = persistTranslations(entity, userId, ntId);
         final NewsletterTopicDefinition persistedEntity = toTopicDefinition(ntId,
             ntRecord.get(NEWSLETTER_TOPIC.VERSION), persistedTranslations);
-        log.info("Inserted 1 record: {} with id {}.", NEWSLETTER_TOPIC.getName(), ntId);
+        log.info("{} inserted 1 record: {} with id {}.", getActiveUser().getUserName(), NEWSLETTER_TOPIC.getName(),
+            ntId);
         return persistedEntity;
     }
 
@@ -243,7 +244,8 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
                 entity, userId);
             final NewsletterTopicDefinition updatedEntity = toTopicDefinition(entity.getId(),
                 record.get(NEWSLETTER_TOPIC.VERSION), persistedTranslations);
-            log.info("Updated 1 record: {} with id {}.", NEWSLETTER_TOPIC.getName(), updatedEntity.getId());
+            log.info("{} updated 1 record: {} with id {}.", getActiveUser().getUserName(), NEWSLETTER_TOPIC.getName(),
+                updatedEntity.getId());
             return updatedEntity;
         } else {
             throw new OptimisticLockingException(NEWSLETTER_TOPIC.getName(), entity.toString(),
@@ -342,7 +344,8 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
                     .and(NEWSLETTER_TOPIC.VERSION.eq(version))
                     .execute();
                 if (deleteCount > 0) {
-                    log.info("Deleted {} record: {} with id {}.", deleteCount, NEWSLETTER_TOPIC.getName(), id);
+                    log.info("{} deleted {} record{}: {} with id {}.", getActiveUser().getUserName(), deleteCount,
+                        (deleteCount != 1 ? "s" : ""), NEWSLETTER_TOPIC.getName(), id);
                 } else {
                     throw new OptimisticLockingException(NEWSLETTER_TOPIC.getName(), toBeDeleted.toString(),
                         OptimisticLockingException.Type.DELETE);
