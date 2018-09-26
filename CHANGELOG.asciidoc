@@ -56,6 +56,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Changed
 - Updated dependencies wicket, wicketstuff, wicket-bootstrap
 - 09/64 - Core: Prepend the first word of the brand to the number label in the edit page
+- 09/63 - Core: Make newPaper button in PaperListPage more distinguishable (Type Primary)
 
 .Deprecated
 

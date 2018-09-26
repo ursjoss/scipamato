@@ -4,6 +4,7 @@ import static ch.difty.scipamato.core.entity.search.PaperFilter.PaperFilterField
 
 import com.giffing.wicket.spring.boot.context.scan.WicketHomePage;
 import com.google.common.base.Strings;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
@@ -130,8 +131,9 @@ public class PaperListPage extends BasePage<Void> {
         queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(filter, PUB_YEAR_FROM.getName())));
         queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(filter, PUB_YEAR_UNTIL.getName())));
 
-        queueResponsePageButton("newPaper",
+        BootstrapAjaxButton button = queueResponsePageButton("newPaper",
             () -> new PaperEntryPage(getPageParameters(), getPage().getPageReference()));
+        button.setType(Buttons.Type.Primary);
         queueXmlPasteModalPanelAndLink("xmlPasteModal", "showXmlPasteModalLink");
     }
 
