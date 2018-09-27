@@ -288,7 +288,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
     private void queueNumberField(String id) {
         final IModel labelModel = Model.of(
-            firstWordOfBrand() + " " + new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null).getString());
+            firstWordOfBrand() + "-" + new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null).getString());
         TextField<Integer> number = new TextField<>(id);
         queue(new Label(id + LABEL_TAG, labelModel));
         number.setLabel(labelModel);

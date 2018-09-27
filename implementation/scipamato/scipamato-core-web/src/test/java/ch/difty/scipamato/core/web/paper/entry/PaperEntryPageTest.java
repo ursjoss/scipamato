@@ -137,7 +137,7 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         applyTestHackWithNestedMultiPartForms();
         getTester().submitForm("contentPanel:form");
         getTester().assertErrorMessages("'Authors' is required.", "'Title' is required.", "'Location' is required.",
-            "'Pub. Year' is required.", "'SciPaMaTo No.' is required.", "'Goals' is required.");
+            "'Pub. Year' is required.", "'SciPaMaTo-No.' is required.", "'Goals' is required.");
     }
 
     // See https://issues.apache.org/jira/browse/WICKET-2790
