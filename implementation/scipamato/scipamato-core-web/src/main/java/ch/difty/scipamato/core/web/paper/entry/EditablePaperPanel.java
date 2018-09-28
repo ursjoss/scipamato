@@ -38,6 +38,7 @@ import org.apache.wicket.request.handler.resource.ResourceRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.ByteArrayResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.core.env.Environment;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.FieldEnumType;
@@ -100,6 +101,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @SpringBean
     private ScipamatoWebSessionFacade sessionFacade;
+
+    @SpringBean
+    private Environment env;
 
     EditablePaperPanel(String id, IModel<Paper> model, PageReference previousPage, Long searchOrderId,
         boolean showingExclusions, Mode mode) {
@@ -632,13 +636,26 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         };
         upload
             .getConfig()
-            .withMaxFileSize(4)
+            .withMaxFileSize(getMaxFileSize())
             .withThumbnailHeight(80)
             .withThumbnailWidth(80)
             .withPreviewsContainer(".dropzone-previews")
-            .withParallelUploads(4)
-            .withAutoQueue(true);
+            .withParallelUploads(4);
         return upload;
+    }
+
+    private int getMaxFileSize() {
+        final String prop = env.getProperty("spring.servlet.multipart.max-file-size");
+        final String unit = "MB";
+        try {
+            if (prop != null && prop.length() > unit.length() && prop
+                .substring(prop.length() - unit.length())
+                .equalsIgnoreCase(unit))
+                return Integer.valueOf(prop.substring(0, prop.length() - unit.length()).trim());
+        } catch (Exception ex) {
+            log.error("Unexpected exception when evaluating the max-file-size for file uploads ", ex);
+        }
+        return -1;
     }
 
     private PaperAttachment convertToPaperAttachment(final FileItem file) {
