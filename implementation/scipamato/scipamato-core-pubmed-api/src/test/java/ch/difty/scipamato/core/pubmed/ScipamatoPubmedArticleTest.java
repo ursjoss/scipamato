@@ -3,6 +3,8 @@ package ch.difty.scipamato.core.pubmed;
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
@@ -429,7 +431,7 @@ public class ScipamatoPubmedArticleTest {
     @Test
     public void title() {
         ArticleTitle articleTitle = new ArticleTitle();
-        articleTitle.setvalue("article title");
+        articleTitle.setMixedContent(List.of("article title"));
         pubmedArticle
             .getMedlineCitation()
             .getArticle()

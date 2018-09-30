@@ -52,4 +52,8 @@ public class Sup {
         this.value = value;
     }
 
+    @Override
+    public String toString() {
+        return value;
+    }
 }

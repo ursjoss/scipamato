@@ -8,22 +8,21 @@
 
 package ch.difty.scipamato.core.pubmed.api;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
- * 
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "value"
+    "mixedContent"
 })
 @XmlRootElement(name = "ArticleTitle")
 public class ArticleTitle {
@@ -37,16 +36,19 @@ public class ArticleTitle {
     @XmlAttribute(name = "sec")
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String sec;
-    @XmlValue
-    protected String value;
+    @XmlMixed
+    @XmlElementRefs({ @XmlElementRef(name = "b", type = B.class), @XmlElementRef(name = "i", type = I.class),
+        @XmlElementRef(name = "u", type = U.class), @XmlElementRef(name = "sub", type = Sub.class),
+        @XmlElementRef(name = "sup", type = Sup.class) })
+    protected List<java.lang.Object> mixedContent;
 
     /**
      * Ruft den Wert der book-Eigenschaft ab.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getBook() {
         return book;
@@ -54,11 +56,11 @@ public class ArticleTitle {
 
     /**
      * Legt den Wert der book-Eigenschaft fest.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setBook(String value) {
         this.book = value;
@@ -66,11 +68,11 @@ public class ArticleTitle {
 
     /**
      * Ruft den Wert der part-Eigenschaft ab.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getPart() {
         return part;
@@ -78,11 +80,11 @@ public class ArticleTitle {
 
     /**
      * Legt den Wert der part-Eigenschaft fest.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setPart(String value) {
         this.part = value;
@@ -90,11 +92,11 @@ public class ArticleTitle {
 
     /**
      * Ruft den Wert der sec-Eigenschaft ab.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getSec() {
         return sec;
@@ -102,38 +104,33 @@ public class ArticleTitle {
 
     /**
      * Legt den Wert der sec-Eigenschaft fest.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setSec(String value) {
         this.sec = value;
     }
 
-    /**
-     * Ruft den Wert der value-Eigenschaft ab.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getvalue() {
-        return value;
+    public List<java.lang.Object> getMixedContent() {
+        if (mixedContent == null)
+            mixedContent = new ArrayList<>();
+        return mixedContent;
     }
 
-    /**
-     * Legt den Wert der value-Eigenschaft fest.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setvalue(String value) {
-        this.value = value;
+    public void setMixedContent(List<java.lang.Object> mixedContent) {
+        this.mixedContent = mixedContent;
+    }
+
+    public String getvalue() {
+        if (mixedContent == null)
+            return null;
+        return getMixedContent()
+            .stream()
+            .map(Objects::toString)
+            .collect(Collectors.joining(""));
     }
 
 }
