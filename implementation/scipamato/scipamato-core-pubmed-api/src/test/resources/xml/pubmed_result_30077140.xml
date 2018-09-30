@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st June 2018//EN" "https://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_180601.dtd">
+<PubmedArticleSet>
+
+<PubmedArticle>
+    <MedlineCitation Status="In-Data-Review" Owner="NLM">
+        <PMID Version="1">30077140</PMID>
+        <DateRevised>
+            <Year>2018</Year>
+            <Month>08</Month>
+            <Day>27</Day>
+        </DateRevised>
+        <Article PubModel="Print-Electronic">
+            <Journal>
+                <ISSN IssnType="Electronic">1096-0953</ISSN>
+                <JournalIssue CitedMedium="Internet">
+                    <Volume>166</Volume>
+                    <PubDate>
+                        <Year>2018</Year>
+                        <Month>Oct</Month>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Environmental research</Title>
+                <ISOAbbreviation>Environ. Res.</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>The concentration-response between long-term PM<sub>2.5</sub> exposure and mortality; A meta-regression approach.</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>677-689</MedlinePgn>
+            </Pagination>
+            <ELocationID EIdType="pii" ValidYN="Y">S0013-9351(18)30325-6</ELocationID>
+            <ELocationID EIdType="doi" ValidYN="Y">10.1016/j.envres.2018.06.021</ELocationID>
+            <Abstract>
+                <AbstractText Label="BACKGROUND" NlmCategory="BACKGROUND">Long-term exposure to ambient fine particulate matter (≤ 2.5 μg/m<sup>3</sup> in aerodynamic diameter; PM<sub>2.5</sub>) is significantly associated with increased risk of premature mortality. Our goal was to provide an updated meta-analysis of all-cause and cause-specific mortality associated with exposure to PM<sub>2.5</sub> and to better estimate the risk of death as a function of air pollution levels.</AbstractText>
+                <AbstractText Label="METHODS" NlmCategory="METHODS">We systematically searched all published cohort studies examining the association between long term exposure to PM<sub>2.5</sub> and mortality. We applied multivariate linear random effects meta-analysis with random effects for cohort, and study within cohort. Meta-regression techniques were used to test whether study population or analytic characteristics modify the PM<sub>2.5 -</sub>mortality association and to estimate the shape of the concentration-response curve.</AbstractText>
+                <AbstractText Label="RESULTS" NlmCategory="RESULTS">A total of 53 studies that provided 135 estimates of the quantitative association between the risk of mortality and exposure to PM<sub>2.5</sub> were included in the meta-analysis. There were 39 studies from North America, 8 from Europe, and 6 from Asia. Since 2015, 17 studies of long-term air pollution exposure have been published, covering, wider geographic areas with a wider range of mean exposures (e.g. &lt;12 or &gt; 20 μg/m<sup>3</sup>). A penalized spline showed the slope decreased at higher concentrations but appeared to level off. We found that the inverse transform of average PM<sub>2.5</sub> well approximated that spline and provided a parametric estimate that fit better than a linear or logarithmic term for average PM<sub>2.5.</sub> In addition, we found that studies using space time exposure models or fixed monitors at Zip-code scale (as compared to land use regression method), or additionally controlling for area level socio-economic status, or with mean exposure less than 10 μg/m<sup>3</sup> were associated with higher mortality effect estimates.</AbstractText>
+                <AbstractText Label="CONCLUSIONS" NlmCategory="CONCLUSIONS">This meta-analysis provides strong evidence for the adverse effect of PM<sub>2.5</sub> on mortality, that studies with poorer exposure have lower effect size estimates, that more control for SES increases effect size estimates, and that significant effects are seen below 10 µg/m<sup>3</sup>. The concentration -response function produced here can be further applied in the global health risk assessment of air particulate matter.</AbstractText>
+                <CopyrightInformation>Copyright © 2018 Elsevier Inc. All rights reserved.</CopyrightInformation>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Vodonos</LastName>
+                    <ForeName>Alina</ForeName>
+                    <Initials>A</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Department of Environmental Health, Harvard T.H. Chan School of Public Heath, Boston, MA 02115, USA. Electronic address: avodonos@hsph.harvard.edu.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Awad</LastName>
+                    <ForeName>Yara Abu</ForeName>
+                    <Initials>YA</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Department of Environmental Health, Harvard T.H. Chan School of Public Heath, Boston, MA 02115, USA.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Schwartz</LastName>
+                    <ForeName>Joel</ForeName>
+                    <Initials>J</Initials>
+                    <AffiliationInfo>
+                        <Affiliation>Department of Environmental Health, Harvard T.H. Chan School of Public Heath, Boston, MA 02115, USA.</Affiliation>
+                    </AffiliationInfo>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType UI="D016428">Journal Article</PublicationType>
+            </PublicationTypeList>
+            <ArticleDate DateType="Electronic">
+                <Year>2018</Year>
+                <Month>08</Month>
+                <Day>01</Day>
+            </ArticleDate>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>Netherlands</Country>
+            <MedlineTA>Environ Res</MedlineTA>
+            <NlmUniqueID>0147621</NlmUniqueID>
+            <ISSNLinking>0013-9351</ISSNLinking>
+        </MedlineJournalInfo>
+        <KeywordList Owner="NOTNLM">
+            <Keyword MajorTopicYN="N">Air pollution</Keyword>
+            <Keyword MajorTopicYN="N">Concentration -response</Keyword>
+            <Keyword MajorTopicYN="N">Mortality</Keyword>
+            <Keyword MajorTopicYN="N">Particulate matter</Keyword>
+        </KeywordList>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="received">
+                <Year>2017</Year>
+                <Month>12</Month>
+                <Day>12</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="revised">
+                <Year>2018</Year>
+                <Month>05</Month>
+                <Day>10</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="accepted">
+                <Year>2018</Year>
+                <Month>06</Month>
+                <Day>11</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2018</Year>
+                <Month>8</Month>
+                <Day>5</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2018</Year>
+                <Month>8</Month>
+                <Day>5</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>2018</Year>
+                <Month>8</Month>
+                <Day>5</Day>
+                <Hour>6</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pubmed">30077140</ArticleId>
+            <ArticleId IdType="pii">S0013-9351(18)30325-6</ArticleId>
+            <ArticleId IdType="doi">10.1016/j.envres.2018.06.021</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+</PubmedArticleSet>

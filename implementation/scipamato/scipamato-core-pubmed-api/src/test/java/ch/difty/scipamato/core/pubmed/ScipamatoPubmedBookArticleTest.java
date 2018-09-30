@@ -57,7 +57,7 @@ public class ScipamatoPubmedBookArticleTest {
             .add(makeLocationLabel("ll2"));
 
         ArticleTitle articleTitle = new ArticleTitle();
-        articleTitle.setvalue("title");
+        articleTitle.setMixedContent(List.of("title"));
         bookDocument.setArticleTitle(articleTitle);
 
         ArticleIdList articleIdList = new ArticleIdList();
@@ -77,7 +77,7 @@ public class ScipamatoPubmedBookArticleTest {
         Abstract abstr = new Abstract();
         AbstractText abstrText = new AbstractText();
         abstrText.setLabel("ABSTRACT");
-        abstrText.setvalue("abstract");
+        abstrText.setMixedContent(List.of("abstract"));
         abstr
             .getAbstractText()
             .add(abstrText);
@@ -153,7 +153,7 @@ public class ScipamatoPubmedBookArticleTest {
     }
 
     @Test
-    public void canParseAbstractWithoutAbstractLAbel() {
+    public void canParseAbstractWithoutAbstractLabel() {
         pubmedBookArticle
             .getBookDocument()
             .getAbstract()

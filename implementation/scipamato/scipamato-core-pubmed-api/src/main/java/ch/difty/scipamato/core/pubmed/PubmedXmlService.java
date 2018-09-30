@@ -85,21 +85,8 @@ public class PubmedXmlService implements PubmedArticleService {
      * @return {@link PubmedArticleSet}
      */
     public PubmedArticleSet unmarshal(final String xmlString) throws IOException {
-        final String cleansedXmlString = cleanse(AssertAs.notNull(xmlString, "xmlString"));
-        final StringReader reader = new StringReader(cleansedXmlString);
+        final StringReader reader = new StringReader(AssertAs.notNull(xmlString, "xmlString"));
         return (PubmedArticleSet) unmarshaller.unmarshal(new StreamSource(reader));
-    }
-
-    private String cleanse(final String xmlString) {
-        return xmlString
-            .replace("<sup>", "")
-            .replace("</sup>", "")
-            .replace("<sub>", "")
-            .replace("</sub>", "")
-            .replace("<i>", "")
-            .replace("</i>", "")
-            .replace("<b>", "")
-            .replace("</b>", "");
     }
 
     /**

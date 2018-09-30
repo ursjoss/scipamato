@@ -22,6 +22,7 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
     private static final String XML_27258721 = "xml/pubmed_result_27258721.xml";
     private static final String XML_30124840 = "xml/pubmed_result_30124840.xml";
     private static final String XML_29144419 = "xml/pubmed_result_29144419.xml";
+    private static final String XML_30077140 = "xml/pubmed_result_30077140.xml";
 
     @Test
     public void feedIntoScipamatoArticle_25395026() throws XmlMappingException, IOException {
@@ -239,7 +240,9 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
             .getAbstract()
             .getAbstractText()
             .get(0)
-            .getvalue()).startsWith(
+            .getMixedContent()
+            .get(0)
+            .toString()).startsWith(
             "The International Agency for Research on Cancer recently classified outdoor air pollution");
 
         AuthorList authorList = article.getAuthorList();
@@ -305,7 +308,8 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
     }
 
     @Test
-    public void feedIntoScipamatoArticle_29144419() throws XmlMappingException, IOException {
+    public void feedIntoScipamatoArticle_29144419_withTagsInAbstract_canExtractAbstract()
+        throws XmlMappingException, IOException {
         List<PubmedArticleFacade> articles = getPubmedArticles(XML_29144419);
         assertThat(articles).hasSize(1);
         PubmedArticleFacade sa = articles.get(0);
@@ -323,5 +327,27 @@ public class ScipamatoPubmedArticleIntegrationTest extends PubmedIntegrationTest
         assertThat(sa.getOriginalAbstract()).endsWith(
             "We did not observe support for our hypothesis that stressors linked to socio-economy or mental health problems would increase susceptibility to the effects of air pollution on the development of asthma.");
         assertThat(sa.getOriginalAbstract()).hasSize(1844);
+    }
+
+    @Test
+    public void feedIntoScipamatoArticle_30077140_withTagsInTitleAndAbstract_canExtractFullTitleAndAbstract()
+        throws XmlMappingException, IOException {
+        List<PubmedArticleFacade> articles = getPubmedArticles(XML_30077140);
+        assertThat(articles).hasSize(1);
+        PubmedArticleFacade sa = articles.get(0);
+
+        assertThat(sa.getPmId()).isEqualTo("30077140");
+        assertThat(sa.getAuthors()).isEqualTo("Vodonos A, Awad YA, Schwartz J.");
+        assertThat(sa.getFirstAuthor()).isEqualTo("Vodonos");
+        assertThat(sa.getPublicationYear()).isEqualTo("2018");
+        assertThat(sa.getLocation()).isEqualTo("Environ Res. 2018; 166: 677-689.");
+        assertThat(sa.getTitle()).isEqualTo(
+            "The concentration-response between long-term PM2.5 exposure and mortality; A meta-regression approach.");
+        assertThat(sa.getDoi()).isEqualTo("10.1016/j.envres.2018.06.021");
+        assertThat(sa.getOriginalAbstract()).startsWith(
+            "BACKGROUND: Long-term exposure to ambient fine particulate matter (≤ 2.5 μg/m3 in");
+        assertThat(sa.getOriginalAbstract()).endsWith(
+            "The concentration -response function produced here can be further applied in the global health risk assessment of air particulate matter.");
+        assertThat(sa.getOriginalAbstract()).hasSize(2295);
     }
 }
