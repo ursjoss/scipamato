@@ -384,9 +384,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     /**
      * Sets the paper's {@code fieldName} value if it has been null - and informs
      * about the change. If the value is not null, it compares the paper's value
-     * with the article's value and informs about mismatches - unless it's the
-     * original abstract, which is not compared, as the differences can be subtle
-     * but not really that important.
+     * with the article's value and informs about mismatches.
      *
      * @param fieldName
      *     the name of the field (as defined in the entity)
@@ -414,10 +412,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         if (paperValue == null || Paper.NA_AUTHORS.equals(paperValue) || Paper.NA_STRING.equals(paperValue)) {
             setPaperFieldFromArticleAndInform(localizedFieldName, articleValue, setter, p, pr, target, fcs);
         } else {
-            if (!ORIGINAL_ABSTRACT
-                .getName()
-                .equals(fieldName))
-                warnNonmatchingFields(localizedFieldName, articleValue, paperValue, pr);
+            warnNonmatchingFields(localizedFieldName, articleValue, paperValue, pr);
         }
     }
 
@@ -651,7 +646,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             if (prop != null && prop.length() > unit.length() && prop
                 .substring(prop.length() - unit.length())
                 .equalsIgnoreCase(unit))
-                return Integer.valueOf(prop.substring(0, prop.length() - unit.length()).trim());
+                return Integer.valueOf(prop
+                    .substring(0, prop.length() - unit.length())
+                    .trim());
         } catch (Exception ex) {
             log.error("Unexpected exception when evaluating the max-file-size for file uploads ", ex);
         }
