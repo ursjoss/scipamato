@@ -511,10 +511,18 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
      *     ProcessingRecord
      */
     private void warnNonmatchingFields(String fieldName, String pmField, String paperField, ProcessingRecord pr) {
-        if (pmField != null && !pmField.equals(paperField)) {
+        if (pmField != null && paperField != null && !normalizeLineEnds(pmField).equals(
+            normalizeLineEnds(paperField))) {
             warn("PubMed " + fieldName + ": " + pmField);
             pr.addDifferingField(fieldName);
         }
+    }
+
+    // Thanks to Roland Illig - https://codereview.stackexchange.com/questions/140048/comparing-strings-with-different-newlines
+    private String normalizeLineEnds(final String s) {
+        return s
+            .replace("\r\n", "\n")
+            .replace('\r', '\n');
     }
 
     @Override
