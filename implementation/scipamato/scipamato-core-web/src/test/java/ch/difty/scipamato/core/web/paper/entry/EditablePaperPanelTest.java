@@ -515,20 +515,6 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
     }
 
     @Test
-    public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesEqualExceptAbstract_doesNotWarnAboutAbstract() {
-        getTester().startComponentInPage(makePanel());
-
-        fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "_oa");
-
-        getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
-        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
-        getTester().assertInfoMessages("All compared fields are matching those in PubMed.");
-        getTester().assertNoErrorMessage();
-
-        verifyPubmedRetrievalButtonClicked();
-    }
-
-    @Test
     public void clickingOnPubmedRetrievalButton_withMatchingPmId_andWithAllValuesSetAndAllDifferent_warnsAboutAllComparedFields() {
         getTester().startComponentInPage(makePanel());
 
@@ -537,7 +523,7 @@ public class EditablePaperPanelTest extends PaperPanelTest<Paper, EditablePaperP
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
         getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING),
             "PubMed Authors: _a", "PubMed First Author: _fa", "PubMed Title: _t", "PubMed Pub. Year: 2016",
-            "PubMed Location: _l", "PubMed DOI: _doi");
+            "PubMed Location: _l", "PubMed DOI: _doi", "PubMed Original Abstract: _oa");
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 
