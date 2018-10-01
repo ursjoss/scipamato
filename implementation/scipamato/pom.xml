@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ch.difty</groupId>
@@ -67,7 +68,9 @@
 
         <!-- Sonar properties -->
         <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
-        <sonar.exclusions>*/target/generated-sources/**/*,src/main/java/ch/difty/scipamato/publ/web/themes/**/*</sonar.exclusions>
+        <sonar.exclusions>
+            */target/generated-sources/**/*,src/main/java/ch/difty/scipamato/core/pubmed/api/**,src/main/java/ch/difty/scipamato/publ/web/themes/**/*
+        </sonar.exclusions>
         <sonar.junit.reportPaths>${project.build.directory}/surefire-reports</sonar.junit.reportPaths>
         <sonar.jacoco.reportPaths>${project.build.directory}/jacoco.exec</sonar.jacoco.reportPaths>
 
@@ -749,7 +752,7 @@
                     <executions>
                         <execution>
                             <id>enforce-maven</id>
-			    <goals>
+                            <goals>
                                 <goal>enforce</goal>
                             </goals>
                             <configuration>
