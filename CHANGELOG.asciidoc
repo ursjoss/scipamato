@@ -54,23 +54,31 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Updated dependencies wicket, wicketstuff, wicket-bootstrap
-- 09/64 - Core: Prepend the first word of the brand to the number label in the edit page
-- 09/63 - Core: Make newPaper button in PaperListPage more distinguishable (Type Primary)
-- 09/57 - Core: Do alert if Original Abstract differs between Pubmed and SciPaMaTo. Normalize line ends before comparing
-- 09/72 - Core: Add newly created paper to head of id list for moving back and forth (after first save)
 
 .Deprecated
 
 .Removed
 
 .Fixed
+
+.Security
+
+
+[[v0.9.2]]
+== [0.9.2] -- 2018-10-03
+
+.Changed
+- Updated dependencies wicket, wicketstuff, wicket-bootstrap
+- 09/64 - Core: Prepend the first word of the brand to the number label in the edit page
+- 09/63 - Core: Make newPaper button in PaperListPage more distinguishable (Type Primary)
+- 09/57 - Core: Do alert if Original Abstract differs between Pubmed and SciPaMaTo. Normalize line ends before comparing
+- 09/72 - Core: Add newly created paper to head of id list for moving back and forth (after first save)
+
+.Fixed
 - Maximum Upload File Size correctly reset to 10M
 - 09/57 - Core: Fix Pubmed import from file for certain html tags in text
                 Not fixed for direct import from pubmed! (new dtd can't be parsed by jaxb)
 - 09/59 - Core -> Public: Make sync more resilient by basing the sync on number instead of id
-
-.Security
 
 
 [[v0.9.1]]
