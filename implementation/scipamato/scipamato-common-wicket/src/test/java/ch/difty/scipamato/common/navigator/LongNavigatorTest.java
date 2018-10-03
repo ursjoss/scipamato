@@ -130,4 +130,44 @@ public class LongNavigatorTest {
                 .hasMessage("Cannot set focus to item that is not part of the managed list (item 100).");
         }
     }
+
+    @Test
+    public void settingIdToHeadIfNotPresent_ifPresent_doesNothing() {
+        assertAddingDoesNothing(triple.get(1));
+    }
+
+    private void assertAddingDoesNothing(final Long id) {
+        nm.initialize(triple);
+        assertThat(nm.getItemWithFocus()).isEqualTo(5L);
+        assertThat(nm.hasPrevious()).isFalse();
+        assertThat(nm.hasNext()).isTrue();
+
+        nm.setIdToHeadIfNotPresent(id);
+
+        assertThat(nm.getItemWithFocus()).isEqualTo(5L);
+        assertThat(nm.hasPrevious()).isFalse();
+        assertThat(nm.hasNext()).isTrue();
+    }
+
+    @Test
+    public void settingIdToHeadIfNotPresent_ifNull_doesNothing() {
+        assertAddingDoesNothing(null);
+    }
+
+    @Test
+    public void settingIdToHeadIfNotPresent_ifNotPresent_addsToHeadAndFocuses() {
+        Long id = 200L;
+        assertThat(triple).doesNotContain(id);
+
+        nm.initialize(triple);
+        assertThat(nm.getItemWithFocus()).isEqualTo(5L);
+        assertThat(nm.hasPrevious()).isFalse();
+        assertThat(nm.hasNext()).isTrue();
+
+        nm.setIdToHeadIfNotPresent(id);
+
+        assertThat(nm.getItemWithFocus()).isEqualTo(id);
+        assertThat(nm.hasPrevious()).isFalse();
+        assertThat(nm.hasNext()).isTrue();
+    }
 }

@@ -77,6 +77,11 @@ class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
     }
 
     @Override
+    public boolean containsId(final T id) {
+        return items.contains(id);
+    }
+
+    @Override
     public void previous() {
         if (hasPrevious())
             index.decrementAndGet();

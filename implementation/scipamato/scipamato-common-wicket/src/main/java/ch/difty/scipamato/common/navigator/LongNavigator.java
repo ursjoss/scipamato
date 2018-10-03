@@ -1,5 +1,6 @@
 package ch.difty.scipamato.common.navigator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,5 +53,16 @@ public class LongNavigator implements ItemNavigator<Long> {
     public void next() {
         if (hasNext())
             items.next();
+    }
+
+    @Override
+    public void setIdToHeadIfNotPresent(final Long idCandidate) {
+        if (idCandidate != null && !items.containsId(idCandidate)) {
+            final List<Long> newItems = new ArrayList<>();
+            newItems.add(idCandidate);
+            newItems.addAll(items.getItems());
+            initialize(newItems);
+            setFocusToItem(idCandidate);
+        }
     }
 }

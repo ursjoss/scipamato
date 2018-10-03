@@ -214,10 +214,13 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
     private void doUpdate(Paper paper) {
         try {
             if (mode == Mode.EDIT) {
+                final boolean newPaper = getNullSafeId() == 0;
                 Paper persisted = service.saveOrUpdate(paper);
                 if (persisted != null) {
                     setModelObject(persisted);
                     resetFeedbackMessages();
+                    if (newPaper)
+                        getPaperIdManager().setIdToHeadIfNotPresent(getNullSafeId());
                 } else {
                     error(new StringResourceModel("save.error.hint", this, null)
                         .setParameters(getNullSafeId(), "")

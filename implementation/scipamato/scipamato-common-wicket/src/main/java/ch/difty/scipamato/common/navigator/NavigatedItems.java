@@ -66,4 +66,10 @@ interface NavigatedItems<T> extends Serializable {
      */
     void next();
 
+    /**
+     * @param id
+     *    the id that may or may not be part of the collections.
+     * @return true if it is contained, false otherwise
+     */
+    boolean containsId(T id);
 }

@@ -143,4 +143,18 @@ public class NavigatedListTest {
         assertThat(navigatedList.hasPrevious()).isFalse();
     }
 
+    @Test
+    public void contains_withIdNull_returnsFalse() {
+        assertThat(navigatedList.containsId(null)).isFalse();
+    }
+
+    @Test
+    public void contains_withIdInList_returnsTrue() {
+        assertThat(navigatedList.containsId(2L)).isTrue();
+    }
+
+    @Test
+    public void contains_withIdNotInList_returnsFalse() {
+        assertThat(navigatedList.containsId(-1L)).isFalse();
+    }
 }
