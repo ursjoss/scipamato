@@ -146,4 +146,16 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
             .extracting("number")
             .containsOnly(8984L, 8934L, 8924L, 2L, 8933L, 8983L, 8993L, 8861L, 8916L, 8973L, 1L, 3L, 8897L);
     }
+
+    @Test
+    public void findingPageByFilter_withCodes6Mand7L_andWithKeywordWithId3_findsOnlyOne() {
+        filter.setCodesOfClass6(newCodes("6M"));
+        filter.setCodesOfClass7(newCodes("7L"));
+        filter.setKeywords(List.of(new Keyword(1, 3, "en", "foo", null)));
+        assertThat(repo.findPageByFilter(filter, allSorted))
+            .isNotEmpty()
+            .extracting("number")
+            .containsOnly(3L);
+    }
+
 }
