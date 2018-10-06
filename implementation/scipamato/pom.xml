@@ -208,7 +208,7 @@
             <dependency>
                 <groupId>net.bytebuddy</groupId>
                 <artifactId>byte-buddy</artifactId>
-                <version>1.8.22</version>
+                <version>1.9.1</version>
             </dependency>
 
             <dependency>
