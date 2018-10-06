@@ -15,9 +15,9 @@ import ch.difty.scipamato.publ.config.ScipamatoPublicProperties;
  * Examples of {@code parentUrl} and the resulting locales are:
  *
  * <ul>
- * <li>https://www.foo.ch/de/whatever/follows/next/ -> Locale.German</li>
- * <li>https://www.foo.ch/en/projects/something/else/ -> Locale.English</li>
- * <li>https://www.foo.ch/fr/bar/baz/ -> LOCALE.FRENCH</li>
+ * <li>https://www.foo.ch/de/whatever/follows/next/ : Locale.German</li>
+ * <li>https://www.foo.ch/en/projects/something/else/ : Locale.English</li>
+ * <li>https://www.foo.ch/fr/bar/baz/ : LOCALE.FRENCH</li>
  * </ul>
  */
 @Service
