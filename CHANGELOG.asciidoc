@@ -54,7 +54,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 .Changed
-- Bumped dependencies: flyway, byte-buddy, mockito
+- Bumped dependencies: flyway, byte-buddy, commons-lang3, mockito
 
 .Deprecated
 
