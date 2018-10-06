@@ -82,7 +82,7 @@
 
         <lombok.version>1.18.2</lombok.version>
 
-        <mockito.version>2.22.0</mockito.version>
+        <mockito.version>2.23.0</mockito.version>
         <assertj.version>3.11.1</assertj.version>
 
         <!-- Web Specific versions - kept here to not maintain them in
