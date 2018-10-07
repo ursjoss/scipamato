@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
-import ch.difty.scipamato.publ.entity.Code;
-import ch.difty.scipamato.publ.entity.PopulationCode;
-import ch.difty.scipamato.publ.entity.PublicPaper;
-import ch.difty.scipamato.publ.entity.StudyDesignCode;
+import ch.difty.scipamato.publ.entity.*;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.publ.persistence.JooqTransactionalIntegrationTest;
 
