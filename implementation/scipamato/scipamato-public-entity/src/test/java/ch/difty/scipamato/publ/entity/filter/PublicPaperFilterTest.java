@@ -2,14 +2,15 @@ package ch.difty.scipamato.publ.entity.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 
 import ch.difty.scipamato.publ.entity.Code;
+import ch.difty.scipamato.publ.entity.Keyword;
 import ch.difty.scipamato.publ.entity.PopulationCode;
 import ch.difty.scipamato.publ.entity.StudyDesignCode;
 
@@ -23,7 +24,7 @@ public class PublicPaperFilterTest {
         filter.setMethodsMask("mm");
         filter.setPublicationYearFrom(2000);
         filter.setPublicationYearUntil(3000);
-        filter.setPopulationCodes(Arrays.asList(PopulationCode.CHILDREN, PopulationCode.ADULTS));
+        filter.setPopulationCodes(List.of(PopulationCode.CHILDREN, PopulationCode.ADULTS));
         filter.setStudyDesignCodes(Collections.singletonList(StudyDesignCode.EXPERIMENTAL));
         filter.setCodesOfClass1(List.of(newCode("1A"), newCode("1B")));
         filter.setCodesOfClass2(List.of(newCode("2A"), newCode("2B")));
@@ -52,6 +53,8 @@ public class PublicPaperFilterTest {
         assertThat(filter.getCodesOfClass6()).hasSize(2);
         assertThat(filter.getCodesOfClass7()).hasSize(2);
         assertThat(filter.getCodesOfClass8()).hasSize(2);
+
+        assertThat(filter.getKeywords()).extracting(Keyword::getKeywordId).containsExactly(1);
 
         assertThat(filter.toString()).isEqualTo(
             "PublicPaperFilter(number=1, authorMask=am, methodsMask=mm, publicationYearFrom=2000, publicationYearUntil=3000, populationCodes=[CHILDREN, ADULTS], studyDesignCodes=[EXPERIMENTAL], "
@@ -90,6 +93,6 @@ public class PublicPaperFilterTest {
             .extracting("name")
             .containsExactly("number", "authorMask", "methodsMask", "publicationYearFrom", "publicationYearUntil",
                 "populationCodes", "studyDesignCodes", "codesOfClass1", "codesOfClass2", "codesOfClass3",
-                "codesOfClass4", "codesOfClass5", "codesOfClass6", "codesOfClass7", "codesOfClass8");
+                "codesOfClass4", "codesOfClass5", "codesOfClass6", "codesOfClass7", "codesOfClass8", "keywords");
     }
 }

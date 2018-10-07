@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
 import ch.difty.scipamato.publ.entity.Code;
+import ch.difty.scipamato.publ.entity.Keyword;
 import ch.difty.scipamato.publ.entity.PopulationCode;
 import ch.difty.scipamato.publ.entity.StudyDesignCode;
 
@@ -32,6 +33,7 @@ public class PublicPaperFilter extends ScipamatoFilter {
     private List<Code>            codesOfClass6;
     private List<Code>            codesOfClass7;
     private List<Code>            codesOfClass8;
+    private List<Keyword>         keywords;
 
     public enum PublicPaperFilterFields implements FieldEnumType {
         NUMBER("number"),
@@ -48,7 +50,8 @@ public class PublicPaperFilter extends ScipamatoFilter {
         CODES_OF_CLASS_5("codesOfClass5"),
         CODES_OF_CLASS_6("codesOfClass6"),
         CODES_OF_CLASS_7("codesOfClass7"),
-        CODES_OF_CLASS_8("codesOfClass8");
+        CODES_OF_CLASS_8("codesOfClass8"),
+        KEYWORDS("keywords");
 
         private final String name;
 

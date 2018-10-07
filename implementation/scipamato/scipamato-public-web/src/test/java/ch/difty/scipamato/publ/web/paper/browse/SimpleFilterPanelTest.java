@@ -11,7 +11,7 @@ public class SimpleFilterPanelTest extends PanelTest<SimpleFilterPanel> {
 
     @Override
     protected SimpleFilterPanel makePanel() {
-        return new SimpleFilterPanel(PANEL, Model.of(new PublicPaperFilter()));
+        return new SimpleFilterPanel(PANEL, Model.of(new PublicPaperFilter()), "en");
     }
 
     @Override
@@ -24,6 +24,7 @@ public class SimpleFilterPanelTest extends PanelTest<SimpleFilterPanel> {
         assertLabeledTextField(PANEL, "pubYearUntil");
         assertLabeledMultiSelect(PANEL, "populationCodes");
         assertLabeledMultiSelect(PANEL, "studyDesignCodes");
+        assertLabeledMultiSelect(PANEL, "keywords");
     }
 
 }
