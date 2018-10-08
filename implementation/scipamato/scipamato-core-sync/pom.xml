@@ -260,6 +260,8 @@
                                         | code
                                         | code_tr
                                         | language
+                                        | keyword
+                                        | keyword_tr
                                         | paper
                                         | paper_code
                                         | newsletter
@@ -305,6 +307,7 @@
                                         code_class
                                         | code
                                         | language
+                                        | keyword
                                         | paper
                                         | new_study
                                         | new_study_topic

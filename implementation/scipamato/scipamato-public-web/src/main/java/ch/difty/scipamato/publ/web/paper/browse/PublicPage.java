@@ -138,7 +138,7 @@ public class PublicPage extends BasePage<Void> {
         protected void onInitialize() {
             super.onInitialize();
             queue(new Form<>("tab1Form"));
-            queue(new SimpleFilterPanel("simpleFilterPanel", Model.of(filter)));
+            queue(new SimpleFilterPanel("simpleFilterPanel", Model.of(filter), getLanguageCode()));
         }
     }
 
@@ -155,7 +155,7 @@ public class PublicPage extends BasePage<Void> {
             Form<Object> form = new Form<>("tab2Form");
             queue(form);
 
-            queue(new SimpleFilterPanel("simpleFilterPanel", Model.of(filter)));
+            queue(new SimpleFilterPanel("simpleFilterPanel", Model.of(filter), getLanguageCode()));
 
             CodeClassModel codeClassModel = new CodeClassModel(getLanguageCode());
             List<CodeClass> codeClasses = codeClassModel.getObject();

@@ -5,41 +5,38 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 
-import ch.difty.scipamato.common.entity.CodeLike;
 import ch.difty.scipamato.common.entity.FieldEnumType;
 
 @Value
 @Builder
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Code extends PublicEntity implements CodeLike {
+public class Keyword extends PublicEntity {
 
     private static final long serialVersionUID = 1L;
 
-    private final Integer codeClassId;
-    private final String  code;
-    private final String  langCode;
-    private final String  name;
-    private final String  comment;
-    private final int     sort;
+    private final int    id;
+    private final int    keywordId;
+    private final String langCode;
+    private final String name;
+    private final String searchOverride;
 
     @SuppressWarnings("WeakerAccess")
     public String getDisplayValue() {
         return name;
     }
 
-    public enum CodeFields implements FieldEnumType {
-        CODE_CLASS_ID("codeClassId"),
-        CODE("code"),
+    public enum KeywordFields implements FieldEnumType {
+        ID("id"),
+        KEYWORD_ID("keywordId"),
         LANG_CODE("langCode"),
         NAME("name"),
-        COMMENT("comment"),
-        SORT("sort"),
+        SEARCH_OVERRIDE("searchOverride"),
         DISPLAY_VALUE("displayValue");
 
         private final String name;
 
-        CodeFields(final String name) {
+        KeywordFields(final String name) {
             this.name = name;
         }
 

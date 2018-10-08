@@ -29,11 +29,12 @@ public class LanguageItemWriter extends ScipamatoItemWriter<PublicLanguage> {
     protected int executeUpdate(final PublicLanguage l) {
         return getDslContext()
             .insertInto(LANGUAGE)
-            .columns(LANGUAGE.CODE, LANGUAGE.LAST_SYNCHED)
-            .values(l.getCode(), l.getLastSynched())
+            .columns(LANGUAGE.CODE, LANGUAGE.MAIN_LANGUAGE, LANGUAGE.LAST_SYNCHED)
+            .values(l.getCode(), l.getMainLanguage(), l.getLastSynched())
             .onConflict(LANGUAGE.CODE)
             .doUpdate()
             .set(LANGUAGE.CODE, l.getCode())
+            .set(LANGUAGE.MAIN_LANGUAGE, l.getMainLanguage())
             .set(LANGUAGE.LAST_SYNCHED, l.getLastSynched())
             .where(LANGUAGE.CODE.eq(l.getCode()))
             .execute();

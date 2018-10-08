@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort.Direction;
-import ch.difty.scipamato.publ.entity.Code;
-import ch.difty.scipamato.publ.entity.PopulationCode;
-import ch.difty.scipamato.publ.entity.PublicPaper;
-import ch.difty.scipamato.publ.entity.StudyDesignCode;
+import ch.difty.scipamato.publ.entity.*;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 import ch.difty.scipamato.publ.persistence.JooqTransactionalIntegrationTest;
 
@@ -146,4 +143,16 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
             .extracting("number")
             .containsOnly(8984L, 8934L, 8924L, 2L, 8933L, 8983L, 8993L, 8861L, 8916L, 8973L, 1L, 3L, 8897L);
     }
+
+    @Test
+    public void findingPageByFilter_withCodes6Mand7L_andWithKeywordWithId3_findsOnlyOne() {
+        filter.setCodesOfClass6(newCodes("6M"));
+        filter.setCodesOfClass7(newCodes("7L"));
+        filter.setKeywords(List.of(new Keyword(1, 3, "en", "foo", null)));
+        assertThat(repo.findPageByFilter(filter, allSorted))
+            .isNotEmpty()
+            .extracting("number")
+            .containsOnly(3L);
+    }
+
 }

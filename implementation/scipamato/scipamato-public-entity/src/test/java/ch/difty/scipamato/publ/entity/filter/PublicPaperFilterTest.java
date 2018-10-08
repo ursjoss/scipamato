@@ -2,14 +2,15 @@ package ch.difty.scipamato.publ.entity.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 
 import ch.difty.scipamato.publ.entity.Code;
+import ch.difty.scipamato.publ.entity.Keyword;
 import ch.difty.scipamato.publ.entity.PopulationCode;
 import ch.difty.scipamato.publ.entity.StudyDesignCode;
 
@@ -23,16 +24,17 @@ public class PublicPaperFilterTest {
         filter.setMethodsMask("mm");
         filter.setPublicationYearFrom(2000);
         filter.setPublicationYearUntil(3000);
-        filter.setPopulationCodes(Arrays.asList(PopulationCode.CHILDREN, PopulationCode.ADULTS));
+        filter.setPopulationCodes(List.of(PopulationCode.CHILDREN, PopulationCode.ADULTS));
         filter.setStudyDesignCodes(Collections.singletonList(StudyDesignCode.EXPERIMENTAL));
-        filter.setCodesOfClass1(Arrays.asList(newCode("1A"), newCode("1B")));
-        filter.setCodesOfClass2(Arrays.asList(newCode("2A"), newCode("2B")));
-        filter.setCodesOfClass3(Arrays.asList(newCode("3A"), newCode("3B")));
-        filter.setCodesOfClass4(Arrays.asList(newCode("4A"), newCode("4B")));
-        filter.setCodesOfClass5(Arrays.asList(newCode("5A"), newCode("5B")));
-        filter.setCodesOfClass6(Arrays.asList(newCode("6A"), newCode("6B")));
-        filter.setCodesOfClass7(Arrays.asList(newCode("7A"), newCode("7B")));
-        filter.setCodesOfClass8(Arrays.asList(newCode("8A"), newCode("8B")));
+        filter.setCodesOfClass1(List.of(newCode("1A"), newCode("1B")));
+        filter.setCodesOfClass2(List.of(newCode("2A"), newCode("2B")));
+        filter.setCodesOfClass3(List.of(newCode("3A"), newCode("3B")));
+        filter.setCodesOfClass4(List.of(newCode("4A"), newCode("4B")));
+        filter.setCodesOfClass5(List.of(newCode("5A"), newCode("5B")));
+        filter.setCodesOfClass6(List.of(newCode("6A"), newCode("6B")));
+        filter.setCodesOfClass7(List.of(newCode("7A"), newCode("7B")));
+        filter.setCodesOfClass8(List.of(newCode("8A"), newCode("8B")));
+        filter.setKeywords(List.of(new Keyword(1, 1,"de", "k1", null)));
 
         assertThat(filter.getNumber()).isEqualTo(1L);
         assertThat(filter.getAuthorMask()).isEqualTo("am");
@@ -52,6 +54,8 @@ public class PublicPaperFilterTest {
         assertThat(filter.getCodesOfClass7()).hasSize(2);
         assertThat(filter.getCodesOfClass8()).hasSize(2);
 
+        assertThat(filter.getKeywords()).extracting(Keyword::getKeywordId).containsExactly(1);
+
         assertThat(filter.toString()).isEqualTo(
             "PublicPaperFilter(number=1, authorMask=am, methodsMask=mm, publicationYearFrom=2000, publicationYearUntil=3000, populationCodes=[CHILDREN, ADULTS], studyDesignCodes=[EXPERIMENTAL], "
             + "codesOfClass1=[Code(codeClassId=1, code=1A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=1, code=1B, langCode=en, name=null, comment=null, sort=0)], "
@@ -61,7 +65,8 @@ public class PublicPaperFilterTest {
             + "codesOfClass5=[Code(codeClassId=5, code=5A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=5, code=5B, langCode=en, name=null, comment=null, sort=0)], "
             + "codesOfClass6=[Code(codeClassId=6, code=6A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=6, code=6B, langCode=en, name=null, comment=null, sort=0)], "
             + "codesOfClass7=[Code(codeClassId=7, code=7A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=7, code=7B, langCode=en, name=null, comment=null, sort=0)], "
-            + "codesOfClass8=[Code(codeClassId=8, code=8A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=8, code=8B, langCode=en, name=null, comment=null, sort=0)])");
+            + "codesOfClass8=[Code(codeClassId=8, code=8A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=8, code=8B, langCode=en, name=null, comment=null, sort=0)], "
+            + "keywords=[Keyword(id=1, keywordId=1, langCode=de, name=k1, searchOverride=null)])");
     }
 
     private Code newCode(String code) {
@@ -88,6 +93,6 @@ public class PublicPaperFilterTest {
             .extracting("name")
             .containsExactly("number", "authorMask", "methodsMask", "publicationYearFrom", "publicationYearUntil",
                 "populationCodes", "studyDesignCodes", "codesOfClass1", "codesOfClass2", "codesOfClass3",
-                "codesOfClass4", "codesOfClass5", "codesOfClass6", "codesOfClass7", "codesOfClass8");
+                "codesOfClass4", "codesOfClass5", "codesOfClass6", "codesOfClass7", "codesOfClass8", "keywords");
     }
 }

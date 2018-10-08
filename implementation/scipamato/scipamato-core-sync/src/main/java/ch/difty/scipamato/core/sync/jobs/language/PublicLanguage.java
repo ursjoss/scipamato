@@ -25,9 +25,10 @@ public class PublicLanguage {
     private final Language delegate;
 
     @Builder
-    private PublicLanguage(final String code, final Timestamp lastSynched) {
+    private PublicLanguage(final String code, final boolean mainLanguage, final Timestamp lastSynched) {
         delegate = new Language();
         delegate.setCode(code);
+        delegate.setMainLanguage(mainLanguage);
         delegate.setLastSynched(lastSynched);
     }
 }

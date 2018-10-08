@@ -1,21 +1,27 @@
 package ch.difty.scipamato.publ.persistence.paper;
 
+import static ch.difty.scipamato.publ.db.tables.Keyword.KEYWORD;
 import static ch.difty.scipamato.publ.db.tables.Paper.PAPER;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.SortField;
+import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
+import ch.difty.scipamato.publ.db.tables.Language;
 import ch.difty.scipamato.publ.db.tables.Paper;
 import ch.difty.scipamato.publ.db.tables.records.PaperRecord;
+import ch.difty.scipamato.publ.entity.Keyword;
 import ch.difty.scipamato.publ.entity.PublicPaper;
 import ch.difty.scipamato.publ.entity.filter.PublicPaperFilter;
 
@@ -74,7 +80,7 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
 
     @Override
     public List<PublicPaper> findPageByFilter(final PublicPaperFilter filter, final PaginationContext pc) {
-        final Condition conditions = filterConditionMapper.map(filter);
+        final Condition conditions = getConditions(filter);
         final Collection<SortField<PublicPaper>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
         final List<PaperRecord> tuples = getDsl()
             .selectFrom(getTable())
@@ -124,7 +130,7 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
 
     @Override
     public int countByFilter(final PublicPaperFilter filter) {
-        final Condition conditions = filterConditionMapper.map(filter);
+        final Condition conditions = getConditions(filter);
         return getDsl().fetchCount(getDsl()
             .selectOne()
             .from(PAPER)
@@ -133,7 +139,7 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
 
     @Override
     public List<Long> findPageOfNumbersByFilter(final PublicPaperFilter filter, final PaginationContext pc) {
-        final Condition conditions = filterConditionMapper.map(filter);
+        final Condition conditions = getConditions(filter);
         final Collection<SortField<PublicPaper>> sortCriteria = getSortMapper().map(pc.getSort(), getTable());
         return getDsl()
             .select()
@@ -145,4 +151,50 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
             .fetch(PAPER.NUMBER);
     }
 
+    private Condition getConditions(final PublicPaperFilter filter) {
+        final Condition conditions = filterConditionMapper.map(filter);
+        if (CollectionUtils.isEmpty(filter.getKeywords()))
+            return conditions;
+        else
+            return DSL.and(conditions, evaluateKeywords(filter.getKeywords()));
+    }
+
+    private Condition evaluateKeywords(final List<Keyword> keywords) {
+        final String mainLanguage = getMainLanguage();
+
+        final List<Integer> keywordIds = keywords
+            .stream()
+            .map(Keyword::getKeywordId)
+            .collect(Collectors.toList());
+
+        final List<Condition> keywordConditions = new ArrayList<>();
+        for (final Integer keywordId : keywordIds) {
+            final String searchTerm = getDsl()
+                .select(DSL.coalesce(KEYWORD.SEARCH_OVERRIDE, KEYWORD.NAME))
+                .from(KEYWORD)
+                .where(KEYWORD.KEYWORD_ID
+                    .eq(keywordId)
+                    .and(KEYWORD.LANG_CODE.eq(mainLanguage)))
+                .orderBy(KEYWORD.NAME)
+                .limit(1)
+                .fetchOne()
+                .value1();
+            keywordConditions.add(PAPER.METHODS.containsIgnoreCase(searchTerm));
+        }
+        if (keywordConditions.size() == 1)
+            return keywordConditions.get(0);
+        else
+            return DSL.and(keywordConditions);
+    }
+
+    /** protected for stubbing **/
+    protected String getMainLanguage() {
+        return getDsl()
+            .select(Language.LANGUAGE.CODE)
+            .from(Language.LANGUAGE)
+            .where(Language.LANGUAGE.MAIN_LANGUAGE.eq(true))
+            .limit(1)
+            .fetchOne()
+            .value1();
+    }
 }
