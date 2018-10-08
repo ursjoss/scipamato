@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
+import ch.difty.scipamato.publ.db.tables.Language;
 import ch.difty.scipamato.publ.db.tables.Paper;
 import ch.difty.scipamato.publ.db.tables.records.PaperRecord;
 import ch.difty.scipamato.publ.entity.Keyword;
@@ -159,6 +160,8 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
     }
 
     private Condition evaluateKeywords(final List<Keyword> keywords) {
+        final String mainLanguage = getMainLanguage();
+
         final List<Integer> keywordIds = keywords
             .stream()
             .map(Keyword::getKeywordId)
@@ -169,9 +172,9 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
             final String searchTerm = getDsl()
                 .select(DSL.coalesce(KEYWORD.SEARCH_OVERRIDE, KEYWORD.NAME))
                 .from(KEYWORD)
-                .where(KEYWORD.KEYWORD_ID.eq(keywordId)
-                    // TODO evaluate mainLanguageCode from table Language (currently missing the main flag)
-                    .and(KEYWORD.LANG_CODE.eq("de")))
+                .where(KEYWORD.KEYWORD_ID
+                    .eq(keywordId)
+                    .and(KEYWORD.LANG_CODE.eq(mainLanguage)))
                 .orderBy(KEYWORD.NAME)
                 .limit(1)
                 .fetchOne()
@@ -184,4 +187,14 @@ public class JooqPublicPaperRepo implements PublicPaperRepository {
             return DSL.and(keywordConditions);
     }
 
+    /** protected for stubbing **/
+    protected String getMainLanguage() {
+        return getDsl()
+            .select(Language.LANGUAGE.CODE)
+            .from(Language.LANGUAGE)
+            .where(Language.LANGUAGE.MAIN_LANGUAGE.eq(true))
+            .limit(1)
+            .fetchOne()
+            .value1();
+    }
 }

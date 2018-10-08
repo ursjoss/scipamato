@@ -53,6 +53,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Added
 
+- 09/10 - Public: Allow filtering by keywords
+
 .Changed
 - Bumped dependencies: flyway, byte-buddy, commons-lang3, mockito
 

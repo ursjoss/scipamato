@@ -55,7 +55,7 @@ public class LanguageSyncConfigTest extends SyncConfigTest<LanguageRecord> {
 
     @Override
     protected String expectedSelectSql() {
-        return "select \"public\".\"language\".\"code\" from \"public\".\"language\"";
+        return "select \"public\".\"language\".\"code\", \"public\".\"language\".\"main_language\" from \"public\".\"language\"";
     }
 
     @Override
@@ -67,13 +67,16 @@ public class LanguageSyncConfigTest extends SyncConfigTest<LanguageRecord> {
     public void makingEntity() throws SQLException {
         ResultSet rs = Mockito.mock(ResultSet.class);
         when(rs.getString(Language.LANGUAGE.CODE.getName())).thenReturn("de");
+        when(rs.getBoolean(Language.LANGUAGE.MAIN_LANGUAGE.getName())).thenReturn(true);
 
         PublicLanguage pl = config.makeEntity(rs);
 
         assertThat(pl.getCode()).isEqualTo("de");
+        assertThat(pl.getMainLanguage()).isTrue();
         assertThat(pl.getLastSynched()).isCloseTo("2016-12-09T06:02:13.000", 1000);
 
         verify(rs).getString(Language.LANGUAGE.CODE.getName());
+        verify(rs).getBoolean(Language.LANGUAGE.MAIN_LANGUAGE.getName());
 
         verifyNoMoreInteractions(rs);
     }

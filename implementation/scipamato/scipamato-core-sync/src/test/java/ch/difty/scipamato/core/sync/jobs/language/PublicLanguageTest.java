@@ -13,10 +13,12 @@ public class PublicLanguageTest extends PublicEntityTest {
         PublicLanguage pp = PublicLanguage
             .builder()
             .code("en")
+            .mainLanguage(true)
             .lastSynched(SYNCHED)
             .build();
 
         assertThat(pp.getCode()).isEqualTo("en");
+        assertThat(pp.getMainLanguage()).isEqualTo(true);
         assertThat(pp.getLastSynched()).isEqualTo(SYNCHED);
     }
 }

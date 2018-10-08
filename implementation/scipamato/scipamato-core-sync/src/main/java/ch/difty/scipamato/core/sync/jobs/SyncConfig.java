@@ -177,6 +177,10 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
         return rs.getString(field.getName());
     }
 
+    protected Boolean getBoolean(final TableField<?, Boolean> field, final ResultSet rs) throws SQLException {
+        return rs.getBoolean(field.getName());
+    }
+
     /**
      * @param field
      *     the integer field to get the value from

@@ -36,7 +36,12 @@ public class JooqPublicPaperRepoTest {
     @Before
     public void setUp() {
         repo = new JooqPublicPaperRepo(dslMock, sortMapperMock, filterConditionMapperMock, authorsAbbreviator,
-            journalExtractor);
+            journalExtractor) {
+            @Override
+            protected String getMainLanguage() {
+                return "de";
+            }
+        };
     }
 
     @After

@@ -34,7 +34,8 @@ public class LanguageSyncConfig
     private static final int    CHUNK_SIZE = 100;
 
     // relevant fields of the core Language record
-    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.LanguageRecord, String> C_CODE = LANGUAGE.CODE;
+    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.LanguageRecord, String>  C_CODE = LANGUAGE.CODE;
+    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.LanguageRecord, Boolean> C_MAIN = LANGUAGE.MAIN_LANGUAGE;
 
     protected LanguageSyncConfig(@Qualifier("dslContext") DSLContext jooqCore,
         @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
@@ -61,7 +62,7 @@ public class LanguageSyncConfig
     @Override
     protected String selectSql() {
         return getJooqCore()
-            .select(C_CODE)
+            .select(C_CODE, C_MAIN)
             .from(LANGUAGE)
             .getSQL();
     }
@@ -71,6 +72,7 @@ public class LanguageSyncConfig
         return PublicLanguage
             .builder()
             .code(getString(C_CODE, rs))
+            .mainLanguage(getBoolean(C_MAIN, rs))
             .lastSynched(getNow())
             .build();
     }
