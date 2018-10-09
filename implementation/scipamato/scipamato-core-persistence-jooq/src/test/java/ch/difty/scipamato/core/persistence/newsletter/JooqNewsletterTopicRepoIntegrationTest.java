@@ -316,4 +316,10 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
     public void findingAllSortedNewsletterTopicsForNewsletterWithId() {
         assertThat(repo.findAllSortedNewsletterTopicsForNewsletterWithId(1)).hasSize(3);
     }
+
+    @Test
+    public void removingObsoleteNewsletterTopicsFromSort() {
+        repo.removeObsoleteNewsletterTopicsFromSort(1);
+        // TODO currently only asserting that the method runs without failure. Need test data and actually assert the behavior
+    }
 }

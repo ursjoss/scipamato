@@ -388,6 +388,22 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     }
 
     @Override
+    public void removeObsoleteNewsletterTopicsFromSort(final int newsletterId) {
+        final List<NewsletterNewsletterTopic> persistedTopics = findPersistedSortedNewsletterTopicsForNewsletterWithId(
+            (newsletterId));
+        final List<NewsletterNewsletterTopic> usedTopics = findAllSortedNewsletterTopicsForNewsletterWithId(
+            (newsletterId));
+        persistedTopics.removeAll(usedTopics);
+
+        persistedTopics.forEach(t -> getDsl()
+            .deleteFrom(NEWSLETTER_NEWSLETTER_TOPIC)
+            .where(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID
+                .eq(t.getNewsletterId())
+                .and(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID.eq(t.getNewsletterTopicId())))
+            .execute());
+    }
+
+    @Override
     public void saveSortedNewsletterTopics(final int newsletterId, final List<NewsletterNewsletterTopic> topics) {
         final Timestamp ts = getDateTimeService().getCurrentTimestamp();
         topics

@@ -85,6 +85,8 @@ class JooqNewsletterTopicService implements NewsletterTopicService {
 
     @Override
     public List<NewsletterNewsletterTopic> getSortedNewsletterTopicsForNewsletter(final int newsletterId) {
+        repo.removeObsoleteNewsletterTopicsFromSort(newsletterId);
+
         final List<NewsletterNewsletterTopic> results = new ArrayList<>(
             repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId));
         final Set<Integer> persistedTopics = results

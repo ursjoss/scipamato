@@ -161,6 +161,7 @@ public class JooqNewsletterTopicServiceTest {
 
         assertThat(service.getSortedNewsletterTopicsForNewsletter(newsletterId)).isEmpty();
 
+        verify(repoMock).removeObsoleteNewsletterTopicsFromSort(newsletterId);
         verify(repoMock).findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId);
         verify(repoMock).findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId);
     }
@@ -189,6 +190,7 @@ public class JooqNewsletterTopicServiceTest {
             .extracting("title")
             .containsExactly("topic1", "topic2");
 
+        verify(repoMock).removeObsoleteNewsletterTopicsFromSort(newsletterId);
         verify(repoMock).findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId);
         verify(repoMock).findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId);
     }
@@ -217,6 +219,7 @@ public class JooqNewsletterTopicServiceTest {
             .extracting("title")
             .containsExactly("topic1", "topic2");
 
+        verify(repoMock).removeObsoleteNewsletterTopicsFromSort(newsletterId);
         verify(repoMock).findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId);
         verify(repoMock).findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId);
     }
@@ -248,6 +251,7 @@ public class JooqNewsletterTopicServiceTest {
             .extracting("title")
             .containsExactly("topic1", "topic2", "topic3");
 
+        verify(repoMock).removeObsoleteNewsletterTopicsFromSort(newsletterId);
         verify(repoMock).findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId);
         verify(repoMock).findAllSortedNewsletterTopicsForNewsletterWithId(newsletterId);
     }
