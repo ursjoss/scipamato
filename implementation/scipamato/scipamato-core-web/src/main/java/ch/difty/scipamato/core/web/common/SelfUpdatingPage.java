@@ -1,6 +1,5 @@
 package ch.difty.scipamato.core.web.common;
 
-import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.event.Broadcast;
@@ -21,9 +20,6 @@ import ch.difty.scipamato.core.config.ApplicationCoreProperties;
  * not yet have all required fields or does not pass validation until more data
  * has been entered. See
  * {@link #tuneDownFeedbackMessages()}/{@link #resetFeedbackMessages()}.
- * <p>
- * Requires the concrete page or it's panel to add a derivative of
- * {@link AbstractAjaxTimerBehavior} to trigger the auto-functionality.
  *
  * @param <T>
  *     the type of the entity the implementing pages use as the model.
