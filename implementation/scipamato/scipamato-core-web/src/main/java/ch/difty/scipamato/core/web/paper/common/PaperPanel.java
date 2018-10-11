@@ -75,6 +75,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     protected TextArea<String>                   originalAbstract;
     private   BootstrapAjaxLink<Void>            pubmedRetrieval;
     private   DataTable<PaperAttachment, String> attachments;
+    private   BootstrapButton                    submit;
 
     private final NewsletterTopicModel newsletterTopicChoice = new NewsletterTopicModel(getLocalization());
 
@@ -151,6 +152,8 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         queueFieldAndLabel(pmId);
         doi = new TextField<>(DOI.getName());
         queueFieldAndLabel(doi, new PropertyValidator<String>());
+
+        addDisableBehavior(title, location, publicationYear, pmId, doi);
 
         queueNumberField(NUMBER.getName());
 
@@ -293,6 +296,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         queue(number);
         if (isEditMode())
             number.add(new PropertyValidator<>());
+        addDisableBehavior(number);
     }
 
     private String firstWordOfBrand() {
@@ -407,6 +411,27 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         queueFieldAndLabel(firstAuthor);
 
         addAuthorBehavior(authors, firstAuthorOverridden, firstAuthor);
+        addDisableBehavior(authors, firstAuthor);
+    }
+
+    private void addDisableBehavior(final FormComponent... components) {
+        for (final FormComponent fc : components) {
+            fc.add(new AjaxFormComponentUpdatingBehavior("input") {
+                @Override
+                protected void onUpdate(final AjaxRequestTarget target) {
+                    disableButton(target, submit);
+                }
+            });
+        }
+    }
+
+    private void disableButton(final AjaxRequestTarget target, final BootstrapButton... buttons) {
+        for (final BootstrapButton b : buttons) {
+            if (b.isEnabled()) {
+                b.setEnabled(false);
+                target.add(b);
+            }
+        }
     }
 
     /**
@@ -465,8 +490,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     protected abstract BootstrapButton newExcludeButton(String id);
 
     private void makeAndQueueSubmitButton(String id) {
-        BootstrapButton submit = new BootstrapButton(id, new StringResourceModel(getSubmitLinkResourceLabel()),
-            Buttons.Type.Default) {
+        submit = new BootstrapButton(id, new StringResourceModel(getSubmitLinkResourceLabel()), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             /**
@@ -480,11 +504,29 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                 summaryShortLink = makeSummaryShortLink("summaryShort");
                 form.addOrReplace(summaryShortLink);
             }
+
+            @Override
+            public void onEvent(IEvent<?> event) {
+                super.onEvent(event);
+                enableButton(this, !isViewMode(), event);
+            }
         };
         submit.add(new LoadingBehavior(new StringResourceModel(getMode() + LOADING_RESOURCE_TAG, this, null)));
         submit.setDefaultFormProcessing(true);
         submit.setEnabled(!isViewMode());
         queue(submit);
+    }
+
+    private void enableButton(final BootstrapButton button, final boolean enabled, final IEvent<?> event) {
+        if (event
+                .getPayload()
+                .getClass() == SelfUpdateEvent.class && button.isVisible()) {
+            button.setEnabled(enabled);
+            ((SelfUpdateEvent) event.getPayload())
+                .getTarget()
+                .add(button);
+            event.dontBroadcastDeeper();
+        }
     }
 
     private ResourceLink<Void> makeSummaryLink(String id) {
@@ -580,6 +622,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             if (pv != null && isEditMode()) {
                 field.add(pv);
             }
+            addDisableBehavior(field);
             queue(field);
             return field;
         }
@@ -627,7 +670,6 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                 }
             });
         }
-
     }
 
     private class TabPanel1 extends AbstractTabPanel {
@@ -720,6 +762,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             addMainCodeOfClass1(mainCodeOfCodeClass1);
             if (isEditMode())
                 form.add(new CodeClass1ConsistencyValidator(codeClass1, mainCodeOfCodeClass1));
+            addDisableBehavior(codeClass1);
         }
 
         private void addMainCodeOfClass1(TextField<String> field) {
@@ -788,6 +831,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                 choices, choiceRenderer).with(config);
             multiSelect.add(new AttributeModifier("data-width", "fit"));
             queue(multiSelect);
+            addDisableBehavior(multiSelect);
             return multiSelect;
         }
     }
@@ -838,6 +882,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             queue(new Form<T>("tab5Form"));
 
             originalAbstract = queueTo(ORIGINAL_ABSTRACT);
+            addDisableBehavior(originalAbstract);
         }
     }
 
@@ -922,6 +967,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             topic.setNullValid(true);
             queue(topic);
             queue(new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null)));
+            addDisableBehavior(topic);
         }
     }
 

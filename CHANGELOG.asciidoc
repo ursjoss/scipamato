@@ -64,7 +64,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Fixed
 - 09/67 - Core: Remove obsolete newsletter topics from sort list
-- 09/74 - Core: Prevent double clicks on buttons
+- 09/74 - Core: Prevent double clicks on buttons and disable save button until auto-save completed
 
 .Security
 
