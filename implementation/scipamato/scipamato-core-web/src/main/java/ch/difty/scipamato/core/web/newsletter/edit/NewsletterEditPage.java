@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.LocalDateTextField;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
@@ -131,9 +132,16 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
         queueFieldAndLabel(new LocalDateTextField(ISSUE_DATE.getName(),
             new StringResourceModel("date.format", this, null).getString()), new PropertyValidator<LocalDate>());
         makeAndQueuePublicationStatusSelectBox(PUBLICATION_STATUS.getName());
-        queue(new BootstrapButton("submit", new StringResourceModel("submit.label"), Buttons.Type.Default));
+        queueSubmitButton("submit");
 
         makeAndQueueResultPanel("resultPanel");
+    }
+
+    private void queueSubmitButton(final String id) {
+        final BootstrapButton button = new BootstrapButton(id, new StringResourceModel("submit.label"),
+            Buttons.Type.Default);
+        button.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
+        queue(button);
     }
 
     private void queueForm(final String id) {

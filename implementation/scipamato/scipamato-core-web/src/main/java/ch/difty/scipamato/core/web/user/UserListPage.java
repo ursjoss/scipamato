@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
@@ -81,7 +83,11 @@ public class UserListPage extends BasePage<Void> {
 
         queueFieldAndLabel(new TextField<String>(USER_NAME.getName(),
             PropertyModel.of(filter, UserFilter.UserFilterFields.NAME_MASK.getName())));
-        queueResponsePageButton("newUser", () -> {
+        queueNewButton("newUser");
+    }
+
+    private void queueNewButton(String id) {
+        BootstrapAjaxButton button = queueResponsePageButton(id, () -> {
             try {
                 final PageParameters pp = new PageParameters();
                 pp.set(CorePageParameters.MODE.getName(), UserEditPage.Mode.CREATE);
@@ -91,6 +97,7 @@ public class UserListPage extends BasePage<Void> {
                 return null;
             }
         });
+        button.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
     }
 
     private void makeAndQueueTable(String id) {

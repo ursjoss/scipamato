@@ -53,6 +53,22 @@ import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
  * at a time. If the paper has been persisted, several feedback messages would
  * be displayed to the user if the come up.
  * <p>
+ * The initial solution turned out to have an important draw-back: Together with
+ * the optimistic locking model on the database, SciPaMaTo ran into a race condition
+ * in some scenarios (access through VPN over public internet - but not when running
+ * the application server locally). If somebody changed a field in the EditablePaperPage
+ * and then directly clicked the save button without losing the focus of the edited field
+ * with another target first, the autosave process and the manual save were not handled
+ * sequentally. One of the two was changing the version in the database when the other
+ * kicked in and tried to save again before the first process had been able to reload
+ * the modified record into the wicket model. Hence the version number of the second save
+ * attempt was outdated and resulted in a optimistic locking exception. As a side effect,
+ * the paper was not accessible anymore from the ItemNavigator. In order to avoid these
+ * silly issues, I resorted to disable the save button upon changing a field and only
+ * re-enable it after with the change event. This seems to resolve the issue but it's quite
+ * a hack. I didn't find a cleaner way to work around this (the clients insist on the
+ * auto-save behavior!).
+ * <p>
  * In order to fetch fields from PubMed, the default model now contains specific
  * 'n.a.' values for the fields that can't be null. In case PubMed import is
  * enabled, those will be replaced with real values (except for the goals field,

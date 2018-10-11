@@ -2,6 +2,7 @@ package ch.difty.scipamato.common.web.pages.login;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
@@ -81,7 +82,10 @@ public abstract class AbstractLoginPage extends AbstractPage<Void> {
     }
 
     private BootstrapButton newButton(String id) {
-        return new BootstrapButton(id, new StringResourceModel(id + ".value", this, null), Buttons.Type.Default);
+        final BootstrapButton button = new BootstrapButton(id, new StringResourceModel(id + ".value", this, null),
+            Buttons.Type.Default);
+        button.add(new LoadingBehavior(new StringResourceModel(id + ".loading", this, null)));
+        return button;
     }
 
     @Override

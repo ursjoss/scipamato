@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.confirmation.ConfirmationBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
@@ -210,13 +211,7 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
 
         form.add(new EqualPasswordInputValidator(pw1Field, pw2Field));
 
-        queue(new BootstrapButton("submit", new StringResourceModel("submit.label"), Buttons.Type.Default) {
-            @Override
-            public void onSubmit() {
-                super.onSubmit();
-                doOnSubmit();
-            }
-        });
+        queueSubmitButton("submit");
 
         final BootstrapButton deleteButton = new BootstrapButton("delete", new StringResourceModel("delete.label"),
             Buttons.Type.Default) {
@@ -229,6 +224,19 @@ public class UserEditPage extends BasePage<ChangePasswordUser> {
         deleteButton.add(new ConfirmationBehavior());
         queue(deleteButton);
 
+    }
+
+    private void queueSubmitButton(final String id) {
+        final BootstrapButton submit = new BootstrapButton(id, new StringResourceModel("submit.label"),
+            Buttons.Type.Default) {
+            @Override
+            public void onSubmit() {
+                super.onSubmit();
+                doOnSubmit();
+            }
+        };
+        submit.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
+        queue(submit);
     }
 
     private void doOnSubmit() {
