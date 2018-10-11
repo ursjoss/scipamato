@@ -15,6 +15,7 @@ public abstract class AbstractPanel<T> extends GenericPanel<T> {
 
     protected static final String LABEL_TAG                 = WicketUtils.LABEL_TAG;
     protected static final String LABEL_RESOURCE_TAG        = WicketUtils.LABEL_RESOURCE_TAG;
+    protected static final String LOADING_RESOURCE_TAG      = WicketUtils.LOADING_RESOURCE_TAG;
     protected static final String TITLE_RESOURCE_TAG        = WicketUtils.TITLE_RESOURCE_TAG;
     protected static final String SELECT_ALL_RESOURCE_TAG   = "multiselect.selectAll";
     protected static final String DESELECT_ALL_RESOURCE_TAG = "multiselect.deselectAll";

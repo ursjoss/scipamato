@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.confirmation.ConfirmationBehavior;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -121,7 +122,10 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
     }
 
     private BootstrapButton newSubmitButton(String id) {
-        return new BootstrapButton(id, new StringResourceModel(id + ".label"), Buttons.Type.Primary);
+        final BootstrapButton button = new BootstrapButton(id, new StringResourceModel(id + ".label"),
+            Buttons.Type.Primary);
+        button.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
+        return button;
     }
 
     private BootstrapButton newDeleteButton(final String id) {

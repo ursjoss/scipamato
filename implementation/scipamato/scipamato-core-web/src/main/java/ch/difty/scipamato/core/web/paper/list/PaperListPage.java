@@ -7,6 +7,7 @@ import com.google.common.base.Strings;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -131,9 +132,8 @@ public class PaperListPage extends BasePage<Void> {
         queueFieldAndLabel(new TextField<String>("pubYearFrom", PropertyModel.of(filter, PUB_YEAR_FROM.getName())));
         queueFieldAndLabel(new TextField<String>("pubYearUntil", PropertyModel.of(filter, PUB_YEAR_UNTIL.getName())));
 
-        BootstrapAjaxButton button = queueResponsePageButton("newPaper",
-            () -> new PaperEntryPage(getPageParameters(), getPage().getPageReference()));
-        button.setType(Buttons.Type.Primary);
+        queueNewPaperButton("newPaper");
+
         queueXmlPasteModalPanelAndLink("xmlPasteModal", "showXmlPasteModalLink");
     }
 
@@ -260,4 +260,10 @@ public class PaperListPage extends BasePage<Void> {
             target.add(getFeedbackPanel());
     }
 
+    private void queueNewPaperButton(final String id) {
+        BootstrapAjaxButton button = queueResponsePageButton(id,
+            () -> new PaperEntryPage(getPageParameters(), getPage().getPageReference()));
+        button.setType(Buttons.Type.Primary);
+        button.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
+    }
 }

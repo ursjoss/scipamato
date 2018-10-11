@@ -5,6 +5,7 @@ import java.util.Map;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -86,8 +87,8 @@ public class XmlPasteModalPanel extends Panel {
     }
 
     private BootstrapAjaxButton newButton(String id) {
-        return new BootstrapAjaxButton(id, new StringResourceModel(id + ".label", this, null), form,
-            Buttons.Type.Primary) {
+        final BootstrapAjaxButton button = new BootstrapAjaxButton(id,
+            new StringResourceModel(id + ".label", this, null), form, Buttons.Type.Primary) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -96,6 +97,8 @@ public class XmlPasteModalPanel extends Panel {
                 ModalWindow.closeCurrent(target);
             }
         };
+        button.add(new LoadingBehavior(new StringResourceModel( id + ".loading", this, null)));
+        return button;
     }
 
     private BootstrapAjaxButton newCancelButton(String id) {

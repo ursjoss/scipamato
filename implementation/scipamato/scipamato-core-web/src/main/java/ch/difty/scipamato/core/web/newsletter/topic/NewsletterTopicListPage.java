@@ -3,6 +3,8 @@ package ch.difty.scipamato.core.web.newsletter.topic;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import lombok.extern.slf4j.Slf4j;
@@ -66,8 +68,8 @@ public class NewsletterTopicListPage extends BasePage<NewsletterTopic> {
 
         queueFieldAndLabel(new TextField<String>("title",
             PropertyModel.of(filter, NewsletterTopicFilter.NewsletterTopicFilterFields.TITLE_MASK.getName())));
-        queueResponsePageButton("newNewsletterTopic",
-            () -> new NewsletterTopicEditPage(Model.of(service.newUnpersistedNewsletterTopicDefinition())));
+        queueNewTopicButton("newNewsletterTopic");
+
     }
 
     private void makeAndQueueTable(String id) {
@@ -94,5 +96,11 @@ public class NewsletterTopicListPage extends BasePage<NewsletterTopic> {
 
     private void onTitleClick(final IModel<NewsletterTopicDefinition> newsletterTopicModel) {
         setResponsePage(new NewsletterTopicEditPage(newsletterTopicModel));
+    }
+
+    private void queueNewTopicButton(final String id) {
+        BootstrapAjaxButton newButton = queueResponsePageButton(id,
+            () -> new NewsletterTopicEditPage(Model.of(service.newUnpersistedNewsletterTopicDefinition())));
+        newButton.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
     }
 }

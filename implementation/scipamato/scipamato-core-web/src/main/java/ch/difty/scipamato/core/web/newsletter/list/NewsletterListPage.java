@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.table.TableBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
@@ -97,7 +98,8 @@ public class NewsletterListPage extends BasePage<Void> {
 
         queueFieldAndLabel(new TextField<String>(ISSUE.getName(), PropertyModel.of(filter, ISSUE_MASK.getName())));
         queueBootstrapSelectAndLabel(PUBLICATION_STATUS.getName());
-        newNewsletterButton = queueResponsePageButton("newNewsletter", NewsletterEditPage::new);
+        queueNewButton("newNewsletter");
+
     }
 
     private void queueBootstrapSelectAndLabel(final String id) {
@@ -227,5 +229,10 @@ public class NewsletterListPage extends BasePage<Void> {
             }
 
         };
+    }
+
+    private void queueNewButton(final String id) {
+        newNewsletterButton = queueResponsePageButton(id, NewsletterEditPage::new);
+        newNewsletterButton.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
     }
 }
