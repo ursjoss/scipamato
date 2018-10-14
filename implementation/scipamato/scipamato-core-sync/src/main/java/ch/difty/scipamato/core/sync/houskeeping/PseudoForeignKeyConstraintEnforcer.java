@@ -46,7 +46,7 @@ public class PseudoForeignKeyConstraintEnforcer<R extends UpdatableRecordImpl<?>
      * @param entityName
      *     the name of the managed entity (e.g. 'code')
      * @param plural
-     *     the suffix indicating more than one of the entities (e.g. 's' -> 'code' + 's' = 'codes')
+     *     the suffix indicating more than one of the entities (e.g. 's' -&gt; 'code' + 's' = 'codes')
      */
     public PseudoForeignKeyConstraintEnforcer(final DeleteConditionStep<R> deleteDdl, final String entityName,
         final String plural) {
