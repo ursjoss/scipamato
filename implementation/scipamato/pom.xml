@@ -23,7 +23,6 @@
         <developer>
             <name>Urs Joss</name>
             <id>u.joss</id>
-            <email>u.joss@difty.ch</email>
             <roles>
                 <role>Software Developer</role>
             </roles>
@@ -91,7 +90,7 @@
         <wicket-spring-boot-starter.version>2.1.2</wicket-spring-boot-starter.version>
         <wicket-bootstrap.version>2.0.4</wicket-bootstrap.version>
         <bootstrap.version>3.3.7-1</bootstrap.version>
-        <wicket-jquery-ui.version>8.0.0</wicket-jquery-ui.version>
+        <wicket-jquery-ui.version>8.1.0</wicket-jquery-ui.version>
         <jasperreports.version>6.7.0</jasperreports.version>
 
         <spring-cloud.version>Finchley.SR1</spring-cloud.version>
@@ -208,7 +207,7 @@
             <dependency>
                 <groupId>net.bytebuddy</groupId>
                 <artifactId>byte-buddy</artifactId>
-                <version>1.9.1</version>
+                <version>1.9.2</version>
             </dependency>
 
             <dependency>
@@ -230,7 +229,7 @@
             <dependency>
                 <groupId>javax.xml.bind</groupId>
                 <artifactId>jaxb-api</artifactId>
-                <version>2.3.0</version>
+                <version>2.3.1</version>
             </dependency>
             <dependency>
                 <groupId>com.sun.xml.bind</groupId>
@@ -240,12 +239,12 @@
             <dependency>
                 <groupId>com.sun.xml.bind</groupId>
                 <artifactId>jaxb-impl</artifactId>
-                <version>2.3.0.1</version>
+                <version>2.3.1</version>
             </dependency>
             <dependency>
                 <groupId>org.glassfish.jaxb</groupId>
                 <artifactId>jaxb-runtime</artifactId>
-                <version>2.3.0.1</version>
+                <version>2.3.1</version>
                 <scope>runtime</scope>
             </dependency>
             <dependency>
@@ -263,7 +262,7 @@
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-client</artifactId>
-                <version>2.0.2</version>
+                <version>2.0.3</version>
             </dependency>
 
             <!-- Lambda utilities -->
@@ -439,7 +438,7 @@
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
-            <version>2.5.2</version>
+            <version>3.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
