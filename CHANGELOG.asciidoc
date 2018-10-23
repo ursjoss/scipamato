@@ -67,6 +67,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - 09/74 - Core: Prevent double clicks on buttons and disable save button until auto-save completed
 - Update dependencies spring-boot-parent, equalsverifier, wicket-jquery-ui, byte-buddy, jaxb-api, jaxb-impl, jaxb-runtime
   spring-boot-starter-admin-client
+- 09/44 - Core: Fix core access for users of type VIEWER
 
 .Security
 

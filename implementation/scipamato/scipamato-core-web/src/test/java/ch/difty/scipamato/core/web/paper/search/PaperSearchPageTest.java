@@ -17,6 +17,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
+import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
@@ -68,7 +69,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         final List<SearchCondition> conditions = Collections.singletonList(new SearchCondition());
         final SearchOrder so = new SearchOrder(conditions);
         so.setId(5L);
-        return new PaperSearchPage(Model.of(so));
+        return new PaperSearchPage(Model.of(so), Mode.EDIT);
     }
 
     @Override
@@ -136,7 +137,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         final List<SearchCondition> conditions = Collections.singletonList(sc);
         final SearchOrder so = new SearchOrder(conditions);
         so.setId(6L);
-        PaperSearchPage page = new PaperSearchPage(Model.of(so));
+        PaperSearchPage page = new PaperSearchPage(Model.of(so), Mode.EDIT);
 
         getTester().startPage(page);
         getTester().assertRenderedPage(getPageClass());
@@ -181,7 +182,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         final List<SearchCondition> conditions = Collections.singletonList(sc);
         final SearchOrder so = new SearchOrder(conditions);
         so.setId(6L);
-        PaperSearchPage page = new PaperSearchPage(Model.of(so));
+        PaperSearchPage page = new PaperSearchPage(Model.of(so), Mode.EDIT);
 
         getTester().startPage(page);
         getTester().assertRenderedPage(getPageClass());
@@ -218,7 +219,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         final List<SearchCondition> conditions = Collections.singletonList(sc);
         final SearchOrder so = new SearchOrder(conditions);
         so.setId(6L);
-        PaperSearchPage page = new PaperSearchPage(Model.of(so));
+        PaperSearchPage page = new PaperSearchPage(Model.of(so), Mode.EDIT);
 
         getTester().startPage(page);
         getTester().assertRenderedPage(getPageClass());
@@ -245,7 +246,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
             Collections.singletonList(paperSlimMock));
         when(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock2);
 
-        PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock));
+        PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock), Mode.EDIT);
 
         getTester().startPage(page);
         getTester().assertRenderedPage(getPageClass());
@@ -311,7 +312,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
             Collections.singletonList(paperSlimMock));
         when(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock2);
 
-        PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock));
+        PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock), Mode.EDIT);
 
         getTester().startPage(page);
         getTester().assertRenderedPage(getPageClass());
@@ -337,7 +338,7 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
             Collections.singletonList(paperSlimMock));
         when(searchOrderServiceMock.saveOrUpdate(isA(SearchOrder.class))).thenReturn(searchOrderMock2);
 
-        PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock));
+        PaperSearchPage page = new PaperSearchPage(Model.of(searchOrderMock), Mode.EDIT);
 
         getTester().startPage(page);
         getTester().assertRenderedPage(getPageClass());

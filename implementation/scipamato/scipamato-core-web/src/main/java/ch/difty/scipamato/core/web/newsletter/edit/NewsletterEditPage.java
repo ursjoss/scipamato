@@ -26,6 +26,7 @@ import org.apache.wicket.model.*;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
@@ -207,7 +208,7 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
     }
 
     private void makeAndQueueResultPanel(String id) {
-        ResultPanel resultPanel = new ResultPanel(id, dataProvider) {
+        ResultPanel resultPanel = new ResultPanel(id, dataProvider, Mode.EDIT) {
             private static final long serialVersionUID = 1L;
 
             @Override

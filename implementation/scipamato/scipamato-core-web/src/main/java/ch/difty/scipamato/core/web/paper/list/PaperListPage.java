@@ -153,7 +153,7 @@ public class PaperListPage extends BasePage<Void> {
     }
 
     private void makeAndQueueResultPanel(String id) {
-        resultPanel = new ResultPanel(id, dataProvider) {
+        resultPanel = new ResultPanel(id, dataProvider, mode) {
             private static final long serialVersionUID = 1L;
 
             @Override
