@@ -415,14 +415,15 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     }
 
     private void addDisableBehavior(final FormComponent... components) {
-        for (final FormComponent fc : components) {
-            fc.add(new AjaxFormComponentUpdatingBehavior("input") {
-                @Override
-                protected void onUpdate(final AjaxRequestTarget target) {
-                    disableButton(target, submit);
-                }
-            });
-        }
+        if (isEditMode())
+            for (final FormComponent fc : components) {
+                fc.add(new AjaxFormComponentUpdatingBehavior("input") {
+                    @Override
+                    protected void onUpdate(final AjaxRequestTarget target) {
+                        disableButton(target, submit);
+                    }
+                });
+            }
     }
 
     private void disableButton(final AjaxRequestTarget target, final BootstrapButton... buttons) {
