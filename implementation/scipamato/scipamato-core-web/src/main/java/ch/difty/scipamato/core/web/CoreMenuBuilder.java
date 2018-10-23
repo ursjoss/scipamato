@@ -63,8 +63,7 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
     private void addPaperMenuEntries(final List<AbstractLink> links, Page page) {
         final String labelParent = "menu.papers.";
         addEntryToMenu(labelParent + "paper", page, PaperListPage.class, GlyphIconType.list, links);
-        if (hasOneOfRoles(Roles.ADMIN, Roles.USER))
-            addEntryToMenu(labelParent + "search", page, PaperSearchPage.class, GlyphIconType.search, links);
+        addEntryToMenu(labelParent + "search", page, PaperSearchPage.class, GlyphIconType.search, links);
     }
 
     private void addNewsletterMenuEntries(final List<AbstractLink> links, Page page) {

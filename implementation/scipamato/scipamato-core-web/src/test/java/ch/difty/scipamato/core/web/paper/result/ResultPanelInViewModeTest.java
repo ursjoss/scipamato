@@ -19,8 +19,7 @@ public class ResultPanelInViewModeTest extends ResultPanelTest {
         getTester().assertLabel(bb + ":3:cell", "firstAuthor");
         getTester().assertLabel(bb + ":4:cell", "2016");
         getTester().assertLabel(bb + ":5:cell:link:label", "title");
-        getTester().assertComponent(bb + ":6:cell:link", AjaxLink.class);
-        getTester().assertLabel(bb + ":6:cell:link:image", "");
+        getTester().assertContainsNot(bb + ":6:cell:link:image");
         getTester().assertContainsNot(bb + ":7:cell:link:image");
     }
 

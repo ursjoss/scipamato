@@ -122,7 +122,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
         columns.add(makePropertyColumn(FIRST_AUTHOR.getName()));
         columns.add(makePropertyColumn(PUBL_YEAR.getName()));
         columns.add(makeClickableColumn(TITLE.getName(), this::onTitleClick));
-        if (isOfferingSearchComposition())
+        if (mode != Mode.VIEW && isOfferingSearchComposition())
             columns.add(makeExcludeLinkIconColumn("exclude"));
         if (mode != Mode.VIEW)
             columns.add(makeNewsletterLinkIconColumn("newsletter"));

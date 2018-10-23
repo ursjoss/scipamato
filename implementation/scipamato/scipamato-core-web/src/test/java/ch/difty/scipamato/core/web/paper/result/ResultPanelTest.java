@@ -133,7 +133,8 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
 
         verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
-        verify(searchOrderMock, times(2)).isShowExcluded();
+        if (getMode() != Mode.VIEW)
+            verify(searchOrderMock, times(2)).isShowExcluded();
         verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
@@ -192,7 +193,6 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
-
     @Test
     public void clickingLink_opensPaperEntryPage() {
         Paper paper = new Paper();
@@ -209,7 +209,7 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(codeClassServiceMock).find(anyString());
         verify(codeServiceMock, times(8)).findCodesOfClass(isA(CodeClassId.class), anyString());
         verify(searchOrderMock).getId();
-        verify(searchOrderMock, times(3)).isShowExcluded();
+        verify(searchOrderMock, times(getMode() == Mode.VIEW ? 1 : 3)).isShowExcluded();
         verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
@@ -225,7 +225,8 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
         verify(paperServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class), eq(LC));
-        verify(searchOrderMock, times(2)).isShowExcluded();
+        if (getMode() != Mode.VIEW)
+            verify(searchOrderMock, times(2)).isShowExcluded();
         verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 

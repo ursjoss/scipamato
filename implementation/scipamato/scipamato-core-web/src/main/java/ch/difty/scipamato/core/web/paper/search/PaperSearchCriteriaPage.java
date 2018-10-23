@@ -30,7 +30,7 @@ import ch.difty.scipamato.core.web.paper.common.SearchablePaperPanel;
  *
  * @author u.joss
  */
-@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
+@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
 public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
 
     private static final long serialVersionUID = 1L;

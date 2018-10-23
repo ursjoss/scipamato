@@ -52,7 +52,7 @@ import ch.difty.scipamato.core.web.paper.result.ResultPanel;
  */
 @MountPath("search")
 @Slf4j
-@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
+@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
 @SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 public class PaperSearchPage extends BasePage<SearchOrder> {
 
@@ -187,7 +187,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     private void makeSearchOrderSelectorPanel(String id) {
         queuePanelHeadingFor(id);
 
-        searchOrderSelectorPanel = new SearchOrderSelectorPanel(id, getModel());
+        searchOrderSelectorPanel = new SearchOrderSelectorPanel(id, getModel(), mode);
         searchOrderSelectorPanel.setOutputMarkupId(true);
         queue(searchOrderSelectorPanel);
     }
