@@ -250,10 +250,10 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                 setIconType(getIconType());
             }
 
-            // Hide if in SearchMode.
+            // Hide if in EditMode
             // Otherwise show if we have an open newsletter or if it is already assigned to a (closed) newsletter
             private boolean shallBeVisible() {
-                return !isSearchMode() && (isaNewsletterInStatusWip() || isAssociatedWithNewsletter());
+                return isEditMode() && (isaNewsletterInStatusWip() || isAssociatedWithNewsletter());
             }
 
             private boolean shallBeEnabled() {
@@ -514,6 +514,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         submit.add(new LoadingBehavior(new StringResourceModel(getMode() + LOADING_RESOURCE_TAG, this, null)));
         submit.setDefaultFormProcessing(true);
         submit.setEnabled(!isViewMode());
+        submit.setVisible(!isViewMode());
         queue(submit);
     }
 
@@ -583,7 +584,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         link.setOutputMarkupId(true);
         link.setOutputMarkupPlaceholderTag(true);
         link.setBody(new StringResourceModel(button + id + ".label"));
-        link.setVisible(isEditMode());
+        link.setVisible(!isSearchMode());
         link.add(
             new AttributeModifier(TITLE_ATTR, new StringResourceModel(button + id + ".title", this, null).getString()));
         return link;

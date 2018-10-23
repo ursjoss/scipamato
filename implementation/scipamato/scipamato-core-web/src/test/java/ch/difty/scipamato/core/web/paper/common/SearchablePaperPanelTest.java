@@ -2,10 +2,9 @@ package ch.difty.scipamato.core.web.paper.common;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.junit.Test;
@@ -98,6 +97,8 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
         getTester().assertLabel(b + ":submit:label", "Search");
         assertTextFieldWithLabel(b + ":createdDisplayValue", "cdv", "Created");
         assertTextFieldWithLabel(b + ":modifiedDisplayValue", "lmdv", "Last Modified");
+
+        getTester().assertComponent(b + ":submit", BootstrapButton.class);
 
         String bb = b + ":tabs:panelsContainer:panels:11:tab6Form";
         getTester().assertInvisible(bb + ":dropzone");

@@ -154,8 +154,6 @@ public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P
         assertTextFieldWithLabel(b + ":location", "l", "Location");
         assertTextFieldWithLabel(b + ":doi", "doi", "DOI");
 
-        getTester().assertComponent(b + ":submit", BootstrapButton.class);
-
         b += ":tabs";
         getTester().assertComponent(b, ClientSideBootstrapTabbedPanel.class);
 

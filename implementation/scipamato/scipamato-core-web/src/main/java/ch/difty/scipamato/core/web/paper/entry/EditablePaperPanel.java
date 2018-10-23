@@ -24,7 +24,6 @@ import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.event.Broadcast;
-import org.apache.wicket.event.IEvent;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.GenericWebPage;
@@ -591,7 +590,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                setVisible(searchOrderId != null);
+                setVisible(searchOrderId != null && !isViewMode());
                 if (showingExclusions) {
                     setIconType(GlyphIconType.okcircle);
                     add(new AttributeModifier(TITLE_ATTR,
