@@ -21,6 +21,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
 import ch.difty.scipamato.common.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.scipamato.common.web.component.table.column.LinkIconColumn;
@@ -69,6 +70,8 @@ public abstract class ResultPanel extends BasePanel<Void> {
 
     private DataTable<PaperSlim, String> results;
 
+    private final Mode mode;
+
     /**
      * Instantiate the panel.
      *
@@ -78,9 +81,10 @@ public abstract class ResultPanel extends BasePanel<Void> {
      *     the data provider extending {@link AbstractPaperSlimProvider}
      *     holding the filter specs
      */
-    protected ResultPanel(String id, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider) {
+    protected ResultPanel(String id, AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider, Mode mode) {
         super(id);
         this.dataProvider = dataProvider;
+        this.mode = mode;
     }
 
     @Override
@@ -118,9 +122,10 @@ public abstract class ResultPanel extends BasePanel<Void> {
         columns.add(makePropertyColumn(FIRST_AUTHOR.getName()));
         columns.add(makePropertyColumn(PUBL_YEAR.getName()));
         columns.add(makeClickableColumn(TITLE.getName(), this::onTitleClick));
-        if (isOfferingSearchComposition())
+        if (mode != Mode.VIEW && isOfferingSearchComposition())
             columns.add(makeExcludeLinkIconColumn("exclude"));
-        columns.add(makeNewsletterLinkIconColumn("newsletter"));
+        if (mode != Mode.VIEW)
+            columns.add(makeNewsletterLinkIconColumn("newsletter"));
         return columns;
     }
 

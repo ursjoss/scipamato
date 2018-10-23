@@ -27,6 +27,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
@@ -66,14 +67,20 @@ public class PaperListPage extends BasePage<Void> {
     @SpringBean
     private PubmedImporter pubmedImportService;
 
-    private PaperFilter                    filter;
-    private PaperSlimByPaperFilterProvider dataProvider;
-    private ModalWindow                    xmlPasteModalWindow;
-    private ResultPanel                    resultPanel;
+    private final Mode                           mode;
+    private       PaperFilter                    filter;
+    private       PaperSlimByPaperFilterProvider dataProvider;
+    private       ModalWindow                    xmlPasteModalWindow;
+    private       ResultPanel                    resultPanel;
 
     public PaperListPage(PageParameters parameters) {
         super(parameters);
         initFilterAndProvider();
+        this.mode = evaluateMode();
+    }
+
+    private Mode evaluateMode() {
+        return hasOneOfRoles(Roles.USER, Roles.ADMIN) ? Mode.EDIT : Mode.VIEW;
     }
 
     private PaperListPage(PageParameters parameters, ServiceResult result) {
@@ -146,7 +153,7 @@ public class PaperListPage extends BasePage<Void> {
     }
 
     private void makeAndQueueResultPanel(String id) {
-        resultPanel = new ResultPanel(id, dataProvider) {
+        resultPanel = new ResultPanel(id, dataProvider, mode) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -206,6 +213,7 @@ public class PaperListPage extends BasePage<Void> {
         link.setLabel(new StringResourceModel("xmlPasteModalLink.label", this, null));
         link.add(
             new AttributeModifier("title", new StringResourceModel("xmlPasteModalLink.title", this, null).getString()));
+        link.setVisible(mode != Mode.VIEW);
         return link;
     }
 
@@ -264,6 +272,7 @@ public class PaperListPage extends BasePage<Void> {
         BootstrapAjaxButton button = queueResponsePageButton(id,
             () -> new PaperEntryPage(getPageParameters(), getPage().getPageReference()));
         button.setType(Buttons.Type.Primary);
+        button.setVisible(mode != Mode.VIEW);
         button.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
     }
 }

@@ -22,6 +22,7 @@ import org.apache.wicket.util.string.StringValue;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.common.AssertAs;
+import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
@@ -51,7 +52,7 @@ import ch.difty.scipamato.core.web.paper.result.ResultPanel;
  */
 @MountPath("search")
 @Slf4j
-@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
+@AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
 @SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 public class PaperSearchPage extends BasePage<SearchOrder> {
 
@@ -65,6 +66,8 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     private SearchOrderPanel         searchOrderPanel;
     private ResultPanel              resultPanel;
     private Label                    resultPanelLabel;
+
+    private final Mode mode;
 
     @SpringBean
     private SearchOrderService searchOrderService;
@@ -88,6 +91,11 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     public PaperSearchPage(final PageParameters parameters) {
         super(parameters);
         trySettingSearchOrderModelFromDb();
+        mode = evaluateMode();
+    }
+
+    private Mode evaluateMode() {
+        return hasOneOfRoles(Roles.USER, Roles.ADMIN) ? Mode.EDIT : Mode.VIEW;
     }
 
     /**
@@ -97,7 +105,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
      * @param searchOrderModel
      *     the model of the searchOrder
      */
-    public PaperSearchPage(final IModel<SearchOrder> searchOrderModel) {
+    public PaperSearchPage(final IModel<SearchOrder> searchOrderModel, final Mode mode) {
         super(searchOrderModel);
         AssertAs.notNull(searchOrderModel, "searchOrderModel");
         final SearchOrder searchOrder = searchOrderModel.getObject();
@@ -106,6 +114,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         getPageParameters().clearNamed();
         getPageParameters().add(SEARCH_ORDER_ID.getName(), searchOrder.getId());
         getPageParameters().add(SHOW_EXCLUDED.getName(), searchOrder.isShowExcluded());
+        this.mode = mode;
     }
 
     private void trySettingSearchOrderModelFromDb() {
@@ -178,7 +187,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     private void makeSearchOrderSelectorPanel(String id) {
         queuePanelHeadingFor(id);
 
-        searchOrderSelectorPanel = new SearchOrderSelectorPanel(id, getModel());
+        searchOrderSelectorPanel = new SearchOrderSelectorPanel(id, getModel(), mode);
         searchOrderSelectorPanel.setOutputMarkupId(true);
         queue(searchOrderSelectorPanel);
     }
@@ -211,7 +220,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         resultPanelLabel.setOutputMarkupId(true);
         queue(resultPanelLabel);
 
-        resultPanel = new ResultPanel(id, dataProvider) {
+        resultPanel = new ResultPanel(id, dataProvider, mode) {
             private static final long serialVersionUID = 1L;
 
             @Override

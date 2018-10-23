@@ -66,8 +66,8 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
     private AjaxCheckBox                 showExcluded;
     private Label                        showExcludedLabel;
 
-    SearchOrderSelectorPanel(String id, IModel<SearchOrder> model) {
-        super(id, model, Mode.EDIT);
+    SearchOrderSelectorPanel(String id, IModel<SearchOrder> model, Mode mode) {
+        super(id, model, mode);
     }
 
     @Override
@@ -143,7 +143,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                setEnabled(SearchOrderSelectorPanel.this.isUserEntitled());
+                setEnabled(!isViewMode() && SearchOrderSelectorPanel.this.isUserEntitled());
             }
 
             @Override

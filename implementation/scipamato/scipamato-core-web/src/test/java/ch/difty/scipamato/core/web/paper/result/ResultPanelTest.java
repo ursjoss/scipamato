@@ -1,6 +1,8 @@
 package ch.difty.scipamato.core.web.paper.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.Collections;
@@ -21,10 +23,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
+import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
-import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
-import ch.difty.scipamato.core.entity.projection.NewsletterAssociation;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
@@ -36,25 +37,24 @@ import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.paper.PaperSlimBySearchOrderProvider;
 import ch.difty.scipamato.core.web.paper.entry.PaperEntryPage;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
-public class ResultPanelTest extends PanelTest<ResultPanel> {
+public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
 
-    private static final long   NUMBER        = 2L;
-    private static final int    ROWS_PER_PAGE = 12;
-    private static final String LC            = "en_us";
+    static final long   NUMBER        = 2L;
+    static final int    ROWS_PER_PAGE = 12;
+    static final String LC            = "en_us";
 
     @MockBean
-    private CodeClassService codeClassServiceMock;
+    CodeClassService codeClassServiceMock;
     @MockBean
-    private CodeService      codeServiceMock;
+    CodeService      codeServiceMock;
 
     @Mock
-    private SearchOrder searchOrderMock;
+    SearchOrder searchOrderMock;
 
-    private final PaperSlim paperSlim = new PaperSlim(1L, NUMBER, "firstAuthor", 2016, "title");
+    final PaperSlim paperSlim = new PaperSlim(1L, NUMBER, "firstAuthor", 2016, "title");
 
     @Mock
-    private Paper paperMock;
+    Paper paperMock;
 
     @Override
     protected void setUpHook() {
@@ -77,7 +77,8 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
     @Override
     protected ResultPanel makePanel() {
-        return new ResultPanel(PANEL_ID, new PaperSlimBySearchOrderProvider(searchOrderMock, ROWS_PER_PAGE)) {
+        return new ResultPanel(PANEL_ID, new PaperSlimBySearchOrderProvider(searchOrderMock, ROWS_PER_PAGE),
+            getMode()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -96,6 +97,19 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
                     dataProvider.isShowExcluded());
             }
         };
+    }
+
+    protected abstract Mode getMode();
+
+    void assertEditableTableRow(final String bb) {
+        getTester().assertLabel(bb + ":1:cell", "1");
+        getTester().assertLabel(bb + ":2:cell", String.valueOf(NUMBER));
+        getTester().assertLabel(bb + ":3:cell", "firstAuthor");
+        getTester().assertLabel(bb + ":4:cell", "2016");
+        getTester().assertLabel(bb + ":5:cell:link:label", "title");
+        getTester().assertComponent(bb + ":6:cell:link", AjaxLink.class);
+        getTester().assertLabel(bb + ":6:cell:link:image", "");
+        getTester().assertLabel(bb + ":7:cell:link:image", "");
     }
 
     @Override
@@ -119,19 +133,64 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
 
         verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
+        if (getMode() != Mode.VIEW)
+            verify(searchOrderMock, times(2)).isShowExcluded();
+        verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
+    }
+
+    protected abstract void assertTableRow(String bb);
+
+    void assertClickingDeleteIconLink() {
+        getTester().startComponentInPage(makePanel());
+        getTester().clickLink(PANEL_ID + ":table:body:rows:1:cells:6:cell:link");
+        getTester().assertComponentOnAjaxResponse(PANEL_ID + ":table");
+
+        verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
+        verify(paperSlimServiceMock, times(2)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
+        verify(searchOrderMock, times(4)).isShowExcluded();
+        verify(paperServiceMock, times(2)).findPageOfIdsBySearchOrder(isA(SearchOrder.class),
+            isA(PaginationRequest.class));
+    }
+
+    void assertExcludeIcon(String iconClass, String titleValue) {
+        getTester().startComponentInPage(makePanel());
+
+        String responseTxt = getTester()
+            .getLastResponse()
+            .getDocument();
+
+        TagTester iconTagTester = TagTester.createTagByAttribute(responseTxt, "class", iconClass);
+        assertThat(iconTagTester).isNotNull();
+        assertThat(iconTagTester.getName()).isEqualTo("i");
+
+        TagTester titleTagTester = TagTester.createTagByAttribute(responseTxt, "title", titleValue);
+        assertThat(titleTagTester).isNotNull();
+        assertThat(titleTagTester.getName()).isEqualTo("i");
+
+        verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
+        verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
         verify(searchOrderMock, times(2)).isShowExcluded();
         verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
-    private void assertTableRow(String bb) {
-        getTester().assertLabel(bb + ":1:cell", "1");
-        getTester().assertLabel(bb + ":2:cell", String.valueOf(NUMBER));
-        getTester().assertLabel(bb + ":3:cell", "firstAuthor");
-        getTester().assertLabel(bb + ":4:cell", "2016");
-        getTester().assertLabel(bb + ":5:cell:link:label", "title");
-        getTester().assertComponent(bb + ":6:cell:link", AjaxLink.class);
-        getTester().assertLabel(bb + ":6:cell:link:image", "");
-        getTester().assertLabel(bb + ":7:cell:link:image", "");
+    void assertNewsletterIcon(String iconClass, String titleValue) {
+        getTester().startComponentInPage(newNonSearchRelevantResultPanel());
+
+        String responseTxt = getTester()
+            .getLastResponse()
+            .getDocument();
+
+        TagTester iconTagTester = TagTester.createTagByAttribute(responseTxt, "class", iconClass);
+        assertThat(iconTagTester).isNotNull();
+        assertThat(iconTagTester.getName()).isEqualTo("i");
+
+        TagTester titleTagTester = TagTester.createTagByAttribute(responseTxt, "title", titleValue);
+        assertThat(titleTagTester).isNotNull();
+        assertThat(titleTagTester.getName()).isEqualTo("i");
+
+        verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
+        verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
+        verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -150,20 +209,8 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(codeClassServiceMock).find(anyString());
         verify(codeServiceMock, times(8)).findCodesOfClass(isA(CodeClassId.class), anyString());
         verify(searchOrderMock).getId();
-        verify(searchOrderMock, times(3)).isShowExcluded();
+        verify(searchOrderMock, times(getMode() == Mode.VIEW ? 1 : 3)).isShowExcluded();
         verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
-    }
-
-    @Test
-    public void clickingDeleteIconLink_() {
-        getTester().startComponentInPage(makePanel());
-        getTester().clickLink(PANEL_ID + ":table:body:rows:1:cells:6:cell:link");
-        getTester().assertComponentOnAjaxResponse(PANEL_ID + ":table");
-
-        verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
-        verify(paperSlimServiceMock, times(2)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
-        verify(searchOrderMock, times(4)).isShowExcluded();
-        verify(paperServiceMock, times(2)).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
     /**
@@ -178,7 +225,8 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(paperSlimServiceMock, times(2)).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock, times(1)).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
         verify(paperServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class), eq(LC));
-        verify(searchOrderMock, times(2)).isShowExcluded();
+        if (getMode() != Mode.VIEW)
+            verify(searchOrderMock, times(2)).isShowExcluded();
         verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
     }
 
@@ -225,39 +273,6 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     }
 
     @Test
-    public void startingPage_showingResults() {
-        when(searchOrderMock.isShowExcluded()).thenReturn(false);
-        assertExcludeIcon("fa fa-fw fa-ban", "Exclude the paper from the search");
-    }
-
-    @Test
-    public void startingPage_showingExclusions() {
-        when(searchOrderMock.isShowExcluded()).thenReturn(true);
-        assertExcludeIcon("fa fa-fw fa-check-circle-o", "Re-include the paper into the search");
-    }
-
-    private void assertExcludeIcon(String iconClass, String titleValue) {
-        getTester().startComponentInPage(makePanel());
-
-        String responseTxt = getTester()
-            .getLastResponse()
-            .getDocument();
-
-        TagTester iconTagTester = TagTester.createTagByAttribute(responseTxt, "class", iconClass);
-        assertThat(iconTagTester).isNotNull();
-        assertThat(iconTagTester.getName()).isEqualTo("i");
-
-        TagTester titleTagTester = TagTester.createTagByAttribute(responseTxt, "title", titleValue);
-        assertThat(titleTagTester).isNotNull();
-        assertThat(titleTagTester.getName()).isEqualTo("i");
-
-        verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
-        verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
-        verify(searchOrderMock, times(2)).isShowExcluded();
-        verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
-    }
-
-    @Test
     public void startingPage_inNonSearchContext_doesNotRenderExcludeFromSearchIcon() {
         ResultPanel panel = newNonSearchRelevantResultPanel();
         getTester().startComponentInPage(panel);
@@ -275,8 +290,9 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
     }
 
     // with isOfferingSearchComposition = false
-    private ResultPanel newNonSearchRelevantResultPanel() {
-        return new ResultPanel(PANEL_ID, new PaperSlimBySearchOrderProvider(searchOrderMock, ROWS_PER_PAGE)) {
+    ResultPanel newNonSearchRelevantResultPanel() {
+        return new ResultPanel(PANEL_ID, new PaperSlimBySearchOrderProvider(searchOrderMock, ROWS_PER_PAGE),
+            getMode()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -290,39 +306,6 @@ public class ResultPanelTest extends PanelTest<ResultPanel> {
                 return null;
             }
         };
-    }
-
-    @Test
-    public void startingPage_withPaperWithNoNewsletter_rendersAddToNewsletterLink() {
-        assertThat(paperSlim.getNewsletterAssociation()).isNull();
-        assertNewsletterIcon("fa fa-fw fa-plus-square-o", "Add to current newsletter");
-    }
-
-    private void assertNewsletterIcon(String iconClass, String titleValue) {
-        getTester().startComponentInPage(newNonSearchRelevantResultPanel());
-
-        String responseTxt = getTester()
-            .getLastResponse()
-            .getDocument();
-
-        TagTester iconTagTester = TagTester.createTagByAttribute(responseTxt, "class", iconClass);
-        assertThat(iconTagTester).isNotNull();
-        assertThat(iconTagTester.getName()).isEqualTo("i");
-
-        TagTester titleTagTester = TagTester.createTagByAttribute(responseTxt, "title", titleValue);
-        assertThat(titleTagTester).isNotNull();
-        assertThat(titleTagTester.getName()).isEqualTo("i");
-
-        verify(paperSlimServiceMock, times(1)).countBySearchOrder(searchOrderMock);
-        verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
-        verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));
-    }
-
-    @Test
-    public void startingPage_withPaperWithNewsletter_rendersAddToNewsletterLink() {
-        NewsletterAssociation ns = new NewsletterAssociation(1, "1802", PublicationStatus.PUBLISHED.getId(), null);
-        paperSlim.setNewsletterAssociation(ns);
-        assertNewsletterIcon("fa fa-fw fa-envelope-o", "Newsletter 1802");
     }
 
 }

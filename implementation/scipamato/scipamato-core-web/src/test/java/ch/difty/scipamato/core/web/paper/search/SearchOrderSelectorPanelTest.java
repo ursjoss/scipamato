@@ -2,6 +2,7 @@ package ch.difty.scipamato.core.web.paper.search;
 
 import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -23,31 +24,33 @@ import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
+import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
 import ch.difty.scipamato.core.entity.search.SearchOrderFilter;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.web.common.PanelTest;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
-public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorPanel> {
+public abstract class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorPanel> {
 
-    private static final long   ID         = 17L;
-    private static final String VALID_NAME = "soName";
-    private static final int    OWNER_ID   = 2;
+    static final long   ID         = 17L;
+    static final String VALID_NAME = "soName";
+    static final int    OWNER_ID   = 2;
 
     @MockBean
-    private SearchOrderService searchOrderServiceMock;
+    SearchOrderService searchOrderServiceMock;
 
     @Mock
-    private SearchOrder searchOrderMock;
+    SearchOrder searchOrderMock;
 
-    private final List<SearchCondition> searchConditions = new ArrayList<>();
+    final List<SearchCondition> searchConditions = new ArrayList<>();
 
     @Override
     protected SearchOrderSelectorPanel makePanel() {
-        return new SearchOrderSelectorPanel(PANEL_ID, Model.of(searchOrderMock));
+        return new SearchOrderSelectorPanel(PANEL_ID, Model.of(searchOrderMock), getMode());
     }
+
+    abstract Mode getMode();
 
     @Override
     protected void setUpHook() {
@@ -133,13 +136,6 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
     }
 
     @Test
-    public void loadingPage_withSearchOrderWithCurrentOwner_rendersGlobalCheckBoxDisabled() {
-        when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
-        getTester().startComponentInPage(makePanel());
-        getTester().assertEnabled(PANEL_ID + ":form:global");
-    }
-
-    @Test
     public void loadingPage_withSearchOrderWithDifferentOwner_rendersGlobalCheckBoxDisabled() {
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID + 1);
         getTester().startComponentInPage(makePanel());
@@ -184,28 +180,6 @@ public class SearchOrderSelectorPanelTest extends PanelTest<SearchOrderSelectorP
         verify(searchOrderServiceMock, times(3)).findPageByFilter(isA(SearchOrderFilter.class),
             isA(PaginationContext.class));
         verify(searchOrderServiceMock).remove(searchOrderMock);
-    }
-
-    @Test
-    public void withGlobalSearchOrders_withSameOwner_globalCheckBox_enabled() {
-        when(searchOrderMock.getName()).thenReturn(VALID_NAME);
-        when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
-        getTester().startComponentInPage(makePanel());
-
-        getTester().assertEnabled(PANEL_ID + ":form:global");
-
-        verify(searchOrderMock, times(2)).getOwner();
-    }
-
-    @Test
-    public void withGlobalSearchOrders_withOtherOwner_globalCheckBox_disabled() {
-        when(searchOrderMock.getName()).thenReturn(VALID_NAME);
-        when(searchOrderMock.getOwner()).thenReturn(OWNER_ID + 1);
-        getTester().startComponentInPage(makePanel());
-
-        getTester().assertDisabled(PANEL_ID + ":form:global");
-
-        verify(searchOrderMock, times(2)).getOwner();
     }
 
 }
