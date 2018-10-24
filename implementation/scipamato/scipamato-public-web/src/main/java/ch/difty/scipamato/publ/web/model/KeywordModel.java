@@ -23,20 +23,6 @@ public class KeywordModel extends InjectedLoadableDetachableModel<Keyword> {
         this.languageCode = AssertAs.notNull(languageCode, "languageCode");
     }
 
-    /**
-     * Protected constructor for testing without wicket application.
-     *
-     * @param languageCode
-     *     the two character language code, e.g. 'en' or 'de'
-     * @param service
-     *     the service to retrieve the keywords
-     */
-    @SuppressWarnings("WeakerAccess")
-    protected KeywordModel(final String languageCode, final KeywordService service) {
-        this(languageCode);
-        this.service = service;
-    }
-
     @Override
     protected List<Keyword> load() {
         return service.findKeywords(languageCode);

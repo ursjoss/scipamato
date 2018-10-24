@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.persistence.newsletter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Fail.fail;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.persistence.paging.Sort;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
@@ -321,5 +323,31 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
     public void removingObsoleteNewsletterTopicsFromSort() {
         repo.removeObsoleteNewsletterTopicsFromSort(1);
         // TODO currently only asserting that the method runs without failure. Need test data and actually assert the behavior
+    }
+
+    @Test
+    public void savingSortedNewsletterTopics() {
+        final int newsletterId = 1;
+
+        final List<NewsletterNewsletterTopic> initialRecords = repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(
+            newsletterId);
+        assertThat(initialRecords).isEmpty();
+
+        final List<NewsletterNewsletterTopic> topics = new ArrayList<>();
+        topics.add(new NewsletterNewsletterTopic(newsletterId, 1, 1, "foo"));
+        topics.add(new NewsletterNewsletterTopic(newsletterId, 2, 2, "bar"));
+        topics.add(new NewsletterNewsletterTopic(newsletterId + 1, 3, 3, "baz"));
+
+        repo.saveSortedNewsletterTopics(newsletterId, topics);
+
+        final List<NewsletterNewsletterTopic> newRecords = repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(
+            newsletterId);
+        assertThat(newRecords)
+            .extracting("sort")
+            .containsExactly(1, 2);
+
+        repo.removeObsoleteNewsletterTopicsFromSort(newsletterId);
+
+        assertThat(repo.findPersistedSortedNewsletterTopicsForNewsletterWithId(newsletterId)).isEmpty();
     }
 }
