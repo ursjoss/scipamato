@@ -72,17 +72,16 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 
 - 09/10 - Public: Allow filtering by keywords
+- 09/80 - Core: Disable newsletter fields if paper is not assigned to newsletter
 
 .Changed
-- Bumped dependencies: flyway, byte-buddy, commons-lang3, mockito
+- Update dependencies spring-boot-parent, flyway, byte-buddy, commons-lang3, mockito, equalsverifier,
+  wicket-jquery-ui, byte-buddy, jaxb-api, jaxb-impl, jaxb-runtime, spring-boot-starter-admin-client
 
 .Fixed
 - 09/67 - Core: Remove obsolete newsletter topics from sort list
 - 09/74 - Core: Prevent double clicks on buttons and disable save button until auto-save completed
-- Update dependencies spring-boot-parent, equalsverifier, wicket-jquery-ui, byte-buddy, jaxb-api, jaxb-impl, jaxb-runtime
-  spring-boot-starter-admin-client
 - 09/44 - Core: Fix core access for users of type VIEWER
-- 09/80 - Core: Disable newsletter fields if paper is not assigned to newslette
 
 
 [[v0.9.2]]
