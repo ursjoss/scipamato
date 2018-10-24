@@ -68,6 +68,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Update dependencies spring-boot-parent, equalsverifier, wicket-jquery-ui, byte-buddy, jaxb-api, jaxb-impl, jaxb-runtime
   spring-boot-starter-admin-client
 - 09/44 - Core: Fix core access for users of type VIEWER
+- 09/80 - Core: Disable newsletter fields if paper is not assigned to newsletter
 
 .Security
 

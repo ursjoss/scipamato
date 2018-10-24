@@ -925,11 +925,30 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             super.onInitialize();
 
             queue(new Form<>("tab7Form"));
-            queueTo(NEWSLETTER_HEADLINE);
-            makeAndQueuePublicationStatusSelectBox("newsletterTopic");
+            queueHeadline(NEWSLETTER_HEADLINE);
+            makeAndQueueNewsletterTopicSelectBox("newsletterTopic");
         }
 
-        private void makeAndQueuePublicationStatusSelectBox(final String id) {
+        private void queueHeadline(FieldEnumType fieldType) {
+            String id = fieldType.getName();
+            TextArea<String> field = new TextArea<>(id) {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected void onConfigure() {
+                    super.onConfigure();
+                    setEnabled(isAssociatedWithNewsletter());
+                }
+            };
+            field.setOutputMarkupId(true);
+            StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
+            queue(new Label(id + LABEL_TAG, labelModel));
+            field.setLabel(labelModel);
+            addDisableBehavior(field);
+            queue(field);
+        }
+
+        private void makeAndQueueNewsletterTopicSelectBox(final String id) {
             final ChainingModel<NewsletterTopic> model = new ChainingModel<>(getModel()) {
                 private static final long serialVersionUID = 1L;
 
@@ -965,7 +984,14 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                 .withNoneSelectedText(noneSelectedModel.getObject())
                 .withLiveSearch(true);
             final BootstrapSelect<NewsletterTopic> topic = new BootstrapSelect<>(id, model, newsletterTopicChoice,
-                choiceRenderer).with(config);
+                choiceRenderer) {
+
+                @Override
+                protected void onConfigure() {
+                    super.onConfigure();
+                    setEnabled(isAssociatedWithNewsletter());
+                }
+            }.with(config);
             topic.setNullValid(true);
             queue(topic);
             queue(new Label(id + LABEL_TAG, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null)));
