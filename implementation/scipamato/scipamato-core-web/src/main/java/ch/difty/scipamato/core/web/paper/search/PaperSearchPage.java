@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.web.paper.search;
 
-import static ch.difty.scipamato.core.web.CorePageParameters.SEARCH_ORDER_ID;
-import static ch.difty.scipamato.core.web.CorePageParameters.SHOW_EXCLUDED;
+import static ch.difty.scipamato.core.web.CorePageParameters.*;
 
 import java.util.Optional;
 
@@ -91,11 +90,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     public PaperSearchPage(final PageParameters parameters) {
         super(parameters);
         trySettingSearchOrderModelFromDb();
-        mode = evaluateMode();
-    }
-
-    private Mode evaluateMode() {
-        return hasOneOfRoles(Roles.USER, Roles.ADMIN) ? Mode.EDIT : Mode.VIEW;
+        this.mode = modeFromPageParametersOrUser();
     }
 
     /**
@@ -104,6 +99,8 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
      *
      * @param searchOrderModel
      *     the model of the searchOrder
+     * @param mode
+     *     the mode in which to open the page
      */
     public PaperSearchPage(final IModel<SearchOrder> searchOrderModel, final Mode mode) {
         super(searchOrderModel);
@@ -114,6 +111,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
         getPageParameters().clearNamed();
         getPageParameters().add(SEARCH_ORDER_ID.getName(), searchOrder.getId());
         getPageParameters().add(SHOW_EXCLUDED.getName(), searchOrder.isShowExcluded());
+        getPageParameters().add(MODE.getName(), mode);
         this.mode = mode;
     }
 
@@ -128,6 +126,15 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     private Long searchOrderIdFromPageParameters() {
         final StringValue sv = getPageParameters().get(SEARCH_ORDER_ID.getName());
         return sv.isNull() ? null : sv.toLong();
+    }
+
+    private Mode modeFromPageParametersOrUser() {
+        final StringValue sv = getPageParameters().get(MODE.getName());
+        return sv.isNull() ? modeFromUserRole() : Mode.valueOf(sv.toString());
+    }
+
+    private Mode modeFromUserRole() {
+        return hasOneOfRoles(Roles.USER, Roles.ADMIN) ? Mode.EDIT : Mode.VIEW;
     }
 
     private void setShowExcluded(SearchOrder so) {
@@ -195,7 +202,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     private void makeSearchOrderPanel(final String id) {
         queuePanelHeadingFor(id);
 
-        searchOrderPanel = new SearchOrderPanel(id, getModel());
+        searchOrderPanel = new SearchOrderPanel(id, getModel(), mode);
         searchOrderPanel.setOutputMarkupId(true);
         queue(searchOrderPanel);
     }
@@ -331,8 +338,9 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             final PageParameters pp = new PageParameters();
             pp.add(SEARCH_ORDER_ID.getName(), persistedNewSearchOrder.getId());
             pp.add(SHOW_EXCLUDED.getName(), false);
+            pp.add(MODE.getName(), mode);
             pageFactory.setResponsePageToPaperSearchPageConsumer(this);
-            setResponsePage(new PaperSearchPage(pp));
+            //            setResponsePage(new PaperSearchPage(pp));
         } catch (OptimisticLockingException ole) {
             final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null)
                 .setParameters(ole.getTableName(), getModelObject().getId())

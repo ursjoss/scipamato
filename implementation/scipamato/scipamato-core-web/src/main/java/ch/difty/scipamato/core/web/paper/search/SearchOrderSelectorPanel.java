@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.web.paper.search;
 import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.*;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.confirmation.ConfirmationBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelect;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapSelectConfig;
@@ -114,7 +115,13 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
     }
 
     private void makeAndQueueName(String id) {
-        name = new TextField<>(id);
+        name = new TextField<>(id) {
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setEnabled(isUserEntitled());
+            }
+        };
         name.setConvertEmptyInputStringToNull(true);
         name.setOutputMarkupId(true);
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
@@ -143,7 +150,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                setEnabled(!isViewMode() && SearchOrderSelectorPanel.this.isUserEntitled());
+                setEnabled(!isViewMode() && isUserEntitled());
             }
 
             @Override
@@ -194,7 +201,12 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
     }
 
     private boolean isUserEntitled() {
-        return getModelObject() != null && getModelObject().getOwner() == getActiveUser().getId();
+        if (getModelObject() == null)
+            return false;
+        if (isViewMode())
+            return !getModelObject().isGlobal() && getModelObject().getOwner() == getActiveUser().getId();
+        else
+            return getModelObject().getOwner() == getActiveUser().getId();
     }
 
     private boolean hasExclusions() {
@@ -208,8 +220,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                setEnabled(
-                    SearchOrderSelectorPanel.this.isModelSelected() && SearchOrderSelectorPanel.this.isUserEntitled());
+                setEnabled(isModelSelected() && isUserEntitled());
             }
 
             @Override
@@ -224,7 +235,7 @@ public class SearchOrderSelectorPanel extends BasePanel<SearchOrder> {
         deleteLink.add(new ButtonBehavior());
         deleteLink.setBody(new StringResourceModel("button.delete.label"));
         deleteLink.setDefaultFormProcessing(false);
-        deleteLink.setEnabled(!isViewMode());
+        deleteLink.add(new ConfirmationBehavior());
         deleteLink.setOutputMarkupId(true);
         queue(deleteLink);
     }

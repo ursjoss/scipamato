@@ -123,19 +123,6 @@ public abstract class SearchOrderSelectorPanelTest extends PanelTest<SearchOrder
     }
 
     @Test
-    public void changingName_addsTargetsAndSendsEvent() {
-        getTester().startComponentInPage(makePanel());
-
-        getTester().executeAjaxEvent(PANEL_ID + ":form:name", "change");
-
-        String b = PANEL_ID + ":form:";
-        getTester().assertComponentOnAjaxResponse(b + GLOBAL.getName());
-        getTester().assertComponentOnAjaxResponse(b + NAME.getName());
-        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName());
-        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName() + "Label");
-    }
-
-    @Test
     public void loadingPage_withSearchOrderWithDifferentOwner_rendersGlobalCheckBoxDisabled() {
         when(searchOrderMock.getOwner()).thenReturn(OWNER_ID + 1);
         getTester().startComponentInPage(makePanel());

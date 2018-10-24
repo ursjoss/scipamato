@@ -20,6 +20,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.component.SerializableBiConsumer;
 import ch.difty.scipamato.common.web.component.SerializableBiFunction;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
@@ -43,8 +44,8 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
     @SpringBean
     private PageFactory pageFactory;
 
-    SearchOrderPanel(String id, IModel<SearchOrder> model) {
-        super(id, model);
+    SearchOrderPanel(String id, IModel<SearchOrder> model, Mode mode) {
+        super(id, model, mode);
     }
 
     @Override
@@ -78,7 +79,8 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                setEnabled(SearchOrderPanel.this.isSearchOrderIdDefined());
+                setEnabled(SearchOrderPanel.this.isSearchOrderIdDefined() && isEntitledToModify(
+                    SearchOrderPanel.this.getModelObject()));
             }
 
             @Override
@@ -99,9 +101,14 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
         final List<IColumn<SearchCondition, String>> columns = new ArrayList<>();
         columns.add(makeClickableColumn("displayValue", null,
             pageFactory.setResponsePageToPaperSearchCriteriaPageConsumer(this), () -> getModelObject().getId()));
+        // TODO find a way to dynamically hide/show the remove column based on isEntitledToModify(getModelObject()
         columns.add(
             makeLinkIconColumn("remove", (IModel<SearchCondition> m) -> getModelObject().remove(m.getObject())));
         return columns;
+    }
+
+    private boolean isEntitledToModify(final SearchOrder searchOrder) {
+        return searchOrder.getOwner() == getActiveUser().getId() || !searchOrder.isGlobal();
     }
 
     private ClickablePropertyColumn2<SearchCondition, String, Long> makeClickableColumn(String propExpression,
@@ -124,14 +131,17 @@ public class SearchOrderPanel extends BasePanel<SearchOrder> {
             @Override
             protected void onClickPerformed(AjaxRequestTarget target, IModel<SearchCondition> rowModel,
                 AjaxLink<Void> link) {
-                consumer.accept(rowModel);
-                target.add(searchConditions);
-                send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).withDroppedConditionId(rowModel
-                    .getObject()
-                    .getSearchConditionId()));
-                info("Removed " + rowModel
-                    .getObject()
-                    .getDisplayValue());
+                if (isEntitledToModify(getModelObject())) {
+                    consumer.accept(rowModel);
+                    target.add(searchConditions);
+                    send(getPage(), Broadcast.BREADTH, new SearchOrderChangeEvent(target).withDroppedConditionId(
+                        rowModel
+                            .getObject()
+                            .getSearchConditionId()));
+                    info("Removed " + rowModel
+                        .getObject()
+                        .getDisplayValue());
+                }
             }
         };
     }

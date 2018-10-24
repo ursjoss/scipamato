@@ -194,10 +194,8 @@ public class PaperSearchPageTest extends BasePageTest<PaperSearchPage> {
         getTester().assertRenderedPage(PaperSearchPage.class);
 
         verify(searchOrderServiceMock).saveOrUpdate(isA(SearchOrder.class));
-        verify(searchOrderMock).getId();
-        verify(searchOrderServiceMock).findById(27L);
-        verify(searchOrderMock2).setShowExcluded(false);
-        verify(searchOrderServiceMock, times(3)).findPageByFilter(isA(SearchOrderFilter.class),
+        verify(searchOrderMock, times(6)).getId();
+        verify(searchOrderServiceMock, times(2)).findPageByFilter(isA(SearchOrderFilter.class),
             isA(PaginationContext.class));
     }
 

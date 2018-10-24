@@ -22,6 +22,7 @@ import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
+import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.component.table.column.LinkIconPanel;
 import ch.difty.scipamato.core.entity.search.SearchCondition;
 import ch.difty.scipamato.core.entity.search.SearchOrder;
@@ -31,7 +32,7 @@ import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.PanelTest;
 
-public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
+public abstract class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
 
     @MockBean
     private CodeClassService codeClassServiceMock;
@@ -45,8 +46,10 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
         final List<SearchCondition> conditions = Collections.singletonList(sc);
         final SearchOrder searchOrder = new SearchOrder(conditions);
         searchOrder.setId(5L);
-        return new SearchOrderPanel(PANEL_ID, Model.of(searchOrder));
+        return new SearchOrderPanel(PANEL_ID, Model.of(searchOrder), getMode());
     }
+
+    abstract Mode getMode();
 
     @Override
     protected void assertSpecificComponents() {
@@ -83,7 +86,7 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
 
     @Test
     public void newButtonIsDisabled_ifSearchOrderIdNotPresent() {
-        getTester().startComponentInPage(new SearchOrderPanel(PANEL_ID, Model.of(new SearchOrder())));
+        getTester().startComponentInPage(new SearchOrderPanel(PANEL_ID, Model.of(new SearchOrder()), getMode()));
         getTester().isDisabled(PANEL_ID + ":form:addSearchCondition");
     }
 
@@ -96,15 +99,6 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
 
         verify(codeClassServiceMock).find(anyString());
         verify(codeServiceMock, times(8)).findCodesOfClass(isA(CodeClassId.class), anyString());
-    }
-
-    @Test
-    public void clickingDeleteIconLink_() {
-        getTester().startComponentInPage(makePanel());
-        getTester().assertContains("foo");
-        getTester().clickLink("panel:form:searchConditions:body:rows:1:cells:2:cell:link");
-        getTester().assertInfoMessages("Removed foo");
-        getTester().assertComponentOnAjaxResponse(PANEL_ID + ":form:searchConditions");
     }
 
     @Test
@@ -122,7 +116,7 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
 
     @Test
     public void searchOrderIdDefined_withNullModel() {
-        SearchOrderPanel p = new SearchOrderPanel(PANEL_ID, null);
+        SearchOrderPanel p = new SearchOrderPanel(PANEL_ID, null, getMode());
         assertThat(p.isSearchOrderIdDefined()).isFalse();
     }
 
@@ -130,7 +124,7 @@ public class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
     public void searchOrderIdDefined_withModelOFSearchOrderWIthNullId() {
         SearchOrder searchOrder = new SearchOrder();
         assertThat(searchOrder.getId()).isNull();
-        SearchOrderPanel p = new SearchOrderPanel(PANEL_ID, Model.of(searchOrder));
+        SearchOrderPanel p = new SearchOrderPanel(PANEL_ID, Model.of(searchOrder), getMode());
         assertThat(p.isSearchOrderIdDefined()).isFalse();
     }
 

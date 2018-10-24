@@ -1,10 +1,12 @@
 package ch.difty.scipamato.core.web.paper.search;
 
+import static ch.difty.scipamato.core.entity.search.SearchOrder.SearchOrderFields.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 
 import ch.difty.scipamato.common.web.Mode;
+import ch.difty.scipamato.core.entity.search.SearchOrder;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class SearchOrderSelectorPanelInEditModeTest extends SearchOrderSelectorPanelTest {
@@ -29,7 +31,7 @@ public class SearchOrderSelectorPanelInEditModeTest extends SearchOrderSelectorP
 
         getTester().assertEnabled(PANEL_ID + ":form:global");
 
-        verify(searchOrderMock, times(2)).getOwner();
+        verify(searchOrderMock, times(3)).getOwner();
     }
 
     @Test
@@ -40,7 +42,32 @@ public class SearchOrderSelectorPanelInEditModeTest extends SearchOrderSelectorP
 
         getTester().assertDisabled(PANEL_ID + ":form:global");
 
-        verify(searchOrderMock, times(2)).getOwner();
+        verify(searchOrderMock, times(3)).getOwner();
     }
 
+    @Test
+    public void changingName_forSearchOwnedByUser_addsTargetsAndSaves() {
+        when(searchOrderMock.getName()).thenReturn(VALID_NAME);
+        when(searchOrderMock.getOwner()).thenReturn(OWNER_ID);
+        getTester().startComponentInPage(makePanel());
+
+        getTester().executeAjaxEvent(PANEL_ID + ":form:name", "change");
+
+        String b = PANEL_ID + ":form:";
+        getTester().assertComponentOnAjaxResponse(b + GLOBAL.getName());
+        getTester().assertComponentOnAjaxResponse(b + NAME.getName());
+        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName());
+        getTester().assertComponentOnAjaxResponse(b + SHOW_EXCLUDED.getName() + "Label");
+
+        verify(searchOrderServiceMock).saveOrUpdate(isA(SearchOrder.class));
+    }
+
+    @Test
+    public void changingName_forSearchOwnedByDifferentUser_doesNotAddTargetNorSaves() {
+        when(searchOrderMock.getName()).thenReturn(VALID_NAME);
+        when(searchOrderMock.getOwner()).thenReturn(OWNER_ID + 1);
+        getTester().startComponentInPage(makePanel());
+
+        getTester().assertDisabled(PANEL_ID + ":form:global");
+    }
 }

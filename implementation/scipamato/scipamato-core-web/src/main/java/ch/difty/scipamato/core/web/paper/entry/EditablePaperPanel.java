@@ -2,8 +2,7 @@ package ch.difty.scipamato.core.web.paper.entry;
 
 import static ch.difty.scipamato.core.entity.Paper.PaperFields.*;
 import static ch.difty.scipamato.core.entity.PaperAttachment.PaperAttachmentFields.NAME;
-import static ch.difty.scipamato.core.web.CorePageParameters.SEARCH_ORDER_ID;
-import static ch.difty.scipamato.core.web.CorePageParameters.SHOW_EXCLUDED;
+import static ch.difty.scipamato.core.web.CorePageParameters.*;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -582,6 +581,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
                 PageParameters pp = new PageParameters();
                 pp.add(SEARCH_ORDER_ID.getName(), searchOrderId);
                 pp.add(SHOW_EXCLUDED.getName(), showingExclusions);
+                pp.add(MODE.getName(), getMode());
                 pageFactory
                     .setResponsePageToPaperSearchPageConsumer(this)
                     .accept(pp);
