@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
-<!-- 2017-01-27T07:23:54 -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="paper_summary_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Empty" uuid="8862e4a6-fdb2-4c5b-b003-40e0e237f591">
 	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="mm"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
-	<style name="Style1" isDefault="true" fontName="DejaVu Sans" fontSize="10" isBold="false" pdfFontName="DejaVu Sans" isPdfEmbedded="true"/>
 	<field name="authors" class="java.lang.String"/>
 	<field name="title" class="java.lang.String"/>
 	<field name="location" class="java.lang.String"/>
@@ -38,7 +36,7 @@
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+						<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{authors}]]></textFieldExpression>
@@ -52,7 +50,7 @@
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
+						<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="false" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
@@ -66,7 +64,7 @@
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+						<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{location}]]></textFieldExpression>
@@ -106,7 +104,7 @@
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+						<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{goals}]]></textFieldExpression>
@@ -122,14 +120,14 @@
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="0" width="555" height="15" isPrintWhenDetailOverflows="false" uuid="039aea88-89ac-40c8-9617-1acaa6996e93">
+					<reportElement positionType="Float" x="0" y="0" width="555" height="15" uuid="039aea88-89ac-40c8-9617-1acaa6996e93">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="10" isBold="true" isItalic="true" isUnderline="false"/>
+						<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="true" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{populationLabel}]]></textFieldExpression>
@@ -142,7 +140,7 @@
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+						<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{population}]]></textFieldExpression>
@@ -158,14 +156,14 @@
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="0" width="555" height="15" isPrintWhenDetailOverflows="false" uuid="287bc90c-2703-47f7-9387-422a71f65c58">
+					<reportElement positionType="Float" x="0" y="0" width="555" height="15" uuid="287bc90c-2703-47f7-9387-422a71f65c58">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="10" isBold="true" isItalic="true" isUnderline="false"/>
+						<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="true" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{methodsLabel}]]></textFieldExpression>
@@ -179,7 +177,7 @@
 						<property name="local_mesure_unitwidth" value="pixel"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+						<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{methods}]]></textFieldExpression>
@@ -195,14 +193,14 @@
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="0" width="555" height="15" isPrintWhenDetailOverflows="false" uuid="4f7b1bbd-6d8c-484e-ad30-6e88dd3ad78d">
+					<reportElement positionType="Float" x="0" y="0" width="555" height="15" uuid="4f7b1bbd-6d8c-484e-ad30-6e88dd3ad78d">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="10" isBold="true" isItalic="true" isUnderline="false"/>
+						<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="true" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{resultLabel}]]></textFieldExpression>
@@ -215,7 +213,7 @@
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+						<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{result}]]></textFieldExpression>
@@ -231,14 +229,14 @@
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="0" width="555" height="15" isPrintWhenDetailOverflows="false" uuid="4f7b1bbd-6d8c-484e-ad30-6e88dd3ad78d">
+					<reportElement positionType="Float" x="0" y="0" width="555" height="15" uuid="4f7b1bbd-6d8c-484e-ad30-6e88dd3ad78d">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="10" isBold="true" isItalic="true" isUnderline="false"/>
+						<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="true" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{commentLabel}]]></textFieldExpression>
@@ -251,7 +249,7 @@
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left">
-						<font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+						<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false"/>
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{comment}]]></textFieldExpression>
@@ -273,7 +271,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="false" isUnderline="false"/>
 					<paragraph leftIndent="0"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{header}]]></textFieldExpression>
@@ -286,7 +284,7 @@
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false"/>
 					<paragraph leftIndent="0"/>
 				</textElement>
 				<textFieldExpression><![CDATA["© " + $F{brand} + " " + java.util.Calendar.getInstance().get(Calendar.YEAR) + " " + $F{createdBy}]]></textFieldExpression>

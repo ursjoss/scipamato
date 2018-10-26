@@ -61,6 +61,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- 09/82 - Core: Fix Literaturliste-PDF-Report (include Goals and DOI)
 
 .Security
 

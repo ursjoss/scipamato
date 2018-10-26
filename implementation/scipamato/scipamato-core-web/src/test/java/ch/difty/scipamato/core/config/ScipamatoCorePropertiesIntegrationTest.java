@@ -41,7 +41,7 @@ public class ScipamatoCorePropertiesIntegrationTest {
 
     @Test
     public void assertBrand() {
-        assertThat(appProperties.getBrand()).isEqualTo("SciPaMaTo - Scientific Paper Management Tool");
+        assertThat(appProperties.getBrand()).isEqualTo("SciPaMaTo");
     }
 
     @Test

@@ -19,7 +19,7 @@ public class ScipamatoPropertiesIntegrationTest {
 
     @Test
     public void brand_hasDefaultValue() {
-        assertThat(sp.getBrand()).isEqualTo("SciPaMaTo - Scientific Paper Management Tool");
+        assertThat(sp.getBrand()).isEqualTo("SciPaMaTo");
     }
 
     @Test
