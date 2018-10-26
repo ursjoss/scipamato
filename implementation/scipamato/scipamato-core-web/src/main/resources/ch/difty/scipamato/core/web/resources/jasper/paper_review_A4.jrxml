@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
-<!-- 2017-01-30T06:41:59 -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="paper_review_A4" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="822" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" whenResourceMissingType="Empty" uuid="78a3a702-e0d1-460b-9e25-bd791531de4e">
 	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="mm"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
-	<style name="Style1" isDefault="true" fontName="DejaVu Sans" fontSize="8" isBold="false" pdfFontName="DejaVu Sans" isPdfEmbedded="true"/>
 	<field name="number" class="java.lang.String"/>
 	<field name="authorYear" class="java.lang.String"/>
 	<field name="populationPlace" class="java.lang.String"/>
@@ -55,7 +53,9 @@
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{numberLabel}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -66,6 +66,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{authorYearLabel}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -74,6 +77,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{populationPlaceLabel}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -84,6 +90,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{methodOutcomeLabel}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -94,6 +103,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{exposurePollutantLabel}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -104,6 +116,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{methodStudyDesignLabel}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -114,6 +129,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{populationDurationLabel}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -124,6 +142,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{populationParticipantsLabel}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -134,6 +155,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{exposureAssessmentLabel}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -144,6 +168,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{resultExposureRangeLabel}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -154,6 +181,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{methodConfoundersLabel}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -164,6 +194,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{resultEffectEstimateLabel}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -187,7 +220,9 @@
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{number}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -198,6 +233,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{authorYear}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -206,6 +244,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{populationPlace}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -216,6 +257,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{methodOutcome}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -226,6 +270,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{exposurePollutant}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -236,6 +283,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{methodStudyDesign}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -246,6 +296,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{populationDuration}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -256,6 +309,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{populationParticipants}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -266,6 +322,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{exposureAssessment}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -276,6 +335,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{resultExposureRange}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -286,6 +348,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{methodConfounders}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -296,6 +361,9 @@
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{resultEffectEstimate}]]></textFieldExpression>
 			</textField>
 		</band>
