@@ -64,7 +64,9 @@ public class PaperLiteratureReviewTest extends JasperEntityTest {
         assertThat(plr.getAuthors()).isEqualTo(AUTHORS);
         assertThat(plr.getPublicationYear()).isEqualTo(String.valueOf(PUBLICATION_YEAR));
         assertThat(plr.getTitle()).isEqualTo(TITLE);
+        assertThat(plr.getGoals()).isEqualTo(GOALS);
         assertThat(plr.getLocation()).isEqualTo(LOCATION);
+        assertThat(plr.getDoi()).isEqualTo(DOI);
         assertThat(plr.getPubmedLink()).isEqualTo("baseUrl/" + PM_ID);
     }
 
@@ -102,7 +104,8 @@ public class PaperLiteratureReviewTest extends JasperEntityTest {
     public void testingToString() {
         plr = new PaperLiteratureReview(p, rhf);
         assertThat(plr.toString()).isEqualTo(
-            "PaperLiteratureReview(number=100, authors=authors, publicationYear=2017, title=title, location=location, pubmedLink=baseUrl/1234, caption=caption, brand=brand, numberLabel=numberLabel)");
+            "PaperLiteratureReview(number=100, authors=authors, publicationYear=2017, title=title, goals=goals, "
+            + "location=location, doi=doi, pubmedLink=baseUrl/1234, caption=caption, brand=brand, numberLabel=numberLabel)");
     }
 
 }

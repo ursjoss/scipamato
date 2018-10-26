@@ -13,6 +13,7 @@ public abstract class JasperEntityTest {
     protected static final String AUTHORS          = "authors";
     protected static final String TITLE            = "title";
     protected static final String LOCATION         = "location";
+    protected static final String DOI              = "doi";
     protected static final String GOALS            = "goals";
     protected static final String POPULATION       = "population";
     protected static final String METHODS          = "methods";
@@ -72,6 +73,7 @@ public abstract class JasperEntityTest {
         p.setTitle(TITLE);
         p.setLocation(LOCATION);
         p.setGoals(GOALS);
+        p.setDoi(DOI);
         p.setPopulation(POPULATION);
         p.setMethods(METHODS);
         p.setResult(RESULT);

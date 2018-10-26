@@ -23,7 +23,9 @@ public class PaperLiteratureReview extends JasperEntity {
     private final String authors;
     private final String publicationYear;
     private final String title;
+    private final String goals;
     private final String location;
+    private final String doi;
     private final String pubmedLink;
 
     private final String caption;
@@ -50,8 +52,9 @@ public class PaperLiteratureReview extends JasperEntity {
         this.title = na(p.getTitle());
         this.location = na(p.getLocation());
         this.pubmedLink = makePubmedLink(rhf.getPubmedBaseUrl(), p.getPmId());
-
+        this.goals = na(p.getGoals());
         this.caption = na(rhf.getCaptionLabel());
+        this.doi = na(p.getDoi());
         this.brand = na(rhf.getBrand());
         this.numberLabel = na(rhf.getNumberLabel());
     }

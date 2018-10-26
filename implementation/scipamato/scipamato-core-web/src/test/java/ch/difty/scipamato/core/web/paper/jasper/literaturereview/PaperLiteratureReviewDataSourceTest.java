@@ -44,6 +44,8 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
         when(paperMock.getAuthors()).thenReturn("a");
         when(paperMock.getPublicationYear()).thenReturn(2017);
         when(paperMock.getTitle()).thenReturn("t");
+        when(paperMock.getGoals()).thenReturn("g");
+        when(paperMock.getDoi()).thenReturn("d");
         when(paperMock.getLocation()).thenReturn("l");
         when(paperMock.getPmId()).thenReturn(1234);
     }
@@ -69,7 +71,9 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
         assertFieldValue("authors", "a", f, jsds);
         assertFieldValue("publicationYear", "2017", f, jsds);
         assertFieldValue("title", "t", f, jsds);
+        assertFieldValue("goals", "g", f, jsds);
         assertFieldValue("location", "l", f, jsds);
+        assertFieldValue("doi", "d", f, jsds);
         assertFieldValue("pubmedLink", "https://www.ncbi.nlm.nih.gov/pubmed/1234", f, jsds);
 
         assertFieldValue("caption", CAPTION, f, jsds);
@@ -94,7 +98,9 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
         verify(paperMock).getAuthors();
         verify(paperMock, times(2)).getPublicationYear();
         verify(paperMock).getTitle();
+        verify(paperMock).getGoals();
         verify(paperMock).getLocation();
+        verify(paperMock).getDoi();
         verify(paperMock).getPmId();
     }
 
