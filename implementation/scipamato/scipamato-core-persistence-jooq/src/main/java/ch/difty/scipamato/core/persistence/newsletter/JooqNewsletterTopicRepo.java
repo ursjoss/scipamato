@@ -5,11 +5,11 @@ import static ch.difty.scipamato.core.db.tables.Language.LANGUAGE;
 import static ch.difty.scipamato.core.db.tables.NewsletterNewsletterTopic.NEWSLETTER_NEWSLETTER_TOPIC;
 import static ch.difty.scipamato.core.db.tables.NewsletterTopic.NEWSLETTER_TOPIC;
 import static ch.difty.scipamato.core.db.tables.NewsletterTopicTr.NEWSLETTER_TOPIC_TR;
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -155,11 +155,11 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
             final String propName = sortProperty.getName();
             if (propName.equals(NEWSLETTER_TOPIC_TR.TITLE.getName())) {
                 if (sortProperty.getDirection() == Sort.Direction.DESC)
-                    results.sort(Comparator
-                        .comparing(NewsletterTopicDefinition::getTranslationsAsString)
-                        .reversed());
+                    results.sort(comparing(NewsletterTopicDefinition::getTranslationsAsString,
+                        String.CASE_INSENSITIVE_ORDER).reversed());
                 else
-                    results.sort(Comparator.comparing(NewsletterTopicDefinition::getTranslationsAsString));
+                    results.sort(
+                        comparing(NewsletterTopicDefinition::getTranslationsAsString, String.CASE_INSENSITIVE_ORDER));
             }
         }
     }
