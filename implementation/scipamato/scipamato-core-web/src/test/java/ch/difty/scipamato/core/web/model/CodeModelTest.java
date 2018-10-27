@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.web.model;
 
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.extractProperty;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -43,7 +42,9 @@ public class CodeModelTest extends ModelTest {
 
         final CodeModel model = new CodeModel(CodeClassId.CC1, "de");
 
-        assertThat(extractProperty(Code.CodeFields.CODE.getName()).from(model.load())).containsExactly("1F", "1N");
+        assertThat(model.load())
+            .extracting(Code.CodeFields.CODE.getName())
+            .containsExactly("1F", "1N");
 
         verify(serviceMock).findCodesOfClass(ccId, languageCode);
 

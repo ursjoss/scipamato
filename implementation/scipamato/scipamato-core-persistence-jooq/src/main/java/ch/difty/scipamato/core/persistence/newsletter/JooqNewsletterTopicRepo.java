@@ -256,7 +256,7 @@ public class JooqNewsletterTopicRepo extends AbstractRepo implements NewsletterT
     private NewsletterTopicDefinition toTopicDefinition(final Integer id, final int version,
         final List<NewsletterTopicTranslation> persistedTranslations) {
         return new NewsletterTopicDefinition(id, getMainLanguage(), version,
-            persistedTranslations.toArray(new NewsletterTopicTranslation[persistedTranslations.size()]));
+            persistedTranslations.toArray(new NewsletterTopicTranslation[0]));
     }
 
     private NewsletterTopicRecord updateAndLoadNewsletterTopicDefinition(final NewsletterTopicDefinition entity,

@@ -2,7 +2,6 @@ package ch.difty.scipamato.core.web.model;
 
 import static ch.difty.scipamato.common.TestUtils.assertDegenerateSupplierParameter;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.extractProperty;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -12,6 +11,7 @@ import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.core.entity.CodeClass;
+import ch.difty.scipamato.core.entity.keyword.Keyword;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 
 public class CodeClassModelTest extends ModelTest {
@@ -36,8 +36,9 @@ public class CodeClassModelTest extends ModelTest {
 
         final CodeClassModel model = new CodeClassModel("de");
 
-        assertThat(extractProperty(CodeClass.CodeClassFields.NAME.getName()).from(model.load())).containsExactly("cc1",
-            "cc2");
+        assertThat(model.load())
+            .extracting(Keyword.KeywordFields.NAME.getName())
+            .containsExactly("cc1", "cc2");
 
         verify(serviceMock).find(languageCode);
 

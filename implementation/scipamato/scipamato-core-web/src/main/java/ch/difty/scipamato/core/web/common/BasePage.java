@@ -78,7 +78,7 @@ public abstract class BasePage<T> extends AbstractPage<T> {
             .stream(roles)
             .sorted()
             .collect(Collectors.toList())
-            .toArray(new String[roles.length]));
+            .toArray(new String[0]));
     }
 
 }

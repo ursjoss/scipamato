@@ -131,12 +131,12 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
     }
 
     @Test
-    public void countingNewsletterTopics_withUnspecifiedFilter_findsAllDefintions() {
+    public void countingNewsletterTopics_withUnspecifiedFilter_findsAllDefinitions() {
         assertThat(repo.countByFilter(new NewsletterTopicFilter())).isEqualTo(3);
     }
 
     @Test
-    public void countingNewsletterTopics_withFilter_findsAllMatchingDefintions() {
+    public void countingNewsletterTopics_withFilter_findsAllMatchingDefinitions() {
         final NewsletterTopicFilter filter = new NewsletterTopicFilter();
         filter.setTitleMask("es");
         assertThat(repo.countByFilter(filter)).isEqualTo(2);

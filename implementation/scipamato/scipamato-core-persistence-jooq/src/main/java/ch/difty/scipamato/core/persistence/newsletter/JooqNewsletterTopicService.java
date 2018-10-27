@@ -16,26 +16,19 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.persistence.NewsletterTopicService;
-import ch.difty.scipamato.core.persistence.UserRepository;
 
 @Service
 @SuppressWarnings("WeakerAccess")
 class JooqNewsletterTopicService implements NewsletterTopicService {
 
     private final NewsletterTopicRepository repo;
-    private final UserRepository            userRepo;
 
-    public JooqNewsletterTopicService(final NewsletterTopicRepository repo, final UserRepository userRepo) {
+    public JooqNewsletterTopicService(final NewsletterTopicRepository repo) {
         this.repo = repo;
-        this.userRepo = userRepo;
     }
 
     public NewsletterTopicRepository getRepo() {
         return repo;
-    }
-
-    public UserRepository getUserRepo() {
-        return userRepo;
     }
 
     @Override
