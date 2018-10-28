@@ -50,6 +50,8 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
 
     private void queueForm(final String formId) {
         queue(newForm(formId));
+        queue(new Label("topicLabel", new StringResourceModel("topic.label", this, null)));
+        queue(new Label("translationsLabel", new StringResourceModel("translations.label", this, null)));
         queue(newRefreshingView("translations"));
         queue(newSubmitButton("submit"));
         queue(newDeleteButton("delete"));

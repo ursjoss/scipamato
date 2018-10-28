@@ -54,7 +54,14 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
         getTester().assertComponent(b, Form.class);
 
         b += ":";
-        String bb = b + "translations";
+
+        String bb = b + "topic";
+        getTester().assertLabel(bb + "Label", "Newsletter Topic");
+
+        bb = b + "translations";
+        getTester().assertLabel(bb + "Label", "Topic Translations");
+
+        bb = b + "translations";
         getTester().assertComponent(bb, RefreshingView.class);
         bb += ":";
         assertTranslation(bb, 1, "de", "thema1");
