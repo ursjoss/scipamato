@@ -51,6 +51,21 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
+.Added
+
+.Changed
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
+
+[[v0.9.4]]
+== [0.9.4] -- 2018-10-28
 
 .Added
 - 09/73 - Core: Add facility to manage the keywords
@@ -59,19 +74,12 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Bumped dependencies spring-cloud, flyway
 - Slightly improve the newsletter topic maintenance infrastructure (layout, back-button)
 
-.Deprecated
-
-.Removed
-
 .Fixed
 - 09/82 - Core: Fix Literaturliste-PDF-Report (include Goals and DOI)
-
-.Security
 
 
 [[v0.9.3]]
 == [0.9.3] -- 2018-10-24
-
 
 .Added
 
