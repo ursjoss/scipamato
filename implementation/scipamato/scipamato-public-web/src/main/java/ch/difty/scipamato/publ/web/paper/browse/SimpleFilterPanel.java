@@ -43,6 +43,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
     private static final String KEYWORDS_NONE_SELECT_RESOURCE_TAG = "keywords.noneSelected";
 
     private static final String AM_DATA_WIDTH = "data-width";
+    public static final  String CHANGE        = "change";
 
     private final String languageCode;
 
@@ -80,7 +81,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
                 }
             }
         };
-        field.add(new AjaxFormComponentUpdatingBehavior("change") {
+        field.add(new AjaxFormComponentUpdatingBehavior(CHANGE) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -131,7 +132,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
             }
         };
         multiSelect.with(config);
-        multiSelect.add(new AjaxFormComponentUpdatingBehavior("change") {
+        multiSelect.add(new AjaxFormComponentUpdatingBehavior(CHANGE) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -183,7 +184,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
             }
         };
         multiSelect.with(config);
-        multiSelect.add(new AjaxFormComponentUpdatingBehavior("change") {
+        multiSelect.add(new AjaxFormComponentUpdatingBehavior(CHANGE) {
             private static final long serialVersionUID = 1L;
 
             @Override

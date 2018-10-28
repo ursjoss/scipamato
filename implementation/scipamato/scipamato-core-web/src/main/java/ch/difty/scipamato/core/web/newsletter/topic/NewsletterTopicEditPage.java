@@ -54,8 +54,8 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
 
     private void queueForm(final String formId) {
         queue(newForm(formId));
-        queue(new Label("topicLabel", new StringResourceModel("topic.label", this, null)));
-        queue(new Label("translationsLabel", new StringResourceModel("translations.label", this, null)));
+        queue(new Label("topicLabel", new StringResourceModel("topic" + LABEL_RESOURCE_TAG, this, null)));
+        queue(new Label("translationsLabel", new StringResourceModel("translations" + LABEL_RESOURCE_TAG, this, null)));
         queue(newRefreshingView("translations"));
         queue(newBackButton("back"));
         queue(newSubmitButton("submit"));
@@ -146,14 +146,14 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
     }
 
     private BootstrapButton newSubmitButton(String id) {
-        final BootstrapButton button = new BootstrapButton(id, new StringResourceModel(id + ".label"),
+        final BootstrapButton button = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG),
             Buttons.Type.Primary);
         button.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
         return button;
     }
 
     private BootstrapButton newDeleteButton(final String id) {
-        final BootstrapButton db = new BootstrapButton(id, new StringResourceModel(id + ".label"),
+        final BootstrapButton db = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG),
             Buttons.Type.Default) {
             @Override
             public void onSubmit() {

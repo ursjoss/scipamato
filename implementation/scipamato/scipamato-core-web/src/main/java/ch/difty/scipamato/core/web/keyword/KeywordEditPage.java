@@ -60,9 +60,9 @@ public class KeywordEditPage extends BasePage<KeywordDefinition> {
 
     private void queueForm(final String formId) {
         queue(form = newForm(formId));
-        queue(new Label("keywordLabel", new StringResourceModel("keyword.label", this, null)));
+        queue(new Label("keywordLabel", new StringResourceModel("keyword" + LABEL_RESOURCE_TAG, this, null)));
         queueFieldAndLabel(new TextField<String>(Keyword.KeywordFields.SEARCH_OVERRIDE.getName()));
-        queue(new Label("translationsLabel", new StringResourceModel("translations.label", this, null)));
+        queue(new Label("translationsLabel", new StringResourceModel("translations" + LABEL_RESOURCE_TAG, this, null)));
         queue(newRefreshingView("translations"));
         queue(newBackButton("back"));
         queue(newSubmitButton("submit"));
@@ -148,7 +148,7 @@ public class KeywordEditPage extends BasePage<KeywordDefinition> {
                     }
                 };
                 newLink.add(new ButtonBehavior());
-                newLink.setBody(new StringResourceModel("button." + id + ".label"));
+                newLink.setBody(new StringResourceModel("button." + id + LABEL_RESOURCE_TAG));
                 return newLink;
             }
 
@@ -176,7 +176,7 @@ public class KeywordEditPage extends BasePage<KeywordDefinition> {
                     }
                 };
                 newLink.add(new ButtonBehavior());
-                newLink.setBody(new StringResourceModel("button." + id + ".label"));
+                newLink.setBody(new StringResourceModel("button." + id + LABEL_RESOURCE_TAG));
                 newLink.add(new ConfirmationBehavior());
                 return newLink;
             }
@@ -203,14 +203,14 @@ public class KeywordEditPage extends BasePage<KeywordDefinition> {
     }
 
     private BootstrapButton newSubmitButton(String id) {
-        final BootstrapButton button = new BootstrapButton(id, new StringResourceModel(id + ".label"),
+        final BootstrapButton button = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG),
             Buttons.Type.Primary);
         button.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
         return button;
     }
 
     private BootstrapButton newDeleteButton(final String id) {
-        final BootstrapButton db = new BootstrapButton(id, new StringResourceModel(id + ".label"),
+        final BootstrapButton db = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG),
             Buttons.Type.Default) {
             @Override
             public void onSubmit() {
