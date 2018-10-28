@@ -38,7 +38,7 @@ public interface NewsletterTopicRepository {
      *     the filter
      * @param paginationContext
      *     context defining paging and sorting
-     * @return a page of entities of type {@code T} as list
+     * @return a page of {@link NewsletterTopicDefinition}s as list
      */
     List<NewsletterTopicDefinition> findPageOfNewsletterTopicDefinitions(NewsletterTopicFilter filter,
         PaginationContext paginationContext);

@@ -20,7 +20,6 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
-import ch.difty.scipamato.core.persistence.UserRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -30,8 +29,6 @@ public class JooqNewsletterTopicServiceTest {
 
     @Mock
     private NewsletterTopicRepository repoMock;
-    @Mock
-    private UserRepository            userRepoMock;
     @Mock
     private NewsletterTopicFilter     filterMock;
 
@@ -58,7 +55,7 @@ public class JooqNewsletterTopicServiceTest {
 
     @Before
     public void setUp() {
-        service = new JooqNewsletterTopicService(repoMock, userRepoMock);
+        service = new JooqNewsletterTopicService(repoMock);
 
         topics.add(topicMock);
         topics.add(topicMock);

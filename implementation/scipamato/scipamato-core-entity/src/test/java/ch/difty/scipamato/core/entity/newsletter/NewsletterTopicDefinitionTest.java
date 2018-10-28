@@ -52,26 +52,26 @@ public class NewsletterTopicDefinitionTest {
     }
 
     @Test
-    public void canGetTranslationsAsString_withTanslationsIncludingMainTranslation() {
+    public void canGetTranslationsAsString_withTranslationsIncludingMainTranslation() {
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en, ntt_fr);
         assertThat(ntd.getTranslationsAsString()).isEqualTo("DE: 'thema2'; EN: 'topic2'; FR: 'sujet2'");
     }
 
     @Test
-    public void canGetTranslationsAsString_withTanslationsIncludingMainTranslation_withPartialTranslation() {
+    public void canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withPartialTranslation() {
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en,
             new NewsletterTopicTranslation(12, "fr", null, 1));
         assertThat(ntd.getTranslationsAsString()).isEqualTo("DE: 'thema2'; EN: 'topic2'; FR: n.a.");
     }
 
     @Test
-    public void canGetTranslationsAsString_withNoTanslations() {
+    public void canGetTranslationsAsString_withNoTranslations() {
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(2, "de", 1);
         assertThat(ntd.getTranslationsAsString()).isNull();
     }
 
     @Test
-    public void modifyingTranlsation_withNullLanguageCode_throws() {
+    public void modifyingTranslation_withNullLanguageCode_throws() {
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en, ntt_fr);
         try {
             ntd.setTitleInLanguage(null, "foo");
@@ -84,7 +84,7 @@ public class NewsletterTopicDefinitionTest {
     }
 
     @Test
-    public void modifyTranslation_withMainLanguageTranslationModfied_changesMainTitle_translationTitle_andSetsModifiedTimestamp() {
+    public void modifyTranslation_withMainLanguageTranslationModified_changesMainTitle_translationTitle_andSetsModifiedTimestamp() {
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en, ntt_fr);
         ntd.setTitleInLanguage("de", "thema 2");
         assertThat(ntd.getTitle()).isEqualTo("thema 2");
@@ -107,7 +107,7 @@ public class NewsletterTopicDefinitionTest {
     }
 
     @Test
-    public void modifyTranslation_withNonMainLanguageTranslationModfied_keepsMainTitle_changesTranslationTitle_andSetsModifiedTimestamp() {
+    public void modifyTranslation_withNonMainLanguageTranslationModified_keepsMainTitle_changesTranslationTitle_andSetsModifiedTimestamp() {
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en, ntt_fr);
         ntd.setTitleInLanguage("fr", "bar");
         assertThat(ntd.getTitle()).isEqualTo("thema2");

@@ -157,7 +157,7 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
      * of mapping the codes to the array of type text does not work:
      *
      * <pre>
-     * return PAPER.CODES.contains(codeCollection.toArray(new String[codeCollection.size()]));
+     * return PAPER.CODES.contains(codeCollection.toArray(new String[0]));
      * </pre>
      * <p>
      * While I originally casted to PostgresDataType.TEXT, I now need to cast to SQLDataType.CLOB

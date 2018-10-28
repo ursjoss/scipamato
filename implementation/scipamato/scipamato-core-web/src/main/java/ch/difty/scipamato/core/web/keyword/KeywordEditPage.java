@@ -1,14 +1,17 @@
-package ch.difty.scipamato.core.web.newsletter.topic;
+package ch.difty.scipamato.core.web.keyword;
 
 import java.util.Collection;
 import java.util.Iterator;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.confirmation.ConfirmationBehavior;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.wicket.PageReference;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -24,24 +27,27 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ch.difty.scipamato.core.auth.Roles;
-import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
-import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
-import ch.difty.scipamato.core.persistence.NewsletterTopicService;
+import ch.difty.scipamato.core.entity.keyword.Keyword;
+import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
+import ch.difty.scipamato.core.entity.keyword.KeywordTranslation;
+import ch.difty.scipamato.core.persistence.KeywordService;
 import ch.difty.scipamato.core.persistence.OptimisticLockingException;
 import ch.difty.scipamato.core.web.common.BasePage;
 
-@MountPath("newsletter-topic/entry")
+@MountPath("keyword-topic/entry")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
 @SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
-public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition> {
+public class KeywordEditPage extends BasePage<KeywordDefinition> {
 
     @SpringBean
-    private NewsletterTopicService service;
+    private KeywordService service;
+
+    private Form<KeywordDefinition> form;
 
     private final PageReference callingPageRef;
 
-    NewsletterTopicEditPage(final IModel<NewsletterTopicDefinition> model, final PageReference callingPageRef) {
+    KeywordEditPage(final IModel<KeywordDefinition> model, final PageReference callingPageRef) {
         super(model);
         this.callingPageRef = callingPageRef;
     }
@@ -53,8 +59,9 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
     }
 
     private void queueForm(final String formId) {
-        queue(newForm(formId));
-        queue(new Label("topicLabel", new StringResourceModel("topic.label", this, null)));
+        queue(form = newForm(formId));
+        queue(new Label("keywordLabel", new StringResourceModel("keyword.label", this, null)));
+        queueFieldAndLabel(new TextField<String>(Keyword.KeywordFields.SEARCH_OVERRIDE.getName()));
         queue(new Label("translationsLabel", new StringResourceModel("translations.label", this, null)));
         queue(newRefreshingView("translations"));
         queue(newBackButton("back"));
@@ -63,13 +70,13 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
 
     }
 
-    private Form<NewsletterTopicDefinition> newForm(final String id) {
+    private Form<KeywordDefinition> newForm(final String id) {
         return new Form<>(id, new CompoundPropertyModel<>(getModel())) {
             @Override
             protected void onSubmit() {
                 super.onSubmit();
                 try {
-                    NewsletterTopicDefinition persisted = service.saveOrUpdate(getModelObject());
+                    KeywordDefinition persisted = service.saveOrUpdate(getModelObject());
                     if (persisted != null) {
                         setModelObject(persisted);
                         info(new StringResourceModel("save.successful.hint", this, null)
@@ -101,27 +108,77 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
         return getModelObject().getId() != null ? getModelObject().getId() : 0L;
     }
 
-    private RefreshingView<NewsletterTopicTranslation> newRefreshingView(final String id) {
-        RefreshingView<NewsletterTopicTranslation> translations = new RefreshingView<>(id) {
+    private RefreshingView<KeywordTranslation> newRefreshingView(final String id) {
+        final RefreshingView<KeywordTranslation> translations = new RefreshingView<>(id) {
             @Override
-            protected Iterator<IModel<NewsletterTopicTranslation>> getItemModels() {
-                Collection<NewsletterTopicTranslation> translations = getModelObject()
+            protected Iterator<IModel<KeywordTranslation>> getItemModels() {
+                final Collection<KeywordTranslation> translations = getModelObject()
                     .getTranslations()
                     .values();
-
                 return new ModelIteratorAdapter<>(translations) {
                     @Override
-                    protected IModel<NewsletterTopicTranslation> model(
-                        final NewsletterTopicTranslation newsletterTopicTranslation) {
-                        return new CompoundPropertyModel<>(newsletterTopicTranslation);
+                    protected IModel<KeywordTranslation> model(final KeywordTranslation keywordTopicTranslation) {
+                        return new CompoundPropertyModel<>(keywordTopicTranslation);
                     }
                 };
             }
 
             @Override
-            protected void populateItem(final Item<NewsletterTopicTranslation> item) {
+            protected void populateItem(final Item<KeywordTranslation> item) {
                 item.add(new Label("langCode"));
-                item.add(new TextField<String>("title"));
+                item.add(new TextField<String>("name"));
+                item.add(newAddLink("addTranslation", item));
+                item.add(newRemoveLink("removeTranslation", item));
+            }
+
+            private AjaxLink<Void> newAddLink(final String id, final Item<KeywordTranslation> item) {
+                final AjaxLink<Void> newLink = new AjaxLink<>(id) {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onClick(final AjaxRequestTarget target) {
+                        final KeywordTranslation currentKt = item.getModelObject();
+                        final String langCode = currentKt.getLangCode();
+                        final KeywordTranslation newKt = new KeywordTranslation(null, langCode, null, 1);
+                        KeywordEditPage.this
+                            .getModelObject()
+                            .getTranslations()
+                            .put(langCode, newKt);
+                        target.add(form);
+                    }
+                };
+                newLink.add(new ButtonBehavior());
+                newLink.setBody(new StringResourceModel("button." + id + ".label"));
+                return newLink;
+            }
+
+            private AjaxLink<Void> newRemoveLink(final String id, final Item<KeywordTranslation> item) {
+                final AjaxLink<Void> newLink = new AjaxLink<>(id) {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onClick(final AjaxRequestTarget target) {
+                        final KeywordTranslation currentKt = item.getModelObject();
+                        final String langCode = currentKt.getLangCode();
+                        final Iterator<KeywordTranslation> it = KeywordEditPage.this
+                            .getModelObject()
+                            .getTranslations()
+                            .get(langCode)
+                            .iterator();
+                        while (it.hasNext()) {
+                            final KeywordTranslation kt = it.next();
+                            if (currentKt.equals(kt)) {
+                                it.remove();
+                                break;
+                            }
+                        }
+                        target.add(form);
+                    }
+                };
+                newLink.add(new ButtonBehavior());
+                newLink.setBody(new StringResourceModel("button." + id + ".label"));
+                newLink.add(new ConfirmationBehavior());
+                return newLink;
             }
         };
         translations.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
@@ -138,7 +195,7 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
                 if (callingPageRef != null)
                     setResponsePage(callingPageRef.getPage());
                 else
-                    setResponsePage(NewsletterTopicListPage.class);
+                    setResponsePage(KeywordListPage.class);
             }
         };
         back.setDefaultFormProcessing(false);
@@ -159,12 +216,12 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
             public void onSubmit() {
                 super.onSubmit();
                 try {
-                    final NewsletterTopicDefinition ntd = NewsletterTopicEditPage.this.getModelObject();
+                    final KeywordDefinition ntd = KeywordEditPage.this.getModelObject();
                     if (ntd != null && ntd.getId() != null) {
                         int id = ntd.getId();
-                        NewsletterTopicDefinition deleted = service.delete(id, ntd.getVersion());
+                        KeywordDefinition deleted = service.delete(id, ntd.getVersion());
                         if (deleted != null) {
-                            setResponsePage(NewsletterTopicListPage.class);
+                            setResponsePage(KeywordListPage.class);
                             info(new StringResourceModel("delete.successful.hint", this, null)
                                 .setParameters(id, deleted.getTranslationsAsString())
                                 .getString());
@@ -181,21 +238,11 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
                     log.error(msg);
                     error(msg);
                 } catch (Exception ex) {
-                    if (ex
-                        .getMessage()
-                        .contains("is still referenced from table")) {
-                        String msg = new StringResourceModel("delete.refintegrity.hint", this, null)
-                            .setParameters(getNullSafeId())
-                            .getString();
-                        log.error(msg);
-                        error(msg);
-                    } else {
-                        String msg = new StringResourceModel("delete.error.hint", this, null)
-                            .setParameters(getNullSafeId(), ex.getMessage())
-                            .getString();
-                        log.error(msg);
-                        error(msg);
-                    }
+                    String msg = new StringResourceModel("delete.error.hint", this, null)
+                        .setParameters(getNullSafeId(), ex.getMessage())
+                        .getString();
+                    log.error(msg);
+                    error(msg);
                 }
             }
         };

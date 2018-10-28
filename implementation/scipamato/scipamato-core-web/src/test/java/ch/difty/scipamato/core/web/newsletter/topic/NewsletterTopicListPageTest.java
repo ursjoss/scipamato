@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
-import ch.difty.scipamato.common.web.component.table.column.LinkIconPanel;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
@@ -107,13 +106,13 @@ public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicLis
     }
 
     @Test
-    public void clickingOnNewsletterTopicTitle_forwardsToNewsletterTopicEntryPage_withModelLoaded() {
+    public void clickingOnNewsletterTopicTitle_forwardsToNewsletterTopicEditPage_withModelLoaded() {
         getTester().startPage(getPageClass());
 
         getTester().clickLink("results:body:rows:1:cells:1:cell:link");
         getTester().assertRenderedPage(NewsletterTopicEditPage.class);
 
-        // verify the newletter was loaded in the target page
+        // verify the newsletter was loaded into the target page
         getTester().assertModelValue("form:translations:1:title", "thema1");
         getTester().assertModelValue("form:translations:2:title", "topic1");
         getTester().assertModelValue("form:translations:3:title", "theme1");
@@ -124,7 +123,7 @@ public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicLis
     }
 
     @Test
-    public void clickingNewNewslettterTopic_forwardsToNewsletterTopicEditPage() {
+    public void clickingNewNewsletterTopic_forwardsToNewsletterTopicEditPage() {
         NewsletterTopicTranslation ntt_en = new NewsletterTopicTranslation(1, "en", "ntt_en", 1);
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(1, "en", 1, ntt_en);
         when(newsletterTopicServiceMock.newUnpersistedNewsletterTopicDefinition()).thenReturn(ntd);
@@ -137,19 +136,10 @@ public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicLis
 
         getTester().assertRenderedPage(NewsletterTopicEditPage.class);
 
-        FormTester targetFormTester = getTester().newFormTester("form");
-
         verify(newsletterTopicServiceMock).countByFilter(isA(NewsletterTopicFilter.class));
         verify(newsletterTopicServiceMock).findPageOfNewsletterTopicDefinitions(isA(NewsletterTopicFilter.class),
             isA(PaginationRequest.class));
         verify(newsletterTopicServiceMock).newUnpersistedNewsletterTopicDefinition();
-    }
-
-    private void validateLinkIconColumn(final int row, final String status, final String value) {
-        String bodyRow = "results:body:rows:" + row + ":cells:";
-        getTester().assertLabel(bodyRow + "3:cell", status);
-        getTester().assertComponent(bodyRow + "4:cell", LinkIconPanel.class);
-        getTester().assertModelValue(bodyRow + "4:cell", value);
     }
 
 }
