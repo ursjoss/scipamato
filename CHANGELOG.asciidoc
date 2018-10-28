@@ -53,9 +53,11 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 
 .Added
+- 09/73 - Core: Add facility to manage the keywords
 
 .Changed
 - Bumped dependencies spring-cloud, flyway
+- Slightly improve the newsletter topic maintenance infrastructure (layout, back-button)
 
 .Deprecated
 

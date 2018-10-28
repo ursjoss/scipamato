@@ -40,7 +40,7 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
 
     @Override
     protected NewsletterTopicEditPage makePage() {
-        return new NewsletterTopicEditPage(Model.of(ntd));
+        return new NewsletterTopicEditPage(Model.of(ntd), null);
     }
 
     @Override
@@ -68,6 +68,7 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
         assertTranslation(bb, 2, "en", "topic1");
         assertTranslation(bb, 3, "fr", "sujet1");
 
+        getTester().assertComponent(b + "back", BootstrapButton.class);
         getTester().assertComponent(b + "submit", BootstrapButton.class);
         getTester().assertComponent(b + "delete", BootstrapButton.class);
     }
@@ -90,7 +91,7 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
     }
 
     private void runSubmitTest() {
-        getTester().startPage(new NewsletterTopicEditPage(Model.of(ntd)));
+        getTester().startPage(new NewsletterTopicEditPage(Model.of(ntd), null));
 
         FormTester formTester = getTester().newFormTester("form");
         formTester.setValue("translations:1:title", "1806");

@@ -9,6 +9,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.confirmation.ConfirmationBehavior;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -44,8 +45,11 @@ public class KeywordEditPage extends BasePage<KeywordDefinition> {
 
     private Form<KeywordDefinition> form;
 
-    KeywordEditPage(final IModel<KeywordDefinition> model) {
+    private final PageReference callingPageRef;
+
+    KeywordEditPage(final IModel<KeywordDefinition> model, final PageReference callingPageRef) {
         super(model);
+        this.callingPageRef = callingPageRef;
     }
 
     @Override
@@ -60,6 +64,7 @@ public class KeywordEditPage extends BasePage<KeywordDefinition> {
         queueFieldAndLabel(new TextField<String>(Keyword.KeywordFields.SEARCH_OVERRIDE.getName()));
         queue(new Label("translationsLabel", new StringResourceModel("translations.label", this, null)));
         queue(newRefreshingView("translations"));
+        queue(newBackButton("back"));
         queue(newSubmitButton("submit"));
         queue(newDeleteButton("delete"));
 
@@ -178,6 +183,23 @@ public class KeywordEditPage extends BasePage<KeywordDefinition> {
         };
         translations.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
         return translations;
+    }
+
+    private BootstrapButton newBackButton(final String id) {
+        BootstrapButton back = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG),
+            Buttons.Type.Default) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onSubmit() {
+                if (callingPageRef != null)
+                    setResponsePage(callingPageRef.getPage());
+                else
+                    setResponsePage(KeywordListPage.class);
+            }
+        };
+        back.setDefaultFormProcessing(false);
+        return back;
     }
 
     private BootstrapButton newSubmitButton(String id) {

@@ -101,12 +101,13 @@ public class KeywordListPage extends BasePage<Keyword> {
     }
 
     private void onTitleClick(final IModel<KeywordDefinition> keywordModel) {
-        setResponsePage(new KeywordEditPage(keywordModel));
+        setResponsePage(new KeywordEditPage(keywordModel, getPage().getPageReference()));
     }
 
     private void queueNewTopicButton(final String id) {
         BootstrapAjaxButton newButton = queueResponsePageButton(id,
-            () -> new KeywordEditPage(Model.of(service.newUnpersistedKeywordDefinition())));
+            () -> new KeywordEditPage(Model.of(service.newUnpersistedKeywordDefinition()),
+                getPage().getPageReference()));
         newButton.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
     }
 }

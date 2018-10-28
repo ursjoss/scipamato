@@ -42,7 +42,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
 
     @Override
     protected KeywordEditPage makePage() {
-        return new KeywordEditPage(Model.of(kd));
+        return new KeywordEditPage(Model.of(kd), null);
     }
 
     @Override
@@ -74,6 +74,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
         assertTranslation(bb, 3, "en", "name1");
         assertTranslation(bb, 4, "fr", "nom1");
 
+        getTester().assertComponent(b + "back", BootstrapButton.class);
         getTester().assertComponent(b + "submit", BootstrapButton.class);
         getTester().assertComponent(b + "delete", BootstrapButton.class);
     }
@@ -98,7 +99,7 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
     }
 
     private void runSubmitTest() {
-        getTester().startPage(new KeywordEditPage(Model.of(kd)));
+        getTester().startPage(new KeywordEditPage(Model.of(kd), null));
 
         FormTester formTester = getTester().newFormTester("form");
         formTester.setValue("translations:1:name", "foo");

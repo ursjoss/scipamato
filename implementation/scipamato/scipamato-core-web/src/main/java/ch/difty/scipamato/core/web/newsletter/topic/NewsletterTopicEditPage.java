@@ -8,6 +8,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.LoadingBehavior;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.confirmation.ConfirmationBehavior;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.wicket.PageReference;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -38,8 +39,11 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
     @SpringBean
     private NewsletterTopicService service;
 
-    NewsletterTopicEditPage(final IModel<NewsletterTopicDefinition> model) {
+    private final PageReference callingPageRef;
+
+    NewsletterTopicEditPage(final IModel<NewsletterTopicDefinition> model, final PageReference callingPageRef) {
         super(model);
+        this.callingPageRef = callingPageRef;
     }
 
     @Override
@@ -53,6 +57,7 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
         queue(new Label("topicLabel", new StringResourceModel("topic.label", this, null)));
         queue(new Label("translationsLabel", new StringResourceModel("translations.label", this, null)));
         queue(newRefreshingView("translations"));
+        queue(newBackButton("back"));
         queue(newSubmitButton("submit"));
         queue(newDeleteButton("delete"));
 
@@ -121,6 +126,23 @@ public class NewsletterTopicEditPage extends BasePage<NewsletterTopicDefinition>
         };
         translations.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
         return translations;
+    }
+
+    private BootstrapButton newBackButton(final String id) {
+        BootstrapButton back = new BootstrapButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG),
+            Buttons.Type.Default) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onSubmit() {
+                if (callingPageRef != null)
+                    setResponsePage(callingPageRef.getPage());
+                else
+                    setResponsePage(NewsletterTopicListPage.class);
+            }
+        };
+        back.setDefaultFormProcessing(false);
+        return back;
     }
 
     private BootstrapButton newSubmitButton(String id) {

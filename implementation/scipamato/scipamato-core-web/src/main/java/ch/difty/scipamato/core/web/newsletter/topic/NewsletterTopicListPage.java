@@ -95,12 +95,13 @@ public class NewsletterTopicListPage extends BasePage<NewsletterTopic> {
     }
 
     private void onTitleClick(final IModel<NewsletterTopicDefinition> newsletterTopicModel) {
-        setResponsePage(new NewsletterTopicEditPage(newsletterTopicModel));
+        setResponsePage(new NewsletterTopicEditPage(newsletterTopicModel, getPage().getPageReference()));
     }
 
     private void queueNewTopicButton(final String id) {
         BootstrapAjaxButton newButton = queueResponsePageButton(id,
-            () -> new NewsletterTopicEditPage(Model.of(service.newUnpersistedNewsletterTopicDefinition())));
+            () -> new NewsletterTopicEditPage(Model.of(service.newUnpersistedNewsletterTopicDefinition()),
+                getPage().getPageReference()));
         newButton.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
     }
 }
