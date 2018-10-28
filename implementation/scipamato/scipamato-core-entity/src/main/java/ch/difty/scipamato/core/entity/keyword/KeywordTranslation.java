@@ -16,9 +16,8 @@ public class KeywordTranslation extends Keyword {
 
     private final String langCode;
 
-    public KeywordTranslation(final Integer id, final String langCode, final String name, final String searchOverride,
-        final Integer version) {
-        super(id, name, searchOverride);
+    public KeywordTranslation(final Integer id, final String langCode, final String name, final Integer version) {
+        super(id, name, null);
         this.langCode = AssertAs.notNull(langCode, "langCode");
         setVersion(version != null ? version : 0);
     }
@@ -26,8 +25,7 @@ public class KeywordTranslation extends Keyword {
     public enum KeywordTranslationFields implements FieldEnumType {
         ID("id"),
         LANG_CODE("langCode"),
-        NAME("name"),
-        SEARCH_OVERRIDE("searchOverride");
+        NAME("name");
 
         private final String name;
 

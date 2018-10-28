@@ -23,7 +23,6 @@ import ch.difty.scipamato.common.NullArgumentException;
  * This aggregate encapsulates the individual translations for all languages,
  * each captured in a {@link KeywordTranslation}.
  * <p>
- * TODO add method to modify other tranlsations within one language
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -50,6 +49,27 @@ public class KeywordDefinition extends Keyword {
      */
     public KeywordDefinition(final Integer id, final String mainLanguageCode, final Integer version,
         final KeywordTranslation... translations) {
+        this(id, mainLanguageCode, null, version, translations);
+    }
+
+    /**
+     * Instantiate a new KeywordDefinition.
+     *
+     * @param id
+     *     the aggregate id
+     * @param mainLanguageCode
+     *     the languageCode of the main language
+     * @param searchOverride
+     *     the search override
+     * @param version
+     *     audit field version
+     * @param translations
+     *     translations for all relevant languages
+     * @throws NullArgumentException
+     *     if the mainLanguageCode is null
+     */
+    public KeywordDefinition(final Integer id, final String mainLanguageCode, final String searchOverride,
+        final Integer version, final KeywordTranslation... translations) {
         super(id, Arrays
             .stream(translations)
             .filter(tr -> AssertAs
@@ -58,15 +78,7 @@ public class KeywordDefinition extends Keyword {
             .map(KeywordTranslation::getName)
             .filter(Objects::nonNull)
             .findFirst()
-            .orElse("n.a."), Arrays
-            .stream(translations)
-            .filter(tr -> AssertAs
-                .notNull(mainLanguageCode, "mainLanguageCode")
-                .equals(tr.getLangCode()))
-            .map(KeywordTranslation::getSearchOverride)
-            .filter(Objects::nonNull)
-            .findFirst()
-            .orElse(null));
+            .orElse("n.a."), searchOverride);
         this.mainLanguageCode = AssertAs.notNull(mainLanguageCode, "mainLanguageCode");
         this.translations = new ArrayListValuedHashMap<>();
         for (final KeywordTranslation kt : translations) {

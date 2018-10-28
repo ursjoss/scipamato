@@ -34,58 +34,59 @@ public class JooqKeywordServiceTest {
     private PaginationContext paginationContextMock;
 
     @Mock
-    private Keyword topicMock;
+    private Keyword keywordMock;
 
-    private final List<Keyword> topics = new ArrayList<>();
+    private final List<Keyword> keywords = new ArrayList<>();
 
     protected KeywordRepository getRepo() {
         return repoMock;
     }
 
     protected Keyword getEntity() {
-        return topicMock;
+        return keywordMock;
     }
 
-    private final List<KeywordDefinition> topicDefinitions = new ArrayList<>();
+    private final List<KeywordDefinition> keywordDefinitions = new ArrayList<>();
 
     @Mock
-    private KeywordDefinition topicDefinitionMock, persistedTopicDefinitionMock;
+    private KeywordDefinition keywordDefinitionMock, persistedKeywordDefinitionMock;
 
     @Before
     public void setUp() {
         service = new JooqKeywordService(repoMock);
 
-        topics.add(topicMock);
-        topics.add(topicMock);
+        keywords.add(keywordMock);
+        keywords.add(keywordMock);
 
-        topicDefinitions.add(topicDefinitionMock);
-        topicDefinitions.add(topicDefinitionMock);
+        keywordDefinitions.add(keywordDefinitionMock);
+        keywordDefinitions.add(keywordDefinitionMock);
     }
 
     @After
     public void specificTearDown() {
-        verifyNoMoreInteractions(repoMock, filterMock, paginationContextMock, topicMock, topicDefinitionMock);
+        verifyNoMoreInteractions(repoMock, filterMock, paginationContextMock, keywordMock, keywordDefinitionMock);
     }
 
     @Test
     public void findingAll_delegatesToRepo() {
         final String langCode = "en";
-        when(repoMock.findAll(langCode)).thenReturn(topics);
-        assertThat(service.findAll(langCode)).isEqualTo(topics);
+        when(repoMock.findAll(langCode)).thenReturn(keywords);
+        assertThat(service.findAll(langCode)).isEqualTo(keywords);
         verify(repoMock).findAll(langCode);
     }
 
     @Test
     public void newUnpersistedKeywordDefinition_delegatesToRepo() {
-        when(repoMock.newUnpersistedKeywordDefinition()).thenReturn(topicDefinitionMock);
-        assertThat(service.newUnpersistedKeywordDefinition()).isEqualTo(topicDefinitionMock);
+        when(repoMock.newUnpersistedKeywordDefinition()).thenReturn(keywordDefinitionMock);
+        assertThat(service.newUnpersistedKeywordDefinition()).isEqualTo(keywordDefinitionMock);
         verify(repoMock).newUnpersistedKeywordDefinition();
     }
 
     @Test
     public void findingPageOfKeywordDefinitions_delegatesToRepo() {
-        when(repoMock.findPageOfKeywordDefinitions(filterMock, paginationContextMock)).thenReturn(topicDefinitions);
-        assertThat(service.findPageOfKeywordDefinitions(filterMock, paginationContextMock)).isEqualTo(topicDefinitions);
+        when(repoMock.findPageOfKeywordDefinitions(filterMock, paginationContextMock)).thenReturn(keywordDefinitions);
+        assertThat(service.findPageOfKeywordDefinitions(filterMock, paginationContextMock)).isEqualTo(
+            keywordDefinitions);
         verify(repoMock).findPageOfKeywordDefinitions(filterMock, paginationContextMock);
     }
 
@@ -98,16 +99,16 @@ public class JooqKeywordServiceTest {
 
     @Test
     public void insertingKeywordDefinition_delegatesToRepo() {
-        when(repoMock.insert(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock);
-        assertThat(service.insert(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock);
-        verify(repoMock).insert(topicDefinitionMock);
+        when(repoMock.insert(keywordDefinitionMock)).thenReturn(persistedKeywordDefinitionMock);
+        assertThat(service.insert(keywordDefinitionMock)).isEqualTo(persistedKeywordDefinitionMock);
+        verify(repoMock).insert(keywordDefinitionMock);
     }
 
     @Test
     public void updatingKeywordDefinition_delegatesToRepo() {
-        when(repoMock.update(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock);
-        assertThat(service.update(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock);
-        verify(repoMock).update(topicDefinitionMock);
+        when(repoMock.update(keywordDefinitionMock)).thenReturn(persistedKeywordDefinitionMock);
+        assertThat(service.update(keywordDefinitionMock)).isEqualTo(persistedKeywordDefinitionMock);
+        verify(repoMock).update(keywordDefinitionMock);
     }
 
     @Test
@@ -117,29 +118,28 @@ public class JooqKeywordServiceTest {
 
     @Test
     public void savingOrUpdatingKeywordDefinition_withNullId_callsInsert() {
-        when(topicDefinitionMock.getId()).thenReturn(null);
-        when(repoMock.insert(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock);
-        assertThat(service.saveOrUpdate(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock);
-        verify(topicDefinitionMock).getId();
-        verify(repoMock).insert(topicDefinitionMock);
+        when(keywordDefinitionMock.getId()).thenReturn(null);
+        when(repoMock.insert(keywordDefinitionMock)).thenReturn(persistedKeywordDefinitionMock);
+        assertThat(service.saveOrUpdate(keywordDefinitionMock)).isEqualTo(persistedKeywordDefinitionMock);
+        verify(keywordDefinitionMock).getId();
+        verify(repoMock).insert(keywordDefinitionMock);
     }
 
     @Test
     public void savingOrUpdatingKeywordDefinition_withNonNullId_callsUpdate() {
-        when(topicDefinitionMock.getId()).thenReturn(1);
-        when(repoMock.update(topicDefinitionMock)).thenReturn(persistedTopicDefinitionMock);
-        assertThat(service.saveOrUpdate(topicDefinitionMock)).isEqualTo(persistedTopicDefinitionMock);
-        verify(topicDefinitionMock).getId();
-        verify(repoMock).update(topicDefinitionMock);
+        when(keywordDefinitionMock.getId()).thenReturn(1);
+        when(repoMock.update(keywordDefinitionMock)).thenReturn(persistedKeywordDefinitionMock);
+        assertThat(service.saveOrUpdate(keywordDefinitionMock)).isEqualTo(persistedKeywordDefinitionMock);
+        verify(keywordDefinitionMock).getId();
+        verify(repoMock).update(keywordDefinitionMock);
     }
 
     @Test
     public void deletingKeywordDefinition_delegatesToRepo() {
-        int id = 11;
-        int version = 12;
-        when(repoMock.delete(id, version)).thenReturn(persistedTopicDefinitionMock);
-        assertThat(service.delete(id, version)).isEqualTo(persistedTopicDefinitionMock);
+        final int id = 11;
+        final int version = 12;
+        when(repoMock.delete(id, version)).thenReturn(persistedKeywordDefinitionMock);
+        assertThat(service.delete(id, version)).isEqualTo(persistedKeywordDefinitionMock);
         verify(repoMock).delete(id, version);
     }
-
 }

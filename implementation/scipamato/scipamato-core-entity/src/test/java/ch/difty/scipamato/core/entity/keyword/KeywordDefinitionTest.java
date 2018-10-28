@@ -12,10 +12,10 @@ import ch.difty.scipamato.common.TestUtils;
 
 public class KeywordDefinitionTest {
 
-    private final KeywordTranslation kw_de  = new KeywordTranslation(10, "de", "stichwort2", "stich", 1);
-    private final KeywordTranslation kw_de2 = new KeywordTranslation(10, "de", "stichwort2foo", null, 1);
-    private final KeywordTranslation kw_en  = new KeywordTranslation(11, "en", "keyword2", null, 1);
-    private final KeywordTranslation kw_fr  = new KeywordTranslation(12, "fr", "motdeclef2", null, 1);
+    private final KeywordTranslation kw_de  = new KeywordTranslation(10, "de", "stichwort2", 1);
+    private final KeywordTranslation kw_de2 = new KeywordTranslation(10, "de", "stichwort2foo", 1);
+    private final KeywordTranslation kw_en  = new KeywordTranslation(11, "en", "keyword2", 1);
+    private final KeywordTranslation kw_fr  = new KeywordTranslation(12, "fr", "motdeclef2", 1);
 
     @Test
     public void degenerateConstruction_withNullLanguageCode_throws() {
@@ -24,28 +24,42 @@ public class KeywordDefinitionTest {
 
     @Test
     public void withNoTranslations_unableToEstablishMainName() {
-        KeywordDefinition ntd = new KeywordDefinition(1, "de", 1);
-        assertThat(ntd.getId()).isEqualTo(1);
-        assertThat(ntd.getName()).isEqualTo("n.a.");
-        assertThat(ntd.getDisplayValue()).isEqualTo("n.a.");
-        assertThat(ntd
+        KeywordDefinition kd = new KeywordDefinition(1, "de", 1);
+        assertThat(kd.getId()).isEqualTo(1);
+        assertThat(kd.getName()).isEqualTo("n.a.");
+        assertThat(kd.getSearchOverride()).isNull();
+        assertThat(kd.getDisplayValue()).isEqualTo("n.a.");
+        assertThat(kd
+            .getTranslations()
+            .asMap()).isEmpty();
+    }
+
+    @Test
+    public void withSearchOVerride() {
+        KeywordDefinition kd = new KeywordDefinition(1, "de", "so", 1);
+        assertThat(kd.getId()).isEqualTo(1);
+        assertThat(kd.getName()).isEqualTo("n.a.");
+        assertThat(kd.getSearchOverride()).isEqualTo("so");
+        assertThat(kd.getDisplayValue()).isEqualTo("n.a.");
+        assertThat(kd
             .getTranslations()
             .asMap()).isEmpty();
     }
 
     @Test
     public void withTranslations_onePerLanguage() {
-        KeywordDefinition ntd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr);
-        assertThat(ntd.getId()).isEqualTo(2);
-        assertThat(ntd.getName()).isEqualTo("stichwort2");
-        assertThat(ntd.getDisplayValue()).isEqualTo("stichwort2");
-        assertThat(ntd
+        KeywordDefinition kd = new KeywordDefinition(2, "de", "sooo", 1, kw_de, kw_en, kw_fr);
+        assertThat(kd.getId()).isEqualTo(2);
+        assertThat(kd.getName()).isEqualTo("stichwort2");
+        assertThat(kd.getSearchOverride()).isEqualTo("sooo");
+        assertThat(kd.getDisplayValue()).isEqualTo("stichwort2");
+        assertThat(kd
             .getTranslations()
             .asMap()).hasSize(3);
-        assertThat(ntd
+        assertThat(kd
             .getTranslations()
             .keySet()).containsExactly("de", "en", "fr");
-        Collection<KeywordTranslation> trs = ntd
+        Collection<KeywordTranslation> trs = kd
             .getTranslations()
             .values();
         assertThat(trs)
@@ -57,28 +71,28 @@ public class KeywordDefinitionTest {
 
     @Test
     public void canGetTranslationsAsString_withTranslationsIncludingMainTranslation() {
-        KeywordDefinition ntd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr);
-        assertThat(ntd.getTranslationsAsString()).isEqualTo("DE: 'stichwort2'; EN: 'keyword2'; FR: 'motdeclef2'");
+        KeywordDefinition kd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr);
+        assertThat(kd.getTranslationsAsString()).isEqualTo("DE: 'stichwort2'; EN: 'keyword2'; FR: 'motdeclef2'");
     }
 
     @Test
     public void canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withPartialTranslation() {
-        KeywordDefinition ntd = new KeywordDefinition(2, "de", 1, kw_de, kw_en,
-            new KeywordTranslation(12, "fr", null, null, 1));
-        assertThat(ntd.getTranslationsAsString()).isEqualTo("DE: 'stichwort2'; EN: 'keyword2'; FR: n.a.");
+        KeywordDefinition kd = new KeywordDefinition(2, "de", 1, kw_de, kw_en,
+            new KeywordTranslation(12, "fr", null, 1));
+        assertThat(kd.getTranslationsAsString()).isEqualTo("DE: 'stichwort2'; EN: 'keyword2'; FR: n.a.");
     }
 
     @Test
     public void canGetTranslationsAsString_withNoTranslations() {
-        KeywordDefinition ntd = new KeywordDefinition(2, "de", 1);
-        assertThat(ntd.getTranslationsAsString()).isNull();
+        KeywordDefinition kd = new KeywordDefinition(2, "de", 1);
+        assertThat(kd.getTranslationsAsString()).isNull();
     }
 
     @Test
     public void modifyingTranslation_withNullLanguageCode_throws() {
-        KeywordDefinition ntd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr);
+        KeywordDefinition kd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr);
         try {
-            ntd.setNameInLanguage(null, "foo");
+            kd.setNameInLanguage(null, "foo");
             fail("should have thrown exception");
         } catch (Exception ex) {
             assertThat(ex)
@@ -89,34 +103,34 @@ public class KeywordDefinitionTest {
 
     @Test
     public void modifyTranslation_withMainLanguageTranslationModified_changesMainName_translationName_andSetsModifiedTimestamp() {
-        KeywordDefinition ntd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr);
-        ntd.setNameInLanguage("de", "KEYWORD 2");
-        assertThat(ntd.getName()).isEqualTo("KEYWORD 2");
-        assertTranslatedName(ntd, "de", 0, "KEYWORD 2");
-        assertLastModifiedIsNotNull(ntd, "de", 0);
-        assertLastModifiedIsNull(ntd, "en", 0);
-        assertLastModifiedIsNull(ntd, "fr", 0);
+        KeywordDefinition kd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr);
+        kd.setNameInLanguage("de", "KEYWORD 2");
+        assertThat(kd.getName()).isEqualTo("KEYWORD 2");
+        assertTranslatedName(kd, "de", 0, "KEYWORD 2");
+        assertLastModifiedIsNotNull(kd, "de", 0);
+        assertLastModifiedIsNull(kd, "en", 0);
+        assertLastModifiedIsNull(kd, "fr", 0);
     }
 
-    private void assertTranslatedName(final KeywordDefinition ntd, final String lc, final int index,
+    private void assertTranslatedName(final KeywordDefinition kd, final String lc, final int index,
         final String value) {
-        assertThat(ntd
+        assertThat(kd
             .getTranslations()
             .get(lc)
             .get(index)
             .getName()).isEqualTo(value);
     }
 
-    private void assertLastModifiedIsNotNull(final KeywordDefinition ntd, final String lc, final int index) {
-        assertThat(ntd
+    private void assertLastModifiedIsNotNull(final KeywordDefinition kd, final String lc, final int index) {
+        assertThat(kd
             .getTranslations()
             .get(lc)
             .get(index)
             .getLastModified()).isNotNull();
     }
 
-    private void assertLastModifiedIsNull(final KeywordDefinition ntd, final String lc, final int index) {
-        assertThat(ntd
+    private void assertLastModifiedIsNull(final KeywordDefinition kd, final String lc, final int index) {
+        assertThat(kd
             .getTranslations()
             .get(lc)
             .get(index)
@@ -125,29 +139,29 @@ public class KeywordDefinitionTest {
 
     @Test
     public void modifyTranslation_withNonMainLanguageTranslationModified_keepsMainName_changesTranslationName_andSetsModifiedTimestamp() {
-        KeywordDefinition ntd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr);
-        ntd.setNameInLanguage("fr", "bar");
-        assertThat(ntd.getName()).isEqualTo("stichwort2");
-        assertTranslatedName(ntd, "fr", 0, "bar");
-        assertThat(ntd
+        KeywordDefinition kd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr);
+        kd.setNameInLanguage("fr", "bar");
+        assertThat(kd.getName()).isEqualTo("stichwort2");
+        assertTranslatedName(kd, "fr", 0, "bar");
+        assertThat(kd
             .getTranslations()
             .get("de")
             .get(0)
             .getLastModified()).isNull();
-        assertThat(ntd
+        assertThat(kd
             .getTranslations()
             .get("en")
             .get(0)
             .getLastModified()).isNull();
-        assertLastModifiedIsNotNull(ntd, "fr", 0);
+        assertLastModifiedIsNotNull(kd, "fr", 0);
     }
 
     @Test
     public void gettingNameInLanguage_withValidLanguages_returnsNames() {
-        KeywordDefinition ntd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr);
-        assertThat(ntd.getNameInLanguage("de")).isEqualTo("stichwort2");
-        assertThat(ntd.getNameInLanguage("en")).isEqualTo("keyword2");
-        assertThat(ntd.getNameInLanguage("fr")).isEqualTo("motdeclef2");
+        KeywordDefinition kd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr);
+        assertThat(kd.getNameInLanguage("de")).isEqualTo("stichwort2");
+        assertThat(kd.getNameInLanguage("en")).isEqualTo("keyword2");
+        assertThat(kd.getNameInLanguage("fr")).isEqualTo("motdeclef2");
     }
 
     @Test
@@ -163,17 +177,17 @@ public class KeywordDefinitionTest {
 
     @Test
     public void withTranslations_moreThanOnePerLanguage() {
-        KeywordDefinition ntd = new KeywordDefinition(2, "de", 1, kw_de, kw_de2, kw_en, kw_fr);
-        assertThat(ntd.getId()).isEqualTo(2);
-        assertThat(ntd.getName()).isEqualTo("stichwort2");
-        assertThat(ntd.getDisplayValue()).isEqualTo("stichwort2");
-        assertThat(ntd
+        KeywordDefinition kd = new KeywordDefinition(2, "de", 1, kw_de, kw_de2, kw_en, kw_fr);
+        assertThat(kd.getId()).isEqualTo(2);
+        assertThat(kd.getName()).isEqualTo("stichwort2");
+        assertThat(kd.getDisplayValue()).isEqualTo("stichwort2");
+        assertThat(kd
             .getTranslations()
             .asMap()).hasSize(3);
-        assertThat(ntd
+        assertThat(kd
             .getTranslations()
             .keySet()).containsExactly("de", "en", "fr");
-        Collection<KeywordTranslation> trs = ntd
+        Collection<KeywordTranslation> trs = kd
             .getTranslations()
             .values();
         assertThat(trs)
@@ -185,22 +199,22 @@ public class KeywordDefinitionTest {
 
     @Test
     public void canGetTranslationsAsString_withTranslationsIncludingMainTranslation_withMultipleTranslations() {
-        KeywordDefinition ntd = new KeywordDefinition(2, "de", 1, kw_de, kw_de2, kw_en, kw_fr);
-        assertThat(ntd.getTranslationsAsString()).isEqualTo(
+        KeywordDefinition kd = new KeywordDefinition(2, "de", 1, kw_de, kw_de2, kw_en, kw_fr);
+        assertThat(kd.getTranslationsAsString()).isEqualTo(
             "DE: 'stichwort2','stichwort2foo'; EN: 'keyword2'; FR: 'motdeclef2'");
     }
 
     @Test
     public void modifyTranslation_withMainLanguageTranslationModified_changesMainName_translationName_andSetsModifiedTimestamp_multipleTranslationsPerLanguage() {
-        KeywordDefinition ntd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr, kw_de2);
-        ntd.setNameInLanguage("de", "Stichwort 2");
-        assertThat(ntd.getName()).isEqualTo("Stichwort 2");
-        assertTranslatedName(ntd, "de", 0, "Stichwort 2");
-        assertTranslatedName(ntd, "de", 1, "stichwort2foo");
-        assertLastModifiedIsNotNull(ntd, "de", 0);
-        assertLastModifiedIsNull(ntd, "de", 1);
-        assertLastModifiedIsNull(ntd, "en", 0);
-        assertLastModifiedIsNull(ntd, "fr", 0);
+        KeywordDefinition kd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr, kw_de2);
+        kd.setNameInLanguage("de", "Stichwort 2");
+        assertThat(kd.getName()).isEqualTo("Stichwort 2");
+        assertTranslatedName(kd, "de", 0, "Stichwort 2");
+        assertTranslatedName(kd, "de", 1, "stichwort2foo");
+        assertLastModifiedIsNotNull(kd, "de", 0);
+        assertLastModifiedIsNull(kd, "de", 1);
+        assertLastModifiedIsNull(kd, "en", 0);
+        assertLastModifiedIsNull(kd, "fr", 0);
     }
 
 }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<body>
+    <wicket:extend>
+        <div class="container-fluid">
+            <form wicket:id="form" class="border">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 wicket:id="keywordLabel" class="panel-title">[Keyword]</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div wicket:id="searchOverrideLabel"></div>
+                                <input wicket:id="searchOverride" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 wicket:id="translationsLabel" class="panel-title">[Translations]</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div wicket:id="translations" class="row">
+                            <div class="col-md-10">
+                                <div class="input-group mb-3">
+                                            <span wicket:id="langCode"
+                                                  class="input-group-addon"
+                                                  id="langCode-addOn">[langCode]</span>
+                                    <input wicket:id="name" class="form-control"
+                                           aria-describedby="langCode-addOn"/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div>
+                                    <button wicket:id="addTranslation" tabindex="-1"></button>
+                                    <button wicket:id="removeTranslation" tabindex="-1"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" wicket:id="submit" class="btn btn-md btn-primary"
+                                tabindex="-1"></button>
+                        <button type="submit" wicket:id="delete" class="btn btn-md" tabindex="-1"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </wicket:extend>
+</body>
+</html>

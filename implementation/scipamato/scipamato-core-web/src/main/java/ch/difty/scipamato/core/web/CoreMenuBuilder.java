@@ -16,6 +16,7 @@ import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.common.web.pages.AbstractMenuBuilder;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.web.authentication.LogoutPage;
+import ch.difty.scipamato.core.web.keyword.KeywordListPage;
 import ch.difty.scipamato.core.web.newsletter.list.NewsletterListPage;
 import ch.difty.scipamato.core.web.newsletter.topic.NewsletterTopicListPage;
 import ch.difty.scipamato.core.web.paper.list.PaperListPage;
@@ -47,6 +48,7 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         newMenu(navbar, page, "papers", GlyphIconType.paperclip, l -> addPaperMenuEntries(l, page));
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
             newMenu(navbar, page, "newsletters", GlyphIconType.book, l -> addNewsletterMenuEntries(l, page));
+            newMenu(navbar, page, "refData", GlyphIconType.folderopen, l -> addRefDataMenuEntries(l, page));
             newMenu(navbar, page, "sync", GlyphIconType.export, l -> addSyncMenuEntries(l, page));
             newMenu(navbar, page, "preferences", GlyphIconType.user, l -> addPreferencesMenuEntries(l, page));
         }
@@ -72,6 +74,13 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
             addEntryToMenu(labelParent + "newsletter", page, NewsletterListPage.class, GlyphIconType.book, links);
             addEntryToMenu(labelParent + "newslettertopic", page, NewsletterTopicListPage.class, GlyphIconType.bookmark,
                 links);
+        }
+    }
+
+    private void addRefDataMenuEntries(final List<AbstractLink> links, Page page) {
+        final String labelParent = "menu.refData.";
+        if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
+            addEntryToMenu(labelParent + "keyword", page, KeywordListPage.class, GlyphIconType.briefcase, links);
         }
     }
 

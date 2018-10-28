@@ -194,7 +194,9 @@ public class JooqKeywordRepoIntegrationTest extends JooqTransactionalIntegration
         assertThat(existing).isNotNull();
         assertThat(existing.getId()).isEqualTo(1);
         assertThat(existing.getName()).isEqualTo("Aerosol");
-        assertThat(existing.getTranslations().asMap()).hasSize(3);
+        assertThat(existing
+            .getTranslations()
+            .asMap()).hasSize(3);
         assertThat(existing.getNameInLanguage("de")).isEqualTo("Aerosol");
         assertThat(existing.getNameInLanguage("en")).isEqualTo("Aerosol");
         assertThat(existing.getNameInLanguage("fr")).isEqualTo("Aérosol");
@@ -202,9 +204,9 @@ public class JooqKeywordRepoIntegrationTest extends JooqTransactionalIntegration
 
     @Test
     public void insertingRecord_savesRecordAndRefreshesId() {
-        final KeywordTranslation kt_de = new KeywordTranslation(null, "de", "foo_de", null, 0);
-        final KeywordTranslation kt_en = new KeywordTranslation(null, "en", "foo1_en", null, 0);
-        final KeywordTranslation kt_fr = new KeywordTranslation(null, "fr", "foo1_fr", null, 0);
+        final KeywordTranslation kt_de = new KeywordTranslation(null, "de", "foo_de", 0);
+        final KeywordTranslation kt_en = new KeywordTranslation(null, "en", "foo1_en", 0);
+        final KeywordTranslation kt_fr = new KeywordTranslation(null, "fr", "foo1_fr", 0);
         final KeywordDefinition ntd = new KeywordDefinition(null, "de", 0, kt_de, kt_en, kt_fr);
 
         assertThat(ntd.getId()).isNull();
@@ -328,6 +330,8 @@ public class JooqKeywordRepoIntegrationTest extends JooqTransactionalIntegration
     public void canLoadKeywordWithMultipleTranslationsInOneLanguage() {
         final KeywordDefinition kd = repo.findKeywordDefinitionById(3);
         assertThat(kd).isNotNull();
-        assertThat(kd.getTranslationsAsString()).isEqualTo("DE: 'Allergie (not Atopie)','Allergie'; EN: 'Allergies'; FR: 'Allérgie'");
+        assertThat(kd.getTranslationsAsString()).isEqualTo(
+            "DE: 'Allergie (not Atopie)','Allergie'; EN: 'Allergies'; FR: 'Allérgie'");
     }
+
 }
