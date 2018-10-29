@@ -62,6 +62,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Fixed
 - 09/84 - Sync: Fix issue with obsolete reference data records in SciPaMaTo-Public not being deleted during sync.
   Also fixed foreign key constraint violation when trying to sync topics of newsletters that are not published.
+- 09/86 - Public: Fix padding in public search page
+
 
 .Security
 

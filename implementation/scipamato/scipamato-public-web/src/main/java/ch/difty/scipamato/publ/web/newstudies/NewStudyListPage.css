@@ -1,5 +1,9 @@
 @CHARSET "UTF-8";
 
+.container-fluid {
+    padding-left: 0px;
+}
+
 h1, h2, h3, h4 {
     display: block;
     font-family: 'simplon_bp_lightlight', sans-serif;
