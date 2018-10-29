@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import org.jooq.DSLContext;
-import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.jooq.conf.ParamType;
 import org.springframework.batch.core.Job;
@@ -41,9 +41,6 @@ public class NewsletterSyncConfig
 
     private static final String TOPIC      = "newsletter";
     private static final int    CHUNK_SIZE = 50;
-
-    // has to be in sync with PublicationStatus TODO place PublicationStatus into scipamato-common-utils and reference here
-    private static final Integer PUBLICATION_STATUS_PUBLISHED = 1;
 
     // relevant fields of the core newsletter record
     private static final TableField<NewsletterRecord, Integer>   N_ID            = NEWSLETTER.ID;
@@ -99,11 +96,13 @@ public class NewsletterSyncConfig
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.NewsletterRecord> getPurgeDcs(
-        final Timestamp cutOff) {
-        return getJooqPublic()
-            .delete(ch.difty.scipamato.publ.db.public_.tables.Newsletter.NEWSLETTER)
-            .where(ch.difty.scipamato.publ.db.public_.tables.Newsletter.NEWSLETTER.LAST_SYNCHED.lessThan(cutOff));
+    protected DeleteWhereStep<ch.difty.scipamato.publ.db.public_.tables.records.NewsletterRecord> getDeleteWhereStep() {
+        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.Newsletter.NEWSLETTER);
+    }
+
+    @Override
+    protected TableField<ch.difty.scipamato.publ.db.public_.tables.records.NewsletterRecord, Timestamp> lastSynchedField() {
+        return ch.difty.scipamato.publ.db.public_.tables.Newsletter.NEWSLETTER.LAST_SYNCHED;
     }
 
 }

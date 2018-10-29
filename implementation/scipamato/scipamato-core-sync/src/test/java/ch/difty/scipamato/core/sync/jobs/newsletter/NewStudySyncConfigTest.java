@@ -6,9 +6,10 @@ import static org.mockito.Mockito.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
+import org.jooq.TableField;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -20,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ch.difty.scipamato.core.db.public_.tables.Paper;
 import ch.difty.scipamato.core.db.public_.tables.PaperNewsletter;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
+import ch.difty.scipamato.publ.db.public_.tables.NewStudy;
 import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyRecord;
 
 @SpringBootTest
@@ -40,8 +42,13 @@ public class NewStudySyncConfigTest extends SyncConfigTest<NewStudyRecord> {
     }
 
     @Override
-    protected DeleteConditionStep<NewStudyRecord> purgeDeleteConditionStep() {
-        return config.getPurgeDcs(Timestamp.valueOf(LocalDateTime.now()));
+    protected DeleteWhereStep<NewStudyRecord> purgeDeleteWhereStep() {
+        return config.getDeleteWhereStep();
+    }
+
+    @Override
+    protected TableField<NewStudyRecord, Timestamp> lastSynchedField() {
+        return config.lastSynchedField();
     }
 
     @Override
@@ -65,13 +72,20 @@ public class NewStudySyncConfigTest extends SyncConfigTest<NewStudyRecord> {
             + "\"public\".\"paper_newsletter\".\"version\", \"public\".\"paper_newsletter\".\"created\", "
             + "\"public\".\"paper_newsletter\".\"last_modified\" "
             + "from \"public\".\"paper_newsletter\" "
-            + "join \"public\".\"paper\" on \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\"";
+            + "join \"public\".\"paper\" on \"public\".\"paper_newsletter\".\"paper_id\" = \"public\".\"paper\".\"id\" "
+            + "join \"public\".\"newsletter\" on \"public\".\"paper_newsletter\".\"newsletter_id\" = \"public\".\"newsletter\".\"id\" "
+            + "where \"public\".\"newsletter\".\"publication_status\" = 1";
         // @formatter:on
     }
 
     @Override
-    protected String expectedPurgeSql() {
-        return "delete from \"public\".\"new_study\" where \"public\".\"new_study\".\"last_synched\" < cast(? as timestamp)";
+    protected String expectedDeleteWhereSql() {
+        return "delete from \"public\".\"new_study\"";
+    }
+
+    @Override
+    protected TableField<NewStudyRecord, Timestamp> expectedLastSyncField() {
+        return NewStudy.NEW_STUDY.LAST_SYNCHED;
     }
 
     @Override

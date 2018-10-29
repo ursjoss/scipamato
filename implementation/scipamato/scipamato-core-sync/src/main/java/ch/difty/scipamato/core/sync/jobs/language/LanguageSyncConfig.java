@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import org.jooq.DSLContext;
-import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Configuration;
 
 import ch.difty.scipamato.common.DateTimeService;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
+import ch.difty.scipamato.publ.db.public_.tables.records.LanguageRecord;
 
 /**
  * Defines the language synchronization job.
@@ -78,11 +79,13 @@ public class LanguageSyncConfig
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.LanguageRecord> getPurgeDcs(
-        final Timestamp cutOff) {
-        return getJooqPublic()
-            .delete(ch.difty.scipamato.publ.db.public_.tables.Language.LANGUAGE)
-            .where(ch.difty.scipamato.publ.db.public_.tables.Language.LANGUAGE.LAST_SYNCHED.lessThan(cutOff));
+    protected DeleteWhereStep<LanguageRecord> getDeleteWhereStep() {
+        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.Language.LANGUAGE);
+    }
+
+    @Override
+    protected TableField<LanguageRecord, Timestamp> lastSynchedField() {
+        return ch.difty.scipamato.publ.db.public_.tables.Language.LANGUAGE.LAST_SYNCHED;
     }
 
 }

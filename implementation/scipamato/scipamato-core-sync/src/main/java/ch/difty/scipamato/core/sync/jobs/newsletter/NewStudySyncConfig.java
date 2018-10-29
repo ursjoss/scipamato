@@ -10,7 +10,9 @@ import java.sql.Timestamp;
 
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
+import org.jooq.conf.ParamType;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -20,11 +22,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import ch.difty.scipamato.common.DateTimeService;
+import ch.difty.scipamato.core.db.public_.tables.Newsletter;
 import ch.difty.scipamato.core.db.public_.tables.records.PaperNewsletterRecord;
 import ch.difty.scipamato.core.db.public_.tables.records.PaperRecord;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
 import ch.difty.scipamato.publ.db.public_.tables.NewStudy;
 import ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic;
+import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyRecord;
 
 /**
  * Defines the newStudy synchronization job, applying two steps:
@@ -88,7 +92,10 @@ public class NewStudySyncConfig
             .from(PAPER_NEWSLETTER)
             .innerJoin(PAPER)
             .on(PAPER_NEWSLETTER.PAPER_ID.eq(PAPER.ID))
-            .getSQL();
+            .innerJoin(Newsletter.NEWSLETTER)
+            .on(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(Newsletter.NEWSLETTER.ID))
+            .where(Newsletter.NEWSLETTER.PUBLICATION_STATUS.eq(PUBLICATION_STATUS_PUBLISHED))
+            .getSQL(ParamType.INLINED);
     }
 
     @Override
@@ -121,11 +128,13 @@ public class NewStudySyncConfig
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.NewStudyRecord> getPurgeDcs(
-        final Timestamp cutOff) {
-        return getJooqPublic()
-            .delete(NewStudy.NEW_STUDY)
-            .where(NewStudy.NEW_STUDY.LAST_SYNCHED.lessThan(cutOff));
+    protected DeleteWhereStep<NewStudyRecord> getDeleteWhereStep() {
+        return getJooqPublic().delete(NewStudy.NEW_STUDY);
+    }
+
+    @Override
+    protected TableField<NewStudyRecord, Timestamp> lastSynchedField() {
+        return NewStudy.NEW_STUDY.LAST_SYNCHED;
     }
 
     @Override

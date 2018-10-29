@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -105,10 +106,12 @@ public class KeywordSyncConfig
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.KeywordRecord> getPurgeDcs(
-        final Timestamp cutOff) {
-        return getJooqPublic()
-            .delete(ch.difty.scipamato.publ.db.public_.tables.Keyword.KEYWORD)
-            .where(ch.difty.scipamato.publ.db.public_.tables.Keyword.KEYWORD.LAST_SYNCHED.lessThan(cutOff));
+    protected DeleteWhereStep<ch.difty.scipamato.publ.db.public_.tables.records.KeywordRecord> getDeleteWhereStep() {
+        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.Keyword.KEYWORD);
+    }
+
+    @Override
+    protected TableField<ch.difty.scipamato.publ.db.public_.tables.records.KeywordRecord, Timestamp> lastSynchedField() {
+        return ch.difty.scipamato.publ.db.public_.tables.Keyword.KEYWORD.LAST_SYNCHED;
     }
 }

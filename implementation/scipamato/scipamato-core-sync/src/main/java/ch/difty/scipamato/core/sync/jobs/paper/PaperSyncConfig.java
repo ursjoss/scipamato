@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.jooq.DSLContext;
-import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.springframework.batch.core.Job;
@@ -188,11 +188,13 @@ public class PaperSyncConfig
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord> getPurgeDcs(
-        final Timestamp cutOff) {
-        return getJooqPublic()
-            .delete(ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER)
-            .where(ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER.LAST_SYNCHED.lessThan(cutOff));
+    protected DeleteWhereStep<ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord> getDeleteWhereStep() {
+        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER);
+    }
+
+    @Override
+    protected TableField<ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord, Timestamp> lastSynchedField() {
+        return ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER.LAST_SYNCHED;
     }
 
 }

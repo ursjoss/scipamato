@@ -8,10 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import org.jooq.DSLContext;
-import org.jooq.DeleteConditionStep;
-import org.jooq.Row9;
-import org.jooq.TableField;
+import org.jooq.*;
 import org.jooq.conf.ParamType;
 import org.jooq.impl.DSL;
 import org.springframework.batch.core.Job;
@@ -124,11 +121,13 @@ public class CodeSyncConfig
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord> getPurgeDcs(
-        final Timestamp cutOff) {
-        return getJooqPublic()
-            .delete(ch.difty.scipamato.publ.db.public_.tables.Code.CODE)
-            .where(ch.difty.scipamato.publ.db.public_.tables.Code.CODE.LAST_SYNCHED.lessThan(cutOff));
+    protected DeleteWhereStep<ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord> getDeleteWhereStep() {
+        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.Code.CODE);
+    }
+
+    @Override
+    protected TableField<ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord, Timestamp> lastSynchedField() {
+        return ch.difty.scipamato.publ.db.public_.tables.Code.CODE.LAST_SYNCHED;
     }
 
     @Override

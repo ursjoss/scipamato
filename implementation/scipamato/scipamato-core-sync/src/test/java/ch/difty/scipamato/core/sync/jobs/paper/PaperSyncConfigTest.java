@@ -107,8 +107,13 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     }
 
     @Override
-    protected DeleteConditionStep<PaperRecord> purgeDeleteConditionStep() {
-        return config.getPurgeDcs(Timestamp.valueOf(LocalDateTime.now()));
+    protected DeleteWhereStep<PaperRecord> purgeDeleteWhereStep() {
+        return config.getDeleteWhereStep();
+    }
+
+    @Override
+    protected TableField<PaperRecord, Timestamp> lastSynchedField() {
+        return config.lastSynchedField();
     }
 
     @Override
@@ -147,8 +152,13 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     }
 
     @Override
-    protected String expectedPurgeSql() {
-        return "delete from \"public\".\"paper\" where \"public\".\"paper\".\"last_synched\" < cast(? as timestamp)";
+    protected String expectedDeleteWhereSql() {
+        return "delete from \"public\".\"paper\"";
+    }
+
+    @Override
+    protected TableField<PaperRecord, Timestamp> expectedLastSyncField() {
+        return ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER.LAST_SYNCHED;
     }
 
     @Test
@@ -329,7 +339,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
 
     @Test
     @Override
-    public void assertingPurgeDdl() {
+    public void assertingPurgeSqlPart() {
         verify(codeAggregator).setInternalCodes(internalCodes);
         verifyNoMoreInteractions(jooqPublic);
     }
@@ -351,6 +361,13 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
             assertThat(expectedPseudoFkSql()).isNull();
         verify(codeAggregator).setInternalCodes(internalCodes);
         verifyNoMoreInteractions(jooqPublic);
+    }
+
+    @Test
+    @Override
+    public void assertingPurgeLastSynchField() {
+        assertThat(lastSynchedField()).isEqualTo(expectedLastSyncField());
+        verify(codeAggregator).setInternalCodes(internalCodes);
     }
 
 }

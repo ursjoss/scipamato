@@ -6,9 +6,10 @@ import static org.mockito.Mockito.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
+import org.jooq.TableField;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -40,8 +41,13 @@ public class NewsletterTopicSyncConfigTest extends SyncConfigTest<NewsletterTopi
     }
 
     @Override
-    protected DeleteConditionStep<NewsletterTopicRecord> purgeDeleteConditionStep() {
-        return config.getPurgeDcs(Timestamp.valueOf(LocalDateTime.now()));
+    protected DeleteWhereStep<NewsletterTopicRecord> purgeDeleteWhereStep() {
+        return config.getDeleteWhereStep();
+    }
+
+    @Override
+    protected TableField<NewsletterTopicRecord, Timestamp> lastSynchedField() {
+        return ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_SYNCHED;
     }
 
     @Override
@@ -63,8 +69,13 @@ public class NewsletterTopicSyncConfigTest extends SyncConfigTest<NewsletterTopi
     }
 
     @Override
-    protected String expectedPurgeSql() {
-        return "delete from \"public\".\"newsletter_topic\" where \"public\".\"newsletter_topic\".\"last_synched\" < cast(? as timestamp)";
+    protected String expectedDeleteWhereSql() {
+        return "delete from \"public\".\"newsletter_topic\"";
+    }
+
+    @Override
+    protected TableField<NewsletterTopicRecord, Timestamp> expectedLastSyncField() {
+        return ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_SYNCHED;
     }
 
     @Test

@@ -6,9 +6,10 @@ import static org.mockito.Mockito.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
+import org.jooq.TableField;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -39,8 +40,13 @@ public class LanguageSyncConfigTest extends SyncConfigTest<LanguageRecord> {
     }
 
     @Override
-    protected DeleteConditionStep<LanguageRecord> purgeDeleteConditionStep() {
-        return config.getPurgeDcs(Timestamp.valueOf(LocalDateTime.now()));
+    protected DeleteWhereStep<LanguageRecord> purgeDeleteWhereStep() {
+        return config.getDeleteWhereStep();
+    }
+
+    @Override
+    protected TableField<LanguageRecord, Timestamp> lastSynchedField() {
+        return config.lastSynchedField();
     }
 
     @Override
@@ -59,8 +65,13 @@ public class LanguageSyncConfigTest extends SyncConfigTest<LanguageRecord> {
     }
 
     @Override
-    protected String expectedPurgeSql() {
-        return "delete from \"public\".\"language\" where \"public\".\"language\".\"last_synched\" < cast(? as timestamp)";
+    protected String expectedDeleteWhereSql() {
+        return "delete from \"public\".\"language\"";
+    }
+
+    @Override
+    protected TableField<LanguageRecord, Timestamp> expectedLastSyncField() {
+        return ch.difty.scipamato.publ.db.public_.tables.Language.LANGUAGE.LAST_SYNCHED;
     }
 
     @Test

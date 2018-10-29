@@ -1,14 +1,12 @@
 package ch.difty.scipamato.core.sync.jobs.newstudypagelink;
 
-import static ch.difty.scipamato.core.db.public_.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK;
-
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import org.jooq.DSLContext;
-import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -19,7 +17,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import ch.difty.scipamato.common.DateTimeService;
+import ch.difty.scipamato.core.db.public_.tables.NewStudyPageLink;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
+import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyPageLinkRecord;
 
 /**
  * Defines the newStudyPageLink synchronization job.
@@ -34,10 +34,10 @@ public class NewStudyPageLinkSyncConfig extends
     private static final int    CHUNK_SIZE = 50;
 
     // relevant fields of the core Language record
-    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.NewStudyPageLinkRecord, String>  C_LANG_CODE = NEW_STUDY_PAGE_LINK.LANG_CODE;
-    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.NewStudyPageLinkRecord, Integer> C_SORT      = NEW_STUDY_PAGE_LINK.SORT;
-    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.NewStudyPageLinkRecord, String>  C_TITLE     = NEW_STUDY_PAGE_LINK.TITLE;
-    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.NewStudyPageLinkRecord, String>  C_URL       = NEW_STUDY_PAGE_LINK.URL;
+    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.NewStudyPageLinkRecord, String>  C_LANG_CODE = NewStudyPageLink.NEW_STUDY_PAGE_LINK.LANG_CODE;
+    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.NewStudyPageLinkRecord, Integer> C_SORT      = NewStudyPageLink.NEW_STUDY_PAGE_LINK.SORT;
+    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.NewStudyPageLinkRecord, String>  C_TITLE     = NewStudyPageLink.NEW_STUDY_PAGE_LINK.TITLE;
+    private static final TableField<ch.difty.scipamato.core.db.public_.tables.records.NewStudyPageLinkRecord, String>  C_URL       = NewStudyPageLink.NEW_STUDY_PAGE_LINK.URL;
 
     protected NewStudyPageLinkSyncConfig(@Qualifier("dslContext") DSLContext jooqCore,
         @Qualifier("publicDslContext") DSLContext jooqPublic, @Qualifier("dataSource") DataSource coreDataSource,
@@ -65,7 +65,7 @@ public class NewStudyPageLinkSyncConfig extends
     protected String selectSql() {
         return getJooqCore()
             .select(C_LANG_CODE, C_SORT, C_TITLE, C_URL)
-            .from(NEW_STUDY_PAGE_LINK)
+            .from(NewStudyPageLink.NEW_STUDY_PAGE_LINK)
             .getSQL();
     }
 
@@ -82,12 +82,13 @@ public class NewStudyPageLinkSyncConfig extends
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.NewStudyPageLinkRecord> getPurgeDcs(
-        final Timestamp cutOff) {
-        return getJooqPublic()
-            .delete(ch.difty.scipamato.publ.db.public_.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK)
-            .where(ch.difty.scipamato.publ.db.public_.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK.LAST_SYNCHED.lessThan(
-                cutOff));
+    protected DeleteWhereStep<NewStudyPageLinkRecord> getDeleteWhereStep() {
+        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK);
+    }
+
+    @Override
+    protected TableField<NewStudyPageLinkRecord, Timestamp> lastSynchedField() {
+        return ch.difty.scipamato.publ.db.public_.tables.NewStudyPageLink.NEW_STUDY_PAGE_LINK.LAST_SYNCHED;
     }
 
 }

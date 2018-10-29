@@ -6,9 +6,10 @@ import static org.mockito.Mockito.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
+import org.jooq.TableField;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -21,6 +22,7 @@ import ch.difty.scipamato.core.db.public_.tables.NewsletterNewsletterTopic;
 import ch.difty.scipamato.core.db.public_.tables.NewsletterTopicTr;
 import ch.difty.scipamato.core.db.public_.tables.PaperNewsletter;
 import ch.difty.scipamato.core.sync.jobs.SyncConfigTest;
+import ch.difty.scipamato.publ.db.public_.tables.NewStudyTopic;
 import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyTopicRecord;
 
 @SpringBootTest
@@ -41,8 +43,13 @@ public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRec
     }
 
     @Override
-    protected DeleteConditionStep<NewStudyTopicRecord> purgeDeleteConditionStep() {
-        return config.getPurgeDcs(Timestamp.valueOf(LocalDateTime.now()));
+    protected DeleteWhereStep<NewStudyTopicRecord> purgeDeleteWhereStep() {
+        return config.getDeleteWhereStep();
+    }
+
+    @Override
+    protected TableField<NewStudyTopicRecord, Timestamp> lastSynchedField() {
+        return config.lastSynchedField();
     }
 
     @Override
@@ -69,13 +76,20 @@ public class NewStudyTopicSyncConfigTest extends SyncConfigTest<NewStudyTopicRec
                 + "on \"public\".\"newsletter_topic\".\"id\" = \"public\".\"newsletter_topic_tr\".\"newsletter_topic_id\" "
             + "left outer join \"public\".\"newsletter_newsletter_topic\" "
                 + "on (\"public\".\"paper_newsletter\".\"newsletter_id\" = \"public\".\"newsletter_newsletter_topic\".\"newsletter_id\" "
-                    + "and \"public\".\"newsletter_topic\".\"id\" = \"public\".\"newsletter_newsletter_topic\".\"newsletter_topic_id\")";
+                    + "and \"public\".\"newsletter_topic\".\"id\" = \"public\".\"newsletter_newsletter_topic\".\"newsletter_topic_id\") "
+            + "join \"public\".\"newsletter\" on \"public\".\"paper_newsletter\".\"newsletter_id\" = \"public\".\"newsletter\".\"id\" "
+            + "where \"public\".\"newsletter\".\"publication_status\" = 1";
         // @formatter:on
     }
 
     @Override
-    protected String expectedPurgeSql() {
-        return "delete from \"public\".\"new_study_topic\" where \"public\".\"new_study_topic\".\"last_synched\" < cast(? as timestamp)";
+    protected String expectedDeleteWhereSql() {
+        return "delete from \"public\".\"new_study_topic\"";
+    }
+
+    @Override
+    protected TableField<NewStudyTopicRecord, Timestamp> expectedLastSyncField() {
+        return NewStudyTopic.NEW_STUDY_TOPIC.LAST_SYNCHED;
     }
 
     @Override

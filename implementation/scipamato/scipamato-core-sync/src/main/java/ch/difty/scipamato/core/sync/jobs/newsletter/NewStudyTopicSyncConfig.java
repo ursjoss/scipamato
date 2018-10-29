@@ -12,7 +12,9 @@ import java.sql.Timestamp;
 
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
+import org.jooq.conf.ParamType;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -22,12 +24,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import ch.difty.scipamato.common.DateTimeService;
+import ch.difty.scipamato.core.db.public_.tables.Newsletter;
 import ch.difty.scipamato.core.db.public_.tables.records.NewsletterNewsletterTopicRecord;
 import ch.difty.scipamato.core.db.public_.tables.records.NewsletterTopicTrRecord;
 import ch.difty.scipamato.core.db.public_.tables.records.PaperNewsletterRecord;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
 import ch.difty.scipamato.publ.db.public_.tables.NewStudyTopic;
 import ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic;
+import ch.difty.scipamato.publ.db.public_.tables.records.NewStudyTopicRecord;
 
 /**
  * Defines the newStudyTopic synchronization job, applying two steps:
@@ -91,7 +95,10 @@ public class NewStudyTopicSyncConfig
             .leftOuterJoin(NEWSLETTER_NEWSLETTER_TOPIC)
             .on(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_ID))
             .and(NEWSLETTER_TOPIC.ID.eq(NEWSLETTER_NEWSLETTER_TOPIC.NEWSLETTER_TOPIC_ID))
-            .getSQL();
+            .innerJoin(Newsletter.NEWSLETTER)
+            .on(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(Newsletter.NEWSLETTER.ID))
+            .where(Newsletter.NEWSLETTER.PUBLICATION_STATUS.eq(PUBLICATION_STATUS_PUBLISHED))
+            .getSQL(ParamType.INLINED);
     }
 
     @Override
@@ -126,11 +133,13 @@ public class NewStudyTopicSyncConfig
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.NewStudyTopicRecord> getPurgeDcs(
-        final Timestamp cutOff) {
-        return getJooqPublic()
-            .delete(NewStudyTopic.NEW_STUDY_TOPIC)
-            .where(NewStudyTopic.NEW_STUDY_TOPIC.LAST_SYNCHED.lessThan(cutOff));
+    protected DeleteWhereStep<NewStudyTopicRecord> getDeleteWhereStep() {
+        return getJooqPublic().delete(NewStudyTopic.NEW_STUDY_TOPIC);
+    }
+
+    @Override
+    protected TableField<NewStudyTopicRecord, Timestamp> lastSynchedField() {
+        return NewStudyTopic.NEW_STUDY_TOPIC.LAST_SYNCHED;
     }
 
     @Override

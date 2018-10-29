@@ -6,9 +6,10 @@ import static org.mockito.Mockito.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
+import org.jooq.TableField;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -40,8 +41,13 @@ public class KeywordSyncConfigTest extends SyncConfigTest<KeywordRecord> {
     }
 
     @Override
-    protected DeleteConditionStep<KeywordRecord> purgeDeleteConditionStep() {
-        return config.getPurgeDcs(Timestamp.valueOf(LocalDateTime.now()));
+    protected DeleteWhereStep<KeywordRecord> purgeDeleteWhereStep() {
+        return config.getDeleteWhereStep();
+    }
+
+    @Override
+    protected TableField<KeywordRecord, Timestamp> lastSynchedField() {
+        return config.lastSynchedField();
     }
 
     @Override
@@ -65,8 +71,13 @@ public class KeywordSyncConfigTest extends SyncConfigTest<KeywordRecord> {
     }
 
     @Override
-    protected String expectedPurgeSql() {
-        return "delete from \"public\".\"keyword\" where \"public\".\"keyword\".\"last_synched\" < cast(? as timestamp)";
+    protected String expectedDeleteWhereSql() {
+        return "delete from \"public\".\"keyword\"";
+    }
+
+    @Override
+    protected TableField<KeywordRecord, Timestamp> expectedLastSyncField() {
+        return ch.difty.scipamato.publ.db.public_.tables.Keyword.KEYWORD.LAST_SYNCHED;
     }
 
     @Test

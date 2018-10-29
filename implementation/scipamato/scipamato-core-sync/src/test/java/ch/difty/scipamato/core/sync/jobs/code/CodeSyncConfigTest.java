@@ -6,9 +6,10 @@ import static org.mockito.Mockito.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
+import org.jooq.TableField;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -40,8 +41,13 @@ public class CodeSyncConfigTest extends SyncConfigTest<CodeRecord> {
     }
 
     @Override
-    protected DeleteConditionStep<CodeRecord> purgeDeleteConditionStep() {
-        return config.getPurgeDcs(Timestamp.valueOf(LocalDateTime.now()));
+    protected DeleteWhereStep<CodeRecord> purgeDeleteWhereStep() {
+        return config.getDeleteWhereStep();
+    }
+
+    @Override
+    protected TableField<CodeRecord, Timestamp> lastSynchedField() {
+        return config.lastSynchedField();
     }
 
     @Override
@@ -74,8 +80,13 @@ public class CodeSyncConfigTest extends SyncConfigTest<CodeRecord> {
     }
 
     @Override
-    protected String expectedPurgeSql() {
-        return "delete from \"public\".\"code\" where \"public\".\"code\".\"last_synched\" < cast(? as timestamp)";
+    protected String expectedDeleteWhereSql() {
+        return "delete from \"public\".\"code\"";
+    }
+
+    @Override
+    protected TableField<CodeRecord, Timestamp> expectedLastSyncField() {
+        return ch.difty.scipamato.publ.db.public_.tables.Code.CODE.LAST_SYNCHED;
     }
 
     @Override

@@ -9,8 +9,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import org.jooq.DSLContext;
-import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
+import org.jooq.conf.ParamType;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import ch.difty.scipamato.common.DateTimeService;
+import ch.difty.scipamato.core.db.public_.tables.Newsletter;
 import ch.difty.scipamato.core.db.public_.tables.records.NewsletterTopicRecord;
 import ch.difty.scipamato.core.db.public_.tables.records.NewsletterTopicTrRecord;
 import ch.difty.scipamato.core.sync.jobs.SyncConfig;
@@ -96,12 +98,13 @@ public class NewsletterTopicSyncConfig
     }
 
     @Override
-    protected DeleteConditionStep<ch.difty.scipamato.publ.db.public_.tables.records.NewsletterTopicRecord> getPurgeDcs(
-        final Timestamp cutOff) {
-        return getJooqPublic()
-            .delete(ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic.NEWSLETTER_TOPIC)
-            .where(ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_SYNCHED.lessThan(
-                cutOff));
+    protected DeleteWhereStep<ch.difty.scipamato.publ.db.public_.tables.records.NewsletterTopicRecord> getDeleteWhereStep() {
+        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic.NEWSLETTER_TOPIC);
+    }
+
+    @Override
+    protected TableField<ch.difty.scipamato.publ.db.public_.tables.records.NewsletterTopicRecord, Timestamp> lastSynchedField() {
+        return ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_SYNCHED;
     }
 
 }

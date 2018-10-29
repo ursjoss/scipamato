@@ -6,6 +6,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
+import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
 import org.junit.Test;
 import org.springframework.batch.core.Job;
@@ -31,9 +33,14 @@ public abstract class SyncConfigTest<R extends UpdatableRecord<R>> {
     protected abstract String selectSql();
 
     /**
-     * @return the purge condition step from the SyncConfig
+     * @return the purge where step from the SyncConfig
      */
-    protected abstract DeleteConditionStep<R> purgeDeleteConditionStep();
+    protected abstract DeleteWhereStep<R> purgeDeleteWhereStep();
+
+    /**
+     * @return the last sync field
+     */
+    protected abstract TableField<R, Timestamp> lastSynchedField();
 
     /**
      * @return the pseudo foreign key ref data integrity enforcement stop from the SysConfig - or null if none applies.
@@ -51,9 +58,14 @@ public abstract class SyncConfigTest<R extends UpdatableRecord<R>> {
     protected abstract String expectedSelectSql();
 
     /**
-     * @return the expected SQL string for purging obsolete entries
+     * @return the expected SQL string part for purging obsolete entries
      */
-    protected abstract String expectedPurgeSql();
+    protected abstract String expectedDeleteWhereSql();
+
+    /**
+     * @return the last sync field
+     */
+    protected abstract TableField<R, Timestamp> expectedLastSyncField();
 
     /**
      * @return the expected SQL string for purging obsolete entries - or null if none applies
@@ -83,8 +95,13 @@ public abstract class SyncConfigTest<R extends UpdatableRecord<R>> {
     }
 
     @Test
-    public void assertingPurgeDdl() {
-        assertThat(purgeDeleteConditionStep().getSQL()).isEqualTo(expectedPurgeSql());
+    public void assertingPurgeSqlPart() {
+        assertThat(purgeDeleteWhereStep().getSQL()).isEqualTo(expectedDeleteWhereSql());
+    }
+
+    @Test
+    public void assertingPurgeLastSynchField() {
+        assertThat(lastSynchedField()).isEqualTo(expectedLastSyncField());
     }
 
     @Test

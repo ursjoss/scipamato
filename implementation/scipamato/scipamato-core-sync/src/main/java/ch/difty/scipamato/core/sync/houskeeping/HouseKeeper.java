@@ -1,7 +1,10 @@
 package ch.difty.scipamato.core.sync.houskeeping;
 
+import java.sql.Timestamp;
+
 import lombok.extern.slf4j.Slf4j;
-import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
+import org.jooq.TableField;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
@@ -9,17 +12,17 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 
 import ch.difty.scipamato.common.AssertAs;
+import ch.difty.scipamato.common.DateTimeService;
 
 /**
  * {@link Tasklet} used for house keeping, i.e. purging records that once were
- * present in scipamato-core and were synchronized to scipamato-public once but
- * now are not present anymore in scipamato-core.
+ * present in scipamato-core and were synchronized to scipamato-public in the past
+ * but now are not present anymore in scipamato-core.
  * <p>
  * The synchronization step that inserts/updates records from core to public
- * touches the lastSynchronized timestamp of each record that is present in
- * scipamato-core. Hence any record in scipamato-public that has no updated
- * timestamp after the first synchronization step must be missing in core and is
- * eligible for purging.
+ * touches the lastSynchronized timestamp of each record present in scipamato-core.
+ * Hence any record in scipamato-public that has no updated timestamp after the first
+ * synchronization step must be missing in core and is eligible for purging.
  * <p>
  * A grace time (in minutes) is applied before purging, i.e. any record which
  * has not been touched within X minutes will be purged. The default value is 30
@@ -32,30 +35,45 @@ import ch.difty.scipamato.common.AssertAs;
 @Slf4j
 public class HouseKeeper<R extends UpdatableRecordImpl<?>> implements Tasklet {
 
-    private final DeleteConditionStep<R> ddl;
-    private final String                 entityName;
+    private final DeleteWhereStep<R>       deleteWhereStep;
+    private final TableField<R, Timestamp> lastSynchedField;
+    private final DateTimeService          dateTimeService;
+    private final int                      graceTimeInMinutes;
+    private final String                   entityName;
 
     /**
-     * @param deleteDdl
-     *     executable jooq delete condition step to delete the records of
-     *     type {@literal T}
+     * @param deleteWhereStep
+     *     part of the delete statement without the condition
+     * @param lastSynchedField
+     *     the the last synched table field
+     * @param dateTimeService
+     *     the service providing the current date and time
      * @param graceTimeInMinutes
      *     records that were touched during synchronization within that many
      *     minutes will be excluded from purging
      * @param entityName
      *     the name of the managed entity
      */
-    public HouseKeeper(final DeleteConditionStep<R> deleteDdl, final int graceTimeInMinutes, final String entityName) {
-        this.ddl = AssertAs.notNull(deleteDdl, "deleteDdl");
+    public HouseKeeper(final DeleteWhereStep<R> deleteWhereStep, final TableField<R, Timestamp> lastSynchedField,
+        final DateTimeService dateTimeService, final int graceTimeInMinutes, final String entityName) {
+        this.deleteWhereStep = AssertAs.notNull(deleteWhereStep, "deleteWhereStep");
+        this.lastSynchedField = AssertAs.notNull(lastSynchedField, "lastSynchedField");
+        this.dateTimeService = AssertAs.notNull(dateTimeService, "dateTimeService");
+        this.graceTimeInMinutes = graceTimeInMinutes;
         this.entityName = AssertAs.notNull(entityName, "entityName");
-        log.debug("Purging {}es that have not been synched in the last {} minutes...", entityName, graceTimeInMinutes);
     }
 
     @Override
     public RepeatStatus execute(final StepContribution contribution, final ChunkContext chunkContext) {
-        final int result = ddl.execute();
+        final Timestamp cutOff = Timestamp.valueOf(dateTimeService
+            .getCurrentDateTime()
+            .minusMinutes(graceTimeInMinutes));
+        final int result = deleteWhereStep
+            .where(lastSynchedField.lessThan(cutOff))
+            .execute();
         if (result > 0)
-            log.info("Successfully deleted {} {}{} in scipamato-public", result, entityName, (result > 1 ? "es" : ""));
+            log.info("Successfully deleted {} {}{} in scipamato-public (not touched since {})", result, entityName,
+                (result > 1 ? "es" : ""), cutOff);
         return RepeatStatus.FINISHED;
     }
 

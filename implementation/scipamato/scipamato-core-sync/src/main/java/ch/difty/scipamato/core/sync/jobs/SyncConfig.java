@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.springframework.batch.core.Job;
@@ -36,6 +37,9 @@ import ch.difty.scipamato.core.sync.houskeeping.PseudoForeignKeyConstraintEnforc
  */
 @SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
+
+    // has to be in sync with PublicationStatus TODO place PublicationStatus into scipamato-common-utils and reference here
+    protected static final Integer PUBLICATION_STATUS_PUBLISHED = 1;
 
     @Value("${purge_grace_time_in_minutes:30}")
     private int graceTime;
@@ -133,16 +137,16 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     protected abstract T makeEntity(ResultSet rs) throws SQLException;
 
     private Step purgingStep() {
-        final Timestamp cutOff = Timestamp.valueOf(getDateTimeService()
-            .getCurrentDateTime()
-            .minusMinutes(graceTime));
         return stepBuilderFactory
             .get(topic + "PurgingStep")
-            .tasklet(new HouseKeeper<>(getPurgeDcs(cutOff), graceTime, topic))
+            .tasklet(
+                new HouseKeeper<>(getDeleteWhereStep(), lastSynchedField(), getDateTimeService(), graceTime, topic))
             .build();
     }
 
-    protected abstract DeleteConditionStep<R> getPurgeDcs(final Timestamp cutOff);
+    protected abstract DeleteWhereStep<R> getDeleteWhereStep();
+
+    protected abstract TableField<R, Timestamp> lastSynchedField();
 
     private Step pseudoForeignKeyConstraintStep() {
         return stepBuilderFactory
@@ -166,7 +170,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
      * belong to a code class that does not exist anymore in table code_class. That's what I here call a
      * pseudo-foreign key constraint.
      *
-     * @return the deleteConditionStep or null if no such envorcment is required. The latter will result in a
+     * @return the deleteConditionStep or null if no such enforcement is required. The latter will result in a
      *     no-op operation in the tasklet running the task.
      */
     public DeleteConditionStep<R> getPseudoFkDcs() {
