@@ -49,7 +49,6 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
             newMenu(navbar, page, "newsletters", GlyphIconType.book, l -> addNewsletterMenuEntries(l, page));
             newMenu(navbar, page, "refData", GlyphIconType.folderopen, l -> addRefDataMenuEntries(l, page));
-            newMenu(navbar, page, "sync", GlyphIconType.export, l -> addSyncMenuEntries(l, page));
             newMenu(navbar, page, "preferences", GlyphIconType.user, l -> addPreferencesMenuEntries(l, page));
         }
 
@@ -81,12 +80,6 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         final String labelParent = "menu.refData.";
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
             addEntryToMenu(labelParent + "keyword", page, KeywordListPage.class, GlyphIconType.briefcase, links);
-        }
-    }
-
-    private void addSyncMenuEntries(final List<AbstractLink> links, Page page) {
-        final String labelParent = "menu.sync.";
-        if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
             addEntryToMenu(labelParent + "sync", page, RefDataSyncPage.class, GlyphIconType.export, links);
         }
     }
