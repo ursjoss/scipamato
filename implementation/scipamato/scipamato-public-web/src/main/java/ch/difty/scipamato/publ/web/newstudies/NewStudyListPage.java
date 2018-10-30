@@ -11,7 +11,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
@@ -52,15 +51,12 @@ import ch.difty.scipamato.publ.web.resources.IcoMoonIconType;
  *
  * @author Urs Joss
  */
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
 @MountPath("new-studies")
 @Slf4j
 public class NewStudyListPage extends BasePage<Void> {
 
     private static final long serialVersionUID = 1L;
-
-    private static final String TARGET = "target";
-    private static final String BLANK  = "_blank";
 
     @SpringBean
     private NewStudyTopicService newStudyTopicService;
@@ -111,15 +107,7 @@ public class NewStudyListPage extends BasePage<Void> {
     }
 
     private ExternalLink newDbSearchLink(final String id, final String href) {
-        return new ExternalLink(id, href, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null).getString()) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onComponentTag(ComponentTag tag) {
-                super.onComponentTag(tag);
-                tag.put(TARGET, BLANK);
-            }
-        };
+        return new ExternalLink(id, href, new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null).getString());
     }
 
     /**
@@ -234,7 +222,6 @@ public class NewStudyListPage extends BasePage<Void> {
         final BootstrapExternalLink link = new BootstrapExternalLink(id, href) {
             private static final long serialVersionUID = 1L;
         };
-        link.setTarget(BootstrapExternalLink.Target.blank);
         link.setIconType(chooseIcon(GlyphIconType.arrowright, IcoMoonIconType.arrow_right));
         link.setLabel(Model.of(linkItem
             .getModelObject()

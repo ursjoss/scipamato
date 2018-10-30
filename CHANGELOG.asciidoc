@@ -56,6 +56,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Changed
 - Core: Moved Sync Menu into Reference Data Menu
 - Public: Layout tweak in NewStudy list page
+- 09/85 - Public: Open links in new study list page in same browser tab
 
 .Deprecated
 
