@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
-import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.jooq.conf.ParamType;
 import org.springframework.batch.core.Job;
@@ -130,11 +129,6 @@ public class NewStudyTopicSyncConfig
         } else {
             return ts1;
         }
-    }
-
-    @Override
-    protected DeleteWhereStep<NewStudyTopicRecord> getDeleteWhereStep() {
-        return getJooqPublic().delete(NewStudyTopic.NEW_STUDY_TOPIC);
     }
 
     @Override

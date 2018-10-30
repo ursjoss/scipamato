@@ -6,7 +6,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.jooq.DeleteConditionStep;
-import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
 import org.junit.Test;
@@ -33,11 +32,6 @@ public abstract class SyncConfigTest<R extends UpdatableRecord<R>> {
     protected abstract String selectSql();
 
     /**
-     * @return the purge where step from the SyncConfig
-     */
-    protected abstract DeleteWhereStep<R> purgeDeleteWhereStep();
-
-    /**
      * @return the last sync field
      */
     protected abstract TableField<R, Timestamp> lastSynchedField();
@@ -56,11 +50,6 @@ public abstract class SyncConfigTest<R extends UpdatableRecord<R>> {
      * @return the expected SQL string for fetching records
      */
     protected abstract String expectedSelectSql();
-
-    /**
-     * @return the expected SQL string part for purging obsolete entries
-     */
-    protected abstract String expectedDeleteWhereSql();
 
     /**
      * @return the last sync field
@@ -92,11 +81,6 @@ public abstract class SyncConfigTest<R extends UpdatableRecord<R>> {
     @Test
     public void assertingSql() {
         assertThat(selectSql()).isEqualTo(expectedSelectSql());
-    }
-
-    @Test
-    public void assertingPurgeSqlPart() {
-        assertThat(purgeDeleteWhereStep().getSQL()).isEqualTo(expectedDeleteWhereSql());
     }
 
     @Test

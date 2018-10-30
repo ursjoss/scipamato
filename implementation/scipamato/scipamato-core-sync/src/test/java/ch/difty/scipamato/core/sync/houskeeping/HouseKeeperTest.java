@@ -7,9 +7,7 @@ import static org.mockito.Mockito.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import org.jooq.DeleteConditionStep;
-import org.jooq.DeleteWhereStep;
-import org.jooq.TableField;
+import org.jooq.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +30,10 @@ public class HouseKeeperTest {
     @Mock
     private DateTimeService                        dateTimeServiceMock;
     @Mock
+    private DSLContext                             dslContextMock;
+    @Mock
+    private Table<CodeClassRecord>                 tableMock;
+    @Mock
     private DeleteWhereStep<CodeClassRecord>       deleteWhereStepMock;
     @Mock
     private DeleteConditionStep<CodeClassRecord>   deleteCondStepMock;
@@ -44,8 +46,10 @@ public class HouseKeeperTest {
 
     @Before
     public void setUp() {
-        hk = new HouseKeeper<>(deleteWhereStepMock, lastSynchedField, dateTimeServiceMock, 30, "code_class");
+        hk = new HouseKeeper<>(dslContextMock, lastSynchedField, dateTimeServiceMock, 30, "code_class");
 
+        when(lastSynchedField.getTable()).thenReturn(tableMock);
+        when(dslContextMock.deleteFrom(tableMock)).thenReturn(deleteWhereStepMock);
         when(dateTimeServiceMock.getCurrentDateTime()).thenReturn(TS);
         when(deleteWhereStepMock.where(lastSynchedField.lessThan(Timestamp.valueOf(TS)))).thenReturn(
             deleteCondStepMock);
@@ -54,27 +58,25 @@ public class HouseKeeperTest {
     @Test
     public void degenerateConstruction_withNullStep_throws() {
         assertDegenerateSupplierParameter(
-            () -> new HouseKeeper<>(null, lastSynchedField, dateTimeServiceMock, 30, "code_class"), "deleteWhereStep");
+            () -> new HouseKeeper<>(null, lastSynchedField, dateTimeServiceMock, 30, "code_class"), "jooqPublic");
     }
 
     @Test
     public void degenerateConstruction_withNullLastSynchedField_throws() {
         assertDegenerateSupplierParameter(
-            () -> new HouseKeeper<>(deleteWhereStepMock, null, dateTimeServiceMock, 30, "code_class"),
-            "lastSynchedField");
+            () -> new HouseKeeper<>(dslContextMock, null, dateTimeServiceMock, 30, "code_class"), "lastSynchedField");
     }
 
     @Test
     public void degenerateConstruction_withNullDateTimeService_throws() {
         assertDegenerateSupplierParameter(
-            () -> new HouseKeeper<>(deleteWhereStepMock, lastSynchedField, null, 30, "code_class"), "dateTimeService");
+            () -> new HouseKeeper<>(dslContextMock, lastSynchedField, null, 30, "code_class"), "dateTimeService");
     }
 
     @Test
     public void degenerateConstruction_withNullEntityName_throws() {
         assertDegenerateSupplierParameter(
-            () -> new HouseKeeper<>(deleteWhereStepMock, lastSynchedField, dateTimeServiceMock, 30, null),
-            "entityName");
+            () -> new HouseKeeper<>(dslContextMock, lastSynchedField, dateTimeServiceMock, 30, null), "entityName");
     }
 
     @Test

@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import org.jooq.DeleteConditionStep;
-import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,11 +39,6 @@ public class LanguageSyncConfigTest extends SyncConfigTest<LanguageRecord> {
     }
 
     @Override
-    protected DeleteWhereStep<LanguageRecord> purgeDeleteWhereStep() {
-        return config.getDeleteWhereStep();
-    }
-
-    @Override
     protected TableField<LanguageRecord, Timestamp> lastSynchedField() {
         return config.lastSynchedField();
     }
@@ -62,11 +56,6 @@ public class LanguageSyncConfigTest extends SyncConfigTest<LanguageRecord> {
     @Override
     protected String expectedSelectSql() {
         return "select \"public\".\"language\".\"code\", \"public\".\"language\".\"main_language\" from \"public\".\"language\"";
-    }
-
-    @Override
-    protected String expectedDeleteWhereSql() {
-        return "delete from \"public\".\"language\"";
     }
 
     @Override

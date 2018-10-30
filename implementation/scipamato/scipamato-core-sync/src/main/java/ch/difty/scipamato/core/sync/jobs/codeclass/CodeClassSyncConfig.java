@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import org.jooq.DSLContext;
-import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -97,11 +96,6 @@ public class CodeClassSyncConfig
             .lastModified(getTimestamp(C_LAST_MODIFIED, rs))
             .lastSynched(getNow())
             .build();
-    }
-
-    @Override
-    protected DeleteWhereStep<ch.difty.scipamato.publ.db.public_.tables.records.CodeClassRecord> getDeleteWhereStep() {
-        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.CodeClass.CODE_CLASS);
     }
 
     @Override

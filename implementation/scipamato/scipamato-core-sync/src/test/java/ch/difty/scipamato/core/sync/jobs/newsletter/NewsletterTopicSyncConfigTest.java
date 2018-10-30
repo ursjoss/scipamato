@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import org.jooq.DeleteConditionStep;
-import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,11 +40,6 @@ public class NewsletterTopicSyncConfigTest extends SyncConfigTest<NewsletterTopi
     }
 
     @Override
-    protected DeleteWhereStep<NewsletterTopicRecord> purgeDeleteWhereStep() {
-        return config.getDeleteWhereStep();
-    }
-
-    @Override
     protected TableField<NewsletterTopicRecord, Timestamp> lastSynchedField() {
         return ch.difty.scipamato.publ.db.public_.tables.NewsletterTopic.NEWSLETTER_TOPIC.LAST_SYNCHED;
     }
@@ -66,11 +60,6 @@ public class NewsletterTopicSyncConfigTest extends SyncConfigTest<NewsletterTopi
             "select \"public\".\"newsletter_topic\".\"id\", \"public\".\"newsletter_topic_tr\".\"lang_code\", \"public\".\"newsletter_topic_tr\".\"title\", "
             + "\"public\".\"newsletter_topic_tr\".\"version\", \"public\".\"newsletter_topic_tr\".\"created\", \"public\".\"newsletter_topic_tr\".\"last_modified\" "
             + "from \"public\".\"newsletter_topic\" join \"public\".\"newsletter_topic_tr\" on \"public\".\"newsletter_topic\".\"id\" = \"public\".\"newsletter_topic_tr\".\"newsletter_topic_id\"";
-    }
-
-    @Override
-    protected String expectedDeleteWhereSql() {
-        return "delete from \"public\".\"newsletter_topic\"";
     }
 
     @Override

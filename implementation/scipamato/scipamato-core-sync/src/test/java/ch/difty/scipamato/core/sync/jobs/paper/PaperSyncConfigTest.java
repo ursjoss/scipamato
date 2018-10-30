@@ -107,11 +107,6 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     }
 
     @Override
-    protected DeleteWhereStep<PaperRecord> purgeDeleteWhereStep() {
-        return config.getDeleteWhereStep();
-    }
-
-    @Override
     protected TableField<PaperRecord, Timestamp> lastSynchedField() {
         return config.lastSynchedField();
     }
@@ -149,11 +144,6 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
             + "\"public\".\"paper\".\"method_confounders\", \"public\".\"paper\".\"population_place\", \"public\".\"paper\".\"population_participants\", "
             + "\"public\".\"paper\".\"population_duration\", \"public\".\"paper\".\"result_exposure_range\", \"public\".\"paper\".\"result_effect_estimate\", "
             + "\"public\".\"paper\".\"result_measured_outcome\"";
-    }
-
-    @Override
-    protected String expectedDeleteWhereSql() {
-        return "delete from \"public\".\"paper\"";
     }
 
     @Override
@@ -335,13 +325,6 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
     @Override
     public void assertingJobIncrementer_toBeRunIdIncrementer() {
         verify(codeAggregator).setInternalCodes(internalCodes);
-    }
-
-    @Test
-    @Override
-    public void assertingPurgeSqlPart() {
-        verify(codeAggregator).setInternalCodes(internalCodes);
-        verifyNoMoreInteractions(jooqPublic);
     }
 
     @Test

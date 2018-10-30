@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import org.jooq.DSLContext;
-import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -76,11 +75,6 @@ public class LanguageSyncConfig
             .mainLanguage(getBoolean(C_MAIN, rs))
             .lastSynched(getNow())
             .build();
-    }
-
-    @Override
-    protected DeleteWhereStep<LanguageRecord> getDeleteWhereStep() {
-        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.Language.LANGUAGE);
     }
 
     @Override

@@ -10,7 +10,6 @@ import java.sql.Timestamp;
 
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
-import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.jooq.conf.ParamType;
 import org.springframework.batch.core.Job;
@@ -125,11 +124,6 @@ public class NewStudySyncConfig
             return firstAuthorString + " et al.";
         else
             return firstAuthorString;
-    }
-
-    @Override
-    protected DeleteWhereStep<NewStudyRecord> getDeleteWhereStep() {
-        return getJooqPublic().delete(NewStudy.NEW_STUDY);
     }
 
     @Override

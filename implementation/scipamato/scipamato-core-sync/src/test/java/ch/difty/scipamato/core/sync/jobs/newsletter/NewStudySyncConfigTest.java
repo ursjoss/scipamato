@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import org.jooq.DeleteConditionStep;
-import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,11 +41,6 @@ public class NewStudySyncConfigTest extends SyncConfigTest<NewStudyRecord> {
     }
 
     @Override
-    protected DeleteWhereStep<NewStudyRecord> purgeDeleteWhereStep() {
-        return config.getDeleteWhereStep();
-    }
-
-    @Override
     protected TableField<NewStudyRecord, Timestamp> lastSynchedField() {
         return config.lastSynchedField();
     }
@@ -76,11 +70,6 @@ public class NewStudySyncConfigTest extends SyncConfigTest<NewStudyRecord> {
             + "join \"public\".\"newsletter\" on \"public\".\"paper_newsletter\".\"newsletter_id\" = \"public\".\"newsletter\".\"id\" "
             + "where \"public\".\"newsletter\".\"publication_status\" = 1";
         // @formatter:on
-    }
-
-    @Override
-    protected String expectedDeleteWhereSql() {
-        return "delete from \"public\".\"new_study\"";
     }
 
     @Override

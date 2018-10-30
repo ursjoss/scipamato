@@ -8,7 +8,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import org.jooq.*;
+import org.jooq.DSLContext;
+import org.jooq.DeleteConditionStep;
+import org.jooq.Row9;
+import org.jooq.TableField;
 import org.jooq.conf.ParamType;
 import org.jooq.impl.DSL;
 import org.springframework.batch.core.Job;
@@ -118,11 +121,6 @@ public class CodeSyncConfig
             .lastModified(getTimestamp(C_LAST_MODIFIED, rs))
             .lastSynched(getNow())
             .build();
-    }
-
-    @Override
-    protected DeleteWhereStep<ch.difty.scipamato.publ.db.public_.tables.records.CodeRecord> getDeleteWhereStep() {
-        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.Code.CODE);
     }
 
     @Override

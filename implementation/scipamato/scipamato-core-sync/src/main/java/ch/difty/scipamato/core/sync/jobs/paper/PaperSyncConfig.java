@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.jooq.DSLContext;
-import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.springframework.batch.core.Job;
@@ -185,11 +184,6 @@ public class PaperSyncConfig
         return (String[]) rs
             .getArray(alias)
             .getArray();
-    }
-
-    @Override
-    protected DeleteWhereStep<ch.difty.scipamato.publ.db.public_.tables.records.PaperRecord> getDeleteWhereStep() {
-        return getJooqPublic().delete(ch.difty.scipamato.publ.db.public_.tables.Paper.PAPER);
     }
 
     @Override

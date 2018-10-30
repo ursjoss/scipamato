@@ -140,11 +140,9 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
         return stepBuilderFactory
             .get(topic + "PurgingStep")
             .tasklet(
-                new HouseKeeper<>(getDeleteWhereStep(), lastSynchedField(), getDateTimeService(), graceTime, topic))
+                new HouseKeeper<>(getJooqPublic(), lastSynchedField(), getDateTimeService(), graceTime, topic))
             .build();
     }
-
-    protected abstract DeleteWhereStep<R> getDeleteWhereStep();
 
     protected abstract TableField<R, Timestamp> lastSynchedField();
 

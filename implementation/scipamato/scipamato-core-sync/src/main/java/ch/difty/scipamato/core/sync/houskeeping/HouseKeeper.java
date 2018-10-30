@@ -3,7 +3,7 @@ package ch.difty.scipamato.core.sync.houskeeping;
 import java.sql.Timestamp;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jooq.DeleteWhereStep;
+import org.jooq.DSLContext;
 import org.jooq.TableField;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.springframework.batch.core.StepContribution;
@@ -35,15 +35,15 @@ import ch.difty.scipamato.common.DateTimeService;
 @Slf4j
 public class HouseKeeper<R extends UpdatableRecordImpl<?>> implements Tasklet {
 
-    private final DeleteWhereStep<R>       deleteWhereStep;
+    private final DSLContext               jooqPublic;
     private final TableField<R, Timestamp> lastSynchedField;
     private final DateTimeService          dateTimeService;
     private final int                      graceTimeInMinutes;
     private final String                   entityName;
 
     /**
-     * @param deleteWhereStep
-     *     part of the delete statement without the condition
+     * @param jooqPublic
+     *     the DSL context for scipamatoPublic
      * @param lastSynchedField
      *     the the last synched table field
      * @param dateTimeService
@@ -54,9 +54,9 @@ public class HouseKeeper<R extends UpdatableRecordImpl<?>> implements Tasklet {
      * @param entityName
      *     the name of the managed entity
      */
-    public HouseKeeper(final DeleteWhereStep<R> deleteWhereStep, final TableField<R, Timestamp> lastSynchedField,
+    public HouseKeeper(final DSLContext jooqPublic, final TableField<R, Timestamp> lastSynchedField,
         final DateTimeService dateTimeService, final int graceTimeInMinutes, final String entityName) {
-        this.deleteWhereStep = AssertAs.notNull(deleteWhereStep, "deleteWhereStep");
+        this.jooqPublic = AssertAs.notNull(jooqPublic, "jooqPublic");
         this.lastSynchedField = AssertAs.notNull(lastSynchedField, "lastSynchedField");
         this.dateTimeService = AssertAs.notNull(dateTimeService, "dateTimeService");
         this.graceTimeInMinutes = graceTimeInMinutes;
@@ -68,7 +68,8 @@ public class HouseKeeper<R extends UpdatableRecordImpl<?>> implements Tasklet {
         final Timestamp cutOff = Timestamp.valueOf(dateTimeService
             .getCurrentDateTime()
             .minusMinutes(graceTimeInMinutes));
-        final int result = deleteWhereStep
+        final int result = jooqPublic
+            .deleteFrom(lastSynchedField.getTable())
             .where(lastSynchedField.lessThan(cutOff))
             .execute();
         if (result > 0)

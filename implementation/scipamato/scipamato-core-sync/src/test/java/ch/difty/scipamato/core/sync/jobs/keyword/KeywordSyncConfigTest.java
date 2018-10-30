@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import org.jooq.DeleteConditionStep;
-import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,11 +40,6 @@ public class KeywordSyncConfigTest extends SyncConfigTest<KeywordRecord> {
     }
 
     @Override
-    protected DeleteWhereStep<KeywordRecord> purgeDeleteWhereStep() {
-        return config.getDeleteWhereStep();
-    }
-
-    @Override
     protected TableField<KeywordRecord, Timestamp> lastSynchedField() {
         return config.lastSynchedField();
     }
@@ -68,11 +62,6 @@ public class KeywordSyncConfigTest extends SyncConfigTest<KeywordRecord> {
             + "\"public\".\"keyword_tr\".\"last_modified\", \"public\".\"keyword\".\"search_override\" "
             + "from \"public\".\"keyword\" join \"public\".\"keyword_tr\" "
             + "on \"public\".\"keyword\".\"id\" = \"public\".\"keyword_tr\".\"keyword_id\"";
-    }
-
-    @Override
-    protected String expectedDeleteWhereSql() {
-        return "delete from \"public\".\"keyword\"";
     }
 
     @Override

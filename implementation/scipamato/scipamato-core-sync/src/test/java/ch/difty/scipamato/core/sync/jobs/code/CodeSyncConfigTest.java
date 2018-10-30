@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import org.jooq.DeleteConditionStep;
-import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,11 +37,6 @@ public class CodeSyncConfigTest extends SyncConfigTest<CodeRecord> {
     @Override
     protected String selectSql() {
         return config.selectSql();
-    }
-
-    @Override
-    protected DeleteWhereStep<CodeRecord> purgeDeleteWhereStep() {
-        return config.getDeleteWhereStep();
     }
 
     @Override
@@ -77,11 +71,6 @@ public class CodeSyncConfigTest extends SyncConfigTest<CodeRecord> {
                     + ") as \"v\"(\"c1\", \"c2\", \"c3\", \"c4\", \"c5\", \"c6\", \"c7\", \"c8\", \"c9\")"
                 + ")";
         // @formatter:on
-    }
-
-    @Override
-    protected String expectedDeleteWhereSql() {
-        return "delete from \"public\".\"code\"";
     }
 
     @Override
