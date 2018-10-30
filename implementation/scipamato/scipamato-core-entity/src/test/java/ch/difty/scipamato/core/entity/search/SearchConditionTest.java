@@ -48,11 +48,12 @@ public class SearchConditionTest {
         sc1.setResultExposureRange(X);
         sc1.setResultEffectEstimate(X);
         sc1.setResultMeasuredOutcome(X);
+        sc1.setConclusion(X);
         sc1.setComment(X);
         sc1.setIntern(X);
         sc1.setOriginalAbstract(X);
         sc1.setMainCodeOfCodeclass1(X);
-        assertThat(sc1.getStringSearchTerms()).hasSize(26);
+        assertThat(sc1.getStringSearchTerms()).hasSize(27);
         assertThat(sc1.getIntegerSearchTerms()).isEmpty();
         assertThat(sc1.getBooleanSearchTerms()).isEmpty();
         assertThat(sc1.getAuditSearchTerms()).isEmpty();
@@ -568,6 +569,20 @@ public class SearchConditionTest {
     }
 
     @Test
+    public void conclusion() {
+        assertThat(sc1.getConclusion()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+
+        sc1.setConclusion(X);
+        assertThat(sc1.getConclusion()).isEqualTo(X);
+        assertThat(sc1.getStringSearchTerms()).hasSize(1);
+
+        sc1.setConclusion(null);
+        assertThat(sc1.getConclusion()).isNull();
+        assertThat(sc1.getStringSearchTerms()).isEmpty();
+    }
+
+    @Test
     public void comment() {
         assertThat(sc1.getComment()).isNull();
         assertThat(sc1.getStringSearchTerms()).isEmpty();
@@ -741,7 +756,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void testDisplayValue_withNewsletterTopicnly() {
+    public void testDisplayValue_withNewsletterTopicOnly() {
         sc1.setNewsletterTopic(new NewsletterTopic(1, "t1"));
         assertThat(sc1.getDisplayValue()).isEqualTo("topic=t1");
     }
@@ -971,7 +986,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void claaringRemovedKeys_removesAllPresent() {
+    public void clearingRemovedKeys_removesAllPresent() {
         sc1.setAuthors("foo");
         sc1.setAuthors(null);
         sc1.setPublicationYear("2014");

@@ -315,6 +315,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .methodStatisticsLabel(getLabelResourceFor(METHOD_STATISTICS.getName()))
             .methodConfoundersLabel(getLabelResourceFor(METHOD_CONFOUNDERS.getName()))
             .resultEffectEstimateLabel(getLabelResourceFor(RESULT_EFFECT_ESTIMATE.getName()))
+            .conclusionLabel(getLabelResourceFor(CONCLUSION.getName()))
             .commentLabel(getLabelResourceFor(COMMENT.getName()))
             .build();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption)
@@ -344,6 +345,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .resultExposureRangeLabel(getShortLabelResourceFor(RESULT_EXPOSURE_RANGE.getName()))
             .methodConfoundersLabel(getLabelResourceFor(METHOD_CONFOUNDERS.getName()))
             .resultEffectEstimateLabel(getShortLabelResourceFor(RESULT_EFFECT_ESTIMATE.getName()))
+            .conclusionLabel(getShortLabelResourceFor(CONCLUSION.getName()))
             .build();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(pdfCaption)
             .withAuthor(getActiveUser())

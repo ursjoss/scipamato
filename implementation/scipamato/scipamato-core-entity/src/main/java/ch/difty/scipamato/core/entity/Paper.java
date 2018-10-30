@@ -141,6 +141,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
         RESULT_EXPOSURE_RANGE("resultExposureRange"),
         RESULT_EFFECT_ESTIMATE("resultEffectEstimate"),
         RESULT_MEASURED_OUTCOME("resultMeasuredOutcome"),
+        CONCLUSION("conclusion"),
         ORIGINAL_ABSTRACT("originalAbstract"),
         ATTACHMENTS("attachments"),
         MAIN_CODE_OF_CODECLASS1("mainCodeOfCodeclass1"),
@@ -214,6 +215,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
     private String resultExposureRange;
     private String resultEffectEstimate;
     private String resultMeasuredOutcome;
+    private String conclusion;
     private String comment;
     private String intern;
     private String originalAbstract;
@@ -324,7 +326,7 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
      * @param topic
      *     the (localized) topic title of the paper newsletter association (functionally dependent on the topicId)
      * @param headline
-     *     the headline of the npaper newsletter association
+     *     the headline of the paper newsletter association
      */
     public void setNewsletterLink(final Integer newsletterId, final String issue, final Integer publicationStatusId,
         final Integer topicId, final String topic, final String headline) {

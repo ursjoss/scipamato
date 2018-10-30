@@ -23,6 +23,7 @@ public abstract class JasperEntityTest {
     protected static final String POPULATION_LABEL = "populationLabel";
     protected static final String METHODS_LABEL    = "methodsLabel";
     protected static final String RESULT_LABEL     = "resultLabel";
+    protected static final String CONCLUSION_LABEL = "conclusionLabel";
     protected static final String COMMENT_LABEL    = "commentLabel";
     protected static final String HEADER_PART      = "headerPart";
     protected static final String BRAND            = "brand";
@@ -52,6 +53,7 @@ public abstract class JasperEntityTest {
     protected static final String METHOD_STATISTICS_LABEL       = "methodStatisticsLabel";
     protected static final String METHOD_CONFOUNDERS_LABEL      = "methodConfoundersLabel";
     protected static final String RESULT_EFFECT_ESTIMATE_LABEL  = "resultEffectEstimateLabel";
+    protected static final String CONCLUSION                    = "conclusion";
     protected static final String NUMBER_LABEL                  = "numberLabel";
     protected static final String CAPTION                       = "caption";
     protected static final String AUTHOR_YEAR_LABEL             = "authorYearLabel";
@@ -92,6 +94,7 @@ public abstract class JasperEntityTest {
         p.setResultExposureRange(RESULT_EXPOSURE_RANGE);
         p.setResultEffectEstimate(RESULT_EFFECT_ESTIMATE);
         p.setResultMeasuredOutcome(RESULT_MEASURED_OUTCOME);
+        p.setConclusion(CONCLUSION);
 
         p.setPmId(PM_ID);
 

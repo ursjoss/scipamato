@@ -36,6 +36,8 @@
 	<field name="methodConfounders" class="java.lang.String"/>
 	<field name="resultEffectEstimateLabel" class="java.lang.String"/>
 	<field name="resultEffectEstimate" class="java.lang.String"/>
+	<field name="conclusionLabel" class="java.lang.String"/>
+	<field name="conclusion" class="java.lang.String"/>
 	<field name="commentLabel" class="java.lang.String"/>
 	<field name="comment" class="java.lang.String"/>
 	<field name="header" class="java.lang.String"/>
@@ -648,6 +650,42 @@
 						<paragraph leftIndent="0"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{resultEffectEstimate}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="conclusion">
+		<groupHeader>
+			<band height="20" splitType="Stretch">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="155" y="0" width="400" height="15" isPrintWhenDetailOverflows="true" uuid="8562d341-73c7-4496-a75d-8756b46d67a5">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false"/>
+						<paragraph leftIndent="0"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{conclusion}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="0" width="150" height="15" uuid="57c4e6e1-464a-4811-b0c9-629d719ed4b1">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="true" isUnderline="false"/>
+						<paragraph leftIndent="0"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{conclusionLabel}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>

@@ -62,7 +62,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
                + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=Turner MC,firstAuthorOverridden=false"
                + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
                + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
-               + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,comment=<null>,intern=<null>,originalAbstract=<null>"
+               + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,conclusion=<null>,comment=<null>,intern=<null>,originalAbstract=<null>"
                + ",mainCodeOfCodeclass1=<null>,newsletterLink=<null>,attachments=[],codes=[],id=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111,version=10]";
     }
 
@@ -261,7 +261,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
                                            + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=Turner MC,firstAuthorOverridden=false"
                                            + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
                                            + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
-                                           + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,comment=<null>,intern=<null>,originalAbstract=<null>"
+                                           + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,conclusion=<null>,comment=<null>,intern=<null>,originalAbstract=<null>"
                                            + ",mainCodeOfCodeclass1=1D,newsletterLink=<null>,attachments=[],codes=[codesOfClass1=[Code[code=1D,name=code 1D,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]]"
                                            + ",codesOfClass1=[Code[code=1E,name=code 1E,comment=<null>,internal=false,codeClass=CodeClass[id=1],sort=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]]"
                                            + ",codesOfClass5=[Code[code=5A,name=code 5A,comment=<null>,internal=false,codeClass=CodeClass[id=5],sort=1,createdBy=<null>,lastModifiedBy=<null>,created=<null>,lastModified=<null>,version=0]]]"
@@ -284,7 +284,7 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
                                            + ",authors=Turner MC, Cohen A, Jerret M, Gapstur SM, Driver WR, Pope CA 3rd, Krewsky D, Beckermann BS, Samet JM.,firstAuthor=Turner MC,firstAuthorOverridden=false"
                                            + ",title=Title,location=foo,publicationYear=2016,goals=foo,population=<null>,populationPlace=<null>,populationParticipants=<null>,populationDuration=<null>"
                                            + ",exposurePollutant=<null>,exposureAssessment=<null>,methods=<null>,methodStudyDesign=<null>,methodOutcome=<null>,methodStatistics=<null>"
-                                           + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,comment=<null>,intern=<null>,originalAbstract=<null>"
+                                           + ",methodConfounders=<null>,result=<null>,resultExposureRange=<null>,resultEffectEstimate=<null>,resultMeasuredOutcome=<null>,conclusion=<null>,comment=<null>,intern=<null>,originalAbstract=<null>"
                                            + ",mainCodeOfCodeclass1=<null>,newsletterLink=<null>,attachments=[PaperAttachment[paperId=1,name=p1,id=1], PaperAttachment[paperId=1,name=p2,id=2]"
                                            + "],codes=[],id=1,createdBy=10,lastModifiedBy=20,created=2017-01-01T22:15:13.111,lastModified=2017-01-10T22:15:13.111,version=10]");
     }

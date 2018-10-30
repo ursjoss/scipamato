@@ -64,6 +64,7 @@ public class PaperRecordMapper extends EntityRecordMapper<PaperRecord, Paper> {
         to.setResultExposureRange(from.getResultExposureRange());
         to.setResultEffectEstimate(from.getResultEffectEstimate());
         to.setResultMeasuredOutcome(from.getResultMeasuredOutcome());
+        to.setConclusion(from.getConclusion());
 
         to.setOriginalAbstract(from.getOriginalAbstract());
 

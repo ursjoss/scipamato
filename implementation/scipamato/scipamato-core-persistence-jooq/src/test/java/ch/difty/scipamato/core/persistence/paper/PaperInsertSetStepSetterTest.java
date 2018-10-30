@@ -77,6 +77,7 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
         when(getMoreStep().set(PAPER.RESULT_EXPOSURE_RANGE, RESULT_EXPOSURE_RANGE)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.RESULT_EFFECT_ESTIMATE, RESULT_EFFECT_ESTIMATE)).thenReturn(getMoreStep());
         when(getMoreStep().set(PAPER.RESULT_MEASURED_OUTCOME, RESULT_MEASURED_OUTCOME)).thenReturn(getMoreStep());
+        when(getMoreStep().set(PAPER.CONCLUSION, CONCLUSION)).thenReturn(getMoreStep());
 
         when(getMoreStep().set(PAPER.ORIGINAL_ABSTRACT, ORIGINAL_ABSTRACT)).thenReturn(getMoreStep());
 
@@ -122,6 +123,7 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
         verify(entityMock).getResultExposureRange();
         verify(entityMock).getResultEffectEstimate();
         verify(entityMock).getResultMeasuredOutcome();
+        verify(entityMock).getConclusion();
 
         verify(entityMock).getOriginalAbstract();
 
@@ -162,6 +164,7 @@ public class PaperInsertSetStepSetterTest extends InsertSetStepSetterTest<PaperR
         verify(getMoreStep()).set(PAPER.RESULT_EXPOSURE_RANGE, RESULT_EXPOSURE_RANGE);
         verify(getMoreStep()).set(PAPER.RESULT_EFFECT_ESTIMATE, RESULT_EFFECT_ESTIMATE);
         verify(getMoreStep()).set(PAPER.RESULT_MEASURED_OUTCOME, RESULT_MEASURED_OUTCOME);
+        verify(getMoreStep()).set(PAPER.CONCLUSION, CONCLUSION);
 
         verify(getMoreStep()).set(PAPER.ORIGINAL_ABSTRACT, ORIGINAL_ABSTRACT);
 

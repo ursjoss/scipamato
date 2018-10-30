@@ -44,6 +44,7 @@ public class ReportHeaderFieldsTest {
             .methodStatisticsLabel("ms")
             .methodConfoundersLabel("mc")
             .resultEffectEstimateLabel("ree")
+            .conclusionLabel("cc")
             .commentLabel("c")
             .populationLabel("p")
             .resultLabel("r")
@@ -70,6 +71,7 @@ public class ReportHeaderFieldsTest {
         assertThat(rhf.getMethodStatisticsLabel()).isEqualTo("ms");
         assertThat(rhf.getMethodConfoundersLabel()).isEqualTo("mc");
         assertThat(rhf.getResultEffectEstimateLabel()).isEqualTo("ree");
+        assertThat(rhf.getConclusionLabel()).isEqualTo("cc");
         assertThat(rhf.getCommentLabel()).isEqualTo("c");
         assertThat(rhf.getPopulationLabel()).isEqualTo("p");
         assertThat(rhf.getResultLabel()).isEqualTo("r");

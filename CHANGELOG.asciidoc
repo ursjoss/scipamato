@@ -52,6 +52,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
+- 09/87: New short field ('Kurzerfassungs-Feld') conclusion.
+         Synched to Public result field. Shown in some reports.
 
 .Changed
 - Core: Moved Sync Menu into Reference Data Menu

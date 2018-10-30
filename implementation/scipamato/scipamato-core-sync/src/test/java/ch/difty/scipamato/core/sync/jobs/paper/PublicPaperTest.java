@@ -70,6 +70,7 @@ public class PublicPaperTest extends PublicEntityTest {
             .resultExposureRange("resultExposureRange")
             .resultEffectEstimate("resultEffectEstimate")
             .resultMeasuredOutcome("resultMeasuredOutcome")
+            .conclusion("conclusion")
             .build();
 
         assertThat(pp.getMethods()).isEqualTo(
@@ -77,7 +78,7 @@ public class PublicPaperTest extends PublicEntityTest {
         assertThat(pp.getPopulation()).isEqualTo(
             "Place: populationPlace / Participants: populationParticipants / Study Duration: populationDuration");
         assertThat(pp.getResult()).isEqualTo(
-            "Exposure (Range): resultExposureRange / Effect Estimate: resultEffectEstimate / Measured Outcome: resultMeasuredOutcome");
+            "Exposure (Range): resultExposureRange / Effect Estimate: resultEffectEstimate / Measured Outcome: resultMeasuredOutcome / Conclusion: conclusion");
     }
 
     @Test
@@ -114,6 +115,7 @@ public class PublicPaperTest extends PublicEntityTest {
             .result("result")
             .resultExposureRange("resultExposureRange")
             .resultEffectEstimate("resultEffectEstimate")
+            .conclusion("conclusion")
             .build();
 
         assertThat(pp.getMethods()).isEqualTo("methods");

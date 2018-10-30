@@ -77,6 +77,7 @@ public class PaperSyncConfig
     private static final TableField<PaperRecord, String> C_RESULT_EXPOSURE_RANGE   = PAPER.RESULT_EXPOSURE_RANGE;
     private static final TableField<PaperRecord, String> C_RESULT_EFFECT_ESTIMATE  = PAPER.RESULT_EFFECT_ESTIMATE;
     private static final TableField<PaperRecord, String> C_RESULT_MEASURED_OUTCOME = PAPER.RESULT_MEASURED_OUTCOME;
+    private static final TableField<PaperRecord, String> C_CONCLUSION              = PAPER.CONCLUSION;
 
     private final CodeAggregator codeAggregator;
 
@@ -125,7 +126,7 @@ public class PaperSyncConfig
                     .as(ALIAS_CODES), C_METHOD_STUDY_DESIGN, C_METHOD_OUTCOME, C_EXPOSURE_POLLUTANT,
                 C_EXPOSURE_ASSESSMENT, C_METHOD_STATISTICS, C_METHOD_CONFOUNDERS, C_POPULATION_PLACE,
                 C_POPULATION_PARTICIPANTS, C_POPULATION_DURATION, C_RESULT_EXPOSURE_RANGE, C_RESULT_EFFECT_ESTIMATE,
-                C_RESULT_MEASURED_OUTCOME)
+                C_RESULT_MEASURED_OUTCOME, C_CONCLUSION)
             .from(Paper.PAPER)
             .innerJoin(PaperCode.PAPER_CODE)
             .on(Paper.PAPER.ID.eq(PaperCode.PAPER_CODE.PAPER_ID))
@@ -135,7 +136,7 @@ public class PaperSyncConfig
                 C_POPULATION, C_RESULT, C_COMMENT, C_VERSION, C_CREATED, C_LAST_MODIFIED, C_METHOD_STUDY_DESIGN,
                 C_METHOD_OUTCOME, C_EXPOSURE_POLLUTANT, C_EXPOSURE_ASSESSMENT, C_METHOD_STATISTICS,
                 C_METHOD_CONFOUNDERS, C_POPULATION_PLACE, C_POPULATION_PARTICIPANTS, C_POPULATION_DURATION,
-                C_RESULT_EXPOSURE_RANGE, C_RESULT_EFFECT_ESTIMATE, C_RESULT_MEASURED_OUTCOME)
+                C_RESULT_EXPOSURE_RANGE, C_RESULT_EFFECT_ESTIMATE, C_RESULT_MEASURED_OUTCOME, C_CONCLUSION)
             .getSQL();
     }
 
@@ -166,6 +167,7 @@ public class PaperSyncConfig
             .resultExposureRange(getString(C_RESULT_EXPOSURE_RANGE, rs))
             .resultEffectEstimate(getString(C_RESULT_EFFECT_ESTIMATE, rs))
             .resultMeasuredOutcome(getString(C_RESULT_MEASURED_OUTCOME, rs))
+            .conclusion(getString(C_CONCLUSION, rs))
             .comment(getString(C_COMMENT, rs))
             .codes(extractCodes(ALIAS_CODES, rs))
             .version(getInteger(C_VERSION, rs))

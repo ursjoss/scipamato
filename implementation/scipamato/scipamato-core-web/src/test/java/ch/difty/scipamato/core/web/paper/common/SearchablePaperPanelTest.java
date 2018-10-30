@@ -48,11 +48,12 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
         sc.setMethodConfounders("mc");
 
         sc.setResult("r");
-        sc.setComment("c");
         sc.setIntern("i");
         sc.setResultMeasuredOutcome("rmo");
         sc.setResultExposureRange("rer");
         sc.setResultEffectEstimate("ree");
+        sc.setConclusion("cc");
+        sc.setComment("c");
 
         sc.addCode(newC(1, "F"));
         sc.setMainCodeOfCodeclass1("mcocc1");

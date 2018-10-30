@@ -132,7 +132,8 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
             + "\"public\".\"paper\".\"method_outcome\", \"public\".\"paper\".\"exposure_pollutant\", \"public\".\"paper\".\"exposure_assessment\", "
             + "\"public\".\"paper\".\"method_statistics\", \"public\".\"paper\".\"method_confounders\", "
             + "\"public\".\"paper\".\"population_place\", \"public\".\"paper\".\"population_participants\", \"public\".\"paper\".\"population_duration\", "
-            + "\"public\".\"paper\".\"result_exposure_range\", \"public\".\"paper\".\"result_effect_estimate\", \"public\".\"paper\".\"result_measured_outcome\" "
+            + "\"public\".\"paper\".\"result_exposure_range\", \"public\".\"paper\".\"result_effect_estimate\", \"public\".\"paper\".\"result_measured_outcome\", "
+            + "\"public\".\"paper\".\"conclusion\" "
             + "from \"public\".\"paper\" join \"public\".\"paper_code\" on \"public\".\"paper\".\"id\" = \"public\".\"paper_code\".\"paper_id\" "
             + "join \"public\".\"code\" on \"public\".\"paper_code\".\"code\" = \"public\".\"code\".\"code\" "
             + "group by \"public\".\"paper\".\"id\", \"public\".\"paper\".\"number\", \"public\".\"paper\".\"pm_id\", \"public\".\"paper\".\"authors\", "
@@ -143,7 +144,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
             + "\"public\".\"paper\".\"exposure_assessment\", \"public\".\"paper\".\"method_statistics\", "
             + "\"public\".\"paper\".\"method_confounders\", \"public\".\"paper\".\"population_place\", \"public\".\"paper\".\"population_participants\", "
             + "\"public\".\"paper\".\"population_duration\", \"public\".\"paper\".\"result_exposure_range\", \"public\".\"paper\".\"result_effect_estimate\", "
-            + "\"public\".\"paper\".\"result_measured_outcome\"";
+            + "\"public\".\"paper\".\"result_measured_outcome\", \"public\".\"paper\".\"conclusion\"";
     }
 
     @Override
@@ -220,6 +221,7 @@ public class PaperSyncConfigTest extends SyncConfigTest<PaperRecord> {
         verify(rs).getString(Paper.PAPER.RESULT_EXPOSURE_RANGE.getName());
         verify(rs).getString(Paper.PAPER.RESULT_EFFECT_ESTIMATE.getName());
         verify(rs).getString(Paper.PAPER.RESULT_MEASURED_OUTCOME.getName());
+        verify(rs).getString(Paper.PAPER.CONCLUSION.getName());
         verify(rs).getString(Paper.PAPER.COMMENT.getName());
         verify(rs).getArray("codes");
         verify(rs).getInt(Paper.PAPER.VERSION.getName());

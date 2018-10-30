@@ -39,6 +39,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
             .resultExposureRangeLabel("rerl")
             .methodConfoundersLabel("mcl")
             .resultEffectEstimateLabel("reel")
+            .conclusionLabel("cc")
             .build();
     }
 
@@ -57,6 +58,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         when(paperMock.getResultExposureRange()).thenReturn("rer");
         when(paperMock.getMethodConfounders()).thenReturn("mc");
         when(paperMock.getResultEffectEstimate()).thenReturn("ree");
+        when(paperMock.getConclusion()).thenReturn("cc");
         when(paperMock.getCreatedByName()).thenReturn("cb");
     }
 
@@ -89,6 +91,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         assertFieldValue("resultExposureRange", "rer", f, jsds);
         assertFieldValue("methodConfounders", "mc", f, jsds);
         assertFieldValue("resultEffectEstimate", "ree", f, jsds);
+        assertFieldValue("conclusion", "cc", f, jsds);
 
         assertFieldValue("numberLabel", "nl", f, jsds);
         assertFieldValue("authorYearLabel", "ayl", f, jsds);
@@ -102,6 +105,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         assertFieldValue("resultExposureRangeLabel", "rerl", f, jsds);
         assertFieldValue("methodConfoundersLabel", "mcl", f, jsds);
         assertFieldValue("resultEffectEstimateLabel", "reel", f, jsds);
+        assertFieldValue("conclusionLabel", "cc", f, jsds);
 
         assertFieldValue("brand", "b", f, jsds);
         assertFieldValue("createdBy", "cb", f, jsds);
@@ -133,6 +137,7 @@ public class PaperReviewDataSourceTest extends PaperDataSourceTest {
         verify(paperMock).getResultExposureRange();
         verify(paperMock).getMethodConfounders();
         verify(paperMock).getResultEffectEstimate();
+        verify(paperMock).getConclusion();
         verify(paperMock).getCreatedByName();
     }
 

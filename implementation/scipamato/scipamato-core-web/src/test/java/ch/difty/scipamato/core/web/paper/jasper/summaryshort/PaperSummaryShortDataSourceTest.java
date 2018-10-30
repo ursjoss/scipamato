@@ -38,6 +38,7 @@ public class PaperSummaryShortDataSourceTest extends PaperDataSourceTest {
     private static final String METHOD_STATISTICS       = "methodStatistics";
     private static final String METHOD_CONFOUNDERS      = "methodConfounders";
     private static final String RESULT_EFFECT_ESTIMATE  = "resultEffectEstimate";
+    private static final String CONCLUSION              = "conclusion";
     private static final String COMMENT                 = "comment";
     private static final String CREATED_BY              = "creatingUser";
 
@@ -55,6 +56,7 @@ public class PaperSummaryShortDataSourceTest extends PaperDataSourceTest {
     private static final String METHOD_STATISTICS_LABEL       = "Statistische Methode";
     private static final String METHOD_CONFOUNDERS_LABEL      = "Störfaktoren Methode";
     private static final String RESULT_EFFECT_ESTIMATE_LABEL  = "Ergebnisse";
+    private static final String CONCLUSION_LABEL              = "Schlussfolgerung";
     private static final String COMMENT_LABEL                 = "Bemerkungen";
     private static final String HEADER_PART                   = "LUDOK-Zusammenfassung Nr.";
     private static final String HEADER                        = HEADER_PART + " " + NUMBER;
@@ -84,6 +86,7 @@ public class PaperSummaryShortDataSourceTest extends PaperDataSourceTest {
             .methodStatisticsLabel(METHOD_STATISTICS_LABEL)
             .methodConfoundersLabel(METHOD_CONFOUNDERS_LABEL)
             .resultEffectEstimateLabel(RESULT_EFFECT_ESTIMATE_LABEL)
+            .conclusionLabel(CONCLUSION_LABEL)
             .commentLabel(COMMENT_LABEL)
             .build();
     }
@@ -108,6 +111,7 @@ public class PaperSummaryShortDataSourceTest extends PaperDataSourceTest {
         when(paperMock.getMethodStatistics()).thenReturn(METHOD_STATISTICS);
         when(paperMock.getMethodConfounders()).thenReturn(METHOD_CONFOUNDERS);
         when(paperMock.getResultEffectEstimate()).thenReturn(RESULT_EFFECT_ESTIMATE);
+        when(paperMock.getConclusion()).thenReturn(CONCLUSION);
         when(paperMock.getComment()).thenReturn(COMMENT);
         when(paperMock.getCreatedByName()).thenReturn(CREATED_BY);
     }
@@ -140,6 +144,7 @@ public class PaperSummaryShortDataSourceTest extends PaperDataSourceTest {
         verify(paperMock).getMethodStatistics();
         verify(paperMock).getMethodConfounders();
         verify(paperMock).getResultEffectEstimate();
+        verify(paperMock).getConclusion();
         verify(paperMock).getComment();
         verify(paperMock).getCreatedByName();
     }
@@ -177,6 +182,7 @@ public class PaperSummaryShortDataSourceTest extends PaperDataSourceTest {
         assertFieldValue("methodStatistics", METHOD_STATISTICS, f, jsds);
         assertFieldValue("methodConfounders", METHOD_CONFOUNDERS, f, jsds);
         assertFieldValue("resultEffectEstimate", RESULT_EFFECT_ESTIMATE, f, jsds);
+        assertFieldValue("conclusion", CONCLUSION, f, jsds);
         assertFieldValue("comment", COMMENT, f, jsds);
 
         assertFieldValue("goalsLabel", GOALS_LABEL, f, jsds);
@@ -193,6 +199,7 @@ public class PaperSummaryShortDataSourceTest extends PaperDataSourceTest {
         assertFieldValue("methodStatisticsLabel", METHOD_STATISTICS_LABEL, f, jsds);
         assertFieldValue("methodConfoundersLabel", METHOD_CONFOUNDERS_LABEL, f, jsds);
         assertFieldValue("resultEffectEstimateLabel", RESULT_EFFECT_ESTIMATE_LABEL, f, jsds);
+        assertFieldValue("conclusionLabel", CONCLUSION_LABEL, f, jsds);
         assertFieldValue("commentLabel", COMMENT_LABEL, f, jsds);
 
         assertFieldValue("header", HEADER, f, jsds);

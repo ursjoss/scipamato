@@ -220,6 +220,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             .methodStatisticsLabel(getLabelResourceFor(METHOD_STATISTICS.getName()))
             .methodConfoundersLabel(getLabelResourceFor(METHOD_CONFOUNDERS.getName()))
             .resultEffectEstimateLabel(getLabelResourceFor(RESULT_EFFECT_ESTIMATE.getName()))
+            .conclusionLabel(getLabelResourceFor(CONCLUSION.getName()))
             .commentLabel(getLabelResourceFor(COMMENT.getName()))
             .build();
         final Paper p = getModelObject();

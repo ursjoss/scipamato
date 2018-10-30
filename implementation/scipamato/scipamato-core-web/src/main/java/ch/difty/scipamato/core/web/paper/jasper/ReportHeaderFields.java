@@ -41,6 +41,7 @@ public class ReportHeaderFields implements IClusterable {
     private final String methodStatisticsLabel;
     private final String methodConfoundersLabel;
     private final String resultEffectEstimateLabel;
+    private final String conclusionLabel;
     private final String commentLabel;
 
     private final String populationLabel;

@@ -86,6 +86,7 @@ public abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, Edita
         p.setResultMeasuredOutcome("rmo");
         p.setResultExposureRange("rer");
         p.setResultEffectEstimate("ree");
+        p.setConclusion("cc");
 
         p.addCode(newC(1, "F"));
         p.setMainCodeOfCodeclass1("mcocc1");

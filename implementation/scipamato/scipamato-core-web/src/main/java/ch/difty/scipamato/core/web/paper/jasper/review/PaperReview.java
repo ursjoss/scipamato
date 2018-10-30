@@ -30,6 +30,7 @@ public class PaperReview extends JasperEntity {
     private final String resultExposureRange;
     private final String methodConfounders;
     private final String resultEffectEstimate;
+    private final String conclusion;
 
     private final String numberLabel;
     private final String authorYearLabel;
@@ -43,6 +44,7 @@ public class PaperReview extends JasperEntity {
     private final String resultExposureRangeLabel;
     private final String methodConfoundersLabel;
     private final String resultEffectEstimateLabel;
+    private final String conclusionLabel;
 
     private final String brand;
     private final String createdBy;
@@ -73,6 +75,7 @@ public class PaperReview extends JasperEntity {
         this.resultExposureRange = na(p.getResultExposureRange());
         this.methodConfounders = na(p.getMethodConfounders());
         this.resultEffectEstimate = na(p.getResultEffectEstimate());
+        this.conclusion = na(p.getConclusion());
         this.numberLabel = na2(rhf.getNumberLabel(), String.valueOf(p.getNumber()));
         this.authorYearLabel = na(rhf.getAuthorYearLabel());
         this.populationPlaceLabel = na(rhf.getPopulationPlaceLabel());
@@ -85,6 +88,7 @@ public class PaperReview extends JasperEntity {
         this.resultExposureRangeLabel = na(rhf.getResultExposureRangeLabel());
         this.methodConfoundersLabel = na(rhf.getMethodConfoundersLabel());
         this.resultEffectEstimateLabel = na(rhf.getResultEffectEstimateLabel());
+        this.conclusionLabel = na(rhf.getConclusionLabel());
 
         this.brand = na(rhf.getBrand());
         this.createdBy = na(p.getCreatedByName());

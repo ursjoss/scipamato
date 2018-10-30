@@ -31,6 +31,7 @@ public class PaperReviewTest extends JasperEntityTest {
             .resultExposureRangeLabel(RESULT_EXPOSURE_RANGE_LABEL)
             .methodConfoundersLabel(METHOD_CONFOUNDERS_LABEL)
             .resultEffectEstimateLabel(RESULT_EFFECT_ESTIMATE_LABEL)
+            .conclusionLabel(CONCLUSION_LABEL)
             .commentLabel(COMMENT_LABEL)
             .build();
     }
@@ -75,6 +76,7 @@ public class PaperReviewTest extends JasperEntityTest {
         assertThat(pr.getResultExposureRangeLabel()).isEqualTo(RESULT_EXPOSURE_RANGE_LABEL);
         assertThat(pr.getMethodConfoundersLabel()).isEqualTo(METHOD_CONFOUNDERS_LABEL);
         assertThat(pr.getResultEffectEstimateLabel()).isEqualTo(RESULT_EFFECT_ESTIMATE_LABEL);
+        assertThat(pr.getConclusionLabel()).isEqualTo(CONCLUSION_LABEL);
         assertThat(pr.getBrand()).isEqualTo(BRAND);
         assertThat(pr.getCreatedBy()).isEqualTo(CREATED_BY);
     }
@@ -131,6 +133,7 @@ public class PaperReviewTest extends JasperEntityTest {
         assertThat(pr.getResultExposureRange()).isEqualTo(RESULT_EXPOSURE_RANGE);
         assertThat(pr.getMethodConfounders()).isEqualTo(METHOD_CONFOUNDERS);
         assertThat(pr.getResultEffectEstimate()).isEqualTo(RESULT_EFFECT_ESTIMATE);
+        assertThat(pr.getConclusion()).isEqualTo(CONCLUSION);
     }
 
     @Test

@@ -48,6 +48,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
             .methodStatisticsLabel(METHOD_STATISTICS_LABEL)
             .methodConfoundersLabel(METHOD_CONFOUNDERS_LABEL)
             .resultEffectEstimateLabel(RESULT_EFFECT_ESTIMATE_LABEL)
+            .conclusionLabel(CONCLUSION_LABEL)
             .commentLabel(COMMENT_LABEL)
             .build();
     }
@@ -71,6 +72,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
         assertThat(ps.getMethodStatistics()).isEqualTo(METHOD_STATISTICS);
         assertThat(ps.getMethodConfounders()).isEqualTo(METHOD_CONFOUNDERS);
         assertThat(ps.getResultEffectEstimate()).isEqualTo(RESULT_EFFECT_ESTIMATE);
+        assertThat(ps.getConclusion()).isEqualTo(CONCLUSION);
         assertThat(ps.getComment()).isEqualTo(COMMENT);
 
         assertThat(ps.getGoalsLabel()).isEqualTo(GOALS_LABEL);
@@ -87,6 +89,7 @@ public class PaperSummaryShortTest extends JasperEntityTest {
         assertThat(ps.getMethodStatisticsLabel()).isEqualTo(METHOD_STATISTICS_LABEL);
         assertThat(ps.getMethodConfoundersLabel()).isEqualTo(METHOD_CONFOUNDERS_LABEL);
         assertThat(ps.getResultEffectEstimateLabel()).isEqualTo(RESULT_EFFECT_ESTIMATE_LABEL);
+        assertThat(ps.getConclusionLabel()).isEqualTo(CONCLUSION_LABEL);
         assertThat(ps.getCommentLabel()).isEqualTo(COMMENT_LABEL);
 
         assertThat(ps.getHeader()).isEqualTo(HEADER_PART + " " + NUMBER);
@@ -218,6 +221,15 @@ public class PaperSummaryShortTest extends JasperEntityTest {
 
         assertThat(ps.getResultEffectEstimate()).isEqualTo("");
         assertThat(ps.getResultEffectEstimateLabel()).isEqualTo("");
+    }
+
+    @Test
+    public void conclusionLabelIsBlankIfConclusionIsBlank() {
+        p.setConclusion("");
+        ps = new PaperSummaryShort(p, rhf);
+
+        assertThat(ps.getConclusion()).isEqualTo("");
+        assertThat(ps.getConclusionLabel()).isEqualTo("");
     }
 
     @Test

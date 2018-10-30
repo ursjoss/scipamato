@@ -86,6 +86,7 @@ public class PaperFilterConditionMapperTest
                 , "RESULT_EXPOSURE_RANGE"
                 , "RESULT_EFFECT_ESTIMATE"
                 , "RESULT_MEASURED_OUTCOME"
+                , "CONCLUSION"
                 , "COMMENT"
                 , "INTERN"
                 , "ORIGINAL_ABSTRACT"

@@ -42,6 +42,8 @@ public class PaperSummaryShort extends PaperSummaryCommon {
     private final String methodConfounders;
     private final String resultEffectEstimateLabel;
     private final String resultEffectEstimate;
+    private final String conclusionLabel;
+    private final String conclusion;
 
     /**
      * Instantiation with a {@link Paper} and the {@link ReportHeaderFields}
@@ -66,6 +68,7 @@ public class PaperSummaryShort extends PaperSummaryCommon {
         this.methodStatistics = na(p.getMethodStatistics());
         this.methodConfounders = na(p.getMethodConfounders());
         this.resultEffectEstimate = na(p.getResultEffectEstimate());
+        this.conclusion = na(p.getConclusion());
 
         this.methodOutcomeLabel = na2(rhf.getMethodOutcomeLabel(), methodOutcome);
         this.resultMeasuredOutcomeLabel = na2(rhf.getResultMeasuredOutcomeLabel(), resultMeasuredOutcome);
@@ -79,6 +82,7 @@ public class PaperSummaryShort extends PaperSummaryCommon {
         this.methodStatisticsLabel = na2(rhf.getMethodStatisticsLabel(), methodStatistics);
         this.methodConfoundersLabel = na2(rhf.getMethodConfoundersLabel(), methodConfounders);
         this.resultEffectEstimateLabel = na2(rhf.getResultEffectEstimateLabel(), resultEffectEstimate);
+        this.conclusionLabel = na2(rhf.getConclusionLabel(), conclusion);
     }
 
 }

@@ -725,6 +725,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             queueNewFieldTo(RESULT_MEASURED_OUTCOME);
             queueNewFieldTo(RESULT_EXPOSURE_RANGE);
             queueNewFieldTo(RESULT_EFFECT_ESTIMATE);
+            queueNewFieldTo(CONCLUSION);
         }
     }
 
@@ -866,6 +867,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             queueNewFieldTo(RESULT_MEASURED_OUTCOME);
             queueNewFieldTo(RESULT_EXPOSURE_RANGE);
             queueNewFieldTo(RESULT_EFFECT_ESTIMATE);
+            queueNewFieldTo(CONCLUSION);
         }
     }
 

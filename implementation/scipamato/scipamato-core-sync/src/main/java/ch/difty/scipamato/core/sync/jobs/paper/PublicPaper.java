@@ -41,7 +41,7 @@ public class PublicPaper extends Paper {
         final String methodOutcome, final String exposurePollutant, final String exposureAssessment,
         final String methodStatistics, final String methodConfounders, final String populationPlace,
         final String populationParticipants, final String populationDuration, final String resultExposureRange,
-        final String resultEffectEstimate, final String resultMeasuredOutcome) {
+        final String resultEffectEstimate, final String resultMeasuredOutcome, final String conclusion) {
         delegate = new Paper();
         delegate.setId(id);
         delegate.setNumber(number);
@@ -60,7 +60,7 @@ public class PublicPaper extends Paper {
         delegate.setResult(
             determineAppropriate(new Tuple(null, result), new Tuple("Exposure (Range)", resultExposureRange),
                 new Tuple("Effect Estimate", resultEffectEstimate),
-                new Tuple("Measured Outcome", resultMeasuredOutcome)));
+                new Tuple("Measured Outcome", resultMeasuredOutcome), new Tuple("Conclusion", conclusion)));
         delegate.setComment(comment);
         delegate.setCodesPopulation(codesPopulation);
         delegate.setCodesStudyDesign(codesStudyDesign);

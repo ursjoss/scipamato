@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
@@ -30,7 +29,8 @@ import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.PanelTest;
 
-public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P extends PaperPanel<T>> extends PanelTest<P> {
+public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P extends PaperPanel<T>>
+    extends PanelTest<P> {
 
     private static final String LOCALE = "en_us";
 
@@ -186,6 +186,7 @@ public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P
         assertTextAreaWithLabel(bbb + ":resultMeasuredOutcome", "rmo", "Measured Outcome");
         assertTextAreaWithLabel(bbb + ":resultExposureRange", "rer", "Exposure (Range)");
         assertTextAreaWithLabel(bbb + ":resultEffectEstimate", "ree", "Effect Estimate/Results");
+        assertTextAreaWithLabel(bbb + ":conclusion", "cc", "Conclusion");
 
         bbb = bb + ":5:tab3Form";
         getTester().assertComponent(bbb, Form.class);
@@ -212,6 +213,7 @@ public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P
         assertTextAreaWithLabel(bbb + ":methodConfounders", "mc", "Confounders");
         assertTextAreaWithLabel(bbb + ":resultMeasuredOutcome", "rmo", "Measured Outcome");
         assertTextAreaWithLabel(bbb + ":resultExposureRange", "rer", "Exposure (Range)");
+        assertTextAreaWithLabel(bbb + ":conclusion", "cc", "Conclusion");
         assertTextAreaWithLabel(bbb + ":resultEffectEstimate", "ree", "Effect Estimate/Results");
 
         bbb = bb + ":9:tab5Form";

@@ -358,6 +358,14 @@ public class SearchCondition extends ScipamatoFilter implements CodeBoxAware, Ne
         setStringValue(value, RESULT_EFFECT_ESTIMATE);
     }
 
+    public String getConclusion() {
+        return getStringValue(CONCLUSION);
+    }
+
+    public void setConclusion(final String value) {
+        setStringValue(value, CONCLUSION);
+    }
+
     public String getResultMeasuredOutcome() {
         return getStringValue(RESULT_MEASURED_OUTCOME);
     }
