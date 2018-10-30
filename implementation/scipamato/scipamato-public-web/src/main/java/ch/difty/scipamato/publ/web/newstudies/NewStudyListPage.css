@@ -20,7 +20,8 @@ h1 {
     -webkit-margin-end: 0px;
 }
 
-h2, h3, h4 {
+h2 {
+    font-size: 1.5em;
     margin: 20px 0 10px 0;
     -webkit-margin-before: 20px;
     -webkit-margin-after: 10px;
@@ -28,13 +29,14 @@ h2, h3, h4 {
     -webkit-margin-end: 0px;
 }
 
-h2 {
-    font-size: 1.5em;
-}
-
 h3 {
     font-family: 'simplon_bp_mediummedium', sans-serif;
     font-size: 1.125em;
+    margin: 20px 0 0px 0;
+    -webkit-margin-before: 20px;
+    -webkit-margin-after: 0px;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
 }
 
 p {
