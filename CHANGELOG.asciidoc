@@ -58,6 +58,16 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Changed
 - Core: Moved Sync Menu into Reference Data Menu
 - Public: Layout tweak in NewStudy list page
+- Bumped dependencies: spring-boot-2.1.0, bval-jsr, spring-boot-admin-starter-client, equalsverifier
+- Simplified dependency management:
+  - Remove explicit version overrides for dependencies managed already in spring-boot-super-pom (jOOQ,
+    Flyway, lombok, mockito, assertj, byte-buddy, commons-lang3, jaxb-api, jaxb-runtime, maven-plugins
+  - Remove dependency management entry or at least version number for dependencies managed already
+    in spring-boot-super-pom
+- Migration to spring-boot-starter-parent-2.1.0
+  - Remove obsolete spring bean overrides
+  - Enable spring.main.allow-bean-definition-overriding where requiered (a. in case of overriding
+    beans with test beans (test profile) and b. with spring batch jobRepository (production)
 
 .Deprecated
 
