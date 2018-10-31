@@ -68,7 +68,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
   Also fixed foreign key constraint violation when trying to sync topics of newsletters that are not published.
   Fix sync of newsletter related tables based on wrong foreign key constraints
 - 09/86 - Public: Fix padding in public search page
-- 09/88 - Public: Fix typo
+- 09/88 - Public: Fix typos
 
 
 .Security
