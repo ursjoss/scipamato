@@ -340,7 +340,6 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
             pp.add(SHOW_EXCLUDED.getName(), false);
             pp.add(MODE.getName(), mode);
             pageFactory.setResponsePageToPaperSearchPageConsumer(this);
-            //            setResponsePage(new PaperSearchPage(pp));
         } catch (OptimisticLockingException ole) {
             final String msg = new StringResourceModel("save.optimisticlockexception.hint", this, null)
                 .setParameters(ole.getTableName(), getModelObject().getId())

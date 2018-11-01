@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 
 import org.jooq.DSLContext;
 import org.jooq.DeleteConditionStep;
-import org.jooq.DeleteWhereStep;
 import org.jooq.TableField;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.springframework.batch.core.Job;
@@ -139,8 +138,7 @@ public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
     private Step purgingStep() {
         return stepBuilderFactory
             .get(topic + "PurgingStep")
-            .tasklet(
-                new HouseKeeper<>(getJooqPublic(), lastSynchedField(), getDateTimeService(), graceTime, topic))
+            .tasklet(new HouseKeeper<>(getJooqPublic(), lastSynchedField(), getDateTimeService(), graceTime, topic))
             .build();
     }
 
