@@ -56,7 +56,7 @@ public class JooqKeywordRepoIntegrationTest extends JooqTransactionalIntegration
         assertThat(ntd.getSearchOverride()).isNull();
         assertThat(ntd.getNameInLanguage("de")).isEqualTo("Allergie (not Atopie)");
         assertThat(ntd.getNameInLanguage("en")).isEqualTo("Allergies");
-        assertThat(ntd.getNameInLanguage("fr")).isEqualTo("Allérgie");
+        assertThat(ntd.getNameInLanguage("fr")).isEqualTo("Allergie");
     }
 
     @Test
@@ -74,13 +74,13 @@ public class JooqKeywordRepoIntegrationTest extends JooqTransactionalIntegration
         assertThat(ntd.getSearchOverride()).isNull();
         assertThat(ntd.getNameInLanguage("de")).isEqualTo("Allergie (not Atopie)");
         assertThat(ntd.getNameInLanguage("en")).isEqualTo("Allergies");
-        assertThat(ntd.getNameInLanguage("fr")).isEqualTo("Allérgie");
+        assertThat(ntd.getNameInLanguage("fr")).isEqualTo("Allergie");
     }
 
     @Test
     public void findingKeywordDefinitions_haveVersionFieldsPopulated() {
         final KeywordFilter filter = new KeywordFilter();
-        filter.setNameMask("Allérgie");
+        filter.setNameMask("Allergie");
         final List<KeywordDefinition> kds = repo.findPageOfKeywordDefinitions(filter,
             new PaginationRequest(Sort.Direction.ASC, "name"));
 
@@ -129,7 +129,7 @@ public class JooqKeywordRepoIntegrationTest extends JooqTransactionalIntegration
         assertThat(ntd.getName()).isEqualTo("Allergie (not Atopie)");
         assertThat(ntd.getNameInLanguage("de")).isEqualTo("Allergie (not Atopie)");
         assertThat(ntd.getNameInLanguage("en")).isEqualTo("Allergies");
-        assertThat(ntd.getNameInLanguage("fr")).isEqualTo("Allérgie");
+        assertThat(ntd.getNameInLanguage("fr")).isEqualTo("Allergie");
     }
 
     @Test
@@ -331,7 +331,7 @@ public class JooqKeywordRepoIntegrationTest extends JooqTransactionalIntegration
         final KeywordDefinition kd = repo.findKeywordDefinitionById(3);
         assertThat(kd).isNotNull();
         assertThat(kd.getTranslationsAsString()).isEqualTo(
-            "DE: 'Allergie (not Atopie)','Allergie'; EN: 'Allergies'; FR: 'Allérgie'");
+            "DE: 'Allergie (not Atopie)','Allergie'; EN: 'Allergies'; FR: 'Allergie'");
     }
 
 }

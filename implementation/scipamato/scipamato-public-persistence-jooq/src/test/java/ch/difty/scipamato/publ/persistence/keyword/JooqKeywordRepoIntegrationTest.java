@@ -40,7 +40,7 @@ public class JooqKeywordRepoIntegrationTest extends JooqTransactionalIntegration
         List<Keyword> keywords = repo.findKeywords("fr");
         assertThat(keywords)
             .extracting("name")
-            .containsExactly("Activités réduites", "Aérosol", "Allérgie");
+            .containsExactly("Activités réduites", "Aérosol", "Allergie");
         keywords.forEach((c) -> log.debug(c.toString()));
     }
 
