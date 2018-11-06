@@ -24,7 +24,7 @@ public class JooqCodeClassRepoIntegrationTest extends JooqTransactionalIntegrati
     public void finding_inFrench_returnsLocalizedCodeClasses() {
         assertThat(repo.find("fr"))
             .extracting("name")
-            .containsExactly("Polluant nocif", "Région", "Echantillons des personnes", "Effets physiologique ou nocifs",
+            .containsExactly("Polluant nocif", "Région", "Population", "Effets physiologique ou nocifs",
                 "Type d'étude", "Espèces investigées", "Durée de l'exposition", "Site d'exposition");
     }
 
