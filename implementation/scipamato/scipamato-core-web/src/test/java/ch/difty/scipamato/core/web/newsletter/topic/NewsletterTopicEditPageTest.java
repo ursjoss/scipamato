@@ -55,22 +55,23 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
 
         b += ":";
 
-        String bb = b + "topic";
+        String bb = b + "header";
         getTester().assertLabel(bb + "Label", "Newsletter Topic");
+
+        bb += "Panel:";
+        getTester().assertComponent(bb + "back", BootstrapButton.class);
+        getTester().assertComponent(bb + "submit", BootstrapButton.class);
+        getTester().assertComponent(bb + "delete", BootstrapButton.class);
 
         bb = b + "translations";
         getTester().assertLabel(bb + "Label", "Topic Translations");
 
-        bb = b + "translations";
+        bb = b + "translationsPanel:translations";
         getTester().assertComponent(bb, RefreshingView.class);
         bb += ":";
         assertTranslation(bb, 1, "de", "thema1");
         assertTranslation(bb, 2, "en", "topic1");
         assertTranslation(bb, 3, "fr", "sujet1");
-
-        getTester().assertComponent(b + "back", BootstrapButton.class);
-        getTester().assertComponent(b + "submit", BootstrapButton.class);
-        getTester().assertComponent(b + "delete", BootstrapButton.class);
     }
 
     private void assertTranslation(final String bb, final int idx, final String langCode, final String title) {
@@ -94,10 +95,10 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
         getTester().startPage(new NewsletterTopicEditPage(Model.of(ntd), null));
 
         FormTester formTester = getTester().newFormTester("form");
-        formTester.setValue("translations:1:title", "1806");
-        assertTranslation("form:translations:", 1, "de", "thema1");
-        formTester.submit("submit");
-        assertTranslation("form:translations:", 4, "de", "1806");
+        formTester.setValue("translationsPanel:translations:1:title", "1806");
+        assertTranslation("form:translationsPanel:translations:", 1, "de", "thema1");
+        formTester.submit("headerPanel:submit");
+        assertTranslation("form:translationsPanel:translations:", 4, "de", "1806");
 
         verify(newsletterTopicServiceMock).saveOrUpdate(isA(NewsletterTopicDefinition.class));
     }

@@ -91,6 +91,14 @@ public class JooqKeywordServiceTest {
     }
 
     @Test
+    public void findingPageOfEntityDefinitions_delegatesToRepo() {
+        when(repoMock.findPageOfKeywordDefinitions(filterMock, paginationContextMock)).thenReturn(keywordDefinitions);
+        assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock)).hasSameElementsAs(
+            keywordDefinitions);
+        verify(repoMock).findPageOfKeywordDefinitions(filterMock, paginationContextMock);
+    }
+
+    @Test
     public void countingKeywords_delegatesToRepo() {
         when(repoMock.countByFilter(filterMock)).thenReturn(3);
         assertThat(service.countByFilter(filterMock)).isEqualTo(3);
@@ -142,4 +150,5 @@ public class JooqKeywordServiceTest {
         assertThat(service.delete(id, version)).isEqualTo(persistedKeywordDefinitionMock);
         verify(repoMock).delete(id, version);
     }
+
 }

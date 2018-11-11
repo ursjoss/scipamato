@@ -19,6 +19,7 @@ import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -33,7 +34,10 @@ public class NewsletterTopicDefinitionProviderTest {
 
     private NewsletterTopicDefinitionProvider provider;
 
-    @Mock
+    @Autowired
+    private ScipamatoCoreApplication application;
+
+    @MockBean
     private NewsletterTopicService serviceMock;
 
     @Mock
@@ -42,16 +46,12 @@ public class NewsletterTopicDefinitionProviderTest {
     @Mock
     private NewsletterTopicDefinition entityMock;
 
-    @Autowired
-    private ScipamatoCoreApplication application;
-
     private List<NewsletterTopicDefinition> papers;
 
     @Before
     public void setUp() {
         new WicketTester(application);
         provider = new NewsletterTopicDefinitionProvider(filterMock);
-        provider.setService(serviceMock);
 
         papers = Arrays.asList(entityMock, entityMock, entityMock);
     }
@@ -122,21 +122,21 @@ public class NewsletterTopicDefinitionProviderTest {
     @Test
     public void iterating_withNoRecords_returnsNoRecords() {
         papers = Collections.emptyList();
-        when(serviceMock.findPageOfNewsletterTopicDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
-            papers);
+        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+            papers.iterator());
         Iterator<NewsletterTopicDefinition> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
-        verify(serviceMock).findPageOfNewsletterTopicDefinitions(eq(filterMock),
+        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new NewsletterTopicDefinitionProviderTest.PaginationContextMatcher(3, "title: ASC")));
     }
 
     @Test
     public void iterating_throughFirst() {
-        when(serviceMock.findPageOfNewsletterTopicDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
-            papers);
+        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+            papers.iterator());
         Iterator<NewsletterTopicDefinition> it = provider.iterator(0, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageOfNewsletterTopicDefinitions(eq(filterMock),
+        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new NewsletterTopicDefinitionProviderTest.PaginationContextMatcher(3, "title: ASC")));
     }
 
@@ -151,22 +151,22 @@ public class NewsletterTopicDefinitionProviderTest {
 
     @Test
     public void iterating_throughSecondPage() {
-        when(serviceMock.findPageOfNewsletterTopicDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
-            papers);
+        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+            papers.iterator());
         Iterator<NewsletterTopicDefinition> it = provider.iterator(3, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageOfNewsletterTopicDefinitions(eq(filterMock),
+        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new NewsletterTopicDefinitionProviderTest.PaginationContextMatcher(3, "title: ASC")));
     }
 
     @Test
     public void iterating_throughThirdPage() {
         provider.setSort("title", SortOrder.DESCENDING);
-        when(serviceMock.findPageOfNewsletterTopicDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
-            papers);
+        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+            papers.iterator());
         Iterator<NewsletterTopicDefinition> it = provider.iterator(6, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageOfNewsletterTopicDefinitions(eq(filterMock),
+        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new NewsletterTopicDefinitionProviderTest.PaginationContextMatcher(3, "title: DESC")));
     }
 

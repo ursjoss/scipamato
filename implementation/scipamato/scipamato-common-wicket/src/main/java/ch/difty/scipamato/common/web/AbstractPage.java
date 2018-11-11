@@ -185,11 +185,11 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
         label.setVisible(field.isVisible());
     }
 
-    protected BootstrapAjaxButton queueResponsePageButton(final String id,
-        SerializableSupplier<AbstractPage<?>> responsePage) {
-        BootstrapAjaxButton newButton = new BootstrapAjaxButton(id,
-            new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null), Type.Default) {
-            private static final long serialVersionUID = 1L;
+    protected BootstrapAjaxButton newResponsePageButton(final String id,
+        final SerializableSupplier<AbstractPage<?>> responsePage) {
+        return new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, AbstractPage.this, null),
+            Type.Default) {
+            private static final long serialVersionUID1 = 1L;
 
             @Override
             protected void onSubmit(final AjaxRequestTarget target) {
@@ -203,8 +203,6 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
                 setEnabled(AbstractPage.this.setResponsePageButtonEnabled());
             }
         };
-        queue(newButton);
-        return newButton;
     }
 
     /**

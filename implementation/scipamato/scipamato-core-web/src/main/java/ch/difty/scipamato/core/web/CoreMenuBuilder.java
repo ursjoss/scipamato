@@ -16,6 +16,8 @@ import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.common.web.pages.AbstractMenuBuilder;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.web.authentication.LogoutPage;
+import ch.difty.scipamato.core.web.code.CodeListPage;
+import ch.difty.scipamato.core.web.codeclass.CodeClassListPage;
 import ch.difty.scipamato.core.web.keyword.KeywordListPage;
 import ch.difty.scipamato.core.web.newsletter.list.NewsletterListPage;
 import ch.difty.scipamato.core.web.newsletter.topic.NewsletterTopicListPage;
@@ -80,6 +82,8 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
         final String labelParent = "menu.refData.";
         if (hasOneOfRoles(Roles.USER, Roles.ADMIN)) {
             addEntryToMenu(labelParent + "keyword", page, KeywordListPage.class, GlyphIconType.briefcase, links);
+            addEntryToMenu(labelParent + "code", page, CodeListPage.class, GlyphIconType.barcode, links);
+            addEntryToMenu(labelParent + "codeClass", page, CodeClassListPage.class, GlyphIconType.qrcode, links);
             addEntryToMenu(labelParent + "sync", page, RefDataSyncPage.class, GlyphIconType.export, links);
         }
     }
@@ -97,7 +101,6 @@ public class CoreMenuBuilder extends AbstractMenuBuilder {
             final PageParameters pp2 = new PageParameters();
             pp2.add("mode", UserEditPage.Mode.CHANGE_PASSWORD);
             addEntryToMenu(labelParent + "password", page, UserEditPage.class, GlyphIconType.pencil, links, pp2);
-
         }
     }
 

@@ -25,7 +25,8 @@ public abstract class BasePanel<T> extends AbstractPanel<T> {
         this(id, null, Mode.VIEW);
     }
 
-    protected BasePanel(final String id, IModel<T> model) {
+    @SuppressWarnings("unused")
+    BasePanel(final String id, IModel<T> model) {
         this(id, model, Mode.VIEW);
     }
 

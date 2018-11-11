@@ -52,7 +52,7 @@ public class CodeClass extends IdScipamatoEntity<Integer> implements CodeClassLi
 
     @Override
     public String getDisplayValue() {
-        return name;
+        return getId() + " - " + name;
     }
 
 }

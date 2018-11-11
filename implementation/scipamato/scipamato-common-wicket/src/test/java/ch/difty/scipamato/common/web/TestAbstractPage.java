@@ -20,7 +20,7 @@ public class TestAbstractPage extends AbstractPage<TestRecord> {
 
         queue(new Form<Void>("form"));
         queueFieldAndLabel(new TextField<String>("foo"));
-        queueResponsePageButton("respPageButton", () -> new TestHomePage(new PageParameters()));
+        queue(newResponsePageButton("respPageButton", () -> new TestHomePage(new PageParameters())));
     }
 
     @Override

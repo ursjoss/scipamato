@@ -1,9 +1,6 @@
 package ch.difty.scipamato.core.persistence.newsletter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.OptionalInt;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -40,6 +37,12 @@ class JooqNewsletterTopicService implements NewsletterTopicService {
     public List<NewsletterTopicDefinition> findPageOfNewsletterTopicDefinitions(final NewsletterTopicFilter filter,
         final PaginationContext paginationContext) {
         return getRepo().findPageOfNewsletterTopicDefinitions(filter, paginationContext);
+    }
+
+    @Override
+    public Iterator<NewsletterTopicDefinition> findPageOfEntityDefinitions(final NewsletterTopicFilter filter,
+        final PaginationContext paginationContext) {
+        return findPageOfNewsletterTopicDefinitions(filter, paginationContext).iterator();
     }
 
     @Override

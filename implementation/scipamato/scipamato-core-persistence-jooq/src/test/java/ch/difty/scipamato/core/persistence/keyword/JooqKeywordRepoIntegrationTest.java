@@ -90,9 +90,7 @@ public class JooqKeywordRepoIntegrationTest extends JooqTransactionalIntegration
 
         assertThat(ntd.getVersion()).isEqualTo(1);
         assertThat(ntd.getCreated()).isNull();
-        assertThat(ntd.getCreatedBy()).isNull();
         assertThat(ntd.getLastModified()).isNull();
-        assertThat(ntd.getLastModifiedBy()).isNull();
 
         Collection<KeywordTranslation> translations = ntd
             .getTranslations()
@@ -103,9 +101,7 @@ public class JooqKeywordRepoIntegrationTest extends JooqTransactionalIntegration
             .next();
         assertThat(tr.getVersion()).isEqualTo(1);
         assertThat(tr.getCreated()).isNull();
-        assertThat(tr.getCreatedBy()).isNull();
         assertThat(tr.getLastModified()).isNull();
-        assertThat(tr.getLastModifiedBy()).isNull();
     }
 
     @Test

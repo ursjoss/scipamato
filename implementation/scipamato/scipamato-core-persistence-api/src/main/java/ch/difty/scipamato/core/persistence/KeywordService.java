@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.persistence;
 import java.util.List;
 
 import ch.difty.scipamato.common.NullArgumentException;
+import ch.difty.scipamato.common.persistence.DefinitionProviderService;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.keyword.Keyword;
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
@@ -13,7 +14,7 @@ import ch.difty.scipamato.core.entity.keyword.KeywordFilter;
  *
  * @author Urs Joss
  */
-public interface KeywordService {
+public interface KeywordService extends DefinitionProviderService<KeywordDefinition, KeywordFilter> {
 
     /**
      * Find the localized {@link Keyword}s

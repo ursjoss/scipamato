@@ -1,5 +1,6 @@
 package ch.difty.scipamato.core.persistence.keyword;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -33,6 +34,12 @@ class JooqKeywordService implements KeywordService {
     public List<KeywordDefinition> findPageOfKeywordDefinitions(final KeywordFilter filter,
         final PaginationContext paginationContext) {
         return getRepo().findPageOfKeywordDefinitions(filter, paginationContext);
+    }
+
+    @Override
+    public Iterator<KeywordDefinition> findPageOfEntityDefinitions(final KeywordFilter filter,
+        final PaginationContext paginationContext) {
+        return findPageOfKeywordDefinitions(filter, paginationContext).iterator();
     }
 
     @Override

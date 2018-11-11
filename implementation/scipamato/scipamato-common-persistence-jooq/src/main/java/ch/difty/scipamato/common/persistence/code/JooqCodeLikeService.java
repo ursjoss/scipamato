@@ -24,6 +24,10 @@ public abstract class JooqCodeLikeService<T extends CodeLike, R extends CodeLike
         this.repo = repo;
     }
 
+    protected R getRepo() {
+        return repo;
+    }
+
     @Override
     public List<T> findCodesOfClass(final CodeClassId codeClassId, final String languageCode) {
         return repo.findCodesOfClass(codeClassId, languageCode);

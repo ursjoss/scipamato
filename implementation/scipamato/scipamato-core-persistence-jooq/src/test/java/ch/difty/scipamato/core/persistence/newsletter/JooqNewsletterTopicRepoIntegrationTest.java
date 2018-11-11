@@ -88,9 +88,7 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
 
         assertThat(ntd.getVersion()).isEqualTo(1);
         assertThat(ntd.getCreated()).isNull();
-        assertThat(ntd.getCreatedBy()).isNull();
         assertThat(ntd.getLastModified()).isNull();
-        assertThat(ntd.getLastModifiedBy()).isNull();
 
         Collection<NewsletterTopicTranslation> translations = ntd
             .getTranslations()
@@ -101,9 +99,7 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
             .next();
         assertThat(tr.getVersion()).isEqualTo(1);
         assertThat(tr.getCreated()).isNull();
-        assertThat(tr.getCreatedBy()).isNull();
         assertThat(tr.getLastModified()).isNull();
-        assertThat(tr.getLastModifiedBy()).isNull();
     }
 
     @Test
@@ -162,7 +158,9 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
         assertThat(ntd.getMainLanguageCode()).isEqualTo("de");
         assertThat(ntd.getTitle()).isEqualTo("n.a.");
         assertThat(ntd.getTitleInLanguage("de")).isNull();
-        assertThat(ntd.getTranslations()).hasSize(3);
+        assertThat(ntd
+            .getTranslations()
+            .asMap()).hasSize(3);
 
         final Collection<NewsletterTopicTranslation> translations = ntd
             .getTranslations()
@@ -190,7 +188,9 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
         assertThat(existing).isNotNull();
         assertThat(existing.getId()).isEqualTo(1);
         assertThat(existing.getTitle()).isEqualTo("Ultrafeine Partikel");
-        assertThat(existing.getTranslations()).hasSize(3);
+        assertThat(existing
+            .getTranslations()
+            .asMap()).hasSize(3);
         assertThat(existing.getTitleInLanguage("de")).isEqualTo("Ultrafeine Partikel");
         assertThat(existing.getTitleInLanguage("en")).isEqualTo("Ultrafine Particles");
         assertThat(existing.getTitleInLanguage("fr")).isNull();
@@ -233,17 +233,21 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
 
         assertThat(ntd).isNotNull();
         assertThat(ntd.getId()).isEqualTo(1);
-        assertThat(ntd.getTranslations()).hasSize(3);
+        assertThat(ntd
+            .getTranslations()
+            .asMap()).hasSize(3);
         assertThat(ntd.getTitleInLanguage("de")).isEqualTo("Ultrafeine Partikel");
         assertThat(ntd.getTitleInLanguage("en")).isEqualTo("Ultrafine Particles");
         assertThat(ntd.getTitleInLanguage("fr")).isNull();
         assertThat(ntd
             .getTranslations()
             .get("de")
+            .get(0)
             .getVersion()).isEqualTo(1);
         assertThat(ntd
             .getTranslations()
             .get("en")
+            .get(0)
             .getVersion()).isEqualTo(1);
 
         ntd.setTitleInLanguage("de", "ufp");
@@ -253,7 +257,9 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
 
         assertThat(updated).isNotNull();
         assertThat(updated.getId()).isEqualTo(1);
-        assertThat(updated.getTranslations()).hasSize(3);
+        assertThat(updated
+            .getTranslations()
+            .asMap()).hasSize(3);
         assertThat(updated.getTitleInLanguage("de")).isEqualTo("ufp");
         assertThat(updated.getTitleInLanguage("en")).isEqualTo("Ultrafine Particles");
         assertThat(updated.getTitleInLanguage("fr")).isEqualTo("foo");
@@ -262,14 +268,17 @@ public class JooqNewsletterTopicRepoIntegrationTest extends JooqTransactionalInt
         assertThat(updated
             .getTranslations()
             .get("de")
+            .get(0)
             .getVersion()).isEqualTo(2);
         assertThat(updated
             .getTranslations()
             .get("en")
+            .get(0)
             .getVersion()).isEqualTo(2);
         assertThat(updated
             .getTranslations()
             .get("fr")
+            .get(0)
             .getVersion()).isEqualTo(1);
     }
 

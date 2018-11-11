@@ -96,6 +96,15 @@ public class JooqNewsletterTopicServiceTest {
     }
 
     @Test
+    public void findingPageOfEntityDefinitions_delegatesToRepo() {
+        when(repoMock.findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock)).thenReturn(
+            topicDefinitions);
+        assertThat(service.findPageOfEntityDefinitions(filterMock, paginationContextMock)).hasSameElementsAs(
+            topicDefinitions);
+        verify(repoMock).findPageOfNewsletterTopicDefinitions(filterMock, paginationContextMock);
+    }
+
+    @Test
     public void countingNewsletterTopics_delegatesToRepo() {
         when(repoMock.countByFilter(filterMock)).thenReturn(3);
         assertThat(service.countByFilter(filterMock)).isEqualTo(3);

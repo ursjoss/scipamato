@@ -232,7 +232,8 @@ public class NewsletterListPage extends BasePage<Void> {
     }
 
     private void queueNewButton(final String id) {
-        newNewsletterButton = queueResponsePageButton(id, NewsletterEditPage::new);
+        newNewsletterButton = newResponsePageButton(id, NewsletterEditPage::new);
         newNewsletterButton.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
+        queue(newNewsletterButton);
     }
 }

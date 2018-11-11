@@ -44,8 +44,8 @@ public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicLis
         results.addAll(List.of(ntd1, ntd2));
 
         when(newsletterTopicServiceMock.countByFilter(isA(NewsletterTopicFilter.class))).thenReturn(results.size());
-        when(newsletterTopicServiceMock.findPageOfNewsletterTopicDefinitions(isA(NewsletterTopicFilter.class),
-            isA(PaginationRequest.class))).thenReturn(results);
+        when(newsletterTopicServiceMock.findPageOfEntityDefinitions(isA(NewsletterTopicFilter.class),
+            isA(PaginationRequest.class))).thenReturn(results.iterator());
     }
 
     @After
@@ -65,13 +65,13 @@ public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicLis
 
     @Override
     protected void assertSpecificComponents() {
-        assertFilterForm("filterForm");
+        assertFilterForm("filterPanel:filterForm");
         final String[] headers = { "Translations" };
         final String[] values = { "DE: 'thema1'; EN: 'topic1'; FR: 'theme1'".replace("'", "&#039;") };
-        assertResultTable("results", headers, values);
+        assertResultTable("resultPanel:results", headers, values);
 
         verify(newsletterTopicServiceMock).countByFilter(isA(NewsletterTopicFilter.class));
-        verify(newsletterTopicServiceMock).findPageOfNewsletterTopicDefinitions(isA(NewsletterTopicFilter.class),
+        verify(newsletterTopicServiceMock).findPageOfEntityDefinitions(isA(NewsletterTopicFilter.class),
             isA(PaginationRequest.class));
     }
 
@@ -109,16 +109,16 @@ public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicLis
     public void clickingOnNewsletterTopicTitle_forwardsToNewsletterTopicEditPage_withModelLoaded() {
         getTester().startPage(getPageClass());
 
-        getTester().clickLink("results:body:rows:1:cells:1:cell:link");
+        getTester().clickLink("resultPanel:results:body:rows:1:cells:1:cell:link");
         getTester().assertRenderedPage(NewsletterTopicEditPage.class);
 
         // verify the newsletter was loaded into the target page
-        getTester().assertModelValue("form:translations:1:title", "thema1");
-        getTester().assertModelValue("form:translations:2:title", "topic1");
-        getTester().assertModelValue("form:translations:3:title", "theme1");
+        getTester().assertModelValue("form:translationsPanel:translations:1:title", "thema1");
+        getTester().assertModelValue("form:translationsPanel:translations:2:title", "topic1");
+        getTester().assertModelValue("form:translationsPanel:translations:3:title", "theme1");
 
         verify(newsletterTopicServiceMock).countByFilter(isA(NewsletterTopicFilter.class));
-        verify(newsletterTopicServiceMock).findPageOfNewsletterTopicDefinitions(isA(NewsletterTopicFilter.class),
+        verify(newsletterTopicServiceMock).findPageOfEntityDefinitions(isA(NewsletterTopicFilter.class),
             isA(PaginationRequest.class));
     }
 
@@ -131,13 +131,13 @@ public class NewsletterTopicListPageTest extends BasePageTest<NewsletterTopicLis
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
 
-        FormTester formTester = getTester().newFormTester("filterForm");
+        FormTester formTester = getTester().newFormTester("filterPanel:filterForm");
         formTester.submit("newNewsletterTopic");
 
         getTester().assertRenderedPage(NewsletterTopicEditPage.class);
 
         verify(newsletterTopicServiceMock).countByFilter(isA(NewsletterTopicFilter.class));
-        verify(newsletterTopicServiceMock).findPageOfNewsletterTopicDefinitions(isA(NewsletterTopicFilter.class),
+        verify(newsletterTopicServiceMock).findPageOfEntityDefinitions(isA(NewsletterTopicFilter.class),
             isA(PaginationRequest.class));
         verify(newsletterTopicServiceMock).newUnpersistedNewsletterTopicDefinition();
     }

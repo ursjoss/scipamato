@@ -3,6 +3,7 @@ package ch.difty.scipamato.core.persistence;
 import java.util.List;
 
 import ch.difty.scipamato.common.NullArgumentException;
+import ch.difty.scipamato.common.persistence.DefinitionProviderService;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterNewsletterTopic;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
@@ -14,7 +15,8 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicFilter;
  *
  * @author Urs Joss
  */
-public interface NewsletterTopicService {
+public interface NewsletterTopicService extends
+    DefinitionProviderService<NewsletterTopicDefinition, NewsletterTopicFilter> {
 
     /**
      * Find the localized {@link NewsletterTopic}s

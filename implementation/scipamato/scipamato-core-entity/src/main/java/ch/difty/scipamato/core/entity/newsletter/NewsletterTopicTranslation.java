@@ -3,47 +3,33 @@ package ch.difty.scipamato.core.entity.newsletter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import ch.difty.scipamato.common.AssertAs;
-import ch.difty.scipamato.common.entity.FieldEnumType;
+import ch.difty.scipamato.common.entity.AbstractDefinitionTranslation;
 
 /**
  * The individual translation in a particular language of a newsletter topic.
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class NewsletterTopicTranslation extends NewsletterTopic {
+public class NewsletterTopicTranslation extends AbstractDefinitionTranslation {
     private static final long serialVersionUID = 1L;
 
-    private final String langCode;
-
-    public NewsletterTopicTranslation(final Integer id, final String langCode, final String title,
+    public NewsletterTopicTranslation(final Integer id, final String langCode, final String name,
         final Integer version) {
-        super(id, title);
-        this.langCode = AssertAs.notNull(langCode, "langCode");
-        setVersion(version != null ? version : 0);
+        super(id, langCode, name, version);
     }
 
-    public enum NewsletterTopicTranslationFields implements FieldEnumType {
-        ID("id"),
-        LANG_CODE("langCode"),
-        TITLE("title");
-
-        private final String name;
-
-        NewsletterTopicTranslationFields(final String name) {
-            this.name = name;
-        }
-
-        @Override
-        public String getName() {
-            return name;
-        }
-
+    /**
+     * Title as Alias for name, as it's used in the database
+     */
+    public String getTitle() {
+        return getName();
     }
 
-    @Override
-    public String getDisplayValue() {
-        return getLangCode() + ": " + getTitle();
+    /**
+     * Title as Alias for name, as it's used in the database
+     */
+    public void setTitle(String title) {
+        setName(title);
     }
 
 }

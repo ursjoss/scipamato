@@ -54,6 +54,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Added
 - 09/87: New short field ('Kurzerfassungs-Feld') conclusion.
          Synched to Public result field. Shown in some reports.
+- 09/05 - Core: Add facilities to manage codes and code classes
 
 .Changed
 - Core: Moved Sync Menu into Reference Data Menu
@@ -68,6 +69,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
   - Remove obsolete spring bean overrides
   - Enable spring.main.allow-bean-definition-overriding where requiered (a. in case of overriding
     beans with test beans (test profile) and b. with spring batch jobRepository (production)
+- Refactored ListPages for Codes, Keywords, Newsletter Topics abstracting common code
 
 .Deprecated
 

@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
-import ch.difty.scipamato.common.web.component.table.column.LinkIconPanel;
 import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
 import ch.difty.scipamato.core.entity.keyword.KeywordFilter;
 import ch.difty.scipamato.core.entity.keyword.KeywordTranslation;
@@ -47,8 +46,8 @@ public class KeywordListPageTest extends BasePageTest<KeywordListPage> {
         results.addAll(List.of(kd1, kd2));
 
         when(keywordServiceMock.countByFilter(isA(KeywordFilter.class))).thenReturn(results.size());
-        when(keywordServiceMock.findPageOfKeywordDefinitions(isA(KeywordFilter.class),
-            isA(PaginationRequest.class))).thenReturn(results);
+        when(keywordServiceMock.findPageOfEntityDefinitions(isA(KeywordFilter.class),
+            isA(PaginationRequest.class))).thenReturn(results.iterator());
     }
 
     @After
@@ -68,13 +67,13 @@ public class KeywordListPageTest extends BasePageTest<KeywordListPage> {
 
     @Override
     protected void assertSpecificComponents() {
-        assertFilterForm("filterForm");
+        assertFilterForm("filterPanel:filterForm");
         final String[] headers = { "Translations", "Search Override" };
         final String[] values = { "DE: 'Name1'; EN: 'name1'; FR: 'nom1'".replace("'", "&#039;"), "nameOverride" };
-        assertResultTable("results", headers, values);
+        assertResultTable("resultPanel:results", headers, values);
 
         verify(keywordServiceMock).countByFilter(isA(KeywordFilter.class));
-        verify(keywordServiceMock).findPageOfKeywordDefinitions(isA(KeywordFilter.class), isA(PaginationRequest.class));
+        verify(keywordServiceMock).findPageOfEntityDefinitions(isA(KeywordFilter.class), isA(PaginationRequest.class));
     }
 
     private void assertFilterForm(final String b) {
@@ -111,16 +110,16 @@ public class KeywordListPageTest extends BasePageTest<KeywordListPage> {
     public void clickingOnKeywordTitle_forwardsToKeywordEditPage_withModelLoaded() {
         getTester().startPage(getPageClass());
 
-        getTester().clickLink("results:body:rows:1:cells:" + COLUMN_ID_WITH_LINK + ":cell:link");
+        getTester().clickLink("resultPanel:results:body:rows:1:cells:" + COLUMN_ID_WITH_LINK + ":cell:link");
         getTester().assertRenderedPage(KeywordEditPage.class);
 
         // verify the keywords were loaded into the target page
-        getTester().assertModelValue("form:translations:1:name", "Name1");
-        getTester().assertModelValue("form:translations:2:name", "name1");
-        getTester().assertModelValue("form:translations:3:name", "nom1");
+        getTester().assertModelValue("form:translationsPanel:translations:1:name", "Name1");
+        getTester().assertModelValue("form:translationsPanel:translations:2:name", "name1");
+        getTester().assertModelValue("form:translationsPanel:translations:3:name", "nom1");
 
         verify(keywordServiceMock).countByFilter(isA(KeywordFilter.class));
-        verify(keywordServiceMock).findPageOfKeywordDefinitions(isA(KeywordFilter.class), isA(PaginationRequest.class));
+        verify(keywordServiceMock).findPageOfEntityDefinitions(isA(KeywordFilter.class), isA(PaginationRequest.class));
     }
 
     @Test
@@ -132,23 +131,14 @@ public class KeywordListPageTest extends BasePageTest<KeywordListPage> {
         getTester().startPage(getPageClass());
         getTester().assertRenderedPage(getPageClass());
 
-        FormTester formTester = getTester().newFormTester("filterForm");
+        FormTester formTester = getTester().newFormTester("filterPanel:filterForm");
         formTester.submit("newKeyword");
 
         getTester().assertRenderedPage(KeywordEditPage.class);
 
-        FormTester targetFormTester = getTester().newFormTester("form");
-
         verify(keywordServiceMock).countByFilter(isA(KeywordFilter.class));
-        verify(keywordServiceMock).findPageOfKeywordDefinitions(isA(KeywordFilter.class), isA(PaginationRequest.class));
+        verify(keywordServiceMock).findPageOfEntityDefinitions(isA(KeywordFilter.class), isA(PaginationRequest.class));
         verify(keywordServiceMock).newUnpersistedKeywordDefinition();
-    }
-
-    private void validateLinkIconColumn(final int row, final String status, final String value) {
-        String bodyRow = "results:body:rows:" + row + ":cells:";
-        getTester().assertLabel(bodyRow + "3:cell", status);
-        getTester().assertComponent(bodyRow + "4:cell", LinkIconPanel.class);
-        getTester().assertModelValue(bodyRow + "4:cell", value);
     }
 
 }

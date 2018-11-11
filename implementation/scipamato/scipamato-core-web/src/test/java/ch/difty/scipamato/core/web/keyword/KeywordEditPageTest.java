@@ -56,27 +56,29 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
         getTester().assertComponent(b, Form.class);
 
         b += ":";
-        String bb = b + "keyword";
+        String bb = b + "header";
         getTester().assertLabel(bb + "Label", "Keyword");
 
-        bb = b + "searchOverride";
+        bb += "Panel:";
+        getTester().assertComponent(bb + "back", BootstrapButton.class);
+        getTester().assertComponent(bb + "submit", BootstrapButton.class);
+        getTester().assertComponent(bb + "delete", BootstrapButton.class);
+
+        bb += "searchOverride";
         getTester().assertLabel(bb + "Label", "Search Override");
         getTester().assertComponent(bb, TextField.class);
         getTester().assertModelValue(bb, "thename");
 
-        bb = b + "translations";
+        bb = "form:translations";
         getTester().assertLabel(bb + "Label", "Keyword Translations");
 
+        bb += "Panel:translations";
         getTester().assertComponent(bb, RefreshingView.class);
         bb += ":";
         assertTranslation(bb, 1, "de", "Name1");
         assertTranslation(bb, 2, "de", "Name1a");
         assertTranslation(bb, 3, "en", "name1");
         assertTranslation(bb, 4, "fr", "nom1");
-
-        getTester().assertComponent(b + "back", BootstrapButton.class);
-        getTester().assertComponent(b + "submit", BootstrapButton.class);
-        getTester().assertComponent(b + "delete", BootstrapButton.class);
     }
 
     private void assertTranslation(final String bb, final int idx, final String langCode, final String name) {
@@ -102,10 +104,10 @@ public class KeywordEditPageTest extends BasePageTest<KeywordEditPage> {
         getTester().startPage(new KeywordEditPage(Model.of(kd), null));
 
         FormTester formTester = getTester().newFormTester("form");
-        formTester.setValue("translations:1:name", "foo");
-        assertTranslation("form:translations:", 1, "de", "Name1");
-        formTester.submit("submit");
-        assertTranslation("form:translations:", 5, "de", "foo");
+        formTester.setValue("translationsPanel:translations:1:name", "foo");
+        assertTranslation("form:translationsPanel:translations:", 1, "de", "Name1");
+        formTester.submit("headerPanel:submit");
+        assertTranslation("form:translationsPanel:translations:", 5, "de", "foo");
 
         verify(keywordServiceMock).saveOrUpdate(isA(KeywordDefinition.class));
     }

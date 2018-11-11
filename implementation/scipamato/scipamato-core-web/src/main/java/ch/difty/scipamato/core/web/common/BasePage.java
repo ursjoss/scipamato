@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.web.common;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import org.apache.wicket.markup.head.CssHeaderItem;
@@ -77,8 +76,7 @@ public abstract class BasePage<T> extends AbstractPage<T> {
         return sessionFacade.hasAtLeastOneRoleOutOf(Arrays
             .stream(roles)
             .sorted()
-            .collect(Collectors.toList())
-            .toArray(new String[0]));
+            .toArray(String[]::new));
     }
 
 }

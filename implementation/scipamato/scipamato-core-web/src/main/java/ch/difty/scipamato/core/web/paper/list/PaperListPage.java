@@ -269,10 +269,11 @@ public class PaperListPage extends BasePage<Void> {
     }
 
     private void queueNewPaperButton(final String id) {
-        BootstrapAjaxButton button = queueResponsePageButton(id,
+        BootstrapAjaxButton button = newResponsePageButton(id,
             () -> new PaperEntryPage(getPageParameters(), getPage().getPageReference()));
         button.setType(Buttons.Type.Primary);
         button.setVisible(mode != Mode.VIEW);
         button.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
+        queue(button);
     }
 }

@@ -27,7 +27,7 @@ public class CodeClassTest extends Jsr303ValidatedEntityTest<CodeClass> {
 
     @Override
     protected String getDisplayValue() {
-        return newValidEntity().getName();
+        return newValidEntity().getId() + " - " + newValidEntity().getName();
     }
 
     @Test

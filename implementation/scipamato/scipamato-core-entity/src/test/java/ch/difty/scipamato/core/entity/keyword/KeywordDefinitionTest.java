@@ -1,26 +1,20 @@
 package ch.difty.scipamato.core.entity.keyword;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Collection;
 
 import org.junit.Test;
 
-import ch.difty.scipamato.common.NullArgumentException;
 import ch.difty.scipamato.common.TestUtils;
 
+@SuppressWarnings("SameParameterValue")
 public class KeywordDefinitionTest {
 
     private final KeywordTranslation kw_de  = new KeywordTranslation(10, "de", "stichwort2", 1);
     private final KeywordTranslation kw_de2 = new KeywordTranslation(10, "de", "stichwort2foo", 1);
     private final KeywordTranslation kw_en  = new KeywordTranslation(11, "en", "keyword2", 1);
     private final KeywordTranslation kw_fr  = new KeywordTranslation(12, "fr", "motdeclef2", 1);
-
-    @Test
-    public void degenerateConstruction_withNullLanguageCode_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new KeywordDefinition(1, null, 1), "mainLanguageCode");
-    }
 
     @Test
     public void withNoTranslations_unableToEstablishMainName() {
@@ -35,7 +29,7 @@ public class KeywordDefinitionTest {
     }
 
     @Test
-    public void withSearchOVerride() {
+    public void withSearchOverride() {
         KeywordDefinition kd = new KeywordDefinition(1, "de", "so", 1);
         assertThat(kd.getId()).isEqualTo(1);
         assertThat(kd.getName()).isEqualTo("n.a.");
@@ -63,7 +57,7 @@ public class KeywordDefinitionTest {
             .getTranslations()
             .values();
         assertThat(trs)
-            .extracting(KeywordTranslation.KeywordTranslationFields.NAME.getName())
+            .extracting(KeywordTranslation.DefinitionTranslationFields.NAME.getName())
             .containsOnly("stichwort2", "keyword2", "motdeclef2");
         for (final KeywordTranslation tr : trs)
             assertThat(tr.getLastModified()).isNull();
@@ -86,19 +80,6 @@ public class KeywordDefinitionTest {
     public void canGetTranslationsAsString_withNoTranslations() {
         KeywordDefinition kd = new KeywordDefinition(2, "de", 1);
         assertThat(kd.getTranslationsAsString()).isNull();
-    }
-
-    @Test
-    public void modifyingTranslation_withNullLanguageCode_throws() {
-        KeywordDefinition kd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr);
-        try {
-            kd.setNameInLanguage(null, "foo");
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex)
-                .isInstanceOf(NullArgumentException.class)
-                .hasMessage("langCode must not be null.");
-        }
     }
 
     @Test
@@ -191,7 +172,7 @@ public class KeywordDefinitionTest {
             .getTranslations()
             .values();
         assertThat(trs)
-            .extracting(KeywordTranslation.KeywordTranslationFields.NAME.getName())
+            .extracting(KeywordTranslation.DefinitionTranslationFields.NAME.getName())
             .containsOnly("stichwort2", "stichwort2foo", "keyword2", "motdeclef2");
         for (final KeywordTranslation tr : trs)
             assertThat(tr.getLastModified()).isNull();
@@ -215,6 +196,12 @@ public class KeywordDefinitionTest {
         assertLastModifiedIsNull(kd, "de", 1);
         assertLastModifiedIsNull(kd, "en", 0);
         assertLastModifiedIsNull(kd, "fr", 0);
+    }
+
+    @Test
+    public void gettingNullSafeId() {
+        KeywordDefinition kd = new KeywordDefinition(2, "de", 1, kw_de, kw_en, kw_fr, kw_de2);
+        assertThat(kd.getNullSafeId()).isEqualTo(2);
     }
 
 }

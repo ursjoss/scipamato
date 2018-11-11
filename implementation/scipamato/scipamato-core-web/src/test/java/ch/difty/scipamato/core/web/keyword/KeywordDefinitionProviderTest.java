@@ -19,6 +19,7 @@ import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
@@ -33,7 +34,10 @@ public class KeywordDefinitionProviderTest {
 
     private KeywordDefinitionProvider provider;
 
-    @Mock
+    @Autowired
+    private ScipamatoCoreApplication application;
+
+    @MockBean
     private KeywordService serviceMock;
 
     @Mock
@@ -42,16 +46,12 @@ public class KeywordDefinitionProviderTest {
     @Mock
     private KeywordDefinition entityMock;
 
-    @Autowired
-    private ScipamatoCoreApplication application;
-
     private List<KeywordDefinition> papers;
 
     @Before
     public void setUp() {
         new WicketTester(application);
         provider = new KeywordDefinitionProvider(filterMock);
-        provider.setService(serviceMock);
 
         papers = Arrays.asList(entityMock, entityMock, entityMock);
     }
@@ -122,19 +122,21 @@ public class KeywordDefinitionProviderTest {
     @Test
     public void iterating_withNoRecords_returnsNoRecords() {
         papers = Collections.emptyList();
-        when(serviceMock.findPageOfKeywordDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+            papers.iterator());
         Iterator<KeywordDefinition> it = provider.iterator(0, 3);
         assertThat(it.hasNext()).isFalse();
-        verify(serviceMock).findPageOfKeywordDefinitions(eq(filterMock),
+        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new KeywordDefinitionProviderTest.PaginationContextMatcher(3, "name: ASC")));
     }
 
     @Test
     public void iterating_throughFirst() {
-        when(serviceMock.findPageOfKeywordDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+            papers.iterator());
         Iterator<KeywordDefinition> it = provider.iterator(0, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageOfKeywordDefinitions(eq(filterMock),
+        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new KeywordDefinitionProviderTest.PaginationContextMatcher(3, "name: ASC")));
     }
 
@@ -149,20 +151,22 @@ public class KeywordDefinitionProviderTest {
 
     @Test
     public void iterating_throughSecondPage() {
-        when(serviceMock.findPageOfKeywordDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+            papers.iterator());
         Iterator<KeywordDefinition> it = provider.iterator(3, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageOfKeywordDefinitions(eq(filterMock),
+        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new KeywordDefinitionProviderTest.PaginationContextMatcher(3, "name: ASC")));
     }
 
     @Test
     public void iterating_throughThirdPage() {
         provider.setSort("name", SortOrder.DESCENDING);
-        when(serviceMock.findPageOfKeywordDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(papers);
+        when(serviceMock.findPageOfEntityDefinitions(eq(filterMock), isA(PaginationContext.class))).thenReturn(
+            papers.iterator());
         Iterator<KeywordDefinition> it = provider.iterator(6, 3);
         assertRecordsIn(it);
-        verify(serviceMock).findPageOfKeywordDefinitions(eq(filterMock),
+        verify(serviceMock).findPageOfEntityDefinitions(eq(filterMock),
             argThat(new KeywordDefinitionProviderTest.PaginationContextMatcher(3, "name: DESC")));
     }
 

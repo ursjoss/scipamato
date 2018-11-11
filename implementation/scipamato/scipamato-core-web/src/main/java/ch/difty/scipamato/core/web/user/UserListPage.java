@@ -87,7 +87,7 @@ public class UserListPage extends BasePage<Void> {
     }
 
     private void queueNewButton(String id) {
-        BootstrapAjaxButton button = queueResponsePageButton(id, () -> {
+        BootstrapAjaxButton button = newResponsePageButton(id, () -> {
             try {
                 final PageParameters pp = new PageParameters();
                 pp.set(CorePageParameters.MODE.getName(), UserEditPage.Mode.CREATE);
@@ -98,6 +98,7 @@ public class UserListPage extends BasePage<Void> {
             }
         });
         button.add(new LoadingBehavior(new StringResourceModel(id + LOADING_RESOURCE_TAG, this, null)));
+        queue(button);
     }
 
     private void makeAndQueueTable(String id) {

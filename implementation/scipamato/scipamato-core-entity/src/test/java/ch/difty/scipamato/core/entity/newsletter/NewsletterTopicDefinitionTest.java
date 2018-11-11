@@ -1,14 +1,10 @@
 package ch.difty.scipamato.core.entity.newsletter;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Collection;
 
 import org.junit.Test;
-
-import ch.difty.scipamato.common.NullArgumentException;
-import ch.difty.scipamato.common.TestUtils;
 
 public class NewsletterTopicDefinitionTest {
 
@@ -17,27 +13,25 @@ public class NewsletterTopicDefinitionTest {
     private final NewsletterTopicTranslation ntt_fr = new NewsletterTopicTranslation(12, "fr", "sujet2", 1);
 
     @Test
-    public void degenerateConstruction_withNullLanguageCode_throws() {
-        TestUtils.assertDegenerateSupplierParameter(() -> new NewsletterTopicDefinition(1, null, 1),
-            "mainLanguageCode");
-    }
-
-    @Test
     public void withNoTranslations_unableToEstablishMainTitle() {
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(1, "de", 1);
         assertThat(ntd.getId()).isEqualTo(1);
-        assertThat(ntd.getTitle()).isEqualTo("n.a.");
+        assertThat(ntd.getName()).isEqualTo("n.a.");
         assertThat(ntd.getDisplayValue()).isEqualTo("n.a.");
-        assertThat(ntd.getTranslations()).isEmpty();
+        assertThat(ntd
+            .getTranslations()
+            .asMap()).isEmpty();
     }
 
     @Test
     public void withTranslations() {
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en, ntt_fr);
         assertThat(ntd.getId()).isEqualTo(2);
-        assertThat(ntd.getTitle()).isEqualTo("thema2");
+        assertThat(ntd.getName()).isEqualTo("thema2");
         assertThat(ntd.getDisplayValue()).isEqualTo("thema2");
-        assertThat(ntd.getTranslations()).hasSize(3);
+        assertThat(ntd
+            .getTranslations()
+            .asMap()).hasSize(3);
         assertThat(ntd
             .getTranslations()
             .keySet()).containsExactly("de", "en", "fr");
@@ -45,7 +39,7 @@ public class NewsletterTopicDefinitionTest {
             .getTranslations()
             .values();
         assertThat(trs)
-            .extracting(NewsletterTopicTranslation.NewsletterTopicTranslationFields.TITLE.getName())
+            .extracting(NewsletterTopicTranslation.DefinitionTranslationFields.NAME.getName())
             .containsOnly("thema2", "topic2", "sujet2");
         for (final NewsletterTopicTranslation tr : trs)
             assertThat(tr.getLastModified()).isNull();
@@ -65,67 +59,73 @@ public class NewsletterTopicDefinitionTest {
     }
 
     @Test
-    public void canGetTranslationsAsString_withNoTranslations() {
-        NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(2, "de", 1);
-        assertThat(ntd.getTranslationsAsString()).isNull();
-    }
-
-    @Test
-    public void modifyingTranslation_withNullLanguageCode_throws() {
-        NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en, ntt_fr);
-        try {
-            ntd.setTitleInLanguage(null, "foo");
-            fail("should have thrown exception");
-        } catch (Exception ex) {
-            assertThat(ex)
-                .isInstanceOf(NullArgumentException.class)
-                .hasMessage("langCode must not be null.");
-        }
-    }
-
-    @Test
     public void modifyTranslation_withMainLanguageTranslationModified_changesMainTitle_translationTitle_andSetsModifiedTimestamp() {
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en, ntt_fr);
-        ntd.setTitleInLanguage("de", "thema 2");
-        assertThat(ntd.getTitle()).isEqualTo("thema 2");
+        ntd.setNameInLanguage("de", "thema 2");
+        assertThat(ntd.getName()).isEqualTo("thema 2");
         assertThat(ntd
             .getTranslations()
             .get("de")
-            .getTitle()).isEqualTo("thema 2");
+            .get(0)
+            .getName()).isEqualTo("thema 2");
         assertThat(ntd
             .getTranslations()
             .get("de")
+            .get(0)
             .getLastModified()).isNotNull();
         assertThat(ntd
             .getTranslations()
             .get("en")
+            .get(0)
             .getLastModified()).isNull();
         assertThat(ntd
             .getTranslations()
             .get("fr")
+            .get(0)
             .getLastModified()).isNull();
     }
 
     @Test
     public void modifyTranslation_withNonMainLanguageTranslationModified_keepsMainTitle_changesTranslationTitle_andSetsModifiedTimestamp() {
         NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en, ntt_fr);
-        ntd.setTitleInLanguage("fr", "bar");
-        assertThat(ntd.getTitle()).isEqualTo("thema2");
+        ntd.setNameInLanguage("fr", "bar");
+        assertThat(ntd.getName()).isEqualTo("thema2");
         assertThat(ntd
             .getTranslations()
             .get("fr")
-            .getTitle()).isEqualTo("bar");
+            .get(0)
+            .getName()).isEqualTo("bar");
         assertThat(ntd
             .getTranslations()
             .get("de")
+            .get(0)
             .getLastModified()).isNull();
         assertThat(ntd
             .getTranslations()
             .get("en")
+            .get(0)
             .getLastModified()).isNull();
         assertThat(ntd
             .getTranslations()
             .get("fr")
+            .get(0)
             .getLastModified()).isNotNull();
+    }
+
+    @Test
+    public void gettingNullSafeId() {
+        NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en, ntt_fr);
+        assertThat(ntd.getNullSafeId()).isEqualTo(2);
+    }
+
+    @Test
+    public void titleIsAliasForName() {
+        NewsletterTopicDefinition ntd = new NewsletterTopicDefinition(2, "de", 1, ntt_de, ntt_en, ntt_fr);
+        assertThat(ntd.getTitle()).isEqualTo(ntd.getName());
+        assertThat(ntd.getTitleInLanguage("de")).isEqualTo(ntd.getNameInLanguage("de"));
+        ntd.setTitle("foo");
+        assertThat(ntd.getName()).isEqualTo("foo");
+        ntd.setTitleInLanguage("de", "bar");
+        assertThat(ntd.getName()).isEqualTo("bar");
     }
 }
