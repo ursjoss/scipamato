@@ -118,7 +118,7 @@ public class AbstractDefinitionEntityTest {
     }
 
     @Test
-    public void entity_gettingTranslationsAsString_withMultipleTranslations_allButMainLanguageWithNullName_returnsNAlast() {
+    public void entity_gettingTranslationsAsString_withMultipleTranslations_allButMainLanguageWithNullName_returns_NA_last() {
         AbstractDefinitionTranslation t_de = new TestDefinitionTranslation(1, "de", "d", 10);
         AbstractDefinitionTranslation t_en = new TestDefinitionTranslation(2, "en", null, 11);
         AbstractDefinitionTranslation t_fr = new TestDefinitionTranslation(3, "fr", null, 12);
@@ -205,7 +205,7 @@ public class AbstractDefinitionEntityTest {
     }
 
     @Test
-    public void translation_settingVersionNull_resultsinZero() {
+    public void translation_settingVersionNull_resultsInZero() {
         TestDefinitionTranslation dt = new TestDefinitionTranslation(1, "de", "deutsch", null);
         assertThat(dt.getVersion()).isEqualTo(0);
     }

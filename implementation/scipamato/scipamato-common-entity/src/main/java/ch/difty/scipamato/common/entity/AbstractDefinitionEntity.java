@@ -19,8 +19,6 @@ import ch.difty.scipamato.common.AssertAs;
 /**
  * Abstract base class comprising of the state and behavior common to all {@link DefinitionEntity} implementations.
  *
- * @param <E>
- *     the concrete type implementing {@link DefinitionEntity}
  * @param <T>
  *     the concrete type implementing the {@link DefinitionTranslation} for the given entity
  * @param <ID>
@@ -28,8 +26,8 @@ import ch.difty.scipamato.common.AssertAs;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public abstract class AbstractDefinitionEntity<E extends DefinitionEntity<ID, T>, T extends DefinitionTranslation, ID>
-    extends ScipamatoEntity implements DefinitionEntity<ID, T> {
+public abstract class AbstractDefinitionEntity<T extends DefinitionTranslation, ID> extends ScipamatoEntity
+    implements DefinitionEntity<ID, T> {
 
     private final ListValuedMap<String, T> translations;
     private final String                   mainLanguageCode;
@@ -73,23 +71,23 @@ public abstract class AbstractDefinitionEntity<E extends DefinitionEntity<ID, T>
         final Collection<T> trs = translations.get(mainLanguageCode);
         if (CollectionUtils.isEmpty(trs))
             return null;
-        final StringBuilder name = new StringBuilder();
-        name.append(mainLanguageCode.toUpperCase());
-        name.append(": ");
+        final StringBuilder sb = new StringBuilder();
+        sb.append(mainLanguageCode.toUpperCase());
+        sb.append(": ");
         String mainNames = trs
             .stream()
             .map(DefinitionTranslation::getName)
             .filter(Objects::nonNull)
             .collect(joining("','"));
-        name.append(mainNames.isEmpty() ? "n.a." : ("'" + mainNames + "'"));
+        sb.append(mainNames.isEmpty() ? "n.a." : ("'" + mainNames + "'"));
         for (final Map.Entry<String, Collection<T>> entry : translations
             .asMap()
             .entrySet()) {
             final String kw = entry.getKey();
             if (!kw.equals(mainLanguageCode)) {
-                if (name.length() > 0)
-                    name.append("; ");
-                name
+                if (sb.length() > 0)
+                    sb.append("; ");
+                sb
                     .append(kw.toUpperCase())
                     .append(": ");
                 final String nameString = entry
@@ -99,15 +97,15 @@ public abstract class AbstractDefinitionEntity<E extends DefinitionEntity<ID, T>
                     .filter(Objects::nonNull)
                     .collect(joining("','"));
                 if (StringUtils.isNotBlank(nameString))
-                    name
+                    sb
                         .append("'")
                         .append(nameString)
                         .append("'");
                 else
-                    name.append("n.a.");
+                    sb.append("n.a.");
             }
         }
-        return name.toString();
+        return sb.toString();
     }
 
     public void setNameInLanguage(final String langCode, final String translatedName) {
@@ -123,7 +121,7 @@ public abstract class AbstractDefinitionEntity<E extends DefinitionEntity<ID, T>
         }
     }
 
-    public void setMainName(String translatedName) {
+    private void setMainName(String translatedName) {
         this.name = translatedName;
     }
 

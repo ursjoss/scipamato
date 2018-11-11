@@ -189,7 +189,7 @@ public abstract class AbstractPage<T> extends GenericWebPage<T> {
         final SerializableSupplier<AbstractPage<?>> responsePage) {
         return new BootstrapAjaxButton(id, new StringResourceModel(id + LABEL_RESOURCE_TAG, AbstractPage.this, null),
             Type.Default) {
-            private static final long serialVersionUID1 = 1L;
+            private static final long serialVersionUID = 1L;
 
             @Override
             protected void onSubmit(final AjaxRequestTarget target) {

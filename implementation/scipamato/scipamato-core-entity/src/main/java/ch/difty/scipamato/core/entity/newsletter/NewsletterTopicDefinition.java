@@ -17,8 +17,7 @@ import ch.difty.scipamato.common.entity.AbstractDefinitionEntity;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class NewsletterTopicDefinition
-    extends AbstractDefinitionEntity<NewsletterTopicDefinition, NewsletterTopicTranslation, Integer> {
+public class NewsletterTopicDefinition extends AbstractDefinitionEntity<NewsletterTopicTranslation, Integer> {
     private static final long serialVersionUID = 1L;
 
     private Integer id;

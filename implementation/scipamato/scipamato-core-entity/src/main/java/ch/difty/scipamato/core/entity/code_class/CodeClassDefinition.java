@@ -17,7 +17,7 @@ import ch.difty.scipamato.common.entity.FieldEnumType;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CodeClassDefinition extends AbstractDefinitionEntity<CodeClassDefinition, CodeClassTranslation, Integer> {
+public class CodeClassDefinition extends AbstractDefinitionEntity<CodeClassTranslation, Integer> {
     private static final long serialVersionUID = 1L;
 
     private Integer id;

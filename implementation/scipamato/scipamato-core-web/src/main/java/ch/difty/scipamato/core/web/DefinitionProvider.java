@@ -19,7 +19,6 @@ public abstract class DefinitionProvider<T extends DefinitionEntity, F extends S
     extends SortableDataProvider<T, String> implements IFilterStateLocator<F> {
 
     private F filter;
-
     private S service;
 
     protected DefinitionProvider(final F filter) {

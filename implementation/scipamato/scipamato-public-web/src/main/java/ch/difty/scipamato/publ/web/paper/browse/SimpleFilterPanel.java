@@ -35,6 +35,7 @@ import ch.difty.scipamato.publ.web.model.KeywordModel;
  *
  * @author Urs Joss
  */
+@SuppressWarnings("SameParameterValue")
 public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
 
     private static final long serialVersionUID = 1L;
@@ -43,7 +44,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
     private static final String KEYWORDS_NONE_SELECT_RESOURCE_TAG = "keywords.noneSelected";
 
     private static final String AM_DATA_WIDTH = "data-width";
-    public static final  String CHANGE        = "change";
+    private static final String CHANGE        = "change";
 
     private final String languageCode;
 
@@ -64,7 +65,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
             PopulationCode.values(), "160px");
         addCodesComplex("studyDesignCodes", PublicPaperFilter.PublicPaperFilterFields.STUDY_DESIGN_CODES,
             StudyDesignCode.values(), "220px");
-        queueKeywordsMultiselect("keywords", PublicPaperFilterFields.KEYWORDS);
+        queueKeywordMultiselect("keywords", PublicPaperFilterFields.KEYWORDS);
     }
 
     private void addTextFieldTo(String id, PublicPaperFilterFields filterField) {
@@ -148,7 +149,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
         queue(multiSelect);
     }
 
-    private void queueKeywordsMultiselect(final String id, final PublicPaperFilterFields filterField) {
+    private void queueKeywordMultiselect(final String id, final PublicPaperFilterFields filterField) {
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
 
