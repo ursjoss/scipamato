@@ -196,7 +196,6 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
                     .withMarkupId(markupId));
             }
         });
-        multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, "fit"));
         queue(multiSelect);
     }
 
