@@ -15,17 +15,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on http://keepachangelog.com/en/1.0.0/[Keep a Changelog].
 
-The versioning scheme in the pre-1.0.0 versions is _not_ adhering to http://semver.org/spec/v2.0.0.html[Semantic Versioning].
+SciPaMato is an application. Therefore, the versioning scheme is _not_ adhering
+to http://semver.org/spec/v2.0.0.html[Semantic Versioning], which is mostly
+targeting software components or libraries. Nevertheless, I'm sticking with
+three part version numbers (e.g. 1.0.0), increasing the second number for
+bigger changes and the third number for relatively small changes and bug fixes.
+The first part of the version number will most likely remain version 1 for a
+longer period of time and may only change with a major rewrite of parts or the
+entire applicatin.
 
-Given a version number 0.ITERATION.RELEASE, we're incrementing
+In the version prior to 1.0.0, the second digit indicated the the development
+iteration, the third was keeping track of the number of the release within that
+iteration. Given a version number 0.ITERATION.RELEASE, we were incrementing
 
 . ITERATION version matching the project iteration
 . RELEASE version with every release within the given iteration.
 
-TIP: E.g. release 0.5.6 is the 6th release in iteration number 5.
-
-
-I will most probably switch to semantic versioning after having reached release 1.0.0.
+TIP: E.g. release 0.5.6 was the 6th release in iteration number 5.
 
 NOTE: References to user stories are in the form Iteration/Story-Number.
 
@@ -51,6 +57,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
+[[v1.0.0]]
+== [1.0.0] -- 2018-11-11
+
 .Added
 - 09/87: New short field ('Kurzerfassungs-Feld') conclusion.
          Synched to Public result field. Shown in some reports.
@@ -61,20 +70,16 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - Public: Layout tweak in NewStudy list page
 - Bumped dependencies: spring-boot-2.1.0, bval-jsr, spring-boot-admin-starter-client, equalsverifier
 - Simplified dependency management:
-  - Remove explicit version overrides for dependencies managed already in spring-boot-super-pom (jOOQ,
-    Flyway, lombok, mockito, assertj, byte-buddy, commons-lang3, jaxb-api, jaxb-runtime, maven-plugins
-  - Remove dependency management entry or at least version number for dependencies managed already
+** Remove explicit version overrides for dependencies managed already in spring-boot-super-pom (jOOQ,
+   Flyway, lombok, mockito, assertj, byte-buddy, commons-lang3, jaxb-api, jaxb-runtime, maven-plugins
+** Remove dependency management entry or at least version number for dependencies managed already
     in spring-boot-super-pom
 - Migration to spring-boot-starter-parent-2.1.0
-  - Remove obsolete spring bean overrides
-  - Enable spring.main.allow-bean-definition-overriding where requiered (a. in case of overriding
+** Remove obsolete spring bean overrides
+** Enable spring.main.allow-bean-definition-overriding where requiered (a. in case of overriding
     beans with test beans (test profile) and b. with spring batch jobRepository (production)
 - Refactored ListPages for Codes, Keywords, Newsletter Topics abstracting common code
 - 09/93 - Public: Limit width of keyword filter field
-
-.Deprecated
-
-.Removed
 
 .Fixed
 - 09/84 - Sync: Fix issue with obsolete reference data records in SciPaMaTo-Public not being deleted during sync.
@@ -82,9 +87,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
   Fix sync of newsletter related tables based on wrong foreign key constraints
 - 09/86 - Public: Fix padding in public search page
 - 09/88 - Public: Fix typos
-
-
-.Security
 
 
 [[v0.9.4]]
