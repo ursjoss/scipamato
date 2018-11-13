@@ -9,6 +9,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import ch.difty.scipamato.common.entity.DefinitionEntity;
 import ch.difty.scipamato.common.entity.DefinitionTranslation;
@@ -72,6 +73,8 @@ public abstract class DefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T
                     }
                 } catch (OptimisticLockingException ole) {
                     handleOptimisticLockingException(ole);
+                } catch (DataIntegrityViolationException dive) {
+                    handleDataIntegrityViolationException(dive);
                 } catch (Exception oe) {
                     handleOtherException(oe);
                 }
@@ -90,6 +93,15 @@ public abstract class DefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T
                         .getNullSafeId())
                     .getString();
                 log.error(msg);
+                error(msg);
+            }
+
+            private void handleDataIntegrityViolationException(final DataIntegrityViolationException dive) {
+                final String msg = new StringResourceModel("delete.dataintegrityviolation.hint", this, null)
+                    .setParameters(DefinitionEditHeaderPanel.this
+                        .getModelObject()
+                        .getNullSafeId())
+                    .getString();
                 error(msg);
             }
 

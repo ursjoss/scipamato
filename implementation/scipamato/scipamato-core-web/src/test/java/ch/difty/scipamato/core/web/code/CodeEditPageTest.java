@@ -13,6 +13,7 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 
 import ch.difty.scipamato.core.entity.CodeClass;
@@ -195,6 +196,22 @@ public class CodeEditPageTest extends BasePageTest<CodeEditPage> {
         getTester().assertErrorMessages("The first digit of the Code must match the Code Class Number.");
 
         verify(codeServiceMock, never()).saveOrUpdate(isA(CodeDefinition.class));
+    }
+
+    @Test
+    public void submitting_withForeignKeyConstraintViolationException_addsErrorMsg() {
+        String msg = "... is still referenced from table \"paper_code\".; nested exception is org.postgresql.util.PSQLException...";
+        when(codeServiceMock.delete(anyString(), anyInt())).thenThrow(new DataIntegrityViolationException(msg));
+
+        getTester().startPage(new CodeEditPage(Model.of(cd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:delete");
+
+        verify(codeServiceMock).delete(anyString(), anyInt());
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("You cannot delete code '2A' as it is still assigned to at least one paper.");
     }
 
 }

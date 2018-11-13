@@ -11,6 +11,7 @@ import org.apache.wicket.util.tester.FormTester;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
@@ -135,6 +136,22 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
         getTester().assertNoInfoMessage();
         getTester().assertErrorMessages(
             "An unexpected error occurred when trying to save NewsletterTopic [id 1]: fooMsg");
+    }
+
+    @Test
+    public void submitting_withForeignKeyConstraintViolationException_addsErrorMsg() {
+        String msg = "...whatever...";
+        when(newsletterTopicServiceMock.delete(anyInt(), anyInt())).thenThrow(new DataIntegrityViolationException(msg));
+
+        getTester().startPage(new NewsletterTopicEditPage(Model.of(ntd), null));
+
+        FormTester formTester = getTester().newFormTester("form");
+        formTester.submit("headerPanel:delete");
+
+        verify(newsletterTopicServiceMock).delete(anyInt(), anyInt());
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("Unable to delete this record as it is still used in other places.");
     }
 
 }
