@@ -164,7 +164,7 @@ public abstract class JooqEntityRepo<R extends Record, T extends CoreEntity, ID,
      *     the entity to free from the associated sub entities
      */
     @SuppressWarnings("EmptyMethod")
-    protected void deleteAssociatedEntitiesOf(T entity) {
+    protected void deleteAssociatedEntitiesOf(@SuppressWarnings("unused") T entity) {
     }
 
     @Override

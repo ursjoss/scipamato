@@ -12,6 +12,7 @@ public class SyncJobResult {
         return result == JobResult.SUCCESS;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public boolean isFailed() {
         return result == JobResult.FAILURE;
     }

@@ -21,6 +21,7 @@ import ch.difty.scipamato.core.sync.jobs.ScipamatoItemWriter;
  */
 public class NewStudyPageLinkItemWriter extends ScipamatoItemWriter<PublicNewStudyPageLink> {
 
+    @SuppressWarnings("WeakerAccess")
     public NewStudyPageLinkItemWriter(final DSLContext jooqDslContextPublic) {
         super(jooqDslContextPublic, "newStudyPageLink");
     }

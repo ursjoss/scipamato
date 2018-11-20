@@ -56,14 +56,14 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
             "pubmedArticle.medlineCitation.article.journal.journalIssue");
         final PubDate pubDate = AssertAs.notNull(journalIssue.getPubDate(),
             "pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate");
-        final List<java.lang.Object> dateishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
-        return dateishObjects
+        final List<java.lang.Object> datishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
+        return datishObjects
             .stream()
             .filter(o -> o instanceof Year)
             .map(o -> (Year) o)
             .map(Year::getvalue)
             .findFirst()
-            .orElseGet(() -> dateishObjects
+            .orElseGet(() -> datishObjects
                 .stream()
                 .filter(o -> o instanceof MedlineDate)
                 .map(o -> (MedlineDate) o)
@@ -160,9 +160,9 @@ class ScipamatoPubmedArticle extends AbstractPubmedArticleFacade {
     private String getAheadOfPrintDateFromArticleDate(final JournalIssue journalIssue) {
         final PubDate pubDate = AssertAs.notNull(journalIssue.getPubDate(),
             "pubmedArticle.medlineCitation.article.journal.journalIssue.pubDate");
-        final List<java.lang.Object> dateishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
+        final List<java.lang.Object> datishObjects = pubDate.getYearOrMonthOrDayOrSeasonOrMedlineDate();
         final StringBuilder sb = new StringBuilder();
-        for (final java.lang.Object o : dateishObjects) {
+        for (final java.lang.Object o : datishObjects) {
             if (o instanceof Year) {
                 sb.append(((Year) o).getvalue());
                 sb.append(" ");

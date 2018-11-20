@@ -84,6 +84,7 @@ public class PubmedXmlService implements PubmedArticleService {
      *     the raw xml string to unmarshal
      * @return {@link PubmedArticleSet}
      */
+    @SuppressWarnings("WeakerAccess")
     public PubmedArticleSet unmarshal(final String xmlString) throws IOException {
         final StringReader reader = new StringReader(AssertAs.notNull(xmlString, "xmlString"));
         return (PubmedArticleSet) unmarshaller.unmarshal(new StreamSource(reader));
@@ -113,8 +114,8 @@ public class PubmedXmlService implements PubmedArticleService {
         final List<PubmedArticleFacade> articles = new ArrayList<>();
         try {
             final PubmedArticleSet set = unmarshal(xmlString);
-            final List<java.lang.Object> aoba = set.getPubmedArticleOrPubmedBookArticle();
-            articles.addAll(aoba
+            final List<java.lang.Object> article = set.getPubmedArticleOrPubmedBookArticle();
+            articles.addAll(article
                 .stream()
                 .map(PubmedArticleFacade::newPubmedArticleFrom)
                 .collect(Collectors.toList()));

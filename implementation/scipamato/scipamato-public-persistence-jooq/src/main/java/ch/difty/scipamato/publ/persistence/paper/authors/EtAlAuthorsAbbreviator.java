@@ -28,7 +28,7 @@ class EtAlAuthorsAbbreviator implements AuthorsAbbreviator {
      *
      * @param properties
      *     the public scipamato properties with the
-     *     authorsAbbrevatedMaxLength setting.
+     *     authorsAbbreviatedMaxLength setting.
      */
     EtAlAuthorsAbbreviator(final ApplicationPublicProperties properties) {
         AssertAs.notNull(properties, "properties");

@@ -22,6 +22,7 @@ import ch.difty.scipamato.core.sync.jobs.ScipamatoItemWriter;
  */
 public class NewsletterTopicItemWriter extends ScipamatoItemWriter<PublicNewsletterTopic> {
 
+    @SuppressWarnings("WeakerAccess")
     public NewsletterTopicItemWriter(final DSLContext jooqDslContextPublic) {
         super(jooqDslContextPublic, "newsletterTopic");
     }
@@ -41,7 +42,9 @@ public class NewsletterTopicItemWriter extends ScipamatoItemWriter<PublicNewslet
             .set(NEWSLETTER_TOPIC.CREATED, p.getCreated())
             .set(NEWSLETTER_TOPIC.LAST_MODIFIED, p.getLastModified())
             .set(NEWSLETTER_TOPIC.LAST_SYNCHED, p.getLastSynched())
-            .where(NEWSLETTER_TOPIC.ID.eq(p.getId()).and(NEWSLETTER_TOPIC.LANG_CODE.eq(p.getLangCode())))
+            .where(NEWSLETTER_TOPIC.ID
+                .eq(p.getId())
+                .and(NEWSLETTER_TOPIC.LANG_CODE.eq(p.getLangCode())))
             .execute();
     }
 

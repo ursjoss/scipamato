@@ -62,7 +62,7 @@ public interface CodeRepository extends CodeLikeRepository<Code> {
     CodeDefinition newUnpersistedCodeDefinition();
 
     /**
-     * Inserts a new or pdates an already persisted {@link CodeDefinition} including its
+     * Inserts a new or updates an already persisted {@link CodeDefinition} including its
      * associated CodeTranslations in the database. Any associated translation will be updated
      * if it exists in the database (id != null) or will be added if it is new (id == null).
      *

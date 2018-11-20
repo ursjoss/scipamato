@@ -17,9 +17,8 @@ import ch.difty.scipamato.publ.db.public_.tables.pojos.Language;
  *
  * @author u.joss
  */
+@SuppressWarnings("WeakerAccess")
 public class PublicLanguage {
-
-    private static final long serialVersionUID = 1L;
 
     @Delegate
     private final Language delegate;

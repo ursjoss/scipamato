@@ -22,6 +22,7 @@ import ch.difty.scipamato.core.sync.jobs.ScipamatoItemWriter;
  */
 public class NewStudyItemWriter extends ScipamatoItemWriter<PublicNewStudy> {
 
+    @SuppressWarnings("WeakerAccess")
     public NewStudyItemWriter(final DSLContext jooqDslContextPublic) {
         super(jooqDslContextPublic, "newStudy");
     }

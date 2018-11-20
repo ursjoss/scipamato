@@ -22,6 +22,7 @@ import ch.difty.scipamato.core.sync.jobs.ScipamatoItemWriter;
  */
 public class NewsletterItemWriter extends ScipamatoItemWriter<PublicNewsletter> {
 
+    @SuppressWarnings("WeakerAccess")
     public NewsletterItemWriter(final DSLContext jooqDslContextPublic) {
         super(jooqDslContextPublic, "newsletter");
     }

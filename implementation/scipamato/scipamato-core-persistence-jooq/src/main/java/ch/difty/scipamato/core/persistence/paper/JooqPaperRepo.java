@@ -228,7 +228,7 @@ public class JooqPaperRepo extends
      * Insert or update the association between paper and newsletter.
      *
      * @param paper
-     *     the paper to store the newsletterlink
+     *     the paper to store the newsletter link
      */
     private void considerStoringNewsletterLinkOf(final Paper paper) {
         if (paper != null && paper.getNewsletterLink() != null) {

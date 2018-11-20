@@ -17,9 +17,8 @@ import ch.difty.scipamato.publ.db.public_.tables.pojos.NewStudyPageLink;
  *
  * @author u.joss
  */
+@SuppressWarnings("WeakerAccess")
 public class PublicNewStudyPageLink {
-
-    private static final long serialVersionUID = 1L;
 
     @Delegate
     private final NewStudyPageLink delegate;

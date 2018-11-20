@@ -96,6 +96,7 @@ public abstract class DefinitionEditHeaderPanel<E extends DefinitionEntity<ID, T
                 error(msg);
             }
 
+            @SuppressWarnings("unused")
             private void handleDataIntegrityViolationException(final DataIntegrityViolationException dive) {
                 final String msg = new StringResourceModel("delete.dataintegrityviolation.hint", this, null)
                     .setParameters(DefinitionEditHeaderPanel.this
