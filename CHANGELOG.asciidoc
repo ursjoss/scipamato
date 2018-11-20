@@ -57,6 +57,23 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 [[unreleased]]
 == [unreleased]
 
+.Added
+- #1: Translate Exception into more user friendly form: DataViolationException
+  when trying to delete code
+
+.Changed
+
+.Deprecated
+
+.Removed
+
+.Fixed
+- #2: Error when creating literature review PDF after using the browsers back
+  button (10/15)
+
+.Security
+
+
 [[v1.0.0]]
 == [1.0.0] -- 2018-11-11
 

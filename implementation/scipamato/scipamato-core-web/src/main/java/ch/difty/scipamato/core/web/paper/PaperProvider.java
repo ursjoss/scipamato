@@ -23,6 +23,7 @@ import ch.difty.scipamato.core.persistence.PaperService;
  *
  * @author u.joss
  */
+@SuppressWarnings("WeakerAccess")
 public class PaperProvider extends SortableDataProvider<Paper, String> implements IFilterStateLocator<PaperFilter> {
 
     private static final long serialVersionUID = 1L;

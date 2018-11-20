@@ -109,8 +109,8 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      * @param callingPage
      *     page reference to the page that called this page. Can be null.
      */
-    @SuppressWarnings("SameParameterValue")
-    PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage) {
+    @SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
+    public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage) {
         this(paperModel, callingPage, null, false);
     }
 

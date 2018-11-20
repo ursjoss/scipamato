@@ -30,7 +30,8 @@ public class CodeEditPage extends DefinitionEditPage<CodeDefinition> {
     @SpringBean
     private CodeService service;
 
-    CodeEditPage(final IModel<CodeDefinition> model, final PageReference callingPageRef) {
+    @SuppressWarnings("WeakerAccess")
+    public CodeEditPage(final IModel<CodeDefinition> model, final PageReference callingPageRef) {
         super(model, callingPageRef);
     }
 
