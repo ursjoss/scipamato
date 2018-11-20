@@ -62,6 +62,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
   when trying to delete code
 
 .Changed
+- Bumpted dependencies: wicket 8.2.0, wicket-spring-boot-starter 2.1.5, wicket-bootstrap 2.0.6
 
 .Deprecated
 
