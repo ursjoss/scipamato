@@ -99,7 +99,7 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
     /**
      * If we have a persisted newsletter, we use its id to filter the assigned papers.
      * A new newsletter however does not yet have an id. If we'd use the null id as filter
-     * criterium, we'd get all papers back. So we need to apply a dummy newsletter id that
+     * criterion, we'd get all papers back. So we need to apply a dummy newsletter id that
      * does not exist and therefore will not return any papers as assignments.
      */
     private Integer getRelevantNewsletterId() {

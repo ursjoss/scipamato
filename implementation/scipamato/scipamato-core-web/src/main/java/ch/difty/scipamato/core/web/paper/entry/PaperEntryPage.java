@@ -59,7 +59,7 @@ import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
  * the application server locally). If somebody changed a field in the EditablePaperPage
  * and then directly clicked the save button without losing the focus of the edited field
  * with another target first, the autosave process and the manual save were not handled
- * sequentally. One of the two was changing the version in the database when the other
+ * sequentially. One of the two was changing the version in the database when the other
  * kicked in and tried to save again before the first process had been able to reload
  * the modified record into the wicket model. Hence the version number of the second save
  * attempt was outdated and resulted in a optimistic locking exception. As a side effect,

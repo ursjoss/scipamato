@@ -289,7 +289,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
     }
 
     /*
-     * Adds or removes an excluded id - depending on whether the showEcluded flag is
+     * Adds or removes an excluded id - depending on whether the showExcluded flag is
      * set in the model
      */
     private void setExclusionIntoModel(final SearchOrderChangeEvent soce) {
