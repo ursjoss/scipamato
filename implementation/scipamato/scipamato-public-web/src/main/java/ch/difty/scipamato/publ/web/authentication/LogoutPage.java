@@ -6,6 +6,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 import ch.difty.scipamato.common.web.AbstractPage;
 import ch.difty.scipamato.common.web.pages.login.AbstractLogoutPage;
 
+@SuppressWarnings("WeakerAccess")
 @MountPath("logout")
 public class LogoutPage extends AbstractLogoutPage {
 

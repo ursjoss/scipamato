@@ -272,7 +272,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             }
 
             // Show the + icon if not assigned to a newsletter yet
-            // Ohterwise: Show the open envelope if assigned to current, closed envelope if assigned to closed nl.
+            // Otherwise: Show the open envelope if assigned to current, closed envelope if assigned to closed nl.
             private IconType getIconType() {
                 if (!isAssociatedWithNewsletter())
                     return FontAwesomeIconType.plus_square;
@@ -287,7 +287,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     }
 
     private void queueNumberField(String id) {
-        final IModel labelModel = Model.of(
+        final IModel<String> labelModel = Model.of(
             firstWordOfBrand() + "-" + new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null).getString());
         TextField<Integer> number = new TextField<>(id);
         queue(new Label(id + LABEL_TAG, labelModel));
@@ -1017,9 +1017,9 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
      * override if needed
      *
      * @param mainCodeOfCodeClass1
-     *     textfield with mainCode of code class1
+     *     text field with mainCode of code class1
      * @param codeClass1
-     *     bootstrap multiselect for the codes of code class 1
+     *     bootstrap multi-select for the codes of code class 1
      */
     protected void addCodeClass1ChangeBehavior(final TextField<String> mainCodeOfCodeClass1,
         final BootstrapMultiSelect<Code> codeClass1) {

@@ -12,6 +12,7 @@ import ch.difty.scipamato.common.navigator.LongNavigator;
  *
  * @author u.joss
  */
+@SuppressWarnings("WeakerAccess")
 public final class ScipamatoPublicSession extends SecureWebSession {
 
     private static final long serialVersionUID = 1L;

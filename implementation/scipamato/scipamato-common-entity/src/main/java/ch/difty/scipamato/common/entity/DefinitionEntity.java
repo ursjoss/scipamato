@@ -33,7 +33,7 @@ public interface DefinitionEntity<ID, T> extends Serializable {
 
     /**
      * A display value for the definition entity. Conveys more about the entity
-     * than the infoIdetifier.
+     * than the infoIdentifier.
      */
     String getDisplayValue();
 

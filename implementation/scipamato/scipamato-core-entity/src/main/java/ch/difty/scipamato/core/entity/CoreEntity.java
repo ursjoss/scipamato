@@ -10,6 +10,7 @@ import lombok.Setter;
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.ScipamatoEntity;
 
+@SuppressWarnings("WeakerAccess")
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true, exclude = { "createdBy", "createdByName", "createdByFullName", "lastModifiedBy",

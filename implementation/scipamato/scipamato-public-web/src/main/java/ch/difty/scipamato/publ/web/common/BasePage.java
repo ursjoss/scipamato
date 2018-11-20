@@ -11,8 +11,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import ch.difty.scipamato.common.navigator.ItemNavigator;
 import ch.difty.scipamato.common.web.AbstractPage;
@@ -115,12 +113,6 @@ public abstract class BasePage<T> extends AbstractPage<T> {
         response.render(JavaScriptHeaderItem.forReference(PymJavaScriptResourceReference.get()));
         response.render(
             new JavaScriptContentHeaderItem(PymScripts.INSTANTIATE.script, PymScripts.INSTANTIATE.id, null));
-    }
-
-    protected Authentication getAuthentication() {
-        return SecurityContextHolder
-            .getContext()
-            .getAuthentication();
     }
 
     protected String getLanguageCode() {

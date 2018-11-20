@@ -61,6 +61,7 @@ public final class PropertyUtils {
      *     the property key, used only for logging purposes
      * @return the int value
      */
+    @SuppressWarnings("WeakerAccess")
     public static int parseInt(final String propertyValue, final String values, final int defaultValue,
         final String propertyKey) {
         int value = defaultValue;

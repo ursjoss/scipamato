@@ -102,7 +102,7 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
     private int numberOfPreviousNewslettersInArchive = 14;
 
     /**
-     * The threshold above which the multiselect box may activate the actionBox (all/none buttons)
+     * The threshold above which the multi-select box may activate the actionBox (all/none buttons)
      */
     int multiSelectBoxActionBoxWithMoreEntriesThan = 4;
 }

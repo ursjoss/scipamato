@@ -24,6 +24,7 @@ import ch.difty.scipamato.common.web.component.SerializableSupplier;
  *     (bi)consumer
  * @author u.joss
  */
+@SuppressWarnings("WeakerAccess")
 public class ClickablePropertyColumn2<T, S, U> extends AbstractClickablePropertyColumn<T, S> {
     private static final long serialVersionUID = 1L;
 

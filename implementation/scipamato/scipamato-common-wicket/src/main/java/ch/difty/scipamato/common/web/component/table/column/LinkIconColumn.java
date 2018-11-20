@@ -27,6 +27,7 @@ import org.apache.wicket.model.IModel;
 /**
  * @author Viliam Repan (lazyman)
  */
+@SuppressWarnings("WeakerAccess")
 public abstract class LinkIconColumn<T extends Serializable> extends AbstractColumn<T, String> {
 
     private static final long serialVersionUID = 1L;

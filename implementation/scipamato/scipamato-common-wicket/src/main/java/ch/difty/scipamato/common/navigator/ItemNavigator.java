@@ -72,6 +72,7 @@ public interface ItemNavigator<T> extends Serializable {
      * Otherwise puts the id to the head of the list.
      *
      * @param idCandidate
+     *     the id candidate
      */
     void setIdToHeadIfNotPresent(T idCandidate);
 }

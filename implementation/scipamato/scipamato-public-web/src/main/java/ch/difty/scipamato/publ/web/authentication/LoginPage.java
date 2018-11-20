@@ -8,6 +8,7 @@ import ch.difty.scipamato.common.web.pages.login.AbstractLoginPage;
 import ch.difty.scipamato.publ.web.common.BasePage;
 import ch.difty.scipamato.publ.web.paper.browse.PublicPage;
 
+@SuppressWarnings("WeakerAccess")
 @MountPath("login")
 @WicketSignInPage
 public class LoginPage extends AbstractLoginPage {

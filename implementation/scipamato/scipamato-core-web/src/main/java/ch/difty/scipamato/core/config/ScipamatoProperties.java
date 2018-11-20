@@ -68,7 +68,7 @@ public class ScipamatoProperties implements ScipamatoBaseProperties {
     }
 
     /**
-     * The threshold above which the multiselect box may (if configured) show the
+     * The threshold above which the multi-select box may (if configured) show the
      *     action box providing the select all/select none buttons
      */
     private int multiSelectBoxActionBoxWithMoreEntriesThan = 4;

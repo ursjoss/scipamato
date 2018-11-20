@@ -31,7 +31,7 @@ public abstract class AbstractMenuBuilder implements MenuBuilder {
      * @param applicationProperties
      *     must not be null. Injected through spring constructor injection. Must not be null.
      * @param webSessionFacade
-     *     the webSessionFacade providing mockable access to the websession. Must not be null.
+     *     the webSessionFacade providing mockable access to the web session. Must not be null.
      */
     protected AbstractMenuBuilder(final ApplicationProperties applicationProperties,
         final ScipamatoWebSessionFacade webSessionFacade) {

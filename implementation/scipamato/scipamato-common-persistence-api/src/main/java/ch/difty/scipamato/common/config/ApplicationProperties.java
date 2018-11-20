@@ -40,7 +40,7 @@ public interface ApplicationProperties extends Serializable {
     Integer getRedirectFromPort();
 
     /**
-     * @return the threshold above which a multi-selectbox
+     * @return the threshold above which a multiselectbox
      *     may activate the action box to select all/none entries
      */
     int getMultiSelectBoxActionBoxWithMoreEntriesThan();

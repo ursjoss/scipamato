@@ -8,8 +8,6 @@ public enum PymScripts {
     INSTANTIATE("pymChild", "var pymChild = new pym.Child()"),
     RESIZE("pymResize", "pymChild.sendHeight(); console.log('sendHeight called');");
 
-    private static final PymScripts[] SCRIPTS = values();
-
     public final String id;
     public final String script;
 
