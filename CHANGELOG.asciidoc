@@ -1,7 +1,6 @@
 = Changelog
 Urs Joss <urs.joss@gmx.ch>
 :icons: font
-:iu: https://github.com/ursjoss/scipamato/issues/
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
@@ -9,6 +8,9 @@ ifdef::env-github[]
 :caution-caption: :fire:
 :warning-caption: :warning:
 endif::[]
+// Refs:
+:url-issues: https://github.com/ursjoss/scipamato/issues/
+
 
 All notable changes to this project will be documented in this file.
 
@@ -75,15 +77,14 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [1.0.1] -- 2018-11-21
 
 .Added
-- {iu}1[#1]: Translate Exception into more user friendly form: DataViolationException
-  when trying to delete code
+- {url-issues}1[#1]: Translate Exception into more user friendly form:
+                     DataViolationException when trying to delete code
 
 .Changed
 - Bumped version of dependencies: wicket 8.2.0, wicket-spring-boot-starter 2.1.5, wicket-bootstrap 2.0.6
 
 .Fixed
-- {iu}2[#2]: Error when creating literature review PDF after using the browsers back
-  button (10/15)
+- {url-issues}2[#2]: Error when creating literature review PDF after using the browsers back button (10/15)
 
 
 [[v1.0.0]]
