@@ -1,6 +1,7 @@
 package ch.difty.scipamato.core.web.paper.entry;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Java6Assertions.fail;
 import static org.mockito.Mockito.*;
 
 import java.util.Collections;
@@ -19,6 +20,7 @@ import org.junit.Test;
 
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.web.Mode;
+import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.web.paper.search.PaperSearchPage;
 
@@ -117,7 +119,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void firstAuthorChangeBehavior_withoutTriggering_hasFirstAuthoerOverriddenFalseAndFirstAuthorDisabled() {
+    public void firstAuthorChangeBehavior_withoutTriggering_hasFirstAuthorOverriddenFalseAndFirstAuthorDisabled() {
         getTester().startComponentInPage(makePanel());
 
         String formId = "panel:form:";
@@ -541,12 +543,35 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     }
 
     @Test
-    public void clickingExclude_showingExcluded_reincludesPaperIntoSearchOrder_andForwardsToPaperSearchPage() {
+    public void clickingExclude_showingExcluded_reIncludesPaperIntoSearchOrder_andSkipsToNextPaper() {
+        Long idOfNextPaper = 10L;
+        when(getItemNavigator().getItemWithFocus()).thenReturn(idOfNextPaper);
+        when(paperServiceMock.findById(idOfNextPaper)).thenReturn(Optional.of(mock(Paper.class)));
+
+        getTester().startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, true));
+        FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
+
+        try {
+            formTester.submit("exclude");
+            fail("should have thrown exception indicating setResponsePage was called");
+        } catch (Exception ex) {
+            assertThat(ex).hasMessage("forward to calling page triggered");
+        }
+
+        verify(paperServiceMock).reincludeIntoSearchOrder(SEARCH_ORDER_ID, 1L);
+        verify(newsletterServiceMock).canCreateNewsletterInProgress();
+        verify(getItemNavigator()).getItemWithFocus();
+        verify(paperServiceMock).findById(idOfNextPaper);
+        verifyCodeAndCodeClassCalls(2);
+    }
+
+    @Test
+    public void clickingExclude_showingExcluded_reIncludesPaperIntoSearchOrder_andForwardsToPaperSearchPage() {
         getTester().startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, true));
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
 
         formTester.submit("exclude");
-        getTester().assertRenderedPage(PaperSearchPage.class); // TODO consider not forwarding
+        getTester().assertRenderedPage(PaperSearchPage.class);
 
         verify(paperServiceMock).reincludeIntoSearchOrder(SEARCH_ORDER_ID, 1L);
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
@@ -575,6 +600,24 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     @Test
     public void startingPageShowingExclusions_adjustsIconAndTitleOfToggleInclusionsButton() {
         assertExcluded(true, "Re-include paper into current search", "glyphicon-ok-circle");
+    }
+
+    @Test
+    public void clickingBack_withoutHavingModifiedExclusionList_forwardsToPaperSearchPageViaCallingPage() {
+        when(callingPageMock.getPage()).thenThrow(new RuntimeException("forward to calling page triggered"));
+        getTester().startComponentInPage(makePanelWith(PMID, callingPageMock, SEARCH_ORDER_ID, true));
+        FormTester formTester = getTester().newFormTester(PANEL_ID + ":form");
+
+        try {
+            formTester.submit("back");
+            fail("should have thrown exception");
+        } catch (Exception ex) {
+            assertThat(ex).hasMessage("forward to calling page triggered");
+        }
+
+        verify(callingPageMock).getPage();
+        verify(newsletterServiceMock).canCreateNewsletterInProgress();
+        verifyCodeAndCodeClassCalls(2);
     }
 
 }

@@ -61,6 +61,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
+- {url-issues}3[#3]: Excluding papers from search from within paper edit page should not jump to the result page
 
 .Changed
 

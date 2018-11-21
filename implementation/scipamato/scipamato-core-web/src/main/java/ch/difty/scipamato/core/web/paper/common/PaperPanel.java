@@ -214,7 +214,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         modified.setEnabled(isSearchMode());
         queueFieldAndLabel(modified);
 
-        makeAndQueueBackButton("back");
+        makeAndQueueBackButton("back", () -> getPaperIdManager().isModified());
         queue(newExcludeButton("exclude"));
         makeAndQueueSubmitButton("submit");
 
@@ -465,14 +465,16 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
     protected abstract BootstrapButton newNavigationButton(String id, GlyphIconType icon,
         SerializableSupplier<Boolean> isEnabled, SerializableSupplier<Long> idSupplier);
 
-    private void makeAndQueueBackButton(String id) {
+    private void makeAndQueueBackButton(String id, SerializableSupplier<Boolean> forceRequerySupplier) {
         BootstrapButton back = new BootstrapButton(id, new StringResourceModel("button.back.label"),
             Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onSubmit() {
-                if (callingPage != null)
+                if (forceRequerySupplier.get())
+                    restartSearchInPaperSearchPage();
+                else if (callingPage != null)
                     setResponsePage(callingPage.getPage());
             }
 
@@ -487,6 +489,8 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             new AttributeModifier(TITLE_ATTR, new StringResourceModel("button.back.title", this, null).getString()));
         queue(back);
     }
+
+    protected abstract void restartSearchInPaperSearchPage();
 
     protected abstract BootstrapButton newExcludeButton(String id);
 

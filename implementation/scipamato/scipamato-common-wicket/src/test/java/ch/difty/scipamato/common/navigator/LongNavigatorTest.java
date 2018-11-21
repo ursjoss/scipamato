@@ -89,9 +89,7 @@ public class LongNavigatorTest {
     public void initializingWithTripleItemList_hasNextAndCanAdvance() {
         nm.initialize(triple);
         assertThat(nm.getItemWithFocus()).isEqualTo(5L);
-        assertThat(nm.hasNext()).isTrue();
-        nm.next();
-        assertThat(nm.getItemWithFocus()).isEqualTo(12L);
+        assertNextIs(12L);
     }
 
     @Test
@@ -170,4 +168,103 @@ public class LongNavigatorTest {
         assertThat(nm.hasPrevious()).isFalse();
         assertThat(nm.hasNext()).isTrue();
     }
+
+    @Test
+    public void removeFromManger_ifPresent_removesItAndIsModified() {
+        Long id = 12L;
+        assertThat(triple).contains(id);
+        nm.initialize(triple);
+        assertThat(nm.getItemWithFocus()).isEqualTo(5L);
+
+        nm.remove(id);
+        assertThat(nm.isModified()).isTrue();
+
+        assertThat(nm.getItemWithFocus()).isEqualTo(5L);
+        assertThat(nm.hasPrevious()).isFalse();
+        assertThat(nm.hasNext()).isTrue();
+        assertNextIs(3L);
+        assertThat(nm.hasNext()).isFalse();
+    }
+
+    @Test
+    public void removeFromManager_ifNotPresent_isNotModified() {
+        Long id = 200L;
+        assertThat(triple).doesNotContain(id);
+        nm.initialize(triple);
+        assertThat(nm.getItemWithFocus()).isEqualTo(5L);
+
+        nm.remove(id);
+        assertThat(nm.isModified()).isFalse();
+
+        assertThat(nm.getItemWithFocus()).isEqualTo(5L);
+        assertThat(nm.hasPrevious()).isFalse();
+        assertNextIs(12L);
+        assertNextIs(3L);
+        assertThat(nm.hasNext()).isFalse();
+    }
+
+    private void assertNextIs(final long id) {
+        assertThat(nm.hasNext()).isTrue();
+        nm.next();
+        assertThat(nm.getItemWithFocus()).isEqualTo(id);
+    }
+
+    @Test
+    public void removeFromManager_ifPresentAndWithFocusAndIsNotLast_removesItAndSetsFocusToNextItem() {
+        Long id = 12L;
+        assertThat(triple).contains(id);
+        nm.initialize(triple);
+
+        nm.setFocusToItem(id);
+        assertThat(nm.getItemWithFocus()).isEqualTo(id);
+
+        nm.remove(id);
+        assertThat(nm.isModified()).isTrue();
+
+        assertThat(nm.getItemWithFocus()).isEqualTo(3L);
+        assertThat(nm.hasPrevious()).isTrue();
+        assertThat(nm.hasNext()).isFalse();
+    }
+
+    @Test
+    public void removeFromManager_ifPresentAndWithFocusAndIsLast_removesItAndSetsFocusToPreviousItem() {
+        Long id = 3L;
+        assertThat(triple).contains(id);
+        nm.initialize(triple);
+
+        nm.setFocusToItem(id);
+        assertThat(nm.getItemWithFocus()).isEqualTo(id);
+
+        nm.remove(id);
+
+        assertThat(nm.isModified()).isTrue();
+
+        assertThat(nm.getItemWithFocus()).isEqualTo(12L);
+        assertThat(nm.hasPrevious()).isTrue();
+        assertThat(nm.hasNext()).isFalse();
+    }
+
+    @Test
+    public void removeFromManager_withNullId_isNotModified() {
+        nm.initialize(triple);
+        nm.remove(null);
+        assertThat(nm.isModified()).isFalse();
+    }
+
+    @Test
+    public void removingFromManager_removingAll() {
+        nm.initialize(triple);
+        assertThat(nm.getItemWithFocus()).isEqualTo(5L);
+
+        nm.remove(3L);
+        assertThat(nm.getItemWithFocus()).isEqualTo(5L);
+
+        nm.remove(5L);
+        assertThat(nm.getItemWithFocus()).isEqualTo(12L);
+        nm.remove(12L);
+
+        assertThat(nm.isModified()).isTrue();
+        assertThat(nm.getItemWithFocus()).isNull();
+    }
+
 }

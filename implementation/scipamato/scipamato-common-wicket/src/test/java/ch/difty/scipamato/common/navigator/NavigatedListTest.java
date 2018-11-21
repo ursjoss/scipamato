@@ -157,4 +157,14 @@ public class NavigatedListTest {
     public void contains_withIdNotInList_returnsFalse() {
         assertThat(navigatedList.containsId(-1L)).isFalse();
     }
+
+    @Test
+    public void without_withIdInOriginalList() {
+        assertThat(navigatedList.without(5L)).containsExactly(13L, 2L, 27L, 7L, 3L, 30L);
+    }
+
+    @Test
+    public void without_withIdNotInOriginalList_returnsFullList() {
+        assertThat(navigatedList.without(50L)).containsExactly(13L, 2L, 5L, 27L, 7L, 3L, 30L);
+    }
 }

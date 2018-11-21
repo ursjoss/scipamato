@@ -76,6 +76,11 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
                     }
                 }
             }
+
+            @Override
+            protected void restartSearchInPaperSearchPage() {
+                // no-op
+            }
         };
     }
 

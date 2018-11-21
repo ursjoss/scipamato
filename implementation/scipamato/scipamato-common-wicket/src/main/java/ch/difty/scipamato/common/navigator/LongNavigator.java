@@ -15,11 +15,13 @@ public class LongNavigator implements ItemNavigator<Long> {
     private static final long serialVersionUID = 1L;
 
     private NavigatedItems<Long> items;
+    private boolean              modified = false;
 
     @Override
     public void initialize(final List<? extends Long> items) {
         if (items != null && !items.isEmpty())
             this.items = new NavigatedList<>(items);
+        modified = false;
     }
 
     @Override
@@ -64,5 +66,33 @@ public class LongNavigator implements ItemNavigator<Long> {
             initialize(newItems);
             setFocusToItem(idCandidate);
         }
+    }
+
+    @Override
+    public void remove(final Long id) {
+        if (id == null || !items.containsId(id))
+            return;
+        if (id.equals(items.getItemWithFocus()))
+            moveFocus();
+        final Long focus = items.getItemWithFocus();
+        final List<Long> newItems = items.without(id);
+        if (newItems.isEmpty())
+            items = null;
+        else
+            initialize(newItems);
+        modified = true;
+        setFocusToItem(focus);
+    }
+
+    private void moveFocus() {
+        if (items.hasNext())
+            items.next();
+        else
+            items.previous();
+    }
+
+    @Override
+    public boolean isModified() {
+        return modified;
     }
 }

@@ -75,4 +75,17 @@ public interface ItemNavigator<T> extends Serializable {
      *     the id candidate
      */
     void setIdToHeadIfNotPresent(T idCandidate);
+
+    /**
+     * Removes the id from the list (if present)
+     *
+     * @param id
+     *     the id to be removed
+     */
+    void remove(T id);
+
+    /**
+     * @return true if the list was modified, false otherwise
+     */
+    boolean isModified();
 }

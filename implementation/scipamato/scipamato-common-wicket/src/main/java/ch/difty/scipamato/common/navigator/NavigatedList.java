@@ -1,12 +1,13 @@
 package ch.difty.scipamato.common.navigator;
 
+import static java.util.stream.Collectors.toList;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import ch.difty.scipamato.common.NullArgumentException;
 
@@ -41,7 +42,7 @@ class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
             .stream()
             .distinct()
             .filter(Objects::nonNull)
-            .collect(Collectors.toList()));
+            .collect(toList()));
     }
 
     @Override
@@ -79,6 +80,15 @@ class NavigatedList<T extends Serializable> implements NavigatedItems<T> {
     @Override
     public boolean containsId(final T id) {
         return items.contains(id);
+    }
+
+    @Override
+    public List<T> without(final T id) {
+        return items
+            .stream()
+            .filter(Objects::nonNull)
+            .filter(i -> !i.equals(id))
+            .collect(toList());
     }
 
     @Override

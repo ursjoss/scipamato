@@ -168,8 +168,7 @@ public abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, Edita
 
             @Override
             protected PaperEntryPage getResponsePage(Paper p, Long searchOrderId, boolean showingExclusions) {
-                // no-op
-                return null;
+                throw new RuntimeException("forward to calling page triggered");
             }
         };
     }

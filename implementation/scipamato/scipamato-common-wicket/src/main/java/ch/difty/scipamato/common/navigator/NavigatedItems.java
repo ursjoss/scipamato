@@ -68,8 +68,17 @@ interface NavigatedItems<T> extends Serializable {
 
     /**
      * @param id
-     *    the id that may or may not be part of the collections.
+     *     the id that may or may not be part of the collections.
      * @return true if it is contained, false otherwise
      */
     boolean containsId(T id);
+
+    /**
+     * Returns a copy of the list without the id passed in as parameter
+     *
+     * @param id
+     *     the id that should be excluded from the new list
+     * @return the new list not containing the id passed in
+     */
+    List<T> without(T id);
 }

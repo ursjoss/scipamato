@@ -569,23 +569,23 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
             @Override
             public void onSubmit() {
-                Long paperId = EditablePaperPanel.this
+                final Long paperId = EditablePaperPanel.this
                     .getModelObject()
                     .getId();
                 if (paperId != null) {
-                    if (showingExclusions) {
+                    if (showingExclusions)
                         paperService.reincludeIntoSearchOrder(searchOrderId, paperId);
-                    } else {
+                    else
                         paperService.excludeFromSearchOrder(searchOrderId, paperId);
+                    getPaperIdManager().remove(paperId);
+                    final Long idWithFocus = getPaperIdManager().getItemWithFocus();
+                    if (idWithFocus != null) {
+                        final Optional<Paper> p = paperService.findById(idWithFocus);
+                        p.ifPresent(paper -> setResponsePage(getResponsePage(paper, searchOrderId, showingExclusions)));
+                    } else {
+                        restartSearchInPaperSearchPage();
                     }
                 }
-                PageParameters pp = new PageParameters();
-                pp.add(SEARCH_ORDER_ID.getName(), searchOrderId);
-                pp.add(SHOW_EXCLUDED.getName(), showingExclusions);
-                pp.add(MODE.getName(), getMode());
-                pageFactory
-                    .setResponsePageToPaperSearchPageConsumer(this)
-                    .accept(pp);
             }
 
             @Override
@@ -605,6 +605,17 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         };
         exclude.setDefaultFormProcessing(false);
         return exclude;
+    }
+
+    @Override
+    protected void restartSearchInPaperSearchPage() {
+        PageParameters pp = new PageParameters();
+        pp.add(SEARCH_ORDER_ID.getName(), searchOrderId);
+        pp.add(SHOW_EXCLUDED.getName(), showingExclusions);
+        pp.add(MODE.getName(), getMode());
+        pageFactory
+            .setResponsePageToPaperSearchPageConsumer(this)
+            .accept(pp);
     }
 
     @Override
