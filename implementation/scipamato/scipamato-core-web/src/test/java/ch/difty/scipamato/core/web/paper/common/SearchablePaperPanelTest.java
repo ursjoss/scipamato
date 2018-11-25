@@ -5,7 +5,6 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.junit.Test;
 
@@ -105,10 +104,7 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
         assertTextFieldWithLabel(b + ":modifiedDisplayValue", "lmdv", "Last Modified");
 
         getTester().assertComponent(b + ":submit", BootstrapButton.class);
-
-        String bb = b + ":tabs:panelsContainer:panels:11:tab6Form";
-        getTester().assertInvisible(bb + ":dropzone");
-        getTester().assertComponent(bb, Form.class);
+        verifyCodeAndCodeClassCalls(1);
     }
 
     @Test
@@ -119,21 +115,18 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
         getTester().isEnabled("panel:form:firstAuthorOverridden");
         getTester().isEnabled("panel:form:createdDisplayValue");
         getTester().isEnabled("panel:form:modifiedDisplayValue");
-        verifyCodeAndCodeClassCalls(1);
     }
 
     @Test
     public void summary_doesNotExist() {
         getTester().startComponentInPage(makePanel());
         getTester().assertContainsNot("panel:form:summary");
-        verifyCodeAndCodeClassCalls(1);
     }
 
     @Test
     public void summaryShort_doesNotExist() {
         getTester().startComponentInPage(makePanel());
         getTester().assertContainsNot("panel:form:summaryShort");
-        verifyCodeAndCodeClassCalls(1);
     }
 
     @Test
@@ -146,8 +139,6 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
         getTester().assertInvisible("panel:form:pubmedRetrieval");
 
         getTester().assertInvisible("panel:form:back");
-
-        verifyCodeAndCodeClassCalls(1);
     }
 
     @Test
@@ -155,14 +146,12 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
         getTester().startComponentInPage(makePanel());
         applyTestHackWithNestedMultiPartForms();
         getTester().submitForm("panel:form");
-        verifyCodeAndCodeClassCalls(2);
     }
 
     @Test
     public void gettingCallingPage_isNull() {
         SearchablePaperPanel panel = getTester().startComponentInPage(makePanel());
         assertThat(panel.getCallingPage()).isNull();
-        verifyCodeAndCodeClassCalls(1);
     }
 
 }

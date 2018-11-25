@@ -243,7 +243,7 @@ public class PaperSearchPage extends BasePage<SearchOrder> {
                         .getObject()
                         .getNumber(), languageCode)
                     .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
-                    dataProvider.isShowExcluded());
+                    dataProvider.isShowExcluded(), Model.of(0));
             }
 
         };

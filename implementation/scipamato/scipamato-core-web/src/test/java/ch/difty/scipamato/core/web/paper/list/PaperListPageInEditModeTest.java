@@ -88,9 +88,6 @@ public class PaperListPageInEditModeTest extends PaperListPageTest {
         verify(applicationPropertiesMock).getMinimumPaperNumberToBeRecycled();
         verify(paperServiceMock).findLowestFreeNumberStartingFrom(minimumNumber);
         // from PaperEntryPage
-        verify(codeClassServiceMock).find(LC);
-        for (CodeClassId ccid : CodeClassId.values())
-            verify(codeServiceMock).findCodesOfClass(ccid, LC);
         verify(paperServiceMock, times(5)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
     }
 

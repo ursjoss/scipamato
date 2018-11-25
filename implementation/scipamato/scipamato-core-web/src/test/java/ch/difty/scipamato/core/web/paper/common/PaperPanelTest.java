@@ -7,15 +7,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
+import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
 import org.junit.After;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -155,14 +153,10 @@ public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P
         assertTextFieldWithLabel(b + ":doi", "doi", "DOI");
 
         b += ":tabs";
-        getTester().assertComponent(b, ClientSideBootstrapTabbedPanel.class);
+        getTester().assertComponent(b, BootstrapTabbedPanel.class);
 
-        String bb = b + ":panelsContainer";
-        getTester().assertComponent(bb, WebMarkupContainer.class);
-        bb += ":panels";
-        getTester().assertComponent(bb, RepeatingView.class);
-
-        String bbb = bb + ":1:tab1Form";
+        String bb = b + ":panel";
+        String bbb = bb + ":tab1Form";
         getTester().assertComponent(bbb, Form.class);
         assertTextAreaWithLabel(bbb + ":goals", "g", "Goals");
         assertTextAreaWithLabel(bbb + ":population", "p", "Population");
@@ -178,7 +172,9 @@ public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P
         assertTextAreaWithLabel(bbb + ":methodStatistics", "ms", "Statistical Method");
         assertTextAreaWithLabel(bbb + ":methodConfounders", "mc", "Confounders");
 
-        bbb = bb + ":3:tab2Form";
+        getTester().clickLink("panel:form:tabs:tabs-container:tabs:1:link");
+
+        bbb = bb + ":tab2Form";
         getTester().assertComponent(bbb, Form.class);
         assertTextAreaWithLabel(bbb + ":result", "r", "Results");
         assertTextAreaWithLabel(bbb + ":comment", "c", "Comment");
@@ -188,7 +184,9 @@ public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P
         assertTextAreaWithLabel(bbb + ":resultEffectEstimate", "ree", "Effect Estimate/Results");
         assertTextAreaWithLabel(bbb + ":conclusion", "cc", "Conclusion");
 
-        bbb = bb + ":5:tab3Form";
+        getTester().clickLink("panel:form:tabs:tabs-container:tabs:2:link");
+
+        bbb = bb + ":tab3Form";
         getTester().assertComponent(bbb, Form.class);
         assertMultiselectWithLabel(bbb + ":codesClass1", newC(1, "F"), "cc1");
         assertTextFieldWithLabel(bbb + ":mainCodeOfCodeclass1", "mcocc1", "Main Exposure Agent");
@@ -200,7 +198,9 @@ public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P
         assertMultiselectWithLabel(bbb + ":codesClass7", newC(7, "A"), "cc7");
         assertMultiselectWithLabel(bbb + ":codesClass8", newC(8, "A"), "cc8");
 
-        bbb = bb + ":7:tab4Form";
+        getTester().clickLink("panel:form:tabs:tabs-container:tabs:3:link");
+
+        bbb = bb + ":tab4Form";
         getTester().assertComponent(bbb, Form.class);
         assertTextAreaWithLabel(bbb + ":populationPlace", "ppl", "Place/Country (study name)");
         assertTextAreaWithLabel(bbb + ":populationParticipants", "ppa", "Participants");
@@ -216,26 +216,29 @@ public abstract class PaperPanelTest<T extends CodeBoxAware & NewsletterAware, P
         assertTextAreaWithLabel(bbb + ":conclusion", "cc", "Conclusion");
         assertTextAreaWithLabel(bbb + ":resultEffectEstimate", "ree", "Effect Estimate/Results");
 
-        bbb = bb + ":9:tab5Form";
+        getTester().clickLink("panel:form:tabs:tabs-container:tabs:4:link");
+
+        bbb = bb + ":tab5Form";
         assertTextAreaWithLabel(bbb + ":originalAbstract", "oa", "Original Abstract");
         getTester().assertComponent(bbb, Form.class);
 
-        bbb = bb + ":11:tab6Form";
+        getTester().clickLink("panel:form:tabs:tabs-container:tabs:5:link");
+        bbb = bb + ":tab6Form";
         getTester().assertComponent(bbb, Form.class);
 
-        bbb = bb + ":13:tab7Form";
+        getTester().clickLink("panel:form:tabs:tabs-container:tabs:6:link");
+
+        bbb = bb + ":tab7Form";
         getTester().assertComponent(bbb, Form.class);
 
-        bb = b + ":tabsContainer:tabs:";
-        getTester().assertLabel(bb + "2:link:title", "Population, Goals, and Methods");
-        getTester().assertLabel(bb + "4:link:title", "Results and Comments");
-        getTester().assertLabel(bb + "6:link:title", "Codes and new Studies");
-        getTester().assertLabel(bb + "8:link:title", "New Field Entry");
-        getTester().assertLabel(bb + "10:link:title", "Original Abstract");
-        getTester().assertLabel(bb + "12:link:title", "Attachments");
-        getTester().assertLabel(bb + "14:link:title", "Newsletter");
-
-        verifyCodeAndCodeClassCalls(1);
+        bb = b + ":tabs-container:tabs:";
+        getTester().assertLabel(bb + "0:link:title", "Population, Goals, and Methods");
+        getTester().assertLabel(bb + "1:link:title", "Results and Comments");
+        getTester().assertLabel(bb + "2:link:title", "Codes and new Studies");
+        getTester().assertLabel(bb + "3:link:title", "New Field Entry");
+        getTester().assertLabel(bb + "4:link:title", "Original Abstract");
+        getTester().assertLabel(bb + "5:link:title", "Attachments");
+        getTester().assertLabel(bb + "6:link:title", "Newsletter");
     }
 
 }

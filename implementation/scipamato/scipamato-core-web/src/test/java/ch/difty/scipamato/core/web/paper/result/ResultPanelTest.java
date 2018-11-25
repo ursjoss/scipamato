@@ -94,7 +94,7 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
                         .getObject()
                         .getNumber(), languageCode)
                     .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
-                    dataProvider.isShowExcluded());
+                    dataProvider.isShowExcluded(), Model.of(0));
             }
         };
     }
@@ -206,8 +206,6 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
         verify(paperSlimServiceMock).countBySearchOrder(searchOrderMock);
         verify(paperSlimServiceMock).findPageBySearchOrder(eq(searchOrderMock), isA(PaginationRequest.class));
         verify(paperServiceMock).findByNumber(NUMBER, LC);
-        verify(codeClassServiceMock).find(anyString());
-        verify(codeServiceMock, times(8)).findCodesOfClass(isA(CodeClassId.class), anyString());
         verify(searchOrderMock).getId();
         verify(searchOrderMock, times(getMode() == Mode.VIEW ? 1 : 3)).isShowExcluded();
         verify(paperServiceMock).findPageOfIdsBySearchOrder(isA(SearchOrder.class), isA(PaginationRequest.class));

@@ -1,8 +1,5 @@
 package ch.difty.scipamato.core.web.common;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
-import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -58,15 +55,7 @@ public abstract class SelfUpdatingPage<T> extends BasePage<T> {
     }
 
     private void activateSelfUpdatingBehavior() {
-        getForm().add(new AjaxFormValidatingBehavior("change") {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onAfterSubmit(AjaxRequestTarget target) {
-                super.onAfterSubmit(target);
-                send(getPage(), Broadcast.BREADTH, new SelfUpdateEvent(target));
-            }
-        });
+        getForm().add(new SelfUpdateBroadcastingBehavior(getPage()));
     }
 
     /**

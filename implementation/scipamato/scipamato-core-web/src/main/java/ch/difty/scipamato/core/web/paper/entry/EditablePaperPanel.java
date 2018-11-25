@@ -105,8 +105,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     private Environment env;
 
     EditablePaperPanel(String id, IModel<Paper> model, PageReference previousPage, Long searchOrderId,
-        boolean showingExclusions, Mode mode) {
-        super(id, model, mode, previousPage);
+        boolean showingExclusions, Mode mode, IModel<Integer> tabIndexModel) {
+        super(id, model, mode, previousPage, tabIndexModel);
         if (!(mode == Mode.EDIT || mode == Mode.VIEW))
             throw new IllegalArgumentException("Mode " + mode + " is not enabled in " + getClass());
         this.searchOrderId = searchOrderId;
@@ -613,6 +613,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
         pp.add(SEARCH_ORDER_ID.getName(), searchOrderId);
         pp.add(SHOW_EXCLUDED.getName(), showingExclusions);
         pp.add(MODE.getName(), getMode());
+        pp.add(TAB_INDEX.getName(), getTabIndexModel().getObject());
         pageFactory
             .setResponsePageToPaperSearchPageConsumer(this)
             .accept(pp);

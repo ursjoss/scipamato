@@ -57,11 +57,14 @@ public class EditablePaperPanelInViewModeTest extends EditablePaperPanelTest {
 
         getTester().assertInvisible(b + ":modAssociation");
 
-        String bb = b + ":tabs:panelsContainer:panels:11:tab6Form";
+        getTester().clickLink("panel:form:tabs:tabs-container:tabs:5:link");
+
+        String bb = b + ":tabs:panel:tab6Form";
         getTester().assertInvisible(bb + ":dropzone");
         getTester().assertComponent(bb + ":attachments", BootstrapDefaultDataTable.class);
         getTester().assertComponent(bb, Form.class);
 
+        verifyCodeAndCodeClassCalls(1, 1);
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
@@ -72,6 +75,16 @@ public class EditablePaperPanelInViewModeTest extends EditablePaperPanelTest {
             .getModelObject()
             .setNewsletterLink(new Paper.NewsletterLink(1, "i1", 1, 1, "t1", "hl"));
         assertThat(p.isAssociatedWithNewsletter()).isTrue();
+    }
+
+    @Test
+    public void specificFields_areDisabled() {
+        getTester().startComponentInPage(makePanel());
+        getTester().isDisabled("panel:form:id");
+        getTester().isDisabled("panel:form:firstAuthorOverridden");
+        getTester().isDisabled("panel:form:createdDisplayValue");
+        getTester().isDisabled("panel:form:modifiedDisplayValue");
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
 }

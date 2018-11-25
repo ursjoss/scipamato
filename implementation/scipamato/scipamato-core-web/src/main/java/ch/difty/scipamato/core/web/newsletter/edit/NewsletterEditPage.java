@@ -224,7 +224,7 @@ public class NewsletterEditPage extends BasePage<Newsletter> {
                         .getObject()
                         .getNumber(), languageCode)
                     .orElse(new Paper())), getPage().getPageReference(), dataProvider.getSearchOrderId(),
-                    dataProvider.isShowExcluded());
+                    dataProvider.isShowExcluded(), Model.of(0));
             }
 
         };

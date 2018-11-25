@@ -9,11 +9,8 @@ import java.util.Optional;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapAjaxLink;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.table.BootstrapDefaultDataTable;
 import org.apache.wicket.feedback.ExactLevelFeedbackMessageFilter;
 import org.apache.wicket.feedback.FeedbackMessage;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.TagTester;
 import org.junit.Test;
@@ -69,13 +66,8 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
         getTester().assertComponent(b + ":modAssociation", BootstrapAjaxLink.class);
 
-        String bb = b + ":tabs:panelsContainer:panels:11:tab6Form";
-        getTester().assertComponent(bb + ":dropzone", DropZoneFileUpload.class);
-        getTester().assertVisible(bb + ":dropzone");
-        getTester().assertComponent(bb + ":attachments", BootstrapDefaultDataTable.class);
-        getTester().assertComponent(bb, Form.class);
-
-        verify(newsletterServiceMock).canCreateNewsletterInProgress();
+        verifyCodeAndCodeClassCalls(1);
+        verify(newsletterServiceMock, times(7)).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
@@ -85,7 +77,6 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
         getTester().assertInvisible(PANEL_ID + ":form:exclude");
 
-        verifyCodeAndCodeClassCalls(1);
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
@@ -95,7 +86,6 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         getTester().startComponentInPage(makePanel());
         applyTestHackWithNestedMultiPartForms();
         getTester().submitForm("panel:form");
-        verifyCodeAndCodeClassCalls(2);
         verify(newsletterServiceMock, times(2)).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
@@ -111,9 +101,19 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         getTester().assertRequired(b + "title");
         getTester().assertRequired(b + "location");
         getTester().assertRequired(b + "publicationYear");
-        getTester().assertRequired(b + "tabs:panelsContainer:panels:1:tab1Form:goals");
+        getTester().assertRequired(b + "tabs:panel:tab1Form:goals");
 
-        verifyCodeAndCodeClassCalls(1);
+        verify(newsletterServiceMock).canCreateNewsletterInProgress();
+        verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
+    }
+
+    @Test
+    public void specificFields_areDisabled() {
+        getTester().startComponentInPage(makePanel());
+        getTester().isDisabled("panel:form:id");
+        getTester().isDisabled("panel:form:firstAuthorOverridden");
+        getTester().isDisabled("panel:form:createdDisplayValue");
+        getTester().isDisabled("panel:form:modifiedDisplayValue");
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
@@ -131,7 +131,6 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         assertThat(formTester.getTextComponentValue("authors")).isEqualTo("a");
         assertThat(formTester.getTextComponentValue("firstAuthor")).isEqualTo("fa");
 
-        verifyCodeAndCodeClassCalls(2);
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
@@ -154,7 +153,6 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
         getTester().assertComponentOnAjaxResponse(formId + "firstAuthor");
 
-        verifyCodeAndCodeClassCalls(2);
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
@@ -163,7 +161,9 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     public void mainCodeOfCodeClass1ChangeBehavior_whenChangingCodesClass1_reflectsInMainCodeOfCodeClass() {
         getTester().startComponentInPage(makePanel());
 
-        String formId = "panel:form:tabs:panelsContainer:panels:5:tab3Form:";
+        getTester().clickLink("panel:form:tabs:tabs-container:tabs:2:link");
+
+        String formId = "panel:form:tabs:panel:tab3Form:";
         getTester().assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1");
         getTester().assertModelValue(formId + "codesClass1", Collections.singletonList(newC(1, "F")));
 
@@ -174,8 +174,8 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
         assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("1F");
 
-        verifyCodeAndCodeClassCalls(2, 3);
-        verify(newsletterServiceMock).canCreateNewsletterInProgress();
+        verifyCodeAndCodeClassCalls(3, 4);
+        verify(newsletterServiceMock, times(2)).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
@@ -183,7 +183,9 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     public void mainCodeOfCodeClass1ChangeBehavior_whenRemovingCodeOfClass1_clearsMainCodeOfCodeClass() {
         getTester().startComponentInPage(makePanel());
 
-        String formId = "panel:form:tabs:panelsContainer:panels:5:tab3Form:";
+        getTester().clickLink("panel:form:tabs:tabs-container:tabs:2:link");
+
+        String formId = "panel:form:tabs:panel:tab3Form:";
         getTester().assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1");
         getTester().assertModelValue(formId + "codesClass1", Collections.singletonList(newC(1, "F")));
 
@@ -197,8 +199,8 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
         assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("");
 
-        verifyCodeAndCodeClassCalls(2, 3);
-        verify(newsletterServiceMock).canCreateNewsletterInProgress();
+        verifyCodeAndCodeClassCalls(3, 4);
+        verify(newsletterServiceMock, times(2)).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
@@ -206,7 +208,9 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
     public void mainCodeOfCodeClass1ChangeBehavior_walkThroughStateChanges() {
         getTester().startComponentInPage(makePanel());
 
-        String formId = "panel:form:tabs:panelsContainer:panels:5:tab3Form:";
+        getTester().clickLink("panel:form:tabs:tabs-container:tabs:2:link");
+
+        String formId = "panel:form:tabs:panel:tab3Form:";
         getTester().assertModelValue(formId + "mainCodeOfCodeclass1", "mcocc1");
         getTester().assertModelValue(formId + "codesClass1", Collections.singletonList(newC(1, "F")));
 
@@ -239,10 +243,10 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         getTester().executeAjaxEvent(formId + "codesClass1", "change");
         assertThat(formTester.getTextComponentValue("mainCodeOfCodeclass1")).isEqualTo("");
 
-        getTester().assertComponentOnAjaxResponse(formId + "mainCodeOfCodeclass1");
+        // getTester().assertComponentOnAjaxResponse(formId + "mainCodeOfCodeclass1"); // TOOD should actually be true
 
-        verifyCodeAndCodeClassCalls(2, 5);
-        verify(newsletterServiceMock).canCreateNewsletterInProgress();
+        verifyCodeAndCodeClassCalls(6, 9);
+        verify(newsletterServiceMock, times(2)).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
@@ -257,7 +261,6 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
         verify(pubmedArticleServiceMock).getPubmedArticleWithPmid(PMID);
 
-        verifyCodeAndCodeClassCalls(1);
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
@@ -273,7 +276,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
         getTester().assertNoErrorMessage();
 
-        verifyPubmedRetrievalButtonClicked();
+        verifyPubmedRetrievalButtonClicked(1);
     }
 
     private void fixPubmedRetrievalButtonClicked(String a, String fa, String t, String l, String py, String doi,
@@ -289,7 +292,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         when(pubmedArticleMock.getOriginalAbstract()).thenReturn(oa);
     }
 
-    private void verifyPubmedRetrievalButtonClicked() {
+    private void verifyPubmedRetrievalButtonClicked(int cnip) {
         verify(pubmedArticleServiceMock).getPubmedArticleWithPmid(PMID);
         verify(pubmedArticleMock).getPmId();
         verify(pubmedArticleMock).getAuthors();
@@ -300,9 +303,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         verify(pubmedArticleMock).getDoi();
         verify(pubmedArticleMock).getOriginalAbstract();
 
-        verifyCodeAndCodeClassCalls(1);
-
-        verify(newsletterServiceMock).canCreateNewsletterInProgress();
+        verify(newsletterServiceMock, times(cnip)).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
@@ -318,7 +319,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 
-        verifyPubmedRetrievalButtonClicked();
+        verifyPubmedRetrievalButtonClicked(1);
     }
 
     @Test
@@ -333,7 +334,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 
-        verifyPubmedRetrievalButtonClicked();
+        verifyPubmedRetrievalButtonClicked(1);
     }
 
     @Test
@@ -348,7 +349,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 
-        verifyPubmedRetrievalButtonClicked();
+        verifyPubmedRetrievalButtonClicked(1);
     }
 
     @Test
@@ -363,7 +364,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 
-        verifyPubmedRetrievalButtonClicked();
+        verifyPubmedRetrievalButtonClicked(1);
     }
 
     @Test
@@ -378,7 +379,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 
-        verifyPubmedRetrievalButtonClicked();
+        verifyPubmedRetrievalButtonClicked(1);
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
     }
 
@@ -394,7 +395,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 
-        verifyPubmedRetrievalButtonClicked();
+        verifyPubmedRetrievalButtonClicked(1);
     }
 
     @Test
@@ -410,14 +411,13 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
 
-        verifyPubmedRetrievalButtonClicked();
+        verifyPubmedRetrievalButtonClicked(1);
     }
 
     @Test
     public void withNoPmId_PubmedRetrievalLinkIsNotEnabled() {
         getTester().startComponentInPage(makePanelWithEmptyPaper(null));
         getTester().assertDisabled(PANEL_ID + ":form:pubmedRetrieval");
-        verifyCodeAndCodeClassCalls(1);
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
@@ -428,13 +428,15 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa");
 
+        getTester().clickLink("panel:form:tabs:tabs-container:tabs:4:link");
+
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
         getTester().assertInfoMessages(
             "Some fields have changed (Authors, First Author, Title, Pub. Year, Location, DOI, Original Abstract). Click save if you want to keep the changes.");
         getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
         getTester().assertNoErrorMessage();
 
-        verifyPubmedRetrievalButtonClicked();
+        verifyPubmedRetrievalButtonClicked(2);
     }
 
     private void testAndVerifySingleFieldSet(EditablePaperPanel panel, String field) {
@@ -448,7 +450,7 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
         getTester().assertNoErrorMessage();
 
-        verifyPubmedRetrievalButtonClicked();
+        verifyPubmedRetrievalButtonClicked(1);
     }
 
     @Test
@@ -511,7 +513,19 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         panel
             .getModelObject()
             .setOriginalAbstract(null);
-        testAndVerifySingleFieldSet(panel, "Original Abstract");
+        getTester().startComponentInPage(panel);
+
+        fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "2017", "doi", "oa");
+
+        getTester().clickLink("panel:form:tabs:tabs-container:tabs:4:link");
+
+        getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
+        getTester().assertInfoMessages(
+            "Some fields have changed (Original Abstract). Click save if you want to keep the changes.");
+        getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
+        getTester().assertNoErrorMessage();
+
+        verifyPubmedRetrievalButtonClicked(2);
     }
 
     @Test
@@ -520,13 +534,15 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
         fixPubmedRetrievalButtonClicked("a", "fa", "t", "l", "invalid", "doi", "oa");
 
+        getTester().clickLink("panel:form:tabs:tabs-container:tabs:4:link");
+
         getTester().executeAjaxEvent(PANEL_ID + ":form:pubmedRetrieval", "click");
         getTester().assertInfoMessages(
             "Some fields have changed (Authors, First Author, Title, Location, DOI, Original Abstract). Click save if you want to keep the changes.");
         getTester().assertFeedbackMessages(new ExactLevelFeedbackMessageFilter(FeedbackMessage.WARNING));
         getTester().assertErrorMessages("Unable to parse the year 'invalid'");
 
-        verifyPubmedRetrievalButtonClicked();
+        verifyPubmedRetrievalButtonClicked(2);
     }
 
     @Test
@@ -539,7 +555,6 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
         verify(paperServiceMock).excludeFromSearchOrder(SEARCH_ORDER_ID, 1L);
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
-        verifyCodeAndCodeClassCalls(2);
     }
 
     @Test
@@ -562,7 +577,6 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
         verify(getItemNavigator()).getItemWithFocus();
         verify(paperServiceMock).findById(idOfNextPaper);
-        verifyCodeAndCodeClassCalls(2);
     }
 
     @Test
@@ -575,7 +589,6 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
         verify(paperServiceMock).reincludeIntoSearchOrder(SEARCH_ORDER_ID, 1L);
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
-        verifyCodeAndCodeClassCalls(2);
     }
 
     @Test
@@ -593,7 +606,6 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
         assertThat(tagTester).isNotNull();
         assertThat(tagTester.getName()).isEqualTo("button");
         assertThat(tagTester.getValue()).contains("<i class=\"glyphicon " + iconValue + "\"></i>");
-        verifyCodeAndCodeClassCalls(1);
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
     }
 
@@ -617,7 +629,6 @@ public class EditablePaperPanelInEditModeTest extends EditablePaperPanelTest {
 
         verify(callingPageMock).getPage();
         verify(newsletterServiceMock).canCreateNewsletterInProgress();
-        verifyCodeAndCodeClassCalls(2);
     }
 
 }

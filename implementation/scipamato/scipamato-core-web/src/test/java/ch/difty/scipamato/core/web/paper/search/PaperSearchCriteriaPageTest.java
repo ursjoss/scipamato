@@ -81,7 +81,8 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
         getTester().assertRenderedPage(PaperSearchPage.class);
         getTester().assertNoErrorMessage();
 
-        verify(searchOrderServiceMock).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID, "en_us");
+        verify(searchOrderServiceMock, times(2)).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID,
+            "en_us");
         verify(searchOrderServiceMock).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
     }
 
@@ -96,10 +97,12 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
         FormTester formTester = getTester().newFormTester("contentPanel:form");
         formTester.submit();
 
-        getTester().assertErrorMessages("An unexpected error occurred when trying to save Search Order [id ]: foo");
+        getTester().assertErrorMessages("An unexpected error occurred when trying to save Search Order [id ]: foo",
+            "An unexpected error occurred when trying to save Search Order [id ]: foo");
         getTester().assertRenderedPage(getPageClass());
 
-        verify(searchOrderServiceMock).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID, "en_us");
+        verify(searchOrderServiceMock, times(2)).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID,
+            "en_us");
         verify(searchOrderServiceMock, never()).findPageByFilter(isA(SearchOrderFilter.class),
             isA(PaginationContext.class));
     }

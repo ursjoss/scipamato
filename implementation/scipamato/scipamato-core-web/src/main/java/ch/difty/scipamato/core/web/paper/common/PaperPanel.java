@@ -9,7 +9,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.button.*;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Size;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
-import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
+import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.fileUpload.DropZoneFileUpload;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.checkboxx.CheckBoxX;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.form.select.BootstrapMultiSelect;
@@ -46,6 +46,7 @@ import ch.difty.scipamato.core.NewsletterAware;
 import ch.difty.scipamato.core.entity.*;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.core.web.common.BasePanel;
+import ch.difty.scipamato.core.web.common.SelfUpdateBroadcastingBehavior;
 import ch.difty.scipamato.core.web.common.SelfUpdateEvent;
 import ch.difty.scipamato.core.web.model.CodeClassModel;
 import ch.difty.scipamato.core.web.model.CodeModel;
@@ -54,7 +55,7 @@ import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource;
 
-@SuppressWarnings({ "WicketForgeJavaIdInspection", "SameParameterValue" })
+@SuppressWarnings("SameParameterValue")
 public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> extends BasePanel<T> {
 
     private static final long serialVersionUID = 1L;
@@ -81,15 +82,18 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
     private final PageReference callingPage;
 
-    private Form<T> form;
+    private Form<T>         form;
+    private IModel<Integer> tabIndexModel;
 
     PaperPanel(String id, IModel<T> model, Mode mode) {
-        this(id, model, mode, null);
+        this(id, model, mode, null, Model.of(0));
     }
 
-    public PaperPanel(String id, IModel<T> model, Mode mode, PageReference previousPage) {
+    public PaperPanel(String id, IModel<T> model, Mode mode, PageReference previousPage,
+        IModel<Integer> tabIndexModel) {
         super(id, model, mode);
         this.callingPage = previousPage;
+        this.tabIndexModel = tabIndexModel;
     }
 
     protected PageReference getCallingPage() {
@@ -98,6 +102,10 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
     protected DataTable<PaperAttachment, String> getAttachments() {
         return attachments;
+    }
+
+    protected IModel<Integer> getTabIndexModel() {
+        return tabIndexModel;
     }
 
     @Override
@@ -157,60 +165,15 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
         queueNumberField(NUMBER.getName());
 
-        TextField<Integer> id = new TextField<>(IdScipamatoEntity.IdScipamatoEntityFields.ID.getName()) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onEvent(IEvent<?> event) {
-                super.onEvent(event);
-                if (event
-                        .getPayload()
-                        .getClass() == SelfUpdateEvent.class) {
-                    ((SelfUpdateEvent) event.getPayload())
-                        .getTarget()
-                        .add(this);
-                    event.dontBroadcastDeeper();
-                }
-            }
-        };
+        TextField<Integer> id = newSelfUpdatingTextField(IdScipamatoEntity.IdScipamatoEntityFields.ID.getName());
         id.setEnabled(isSearchMode());
         queueFieldAndLabel(id);
 
-        TextField<String> created = new TextField<>(CoreEntity.CoreEntityFields.CREATED_DV.getName()) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onEvent(IEvent<?> event) {
-                super.onEvent(event);
-                if (event
-                        .getPayload()
-                        .getClass() == SelfUpdateEvent.class) {
-                    ((SelfUpdateEvent) event.getPayload())
-                        .getTarget()
-                        .add(this);
-                    event.dontBroadcastDeeper();
-                }
-            }
-        };
+        TextField<String> created = newSelfUpdatingTextField(CoreEntity.CoreEntityFields.CREATED_DV.getName());
         created.setEnabled(isSearchMode());
         queueFieldAndLabel(created);
 
-        TextField<String> modified = new TextField<>(CoreEntity.CoreEntityFields.MODIFIED_DV.getName()) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onEvent(IEvent<?> event) {
-                super.onEvent(event);
-                if (event
-                        .getPayload()
-                        .getClass() == SelfUpdateEvent.class) {
-                    ((SelfUpdateEvent) event.getPayload())
-                        .getTarget()
-                        .add(this);
-                    event.dontBroadcastDeeper();
-                }
-            }
-        };
+        TextField<String> modified = newSelfUpdatingTextField(CoreEntity.CoreEntityFields.MODIFIED_DV.getName());
         modified.setEnabled(isSearchMode());
         queueFieldAndLabel(modified);
 
@@ -286,6 +249,25 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         queue(addRemoveNewsletter);
     }
 
+    private <U> TextField<U> newSelfUpdatingTextField(final String id) {
+        return new TextField<>(id) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onEvent(IEvent<?> event) {
+                super.onEvent(event);
+                if (event
+                        .getPayload()
+                        .getClass() == SelfUpdateEvent.class) {
+                    ((SelfUpdateEvent) event.getPayload())
+                        .getTarget()
+                        .add(this);
+                    event.dontBroadcastDeeper();
+                }
+            }
+        };
+    }
+
     private void queueNumberField(String id) {
         final IModel<String> labelModel = Model.of(
             firstWordOfBrand() + "-" + new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null).getString());
@@ -334,7 +316,6 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             public Panel getPanel(String panelId) {
                 return new TabPanel1(panelId, form.getModel());
             }
-
         });
         tabs.add(new AbstractTab(new StringResourceModel("tab2" + LABEL_RESOURCE_TAG, this, null)) {
             private static final long serialVersionUID = 1L;
@@ -383,8 +364,9 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             public Panel getPanel(String panelId) {
                 return new TabPanel7(panelId, form.getModel());
             }
+
         });
-        queue(new ClientSideBootstrapTabbedPanel<>(tabId, tabs));
+        queue(new BootstrapTabbedPanel<>(tabId, tabs, tabIndexModel));
     }
 
     /*
@@ -599,6 +581,8 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
 
         private static final long serialVersionUID = 1L;
 
+        abstract int tabIndex();
+
         AbstractTabPanel(String id, IModel<?> model) {
             super(id, model);
         }
@@ -676,6 +660,12 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                 }
             });
         }
+
+        @Override
+        protected void onConfigure() {
+            super.onConfigure();
+            tabIndexModel.setObject(tabIndex());
+        }
     }
 
     private class TabPanel1 extends AbstractTabPanel {
@@ -686,10 +676,25 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         }
 
         @Override
+        int tabIndex() {
+            return 0;
+        }
+
+        @Override
         protected void onInitialize() {
             super.onInitialize();
 
-            queue(new Form<T>("tab1Form"));
+            final Form<T> tab1Form = new Form<>("tab1Form", new CompoundPropertyModel<>(getModel())) {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected void onSubmit() {
+                    super.onSubmit();
+                    onFormSubmit();
+                }
+            };
+            tab1Form.add(new SelfUpdateBroadcastingBehavior(getPage()));
+            queue(tab1Form);
 
             queueTo(GOALS, new PropertyValidator<String>());
             queueTo(POPULATION);
@@ -707,6 +712,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             queueNewFieldTo(METHOD_STATISTICS);
             queueNewFieldTo(METHOD_CONFOUNDERS);
         }
+
     }
 
     private class TabPanel2 extends AbstractTabPanel {
@@ -717,10 +723,25 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         }
 
         @Override
+        int tabIndex() {
+            return 1;
+        }
+
+        @Override
         protected void onInitialize() {
             super.onInitialize();
 
-            queue(new Form<T>("tab2Form"));
+            final Form<T> tab2Form = new Form<>("tab2Form", new CompoundPropertyModel<>(getModel())) {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected void onSubmit() {
+                    super.onSubmit();
+                    onFormSubmit();
+                }
+            };
+            tab2Form.add(new SelfUpdateBroadcastingBehavior(getPage()));
+            queue(tab2Form);
 
             queueTo(RESULT);
             queueTo(COMMENT);
@@ -731,6 +752,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             queueNewFieldTo(RESULT_EFFECT_ESTIMATE);
             queueNewFieldTo(CONCLUSION);
         }
+
     }
 
     private class TabPanel3 extends AbstractTabPanel {
@@ -743,10 +765,25 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         }
 
         @Override
+        int tabIndex() {
+            return 2;
+        }
+
+        @Override
         protected void onInitialize() {
             super.onInitialize();
 
-            Form<T> tab3Form = new Form<>("tab3Form");
+            Form<T> tab3Form = new Form<>("tab3Form", new CompoundPropertyModel<>(getModel())) {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected void onSubmit() {
+                    super.onSubmit();
+                    onFormSubmit();
+                }
+            };
+            tab3Form.setMultiPart(true);
+            tab3Form.add(new SelfUpdateBroadcastingBehavior(getPage()));
             queue(tab3Form);
 
             CodeClassModel codeClassModel = new CodeClassModel(getLocalization());
@@ -841,6 +878,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             addDisableBehavior(multiSelect);
             return multiSelect;
         }
+
     }
 
     private class TabPanel4 extends AbstractTabPanel {
@@ -851,10 +889,25 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         }
 
         @Override
+        int tabIndex() {
+            return 3;
+        }
+
+        @Override
         protected void onInitialize() {
             super.onInitialize();
 
-            queue(new Form<T>("tab4Form"));
+            Form<T> tab4Form = new Form<>("tab4Form", new CompoundPropertyModel<>(getModel())) {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected void onSubmit() {
+                    super.onSubmit();
+                    onFormSubmit();
+                }
+            };
+            tab4Form.add(new SelfUpdateBroadcastingBehavior(getPage()));
+            queue(tab4Form);
 
             queueNewFieldTo(METHOD_STUDY_DESIGN);
             queueNewFieldTo(METHOD_OUTCOME);
@@ -875,7 +928,6 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         }
     }
 
-    @SuppressWarnings("WicketForgeJavaIdInspection")
     private class TabPanel5 extends AbstractTabPanel {
         private static final long serialVersionUID = 1L;
 
@@ -884,10 +936,25 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         }
 
         @Override
+        int tabIndex() {
+            return 4;
+        }
+
+        @Override
         protected void onInitialize() {
             super.onInitialize();
 
-            queue(new Form<T>("tab5Form"));
+            Form<T> tab5Form = new Form<>("tab5Form", new CompoundPropertyModel<>(getModel())) {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected void onSubmit() {
+                    super.onSubmit();
+                    onFormSubmit();
+                }
+            };
+            tab5Form.add(new SelfUpdateBroadcastingBehavior(getPage()));
+            queue(tab5Form);
 
             originalAbstract = queueTo(ORIGINAL_ABSTRACT);
             addDisableBehavior(originalAbstract);
@@ -902,19 +969,29 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         }
 
         @Override
+        int tabIndex() {
+            return 5;
+        }
+
+        @Override
         protected void onInitialize() {
             super.onInitialize();
-            queue(newTab6Frm("tab6Form"));
+            Form<T> tab6Form = new Form<>("tab6Form", new CompoundPropertyModel<>(getModel())) {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected void onSubmit() {
+                    super.onSubmit();
+                    onFormSubmit();
+                }
+            };
+            tab6Form.setOutputMarkupId(true);
+            tab6Form.setMultiPart(true);
+            tab6Form.add(new SelfUpdateBroadcastingBehavior(getPage()));
+            queue(tab6Form);
             queue(newDropZoneFileUpload());
             attachments = newAttachmentTable("attachments");
             queue(attachments);
-        }
-
-        private Form<Void> newTab6Frm(String id) {
-            Form<Void> tab6Form = new Form<>(id);
-            tab6Form.setOutputMarkupId(true);
-            tab6Form.setMultiPart(true);
-            return tab6Form;
         }
     }
 
@@ -927,10 +1004,25 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         }
 
         @Override
+        int tabIndex() {
+            return 6;
+        }
+
+        @Override
         protected void onInitialize() {
             super.onInitialize();
 
-            queue(new Form<>("tab7Form"));
+            Form<T> tab7Form = new Form<>("tab7Form", new CompoundPropertyModel<>(getModel())) {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected void onSubmit() {
+                    super.onSubmit();
+                    onFormSubmit();
+                }
+            };
+            tab7Form.add(new SelfUpdateBroadcastingBehavior(getPage()));
+            queue(tab7Form);
             queueHeadline(NEWSLETTER_HEADLINE);
             makeAndQueueNewsletterTopicSelectBox("newsletterTopic");
         }

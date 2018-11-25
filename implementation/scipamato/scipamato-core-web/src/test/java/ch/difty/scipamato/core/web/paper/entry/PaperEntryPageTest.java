@@ -3,12 +3,10 @@ package ch.difty.scipamato.core.web.paper.entry;
 import static ch.difty.scipamato.core.entity.Paper.PaperFields.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.ClientSideBootstrapTabbedPanel;
+import de.agilecoders.wicket.core.markup.html.bootstrap.tabs.BootstrapTabbedPanel;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -70,52 +68,20 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         assertLabeledTextField(b, DOI.getName());
 
         b += ":tabs";
-        getTester().assertComponent(b, ClientSideBootstrapTabbedPanel.class);
-        b += ":panelsContainer:panels";
+        getTester().assertComponent(b, BootstrapTabbedPanel.class);
+        b += ":panel";
         assertTabPanelFields(1, 1, b, GOALS.getName(), POPULATION.getName(), METHODS.getName(),
             POPULATION_PLACE.getName(), POPULATION_PARTICIPANTS.getName(), POPULATION_DURATION.getName(),
             EXPOSURE_POLLUTANT.getName(), EXPOSURE_ASSESSMENT.getName(), METHOD_STUDY_DESIGN.getName(),
             METHOD_OUTCOME.getName(), METHOD_STATISTICS.getName(), METHOD_CONFOUNDERS.getName());
-        assertTabPanelFields(2, 3, b, RESULT.getName(), COMMENT.getName(), INTERN.getName(),
-            RESULT_EXPOSURE_RANGE.getName(), RESULT_EFFECT_ESTIMATE.getName(), RESULT_MEASURED_OUTCOME.getName());
-        assertTabPanelFieldsOfTab3(5, b, MAIN_CODE_OF_CODECLASS1.getName(), "codesClass1", "codesClass2", "codesClass3",
-            "codesClass4", "codesClass5", "codesClass6", "codesClass7", "codesClass8");
-        assertTabPanelFields(4, 7, b, POPULATION_PLACE.getName(), POPULATION_PARTICIPANTS.getName(),
-            POPULATION_DURATION.getName(), EXPOSURE_POLLUTANT.getName(), EXPOSURE_ASSESSMENT.getName(),
-            METHOD_STUDY_DESIGN.getName(), METHOD_OUTCOME.getName(), METHOD_STATISTICS.getName(),
-            METHOD_CONFOUNDERS.getName(), RESULT_EXPOSURE_RANGE.getName(), RESULT_EFFECT_ESTIMATE.getName(),
-            RESULT_MEASURED_OUTCOME.getName());
-        assertTabPanelFields(5, 9, b, ORIGINAL_ABSTRACT.getName());
-        assertTabPanelFields(6, 11, b);
     }
 
     private void assertTabPanelFields(int tabId, int panelId, String b, String... fields) {
-        assertTabPanel(panelId, b);
-        final String bb = b + ":" + panelId + ":tab" + tabId + "Form";
+        final String bb = b + ":tab" + tabId + "Form";
         getTester().assertComponent(bb, Form.class);
         for (String f : fields) {
             assertLabeledTextArea(bb, f);
         }
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    private void assertTabPanelFieldsOfTab3(int panelId, String b, String... fields) {
-        assertTabPanel(panelId, b);
-        final String bb = b + ":" + panelId + ":tab3Form";
-        getTester().assertComponent(bb, Form.class);
-        int fieldCount = 0;
-        for (String f : fields) {
-            if (fieldCount++ == 0) {
-                assertLabeledTextField(bb, f);
-            } else {
-                assertLabeledMultiSelect(bb, f);
-            }
-        }
-    }
-
-    private void assertTabPanel(int i, String b) {
-        final String bb = ":" + i;
-        getTester().assertComponent(b + bb, Panel.class);
     }
 
     @Test
@@ -123,12 +89,12 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenReturn(persistedPaperMock);
 
         getTester().startPage(makePage());
-        FormTester formTester = makeSavablePaperTester();
+        FormTester formTester = makeSaveablePaperTester();
         formTester.submit();
 
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
-        verify(paperServiceMock).saveOrUpdate(isA(Paper.class));
+        verify(paperServiceMock, times(2)).saveOrUpdate(isA(Paper.class));
     }
 
     @Test
@@ -152,21 +118,22 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
         getTester().startPage(makePage());
 
-        FormTester formTester = makeSavablePaperTester();
+        FormTester formTester = makeSaveablePaperTester();
         formTester.submit();
 
-        getTester().assertErrorMessages("An unexpected error occurred when trying to save Paper [id 0]: foo");
-        verify(paperServiceMock).saveOrUpdate(isA(Paper.class));
+        getTester().assertErrorMessages("An unexpected error occurred when trying to save Paper [id 0]: foo",
+            "An unexpected error occurred when trying to save Paper [id 0]: foo");
+        verify(paperServiceMock, times(2)).saveOrUpdate(isA(Paper.class));
     }
 
-    private FormTester makeSavablePaperTester() {
+    private FormTester makeSaveablePaperTester() {
         FormTester formTester = getTester().newFormTester("contentPanel:form");
         formTester.setValue("number", "100");
         formTester.setValue("authors", "Poe EA.");
         formTester.setValue("title", "Title");
         formTester.setValue("location", "loc");
         formTester.setValue("publicationYear", "2017");
-        formTester.setValue("tabs:panelsContainer:panels:1:tab1Form:goals", "goals");
+        formTester.setValue("tabs:panel:tab1Form:goals", "goals");
         return formTester;
     }
 
@@ -177,12 +144,13 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
 
         getTester().startPage(makePage());
 
-        FormTester formTester = makeSavablePaperTester();
+        FormTester formTester = makeSaveablePaperTester();
         formTester.submit();
 
         getTester().assertErrorMessages(
+            "The paper with id 0 has been modified concurrently by another user. Please reload it and apply your changes once more.",
             "The paper with id 0 has been modified concurrently by another user. Please reload it and apply your changes once more.");
-        verify(paperServiceMock).saveOrUpdate(isA(Paper.class));
+        verify(paperServiceMock, times(2)).saveOrUpdate(isA(Paper.class));
     }
 
     @Test
@@ -190,13 +158,14 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         when(paperServiceMock.saveOrUpdate(isA(Paper.class))).thenReturn(null);
 
         getTester().startPage(makePage());
-        FormTester formTester = makeSavablePaperTester();
+        FormTester formTester = makeSaveablePaperTester();
         formTester.submit();
 
         getTester().assertNoInfoMessage();
-        getTester().assertErrorMessages("An unexpected error occurred when trying to save Paper [id 0]: ");
+        getTester().assertErrorMessages("An unexpected error occurred when trying to save Paper [id 0]: ",
+            "An unexpected error occurred when trying to save Paper [id 0]: ");
 
-        verify(paperServiceMock).saveOrUpdate(isA(Paper.class));
+        verify(paperServiceMock, times(2)).saveOrUpdate(isA(Paper.class));
     }
 
     @Test
@@ -214,13 +183,13 @@ public class PaperEntryPageTest extends SelfUpdatingPageTest<PaperEntryPage> {
         assertThat(formTester.getTextComponentValue(TITLE.getName())).isNotNull();
         assertThat(formTester.getTextComponentValue(LOCATION.getName())).isNotNull();
         assertThat(formTester.getTextComponentValue(PUBL_YEAR.getName())).isNotNull();
-        assertThat(formTester.getTextComponentValue("tabs:panelsContainer:panels:1:tab1Form:goals")).isNotNull();
+        assertThat(formTester.getTextComponentValue("tabs:panel:tab1Form:goals")).isNotNull();
 
         formTester.submit();
 
         getTester().assertNoInfoMessage();
         getTester().assertNoErrorMessage();
-        verify(paperServiceMock).saveOrUpdate(isA(Paper.class));
+        verify(paperServiceMock, times(2)).saveOrUpdate(isA(Paper.class));
         verify(paperServiceMock).findLowestFreeNumberStartingFrom(7L);
     }
 

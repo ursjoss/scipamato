@@ -96,9 +96,6 @@ public abstract class SearchOrderPanelTest extends PanelTest<SearchOrderPanel> {
         FormTester formTester = getTester().newFormTester(PANEL_ID + ":form", false);
         formTester.submit("addSearchCondition");
         getTester().assertRenderedPage(PaperSearchCriteriaPage.class);
-
-        verify(codeClassServiceMock).find(anyString());
-        verify(codeServiceMock, times(8)).findCodesOfClass(isA(CodeClassId.class), anyString());
     }
 
     @Test

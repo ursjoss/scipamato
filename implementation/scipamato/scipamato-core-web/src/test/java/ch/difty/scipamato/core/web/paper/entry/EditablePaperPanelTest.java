@@ -100,8 +100,8 @@ public abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, Edita
 
         p.setOriginalAbstract("oa");
 
-        return new EditablePaperPanel(PANEL_ID, Model.of(p), callingPageMock, SEARCH_ORDER_ID, SHOW_EXCLUDED,
-            getMode()) {
+        return new EditablePaperPanel(PANEL_ID, Model.of(p), callingPageMock, SEARCH_ORDER_ID, SHOW_EXCLUDED, getMode(),
+            Model.of(0)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -127,16 +127,14 @@ public abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, Edita
         getTester().isDisabled("panel:form:firstAuthorOverridden");
         getTester().isDisabled("panel:form:createdDisplayValue");
         getTester().isDisabled("panel:form:modifiedDisplayValue");
-        verifyCodeAndCodeClassCalls(1);
-        if (getMode() != Mode.VIEW)
-            verify(newsletterServiceMock).canCreateNewsletterInProgress();
+        verify(newsletterServiceMock).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
     }
 
     EditablePaperPanel makePanelWithEmptyPaper(Integer pmId) {
         Paper p = new Paper();
         p.setPmId(pmId);
-        return new EditablePaperPanel(PANEL_ID, Model.of(p), null, null, SHOW_EXCLUDED, getMode()) {
+        return new EditablePaperPanel(PANEL_ID, Model.of(p), null, null, SHOW_EXCLUDED, getMode(), Model.of(0)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -158,7 +156,8 @@ public abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, Edita
         Paper p = new Paper();
         p.setId(1L);
         p.setPmId(pmId);
-        return new EditablePaperPanel(PANEL_ID, Model.of(p), callingPage, searchOrderId, showExcluded, getMode()) {
+        return new EditablePaperPanel(PANEL_ID, Model.of(p), callingPage, searchOrderId, showExcluded, getMode(),
+            Model.of(0)) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -179,7 +178,6 @@ public abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, Edita
 
         getTester().assertInvisible(PANEL_ID + ":form:back");
 
-        verifyCodeAndCodeClassCalls(1);
         if (getMode() != Mode.VIEW)
             verify(newsletterServiceMock).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
@@ -222,7 +220,6 @@ public abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, Edita
         getTester().assertComponent(path, ResourceLink.class);
         getTester().assertVisible(path);
         getTester().assertEnabled(path);
-        verifyCodeAndCodeClassCalls(1);
         if (getMode() != Mode.VIEW)
             verify(newsletterServiceMock).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));
@@ -235,7 +232,6 @@ public abstract class EditablePaperPanelTest extends PaperPanelTest<Paper, Edita
         getTester().assertComponent(path, ResourceLink.class);
         getTester().assertVisible(path);
         getTester().assertEnabled(path);
-        verifyCodeAndCodeClassCalls(1);
         if (getMode() != Mode.VIEW)
             verify(newsletterServiceMock).canCreateNewsletterInProgress();
         verify(paperServiceMock, times(2)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationContext.class));

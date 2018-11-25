@@ -1,7 +1,6 @@
 package ch.difty.scipamato.core.web.paper.entry;
 
-import static ch.difty.scipamato.core.web.CorePageParameters.SEARCH_ORDER_ID;
-import static ch.difty.scipamato.core.web.CorePageParameters.SHOW_EXCLUDED;
+import static ch.difty.scipamato.core.web.CorePageParameters.*;
 
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCDNCSSReference;
 import lombok.extern.slf4j.Slf4j;
@@ -82,7 +81,6 @@ import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
  *
  * @author u.joss
  */
-@SuppressWarnings("WicketForgeJavaIdInspection")
 @MountPath("entry")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })
@@ -95,10 +93,11 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
     private EditablePaperPanel contentPanel;
 
-    private final Mode          mode;
-    private final PageReference callingPage;
-    private final Long          searchOrderId;
-    private final boolean       showingExclusions;
+    private final Mode           mode;
+    private final PageReference  callingPage;
+    private final Long           searchOrderId;
+    private final boolean        showingExclusions;
+    private final Model<Integer> tabIndexModel;
 
     /**
      * Instantiates the page with the paper passed in as model. Allows the page to
@@ -111,7 +110,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      */
     @SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
     public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage) {
-        this(paperModel, callingPage, null, false);
+        this(paperModel, callingPage, null, false, Model.of(0));
     }
 
     /**
@@ -131,13 +130,15 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
      *     excluded from it. If true, the current paper has already been
      *     excluded from the search order. You can re-include it.
      */
+    @SuppressWarnings("WeakerAccess")
     public PaperEntryPage(IModel<Paper> paperModel, PageReference callingPage, Long searchOrderId,
-        boolean showingExclusions) {
+        boolean showingExclusions, Model<Integer> tabIndexModel) {
         super(paperModel);
         this.callingPage = callingPage;
         this.searchOrderId = searchOrderId;
         this.showingExclusions = showingExclusions;
         this.mode = evaluateMode();
+        this.tabIndexModel = tabIndexModel;
     }
 
     private Mode evaluateMode() {
@@ -163,6 +164,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         this.searchOrderId = searchOrderIdFromPageParameters();
         this.showingExclusions = showExcludedFromPageParameters();
         this.mode = evaluateMode();
+        this.tabIndexModel = tabIndexFromPageParameters();
     }
 
     private Long searchOrderIdFromPageParameters() {
@@ -174,6 +176,11 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
         final StringValue ieString = getPageParameters().get(SHOW_EXCLUDED.getName());
         final Boolean ie = ieString.isNull() ? null : ieString.toBoolean();
         return ie != null && ie;
+    }
+
+    private Model<Integer> tabIndexFromPageParameters() {
+        final StringValue sv = getPageParameters().get(TAB_INDEX.getName());
+        return Model.of(sv.isNull() ? 0 : sv.toInt(0));
     }
 
     @Override
@@ -204,7 +211,7 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
     @Override
     protected void implSpecificOnInitialize() {
         contentPanel = new EditablePaperPanel("contentPanel", getModel(), callingPage, searchOrderId, showingExclusions,
-            mode) {
+            mode, tabIndexModel) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -214,7 +221,8 @@ public class PaperEntryPage extends SelfUpdatingPage<Paper> {
 
             @Override
             protected PaperEntryPage getResponsePage(Paper p, Long searchOrderId, boolean showingExclusions) {
-                return new PaperEntryPage(Model.of(p), getCallingPage(), searchOrderId, showingExclusions);
+                return new PaperEntryPage(Model.of(p), getCallingPage(), searchOrderId, showingExclusions,
+                    tabIndexModel);
             }
         };
         contentPanel.setOutputMarkupId(true);

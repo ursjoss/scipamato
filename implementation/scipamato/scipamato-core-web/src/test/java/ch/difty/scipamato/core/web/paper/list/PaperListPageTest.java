@@ -17,7 +17,6 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.core.config.ApplicationCoreProperties;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
@@ -133,10 +132,6 @@ public abstract class PaperListPageTest extends BasePageTest<PaperListPage> {
         verify(paperServiceMock, times(4)).findPageOfIdsByFilter(isA(PaperFilter.class), isA(PaginationRequest.class));
         verify(paperServiceMock).findByNumber(number, LC);
         verify(pubmedImportService, never()).persistPubmedArticlesFromXml(anyString());
-        // from PaperEntryPage
-        verify(codeClassServiceMock).find(LC);
-        for (CodeClassId ccid : CodeClassId.values())
-            verify(codeServiceMock).findCodesOfClass(ccid, LC);
     }
 
 }
