@@ -61,7 +61,6 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
-- {url-issues}3[#3]: Core: Excluding papers from search from within paper edit page should not jump to the result page
 
 .Changed
 
@@ -70,9 +69,18 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
-- {url-issues}4[#4]: Core: Navigating from one paper to the next/previous in the paper entry page should keep the focus on the previously selected tab panel.
 
 .Security
+
+
+[[v1.0.2]]
+== [1.0.2] -- 2018-11-26
+
+.Added
+- {url-issues}3[#3]: Core: Excluding papers from search from within paper edit page should not jump to the result page
+
+.Fixed
+- {url-issues}4[#4]: Core: Navigating from one paper to the next/previous in the paper entry page should keep the focus on the previously selected tab panel.
 
 
 [[v1.0.1]]
