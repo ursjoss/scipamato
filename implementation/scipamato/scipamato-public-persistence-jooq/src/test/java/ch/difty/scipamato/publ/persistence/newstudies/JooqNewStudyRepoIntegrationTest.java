@@ -134,16 +134,16 @@ public class JooqNewStudyRepoIntegrationTest extends JooqTransactionalIntegratio
 
         assertThat(results).hasSize(2);
         assertThat(results)
-            .extracting(NewStudyPageLink.NewProjectPageLinkFields.LANG_CODE.getName())
+            .extracting(NewStudyPageLink.NewStudyPageLinkFields.LANG_CODE.getName())
             .containsOnly("en");
         assertThat(results)
-            .extracting(NewStudyPageLink.NewProjectPageLinkFields.SORT.getName())
+            .extracting(NewStudyPageLink.NewStudyPageLinkFields.SORT.getName())
             .containsExactly(1, 2);
         assertThat(results)
-            .extracting(NewStudyPageLink.NewProjectPageLinkFields.TITLE.getName())
+            .extracting(NewStudyPageLink.NewStudyPageLinkFields.TITLE.getName())
             .containsExactly("Search", "Project Repository");
         assertThat(results)
-            .extracting(NewStudyPageLink.NewProjectPageLinkFields.URL.getName())
+            .extracting(NewStudyPageLink.NewStudyPageLinkFields.URL.getName())
             .containsExactly("https://duckduckgo.com/", "https://github.com/ursjoss/scipamato");
     }
 
@@ -153,10 +153,10 @@ public class JooqNewStudyRepoIntegrationTest extends JooqTransactionalIntegratio
 
         assertThat(results).hasSize(2);
         assertThat(results)
-            .extracting(NewStudyPageLink.NewProjectPageLinkFields.LANG_CODE.getName())
+            .extracting(NewStudyPageLink.NewStudyPageLinkFields.LANG_CODE.getName())
             .containsOnly("de");
         assertThat(results)
-            .extracting(NewStudyPageLink.NewProjectPageLinkFields.TITLE.getName())
+            .extracting(NewStudyPageLink.NewStudyPageLinkFields.TITLE.getName())
             .containsExactly("Web Suche", "Projekt Code");
     }
 }

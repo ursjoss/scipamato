@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import org.junit.Test;
 
 public class NewStudyPageLinkTest extends PublicEntityTest<NewStudyPageLink> {
 
@@ -35,5 +36,12 @@ public class NewStudyPageLinkTest extends PublicEntityTest<NewStudyPageLink> {
             .withIgnoredFields(CREATED.getName(), MODIFIED.getName())
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
+    }
+
+    @Test
+    public void assertEnumFields() {
+        assertThat(NewStudyPageLink.NewStudyPageLinkFields.values())
+            .extracting("name")
+            .containsExactly("langCode", "sort", "title", "url");
     }
 }

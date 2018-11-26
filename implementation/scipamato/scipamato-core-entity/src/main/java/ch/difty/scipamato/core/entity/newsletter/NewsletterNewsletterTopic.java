@@ -20,4 +20,5 @@ public class NewsletterNewsletterTopic extends CoreEntity {
     public String getDisplayValue() {
         return title;
     }
+
 }

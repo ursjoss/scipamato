@@ -69,9 +69,20 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
-- {url-issues}3[#3]: Core: Fix Exception when importing new paper from PubMed
 
 .Security
+
+
+[[v1.0.3]]
+== [1.0.3] -- 2018-11-26
+
+
+.Added
+- Enhanced test coverage
+
+.Fixed
+- {url-issues}3[#3]: Core: Fix Exception when importing new paper from PubMed
+- a couple of minor bugs
 
 
 [[v1.0.2]]

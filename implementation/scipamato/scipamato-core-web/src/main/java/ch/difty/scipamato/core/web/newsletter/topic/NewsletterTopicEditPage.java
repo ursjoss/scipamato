@@ -18,7 +18,7 @@ import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 @MountPath("newsletter-topic/entry")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+@SuppressWarnings("SameParameterValue")
 public class NewsletterTopicEditPage extends DefinitionEditPage<NewsletterTopicDefinition> {
 
     @SpringBean
@@ -62,6 +62,6 @@ public class NewsletterTopicEditPage extends DefinitionEditPage<NewsletterTopicD
     @Override
     protected void handleDuplicateKeyException(final DuplicateKeyException dke) {
         if (dke != null && dke.getMessage() != null)
-            info(dke.getMessage());
+            error(dke.getMessage());
     }
 }

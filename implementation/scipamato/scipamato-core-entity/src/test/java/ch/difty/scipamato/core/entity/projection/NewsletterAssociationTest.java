@@ -56,4 +56,11 @@ public class NewsletterAssociationTest {
             .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
             .verify();
     }
+
+    @Test
+    public void assertEnumFields() {
+        assertThat(NewsletterAssociation.NewsletterAssociationFields.values())
+            .extracting("name")
+            .containsExactly("id", "issue", "publicationStatusId", "headline");
+    }
 }

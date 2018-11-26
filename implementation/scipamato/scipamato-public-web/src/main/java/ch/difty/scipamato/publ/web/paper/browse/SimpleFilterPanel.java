@@ -12,10 +12,7 @@ import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
-import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
-import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
@@ -74,30 +71,39 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
 
             @Override
             public void onEvent(IEvent<?> event) {
-                if (event
-                        .getPayload()
-                        .getClass() == SimpleFilterPanelChangeEvent.class) {
-                    ((SimpleFilterPanelChangeEvent) event.getPayload()).considerAddingToTarget(this);
-                    event.dontBroadcastDeeper();
-                }
+                handleChangeEvent(event, this);
             }
+
         };
         field.add(new AjaxFormComponentUpdatingBehavior(CHANGE) {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                final String id = field.getId();
-                final String markupId = field.getMarkupId();
-                send(getPage(), Broadcast.BREADTH, new SimpleFilterPanelChangeEvent(target)
-                    .withId(id)
-                    .withMarkupId(markupId));
+                sendChangeEvent(target, field);
             }
         });
         StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
         queue(new Label(id + LABEL_TAG, labelModel));
         field.setLabel(labelModel);
         queue(field);
+    }
+
+    private void sendChangeEvent(final AjaxRequestTarget target, final FormComponent component) {
+        final String id = component.getId();
+        final String markupId = component.getMarkupId();
+        send(getPage(), Broadcast.BREADTH, new SimpleFilterPanelChangeEvent(target)
+            .withId(id)
+            .withMarkupId(markupId));
+    }
+
+    private void handleChangeEvent(final IEvent<?> event, final FormComponent component) {
+        if (event
+                .getPayload()
+                .getClass() == SimpleFilterPanelChangeEvent.class) {
+            ((SimpleFilterPanelChangeEvent) event.getPayload()).considerAddingToTarget(component);
+            event.dontBroadcastDeeper();
+        }
     }
 
     private <C extends Enum<C>> void addCodesComplex(String id, PublicPaperFilterFields filterField, C[] values,
@@ -124,12 +130,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
 
             @Override
             public void onEvent(IEvent<?> event) {
-                if (event
-                        .getPayload()
-                        .getClass() == SimpleFilterPanelChangeEvent.class) {
-                    ((SimpleFilterPanelChangeEvent) event.getPayload()).considerAddingToTarget(this);
-                    event.dontBroadcastDeeper();
-                }
+                handleChangeEvent(event, this);
             }
         };
         multiSelect.with(config);
@@ -138,11 +139,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                final String id = multiSelect.getId();
-                final String markupId = multiSelect.getMarkupId();
-                send(getPage(), Broadcast.BREADTH, new SimpleFilterPanelChangeEvent(target)
-                    .withId(id)
-                    .withMarkupId(markupId));
+                sendChangeEvent(target, multiSelect);
             }
         });
         multiSelect.add(new AttributeModifier(AM_DATA_WIDTH, width));
@@ -176,12 +173,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
 
             @Override
             public void onEvent(IEvent<?> event) {
-                if (event
-                        .getPayload()
-                        .getClass() == SimpleFilterPanelChangeEvent.class) {
-                    ((SimpleFilterPanelChangeEvent) event.getPayload()).considerAddingToTarget(this);
-                    event.dontBroadcastDeeper();
-                }
+                handleChangeEvent(event, this);
             }
         };
         multiSelect.with(config);
@@ -190,11 +182,7 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                final String id = multiSelect.getId();
-                final String markupId = multiSelect.getMarkupId();
-                send(getPage(), Broadcast.BREADTH, new SimpleFilterPanelChangeEvent(target)
-                    .withId(id)
-                    .withMarkupId(markupId));
+                sendChangeEvent(target, multiSelect);
             }
         });
         queue(multiSelect);

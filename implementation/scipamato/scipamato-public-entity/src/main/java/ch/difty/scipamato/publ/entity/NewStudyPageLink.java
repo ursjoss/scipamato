@@ -18,7 +18,7 @@ public class NewStudyPageLink extends PublicEntity {
     private       String  title;
     private       String  url;
 
-    public enum NewProjectPageLinkFields implements FieldEnumType {
+    public enum NewStudyPageLinkFields implements FieldEnumType {
         LANG_CODE("langCode"),
         SORT("sort"),
         TITLE("title"),
@@ -26,7 +26,7 @@ public class NewStudyPageLink extends PublicEntity {
 
         private final String name;
 
-        NewProjectPageLinkFields(final String name) {
+        NewStudyPageLinkFields(final String name) {
             this.name = name;
         }
 

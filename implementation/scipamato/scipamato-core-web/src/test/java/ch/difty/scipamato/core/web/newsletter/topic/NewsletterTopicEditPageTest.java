@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
@@ -124,6 +125,17 @@ public class NewsletterTopicEditPageTest extends BasePageTest<NewsletterTopicEdi
         getTester().assertNoInfoMessage();
         getTester().assertErrorMessages("The tblName with id 1 has been modified concurrently "
                                         + "by another user. Please reload it and apply your changes once more.");
+    }
+
+    @Test
+    public void submitting_withDuplicateKeyException_addsErrorMsg() {
+        when(newsletterTopicServiceMock.saveOrUpdate(isA(NewsletterTopicDefinition.class))).thenThrow(
+            new DuplicateKeyException("some message about duplicate key stuff"));
+
+        runSubmitTest();
+
+        getTester().assertNoInfoMessage();
+        getTester().assertErrorMessages("some message about duplicate key stuff");
     }
 
     @Test

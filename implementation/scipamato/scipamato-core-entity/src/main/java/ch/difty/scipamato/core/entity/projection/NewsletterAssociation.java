@@ -22,7 +22,7 @@ public class NewsletterAssociation extends IdScipamatoEntity<Integer> {
     private Integer publicationStatusId;
     private String  headline;
 
-    public enum NewsletterSlimFields implements FieldEnumType {
+    public enum NewsletterAssociationFields implements FieldEnumType {
         ID("id"),
         ISSUE("issue"),
         STATUS("publicationStatusId"),
@@ -30,7 +30,7 @@ public class NewsletterAssociation extends IdScipamatoEntity<Integer> {
 
         private final String name;
 
-        NewsletterSlimFields(final String name) {
+        NewsletterAssociationFields(final String name) {
             this.name = name;
         }
 

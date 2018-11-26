@@ -86,7 +86,7 @@ public class NewStudyTopicItemWriterIntegrationTest
     public void insertingNewNewStudyTopic_succeeds() {
         int newsletterId = newNewStudyTopic.getNewsletterId();
         int newsletterTopicId = newNewStudyTopic.getNewsletterTopicId();
-        assertNewStuyTopicDoesNotExistWith(newsletterId, newsletterTopicId);
+        assertNewStudyTopicDoesNotExistWith(newsletterId, newsletterTopicId);
         assertThat(getWriter().executeUpdate(newNewStudyTopic)).isEqualTo(1);
         assertNewStudyTopicExistsWith(newsletterId, newsletterTopicId);
     }
@@ -95,7 +95,7 @@ public class NewStudyTopicItemWriterIntegrationTest
         assertRecordCountForId(newsletterId, newsletterTopicId, 1);
     }
 
-    private void assertNewStuyTopicDoesNotExistWith(int newsletterId, int newsletterTopicId) {
+    private void assertNewStudyTopicDoesNotExistWith(int newsletterId, int newsletterTopicId) {
         assertRecordCountForId(newsletterId, newsletterTopicId, 0);
     }
 
