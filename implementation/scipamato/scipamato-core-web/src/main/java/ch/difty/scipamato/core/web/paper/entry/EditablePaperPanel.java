@@ -493,7 +493,8 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     private void addTargets(AjaxRequestTarget target, FormComponent<?>... fcs) {
         if (fcs.length > 0)
             for (FormComponent<?> fc : fcs)
-                target.add(fc);
+                if (fc != null)
+                    target.add(fc);
     }
 
     /**

@@ -69,6 +69,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- {url-issues}3[#3]: Core: Fix Exception when importing new paper from PubMed
 
 .Security
 
