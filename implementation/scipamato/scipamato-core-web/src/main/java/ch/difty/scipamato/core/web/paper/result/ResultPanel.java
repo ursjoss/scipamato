@@ -39,6 +39,7 @@ import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfExporterConfiguration;
 import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReviewDataSource;
+import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReviewPlusDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.review.PaperReviewDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource;
@@ -95,7 +96,8 @@ public abstract class ResultPanel extends BasePanel<Void> {
         makeAndQueuePdfSummaryLink("summaryLink");
         makeAndQueuePdfSummaryShortLink("summaryShortLink");
         makeAndQueuePdfReviewLink("reviewLink");
-        makeAndQueuePdfLiteratureReviewLink("literatureReviewLink");
+        makeAndQueuePdfLiteratureReviewLink("literatureReviewLink", false);
+        makeAndQueuePdfLiteratureReviewLink("literatureReviewPlusLink", true);
         makeAndQueuePdfSummaryTableLink("summaryTableLink");
         makeAndQueuePdfSummaryTableWithoutResultsLink("summaryTableWithoutResultsLink");
     }
@@ -356,7 +358,7 @@ public abstract class ResultPanel extends BasePanel<Void> {
         queue(newResourceLink(id, "review", new PaperReviewDataSource(dataProvider, rhf, config)));
     }
 
-    private void makeAndQueuePdfLiteratureReviewLink(final String id) {
+    private void makeAndQueuePdfLiteratureReviewLink(final String id, final boolean plus) {
         final String brand = getProperties().getBrand();
         final String pdfCaption = new StringResourceModel("paper_literature_review.caption", this, null)
             .setParameters(brand)
@@ -374,7 +376,13 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .withCompression()
             .build();
 
-        queue(newResourceLink(id, "literature_review", new PaperLiteratureReviewDataSource(dataProvider, rhf, config)));
+        if (plus) {
+            queue(newResourceLink(id, "literature_review_plus",
+                new PaperLiteratureReviewPlusDataSource(dataProvider, rhf, config)));
+        } else {
+            queue(newResourceLink(id, "literature_review",
+                new PaperLiteratureReviewDataSource(dataProvider, rhf, config)));
+        }
     }
 
     private void makeAndQueuePdfSummaryTableLink(final String id) {

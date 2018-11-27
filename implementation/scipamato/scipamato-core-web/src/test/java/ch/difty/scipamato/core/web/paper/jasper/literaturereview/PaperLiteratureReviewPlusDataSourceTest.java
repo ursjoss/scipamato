@@ -15,9 +15,9 @@ import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
+public class PaperLiteratureReviewPlusDataSourceTest extends PaperDataSourceTest {
 
-    private static final String FILE_NAME = "paper_literature_review.pdf";
+    private static final String FILE_NAME = "paper_literature_review_plus.pdf";
 
     private static final Long NUMBER = 5L;
 
@@ -26,8 +26,8 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
     private static final String NUMBER_LABEL    = "numberLabel";
     private static final String PUBMED_BASE_URL = "https://www.ncbi.nlm.nih.gov/pubmed/";
 
-    private       PaperLiteratureReviewDataSource ds;
-    private final ReportHeaderFields              rhf = newReportHeaderFields();
+    private       PaperLiteratureReviewPlusDataSource ds;
+    private final ReportHeaderFields                  rhf = newReportHeaderFields();
 
     private ReportHeaderFields newReportHeaderFields() {
         return ReportHeaderFields
@@ -62,7 +62,7 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
         assertThat(ds.getReportParameters()).isNotEmpty();
         assertThat(ds
             .getReportParameters()
-            .get("show_goal")).isEqualTo(false);
+            .get("show_goal")).isEqualTo(true);
 
         assertThat(ds.getFileName()).isEqualTo(fileName);
 
@@ -91,7 +91,7 @@ public class PaperLiteratureReviewDataSourceTest extends PaperDataSourceTest {
         when(dataProviderMock.size()).thenReturn(1L);
         when(dataProviderMock.findAllPapersByFilter()).thenReturn(Collections.singletonList(paperMock));
 
-        ds = new PaperLiteratureReviewDataSource(dataProviderMock, rhf, pdfExporterConfigMock);
+        ds = new PaperLiteratureReviewPlusDataSource(dataProviderMock, rhf, pdfExporterConfigMock);
         assertDataSource(FILE_NAME);
 
         verify(dataProviderMock).size();

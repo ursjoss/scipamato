@@ -75,8 +75,13 @@ public abstract class JasperPaperDataSource<E extends JasperEntity>
 
     private void init() {
         setJasperReport(getReport());
-        setReportParameters(new HashMap<>());
+        setReportParameters(getParameterMap());
         setFileName(baseName + "." + getExtension());
+    }
+
+    // override if needed
+    protected HashMap<String, Object> getParameterMap() {
+        return new HashMap<>();
     }
 
     protected abstract JasperReport getReport();

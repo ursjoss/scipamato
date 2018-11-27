@@ -21,7 +21,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.Paper;
@@ -127,6 +126,8 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
         bb = b + ":reviewLink";
         getTester().assertComponent(bb, ResourceLink.class);
         bb = b + ":literatureReviewLink";
+        getTester().assertComponent(bb, ResourceLink.class);
+        bb = b + ":literatureReviewPlusLink";
         getTester().assertComponent(bb, ResourceLink.class);
         bb = b + ":summaryTableLink";
         getTester().assertComponent(bb, ResourceLink.class);
@@ -253,6 +254,13 @@ public abstract class ResultPanelTest extends PanelTest<ResultPanel> {
     public void clickingLiteratureReviewLink_succeeds() {
         getTester().startComponentInPage(makePanel());
         getTester().clickLink(PANEL_ID + ":literatureReviewLink");
+        verifyPdfExport();
+    }
+
+    @Test
+    public void clickingLiteratureReviewPlusLink_succeeds() {
+        getTester().startComponentInPage(makePanel());
+        getTester().clickLink(PANEL_ID + ":literatureReviewPlusLink");
         verifyPdfExport();
     }
 

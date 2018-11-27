@@ -17,18 +17,18 @@ import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfResourceHandler;
 import ch.difty.scipamato.core.web.resources.jasper.PaperLiteratureReviewReportResourceReference;
 
 /**
- * DataSource for the PaperLiteratureReviewReport.
+ * DataSource for the PaperLiteratureReviewPlusReport.
  * <p>
  * The meta fields are not contained within a paper instance and make up the
  * caption
  *
  * @author u.joss
  */
-public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<PaperLiteratureReview> {
+public class PaperLiteratureReviewPlusDataSource extends JasperPaperDataSource<PaperLiteratureReview> {
 
     private static final long serialVersionUID = 1L;
 
-    private static final String FILE_NAME = "paper_literature_review";
+    private static final String FILE_NAME = "paper_literature_review_plus";
 
     private final ReportHeaderFields reportHeaderFields;
 
@@ -44,7 +44,7 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
      * @param config
      *     {@link ClusterablePdfExporterConfiguration}
      */
-    public PaperLiteratureReviewDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
+    public PaperLiteratureReviewPlusDataSource(final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider,
         final ReportHeaderFields reportHeaderFields, ClusterablePdfExporterConfiguration config) {
         super(new ScipamatoPdfResourceHandler(config), FILE_NAME, AssertAs.notNull(dataProvider, "dataProvider"));
         this.reportHeaderFields = AssertAs.notNull(reportHeaderFields, "reportHeaderFields");
@@ -53,7 +53,7 @@ public class PaperLiteratureReviewDataSource extends JasperPaperDataSource<Paper
     @Override
     protected HashMap<String, Object> getParameterMap() {
         final HashMap<String, Object> map = new HashMap<>();
-        map.put("show_goal", false);
+        map.put("show_goal", true);
         return map;
     }
 
