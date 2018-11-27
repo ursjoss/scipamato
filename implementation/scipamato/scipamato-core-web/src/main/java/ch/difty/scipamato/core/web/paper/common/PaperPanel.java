@@ -873,7 +873,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                 .withLiveSearchStyle("contains");
             final BootstrapMultiSelect<Code> multiSelect = new BootstrapMultiSelect<>(CODES_CLASS_BASE_NAME + id, model,
                 choices, choiceRenderer).with(config);
-            multiSelect.add(new AttributeModifier("data-width", "fit"));
+            multiSelect.add(new AttributeModifier("data-width", "100%"));
             queue(multiSelect);
             addDisableBehavior(multiSelect);
             return multiSelect;
