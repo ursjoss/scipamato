@@ -47,8 +47,8 @@ public class RefDataSyncPage extends BasePage<Void> {
                 } else {
                     error(new StringResourceModel("feedback.msg.failed", this, null).getString());
                 }
-                for (String msg : result.getMessages()) {
-                    info(msg);
+                for (SyncJobResult.LogMessage msg : result.getMessages()) {
+                    info(msg.getMessage());
                 }
                 target.add(getFeedbackPanel());
             }

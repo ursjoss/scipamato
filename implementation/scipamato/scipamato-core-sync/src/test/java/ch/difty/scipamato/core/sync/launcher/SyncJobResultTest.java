@@ -24,6 +24,43 @@ public class SyncJobResultTest {
     }
 
     @Test
+    public void settingSuccess_hasMessageWithLevelInfo() {
+        result.setSuccess("foo");
+        SyncJobResult.LogMessage lm = result
+            .getMessages()
+            .get(0);
+        assertThat(lm.getMessage()).isEqualTo("foo");
+        assertThat(lm.getMessageLevel()).isEqualTo(SyncJobResult.MessageLevel.INFO);
+    }
+
+    @Test
+    public void settingFailure_hasMessageWithLevelError() {
+        result.setFailure("bar");
+        SyncJobResult.LogMessage lm = result
+            .getMessages()
+            .get(0);
+        assertThat(lm.getMessage()).isEqualTo("bar");
+        assertThat(lm.getMessageLevel()).isEqualTo(SyncJobResult.MessageLevel.ERROR);
+    }
+
+    @Test
+    public void settingWarning_hasMessageWithLevelWarning() {
+        result.setWarning("baz");
+        SyncJobResult.LogMessage lm = result
+            .getMessages()
+            .get(0);
+        assertThat(lm.getMessage()).isEqualTo("baz");
+        assertThat(lm.getMessageLevel()).isEqualTo(SyncJobResult.MessageLevel.WARNING);
+    }
+
+    @Test
+    public void settingWarning_doesNotAlterSuccess() {
+        result.setWarning("baz");
+        assertThat(result.isSuccessful()).isFalse();
+        assertThat(result.isFailed()).isFalse();
+    }
+
+    @Test
     public void addingSuccessMessage_resultsInSuccessfulJobWithMessage() {
         result.setSuccess("foo");
         assertThat(result.isSuccessful()).isTrue();
@@ -31,7 +68,8 @@ public class SyncJobResultTest {
         assertThat(result.getMessages()).hasSize(1);
         assertThat(result
             .getMessages()
-            .get(0)).isEqualTo("foo");
+            .get(0)
+            .getMessage()).isEqualTo("foo");
     }
 
     @Test
@@ -42,7 +80,8 @@ public class SyncJobResultTest {
         assertThat(result.getMessages()).hasSize(1);
         assertThat(result
             .getMessages()
-            .get(0)).isEqualTo("bar");
+            .get(0)
+            .getMessage()).isEqualTo("bar");
     }
 
     @Test
@@ -50,7 +89,9 @@ public class SyncJobResultTest {
         result.setSuccess("success1");
         result.setSuccess("success2");
         assertThat(result.isSuccessful()).isTrue();
-        assertThat(result.getMessages()).containsExactly("success1", "success2");
+        assertThat(result.getMessages())
+            .extracting("message")
+            .containsExactly("success1", "success2");
     }
 
     @Test
@@ -58,7 +99,9 @@ public class SyncJobResultTest {
         result.setSuccess("success1");
         result.setFailure("some issue2");
         assertThat(result.isFailed()).isTrue();
-        assertThat(result.getMessages()).containsExactly("success1", "some issue2");
+        assertThat(result.getMessages())
+            .extracting("message")
+            .containsExactly("success1", "some issue2");
     }
 
     @Test
@@ -67,6 +110,8 @@ public class SyncJobResultTest {
         result.setFailure("some issue2");
         result.setSuccess("success3");
         assertThat(result.isFailed()).isTrue();
-        assertThat(result.getMessages()).containsExactly("success1", "some issue2", "success3");
+        assertThat(result.getMessages())
+            .extracting("message")
+            .containsExactly("success1", "some issue2", "success3");
     }
 }
