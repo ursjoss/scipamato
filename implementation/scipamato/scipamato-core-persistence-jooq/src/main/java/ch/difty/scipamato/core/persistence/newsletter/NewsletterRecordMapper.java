@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import ch.difty.scipamato.core.db.tables.records.NewsletterRecord;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
-import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.persistence.AuditFields;
 import ch.difty.scipamato.core.persistence.EntityRecordMapper;
 

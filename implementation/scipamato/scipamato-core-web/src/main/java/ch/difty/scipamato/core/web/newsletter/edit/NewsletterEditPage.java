@@ -31,7 +31,7 @@ import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
-import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.persistence.NewsletterService;

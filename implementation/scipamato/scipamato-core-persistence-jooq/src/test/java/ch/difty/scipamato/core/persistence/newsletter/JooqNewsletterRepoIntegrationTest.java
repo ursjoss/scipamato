@@ -18,7 +18,7 @@ import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
-import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.JooqTransactionalIntegrationTest;
 

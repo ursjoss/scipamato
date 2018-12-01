@@ -1,4 +1,4 @@
-package ch.difty.scipamato.core.entity.newsletter;
+package ch.difty.scipamato.common.entity.newsletter;
 
 /**
  * Newsletter specific Publication Status

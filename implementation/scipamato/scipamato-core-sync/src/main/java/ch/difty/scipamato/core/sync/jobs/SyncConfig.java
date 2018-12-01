@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 
 import ch.difty.scipamato.common.DateTimeService;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.sync.houskeeping.HouseKeeper;
 import ch.difty.scipamato.core.sync.houskeeping.PseudoForeignKeyConstraintEnforcer;
 
@@ -37,8 +38,7 @@ import ch.difty.scipamato.core.sync.houskeeping.PseudoForeignKeyConstraintEnforc
 @SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 public abstract class SyncConfig<T, R extends UpdatableRecordImpl<R>> {
 
-    // has to be in sync with PublicationStatus TODO place PublicationStatus into scipamato-common-utils and reference here
-    protected static final Integer PUBLICATION_STATUS_PUBLISHED = 1;
+    protected static final Integer PUBLICATION_STATUS_PUBLISHED = PublicationStatus.PUBLISHED.getId();
 
     @Value("${purge_grace_time_in_minutes:30}")
     private int graceTime;

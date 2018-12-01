@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import ch.difty.scipamato.common.entity.FieldEnumType;
 import ch.difty.scipamato.common.entity.filter.ScipamatoFilter;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

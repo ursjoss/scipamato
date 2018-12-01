@@ -6,6 +6,8 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
+
 public class NewsletterFilterTest {
 
     private final NewsletterFilter f = new NewsletterFilter();

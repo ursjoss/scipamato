@@ -19,7 +19,7 @@ import ch.difty.scipamato.common.persistence.paging.PaginationRequest;
 import ch.difty.scipamato.common.web.component.table.column.LinkIconPanel;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
-import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.newsletter.edit.NewsletterEditPage;
 
