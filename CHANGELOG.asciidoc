@@ -65,7 +65,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - {url-issues}5[#5] - Core: Tweak Layout of paper entry page for smaller resolution screens
-- Updated dependencies: spring-boot
+- Updated dependencies: spring-boot, spring-boot-admin-starter-client
 
 .Deprecated
 
