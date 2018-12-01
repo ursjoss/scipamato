@@ -54,15 +54,15 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
     protected void onInitialize() {
         super.onInitialize();
 
-        addTextFieldTo("methodsSearch", PublicPaperFilter.PublicPaperFilterFields.METHODS_MASK);
-        addTextFieldTo("authorsSearch", PublicPaperFilter.PublicPaperFilterFields.AUTHOR_MASK);
-        addTextFieldTo("pubYearFrom", PublicPaperFilter.PublicPaperFilterFields.PUB_YEAR_FROM);
-        addTextFieldTo("pubYearUntil", PublicPaperFilter.PublicPaperFilterFields.PUB_YEAR_UNTIL);
-        addCodesComplex("populationCodes", PublicPaperFilter.PublicPaperFilterFields.POPULATION_CODES,
-            PopulationCode.values(), "160px");
-        addCodesComplex("studyDesignCodes", PublicPaperFilter.PublicPaperFilterFields.STUDY_DESIGN_CODES,
-            StudyDesignCode.values(), "220px");
+        addTextFieldTo("methodsSearch", PublicPaperFilterFields.METHODS_MASK);
+        addTextFieldTo("authorsSearch", PublicPaperFilterFields.AUTHOR_MASK);
+        addTextFieldTo("pubYearFrom", PublicPaperFilterFields.PUB_YEAR_FROM);
+        addTextFieldTo("pubYearUntil", PublicPaperFilterFields.PUB_YEAR_UNTIL);
+        addCodesComplex("populationCodes", PublicPaperFilterFields.POPULATION_CODES, PopulationCode.values(), "160px");
+        addCodesComplex("studyDesignCodes", PublicPaperFilterFields.STUDY_DESIGN_CODES, StudyDesignCode.values(),
+            "220px");
         queueKeywordMultiselect("keywords", PublicPaperFilterFields.KEYWORDS);
+        addTextFieldTo("titleSearch", PublicPaperFilterFields.TITLE_MASK);
     }
 
     private void addTextFieldTo(String id, PublicPaperFilterFields filterField) {

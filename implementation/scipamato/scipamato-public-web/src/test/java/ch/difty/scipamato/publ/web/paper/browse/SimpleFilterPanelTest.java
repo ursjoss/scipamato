@@ -25,6 +25,7 @@ public class SimpleFilterPanelTest extends PanelTest<SimpleFilterPanel> {
         assertLabeledMultiSelect(PANEL, "populationCodes");
         assertLabeledMultiSelect(PANEL, "studyDesignCodes");
         assertLabeledMultiSelect(PANEL, "keywords");
+        assertLabeledTextField(PANEL, "titleSearch");
     }
 
 }

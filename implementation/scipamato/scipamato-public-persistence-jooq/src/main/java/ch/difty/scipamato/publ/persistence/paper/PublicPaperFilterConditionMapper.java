@@ -38,6 +38,10 @@ public class PublicPaperFilterConditionMapper extends AbstractFilterConditionMap
             addTokenizedConditions(conditions, filter.getAuthorMask(), PAPER.AUTHORS);
         }
 
+        if (filter.getTitleMask() != null) {
+            addTokenizedConditions(conditions, filter.getTitleMask(), PAPER.TITLE);
+        }
+
         if (filter.getMethodsMask() != null) {
             addTokenizedConditions(conditions, filter.getMethodsMask(), PAPER.METHODS);
         }

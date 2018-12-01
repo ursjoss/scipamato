@@ -59,6 +59,15 @@ public class PublicPaperFilterConditionMapperTest
     }
 
     @Test
+    public void creatingWhereCondition_withTitleMask_searchesTitle() {
+        String pattern = "tm";
+        filter.setTitleMask(pattern);
+        assertThat(mapper
+            .map(filter)
+            .toString()).isEqualToIgnoringCase(makeWhereClause(pattern, "TITLE"));
+    }
+
+    @Test
     public void creatingWhereCondition_withAuthorMaskHoldingMultipleAuthors_searchesForPapersWithBothAuthorsInAnyOrder() {
         String pattern = "foo  bar";
         filter.setAuthorMask(pattern);
@@ -70,7 +79,7 @@ public class PublicPaperFilterConditionMapperTest
                 "  lower(\"public\".\"paper\".\"authors\") like lower('%foo%')\n" +
                 "  and lower(\"public\".\"paper\".\"authors\") like lower('%bar%')\n" +
                 ")"
-        // @formatter:on
+            // @formatter:on
         );
     }
 
@@ -96,7 +105,7 @@ public class PublicPaperFilterConditionMapperTest
                 "  and lower(\"public\".\"paper\".\"methods\") like lower('%m2%')\n" +
                 "  and lower(\"public\".\"paper\".\"methods\") like lower('%m3%')\n" +
                 ")"
-        // @formatter:on
+            // @formatter:on
         );
     }
 
@@ -340,7 +349,7 @@ public class PublicPaperFilterConditionMapperTest
                 "  lower(\"public\".\"paper\".\"authors\") like lower('%Last F%')\n" +
                 "  and lower(\"public\".\"paper\".\"authors\") like lower('%Other S%')\n" +
                 ")"
-        // @formatter:on
+            // @formatter:on
         );
     }
 
