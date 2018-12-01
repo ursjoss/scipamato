@@ -22,7 +22,8 @@ public class SyncJobResult {
     }
 
     public void setSuccess(final String msg) {
-        result = JobResult.SUCCESS;
+        if (result != JobResult.FAILURE)
+            result = JobResult.SUCCESS;
         logMessages.add(msg);
     }
 

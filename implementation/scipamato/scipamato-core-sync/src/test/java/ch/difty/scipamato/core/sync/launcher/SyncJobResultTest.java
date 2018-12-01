@@ -44,4 +44,29 @@ public class SyncJobResultTest {
             .getMessages()
             .get(0)).isEqualTo("bar");
     }
+
+    @Test
+    public void withMultipleSteps_ifAllSucceed_success() {
+        result.setSuccess("success1");
+        result.setSuccess("success2");
+        assertThat(result.isSuccessful()).isTrue();
+        assertThat(result.getMessages()).containsExactly("success1", "success2");
+    }
+
+    @Test
+    public void withMultipleSteps_ifOneFails_failure() {
+        result.setSuccess("success1");
+        result.setFailure("some issue2");
+        assertThat(result.isFailed()).isTrue();
+        assertThat(result.getMessages()).containsExactly("success1", "some issue2");
+    }
+
+    @Test
+    public void withMultipleSteps_failureWins() {
+        result.setSuccess("success1");
+        result.setFailure("some issue2");
+        result.setSuccess("success3");
+        assertThat(result.isFailed()).isTrue();
+        assertThat(result.getMessages()).containsExactly("success1", "some issue2", "success3");
+    }
 }
