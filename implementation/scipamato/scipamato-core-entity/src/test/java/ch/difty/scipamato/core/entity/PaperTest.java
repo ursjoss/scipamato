@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
-import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 
 @SuppressWarnings("SameParameterValue")
 public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {

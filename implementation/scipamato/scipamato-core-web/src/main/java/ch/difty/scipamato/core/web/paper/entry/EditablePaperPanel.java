@@ -50,7 +50,7 @@ import ch.difty.scipamato.common.web.component.table.column.LinkIconColumn;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
-import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.logic.parsing.AuthorParser;
 import ch.difty.scipamato.core.logic.parsing.AuthorParserFactory;
 import ch.difty.scipamato.core.persistence.NewsletterService;

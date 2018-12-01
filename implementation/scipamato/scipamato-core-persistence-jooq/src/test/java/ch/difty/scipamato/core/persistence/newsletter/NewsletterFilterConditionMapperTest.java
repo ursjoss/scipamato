@@ -10,7 +10,7 @@ import ch.difty.scipamato.common.persistence.GenericFilterConditionMapper;
 import ch.difty.scipamato.core.db.tables.Newsletter;
 import ch.difty.scipamato.core.db.tables.records.NewsletterRecord;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
-import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 
 public class NewsletterFilterConditionMapperTest
     extends FilterConditionMapperTest<NewsletterRecord, Newsletter, NewsletterFilter> {

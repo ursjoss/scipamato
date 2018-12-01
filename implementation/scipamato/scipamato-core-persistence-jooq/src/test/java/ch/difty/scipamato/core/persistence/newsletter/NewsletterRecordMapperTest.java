@@ -10,7 +10,7 @@ import org.jooq.RecordMapper;
 
 import ch.difty.scipamato.core.db.tables.records.NewsletterRecord;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
-import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.persistence.RecordMapperTest;
 
 public class NewsletterRecordMapperTest extends RecordMapperTest<NewsletterRecord, Newsletter> {

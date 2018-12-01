@@ -1,10 +1,12 @@
-package ch.difty.scipamato.core.entity.newsletter;
+package ch.difty.scipamato.common.entity.newsletter;
 
-import static ch.difty.scipamato.core.entity.newsletter.PublicationStatus.*;
+import static ch.difty.scipamato.common.entity.newsletter.PublicationStatus.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.Test;
+
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 
 public class PublicationStatusTest {
 

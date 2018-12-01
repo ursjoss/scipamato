@@ -41,7 +41,7 @@ import ch.difty.scipamato.common.web.component.table.column.LinkIconColumn;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterFilter;
-import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.persistence.NewsletterService;
 import ch.difty.scipamato.core.web.common.BasePage;
 import ch.difty.scipamato.core.web.newsletter.NewsletterProvider;

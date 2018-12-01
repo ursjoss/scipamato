@@ -15,7 +15,7 @@ import org.junit.After;
 import org.junit.Test;
 
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
-import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.web.common.BasePageTest;
 import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 

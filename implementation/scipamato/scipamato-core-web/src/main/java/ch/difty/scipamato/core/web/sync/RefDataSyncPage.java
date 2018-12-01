@@ -42,14 +42,20 @@ public class RefDataSyncPage extends BasePage<Void> {
             protected void onSubmit(AjaxRequestTarget target) {
                 super.onSubmit(target);
                 SyncJobResult result = jobLauncher.launch();
-                if (result.isSuccessful()) {
+                if (result.isSuccessful())
                     info(new StringResourceModel("feedback.msg.success", this, null).getString());
-                } else {
+                else
                     error(new StringResourceModel("feedback.msg.failed", this, null).getString());
+
+                for (SyncJobResult.LogMessage msg : result.getMessages()) {
+                    if (msg.getMessageLevel() == SyncJobResult.MessageLevel.INFO)
+                        info(msg.getMessage());
+                    else if (msg.getMessageLevel() == SyncJobResult.MessageLevel.WARNING)
+                        warn(msg.getMessage());
+                    else if (msg.getMessageLevel() == SyncJobResult.MessageLevel.ERROR)
+                        error(msg.getMessage());
                 }
-                for (String msg : result.getMessages()) {
-                    info(msg);
-                }
+
                 target.add(getFeedbackPanel());
             }
         }.setEffect(Effect.ZOOM_IN);

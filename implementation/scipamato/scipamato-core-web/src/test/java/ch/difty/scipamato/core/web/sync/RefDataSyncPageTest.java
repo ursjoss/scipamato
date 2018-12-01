@@ -45,12 +45,23 @@ public class RefDataSyncPageTest extends BasePageTest<RefDataSyncPage> {
     public void submitting_triggersSynchronize_withSuccess() {
         result.setSuccess("yep");
         assertAjaxEvent("yep", "Data was successfully exported to the public database.", result);
+        getTester().assertInfoMessages("Data was successfully exported to the public database.", "yep");
+        getTester().assertNoErrorMessage();
     }
 
     @Test
     public void submitting_triggersSynchronize_withFailure() {
         result.setFailure("nope");
         assertAjaxEvent("nope", "Unexpected error occurred while exporting the data to the public database.", result);
+    }
+
+    @Test
+    public void submitting_triggersSynchronize_withWarn() {
+        result.setSuccess("yep");
+        result.setWarning("hmmm");
+        assertAjaxEvent("yep", "Data was successfully exported to the public database.", result);
+        getTester().assertInfoMessages("Data was successfully exported to the public database.", "yep");
+        getTester().assertNoErrorMessage();
     }
 
     private void assertAjaxEvent(String msg, String expectedLabelText, SyncJobResult result) {

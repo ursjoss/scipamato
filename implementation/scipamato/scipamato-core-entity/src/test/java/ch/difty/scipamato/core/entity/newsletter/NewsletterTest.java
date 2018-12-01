@@ -10,6 +10,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.Jsr303ValidatedEntityTest;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 

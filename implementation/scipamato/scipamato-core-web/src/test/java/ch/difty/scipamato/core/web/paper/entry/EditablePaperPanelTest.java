@@ -16,7 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.entity.Paper;
-import ch.difty.scipamato.core.entity.newsletter.PublicationStatus;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.persistence.SearchOrderService;
 import ch.difty.scipamato.core.pubmed.PubmedArticleFacade;
