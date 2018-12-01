@@ -20,6 +20,7 @@ public class PublicPaperFilter extends ScipamatoFilter {
 
     private Long                  number;
     private String                authorMask;
+    private String                titleMask;
     private String                methodsMask;
     private Integer               publicationYearFrom;
     private Integer               publicationYearUntil;
@@ -38,6 +39,7 @@ public class PublicPaperFilter extends ScipamatoFilter {
     public enum PublicPaperFilterFields implements FieldEnumType {
         NUMBER("number"),
         AUTHOR_MASK("authorMask"),
+        TITLE_MASK("titleMask"),
         METHODS_MASK("methodsMask"),
         PUB_YEAR_FROM("publicationYearFrom"),
         PUB_YEAR_UNTIL("publicationYearUntil"),

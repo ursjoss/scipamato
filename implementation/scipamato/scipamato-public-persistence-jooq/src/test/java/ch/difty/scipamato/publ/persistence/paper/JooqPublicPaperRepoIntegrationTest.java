@@ -67,6 +67,12 @@ public class JooqPublicPaperRepoIntegrationTest extends JooqTransactionalIntegra
     }
 
     @Test
+    public void countingByFilter_withTitleMask_findsOne() {
+        filter.setTitleMask("ambient");
+        assertThat(repo.countByFilter(filter)).isEqualTo(3);
+    }
+
+    @Test
     public void countingByFilter_withMethodsMask_findsOne() {
         filter.setMethodsMask("Sensitivitätsanalysen");
         assertThat(repo.countByFilter(filter)).isEqualTo(1);

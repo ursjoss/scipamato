@@ -21,6 +21,7 @@ public class PublicPaperFilterTest {
         PublicPaperFilter filter = new PublicPaperFilter();
         filter.setNumber(1L);
         filter.setAuthorMask("am");
+        filter.setTitleMask("tm");
         filter.setMethodsMask("mm");
         filter.setPublicationYearFrom(2000);
         filter.setPublicationYearUntil(3000);
@@ -34,10 +35,11 @@ public class PublicPaperFilterTest {
         filter.setCodesOfClass6(List.of(newCode("6A"), newCode("6B")));
         filter.setCodesOfClass7(List.of(newCode("7A"), newCode("7B")));
         filter.setCodesOfClass8(List.of(newCode("8A"), newCode("8B")));
-        filter.setKeywords(List.of(new Keyword(1, 1,"de", "k1", null)));
+        filter.setKeywords(List.of(new Keyword(1, 1, "de", "k1", null)));
 
         assertThat(filter.getNumber()).isEqualTo(1L);
         assertThat(filter.getAuthorMask()).isEqualTo("am");
+        assertThat(filter.getTitleMask()).isEqualTo("tm");
         assertThat(filter.getMethodsMask()).isEqualTo("mm");
         assertThat(filter.getPublicationYearFrom()).isEqualTo(2000);
         assertThat(filter.getPublicationYearUntil()).isEqualTo(3000);
@@ -54,10 +56,12 @@ public class PublicPaperFilterTest {
         assertThat(filter.getCodesOfClass7()).hasSize(2);
         assertThat(filter.getCodesOfClass8()).hasSize(2);
 
-        assertThat(filter.getKeywords()).extracting(Keyword::getKeywordId).containsExactly(1);
+        assertThat(filter.getKeywords())
+            .extracting(Keyword::getKeywordId)
+            .containsExactly(1);
 
         assertThat(filter.toString()).isEqualTo(
-            "PublicPaperFilter(number=1, authorMask=am, methodsMask=mm, publicationYearFrom=2000, publicationYearUntil=3000, populationCodes=[CHILDREN, ADULTS], studyDesignCodes=[EXPERIMENTAL], "
+            "PublicPaperFilter(number=1, authorMask=am, titleMask=tm, methodsMask=mm, publicationYearFrom=2000, publicationYearUntil=3000, populationCodes=[CHILDREN, ADULTS], studyDesignCodes=[EXPERIMENTAL], "
             + "codesOfClass1=[Code(codeClassId=1, code=1A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=1, code=1B, langCode=en, name=null, comment=null, sort=0)], "
             + "codesOfClass2=[Code(codeClassId=2, code=2A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=2, code=2B, langCode=en, name=null, comment=null, sort=0)], "
             + "codesOfClass3=[Code(codeClassId=3, code=3A, langCode=en, name=null, comment=null, sort=0), Code(codeClassId=3, code=3B, langCode=en, name=null, comment=null, sort=0)], "
@@ -91,8 +95,9 @@ public class PublicPaperFilterTest {
     public void assertEnumFields() {
         assertThat(PublicPaperFilter.PublicPaperFilterFields.values())
             .extracting("name")
-            .containsExactly("number", "authorMask", "methodsMask", "publicationYearFrom", "publicationYearUntil",
-                "populationCodes", "studyDesignCodes", "codesOfClass1", "codesOfClass2", "codesOfClass3",
-                "codesOfClass4", "codesOfClass5", "codesOfClass6", "codesOfClass7", "codesOfClass8", "keywords");
+            .containsExactly("number", "authorMask", "titleMask", "methodsMask", "publicationYearFrom",
+                "publicationYearUntil", "populationCodes", "studyDesignCodes", "codesOfClass1", "codesOfClass2",
+                "codesOfClass3", "codesOfClass4", "codesOfClass5", "codesOfClass6", "codesOfClass7", "codesOfClass8",
+                "keywords");
     }
 }
