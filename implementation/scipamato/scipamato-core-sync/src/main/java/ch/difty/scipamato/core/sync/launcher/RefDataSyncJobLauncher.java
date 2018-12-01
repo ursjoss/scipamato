@@ -46,6 +46,8 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
     private final Job         syncKeywordJob;
     private final JobLauncher jobLauncher;
 
+    private final Warner warner;
+
     public RefDataSyncJobLauncher(final JobLauncher jobLauncher,
         @Qualifier("syncLanguageJob") final Job syncLanguageJob,
         @Qualifier("syncNewStudyPageLinkJob") final Job syncNewStudyPageLinkJob,
@@ -54,7 +56,7 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
         @Qualifier("syncNewsletterTopicJob") final Job syncNewsletterTopicJob,
         @Qualifier("syncNewStudyJob") final Job syncNewStudyJob,
         @Qualifier("syncNewStudyTopicJob") final Job syncNewStudyTopicJob,
-        @Qualifier("syncKeywordJob") final Job syncKeywordJob) {
+        @Qualifier("syncKeywordJob") final Job syncKeywordJob, final Warner warner) {
         this.jobLauncher = jobLauncher;
         this.syncNewStudyPageLinkJob = syncNewStudyPageLinkJob;
         this.syncLanguageJob = syncLanguageJob;
@@ -66,6 +68,7 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
         this.syncNewStudyJob = syncNewStudyJob;
         this.syncNewStudyTopicJob = syncNewStudyTopicJob;
         this.syncKeywordJob = syncKeywordJob;
+        this.warner = warner;
     }
 
     @Override
@@ -79,6 +82,8 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
                 .toInstant()), true)
             .toJobParameters();
         try {
+            warnAboutUnsynchronizedEntities(result);
+
             runSingleJob("languages", syncLanguageJob, result, jobParameters);
             runSingleJob("newStudyPage_links", syncNewStudyPageLinkJob, result, jobParameters);
             runSingleJob("code_classes", syncCodeClassJob, result, jobParameters);
@@ -89,7 +94,11 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
             runSingleJob("newStudyTopics", syncNewStudyTopicJob, result, jobParameters);
             runSingleJob("newStudies", syncNewStudyJob, result, jobParameters);
             runSingleJob("keywords", syncKeywordJob, result, jobParameters);
-            log.info("Job finished successfully.");
+
+            if (result.isSuccessful())
+                log.info("Job finished successfully.");
+            else
+                log.warn("Job finished with issues.");
         } catch (final Exception ex) {
             log.error("Job terminated.", ex);
             result.setFailure("Unexpected exception of type " + ex.getClass() + ": " + ex.getMessage());
@@ -128,6 +137,12 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
             result.setSuccess(msg);
         else
             result.setFailure(msg);
+    }
+
+    private void warnAboutUnsynchronizedEntities(final SyncJobResult result) {
+        warner
+            .findUnsynchronizedPapers()
+            .ifPresent(result::setWarning);
     }
 
 }

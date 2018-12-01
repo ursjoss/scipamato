@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import ch.difty.scipamato.core.sync.launcher.Warner;
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class DataSourceConfigTest {
@@ -28,6 +30,9 @@ public class DataSourceConfigTest {
 
     @Autowired
     private Configuration batchConfiguration;
+
+    @Autowired
+    private Warner warner;
 
     @Test
     public void assertJooqSourceConfigIsProperlyWired() throws SQLException {
@@ -75,6 +80,11 @@ public class DataSourceConfigTest {
             .transactionProvider()
             .getClass()
             .getName()).isEqualTo("org.springframework.boot.autoconfigure.jooq.SpringTransactionProvider");
+    }
+
+    @Test
+    public void assertWarner() {
+        assertThat(warner).isNotNull();
     }
 
 }

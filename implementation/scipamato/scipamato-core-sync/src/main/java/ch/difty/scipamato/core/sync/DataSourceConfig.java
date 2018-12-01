@@ -9,6 +9,7 @@ import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultExecuteListenerProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jooq.JooqExceptionTranslator;
 import org.springframework.boot.autoconfigure.jooq.JooqProperties;
 import org.springframework.boot.autoconfigure.jooq.SpringTransactionProvider;
@@ -21,6 +22,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import ch.difty.scipamato.core.sync.launcher.UnsynchronizedEntitiesWarner;
+import ch.difty.scipamato.core.sync.launcher.Warner;
 
 @Configuration
 @EnableConfigurationProperties({ JooqProperties.class })
@@ -188,4 +192,8 @@ public class DataSourceConfig {
         return DSL.using(batchConfiguration());
     }
 
+    @Bean
+    public Warner unsynchronizedEntitiesWarner(@Qualifier("dslContext") DSLContext jooqCore) {
+        return new UnsynchronizedEntitiesWarner(jooqCore);
+    }
 }

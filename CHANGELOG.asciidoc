@@ -65,6 +65,9 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - {url-issues}5[#5] - Core: Tweak Layout of paper entry page for smaller resolution screens
+- {url-issues}7[#7] - Sync: Improve Synchronization feedback:
+** Let the entire job fail if one job step fails
+** Provide warn messages for unsynchronized entities (papers with no codes assigned)
 - Updated dependencies: spring-boot, spring-boot-admin-starter-client, equalsverifier
 
 .Deprecated
