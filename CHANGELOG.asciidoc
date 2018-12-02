@@ -61,15 +61,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 == [unreleased]
 
 .Added
-- {url-issues}6[#6] - Core: Extension of the Literature Review PDF Report: Original without the goals field, additional one called Literature Review Plus with the goals field
-- {url-issues}9[#9] - Public: Offer to search by study title
 
 .Changed
-- {url-issues}5[#5] - Core: Tweak Layout of paper entry page for smaller resolution screens
-- {url-issues}7[#7] - Sync: Improve Synchronization feedback:
-** Let the entire job fail if one job step fails
-** Provide warn messages for unsynchronized entities (papers with no codes assigned)
-- Updated dependencies: spring-boot, spring-boot-admin-starter-client, equalsverifier
 
 .Deprecated
 
@@ -80,9 +73,23 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Security
 
 
+[[v1.0.4]]
+== [1.0.4] -- 2018-12-02
+
+.Added
+- {url-issues}6[#6] - Core: Extension of the Literature Review PDF Report: Original without the goals field, additional one called Literature Review Plus with the goals field
+- {url-issues}9[#9] - Public: Offer to search by study title
+
+.Changed
+- {url-issues}5[#5] - Core: Tweak Layout of paper entry page for smaller resolution screens
+- {url-issues}7[#7] - Sync: Improve Synchronization feedback:
+** Let the entire job fail if one job step fails
+** Provide warn messages for unsynchronized entities (papers with no codes assigned)
+- Updated dependencies: spring-boot, spring-boot-admin-starter-client, equalsverifier
+
+
 [[v1.0.3]]
 == [1.0.3] -- 2018-11-26
-
 
 .Added
 - Enhanced test coverage
