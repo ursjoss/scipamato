@@ -20,15 +20,14 @@ public class UnsynchronizedEntitiesWarner implements Warner {
         this.jooqCore = AssertAs.notNull(jooqCore, "jooqCore");
     }
 
+    protected UnsynchronizedEntitiesWarner() {
+        // for test purposes only
+        jooqCore = null;
+    }
+
     @Override
     public Optional<String> findUnsynchronizedPapers() {
-        final List<Long> numbers = jooqCore
-            .select(Paper.PAPER.NUMBER)
-            .from(Paper.PAPER)
-            .where(Paper.PAPER.ID.notIn(DSL
-                .select(PaperCode.PAPER_CODE.PAPER_ID)
-                .from(PaperCode.PAPER_CODE)))
-            .fetchInto(Long.class);
+        final List<Long> numbers = retrieveRecords();
         if (numbers.isEmpty())
             return Optional.empty();
         else
@@ -36,6 +35,17 @@ public class UnsynchronizedEntitiesWarner implements Warner {
                 .stream()
                 .map(String::valueOf)
                 .collect(Collectors.joining(", ")) + ".");
+    }
+
+    // protected for stubbing
+    List<Long> retrieveRecords() {
+        return jooqCore
+            .select(Paper.PAPER.NUMBER)
+            .from(Paper.PAPER)
+            .where(Paper.PAPER.ID.notIn(DSL
+                .select(PaperCode.PAPER_CODE.PAPER_ID)
+                .from(PaperCode.PAPER_CODE)))
+            .fetchInto(Long.class);
     }
 }
 

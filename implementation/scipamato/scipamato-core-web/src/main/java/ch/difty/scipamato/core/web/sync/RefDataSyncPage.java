@@ -42,22 +42,33 @@ public class RefDataSyncPage extends BasePage<Void> {
             protected void onSubmit(AjaxRequestTarget target) {
                 super.onSubmit(target);
                 SyncJobResult result = jobLauncher.launch();
+                reportJobResult(result);
+                reportLogMessages(result);
+                target.add(getFeedbackPanel());
+            }
+
+            private void reportJobResult(final SyncJobResult result) {
                 if (result.isSuccessful())
                     info(new StringResourceModel("feedback.msg.success", this, null).getString());
                 else
                     error(new StringResourceModel("feedback.msg.failed", this, null).getString());
-
-                for (SyncJobResult.LogMessage msg : result.getMessages()) {
-                    if (msg.getMessageLevel() == SyncJobResult.MessageLevel.INFO)
-                        info(msg.getMessage());
-                    else if (msg.getMessageLevel() == SyncJobResult.MessageLevel.WARNING)
-                        warn(msg.getMessage());
-                    else if (msg.getMessageLevel() == SyncJobResult.MessageLevel.ERROR)
-                        error(msg.getMessage());
-                }
-
-                target.add(getFeedbackPanel());
             }
+
+            private void reportLogMessages(final SyncJobResult result) {
+                for (final SyncJobResult.LogMessage msg : result.getMessages()) {
+                    switch (msg.getMessageLevel()) {
+                    case INFO:
+                        info(msg.getMessage());
+                        break;
+                    case WARNING:
+                        warn(msg.getMessage());
+                        break;
+                    default:
+                        error(msg.getMessage());
+                    }
+                }
+            }
+
         }.setEffect(Effect.ZOOM_IN);
     }
 

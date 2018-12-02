@@ -97,7 +97,8 @@ public class SimpleFilterPanel extends AbstractPanel<PublicPaperFilter> {
             .withMarkupId(markupId));
     }
 
-    private void handleChangeEvent(final IEvent<?> event, final FormComponent component) {
+    // package private access for testing
+    void handleChangeEvent(final IEvent<?> event, final FormComponent component) {
         if (event
                 .getPayload()
                 .getClass() == SimpleFilterPanelChangeEvent.class) {
