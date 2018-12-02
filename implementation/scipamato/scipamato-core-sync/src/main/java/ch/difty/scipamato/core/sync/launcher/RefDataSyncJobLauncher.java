@@ -18,14 +18,15 @@ import org.springframework.stereotype.Component;
  * synchronization jobs:
  * <ol>
  * <li>languages</li>
+ * <li>NewStudyPage links</li>
  * <li>code_classes</li>
  * <li>codes</li>
- * <li>keywords</li>
  * <li>papers</li>
  * <li>newsletters</li>
  * <li>newsletterTopics</li>
- * <li>newStudies</li>
  * <li>newStudyTopics</li>
+ * <li>newStudies</li>
+ * <li>keywords</li>
  * </ol>
  *
  * @author u.joss
@@ -75,12 +76,7 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
     public SyncJobResult launch() {
         log.info("Starting synchronization job from scipamato-core to scipamato-public...");
         final SyncJobResult result = new SyncJobResult();
-        final JobParameters jobParameters = new JobParametersBuilder()
-            .addDate("runDate", Date.from(LocalDateTime
-                .now()
-                .atZone(ZoneId.systemDefault())
-                .toInstant()), true)
-            .toJobParameters();
+        final JobParameters jobParameters = getJobParameters();
         try {
             warnAboutUnsynchronizedEntities(result);
 
@@ -104,6 +100,16 @@ public class RefDataSyncJobLauncher implements SyncJobLauncher {
             result.setFailure("Unexpected exception of type " + ex.getClass() + ": " + ex.getMessage());
         }
         return result;
+    }
+
+    // package protected for testing
+    JobParameters getJobParameters() {
+        return new JobParametersBuilder()
+            .addDate("runDate", Date.from(LocalDateTime
+                .now()
+                .atZone(ZoneId.systemDefault())
+                .toInstant()), true)
+            .toJobParameters();
     }
 
     private void runSingleJob(final String topic, final Job job, final SyncJobResult result,
