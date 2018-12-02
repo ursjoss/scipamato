@@ -24,7 +24,7 @@ import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 @MountPath("codes/entry")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+@SuppressWarnings("SameParameterValue")
 public class CodeEditPage extends DefinitionEditPage<CodeDefinition> {
 
     @SpringBean

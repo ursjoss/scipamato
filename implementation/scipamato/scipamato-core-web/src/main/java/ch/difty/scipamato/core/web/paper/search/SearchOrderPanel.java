@@ -34,7 +34,7 @@ import ch.difty.scipamato.core.web.paper.PageFactory;
 import ch.difty.scipamato.core.web.paper.SearchConditionProvider;
 import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent;
 
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+@SuppressWarnings("SameParameterValue")
 public class SearchOrderPanel extends BasePanel<SearchOrder> {
 
     private static final long serialVersionUID = 1L;

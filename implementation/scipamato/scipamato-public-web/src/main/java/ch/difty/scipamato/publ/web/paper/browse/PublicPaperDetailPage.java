@@ -25,7 +25,7 @@ import ch.difty.scipamato.publ.persistence.api.PublicPaperService;
 import ch.difty.scipamato.publ.web.PublicPageParameters;
 import ch.difty.scipamato.publ.web.common.BasePage;
 
-@SuppressWarnings({ "WicketForgeJavaIdInspection", "SameParameterValue" })
+@SuppressWarnings("SameParameterValue")
 @MountPath("/paper/number/${number}")
 public class PublicPaperDetailPage extends BasePage<PublicPaper> {
 

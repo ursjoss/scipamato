@@ -9,7 +9,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
 import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+@SuppressWarnings("SameParameterValue")
 class NewsletterTopicEditTranslationPanel
     extends DefinitionEditTranslationPanel<NewsletterTopicDefinition, NewsletterTopicTranslation> {
 

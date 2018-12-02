@@ -20,7 +20,7 @@ import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 @MountPath("keyword/entry")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+@SuppressWarnings("SameParameterValue")
 public class KeywordEditPage extends DefinitionEditPage<KeywordDefinition> {
 
     @SpringBean

@@ -42,7 +42,7 @@ import ch.difty.scipamato.publ.web.common.BasePage;
 import ch.difty.scipamato.publ.web.model.CodeClassModel;
 import ch.difty.scipamato.publ.web.model.CodeModel;
 
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+@SuppressWarnings("SameParameterValue")
 @MountPath("/")
 @WicketHomePage
 public class PublicPage extends BasePage<Void> {

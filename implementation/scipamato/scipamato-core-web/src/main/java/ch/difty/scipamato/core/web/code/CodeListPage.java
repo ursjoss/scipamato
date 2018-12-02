@@ -21,7 +21,7 @@ import ch.difty.scipamato.core.web.common.DefinitionListPage;
 @MountPath("codes")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection", "WeakerAccess" })
+@SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 public class CodeListPage extends DefinitionListPage<CodeDefinition, CodeFilter, CodeService, CodeDefinitionProvider> {
 
     @SpringBean

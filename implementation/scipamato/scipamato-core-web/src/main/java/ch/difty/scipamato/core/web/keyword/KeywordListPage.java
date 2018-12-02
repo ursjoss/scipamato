@@ -20,7 +20,7 @@ import ch.difty.scipamato.core.web.common.DefinitionListPage;
 @MountPath("keywords")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection", "WeakerAccess" })
+@SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 public class KeywordListPage
     extends DefinitionListPage<KeywordDefinition, KeywordFilter, KeywordService, KeywordDefinitionProvider> {
 

@@ -10,7 +10,7 @@ import ch.difty.scipamato.core.persistence.NewsletterTopicService;
 import ch.difty.scipamato.core.web.common.DefinitionListFilterPanel;
 import ch.difty.scipamato.core.web.newsletter.NewsletterTopicDefinitionProvider;
 
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+@SuppressWarnings("SameParameterValue")
 abstract class NewsletterTopicListFilterPanel extends
     DefinitionListFilterPanel<NewsletterTopicDefinition, NewsletterTopicFilter, NewsletterTopicService, NewsletterTopicDefinitionProvider> {
 

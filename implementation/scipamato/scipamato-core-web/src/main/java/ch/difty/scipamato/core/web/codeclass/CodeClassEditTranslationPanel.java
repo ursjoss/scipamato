@@ -9,7 +9,7 @@ import ch.difty.scipamato.core.entity.code.CodeTranslation;
 import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
 import ch.difty.scipamato.core.web.common.DefinitionEditTranslationPanel;
 
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+@SuppressWarnings("SameParameterValue")
 class CodeClassEditTranslationPanel extends DefinitionEditTranslationPanel<CodeClassDefinition, CodeTranslation> {
 
     CodeClassEditTranslationPanel(final String id, final IModel<CodeClassDefinition> model) {

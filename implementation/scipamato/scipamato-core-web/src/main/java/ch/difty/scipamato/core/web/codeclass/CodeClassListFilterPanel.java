@@ -9,7 +9,7 @@ import ch.difty.scipamato.core.entity.code_class.CodeClassTranslation;
 import ch.difty.scipamato.core.persistence.CodeClassService;
 import ch.difty.scipamato.core.web.common.DefinitionListFilterPanel;
 
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+@SuppressWarnings("SameParameterValue")
 class CodeClassListFilterPanel extends
     DefinitionListFilterPanel<CodeClassDefinition, CodeClassFilter, CodeClassService, CodeClassDefinitionProvider> {
 

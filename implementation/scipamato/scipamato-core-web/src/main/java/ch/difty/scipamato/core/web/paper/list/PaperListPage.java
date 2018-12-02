@@ -54,7 +54,7 @@ import ch.difty.scipamato.core.web.paper.result.ResultPanel;
  *
  * @author u.joss
  */
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+@SuppressWarnings("SameParameterValue")
 @MountPath("/")
 @WicketHomePage
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN, Roles.VIEWER })

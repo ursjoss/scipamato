@@ -21,7 +21,7 @@ import ch.difty.scipamato.core.web.newsletter.NewsletterTopicDefinitionProvider;
 @MountPath("newsletter/topics")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection", "WeakerAccess" })
+@SuppressWarnings({ "SameParameterValue", "WeakerAccess" })
 public class NewsletterTopicListPage extends
     DefinitionListPage<NewsletterTopicDefinition, NewsletterTopicFilter, NewsletterTopicService, NewsletterTopicDefinitionProvider> {
 

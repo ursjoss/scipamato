@@ -7,7 +7,7 @@ import ch.difty.scipamato.core.entity.code_class.CodeClassDefinition;
 import ch.difty.scipamato.core.entity.code_class.CodeClassTranslation;
 import ch.difty.scipamato.core.web.common.DefinitionEditHeaderPanel;
 
-@SuppressWarnings({ "WicketForgeJavaIdInspection", "SameParameterValue" })
+@SuppressWarnings("SameParameterValue")
 abstract class CodeClassEditHeaderPanel
     extends DefinitionEditHeaderPanel<CodeClassDefinition, CodeClassTranslation, Integer> {
 

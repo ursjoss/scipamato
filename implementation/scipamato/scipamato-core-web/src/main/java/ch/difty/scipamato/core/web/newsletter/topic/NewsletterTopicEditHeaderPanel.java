@@ -6,7 +6,7 @@ import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicDefinition;
 import ch.difty.scipamato.core.entity.newsletter.NewsletterTopicTranslation;
 import ch.difty.scipamato.core.web.common.DefinitionEditHeaderPanel;
 
-@SuppressWarnings({ "WicketForgeJavaIdInspection", "SameParameterValue" })
+@SuppressWarnings("SameParameterValue")
 abstract class NewsletterTopicEditHeaderPanel
     extends DefinitionEditHeaderPanel<NewsletterTopicDefinition, NewsletterTopicTranslation, Integer> {
 

@@ -9,7 +9,7 @@ import ch.difty.scipamato.core.entity.keyword.KeywordFilter;
 import ch.difty.scipamato.core.persistence.KeywordService;
 import ch.difty.scipamato.core.web.common.DefinitionListFilterPanel;
 
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+@SuppressWarnings("SameParameterValue")
 abstract class KeywordListFilterPanel
     extends DefinitionListFilterPanel<KeywordDefinition, KeywordFilter, KeywordService, KeywordDefinitionProvider> {
 

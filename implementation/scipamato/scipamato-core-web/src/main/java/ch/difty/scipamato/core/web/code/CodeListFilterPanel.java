@@ -19,7 +19,7 @@ import ch.difty.scipamato.core.persistence.CodeService;
 import ch.difty.scipamato.core.web.common.DefinitionListFilterPanel;
 import ch.difty.scipamato.core.web.model.CodeClassModel;
 
-@SuppressWarnings({ "SameParameterValue", "WicketForgeJavaIdInspection" })
+@SuppressWarnings("SameParameterValue")
 abstract class CodeListFilterPanel
     extends DefinitionListFilterPanel<CodeDefinition, CodeFilter, CodeService, CodeDefinitionProvider> {
 

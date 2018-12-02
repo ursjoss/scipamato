@@ -8,7 +8,7 @@ import ch.difty.scipamato.core.entity.keyword.KeywordDefinition;
 import ch.difty.scipamato.core.entity.keyword.KeywordTranslation;
 import ch.difty.scipamato.core.web.common.DefinitionEditHeaderPanel;
 
-@SuppressWarnings({ "WicketForgeJavaIdInspection", "SameParameterValue" })
+@SuppressWarnings("SameParameterValue")
 abstract class KeywordEditHeaderPanel
     extends DefinitionEditHeaderPanel<KeywordDefinition, KeywordTranslation, Integer> {
 

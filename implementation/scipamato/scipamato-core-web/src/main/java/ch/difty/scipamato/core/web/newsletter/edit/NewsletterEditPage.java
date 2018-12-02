@@ -26,12 +26,12 @@ import org.apache.wicket.model.*;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.core.auth.Roles;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.entity.newsletter.Newsletter;
-import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.entity.search.PaperFilter;
 import ch.difty.scipamato.core.persistence.NewsletterService;
@@ -47,7 +47,7 @@ import ch.difty.scipamato.core.web.paper.result.ResultPanel;
 @MountPath("newsletters/entry")
 @Slf4j
 @AuthorizeInstantiation({ Roles.USER, Roles.ADMIN })
-@SuppressWarnings({ "WicketForgeJavaIdInspection", "SameParameterValue" })
+@SuppressWarnings("SameParameterValue")
 public class NewsletterEditPage extends BasePage<Newsletter> {
 
     private static final int RESULT_PAGE_SIZE = 12;

@@ -17,7 +17,7 @@ import ch.difty.scipamato.core.entity.code.CodeTranslation;
 import ch.difty.scipamato.core.web.common.DefinitionEditHeaderPanel;
 import ch.difty.scipamato.core.web.model.CodeClassModel;
 
-@SuppressWarnings({ "WicketForgeJavaIdInspection", "SameParameterValue" })
+@SuppressWarnings("SameParameterValue")
 abstract class CodeEditHeaderPanel extends DefinitionEditHeaderPanel<CodeDefinition, CodeTranslation, String> {
 
     private BootstrapSelect<CodeClass> codeClasses;
