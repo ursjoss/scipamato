@@ -72,6 +72,23 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Security
 
+[[v1.0.5]]
+== [1.0.5] -- 2018-12-03
+
+.Added
+
+.Changed
+- {url-issues}9[#9] - Public: Reorder the filter fields in the SimpleFilterPanel
+
+.Deprecated
+
+.Removed
+
+.Fixed
+
+.Security
+
+
 
 [[v1.0.4]]
 == [1.0.4] -- 2018-12-02
