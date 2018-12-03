@@ -86,6 +86,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 - {url-issues}7[#7] - Core: Remove Validation from PaperEditPage. Message in the Synchronization Page seems to be enough.
 
 .Fixed
+- {url-issues}6[#6] - Core: Extension of the Literature Review PDF Report: Don't allow pagebreak within study
 
 .Security
 

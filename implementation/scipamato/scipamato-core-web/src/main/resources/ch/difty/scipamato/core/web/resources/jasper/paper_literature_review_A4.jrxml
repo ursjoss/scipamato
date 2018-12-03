@@ -31,7 +31,7 @@
 	<field name="doi" class="java.lang.String"/>
 	<field name="brand" class="java.lang.String"/>
 	<field name="numberLabel" class="java.lang.String"/>
-	<group name="number" minHeightToStartNewPage="5">
+	<group name="number" minHeightToStartNewPage="5" keepTogether="true">
 		<groupExpression><![CDATA[$F{number}]]></groupExpression>
 		<groupHeader>
 			<band height="41" splitType="Prevent">
