@@ -490,17 +490,6 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                 form.addOrReplace(summaryLink);
                 summaryShortLink = makeSummaryShortLink("summaryShort");
                 form.addOrReplace(summaryShortLink);
-
-                if (hasNoCodesAssigned()) {
-                    warn(new StringResourceModel("form.noCodesAssigned", this, null).getString());
-                }
-            }
-
-            private boolean hasNoCodesAssigned() {
-                return PaperPanel.this
-                    .getModelObject()
-                    .getCodes()
-                    .isEmpty();
             }
 
             @Override

@@ -83,6 +83,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Deprecated
 
 .Removed
+- {url-issues}7[#7] - Core: Remove Validation from PaperEditPage. Message in the Synchronization Page seems to be enough.
 
 .Fixed
 
