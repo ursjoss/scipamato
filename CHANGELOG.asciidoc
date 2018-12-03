@@ -79,6 +79,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 
 .Changed
 - {url-issues}9[#9] - Public: Reorder the filter fields in the SimpleFilterPanel
+- Core: PaperEntryPage: Reduce row count of title field to 3
 
 .Deprecated
 
