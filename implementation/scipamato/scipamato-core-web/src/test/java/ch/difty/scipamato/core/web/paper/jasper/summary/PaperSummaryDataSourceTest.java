@@ -12,6 +12,7 @@ import net.sf.jasperreports.engine.design.JRDesignField;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.NullArgumentException;
+import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
 import ch.difty.scipamato.core.web.paper.AbstractPaperSlimProvider;
 import ch.difty.scipamato.core.web.paper.jasper.PaperDataSourceTest;
@@ -70,15 +71,20 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
         when(paperMock.getResult()).thenReturn(RESULT);
         when(paperMock.getComment()).thenReturn(COMMENT);
         when(paperMock.getCreatedByName()).thenReturn(CREATED_BY);
+
+        when(shortFieldConcatenatorMock.methodsFrom(isA(Paper.class))).thenReturn(METHODS);
+        when(shortFieldConcatenatorMock.populationFrom(isA(Paper.class))).thenReturn(POPULATION);
+        when(shortFieldConcatenatorMock.resultFrom(isA(Paper.class))).thenReturn(RESULT);
     }
 
     @Test
     public void instantiatingWithPaper_returnsPdfDataSourceWithOneRecord() throws JRException {
-        ds = new PaperSummaryDataSource(paperMock, rhf, pdfExporterConfigMock);
+        ds = new PaperSummaryDataSource(paperMock, rhf, shortFieldConcatenatorMock, pdfExporterConfigMock);
 
         assertDataSource(FILE_NAME_SINGLE);
 
         verifyPaperMock(3);
+        verifyShortFieldConcatenator();
     }
 
     private void verifyPaperMock(int i) {
@@ -87,11 +93,14 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
         verify(paperMock).getTitle();
         verify(paperMock).getLocation();
         verify(paperMock).getGoals();
-        verify(paperMock).getPopulation();
-        verify(paperMock).getMethods();
-        verify(paperMock).getResult();
         verify(paperMock).getComment();
         verify(paperMock).getCreatedByName();
+    }
+
+    private void verifyShortFieldConcatenator() {
+        verify(shortFieldConcatenatorMock).methodsFrom(paperMock);
+        verify(shortFieldConcatenatorMock).populationFrom(paperMock);
+        verify(shortFieldConcatenatorMock).resultFrom(paperMock);
     }
 
     private void assertDataSource(String fileName) throws JRException {
@@ -134,12 +143,13 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
 
     @Test
     public void instantiatingWithPaperSummary_returnsPdfDataSourceWithOneRecord() throws JRException {
-        PaperSummary ps = new PaperSummary(paperMock, rhf);
+        PaperSummary ps = new PaperSummary(paperMock, shortFieldConcatenatorMock, rhf);
         ds = new PaperSummaryDataSource(ps, pdfExporterConfigMock);
 
         assertDataSource(FILE_NAME_SINGLE);
 
         verifyPaperMock(1);
+        verifyShortFieldConcatenator();
     }
 
     @Test
@@ -147,12 +157,13 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
         reset(paperMock);
         when(paperMock.getNumber()).thenReturn(null);
 
-        PaperSummary ps = new PaperSummary(paperMock, rhf);
+        PaperSummary ps = new PaperSummary(paperMock, shortFieldConcatenatorMock, rhf);
         ds = new PaperSummaryDataSource(ps, pdfExporterConfigMock);
 
         assertThat(ds.getFileName()).isEqualTo(FILE_NAME_SINGLE_FALLBACK);
 
         verifyPaperMock(1);
+        verifyShortFieldConcatenator();
     }
 
     @Test
@@ -160,11 +171,12 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
         reset(paperMock);
         when(paperMock.getNumber()).thenReturn(null);
 
-        ds = new PaperSummaryDataSource(paperMock, rhf, pdfExporterConfigMock);
+        ds = new PaperSummaryDataSource(paperMock, rhf, shortFieldConcatenatorMock, pdfExporterConfigMock);
 
         assertThat(ds.getFileName()).isEqualTo(FILE_NAME_SINGLE_FALLBACK);
 
         verifyPaperMock(2);
+        verifyShortFieldConcatenator();
     }
 
     @Test
@@ -172,19 +184,20 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
         when(dataProviderMock.size()).thenReturn(1L);
         when(dataProviderMock.findAllPapersByFilter()).thenReturn(Collections.singletonList(paperMock));
 
-        ds = new PaperSummaryDataSource(dataProviderMock, rhf, pdfExporterConfigMock);
+        ds = new PaperSummaryDataSource(dataProviderMock, rhf, shortFieldConcatenatorMock, pdfExporterConfigMock);
         assertDataSource(FILE_NAME_MULTIPLE);
 
         verify(dataProviderMock).size();
         verify(dataProviderMock).findAllPapersByFilter();
 
         verifyPaperMock(1);
+        verifyShortFieldConcatenator();
     }
 
     @Test
     public void instantiatingWithProvider_withEmptyProvider_returnsNoRecord() throws JRException {
         when(dataProviderMock.size()).thenReturn(0L);
-        ds = new PaperSummaryDataSource(dataProviderMock, rhf, pdfExporterConfigMock);
+        ds = new PaperSummaryDataSource(dataProviderMock, rhf, shortFieldConcatenatorMock, pdfExporterConfigMock);
         assertThat(ds
             .getReportDataSource()
             .next()).isFalse();
@@ -195,7 +208,7 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     public void instantiatingWithProvider_withNullProvider_throws() {
         AbstractPaperSlimProvider<? extends PaperSlimFilter> provider = null;
         try {
-            new PaperSummaryDataSource(provider, rhf, pdfExporterConfigMock);
+            new PaperSummaryDataSource(provider, rhf, shortFieldConcatenatorMock, pdfExporterConfigMock);
         } catch (Exception ex) {
             assertThat(ex)
                 .isInstanceOf(NullArgumentException.class)

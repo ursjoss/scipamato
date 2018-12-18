@@ -41,6 +41,7 @@ import org.springframework.core.env.Environment;
 
 import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.entity.FieldEnumType;
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.ScipamatoWebSessionFacade;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
@@ -50,7 +51,6 @@ import ch.difty.scipamato.common.web.component.table.column.LinkIconColumn;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperAttachment;
-import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.logic.parsing.AuthorParser;
 import ch.difty.scipamato.core.logic.parsing.AuthorParserFactory;
 import ch.difty.scipamato.core.persistence.NewsletterService;
@@ -64,6 +64,7 @@ import ch.difty.scipamato.core.web.paper.PaperAttachmentProvider;
 import ch.difty.scipamato.core.web.paper.common.PaperPanel;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfExporterConfiguration;
+import ch.difty.scipamato.core.web.paper.jasper.CoreShortFieldConcatenator;
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource;
 
@@ -100,6 +101,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
 
     @SpringBean
     private ScipamatoWebSessionFacade sessionFacade;
+
+    @SpringBean
+    private CoreShortFieldConcatenator shortFieldConcatenator;
 
     @SpringBean
     private Environment env;
@@ -192,7 +196,7 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             .withCodes(p.getCodes())
             .withCompression()
             .build();
-        return new PaperSummaryDataSource(p, rhf, config);
+        return new PaperSummaryDataSource(p, rhf, shortFieldConcatenator, config);
     }
 
     /**

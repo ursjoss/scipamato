@@ -21,13 +21,13 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.common.web.Mode;
 import ch.difty.scipamato.common.web.component.SerializableConsumer;
 import ch.difty.scipamato.common.web.component.table.column.ClickablePropertyColumn;
 import ch.difty.scipamato.common.web.component.table.column.LinkIconColumn;
 import ch.difty.scipamato.core.entity.Paper;
 import ch.difty.scipamato.core.entity.PaperSlimFilter;
-import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
 import ch.difty.scipamato.core.entity.projection.PaperSlim;
 import ch.difty.scipamato.core.persistence.NewsletterService;
 import ch.difty.scipamato.core.persistence.PaperService;
@@ -38,6 +38,7 @@ import ch.difty.scipamato.core.web.paper.SearchOrderChangeEvent;
 import ch.difty.scipamato.core.web.paper.jasper.JasperPaperDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfExporterConfiguration;
+import ch.difty.scipamato.core.web.paper.jasper.CoreShortFieldConcatenator;
 import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReviewDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.literaturereview.PaperLiteratureReviewPlusDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.review.PaperReviewDataSource;
@@ -66,6 +67,9 @@ public abstract class ResultPanel extends BasePanel<Void> {
 
     @SpringBean
     private NewsletterService newsletterService;
+
+    @SpringBean
+    private CoreShortFieldConcatenator shortFieldConcatenator;
 
     private final AbstractPaperSlimProvider<? extends PaperSlimFilter> dataProvider;
 
@@ -292,7 +296,8 @@ public abstract class ResultPanel extends BasePanel<Void> {
             .withCompression()
             .build();
 
-        queue(newResourceLink(id, "summary", new PaperSummaryDataSource(dataProvider, rhf, config)));
+        queue(newResourceLink(id, "summary",
+            new PaperSummaryDataSource(dataProvider, rhf, shortFieldConcatenator, config)));
     }
 
     private void makeAndQueuePdfSummaryShortLink(String id) {
