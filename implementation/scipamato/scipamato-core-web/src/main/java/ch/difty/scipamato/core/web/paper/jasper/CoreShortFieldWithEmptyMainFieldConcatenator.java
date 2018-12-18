@@ -23,7 +23,7 @@ public class CoreShortFieldWithEmptyMainFieldConcatenator extends AbstractShortF
     private static final String PAPER = "paper";
 
     public CoreShortFieldWithEmptyMainFieldConcatenator() {
-        super(false);
+        super(true);
     }
 
     @Override
@@ -35,14 +35,14 @@ public class CoreShortFieldWithEmptyMainFieldConcatenator extends AbstractShortF
 
     @Override
     public String populationFrom(final Paper p) {
-        AssertAs.notNull(p, "paper");
+        AssertAs.notNull(p, PAPER);
         return populationFrom(p.getPopulation(), p.getPopulationPlace(), p.getPopulationParticipants(),
             p.getPopulationDuration());
     }
 
     @Override
     public String resultFrom(final Paper p) {
-        AssertAs.notNull(p, "paper");
+        AssertAs.notNull(p, PAPER);
         return resultFrom(p.getResult(), p.getResultExposureRange(), p.getResultEffectEstimate(),
             p.getResultMeasuredOutcome(), p.getConclusion());
     }

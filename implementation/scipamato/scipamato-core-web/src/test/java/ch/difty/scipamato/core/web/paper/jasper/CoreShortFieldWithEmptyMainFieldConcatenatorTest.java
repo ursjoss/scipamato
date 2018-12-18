@@ -55,7 +55,8 @@ public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
         p.setMethodStatistics("ms");
         p.setMethodConfounders("mc");
 
-        assertThat(sfc.methodsFrom(p)).isEqualTo("msd / mo / pp / ep / ea / ms / mc");
+        assertThat(sfc.methodsFrom(p)).isEqualTo(
+            "Study Design: msd / Outcome: mo / Place: pp / Pollutant: ep / Exposure Assessment: ea / Statistical Method: ms / Confounders: mc");
     }
 
     @Test
@@ -75,7 +76,7 @@ public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
         p.setPopulationParticipants("ppa");
         p.setPopulationDuration("pd");
 
-        assertThat(sfc.populationFrom(p)).isEqualTo("ppl / ppa / pd");
+        assertThat(sfc.populationFrom(p)).isEqualTo("Place: ppl / Participants: ppa / Study Duration: pd");
     }
 
     @Test
@@ -97,7 +98,8 @@ public class CoreShortFieldWithEmptyMainFieldConcatenatorTest {
         p.setResultMeasuredOutcome("rmo");
         p.setConclusion("cc");
 
-        assertThat(sfc.resultFrom(p)).isEqualTo("rer / ree / rmo / cc");
+        assertThat(sfc.resultFrom(p)).isEqualTo(
+            "Exposure (Range): rer / Effect Estimate: ree / Measured Outcome: rmo / Conclusion: cc");
     }
 
 }
