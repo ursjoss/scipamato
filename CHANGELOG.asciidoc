@@ -69,6 +69,7 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- Fixed License in POM file to reflecte the change from GPL3 to BSD-3
 
 .Security
 
