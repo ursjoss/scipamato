@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
  * into the respective main fields in different places in the application.
  * <p>
  * Each of the three methods (for method, population and result) has two variants, one passing in the values only,
- * prepending an English static label to each value. The other one with dynamic labels that can be localized according
+ * pre-pending an English static label to each value. The other one with dynamic labels that can be localized according
  * to the users language preference.
  */
 public abstract class AbstractShortFieldConcatenator {
@@ -73,7 +73,7 @@ public abstract class AbstractShortFieldConcatenator {
     private String concatShortFields(final Tuple[] shortFields) {
         final StringBuilder sb = new StringBuilder();
         for (final Tuple t : shortFields) {
-            if (StringUtils.isNotBlank(t.content)) {
+            if (t != null && StringUtils.isNotBlank(t.content)) {
                 if (sb.length() > 0)
                     sb.append(" / ");
                 if (t.label != null)
