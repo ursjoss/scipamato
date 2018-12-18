@@ -1044,7 +1044,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                 @Override
                 protected void onConfigure() {
                     super.onConfigure();
-                    setEnabled(isAssociatedWithNewsletter());
+                    setEnabled(isSearchMode() || isAssociatedWithNewsletter());
                 }
             };
             field.setOutputMarkupId(true);
@@ -1096,7 +1096,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
                 @Override
                 protected void onConfigure() {
                     super.onConfigure();
-                    setEnabled(isAssociatedWithNewsletter());
+                    setEnabled(isSearchMode() || isAssociatedWithNewsletter());
                 }
             }.with(config);
             topic.setNullValid(true);
