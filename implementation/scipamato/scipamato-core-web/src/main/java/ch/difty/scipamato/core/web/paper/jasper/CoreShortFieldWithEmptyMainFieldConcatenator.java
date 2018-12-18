@@ -22,29 +22,33 @@ public class CoreShortFieldWithEmptyMainFieldConcatenator extends AbstractShortF
 
     private static final String PAPER = "paper";
 
-    public CoreShortFieldWithEmptyMainFieldConcatenator() {
-        super(true);
+    @Override
+    public String methodsFrom(final Paper p, final ReportHeaderFields rhf) {
+        AssertAs.notNull(p, PAPER);
+        return methodsFrom(p.getMethods(), new Tuple(rhf.getMethodStudyDesignLabel(), p.getMethodStudyDesign()),
+            new Tuple(rhf.getMethodOutcomeLabel(), p.getMethodOutcome()),
+            new Tuple(rhf.getPopulationPlaceLabel(), p.getPopulationPlace()),
+            new Tuple(rhf.getExposurePollutantLabel(), p.getExposurePollutant()),
+            new Tuple(rhf.getExposureAssessmentLabel(), p.getExposureAssessment()),
+            new Tuple(rhf.getMethodStatisticsLabel(), p.getMethodStatistics()),
+            new Tuple(rhf.getMethodConfoundersLabel(), p.getMethodConfounders()));
     }
 
     @Override
-    public String methodsFrom(final Paper p) {
+    public String populationFrom(final Paper p, final ReportHeaderFields rhf) {
         AssertAs.notNull(p, PAPER);
-        return methodsFrom(p.getMethods(), p.getMethodStudyDesign(), p.getMethodOutcome(), p.getPopulationPlace(),
-            p.getExposurePollutant(), p.getExposureAssessment(), p.getMethodStatistics(), p.getMethodConfounders());
+        return populationFrom(p.getPopulation(), new Tuple(rhf.getPopulationPlaceLabel(), p.getPopulationPlace()),
+            new Tuple(rhf.getPopulationParticipantsLabel(), p.getPopulationParticipants()),
+            new Tuple(rhf.getPopulationDurationLabel(), p.getPopulationDuration()));
     }
 
     @Override
-    public String populationFrom(final Paper p) {
+    public String resultFrom(final Paper p, final ReportHeaderFields rhf) {
         AssertAs.notNull(p, PAPER);
-        return populationFrom(p.getPopulation(), p.getPopulationPlace(), p.getPopulationParticipants(),
-            p.getPopulationDuration());
-    }
-
-    @Override
-    public String resultFrom(final Paper p) {
-        AssertAs.notNull(p, PAPER);
-        return resultFrom(p.getResult(), p.getResultExposureRange(), p.getResultEffectEstimate(),
-            p.getResultMeasuredOutcome(), p.getConclusion());
+        return resultFrom(p.getResult(), new Tuple(rhf.getResultExposureRangeLabel(), p.getResultExposureRange()),
+            new Tuple(rhf.getResultEffectEstimateLabel(), p.getResultEffectEstimate()),
+            new Tuple(rhf.getResultMeasuredOutcomeLabel(), p.getResultMeasuredOutcome()),
+            new Tuple(rhf.getConclusionLabel(), p.getConclusion()));
     }
 
 }

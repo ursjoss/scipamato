@@ -62,9 +62,9 @@ import ch.difty.scipamato.core.web.paper.NewsletterChangeEvent;
 import ch.difty.scipamato.core.web.paper.PageFactory;
 import ch.difty.scipamato.core.web.paper.PaperAttachmentProvider;
 import ch.difty.scipamato.core.web.paper.common.PaperPanel;
+import ch.difty.scipamato.core.web.paper.jasper.CoreShortFieldConcatenator;
 import ch.difty.scipamato.core.web.paper.jasper.ReportHeaderFields;
 import ch.difty.scipamato.core.web.paper.jasper.ScipamatoPdfExporterConfiguration;
-import ch.difty.scipamato.core.web.paper.jasper.CoreShortFieldConcatenator;
 import ch.difty.scipamato.core.web.paper.jasper.summary.PaperSummaryDataSource;
 import ch.difty.scipamato.core.web.paper.jasper.summaryshort.PaperSummaryShortDataSource;
 
@@ -184,6 +184,19 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
             .methodsLabel(getLabelResourceFor(METHODS.getName()))
             .resultLabel(getLabelResourceFor(RESULT.getName()))
             .commentLabel(getLabelResourceFor(COMMENT.getName()))
+            .methodStudyDesignLabel(getLabelResourceFor(METHOD_STUDY_DESIGN.getName()))
+            .methodOutcomeLabel(getLabelResourceFor(METHOD_OUTCOME.getName()))
+            .populationPlaceLabel(getLabelResourceFor(POPULATION_PLACE.getName()))
+            .exposurePollutantLabel(getLabelResourceFor(EXPOSURE_POLLUTANT.getName()))
+            .exposureAssessmentLabel(getLabelResourceFor(EXPOSURE_ASSESSMENT.getName()))
+            .methodStatisticsLabel(getLabelResourceFor(METHOD_STATISTICS.getName()))
+            .methodConfoundersLabel(getLabelResourceFor(METHOD_CONFOUNDERS.getName()))
+            .populationDurationLabel(getLabelResourceFor(POPULATION_DURATION.getName()))
+            .populationParticipantsLabel(getLabelResourceFor(POPULATION_PARTICIPANTS.getName()))
+            .resultEffectEstimateLabel(getLabelResourceFor(RESULT_EFFECT_ESTIMATE.getName()))
+            .resultExposureRangeLabel(getLabelResourceFor(RESULT_EXPOSURE_RANGE.getName()))
+            .resultMeasuredOutcomeLabel(getLabelResourceFor(RESULT_MEASURED_OUTCOME.getName()))
+            .conclusionLabel(getLabelResourceFor(CONCLUSION.getName()))
             .build();
         final Paper p = getModelObject();
         final ScipamatoPdfExporterConfiguration config = new ScipamatoPdfExporterConfiguration.Builder(headerPart,

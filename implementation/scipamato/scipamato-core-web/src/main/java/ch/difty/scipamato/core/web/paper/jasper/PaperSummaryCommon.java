@@ -43,7 +43,7 @@ public abstract class PaperSummaryCommon extends JasperEntity {
     protected PaperSummaryCommon(final Paper p, final CoreShortFieldConcatenator shortFieldConcatenator,
         final ReportHeaderFields rhf) {
         this(p.getNumber(), p.getAuthors(), p.getTitle(), p.getLocation(), p.getGoals(),
-            (shortFieldConcatenator != null ? shortFieldConcatenator.methodsFrom(p) : p.getMethods()), p.getComment(),
+            (shortFieldConcatenator != null ? shortFieldConcatenator.methodsFrom(p, rhf) : p.getMethods()), p.getComment(),
             rhf.getGoalsLabel(), rhf.getMethodsLabel(), rhf.getCommentLabel(), rhf.getHeaderPart(), rhf.getBrand(),
             p.getCreatedByName());
     }

@@ -32,10 +32,6 @@ class SyncShortFieldWithEmptyMainFieldConcatenator extends AbstractShortFieldCon
     private static final String RS         = "rs";
     private static final String UNABLE_MSG = "Unable to evaluate recordset";
 
-    protected SyncShortFieldWithEmptyMainFieldConcatenator() {
-        super(true);
-    }
-
     @Override
     public String methodsFrom(final ResultSet rs) {
         AssertAs.notNull(rs, RS);

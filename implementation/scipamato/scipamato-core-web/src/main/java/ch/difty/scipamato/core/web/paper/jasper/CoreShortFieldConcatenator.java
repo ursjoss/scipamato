@@ -14,19 +14,19 @@ public interface CoreShortFieldConcatenator {
      *     the paper
      * @return the methods field content
      */
-    String methodsFrom(Paper paper);
+    String methodsFrom(Paper paper, ReportHeaderFields rhf);
 
     /**
      * @param paper
      *     the paper
      * @return the population field content
      */
-    String populationFrom(Paper paper);
+    String populationFrom(Paper paper, ReportHeaderFields rhf);
 
     /**
      * @param paper
      *     the paper
      * @return the result field content
      */
-    String resultFrom(Paper paper);
+    String resultFrom(Paper paper, ReportHeaderFields rhf);
 }

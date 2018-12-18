@@ -72,9 +72,9 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
         when(paperMock.getComment()).thenReturn(COMMENT);
         when(paperMock.getCreatedByName()).thenReturn(CREATED_BY);
 
-        when(shortFieldConcatenatorMock.methodsFrom(isA(Paper.class))).thenReturn(METHODS);
-        when(shortFieldConcatenatorMock.populationFrom(isA(Paper.class))).thenReturn(POPULATION);
-        when(shortFieldConcatenatorMock.resultFrom(isA(Paper.class))).thenReturn(RESULT);
+        when(shortFieldConcatenatorMock.methodsFrom(isA(Paper.class), eq(rhf))).thenReturn(METHODS);
+        when(shortFieldConcatenatorMock.populationFrom(isA(Paper.class), eq(rhf))).thenReturn(POPULATION);
+        when(shortFieldConcatenatorMock.resultFrom(isA(Paper.class), eq(rhf))).thenReturn(RESULT);
     }
 
     @Test
@@ -98,9 +98,9 @@ public class PaperSummaryDataSourceTest extends PaperDataSourceTest {
     }
 
     private void verifyShortFieldConcatenator() {
-        verify(shortFieldConcatenatorMock).methodsFrom(paperMock);
-        verify(shortFieldConcatenatorMock).populationFrom(paperMock);
-        verify(shortFieldConcatenatorMock).resultFrom(paperMock);
+        verify(shortFieldConcatenatorMock).methodsFrom(paperMock, rhf);
+        verify(shortFieldConcatenatorMock).populationFrom(paperMock, rhf);
+        verify(shortFieldConcatenatorMock).resultFrom(paperMock, rhf);
     }
 
     private void assertDataSource(String fileName) throws JRException {
