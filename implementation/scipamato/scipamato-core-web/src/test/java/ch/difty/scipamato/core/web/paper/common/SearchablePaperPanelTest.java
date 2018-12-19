@@ -78,6 +78,11 @@ public class SearchablePaperPanelTest extends PaperPanelTest<SearchCondition, Se
             protected void restartSearchInPaperSearchPage() {
                 // no-op
             }
+
+            @Override
+            protected void doOnSubmit() {
+                // no-op
+            }
         };
     }
 

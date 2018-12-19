@@ -857,4 +857,9 @@ public abstract class EditablePaperPanel extends PaperPanel<Paper> {
     protected boolean isaNewsletterInStatusWip() {
         return !newsletterService.canCreateNewsletterInProgress();
     }
+
+    @Override
+    protected void doOnSubmit() {
+        // no-op - handled via onFormSubmit
+    }
 }

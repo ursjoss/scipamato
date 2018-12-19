@@ -66,9 +66,6 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
                     try {
                         searchOrderService.saveOrUpdateSearchCondition(getModelObject(), searchOrderId,
                             getLanguageCode());
-                        pageFactory
-                            .setResponsePageToPaperSearchPageConsumer(this)
-                            .accept(getPageParameters());
                     } catch (Exception ex) {
                         error(new StringResourceModel("save.error.hint", this, null)
                             .setParameters(getNullSafeId(), ex.getMessage())
@@ -78,9 +75,18 @@ public class PaperSearchCriteriaPage extends BasePage<SearchCondition> {
             }
 
             @Override
+            protected void doOnSubmit() {
+                pageFactory
+                    .setResponsePageToPaperSearchPageConsumer(this)
+                    .accept(getPageParameters());
+
+            }
+
+            @Override
             protected void restartSearchInPaperSearchPage() {
                 // no-op
             }
+
         };
     }
 

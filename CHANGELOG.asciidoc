@@ -52,6 +52,8 @@ NOTE: References to user stories are in the form Iteration/Story-Number.
 .Removed
 
 .Fixed
+- {url-issues}16[#16] - Core: Fix editing Search Conditions by not automatically closing the page and triggering the search
+  after having updated a field.
 
 .Security
 

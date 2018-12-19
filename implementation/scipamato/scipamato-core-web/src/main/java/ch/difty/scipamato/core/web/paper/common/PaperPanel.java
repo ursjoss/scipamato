@@ -480,6 +480,13 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         submit = new BootstrapButton(id, new StringResourceModel(getSubmitLinkResourceLabel()), Buttons.Type.Default) {
             private static final long serialVersionUID = 1L;
 
+            @Override
+            public void onSubmit() {
+                super.onSubmit();
+                onFormSubmit();
+                doOnSubmit();
+            }
+
             /**
              * Refresh the summary link to use the updated model
              */
@@ -504,6 +511,8 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
         submit.setVisible(!isViewMode());
         queue(submit);
     }
+
+    protected abstract void doOnSubmit();
 
     private void enableButton(final BootstrapButton button, final boolean enabled, final IEvent<?> event) {
         if (event

@@ -71,17 +71,34 @@ public class PaperSearchCriteriaPageTest extends BasePageTest<PaperSearchCriteri
     }
 
     @Test
-    public void submittingForm_savesSearchConditionAndForwardsToPaperSearchPage() {
+    public void submittingForm_savesSearchCondition_andRemainsOnPagePage() {
         getTester().startPage(makePage());
         getTester().assertRenderedPage(getPageClass());
 
         FormTester formTester = getTester().newFormTester("contentPanel:form");
         formTester.submit();
 
-        getTester().assertRenderedPage(PaperSearchPage.class);
+        getTester().assertRenderedPage(getPageClass());
         getTester().assertNoErrorMessage();
 
         verify(searchOrderServiceMock, times(2)).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID,
+            "en_us");
+        verify(searchOrderServiceMock, never()).findPageByFilter(isA(SearchOrderFilter.class),
+            isA(PaginationContext.class));
+    }
+
+    @Test
+    public void submittingForm_andClickingSubmitButton_savesSearchConditionAndForwardsToPaperSearchPagex() {
+        getTester().startPage(makePage());
+        getTester().assertRenderedPage(getPageClass());
+
+        FormTester formTester = getTester().newFormTester("contentPanel:form");
+        formTester.submit("submit");
+
+        getTester().assertRenderedPage(PaperSearchPage.class);
+        getTester().assertNoErrorMessage();
+
+        verify(searchOrderServiceMock, times(3)).saveOrUpdateSearchCondition(searchConditionMock, SEARCH_ORDER_ID,
             "en_us");
         verify(searchOrderServiceMock).findPageByFilter(isA(SearchOrderFilter.class), isA(PaginationContext.class));
     }
