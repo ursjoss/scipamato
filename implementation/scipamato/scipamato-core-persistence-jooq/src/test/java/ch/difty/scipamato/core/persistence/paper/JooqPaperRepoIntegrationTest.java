@@ -184,6 +184,25 @@ public class JooqPaperRepoIntegrationTest extends JooqTransactionalIntegrationTe
     }
 
     @Test
+    public void savingAssociatedEntitiesOf_withNewsletterLink() {
+        Paper paper = repo.add(makeMinimalPaper());
+        final long id = paper.getId();
+        final Paper.NewsletterLink newsletterLink = new Paper.NewsletterLink(2, "whatever", 1, 1, "topic1", "hl");
+
+        paper.setNewsletterLink(newsletterLink);
+
+        repo.update(paper);
+        assertThat(paper.getId()).isEqualTo(id);
+
+        Paper newCopy = repo.findById(id);
+        assertThat(newCopy).isNotEqualTo(paper);
+        assertThat(newCopy.getId()).isEqualTo(id);
+        assertThat(newCopy
+            .getNewsletterLink()
+            .getIssue()).isEqualTo("1804");
+    }
+
+    @Test
     public void deletingRecord() {
         Paper paper = repo.add(makeMinimalPaper());
         assertThat(paper).isNotNull();
