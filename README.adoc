@@ -1,3 +1,6 @@
+[![License](https://img.shields.io/github/license/ursjoss/scipamato.svg)](LICENSE)
+[![Quality gate](https://sonarcloud.io/api/project_badges/measure?project=ursjoss_scipamato&metric=alert_status)](https://sonarcloud.io/dashboard?id=ursjoss_scipamato)
+
 [[scipamato]]
 == SciPaMaTo
 
