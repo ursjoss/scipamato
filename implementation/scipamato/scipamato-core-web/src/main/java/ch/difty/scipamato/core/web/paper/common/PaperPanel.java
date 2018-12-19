@@ -1034,6 +1034,7 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             queue(tab7Form);
             queueHeadline(NEWSLETTER_HEADLINE);
             makeAndQueueNewsletterTopicSelectBox("newsletterTopic");
+            queueIssue("newsletterIssue");
         }
 
         private void queueHeadline(FieldEnumType fieldType) {
@@ -1052,6 +1053,31 @@ public abstract class PaperPanel<T extends CodeBoxAware & NewsletterAware> exten
             queue(new Label(id + LABEL_TAG, labelModel));
             field.setLabel(labelModel);
             addDisableBehavior(field);
+            queue(field);
+        }
+
+        private void queueIssue(String id) {
+            TextField<String> field = new TextField<>(id) {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected void onConfigure() {
+                    super.onConfigure();
+                    setVisible(isSearchMode());
+                }
+            };
+            field.setOutputMarkupId(true);
+            StringResourceModel labelModel = new StringResourceModel(id + LABEL_RESOURCE_TAG, this, null);
+            queue(new Label(id + LABEL_TAG, labelModel) {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected void onConfigure() {
+                    super.onConfigure();
+                    setVisible(isSearchMode());
+                }
+            });
+            field.setLabel(labelModel);
             queue(field);
         }
 

@@ -342,4 +342,10 @@ public class Paper extends IdScipamatoEntity<Long> implements CodeBoxAware, News
     public String getNewsletterIssue() {
         return newsletterLink != null ? newsletterLink.getIssue() : null;
     }
+
+    @Override
+    public void setNewsletterIssue(final String issue) {
+        // no-op - only used for searching by newsletter issue
+    }
+
 }

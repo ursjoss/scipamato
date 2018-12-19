@@ -749,6 +749,18 @@ public class SearchConditionTest {
     }
 
     @Test
+    public void testDisplayValue_withNewsletterTopicOnly() {
+        sc1.setNewsletterTopic(new NewsletterTopic(1, "t1"));
+        assertThat(sc1.getDisplayValue()).isEqualTo("topic=t1");
+    }
+
+    @Test
+    public void testDisplayValue_withNewsletterIssueOnly() {
+        sc1.setNewsletterIssue("2018/06");
+        assertThat(sc1.getDisplayValue()).isEqualTo("issue=2018/06");
+    }
+
+    @Test
     public void testDisplayValue_withNewsletterHeadlinePlusSomethingElse() {
         sc1.setAuthors("foobar");
         sc1.setNewsletterHeadline("foo");
@@ -756,16 +768,25 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void testDisplayValue_withNewsletterTopicOnly() {
-        sc1.setNewsletterTopic(new NewsletterTopic(1, "t1"));
-        assertThat(sc1.getDisplayValue()).isEqualTo("topic=t1");
-    }
-
-    @Test
     public void testDisplayValue_withNewsletterTopicPlusSomethingElse() {
         sc1.setAuthors("foobar");
         sc1.setNewsletterTopic(new NewsletterTopic(1, "t1"));
         assertThat(sc1.getDisplayValue()).isEqualTo("foobar AND topic=t1");
+    }
+
+    @Test
+    public void testDisplayValue_withNewsletterIssuePlusSomethingElse() {
+        sc1.setAuthors("foobar");
+        sc1.setNewsletterIssue("2018/04");
+        assertThat(sc1.getDisplayValue()).isEqualTo("foobar AND issue=2018/04");
+    }
+
+    @Test
+    public void testDisplayValue_withAllNewsletterRelatedFields() {
+        sc1.setNewsletterHeadline("foobar");
+        sc1.setNewsletterIssue("2018/02");
+        sc1.setNewsletterTopic(new NewsletterTopic(10, "t2"));
+        assertThat(sc1.getDisplayValue()).isEqualTo("issue=2018/02 AND headline=foobar AND topic=t2");
     }
 
     @SuppressWarnings({ "unlikely-arg-type", "EqualsWithItself", "ConstantConditions", "ObjectEqualsCanBeEquality",
@@ -935,7 +956,7 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash11_withDifferentNewsletterTopics() {
+    public void equalsAndHash12_withDifferentNewsletterTopics() {
         SearchCondition f1 = new SearchCondition();
         f1.setNewsletterTopic(new NewsletterTopic(1, "foo"));
         SearchCondition f2 = new SearchCondition();
@@ -944,11 +965,47 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void equalsAndHash11_withDifferentNewsletterHeadlines() {
+    public void equalsAndHash13_withDifferentNewsletterHeadlines() {
         SearchCondition f1 = new SearchCondition();
         f1.setNewsletterHeadline("foo");
         SearchCondition f2 = new SearchCondition();
         f2.setNewsletterHeadline("bar");
+        assertInequality(f1, f2);
+    }
+
+    @Test
+    public void equalsAndHash14_withDifferentNewsletterIssue() {
+        SearchCondition f1 = new SearchCondition();
+        f1.setNewsletterIssue("foo");
+        SearchCondition f2 = new SearchCondition();
+        f2.setNewsletterIssue("bar");
+        assertInequality(f1, f2);
+    }
+
+    @Test
+    public void equalsAndHash15_withDifferentNewsletterTopics_firstNull() {
+        SearchCondition f1 = new SearchCondition();
+        f1.setNewsletterTopic(null);
+        SearchCondition f2 = new SearchCondition();
+        f2.setNewsletterTopic(new NewsletterTopic(2, "foo"));
+        assertInequality(f1, f2);
+    }
+
+    @Test
+    public void equalsAndHash16_withDifferentNewsletterHeadlines_firstNull() {
+        SearchCondition f1 = new SearchCondition();
+        f1.setNewsletterHeadline(null);
+        SearchCondition f2 = new SearchCondition();
+        f2.setNewsletterHeadline("bar");
+        assertInequality(f1, f2);
+    }
+
+    @Test
+    public void equalsAndHash17_withDifferentNewsletterIssue_firstNull() {
+        SearchCondition f1 = new SearchCondition();
+        f1.setNewsletterIssue(null);
+        SearchCondition f2 = new SearchCondition();
+        f2.setNewsletterIssue("bar");
         assertInequality(f1, f2);
     }
 
@@ -1098,7 +1155,14 @@ public class SearchConditionTest {
     }
 
     @Test
-    public void getNewsletterIssue_returnsNull() {
+    public void settingAndResettingNewsletterIssue() {
+        assertThat(sc1.getNewsletterIssue()).isNull();
+
+        sc1.setNewsletterIssue("foo");
+        assertThat(sc1.getNewsletterIssue()).isEqualTo("foo");
+
+        sc1.setNewsletterIssue(null);
         assertThat(sc1.getNewsletterIssue()).isNull();
     }
+
 }

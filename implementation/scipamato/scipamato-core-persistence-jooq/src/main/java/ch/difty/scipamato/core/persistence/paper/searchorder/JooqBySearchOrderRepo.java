@@ -16,6 +16,7 @@ import ch.difty.scipamato.common.AssertAs;
 import ch.difty.scipamato.common.persistence.JooqSortMapper;
 import ch.difty.scipamato.common.persistence.paging.PaginationContext;
 import ch.difty.scipamato.core.db.Tables;
+import ch.difty.scipamato.core.db.tables.Newsletter;
 import ch.difty.scipamato.core.db.tables.records.PaperRecord;
 import ch.difty.scipamato.core.entity.Code;
 import ch.difty.scipamato.core.entity.IdScipamatoEntity;
@@ -147,7 +148,8 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
             .isEmpty()) {
             conditions.add(() -> codeConditions(searchCondition.getCodes()));
         }
-        if (searchCondition.getNewsletterHeadline() != null || searchCondition.getNewsletterTopicId() != null) {
+        if (searchCondition.getNewsletterHeadline() != null || searchCondition.getNewsletterTopicId() != null
+            || searchCondition.getNewsletterIssue() != null) {
             conditions.add(() -> newsletterConditions(searchCondition));
         }
         return conditions.combineWithAnd();
@@ -175,18 +177,38 @@ public abstract class JooqBySearchOrderRepo<T extends IdScipamatoEntity<Long>, M
         final SelectConditionStep<Record1<Integer>> step = DSL
             .selectOne()
             .from(PAPER_NEWSLETTER)
+            .innerJoin(Newsletter.NEWSLETTER)
+            .on(PAPER_NEWSLETTER.NEWSLETTER_ID.eq(Newsletter.NEWSLETTER.ID))
             .where(PAPER_NEWSLETTER.PAPER_ID.eq(PAPER.ID));
         final Condition topicCondition = PAPER_NEWSLETTER.NEWSLETTER_TOPIC_ID.eq(sc.getNewsletterTopicId());
         final LikeEscapeStep headlineCondition = PAPER_NEWSLETTER.HEADLINE.likeIgnoreCase(
             "%" + sc.getNewsletterHeadline() + "%");
-        if (sc.getNewsletterTopicId() != null && sc.getNewsletterHeadline() != null) {
+        final LikeEscapeStep issueCondition = Newsletter.NEWSLETTER.ISSUE.likeIgnoreCase(
+            "%" + sc.getNewsletterIssue() + "%");
+        if (sc.getNewsletterTopicId() != null && sc.getNewsletterHeadline() != null
+            && sc.getNewsletterIssue() != null) {
+            nlConditions.add(() -> DSL.exists(step
+                .and(topicCondition)
+                .and(headlineCondition)
+                .and(issueCondition)));
+        } else if (sc.getNewsletterTopicId() != null && sc.getNewsletterIssue() != null) {
+            nlConditions.add(() -> DSL.exists(step
+                .and(topicCondition)
+                .and(issueCondition)));
+        } else if (sc.getNewsletterHeadline() != null && sc.getNewsletterIssue() != null) {
+            nlConditions.add(() -> DSL.exists(step
+                .and(headlineCondition)
+                .and(issueCondition)));
+        } else if (sc.getNewsletterTopicId() != null && sc.getNewsletterHeadline() != null) {
             nlConditions.add(() -> DSL.exists(step
                 .and(topicCondition)
                 .and(headlineCondition)));
         } else if (sc.getNewsletterTopicId() != null) {
             nlConditions.add(() -> DSL.exists(step.and(topicCondition)));
-        } else {
+        } else if (sc.getNewsletterHeadline() != null) {
             nlConditions.add(() -> DSL.exists(step.and(headlineCondition)));
+        } else {
+            nlConditions.add(() -> DSL.exists(step.and(issueCondition)));
         }
         return nlConditions.combineWithAnd();
     }

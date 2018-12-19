@@ -13,8 +13,8 @@ import java.util.List;
 import org.junit.Test;
 
 import ch.difty.scipamato.common.entity.CodeClassId;
-import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 import ch.difty.scipamato.common.entity.newsletter.PublicationStatus;
+import ch.difty.scipamato.core.entity.newsletter.NewsletterTopic;
 
 @SuppressWarnings("SameParameterValue")
 public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
@@ -559,5 +559,13 @@ public class PaperTest extends Jsr303ValidatedEntityTest<Paper> {
         assertThat(p.getNewsletterLink()).isNull();
         assertThat(p.getNewsletterTopicId()).isNull();
         assertThat(p.getNewsletterHeadline()).isNull();
+    }
+
+    @Test
+    public void settingNewsletterIssue_isNoOp() {
+        Paper p = newValidEntity();
+        assertThat(p.getNewsletterIssue()).isNull();
+        p.setNewsletterIssue("whatever");
+        assertThat(p.getNewsletterIssue()).isNull();
     }
 }

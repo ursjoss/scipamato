@@ -333,10 +333,12 @@ public class JooqSearchOrderRepo extends
             final Integer userId = getUserId();
             final SearchConditionRecord searchConditionRecord = getDsl()
                 .insertInto(SEARCH_CONDITION, SEARCH_CONDITION.SEARCH_ORDER_ID, SEARCH_CONDITION.NEWSLETTER_TOPIC_ID,
-                    SEARCH_CONDITION.NEWSLETTER_HEADLINE, SEARCH_CONDITION.CREATED_TERM, SEARCH_CONDITION.MODIFIED_TERM,
-                    SEARCH_CONDITION.CREATED_BY, SEARCH_CONDITION.LAST_MODIFIED_BY)
+                    SEARCH_CONDITION.NEWSLETTER_HEADLINE, SEARCH_CONDITION.NEWSLETTER_ISSUE,
+                    SEARCH_CONDITION.CREATED_TERM, SEARCH_CONDITION.MODIFIED_TERM, SEARCH_CONDITION.CREATED_BY,
+                    SEARCH_CONDITION.LAST_MODIFIED_BY)
                 .values(searchOrderId, searchCondition.getNewsletterTopicId(), searchCondition.getNewsletterHeadline(),
-                    searchCondition.getCreatedDisplayValue(), searchCondition.getModifiedDisplayValue(), userId, userId)
+                    searchCondition.getNewsletterIssue(), searchCondition.getCreatedDisplayValue(),
+                    searchCondition.getModifiedDisplayValue(), userId, userId)
                 .returning()
                 .fetchOne();
             persistSearchTerms(searchCondition, searchConditionRecord.getSearchConditionId());
@@ -562,6 +564,7 @@ public class JooqSearchOrderRepo extends
             .set(SEARCH_CONDITION.SEARCH_ORDER_ID, searchOrderId)
             .set(SEARCH_CONDITION.NEWSLETTER_TOPIC_ID, searchCondition.getNewsletterTopicId())
             .set(SEARCH_CONDITION.NEWSLETTER_HEADLINE, searchCondition.getNewsletterHeadline())
+            .set(SEARCH_CONDITION.NEWSLETTER_ISSUE, searchCondition.getNewsletterIssue())
             .set(SEARCH_CONDITION.CREATED_TERM, searchCondition.getCreatedDisplayValue())
             .set(SEARCH_CONDITION.MODIFIED_TERM, searchCondition.getModifiedDisplayValue())
             .set(SEARCH_CONDITION.LAST_MODIFIED, getTs())
